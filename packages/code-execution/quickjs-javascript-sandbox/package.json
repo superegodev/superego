@@ -1,0 +1,28 @@
+{
+  "name": "@superego/quickjs-javascript-sandbox",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./nodejs": {
+      "import": "./src/index.nodejs.ts"
+    },
+    "./browser": {
+      "import": "./src/index.browser.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@jitl/quickjs-wasmfile-release-sync": "^0.31.0",
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "quickjs-emscripten": "^0.31.0"
+  }
+}

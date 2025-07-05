@@ -1,0 +1,45 @@
+{
+  "include": ["${configDir}/src"],
+  "compilerOptions": {
+    // Language and environment
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "jsx": "preserve",
+
+    // Emit
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+
+    // Modules
+    "rootDir": "${configDir}/src",
+    "outDir": "${configDir}/dist",
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+
+    // Interop constraints
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    // Type checking
+    "strict": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    // Needed to improve usage of react-aria-components, which doesn't use this
+    // option.
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "checkJs": true,
+    "skipLibCheck": true
+  }
+}

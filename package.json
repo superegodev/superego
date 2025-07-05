@@ -1,0 +1,28 @@
+{
+  "name": "@superego/root",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/**/*"
+  ],
+  "scripts": {
+    "test": "yarn workspaces foreach --all --topological-dev --verbose run test run",
+    "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
+    "check-linting": "biome lint",
+    "fix-linting": "biome lint --write",
+    "check-formatting": "biome check --linter-enabled=false && prettier --list-different \"**/*.(md|yml|sql)\"",
+    "fix-formatting": "biome check --linter-enabled=false --write && prettier --write \"**/*.(md|yml|sql)\"",
+    "build-demo": "yarn workspace @superego/demo-app build",
+    "deploy-demo": "yarn workspace @superego/demo-app deploy",
+    "build-electron": "yarn workspace @superego/electron-app build",
+    "deploy-electron": "yarn workspace @superego/electron-app deploy"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-sql-cst": "^0.13.0",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
+}

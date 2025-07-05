@@ -1,0 +1,28 @@
+{
+  "name": "@superego/shared-utils",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose",
+    "bench": "vitest bench"
+  },
+  "devDependencies": {
+    "@fast-check/vitest": "^0.2.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/schema": "workspace:*",
+    "base-x": "^5.0.1",
+    "uuid": "^11.1.0",
+    "valibot": "^1.1.0"
+  }
+}

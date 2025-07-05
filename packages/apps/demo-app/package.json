@@ -1,0 +1,27 @@
+{
+  "name": "@superego/demo-app",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
+    "check-types": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && vite build",
+    "deploy": "wrangler pages deploy dist/ --project-name demosuperegodev"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vite": "^7.0.2",
+    "wrangler": "^4.23.0"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/browser-app": "workspace:^",
+    "@superego/demo-data-repositories": "workspace:^",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/fake-javascript-sandbox": "workspace:*",
+    "@tanstack/react-query": "^5.81.5"
+  }
+}

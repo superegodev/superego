@@ -1,0 +1,25 @@
+{
+  "name": "@superego/schema",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "devDependencies": {
+    "@fast-check/vitest": "^0.2.1",
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@superego/global-types": "workspace:*",
+    "valibot": "^1.1.0"
+  }
+}

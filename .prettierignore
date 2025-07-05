@@ -1,0 +1,15 @@
+# yarn
+.yarn/*
+.pnp.*
+node_modules
+
+# Output files and directories
+dist
+
+# Translation files
+**/translations/*
+
+# Misc
+.gitattributes
+.vscode
+.idea

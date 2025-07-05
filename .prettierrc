@@ -1,0 +1,17 @@
+{
+  "overrides": [
+    {
+      "files": "*.yml",
+      "options": { "printWidth": 120 }
+    },
+    {
+      "files": "*.md",
+      "options": { "proseWrap": "always" }
+    },
+    {
+      "files": ["*.sql"],
+      "options": { "parser": "sqlite" }
+    }
+  ],
+  "plugins": ["prettier-plugin-sql-cst"]
+}

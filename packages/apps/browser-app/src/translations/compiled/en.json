@@ -1,0 +1,968 @@
+{
+  "BooleanField.tsx_KKkUks": [
+    {
+      "type": 0,
+      "value": "True"
+    }
+  ],
+  "BooleanField.tsx_rxqs5U": [
+    {
+      "type": 0,
+      "value": "False"
+    }
+  ],
+  "BrowserApp.tsx_w1vfWS": [
+    {
+      "type": 0,
+      "value": "Error loading app"
+    }
+  ],
+  "Collection.tsx_D3idYv": [
+    {
+      "type": 0,
+      "value": "Settings"
+    }
+  ],
+  "Collection.tsx_r0FgVC": [
+    {
+      "type": 0,
+      "value": "Create document"
+    }
+  ],
+  "Collection.tsx_zYomDH": [
+    {
+      "type": 0,
+      "value": "Collection actions"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_ISrFoo": [
+    {
+      "type": 0,
+      "value": "Open "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " actions menu"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_iXNbPf": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "CollectionSettings.tsx_AHx1om": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Settings"
+    }
+  ],
+  "CollectionSettings.tsx_D3idYv": [
+    {
+      "type": 0,
+      "value": "Settings"
+    }
+  ],
+  "CollectionSettings.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Create new version"
+    }
+  ],
+  "CollectionSettings.tsx_W/lYsa": [
+    {
+      "type": 0,
+      "value": "Version settings"
+    }
+  ],
+  "CollectionSettings.tsx_m4GG4b": [
+    {
+      "type": 0,
+      "value": "Delete collection"
+    }
+  ],
+  "CollectionSettings.tsx_zYomDH": [
+    {
+      "type": 0,
+      "value": "Collection actions"
+    }
+  ],
+  "CollectionsTree.tsx_gykodq": [
+    {
+      "type": 0,
+      "value": "Tree of collection categories and collections"
+    }
+  ],
+  "CreateCollection.tsx_XQCXwU": [
+    {
+      "type": 0,
+      "value": "Create Collection"
+    }
+  ],
+  "CreateCollectionForm.tsx_+R8UFo": [
+    {
+      "type": 0,
+      "value": "Error creating collection"
+    }
+  ],
+  "CreateCollectionForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "CreateCollectionForm.tsx_Lktmvk": [
+    {
+      "type": 0,
+      "value": "Schema"
+    }
+  ],
+  "CreateCollectionForm.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "CreateCollectionForm.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "CreateDocument.tsx_saRT/V": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Create Document"
+    }
+  ],
+  "CreateDocumentForm.tsx_KlVScA": [
+    {
+      "type": 0,
+      "value": "Error creating document"
+    }
+  ],
+  "CreateDocumentForm.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "CreateNewCollectionVersion.tsx_WgkS3f": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Create New Version"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_1Og5F/": [
+    {
+      "type": 0,
+      "value": "Migration"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_Lktmvk": [
+    {
+      "type": 0,
+      "value": "Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_WEMhIw": [
+    {
+      "type": 0,
+      "value": "TypeScript function expression to migrate documents from the previous schema to the updated schema."
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_Xrb7F4": [
+    {
+      "type": 0,
+      "value": "Update and migrate"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_r7rdMp": [
+    {
+      "type": 0,
+      "value": "Error updating schema and migrating documents"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_zq3yJy": [
+    {
+      "type": 0,
+      "value": "Error updating document"
+    }
+  ],
+  "Default.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Not a valid JSON string"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_1CICoa": [
+    {
+      "type": 0,
+      "value": "Error deleting collection"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_4S5UP3": [
+    {
+      "type": 0,
+      "value": "If you're sure you want to delete the collection, write "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " in the input below."
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_Q5SlBK": [
+    {
+      "type": 0,
+      "value": "Delete collection \""
+    },
+    {
+      "type": 1,
+      "value": "collectionName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_iuFFzm": [
+    {
+      "type": 0,
+      "value": "Deleting the collection will permanently delete all of its documents and files."
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_+pXFqz": [
+    {
+      "type": 0,
+      "value": "If you're sure you want to delete the document, write "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " in the input below."
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_GSdOzc": [
+    {
+      "type": 0,
+      "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_H7J/rn": [
+    {
+      "type": 0,
+      "value": "Error deleting document"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_cpePvc": [
+    {
+      "type": 0,
+      "value": "Delete document \""
+    },
+    {
+      "type": 1,
+      "value": "documentName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
+    }
+  ],
+  "Document.tsx_EPTOBf": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "document"
+    }
+  ],
+  "Document.tsx_SNguYK": [
+    {
+      "type": 0,
+      "value": "Document actions"
+    }
+  ],
+  "Document.tsx_eoWkGI": [
+    {
+      "type": 0,
+      "value": "Delete document"
+    }
+  ],
+  "Document.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "DocumentsTable.tsx_AbXVP4": [
+    {
+      "type": 0,
+      "value": "Created at"
+    }
+  ],
+  "DocumentsTable.tsx_JtSyau": [
+    {
+      "type": 0,
+      "value": "Last modified at"
+    }
+  ],
+  "DocumentsTable.tsx_MzUvBt": [
+    {
+      "type": 0,
+      "value": "This collection doesn't have any documents yet."
+    }
+  ],
+  "DocumentsTable.tsx_cbuMAX": [
+    {
+      "type": 0,
+      "value": "Documents of collection "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "EmojiInput.tsx_CqyOwA": [
+    {
+      "type": 0,
+      "value": "Select emoji"
+    }
+  ],
+  "EmojiPicker.tsx_0BUTMv": [
+    {
+      "type": 0,
+      "value": "Search..."
+    }
+  ],
+  "EmojiPicker.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "EmojiPicker.tsx_GrDv3f": [
+    {
+      "type": 0,
+      "value": "Selected: "
+    },
+    {
+      "type": 1,
+      "value": "selectedEmoji"
+    }
+  ],
+  "EmojiPicker.tsx_wLCEuv": [
+    {
+      "type": 0,
+      "value": "No matches."
+    }
+  ],
+  "EnumField.tsx_k0cXGK": [
+    {
+      "type": 0,
+      "value": "null - click to select a value"
+    }
+  ],
+  "FileField.tsx_5q3qC0": [
+    {
+      "type": 0,
+      "value": "Download"
+    }
+  ],
+  "FileField.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "FileField.tsx_SHoeDt": [
+    {
+      "type": 0,
+      "value": "Upload new"
+    }
+  ],
+  "FileField.tsx_jI+nI4": [
+    {
+      "type": 0,
+      "value": "null - click or drop file to upload"
+    }
+  ],
+  "FileField.tsx_xxtls6": [
+    {
+      "type": 0,
+      "value": "Mime Type"
+    }
+  ],
+  "FormattingToolbar.tsx_+im1ZA": [
+    {
+      "type": 0,
+      "value": "Blocks"
+    }
+  ],
+  "FormattingToolbar.tsx_+uJ/8b": [
+    {
+      "type": 0,
+      "value": "Superscript"
+    }
+  ],
+  "FormattingToolbar.tsx_/7maNQ": [
+    {
+      "type": 0,
+      "value": "Heading 1"
+    }
+  ],
+  "FormattingToolbar.tsx_08d23j": [
+    {
+      "type": 0,
+      "value": "Text formatting"
+    }
+  ],
+  "FormattingToolbar.tsx_2YLmul": [
+    {
+      "type": 0,
+      "value": "Open list menu"
+    }
+  ],
+  "FormattingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Redo"
+    }
+  ],
+  "FormattingToolbar.tsx_5Qvm03": [
+    {
+      "type": 0,
+      "value": "Heading 6"
+    }
+  ],
+  "FormattingToolbar.tsx_5j/gIz": [
+    {
+      "type": 0,
+      "value": "Ordered list"
+    }
+  ],
+  "FormattingToolbar.tsx_7mL9QE": [
+    {
+      "type": 0,
+      "value": "Style"
+    }
+  ],
+  "FormattingToolbar.tsx_8typ4g": [
+    {
+      "type": 0,
+      "value": "Code block"
+    }
+  ],
+  "FormattingToolbar.tsx_AtPL8s": [
+    {
+      "type": 0,
+      "value": "Open headings menu"
+    }
+  ],
+  "FormattingToolbar.tsx_BDbgCL": [
+    {
+      "type": 0,
+      "value": "Heading 3"
+    }
+  ],
+  "FormattingToolbar.tsx_BKF2fN": [
+    {
+      "type": 0,
+      "value": "Heading 4"
+    }
+  ],
+  "FormattingToolbar.tsx_Bz/qc/": [
+    {
+      "type": 0,
+      "value": "Align right"
+    }
+  ],
+  "FormattingToolbar.tsx_Dkkmwm": [
+    {
+      "type": 0,
+      "value": "Bold"
+    }
+  ],
+  "FormattingToolbar.tsx_Ig/eGK": [
+    {
+      "type": 0,
+      "value": "Alignment"
+    }
+  ],
+  "FormattingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Undo"
+    }
+  ],
+  "FormattingToolbar.tsx_NWm89j": [
+    {
+      "type": 0,
+      "value": "Strike"
+    }
+  ],
+  "FormattingToolbar.tsx_PO+iF4": [
+    {
+      "type": 0,
+      "value": "Task list"
+    }
+  ],
+  "FormattingToolbar.tsx_QPmWTa": [
+    {
+      "type": 0,
+      "value": "Center"
+    }
+  ],
+  "FormattingToolbar.tsx_SOtMvF": [
+    {
+      "type": 0,
+      "value": "Underline"
+    }
+  ],
+  "FormattingToolbar.tsx_Zqekct": [
+    {
+      "type": 0,
+      "value": "Heading 2"
+    }
+  ],
+  "FormattingToolbar.tsx_atzUcB": [
+    {
+      "type": 0,
+      "value": "Quote"
+    }
+  ],
+  "FormattingToolbar.tsx_djJp6c": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
+  "FormattingToolbar.tsx_drh2NU": [
+    {
+      "type": 0,
+      "value": "Bullet list"
+    }
+  ],
+  "FormattingToolbar.tsx_g2V+es": [
+    {
+      "type": 0,
+      "value": "Italic"
+    }
+  ],
+  "FormattingToolbar.tsx_h2vipu": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "FormattingToolbar.tsx_jWDuFc": [
+    {
+      "type": 0,
+      "value": "Align left"
+    }
+  ],
+  "FormattingToolbar.tsx_rDSlqC": [
+    {
+      "type": 0,
+      "value": "Subscript"
+    }
+  ],
+  "FormattingToolbar.tsx_uXKvtQ": [
+    {
+      "type": 0,
+      "value": "Justify"
+    }
+  ],
+  "FormattingToolbar.tsx_vEQBIa": [
+    {
+      "type": 0,
+      "value": "Heading 5"
+    }
+  ],
+  "GlobalSettings.tsx_cFXlu2": [
+    {
+      "type": 0,
+      "value": "Superego Global Settings"
+    }
+  ],
+  "Header.tsx_9lnhZ4": [
+    {
+      "type": 0,
+      "value": "Create collection"
+    }
+  ],
+  "Header.tsx_t9KdzH": [
+    {
+      "type": 0,
+      "value": "New Collection Category"
+    }
+  ],
+  "Header.tsx_ulh3kf": [
+    {
+      "type": 0,
+      "value": "Collections"
+    }
+  ],
+  "Header.tsx_zpIkYq": [
+    {
+      "type": 0,
+      "value": "Create collection category"
+    }
+  ],
+  "Home.tsx_6Se3+J": [
+    {
+      "type": 0,
+      "value": "Superego Logo - A low detail, low-poly painting of Freud's face"
+    }
+  ],
+  "Home.tsx_oxShVS": [
+    {
+      "type": 0,
+      "value": "Your Life's Database"
+    }
+  ],
+  "Home.tsx_q4FNnF": [
+    {
+      "type": 0,
+      "value": "Superego"
+    }
+  ],
+  "ListField.tsx_6ibWnb": [
+    {
+      "type": 0,
+      "value": "Move item up"
+    }
+  ],
+  "ListField.tsx_Dp51E2": [
+    {
+      "type": 0,
+      "value": "null - click to set a value"
+    }
+  ],
+  "ListField.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "ListField.tsx_KDO3hW": [
+    {
+      "type": 0,
+      "value": "Add item"
+    }
+  ],
+  "ListField.tsx_MQ+9dH": [
+    {
+      "type": 1,
+      "value": "itemName"
+    },
+    {
+      "type": 0,
+      "value": " number "
+    },
+    {
+      "type": 1,
+      "value": "itemNumber"
+    }
+  ],
+  "ListField.tsx_UjPa5a": [
+    {
+      "type": 0,
+      "value": "Move item down"
+    }
+  ],
+  "ListField.tsx_pUcgkI": [
+    {
+      "type": 0,
+      "value": "There are no items in the list"
+    }
+  ],
+  "NullifyFieldAction.tsx_MLa9CL": [
+    {
+      "type": 0,
+      "value": "Set "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " to null"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_D3idYv": [
+    {
+      "type": 0,
+      "value": "Settings"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_ejEGdx": [
+    {
+      "type": 0,
+      "value": "Home"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
+  "RHFSchemaField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Not a valid JSON string"
+    }
+  ],
+  "RHFSchemaField.tsx_HkeO+7": [
+    {
+      "type": 0,
+      "value": "Invalid schema"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionField.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionField.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionField.tsx_SSSuYh": [
+    {
+      "type": 0,
+      "value": "TypeScript function to get the property value (a string) from the document's content"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": [
+    {
+      "type": 0,
+      "value": "Value getter"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionsField.tsx_2qoZR0": [
+    {
+      "type": 0,
+      "value": "Add summary property"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionsField.tsx_4GyJ00": [
+    {
+      "type": 0,
+      "value": "Summary properties"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionsField.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_1CICoa": [
+    {
+      "type": 0,
+      "value": "Error deleting collection"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_cuCM/d": [
+    {
+      "type": 0,
+      "value": "Rename collection category \""
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "StructField.tsx_Dp51E2": [
+    {
+      "type": 0,
+      "value": "null - click to set a value"
+    }
+  ],
+  "TiptapInput.tsx_0he+1r": [
+    {
+      "type": 0,
+      "value": "Write..."
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_c9brFu": [
+    {
+      "type": 0,
+      "value": "Error saving settings"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_muqizb": [
+    {
+      "type": 0,
+      "value": "Save settings"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": [
+    {
+      "type": 0,
+      "value": "Error saving collection version settings"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [
+    {
+      "type": 0,
+      "value": "Save collection version settings"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_Pe0ogR": [
+    {
+      "type": 0,
+      "value": "Theme"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_c9brFu": [
+    {
+      "type": 0,
+      "value": "Error saving settings"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_muqizb": [
+    {
+      "type": 0,
+      "value": "Save settings"
+    }
+  ],
+  "summaryPropertyDefinition.ts_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "summaryPropertyDefinition.ts_TCx5u7": [
+    {
+      "type": 0,
+      "value": "Summary property "
+    },
+    {
+      "type": 1,
+      "value": "position"
+    }
+  ],
+  "summaryPropertyDefinition.ts_gcaV8O": [
+    {
+      "type": 0,
+      "value": "Name of the document"
+    }
+  ],
+  "typescriptModule.ts_yZ+w+N": [
+    {
+      "type": 0,
+      "value": "TypeScript compilation failed"
+    }
+  ]
+}

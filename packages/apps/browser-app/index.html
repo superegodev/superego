@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' data:;
+        connect-src 'self' https://cdn.jsdelivr.net;
+      "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Superego Browser App Dev Environment</title>
+  </head>
+  <body>
+    <script type="module" src="/dev/main.js"></script>
+  </body>
+</html>

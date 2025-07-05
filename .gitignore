@@ -1,0 +1,33 @@
+# Package manager
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build artifacts
+dist
+dist-ssr
+*.local
+.vite
+out
+
+# Misc
+.DS_Store
+.vscode
+!.vscode/extensions.json
+.idea/
+.claude/
+
+# Folder used for drafts that should not be committed
+/drafts/

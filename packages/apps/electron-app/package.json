@@ -1,0 +1,39 @@
+{
+  "name": "@superego/electron-app",
+  "productName": "superego",
+  "description": "Your Life's Database",
+  "version": "0.0.0",
+  "main": "./dist/main/index.mjs",
+  "scripts": {
+    "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
+    "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
+    "build:vite": "electron-vite --outDir=dist build",
+    "build:forge:package": "electron-forge package",
+    "build:forge:make": "electron-forge make",
+    "build": "yarn build:vite && yarn build:forge:make",
+    "deploy": "electron-forge publish"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.1",
+    "@electron-forge/maker-deb": "^7.8.1",
+    "@electron-forge/maker-rpm": "^7.8.1",
+    "@electron-forge/maker-squirrel": "^7.8.1",
+    "@electron-forge/maker-zip": "^7.8.1",
+    "@electron-forge/plugin-fuses": "^7.8.1",
+    "@electron-forge/publisher-github": "^7.8.1",
+    "@electron/fuses": "^1.8.0",
+    "@types/electron-squirrel-startup": "^1.0.2",
+    "electron": "37.2.0",
+    "electron-vite": "^4.0.0-beta.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.2"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/browser-app": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/quickjs-javascript-sandbox": "workspace:*",
+    "@superego/sqlite-data-repositories": "workspace:*",
+    "electron-squirrel-startup": "^1.0.1"
+  }
+}

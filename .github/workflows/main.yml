@@ -1,0 +1,81 @@
+name: QA and deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Install Playwright
+        run: yarn dlx playwright install chromium --with-deps
+      - name: Check formatting
+        run: yarn check-formatting
+      - name: Check types
+        run: yarn check-types
+      - name: Check linting
+        run: yarn check-linting
+      - name: Test
+        run: yarn test
+
+  build-deploy-demo:
+    needs: qa
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Build
+        run: yarn build-demo
+      - name: Deploy demo-app to demo.superego.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        run: yarn deploy-demo
+
+  build-deploy-electron:
+    needs: qa
+    strategy:
+      matrix:
+        include:
+          - os: macos-13
+            arch: x64
+          - os: macos-latest
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Set electron-app package version
+        run: |
+          PKG_JSON_PATH="packages/apps/electron-app/package.json"
+          printf '%s' "$(jq ".version = \"0.0.0-main\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
+      - name: Build
+        run: yarn build-electron
+      - name: Deploy electron app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn deploy-electron
