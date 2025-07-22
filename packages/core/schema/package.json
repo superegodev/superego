@@ -13,8 +13,8 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.1",
-    "@types/node": "^24.0.10",
+    "@fast-check/vitest": "^0.2.2",
+    "@types/node": "^24.0.15",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
