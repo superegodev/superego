@@ -52,7 +52,7 @@ export default function TypescriptModuleInput({
   }, [autoFocus, ref]);
   return (
     <div
-      data-testid={'typescript-module-input'}
+      data-testid={"typescript-module-input"}
       tabIndex={0}
       ref={rootElementRef}
       onFocus={() => setMode("readWrite")}

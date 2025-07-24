@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-import dateCollection from '../fixtures/date/collection.json' with { type: 'json' }
-import { createCollection, getValueGetterContent } from "./collection.utils";
+import dateCollection from "../fixtures/date/collection.json" with {
+  type: "json",
+};
+import { createCollection, getValueGetterContent } from "./collection.utils.js";
 
 test("create a collection and insert data", async ({ page }) => {
   const collectionName = dateCollection.rootType;
@@ -9,7 +11,7 @@ test("create a collection and insert data", async ({ page }) => {
   await createCollection(page, {
     name: collectionName,
     schema: dateCollection,
-    valueGetter: getValueGetterContent('../fixtures/date/value-getter.ts'),
+    valueGetter: getValueGetterContent("../fixtures/date/value-getter.ts"),
   });
 
   // Create document
@@ -22,8 +24,10 @@ test("create a collection and insert data", async ({ page }) => {
   await page.getByText(collectionName, { exact: true }).click();
 
   // Expect document created correctly
-  const date = new Date()
-  const day = date.getDate()
-  const month = date.getMonth() + 1
-  await expect(page.getByRole("rowheader", { name: `${month}-${day}` })).toBeVisible();
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  await expect(
+    page.getByRole("rowheader", { name: `${month}-${day}` }),
+  ).toBeVisible();
 });
