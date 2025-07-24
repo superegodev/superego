@@ -1,0 +1,14 @@
+{
+  "name": "@superego/e2e-tests",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test --config=playwright.config.ts",
+    "show-report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "typescript": "^5.8.3"
+  }
+}

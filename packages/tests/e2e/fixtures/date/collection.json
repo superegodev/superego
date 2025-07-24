@@ -1,0 +1,20 @@
+{
+  "types": {
+    "DateCollection": {
+      "description": {
+        "en": "Represents a single weigh-in event for the user."
+      },
+      "dataType": "Struct",
+      "properties": {
+        "date": {
+          "description": {
+            "en": "When the weigh-in occurred."
+          },
+          "dataType": "String",
+          "format": "dev.superego:String.PlainDate"
+        }
+      }
+    }
+  },
+  "rootType": "DateCollection"
+}

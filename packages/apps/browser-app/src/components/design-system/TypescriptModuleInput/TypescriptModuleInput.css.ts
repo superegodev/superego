@@ -5,6 +5,7 @@ export const TypescriptModuleInput = {
   root: style({
     position: "relative",
     marginBlockEnd: vars.spacing._2,
+    cursor: 'text',
     selectors: {
       "&::before": {
         content: "",
