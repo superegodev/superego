@@ -13,7 +13,7 @@
     "generate-index": "node --experimental-strip-types --no-warnings scripts/generateIndex.ts"
   },
   "devDependencies": {
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.15",
     "typescript": "^5.8.3"
   },
   "dependencies": {
