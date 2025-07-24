@@ -26,7 +26,9 @@ jobs:
       - name: Check linting
         run: yarn check-linting
       - name: Test
-        run: yarn test
+        run: |
+          yarn test
+          yarn test:e2e
 
   build-deploy-demo:
     needs: qa

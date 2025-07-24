@@ -31,3 +31,7 @@ out
 
 # Folder used for drafts that should not be committed
 /drafts/
+
+# Reports
+playwright-report
+test-results
