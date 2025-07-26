@@ -83,15 +83,16 @@ jobs:
       - name: Build
         run: yarn build-electron
       - name: Get OS friendly name
-        id: get_os
+        id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
+        id: upload-artifacts
         with:
-          name: ${{ steps.get_os.outputs.name }}-${{ matrix.arch }}-app
+          name: ${{ steps.get-os.outputs.name }}-${{ matrix.arch }}-app
           path: packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/*.zip
           compression-level: 0
       - uses: mshick/add-pr-comment@v2
         with:
-          message-id: ${{ github.event.number }}-electron-${{ steps.get_os.outputs.name }}-${{ matrix.arch }}
+          message-id: ${{ github.event.number }}-electron-${{ steps.get-os.outputs.name }}-${{ matrix.arch }}
           message: |
-            Preview app for ${{ steps.get_os.outputs.name }} ${{ matrix.arch }} available at ${{ steps.artifact-upload-step.outputs.artifact-url }}
+            Preview app for ${{ steps.get-os.outputs.name }} ${{ matrix.arch }} available at ${{ steps.upload-artifacts.outputs.artifact-url }}
