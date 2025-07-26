@@ -49,6 +49,7 @@ jobs:
         run: yarn deploy-demo --branch ${{ github.event.number }}
       - uses: mshick/add-pr-comment@v2
         with:
+          message-id: ${{ github.event.number }}-demo
           message: |
             Preview available at https://${{ github.event.number }}.demosuperegodev.pages.dev/
 
@@ -80,7 +81,16 @@ jobs:
           printf '%s' "$(jq ".version = \"0.0.0-PR-${PR_NUMBER}\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
       - name: Build
         run: yarn build-electron
-      - name: Deploy electron app
-        run: yarn deploy-electron
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get OS Name
+        id: get_os
+        run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.get_os.outputs.name }}-${{ matrix.arch }}-app
+          path: packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/*.zip
+          compression-level: 0
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message-id: ${{ github.event.number }}-electron-${{ steps.get_os.outputs.name }}-${{ matrix.arch }}
+          message: |
+            Preview app for ${{ steps.get_os.outputs.name }} ${{ matrix.arch }} available at ${{ steps.artifact-upload-step.outputs.artifact-url }}

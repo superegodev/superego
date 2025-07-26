@@ -1,4 +1,4 @@
-![Main workflow status](https://github.com/superegodev/superego/actions/workflows/main.yml/badge.svg)
+![Tags workflow status](https://github.com/superegodev/superego/actions/workflows/tags.yml/badge.svg)
 
 <p align="center">
   <img alt="Superego logo" src="./docs/images/logo.png" style="height: 150px;" />
