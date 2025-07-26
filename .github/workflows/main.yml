@@ -106,7 +106,7 @@ jobs:
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
         run: |
-          APP_VERSION="v${{ github.ref_name }}#v"
+          APP_VERSION="${GITHUB_REF_NAME#m}"
           echo $APP_VERSION
           APP_PATH=packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/superego-darwin-${{ matrix.arch }}-$APP_VERSION.zip
           echo $APP_PATH
