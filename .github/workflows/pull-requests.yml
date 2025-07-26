@@ -65,6 +65,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -81,7 +82,7 @@ jobs:
           printf '%s' "$(jq ".version = \"0.0.0-PR-${PR_NUMBER}\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
       - name: Build
         run: yarn build-electron
-      - name: Get OS Name
+      - name: Get OS friendly name
         id: get_os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
