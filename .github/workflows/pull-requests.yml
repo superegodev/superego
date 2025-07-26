@@ -28,9 +28,6 @@ jobs:
   build-deploy-demo:
     needs: qa
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,11 +44,6 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
         run: yarn deploy-demo --branch ${{ github.event.number }}
-      - uses: mshick/add-pr-comment@v2
-        with:
-          message-id: ${{ github.event.number }}-demo
-          message: |
-            Preview available at https://${{ github.event.number }}.demosuperegodev.pages.dev/
 
   build-deploy-electron:
     needs: qa
@@ -65,7 +57,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -91,8 +82,17 @@ jobs:
           name: ${{ steps.get-os.outputs.name }}-${{ matrix.arch }}-app
           path: packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/*.zip
           compression-level: 0
+
+  add-pr-comment:
+    needs: [build-deploy-demo, build-deploy-electron]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
       - uses: mshick/add-pr-comment@v2
         with:
-          message-id: ${{ github.event.number }}-electron-${{ steps.get-os.outputs.name }}-${{ matrix.arch }}
           message: |
-            Preview app for ${{ steps.get-os.outputs.name }} ${{ matrix.arch }} available at ${{ steps.upload-artifacts.outputs.artifact-url }}
+            ### 🚀 Previews available
+
+            - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
+            - Electron apps: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
