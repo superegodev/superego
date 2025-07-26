@@ -1435,7 +1435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^5.1.1":
+"@hookform/resolvers@npm:^5.2.0":
   version: 5.2.0
   resolution: "@hookform/resolvers@npm:5.2.0"
   dependencies:
@@ -3966,7 +3966,7 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.2"
     "@formatjs/cli": "npm:^6.7.2"
-    "@hookform/resolvers": "npm:^5.1.1"
+    "@hookform/resolvers": "npm:^5.2.0"
     "@react-aria/optimize-locales-plugin": "npm:^1.1.5"
     "@standard-schema/spec": "npm:^1.0.0"
     "@superego/backend": "workspace:*"
@@ -3991,7 +3991,7 @@ __metadata:
     "@types/react": "npm:^19.1.8"
     "@types/react-dom": "npm:^19.1.6"
     "@vanilla-extract/css": "npm:^1.17.4"
-    "@vanilla-extract/vite-plugin": "npm:^5.1.0"
+    "@vanilla-extract/vite-plugin": "npm:^5.1.1"
     "@vitejs/plugin-react": "npm:^4.7.0"
     babel-plugin-formatjs: "npm:^10.5.39"
     base-x: "npm:^5.0.1"
@@ -4004,13 +4004,13 @@ __metadata:
     react-aria: "npm:^3.42.0"
     react-aria-components: "npm:^1.11.0"
     react-dom: "npm:^19.1.0"
-    react-hook-form: "patch:react-hook-form@npm%3A7.60.0#~/.yarn/patches/react-hook-form-npm-7.60.0-cd396bdfb0.patch"
+    react-hook-form: "patch:react-hook-form@npm%3A7.61.1#~/.yarn/patches/react-hook-form-npm-7.61.1-1f3f0b62d8.patch"
     react-icons: "npm:^5.5.0"
     react-intl: "npm:^7.1.11"
     react-stately: "npm:^3.40.0"
     typescript: "npm:^5.8.3"
     valibot: "npm:^1.1.0"
-    vite: "npm:^7.0.5"
+    vite: "npm:^7.0.6"
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.6"
   languageName: unknown
@@ -4027,8 +4027,8 @@ __metadata:
     "@superego/fake-javascript-sandbox": "workspace:*"
     "@tanstack/react-query": "npm:^5.83.0"
     typescript: "npm:^5.8.3"
-    vite: "npm:^7.0.5"
-    wrangler: "npm:^4.25.1"
+    vite: "npm:^7.0.6"
+    wrangler: "npm:^4.26.0"
   languageName: unknown
   linkType: soft
 
@@ -4063,11 +4063,11 @@ __metadata:
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@types/electron-squirrel-startup": "npm:^1.0.2"
-    electron: "npm:37.2.3"
+    electron: "npm:37.2.4"
     electron-squirrel-startup: "npm:^1.0.1"
     electron-vite: "npm:^4.0.0"
     typescript: "npm:^5.8.3"
-    vite: "npm:^7.0.5"
+    vite: "npm:^7.0.6"
   languageName: unknown
   linkType: soft
 
@@ -4936,7 +4936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/vite-plugin@npm:^5.1.0":
+"@vanilla-extract/vite-plugin@npm:^5.1.1":
   version: 5.1.1
   resolution: "@vanilla-extract/vite-plugin@npm:5.1.1"
   dependencies:
@@ -6121,16 +6121,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:37.2.3":
-  version: 37.2.3
-  resolution: "electron@npm:37.2.3"
+"electron@npm:37.2.4":
+  version: 37.2.4
+  resolution: "electron@npm:37.2.4"
   dependencies:
     "@electron/get": "npm:^2.0.0"
     "@types/node": "npm:^22.7.7"
     extract-zip: "npm:^2.0.1"
   bin:
     electron: cli.js
-  checksum: 10c0/589e885345573a2d68be4af828b4d8b795f2dcc045d98c1a0245b639aceb0af148dce94ffdd46d36f000608523d4e0cce7b832f80180852d17445fed0b2f3a19
+  checksum: 10c0/1a579ac3ef1dde43673df9b95f343e67020f6e09f2cd4a978eab5953d392ea7afe5c171e7e713fe55501456767b788cbc175f7447e9b12d456ea9d35496f223b
   languageName: node
   linkType: hard
 
@@ -9020,21 +9020,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.60.0":
-  version: 7.60.0
-  resolution: "react-hook-form@npm:7.60.0"
+"react-hook-form@npm:7.61.1":
+  version: 7.61.1
+  resolution: "react-hook-form@npm:7.61.1"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/eb8518d42a074d9e115d4b414bac18ae72708b2d047a9453dcc7588b00df300b32cebf6ecb7f2c8aa534808b3dc54bde4124af95c1e432b6691f9aba07c93b11
+  checksum: 10c0/c241bca80f6d5f9f8b4f24b668670a3ee7249f9cf99537219c4ac1072431493d3768a910b6f2aaff20689a727d0e2797aeacb1ab9285b3e59309de3dd1bead41
   languageName: node
   linkType: hard
 
-"react-hook-form@patch:react-hook-form@npm%3A7.60.0#~/.yarn/patches/react-hook-form-npm-7.60.0-cd396bdfb0.patch":
-  version: 7.60.0
-  resolution: "react-hook-form@patch:react-hook-form@npm%3A7.60.0#~/.yarn/patches/react-hook-form-npm-7.60.0-cd396bdfb0.patch::version=7.60.0&hash=f592d7"
+"react-hook-form@patch:react-hook-form@npm%3A7.61.1#~/.yarn/patches/react-hook-form-npm-7.61.1-1f3f0b62d8.patch":
+  version: 7.61.1
+  resolution: "react-hook-form@patch:react-hook-form@npm%3A7.61.1#~/.yarn/patches/react-hook-form-npm-7.61.1-1f3f0b62d8.patch::version=7.61.1&hash=e4f064"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/5937a943d38c95418996bd3809419f5729c4242f442afb59b6e138a2b7f4e517226467f08f5a971378de940d3bd3598d0b4b7358a4f45e9715a37ceec4d0b5bc
+  checksum: 10c0/94744c401503ec02aa1f272478e4ba286c56b9c08dcefaec51e9826e04162009d2bc4fbf03010f0e58045a05ae03f2cda9f51cd896b99319b002f9adb268c9b6
   languageName: node
   linkType: hard
 
@@ -10298,7 +10298,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0, vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0-0, vite@npm:^7.0.5":
+"vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0, vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0-0, vite@npm:^7.0.6":
   version: 7.0.6
   resolution: "vite@npm:7.0.6"
   dependencies:
@@ -10527,7 +10527,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^4.25.1":
+"wrangler@npm:^4.26.0":
   version: 4.26.0
   resolution: "wrangler@npm:4.26.0"
   dependencies:
