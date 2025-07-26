@@ -11,7 +11,7 @@ export default function Cell({
   align = "left",
   className,
   ...props
-}: Props & RefAttributes<object>) {
+}: Props & RefAttributes<HTMLDivElement | HTMLTableCellElement>) {
   return (
     <CellRAC
       {...props}
