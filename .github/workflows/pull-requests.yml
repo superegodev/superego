@@ -95,4 +95,4 @@ jobs:
             ### 🚀 Previews available
 
             - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
-            - Electron apps: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+            - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}
