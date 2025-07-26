@@ -1,0 +1,130 @@
+name: QA and deploy
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Install Playwright
+        run: yarn dlx playwright install chromium --with-deps
+      - name: Check formatting
+        run: yarn check-formatting
+      - name: Check types
+        run: yarn check-types
+      - name: Check linting
+        run: yarn check-linting
+      - name: Test
+        run: yarn test
+
+  build-deploy-demo:
+    needs: qa
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Build
+        run: yarn build-demo
+      - name: Deploy demo-app to demo.superego.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        run: yarn deploy-demo
+
+  build-deploy-electron:
+    needs: qa
+    strategy:
+      matrix:
+        include:
+          - os: macos-13
+            arch: x64
+          - os: macos-latest
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+    environment: production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Setup macOS for signing and notarizing
+        if: startsWith(matrix.os, 'macos')
+        env:
+          MACOS_CERTIFICATE_P12_BASE64: ${{ secrets.MACOS_CERTIFICATE_P12_BASE64 }}
+          MACOS_CERTIFICATE_P12_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_P12_PASSWORD }}
+          MACOS_CERTIFICATE_P12_PATH: ${{ runner.temp }}/MacosCertificate.p12
+          MACOS_TEMP_KEYCHAIN_PATH: ${{ runner.temp }}/MacosKeychain.keychain-db
+          MACOS_TEMP_KEYCHAIN_PASSWORD: ${{ secrets.MACOS_TEMP_KEYCHAIN_PASSWORD }}
+          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+          APPLE_API_KEY: ${{ runner.temp }}/AppleApiKey.p8
+        run: |
+          # Signing setup
+          ## Create a default keychain and unlock it
+          security create-keychain -p $MACOS_TEMP_KEYCHAIN_PASSWORD $MACOS_TEMP_KEYCHAIN_PATH
+          security default-keychain -s $MACOS_TEMP_KEYCHAIN_PATH
+          security unlock-keychain -p $MACOS_TEMP_KEYCHAIN_PASSWORD $MACOS_TEMP_KEYCHAIN_PATH
+          ## Decode and import the certificate
+          echo $MACOS_CERTIFICATE_P12_BASE64 | base64 --decode -o $MACOS_CERTIFICATE_P12_PATH
+          security import $MACOS_CERTIFICATE_P12_PATH -k $MACOS_TEMP_KEYCHAIN_PATH -P $MACOS_CERTIFICATE_P12_PASSWORD -T /usr/bin/codesign
+          ## Set keychain settings to allow access without prompt
+          security set-key-partition-list -S apple-tool:,apple: -s -k $MACOS_TEMP_KEYCHAIN_PASSWORD $MACOS_TEMP_KEYCHAIN_PATH
+
+          # Notarization setup
+          ## Decode the Base64 Apple API Key string into the .p8 file
+          echo $APPLE_API_KEY_BASE64 | base64 --decode -o $APPLE_API_KEY
+      - name: Build
+        run: yarn build-electron
+      - name: Submit macOS app for notarization
+        if: startsWith(matrix.os, 'macos')
+        env:
+          APPLE_API_KEY: ${{ runner.temp }}/AppleApiKey.p8
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: |
+          APP_VERSION="${GITHUB_REF_NAME#m}"
+          APP_PATH=packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/superego-darwin-${{ matrix.arch }}-$APP_VERSION.zip
+          ls $APP_PATH
+          OUTPUT=$(xcrun notarytool submit $APP_PATH --key $APPLE_API_KEY --key-id $APPLE_API_KEY_ID --issuer $APPLE_API_ISSUER)
+          SUBMISSION_ID=$(echo "$OUTPUT" | awk '/id: / {print $2}')
+          if [[ -n "$SUBMISSION_ID" ]]; then
+            echo "::add-mask::$SUBMISSION_ID"
+          fi
+          echo "$OUTPUT"
+      - name: Deploy electron app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn deploy-electron
+      - name: Clean up sensitive info
+        if: always() && startsWith(matrix.os, 'macos')
+        env:
+          MACOS_TEMP_KEYCHAIN_PATH: ${{ runner.temp }}/MacosKeychain.keychain-db
+          MACOS_CERTIFICATE_P12_PATH: ${{ runner.temp }}/MacosCertificate.p12
+          APPLE_API_KEY: ${{ runner.temp }}/AppleApiKey.p8
+        run: |
+          security delete-keychain $MACOS_TEMP_KEYCHAIN_PATH || true
+          rm -f $MACOS_TEMP_KEYCHAIN_PATH || true
+          rm -f $MACOS_CERTIFICATE_P12_PATH || true
+          rm -f $APPLE_API_KEY || true

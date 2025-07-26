@@ -11,7 +11,7 @@ export default function Column({
   align = "left",
   className,
   ...props
-}: Props & RefAttributes<object>) {
+}: Props & RefAttributes<HTMLDivElement | HTMLTableCellElement>) {
   return (
     <ColumnRAC
       {...props}

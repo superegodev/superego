@@ -8,15 +8,14 @@ import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
 
 const githubRef = process.env["GITHUB_REF"];
-const isPrOrMain =
-  githubRef !== undefined &&
-  (githubRef.startsWith("refs/pull/") || githubRef === "refs/heads/main");
+const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
 
 export default {
   packagerConfig: {
     asar: true,
     ignore: ["src", "electron.vite.config.ts", "tsconfig.json"],
     icon: "./assets/icon",
+    osxSign: isTag ? {} : undefined,
   },
   makers: [
     new MakerSquirrel({}),
@@ -41,8 +40,8 @@ export default {
         owner: "superegodev",
         name: "superego",
       },
-      prerelease: isPrOrMain,
-      force: isPrOrMain,
+      prerelease: false,
+      force: false,
     }),
   ],
 } satisfies ForgeConfig;

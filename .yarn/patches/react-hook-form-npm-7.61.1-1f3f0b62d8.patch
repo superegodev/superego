@@ -1,8 +1,8 @@
 diff --git a/dist/index.esm.mjs b/dist/index.esm.mjs
-index 20f3313bc779a7ebe165ebd612bdc9bc8987ca47..f23c019a25b99c901d36873ff86c1e111b142b62 100644
+index 097eba4040e37dbcc2f4338e2e1573f1f114cc1a..866278613d40a86e8865fc55197845f8f96ef572 100644
 --- a/dist/index.esm.mjs
 +++ b/dist/index.esm.mjs
-@@ -674,6 +674,8 @@ var createSubject = () => {
+@@ -294,6 +294,8 @@ var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) =>
  };
  
  var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
@@ -11,7 +11,7 @@ index 20f3313bc779a7ebe165ebd612bdc9bc8987ca47..f23c019a25b99c901d36873ff86c1e11
  
  function deepEqual(object1, object2, _internal_visited = new WeakSet()) {
      if (isPrimitive(object1) || isPrimitive(object2)) {
-@@ -682,6 +684,14 @@ function deepEqual(object1, object2, _internal_visited = new WeakSet()) {
+@@ -302,6 +304,14 @@ function deepEqual(object1, object2, _internal_visited = new WeakSet()) {
      if (isDateObject(object1) && isDateObject(object2)) {
          return object1.getTime() === object2.getTime();
      }
