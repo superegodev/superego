@@ -17,6 +17,7 @@ export default {
     asar: true,
     ignore: ["src", "electron.vite.config.ts", "tsconfig.json"],
     icon: "./assets/icon",
+    osxSign: {},
   },
   makers: [
     new MakerSquirrel({}),
