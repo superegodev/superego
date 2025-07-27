@@ -13,5 +13,5 @@
       "options": { "parser": "sqlite" }
     }
   ],
-  "plugins": ["prettier-plugin-sql-cst"]
+  "plugins": ["prettier-plugin-sql-cst", "prettier-plugin-sh"]
 }

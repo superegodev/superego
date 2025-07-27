@@ -6,13 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
+    "ignoreUnknown": true,
     "includes": [
-      "**/packages/**/*.js",
-      "**/packages/**/*.mjs",
-      "**/packages/**/*.ts",
-      "**/packages/**/*.mts",
-      "**/packages/**/*.tsx",
+      "packages/**/*.js",
+      "packages/**/*.mjs",
+      "packages/**/*.ts",
+      "packages/**/*.mts",
+      "packages/**/*.tsx",
       "**/*.json",
       "!**/package.json",
       "!**/translations/**/*"

@@ -1,6 +1,6 @@
 {
   "name": "@superego/root",
-  "version": "0.0.0",
+  "version": "2025.6.0",
   "type": "module",
   "private": true,
   "workspaces": [
@@ -11,16 +11,18 @@
     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
     "check-linting": "biome lint",
     "fix-linting": "biome lint --write",
-    "check-formatting": "biome check --linter-enabled=false && prettier --list-different \"**/*.(md|yml|sql)\"",
-    "fix-formatting": "biome check --linter-enabled=false --write && prettier --write \"**/*.(md|yml|sql)\"",
+    "check-formatting": "biome check --linter-enabled=false && prettier --list-different \"**/*.(md|yml|sql|sh)\"",
+    "fix-formatting": "biome check --linter-enabled=false --write && prettier --write \"**/*.(md|yml|sql|sh)\"",
     "build-demo": "yarn workspace @superego/demo-app build",
     "deploy-demo": "yarn workspace @superego/demo-app deploy",
     "build-electron": "yarn workspace @superego/electron-app build",
-    "deploy-electron": "yarn workspace @superego/electron-app deploy"
+    "deploy-electron": "yarn workspace @superego/electron-app deploy",
+    "prepare-release": "scripts/prepare-release.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
     "prettier": "^3.6.2",
+    "prettier-plugin-sh": "^0.18.0",
     "prettier-plugin-sql-cst": "^0.13.0",
     "typescript": "^5.8.3"
   },
