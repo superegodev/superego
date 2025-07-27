@@ -1,6 +1,6 @@
 {
   "name": "@superego/sqlite-data-repositories",
-  "version": "0.0.0",
+  "version": "2025.7.0",
   "type": "module",
   "exports": {
     ".": {

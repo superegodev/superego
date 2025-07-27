@@ -2,7 +2,7 @@
   "name": "@superego/electron-app",
   "productName": "superego",
   "description": "Your Life's Database",
-  "version": "0.0.0",
+  "version": "2025.7.0",
   "main": "./dist/main/index.mjs",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
