@@ -1,6 +1,6 @@
 {
   "name": "@superego/demo-app",
-  "version": "2025.7.0",
+  "version": "2025.7.1",
   "type": "module",
   "private": true,
   "scripts": {

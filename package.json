@@ -1,6 +1,6 @@
 {
   "name": "@superego/root",
-  "version": "2025.7.0",
+  "version": "2025.7.1",
   "type": "module",
   "private": true,
   "workspaces": [
