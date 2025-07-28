@@ -20,15 +20,12 @@ CURRENT_PATCH="${VERSION_PARTS[2]}"
 # Calculate next version based on current date
 NEXT_MAJOR=$(date -u +%Y)
 NEXT_MINOR=$(date -u +%-m)
-
 if [ "$NEXT_MAJOR" = "$CURRENT_MAJOR" ] && [ "$NEXT_MINOR" = "$CURRENT_MINOR" ]; then
   NEXT_PATCH=$((CURRENT_PATCH + 1))
 else
   NEXT_PATCH=0
 fi
-
 NEXT_VERSION="${NEXT_MAJOR}.${NEXT_MINOR}.${NEXT_PATCH}"
-echo $NEXT_VERSION
 
 # Bump all packages to the next version
 yarn workspaces foreach --all --topological-dev version "$NEXT_VERSION"
