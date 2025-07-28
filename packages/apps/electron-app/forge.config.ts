@@ -7,25 +7,15 @@ import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
 
-const {
-  GITHUB_REF: githubRef,
-  APPLE_API_KEY: appleApiKey,
-  APPLE_API_KEY_ID: appleApiKeyId,
-  APPLE_API_ISSUER: appleApiIssuer,
-} = process.env;
+const { GITHUB_REF: githubRef } = process.env;
 const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
-const shouldNotarizeMacOS =
-  isTag && appleApiKey && appleApiKeyId && appleApiIssuer;
 
 export default {
   packagerConfig: {
     asar: true,
     ignore: ["src", "electron.vite.config.ts", "tsconfig.json"],
     icon: "./assets/icon",
-    osxSign: shouldNotarizeMacOS ? {} : undefined,
-    osxNotarize: shouldNotarizeMacOS
-      ? { appleApiKey, appleApiKeyId, appleApiIssuer }
-      : undefined,
+    osxSign: isTag ? {} : undefined,
   },
   makers: [
     new MakerSquirrel({}),
