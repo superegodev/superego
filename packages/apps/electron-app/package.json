@@ -8,9 +8,8 @@
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "build:vite": "electron-vite --outDir=dist build",
-    "build:forge:package": "electron-forge package",
-    "build:forge:make": "electron-forge make",
-    "build": "yarn build:vite && yarn build:forge:make",
+    "build:forge": "electron-forge publish --dry-run",
+    "build": "yarn build:vite && yarn build:forge",
     "deploy": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {
