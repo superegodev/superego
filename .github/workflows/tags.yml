@@ -134,7 +134,7 @@ jobs:
 
           # Print the sha256 of the final zip, to compare it with the release
           # artifact zip.
-          sha256 $APP_ZIP
+          shasum -a 256 $APP_ZIP
       - name: Deploy electron app to GitHub releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
