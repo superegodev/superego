@@ -1,7 +1,6 @@
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
@@ -18,10 +17,19 @@ export default {
     osxSign: isTag ? {} : undefined,
   },
   makers: [
-    new MakerSquirrel({}),
     new MakerZIP({}, ["darwin"]),
-    new MakerRpm({}),
-    new MakerDeb({}),
+    new MakerRpm({
+      options: {
+        bin: "superego",
+        icon: "./assets/icon.png",
+      },
+    }),
+    new MakerDeb({
+      options: {
+        bin: "superego",
+        icon: "./assets/icon.png",
+      },
+    }),
   ],
   plugins: [
     new FusesPlugin({

@@ -3,6 +3,12 @@
   "productName": "superego",
   "description": "Your Life's Database",
   "version": "2025.7.6",
+  "author": {
+    "name": "Paolo Scanferla",
+    "email": "paolo.scanferla@gmail.com",
+    "url": "https://pscanf.com/"
+  },
+  "license": "AGPL-3.0-or-later",
   "main": "./dist/main/index.mjs",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
@@ -16,13 +22,12 @@
     "@electron-forge/cli": "^7.8.1",
     "@electron-forge/maker-deb": "^7.8.1",
     "@electron-forge/maker-rpm": "^7.8.1",
-    "@electron-forge/maker-squirrel": "^7.8.1",
     "@electron-forge/maker-zip": "^7.8.1",
     "@electron-forge/plugin-fuses": "^7.8.1",
     "@electron-forge/publisher-github": "^7.8.1",
     "@electron/fuses": "^1.8.0",
-    "@types/electron-squirrel-startup": "^1.0.2",
     "electron": "37.2.4",
+    "electron-builder": "26.0.12",
     "electron-vite": "^4.0.0",
     "typescript": "^5.8.3",
     "vite": "^7.0.6"
@@ -32,7 +37,6 @@
     "@superego/browser-app": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
-    "@superego/sqlite-data-repositories": "workspace:*",
-    "electron-squirrel-startup": "^1.0.1"
+    "@superego/sqlite-data-repositories": "workspace:*"
   }
 }

@@ -4,13 +4,7 @@ import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { app, BrowserWindow } from "electron";
-import started from "electron-squirrel-startup";
 import BackendIPCProxyServer from "../ipc-proxy/BackendIPCProxyServer.js";
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) {
-  app.quit();
-}
 
 app
   .on("ready", () => {
@@ -63,6 +57,7 @@ const createWindow = () => {
     webPreferences: {
       preload: join(import.meta.dirname, "../preload/index.js"),
     },
+    icon: process.platform === "linux" ? "../../assets/icon.png" : undefined,
   });
   mainWindow.maximize();
   mainWindow.show();
