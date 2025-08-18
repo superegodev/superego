@@ -189,7 +189,7 @@ export default interface Backend {
       collectionId: CollectionId,
       documentId: DocumentId,
       id: FileId,
-    ): RpcResultPromise<Uint8Array, FileNotFound>;
+    ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound>;
   };
 
   globalSettings: {

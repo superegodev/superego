@@ -12,7 +12,7 @@ export default async function downloadFile(
   collectionId: CollectionId | undefined,
   documentId: DocumentId | undefined,
 ): Promise<void> {
-  let content: Uint8Array;
+  let content: Uint8Array<ArrayBuffer>;
   if ("content" in file) {
     content = file.content;
   } else {

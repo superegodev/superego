@@ -18,7 +18,7 @@ export default class FilesGetContent extends Usecase<
     collectionId: CollectionId,
     documentId: DocumentId,
     id: FileId,
-  ): RpcResultPromise<Uint8Array, FileNotFound> {
+  ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound> {
     const file = await this.repos.file.find(id);
     const content = await this.repos.file.getContent(id);
     if (

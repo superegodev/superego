@@ -60,13 +60,13 @@ function useSyncTypescriptLibsModels(
 ) {
   useEffect(() => {
     if (isShown && typescriptLibs) {
-      typescriptLibs.forEach(({ path, source }) =>
+      for (const { path, source } of typescriptLibs) {
         monaco.editor.createModel(
           source,
           "typescript",
           makeTsLibModelUri(path),
-        ),
-      );
+        );
+      }
       // WORKAROUND: It seems that for some reason monaco's TypeScript worker
       // caches old models even when they have been disposed, so when libs
       // update (for example when the code generated from a schema changes) the
@@ -82,9 +82,9 @@ function useSyncTypescriptLibsModels(
       });
     }
     return () => {
-      typescriptLibs?.forEach(({ path }) =>
-        monaco.editor.getModel(makeTsLibModelUri(path))?.dispose(),
-      );
+      for (const { path } of typescriptLibs ?? []) {
+        monaco.editor.getModel(makeTsLibModelUri(path))?.dispose();
+      }
     };
   }, [isShown, typescriptLibs]);
 }

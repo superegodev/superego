@@ -23,6 +23,6 @@ export default interface Data {
   collectionVersions: Record<CollectionVersionId, CollectionVersionEntity>;
   documents: Record<DocumentId, DocumentEntity>;
   documentVersions: Record<DocumentVersionId, DocumentVersionEntity>;
-  files: Record<FileId, FileEntity & { content: Uint8Array }>;
+  files: Record<FileId, FileEntity & { content: Uint8Array<ArrayBuffer> }>;
   globalSettings: { value: GlobalSettings };
 }

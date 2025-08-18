@@ -6,5 +6,5 @@ export default interface ProtoFile {
   name: string;
   mimeType: string;
   /** The binary content of the file. */
-  content: Uint8Array;
+  content: Uint8Array<ArrayBuffer>;
 }

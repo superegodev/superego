@@ -96,15 +96,16 @@ export default class DocumentsCreate extends Usecase<
       content: convertedContent,
       createdAt: now,
     };
-    const filesWithContent: (FileEntity & { content: Uint8Array })[] =
-      protoFilesWithIds.map((protoFileWithId) => ({
-        id: protoFileWithId.id,
-        collectionId: collectionId,
-        documentId: document.id,
-        createdWithDocumentVersionId: documentVersion.id,
-        createdAt: now,
-        content: protoFileWithId.content,
-      }));
+    const filesWithContent: (FileEntity & {
+      content: Uint8Array<ArrayBuffer>;
+    })[] = protoFilesWithIds.map((protoFileWithId) => ({
+      id: protoFileWithId.id,
+      collectionId: collectionId,
+      documentId: document.id,
+      createdWithDocumentVersionId: documentVersion.id,
+      createdAt: now,
+      content: protoFileWithId.content,
+    }));
     await this.repos.document.insert(document);
     await this.repos.documentVersion.insert(documentVersion);
     await this.repos.file.insertAll(filesWithContent);

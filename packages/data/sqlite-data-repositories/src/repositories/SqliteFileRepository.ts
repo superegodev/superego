@@ -10,7 +10,7 @@ export default class SqliteFileRepository implements FileRepository {
   constructor(private db: DatabaseSync) {}
 
   async insertAll(
-    filesWithContent: (FileEntity & { content: Uint8Array })[],
+    filesWithContent: (FileEntity & { content: Uint8Array<ArrayBuffer> })[],
   ): Promise<void> {
     const insert = this.db.prepare(`
       INSERT INTO "${table}"
@@ -91,7 +91,7 @@ export default class SqliteFileRepository implements FileRepository {
     return files.map(toEntity);
   }
 
-  async getContent(id: FileId): Promise<Uint8Array | null> {
+  async getContent(id: FileId): Promise<Uint8Array<ArrayBuffer> | null> {
     const result = this.db
       .prepare(`SELECT "content" FROM "${table}" WHERE "id" = ?`)
       .get(id) as { content: Buffer } | undefined;

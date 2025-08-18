@@ -16,7 +16,7 @@ export default class DemoFileRepository
   }
 
   async insertAll(
-    files: (FileEntity & { content: Uint8Array })[],
+    files: (FileEntity & { content: Uint8Array<ArrayBuffer> })[],
   ): Promise<void> {
     this.ensureNotDisposed();
     this.onWrite();
@@ -72,7 +72,7 @@ export default class DemoFileRepository
     );
   }
 
-  async getContent(id: FileId): Promise<Uint8Array | null> {
+  async getContent(id: FileId): Promise<Uint8Array<ArrayBuffer> | null> {
     this.ensureNotDisposed();
     return clone(this.files[id]?.content ?? null);
   }
