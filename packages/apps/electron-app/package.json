@@ -13,19 +13,19 @@
     "deploy": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.8.1",
-    "@electron-forge/maker-deb": "^7.8.1",
-    "@electron-forge/maker-rpm": "^7.8.1",
-    "@electron-forge/maker-squirrel": "^7.8.1",
-    "@electron-forge/maker-zip": "^7.8.1",
-    "@electron-forge/plugin-fuses": "^7.8.1",
-    "@electron-forge/publisher-github": "^7.8.1",
-    "@electron/fuses": "^1.8.0",
+    "@electron-forge/cli": "^7.8.3",
+    "@electron-forge/maker-deb": "^7.8.3",
+    "@electron-forge/maker-rpm": "^7.8.3",
+    "@electron-forge/maker-squirrel": "^7.8.3",
+    "@electron-forge/maker-zip": "^7.8.3",
+    "@electron-forge/plugin-fuses": "^7.8.3",
+    "@electron-forge/publisher-github": "^7.8.3",
+    "@electron/fuses": "^2.0.0",
     "@types/electron-squirrel-startup": "^1.0.2",
-    "electron": "37.2.4",
+    "electron": "37.3.0",
     "electron-vite": "^4.0.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.6"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
