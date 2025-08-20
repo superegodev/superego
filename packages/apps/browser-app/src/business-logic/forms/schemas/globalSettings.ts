@@ -13,7 +13,7 @@ export default function globalSettings(): v.GenericSchema<
     appearance: v.strictObject({
       theme: v.picklist(Object.values(Theme)),
     }),
-    ai: v.strictObject({
+    aiAssistant: v.strictObject({
       providers: v.strictObject({
         groq: v.strictObject({
           apiKey: v.nullable(v.string()),

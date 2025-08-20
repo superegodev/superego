@@ -973,16 +973,16 @@
       "value": "Base URL"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_ijQrZ0": [
-    {
-      "type": 0,
-      "value": "AI"
-    }
-  ],
   "UpdateGlobalSettingsForm.tsx_muqizb": [
     {
       "type": 0,
       "value": "Save settings"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_o0/SZQ": [
+    {
+      "type": 0,
+      "value": "AI assistant"
     }
   ],
   "summaryPropertyDefinition.ts_HAlOn1": [

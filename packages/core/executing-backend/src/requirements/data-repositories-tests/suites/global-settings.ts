@@ -9,7 +9,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const initialSettings = {
       appearance: { theme: Theme.Auto },
-      ai: {
+      aiAssistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
         completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
       },
@@ -24,7 +24,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     // Exercise
     const updatedSettings = {
       appearance: { theme: Theme.Auto },
-      ai: {
+      aiAssistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
         completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
       },
@@ -51,7 +51,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings = {
       appearance: { theme: Theme.Auto },
-      ai: {
+      aiAssistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
         completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
       },

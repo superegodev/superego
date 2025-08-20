@@ -34,7 +34,7 @@ export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
 // Types
-export type { default as AISettings } from "./types/AISettings.js";
+export type { default as AIAssistantSettings } from "./types/AIAssistantSettings.js";
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";

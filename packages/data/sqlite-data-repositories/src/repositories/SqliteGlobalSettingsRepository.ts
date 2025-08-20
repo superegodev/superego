@@ -17,14 +17,12 @@ export default class SqliteGlobalSettingsRepository
 
   async replace(globalSettings: GlobalSettings): Promise<void> {
     this.db
-      .prepare(
-        `
+      .prepare(`
         INSERT OR REPLACE INTO "${table}"
           ("id", "value")
         VALUES
           (?, ?)
-      `,
-      )
+      `)
       .run("singleton", JSON.stringify(globalSettings));
   }
 
@@ -46,21 +44,21 @@ export default class SqliteGlobalSettingsRepository
           settings?.appearance?.theme ??
           this.defaultGlobalSettings.appearance.theme,
       },
-      ai: {
+      aiAssistant: {
         providers: {
           groq: {
             apiKey:
-              settings.ai?.providers?.groq?.apiKey ??
-              this.defaultGlobalSettings.ai.providers.groq.apiKey,
+              settings.aiAssistant?.providers?.groq?.apiKey ??
+              this.defaultGlobalSettings.aiAssistant.providers.groq.apiKey,
             baseUrl:
-              settings.ai?.providers?.groq?.baseUrl ??
-              this.defaultGlobalSettings.ai.providers.groq.baseUrl,
+              settings.aiAssistant?.providers?.groq?.baseUrl ??
+              this.defaultGlobalSettings.aiAssistant.providers.groq.baseUrl,
           },
         },
         completions: {
           defaultModel:
-            settings.ai?.completions?.defaultModel ??
-            this.defaultGlobalSettings.ai.completions.defaultModel,
+            settings.aiAssistant?.completions?.defaultModel ??
+            this.defaultGlobalSettings.aiAssistant.completions.defaultModel,
         },
       },
     };

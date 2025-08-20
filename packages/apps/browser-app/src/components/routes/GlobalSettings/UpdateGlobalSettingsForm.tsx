@@ -60,7 +60,10 @@ export default function UpdateGlobalSettingsForm() {
           label={intl.formatMessage({ defaultMessage: "Theme" })}
         />
       </Section>
-      <Section title={intl.formatMessage({ defaultMessage: "AI" })} level={2}>
+      <Section
+        title={intl.formatMessage({ defaultMessage: "AI assistant" })}
+        level={2}
+      >
         <Section
           title={intl.formatMessage({ defaultMessage: "Providers" })}
           level={3}
@@ -72,13 +75,13 @@ export default function UpdateGlobalSettingsForm() {
             <Fieldset.Fields>
               <RHFTextField
                 control={control}
-                name="ai.providers.groq.apiKey"
+                name="aiAssistant.providers.groq.apiKey"
                 emptyInputValue={null}
                 label={intl.formatMessage({ defaultMessage: "API key" })}
               />
               <RHFTextField
                 control={control}
-                name="ai.providers.groq.baseUrl"
+                name="aiAssistant.providers.groq.baseUrl"
                 emptyInputValue={null}
                 label={intl.formatMessage({ defaultMessage: "Base URL" })}
               />
@@ -91,7 +94,7 @@ export default function UpdateGlobalSettingsForm() {
         >
           <RHFSelectField
             control={control}
-            name="ai.completions.defaultModel"
+            name="aiAssistant.completions.defaultModel"
             options={Object.values(AICompletionModel).map(
               (aiCompletionModel) => ({
                 id: aiCompletionModel,

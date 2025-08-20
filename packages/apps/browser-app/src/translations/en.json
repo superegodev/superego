@@ -434,11 +434,11 @@
   "UpdateGlobalSettingsForm.tsx_dqWH5L": {
     "defaultMessage": "Base URL"
   },
-  "UpdateGlobalSettingsForm.tsx_ijQrZ0": {
-    "defaultMessage": "AI"
-  },
   "UpdateGlobalSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"
+  },
+  "UpdateGlobalSettingsForm.tsx_o0/SZQ": {
+    "defaultMessage": "AI assistant"
   },
   "summaryPropertyDefinition.ts_HAlOn1": {
     "defaultMessage": "Name"
