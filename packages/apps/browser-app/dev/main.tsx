@@ -1,4 +1,4 @@
-import { Theme } from "@superego/backend";
+import { AICompletionModel, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
@@ -6,7 +6,13 @@ import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 
 const backend = new ExecutingBackend(
-  new DemoDataRepositoriesManager({ theme: Theme.Auto }),
+  new DemoDataRepositoriesManager({
+    appearance: { theme: Theme.Auto },
+    ai: {
+      providers: { groq: { apiKey: null, baseUrl: null } },
+      completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+    },
+  }),
   new QuickjsJavascriptSandbox(),
 );
 

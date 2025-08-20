@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { Theme } from "@superego/backend";
+import { AICompletionModel, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -45,7 +45,13 @@ app
 function startBackendIPCProxyServer() {
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(app.getPath("userData"), "superego.db"),
-    defaultGlobalSettings: { theme: Theme.Auto },
+    defaultGlobalSettings: {
+      appearance: { theme: Theme.Auto },
+      ai: {
+        providers: { groq: { apiKey: null, baseUrl: null } },
+        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+      },
+    },
   });
   dataRepositoriesManager.runMigrations();
   const javascriptSandbox = new QuickjsJavascriptSandbox();

@@ -1,14 +1,17 @@
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import * as cs from "./Section.css.js";
 
 interface Props {
   title: string;
+  // Add more levels as necessary.
+  level: 2 | 3;
   children: ReactNode;
 }
-export default function Section({ title, children }: Props) {
+export default function Section({ title, level, children }: Props) {
+  const Heading = { 2: "h2", 3: "h3" }[level] as keyof JSX.IntrinsicElements;
   return (
     <section className={cs.Section.root}>
-      <h2 className={cs.Section.title}>{title}</h2>
+      <Heading className={cs.Section.title[level]}>{title}</Heading>
       {children}
     </section>
   );

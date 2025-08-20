@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "generate-index": "node --experimental-strip-types --no-warnings scripts/generateIndex.ts"
+    "generate-index": "node scripts/generateIndex.ts"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

@@ -3,7 +3,7 @@ import type { Document } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { object, pipe, string, value } from "valibot";
+import * as v from "valibot";
 import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
@@ -35,8 +35,8 @@ export default function DeleteDocumentModalForm({
 
   const { result, mutate } = useDeleteDocument();
 
-  const schema = object({
-    commandConfirmation: pipe(string(), value("delete")),
+  const schema = v.strictObject({
+    commandConfirmation: v.pipe(v.string(), v.value("delete")),
   });
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: { commandConfirmation: "" },

@@ -53,7 +53,10 @@ export default function CollectionSettings({ collectionId }: Props) {
         ]}
       />
       <Shell.Panel.Content>
-        <Section title={intl.formatMessage({ defaultMessage: "Settings" })}>
+        <Section
+          title={intl.formatMessage({ defaultMessage: "Settings" })}
+          level={2}
+        >
           <UpdateCollectionSettingsForm
             key={`UpdateCollectionSettingsForm_${collectionId}`}
             collection={collection}
@@ -61,6 +64,7 @@ export default function CollectionSettings({ collectionId }: Props) {
         </Section>
         <Section
           title={intl.formatMessage({ defaultMessage: "Version settings" })}
+          level={2}
         >
           <UpdateCollectionVersionSettingsForm
             key={`UpdateCollectionVersionSettingsForm_${collectionId}`}

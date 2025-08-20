@@ -1,5 +1,7 @@
-import type Theme from "../enums/Theme.js";
+import type AISettings from "./AISettings.js";
+import type AppearanceSettings from "./AppearanceSettings.js";
 
 export default interface GlobalSettings {
-  theme: Theme;
+  appearance: AppearanceSettings;
+  ai: AISettings;
 }

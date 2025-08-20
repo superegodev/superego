@@ -3,6 +3,7 @@ import type { GlobalSettings } from "@superego/backend";
 import type { GlobalSettingsRepository } from "@superego/executing-backend";
 import type SqliteGlobalSettings from "../types/SqliteGlobalSettings.js";
 import { toEntity } from "../types/SqliteGlobalSettings.js";
+import type DeepPartial from "../utils/DeepPartial.js";
 
 const table = "singleton__global_settings";
 
@@ -16,12 +17,14 @@ export default class SqliteGlobalSettingsRepository
 
   async replace(globalSettings: GlobalSettings): Promise<void> {
     this.db
-      .prepare(`
+      .prepare(
+        `
         INSERT OR REPLACE INTO "${table}"
           ("id", "value")
         VALUES
           (?, ?)
-      `)
+      `,
+      )
       .run("singleton", JSON.stringify(globalSettings));
   }
 
@@ -29,6 +32,37 @@ export default class SqliteGlobalSettingsRepository
     const settings = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
       .get("singleton") as SqliteGlobalSettings | undefined;
-    return settings ? toEntity(settings) : this.defaultGlobalSettings;
+    return this.mergeDefaults(settings ? toEntity(settings) : {});
+  }
+
+  // The settings retrieved from SQLite could be either missing, or they could
+  // have been saved by a previous version of Superego and been missing some
+  // properties. This function merges them with the default settings, ensuring
+  // that the returned object respects the GlobalSettings interface.
+  private mergeDefaults(settings: DeepPartial<GlobalSettings>): GlobalSettings {
+    return {
+      appearance: {
+        theme:
+          settings?.appearance?.theme ??
+          this.defaultGlobalSettings.appearance.theme,
+      },
+      ai: {
+        providers: {
+          groq: {
+            apiKey:
+              settings.ai?.providers?.groq?.apiKey ??
+              this.defaultGlobalSettings.ai.providers.groq.apiKey,
+            baseUrl:
+              settings.ai?.providers?.groq?.baseUrl ??
+              this.defaultGlobalSettings.ai.providers.groq.baseUrl,
+          },
+        },
+        completions: {
+          defaultModel:
+            settings.ai?.completions?.defaultModel ??
+            this.defaultGlobalSettings.ai.completions.defaultModel,
+        },
+      },
+    };
   }
 }

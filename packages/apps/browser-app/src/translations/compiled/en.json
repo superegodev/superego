@@ -919,16 +919,64 @@
       "value": "Save collection version settings"
     }
   ],
+  "UpdateGlobalSettingsForm.tsx_2GURQY": [
+    {
+      "type": 0,
+      "value": "Appearance"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_BGZ5iy": [
+    {
+      "type": 0,
+      "value": "Completions"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Providers"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_ITn8xV": [
+    {
+      "type": 0,
+      "value": "Groq"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
   "UpdateGlobalSettingsForm.tsx_Pe0ogR": [
     {
       "type": 0,
       "value": "Theme"
     }
   ],
+  "UpdateGlobalSettingsForm.tsx_bV+Ymc": [
+    {
+      "type": 0,
+      "value": "Default model"
+    }
+  ],
   "UpdateGlobalSettingsForm.tsx_c9brFu": [
     {
       "type": 0,
       "value": "Error saving settings"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "Base URL"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_ijQrZ0": [
+    {
+      "type": 0,
+      "value": "AI"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_muqizb": [

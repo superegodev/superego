@@ -407,11 +407,35 @@
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Save collection version settings"
   },
+  "UpdateGlobalSettingsForm.tsx_2GURQY": {
+    "defaultMessage": "Appearance"
+  },
+  "UpdateGlobalSettingsForm.tsx_BGZ5iy": {
+    "defaultMessage": "Completions"
+  },
+  "UpdateGlobalSettingsForm.tsx_IL1Uey": {
+    "defaultMessage": "Providers"
+  },
+  "UpdateGlobalSettingsForm.tsx_ITn8xV": {
+    "defaultMessage": "Groq"
+  },
+  "UpdateGlobalSettingsForm.tsx_KTNoOq": {
+    "defaultMessage": "API key"
+  },
   "UpdateGlobalSettingsForm.tsx_Pe0ogR": {
     "defaultMessage": "Theme"
   },
+  "UpdateGlobalSettingsForm.tsx_bV+Ymc": {
+    "defaultMessage": "Default model"
+  },
   "UpdateGlobalSettingsForm.tsx_c9brFu": {
     "defaultMessage": "Error saving settings"
+  },
+  "UpdateGlobalSettingsForm.tsx_dqWH5L": {
+    "defaultMessage": "Base URL"
+  },
+  "UpdateGlobalSettingsForm.tsx_ijQrZ0": {
+    "defaultMessage": "AI"
   },
   "UpdateGlobalSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"
