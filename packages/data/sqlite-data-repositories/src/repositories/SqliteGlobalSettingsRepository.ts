@@ -44,21 +44,21 @@ export default class SqliteGlobalSettingsRepository
           settings?.appearance?.theme ??
           this.defaultGlobalSettings.appearance.theme,
       },
-      aiAssistant: {
+      assistant: {
         providers: {
           groq: {
             apiKey:
-              settings.aiAssistant?.providers?.groq?.apiKey ??
-              this.defaultGlobalSettings.aiAssistant.providers.groq.apiKey,
+              settings.assistant?.providers?.groq?.apiKey ??
+              this.defaultGlobalSettings.assistant.providers.groq.apiKey,
             baseUrl:
-              settings.aiAssistant?.providers?.groq?.baseUrl ??
-              this.defaultGlobalSettings.aiAssistant.providers.groq.baseUrl,
+              settings.assistant?.providers?.groq?.baseUrl ??
+              this.defaultGlobalSettings.assistant.providers.groq.baseUrl,
           },
         },
         completions: {
           defaultModel:
-            settings.aiAssistant?.completions?.defaultModel ??
-            this.defaultGlobalSettings.aiAssistant.completions.defaultModel,
+            settings.assistant?.completions?.defaultModel ??
+            this.defaultGlobalSettings.assistant.completions.defaultModel,
         },
       },
     };

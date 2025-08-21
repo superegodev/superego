@@ -1,7 +1,7 @@
-import type AIAssistantSettings from "./AIAssistantSettings.js";
 import type AppearanceSettings from "./AppearanceSettings.js";
+import type AssistantSettings from "./AssistantSettings.js";
 
 export default interface GlobalSettings {
   appearance: AppearanceSettings;
-  aiAssistant: AIAssistantSettings;
+  assistant: AssistantSettings;
 }

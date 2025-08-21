@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { AICompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -47,9 +47,9 @@ function startBackendIPCProxyServer() {
     fileName: join(app.getPath("userData"), "superego.db"),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      aiAssistant: {
+      assistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     },
   });

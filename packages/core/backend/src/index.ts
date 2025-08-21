@@ -3,7 +3,7 @@
 // Backend
 export type { default as Backend } from "./Backend.js";
 // Enums
-export { default as AICompletionModel } from "./enums/AICompletionModel.js";
+export { default as CompletionModel } from "./enums/CompletionModel.js";
 export { default as Theme } from "./enums/Theme.js";
 // Errors
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
@@ -34,8 +34,8 @@ export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
 // Types
-export type { default as AIAssistantSettings } from "./types/AIAssistantSettings.js";
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as AssistantSettings } from "./types/AssistantSettings.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";

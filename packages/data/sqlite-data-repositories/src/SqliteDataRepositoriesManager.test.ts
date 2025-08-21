@@ -1,7 +1,7 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AICompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import { afterAll, beforeAll } from "vitest";
 import SqliteDataRepositoriesManager from "./SqliteDataRepositoriesManager.js";
@@ -23,9 +23,9 @@ registerDataRepositoriesTests(async () => {
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      aiAssistant: {
+      assistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     },
     enableForeignKeyConstraints: false,

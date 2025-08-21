@@ -1,4 +1,4 @@
-import { AICompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect, it } from "vitest";
 import type Dependencies from "../Dependencies.js";
@@ -9,9 +9,9 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const initialSettings = {
       appearance: { theme: Theme.Auto },
-      aiAssistant: {
+      assistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -24,9 +24,9 @@ export default rd<Dependencies>("Global settings", (deps) => {
     // Exercise
     const updatedSettings = {
       appearance: { theme: Theme.Auto },
-      aiAssistant: {
+      assistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -51,9 +51,9 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings = {
       appearance: { theme: Theme.Auto },
-      aiAssistant: {
+      assistant: {
         providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

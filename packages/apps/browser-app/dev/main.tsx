@@ -1,4 +1,4 @@
-import { AICompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
@@ -8,9 +8,9 @@ import { renderBrowserApp } from "../src/index.js";
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
-    aiAssistant: {
+    assistant: {
       providers: { groq: { apiKey: null, baseUrl: null } },
-      completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+      completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
     },
   }),
   new QuickjsJavascriptSandbox(),

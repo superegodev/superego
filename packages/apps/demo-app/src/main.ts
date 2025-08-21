@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { AICompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
@@ -9,9 +9,9 @@ import { QueryClient } from "@tanstack/react-query";
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
-    aiAssistant: {
+    assistant: {
       providers: { groq: { apiKey: null, baseUrl: null } },
-      completions: { defaultModel: AICompletionModel.GroqKimiK2Instruct },
+      completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
     },
   }),
   new FakeJavascriptSandbox(),

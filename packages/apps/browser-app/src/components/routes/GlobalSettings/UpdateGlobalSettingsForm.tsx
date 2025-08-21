@@ -1,9 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import {
-  AICompletionModel,
-  type GlobalSettings,
-  Theme,
-} from "@superego/backend";
+import { CompletionModel, type GlobalSettings, Theme } from "@superego/backend";
 import { useEffect } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
@@ -61,7 +57,7 @@ export default function UpdateGlobalSettingsForm() {
         />
       </Section>
       <Section
-        title={intl.formatMessage({ defaultMessage: "AI assistant" })}
+        title={intl.formatMessage({ defaultMessage: "Assistant" })}
         level={2}
       >
         <Section
@@ -75,13 +71,13 @@ export default function UpdateGlobalSettingsForm() {
             <Fieldset.Fields>
               <RHFTextField
                 control={control}
-                name="aiAssistant.providers.groq.apiKey"
+                name="assistant.providers.groq.apiKey"
                 emptyInputValue={null}
                 label={intl.formatMessage({ defaultMessage: "API key" })}
               />
               <RHFTextField
                 control={control}
-                name="aiAssistant.providers.groq.baseUrl"
+                name="assistant.providers.groq.baseUrl"
                 emptyInputValue={null}
                 label={intl.formatMessage({ defaultMessage: "Base URL" })}
               />
@@ -94,13 +90,11 @@ export default function UpdateGlobalSettingsForm() {
         >
           <RHFSelectField
             control={control}
-            name="aiAssistant.completions.defaultModel"
-            options={Object.values(AICompletionModel).map(
-              (aiCompletionModel) => ({
-                id: aiCompletionModel,
-                label: AIModelUtils.getDisplayName(aiCompletionModel),
-              }),
-            )}
+            name="assistant.completions.defaultModel"
+            options={Object.values(CompletionModel).map((CompletionModel) => ({
+              id: CompletionModel,
+              label: AIModelUtils.getDisplayName(CompletionModel),
+            }))}
             label={intl.formatMessage({ defaultMessage: "Default model" })}
           />
         </Section>
