@@ -4,6 +4,12 @@ import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
+import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
+import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
+import AssistantListConversations from "./usecases/assistant/ListConversations.js";
+import AssistantRetryResponseGeneration from "./usecases/assistant/RetryResponseGeneration.js";
+import AssistantStartConversation from "./usecases/assistant/StartConversation.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -28,6 +34,7 @@ export default class ExecutingBackend implements Backend {
   collections: Backend["collections"];
   documents: Backend["documents"];
   files: Backend["files"];
+  assistant: Backend["assistant"];
   globalSettings: Backend["globalSettings"];
 
   constructor(
@@ -64,6 +71,17 @@ export default class ExecutingBackend implements Backend {
       getContent: this.makeUsecase(FilesGetContent),
     };
 
+    this.assistant = {
+      startConversation: this.makeUsecase(AssistantStartConversation),
+      continueConversation: this.makeUsecase(AssistantContinueConversation),
+      retryResponseGeneration: this.makeUsecase(
+        AssistantRetryResponseGeneration,
+      ),
+      deleteConversation: this.makeUsecase(AssistantDeleteConversation),
+      listConversations: this.makeUsecase(AssistantListConversations),
+      getConversation: this.makeUsecase(AssistantGetConversation),
+    };
+
     this.globalSettings = {
       get: this.makeUsecase(GlobalSettingsGet),
       update: this.makeUsecase(GlobalSettingsUpdate),
@@ -77,8 +95,8 @@ export default class ExecutingBackend implements Backend {
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
     ) => { exec: Exec },
-  ) {
-    return async (...args: any[]) =>
+  ): Exec {
+    return (async (...args: any[]) =>
       this.dataRepositoriesManager
         .runInSerializableTransaction(async (dataRepositories) => {
           const usecase = new Usecase(dataRepositories, this.javascriptSandbox);
@@ -92,6 +110,6 @@ export default class ExecutingBackend implements Backend {
           makeUnsuccessfulRpcResult(
             makeRpcError("UnexpectedError", { cause: error }),
           ),
-        );
+        )) as Exec;
   }
 }

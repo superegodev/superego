@@ -4,7 +4,12 @@
 export type { default as Backend } from "./Backend.js";
 // Enums
 export { default as CompletionModel } from "./enums/CompletionModel.js";
+export { default as ConversationType } from "./enums/ConversationType.js";
+export { default as MessagePartType } from "./enums/MessagePartType.js";
+export { default as MessageRole } from "./enums/MessageRole.js";
+export { default as SpeechModel } from "./enums/SpeechModel.js";
 export { default as Theme } from "./enums/Theme.js";
+export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 // Errors
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
@@ -18,6 +23,7 @@ export type { default as CollectionSettingsNotValid } from "./errors/CollectionS
 export type { default as CollectionSummaryPropertiesNotValid } from "./errors/CollectionSummaryPropertiesNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
+export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
@@ -25,11 +31,13 @@ export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
+export type { default as ResponseGenerationNotRetryable } from "./errors/ResponseGenerationNotRetryable.js";
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
 // Ids
 export type { default as CollectionCategoryId } from "./ids/CollectionCategoryId.js";
 export type { default as CollectionId } from "./ids/CollectionId.js";
 export type { default as CollectionVersionId } from "./ids/CollectionVersionId.js";
+export type { default as ConversationId } from "./ids/ConversationId.js";
 export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
@@ -41,12 +49,15 @@ export type { default as CollectionCategory } from "./types/CollectionCategory.j
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
+export type { default as Conversation } from "./types/Conversation.js";
 export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as JavascriptFunctionExecutionError } from "./types/JavascriptFunctionExecutionError.js";
 export type { default as JavascriptFunctionExecutionResult } from "./types/JavascriptFunctionExecutionResult.js";
+export type { default as Message } from "./types/Message.js";
+export type { default as MessagePart } from "./types/MessagePart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as RpcError } from "./types/RpcError.js";
 export type { default as RpcResult } from "./types/RpcResult.js";

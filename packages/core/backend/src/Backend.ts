@@ -203,23 +203,28 @@ export default interface Backend {
         | Omit<MessagePart.Audio, "transcription">
         | (MessagePart.Text & { contentType: "text/plain" }),
     ): RpcResultPromise<Conversation>;
+
     continueConversation(
       id: ConversationId,
       messagePart:
         | Omit<MessagePart.Audio, "transcription">
         | (MessagePart.Text & { contentType: "text/plain" }),
     ): RpcResultPromise<Conversation, ConversationNotFound>;
+
     retryResponseGeneration(
       id: ConversationId,
     ): RpcResultPromise<
       Conversation,
       ConversationNotFound | ResponseGenerationNotRetryable
     >;
-    getConversation(): RpcResultPromise<Conversation, ConversationNotFound>;
-    listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
+
     deleteConversation(
       id: ConversationId,
     ): RpcResultPromise<DeletedEntities, ConversationNotFound>;
+
+    listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
+
+    getConversation(): RpcResultPromise<Conversation, ConversationNotFound>;
   };
 
   globalSettings: {
