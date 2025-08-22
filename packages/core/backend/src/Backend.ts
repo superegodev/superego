@@ -11,6 +11,7 @@ import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid
 import type CollectionSummaryPropertiesNotValid from "./errors/CollectionSummaryPropertiesNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
+import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
@@ -18,9 +19,11 @@ import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type ResponseGenerationNotRetryable from "./errors/ResponseGenerationNotRetryable.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
+import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
@@ -28,9 +31,11 @@ import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
+import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
 import type Document from "./types/Document.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type MessagePart from "./types/MessagePart.js";
 import type RpcResultPromise from "./types/RpcResultPromise.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
@@ -190,6 +195,31 @@ export default interface Backend {
       documentId: DocumentId,
       id: FileId,
     ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound>;
+  };
+
+  assistant: {
+    startConversation(
+      messagePart:
+        | Omit<MessagePart.Audio, "transcription">
+        | (MessagePart.Text & { contentType: "text/plain" }),
+    ): RpcResultPromise<Conversation>;
+    continueConversation(
+      id: ConversationId,
+      messagePart:
+        | Omit<MessagePart.Audio, "transcription">
+        | (MessagePart.Text & { contentType: "text/plain" }),
+    ): RpcResultPromise<Conversation, ConversationNotFound>;
+    retryResponseGeneration(
+      id: ConversationId,
+    ): RpcResultPromise<
+      Conversation,
+      ConversationNotFound | ResponseGenerationNotRetryable
+    >;
+    getConversation(): RpcResultPromise<Conversation, ConversationNotFound>;
+    listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
+    deleteConversation(
+      id: ConversationId,
+    ): RpcResultPromise<DeletedEntities, ConversationNotFound>;
   };
 
   globalSettings: {
