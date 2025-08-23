@@ -24,15 +24,13 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     );
 
     // Verify
-    const exists = await dataRepositoriesManager.runInSerializableTransaction(
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.collectionCategory.exists(
-          collectionCategory.id,
-        ),
+        returnValue: await repos.collectionCategory.find(collectionCategory.id),
       }),
     );
-    expect(exists).toEqual(true);
+    expect(found).toEqual(collectionCategory);
   });
 
   it("replacing", async () => {

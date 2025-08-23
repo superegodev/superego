@@ -14,6 +14,6 @@ export default interface DataRepositories {
   document: DocumentRepository;
   documentVersion: DocumentVersionRepository;
   file: FileRepository;
-  conversations: ConversationRepository;
+  conversation: ConversationRepository;
   globalSettings: GlobalSettingsRepository;
 }

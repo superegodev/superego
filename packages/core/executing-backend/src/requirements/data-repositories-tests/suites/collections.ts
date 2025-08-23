@@ -26,13 +26,13 @@ export default rd<Dependencies>("Collections", (deps) => {
     );
 
     // Verify
-    const exists = await dataRepositoriesManager.runInSerializableTransaction(
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.collection.exists(collection.id),
+        returnValue: await repos.collection.find(collection.id),
       }),
     );
-    expect(exists).toEqual(true);
+    expect(found).toEqual(collection);
   });
 
   it("replacing", async () => {

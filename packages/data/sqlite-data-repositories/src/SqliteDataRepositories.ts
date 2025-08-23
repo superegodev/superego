@@ -4,6 +4,7 @@ import type { DataRepositories } from "@superego/executing-backend";
 import SqliteCollectionCategoryRepository from "./repositories/SqliteCollectionCategoryRepository.js";
 import SqliteCollectionRepository from "./repositories/SqliteCollectionRepository.js";
 import SqliteCollectionVersionRepository from "./repositories/SqliteCollectionVersionRepository.js";
+import SqliteConversationRepository from "./repositories/SqliteConversationRepository.js";
 import SqliteDocumentRepository from "./repositories/SqliteDocumentRepository.js";
 import SqliteDocumentVersionRepository from "./repositories/SqliteDocumentVersionRepository.js";
 import SqliteFileRepository from "./repositories/SqliteFileRepository.js";
@@ -13,6 +14,7 @@ export default class SqliteDataRepositories implements DataRepositories {
   collectionCategory: SqliteCollectionCategoryRepository;
   collection: SqliteCollectionRepository;
   collectionVersion: SqliteCollectionVersionRepository;
+  conversation: SqliteConversationRepository;
   document: SqliteDocumentRepository;
   documentVersion: SqliteDocumentVersionRepository;
   file: SqliteFileRepository;
@@ -22,6 +24,7 @@ export default class SqliteDataRepositories implements DataRepositories {
     this.collectionCategory = new SqliteCollectionCategoryRepository(db);
     this.collection = new SqliteCollectionRepository(db);
     this.collectionVersion = new SqliteCollectionVersionRepository(db);
+    this.conversation = new SqliteConversationRepository(db);
     this.document = new SqliteDocumentRepository(db);
     this.documentVersion = new SqliteDocumentVersionRepository(db);
     this.file = new SqliteFileRepository(db);

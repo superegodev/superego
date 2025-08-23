@@ -42,7 +42,7 @@ export default class AssistantRetryContinueConversation extends Usecase<
   > {
     let conversation: ConversationEntity | null;
     if (typeof idOrConversation === "string") {
-      conversation = await this.repos.conversations.find(idOrConversation);
+      conversation = await this.repos.conversation.find(idOrConversation);
       if (!conversation) {
         return makeUnsuccessfulRpcResult(
           makeRpcError("ConversationNotFound", {
@@ -62,7 +62,7 @@ export default class AssistantRetryContinueConversation extends Usecase<
       conversation = idOrConversation;
     }
 
-    await this.repos.conversations.upsert({
+    await this.repos.conversation.upsert({
       ...conversation,
       isGeneratingNextMessage: true,
       nextMessageGenerationError: null,
@@ -89,7 +89,7 @@ export default class AssistantRetryContinueConversation extends Usecase<
           isGeneratingNextMessage: false,
           nextMessageGenerationError: result.error,
         };
-    await this.repos.conversations.upsert(updatedConversation);
+    await this.repos.conversation.upsert(updatedConversation);
 
     return makeSuccessfulRpcResult(makeConversation(conversation));
   }

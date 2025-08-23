@@ -25,7 +25,7 @@ export default class AssistantContinueConversation extends Usecase<
       | Omit<MessagePart.Audio, "transcription">
       | (MessagePart.Text & { contentType: "text/plain" }),
   ): RpcResultPromise<Conversation, ConversationNotFound> {
-    const conversation = await this.repos.conversations.find(id);
+    const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulRpcResult(
         makeRpcError("ConversationNotFound", { conversationId: id }),
