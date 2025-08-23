@@ -187,11 +187,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
         };
       }
 
-      const documentsCreateNewVersion = new DocumentsCreateNewVersion(
-        this.repos,
-        this.javascriptSandbox,
-      );
-      const result = await documentsCreateNewVersion.exec(
+      const result = await this.sub(DocumentsCreateNewVersion).exec(
         document.collectionId,
         document.id,
         latestDocumentVersion.id,

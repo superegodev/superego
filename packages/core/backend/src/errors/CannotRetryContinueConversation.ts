@@ -1,10 +1,10 @@
 import type ConversationId from "../ids/ConversationId.js";
 import type RpcError from "../types/RpcError.js";
 
-type ResponseGenerationNotRetryable = RpcError<
-  "ResponseGenerationNotRetryable",
+type CannotRetryContinueConversation = RpcError<
+  "CannotRetryContinueConversation",
   {
     conversationId: ConversationId;
   }
 >;
-export default ResponseGenerationNotRetryable;
+export default CannotRetryContinueConversation;

@@ -5,7 +5,9 @@ import type Message from "./Message.js";
 export default interface Conversation {
   id: ConversationId;
   type: ConversationType;
-  title: string;
+  title: string | null;
   messages: Message[];
+  isGeneratingNextMessage: boolean;
+  nextMessageGenerationError: string | null;
   createdAt: Date;
 }

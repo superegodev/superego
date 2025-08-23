@@ -6,9 +6,7 @@ import type DocumentVersionId from "../ids/DocumentVersionId.js";
 type MessagePart =
   | MessagePart.Text
   | MessagePart.Audio
-  | MessagePart.DocumentCreated
-  | MessagePart.GeneratingResponse
-  | MessagePart.ResponseGenerationError;
+  | MessagePart.DocumentCreated;
 namespace MessagePart {
   export interface Audio {
     type: MessagePartType.Audio;
@@ -28,15 +26,6 @@ namespace MessagePart {
     collectionId: CollectionId;
     documentId: DocumentId;
     documentVersionId: DocumentVersionId;
-  }
-
-  export interface GeneratingResponse {
-    type: MessagePartType.GeneratingResponse;
-  }
-
-  export interface ResponseGenerationError {
-    type: MessagePartType.ResponseGenerationError;
-    error: string;
   }
 }
 export default MessagePart;

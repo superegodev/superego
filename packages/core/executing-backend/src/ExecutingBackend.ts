@@ -4,11 +4,13 @@ import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import type LlmAssistant from "./requirements/LlmAssistant.js";
+import type SpeechService from "./requirements/SpeechService.js";
 import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
 import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
 import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
 import AssistantListConversations from "./usecases/assistant/ListConversations.js";
-import AssistantRetryResponseGeneration from "./usecases/assistant/RetryResponseGeneration.js";
+import AssistantRetryContinueConversation from "./usecases/assistant/RetryContinueConversation.js";
 import AssistantStartConversation from "./usecases/assistant/StartConversation.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -40,6 +42,8 @@ export default class ExecutingBackend implements Backend {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
+    private llmAssistant: LlmAssistant,
+    private speechService: SpeechService,
   ) {
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate),
@@ -74,8 +78,8 @@ export default class ExecutingBackend implements Backend {
     this.assistant = {
       startConversation: this.makeUsecase(AssistantStartConversation),
       continueConversation: this.makeUsecase(AssistantContinueConversation),
-      retryResponseGeneration: this.makeUsecase(
-        AssistantRetryResponseGeneration,
+      retryContinueConversation: this.makeUsecase(
+        AssistantRetryContinueConversation,
       ),
       deleteConversation: this.makeUsecase(AssistantDeleteConversation),
       listConversations: this.makeUsecase(AssistantListConversations),
@@ -91,15 +95,22 @@ export default class ExecutingBackend implements Backend {
   private makeUsecase<
     Exec extends (...args: any[]) => RpcResultPromise<any, any>,
   >(
-    Usecase: new (
+    UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
+      llmAssistant: LlmAssistant,
+      speechService: SpeechService,
     ) => { exec: Exec },
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
         .runInSerializableTransaction(async (dataRepositories) => {
-          const usecase = new Usecase(dataRepositories, this.javascriptSandbox);
+          const usecase = new UsecaseClass(
+            dataRepositories,
+            this.javascriptSandbox,
+            this.llmAssistant,
+            this.speechService,
+          );
           const rpcResult = await usecase.exec(...args);
           return {
             action: rpcResult.success ? "commit" : "rollback",

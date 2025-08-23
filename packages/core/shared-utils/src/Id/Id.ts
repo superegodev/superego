@@ -12,6 +12,8 @@ export default {
     document: makeGenerateId("Document"),
     documentVersion: makeGenerateId("DocumentVersion"),
     file: makeGenerateId("File"),
+    conversation: makeGenerateId("Conversation"),
+    message: makeGenerateId("Message"),
   },
 
   is: {
@@ -21,6 +23,8 @@ export default {
     document: makeIsId("Document"),
     documentVersion: makeIsId("DocumentVersion"),
     file: makeIsId("File"),
+    conversation: makeIsId("Conversation"),
+    message: makeIsId("Message"),
   },
 };
 

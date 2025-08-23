@@ -1,4 +1,5 @@
 import type {
+  CannotRetryContinueConversation,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
@@ -11,6 +12,7 @@ import type {
   CollectionSummaryPropertiesNotValid,
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
+  ConversationNotFound,
   DocumentContentNotValid,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
@@ -22,6 +24,7 @@ import type {
 } from "@superego/backend";
 
 type KnownRpcError =
+  | CannotRetryContinueConversation
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
@@ -34,6 +37,7 @@ type KnownRpcError =
   | CollectionSummaryPropertiesNotValid
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
+  | ConversationNotFound
   | DocumentContentNotValid
   | DocumentVersionIdNotMatching
   | DocumentNotFound

@@ -1,4 +1,5 @@
 import type { Schema } from "@superego/schema";
+import type CannotRetryContinueConversation from "./errors/CannotRetryContinueConversation.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -19,7 +20,6 @@ import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
-import type ResponseGenerationNotRetryable from "./errors/ResponseGenerationNotRetryable.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -199,23 +199,23 @@ export default interface Backend {
 
   assistant: {
     startConversation(
-      messagePart:
+      protoMessagePart:
         | Omit<MessagePart.Audio, "transcription">
         | (MessagePart.Text & { contentType: "text/plain" }),
     ): RpcResultPromise<Conversation>;
 
     continueConversation(
       id: ConversationId,
-      messagePart:
+      protoMessagePart:
         | Omit<MessagePart.Audio, "transcription">
         | (MessagePart.Text & { contentType: "text/plain" }),
     ): RpcResultPromise<Conversation, ConversationNotFound>;
 
-    retryResponseGeneration(
+    retryContinueConversation(
       id: ConversationId,
     ): RpcResultPromise<
       Conversation,
-      ConversationNotFound | ResponseGenerationNotRetryable
+      ConversationNotFound | CannotRetryContinueConversation
     >;
 
     deleteConversation(
