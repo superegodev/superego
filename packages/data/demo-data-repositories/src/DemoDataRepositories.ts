@@ -1,8 +1,12 @@
-import type { DataRepositories } from "@superego/executing-backend";
+import type {
+  ConversationRepository,
+  DataRepositories,
+} from "@superego/executing-backend";
 import type Data from "./Data.js";
 import DemoCollectionCategoryRepository from "./repositories/DemoCollectionCategoryRepository.js";
 import DemoCollectionRepository from "./repositories/DemoCollectionRepository.js";
 import DemoCollectionVersionRepository from "./repositories/DemoCollectionVersionRepository.js";
+import DemoConversationRepository from "./repositories/DemoConversationRepository.js";
 import DemoDocumentRepository from "./repositories/DemoDocumentRepository.js";
 import DemoDocumentVersionRepository from "./repositories/DemoDocumentVersionRepository.js";
 import DemoFileRepository from "./repositories/DemoFileRepository.js";
@@ -15,6 +19,7 @@ export default class DemoDataRepositories implements DataRepositories {
   document: DemoDocumentRepository;
   documentVersion: DemoDocumentVersionRepository;
   file: DemoFileRepository;
+  conversation: ConversationRepository;
   globalSettings: DemoGlobalSettingsRepository;
 
   constructor(data: Data, onWrite: () => void) {
@@ -33,6 +38,10 @@ export default class DemoDataRepositories implements DataRepositories {
       onWrite,
     );
     this.file = new DemoFileRepository(data.files, onWrite);
+    this.conversation = new DemoConversationRepository(
+      data.conversations,
+      onWrite,
+    );
     this.globalSettings = new DemoGlobalSettingsRepository(
       data.globalSettings,
       onWrite,

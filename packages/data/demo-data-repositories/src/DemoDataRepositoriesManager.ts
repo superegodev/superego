@@ -36,6 +36,7 @@ export default class DemoDataRepositoriesManager
       documents: {},
       documentVersions: {},
       files: {},
+      conversations: {},
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;

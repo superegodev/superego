@@ -2,6 +2,7 @@ import type {
   CollectionCategoryId,
   CollectionId,
   CollectionVersionId,
+  ConversationId,
   DocumentId,
   DocumentVersionId,
   FileId,
@@ -11,6 +12,7 @@ import type {
   CollectionCategoryEntity,
   CollectionEntity,
   CollectionVersionEntity,
+  ConversationEntity,
   DocumentEntity,
   DocumentVersionEntity,
   FileEntity,
@@ -24,5 +26,6 @@ export default interface Data {
   documents: Record<DocumentId, DocumentEntity>;
   documentVersions: Record<DocumentVersionId, DocumentVersionEntity>;
   files: Record<FileId, FileEntity & { content: Uint8Array<ArrayBuffer> }>;
+  conversations: Record<ConversationId, ConversationEntity>;
   globalSettings: { value: GlobalSettings };
 }
