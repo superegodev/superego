@@ -1,4 +1,5 @@
 import type {
+  CannotCreateAssistant,
   CannotRetryContinueConversation,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
@@ -24,6 +25,7 @@ import type {
 } from "@superego/backend";
 
 type KnownRpcError =
+  | CannotCreateAssistant
   | CannotRetryContinueConversation
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid

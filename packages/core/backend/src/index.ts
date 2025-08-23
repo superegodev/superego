@@ -14,6 +14,7 @@ export { default as Theme } from "./enums/Theme.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
+export type { default as CannotCreateAssistant } from "./errors/CannotCreateAssistant.js";
 export type { default as CannotRetryContinueConversation } from "./errors/CannotRetryContinueConversation.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";

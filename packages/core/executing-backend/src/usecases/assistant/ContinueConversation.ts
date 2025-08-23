@@ -1,11 +1,11 @@
 import {
   type Backend,
+  type CannotCreateAssistant,
   type Conversation,
   type ConversationId,
   type ConversationNotFound,
   type Message,
   type MessagePart,
-  MessagePartType,
   MessageRole,
   type RpcResultPromise,
 } from "@superego/backend";
@@ -21,10 +21,11 @@ export default class AssistantContinueConversation extends Usecase<
 > {
   async exec(
     id: ConversationId,
-    protoMessagePart:
-      | Omit<MessagePart.Audio, "transcription">
-      | (MessagePart.Text & { contentType: "text/plain" }),
-  ): RpcResultPromise<Conversation, ConversationNotFound> {
+    messagePart: MessagePart.Text & { contentType: "text/plain" },
+  ): RpcResultPromise<
+    Conversation,
+    ConversationNotFound | CannotCreateAssistant
+  > {
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulRpcResult(
@@ -32,16 +33,6 @@ export default class AssistantContinueConversation extends Usecase<
       );
     }
 
-    const messagePart: MessagePart =
-      protoMessagePart.type === MessagePartType.Audio
-        ? {
-            ...protoMessagePart,
-            transcription: await this.speechService.transcribe({
-              content: protoMessagePart.content,
-              contentType: protoMessagePart.contentType,
-            }),
-          }
-        : protoMessagePart;
     const message: Message = {
       id: Id.generate.message(),
       role: MessageRole.User,

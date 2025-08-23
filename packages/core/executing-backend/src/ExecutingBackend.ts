@@ -1,11 +1,10 @@
 import type { Backend, RpcResultPromise } from "@superego/backend";
 import makeRpcError from "./makers/makeRpcError.js";
 import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
+import type AssistantManager from "./requirements/AssistantManager.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import type LlmAssistant from "./requirements/LlmAssistant.js";
-import type SpeechService from "./requirements/SpeechService.js";
 import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
 import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
 import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
@@ -42,8 +41,7 @@ export default class ExecutingBackend implements Backend {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
-    private llmAssistant: LlmAssistant,
-    private speechService: SpeechService,
+    private assistantManager: AssistantManager,
   ) {
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate),
@@ -98,8 +96,7 @@ export default class ExecutingBackend implements Backend {
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
-      llmAssistant: LlmAssistant,
-      speechService: SpeechService,
+      assistantManager: AssistantManager,
     ) => { exec: Exec },
   ): Exec {
     return (async (...args: any[]) =>
@@ -108,8 +105,7 @@ export default class ExecutingBackend implements Backend {
           const usecase = new UsecaseClass(
             dataRepositories,
             this.javascriptSandbox,
-            this.llmAssistant,
-            this.speechService,
+            this.assistantManager,
           );
           const rpcResult = await usecase.exec(...args);
           return {

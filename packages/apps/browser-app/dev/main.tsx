@@ -2,6 +2,7 @@ import { CompletionModel, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
+import { RoutingAssistantManager } from "@superego/routing-assistant-manager";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 
@@ -14,6 +15,7 @@ const backend = new ExecutingBackend(
     },
   }),
   new QuickjsJavascriptSandbox(),
+  new RoutingAssistantManager(),
 );
 
 const queryClient = new QueryClient({

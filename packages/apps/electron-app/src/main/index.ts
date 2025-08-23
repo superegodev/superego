@@ -2,6 +2,7 @@ import { join } from "node:path";
 import { CompletionModel, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
+import { RoutingAssistantManager } from "@superego/routing-assistant-manager";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { app, BrowserWindow } from "electron";
 import started from "electron-squirrel-startup";
@@ -55,9 +56,11 @@ function startBackendIPCProxyServer() {
   });
   dataRepositoriesManager.runMigrations();
   const javascriptSandbox = new QuickjsJavascriptSandbox();
+  const assistantManager = new RoutingAssistantManager();
   const backend = new ExecutingBackend(
     dataRepositoriesManager,
     javascriptSandbox,
+    assistantManager,
   );
   const backendIPCProxyServer = new BackendIPCProxyServer(backend);
   backendIPCProxyServer.start();

@@ -1,4 +1,6 @@
 import type { Schema } from "@superego/schema";
+import type ConversationType from "./enums/ConversationType.js";
+import type CannotCreateAssistant from "./errors/CannotCreateAssistant.js";
 import type CannotRetryContinueConversation from "./errors/CannotRetryContinueConversation.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
@@ -199,23 +201,25 @@ export default interface Backend {
 
   assistant: {
     startConversation(
-      protoMessagePart:
-        | Omit<MessagePart.Audio, "transcription">
-        | (MessagePart.Text & { contentType: "text/plain" }),
-    ): RpcResultPromise<Conversation>;
+      type: ConversationType,
+      messagePart: MessagePart.Text & { contentType: "text/plain" },
+    ): RpcResultPromise<Conversation, CannotCreateAssistant>;
 
     continueConversation(
       id: ConversationId,
-      protoMessagePart:
-        | Omit<MessagePart.Audio, "transcription">
-        | (MessagePart.Text & { contentType: "text/plain" }),
-    ): RpcResultPromise<Conversation, ConversationNotFound>;
+      messagePart: MessagePart.Text & { contentType: "text/plain" },
+    ): RpcResultPromise<
+      Conversation,
+      ConversationNotFound | CannotCreateAssistant
+    >;
 
     retryContinueConversation(
       id: ConversationId,
     ): RpcResultPromise<
       Conversation,
-      ConversationNotFound | CannotRetryContinueConversation
+      | ConversationNotFound
+      | CannotRetryContinueConversation
+      | CannotCreateAssistant
     >;
 
     deleteConversation(
@@ -225,6 +229,8 @@ export default interface Backend {
     listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
 
     getConversation(): RpcResultPromise<Conversation, ConversationNotFound>;
+
+    // EVOLUTION: tts and stt methods. Possibly in another section (speech).
   };
 
   globalSettings: {

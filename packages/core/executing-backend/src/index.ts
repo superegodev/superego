@@ -11,6 +11,8 @@ export type { default as DocumentVersionEntity } from "./entities/DocumentVersio
 export type { default as FileEntity } from "./entities/FileEntity.js";
 
 // Requirements
+export type { default as Assistant } from "./requirements/Assistant.js";
+export type { default as AssistantManager } from "./requirements/AssistantManager.js";
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";
 export type { default as CollectionVersionRepository } from "./requirements/CollectionVersionRepository.js";
@@ -22,5 +24,3 @@ export type { default as DocumentVersionRepository } from "./requirements/Docume
 export type { default as FileRepository } from "./requirements/FileRepository.js";
 export type { default as GlobalSettingsRepository } from "./requirements/GlobalSettingsRepository.js";
 export type { default as JavascriptSandbox } from "./requirements/JavascriptSandbox.js";
-export type { default as LlmAssistant } from "./requirements/LlmAssistant.js";
-export type { default as SpeechService } from "./requirements/SpeechService.js";

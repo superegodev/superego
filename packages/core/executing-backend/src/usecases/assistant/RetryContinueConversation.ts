@@ -1,5 +1,6 @@
 import {
   type Backend,
+  type CannotCreateAssistant,
   type CannotRetryContinueConversation,
   type Conversation,
   type ConversationId,
@@ -17,9 +18,7 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeRpcError from "../../makers/makeRpcError.js";
 import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
 import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
-import LlmAssistant, {
-  toLlmAssistantMessage,
-} from "../../requirements/LlmAssistant.js";
+import Assistant, { toAssistantMessage } from "../../requirements/Assistant.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "../documents/Create.js";
@@ -31,14 +30,20 @@ export default class AssistantRetryContinueConversation extends Usecase<
     id: ConversationId,
   ): RpcResultPromise<
     Conversation,
-    ConversationNotFound | CannotRetryContinueConversation
+    | ConversationNotFound
+    | CannotRetryContinueConversation
+    | CannotCreateAssistant
   >;
-  async exec(conversation: ConversationEntity): RpcResultPromise<Conversation>;
+  async exec(
+    conversation: ConversationEntity,
+  ): RpcResultPromise<Conversation, CannotCreateAssistant>;
   async exec(
     idOrConversation: ConversationId | ConversationEntity,
   ): RpcResultPromise<
     Conversation,
-    ConversationNotFound | CannotRetryContinueConversation
+    | ConversationNotFound
+    | CannotRetryContinueConversation
+    | CannotCreateAssistant
   > {
     let conversation: ConversationEntity | null;
     if (typeof idOrConversation === "string") {
@@ -62,15 +67,24 @@ export default class AssistantRetryContinueConversation extends Usecase<
       conversation = idOrConversation;
     }
 
+    let assistant: Assistant;
+    try {
+      assistant = await this.getAssistant();
+    } catch {
+      return makeUnsuccessfulRpcResult(
+        makeRpcError("CannotCreateAssistant", null),
+      );
+    }
+
     await this.repos.conversation.upsert({
       ...conversation,
       isGeneratingNextMessage: true,
       nextMessageGenerationError: null,
     });
     const collections = await this.repos.collection.findAll();
-    const result = await this.llmAssistant.generateNextMessage(
+    const result = await assistant.generateNextMessage(
       conversation.type,
-      conversation.messages.map(toLlmAssistantMessage),
+      conversation.messages.map(toAssistantMessage),
       collections,
     );
 
@@ -79,7 +93,7 @@ export default class AssistantRetryContinueConversation extends Usecase<
           ...conversation,
           messages: [
             ...conversation.messages,
-            await this.executeAndConvertMessage(result.message),
+            await this.executeAndConvertAssistantMessage(result.message),
           ],
           isGeneratingNextMessage: false,
           nextMessageGenerationError: null,
@@ -94,31 +108,38 @@ export default class AssistantRetryContinueConversation extends Usecase<
     return makeSuccessfulRpcResult(makeConversation(conversation));
   }
 
-  private async executeAndConvertMessage(
-    message: LlmAssistant.Message,
+  private async getAssistant(): Promise<Assistant> {
+    const globalSettings = await this.repos.globalSettings.get();
+    return this.assistantManager.getAssistant(globalSettings.assistant);
+  }
+
+  private async executeAndConvertAssistantMessage(
+    message: Assistant.Message,
   ): Promise<Message> {
     return {
       id: Id.generate.message(),
       role: MessageRole.Assistant,
       parts: await Promise.all(
-        message.parts.map((part) => this.executeAndConvertMessagePart(part)),
+        message.parts.map((part) =>
+          this.executeAndConvertAssistantMessagePart(part),
+        ),
       ),
       createdAt: new Date(),
     };
   }
 
-  private async executeAndConvertMessagePart(
-    part: LlmAssistant.MessagePart,
+  private async executeAndConvertAssistantMessagePart(
+    part: Assistant.MessagePart,
   ): Promise<MessagePart> {
     switch (part.type) {
-      case LlmAssistant.MessagePartType.Text: {
+      case Assistant.MessagePartType.Text: {
         return {
           type: MessagePartType.Text,
           content: part.content,
           contentType: part.contentType,
         };
       }
-      case LlmAssistant.MessagePartType.CreateDocument: {
+      case Assistant.MessagePartType.CreateDocument: {
         const result = await this.sub(DocumentsCreate).exec(
           part.collectionId,
           part.documentContent,
@@ -129,6 +150,7 @@ export default class AssistantRetryContinueConversation extends Usecase<
             collectionId: result.data.collectionId,
             documentId: result.data.id,
             documentVersionId: result.data.latestVersion.id,
+            documentContent: result.data.latestVersion.content,
           };
         }
         throw new DocumentCreationFailed(

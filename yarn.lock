@@ -4188,6 +4188,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/routing-assistant-manager": "workspace:^"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:^"
     "@tanstack/react-query": "npm:^5.85.5"
@@ -4239,6 +4240,7 @@ __metadata:
     "@superego/demo-data-repositories": "workspace:^"
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
+    "@superego/routing-assistant-manager": "workspace:^"
     "@tanstack/react-query": "npm:^5.85.5"
     typescript: "npm:^5.9.2"
     vite: "npm:^7.1.3"
@@ -4275,6 +4277,7 @@ __metadata:
     "@superego/browser-app": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/routing-assistant-manager": "workspace:^"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@types/electron-squirrel-startup": "npm:^1.0.2"
     electron: "npm:37.3.1"
@@ -4342,6 +4345,15 @@ __metadata:
     prettier: "npm:^3.6.2"
     prettier-plugin-sh: "npm:^0.18.0"
     prettier-plugin-sql-cst: "npm:^0.13.0"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
+"@superego/routing-assistant-manager@workspace:^, @superego/routing-assistant-manager@workspace:packages/ai/routing-assistant-manager":
+  version: 0.0.0-use.local
+  resolution: "@superego/routing-assistant-manager@workspace:packages/ai/routing-assistant-manager"
+  dependencies:
+    "@superego/executing-backend": "workspace:*"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft

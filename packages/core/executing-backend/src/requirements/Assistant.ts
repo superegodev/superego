@@ -7,14 +7,14 @@ import {
 } from "@superego/backend";
 import type CollectionEntity from "../entities/CollectionEntity.js";
 
-interface LlmAssistant {
+interface Assistant {
   generateNextMessage(
     conversationType: ConversationType,
-    previousMessages: LlmAssistant.Message[],
+    previousMessages: Assistant.Message[],
     collections: CollectionEntity[],
-  ): Promise<LlmAssistant.GetNextMessageResult>;
+  ): Promise<Assistant.GetNextMessageResult>;
 }
-namespace LlmAssistant {
+namespace Assistant {
   export enum MessagePartType {
     Text = "Text",
     CreateDocument = "CreateDocument",
@@ -41,29 +41,23 @@ namespace LlmAssistant {
     | { success: true; message: Message }
     | { success: false; error: string };
 }
-export default LlmAssistant;
+export default Assistant;
 
-export function toLlmAssistantMessage(message: Message): LlmAssistant.Message {
+export function toAssistantMessage(message: Message): Assistant.Message {
   return {
     role: message.role,
     parts: message.parts.map((part) =>
-      part.type === MessagePartType.Audio
+      part.type === MessagePartType.Text
         ? {
-            type: LlmAssistant.MessagePartType.Text,
-            content: part.transcription,
-            contentType: "text/plain",
+            type: Assistant.MessagePartType.Text,
+            content: part.content,
+            contentType: part.contentType,
           }
-        : part.type === MessagePartType.Text
-          ? {
-              type: LlmAssistant.MessagePartType.Text,
-              content: part.content,
-              contentType: part.contentType,
-            }
-          : {
-              type: LlmAssistant.MessagePartType.CreateDocument,
-              collectionId: "" as any, // TODO
-              documentContent: {},
-            },
+        : {
+            type: Assistant.MessagePartType.CreateDocument,
+            collectionId: part.collectionId,
+            documentContent: part.documentContent,
+          },
     ),
   };
 }
