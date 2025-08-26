@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
+    "@types/luxon": "^3",
     "typescript": "^5.9.2"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
+    "luxon": "^3.7.1",
     "valibot": "^1.1.0",
     "vitest": "^3.2.4"
   }

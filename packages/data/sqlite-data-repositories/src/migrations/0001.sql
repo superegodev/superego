@@ -1,5 +1,6 @@
 -- Conversations
 
+-- TODO: update
 CREATE TABLE "conversations" (
   "id" TEXT PRIMARY KEY NOT NULL,
   "type" TEXT NOT NULL,

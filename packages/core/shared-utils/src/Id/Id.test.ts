@@ -35,8 +35,3 @@ it("conversation", () => {
   // Exercise and verify
   expect(Id.is.conversation(Id.generate.conversation())).toBe(true);
 });
-
-it("message", () => {
-  // Exercise and verify
-  expect(Id.is.message(Id.generate.message())).toBe(true);
-});

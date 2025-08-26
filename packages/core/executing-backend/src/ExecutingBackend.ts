@@ -5,12 +5,11 @@ import type AssistantManager from "./requirements/AssistantManager.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
-import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
-import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
-import AssistantListConversations from "./usecases/assistant/ListConversations.js";
-import AssistantRetryContinueConversation from "./usecases/assistant/RetryContinueConversation.js";
-import AssistantStartConversation from "./usecases/assistant/StartConversation.js";
+import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
+import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
+import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
+import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
+import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -35,7 +34,7 @@ export default class ExecutingBackend implements Backend {
   collections: Backend["collections"];
   documents: Backend["documents"];
   files: Backend["files"];
-  assistant: Backend["assistant"];
+  assistants: Backend["assistants"];
   globalSettings: Backend["globalSettings"];
 
   constructor(
@@ -73,15 +72,12 @@ export default class ExecutingBackend implements Backend {
       getContent: this.makeUsecase(FilesGetContent),
     };
 
-    this.assistant = {
-      startConversation: this.makeUsecase(AssistantStartConversation),
-      continueConversation: this.makeUsecase(AssistantContinueConversation),
-      retryContinueConversation: this.makeUsecase(
-        AssistantRetryContinueConversation,
-      ),
-      deleteConversation: this.makeUsecase(AssistantDeleteConversation),
-      listConversations: this.makeUsecase(AssistantListConversations),
-      getConversation: this.makeUsecase(AssistantGetConversation),
+    this.assistants = {
+      startConversation: this.makeUsecase(AssistantsStartConversation),
+      continueConversation: this.makeUsecase(AssistantsContinueConversation),
+      deleteConversation: this.makeUsecase(AssistantsDeleteConversation),
+      listConversations: this.makeUsecase(AssistantsListConversations),
+      getConversation: this.makeUsecase(AssistantsGetConversation),
     };
 
     this.globalSettings = {

@@ -1,0 +1,153 @@
+{
+  "$defs": {
+    "SleepStageSummary": {
+      "title": "SleepStageSummary",
+      "description": "Summary of time spent in different sleep stages in minutes.",
+      "type": "object",
+      "properties": {
+        "deep": {
+          "description": "Minutes in deep sleep.",
+          "type": "number"
+        },
+        "light": {
+          "description": "Minutes in light sleep.",
+          "type": "number"
+        },
+        "rem": {
+          "description": "Minutes in REM sleep.",
+          "type": "number"
+        },
+        "awake": {
+          "description": "Minutes awake during the sleep period.",
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "deep",
+        "light",
+        "rem",
+        "awake"
+      ]
+    },
+    "SleepInterruption": {
+      "title": "SleepInterruption",
+      "description": "Details of a sleep interruption.",
+      "type": "object",
+      "properties": {
+        "time": {
+          "description": "Timestamp of the interruption.\n\nFormat `dev.superego:String.Instant`:\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+          "examples": [
+            "2006-08-24T19:39:09.000Z",
+            "2006-08-24T19:39:09.068Z"
+          ],
+          "type": "string"
+        },
+        "durationSeconds": {
+          "description": "Duration of the interruption in seconds.",
+          "type": "number"
+        },
+        "reason": {
+          "description": "User-reported reason for interruption.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "time",
+        "durationSeconds",
+        "reason"
+      ]
+    }
+  },
+  "title": "SleepSession",
+  "description": "Represents a single sleep session.",
+  "type": "object",
+  "properties": {
+    "startTime": {
+      "description": "Format `dev.superego:String.Instant`:\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "examples": [
+        "2006-08-24T19:39:09.000Z",
+        "2006-08-24T19:39:09.068Z"
+      ],
+      "type": "string"
+    },
+    "endTime": {
+      "description": "Format `dev.superego:String.Instant`:\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "examples": [
+        "2006-08-24T19:39:09.000Z",
+        "2006-08-24T19:39:09.068Z"
+      ],
+      "type": "string"
+    },
+    "totalDurationMinutes": {
+      "description": "Total duration in bed in minutes.",
+      "type": "number"
+    },
+    "actualSleepMinutes": {
+      "description": "Calculated actual sleep duration in minutes.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "qualityScore": {
+      "description": "Sleep quality score (e.g., 0-100).\n\nFormat `dev.superego:Number.Integer`:\n\nAn integer",
+      "examples": [
+        -1,
+        0,
+        1
+      ],
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "sleepStages": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SleepStageSummary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "interruptions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/SleepInterruption"
+      }
+    },
+    "dreamRecorded": {
+      "description": "Whether a dream was recorded for this session.",
+      "type": "boolean",
+      "const": false
+    },
+    "dreamNotes": {
+      "description": "Notes about any dreams.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "startTime",
+    "endTime",
+    "totalDurationMinutes",
+    "actualSleepMinutes",
+    "qualityScore",
+    "sleepStages",
+    "interruptions",
+    "dreamRecorded",
+    "dreamNotes"
+  ]
+}

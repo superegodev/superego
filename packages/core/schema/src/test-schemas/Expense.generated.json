@@ -1,0 +1,221 @@
+{
+  "$defs": {
+    "ExpenseCategory": {
+      "title": "ExpenseCategory",
+      "description": "Category of the expense.\n\nEnum members descriptions:\n\n- GROCERIES: undefined\n- TRANSPORT: undefined\n- ENTERTAINMENT: undefined\n- BILLS: undefined\n- HEALTHCARE: undefined\n- SHOPPING: undefined\n- OTHER: undefined",
+      "type": "string",
+      "enum": [
+        "GROCERIES",
+        "TRANSPORT",
+        "ENTERTAINMENT",
+        "BILLS",
+        "HEALTHCARE",
+        "SHOPPING",
+        "OTHER"
+      ]
+    },
+    "PaymentMethodDetails": {
+      "title": "PaymentMethodDetails",
+      "description": "Details of the payment method used.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "e.g., Credit Card, Debit Card, PayPal, Cash",
+          "type": "string"
+        },
+        "last4Digits": {
+          "description": "Last 4 digits for card payments.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issuer": {
+          "description": "Card issuer or payment provider.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "last4Digits",
+        "issuer"
+      ]
+    },
+    "JsonObject": {
+      "title": "JsonObject",
+      "type": "object",
+      "properties": {
+        "__dataType": {
+          "type": "string",
+          "const": "JsonObject"
+        }
+      },
+      "required": [
+        "__dataType"
+      ],
+      "additionalProperties": true
+    },
+    "ProtoFile": {
+      "title": "ProtoFile",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name + extension.",
+          "examples": [
+            "book.pdf"
+          ]
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string",
+          "description": "The binary content of the file, in base64."
+        }
+      },
+      "required": [
+        "name",
+        "mimeType",
+        "content"
+      ],
+      "additionalProperties": false
+    },
+    "FileRef": {
+      "title": "ProtoFile",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "File name + extension.",
+          "examples": [
+            "book.pdf"
+          ]
+        },
+        "mimeType": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "mimeType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "title": "Expense",
+  "description": "Represents a single financial expense.",
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "Date of the expense.\n\nFormat `dev.superego:String.PlainDate`:\n\nA calendar date in the ISO8601 format, not associated with a particular time or time zone.",
+      "examples": [
+        "2006-08-24",
+        "2024-02-29",
+        "-000924-01-01",
+        "0924-01-01",
+        "+010924-01-01"
+      ],
+      "type": "string"
+    },
+    "amount": {
+      "description": "Amount of the expense.",
+      "type": "number"
+    },
+    "currency": {
+      "description": "Currency code (e.g., EUR, USD).",
+      "type": "string",
+      "const": "EUR"
+    },
+    "category": {
+      "$ref": "#/$defs/ExpenseCategory"
+    },
+    "description": {
+      "description": "Detailed description of the expense.\n\nFormat `dev.superego:JsonObject.TiptapRichText`:\n\nA rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
+      "examples": [
+        {
+          "__dataType": "JsonObject",
+          "type": "doc",
+          "content": []
+        },
+        {
+          "__dataType": "JsonObject",
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Hello, World!"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "$ref": "#/$defs/JsonObject"
+    },
+    "isRecurring": {
+      "description": "Is this a recurring expense?",
+      "type": "boolean"
+    },
+    "receipt": {
+      "description": "Scanned or digital receipt file.",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProtoFile"
+        },
+        {
+          "$ref": "#/$defs/FileRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentMethod": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PaymentMethodDetails"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tags": {
+      "description": "List of user-defined tags.",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "date",
+    "amount",
+    "currency",
+    "category",
+    "description",
+    "isRecurring",
+    "receipt",
+    "paymentMethod",
+    "tags"
+  ]
+}

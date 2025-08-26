@@ -6,7 +6,7 @@ import schema from "../valibot-schemas/schema/schema.js";
 import codegen from "./codegen.js";
 
 describe("generates TypeScript from a schema", () => {
-  const testSchemasDir = `${__dirname}/test-schemas`;
+  const testSchemasDir = `${__dirname}/../test-schemas`;
   const schemaExtension = ".schema.ts";
   const generatedExtension = ".generated.ts";
   it.each(

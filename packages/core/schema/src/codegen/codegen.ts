@@ -3,9 +3,9 @@ import formats from "../formats/formats.js";
 import type Schema from "../Schema.js";
 import type { AnyTypeDefinition, EnumMember } from "../typeDefinitions.js";
 import findFormat from "../utils/findFormat.js";
+import joinLines from "../utils/joinLines.js";
 import generateBuiltInTypes from "./generateBuiltInTypes.js";
 import indent from "./indent.js";
-import joinLines from "./joinLines.js";
 import makeTsDoc from "./makeTsDoc.js";
 import type ReferencedBuiltInTypes from "./ReferencedBuiltInTypes.js";
 
@@ -15,6 +15,7 @@ function generateEnumMemberTsDoc({ description }: EnumMember): string {
 
 function generateTypeDefinitionTsDoc(
   typeDefinition: AnyTypeDefinition,
+  isRootType: boolean,
 ): string {
   const commentLines: string[] = [];
   if (typeDefinition.description) {
@@ -36,6 +37,9 @@ function generateTypeDefinitionTsDoc(
         ),
       );
     }
+  }
+  if (isRootType) {
+    commentLines.push("", "Note: This is the root type of this schema.");
   }
   return commentLines.length > 0
     ? makeTsDoc(joinLines(commentLines).trim())
@@ -81,7 +85,10 @@ function generateType(
           ([propertyName, propertyTypeDefinition]) => {
             const isNullable =
               typeDefinition.nullableProperties?.includes(propertyName);
-            const tsDoc = generateTypeDefinitionTsDoc(propertyTypeDefinition);
+            const tsDoc = generateTypeDefinitionTsDoc(
+              propertyTypeDefinition,
+              false,
+            );
             const typeString = generateType(
               propertyTypeDefinition,
               schema,
@@ -113,10 +120,11 @@ function generateType(
 function generateTypeDeclaration(
   typeName: string,
   typeDefinition: AnyTypeDefinition,
+  isRootType: boolean,
   schema: Schema,
   referencedBuiltInTypes: ReferencedBuiltInTypes,
 ): string {
-  const tsDoc = generateTypeDefinitionTsDoc(typeDefinition);
+  const tsDoc = generateTypeDefinitionTsDoc(typeDefinition, isRootType);
   const type = generateType(typeDefinition, schema, referencedBuiltInTypes);
   return typeDefinition.dataType === DataType.Enum
     ? `${tsDoc}export enum ${typeName} ${type}`
@@ -130,6 +138,7 @@ export default function codegen(schema: Schema): string {
       generateTypeDeclaration(
         typeName,
         typeDefinition,
+        typeName === schema.rootType,
         schema,
         referencedBuiltInTypes,
       ),

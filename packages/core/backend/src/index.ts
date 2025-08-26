@@ -5,17 +5,19 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
+export { default as Assistant } from "./enums/Assistant.js";
 export { default as CompletionModel } from "./enums/CompletionModel.js";
-export { default as ConversationType } from "./enums/ConversationType.js";
-export { default as MessagePartType } from "./enums/MessagePartType.js";
+export { default as ConversationFormat } from "./enums/ConversationFormat.js";
+export { default as ConversationStatus } from "./enums/ConversationStatus.js";
+export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";
 export { default as Theme } from "./enums/Theme.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
+export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
 export type { default as CannotCreateAssistant } from "./errors/CannotCreateAssistant.js";
-export type { default as CannotRetryContinueConversation } from "./errors/CannotRetryContinueConversation.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
 export type { default as CollectionCategoryNameNotValid } from "./errors/CollectionCategoryNameNotValid.js";
@@ -46,7 +48,6 @@ export type { default as ConversationId } from "./ids/ConversationId.js";
 export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
-export type { default as MessageId } from "./ids/MessageId.js";
 
 // Types
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
@@ -64,12 +65,17 @@ export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as JavascriptFunctionExecutionError } from "./types/JavascriptFunctionExecutionError.js";
 export type { default as JavascriptFunctionExecutionResult } from "./types/JavascriptFunctionExecutionResult.js";
 export type { default as Message } from "./types/Message.js";
-export type { default as MessagePart } from "./types/MessagePart.js";
+export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as RpcError } from "./types/RpcError.js";
 export type { default as RpcResult } from "./types/RpcResult.js";
 export type { default as RpcResultPromise } from "./types/RpcResultPromise.js";
 export type { default as SummaryProperty } from "./types/SummaryProperty.js";
 export type { default as SummaryPropertyDefinition } from "./types/SummaryPropertyDefinition.js";
+export type { default as Tool } from "./types/Tool.js";
+export type { default as ToolCall } from "./types/ToolCall.js";
+export type { default as ToolResult } from "./types/ToolResult.js";
+export type { default as ToolResultError } from "./types/ToolResultError.js";
+export type { default as ToolResultOutput } from "./types/ToolResultOutput.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

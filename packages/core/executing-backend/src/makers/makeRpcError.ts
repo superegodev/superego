@@ -1,6 +1,6 @@
 import type {
+  CannotContinueConversation,
   CannotCreateAssistant,
-  CannotRetryContinueConversation,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
@@ -26,7 +26,7 @@ import type {
 
 type KnownRpcError =
   | CannotCreateAssistant
-  | CannotRetryContinueConversation
+  | CannotContinueConversation
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid

@@ -10,12 +10,17 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "vitest --reporter=verbose"
+    "test": "vitest --reporter=verbose",
+    "tsx": "tsx"
   },
   "devDependencies": {
+    "groq-sdk": "^0.30.0",
+    "openai": "^5.15.0",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*"
   }
 }

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 // ExecutingBackend
 export { default as ExecutingBackend } from "./ExecutingBackend.js";
 
@@ -11,7 +12,7 @@ export type { default as DocumentVersionEntity } from "./entities/DocumentVersio
 export type { default as FileEntity } from "./entities/FileEntity.js";
 
 // Requirements
-export type { default as Assistant } from "./requirements/Assistant.js";
+export { default as Assistant } from "./requirements/Assistant.js";
 export type { default as AssistantManager } from "./requirements/AssistantManager.js";
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";

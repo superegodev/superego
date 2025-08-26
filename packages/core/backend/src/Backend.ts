@@ -1,7 +1,8 @@
 import type { Schema } from "@superego/schema";
-import type ConversationType from "./enums/ConversationType.js";
+import type Assistant from "./enums/Assistant.js";
+import type ConversationFormat from "./enums/ConversationFormat.js";
+import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotCreateAssistant from "./errors/CannotCreateAssistant.js";
-import type CannotRetryContinueConversation from "./errors/CannotRetryContinueConversation.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -37,7 +38,9 @@ import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
 import type Document from "./types/Document.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
-import type MessagePart from "./types/MessagePart.js";
+import type Message from "./types/Message.js";
+import type MessageContentPart from "./types/MessageContentPart.js";
+import type NonEmptyArray from "./types/NonEmptyArray.js";
 import type RpcResultPromise from "./types/RpcResultPromise.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
@@ -199,27 +202,19 @@ export default interface Backend {
     ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound>;
   };
 
-  assistant: {
+  assistants: {
     startConversation(
-      type: ConversationType,
-      messagePart: MessagePart.Text & { contentType: "text/plain" },
+      assistant: Assistant,
+      format: ConversationFormat,
+      userMessageContent: Message.User["content"],
     ): RpcResultPromise<Conversation, CannotCreateAssistant>;
 
     continueConversation(
       id: ConversationId,
-      messagePart: MessagePart.Text & { contentType: "text/plain" },
+      userMessageContent: Message.User["content"],
     ): RpcResultPromise<
       Conversation,
-      ConversationNotFound | CannotCreateAssistant
-    >;
-
-    retryContinueConversation(
-      id: ConversationId,
-    ): RpcResultPromise<
-      Conversation,
-      | ConversationNotFound
-      | CannotRetryContinueConversation
-      | CannotCreateAssistant
+      CannotCreateAssistant | ConversationNotFound | CannotContinueConversation
     >;
 
     deleteConversation(
@@ -228,7 +223,9 @@ export default interface Backend {
 
     listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
 
-    getConversation(): RpcResultPromise<Conversation, ConversationNotFound>;
+    getConversation(
+      id: ConversationId,
+    ): RpcResultPromise<Conversation, ConversationNotFound>;
 
     // EVOLUTION: tts and stt methods. Possibly in another section (speech).
   };

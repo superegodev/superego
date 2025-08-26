@@ -1,4 +1,4 @@
-import joinLines from "./joinLines.js";
+import joinLines from "../utils/joinLines.js";
 
 export default function makeTsDoc(content: string): string {
   const sanitizedContent = content.replaceAll("*/", "*\\/");

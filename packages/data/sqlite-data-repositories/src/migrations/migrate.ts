@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import type { DatabaseSync } from "node:sqlite";
 import m0000 from "./0000.sql?raw";
 import m0001 from "./0001.sql?raw";

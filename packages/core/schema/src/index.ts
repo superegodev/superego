@@ -8,6 +8,7 @@ export { default as DataType } from "./DataType.js";
 export type { default as Format } from "./Format.js";
 export { default as FormatId } from "./formats/FormatId.js";
 export { default as formats } from "./formats/formats.js";
+export { default as jsonschemagen } from "./jsonschemagen/jsonschemagen.js";
 export type { default as Schema } from "./Schema.js";
 export type * from "./typeDefinitions.js";
 export type { default as FileRef } from "./types/FileRef.js";
