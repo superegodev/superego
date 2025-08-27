@@ -1,12 +1,4 @@
-import {
-  AssistantName,
-  CompletionModel,
-  type Conversation,
-  ConversationFormat,
-  type Message,
-  MessageContentPartType,
-  Theme,
-} from "@superego/backend";
+import { CompletionModel, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { RoutingInferenceServiceFactory } from "@superego/inference-services";
