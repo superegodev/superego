@@ -1,7 +1,8 @@
-import { ConversationType } from "@superego/backend";
+import { AssistantName, ConversationFormat } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type ConversationEntity from "../../../entities/ConversationEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 export default rd<Dependencies>("Conversations", (deps) => {
@@ -10,13 +11,14 @@ export default rd<Dependencies>("Conversations", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const conversation = {
+    const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      type: ConversationType.Text,
+      assistant: AssistantName.DocumentCreator,
+      format: ConversationFormat.Text,
       title: "title",
+      contextFingerprint: "contextFingerprint",
       messages: [],
-      isGeneratingNextMessage: false,
-      nextMessageGenerationError: null,
+      isCompleted: false,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -39,13 +41,14 @@ export default rd<Dependencies>("Conversations", (deps) => {
   it("updating (via upsert)", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const conversation = {
+    const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      type: ConversationType.Text,
+      assistant: AssistantName.DocumentCreator,
+      format: ConversationFormat.Text,
       title: "original title",
+      contextFingerprint: "contextFingerprint",
       messages: [],
-      isGeneratingNextMessage: false,
-      nextMessageGenerationError: null,
+      isCompleted: false,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -59,7 +62,6 @@ export default rd<Dependencies>("Conversations", (deps) => {
     const updatedConversation = {
       ...conversation,
       title: "updated title",
-      isGeneratingNextMessage: true,
     };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
@@ -81,13 +83,14 @@ export default rd<Dependencies>("Conversations", (deps) => {
   it("deleting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const conversation = {
+    const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      type: ConversationType.Text,
+      assistant: AssistantName.DocumentCreator,
+      format: ConversationFormat.Text,
       title: "title",
+      contextFingerprint: "contextFingerprint",
       messages: [],
-      isGeneratingNextMessage: false,
-      nextMessageGenerationError: null,
+      isCompleted: false,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -121,13 +124,14 @@ export default rd<Dependencies>("Conversations", (deps) => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const conversation = {
+      const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
-        type: ConversationType.Text,
+        assistant: AssistantName.DocumentCreator,
+        format: ConversationFormat.Text,
         title: "title",
+        contextFingerprint: "contextFingerprint",
         messages: [],
-        isGeneratingNextMessage: false,
-        nextMessageGenerationError: null,
+        isCompleted: false,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -188,22 +192,24 @@ export default rd<Dependencies>("Conversations", (deps) => {
     it("case: some conversations => returns them (ordered by createdAt, desc)", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const conversation1 = {
+      const conversation1: ConversationEntity = {
         id: Id.generate.conversation(),
-        type: ConversationType.Text,
+        assistant: AssistantName.DocumentCreator,
+        format: ConversationFormat.Text,
         title: "title 1",
+        contextFingerprint: "contextFingerprint",
         messages: [],
-        isGeneratingNextMessage: false,
-        nextMessageGenerationError: null,
+        isCompleted: false,
         createdAt: new Date(1),
       };
-      const conversation2 = {
+      const conversation2: ConversationEntity = {
         id: Id.generate.conversation(),
-        type: ConversationType.Text,
+        assistant: AssistantName.DocumentCreator,
+        format: ConversationFormat.Text,
         title: "title 2",
+        contextFingerprint: "contextFingerprint",
         messages: [],
-        isGeneratingNextMessage: false,
-        nextMessageGenerationError: null,
+        isCompleted: false,
         createdAt: new Date(2),
       };
       await dataRepositoriesManager.runInSerializableTransaction(

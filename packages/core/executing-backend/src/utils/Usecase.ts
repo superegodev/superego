@@ -1,12 +1,12 @@
-import type AssistantManager from "../requirements/AssistantManager.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
+import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 
 export default abstract class Usecase<Exec extends (...args: any[]) => any> {
   constructor(
     protected repos: DataRepositories,
     protected javascriptSandbox: JavascriptSandbox,
-    protected assistantManager: AssistantManager,
+    protected inferenceServiceFactory: InferenceServiceFactory,
   ) {}
 
   abstract exec(...args: Parameters<Exec>): ReturnType<Exec>;
@@ -17,7 +17,7 @@ export default abstract class Usecase<Exec extends (...args: any[]) => any> {
     return new UsecaseClass(
       this.repos,
       this.javascriptSandbox,
-      this.assistantManager,
+      this.inferenceServiceFactory,
     ) as InstanceType<SubUsecase>;
   }
 }

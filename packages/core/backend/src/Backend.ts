@@ -1,8 +1,8 @@
 import type { Schema } from "@superego/schema";
-import type Assistant from "./enums/Assistant.js";
+import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
-import type CannotCreateAssistant from "./errors/CannotCreateAssistant.js";
+import type CannotCreateInferenceService from "./errors/CannotCreateInferenceService.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -39,8 +39,6 @@ import type DeletedEntities from "./types/DeletedEntities.js";
 import type Document from "./types/Document.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type Message from "./types/Message.js";
-import type MessageContentPart from "./types/MessageContentPart.js";
-import type NonEmptyArray from "./types/NonEmptyArray.js";
 import type RpcResultPromise from "./types/RpcResultPromise.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
@@ -204,17 +202,19 @@ export default interface Backend {
 
   assistants: {
     startConversation(
-      assistant: Assistant,
+      assistant: AssistantName,
       format: ConversationFormat,
       userMessageContent: Message.User["content"],
-    ): RpcResultPromise<Conversation, CannotCreateAssistant>;
+    ): RpcResultPromise<Conversation, CannotCreateInferenceService>;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
     ): RpcResultPromise<
       Conversation,
-      CannotCreateAssistant | ConversationNotFound | CannotContinueConversation
+      | CannotCreateInferenceService
+      | ConversationNotFound
+      | CannotContinueConversation
     >;
 
     deleteConversation(

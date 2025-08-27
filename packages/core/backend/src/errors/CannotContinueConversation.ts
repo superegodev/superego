@@ -5,10 +5,7 @@ type CannotContinueConversation = RpcError<
   "CannotContinueConversation",
   {
     conversationId: ConversationId;
-    reason:
-      | "ConversationCompleted"
-      | "ConversationContextChanged"
-      | "GeneratingNextMessage";
+    reason: "ConversationCompleted" | "ConversationContextChanged";
   }
 >;
 export default CannotContinueConversation;

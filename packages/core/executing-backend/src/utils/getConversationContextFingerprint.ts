@@ -1,7 +1,7 @@
 import type { Collection } from "@superego/backend";
-import sha256 from "../../../utils/sha256.js";
+import sha256 from "./sha256.js";
 
-export default async function getContextFingerprint(
+export default async function getConversationContextFingerprint(
   collections: Collection[],
 ): Promise<string> {
   return sha256(

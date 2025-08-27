@@ -1,13 +1,13 @@
 -- Conversations
 
--- TODO: update
 CREATE TABLE "conversations" (
   "id" TEXT PRIMARY KEY NOT NULL,
-  "type" TEXT NOT NULL,
-  "title" TEXT,
+  "assistant" TEXT NOT NULL,
+  "format" TEXT NOT NULL,
+  "title" TEXT NOT NULL,
+  "context_fingerprint" TEXT NOT NULL,
   "messages" TEXT NOT NULL,
-  "is_generating_next_message" INTEGER NOT NULL,
-  "next_message_generation_error" TEXT,
+  "is_completed" INTEGER NOT NULL,
   "created_at" TEXT NOT NULL,
   CHECK (json_valid("messages"))
 );

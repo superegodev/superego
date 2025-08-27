@@ -6,11 +6,12 @@ export default function makeConversation(
 ): Conversation {
   return {
     id: conversation.id,
-    type: conversation.type,
+    assistant: conversation.assistant,
+    format: conversation.format,
     title: conversation.title,
+    contextFingerprint: conversation.contextFingerprint,
     messages: conversation.messages,
-    isGeneratingNextMessage: conversation.isGeneratingNextMessage,
-    nextMessageGenerationError: conversation.nextMessageGenerationError,
+    isCompleted: conversation.isCompleted,
     createdAt: conversation.createdAt,
   };
 }

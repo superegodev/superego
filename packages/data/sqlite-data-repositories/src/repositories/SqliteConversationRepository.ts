@@ -20,30 +20,33 @@ export default class SqliteConversationRepository
         INSERT INTO "${table}"
           (
             "id",
-            "type",
+            "assistant",
+            "format",
             "title",
+            "context_fingerprint",
             "messages",
-            "is_generating_next_message",
-            "next_message_generation_error",
+            "is_completed",
             "created_at"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT("id") DO UPDATE SET
-          "type" = excluded."type",
+          "assistant" = excluded."assistant",
+          "format" = excluded."format",
           "title" = excluded."title",
+          "context_fingerprint" = excluded."context_fingerprint",
           "messages" = excluded."messages",
-          "is_generating_next_message" = excluded."is_generating_next_message",
-          "next_message_generation_error" = excluded."next_message_generation_error",
+          "is_completed" = excluded."is_completed",
           "created_at" = excluded."created_at"
       `)
       .run(
         conversation.id,
-        conversation.type,
+        conversation.assistant,
+        conversation.format,
         conversation.title,
+        conversation.contextFingerprint,
         JSON.stringify(conversation.messages),
-        conversation.isGeneratingNextMessage ? 1 : 0,
-        conversation.nextMessageGenerationError,
+        conversation.isCompleted ? 1 : 0,
         conversation.createdAt.toISOString(),
       );
   }

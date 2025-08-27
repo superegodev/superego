@@ -1,15 +1,14 @@
 import type { Backend, RpcResultPromise } from "@superego/backend";
 import makeRpcError from "./makers/makeRpcError.js";
 import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
-import type AssistantManager from "./requirements/AssistantManager.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
+import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
-import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
+import AssistantsStartOrContinueConversation from "./usecases/assistants/StartOrContinueConversation.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -40,7 +39,7 @@ export default class ExecutingBackend implements Backend {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
-    private assistantManager: AssistantManager,
+    private inferenceServiceFactory: InferenceServiceFactory,
   ) {
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate),
@@ -73,8 +72,12 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.assistants = {
-      startConversation: this.makeUsecase(AssistantsStartConversation),
-      continueConversation: this.makeUsecase(AssistantsContinueConversation),
+      startConversation: this.makeUsecase(
+        AssistantsStartOrContinueConversation,
+      ),
+      continueConversation: this.makeUsecase(
+        AssistantsStartOrContinueConversation,
+      ),
       deleteConversation: this.makeUsecase(AssistantsDeleteConversation),
       listConversations: this.makeUsecase(AssistantsListConversations),
       getConversation: this.makeUsecase(AssistantsGetConversation),
@@ -92,7 +95,7 @@ export default class ExecutingBackend implements Backend {
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
-      assistantManager: AssistantManager,
+      inferenceServiceFactory: InferenceServiceFactory,
     ) => { exec: Exec },
   ): Exec {
     return (async (...args: any[]) =>
@@ -101,7 +104,7 @@ export default class ExecutingBackend implements Backend {
           const usecase = new UsecaseClass(
             dataRepositories,
             this.javascriptSandbox,
-            this.assistantManager,
+            this.inferenceServiceFactory,
           );
           const rpcResult = await usecase.exec(...args);
           return {

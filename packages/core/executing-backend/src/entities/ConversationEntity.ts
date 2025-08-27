@@ -1,18 +1,17 @@
 import type {
-  Assistant,
+  AssistantName,
   ConversationFormat,
   ConversationId,
-  ConversationStatus,
   Message,
 } from "@superego/backend";
 
 export default interface ConversationEntity {
   id: ConversationId;
-  assistant: Assistant;
+  assistant: AssistantName;
   format: ConversationFormat;
   title: string;
-  status: ConversationStatus;
+  contextFingerprint: string;
   messages: Message[];
-  conversationContextFingerprint: string;
+  isCompleted: boolean;
   createdAt: Date;
 }

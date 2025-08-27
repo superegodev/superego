@@ -5,10 +5,9 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
-export { default as Assistant } from "./enums/Assistant.js";
+export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as CompletionModel } from "./enums/CompletionModel.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
-export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";
@@ -17,7 +16,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
-export type { default as CannotCreateAssistant } from "./errors/CannotCreateAssistant.js";
+export type { default as CannotCreateInferenceService } from "./errors/CannotCreateInferenceService.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
 export type { default as CollectionCategoryNameNotValid } from "./errors/CollectionCategoryNameNotValid.js";
