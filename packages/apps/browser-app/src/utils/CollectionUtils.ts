@@ -10,6 +10,6 @@ export default {
 
   getDisplayName(collection: Collection): string {
     const { icon, name } = collection.settings;
-    return icon ? `${icon} ${name}` : name;
+    return icon ? `${icon}\u2002${name}` : name;
   },
 };
