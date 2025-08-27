@@ -10,7 +10,7 @@ import makeTsDoc from "./makeTsDoc.js";
 import type ReferencedBuiltInTypes from "./ReferencedBuiltInTypes.js";
 
 function generateEnumMemberTsDoc({ description }: EnumMember): string {
-  return description ? makeTsDoc(description.en) : "";
+  return description ? makeTsDoc(description) : "";
 }
 
 function generateTypeDefinitionTsDoc(
@@ -19,7 +19,7 @@ function generateTypeDefinitionTsDoc(
 ): string {
   const commentLines: string[] = [];
   if (typeDefinition.description) {
-    commentLines.push(typeDefinition.description.en);
+    commentLines.push(typeDefinition.description);
   }
   if ("format" in typeDefinition) {
     const format = findFormat(typeDefinition, formats);

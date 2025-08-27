@@ -2,7 +2,6 @@ import type { Collection, Document } from "@superego/backend";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
-import I18nString from "../../design-system/I18nString/I18nString.js";
 import Table from "../../design-system/Table/Table.js";
 
 interface Props {
@@ -22,8 +21,8 @@ export default function DocumentsTable({ collection, documents }: Props) {
       <Table.Header>
         {collection.latestVersion.settings.summaryProperties.map(
           ({ name }, index) => (
-            <Table.Column key={name.en} isRowHeader={index === 0}>
-              <I18nString value={name} />
+            <Table.Column key={name} isRowHeader={index === 0}>
+              {name}
             </Table.Column>
           ),
         )}
@@ -52,7 +51,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
           >
             {document.latestVersion.summaryProperties.map(
               ({ name, value, valueComputationError }) => (
-                <Table.Cell key={name.en}>
+                <Table.Cell key={name}>
                   {value ?? valueComputationError.message}
                 </Table.Cell>
               ),

@@ -5,11 +5,11 @@ import type Schema from "../Schema.js";
 export default {
   types: {
     MassQuantity: {
-      description: { en: "A quantity of mass." },
+      description: "A quantity of mass.",
       dataType: DataType.Struct,
       properties: {
         unit: {
-          description: { en: "Grams." },
+          description: "Grams.",
           dataType: DataType.StringLiteral,
           value: "g",
         },

@@ -1,6 +1,5 @@
 import rootType from "./utils/rootType.js";
 import content from "./valibot-schemas/content/content.js";
-import i18nString from "./valibot-schemas/i18nString/i18nString.js";
 import schema from "./valibot-schemas/schema/schema.js";
 
 export { default as codegen } from "./codegen/codegen.js";
@@ -14,5 +13,5 @@ export type * from "./typeDefinitions.js";
 export type { default as FileRef } from "./types/FileRef.js";
 export type { default as JsonObject } from "./types/JsonObject.js";
 export type { default as ProtoFile } from "./types/ProtoFile.js";
-export const valibotSchemas = { schema, content, i18nString };
+export const valibotSchemas = { schema, content };
 export const utils = { rootType };

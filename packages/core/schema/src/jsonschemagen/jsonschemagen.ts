@@ -13,7 +13,7 @@ function generateDescription(
 ): string | undefined {
   const lines: string[] = [];
   if (typeDefinition.description) {
-    lines.push(typeDefinition.description.en);
+    lines.push(typeDefinition.description);
   }
   if ("format" in typeDefinition) {
     const format = findFormat(typeDefinition, formats);
@@ -27,7 +27,7 @@ function generateDescription(
       "Enum members descriptions:",
       "",
       ...Object.values(typeDefinition.members).map(
-        (member) => `- ${member.value}: ${member.description?.en}`,
+        (member) => `- ${member.value}: ${member.description}`,
       ),
     );
   }

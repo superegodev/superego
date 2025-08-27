@@ -1,9 +1,7 @@
-import type { I18nString } from "@superego/global-types";
 import type DataType from "./DataType.js";
 
 export interface Described {
-  // TODO: make it monolingual
-  description?: I18nString | undefined;
+  description?: string | undefined;
 }
 
 export interface StringTypeDefinition extends Described {

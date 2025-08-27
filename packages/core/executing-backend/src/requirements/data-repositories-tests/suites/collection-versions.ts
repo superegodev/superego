@@ -10,9 +10,7 @@ const schema: Schema = {
   rootType: "Root",
 };
 const settings: CollectionVersionSettings = {
-  summaryProperties: [
-    { name: { en: "name" }, getter: { source: "", compiled: "" } },
-  ],
+  summaryProperties: [{ name: "name", getter: { source: "", compiled: "" } }],
 };
 
 export default rd<Dependencies>("Collection versions", (deps) => {
@@ -61,7 +59,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       settings: {
         summaryProperties: [
           {
-            name: { en: "original name" },
+            name: "original name",
             getter: { source: "", compiled: "" },
           },
         ],
@@ -82,7 +80,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       settings: {
         summaryProperties: [
           {
-            name: { en: "updated name" },
+            name: "updated name",
             getter: { source: "", compiled: "" },
           },
         ],

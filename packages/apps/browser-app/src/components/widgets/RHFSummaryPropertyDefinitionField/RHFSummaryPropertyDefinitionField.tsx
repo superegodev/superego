@@ -2,9 +2,8 @@ import { useMemo } from "react";
 import { type Control, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
-import I18nString from "../../design-system/I18nString/I18nString.js";
 import type TypescriptLib from "../../design-system/TypescriptModuleInput/TypescriptLib.js";
-import RHFI18nStringField from "../RHFI18nStringField/RHFI18nStringField.js";
+import RHFTextField from "../RHFTextField/RHFTextField.jsx";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 
 interface Props {
@@ -28,17 +27,15 @@ export default function RHFSummaryPropertyDefinitionField({
   );
   return (
     <Fieldset>
-      <Fieldset.Legend>
-        <I18nString value={summaryPropertyDefinition.name} />
-      </Fieldset.Legend>
+      <Fieldset.Legend>{summaryPropertyDefinition.name}</Fieldset.Legend>
       <Fieldset.Fields>
-        <RHFI18nStringField
+        <RHFTextField
           control={control}
           name={`${name}.name`}
           isDisabled={isDisabled}
           label={intl.formatMessage({ defaultMessage: "Name" })}
         />
-        <RHFI18nStringField
+        <RHFTextField
           control={control}
           name={`${name}.description`}
           isDisabled={isDisabled}
