@@ -95,6 +95,8 @@ const commonVars = {
       md: "0.25rem",
       lg: "0.5rem",
       xl: "0.75rem",
+      xl2: "1rem",
+      xl3: "1.25rem",
       full: "9999px",
     },
     width: {

@@ -9,8 +9,7 @@
   },
   "private": true,
   "scripts": {
-    "check-types": "tsc --noEmit",
-    "test": "vitest --reporter=verbose"
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "groq-sdk": "^0.30.0",

@@ -5,7 +5,7 @@ import InferenceService from "../../../requirements/InferenceService.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CompleteConversation {
-    return toolCall.tool === "complete_conversation";
+    return toolCall.tool === "completeConversation";
   },
 
   // This function will only be invoked only if the
@@ -18,7 +18,7 @@ export default {
       output: makeUnsuccessfulToolResultOutput(
         makeToolResultError(
           "InvalidToolCall",
-          "The complete_conversation tool cannot be called in parallel with other tools.",
+          "The completeConversation tool cannot be called in parallel with other tools.",
         ),
       ),
     };
@@ -27,7 +27,7 @@ export default {
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: "complete_conversation",
+      name: "completeConversation",
       description: "Marks the conversation with the user as completed.",
       inputSchema: {
         type: "object",

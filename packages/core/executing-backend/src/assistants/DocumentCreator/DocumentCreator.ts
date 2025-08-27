@@ -40,7 +40,7 @@ export default class DocumentCreator implements Assistant {
           content: [
             {
               type: MessageContentPartType.Text,
-              text: developer(conversationFormat),
+              text: developer(),
             },
           ],
         },

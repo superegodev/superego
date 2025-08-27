@@ -40,6 +40,7 @@ const queryClient = new QueryClient({
 
 renderBrowserApp(backend, queryClient);
 
+// TODO: remove
 class DevAssistant {
   private conversation: Conversation | null = null;
 

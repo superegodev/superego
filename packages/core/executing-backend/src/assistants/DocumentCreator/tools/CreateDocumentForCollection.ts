@@ -13,7 +13,7 @@ import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreate from "../../../usecases/documents/Create.js";
 import formatDescription from "../../../utils/formatDescription.js";
 
-const toolNameSuffix = ".create_document" as const;
+const toolNameSuffix = ".createDocument" as const;
 function extractPrefix(toolName: string): string {
   return toolName.slice(0, -toolNameSuffix.length);
 }
@@ -32,6 +32,8 @@ export default {
   ): Promise<ToolResult.CreateDocumentForCollection> {
     const collectionId = extractPrefix(toolCall.tool) as CollectionId;
 
+    // TODO: if necessary, try some easy fixes to the document (e.g., if a
+    // property is not provided, but it's nullable, set it to null).
     const {
       success,
       data: document,

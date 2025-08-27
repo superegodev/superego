@@ -19,6 +19,7 @@ describe("generates TypeScript from a schema", () => {
     const { default: testSchema } = await import(
       `${testSchemasDir}/${schemaFile}`
     );
+    console.log(JSON.stringify(testSchema));
     // Ensure that the test schema is valid.
     expect(v.is(schema(), testSchema)).toEqual(true);
 

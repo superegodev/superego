@@ -1,12 +1,11 @@
 import type CollectionId from "../ids/CollectionId.js";
 
 namespace ToolName {
-  export type GetCollectionTypescriptSchema =
-    "get_collection_typescript_schema";
+  export type GetCollectionTypescriptSchema = "getCollectionTypescriptSchema";
 
-  export type CreateDocumentForCollection = `${CollectionId}.create_document`;
+  export type CreateDocumentForCollection = `${CollectionId}.createDocument`;
 
-  export type CompleteConversation = "complete_conversation";
+  export type CompleteConversation = "completeConversation";
 }
 
 type ToolName =

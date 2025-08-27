@@ -20,5 +20,6 @@ export const Home = {
   tagLine: style({
     fontSize: vars.typography.fontSizes.xl,
     fontWeight: vars.typography.fontWeights.regular,
+    marginBlockEnd: vars.spacing._24,
   }),
 };

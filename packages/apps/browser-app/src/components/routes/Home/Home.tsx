@@ -1,4 +1,5 @@
 import { FormattedMessage, useIntl } from "react-intl";
+import AssistantMessageInput from "../../design-system/AssistantMessageInput/AssistantMessageInput.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import * as cs from "./Home.css.js";
 import logo from "./logo.avif";
@@ -23,6 +24,11 @@ export default function Home() {
           <h2 className={cs.Home.tagLine}>
             <FormattedMessage defaultMessage="Your Life's Database" />
           </h2>
+          <AssistantMessageInput
+            onSend={(userMessageContent) => {
+              console.log(userMessageContent);
+            }}
+          />
         </div>
       </Shell.Panel.Content>
     </Shell.Panel>

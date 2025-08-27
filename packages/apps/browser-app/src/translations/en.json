@@ -1,4 +1,13 @@
 {
+  "AssistantMessageInput.tsx_5OQcRC": {
+    "defaultMessage": "Assistant text input"
+  },
+  "AssistantMessageInput.tsx_9WRlF4": {
+    "defaultMessage": "Send"
+  },
+  "AssistantMessageInput.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },

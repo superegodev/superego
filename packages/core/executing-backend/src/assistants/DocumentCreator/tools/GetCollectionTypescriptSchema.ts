@@ -8,7 +8,7 @@ import formatDescription from "../../../utils/formatDescription.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.GetCollectionTypescriptSchema {
-    return toolCall.tool === "get_collection_typescript_schema";
+    return toolCall.tool === "getCollectionTypescriptSchema";
   },
 
   async exec(
@@ -33,7 +33,7 @@ export default {
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: "get_collection_typescript_schema",
+      name: "getCollectionTypescriptSchema",
       description: formatDescription(`
         Gets the set of TypeScript types that describe the shape of a document
         in the collection specified collection. Note: the type denoted as the

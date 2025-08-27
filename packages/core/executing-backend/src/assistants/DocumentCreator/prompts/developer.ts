@@ -1,14 +1,5 @@
-import { ConversationFormat } from "@superego/backend";
-import developerText from "./developerText.md?raw";
-import developerVoice from "./developerVoice.md?raw";
+import developerPrompt from "./developer.md?raw";
 
-export default function developer(
-  conversationFormat: ConversationFormat,
-): string {
-  switch (conversationFormat) {
-    case ConversationFormat.Text:
-      return developerText;
-    case ConversationFormat.Voice:
-      return developerVoice;
-  }
+export default function developer(): string {
+  return developerPrompt;
 }
