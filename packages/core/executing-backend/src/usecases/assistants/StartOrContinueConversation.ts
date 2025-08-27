@@ -142,7 +142,7 @@ export default class AssistantsStartOrContinueConversation extends Usecase<
 
   private async getInferenceService(): Promise<InferenceService> {
     const globalSettings = await this.repos.globalSettings.get();
-    return this.inferenceServiceFactory.create(globalSettings.assistant);
+    return this.inferenceServiceFactory.create(globalSettings.inference);
   }
 
   private createAssistant(

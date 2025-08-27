@@ -1,8 +1,7 @@
 import type AppearanceSettings from "./AppearanceSettings.js";
-import type AssistantSettings from "./AssistantSettings.js";
+import type InferenceSettings from "./InferenceSettings.js";
 
 export default interface GlobalSettings {
   appearance: AppearanceSettings;
-  // TODO: rename assistant setting
-  assistant: AssistantSettings;
+  inference: InferenceSettings;
 }

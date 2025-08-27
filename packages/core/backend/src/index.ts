@@ -50,7 +50,6 @@ export type { default as FileId } from "./ids/FileId.js";
 
 // Types
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
-export type { default as AssistantSettings } from "./types/AssistantSettings.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";
@@ -61,6 +60,7 @@ export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
+export type { default as InferenceSettings } from "./types/InferenceSettings.js";
 export type { default as JavascriptFunctionExecutionError } from "./types/JavascriptFunctionExecutionError.js";
 export type { default as JavascriptFunctionExecutionResult } from "./types/JavascriptFunctionExecutionResult.js";
 export type { default as Message } from "./types/Message.js";

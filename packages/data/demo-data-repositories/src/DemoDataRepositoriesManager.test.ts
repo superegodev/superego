@@ -6,7 +6,7 @@ registerDataRepositoriesTests(async () => {
   const dataRepositoriesManager = new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         providers: { groq: { apiKey: null, baseUrl: null } },
         completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },

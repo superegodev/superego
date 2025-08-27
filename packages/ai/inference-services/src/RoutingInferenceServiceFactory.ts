@@ -1,4 +1,4 @@
-import type { AssistantSettings } from "@superego/backend";
+import type { InferenceSettings } from "@superego/backend";
 import type {
   InferenceService,
   InferenceServiceFactory,
@@ -8,7 +8,7 @@ import GroqInferenceService from "./GroqInferenceService/GroqInferenceService.js
 export default class RoutingInferenceServiceFactory
   implements InferenceServiceFactory
 {
-  create(settings: AssistantSettings): InferenceService {
+  create(settings: InferenceSettings): InferenceService {
     if (settings.providers.groq.apiKey) {
       return new GroqInferenceService(
         settings.completions.defaultModel,

@@ -23,7 +23,7 @@ registerDataRepositoriesTests(async () => {
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         providers: { groq: { apiKey: null, baseUrl: null } },
         completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },

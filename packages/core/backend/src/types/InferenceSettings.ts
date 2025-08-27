@@ -1,6 +1,6 @@
 import type CompletionModel from "../enums/CompletionModel.js";
 
-export default interface AssistantSettings {
+export default interface InferenceSettings {
   providers: {
     groq: {
       apiKey: string | null;

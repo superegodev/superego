@@ -17,7 +17,7 @@ import { renderBrowserApp } from "../src/index.js";
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
-    assistant: {
+    inference: {
       providers: { groq: { apiKey: null, baseUrl: null } },
       completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
     },
@@ -39,36 +39,3 @@ const queryClient = new QueryClient({
 });
 
 renderBrowserApp(backend, queryClient);
-
-// TODO: remove
-class DevAssistant {
-  private conversation: Conversation | null = null;
-
-  async say(message: string) {
-    const messageContent: Message.User["content"] = [
-      {
-        type: MessageContentPartType.Text,
-        text: message,
-      },
-    ];
-    const result =
-      this.conversation === null
-        ? await backend.assistants.startConversation(
-            AssistantName.DocumentCreator,
-            ConversationFormat.Text,
-            messageContent,
-          )
-        : await backend.assistants.continueConversation(
-            this.conversation.id,
-            messageContent,
-          );
-    if (result.error) {
-      console.log("ERROR CALLING BACKEND");
-      console.log(result.error);
-      return;
-    }
-    this.conversation = result.data;
-    console.log(this.conversation);
-  }
-}
-(window as any).assistant = new DevAssistant();

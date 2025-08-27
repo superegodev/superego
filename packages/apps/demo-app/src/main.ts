@@ -10,7 +10,7 @@ import { QueryClient } from "@tanstack/react-query";
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
-    assistant: {
+    inference: {
       providers: { groq: { apiKey: null, baseUrl: null } },
       completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
     },
