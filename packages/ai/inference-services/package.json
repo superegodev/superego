@@ -1,5 +1,5 @@
 {
-  "name": "@superego/routing-assistant-manager",
+  "name": "@superego/inference-services",
   "version": "2025.7.6",
   "type": "module",
   "exports": {
@@ -10,13 +10,11 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "vitest --reporter=verbose",
-    "tsx": "tsx"
+    "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
     "groq-sdk": "^0.30.0",
     "openai": "^5.15.0",
-    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },
   "dependencies": {

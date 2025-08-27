@@ -31,8 +31,8 @@
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
     "@superego/executing-backend": "workspace:*",
+    "@superego/inference-services": "workspace:^",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
-    "@superego/routing-assistant-manager": "workspace:^",
     "@superego/sqlite-data-repositories": "workspace:*",
     "electron-squirrel-startup": "^1.0.1"
   }

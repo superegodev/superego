@@ -55,7 +55,7 @@ export default class DocumentCreator implements Assistant {
         },
         ...messages,
       ],
-      // TODO: pass in tools
+      this.getTools(messages),
     );
 
     // Case: assistantMessage is Message.ContentAssistant
@@ -94,6 +94,24 @@ export default class DocumentCreator implements Assistant {
       assistantMessage,
       toolMessage,
     ]);
+  }
+
+  private getTools(messages: Message[]): InferenceService.Tool[] {
+    return [
+      GetCollectionTypescriptSchema.get(),
+      ...messages
+        .filter((message) => "toolCalls" in message)
+        .flatMap((message) => message.toolCalls)
+        .filter((toolCall) => GetCollectionTypescriptSchema.is(toolCall))
+        .map((toolCall) =>
+          this.collections.find(
+            (collection) => collection.id === toolCall.input.collectionId,
+          ),
+        )
+        .filter((collection) => collection !== undefined)
+        .map((collection) => CreateDocumentForCollection.get(collection)),
+      CompleteConversation.get(),
+    ];
   }
 
   private async processToolCall(toolCall: ToolCall): Promise<ToolResult> {

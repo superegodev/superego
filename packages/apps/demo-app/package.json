@@ -22,7 +22,7 @@
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
-    "@superego/routing-assistant-manager": "workspace:^",
+    "@superego/inference-services": "workspace:^",
     "@tanstack/react-query": "^5.85.5"
   }
 }

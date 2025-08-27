@@ -1,25 +1,25 @@
 import type CollectionId from "../ids/CollectionId.js";
-import type Tool from "./Tool.js";
+import type ToolName from "./ToolName.js";
 
-interface ToolCall<TTool extends Tool | string = string, Input = any> {
+interface ToolCall<Tool extends ToolName | string = string, Input = any> {
   id: string;
-  tool: TTool;
+  tool: Tool;
   input: Input;
 }
 
 namespace ToolCall {
   export type CompleteConversation = ToolCall<
-    Tool.CompleteConversation,
+    ToolName.CompleteConversation,
     { finalMessage: string }
   >;
 
   export type GetCollectionTypescriptSchema = ToolCall<
-    Tool.GetCollectionTypescriptSchema,
+    ToolName.GetCollectionTypescriptSchema,
     { collectionId: CollectionId }
   >;
 
   export type CreateDocumentForCollection = ToolCall<
-    Tool.CreateDocumentForCollection,
+    ToolName.CreateDocumentForCollection,
     any
   >;
 }

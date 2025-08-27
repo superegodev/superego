@@ -170,7 +170,9 @@ function generateDefinition(
   }
 }
 
-export default function jsonschemagen(schema: Schema): JSONSchema7 {
+export default function jsonschemagen(
+  schema: Schema,
+): JSONSchema7 & { type: "object" } {
   const referencedBuiltInTypes: ReferencedBuiltInTypes = new Set();
   const jsonSchema: JSONSchema7 = {
     $defs: {},
@@ -193,5 +195,5 @@ export default function jsonschemagen(schema: Schema): JSONSchema7 {
     jsonSchema.$defs!,
     generateBuiltInTypesDefs(referencedBuiltInTypes),
   );
-  return jsonSchema;
+  return jsonSchema as JSONSchema7 & { type: "object" };
 }

@@ -4,7 +4,7 @@ import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
-import { RoutingAssistantManager } from "@superego/routing-assistant-manager";
+import { RoutingInferenceServiceFactory } from "@superego/inference-services";
 import { QueryClient } from "@tanstack/react-query";
 
 const backend = new ExecutingBackend(
@@ -16,7 +16,7 @@ const backend = new ExecutingBackend(
     },
   }),
   new FakeJavascriptSandbox(),
-  new RoutingAssistantManager(),
+  new RoutingInferenceServiceFactory(),
 );
 
 const queryClient = new QueryClient({

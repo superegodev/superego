@@ -1,17 +1,28 @@
-import type { CollectionId, ToolCall, ToolResult } from "@superego/backend";
+import type {
+  Collection,
+  CollectionId,
+  ToolCall,
+  ToolResult,
+} from "@superego/backend";
+import { jsonschemagen } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeSuccessfulToolResultOutput from "../../../makers/makeSuccessfulToolResultOutput.js";
 import makeUnsuccessfulToolResultOutput from "../../../makers/makeUnsuccessfulToolResultOutput.js";
+import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreate from "../../../usecases/documents/Create.js";
+import formatDescription from "../../../utils/formatDescription.js";
 
-const toolPrefix = "create_document_for_" as const;
+const toolNameSuffix = ".create_document" as const;
+function extractPrefix(toolName: string): string {
+  return toolName.slice(0, -toolNameSuffix.length);
+}
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateDocumentForCollection {
     return (
-      toolCall.tool.startsWith(toolPrefix) &&
-      Id.is.collection(toolCall.tool.slice(toolPrefix.length))
+      toolCall.tool.endsWith(toolNameSuffix) &&
+      Id.is.collection(extractPrefix(toolCall.tool))
     );
   },
 
@@ -19,7 +30,7 @@ export default {
     toolCall: ToolCall.CreateDocumentForCollection,
     documentsCreate: DocumentsCreate,
   ): Promise<ToolResult.CreateDocumentForCollection> {
-    const collectionId = toolCall.tool.slice(toolPrefix.length) as CollectionId;
+    const collectionId = extractPrefix(toolCall.tool) as CollectionId;
 
     const {
       success,
@@ -43,6 +54,18 @@ export default {
             documentVersionId: document.latestVersion.id,
           })
         : makeUnsuccessfulToolResultOutput(error),
+    };
+  },
+
+  get(collection: Collection): InferenceService.Tool {
+    return {
+      type: InferenceService.ToolType.Function,
+      name: `${collection.id}${toolNameSuffix}`,
+      description: formatDescription(`
+        Creates a document in collection "${collection.settings.name}"
+        (collection id = ${collection.id}).
+      `),
+      inputSchema: jsonschemagen(collection.latestVersion.schema),
     };
   },
 };

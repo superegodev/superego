@@ -1,17 +1,18 @@
 import {
+  AssistantName,
   CompletionModel,
   type Conversation,
-  ConversationType,
-  MessagePartType,
+  ConversationFormat,
+  type Message,
+  MessageContentPartType,
   Theme,
 } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { RoutingInferenceServiceFactory } from "@superego/inference-services";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
-import { RoutingAssistantManager } from "@superego/routing-assistant-manager";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
-import last from "../src/utils/last.js";
 
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
@@ -22,7 +23,7 @@ const backend = new ExecutingBackend(
     },
   }),
   new QuickjsJavascriptSandbox(),
-  new RoutingAssistantManager(),
+  new RoutingInferenceServiceFactory(),
 );
 
 const queryClient = new QueryClient({
@@ -43,20 +44,22 @@ class DevAssistant {
   private conversation: Conversation | null = null;
 
   async say(message: string) {
-    const messagePart = {
-      type: MessagePartType.Text,
-      content: message,
-      contentType: "text/plain",
-    } as const;
+    const messageContent: Message.User["content"] = [
+      {
+        type: MessageContentPartType.Text,
+        text: message,
+      },
+    ];
     const result =
       this.conversation === null
-        ? await backend.assistant.startConversation(
-            ConversationType.Text,
-            messagePart,
+        ? await backend.assistants.startConversation(
+            AssistantName.DocumentCreator,
+            ConversationFormat.Text,
+            messageContent,
           )
-        : await backend.assistant.continueConversation(
+        : await backend.assistants.continueConversation(
             this.conversation.id,
-            messagePart,
+            messageContent,
           );
     if (result.error) {
       console.log("ERROR CALLING BACKEND");
@@ -65,28 +68,6 @@ class DevAssistant {
     }
     this.conversation = result.data;
     console.log(this.conversation);
-    this.logLastMessage();
-  }
-
-  private logLastMessage() {
-    const conversation = this.conversation!;
-    if (conversation.nextMessageGenerationError) {
-      console.log("NEXT MESSAGE GENERATION ERROR");
-      console.log(conversation.nextMessageGenerationError);
-      return;
-    }
-    console.log("RESPONSE");
-    const lastMessage = last(conversation.messages);
-    lastMessage?.parts.forEach((part) => {
-      if (part.type === MessagePartType.Text) {
-        console.log("Text part");
-        console.log(part.content);
-      }
-      if (part.type === MessagePartType.DocumentCreated) {
-        console.log("DocumentCreated part");
-        console.log(part.documentContent);
-      }
-    });
   }
 }
 (window as any).assistant = new DevAssistant();

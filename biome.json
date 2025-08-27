@@ -15,7 +15,8 @@
       "packages/**/*.tsx",
       "**/*.json",
       "!**/package.json",
-      "!**/translations/**/*"
+      "!**/translations/**/*",
+      "!packages/core/schema/src/test-schemas/*.generated.*"
     ]
   },
   "formatter": {

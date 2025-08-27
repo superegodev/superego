@@ -3,6 +3,8 @@ import { codegen } from "@superego/schema";
 import makeSuccessfulToolResultOutput from "../../../makers/makeSuccessfulToolResultOutput.js";
 import makeToolResultError from "../../../makers/makeToolResultError.js";
 import makeUnsuccessfulToolResultOutput from "../../../makers/makeUnsuccessfulToolResultOutput.js";
+import InferenceService from "../../../requirements/InferenceService.js";
+import formatDescription from "../../../utils/formatDescription.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.GetCollectionTypescriptSchema {
@@ -25,6 +27,33 @@ export default {
         : makeUnsuccessfulToolResultOutput(
             makeToolResultError("CollectionNotFound", { collectionId }),
           ),
+    };
+  },
+
+  get(): InferenceService.Tool {
+    return {
+      type: InferenceService.ToolType.Function,
+      name: "get_collection_typescript_schema",
+      description: formatDescription(`
+        Gets the set of TypeScript types that describe the shape of a document
+        in the collection specified collection. Note: the type denoted as the
+        "root type" is the one that describes the document; the other types - if
+        there are any - are auxiliary.
+      `),
+      inputSchema: {
+        type: "object",
+        properties: {
+          collectionId: {
+            type: "string",
+            description: formatDescription(`
+              The ID of the collection whose TypeScript schema we want to
+              retrieve.
+            `),
+          },
+        },
+        required: ["collectionId"],
+        additionalProperties: false,
+      },
     };
   },
 };

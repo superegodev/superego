@@ -4,21 +4,21 @@ import type FilesNotFound from "../errors/FilesNotFound.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
-import type Tool from "./Tool.js";
+import type ToolName from "./ToolName.js";
 import type ToolResultOutput from "./ToolResultOutput.js";
 
 interface ToolResult<
-  TTool extends Tool | string = string,
+  Tool extends ToolName | string = string,
   Output extends ToolResultOutput<any, any> = ToolResultOutput<any, any>,
 > {
-  tool: TTool;
+  tool: Tool;
   toolCallId: string;
   output: Output;
 }
 
 namespace ToolResult {
   export type GetCollectionTypescriptSchema = ToolResult<
-    Tool.GetCollectionTypescriptSchema,
+    ToolName.GetCollectionTypescriptSchema,
     ToolResultOutput<
       {
         typescriptSchema: string;
@@ -28,7 +28,7 @@ namespace ToolResult {
   >;
 
   export type CreateDocumentForCollection = ToolResult<
-    Tool.CreateDocumentForCollection,
+    ToolName.CreateDocumentForCollection,
     ToolResultOutput<
       {
         collectionId: CollectionId;
