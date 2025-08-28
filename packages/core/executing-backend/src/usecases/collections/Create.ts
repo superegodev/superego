@@ -43,9 +43,11 @@ export default class CollectionsCreate extends Usecase<
     | CollectionSummaryPropertiesNotValid
   > {
     const settingsValidationResult = v.safeParse(
-      v.object({
+      v.strictObject({
         name: backedUtilsValibotSchemas.collectionName(),
         icon: v.nullable(backedUtilsValibotSchemas.icon()),
+        description: v.nullable(v.string()),
+        assistantInstructions: v.nullable(v.string()),
       }),
       settings,
     );
@@ -116,6 +118,9 @@ export default class CollectionsCreate extends Usecase<
         name: settingsValidationResult.output.name,
         icon: settingsValidationResult.output.icon,
         collectionCategoryId: settings.collectionCategoryId,
+        description: settingsValidationResult.output.description,
+        assistantInstructions:
+          settingsValidationResult.output.assistantInstructions,
       },
       createdAt: now,
     };

@@ -56,8 +56,8 @@ export default {
       description: "Details of the payment method used.",
       dataType: DataType.Enum,
       members: {
-        CreditCard: { value: "CreditCard" },
-        DebitCard: { value: "DebitCard" },
+        CreditCard: { value: "Credit Card" },
+        DebitCard: { value: "Debit Card" },
         Cash: { value: "Cash" },
       },
     },

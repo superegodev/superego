@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type CollectionEntity from "../../../entities/CollectionEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 export default rd<Dependencies>("Collections", (deps) => {
@@ -9,12 +10,14 @@ export default rd<Dependencies>("Collections", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const collection = {
+    const collection: CollectionEntity = {
       id: Id.generate.collection(),
       settings: {
         name: "name",
         icon: null,
         collectionCategoryId: null,
+        description: null,
+        assistantInstructions: null,
       },
       createdAt: new Date(),
     };
@@ -38,12 +41,14 @@ export default rd<Dependencies>("Collections", (deps) => {
   it("replacing", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const collection = {
+    const collection: CollectionEntity = {
       id: Id.generate.collection(),
       settings: {
         name: "original name",
         icon: null,
         collectionCategoryId: null,
+        description: null,
+        assistantInstructions: null,
       },
       createdAt: new Date(),
     };
@@ -82,12 +87,14 @@ export default rd<Dependencies>("Collections", (deps) => {
   it("deleting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const collection = {
+    const collection: CollectionEntity = {
       id: Id.generate.collection(),
       settings: {
         name: "name",
         icon: null,
         collectionCategoryId: null,
+        description: null,
+        assistantInstructions: null,
       },
       createdAt: new Date(),
     };
@@ -122,12 +129,14 @@ export default rd<Dependencies>("Collections", (deps) => {
     it("case: exists", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collection = {
+      const collection: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
         },
         createdAt: new Date(),
       };
@@ -172,12 +181,14 @@ export default rd<Dependencies>("Collections", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const collectionCategoryId = Id.generate.collectionCategory();
-      const collection = {
+      const collection: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
           name: "name",
           icon: null,
           collectionCategoryId: collectionCategoryId,
+          description: null,
+          assistantInstructions: null,
         },
         createdAt: new Date(),
       };
@@ -227,12 +238,14 @@ export default rd<Dependencies>("Collections", (deps) => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collection = {
+      const collection: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
         },
         createdAt: new Date(),
       };
@@ -292,21 +305,25 @@ export default rd<Dependencies>("Collections", (deps) => {
     it("case: some collections => returns them", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collection1 = {
+      const collection1: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
           name: "name 1",
           icon: null,
           collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
         },
         createdAt: new Date(),
       };
-      const collection2 = {
+      const collection2: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
           name: "name 2",
           icon: null,
           collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
         },
         createdAt: new Date(),
       };

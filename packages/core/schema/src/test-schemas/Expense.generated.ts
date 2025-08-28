@@ -62,8 +62,8 @@ export enum Category {
  * Details of the payment method used.
  */
 export enum PaymentMethod {
-  CreditCard = "CreditCard",
-  DebitCard = "DebitCard",
+  CreditCard = "Credit Card",
+  DebitCard = "Debit Card",
   Cash = "Cash",
 }
 

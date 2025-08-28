@@ -20,11 +20,11 @@
     },
     "PaymentMethod": {
       "title": "PaymentMethod",
-      "description": "Details of the payment method used.\n\n## Enum members\n\n### CreditCard\n\n\n\n### DebitCard\n\n\n\n### Cash",
+      "description": "Details of the payment method used.\n\n## Enum members\n\n### Credit Card\n\n\n\n### Debit Card\n\n\n\n### Cash",
       "type": "string",
       "enum": [
-        "CreditCard",
-        "DebitCard",
+        "Credit Card",
+        "Debit Card",
         "Cash"
       ]
     },

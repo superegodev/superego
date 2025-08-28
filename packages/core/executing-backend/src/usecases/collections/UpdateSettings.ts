@@ -42,6 +42,8 @@ export default class CollectionsUpdateSettings extends Usecase<
         v.object({
           name: valibotSchemas.collectionName(),
           icon: v.nullable(valibotSchemas.icon()),
+          description: v.nullable(v.string()),
+          assistantInstructions: v.nullable(v.string()),
         }),
       ),
       settingsPatch,
@@ -85,6 +87,14 @@ export default class CollectionsUpdateSettings extends Usecase<
           settingsPatch.collectionCategoryId !== undefined
             ? settingsPatch.collectionCategoryId
             : collection.settings.collectionCategoryId,
+        description:
+          settingsPatch.description !== undefined
+            ? settingsPatch.description
+            : collection.settings.description,
+        assistantInstructions:
+          settingsPatch.assistantInstructions !== undefined
+            ? settingsPatch.assistantInstructions
+            : collection.settings.assistantInstructions,
       },
     };
     await this.repos.collection.replace(updatedCollection);

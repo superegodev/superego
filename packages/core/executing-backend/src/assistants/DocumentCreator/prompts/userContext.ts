@@ -8,11 +8,8 @@ export default function userContext(collections: Collection[]): string {
       collections.map((collection) => ({
         id: collection.id,
         name: collection.settings.name,
-        description: "",
-        assistantInstructions: "",
-        // TODO:
-        // description: collection.settings.description,
-        // assistantInstructions: collection.settings.assistantInstructions
+        description: collection.settings.description,
+        assistantInstructions: collection.settings.assistantInstructions,
       })),
     ),
     "</collections>",

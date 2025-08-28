@@ -16,6 +16,8 @@ import * as cs from "./CollectionSettings.css.js";
 interface FormValues {
   name: string;
   icon: string | null;
+  description: string | null;
+  assistantInstructions: string | null;
 }
 
 interface Props {
@@ -30,12 +32,16 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
     defaultValues: {
       name: collection.settings.name,
       icon: collection.settings.icon,
+      description: collection.settings.description,
+      assistantInstructions: collection.settings.assistantInstructions,
     },
     mode: "all",
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.collectionName(),
         icon: v.nullable(valibotSchemas.icon()),
+        description: v.nullable(v.string()),
+        assistantInstructions: v.nullable(v.string()),
       }),
     ),
   });
@@ -43,8 +49,8 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
   const onSubmit = async (values: FormValues) => {
     const { success, data } = await mutate(collection.id, values);
     if (success) {
-      const { name, icon } = data.settings;
-      reset({ name, icon });
+      const { name, icon, description, assistantInstructions } = data.settings;
+      reset({ name, icon, description, assistantInstructions });
     }
   };
 
@@ -64,6 +70,20 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
           className={cs.UpdateCollectionSettingsForm.nameInput}
         />
       </div>
+      <RHFTextField
+        control={control}
+        name="description"
+        label={intl.formatMessage({ defaultMessage: "Description" })}
+        textArea={true}
+        emptyInputValue={null}
+      />
+      <RHFTextField
+        control={control}
+        name="assistantInstructions"
+        label={intl.formatMessage({ defaultMessage: "Assistant instructions" })}
+        textArea={true}
+        emptyInputValue={null}
+      />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Save settings" />

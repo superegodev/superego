@@ -33,6 +33,8 @@ const schemaTypescriptLibPath = "/CollectionSchema.ts";
 interface FormValues {
   name: string;
   icon: string | null;
+  description: string | null;
+  assistantInstructions: string | null;
   schema: Schema;
   summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
 }
@@ -64,6 +66,8 @@ export default function CreateCollectionForm() {
       defaultValues: {
         name: "",
         icon: null,
+        description: null,
+        assistantInstructions: null,
         schema: defaultSchema,
         summaryProperties: [defaultSummaryPropertyDefinition],
       },
@@ -72,6 +76,8 @@ export default function CreateCollectionForm() {
         v.strictObject({
           name: backendUtilsValibotSchemas.collectionName(),
           icon: v.nullable(backendUtilsValibotSchemas.icon()),
+          description: v.nullable(v.string()),
+          assistantInstructions: v.nullable(v.string()),
           schema: schemaValibotSchemas.schema(),
           summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
         }),
@@ -101,10 +107,18 @@ export default function CreateCollectionForm() {
     schema,
     name,
     icon,
+    description,
+    assistantInstructions,
     summaryProperties,
   }: FormValues) => {
     const { success, data } = await mutate(
-      { name, icon, collectionCategoryId: null },
+      {
+        name,
+        icon,
+        collectionCategoryId: null,
+        description,
+        assistantInstructions,
+      },
       schema,
       { summaryProperties },
     );
@@ -137,6 +151,20 @@ export default function CreateCollectionForm() {
           className={cs.CreateCollectionForm.nameInput}
         />
       </div>
+      <RHFTextField
+        control={control}
+        name="description"
+        label={intl.formatMessage({ defaultMessage: "Description" })}
+        textArea={true}
+        emptyInputValue={null}
+      />
+      <RHFTextField
+        control={control}
+        name="assistantInstructions"
+        label={intl.formatMessage({ defaultMessage: "Assistant instructions" })}
+        textArea={true}
+        emptyInputValue={null}
+      />
       <RHFSchemaField
         control={control}
         name="schema"

@@ -53,11 +53,17 @@
   "CreateCollectionForm.tsx_+R8UFo": {
     "defaultMessage": "Error creating collection"
   },
+  "CreateCollectionForm.tsx_1W2oHf": {
+    "defaultMessage": "Assistant instructions"
+  },
   "CreateCollectionForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
   "CreateCollectionForm.tsx_Lktmvk": {
     "defaultMessage": "Schema"
+  },
+  "CreateCollectionForm.tsx_Q8Qw5B": {
+    "defaultMessage": "Description"
   },
   "CreateCollectionForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
@@ -392,8 +398,14 @@
   "TiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
+  "UpdateCollectionSettingsForm.tsx_1W2oHf": {
+    "defaultMessage": "Assistant instructions"
+  },
   "UpdateCollectionSettingsForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
+  },
+  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
+    "defaultMessage": "Description"
   },
   "UpdateCollectionSettingsForm.tsx_c9brFu": {
     "defaultMessage": "Error saving settings"

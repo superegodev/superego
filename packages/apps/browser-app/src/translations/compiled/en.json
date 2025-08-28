@@ -119,6 +119,12 @@
       "value": "Error creating collection"
     }
   ],
+  "CreateCollectionForm.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Assistant instructions"
+    }
+  ],
   "CreateCollectionForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -129,6 +135,12 @@
     {
       "type": 0,
       "value": "Schema"
+    }
+  ],
+  "CreateCollectionForm.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Description"
     }
   ],
   "CreateCollectionForm.tsx_VzzYJk": [
@@ -889,10 +901,22 @@
       "value": "Write..."
     }
   ],
+  "UpdateCollectionSettingsForm.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Assistant instructions"
+    }
+  ],
   "UpdateCollectionSettingsForm.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Name"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Description"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_c9brFu": [
