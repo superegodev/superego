@@ -1,48 +1,31 @@
 {
   "$defs": {
-    "ExpenseCategory": {
-      "title": "ExpenseCategory",
-      "description": "Category of the expense.\n\nEnum members descriptions:\n\n- GROCERIES: undefined\n- TRANSPORT: undefined\n- ENTERTAINMENT: undefined\n- BILLS: undefined\n- HEALTHCARE: undefined\n- SHOPPING: undefined\n- OTHER: undefined",
+    "Category": {
+      "title": "Category",
+      "description": "Category of the expense.\n\n## Enum members\n\n### Housing\n\nRent or mortgage, property taxes, HOA dues, home repairs.\n\n### Utilities\n\nElectricity, gas, water, trash, internet, phone.\n\n### Groceries\n\nFood and household staples for home.\n\n### DiningAndTakeout\n\nRestaurants, cafés, delivery, tips.\n\n### Transportation\n\nFuel, public transit, rideshare, parking, maintenance.\n\n### HealthAndMedical\n\n Doctor visits, dental, prescriptions, copays.\n\n### Insurance\n\nAuto, health, home/renters, life premiums.\n\n### DebtAndLoans\n\nCredit card payments, student or auto loans.\n\n### EntertainmentAndSubscriptions\n\nStreaming, games, events, hobbies, apps.\n\n### ShoppingAndPersonalCare\n\nClothing, toiletries, cosmetics, salon/barber.\n\n### Other",
       "type": "string",
       "enum": [
-        "GROCERIES",
-        "TRANSPORT",
-        "ENTERTAINMENT",
-        "BILLS",
-        "HEALTHCARE",
-        "SHOPPING",
-        "OTHER"
+        "Housing",
+        "Utilities",
+        "Groceries",
+        "DiningAndTakeout",
+        "Transportation",
+        "HealthAndMedical",
+        "Insurance",
+        "DebtAndLoans",
+        "EntertainmentAndSubscriptions",
+        "ShoppingAndPersonalCare",
+        "Other"
       ]
     },
-    "PaymentMethodDetails": {
-      "title": "PaymentMethodDetails",
-      "description": "Details of the payment method used.",
-      "type": "object",
-      "properties": {
-        "type": {
-          "description": "e.g., Credit Card, Debit Card, PayPal, Cash",
-          "type": "string"
-        },
-        "last4Digits": {
-          "description": "Last 4 digits for card payments.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "issuer": {
-          "description": "Card issuer or payment provider.",
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "type",
-        "last4Digits",
-        "issuer"
+    "PaymentMethod": {
+      "title": "PaymentMethod",
+      "description": "Details of the payment method used.\n\n## Enum members\n\n### CreditCard\n\n\n\n### DebitCard\n\n\n\n### Cash",
+      "type": "string",
+      "enum": [
+        "CreditCard",
+        "DebitCard",
+        "Cash"
       ]
     },
     "JsonObject": {
@@ -58,65 +41,18 @@
         "__dataType"
       ],
       "additionalProperties": true
-    },
-    "ProtoFile": {
-      "title": "ProtoFile",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "File name + extension.",
-          "examples": [
-            "book.pdf"
-          ]
-        },
-        "mimeType": {
-          "type": "string"
-        },
-        "content": {
-          "type": "string",
-          "description": "The binary content of the file, in base64."
-        }
-      },
-      "required": [
-        "name",
-        "mimeType",
-        "content"
-      ],
-      "additionalProperties": false
-    },
-    "FileRef": {
-      "title": "ProtoFile",
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "description": "File name + extension.",
-          "examples": [
-            "book.pdf"
-          ]
-        },
-        "mimeType": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "mimeType"
-      ],
-      "additionalProperties": false
     }
   },
   "title": "Expense",
   "description": "Represents a single financial expense.",
   "type": "object",
   "properties": {
+    "title": {
+      "description": "Short title for the expense. 5 words max.",
+      "type": "string"
+    },
     "date": {
-      "description": "Date of the expense.\n\nFormat `dev.superego:String.PlainDate`:\n\nA calendar date in the ISO8601 format, not associated with a particular time or time zone.",
+      "description": "Date of the expense.\n\n## Format `dev.superego:String.PlainDate`\n\nA calendar date in the ISO8601 format, not associated with a particular time or time zone.",
       "examples": [
         "2006-08-24",
         "2024-02-29",
@@ -136,10 +72,20 @@
       "const": "EUR"
     },
     "category": {
-      "$ref": "#/$defs/ExpenseCategory"
+      "$ref": "#/$defs/Category"
     },
-    "description": {
-      "description": "Detailed description of the expense.\n\nFormat `dev.superego:JsonObject.TiptapRichText`:\n\nA rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
+    "paymentMethod": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PaymentMethod"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "notes": {
+      "description": "Misc notes.\n\n## Format `dev.superego:JsonObject.TiptapRichText`\n\nA rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
       "examples": [
         {
           "__dataType": "JsonObject",
@@ -165,57 +111,24 @@
           ]
         }
       ],
-      "$ref": "#/$defs/JsonObject"
-    },
-    "isRecurring": {
-      "description": "Is this a recurring expense?",
-      "type": "boolean"
-    },
-    "receipt": {
-      "description": "Scanned or digital receipt file.",
       "anyOf": [
         {
-          "$ref": "#/$defs/ProtoFile"
-        },
-        {
-          "$ref": "#/$defs/FileRef"
+          "$ref": "#/$defs/JsonObject"
         },
         {
           "type": "null"
         }
       ]
-    },
-    "paymentMethod": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/PaymentMethodDetails"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "tags": {
-      "description": "List of user-defined tags.",
-      "type": [
-        "array",
-        "null"
-      ],
-      "items": {
-        "type": "string"
-      }
     }
   },
   "additionalProperties": false,
   "required": [
+    "title",
     "date",
     "amount",
     "currency",
     "category",
-    "description",
-    "isRecurring",
-    "receipt",
     "paymentMethod",
-    "tags"
+    "notes"
   ]
 }

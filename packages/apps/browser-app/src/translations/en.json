@@ -1,13 +1,4 @@
 {
-  "AssistantMessageInput.tsx_5OQcRC": {
-    "defaultMessage": "Assistant text input"
-  },
-  "AssistantMessageInput.tsx_9WRlF4": {
-    "defaultMessage": "Send"
-  },
-  "AssistantMessageInput.tsx_oZLZvb": {
-    "defaultMessage": "How can I help you?"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -311,6 +302,9 @@
   "Home.tsx_6Se3+J": {
     "defaultMessage": "Superego Logo - A low detail, low-poly painting of Freud's face"
   },
+  "Home.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
+  },
   "Home.tsx_oxShVS": {
     "defaultMessage": "Your Life's Database"
   },
@@ -448,6 +442,12 @@
   },
   "UpdateGlobalSettingsForm.tsx_n0wQL1": {
     "defaultMessage": "Inference"
+  },
+  "UserMessageContentInput.tsx_9WRlF4": {
+    "defaultMessage": "Send"
+  },
+  "UserMessageContentInput.tsx_rf1wfv": {
+    "defaultMessage": "Message to assistant"
   },
   "summaryPropertyDefinition.ts_HAlOn1": {
     "defaultMessage": "Name"

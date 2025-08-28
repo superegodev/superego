@@ -26,11 +26,11 @@ function generateTypeDefinitionTsDoc(
     if (format) {
       commentLines.push(
         "",
-        `Format \`${format.id}\`:`,
+        `## Format \`${format.id}\``,
         "",
         format.description.en,
         "",
-        "Examples:",
+        "### Examples",
         "",
         ...format.validExamples.map(
           (example) => `- ${JSON.stringify(example)}`,

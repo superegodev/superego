@@ -7,13 +7,16 @@ import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 
 const backend = new ExecutingBackend(
-  new DemoDataRepositoriesManager({
-    appearance: { theme: Theme.Auto },
-    inference: {
-      providers: { groq: { apiKey: null, baseUrl: null } },
-      completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+  new DemoDataRepositoriesManager(
+    {
+      appearance: { theme: Theme.Auto },
+      inference: {
+        providers: { groq: { apiKey: null, baseUrl: null } },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+      },
     },
-  }),
+    true,
+  ),
   new QuickjsJavascriptSandbox(),
   new RoutingInferenceServiceFactory(),
 );

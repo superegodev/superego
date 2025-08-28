@@ -1,22 +1,4 @@
 {
-  "AssistantMessageInput.tsx_5OQcRC": [
-    {
-      "type": 0,
-      "value": "Assistant text input"
-    }
-  ],
-  "AssistantMessageInput.tsx_9WRlF4": [
-    {
-      "type": 0,
-      "value": "Send"
-    }
-  ],
-  "AssistantMessageInput.tsx_oZLZvb": [
-    {
-      "type": 0,
-      "value": "How can I help you?"
-    }
-  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -703,6 +685,12 @@
       "value": "Superego Logo - A low detail, low-poly painting of Freud's face"
     }
   ],
+  "Home.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
+    }
+  ],
   "Home.tsx_oxShVS": [
     {
       "type": 0,
@@ -1001,6 +989,18 @@
     {
       "type": 0,
       "value": "Inference"
+    }
+  ],
+  "UserMessageContentInput.tsx_9WRlF4": [
+    {
+      "type": 0,
+      "value": "Send"
+    }
+  ],
+  "UserMessageContentInput.tsx_rf1wfv": [
+    {
+      "type": 0,
+      "value": "Message to assistant"
     }
   ],
   "summaryPropertyDefinition.ts_HAlOn1": [

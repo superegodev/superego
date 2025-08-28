@@ -1,0 +1,103 @@
+{
+  "$defs": {
+    "Type": {
+      "title": "Type",
+      "description": "Type of a calendar entry.\n\n## Enum members\n\n### Event\n\nAn event, with a defined start time and a defined end time.\n\n### Reminder\n\nA reminder, with a defined start time but no end time.",
+      "type": "string",
+      "enum": [
+        "Event",
+        "Reminder"
+      ]
+    },
+    "JsonObject": {
+      "title": "JsonObject",
+      "type": "object",
+      "properties": {
+        "__dataType": {
+          "type": "string",
+          "const": "JsonObject"
+        }
+      },
+      "required": [
+        "__dataType"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "title": "CalendarEntry",
+  "description": "An entry in my calendar.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "The type of the entry.",
+      "$ref": "#/$defs/Type"
+    },
+    "title": {
+      "description": "Short title for the entry. 5 words max.",
+      "type": "string"
+    },
+    "startTime": {
+      "description": "When the event or reminder starts.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "examples": [
+        "2006-08-24T19:39:09.000Z",
+        "2006-08-24T19:39:09.068Z"
+      ],
+      "type": "string"
+    },
+    "endTime": {
+      "description": "When the event or reminder ends. Null for reminders.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "examples": [
+        "2006-08-24T19:39:09.000Z",
+        "2006-08-24T19:39:09.068Z"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "description": "Misc notes.\n\n## Format `dev.superego:JsonObject.TiptapRichText`\n\nA rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
+      "examples": [
+        {
+          "__dataType": "JsonObject",
+          "type": "doc",
+          "content": []
+        },
+        {
+          "__dataType": "JsonObject",
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "attrs": {
+                "textAlign": null
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Hello, World!"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JsonObject"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "title",
+    "startTime",
+    "endTime",
+    "notes"
+  ]
+}

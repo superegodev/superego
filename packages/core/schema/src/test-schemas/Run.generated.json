@@ -2,7 +2,7 @@
   "$defs": {
     "RunType": {
       "title": "RunType",
-      "description": "Type of running activity.\n\nEnum members descriptions:\n\n- TREADMILL: Running on a treadmill.\n- OUTDOOR: Running outdoors on roads or paths.\n- TRAIL: Running on trails.",
+      "description": "Type of running activity.\n\n## Enum members\n\n### TREADMILL\n\nRunning on a treadmill.\n\n### OUTDOOR\n\nRunning outdoors on roads or paths.\n\n### TRAIL\n\nRunning on trails.",
       "type": "string",
       "enum": [
         "TREADMILL",
@@ -12,7 +12,7 @@
     },
     "RatePerceivedExertion": {
       "title": "RatePerceivedExertion",
-      "description": "A quantitative measure of perceived exertion during physical activity. Follows the Borg CR10 scale.\n\nEnum members descriptions:\n\n- 0: No exertion.\n- 0.5: Noticeable.\n- 1: Very light.\n- 2: Light.\n- 3: Moderate.\n- 4: Somewhat difficult.\n- 5: Difficult.\n- 6: Difficult.\n- 7: Very difficult.\n- 8: Very difficult.\n- 9: Almost maximal.\n- 10: Maximal.",
+      "description": "A quantitative measure of perceived exertion during physical activity. Follows the Borg CR10 scale.\n\n## Enum members\n\n### 0\n\nNo exertion.\n\n### 0.5\n\nNoticeable.\n\n### 1\n\nVery light.\n\n### 2\n\nLight.\n\n### 3\n\nModerate.\n\n### 4\n\nSomewhat difficult.\n\n### 5\n\nDifficult.\n\n### 6\n\nDifficult.\n\n### 7\n\nVery difficult.\n\n### 8\n\nVery difficult.\n\n### 9\n\nAlmost maximal.\n\n### 10\n\nMaximal.",
       "type": "string",
       "enum": [
         "0",
@@ -31,7 +31,7 @@
     },
     "WeatherCondition": {
       "title": "WeatherCondition",
-      "description": "General weather condition.\n\nEnum members descriptions:\n\n- SUNNY: undefined\n- CLOUDY: undefined\n- RAINY: undefined\n- SNOWY: undefined",
+      "description": "General weather condition.\n\n## Enum members\n\n### SUNNY\n\n\n\n### CLOUDY\n\n\n\n### RAINY\n\n\n\n### SNOWY",
       "type": "string",
       "enum": [
         "SUNNY",
@@ -124,7 +124,7 @@
   "type": "object",
   "properties": {
     "startTime": {
-      "description": "ISO 8601 timestamp of when the run started.\n\nFormat `dev.superego:String.Instant`:\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "description": "ISO 8601 timestamp of when the run started.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
       "examples": [
         "2006-08-24T19:39:09.000Z",
         "2006-08-24T19:39:09.068Z"

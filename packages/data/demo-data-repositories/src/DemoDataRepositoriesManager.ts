@@ -5,6 +5,7 @@ import type {
 } from "@superego/executing-backend";
 import type Data from "./Data.js";
 import DemoDataRepositories from "./DemoDataRepositories.js";
+import demoData from "./demoData.js";
 import clone from "./utils/clone.js";
 
 export default class DemoDataRepositoriesManager
@@ -18,6 +19,7 @@ export default class DemoDataRepositoriesManager
 
   constructor(
     private defaultGlobalSettings: GlobalSettings,
+    private useDemoDataAsDefault = false,
     private databaseName = "superego",
   ) {}
 
@@ -38,6 +40,7 @@ export default class DemoDataRepositoriesManager
       files: {},
       conversations: {},
       globalSettings: { value: this.defaultGlobalSettings },
+      ...(this.useDemoDataAsDefault ? demoData : {}),
     };
     const initialVersion = transactionData.version;
     const repos = new DemoDataRepositories(transactionData, () => {

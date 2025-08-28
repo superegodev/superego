@@ -4,42 +4,71 @@ import type Schema from "../Schema.js";
 
 export default {
   types: {
-    ExpenseCategory: {
+    Category: {
       description: "Category of the expense.",
       dataType: DataType.Enum,
       members: {
-        Groceries: { value: "GROCERIES" },
-        Transport: { value: "TRANSPORT" },
-        Entertainment: { value: "ENTERTAINMENT" },
-        Bills: { value: "BILLS" },
-        Healthcare: { value: "HEALTHCARE" },
-        Shopping: { value: "SHOPPING" },
-        Other: { value: "OTHER" },
+        Housing: {
+          value: "Housing",
+          description:
+            "Rent or mortgage, property taxes, HOA dues, home repairs.",
+        },
+        Utilities: {
+          value: "Utilities",
+          description: "Electricity, gas, water, trash, internet, phone.",
+        },
+        Groceries: {
+          value: "Groceries",
+          description: "Food and household staples for home.",
+        },
+        DiningAndTakeout: {
+          value: "DiningAndTakeout",
+          description: "Restaurants, cafés, delivery, tips.",
+        },
+        Transportation: {
+          value: "Transportation",
+          description: "Fuel, public transit, rideshare, parking, maintenance.",
+        },
+        HealthAndMedical: {
+          value: "HealthAndMedical",
+          description: " Doctor visits, dental, prescriptions, copays.",
+        },
+        Insurance: {
+          value: "Insurance",
+          description: "Auto, health, home/renters, life premiums.",
+        },
+        DebtAndLoans: {
+          value: "DebtAndLoans",
+          description: "Credit card payments, student or auto loans.",
+        },
+        EntertainmentAndSubscriptions: {
+          value: "EntertainmentAndSubscriptions",
+          description: "Streaming, games, events, hobbies, apps.",
+        },
+        ShoppingAndPersonalCare: {
+          value: "ShoppingAndPersonalCare",
+          description: "Clothing, toiletries, cosmetics, salon/barber.",
+        },
+        Other: { value: "Other" },
       },
     },
-    PaymentMethodDetails: {
+    PaymentMethod: {
       description: "Details of the payment method used.",
-      dataType: DataType.Struct,
-      properties: {
-        type: {
-          description: "e.g., Credit Card, Debit Card, PayPal, Cash",
-          dataType: DataType.String,
-        },
-        last4Digits: {
-          description: "Last 4 digits for card payments.",
-          dataType: DataType.String,
-        },
-        issuer: {
-          description: "Card issuer or payment provider.",
-          dataType: DataType.String,
-        },
+      dataType: DataType.Enum,
+      members: {
+        CreditCard: { value: "CreditCard" },
+        DebitCard: { value: "DebitCard" },
+        Cash: { value: "Cash" },
       },
-      nullableProperties: ["last4Digits", "issuer"],
     },
     Expense: {
       description: "Represents a single financial expense.",
       dataType: DataType.Struct,
       properties: {
+        title: {
+          description: "Short title for the expense. 5 words max.",
+          dataType: DataType.String,
+        },
         date: {
           description: "Date of the expense.",
           dataType: DataType.String,
@@ -54,28 +83,15 @@ export default {
           dataType: DataType.StringLiteral,
           value: "EUR",
         },
-        category: { dataType: null, ref: "ExpenseCategory" },
-        description: {
-          description: "Detailed description of the expense.",
+        category: { dataType: null, ref: "Category" },
+        paymentMethod: { dataType: null, ref: "PaymentMethod" },
+        notes: {
+          description: "Misc notes.",
           dataType: DataType.JsonObject,
           format: FormatId.JsonObject.TiptapRichText,
         },
-        isRecurring: {
-          description: "Is this a recurring expense?",
-          dataType: DataType.Boolean,
-        },
-        receipt: {
-          description: "Scanned or digital receipt file.",
-          dataType: DataType.File,
-        },
-        paymentMethod: { dataType: null, ref: "PaymentMethodDetails" },
-        tags: {
-          description: "List of user-defined tags.",
-          dataType: DataType.List,
-          items: { dataType: DataType.String },
-        },
       },
-      nullableProperties: ["receipt", "paymentMethod", "tags"],
+      nullableProperties: ["paymentMethod", "notes"],
     },
   },
   rootType: "Expense",

@@ -133,11 +133,11 @@ export type Run = {
   /**
    * ISO 8601 timestamp of when the run started.
    *
-   * Format `dev.superego:String.Instant`:
+   * ## Format `dev.superego:String.Instant`
    *
    * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
    *
-   * Examples:
+   * ### Examples
    *
    * - "2006-08-24T19:39:09.000Z"
    * - "2006-08-24T19:39:09.068Z"

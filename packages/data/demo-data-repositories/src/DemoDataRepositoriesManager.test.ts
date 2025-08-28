@@ -11,6 +11,7 @@ registerDataRepositoriesTests(async () => {
         completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
       },
     },
+    false,
     crypto.randomUUID().replaceAll("-", ""),
   );
   return { dataRepositoriesManager };

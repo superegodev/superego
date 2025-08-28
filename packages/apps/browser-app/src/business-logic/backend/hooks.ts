@@ -110,6 +110,22 @@ export const useDeleteDocument = makeUseBackendMutation(
 );
 
 /*
+ * Assistants
+ */
+
+export const useStartConversation = makeUseBackendMutation(
+  "assistants",
+  "startConversation",
+  () => [],
+);
+
+export const useContinueConversation = makeUseBackendMutation(
+  "assistants",
+  "continueConversation",
+  () => [],
+);
+
+/*
  * Global settings
  */
 

@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const AssistantMessageInput = {
+export const UserMessageContentInput = {
   root: style({
     position: "relative",
     width: "80%",
@@ -30,6 +30,9 @@ export const AssistantMessageInput = {
     ["fieldSizing" as any]: "content",
     resize: "none",
     selectors: {
+      "&:disabled": {
+        background: vars.colors.background.surface,
+      },
       "&:focus-visible": {
         outline: "none",
       },

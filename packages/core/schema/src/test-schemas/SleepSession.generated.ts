@@ -31,11 +31,11 @@ export type SleepInterruption = {
   /**
    * Timestamp of the interruption.
    *
-   * Format `dev.superego:String.Instant`:
+   * ## Format `dev.superego:String.Instant`
    *
    * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
    *
-   * Examples:
+   * ### Examples
    *
    * - "2006-08-24T19:39:09.000Z"
    * - "2006-08-24T19:39:09.068Z"
@@ -58,22 +58,22 @@ export type SleepInterruption = {
  */
 export type SleepSession = {
   /**
-   * Format `dev.superego:String.Instant`:
+   * ## Format `dev.superego:String.Instant`
    *
    * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
    *
-   * Examples:
+   * ### Examples
    *
    * - "2006-08-24T19:39:09.000Z"
    * - "2006-08-24T19:39:09.068Z"
    */
   startTime: string;
   /**
-   * Format `dev.superego:String.Instant`:
+   * ## Format `dev.superego:String.Instant`
    *
    * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
    *
-   * Examples:
+   * ### Examples
    *
    * - "2006-08-24T19:39:09.000Z"
    * - "2006-08-24T19:39:09.068Z"
@@ -90,11 +90,11 @@ export type SleepSession = {
   /**
    * Sleep quality score (e.g., 0-100).
    *
-   * Format `dev.superego:Number.Integer`:
+   * ## Format `dev.superego:Number.Integer`
    *
    * An integer
    *
-   * Examples:
+   * ### Examples
    *
    * - -1
    * - 0

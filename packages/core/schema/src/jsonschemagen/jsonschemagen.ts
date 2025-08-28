@@ -18,17 +18,20 @@ function generateDescription(
   if ("format" in typeDefinition) {
     const format = findFormat(typeDefinition, formats);
     if (format) {
-      lines.push("", `Format \`${format.id}\`:`, "", format.description.en);
+      lines.push("", `## Format \`${format.id}\``, "", format.description.en);
     }
   }
   if (typeDefinition.dataType === DataType.Enum) {
     lines.push(
       "",
-      "Enum members descriptions:",
+      "## Enum members",
       "",
-      ...Object.values(typeDefinition.members).map(
-        (member) => `- ${member.value}: ${member.description}`,
-      ),
+      ...Object.values(typeDefinition.members).flatMap((member) => [
+        `### ${member.value}`,
+        "",
+        member.description ?? "",
+        "",
+      ]),
     );
   }
   return lines.length > 0 ? joinLines(lines).trim() : undefined;

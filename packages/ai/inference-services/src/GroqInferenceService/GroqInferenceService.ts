@@ -25,6 +25,10 @@ export default class GroqInferenceService implements InferenceService {
     previousMessages: Message[],
     tools: InferenceService.Tool[],
   ): Promise<Message.Assistant> {
+    console.log("generateNextMessage", {
+      tools: tools.map(toGroqTool),
+      messages: previousMessages.flatMap(toGroqMessage),
+    });
     const response = await this.groq.chat.completions.create({
       model: this.model.slice("Groq_".length),
       tools: tools.map(toGroqTool),

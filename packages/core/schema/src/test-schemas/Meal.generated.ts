@@ -2,6 +2,15 @@
 // Schema types //
 //////////////////
 
+export enum Type {
+  Breakfast = "Breakfast",
+  MorningSnack = "MorningSnack",
+  Lunch = "Lunch",
+  AfternoonSnack = "AfternoonSnack",
+  Dinner = "Dinner",
+  EveningSnack = "EveningSnack",
+}
+
 /**
  * A quantity of mass.
  */
@@ -16,13 +25,16 @@ export type MassQuantity = {
 /**
  * Note: This is the root type of this schema.
  */
-export type FoodJournalEntry = {
+export type Meal = {
+  type: Type;
   /**
-   * Format `dev.superego:String.PlainDate`:
+   * The date of the meal.
+   *
+   * ## Format `dev.superego:String.PlainDate`
    *
    * A calendar date in the ISO8601 format, not associated with a particular time or time zone.
    *
-   * Examples:
+   * ### Examples
    *
    * - "2006-08-24"
    * - "2024-02-29"
@@ -31,21 +43,11 @@ export type FoodJournalEntry = {
    * - "+010924-01-01"
    */
   date: string;
-  meals: {
-    /**
-     * Format `dev.superego:String.Instant`:
-     *
-     * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
-     *
-     * Examples:
-     *
-     * - "2006-08-24T19:39:09.000Z"
-     * - "2006-08-24T19:39:09.068Z"
-     */
-    time: string;
-    consumedFoods: {
-      foodId: string;
-      quantity: MassQuantity;
-    }[];
+  /**
+   * Foods consumed during the meal.
+   */
+  consumedFoods: {
+    foodId: string;
+    quantity: MassQuantity;
   }[];
 };

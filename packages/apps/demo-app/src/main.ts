@@ -8,13 +8,16 @@ import { RoutingInferenceServiceFactory } from "@superego/inference-services";
 import { QueryClient } from "@tanstack/react-query";
 
 const backend = new ExecutingBackend(
-  new DemoDataRepositoriesManager({
-    appearance: { theme: Theme.Auto },
-    inference: {
-      providers: { groq: { apiKey: null, baseUrl: null } },
-      completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+  new DemoDataRepositoriesManager(
+    {
+      appearance: { theme: Theme.Auto },
+      inference: {
+        providers: { groq: { apiKey: null, baseUrl: null } },
+        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+      },
     },
-  }),
+    true,
+  ),
   new FakeJavascriptSandbox(),
   new RoutingInferenceServiceFactory(),
 );

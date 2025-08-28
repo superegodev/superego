@@ -4,19 +4,8 @@ import type Schema from "../Schema.js";
 
 export default {
   types: {
-    Feeling: {
-      description: "User's subjective feeling at the time of weigh-in.",
-      dataType: DataType.Enum,
-      members: {
-        Great: { value: "GREAT" },
-        Good: { value: "GOOD" },
-        Neutral: { value: "NEUTRAL" },
-        Bad: { value: "BAD" },
-        Terrible: { value: "TERRIBLE" },
-      },
-    },
     WeighIn: {
-      description: "Represents a single weigh-in event for the user.",
+      description: " A single weigh-in.",
       dataType: DataType.Struct,
       properties: {
         timestamp: {
@@ -38,23 +27,11 @@ export default {
         },
         measurementDevice: {
           description: "Device used for measurement.",
-          dataType: DataType.StringLiteral,
-          value: "SmartScale V3 Pro",
-        },
-        feeling: { dataType: null, ref: "Feeling" },
-        progressPhoto: {
-          description: "Optional photo taken at the time of weigh-in.",
-          dataType: DataType.File,
+          dataType: DataType.String,
         },
         notes: { dataType: DataType.String },
       },
-      nullableProperties: [
-        "bodyFatPercentage",
-        "muscleMassKg",
-        "progressPhoto",
-        "notes",
-        "feeling",
-      ],
+      nullableProperties: ["bodyFatPercentage", "muscleMassKg", "notes"],
     },
   },
   rootType: "WeighIn",
