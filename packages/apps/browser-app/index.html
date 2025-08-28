@@ -6,7 +6,8 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' data:;
-        connect-src 'self' https://cdn.jsdelivr.net https://api.groq.com https://api.openai.com;
+        worker-src 'self' blob:;
+        connect-src 'self' https://cdn.jsdelivr.net https://api.groq.com;
       "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

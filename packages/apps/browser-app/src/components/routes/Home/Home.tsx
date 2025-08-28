@@ -1,4 +1,9 @@
-import { AssistantName, ConversationFormat } from "@superego/backend";
+import {
+  AssistantName,
+  type Conversation,
+  ConversationFormat,
+} from "@superego/backend";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   useContinueConversation,
@@ -7,11 +12,12 @@ import {
 import ConversationMessages from "../../design-system/ConversationMessages/ConversationMessages.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
+import Hero from "./Hero.jsx";
 import * as cs from "./Home.css.js";
-import logo from "./logo.avif";
 
 export default function Home() {
   const intl = useIntl();
+  const [conversation, setConversation] = useState<Conversation | null>(null);
   const {
     result: startConversationResult,
     mutate: startConversation,
@@ -24,32 +30,24 @@ export default function Home() {
   } = useContinueConversation();
   const isAwaitingNextMessage =
     isStartingConversation || isContinuingConversation;
-  const conversation =
-    continueConversationResult?.data ?? startConversationResult?.data;
+  useEffect(() => {
+    setConversation(
+      continueConversationResult?.data ??
+        startConversationResult?.data ??
+        conversation,
+    );
+  }, [conversation, startConversationResult, continueConversationResult]);
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Content>
-        <div className={cs.Home.root}>
-          <img
-            src={logo}
-            alt={intl.formatMessage({
-              defaultMessage:
-                "Superego Logo - A low detail, low-poly painting of Freud's face",
-            })}
-            className={cs.Home.logo}
-          />
-          <h1 className={cs.Home.title}>
-            <FormattedMessage defaultMessage="Superego" />
-          </h1>
-          <h2 className={cs.Home.tagLine}>
-            <FormattedMessage defaultMessage="Your Life's Database" />
-          </h2>
-          {conversation ? (
-            <ConversationMessages conversation={conversation} />
-          ) : null}
-          {isAwaitingNextMessage ? "Thinking..." : null}
-          <br />
-          <br />
+        <div
+          className={
+            cs.Home.root[
+              conversation ? "withConversation" : "withoutConversation"
+            ]
+          }
+        >
+          <Hero isMinified={!!conversation} />
           <UserMessageContentInput
             onSend={(userMessageContent) => {
               if (!conversation) {
@@ -67,7 +65,20 @@ export default function Home() {
             })}
             autoFocus={true}
             isDisabled={isAwaitingNextMessage}
+            className={cs.Home.userMessageContentInput}
           />
+          <div
+            className={cs.Home.spinner}
+            style={{ visibility: isAwaitingNextMessage ? "visible" : "hidden" }}
+          >
+            <FormattedMessage defaultMessage="Thinking..." />
+          </div>
+          {conversation ? (
+            <ConversationMessages
+              conversation={conversation}
+              className={cs.Home.conversationMessages}
+            />
+          ) : null}
         </div>
       </Shell.Panel.Content>
     </Shell.Panel>

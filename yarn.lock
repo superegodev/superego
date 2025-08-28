@@ -4214,6 +4214,7 @@ __metadata:
     dequal: "npm:^2.0.3"
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
+    markdown-to-jsx: "npm:^7.7.13"
     monaco-editor: "npm:^0.52.2"
     react: "npm:^19.1.1"
     react-aria: "npm:^3.42.0"
@@ -8182,6 +8183,15 @@ __metadata:
   bin:
     markdown-it: bin/markdown-it.mjs
   checksum: 10c0/9a6bb444181d2db7016a4173ae56a95a62c84d4cbfb6916a399b11d3e6581bf1cc2e4e1d07a2f022ae72c25f56db90fbe1e529fca16fbf9541659dc53480d4b4
+  languageName: node
+  linkType: hard
+
+"markdown-to-jsx@npm:^7.7.13":
+  version: 7.7.13
+  resolution: "markdown-to-jsx@npm:7.7.13"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: 10c0/6e423b36f62cc387b87cc17ab603108b8a3095d0fc6b4294d7149aba9ca52a356a937638cb883c44e63ea8d40212f6f81ffc683020afcbc9f84bdd2856061aa9
   languageName: node
   linkType: hard
 
