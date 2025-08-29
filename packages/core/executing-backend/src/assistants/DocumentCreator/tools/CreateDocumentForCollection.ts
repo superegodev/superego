@@ -34,6 +34,7 @@ export default {
 
     // TODO: if necessary, try some easy fixes to the document (e.g., if a
     // property is not provided, but it's nullable, set it to null).
+    // TODO: THIS EXECS IN A TRANSACTION, BUT IT'S NOT TRANSACTIONAL!!!
     const {
       success,
       data: document,
