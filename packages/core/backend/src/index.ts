@@ -5,9 +5,9 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
-export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as CompletionModel } from "./enums/CompletionModel.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
+export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";

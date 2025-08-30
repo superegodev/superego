@@ -29,11 +29,13 @@ namespace Message {
 
   export interface ContentAssistant {
     role: MessageRole.Assistant;
+    agent: string;
     content: NonEmptyArray<MessageContentPart.Text>;
     createdAt: Date;
   }
   export interface ToolCallAssistant {
     role: MessageRole.Assistant;
+    agent: string;
     toolCalls: ToolCall[];
     createdAt: Date;
   }
