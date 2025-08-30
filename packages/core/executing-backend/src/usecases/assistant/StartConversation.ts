@@ -1,0 +1,58 @@
+import {
+  type Backend,
+  BackgroundJobName,
+  type Conversation,
+  type ConversationFormat,
+  ConversationStatus,
+  type Message,
+  type MessageContentPart,
+  MessageRole,
+  type NonEmptyArray,
+  type RpcResultPromise,
+} from "@superego/backend";
+import { Id } from "@superego/shared-utils";
+import type ConversationEntity from "../../entities/ConversationEntity.js";
+import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
+import makeConversation from "../../makers/makeConversation.js";
+import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
+import Usecase from "../../utils/Usecase.js";
+import CollectionsList from "../collections/List.js";
+
+export default class AssistantStartConversation extends Usecase<
+  Backend["assistant"]["startConversation"]
+> {
+  async exec(
+    format: ConversationFormat,
+    userMessageContent: NonEmptyArray<MessageContentPart.Text>,
+  ): RpcResultPromise<Conversation> {
+    const { data: collections } = await this.sub(CollectionsList).exec();
+    if (!collections) {
+      throw new UnexpectedAssistantError("Getting collections failed.");
+    }
+
+    const now = new Date();
+    const userMessage: Message.User = {
+      role: MessageRole.User,
+      content: userMessageContent,
+      createdAt: now,
+    };
+    const conversation: ConversationEntity = {
+      id: Id.generate.conversation(),
+      format: format,
+      title: userMessageContent[0].text,
+      contextFingerprint: await getConversationContextFingerprint(collections),
+      messages: [userMessage],
+      status: ConversationStatus.Processing,
+      error: null,
+      createdAt: now,
+    };
+    await this.repos.conversation.upsert(conversation);
+
+    await this.enqueueBackgroundJob(BackgroundJobName.ProcessConversation, {
+      conversationId: conversation.id,
+    });
+
+    return makeSuccessfulRpcResult(makeConversation(conversation));
+  }
+}

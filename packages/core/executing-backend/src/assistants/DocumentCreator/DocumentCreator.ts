@@ -8,7 +8,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import type InferenceService from "../../requirements/InferenceService.js";
-import type DocumentsCreate from "../../usecases/documents/Create.js";
+import type DocumentsCreate from "../../usecases/foreground/documents/Create.js";
 import type Assistant from "../Assistant.js";
 import developer from "./prompts/developer.js";
 import userContext from "./prompts/userContext.js";

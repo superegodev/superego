@@ -59,7 +59,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
     );
 
     // Exercise
-    const updatedConversation = {
+    const updatedConversation: ConversationEntity = {
       ...conversation,
       title: "updated title",
     };

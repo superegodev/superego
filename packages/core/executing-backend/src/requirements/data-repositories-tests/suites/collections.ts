@@ -60,7 +60,7 @@ export default rd<Dependencies>("Collections", (deps) => {
     );
 
     // Exercise
-    const updatedCollection = {
+    const updatedCollection: CollectionEntity = {
       ...collection,
       settings: {
         ...collection.settings,

@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 const content = {
@@ -18,7 +19,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const documentVersion = {
+    const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
@@ -51,7 +52,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
-    const documentVersion1 = {
+    const documentVersion1: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collection1Id,
       documentId: Id.generate.document(),
@@ -60,7 +61,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       previousVersionId: null,
       createdAt: new Date(),
     };
-    const documentVersion2 = {
+    const documentVersion2: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collection1Id,
       documentId: Id.generate.document(),
@@ -69,7 +70,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       previousVersionId: null,
       createdAt: new Date(),
     };
-    const documentVersion3 = {
+    const documentVersion3: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collection2Id,
       documentId: Id.generate.document(),
@@ -131,7 +132,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
     const collectionId = Id.generate.collection();
     const document1Id = Id.generate.document();
     const document2Id = Id.generate.document();
-    const documentVersion1 = {
+    const documentVersion1: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collectionId,
       documentId: document1Id,
@@ -140,7 +141,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       previousVersionId: null,
       createdAt: new Date(),
     };
-    const documentVersion2 = {
+    const documentVersion2: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collectionId,
       documentId: document1Id,
@@ -149,7 +150,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       previousVersionId: documentVersion1.id,
       createdAt: new Date(),
     };
-    const documentVersion3 = {
+    const documentVersion3: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       collectionId: collectionId,
       documentId: document2Id,
@@ -197,7 +198,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const documentId = Id.generate.document();
-      const documentVersion1 = {
+      const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: Id.generate.collection(),
         documentId: documentId,
@@ -206,7 +207,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
         previousVersionId: null,
         createdAt: new Date(),
       };
-      const documentVersion2 = {
+      const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: Id.generate.collection(),
         documentId: documentId,
@@ -281,7 +282,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
       const collectionId = Id.generate.collection();
       const document1Id = Id.generate.document();
       const document2Id = Id.generate.document();
-      const documentVersion1 = {
+      const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: collectionId,
         documentId: document1Id,
@@ -290,7 +291,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
         previousVersionId: null,
         createdAt: new Date(),
       };
-      const documentVersion2 = {
+      const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: collectionId,
         documentId: document1Id,
@@ -299,7 +300,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
         previousVersionId: documentVersion1.id,
         createdAt: new Date(),
       };
-      const documentVersion3 = {
+      const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: collectionId,
         documentId: document2Id,
@@ -308,7 +309,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
         previousVersionId: null,
         createdAt: new Date(),
       };
-      const documentVersion4 = {
+      const documentVersion4: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),

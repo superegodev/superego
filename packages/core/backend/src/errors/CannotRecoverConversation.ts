@@ -1,14 +1,14 @@
 import type ConversationId from "../ids/ConversationId.js";
 import type RpcError from "../types/RpcError.js";
 
-type CannotContinueConversation = RpcError<
-  "CannotContinueConversation",
+type CannotRecoverConversation = RpcError<
+  "CannotRecoverConversation",
   {
     conversationId: ConversationId;
     reason:
+      | "ConversationIsIdle"
       | "ConversationIsProcessing"
-      | "ConversationHasError"
       | "ConversationContextChanged";
   }
 >;
-export default CannotContinueConversation;
+export default CannotRecoverConversation;

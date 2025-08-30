@@ -1,4 +1,5 @@
 import type Dependencies from "./Dependencies.js";
+import backgroundJobs from "./suites/background-jobs.js";
 import collectionCategories from "./suites/collection-categories.js";
 import collectionVersions from "./suites/collection-versions.js";
 import collections from "./suites/collections.js";
@@ -21,6 +22,7 @@ export default function registerDataRepositoriesTests(
   documentVersions(deps);
   files(deps);
   conversations(deps);
+  backgroundJobs(deps);
   globalSettings(deps);
   transactions(deps);
 }

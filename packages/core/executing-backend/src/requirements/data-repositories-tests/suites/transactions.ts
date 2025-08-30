@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
+import type CollectionCategoryEntity from "../../../entities/CollectionCategoryEntity.js";
 import type DataRepositories from "../../DataRepositories.js";
 import type Dependencies from "../Dependencies.js";
 import WorkflowEvent from "../utils/WorkflowEvent.js";
@@ -11,7 +12,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const collectionCategory = {
+    const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "name",
       icon: null,
@@ -133,7 +134,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const collectionCategory = {
+    const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "name",
       icon: null,
@@ -185,7 +186,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     it("case: t1 begin + write, t2 begin + read + write + commit, t1 commit => t1 ✓, t2 ✗", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -258,7 +259,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     it("case: t1 begin + write, t2 begin + read + write, t1 commit, t2 commit => t1 ✓, t2 ✗", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -332,7 +333,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     it("case: t1 begin + read, t2 begin + write, t1 write + commit, t2 commit => t1 ✗, t2 ✓", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -413,7 +414,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     it("case: t1 begin + read, t2 begin + write + commit, t1 write + commit => t1 ✗, t2 ✓", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,

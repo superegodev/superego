@@ -5,6 +5,8 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
+export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
+export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
 export { default as CompletionModel } from "./enums/CompletionModel.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
@@ -16,7 +18,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
-export type { default as CannotCreateInferenceService } from "./errors/CannotCreateInferenceService.js";
+export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
 export type { default as CollectionCategoryNameNotValid } from "./errors/CollectionCategoryNameNotValid.js";
@@ -40,6 +42,7 @@ export type { default as ParentCollectionCategoryNotFound } from "./errors/Paren
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
 
 // Ids
+export type { default as BackgroundJobId } from "./ids/BackgroundJobId.js";
 export type { default as CollectionCategoryId } from "./ids/CollectionCategoryId.js";
 export type { default as CollectionId } from "./ids/CollectionId.js";
 export type { default as CollectionVersionId } from "./ids/CollectionVersionId.js";
@@ -50,6 +53,7 @@ export type { default as FileId } from "./ids/FileId.js";
 
 // Types
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as BackgroundJob } from "./types/BackgroundJob.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";

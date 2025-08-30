@@ -1,17 +1,25 @@
 import type {
-  AssistantName,
   ConversationFormat,
   ConversationId,
+  ConversationStatus,
   Message,
 } from "@superego/backend";
 
-export default interface ConversationEntity {
+type ConversationEntity = {
   id: ConversationId;
-  assistant: AssistantName;
   format: ConversationFormat;
   title: string;
   contextFingerprint: string;
   messages: Message[];
-  isCompleted: boolean;
   createdAt: Date;
-}
+} & (
+  | {
+      status: ConversationStatus.Idle | ConversationStatus.Processing;
+      error: null;
+    }
+  | {
+      status: ConversationStatus.Error;
+      error: { name: string; details: any };
+    }
+);
+export default ConversationEntity;

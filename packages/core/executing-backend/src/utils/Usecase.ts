@@ -1,3 +1,10 @@
+import {
+  type BackgroundJob,
+  type BackgroundJobName,
+  BackgroundJobStatus,
+} from "@superego/backend";
+import { Id } from "@superego/shared-utils";
+import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
 import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
@@ -19,5 +26,22 @@ export default abstract class Usecase<Exec extends (...args: any[]) => any> {
       this.javascriptSandbox,
       this.inferenceServiceFactory,
     ) as InstanceType<SubUsecase>;
+  }
+
+  protected async enqueueBackgroundJob<Name extends BackgroundJobName>(
+    name: Name,
+    input: Extract<BackgroundJob, { name: Name }>["input"],
+  ): Promise<void> {
+    const backgroundJob: BackgroundJobEntity = {
+      id: Id.generate.backgroundJob(),
+      name: name,
+      input: input,
+      status: BackgroundJobStatus.Enqueued,
+      enqueuedAt: new Date(),
+      startedProcessingAt: null,
+      finishedProcessingAt: null,
+      error: null,
+    };
+    await this.repos.backgroundJob.insert(backgroundJob);
   }
 }

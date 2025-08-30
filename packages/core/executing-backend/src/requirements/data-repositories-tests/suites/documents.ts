@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type DocumentEntity from "../../../entities/DocumentEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 export default rd<Dependencies>("Documents", (deps) => {
@@ -9,7 +10,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const document = {
+    const document: DocumentEntity = {
       id: Id.generate.document(),
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
@@ -34,7 +35,7 @@ export default rd<Dependencies>("Documents", (deps) => {
   it("deleting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const document = {
+    const document: DocumentEntity = {
       id: Id.generate.document(),
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
@@ -71,17 +72,17 @@ export default rd<Dependencies>("Documents", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
-    const document1 = {
+    const document1: DocumentEntity = {
       id: Id.generate.document(),
       collectionId: collection1Id,
       createdAt: new Date(),
     };
-    const document2 = {
+    const document2: DocumentEntity = {
       id: Id.generate.document(),
       collectionId: collection1Id,
       createdAt: new Date(),
     };
-    const document3 = {
+    const document3: DocumentEntity = {
       id: Id.generate.document(),
       collectionId: collection2Id,
       createdAt: new Date(),
@@ -131,7 +132,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     it("case: exists", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const document = {
+      const document: DocumentEntity = {
         id: Id.generate.document(),
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
@@ -176,7 +177,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const document = {
+      const document: DocumentEntity = {
         id: Id.generate.document(),
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
@@ -241,17 +242,17 @@ export default rd<Dependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const collection1Id = Id.generate.collection();
       const collection2Id = Id.generate.collection();
-      const document1 = {
+      const document1: DocumentEntity = {
         id: Id.generate.document(),
         collectionId: collection1Id,
         createdAt: new Date(),
       };
-      const document2 = {
+      const document2: DocumentEntity = {
         id: Id.generate.document(),
         collectionId: collection1Id,
         createdAt: new Date(),
       };
-      const document3 = {
+      const document3: DocumentEntity = {
         id: Id.generate.document(),
         collectionId: collection2Id,
         createdAt: new Date(),

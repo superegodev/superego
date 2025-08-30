@@ -3,6 +3,7 @@ import { DataType, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type CollectionVersionEntity from "../../../entities/CollectionVersionEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 const schema: Schema = {
@@ -19,7 +20,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const collectionVersion = {
+    const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
       collectionId: Id.generate.collection(),
@@ -51,7 +52,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
   it("replacing", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const collectionVersion = {
+    const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
       collectionId: Id.generate.collection(),
@@ -75,7 +76,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     );
 
     // Exercise
-    const updatedCollectionVersion = {
+    const updatedCollectionVersion: CollectionVersionEntity = {
       ...collectionVersion,
       settings: {
         summaryProperties: [
@@ -111,7 +112,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
-    const collectionVersion1 = {
+    const collectionVersion1: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
       collectionId: collection1Id,
@@ -120,7 +121,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       migration: null,
       createdAt: new Date(),
     };
-    const collectionVersion2 = {
+    const collectionVersion2: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: collectionVersion1.id,
       collectionId: collection1Id,
@@ -129,7 +130,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       migration: null,
       createdAt: new Date(),
     };
-    const collectionVersion3 = {
+    const collectionVersion3: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
       collectionId: collection2Id,
@@ -175,7 +176,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const collectionId = Id.generate.collection();
-      const collectionVersion1 = {
+      const collectionVersion1: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: null,
         collectionId: collectionId,
@@ -184,7 +185,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         migration: null,
         createdAt: new Date(),
       };
-      const collectionVersion2 = {
+      const collectionVersion2: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: collectionVersion1.id,
         collectionId: collectionId,
@@ -258,7 +259,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const collection1Id = Id.generate.collection();
       const collection2Id = Id.generate.collection();
-      const collectionVersion1 = {
+      const collectionVersion1: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: null,
         collectionId: collection1Id,
@@ -267,7 +268,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         migration: null,
         createdAt: new Date(),
       };
-      const collectionVersion2 = {
+      const collectionVersion2: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: collectionVersion1.id,
         collectionId: collection1Id,
@@ -276,7 +277,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         migration: null,
         createdAt: new Date(),
       };
-      const collectionVersion3 = {
+      const collectionVersion3: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: null,
         collectionId: collection2Id,

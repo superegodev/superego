@@ -1,3 +1,4 @@
+import type BackgroundJobRepository from "./BackgroundJobRepository.js";
 import type CollectionCategoryRepository from "./CollectionCategoryRepository.js";
 import type CollectionRepository from "./CollectionRepository.js";
 import type CollectionVersionRepository from "./CollectionVersionRepository.js";
@@ -15,5 +16,6 @@ export default interface DataRepositories {
   documentVersion: DocumentVersionRepository;
   file: FileRepository;
   conversation: ConversationRepository;
+  backgroundJob: BackgroundJobRepository;
   globalSettings: GlobalSettingsRepository;
 }

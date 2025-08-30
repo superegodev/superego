@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type FileEntity from "../../../entities/FileEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 export default rd<Dependencies>("Files", (deps) => {
@@ -9,14 +10,14 @@ export default rd<Dependencies>("Files", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const file1 = {
+    const file1: FileEntity = {
       id: Id.generate.file(),
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
       createdWithDocumentVersionId: Id.generate.documentVersion(),
       createdAt: new Date(),
     };
-    const file2 = {
+    const file2: FileEntity = {
       id: Id.generate.file(),
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
@@ -73,21 +74,21 @@ export default rd<Dependencies>("Files", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
-    const file1 = {
+    const file1: FileEntity = {
       id: Id.generate.file(),
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       createdWithDocumentVersionId: Id.generate.documentVersion(),
       createdAt: new Date(),
     };
-    const file2 = {
+    const file2: FileEntity = {
       id: Id.generate.file(),
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       createdWithDocumentVersionId: Id.generate.documentVersion(),
       createdAt: new Date(),
     };
-    const file3 = {
+    const file3: FileEntity = {
       id: Id.generate.file(),
       collectionId: collection2Id,
       documentId: Id.generate.document(),
@@ -146,21 +147,21 @@ export default rd<Dependencies>("Files", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const document1Id = Id.generate.document();
     const document2Id = Id.generate.document();
-    const file1 = {
+    const file1: FileEntity = {
       id: Id.generate.file(),
       collectionId: Id.generate.collection(),
       documentId: document1Id,
       createdWithDocumentVersionId: Id.generate.documentVersion(),
       createdAt: new Date(),
     };
-    const file2 = {
+    const file2: FileEntity = {
       id: Id.generate.file(),
       collectionId: Id.generate.collection(),
       documentId: document1Id,
       createdWithDocumentVersionId: Id.generate.documentVersion(),
       createdAt: new Date(),
     };
-    const file3 = {
+    const file3: FileEntity = {
       id: Id.generate.file(),
       collectionId: Id.generate.collection(),
       documentId: document2Id,
@@ -217,7 +218,7 @@ export default rd<Dependencies>("Files", (deps) => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const file = {
+      const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
@@ -284,21 +285,21 @@ export default rd<Dependencies>("Files", (deps) => {
     it("case: some matching files => returns them", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const file1 = {
+      const file1: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         createdWithDocumentVersionId: Id.generate.documentVersion(),
         createdAt: new Date(),
       };
-      const file2 = {
+      const file2: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         createdWithDocumentVersionId: Id.generate.documentVersion(),
         createdAt: new Date(),
       };
-      const file3 = {
+      const file3: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
@@ -334,7 +335,7 @@ export default rd<Dependencies>("Files", (deps) => {
     it("case: exists => returns content", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const file = {
+      const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),

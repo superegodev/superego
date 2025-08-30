@@ -1,4 +1,4 @@
-import { CompletionModel, Theme } from "@superego/backend";
+import { CompletionModel, type GlobalSettings, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect, it } from "vitest";
 import type Dependencies from "../Dependencies.js";
@@ -7,7 +7,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
   it("replacing", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const initialSettings = {
+    const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: { groq: { apiKey: null, baseUrl: null } },
@@ -16,13 +16,13 @@ export default rd<Dependencies>("Global settings", (deps) => {
     };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
-        await repos.globalSettings.replace(initialSettings);
+        await repos.globalSettings.replace(settings);
         return { action: "commit", returnValue: null };
       },
     );
 
     // Exercise
-    const updatedSettings = {
+    const updatedSettings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: { groq: { apiKey: null, baseUrl: null } },
@@ -49,7 +49,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
   it("getting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const settings = {
+    const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: { groq: { apiKey: null, baseUrl: null } },

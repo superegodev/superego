@@ -1,14 +1,17 @@
-import type { Backend, RpcResultPromise } from "@superego/backend";
+import type { Backend } from "@superego/backend";
 import makeRpcError from "./makers/makeRpcError.js";
 import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
-import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
-import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
-import AssistantsStartOrContinueConversation from "./usecases/assistants/StartOrContinueConversation.js";
+import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
+import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
+import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
+import AssistantListConversations from "./usecases/assistant/ListConversations.js";
+import AssistantRecoverConversation from "./usecases/assistant/RecoverConversation.js";
+import AssistantStartConversation from "./usecases/assistant/StartConversation.js";
+import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -33,7 +36,8 @@ export default class ExecutingBackend implements Backend {
   collections: Backend["collections"];
   documents: Backend["documents"];
   files: Backend["files"];
-  assistants: Backend["assistants"];
+  assistant: Backend["assistant"];
+  backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
   constructor(
@@ -42,61 +46,65 @@ export default class ExecutingBackend implements Backend {
     private inferenceServiceFactory: InferenceServiceFactory,
   ) {
     this.collectionCategories = {
-      create: this.makeUsecase(CollectionCategoriesCreate),
-      update: this.makeUsecase(CollectionCategoriesUpdate),
-      delete: this.makeUsecase(CollectionCategoriesDelete),
-      list: this.makeUsecase(CollectionCategoriesList),
+      create: this.makeUsecase(CollectionCategoriesCreate, true),
+      update: this.makeUsecase(CollectionCategoriesUpdate, true),
+      delete: this.makeUsecase(CollectionCategoriesDelete, true),
+      list: this.makeUsecase(CollectionCategoriesList, false),
     };
 
     this.collections = {
-      create: this.makeUsecase(CollectionsCreate),
-      createNewVersion: this.makeUsecase(CollectionsCreateNewVersion),
-      list: this.makeUsecase(CollectionsList),
-      delete: this.makeUsecase(CollectionsDelete),
-      updateSettings: this.makeUsecase(CollectionsUpdateSettings),
+      create: this.makeUsecase(CollectionsCreate, true),
+      updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
+      createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
       updateLatestVersionSettings: this.makeUsecase(
         CollectionUpdateLatestVersionSettings,
+        true,
       ),
+      delete: this.makeUsecase(CollectionsDelete, true),
+      list: this.makeUsecase(CollectionsList, false),
     };
 
     this.documents = {
-      create: this.makeUsecase(DocumentsCreate),
-      createNewVersion: this.makeUsecase(DocumentsCreateNewVersion),
-      get: this.makeUsecase(DocumentsGet),
-      list: this.makeUsecase(DocumentsList),
-      delete: this.makeUsecase(DocumentsDelete),
+      create: this.makeUsecase(DocumentsCreate, true),
+      createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
+      delete: this.makeUsecase(DocumentsDelete, true),
+      list: this.makeUsecase(DocumentsList, false),
+      get: this.makeUsecase(DocumentsGet, false),
     };
 
     this.files = {
-      getContent: this.makeUsecase(FilesGetContent),
+      getContent: this.makeUsecase(FilesGetContent, false),
     };
 
-    this.assistants = {
-      startConversation: this.makeUsecase(
-        AssistantsStartOrContinueConversation,
-      ),
+    this.assistant = {
+      startConversation: this.makeUsecase(AssistantStartConversation, true),
       continueConversation: this.makeUsecase(
-        AssistantsStartOrContinueConversation,
+        AssistantContinueConversation,
+        true,
       ),
-      deleteConversation: this.makeUsecase(AssistantsDeleteConversation),
-      listConversations: this.makeUsecase(AssistantsListConversations),
-      getConversation: this.makeUsecase(AssistantsGetConversation),
+      recoverConversation: this.makeUsecase(AssistantRecoverConversation, true),
+      deleteConversation: this.makeUsecase(AssistantDeleteConversation, true),
+      listConversations: this.makeUsecase(AssistantListConversations, false),
+      getConversation: this.makeUsecase(AssistantGetConversation, false),
+    };
+
+    this.backgroundJobs = {
+      list: this.makeUsecase(BackgroundJobsList, false),
     };
 
     this.globalSettings = {
-      get: this.makeUsecase(GlobalSettingsGet),
-      update: this.makeUsecase(GlobalSettingsUpdate),
+      get: this.makeUsecase(GlobalSettingsGet, false),
+      update: this.makeUsecase(GlobalSettingsUpdate, true),
     };
   }
 
-  private makeUsecase<
-    Exec extends (...args: any[]) => RpcResultPromise<any, any>,
-  >(
+  private makeUsecase<Exec extends (...args: any[]) => any>(
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
       inferenceServiceFactory: InferenceServiceFactory,
     ) => { exec: Exec },
+    triggerBackgroundJobCheck: boolean,
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
@@ -111,6 +119,11 @@ export default class ExecutingBackend implements Backend {
             action: rpcResult.success ? "commit" : "rollback",
             returnValue: rpcResult,
           };
+        })
+        .then(() => {
+          if (triggerBackgroundJobCheck) {
+            // TODO: trigger background job check
+          }
         })
         .catch((error) =>
           makeUnsuccessfulRpcResult(

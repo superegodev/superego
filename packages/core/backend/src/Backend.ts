@@ -1,8 +1,7 @@
 import type { Schema } from "@superego/schema";
-import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
-import type CannotCreateInferenceService from "./errors/CannotCreateInferenceService.js";
+import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -30,6 +29,7 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
@@ -200,21 +200,25 @@ export default interface Backend {
     ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound>;
   };
 
-  assistants: {
+  assistant: {
     startConversation(
-      assistant: AssistantName,
       format: ConversationFormat,
       userMessageContent: Message.User["content"],
-    ): RpcResultPromise<Conversation, CannotCreateInferenceService>;
+    ): RpcResultPromise<Conversation>;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
     ): RpcResultPromise<
       Conversation,
-      | CannotCreateInferenceService
-      | ConversationNotFound
-      | CannotContinueConversation
+      ConversationNotFound | CannotContinueConversation
+    >;
+
+    recoverConversation(
+      id: ConversationId,
+    ): RpcResultPromise<
+      Conversation,
+      ConversationNotFound | CannotRecoverConversation
     >;
 
     deleteConversation(
@@ -228,6 +232,10 @@ export default interface Backend {
     ): RpcResultPromise<Conversation, ConversationNotFound>;
 
     // EVOLUTION: tts and stt methods. Possibly in another section (speech).
+  };
+
+  backgroundJobs: {
+    list(): RpcResultPromise<BackgroundJob[]>;
   };
 
   globalSettings: {
