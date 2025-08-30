@@ -18,7 +18,7 @@
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
     "@types/json-schema": "^7.0.15",
-    "@types/luxon": "^3",
+    "@types/luxon": "^3.7.1",
     "typescript": "^5.9.2"
   },
   "dependencies": {

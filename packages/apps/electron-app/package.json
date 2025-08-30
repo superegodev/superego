@@ -22,7 +22,7 @@
     "@electron-forge/publisher-github": "^7.8.3",
     "@electron/fuses": "^2.0.0",
     "@types/electron-squirrel-startup": "^1.0.2",
-    "electron": "37.3.1",
+    "electron": "37.4.0",
     "electron-vite": "^4.0.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.3"
