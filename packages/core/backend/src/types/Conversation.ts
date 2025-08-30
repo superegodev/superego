@@ -9,6 +9,8 @@ type Conversation = {
   title: string;
   contextFingerprint: string;
   messages: Message[];
+  status: ConversationStatus;
+  error: { name: string; details: any } | null;
   createdAt: Date;
 } & (
   | {

@@ -5,6 +5,7 @@ export { default as ExecutingBackend } from "./ExecutingBackend.js";
 // Entities //
 //////////////
 
+export type { default as BackgroundJobEntity } from "./entities/BackgroundJobEntity.js";
 export type { default as CollectionCategoryEntity } from "./entities/CollectionCategoryEntity.js";
 export type { default as CollectionEntity } from "./entities/CollectionEntity.js";
 export type { default as CollectionVersionEntity } from "./entities/CollectionVersionEntity.js";
@@ -17,6 +18,7 @@ export type { default as FileEntity } from "./entities/FileEntity.js";
 // Requirements //
 //////////////////
 
+export type { default as BackgroundJobRepository } from "./requirements/BackgroundJobRepository.js";
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";
 export type { default as CollectionVersionRepository } from "./requirements/CollectionVersionRepository.js";

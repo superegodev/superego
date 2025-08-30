@@ -7,6 +7,7 @@ type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
   id: BackgroundJobId;
   name: Name;
   input: Input;
+  status: BackgroundJobStatus;
   enqueuedAt: Date;
   startedProcessingAt: Date | null;
   finishedProcessingAt: Date | null;

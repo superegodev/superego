@@ -32,13 +32,14 @@ export default class DemoDataRepositoriesManager
     let shouldAbort = false;
     const transactionData = (await this.readData()) ?? {
       version: crypto.randomUUID(),
+      backgroundJobs: {},
       collectionCategories: {},
       collections: {},
       collectionVersions: {},
+      conversations: {},
       documents: {},
       documentVersions: {},
       files: {},
-      conversations: {},
       globalSettings: { value: this.defaultGlobalSettings },
       ...(this.useDemoDataAsDefault ? demoData : {}),
     };

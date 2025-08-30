@@ -3,15 +3,13 @@ import type Assistant from "../../assistants/Assistant.js";
 import DocumentCreator from "../../assistants/DocumentCreator/DocumentCreator.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
-import makeConversation from "../../makers/makeConversation.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
 import type InferenceService from "../../requirements/InferenceService.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 
-export default class AssistantProcessConversation extends Usecase<any> {
+export default class AssistantProcessConversation extends Usecase {
   async exec(id: ConversationId): Promise<void> {
     const inferenceService = await this.getInferenceService();
 
@@ -44,8 +42,6 @@ export default class AssistantProcessConversation extends Usecase<any> {
       messages: messages,
     };
     await this.repos.conversation.upsert(updatedConversation);
-
-    return makeSuccessfulRpcResult(makeConversation(updatedConversation));
   }
 
   private async getInferenceService(): Promise<InferenceService> {

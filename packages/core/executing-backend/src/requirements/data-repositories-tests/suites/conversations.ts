@@ -1,4 +1,4 @@
-import { AssistantName, ConversationFormat } from "@superego/backend";
+import { ConversationFormat, ConversationStatus } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
@@ -13,12 +13,12 @@ export default rd<Dependencies>("Conversations", (deps) => {
     // Exercise
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      assistant: AssistantName.DocumentCreator,
       format: ConversationFormat.Text,
       title: "title",
       contextFingerprint: "contextFingerprint",
       messages: [],
-      isCompleted: false,
+      status: ConversationStatus.Idle,
+      error: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -43,12 +43,12 @@ export default rd<Dependencies>("Conversations", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      assistant: AssistantName.DocumentCreator,
       format: ConversationFormat.Text,
       title: "original title",
       contextFingerprint: "contextFingerprint",
       messages: [],
-      isCompleted: false,
+      status: ConversationStatus.Idle,
+      error: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -85,12 +85,12 @@ export default rd<Dependencies>("Conversations", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
-      assistant: AssistantName.DocumentCreator,
       format: ConversationFormat.Text,
       title: "title",
       contextFingerprint: "contextFingerprint",
       messages: [],
-      isCompleted: false,
+      status: ConversationStatus.Idle,
+      error: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -126,12 +126,12 @@ export default rd<Dependencies>("Conversations", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
-        assistant: AssistantName.DocumentCreator,
         format: ConversationFormat.Text,
         title: "title",
         contextFingerprint: "contextFingerprint",
         messages: [],
-        isCompleted: false,
+        status: ConversationStatus.Idle,
+        error: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -194,22 +194,22 @@ export default rd<Dependencies>("Conversations", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const conversation1: ConversationEntity = {
         id: Id.generate.conversation(),
-        assistant: AssistantName.DocumentCreator,
         format: ConversationFormat.Text,
         title: "title 1",
         contextFingerprint: "contextFingerprint",
         messages: [],
-        isCompleted: false,
+        status: ConversationStatus.Idle,
+        error: null,
         createdAt: new Date(1),
       };
       const conversation2: ConversationEntity = {
         id: Id.generate.conversation(),
-        assistant: AssistantName.DocumentCreator,
         format: ConversationFormat.Text,
         title: "title 2",
         contextFingerprint: "contextFingerprint",
         messages: [],
-        isCompleted: false,
+        status: ConversationStatus.Idle,
+        error: null,
         createdAt: new Date(2),
       };
       await dataRepositoriesManager.runInSerializableTransaction(

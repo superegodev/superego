@@ -1,6 +1,10 @@
 import type { DatabaseSync } from "node:sqlite";
 import type { GlobalSettings } from "@superego/backend";
-import type { DataRepositories } from "@superego/executing-backend";
+import type {
+  BackgroundJobRepository,
+  DataRepositories,
+} from "@superego/executing-backend";
+import SqliteBackgroundJobRepository from "./repositories/SqliteBackgroundJobRepository.js";
 import SqliteCollectionCategoryRepository from "./repositories/SqliteCollectionCategoryRepository.js";
 import SqliteCollectionRepository from "./repositories/SqliteCollectionRepository.js";
 import SqliteCollectionVersionRepository from "./repositories/SqliteCollectionVersionRepository.js";
@@ -11,6 +15,7 @@ import SqliteFileRepository from "./repositories/SqliteFileRepository.js";
 import SqliteGlobalSettingsRepository from "./repositories/SqliteGlobalSettingsRepository.js";
 
 export default class SqliteDataRepositories implements DataRepositories {
+  backgroundJob: BackgroundJobRepository;
   collectionCategory: SqliteCollectionCategoryRepository;
   collection: SqliteCollectionRepository;
   collectionVersion: SqliteCollectionVersionRepository;
@@ -21,6 +26,7 @@ export default class SqliteDataRepositories implements DataRepositories {
   globalSettings: SqliteGlobalSettingsRepository;
 
   constructor(db: DatabaseSync, defaultGlobalSettings: GlobalSettings) {
+    this.backgroundJob = new SqliteBackgroundJobRepository(db);
     this.collectionCategory = new SqliteCollectionCategoryRepository(db);
     this.collection = new SqliteCollectionRepository(db);
     this.collectionVersion = new SqliteCollectionVersionRepository(db);
