@@ -1,6 +1,6 @@
 import type { Collection, ConversationId } from "@superego/backend";
-import type Assistant from "../../assistants/Assistant.js";
-import DocumentCreator from "../../assistants/DocumentCreator/DocumentCreator.js";
+import type Assistant from "../../assistant/Assistant.js";
+import DocumentCreator from "../../assistant/DocumentCreator/DocumentCreator.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import type InferenceService from "../../requirements/InferenceService.js";
