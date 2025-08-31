@@ -15,7 +15,7 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { type Schema, valibotSchemas } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import { extractErrorDetails, Id } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
@@ -208,7 +208,9 @@ export default class CollectionsCreateNewVersion extends Usecase<
     } catch (error) {
       return {
         documentId: document.id,
-        cause: makeResultError("UnexpectedError", { cause: error }),
+        cause: makeResultError("UnexpectedError", {
+          cause: extractErrorDetails(error),
+        }),
       };
     }
   }

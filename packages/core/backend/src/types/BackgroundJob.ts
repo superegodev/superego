@@ -1,3 +1,4 @@
+import type { ResultError } from "@superego/global-types";
 import type BackgroundJobName from "../enums/BackgroundJobName.js";
 import type BackgroundJobStatus from "../enums/BackgroundJobStatus.js";
 import type BackgroundJobId from "../ids/BackgroundJobId.js";
@@ -11,7 +12,7 @@ type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
   enqueuedAt: Date;
   startedProcessingAt: Date | null;
   finishedProcessingAt: Date | null;
-  error: { name: string; details: any } | null;
+  error: ResultError<any, any> | null;
 } & (
   | {
       status: BackgroundJobStatus.Enqueued;
@@ -35,14 +36,14 @@ type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
       status: BackgroundJobStatus.Failed;
       startedProcessingAt: Date;
       finishedProcessingAt: Date;
-      error: { name: string; details: any };
+      error: ResultError<any, any>;
     }
 );
 
 namespace BackgroundJob {
   export type ProcessConversation = BaseBackgroundJob<
     BackgroundJobName.ProcessConversation,
-    { conversationId: ConversationId }
+    { id: ConversationId }
   >;
 }
 

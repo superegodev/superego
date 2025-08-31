@@ -51,7 +51,7 @@ export default class AssistantStartConversation extends Usecase<
     await this.repos.conversation.upsert(conversation);
 
     await this.enqueueBackgroundJob(BackgroundJobName.ProcessConversation, {
-      conversationId: conversation.id,
+      id: conversation.id,
     });
 
     return makeSuccessfulResult(makeConversation(conversation));

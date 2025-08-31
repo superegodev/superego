@@ -1,5 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
-import type { BackgroundJobId } from "@superego/backend";
+import { type BackgroundJobId, BackgroundJobStatus } from "@superego/backend";
 import type {
   BackgroundJobEntity,
   BackgroundJobRepository,
@@ -76,9 +76,39 @@ export default class SqliteBackgroundJobRepository
     return backgroundJob ? toEntity(backgroundJob) : null;
   }
 
+  async findWhereStatusEqProcessing(): Promise<
+    (BackgroundJobEntity & { status: BackgroundJobStatus.Processing }) | null
+  > {
+    const backgroundJob = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "status" = '${BackgroundJobStatus.Processing}'`,
+      )
+      .get() as SqliteBackgroundJob | undefined;
+    return backgroundJob
+      ? (toEntity(backgroundJob) as BackgroundJobEntity & {
+          status: BackgroundJobStatus.Processing;
+        })
+      : null;
+  }
+
+  async findOldestWhereStatusEqEnqueued(): Promise<
+    (BackgroundJobEntity & { status: BackgroundJobStatus.Enqueued }) | null
+  > {
+    const backgroundJob = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "status" = '${BackgroundJobStatus.Enqueued}' ORDER BY "enqueued_at" ASC`,
+      )
+      .get() as SqliteBackgroundJob | undefined;
+    return backgroundJob
+      ? (toEntity(backgroundJob) as BackgroundJobEntity & {
+          status: BackgroundJobStatus.Enqueued;
+        })
+      : null;
+  }
+
   async findAll(): Promise<BackgroundJobEntity[]> {
     const backgroundJobs = this.db
-      .prepare(`SELECT * FROM "${table}" ORDER BY "name" ASC`)
+      .prepare(`SELECT * FROM "${table}" ORDER BY "enqueued_at" DESC`)
       .all() as any as SqliteBackgroundJob[];
     return backgroundJobs.map(toEntity);
   }

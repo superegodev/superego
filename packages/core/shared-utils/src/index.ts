@@ -8,3 +8,4 @@ export const valibotSchemas = {
   collectionName,
   icon,
 };
+export { default as extractErrorDetails } from "./extractErrorDetails.js";

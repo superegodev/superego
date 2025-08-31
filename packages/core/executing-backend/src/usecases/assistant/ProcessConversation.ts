@@ -1,8 +1,10 @@
 import type { Collection, ConversationId } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import type Assistant from "../../assistant/Assistant.js";
 import DocumentCreator from "../../assistant/DocumentCreator/DocumentCreator.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import type InferenceService from "../../requirements/InferenceService.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
@@ -10,7 +12,7 @@ import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 
 export default class AssistantProcessConversation extends Usecase {
-  async exec(id: ConversationId): Promise<void> {
+  async exec({ id }: { id: ConversationId }): ResultPromise<void, any> {
     const inferenceService = await this.getInferenceService();
 
     const { data: collections } = await this.sub(CollectionsList).exec();
@@ -42,6 +44,9 @@ export default class AssistantProcessConversation extends Usecase {
       messages: messages,
     };
     await this.repos.conversation.upsert(updatedConversation);
+
+    // TODO
+    return makeSuccessfulResult(undefined);
   }
 
   private async getInferenceService(): Promise<InferenceService> {

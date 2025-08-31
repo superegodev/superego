@@ -3,6 +3,7 @@ import {
   type BackgroundJobName,
   BackgroundJobStatus,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
 import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
@@ -10,7 +11,9 @@ import type InferenceServiceFactory from "../requirements/InferenceServiceFactor
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 
 export default abstract class Usecase<
-  Exec extends (...args: any[]) => any = (...args: any[]) => any,
+  Exec extends (...args: any[]) => ResultPromise<any, any> = (
+    ...args: any[]
+  ) => ResultPromise<any, any>,
 > {
   constructor(
     protected repos: DataRepositories,

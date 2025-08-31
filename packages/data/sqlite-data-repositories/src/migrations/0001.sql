@@ -27,3 +27,14 @@ CREATE TABLE "background_jobs" (
   CHECK (json_valid("input")),
   CHECK (json_valid("error"))
 );
+
+CREATE UNIQUE INDEX "idx__background_jobs__on__status__unique_status_processing" ON "background_jobs" (
+  "status"
+)
+WHERE "status" = 'Processing';
+
+CREATE INDEX "idx__background_jobs__on__enqueued_at__status_enqueued" ON "background_jobs" (
+  "enqueued_at"
+)
+WHERE "status" = 'Enqueued';
+

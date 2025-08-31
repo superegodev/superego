@@ -1,4 +1,4 @@
-import type { BackgroundJobId } from "@superego/backend";
+import { type BackgroundJobId, BackgroundJobStatus } from "@superego/backend";
 import type {
   BackgroundJobEntity,
   BackgroundJobRepository,
@@ -33,6 +33,31 @@ export default class DemoBackgroundJobRepository
   async find(id: BackgroundJobId): Promise<BackgroundJobEntity | null> {
     this.ensureNotDisposed();
     return clone(this.backgroundJobs[id] ?? null);
+  }
+
+  async findWhereStatusEqProcessing(): Promise<
+    (BackgroundJobEntity & { status: BackgroundJobStatus.Processing }) | null
+  > {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.backgroundJobs).find(
+        (backgroundJob) =>
+          backgroundJob.status === BackgroundJobStatus.Processing,
+      ) ?? null,
+    );
+  }
+
+  async findOldestWhereStatusEqEnqueued(): Promise<
+    (BackgroundJobEntity & { status: BackgroundJobStatus.Enqueued }) | null
+  > {
+    this.ensureNotDisposed();
+    const enqueued = Object.values(this.backgroundJobs)
+      .filter(
+        (backgroundJob) =>
+          backgroundJob.status === BackgroundJobStatus.Enqueued,
+      )
+      .sort((a, b) => (a.enqueuedAt > b.enqueuedAt ? 1 : -1));
+    return clone(enqueued[0] ?? null);
   }
 
   async findAll(): Promise<BackgroundJobEntity[]> {

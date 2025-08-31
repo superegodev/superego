@@ -1,4 +1,6 @@
 import type { Backend } from "@superego/backend";
+import { extractErrorDetails } from "@superego/shared-utils";
+import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
 import makeResultError from "./makers/makeResultError.js";
 import makeUnsuccessfulResult from "./makers/makeUnsuccessfulResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
@@ -39,6 +41,8 @@ export default class ExecutingBackend implements Backend {
   assistant: Backend["assistant"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+
+  private backgroundJobExecutor: BackgroundJobExecutor;
 
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
@@ -96,6 +100,12 @@ export default class ExecutingBackend implements Backend {
       get: this.makeUsecase(GlobalSettingsGet, false),
       update: this.makeUsecase(GlobalSettingsUpdate, true),
     };
+
+    this.backgroundJobExecutor = new BackgroundJobExecutor(
+      dataRepositoriesManager,
+      javascriptSandbox,
+      inferenceServiceFactory,
+    );
   }
 
   private makeUsecase<Exec extends (...args: any[]) => any>(
@@ -108,9 +118,9 @@ export default class ExecutingBackend implements Backend {
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
-        .runInSerializableTransaction(async (dataRepositories) => {
+        .runInSerializableTransaction(async (repos) => {
           const usecase = new UsecaseClass(
-            dataRepositories,
+            repos,
             this.javascriptSandbox,
             this.inferenceServiceFactory,
           );
@@ -121,13 +131,20 @@ export default class ExecutingBackend implements Backend {
           };
         })
         .then(() => {
+          // We trigger a background job check only _after_ the transaction that
+          // might have created some background jobs has been committed. (Else
+          // the BackgroundJobExecutor wouldn't even see the created background
+          // jobs, since it executes in a separate transaction.)
           if (triggerBackgroundJobCheck) {
-            // TODO: trigger background job check
+            // Note: this call is purposefully not awaited.
+            this.backgroundJobExecutor.executeNext();
           }
         })
         .catch((error) =>
           makeUnsuccessfulResult(
-            makeResultError("UnexpectedError", { cause: error }),
+            makeResultError("UnexpectedError", {
+              cause: extractErrorDetails(error),
+            }),
           ),
         )) as Exec;
   }
