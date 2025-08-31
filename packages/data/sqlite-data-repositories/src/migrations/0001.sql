@@ -27,5 +27,3 @@ CREATE TABLE "background_jobs" (
   CHECK (json_valid("input")),
   CHECK (json_valid("error"))
 );
-
-
