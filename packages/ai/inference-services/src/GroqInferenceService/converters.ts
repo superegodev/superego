@@ -82,7 +82,9 @@ export function toGroqContentPart(
 
 export function fromGroqAssistantMessage(
   message: Groq.Chat.ChatCompletionMessage,
-): Message.Assistant {
+):
+  | Omit<Message.ToolCallAssistant, "agent">
+  | Omit<Message.ContentAssistant, "agent"> {
   const baseMessage = {
     role: MessageRole.Assistant,
     createdAt: new Date(),

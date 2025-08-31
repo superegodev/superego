@@ -1,4 +1,4 @@
-import type { Result, ResultError } from "@superego/backend";
+import type { Result, ResultError } from "@superego/global-types";
 import { type UseQueryResult, useQueries } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import isEmpty from "../../utils/isEmpty.js";

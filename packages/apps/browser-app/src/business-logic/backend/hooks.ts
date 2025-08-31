@@ -114,13 +114,13 @@ export const useDeleteDocument = makeUseBackendMutation(
  */
 
 export const useStartConversation = makeUseBackendMutation(
-  "assistants",
+  "assistant",
   "startConversation",
   () => [],
 );
 
 export const useContinueConversation = makeUseBackendMutation(
-  "assistants",
+  "assistant",
   "continueConversation",
   () => [],
 );

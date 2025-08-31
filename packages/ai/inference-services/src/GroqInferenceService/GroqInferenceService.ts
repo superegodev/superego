@@ -24,11 +24,10 @@ export default class GroqInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-  ): Promise<Message.Assistant> {
-    console.log("generateNextMessage", {
-      tools: tools.map(toGroqTool),
-      messages: previousMessages.flatMap(toGroqMessage),
-    });
+  ): Promise<
+    | Omit<Message.ToolCallAssistant, "agent">
+    | Omit<Message.ContentAssistant, "agent">
+  > {
     const response = await this.groq.chat.completions.create({
       model: this.model.slice("Groq_".length),
       tools: tools.map(toGroqTool),

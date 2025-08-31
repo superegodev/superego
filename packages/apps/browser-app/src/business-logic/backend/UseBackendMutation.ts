@@ -1,4 +1,5 @@
-import type { Backend, Result } from "@superego/backend";
+import type { Backend } from "@superego/backend";
+import type { Result } from "@superego/global-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import type { ArgsOf, BackendMethod, ResultOf } from "./typeUtils.js";

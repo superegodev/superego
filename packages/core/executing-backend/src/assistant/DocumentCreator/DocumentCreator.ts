@@ -62,7 +62,7 @@ export default class DocumentCreator implements Assistant {
     if ("content" in assistantMessage) {
       return {
         hasCompletedConversation: false,
-        messages: [...messages, assistantMessage],
+        messages: [...messages, { ...assistantMessage, agent: "TODO" }],
       };
     }
 
@@ -74,7 +74,7 @@ export default class DocumentCreator implements Assistant {
     ) {
       return {
         hasCompletedConversation: true,
-        messages: [...messages, assistantMessage],
+        messages: [...messages, { ...assistantMessage, agent: "TODO" }],
       };
     }
 
@@ -91,7 +91,7 @@ export default class DocumentCreator implements Assistant {
     };
     return this.generateAndProcessNextMessages(conversationFormat, [
       ...messages,
-      assistantMessage,
+      { ...assistantMessage, agent: "TODO" },
       toolMessage,
     ]);
   }

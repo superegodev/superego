@@ -20,7 +20,10 @@ interface InferenceService {
   generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-  ): Promise<Message.Assistant>;
+  ): Promise<
+    | Omit<Message.ToolCallAssistant, "agent">
+    | Omit<Message.ContentAssistant, "agent">
+  >;
 }
 
 export default InferenceService;
