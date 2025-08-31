@@ -20,7 +20,7 @@ import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -201,7 +201,7 @@ export default function CreateCollectionForm() {
             defaultMessage: "Error creating collection",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

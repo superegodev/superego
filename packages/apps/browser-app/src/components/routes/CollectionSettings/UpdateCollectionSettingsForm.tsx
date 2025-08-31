@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionSettings } from "../../../business-logic/backend/hooks.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
@@ -96,7 +96,7 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
             defaultMessage: "Error saving settings",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

@@ -2,14 +2,18 @@ import type {
   Backend,
   ConversationNotFound,
   DeletedEntities,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import Usecase from "../../utils/Usecase.js";
 
 export default class AssistantDeleteConversation extends Usecase<
   Backend["assistant"]["deleteConversation"]
 > {
-  async exec(): RpcResultPromise<DeletedEntities, ConversationNotFound> {
+  async exec(): ResultPromise<
+    DeletedEntities,
+    ConversationNotFound | UnexpectedError
+  > {
     throw new Error("Method not implemented.");
   }
 }

@@ -18,7 +18,7 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import mapNonEmptyArray from "../../../utils/mapNonEmptyArray.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
@@ -198,7 +198,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             defaultMessage: "Error updating schema and migrating documents",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

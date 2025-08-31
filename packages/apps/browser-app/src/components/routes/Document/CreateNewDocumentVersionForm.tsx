@@ -9,7 +9,7 @@ import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hoo
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import RhfContent from "../../../utils/RhfContent.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 
 interface Props {
@@ -76,7 +76,7 @@ export default function CreateNewDocumentVersionForm({
             defaultMessage: "Error updating document",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

@@ -1,9 +1,10 @@
 import type {
   Backend,
   GlobalSettings,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import type { ResultPromise } from "@superego/global-types";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class GlobalSettingsUpdate extends Usecase<
@@ -11,13 +12,13 @@ export default class GlobalSettingsUpdate extends Usecase<
 > {
   async exec(
     globalSettingsPatch: Partial<GlobalSettings>,
-  ): RpcResultPromise<GlobalSettings> {
+  ): ResultPromise<GlobalSettings, UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
     const updatedGlobalSettings: GlobalSettings = {
       ...globalSettings,
       ...globalSettingsPatch,
     };
     this.repos.globalSettings.replace(updatedGlobalSettings);
-    return makeSuccessfulRpcResult(updatedGlobalSettings);
+    return makeSuccessfulResult(updatedGlobalSettings);
   }
 }

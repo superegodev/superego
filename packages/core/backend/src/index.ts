@@ -70,15 +70,10 @@ export type { default as JavascriptFunctionExecutionResult } from "./types/Javas
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
-export type { default as RpcError } from "./types/RpcError.js";
-export type { default as RpcResult } from "./types/RpcResult.js";
-export type { default as RpcResultPromise } from "./types/RpcResultPromise.js";
 export type { default as SummaryProperty } from "./types/SummaryProperty.js";
 export type { default as SummaryPropertyDefinition } from "./types/SummaryPropertyDefinition.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolName } from "./types/ToolName.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
-export type { default as ToolResultError } from "./types/ToolResultError.js";
-export type { default as ToolResultOutput } from "./types/ToolResultOutput.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

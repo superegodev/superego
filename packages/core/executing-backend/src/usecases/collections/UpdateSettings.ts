@@ -6,15 +6,16 @@ import type {
   CollectionNotFound,
   CollectionSettings,
   CollectionSettingsNotValid,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
@@ -25,15 +26,18 @@ export default class CollectionsUpdateSettings extends Usecase<
   async exec(
     id: CollectionId,
     settingsPatch: Partial<CollectionSettings>,
-  ): RpcResultPromise<
+  ): ResultPromise<
     Collection,
-    CollectionNotFound | CollectionSettingsNotValid | CollectionCategoryNotFound
+    | CollectionNotFound
+    | CollectionSettingsNotValid
+    | CollectionCategoryNotFound
+    | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
 
     if (!collection) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionNotFound", { collectionId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId: id }),
       );
     }
 
@@ -50,8 +54,8 @@ export default class CollectionsUpdateSettings extends Usecase<
     );
 
     if (!settingsValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSettingsNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSettingsNotValid", {
           collectionId: id,
           issues: makeValidationIssues(settingsValidationResult.issues),
         }),
@@ -64,8 +68,8 @@ export default class CollectionsUpdateSettings extends Usecase<
         settingsPatch.collectionCategoryId,
       ))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: settingsPatch.collectionCategoryId,
         }),
       );
@@ -99,7 +103,7 @@ export default class CollectionsUpdateSettings extends Usecase<
     };
     await this.repos.collection.replace(updatedCollection);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       makeCollection(updatedCollection, latestVersion),
     );
   }

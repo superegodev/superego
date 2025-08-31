@@ -7,15 +7,16 @@ import type {
   CollectionCategoryNotFound,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionCategoryEntity from "../../entities/CollectionCategoryEntity.js";
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -25,13 +26,14 @@ export default class CollectionCategoriesUpdate extends Usecase<
   async exec(
     id: CollectionCategoryId,
     patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,
-  ): RpcResultPromise<
+  ): ResultPromise<
     CollectionCategory,
     | CollectionCategoryNotFound
     | CollectionCategoryNameNotValid
     | CollectionCategoryIconNotValid
     | ParentCollectionCategoryNotFound
     | ParentCollectionCategoryIsDescendant
+    | UnexpectedError
   > {
     const collectionCategories = await this.repos.collectionCategory.findAll();
     const collectionCategoriesById = collectionCategories.reduce<
@@ -43,8 +45,8 @@ export default class CollectionCategoriesUpdate extends Usecase<
 
     const collectionCategory = collectionCategoriesById[id];
     if (!collectionCategory) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: id,
         }),
       );
@@ -55,8 +57,8 @@ export default class CollectionCategoriesUpdate extends Usecase<
       : null;
 
     if (nameValidationResult && !nameValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNameNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNameNotValid", {
           collectionCategoryId: id,
           issues: makeValidationIssues(nameValidationResult.issues),
         }),
@@ -69,8 +71,8 @@ export default class CollectionCategoriesUpdate extends Usecase<
         : null;
 
     if (iconValidationResult && !iconValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryIconNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryIconNotValid", {
           collectionCategoryId: id,
           issues: makeValidationIssues(iconValidationResult.issues),
         }),
@@ -78,8 +80,8 @@ export default class CollectionCategoriesUpdate extends Usecase<
     }
 
     if (patch.parentId && !collectionCategoriesById[patch.parentId]) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("ParentCollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("ParentCollectionCategoryNotFound", {
           parentId: patch.parentId,
         }),
       );
@@ -89,8 +91,8 @@ export default class CollectionCategoriesUpdate extends Usecase<
       patch.parentId &&
       this.isDescendant(patch.parentId, id, collectionCategoriesById)
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("ParentCollectionCategoryIsDescendant", {
+      return makeUnsuccessfulResult(
+        makeResultError("ParentCollectionCategoryIsDescendant", {
           parentId: patch.parentId,
         }),
       );
@@ -111,7 +113,7 @@ export default class CollectionCategoriesUpdate extends Usecase<
     };
     await this.repos.collectionCategory.replace(updatedCollectionCategory);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       makeCollectionCategory(updatedCollectionCategory),
     );
   }

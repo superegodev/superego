@@ -10,7 +10,7 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import generateDefaultValues from "../../../utils/generateDefaultValues.js";
 import RhfContent from "../../../utils/RhfContent.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CreateDocument.css.js";
@@ -60,7 +60,7 @@ export default function CreateDocumentForm({ collection }: Props) {
             defaultMessage: "Error creating document",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

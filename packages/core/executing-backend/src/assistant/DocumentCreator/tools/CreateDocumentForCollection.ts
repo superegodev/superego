@@ -7,10 +7,10 @@ import type {
 import { jsonschemagen } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
-import makeSuccessfulToolResultOutput from "../../../makers/makeSuccessfulToolResultOutput.js";
-import makeUnsuccessfulToolResultOutput from "../../../makers/makeUnsuccessfulToolResultOutput.js";
+import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type DocumentsCreate from "../../../usecases/foreground/documents/Create.js";
+import type DocumentsCreate from "../../../usecases/documents/Create.js";
 import formatDescription from "../../../utils/formatDescription.js";
 
 const toolNameSuffix = ".createDocument" as const;
@@ -51,12 +51,12 @@ export default {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: success
-        ? makeSuccessfulToolResultOutput({
+        ? makeSuccessfulResult({
             collectionId: document.collectionId,
             documentId: document.id,
             documentVersionId: document.latestVersion.id,
           })
-        : makeUnsuccessfulToolResultOutput(error),
+        : makeUnsuccessfulResult(error),
     };
   },
 

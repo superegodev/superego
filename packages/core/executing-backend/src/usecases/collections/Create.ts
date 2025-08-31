@@ -7,8 +7,9 @@ import type {
   CollectionSettingsNotValid,
   CollectionSummaryPropertiesNotValid,
   CollectionVersionSettings,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   type Schema,
   valibotSchemas as schemaValibotSchemas,
@@ -21,9 +22,9 @@ import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
@@ -35,12 +36,13 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-  ): RpcResultPromise<
+  ): ResultPromise<
     Collection,
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
     | CollectionSchemaNotValid
     | CollectionSummaryPropertiesNotValid
+    | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
       v.strictObject({
@@ -52,8 +54,8 @@ export default class CollectionsCreate extends Usecase<
       settings,
     );
     if (!settingsValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSettingsNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSettingsNotValid", {
           collectionId: null,
           issues: makeValidationIssues(settingsValidationResult.issues),
         }),
@@ -66,8 +68,8 @@ export default class CollectionsCreate extends Usecase<
         settings.collectionCategoryId,
       ))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: settings.collectionCategoryId,
         }),
       );
@@ -78,8 +80,8 @@ export default class CollectionsCreate extends Usecase<
       schema,
     );
     if (!schemaValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSchemaNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSchemaNotValid", {
           collectionId: null,
           issues: makeValidationIssues(schemaValidationResult.issues),
         }),
@@ -97,8 +99,8 @@ export default class CollectionsCreate extends Usecase<
       [],
     );
     if (!isEmpty(nonValidSummaryPropertyIndexes)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSummaryPropertiesNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSummaryPropertiesNotValid", {
           collectionId: null,
           collectionVersionId: null,
           issues: nonValidSummaryPropertyIndexes.map((index) => ({
@@ -136,8 +138,6 @@ export default class CollectionsCreate extends Usecase<
     await this.repos.collection.insert(collection);
     await this.repos.collectionVersion.insert(collectionVersion);
 
-    return makeSuccessfulRpcResult(
-      makeCollection(collection, collectionVersion),
-    );
+    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
 }

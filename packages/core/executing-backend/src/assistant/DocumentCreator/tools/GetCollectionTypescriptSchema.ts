@@ -1,8 +1,8 @@
 import type { Collection, ToolCall, ToolResult } from "@superego/backend";
 import { codegen } from "@superego/schema";
-import makeSuccessfulToolResultOutput from "../../../makers/makeSuccessfulToolResultOutput.js";
-import makeToolResultError from "../../../makers/makeToolResultError.js";
-import makeUnsuccessfulToolResultOutput from "../../../makers/makeUnsuccessfulToolResultOutput.js";
+import makeResultError from "../../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import formatDescription from "../../../utils/formatDescription.js";
 
@@ -21,11 +21,11 @@ export default {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: collection
-        ? makeSuccessfulToolResultOutput({
+        ? makeSuccessfulResult({
             typescriptSchema: codegen(collection.latestVersion.schema),
           })
-        : makeUnsuccessfulToolResultOutput(
-            makeToolResultError("CollectionNotFound", { collectionId }),
+        : makeUnsuccessfulResult(
+            makeResultError("CollectionNotFound", { collectionId }),
           ),
     };
   },

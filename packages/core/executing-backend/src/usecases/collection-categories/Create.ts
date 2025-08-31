@@ -4,15 +4,16 @@ import type {
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
   ParentCollectionCategoryNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { Id, valibotSchemas } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionCategoryEntity from "../../entities/CollectionCategoryEntity.js";
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -21,11 +22,12 @@ export default class CollectionCategoriesCreate extends Usecase<
 > {
   async exec(
     proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
-  ): RpcResultPromise<
+  ): ResultPromise<
     CollectionCategory,
     | CollectionCategoryNameNotValid
     | CollectionCategoryIconNotValid
     | ParentCollectionCategoryNotFound
+    | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(
       valibotSchemas.collectionCategoryName(),
@@ -33,8 +35,8 @@ export default class CollectionCategoriesCreate extends Usecase<
     );
 
     if (!nameValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNameNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNameNotValid", {
           collectionCategoryId: null,
           issues: makeValidationIssues(nameValidationResult.issues),
         }),
@@ -47,8 +49,8 @@ export default class CollectionCategoriesCreate extends Usecase<
     );
 
     if (!iconValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryIconNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryIconNotValid", {
           collectionCategoryId: null,
           issues: makeValidationIssues(iconValidationResult.issues),
         }),
@@ -59,8 +61,8 @@ export default class CollectionCategoriesCreate extends Usecase<
       proto.parentId &&
       !(await this.repos.collectionCategory.exists(proto.parentId))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("ParentCollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("ParentCollectionCategoryNotFound", {
           parentId: proto.parentId,
         }),
       );
@@ -75,6 +77,6 @@ export default class CollectionCategoriesCreate extends Usecase<
     };
     await this.repos.collectionCategory.insert(collectionCategory);
 
-    return makeSuccessfulRpcResult(makeCollectionCategory(collectionCategory));
+    return makeSuccessfulResult(makeCollectionCategory(collectionCategory));
   }
 }

@@ -1,6 +1,6 @@
 import type { Backend } from "@superego/backend";
-import makeRpcError from "./makers/makeRpcError.js";
-import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "./makers/makeResultError.js";
+import makeUnsuccessfulResult from "./makers/makeUnsuccessfulResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
@@ -114,10 +114,10 @@ export default class ExecutingBackend implements Backend {
             this.javascriptSandbox,
             this.inferenceServiceFactory,
           );
-          const rpcResult = await usecase.exec(...args);
+          const result = await usecase.exec(...args);
           return {
-            action: rpcResult.success ? "commit" : "rollback",
-            returnValue: rpcResult,
+            action: result.success ? "commit" : "rollback",
+            returnValue: result,
           };
         })
         .then(() => {
@@ -126,8 +126,8 @@ export default class ExecutingBackend implements Backend {
           }
         })
         .catch((error) =>
-          makeUnsuccessfulRpcResult(
-            makeRpcError("UnexpectedError", { cause: error }),
+          makeUnsuccessfulResult(
+            makeResultError("UnexpectedError", { cause: error }),
           ),
         )) as Exec;
   }

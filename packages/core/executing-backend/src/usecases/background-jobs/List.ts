@@ -1,18 +1,19 @@
 import type {
   Backend,
   BackgroundJob,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeBackgroundJob from "../../makers/makeBackgroundJob.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class BackgroundJobsList extends Usecase<
   Backend["backgroundJobs"]["list"]
 > {
-  async exec(): RpcResultPromise<BackgroundJob[]> {
+  async exec(): ResultPromise<BackgroundJob[], UnexpectedError> {
     const backgroundJobs = await this.repos.backgroundJob.findAll();
 
-    return makeSuccessfulRpcResult(backgroundJobs.map(makeBackgroundJob));
+    return makeSuccessfulResult(backgroundJobs.map(makeBackgroundJob));
   }
 }

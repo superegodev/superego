@@ -1,3 +1,4 @@
+import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
 import type ConversationFormat from "./enums/ConversationFormat.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
@@ -22,6 +23,7 @@ import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type UnexpectedError from "./errors/UnexpectedError.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -39,40 +41,43 @@ import type DeletedEntities from "./types/DeletedEntities.js";
 import type Document from "./types/Document.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type Message from "./types/Message.js";
-import type RpcResultPromise from "./types/RpcResultPromise.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
   collectionCategories: {
     create(
       proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
-    ): RpcResultPromise<
+    ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNameNotValid
       | CollectionCategoryIconNotValid
       | ParentCollectionCategoryNotFound
+      | UnexpectedError
     >;
 
     update(
       id: CollectionCategoryId,
       patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNotFound
       | CollectionCategoryNameNotValid
       | CollectionCategoryIconNotValid
       | ParentCollectionCategoryNotFound
       | CollectionCategoryIsDescendant
+      | UnexpectedError
     >;
 
     delete(
       id: CollectionCategoryId,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      CollectionCategoryNotFound | CollectionCategoryHasChildren
+      | CollectionCategoryNotFound
+      | CollectionCategoryHasChildren
+      | UnexpectedError
     >;
 
-    list(): RpcResultPromise<CollectionCategory[]>;
+    list(): ResultPromise<CollectionCategory[], UnexpectedError>;
   };
 
   collections: {
@@ -80,22 +85,24 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
       | CollectionSummaryPropertiesNotValid
+      | UnexpectedError
     >;
 
     updateSettings(
       id: CollectionId,
       settingsPatch: Partial<CollectionSettings>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | UnexpectedError
     >;
 
     /** Creates a new version for the collection and migrates all documents. */
@@ -105,7 +112,7 @@ export default interface Backend {
       schema: Schema,
       settings: CollectionVersionSettings,
       migration: TypescriptModule,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
@@ -113,17 +120,19 @@ export default interface Backend {
       | CollectionSummaryPropertiesNotValid
       | CollectionMigrationNotValid
       | CollectionMigrationFailed
+      | UnexpectedError
     >;
 
     updateLatestVersionSettings(
       id: CollectionId,
       latestVersionId: CollectionVersionId,
       settingsPatch: Partial<CollectionVersionSettings>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | CollectionSummaryPropertiesNotValid
+      | UnexpectedError
     >;
 
     /**
@@ -136,21 +145,24 @@ export default interface Backend {
     delete(
       id: CollectionId,
       commandConfirmation: string,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      CollectionNotFound | CommandConfirmationNotValid
+      CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
-    list(): RpcResultPromise<Collection[]>;
+    list(): ResultPromise<Collection[], UnexpectedError>;
   };
 
   documents: {
     create(
       collectionId: CollectionId,
       content: any,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Document,
-      CollectionNotFound | DocumentContentNotValid | FilesNotFound
+      | CollectionNotFound
+      | DocumentContentNotValid
+      | FilesNotFound
+      | UnexpectedError
     >;
 
     createNewVersion(
@@ -158,12 +170,13 @@ export default interface Backend {
       id: DocumentId,
       latestVersionId: DocumentVersionId,
       content: any,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Document,
       | DocumentNotFound
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
+      | UnexpectedError
     >;
 
     /**
@@ -177,19 +190,19 @@ export default interface Backend {
       collectionId: CollectionId,
       id: DocumentId,
       commandConfirmation: string,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      DocumentNotFound | CommandConfirmationNotValid
+      DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
     list(
       collectionId: CollectionId,
-    ): RpcResultPromise<Document[], CollectionNotFound>;
+    ): ResultPromise<Document[], CollectionNotFound | UnexpectedError>;
 
     get(
       collectionId: CollectionId,
       id: DocumentId,
-    ): RpcResultPromise<Document, DocumentNotFound>;
+    ): ResultPromise<Document, DocumentNotFound | UnexpectedError>;
   };
 
   files: {
@@ -197,52 +210,55 @@ export default interface Backend {
       collectionId: CollectionId,
       documentId: DocumentId,
       id: FileId,
-    ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound>;
+    ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError>;
   };
 
   assistant: {
     startConversation(
       format: ConversationFormat,
       userMessageContent: Message.User["content"],
-    ): RpcResultPromise<Conversation>;
+    ): ResultPromise<Conversation, UnexpectedError>;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
-    ): RpcResultPromise<
+    ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotContinueConversation
+      ConversationNotFound | CannotContinueConversation | UnexpectedError
     >;
 
     recoverConversation(
       id: ConversationId,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotRecoverConversation
+      ConversationNotFound | CannotRecoverConversation | UnexpectedError
     >;
 
     deleteConversation(
       id: ConversationId,
-    ): RpcResultPromise<DeletedEntities, ConversationNotFound>;
+    ): ResultPromise<DeletedEntities, ConversationNotFound | UnexpectedError>;
 
-    listConversations(): RpcResultPromise<Omit<Conversation, "messages">[]>;
+    listConversations(): ResultPromise<
+      Omit<Conversation, "messages">[],
+      UnexpectedError
+    >;
 
     getConversation(
       id: ConversationId,
-    ): RpcResultPromise<Conversation, ConversationNotFound>;
+    ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
     // EVOLUTION: tts and stt methods. Possibly in another section (speech).
   };
 
   backgroundJobs: {
-    list(): RpcResultPromise<BackgroundJob[]>;
+    list(): ResultPromise<BackgroundJob[], UnexpectedError>;
   };
 
   globalSettings: {
-    get(): RpcResultPromise<GlobalSettings>;
+    get(): ResultPromise<GlobalSettings, UnexpectedError>;
 
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
-    ): RpcResultPromise<GlobalSettings>;
+    ): ResultPromise<GlobalSettings, UnexpectedError>;
   };
 }

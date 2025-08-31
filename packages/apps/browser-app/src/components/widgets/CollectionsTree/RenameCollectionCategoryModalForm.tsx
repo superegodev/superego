@@ -8,7 +8,7 @@ import * as v from "valibot";
 import { useUpdateCollectionCategory } from "../../../business-logic/backend/hooks.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFEmojiField from "../RHFEmojiField/RHFEmojiField.js";
 import RHFSubmitButton from "../RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
@@ -92,7 +92,7 @@ export default function RenameCollectionCategoryModalForm({
               defaultMessage: "Error deleting collection",
             })}
           >
-            <RpcError error={result.error} />
+            <ResultError error={result.error} />
           </Alert>
         ) : null}
       </Form>

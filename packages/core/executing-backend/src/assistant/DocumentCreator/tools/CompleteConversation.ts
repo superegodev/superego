@@ -1,6 +1,6 @@
 import type { ToolCall, ToolResult } from "@superego/backend";
-import makeToolResultError from "../../../makers/makeToolResultError.js";
-import makeUnsuccessfulToolResultOutput from "../../../makers/makeUnsuccessfulToolResultOutput.js";
+import makeResultError from "../../../makers/makeResultError.js";
+import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 
 export default {
@@ -15,8 +15,8 @@ export default {
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeUnsuccessfulToolResultOutput(
-        makeToolResultError(
+      output: makeUnsuccessfulResult(
+        makeResultError(
           "InvalidToolCall",
           "The completeConversation tool cannot be called in parallel with other tools.",
         ),

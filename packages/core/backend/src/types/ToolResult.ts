@@ -1,3 +1,4 @@
+import type { Result } from "@superego/global-types";
 import type CollectionNotFound from "../errors/CollectionNotFound.js";
 import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
@@ -5,11 +6,10 @@ import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type ToolName from "./ToolName.js";
-import type ToolResultOutput from "./ToolResultOutput.js";
 
 interface ToolResult<
   Tool extends ToolName | string = string,
-  Output extends ToolResultOutput<any, any> = ToolResultOutput<any, any>,
+  Output extends Result<any, any> = Result<any, any>,
 > {
   tool: Tool;
   toolCallId: string;
@@ -19,7 +19,7 @@ interface ToolResult<
 namespace ToolResult {
   export type GetCollectionTypescriptSchema = ToolResult<
     ToolName.GetCollectionTypescriptSchema,
-    ToolResultOutput<
+    Result<
       {
         typescriptSchema: string;
       },
@@ -29,7 +29,7 @@ namespace ToolResult {
 
   export type CreateDocumentForCollection = ToolResult<
     ToolName.CreateDocumentForCollection,
-    ToolResultOutput<
+    Result<
       {
         collectionId: CollectionId;
         documentId: DocumentId;

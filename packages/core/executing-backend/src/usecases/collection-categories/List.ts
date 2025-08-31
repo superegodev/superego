@@ -1,19 +1,20 @@
 import type {
   Backend,
   CollectionCategory,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionCategoriesList extends Usecase<
   Backend["collectionCategories"]["list"]
 > {
-  async exec(): RpcResultPromise<CollectionCategory[]> {
+  async exec(): ResultPromise<CollectionCategory[], UnexpectedError> {
     const collectionCategories = await this.repos.collectionCategory.findAll();
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       collectionCategories.map(makeCollectionCategory),
     );
   }

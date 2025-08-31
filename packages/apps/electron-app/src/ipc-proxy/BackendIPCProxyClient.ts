@@ -1,4 +1,4 @@
-import type { Backend, RpcResultPromise } from "@superego/backend";
+import type { Backend, ResultPromise } from "@superego/backend";
 import { ipcRenderer } from "electron";
 
 export default class BackendIPCProxyClient implements Backend {
@@ -47,8 +47,8 @@ export default class BackendIPCProxyClient implements Backend {
 
   private makeMainIpcCall<T>(
     channel: string,
-  ): (...args: any[]) => RpcResultPromise<any, any> {
-    return async (...args: any[]): RpcResultPromise<T> => {
+  ): (...args: any[]) => ResultPromise<any, any> {
+    return async (...args: any[]): ResultPromise<T> => {
       try {
         return await ipcRenderer.invoke(channel, ...args);
       } catch (error) {

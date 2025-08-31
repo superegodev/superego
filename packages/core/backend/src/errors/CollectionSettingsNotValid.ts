@@ -1,8 +1,9 @@
+import type { ResultError } from "@superego/global-types";
 import type CollectionId from "../ids/CollectionId.js";
-import type RpcError from "../types/RpcError.js";
+
 import type ValidationIssue from "../types/ValidationIssue.js";
 
-type CollectionSettingsNotValid = RpcError<
+type CollectionSettingsNotValid = ResultError<
   "CollectionSettingsNotValid",
   {
     collectionId: CollectionId | null;

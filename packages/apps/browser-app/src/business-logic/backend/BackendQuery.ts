@@ -1,8 +1,8 @@
-import type { Backend, RpcResult } from "@superego/backend";
+import type { Backend, Result } from "@superego/backend";
 import type { FetchQueryOptions } from "@tanstack/react-query";
-import type { ArgsOf, RpcResultOf } from "./typeUtils.js";
+import type { ArgsOf, ResultOf } from "./typeUtils.js";
 
-type BackendQuery<QueryResult extends RpcResult<any, any>> = (
+type BackendQuery<QueryResult extends Result<any, any>> = (
   backend: Backend,
 ) => FetchQueryOptions<QueryResult, never>;
 export default BackendQuery;
@@ -14,9 +14,7 @@ export function makeBackendQueryGetter<
   entity: Entity,
   method: Method,
   queryKey: (...args: ArgsOf<Entity, Method>) => string[],
-): (
-  ...args: ArgsOf<Entity, Method>
-) => BackendQuery<RpcResultOf<Entity, Method>> {
+): (...args: ArgsOf<Entity, Method>) => BackendQuery<ResultOf<Entity, Method>> {
   return function getBackendQuery(...args) {
     return (backend) => ({
       queryKey: queryKey(...args),

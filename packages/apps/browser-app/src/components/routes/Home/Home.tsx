@@ -1,8 +1,4 @@
-import {
-  AssistantName,
-  type Conversation,
-  ConversationFormat,
-} from "@superego/backend";
+import { type Conversation, ConversationFormat } from "@superego/backend";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {

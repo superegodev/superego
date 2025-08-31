@@ -4,11 +4,12 @@ import type {
   DocumentId,
   FileId,
   FileNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import type { ResultPromise } from "@superego/global-types";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class FilesGetContent extends Usecase<
@@ -18,7 +19,7 @@ export default class FilesGetContent extends Usecase<
     collectionId: CollectionId,
     documentId: DocumentId,
     id: FileId,
-  ): RpcResultPromise<Uint8Array<ArrayBuffer>, FileNotFound> {
+  ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {
     const file = await this.repos.file.find(id);
     const content = await this.repos.file.getContent(id);
     if (
@@ -27,11 +28,11 @@ export default class FilesGetContent extends Usecase<
       file.documentId !== documentId ||
       !content
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("FileNotFound", { fileId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("FileNotFound", { fileId: id }),
       );
     }
 
-    return makeSuccessfulRpcResult(content);
+    return makeSuccessfulResult(content);
   }
 }

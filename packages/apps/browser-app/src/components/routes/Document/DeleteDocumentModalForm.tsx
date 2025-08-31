@@ -10,7 +10,7 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./Document.css.js";
@@ -106,7 +106,7 @@ export default function DeleteDocumentModalForm({
               defaultMessage: "Error deleting document",
             })}
           >
-            <RpcError error={result.error} />
+            <ResultError error={result.error} />
           </Alert>
         ) : null}
       </Form>

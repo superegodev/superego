@@ -11,7 +11,7 @@ import AIModelUtils from "../../../utils/AIModelUtils.js";
 import applyTheme from "../../../utils/applyTheme.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.jsx";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import Section from "../../design-system/Section/Section.jsx";
 import RHFSelectField from "../../widgets/RHFSelectField/RHFSelectField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -111,7 +111,7 @@ export default function UpdateGlobalSettingsForm() {
             defaultMessage: "Error saving settings",
           })}
         >
-          <RpcError error={result.error} />
+          <ResultError error={result.error} />
         </Alert>
       ) : null}
     </Form>

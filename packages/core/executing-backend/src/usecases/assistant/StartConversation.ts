@@ -8,13 +8,14 @@ import {
   type MessageContentPart,
   MessageRole,
   type NonEmptyArray,
-  type RpcResultPromise,
+  type UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -25,7 +26,7 @@ export default class AssistantStartConversation extends Usecase<
   async exec(
     format: ConversationFormat,
     userMessageContent: NonEmptyArray<MessageContentPart.Text>,
-  ): RpcResultPromise<Conversation> {
+  ): ResultPromise<Conversation, UnexpectedError> {
     const { data: collections } = await this.sub(CollectionsList).exec();
     if (!collections) {
       throw new UnexpectedAssistantError("Getting collections failed.");
@@ -53,6 +54,6 @@ export default class AssistantStartConversation extends Usecase<
       conversationId: conversation.id,
     });
 
-    return makeSuccessfulRpcResult(makeConversation(conversation));
+    return makeSuccessfulResult(makeConversation(conversation));
   }
 }

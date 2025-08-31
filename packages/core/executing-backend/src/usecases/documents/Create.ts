@@ -5,8 +5,9 @@ import type {
   Document,
   DocumentContentNotValid,
   FilesNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import * as v from "valibot";
@@ -14,9 +15,9 @@ import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
@@ -29,13 +30,16 @@ export default class DocumentsCreate extends Usecase<
   async exec(
     collectionId: CollectionId,
     content: any,
-  ): RpcResultPromise<
+  ): ResultPromise<
     Document,
-    CollectionNotFound | DocumentContentNotValid | FilesNotFound
+    | CollectionNotFound
+    | DocumentContentNotValid
+    | FilesNotFound
+    | UnexpectedError
   > {
     if (!(await this.repos.collection.exists(collectionId))) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionNotFound", { collectionId }),
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId }),
       );
     }
 
@@ -50,8 +54,8 @@ export default class DocumentsCreate extends Usecase<
       content,
     );
     if (!contentValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentContentNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentContentNotValid", {
           collectionId,
           collectionVersionId: latestCollectionVersion.id,
           documentId: null,
@@ -67,8 +71,8 @@ export default class DocumentsCreate extends Usecase<
       contentValidationResult.output,
     );
     if (!isEmpty(referencedFileIds)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("FilesNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("FilesNotFound", {
           collectionId,
           documentId: null,
           fileIds: referencedFileIds,
@@ -110,7 +114,7 @@ export default class DocumentsCreate extends Usecase<
     await this.repos.documentVersion.insert(documentVersion);
     await this.repos.file.insertAll(filesWithContent);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       await makeDocument(
         this.javascriptSandbox,
         latestCollectionVersion,

@@ -1,7 +1,7 @@
+import type { ResultError } from "@superego/global-types";
 import type ConversationId from "../ids/ConversationId.js";
-import type RpcError from "../types/RpcError.js";
 
-type ConversationNotFound = RpcError<
+type ConversationNotFound = ResultError<
   "ConversationNotFound",
   {
     conversationId: ConversationId;

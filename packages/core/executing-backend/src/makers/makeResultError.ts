@@ -24,7 +24,7 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 
-type KnownRpcError =
+type KnownResultError =
   | CannotContinueConversation
   | CannotRecoverConversation
   | CollectionCategoryHasChildren
@@ -49,9 +49,11 @@ type KnownRpcError =
   | ParentCollectionCategoryNotFound
   | UnexpectedError;
 
-export default function makeRpcError<Name extends KnownRpcError["name"]>(
+export default function makeResultError<Name extends string>(
   name: Name,
-  details: Extract<KnownRpcError, { name: Name }>["details"],
-): Extract<KnownRpcError, { name: Name }> {
-  return { name, details } as Extract<KnownRpcError, { name: Name }>;
+  details: Name extends KnownResultError["name"]
+    ? Extract<KnownResultError, { name: Name }>["details"]
+    : any,
+) {
+  return { name, details };
 }

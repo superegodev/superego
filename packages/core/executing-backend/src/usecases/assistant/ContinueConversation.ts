@@ -10,14 +10,15 @@ import {
   type MessageContentPart,
   MessageRole,
   type NonEmptyArray,
-  type RpcResultPromise,
+  type UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -28,14 +29,14 @@ export default class AssistantContinueConversation extends Usecase<
   async exec(
     id: ConversationId,
     userMessageContent: NonEmptyArray<MessageContentPart.Text>,
-  ): RpcResultPromise<
+  ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotContinueConversation
+    ConversationNotFound | CannotContinueConversation | UnexpectedError
   > {
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("ConversationNotFound", { conversationId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("ConversationNotFound", { conversationId: id }),
       );
     }
 
@@ -49,8 +50,8 @@ export default class AssistantContinueConversation extends Usecase<
       conversation.status !== ConversationStatus.Idle ||
       conversation.contextFingerprint !== contextFingerprint
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CannotContinueConversation", {
+      return makeUnsuccessfulResult(
+        makeResultError("CannotContinueConversation", {
           conversationId: id,
           reason:
             conversation.status === ConversationStatus.Processing
@@ -78,6 +79,6 @@ export default class AssistantContinueConversation extends Usecase<
       conversationId: id,
     });
 
-    return makeSuccessfulRpcResult(makeConversation(updatedConversation));
+    return makeSuccessfulResult(makeConversation(updatedConversation));
   }
 }

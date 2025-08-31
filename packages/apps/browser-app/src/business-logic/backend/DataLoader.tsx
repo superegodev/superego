@@ -1,4 +1,4 @@
-import type { RpcError, RpcResult } from "@superego/backend";
+import type { Result, ResultError } from "@superego/backend";
 import { type UseQueryResult, useQueries } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import isEmpty from "../../utils/isEmpty.js";
@@ -11,7 +11,7 @@ type ExtractBackendQueryData<
   [Index in keyof DataLoaderQueries]: DataLoaderQueries[Index] extends BackendQuery<
     infer QueryResult
   >
-    ? QueryResult extends RpcResult<infer Data, any>
+    ? QueryResult extends Result<infer Data, any>
       ? NonNullable<Data>
       : never
     : never;
@@ -19,14 +19,14 @@ type ExtractBackendQueryData<
 
 interface Props<Queries extends readonly BackendQuery<any>[]> {
   queries: [...Queries];
-  renderErrors?: ((errors: RpcError<any, any>[]) => ReactNode) | undefined;
+  renderErrors?: ((errors: ResultError<any, any>[]) => ReactNode) | undefined;
   children: (...args: ExtractBackendQueryData<Queries>) => ReactNode;
 }
 export default function DataLoader<
   Queries extends readonly BackendQuery<any>[],
 >({ queries, renderErrors, children }: Props<Queries>) {
   const backend = useBackend();
-  const results: UseQueryResult<RpcResult<any, any>>[] = useQueries({
+  const results: UseQueryResult<Result<any, any>>[] = useQueries({
     queries: queries.map((query) => query(backend)),
   });
 
