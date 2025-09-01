@@ -4358,6 +4358,7 @@ __metadata:
   resolution: "@superego/root@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^2.2.2"
+    playwright: "npm:^1.55.0"
     prettier: "npm:^3.6.2"
     prettier-plugin-sh: "npm:^0.18.0"
     prettier-plugin-sql-cst: "npm:^0.13.0"

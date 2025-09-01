@@ -17,10 +17,12 @@
     "deploy-demo": "yarn workspace @superego/demo-app deploy",
     "build-electron": "yarn workspace @superego/electron-app build",
     "deploy-electron": "yarn workspace @superego/electron-app deploy",
-    "prepare-release": "scripts/prepare-release.sh"
+    "prepare-release": "scripts/prepare-release.sh",
+    "playwright": "playwright"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",
+    "playwright": "^1.55.0",
     "prettier": "^3.6.2",
     "prettier-plugin-sh": "^0.18.0",
     "prettier-plugin-sql-cst": "^0.13.0",
