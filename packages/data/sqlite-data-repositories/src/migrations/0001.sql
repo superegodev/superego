@@ -37,4 +37,3 @@ CREATE INDEX "idx__background_jobs__on__enqueued_at__status_enqueued" ON "backgr
   "enqueued_at"
 )
 WHERE "status" = 'Enqueued';
-
