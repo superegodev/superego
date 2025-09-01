@@ -11,6 +11,9 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
+  "Chat.tsx_QrZMdi": {
+    "defaultMessage": "Thinking..."
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
@@ -49,6 +52,15 @@
   },
   "CollectionsTree.tsx_gykodq": {
     "defaultMessage": "Tree of collection categories and collections"
+  },
+  "Conversation.tsx_9eR0Qp": {
+    "defaultMessage": "Delete conversation"
+  },
+  "Conversation.tsx_HClzK5": {
+    "defaultMessage": "🤖 Conversation » {conversation}"
+  },
+  "Conversation.tsx_w5q/I/": {
+    "defaultMessage": "Conversation actions"
   },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
@@ -124,6 +136,24 @@
   },
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteConversationModalForm.tsx_0Gdwem": {
+    "defaultMessage": "Delete conversation \"{conversationName}\""
+  },
+  "DeleteConversationModalForm.tsx_4GxOi1": {
+    "defaultMessage": "Error deleting conversation"
+  },
+  "DeleteConversationModalForm.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "DeleteConversationModalForm.tsx_VcWPH+": {
+    "defaultMessage": "If you're sure you want to delete the conversation, write <em>delete</em> in the input below."
+  },
+  "DeleteConversationModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Command confirmation"
+  },
+  "DeleteConversationModalForm.tsx_t7Vs5c": {
+    "defaultMessage": "Deleting the conversation is permanent."
   },
   "DeleteDocumentModalForm.tsx_+pXFqz": {
     "defaultMessage": "If you're sure you want to delete the document, write <em>delete</em> in the input below."
@@ -308,8 +338,8 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Create collection category"
   },
-  "Hero.tsx_6Se3+J": {
-    "defaultMessage": "Superego Logo - A low detail, low-poly painting of Freud's face"
+  "Hero.tsx_FbFgI4": {
+    "defaultMessage": "Superego Logo"
   },
   "Hero.tsx_oxShVS": {
     "defaultMessage": "Your Life's Database"
@@ -317,11 +347,8 @@
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
   },
-  "Home.tsx_QrZMdi": {
-    "defaultMessage": "Thinking..."
-  },
-  "Home.tsx_oZLZvb": {
-    "defaultMessage": "How can I help you?"
+  "Home.tsx_EWHk8s": {
+    "defaultMessage": "Error starting conversation"
   },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
@@ -466,6 +493,9 @@
   },
   "UserMessageContentInput.tsx_9WRlF4": {
     "defaultMessage": "Send"
+  },
+  "UserMessageContentInput.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
   },
   "UserMessageContentInput.tsx_rf1wfv": {
     "defaultMessage": "Message to assistant"

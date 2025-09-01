@@ -43,7 +43,7 @@ export default function Collection({ collectionId }: Props) {
         ]}
       />
       <Shell.Panel.Content>
-        <DataLoader queries={[listDocumentsQuery(collectionId)]}>
+        <DataLoader queries={[listDocumentsQuery([collectionId])]}>
           {(documents) => (
             <DocumentsTable collection={collection} documents={documents} />
           )}

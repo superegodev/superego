@@ -236,7 +236,11 @@ export default interface Backend {
 
     deleteConversation(
       id: ConversationId,
-    ): ResultPromise<DeletedEntities, ConversationNotFound | UnexpectedError>;
+      commandConfirmation: string,
+    ): ResultPromise<
+      DeletedEntities,
+      ConversationNotFound | CommandConfirmationNotValid | UnexpectedError
+    >;
 
     listConversations(): ResultPromise<
       Omit<Conversation, "messages">[],

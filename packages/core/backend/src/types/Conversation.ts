@@ -7,6 +7,8 @@ type Conversation = {
   id: ConversationId;
   format: ConversationFormat;
   title: string;
+  // TODO: hide this property from the Backend types, keeping it only on the
+  // entity. Use instead canBeContinued + canBeRecovered.
   contextFingerprint: string;
   messages: Message[];
   status: ConversationStatus;

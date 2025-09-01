@@ -3,15 +3,24 @@ import { vars } from "../../../themes.css.js";
 
 export const CollectionsTree = {
   root: style({
+    overflow: "hidden",
     display: "flex",
     flexDirection: "column",
     marginInline: `calc(-1 * ${vars.spacing._2})`,
     fontSize: vars.typography.fontSizes.sm,
   }),
+
+  tree: style({
+    flex: "0 1 auto",
+    minHeight: 0,
+    overflow: "auto",
+    overscrollBehavior: "contain",
+  }),
 };
 
 export const Header = {
   root: style({
+    flex: "0 0 auto",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

@@ -110,19 +110,53 @@ export const useDeleteDocument = makeUseBackendMutation(
 );
 
 /*
- * Assistants
+ * Assistant
  */
+
+export const listConversationsQuery = makeBackendQueryGetter(
+  "assistant",
+  "listConversations",
+  () => ["listConversations"],
+);
+
+export const getConversationQuery = makeBackendQueryGetter(
+  "assistant",
+  "getConversation",
+  (conversationId) => ["getConversation", conversationId],
+);
 
 export const useStartConversation = makeUseBackendMutation(
   "assistant",
   "startConversation",
-  () => [],
+  () => [["listConversations"]],
 );
 
 export const useContinueConversation = makeUseBackendMutation(
   "assistant",
   "continueConversation",
-  () => [],
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+export const useDeleteConversation = makeUseBackendMutation(
+  "assistant",
+  "deleteConversation",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+/*
+ * Background jobs
+ */
+
+export const listBackgroundJobsQuery = makeBackendQueryGetter(
+  "backgroundJobs",
+  "list",
+  () => ["listBackgroundJobs"],
 );
 
 /*

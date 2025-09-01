@@ -59,6 +59,7 @@ export default function CollectionsTree({ className }: Props) {
             tree.makeTree(collectionCategories, collections, collator).children
           }
           defaultExpandedKeys={collectionCategories.map(({ id }) => id)}
+          className={cs.CollectionsTree.tree}
         >
           {function renderItem(item) {
             return item.type === tree.TreeItemType.CollectionCategory ? (

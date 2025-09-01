@@ -1,4 +1,8 @@
-import type { CollectionId, DocumentId } from "@superego/backend";
+import type {
+  CollectionId,
+  ConversationId,
+  DocumentId,
+} from "@superego/backend";
 
 export enum RouteName {
   Home = "Home",
@@ -9,6 +13,8 @@ export enum RouteName {
   CreateCollectionVersion = "CreateCollectionVersion",
   CreateDocument = "CreateDocument",
   Document = "Document",
+  Conversation = "Conversation",
+  Conversations = "Conversations",
 }
 
 type Route =
@@ -41,6 +47,13 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
+    }
+  | {
+      name: RouteName.Conversations;
+    }
+  | {
+      name: RouteName.Conversation;
+      conversationId: ConversationId;
     };
 
 export default Route;

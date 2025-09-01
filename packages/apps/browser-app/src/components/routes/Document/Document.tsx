@@ -24,7 +24,7 @@ export default function Document({ collectionId, documentId }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
   return collection ? (
-    <DataLoader queries={[getDocumentQuery(collection.id, documentId)]}>
+    <DataLoader queries={[getDocumentQuery([collection.id, documentId])]}>
       {(document) => (
         <Shell.Panel slot="Main">
           <Shell.Panel.Header

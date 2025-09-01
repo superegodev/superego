@@ -11,6 +11,7 @@ export default function ConversationMessages({
   conversation,
   className,
 }: Props) {
+  // TODO: add Thinking...
   return (
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {conversation.messages.map((message, index) => (

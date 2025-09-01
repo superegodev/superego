@@ -5,20 +5,19 @@ import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.jsx";
+import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.jsx";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
   onSend: (messageContent: Message.User["content"]) => void;
-  placeholder: string;
   autoFocus: boolean;
-  isDisabled: boolean;
+  isProcessingMessage: boolean;
   className?: string | undefined;
 }
 export default function UserMessageContentInput({
   onSend,
-  placeholder,
   autoFocus,
-  isDisabled,
+  isProcessingMessage,
   className,
 }: Props) {
   const intl = useIntl();
@@ -37,7 +36,7 @@ export default function UserMessageContentInput({
           defaultMessage: "Message to assistant",
         })}
         autoFocus={autoFocus}
-        isDisabled={isDisabled}
+        isDisabled={isProcessingMessage}
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
@@ -46,7 +45,9 @@ export default function UserMessageContentInput({
         }}
       >
         <TextArea
-          placeholder={placeholder}
+          placeholder={intl.formatMessage({
+            defaultMessage: "How can I help you?",
+          })}
           className={cs.UserMessageContentInput.textArea}
         />
       </TextField>
@@ -54,10 +55,14 @@ export default function UserMessageContentInput({
         variant="invisible"
         label={intl.formatMessage({ defaultMessage: "Send" })}
         className={cs.UserMessageContentInput.sendButton}
-        isDisabled={isDisabled || text === ""}
+        isDisabled={isProcessingMessage || text === ""}
         onPress={send}
       >
-        <PiPaperPlaneRightFill />
+        {isProcessingMessage ? (
+          <ThreeDotSpinner className={cs.UserMessageContentInput.spinner} />
+        ) : (
+          <PiPaperPlaneRightFill />
+        )}
       </IconButton>
     </div>
   );

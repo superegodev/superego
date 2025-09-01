@@ -1,11 +1,10 @@
-import { type Conversation, ConversationFormat } from "@superego/backend";
-import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import {
-  useContinueConversation,
-  useStartConversation,
-} from "../../../business-logic/backend/hooks.js";
-import ConversationMessages from "../../design-system/ConversationMessages/ConversationMessages.jsx";
+import { ConversationFormat, type Message } from "@superego/backend";
+import { useIntl } from "react-intl";
+import { useStartConversation } from "../../../business-logic/backend/hooks.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import Alert from "../../design-system/Alert/Alert.jsx";
+import ResultError from "../../design-system/ResultError/ResultError.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
 import Hero from "./Hero.jsx";
@@ -13,67 +12,37 @@ import * as cs from "./Home.css.js";
 
 export default function Home() {
   const intl = useIntl();
-  const [conversation, setConversation] = useState<Conversation | null>(null);
-  const {
-    result: startConversationResult,
-    mutate: startConversation,
-    isPending: isStartingConversation,
-  } = useStartConversation();
-  const {
-    result: continueConversationResult,
-    mutate: continueConversation,
-    isPending: isContinuingConversation,
-  } = useContinueConversation();
-  const isAwaitingNextMessage =
-    isStartingConversation || isContinuingConversation;
-  useEffect(() => {
-    setConversation(
-      continueConversationResult?.data ??
-        startConversationResult?.data ??
-        conversation,
+  const { navigateTo } = useNavigationState();
+
+  const { result, mutate, isPending } = useStartConversation();
+  const onSend = async (userMessageContent: Message.User["content"]) => {
+    const { success, data } = await mutate(
+      ConversationFormat.Text,
+      userMessageContent,
     );
-  }, [conversation, startConversationResult, continueConversationResult]);
+    if (success) {
+      navigateTo({ name: RouteName.Conversation, conversationId: data.id });
+    }
+  };
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Content>
-        <div
-          className={
-            cs.Home.root[
-              conversation ? "withConversation" : "withoutConversation"
-            ]
-          }
-        >
-          <Hero isMinified={!!conversation} />
+        <div className={cs.Home.root}>
+          <Hero />
           <UserMessageContentInput
-            onSend={(userMessageContent) => {
-              if (!conversation) {
-                startConversation(
-                  AssistantName.DocumentCreator,
-                  ConversationFormat.Text,
-                  userMessageContent,
-                );
-              } else {
-                continueConversation(conversation.id, userMessageContent);
-              }
-            }}
-            placeholder={intl.formatMessage({
-              defaultMessage: "How can I help you?",
-            })}
+            onSend={onSend}
             autoFocus={true}
-            isDisabled={isAwaitingNextMessage}
-            className={cs.Home.userMessageContentInput}
+            isProcessingMessage={isPending}
           />
-          <div
-            className={cs.Home.spinner}
-            style={{ visibility: isAwaitingNextMessage ? "visible" : "hidden" }}
-          >
-            <FormattedMessage defaultMessage="Thinking..." />
-          </div>
-          {conversation ? (
-            <ConversationMessages
-              conversation={conversation}
-              className={cs.Home.conversationMessages}
-            />
+          {result?.error ? (
+            <Alert
+              variant="error"
+              title={intl.formatMessage({
+                defaultMessage: "Error starting conversation",
+              })}
+            >
+              <ResultError error={result.error} />
+            </Alert>
           ) : null}
         </div>
       </Shell.Panel.Content>

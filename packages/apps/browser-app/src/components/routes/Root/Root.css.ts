@@ -3,16 +3,31 @@ import { vars } from "../../../themes.css.js";
 
 export const PrimarySidebarPanel = {
   root: style({
+    height: "100%",
+    overflow: "hidden",
     display: "flex",
     flexDirection: "column",
   }),
   topActions: style({
-    marginBlockEnd: vars.spacing._6,
+    marginBlockEnd: vars.spacing._4,
+    flex: "0 0 auto",
+    maxHeight: vars.spacing._64,
+    overflow: "auto",
+    overscrollBehavior: "contain",
   }),
   collectionsTree: style({
-    flexGrow: 1,
+    flex: "1 1 auto",
+    minHeight: 0,
+    overflow: "auto",
+    overscrollBehavior: "contain",
   }),
-  bottomActions: style({}),
+  bottomActions: style({
+    marginBlockStart: vars.spacing._4,
+    flex: "0 0 auto",
+    maxHeight: vars.spacing._64,
+    overflow: "auto",
+    overscrollBehavior: "contain",
+  }),
 };
 
 const primarySidebarPanelActionRootBase = style({

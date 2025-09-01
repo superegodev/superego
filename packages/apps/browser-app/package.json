@@ -30,7 +30,7 @@
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "typescript": "^5.9.2",
-    "vite": "^7.1.3",
+    "vite": "^7.1.4",
     "vitest": "^3.2.4"
   },
   "dependencies": {
@@ -41,7 +41,7 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:^",
-    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query": "^5.85.6",
     "@tiptap/extension-code-block-lowlight": "3.3.0",
     "@tiptap/extension-list": "3.3.0",
     "@tiptap/extension-subscript": "3.3.0",

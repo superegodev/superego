@@ -23,6 +23,12 @@
       "value": "Error loading app"
     }
   ],
+  "Chat.tsx_QrZMdi": [
+    {
+      "type": 0,
+      "value": "Thinking..."
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -111,6 +117,28 @@
     {
       "type": 0,
       "value": "Tree of collection categories and collections"
+    }
+  ],
+  "Conversation.tsx_9eR0Qp": [
+    {
+      "type": 0,
+      "value": "Delete conversation"
+    }
+  ],
+  "Conversation.tsx_HClzK5": [
+    {
+      "type": 0,
+      "value": "🤖 Conversation » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "Conversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Conversation actions"
     }
   ],
   "CreateCollection.tsx_XQCXwU": [
@@ -291,6 +319,64 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_0Gdwem": [
+    {
+      "type": 0,
+      "value": "Delete conversation \""
+    },
+    {
+      "type": 1,
+      "value": "conversationName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteConversationModalForm.tsx_4GxOi1": [
+    {
+      "type": 0,
+      "value": "Error deleting conversation"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_VcWPH+": [
+    {
+      "type": 0,
+      "value": "If you're sure you want to delete the conversation, write "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " in the input below."
+    }
+  ],
+  "DeleteConversationModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_t7Vs5c": [
+    {
+      "type": 0,
+      "value": "Deleting the conversation is permanent."
     }
   ],
   "DeleteDocumentModalForm.tsx_+pXFqz": [
@@ -697,10 +783,10 @@
       "value": "Create collection category"
     }
   ],
-  "Hero.tsx_6Se3+J": [
+  "Hero.tsx_FbFgI4": [
     {
       "type": 0,
-      "value": "Superego Logo - A low detail, low-poly painting of Freud's face"
+      "value": "Superego Logo"
     }
   ],
   "Hero.tsx_oxShVS": [
@@ -715,16 +801,10 @@
       "value": "Superego"
     }
   ],
-  "Home.tsx_QrZMdi": [
+  "Home.tsx_EWHk8s": [
     {
       "type": 0,
-      "value": "Thinking..."
-    }
-  ],
-  "Home.tsx_oZLZvb": [
-    {
-      "type": 0,
-      "value": "How can I help you?"
+      "value": "Error starting conversation"
     }
   ],
   "ListField.tsx_6ibWnb": [
@@ -1037,6 +1117,12 @@
     {
       "type": 0,
       "value": "Send"
+    }
+  ],
+  "UserMessageContentInput.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
     }
   ],
   "UserMessageContentInput.tsx_rf1wfv": [

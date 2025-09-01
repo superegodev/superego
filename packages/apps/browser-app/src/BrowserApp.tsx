@@ -35,9 +35,9 @@ export default function BrowserApp({ backend, queryClient }: Props) {
             <RouterProvider navigate={(href) => navigateTo(fromHref(href))}>
               <DataLoader
                 queries={[
-                  listCollectionCategoriesQuery(),
-                  listCollectionsQuery(),
-                  getGlobalSettingsQuery(),
+                  listCollectionCategoriesQuery([]),
+                  listCollectionsQuery([]),
+                  getGlobalSettingsQuery([]),
                 ]}
                 renderErrors={(errors) => (
                   <>

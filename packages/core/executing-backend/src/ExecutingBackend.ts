@@ -130,7 +130,7 @@ export default class ExecutingBackend implements Backend {
             returnValue: result,
           };
         })
-        .then(() => {
+        .then((result) => {
           // We trigger a background job check only _after_ the transaction that
           // might have created some background jobs has been committed. (Else
           // the BackgroundJobExecutor wouldn't even see the created background
@@ -139,6 +139,7 @@ export default class ExecutingBackend implements Backend {
             // Note: this call is purposefully not awaited.
             this.backgroundJobExecutor.executeNext();
           }
+          return result;
         })
         .catch((error) =>
           makeUnsuccessfulResult(

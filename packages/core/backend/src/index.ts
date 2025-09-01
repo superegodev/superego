@@ -18,6 +18,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
+export type { default as CannotProcessConversation } from "./errors/CannotProcessConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";

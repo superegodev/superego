@@ -4,7 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const UserMessageContentInput = {
   root: style({
     position: "relative",
-    width: "80%",
+    width: "100%",
   }),
 
   textField: style({
@@ -49,5 +49,9 @@ export const UserMessageContentInput = {
     width: vars.spacing._10,
     borderRadius: vars.borders.radius.full,
     fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  spinner: style({
+    height: vars.spacing._4,
   }),
 };
