@@ -21,10 +21,8 @@ export default function Conversation({ conversationId }: Props) {
       queries={[
         getConversationQuery([conversationId], {
           pollingInterval: 200,
-          pollWhile: (result) => {
-            console.log(result?.data);
-            return result?.data?.status === ConversationStatus.Processing;
-          },
+          pollWhile: (result) =>
+            result?.data?.status === ConversationStatus.Processing,
         }),
       ]}
     >

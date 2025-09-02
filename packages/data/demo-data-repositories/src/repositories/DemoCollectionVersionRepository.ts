@@ -45,6 +45,11 @@ export default class DemoCollectionVersionRepository
     return deletedIds;
   }
 
+  async find(id: CollectionVersionId): Promise<CollectionVersionEntity | null> {
+    this.ensureNotDisposed();
+    return clone(this.collectionVersions[id] ?? null);
+  }
+
   async findLatestWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<CollectionVersionEntity | null> {

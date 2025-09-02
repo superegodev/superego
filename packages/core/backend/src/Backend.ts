@@ -19,6 +19,7 @@ import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
+import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
@@ -39,6 +40,7 @@ import type CollectionVersionSettings from "./types/CollectionVersionSettings.js
 import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
 import type Document from "./types/Document.js";
+import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type Message from "./types/Message.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
@@ -203,6 +205,15 @@ export default interface Backend {
       collectionId: CollectionId,
       id: DocumentId,
     ): ResultPromise<Document, DocumentNotFound | UnexpectedError>;
+
+    getVersion(
+      collectionId: CollectionId,
+      documentId: DocumentId,
+      documentVersionId: DocumentVersionId,
+    ): ResultPromise<
+      DocumentVersion,
+      DocumentVersionNotFound | UnexpectedError
+    >;
   };
 
   files: {

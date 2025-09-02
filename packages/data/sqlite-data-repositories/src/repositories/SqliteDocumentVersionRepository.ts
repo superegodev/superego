@@ -86,6 +86,22 @@ export default class SqliteDocumentVersionRepository
     return result.map(({ id }) => id);
   }
 
+  async find(id: DocumentVersionId): Promise<DocumentVersionEntity | null> {
+    const documentVersion = this.db
+      .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
+      .get(id) as SqliteDocumentVersion | undefined;
+    if (!documentVersion) {
+      return null;
+    }
+    if (documentVersion?.is_latest === 1) {
+      return toEntity(documentVersion);
+    }
+    const allDocumentVersions = this.db
+      .prepare(`SELECT * FROM "${table}"`)
+      .all() as SqliteDocumentVersion[];
+    return toEntity(documentVersion, allDocumentVersions, jdp);
+  }
+
   async findLatestWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity | null> {

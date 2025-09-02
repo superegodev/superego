@@ -5,18 +5,24 @@ import * as cs from "./ConversationMessages.css.js";
 
 interface Props {
   conversation: Conversation;
+  showTechnicalLog: boolean;
   className?: string | undefined;
 }
 export default function ConversationMessages({
   conversation,
+  showTechnicalLog,
   className,
 }: Props) {
   // TODO: add Thinking...
   return (
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {conversation.messages.map((message, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: order is stable.
-        <ConversationMessage key={index} message={message} />
+        <ConversationMessage
+          // biome-ignore lint/suspicious/noArrayIndexKey: order is stable.
+          key={index}
+          message={message}
+          showTechnicalLog={showTechnicalLog}
+        />
       ))}
     </div>
   );

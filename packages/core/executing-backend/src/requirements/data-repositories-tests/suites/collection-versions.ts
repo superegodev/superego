@@ -171,6 +171,57 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     expect(found).toEqual([collectionVersion3]);
   });
 
+  describe("finding one", () => {
+    it("case: exists => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const collectionVersion: CollectionVersionEntity = {
+        id: Id.generate.collectionVersion(),
+        previousVersionId: null,
+        collectionId: Id.generate.collection(),
+        schema: schema,
+        settings: settings,
+        migration: null,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.collectionVersion.insert(collectionVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.collectionVersion.find(collectionVersion.id),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(collectionVersion);
+    });
+
+    it("case: doesn't exist => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.collectionVersion.find(
+            Id.generate.collectionVersion(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+  });
+
   describe("finding latest by collection id", () => {
     it("case: exists => returns latest", async () => {
       // Setup SUT

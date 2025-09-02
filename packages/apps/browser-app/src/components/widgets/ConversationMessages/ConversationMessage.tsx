@@ -6,8 +6,12 @@ import UserMessage from "./UserMessage.jsx";
 
 interface Props {
   message: Message;
+  showTechnicalLog: boolean;
 }
-export default function ConversationMessage({ message }: Props) {
+export default function ConversationMessage({
+  message,
+  showTechnicalLog,
+}: Props) {
   switch (message.role) {
     case MessageRole.User:
       return <UserMessage message={message} />;
@@ -15,10 +19,15 @@ export default function ConversationMessage({ message }: Props) {
       return "content" in message ? (
         <AssistantContentMessage message={message} />
       ) : (
-        <AssistantToolCallMessage message={message} />
+        <AssistantToolCallMessage
+          message={message}
+          showTechnicalLog={showTechnicalLog}
+        />
       );
     case MessageRole.Tool:
-      return <ToolMessage message={message} />;
+      return (
+        <ToolMessage message={message} showTechnicalLog={showTechnicalLog} />
+      );
     default:
       return null;
   }

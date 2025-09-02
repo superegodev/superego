@@ -28,6 +28,7 @@ import DocumentsCreate from "./usecases/documents/Create.js";
 import DocumentsCreateNewVersion from "./usecases/documents/CreateNewVersion.js";
 import DocumentsDelete from "./usecases/documents/Delete.js";
 import DocumentsGet from "./usecases/documents/Get.js";
+import DocumentsGetVersion from "./usecases/documents/GetVersion.js";
 import DocumentsList from "./usecases/documents/List.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
@@ -74,6 +75,7 @@ export default class ExecutingBackend implements Backend {
       delete: this.makeUsecase(DocumentsDelete, true),
       list: this.makeUsecase(DocumentsList, false),
       get: this.makeUsecase(DocumentsGet, false),
+      getVersion: this.makeUsecase(DocumentsGetVersion, false),
     };
 
     this.files = {

@@ -1,8 +1,8 @@
 {
-  "AssistantToolCallMessage.tsx_/ZNQCX": [
+  "AssistantToolCallMessage.tsx_NnWZ6F": [
     {
       "type": 0,
-      "value": "Tool calls"
+      "value": "Tool call"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -21,12 +21,6 @@
     {
       "type": 0,
       "value": "Error loading app"
-    }
-  ],
-  "Chat.tsx_QrZMdi": [
-    {
-      "type": 0,
-      "value": "Thinking..."
     }
   ],
   "Collection.tsx_D3idYv": [
@@ -987,16 +981,22 @@
       "value": "null - click to set a value"
     }
   ],
+  "TechnicalToolCallOrResult.tsx_NnWZ6F": [
+    {
+      "type": 0,
+      "value": "Tool call"
+    }
+  ],
+  "TechnicalToolCallOrResult.tsx_OJmR+3": [
+    {
+      "type": 0,
+      "value": "Tool result"
+    }
+  ],
   "TiptapInput.tsx_0he+1r": [
     {
       "type": 0,
       "value": "Write..."
-    }
-  ],
-  "ToolMessage.tsx_v9P+VS": [
-    {
-      "type": 0,
-      "value": "Tool results"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

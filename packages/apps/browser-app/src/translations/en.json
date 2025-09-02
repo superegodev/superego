@@ -1,6 +1,6 @@
 {
-  "AssistantToolCallMessage.tsx_/ZNQCX": {
-    "defaultMessage": "Tool calls"
+  "AssistantToolCallMessage.tsx_NnWZ6F": {
+    "defaultMessage": "Tool call"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -10,9 +10,6 @@
   },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
-  },
-  "Chat.tsx_QrZMdi": {
-    "defaultMessage": "Thinking..."
   },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
@@ -428,11 +425,14 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
+  "TechnicalToolCallOrResult.tsx_NnWZ6F": {
+    "defaultMessage": "Tool call"
+  },
+  "TechnicalToolCallOrResult.tsx_OJmR+3": {
+    "defaultMessage": "Tool result"
+  },
   "TiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
-  },
-  "ToolMessage.tsx_v9P+VS": {
-    "defaultMessage": "Tool results"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"

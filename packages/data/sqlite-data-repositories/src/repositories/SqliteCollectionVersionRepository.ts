@@ -89,6 +89,13 @@ export default class SqliteCollectionVersionRepository
     return result.map(({ id }) => id);
   }
 
+  async find(id: CollectionVersionId): Promise<CollectionVersionEntity | null> {
+    const collectionVersion = this.db
+      .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
+      .get(id) as SqliteCollectionVersion | undefined;
+    return collectionVersion ? toEntity(collectionVersion) : null;
+  }
+
   async findLatestWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<CollectionVersionEntity | null> {

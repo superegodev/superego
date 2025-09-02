@@ -58,6 +58,11 @@ export default class DemoDocumentVersionRepository
     return deletedIds;
   }
 
+  async find(id: DocumentVersionId): Promise<DocumentVersionEntity | null> {
+    this.ensureNotDisposed();
+    return clone(this.documentVersions[id] ?? null);
+  }
+
   async findLatestWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity | null> {

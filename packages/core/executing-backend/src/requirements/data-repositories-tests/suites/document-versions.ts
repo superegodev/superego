@@ -193,6 +193,119 @@ export default rd<Dependencies>("Document versions", (deps) => {
     expect(latestDocumentVersions).toEqual([documentVersion3]);
   });
 
+  describe("finding one", () => {
+    it("case: exists, latest => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        content: content,
+        previousVersionId: null,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(documentVersion);
+    });
+
+    it("case: exists, not latest => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const documentId = Id.generate.document();
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        collectionId: Id.generate.collection(),
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        content: { ...content, number: 1 },
+        previousVersionId: null,
+        createdAt: new Date(),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        collectionId: Id.generate.collection(),
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        content: { ...content, number: 2 },
+        previousVersionId: documentVersion1.id,
+        createdAt: new Date(),
+      };
+      const documentVersion3: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        collectionId: Id.generate.collection(),
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        content: { ...content, number: 3 },
+        previousVersionId: documentVersion2.id,
+        createdAt: new Date(),
+      };
+      const documentVersion4: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        collectionId: Id.generate.collection(),
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        content: { ...content, number: 4 },
+        previousVersionId: documentVersion3.id,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          await repos.documentVersion.insert(documentVersion3);
+          await repos.documentVersion.insert(documentVersion4);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion3.id),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(documentVersion3);
+    });
+
+    it("case: doesn't exist => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(
+            Id.generate.documentVersion(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+  });
+
   describe("finding latest by document id", () => {
     it("case: exists => returns latest", async () => {
       // Setup SUT

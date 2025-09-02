@@ -48,7 +48,11 @@ export const useCreateCollection = makeUseBackendMutation(
 export const useCreateNewCollectionVersion = makeUseBackendMutation(
   "collections",
   "createNewVersion",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+  ],
 );
 
 export const useUpdateCollectionSettings = makeUseBackendMutation(
@@ -60,13 +64,23 @@ export const useUpdateCollectionSettings = makeUseBackendMutation(
 export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
   "collections",
   "updateLatestVersionSettings",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
 );
 
 export const useDeleteCollection = makeUseBackendMutation(
   "collections",
   "delete",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
 );
 
 /*
@@ -83,6 +97,17 @@ export const getDocumentQuery = makeBackendQueryGetter(
   "documents",
   "get",
   (collectionId, documentId) => ["getDocument", collectionId, documentId],
+);
+
+export const getDocumentVersionQuery = makeBackendQueryGetter(
+  "documents",
+  "getVersion",
+  (collectionId, documentId, documentVersionId) => [
+    "getDocumentVersion",
+    collectionId,
+    documentId,
+    documentVersionId,
+  ],
 );
 
 export const useCreateDocument = makeUseBackendMutation(
@@ -106,6 +131,7 @@ export const useDeleteDocument = makeUseBackendMutation(
   ([collectionId, documentId]) => [
     ["listDocuments", collectionId],
     ["getDocument", collectionId, documentId],
+    ["getDocumentVersion", collectionId, documentId],
   ],
 );
 

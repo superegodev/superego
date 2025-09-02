@@ -13,6 +13,10 @@ export default class AssistantListConversations extends Usecase<
   > {
     const conversations = await this.repos.conversation.findAll();
 
-    return makeSuccessfulResult(conversations.map(makeConversation));
+    return makeSuccessfulResult(
+      conversations
+        .map(makeConversation)
+        .map(({ messages, ...conversation }) => conversation),
+    );
   }
 }

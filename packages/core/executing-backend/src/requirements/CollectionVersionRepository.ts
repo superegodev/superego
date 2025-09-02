@@ -7,6 +7,7 @@ export default interface CollectionVersionRepository {
   deleteAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<CollectionVersionId[]>;
+  find(id: CollectionVersionId): Promise<CollectionVersionEntity | null>;
   findLatestWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<CollectionVersionEntity | null>;

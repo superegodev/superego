@@ -18,6 +18,7 @@ import type {
   DocumentContentNotValid,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
+  DocumentVersionNotFound,
   FileNotFound,
   FilesNotFound,
   ParentCollectionCategoryIsDescendant,
@@ -45,6 +46,7 @@ type KnownResultError =
   | DocumentContentNotValid
   | DocumentVersionIdNotMatching
   | DocumentNotFound
+  | DocumentVersionNotFound
   | FileNotFound
   | FilesNotFound
   | ParentCollectionCategoryIsDescendant
