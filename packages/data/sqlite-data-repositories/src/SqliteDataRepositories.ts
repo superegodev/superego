@@ -43,8 +43,10 @@ export default class SqliteDataRepositories implements DataRepositories {
     );
   }
 
-  async createSavepoint(name: string): Promise<void> {
+  async createSavepoint(): Promise<string> {
+    const name = crypto.randomUUID();
     this.db.prepare(`SAVEPOINT "${name}"`).run();
+    return name;
   }
 
   async rollbackToSavepoint(name: string): Promise<void> {

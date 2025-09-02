@@ -7,6 +7,7 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { extractErrorDetails } from "@superego/shared-utils";
 import type Assistant from "../../assistant/Assistant.js";
 import DocumentCreator from "../../assistant/DocumentCreator/DocumentCreator.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
@@ -62,17 +63,30 @@ export default class AssistantProcessConversation extends Usecase {
 
     const assistant = this.createAssistant(inferenceService, collections);
 
-    const { messages } = await assistant.generateAndProcessNextMessages(
-      conversation.format,
-      conversation.messages,
-    );
+    let updatedConversation: ConversationEntity;
+    const beforeGenerateAndProcessSavepoint =
+      await this.repos.createSavepoint();
+    try {
+      const messages = await assistant.generateAndProcessNextMessages(
+        conversation.format,
+        conversation.messages,
+      );
+      updatedConversation = {
+        ...conversation,
+        status: ConversationStatus.Idle,
+        messages: messages,
+      };
+    } catch (error) {
+      await this.repos.rollbackToSavepoint(beforeGenerateAndProcessSavepoint);
+      updatedConversation = {
+        ...conversation,
+        status: ConversationStatus.Error,
+        error: makeResultError("UnexpectedError", {
+          cause: extractErrorDetails(error),
+        }),
+      };
+    }
 
-    // TODO: handle error case. Probably requires savepoint.
-    const updatedConversation: ConversationEntity = {
-      ...conversation,
-      status: ConversationStatus.Idle,
-      messages: messages,
-    };
     await this.repos.conversation.upsert(updatedConversation);
 
     return makeSuccessfulResult(undefined);

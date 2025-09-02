@@ -24,7 +24,7 @@ export default class DemoDataRepositories implements DataRepositories {
   constructor(
     data: Data,
     onWrite: () => void,
-    public createSavepoint: (name: string) => Promise<void>,
+    public createSavepoint: () => Promise<string>,
     public rollbackToSavepoint: (name: string) => Promise<void>,
   ) {
     this.backgroundJob = new DemoBackgroundJobRepository(

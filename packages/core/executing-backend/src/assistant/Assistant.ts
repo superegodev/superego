@@ -4,8 +4,5 @@ export default interface Assistant {
   generateAndProcessNextMessages(
     conversationFormat: ConversationFormat,
     previousMessages: Message[],
-  ): Promise<{
-    hasCompletedConversation: boolean;
-    messages: Message[];
-  }>;
+  ): Promise<Message[]>;
 }

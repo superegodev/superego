@@ -497,12 +497,12 @@ export default rd<Dependencies>("Transactions", (deps) => {
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => {
             await repos.collectionCategory.insert(collectionCategory);
-            await repos.createSavepoint("before-replace");
+            const savepoint = await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name",
             });
-            await repos.rollbackToSavepoint("before-replace");
+            await repos.rollbackToSavepoint(savepoint);
             return { action: "commit", returnValue: null };
           },
         );
@@ -533,17 +533,17 @@ export default rd<Dependencies>("Transactions", (deps) => {
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => {
             await repos.collectionCategory.insert(collectionCategory);
-            await repos.createSavepoint("before-replace-1");
+            await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 1",
             });
-            await repos.createSavepoint("before-replace-2");
+            const savepoint2 = await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 2",
             });
-            await repos.rollbackToSavepoint("before-replace-2");
+            await repos.rollbackToSavepoint(savepoint2);
             return { action: "commit", returnValue: null };
           },
         );
@@ -576,17 +576,17 @@ export default rd<Dependencies>("Transactions", (deps) => {
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => {
             await repos.collectionCategory.insert(collectionCategory);
-            await repos.createSavepoint("before-replace-1");
+            const savepoint1 = await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 1",
             });
-            await repos.createSavepoint("before-replace-2");
+            await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 2",
             });
-            await repos.rollbackToSavepoint("before-replace-1");
+            await repos.rollbackToSavepoint(savepoint1);
             return { action: "commit", returnValue: null };
           },
         );
@@ -619,7 +619,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => {
             await repos.collectionCategory.insert(collectionCategory);
-            await repos.createSavepoint("before-replace");
+            await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name",
@@ -656,12 +656,12 @@ export default rd<Dependencies>("Transactions", (deps) => {
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => {
             await repos.collectionCategory.insert(collectionCategory);
-            await repos.createSavepoint("before-replace-1");
+            await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 1",
             });
-            await repos.createSavepoint("before-replace-2");
+            await repos.createSavepoint();
             await repos.collectionCategory.replace({
               ...collectionCategory,
               name: "updated name 2",

@@ -1,9 +1,7 @@
 import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
-import type { ResultError } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import makeResultError from "./makers/makeResultError.js";
-import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
@@ -36,27 +34,41 @@ export default class BackgroundJobExecutor {
           this.inferenceServiceFactory,
         );
 
+        const beforeExecSavepoint = await repos.createSavepoint();
         const result = await usecase.exec(backgroundJob.input);
 
-        // Marking a job as succeeded occurs in the same transaction in which
-        // the job executed. This guarantees that a job never gets successfully
-        // processed twice.
-        this.markAsSucceeded(repos, backgroundJob);
+        if (result.success) {
+          await repos.backgroundJob.replace({
+            ...backgroundJob,
+            status: BackgroundJobStatus.Succeeded,
+            finishedProcessingAt: new Date(),
+            error: null,
+          });
+        } else {
+          await repos.rollbackToSavepoint(beforeExecSavepoint);
+          await repos.backgroundJob.replace({
+            ...backgroundJob,
+            status: BackgroundJobStatus.Failed,
+            finishedProcessingAt: new Date(),
+            error: result.error,
+          });
+        }
 
-        return {
-          action: result.success ? "commit" : "rollback",
-          returnValue: result,
-        };
+        return { action: "commit", returnValue: null };
       })
-      .then(async (result) =>
-        !result.success ? this.markAsFailed(backgroundJob, result.error) : null,
-      )
       .catch((error) =>
-        this.markAsFailed(
-          backgroundJob,
-          makeResultError("UnexpectedError", {
-            cause: extractErrorDetails(error),
-          }),
+        this.dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.backgroundJob.replace({
+              ...backgroundJob,
+              status: BackgroundJobStatus.Failed,
+              finishedProcessingAt: new Date(),
+              error: makeResultError("UnexpectedError", {
+                cause: extractErrorDetails(error),
+              }),
+            });
+            return { action: "commit", returnValue: null };
+          },
         ),
       )
       .finally(() => this.executeNext());
@@ -102,39 +114,6 @@ export default class BackgroundJobExecutor {
         await repos.backgroundJob.replace(updatedBackgroundJob);
 
         return { action: "commit", returnValue: updatedBackgroundJob };
-      },
-    );
-  }
-
-  private async markAsSucceeded(
-    repos: DataRepositories,
-    backgroundJob: BackgroundJobEntity & {
-      status: BackgroundJobStatus.Processing;
-    },
-  ): Promise<void> {
-    await repos.backgroundJob.replace({
-      ...backgroundJob,
-      status: BackgroundJobStatus.Succeeded,
-      finishedProcessingAt: new Date(),
-      error: null,
-    });
-  }
-
-  private async markAsFailed(
-    backgroundJob: BackgroundJobEntity & {
-      status: BackgroundJobStatus.Processing;
-    },
-    error: ResultError<any, any>,
-  ): Promise<void> {
-    await this.dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => {
-        await repos.backgroundJob.replace({
-          ...backgroundJob,
-          status: BackgroundJobStatus.Failed,
-          finishedProcessingAt: new Date(),
-          error: error,
-        });
-        return { action: "commit", returnValue: undefined };
       },
     );
   }

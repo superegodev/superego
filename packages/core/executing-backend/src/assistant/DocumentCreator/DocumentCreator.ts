@@ -29,10 +29,7 @@ export default class DocumentCreator implements Assistant {
   async generateAndProcessNextMessages(
     conversationFormat: ConversationFormat,
     messages: Message[],
-  ): Promise<{
-    hasCompletedConversation: boolean;
-    messages: Message[];
-  }> {
+  ): Promise<Message[]> {
     const assistantMessage = await this.inferenceService.generateNextMessage(
       [
         {
@@ -60,13 +57,7 @@ export default class DocumentCreator implements Assistant {
 
     // Case: assistantMessage is Message.ContentAssistant
     if ("content" in assistantMessage) {
-      return {
-        hasCompletedConversation: false,
-        messages: [
-          ...messages,
-          { ...assistantMessage, agent: "DocumentCreator" },
-        ],
-      };
+      return [...messages, { ...assistantMessage, agent: "DocumentCreator" }];
     }
 
     // Case: assistantMessage is Message.ToolCallAssistant with a single
@@ -75,13 +66,7 @@ export default class DocumentCreator implements Assistant {
       assistantMessage.toolCalls.length === 1 &&
       CompleteConversation.is(assistantMessage.toolCalls[0]!)
     ) {
-      return {
-        hasCompletedConversation: true,
-        messages: [
-          ...messages,
-          { ...assistantMessage, agent: "DocumentCreator" },
-        ],
-      };
+      return [...messages, { ...assistantMessage, agent: "DocumentCreator" }];
     }
 
     // Case: assistantMessage is Message.ToolCallAssistant.

@@ -53,8 +53,10 @@ export default class DemoDataRepositoriesManager
       }
     };
     const savepoints: { [name: string]: Data } = {};
-    const createSavepoint = async (name: string) => {
+    const createSavepoint = async () => {
+      const name = crypto.randomUUID();
       savepoints[name] = clone(transactionData);
+      return name;
     };
     const rollbackToSavepoint = async (name: string) => {
       Object.assign(transactionData, savepoints[name]);

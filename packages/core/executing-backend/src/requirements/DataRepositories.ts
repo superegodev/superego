@@ -18,6 +18,6 @@ export default interface DataRepositories {
   conversation: ConversationRepository;
   backgroundJob: BackgroundJobRepository;
   globalSettings: GlobalSettingsRepository;
-  createSavepoint(name: string): Promise<void>;
+  createSavepoint(): Promise<string>;
   rollbackToSavepoint(name: string): Promise<void>;
 }
