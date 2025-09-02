@@ -25,7 +25,7 @@ export default function Chat({ conversation }: Props) {
       <ConversationMessages
         conversation={conversation}
         className={cs.Chat.messages}
-        showTechnicalLog={true} // TODO: make ui to toggle this
+        showTechnicalLog={false}
       />
     </>
   );

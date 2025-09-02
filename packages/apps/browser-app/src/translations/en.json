@@ -1,7 +1,4 @@
 {
-  "AssistantToolCallMessage.tsx_NnWZ6F": {
-    "defaultMessage": "Tool call"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -85,6 +82,9 @@
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
+  },
+  "CreateDocumentForCollection.tsx_hmMMs+": {
+    "defaultMessage": "{collection} » Document created"
   },
   "CreateDocumentForm.tsx_KlVScA": {
     "defaultMessage": "Error creating document"

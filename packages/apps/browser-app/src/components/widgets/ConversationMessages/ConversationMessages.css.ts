@@ -14,6 +14,7 @@ export const UserMessage = {
     padding: vars.spacing._4,
     marginInlineStart: "40%",
     marginBlock: vars.spacing._8,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };
 
@@ -31,6 +32,7 @@ export const TechnicalToolCallOrResult = {
     alignItems: "center",
     gap: vars.spacing._1,
     marginBlockEnd: vars.spacing._05,
+    fontSize: vars.typography.fontSizes.xs,
   }),
 
   pre: style({
@@ -50,32 +52,46 @@ export const TechnicalToolCallOrResult = {
 };
 
 export const CreateDocumentForCollection = {
+  root: style({
+    display: "block",
+    textDecoration: "none",
+    marginBlock: vars.spacing._2,
+  }),
+
+  title: style({
+    color: vars.colors.text.primary,
+    marginBlockEnd: vars.spacing._2,
+  }),
+
   summaryProperties: style({
-    display: "inline-grid",
-    rowGap: vars.spacing._2,
-    width: "fit-content",
+    display: "inline-table",
+    width: "auto",
     padding: vars.spacing._4,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
+    margin: 0,
   }),
 
   summaryProperty: style({
-    display: "grid",
-    gridTemplateColumns: `${vars.spacing._32} auto`,
-    columnGap: vars.spacing._6,
-    alignItems: "center",
+    display: "table-row",
+    marginBlockEnd: vars.spacing._2,
   }),
 
   summaryPropertyName: style({
-    minWidth: vars.spacing._32,
+    display: "table-cell",
+    verticalAlign: "middle",
+    paddingBlock: vars.spacing._1,
+    paddingInlineEnd: vars.spacing._8,
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.xs,
+    whiteSpace: "nowrap",
   }),
 
   summaryPropertyValue: style({
-    minWidth: vars.spacing._32,
+    display: "table-cell",
+    verticalAlign: "middle",
+    paddingInlineEnd: vars.spacing._8,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.md,
-    marginInlineStart: 0,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };

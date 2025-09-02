@@ -8,9 +8,9 @@ export const UserMessageContentInput = {
   }),
 
   textField: style({
-    paddingInlineStart: vars.spacing._6,
+    paddingInlineStart: vars.spacing._5,
     paddingInlineEnd: vars.spacing._12,
-    paddingBlock: vars.spacing._4,
+    paddingBlock: vars.spacing._3,
     borderRadius: vars.borders.radius.xl3,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
     boxShadow: `0 ${vars.spacing._05} ${vars.spacing._05} rgba(from ${vars.colors.neutral._12} r g b / 0.1)`,
@@ -20,7 +20,7 @@ export const UserMessageContentInput = {
     width: "100%",
     maxHeight: vars.spacing._80,
     fontFamily: vars.typography.fontFamilies.sansSerif,
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.sm,
     border: 0,
     // Experimental property:
     // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
@@ -43,7 +43,7 @@ export const UserMessageContentInput = {
     position: "absolute",
     // Manual pixel adjustment to center the paper plane with the default
     // textarea height.
-    bottom: `calc(${vars.spacing._2} + 2.5px)`,
+    bottom: `calc(${vars.spacing._1} + 1.5px)`,
     right: vars.spacing._4,
     height: vars.spacing._10,
     width: vars.spacing._10,

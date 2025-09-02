@@ -4,8 +4,7 @@ import { RouteName } from "./Route.js";
 
 const useNavigationStateStore = create<UseNavigationState>((set) => ({
   activeRoute: {
-    name: RouteName.Conversation,
-    conversationId: "Conversation_CSjYHCM6m3frzwnm1byJK",
+    name: RouteName.Home,
   },
   navigateTo(route) {
     set({ activeRoute: route });

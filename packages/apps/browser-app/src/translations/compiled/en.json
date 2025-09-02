@@ -1,10 +1,4 @@
 {
-  "AssistantToolCallMessage.tsx_NnWZ6F": [
-    {
-      "type": 0,
-      "value": "Tool call"
-    }
-  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -191,6 +185,16 @@
     {
       "type": 0,
       "value": " » Create Document"
+    }
+  ],
+  "CreateDocumentForCollection.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document created"
     }
   ],
   "CreateDocumentForm.tsx_KlVScA": [
