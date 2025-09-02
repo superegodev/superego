@@ -479,4 +479,209 @@ export default rd<Dependencies>("Transactions", (deps) => {
       expect(t1State.error).toBeInstanceOf(Error);
     });
   });
+
+  describe("Savepoints", () => {
+    describe("rolling back to a savepoint only rolls back changes made from that savepoint", () => {
+      it("case: roll back to latest, with single savepoint", async () => {
+        // Setup SUT
+        const { dataRepositoriesManager } = await deps();
+
+        // Exercise
+        const collectionCategory: CollectionCategoryEntity = {
+          id: Id.generate.collectionCategory(),
+          name: "name",
+          icon: null,
+          parentId: null,
+          createdAt: new Date(),
+        };
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.collectionCategory.insert(collectionCategory);
+            await repos.createSavepoint("before-replace");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name",
+            });
+            await repos.rollbackToSavepoint("before-replace");
+            return { action: "commit", returnValue: null };
+          },
+        );
+
+        // Verify
+        const collectionCategories =
+          await dataRepositoriesManager.runInSerializableTransaction(
+            async (repos) => ({
+              action: "commit",
+              returnValue: await repos.collectionCategory.findAll(),
+            }),
+          );
+        expect(collectionCategories).toEqual([collectionCategory]);
+      });
+
+      it("case: roll back to latest savepoint, with multiple savepoints", async () => {
+        // Setup SUT
+        const { dataRepositoriesManager } = await deps();
+
+        // Exercise
+        const collectionCategory: CollectionCategoryEntity = {
+          id: Id.generate.collectionCategory(),
+          name: "name",
+          icon: null,
+          parentId: null,
+          createdAt: new Date(),
+        };
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.collectionCategory.insert(collectionCategory);
+            await repos.createSavepoint("before-replace-1");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 1",
+            });
+            await repos.createSavepoint("before-replace-2");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 2",
+            });
+            await repos.rollbackToSavepoint("before-replace-2");
+            return { action: "commit", returnValue: null };
+          },
+        );
+
+        // Verify
+        const collectionCategories =
+          await dataRepositoriesManager.runInSerializableTransaction(
+            async (repos) => ({
+              action: "commit",
+              returnValue: await repos.collectionCategory.findAll(),
+            }),
+          );
+        expect(collectionCategories).toEqual([
+          { ...collectionCategory, name: "updated name 1" },
+        ]);
+      });
+
+      it("case: roll back to non-latest savepoint, with multiple savepoints", async () => {
+        // Setup SUT
+        const { dataRepositoriesManager } = await deps();
+
+        // Exercise
+        const collectionCategory: CollectionCategoryEntity = {
+          id: Id.generate.collectionCategory(),
+          name: "name",
+          icon: null,
+          parentId: null,
+          createdAt: new Date(),
+        };
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.collectionCategory.insert(collectionCategory);
+            await repos.createSavepoint("before-replace-1");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 1",
+            });
+            await repos.createSavepoint("before-replace-2");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 2",
+            });
+            await repos.rollbackToSavepoint("before-replace-1");
+            return { action: "commit", returnValue: null };
+          },
+        );
+
+        // Verify
+        const collectionCategories =
+          await dataRepositoriesManager.runInSerializableTransaction(
+            async (repos) => ({
+              action: "commit",
+              returnValue: await repos.collectionCategory.findAll(),
+            }),
+          );
+        expect(collectionCategories).toEqual([collectionCategory]);
+      });
+    });
+
+    describe("committing commits all changes done since savepoints (normally, as one would expect)", () => {
+      it("case: single savepoint", async () => {
+        // Setup SUT
+        const { dataRepositoriesManager } = await deps();
+
+        // Exercise
+        const collectionCategory: CollectionCategoryEntity = {
+          id: Id.generate.collectionCategory(),
+          name: "name",
+          icon: null,
+          parentId: null,
+          createdAt: new Date(),
+        };
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.collectionCategory.insert(collectionCategory);
+            await repos.createSavepoint("before-replace");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name",
+            });
+            return { action: "commit", returnValue: null };
+          },
+        );
+
+        // Verify
+        const collectionCategories =
+          await dataRepositoriesManager.runInSerializableTransaction(
+            async (repos) => ({
+              action: "commit",
+              returnValue: await repos.collectionCategory.findAll(),
+            }),
+          );
+        expect(collectionCategories).toEqual([
+          { ...collectionCategory, name: "updated name" },
+        ]);
+      });
+
+      it("case: multiple savepoints", async () => {
+        // Setup SUT
+        const { dataRepositoriesManager } = await deps();
+
+        // Exercise
+        const collectionCategory: CollectionCategoryEntity = {
+          id: Id.generate.collectionCategory(),
+          name: "name",
+          icon: null,
+          parentId: null,
+          createdAt: new Date(),
+        };
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => {
+            await repos.collectionCategory.insert(collectionCategory);
+            await repos.createSavepoint("before-replace-1");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 1",
+            });
+            await repos.createSavepoint("before-replace-2");
+            await repos.collectionCategory.replace({
+              ...collectionCategory,
+              name: "updated name 2",
+            });
+            return { action: "commit", returnValue: null };
+          },
+        );
+
+        // Verify
+        const collectionCategories =
+          await dataRepositoriesManager.runInSerializableTransaction(
+            async (repos) => ({
+              action: "commit",
+              returnValue: await repos.collectionCategory.findAll(),
+            }),
+          );
+        expect(collectionCategories).toEqual([
+          { ...collectionCategory, name: "updated name 2" },
+        ]);
+      });
+    });
+  });
 });

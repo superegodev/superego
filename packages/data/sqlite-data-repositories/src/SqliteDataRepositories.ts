@@ -25,7 +25,10 @@ export default class SqliteDataRepositories implements DataRepositories {
   file: SqliteFileRepository;
   globalSettings: SqliteGlobalSettingsRepository;
 
-  constructor(db: DatabaseSync, defaultGlobalSettings: GlobalSettings) {
+  constructor(
+    private db: DatabaseSync,
+    defaultGlobalSettings: GlobalSettings,
+  ) {
     this.backgroundJob = new SqliteBackgroundJobRepository(db);
     this.collectionCategory = new SqliteCollectionCategoryRepository(db);
     this.collection = new SqliteCollectionRepository(db);
@@ -38,5 +41,14 @@ export default class SqliteDataRepositories implements DataRepositories {
       db,
       defaultGlobalSettings,
     );
+  }
+
+  async createSavepoint(name: string): Promise<void> {
+    this.db.prepare(`SAVEPOINT "${name}"`).run();
+  }
+
+  async rollbackToSavepoint(name: string): Promise<void> {
+    this.db.prepare(`ROLLBACK TRANSACTION TO SAVEPOINT "${name}"`).run();
+    this.db.prepare(`RELEASE SAVEPOINT "${name}"`).run();
   }
 }

@@ -44,14 +44,28 @@ export default class DemoDataRepositoriesManager
       ...(this.useDemoDataAsDefault ? demoData : {}),
     };
     const initialVersion = transactionData.version;
-    const repos = new DemoDataRepositories(transactionData, () => {
+    const onWrite = () => {
       transactionData.version = crypto.randomUUID();
       if (this.lock === null) {
         this.lock = transactionId;
       } else if (this.lock !== transactionId) {
         shouldAbort = true;
       }
-    });
+    };
+    const savepoints: { [name: string]: Data } = {};
+    const createSavepoint = async (name: string) => {
+      savepoints[name] = clone(transactionData);
+    };
+    const rollbackToSavepoint = async (name: string) => {
+      Object.assign(transactionData, savepoints[name]);
+      delete savepoints[name];
+    };
+    const repos = new DemoDataRepositories(
+      transactionData,
+      onWrite,
+      createSavepoint,
+      rollbackToSavepoint,
+    );
     const { action, returnValue } = await fn(repos);
     repos.dispose();
     if (shouldAbort) {

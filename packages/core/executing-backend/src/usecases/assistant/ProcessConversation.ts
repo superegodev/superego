@@ -67,7 +67,7 @@ export default class AssistantProcessConversation extends Usecase {
       conversation.messages,
     );
 
-    // TODO: error case
+    // TODO: handle error case. Probably requires savepoint.
     const updatedConversation: ConversationEntity = {
       ...conversation,
       status: ConversationStatus.Idle,
