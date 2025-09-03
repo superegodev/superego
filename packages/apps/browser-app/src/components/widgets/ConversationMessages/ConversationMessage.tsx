@@ -1,8 +1,8 @@
 import { type Message, MessageRole } from "@superego/backend";
-import AssistantContentMessage from "./AssistantContentMessage.jsx";
-import AssistantToolCallMessage from "./AssistantToolCallMessage.jsx";
-import ToolMessage from "./ToolMessage.jsx";
-import UserMessage from "./UserMessage.jsx";
+import AssistantContentMessage from "./AssistantContentMessage.js";
+import AssistantToolCallMessage from "./AssistantToolCallMessage.js";
+import ToolMessage from "./ToolMessage.js";
+import UserMessage from "./UserMessage.js";
 
 interface Props {
   message: Message;

@@ -1,5 +1,5 @@
 import type { Message } from "@superego/backend";
-import TechnicalToolCallOrResult from "./TechnicalToolCallOrResult.jsx";
+import TechnicalToolCallOrResult from "./TechnicalToolCallOrResult.js";
 
 interface Props {
   message: Message.ToolCallAssistant;

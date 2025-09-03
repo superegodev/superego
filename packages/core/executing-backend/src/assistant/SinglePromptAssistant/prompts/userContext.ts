@@ -17,5 +17,9 @@ export default function userContext(collections: Collection[]): string {
     "<local-current-date-time>",
     DateTime.now().toFormat("cccc LLLL d yyyy HH:mm:ss.SSS 'GMT'ZZZ"),
     "</local-current-date-time>",
+    "",
+    "<time-zone>",
+    DateTime.local().zone.name,
+    "</time-zone>",
   ].join("\n");
 }

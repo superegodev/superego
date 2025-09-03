@@ -1,6 +1,6 @@
 import { FormatId } from "@superego/schema";
-import Default from "./formats/Default.jsx";
-import PlainDate from "./formats/PlainDate.jsx";
+import Default from "./formats/Default.js";
+import PlainDate from "./formats/PlainDate.js";
 import type Props from "./Props.js";
 
 export default function StringField({

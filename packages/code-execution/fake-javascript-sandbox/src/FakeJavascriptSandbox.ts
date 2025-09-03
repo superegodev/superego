@@ -1,8 +1,9 @@
 import type {
-  JavascriptFunctionExecutionResult,
+  ExecutingJavascriptFunctionFailed,
   TypescriptModule,
 } from "@superego/backend";
 import type { JavascriptSandbox } from "@superego/executing-backend";
+import type { ResultPromise } from "@superego/global-types";
 
 export default class FakeJavascriptSandbox implements JavascriptSandbox {
   // TODO: consider using an LRU cache to avoid memory ballooning.
@@ -24,17 +25,21 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
   async executeSyncFunction(
     typescriptModule: TypescriptModule,
     args: any[],
-  ): Promise<JavascriptFunctionExecutionResult> {
+  ): ResultPromise<any, ExecutingJavascriptFunctionFailed> {
     let importedModule: unknown;
     try {
       importedModule = await this.importModule(typescriptModule);
     } catch (error) {
       return {
         success: false,
-        error: FakeJavascriptSandbox.extractErrorDetails(
-          error,
-          "Unknown error importing module",
-        ),
+        data: null,
+        error: {
+          name: "ExecutingJavascriptFunctionFailed",
+          details: FakeJavascriptSandbox.extractErrorDetails(
+            error,
+            "Unknown error importing module",
+          ),
+        },
       };
     }
 
@@ -45,8 +50,12 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
     ) {
       return {
         success: false,
+        data: null,
         error: {
-          message: "The default export of the module is not a function",
+          name: "ExecutingJavascriptFunctionFailed",
+          details: {
+            message: "The default export of the module is not a function",
+          },
         },
       };
     }
@@ -58,10 +67,14 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
     } catch (error) {
       return {
         success: false,
-        error: FakeJavascriptSandbox.extractErrorDetails(
-          error,
-          "Unknown error executing function",
-        ),
+        data: null,
+        error: {
+          name: "ExecutingJavascriptFunctionFailed",
+          details: FakeJavascriptSandbox.extractErrorDetails(
+            error,
+            "Unknown error executing function",
+          ),
+        },
       };
     }
 
@@ -70,14 +83,18 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
     } catch {
       return {
         success: false,
+        data: null,
         error: {
-          message:
-            "The value returned by the function is not serializable to JSON",
+          name: "ExecutingJavascriptFunctionFailed",
+          details: {
+            message:
+              "The value returned by the function is not serializable to JSON",
+          },
         },
       };
     }
 
-    return { success: true, returnedValue };
+    return { success: true, data: returnedValue, error: null };
   }
 
   static importModule: (typescriptModule: TypescriptModule) => Promise<unknown>;
@@ -114,11 +131,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
   private static extractErrorDetails(
     error: unknown,
     fallbackMessage: string,
-  ): {
-    message: string;
-    name?: string | undefined;
-    stack?: string | undefined;
-  } {
+  ): ExecutingJavascriptFunctionFailed["details"] {
     return typeof error === "object" && error !== null
       ? {
           message:

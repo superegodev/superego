@@ -191,7 +191,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
         document.collectionId,
         document.id,
         latestDocumentVersion.id,
-        executionResult.returnedValue,
+        executionResult.data,
       );
 
       if (!result.success) {

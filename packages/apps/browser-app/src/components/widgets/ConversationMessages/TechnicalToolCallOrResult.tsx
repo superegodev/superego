@@ -2,7 +2,7 @@ import type { ToolCall, ToolResult } from "@superego/backend";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 import { PiCaretDown, PiCaretRight } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
-import Button from "../../design-system/Button/Button.jsx";
+import Button from "../../design-system/Button/Button.js";
 import * as cs from "./ConversationMessages.css.js";
 
 type Props =

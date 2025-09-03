@@ -1,8 +1,10 @@
 import type {
-  JavascriptFunctionExecutionResult,
+  ExecutingJavascriptFunctionFailed,
   TypescriptModule,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 
+// TODO: add luxon and es-toolkit inside the sandbox
 export default interface JavascriptSandbox {
   /**
    * Returns whether the default export of the supplied TypescriptModule is a
@@ -27,5 +29,5 @@ export default interface JavascriptSandbox {
      * JSON-invariant.
      */
     args: any[],
-  ): Promise<JavascriptFunctionExecutionResult>;
+  ): ResultPromise<any, ExecutingJavascriptFunctionFailed>;
 }

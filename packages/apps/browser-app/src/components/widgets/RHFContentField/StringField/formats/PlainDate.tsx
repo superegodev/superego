@@ -1,7 +1,7 @@
 import { parseDate } from "@internationalized/date";
 import { useController } from "react-hook-form";
 import classnames from "../../../../../utils/classnames.js";
-import DatePicker from "../../../../design-system/forms/DatePicker.jsx";
+import DatePicker from "../../../../design-system/forms/DatePicker.js";
 import DatePickerCalendar from "../../../../design-system/forms/DatePickerCalendar.js";
 import DatePickerInput from "../../../../design-system/forms/DatePickerInput.js";
 import FieldError from "../../../../design-system/forms/FieldError.js";

@@ -3,11 +3,11 @@ import { useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.jsx";
-import ResultError from "../../design-system/ResultError/ResultError.jsx";
+import Alert from "../../design-system/Alert/Alert.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
-import Hero from "./Hero.jsx";
+import Hero from "./Hero.js";
 import * as cs from "./Home.css.js";
 
 export default function Home() {

@@ -6,9 +6,9 @@ import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import Chat from "./Chat.jsx";
+import Chat from "./Chat.js";
 import * as cs from "./Conversation.css.js";
-import DeleteConversationModalForm from "./DeleteConversationModalForm.jsx";
+import DeleteConversationModalForm from "./DeleteConversationModalForm.js";
 
 interface Props {
   conversationId: ConversationId;

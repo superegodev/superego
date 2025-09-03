@@ -23,6 +23,7 @@
     "@jitl/quickjs-wasmfile-release-sync": "^0.31.0",
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
     "quickjs-emscripten": "^0.31.0"
   }
 }

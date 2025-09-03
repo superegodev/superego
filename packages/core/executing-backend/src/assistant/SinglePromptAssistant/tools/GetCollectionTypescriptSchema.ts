@@ -4,7 +4,6 @@ import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import formatDescription from "../../../utils/formatDescription.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.GetCollectionTypescriptSchema {
@@ -22,7 +21,7 @@ export default {
       toolCallId: toolCall.id,
       output: collection
         ? makeSuccessfulResult({
-            typescriptSchema: codegen(collection.latestVersion.schema),
+            typescriptSchema: makeTypescriptSchema(collection),
           })
         : makeUnsuccessfulResult(
             makeResultError("CollectionNotFound", { collectionId }),
@@ -34,21 +33,24 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: "getCollectionTypescriptSchema",
-      description: formatDescription(`
-        Gets the set of TypeScript types that describe the shape of a document
-        in the collection specified collection. Note: the type denoted as the
-        "root type" is the one that describes the document; the other types - if
-        there are any - are auxiliary.
-      `),
+      description: `
+Fetch the TypeScript type declarations for a collection.
+
+**Use it:**
+
+- As the **source of truth** for fields, types, enums, constraints.
+- **All fields are required.** If a field’s type includes \`null\`, the key
+  **must** be present and may be \`null\`; otherwise it must be a non-null
+  value.
+- Call this **before** any creation, versioning, or field-dependent analysis.
+      `.trim(),
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
             type: "string",
-            description: formatDescription(`
-              The ID of the collection whose TypeScript schema we want to
-              retrieve.
-            `),
+            description:
+              "ID of the collection whose TypeScript schema to retrieve (e.g., 'Collection_1234567890').",
           },
         },
         required: ["collectionId"],
@@ -57,3 +59,23 @@ export default {
     };
   },
 };
+
+function makeTypescriptSchema(collection: Collection): string {
+  const { schema } = collection.latestVersion;
+  return [
+    codegen(schema),
+    "////////////////////////////////",
+    "// Collection document schema //",
+    "////////////////////////////////",
+    "",
+    `/** This is the schema for a document in ${collection.id}. */`,
+    `interface ${collection.id}_Document {`,
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: intended usage.
+    "  id: `Document_${string}`;",
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: intended usage.
+    "  versionId: `DocumentVersion_${string}`;",
+    `  content: ${schema.rootType};`,
+    "}",
+    "",
+  ].join("\n");
+}

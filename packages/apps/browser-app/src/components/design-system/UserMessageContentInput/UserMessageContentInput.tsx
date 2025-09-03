@@ -4,8 +4,8 @@ import { TextArea, TextField } from "react-aria-components";
 import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import IconButton from "../IconButton/IconButton.jsx";
-import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.jsx";
+import IconButton from "../IconButton/IconButton.js";
+import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {

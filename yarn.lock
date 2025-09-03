@@ -4313,6 +4313,7 @@ __metadata:
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
     "@vitest/browser": "npm:^3.2.4"
     playwright: "npm:^1.55.0"
     typescript: "npm:^5.9.2"
@@ -4347,6 +4348,7 @@ __metadata:
     "@jitl/quickjs-wasmfile-release-sync": "npm:^0.31.0"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
     quickjs-emscripten: "npm:^0.31.0"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"

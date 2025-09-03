@@ -14,6 +14,7 @@ export { default as MessageContentPartType } from "./enums/MessageContentPartTyp
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";
 export { default as Theme } from "./enums/Theme.js";
+export { default as ToolName } from "./enums/ToolName.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
@@ -37,6 +38,7 @@ export type { default as DocumentContentNotValid } from "./errors/DocumentConten
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";
+export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
@@ -67,15 +69,12 @@ export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
-export type { default as JavascriptFunctionExecutionError } from "./types/JavascriptFunctionExecutionError.js";
-export type { default as JavascriptFunctionExecutionResult } from "./types/JavascriptFunctionExecutionResult.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as SummaryProperty } from "./types/SummaryProperty.js";
 export type { default as SummaryPropertyDefinition } from "./types/SummaryPropertyDefinition.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
-export type { default as ToolName } from "./types/ToolName.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

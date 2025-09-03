@@ -52,7 +52,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
             {document.latestVersion.summaryProperties.map(
               ({ name, value, valueComputationError }) => (
                 <Table.Cell key={name}>
-                  {value ?? valueComputationError.message}
+                  {value ?? valueComputationError.details.message}
                 </Table.Cell>
               ),
             )}

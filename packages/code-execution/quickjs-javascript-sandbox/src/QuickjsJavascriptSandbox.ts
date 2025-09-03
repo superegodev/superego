@@ -1,9 +1,9 @@
 import type {
-  JavascriptFunctionExecutionError,
-  JavascriptFunctionExecutionResult,
+  ExecutingJavascriptFunctionFailed,
   TypescriptModule,
 } from "@superego/backend";
 import type { JavascriptSandbox } from "@superego/executing-backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   type QuickJSContext,
   type QuickJSHandle,
@@ -35,7 +35,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   public async executeSyncFunction(
     typescriptModule: TypescriptModule,
     args: any[],
-  ): Promise<JavascriptFunctionExecutionResult> {
+  ): ResultPromise<any, ExecutingJavascriptFunctionFailed> {
     let vm: QuickJSContext;
     let defaultExport: QuickJSHandle;
     try {
@@ -43,18 +43,26 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
     } catch (error: unknown) {
       return {
         success: false,
-        error: QuickjsJavascriptSandbox.extractErrorDetails(
-          error,
-          "Unknown error importing module",
-        ),
+        data: null,
+        error: {
+          name: "ExecutingJavascriptFunctionFailed",
+          details: QuickjsJavascriptSandbox.extractErrorDetails(
+            error,
+            "Unknown error importing module",
+          ),
+        },
       };
     }
 
     if (vm.typeof(defaultExport) !== "function") {
       return {
         success: false,
+        data: null,
         error: {
-          message: "The default export of the module is not a function",
+          name: "ExecutingJavascriptFunctionFailed",
+          details: {
+            message: "The default export of the module is not a function",
+          },
         },
       };
     }
@@ -72,14 +80,18 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
           ),
         );
         const returnedValue = vm.dump(resultHandle);
-        return { success: true, returnedValue };
+        return { success: true, data: returnedValue, error: null };
       } catch (error: unknown) {
         return {
           success: false,
-          error: QuickjsJavascriptSandbox.extractErrorDetails(
-            error,
-            "Unknown error executing function",
-          ),
+          data: null,
+          error: {
+            name: "ExecutingJavascriptFunctionFailed",
+            details: QuickjsJavascriptSandbox.extractErrorDetails(
+              error,
+              "Unknown error executing function",
+            ),
+          },
         };
       }
     });
@@ -122,7 +134,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   private static extractErrorDetails(
     error: unknown,
     fallbackMessage: string,
-  ): JavascriptFunctionExecutionError {
+  ): ExecutingJavascriptFunctionFailed["details"] {
     return typeof error === "object" && error !== null
       ? {
           message:

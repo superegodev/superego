@@ -9,7 +9,7 @@ import {
 import type { ResultPromise } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type Assistant from "../../assistant/Assistant.js";
-import DocumentCreator from "../../assistant/DocumentCreator/DocumentCreator.js";
+import SinglePromptAssistant from "../../assistant/SinglePromptAssistant/SinglePromptAssistant.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
@@ -19,6 +19,8 @@ import getConversationContextFingerprint from "../../utils/getConversationContex
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
+import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
+import DocumentsList from "../documents/List.js";
 
 export default class AssistantProcessConversation extends Usecase {
   async exec({
@@ -97,12 +99,20 @@ export default class AssistantProcessConversation extends Usecase {
     return this.inferenceServiceFactory.create(globalSettings.inference);
   }
 
+  // TODO: consider making AssistantFactory requirement.
   private createAssistant(
     inferenceService: InferenceService,
     collections: Collection[],
   ): Assistant {
-    return new DocumentCreator(inferenceService, collections, {
-      documentsCreate: this.sub(DocumentsCreate),
-    });
+    return new SinglePromptAssistant(
+      inferenceService,
+      collections,
+      {
+        documentsCreate: this.sub(DocumentsCreate),
+        documentsList: this.sub(DocumentsList),
+        documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
+      },
+      this.javascriptSandbox,
+    );
   }
 }

@@ -24,7 +24,7 @@ export default async function makeDocumentVersion(
           return {
             name,
             description,
-            value: result.success ? result.returnedValue : null,
+            value: result.success ? result.data : null,
             valueComputationError: !result.success ? result.error : null,
           };
         },

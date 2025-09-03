@@ -51,7 +51,7 @@ export const TechnicalToolCallOrResult = {
   }),
 };
 
-export const CreateDocumentForCollection = {
+export const CreateDocument = {
   root: style({
     display: "block",
     textDecoration: "none",

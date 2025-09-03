@@ -1,7 +1,7 @@
 import type { Conversation } from "@superego/backend";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
-import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.jsx";
-import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.jsx";
+import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
+import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.js";
 import * as cs from "./Conversation.css.js";
 
 interface Props {
@@ -25,7 +25,7 @@ export default function Chat({ conversation }: Props) {
       <ConversationMessages
         conversation={conversation}
         className={cs.Chat.messages}
-        showTechnicalLog={false}
+        showTechnicalLog={true}
       />
     </>
   );

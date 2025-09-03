@@ -13,7 +13,7 @@ import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
-import FormattingToolbar from "./FormattingToolbar.jsx";
+import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./TiptapInput.css.js";
 
 interface Props {

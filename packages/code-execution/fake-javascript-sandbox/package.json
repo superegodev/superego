@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
-    "@superego/executing-backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*"
   }
 }

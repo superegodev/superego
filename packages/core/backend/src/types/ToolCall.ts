@@ -1,5 +1,7 @@
+import type ToolName from "../enums/ToolName.js";
 import type CollectionId from "../ids/CollectionId.js";
-import type ToolName from "./ToolName.js";
+import type DocumentId from "../ids/DocumentId.js";
+import type DocumentVersionId from "../ids/DocumentVersionId.js";
 
 interface ToolCall<Tool extends ToolName | string = string, Input = any> {
   id: string;
@@ -8,19 +10,37 @@ interface ToolCall<Tool extends ToolName | string = string, Input = any> {
 }
 
 namespace ToolCall {
-  export type CompleteConversation = ToolCall<
-    ToolName.CompleteConversation,
-    { finalMessage: string }
-  >;
-
   export type GetCollectionTypescriptSchema = ToolCall<
     ToolName.GetCollectionTypescriptSchema,
-    { collectionId: CollectionId }
+    {
+      collectionId: CollectionId;
+    }
   >;
 
-  export type CreateDocumentForCollection = ToolCall<
-    ToolName.CreateDocumentForCollection,
-    any
+  export type CreateDocument = ToolCall<
+    ToolName.CreateDocument,
+    {
+      collectionId: CollectionId;
+      content: any;
+    }
+  >;
+
+  export type CreateNewDocumentVersion = ToolCall<
+    ToolName.CreateNewDocumentVersion,
+    {
+      collectionId: CollectionId;
+      id: DocumentId;
+      latestVersionId: DocumentVersionId;
+      content: any;
+    }
+  >;
+
+  export type ExecuteJavascriptFunction = ToolCall<
+    ToolName.ExecuteJavascriptFunction,
+    {
+      collectionId: CollectionId;
+      javascriptFunction: string;
+    }
   >;
 }
 

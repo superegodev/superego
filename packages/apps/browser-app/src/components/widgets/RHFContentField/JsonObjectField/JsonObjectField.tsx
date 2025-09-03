@@ -1,6 +1,6 @@
 import { FormatId } from "@superego/schema";
-import Default from "./formats/Default.jsx";
-import TiptapRichText from "./formats/TiptapRichText.jsx";
+import Default from "./formats/Default.js";
+import TiptapRichText from "./formats/TiptapRichText.js";
 import type Props from "./Props.js";
 
 export default function JsonObjectField({

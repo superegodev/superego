@@ -80,11 +80,11 @@
   "CreateCollectionForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
+  "CreateDocument.tsx_hmMMs+": {
+    "defaultMessage": "{collection} » Document created"
+  },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
-  },
-  "CreateDocumentForCollection.tsx_hmMMs+": {
-    "defaultMessage": "{collection} » Document created"
   },
   "CreateDocumentForm.tsx_KlVScA": {
     "defaultMessage": "Error creating document"

@@ -5,7 +5,7 @@ import {
   Input,
   TextField as TextFieldForm,
 } from "../../../../design-system/forms/forms.js";
-import AnyFieldLabel from "../../AnyFieldLabel.jsx";
+import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import type Props from "../Props.js";
 

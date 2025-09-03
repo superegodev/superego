@@ -10,12 +10,12 @@ import forms from "../../../business-logic/forms/forms.js";
 import AIModelUtils from "../../../utils/AIModelUtils.js";
 import applyTheme from "../../../utils/applyTheme.js";
 import Alert from "../../design-system/Alert/Alert.js";
-import Fieldset from "../../design-system/Fieldset/Fieldset.jsx";
+import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
-import Section from "../../design-system/Section/Section.jsx";
+import Section from "../../design-system/Section/Section.js";
 import RHFSelectField from "../../widgets/RHFSelectField/RHFSelectField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.jsx";
+import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./GlobalSettings.css.js";
 
 export default function UpdateGlobalSettingsForm() {

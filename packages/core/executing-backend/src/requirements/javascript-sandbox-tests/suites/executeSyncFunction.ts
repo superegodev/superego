@@ -24,7 +24,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           name: expect.stringMatching(/SyntaxError|RollupError/),
         });
       });
@@ -49,7 +49,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: "Throw!",
           name: "Error",
         });
@@ -72,7 +72,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: "The default export of the module is not a function",
         });
       });
@@ -96,7 +96,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: expect.stringMatching("not a function"),
           name: "TypeError",
         });
@@ -165,7 +165,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(result.success);
-        expect(result.returnedValue).toEqual(2);
+        expect(result.data).toEqual(2);
       });
 
       it("composite arguments, composite return value", async () => {
@@ -187,7 +187,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(result.success);
-        expect(result.returnedValue).toEqual({ value: 2 });
+        expect(result.data).toEqual({ value: 2 });
       });
     });
   });

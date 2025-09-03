@@ -177,6 +177,16 @@
       "value": "Icon"
     }
   ],
+  "CreateDocument.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document created"
+    }
+  ],
   "CreateDocument.tsx_saRT/V": [
     {
       "type": 1,
@@ -185,16 +195,6 @@
     {
       "type": 0,
       "value": " » Create Document"
-    }
-  ],
-  "CreateDocumentForCollection.tsx_hmMMs+": [
-    {
-      "type": 1,
-      "value": "collection"
-    },
-    {
-      "type": 0,
-      "value": " » Document created"
     }
   ],
   "CreateDocumentForm.tsx_KlVScA": [

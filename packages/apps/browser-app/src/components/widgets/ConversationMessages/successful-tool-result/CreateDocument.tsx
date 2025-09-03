@@ -1,4 +1,5 @@
 import type { ToolResult } from "@superego/backend";
+
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.jsx";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.jsx";
@@ -9,11 +10,11 @@ import Link from "../../../design-system/Link/Link.jsx";
 import * as cs from "../ConversationMessages.css.js";
 
 interface Props {
-  toolResult: ToolResult.CreateDocumentForCollection & {
+  toolResult: ToolResult.CreateDocument & {
     output: { success: true };
   };
 }
-export default function CreateDocumentForCollection({ toolResult }: Props) {
+export default function CreateDocument({ toolResult }: Props) {
   const { collections } = useGlobalData();
   const { collectionId, documentId, documentVersionId } =
     toolResult.output.data;
@@ -27,9 +28,9 @@ export default function CreateDocumentForCollection({ toolResult }: Props) {
       {(documentVersion) => (
         <Link
           to={{ name: RouteName.Document, collectionId, documentId }}
-          className={cs.CreateDocumentForCollection.root}
+          className={cs.CreateDocument.root}
         >
-          <h5 className={cs.CreateDocumentForCollection.title}>
+          <h5 className={cs.CreateDocument.title}>
             <FormattedMessage
               defaultMessage="{collection} » Document created"
               values={{
@@ -39,26 +40,15 @@ export default function CreateDocumentForCollection({ toolResult }: Props) {
               }}
             />
           </h5>
-          <dl className={cs.CreateDocumentForCollection.summaryProperties}>
+          <dl className={cs.CreateDocument.summaryProperties}>
             {documentVersion.summaryProperties.map(
               ({ name, value, valueComputationError }) => (
-                <div
-                  key={name}
-                  className={cs.CreateDocumentForCollection.summaryProperty}
-                >
-                  <dt
-                    className={
-                      cs.CreateDocumentForCollection.summaryPropertyName
-                    }
-                  >
+                <div key={name} className={cs.CreateDocument.summaryProperty}>
+                  <dt className={cs.CreateDocument.summaryPropertyName}>
                     {name}
                   </dt>
-                  <dd
-                    className={
-                      cs.CreateDocumentForCollection.summaryPropertyValue
-                    }
-                  >
-                    {value ?? valueComputationError.message}
+                  <dd className={cs.CreateDocument.summaryPropertyValue}>
+                    {value ?? valueComputationError.details.message}
                   </dd>
                 </div>
               ),

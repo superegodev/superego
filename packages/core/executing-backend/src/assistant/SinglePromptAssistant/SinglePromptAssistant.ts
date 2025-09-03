@@ -8,22 +8,29 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import type InferenceService from "../../requirements/InferenceService.js";
+import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
 import type DocumentsCreate from "../../usecases/documents/Create.js";
+import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
+import type DocumentsList from "../../usecases/documents/List.js";
 import type Assistant from "../Assistant.js";
 import developer from "./prompts/developer.js";
 import userContext from "./prompts/userContext.js";
-import CompleteConversation from "./tools/CompleteConversation.js";
-import CreateDocumentForCollection from "./tools/CreateDocumentForCollection.js";
+import CreateDocument from "./tools/CreateDocument.js";
+import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
+import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
 import Unknown from "./tools/Unknown.js";
 
-export default class DocumentCreator implements Assistant {
+export default class SinglePromptAssistant implements Assistant {
   constructor(
     private inferenceService: InferenceService,
     private collections: Collection[],
     private usecases: {
       documentsCreate: DocumentsCreate;
+      documentsCreateNewVersion: DocumentsCreateNewVersion;
+      documentsList: DocumentsList;
     },
+    private javascriptSandbox: JavascriptSandbox,
   ) {}
 
   async generateAndProcessNextMessages(
@@ -52,21 +59,15 @@ export default class DocumentCreator implements Assistant {
         },
         ...messages,
       ],
-      this.getTools(messages),
+      this.getTools(),
     );
 
     // Case: assistantMessage is Message.ContentAssistant
     if ("content" in assistantMessage) {
-      return [...messages, { ...assistantMessage, agent: "DocumentCreator" }];
-    }
-
-    // Case: assistantMessage is Message.ToolCallAssistant with a single
-    // ToolCall.CompleteConversation.
-    if (
-      assistantMessage.toolCalls.length === 1 &&
-      CompleteConversation.is(assistantMessage.toolCalls[0]!)
-    ) {
-      return [...messages, { ...assistantMessage, agent: "DocumentCreator" }];
+      return [
+        ...messages,
+        { ...assistantMessage, agent: "SinglePromptAssistant" },
+      ];
     }
 
     // Case: assistantMessage is Message.ToolCallAssistant.
@@ -82,41 +83,34 @@ export default class DocumentCreator implements Assistant {
     };
     return this.generateAndProcessNextMessages(conversationFormat, [
       ...messages,
-      { ...assistantMessage, agent: "DocumentCreator" },
+      { ...assistantMessage, agent: "SinglePromptAssistant" },
       toolMessage,
     ]);
   }
 
-  private getTools(messages: Message[]): InferenceService.Tool[] {
-    return [
-      GetCollectionTypescriptSchema.get(),
-      ...messages
-        .filter((message) => "toolCalls" in message)
-        .flatMap((message) => message.toolCalls)
-        .filter((toolCall) => GetCollectionTypescriptSchema.is(toolCall))
-        .map((toolCall) =>
-          this.collections.find(
-            (collection) => collection.id === toolCall.input.collectionId,
-          ),
-        )
-        .filter((collection) => collection !== undefined)
-        .map((collection) => CreateDocumentForCollection.get(collection)),
-      CompleteConversation.get(),
-    ];
+  private getTools(): InferenceService.Tool[] {
+    return [GetCollectionTypescriptSchema.get(), CreateDocument.get()];
   }
 
   private async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
     }
-    if (CreateDocumentForCollection.is(toolCall)) {
-      return CreateDocumentForCollection.exec(
+    if (CreateDocument.is(toolCall)) {
+      return CreateDocument.exec(toolCall, this.usecases.documentsCreate);
+    }
+    if (CreateNewDocumentVersion.is(toolCall)) {
+      return CreateNewDocumentVersion.exec(
         toolCall,
-        this.usecases.documentsCreate,
+        this.usecases.documentsCreateNewVersion,
       );
     }
-    if (CompleteConversation.is(toolCall)) {
-      return CompleteConversation.exec(toolCall);
+    if (ExecuteJavascriptFunction.is(toolCall)) {
+      return ExecuteJavascriptFunction.exec(
+        toolCall,
+        this.usecases.documentsList,
+        this.javascriptSandbox,
+      );
     }
     return Unknown.exec(toolCall);
   }

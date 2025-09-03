@@ -4,8 +4,8 @@ import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import { FieldError } from "../../../../design-system/forms/forms.js";
-import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.jsx";
-import AnyFieldLabel from "../../AnyFieldLabel.jsx";
+import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.js";
+import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import type Props from "../Props.js";
 

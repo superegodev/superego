@@ -1,10 +1,10 @@
-import type JavascriptFunctionExecutionError from "./JavascriptFunctionExecutionError.js";
+import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 
 type SummaryProperty = {
   name: string;
   description?: string | undefined;
 } & (
   | { value: string; valueComputationError: null }
-  | { value: null; valueComputationError: JavascriptFunctionExecutionError }
+  | { value: null; valueComputationError: ExecutingJavascriptFunctionFailed }
 );
 export default SummaryProperty;

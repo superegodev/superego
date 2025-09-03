@@ -1,4 +1,8 @@
-import type { Conversation, ToolResult } from "@superego/backend";
+import {
+  type Conversation,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 
 const DISPLAY_NAME_LENGTH = 16;
 
@@ -15,11 +19,13 @@ export default {
       : title;
   },
 
-  isSuccessfulCreateDocumentForCollectionToolResult(
+  isSuccessfulCreateDocumentToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.CreateDocumentForCollection & {
+  ): toolResult is ToolResult.CreateDocument & {
     output: { success: true };
   } {
-    return toolResult.tool.endsWith(".createDocument");
+    return (
+      toolResult.tool === ToolName.CreateDocument && toolResult.output.success
+    );
   },
 };
