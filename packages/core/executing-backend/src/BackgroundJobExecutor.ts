@@ -13,7 +13,7 @@ export default class BackgroundJobExecutor {
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private stuckJobTimeout: Millisecond = 5 * 60 * 1000,
+    private stuckJobTimeout: Millisecond = 1 * 60 * 1000,
   ) {}
 
   async executeNext(): Promise<void> {

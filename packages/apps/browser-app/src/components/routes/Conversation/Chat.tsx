@@ -1,4 +1,4 @@
-import type { Conversation } from "@superego/backend";
+import { type Conversation, ConversationStatus } from "@superego/backend";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
 import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
 import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.js";
@@ -10,7 +10,7 @@ interface Props {
 export default function Chat({ conversation }: Props) {
   // TODO: use https://react-spectrum.adobe.com/react-aria/Toast.html for
   // displaying errors.
-  const { mutate, isPending } = useContinueConversation();
+  const { mutate } = useContinueConversation();
   return (
     <>
       <div className={cs.Chat.userMessageContentInputContainer}>
@@ -19,7 +19,9 @@ export default function Chat({ conversation }: Props) {
             mutate(conversation.id, userMessageContent);
           }}
           autoFocus={true}
-          isProcessingMessage={isPending}
+          isProcessingMessage={
+            conversation.status === ConversationStatus.Processing
+          }
         />
       </div>
       <ConversationMessages

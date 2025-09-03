@@ -1,6 +1,5 @@
 import type {
   CannotContinueConversation,
-  CannotProcessConversation,
   CannotRecoverConversation,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
@@ -15,6 +14,7 @@ import type {
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
   ConversationNotFound,
+  ConversationStatusNotProcessing,
   DocumentContentNotValid,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
@@ -28,7 +28,6 @@ import type {
 
 type KnownResultError =
   | CannotContinueConversation
-  | CannotProcessConversation
   | CannotRecoverConversation
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid
@@ -43,6 +42,7 @@ type KnownResultError =
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
   | ConversationNotFound
+  | ConversationStatusNotProcessing
   | DocumentContentNotValid
   | DocumentVersionIdNotMatching
   | DocumentNotFound

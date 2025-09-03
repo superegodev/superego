@@ -1,9 +1,9 @@
 import {
-  type CannotProcessConversation,
   type Collection,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
+  type ConversationStatusNotProcessing,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -29,10 +29,8 @@ export default class AssistantProcessConversation extends Usecase {
     id: ConversationId;
   }): ResultPromise<
     void,
-    ConversationNotFound | CannotProcessConversation | UnexpectedError
+    ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
   > {
-    const inferenceService = await this.getInferenceService();
-
     const collectionsListResult = await this.sub(CollectionsList).exec();
     if (!collectionsListResult.success) {
       return collectionsListResult;
@@ -46,29 +44,25 @@ export default class AssistantProcessConversation extends Usecase {
       );
     }
 
-    const contextFingerprint =
-      await getConversationContextFingerprint(collections);
-    if (
-      conversation.contextFingerprint !== contextFingerprint ||
-      conversation.status !== ConversationStatus.Processing
-    ) {
+    if (conversation.status !== ConversationStatus.Processing) {
       return makeUnsuccessfulResult(
-        makeResultError("CannotProcessConversation", {
+        makeResultError("ConversationStatusNotProcessing", {
           conversationId: id,
-          reason:
-            conversation.status !== ConversationStatus.Processing
-              ? "ConversationStatusNotProcessing"
-              : "ConversationContextChanged",
         }),
       );
     }
-
-    const assistant = this.createAssistant(inferenceService, collections);
 
     let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
     try {
+      const contextFingerprint =
+        await getConversationContextFingerprint(collections);
+      if (conversation.contextFingerprint !== contextFingerprint) {
+        throw new Error("Context fingerprint changed");
+      }
+      const inferenceService = await this.getInferenceService();
+      const assistant = this.createAssistant(inferenceService, collections);
       const messages = await assistant.generateAndProcessNextMessages(
         conversation.format,
         conversation.messages,

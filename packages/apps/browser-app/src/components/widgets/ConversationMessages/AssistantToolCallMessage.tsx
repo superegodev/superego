@@ -1,5 +1,6 @@
 import type { Message } from "@superego/backend";
-import TechnicalToolCallOrResult from "./TechnicalToolCallOrResult.js";
+import { useIntl } from "react-intl";
+import JsonDetails from "./JsonDetails.js";
 
 interface Props {
   message: Message.ToolCallAssistant;
@@ -9,9 +10,14 @@ export default function AssistantToolCallMessage({
   message,
   showTechnicalLog,
 }: Props) {
+  const intl = useIntl();
   return showTechnicalLog
     ? message.toolCalls.map((toolCall) => (
-        <TechnicalToolCallOrResult key={toolCall.id} toolCall={toolCall} />
+        <JsonDetails
+          key={toolCall.id}
+          title={intl.formatMessage({ defaultMessage: "Tool call" })}
+          value={toolCall}
+        />
       ))
     : null;
 }

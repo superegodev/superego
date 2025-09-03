@@ -59,7 +59,22 @@ export default class DemoDataRepositoriesManager
       return name;
     };
     const rollbackToSavepoint = async (name: string) => {
-      Object.assign(transactionData, savepoints[name]);
+      transactionData.version = savepoints[name]!.version;
+      (
+        [
+          "backgroundJobs",
+          "collectionCategories",
+          "collections",
+          "collectionVersions",
+          "conversations",
+          "documents",
+          "documentVersions",
+          "files",
+          "globalSettings",
+        ] as const
+      ).forEach((property) => {
+        Object.assign(transactionData[property], savepoints[name]![property]);
+      });
       delete savepoints[name];
     };
     const repos = new DemoDataRepositories(

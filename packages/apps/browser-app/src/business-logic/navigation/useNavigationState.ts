@@ -2,9 +2,11 @@ import { create } from "zustand";
 import type Route from "./Route.js";
 import { RouteName } from "./Route.js";
 
+// TODO: sync with history and url.
 const useNavigationStateStore = create<UseNavigationState>((set) => ({
   activeRoute: {
-    name: RouteName.Home,
+    name: RouteName.Conversation,
+    conversationId: "Conversation_CSmwQkmcyt8X12cLiKE1j",
   },
   navigateTo(route) {
     set({ activeRoute: route });

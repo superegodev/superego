@@ -1,7 +1,9 @@
-import type { Conversation } from "@superego/backend";
+import { type Conversation, ConversationStatus } from "@superego/backend";
 import classnames from "../../../utils/classnames.js";
 import ConversationMessage from "./ConversationMessage.js";
 import * as cs from "./ConversationMessages.css.js";
+import ErrorMessage from "./ErrorMessage.js";
+import ThinkingMessage from "./ThinkingMessage.js";
 
 interface Props {
   conversation: Conversation;
@@ -13,7 +15,6 @@ export default function ConversationMessages({
   showTechnicalLog,
   className,
 }: Props) {
-  // TODO: add Thinking...
   return (
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {conversation.messages.map((message, index) => (
@@ -24,6 +25,12 @@ export default function ConversationMessages({
           showTechnicalLog={showTechnicalLog}
         />
       ))}
+      {conversation.status === ConversationStatus.Processing ? (
+        <ThinkingMessage />
+      ) : null}
+      {conversation.status === ConversationStatus.Error ? (
+        <ErrorMessage conversation={conversation} />
+      ) : null}
     </div>
   );
 }

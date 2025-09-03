@@ -166,6 +166,15 @@ export const useContinueConversation = makeUseBackendMutation(
   ],
 );
 
+export const useRecoverConversation = makeUseBackendMutation(
+  "assistant",
+  "recoverConversation",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
 export const useDeleteConversation = makeUseBackendMutation(
   "assistant",
   "deleteConversation",

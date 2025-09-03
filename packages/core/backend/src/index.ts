@@ -19,7 +19,6 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
-export type { default as CannotProcessConversation } from "./errors/CannotProcessConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
 export type { default as CollectionCategoryHasChildren } from "./errors/CollectionCategoryHasChildren.js";
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
@@ -34,6 +33,7 @@ export type { default as CollectionSummaryPropertiesNotValid } from "./errors/Co
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
+export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";

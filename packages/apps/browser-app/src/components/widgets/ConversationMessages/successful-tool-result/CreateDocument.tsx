@@ -1,12 +1,12 @@
 import type { ToolResult } from "@superego/backend";
 
 import { FormattedMessage } from "react-intl";
-import DataLoader from "../../../../business-logic/backend/DataLoader.jsx";
-import { useGlobalData } from "../../../../business-logic/backend/GlobalData.jsx";
+import DataLoader from "../../../../business-logic/backend/DataLoader.js";
+import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { getDocumentVersionQuery } from "../../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import Link from "../../../design-system/Link/Link.jsx";
+import Link from "../../../design-system/Link/Link.js";
 import * as cs from "../ConversationMessages.css.js";
 
 interface Props {

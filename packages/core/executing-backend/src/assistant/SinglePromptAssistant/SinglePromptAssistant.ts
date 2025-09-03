@@ -89,12 +89,24 @@ export default class SinglePromptAssistant implements Assistant {
   }
 
   private getTools(): InferenceService.Tool[] {
-    return [GetCollectionTypescriptSchema.get(), CreateDocument.get()];
+    return [
+      GetCollectionTypescriptSchema.get(),
+      ExecuteJavascriptFunction.get(),
+      CreateDocument.get(),
+      CreateNewDocumentVersion.get(),
+    ];
   }
 
   private async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
+    }
+    if (ExecuteJavascriptFunction.is(toolCall)) {
+      return ExecuteJavascriptFunction.exec(
+        toolCall,
+        this.usecases.documentsList,
+        this.javascriptSandbox,
+      );
     }
     if (CreateDocument.is(toolCall)) {
       return CreateDocument.exec(toolCall, this.usecases.documentsCreate);
@@ -103,13 +115,6 @@ export default class SinglePromptAssistant implements Assistant {
       return CreateNewDocumentVersion.exec(
         toolCall,
         this.usecases.documentsCreateNewVersion,
-      );
-    }
-    if (ExecuteJavascriptFunction.is(toolCall)) {
-      return ExecuteJavascriptFunction.exec(
-        toolCall,
-        this.usecases.documentsList,
-        this.javascriptSandbox,
       );
     }
     return Unknown.exec(toolCall);

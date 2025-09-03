@@ -1,4 +1,7 @@
 {
+  "AssistantToolCallMessage.tsx_NnWZ6F": {
+    "defaultMessage": "Tool call"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -211,6 +214,15 @@
   },
   "EnumField.tsx_k0cXGK": {
     "defaultMessage": "null - click to select a value"
+  },
+  "ErrorMessage.tsx_62nsdy": {
+    "defaultMessage": "Retry"
+  },
+  "ErrorMessage.tsx_Lv0zJu": {
+    "defaultMessage": "Details"
+  },
+  "ErrorMessage.tsx_zg3wLI": {
+    "defaultMessage": "The assistant encountered an error."
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"
@@ -425,14 +437,11 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
-  "TechnicalToolCallOrResult.tsx_NnWZ6F": {
-    "defaultMessage": "Tool call"
-  },
-  "TechnicalToolCallOrResult.tsx_OJmR+3": {
-    "defaultMessage": "Tool result"
-  },
   "TiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
+  },
+  "ToolMessage.tsx_OJmR+3": {
+    "defaultMessage": "Tool result"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"
