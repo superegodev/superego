@@ -1,5 +1,5 @@
 import { type Message, MessageContentPartType } from "@superego/backend";
-import { useState } from "react";
+import { type RefObject, useState } from "react";
 import { TextArea, TextField } from "react-aria-components";
 import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -12,12 +12,14 @@ interface Props {
   onSend: (messageContent: Message.User["content"]) => void;
   autoFocus: boolean;
   isProcessingMessage: boolean;
+  textAreaRef?: RefObject<HTMLTextAreaElement | null> | undefined;
   className?: string | undefined;
 }
 export default function UserMessageContentInput({
   onSend,
   autoFocus,
   isProcessingMessage,
+  textAreaRef,
   className,
 }: Props) {
   const intl = useIntl();
@@ -49,6 +51,7 @@ export default function UserMessageContentInput({
             defaultMessage: "How can I help you?",
           })}
           className={cs.UserMessageContentInput.textArea}
+          ref={textAreaRef}
         />
       </TextField>
       <IconButton
