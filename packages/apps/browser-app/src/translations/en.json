@@ -1,4 +1,10 @@
 {
+  "Assistant.tsx_EWHk8s": {
+    "defaultMessage": "Error starting conversation"
+  },
+  "Assistant.tsx_khigiR": {
+    "defaultMessage": "Previous conversations"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -50,14 +56,41 @@
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
-  "Conversation.tsx_HClzK5": {
-    "defaultMessage": "🤖 Conversation » {conversation}"
+  "Conversation.tsx_eq3LES": {
+    "defaultMessage": "🤖 Conversations » {conversation}"
   },
   "Conversation.tsx_gKk3/v": {
     "defaultMessage": "Toggle tool calls"
   },
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
+  },
+  "Conversations.tsx_PQ8A3I": {
+    "defaultMessage": "New conversation"
+  },
+  "Conversations.tsx_YdANpb": {
+    "defaultMessage": "Conversations actions"
+  },
+  "Conversations.tsx_yYmfIl": {
+    "defaultMessage": "🤖 Conversations"
+  },
+  "ConversationsTable.tsx_/+r2Su": {
+    "defaultMessage": "You don't have any conversations yet."
+  },
+  "ConversationsTable.tsx_1udzha": {
+    "defaultMessage": "Conversations"
+  },
+  "ConversationsTable.tsx_9a9+ww": {
+    "defaultMessage": "Title"
+  },
+  "ConversationsTable.tsx_AbXVP4": {
+    "defaultMessage": "Created at"
+  },
+  "ConversationsTable.tsx_tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "ConversationsTable.tsx_zQLEfz": {
+    "defaultMessage": "Format"
   },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
@@ -353,9 +386,6 @@
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
   },
-  "Home.tsx_EWHk8s": {
-    "defaultMessage": "Error starting conversation"
-  },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
   },
@@ -383,8 +413,8 @@
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
-  "PrimarySidebarPanel.tsx_ejEGdx": {
-    "defaultMessage": "Home"
+  "PrimarySidebarPanel.tsx_ZT0z9z": {
+    "defaultMessage": "Ask"
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"

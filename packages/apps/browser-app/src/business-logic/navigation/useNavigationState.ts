@@ -5,7 +5,7 @@ import { RouteName } from "./Route.js";
 // TODO: sync with history and url.
 const useNavigationStateStore = create<UseNavigationState>((set) => ({
   activeRoute: {
-    name: RouteName.Home,
+    name: RouteName.Assistant,
   },
   navigateTo(route) {
     set({ activeRoute: route });

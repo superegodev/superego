@@ -55,7 +55,6 @@ export default function Title({ toolCall, toolResult }: Props) {
     );
   }
   return (
-    // TODO: add toolCallId
     <h5 className={cs.Title.root}>
       {"⚡\u2002"}
       {title}

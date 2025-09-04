@@ -46,7 +46,7 @@ export default function DeleteCollectionModalForm({
   const onSubmit = async ({ commandConfirmation }: FormValues) => {
     const { success } = await mutate(collection.id, commandConfirmation);
     if (success) {
-      navigateTo({ name: RouteName.Home });
+      navigateTo({ name: RouteName.Assistant });
     }
   };
 

@@ -1,4 +1,4 @@
-import { PiGear, PiHouse, PiMagnifyingGlass } from "react-icons/pi";
+import { PiGear, PiMagnifyingGlass, PiRobot } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -11,9 +11,12 @@ export default function PrimarySidebarPanel() {
     <Shell.Panel slot="PrimarySidebar">
       <Shell.Panel.Content className={cs.PrimarySidebarPanel.root}>
         <div className={cs.PrimarySidebarPanel.topActions}>
-          <PrimarySidebarPanelAction type="link" to={{ name: RouteName.Home }}>
-            <PiHouse />
-            <FormattedMessage defaultMessage="Home" />
+          <PrimarySidebarPanelAction
+            type="link"
+            to={{ name: RouteName.Assistant }}
+          >
+            <PiRobot />
+            <FormattedMessage defaultMessage="Ask" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction type="button" onPress={() => {}}>
             <PiMagnifyingGlass />

@@ -1,16 +1,22 @@
 import { ConversationFormat, type Message } from "@superego/backend";
-import { useIntl } from "react-intl";
+import {
+  PiArrowCircleLeft,
+  PiArrowCircleRight,
+  PiClockCounterClockwise,
+} from "react-icons/pi";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
-import Shell from "../../design-system/Shell/Shell.js";
-import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
-import Hero from "./Hero.js";
-import * as cs from "./Home.css.js";
+import Alert from "../../design-system/Alert/Alert.jsx";
+import Link from "../../design-system/Link/Link.jsx";
+import ResultError from "../../design-system/ResultError/ResultError.jsx";
+import Shell from "../../design-system/Shell/Shell.jsx";
+import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.jsx";
+import * as cs from "./Assistant.css.js";
+import Hero from "./Hero.jsx";
 
-export default function Home() {
+export default function Assistant() {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
@@ -27,13 +33,20 @@ export default function Home() {
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Content>
-        <div className={cs.Home.root}>
+        <div className={cs.Assistant.root}>
           <Hero />
           <UserMessageContentInput
             onSend={onSend}
             autoFocus={true}
             isProcessingMessage={isPending}
           />
+          <Link
+            to={{ name: RouteName.Conversations }}
+            className={cs.Assistant.historyLink}
+          >
+            <PiClockCounterClockwise className={cs.Assistant.historyLinkIcon} />
+            <FormattedMessage defaultMessage="Previous conversations" />
+          </Link>
           {result?.error ? (
             <Alert
               variant="error"

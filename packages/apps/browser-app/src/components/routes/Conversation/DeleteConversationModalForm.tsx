@@ -31,7 +31,7 @@ export default function DeleteConversationModalForm({
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
-  const conversationName = ConversationUtils.getDisplayName(conversation);
+  const conversationName = ConversationUtils.getDisplayTitle(conversation);
 
   const { result, mutate } = useDeleteConversation();
 
@@ -47,7 +47,7 @@ export default function DeleteConversationModalForm({
   const onSubmit = async ({ commandConfirmation }: FormValues) => {
     const { success } = await mutate(conversation.id, commandConfirmation);
     if (success) {
-      navigateTo({ name: RouteName.Home });
+      navigateTo({ name: RouteName.Assistant });
     }
   };
 

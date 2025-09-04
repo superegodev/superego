@@ -3,6 +3,7 @@ import { createTheme } from "@vanilla-extract/css";
 const commonVars = {
   typography: {
     fontSizes: {
+      xs2: "0.70rem",
       xs: "0.80rem",
       sm: "0.875rem",
       md: "1rem",
@@ -205,6 +206,16 @@ export const [light, vars] = createTheme({
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      success: {
+        border: colors.greens._5,
+        background: colors.greens._1,
+        text: colors.greens._5,
+      },
+      pending: {
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
+      },
       error: {
         border: colors.reds._5,
         background: colors.reds._1,
@@ -296,6 +307,16 @@ export const dark = createTheme(vars, {
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      success: {
+        border: colors.greens._5,
+        background: colors.greens._1,
+        text: colors.greens._5,
+      },
+      pending: {
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
+      },
       error: {
         border: colors.reds._5,
         background: colors.reds._1,

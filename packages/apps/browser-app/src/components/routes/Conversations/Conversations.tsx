@@ -1,0 +1,37 @@
+import { PiPlus } from "react-icons/pi";
+import { useIntl } from "react-intl";
+import DataLoader from "../../../business-logic/backend/DataLoader.js";
+import { listConversationsQuery } from "../../../business-logic/backend/hooks.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import Shell from "../../design-system/Shell/Shell.jsx";
+import ConversationsTable from "../../widgets/ConversationsTable/ConversationsTable.jsx";
+
+export default function Conversations() {
+  const intl = useIntl();
+  return (
+    <Shell.Panel slot="Main">
+      <Shell.Panel.Header
+        title={intl.formatMessage({ defaultMessage: "🤖\u2002Conversations" })}
+        actionsAriaLabel={intl.formatMessage({
+          defaultMessage: "Conversations actions",
+        })}
+        actions={[
+          {
+            label: intl.formatMessage({ defaultMessage: "New conversation" }),
+            icon: <PiPlus />,
+            to: {
+              name: RouteName.Assistant,
+            },
+          },
+        ]}
+      />
+      <Shell.Panel.Content>
+        <DataLoader queries={[listConversationsQuery([])]}>
+          {(conversations) => (
+            <ConversationsTable conversations={conversations} />
+          )}
+        </DataLoader>
+      </Shell.Panel.Content>
+    </Shell.Panel>
+  );
+}

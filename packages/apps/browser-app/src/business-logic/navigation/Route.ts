@@ -5,7 +5,7 @@ import type {
 } from "@superego/backend";
 
 export enum RouteName {
-  Home = "Home",
+  Assistant = "Assistant",
   GlobalSettings = "Settings",
   CreateCollection = "CreateCollection",
   Collection = "Collection",
@@ -19,7 +19,7 @@ export enum RouteName {
 
 type Route =
   | {
-      name: RouteName.Home;
+      name: RouteName.Assistant;
     }
   | {
       name: RouteName.GlobalSettings;

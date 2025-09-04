@@ -1,5 +1,5 @@
 import { FormattedMessage, useIntl } from "react-intl";
-import * as cs from "./Home.css.js";
+import * as cs from "./Assistant.css.js";
 import logo from "./logo.avif";
 
 export default function Hero() {

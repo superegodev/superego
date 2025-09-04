@@ -8,7 +8,7 @@ import {
 const DISPLAY_NAME_LENGTH = 16;
 
 export default {
-  getDisplayName({ title }: Conversation): string {
+  getDisplayTitle({ title }: Pick<Conversation, "title">): string {
     const segments = [
       ...new Intl.Segmenter(undefined, { granularity: "word" }).segment(title),
     ];

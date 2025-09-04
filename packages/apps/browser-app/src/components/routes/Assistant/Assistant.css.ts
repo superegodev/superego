@@ -1,11 +1,29 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const Home = {
+export const Assistant = {
   root: style({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  }),
+
+  historyLink: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
+    marginBlockStart: vars.spacing._8,
+    fontSize: vars.typography.fontSizes.sm,
+    textDecoration: "none",
+    color: vars.colors.text.primary,
+    fontStyle: "italic",
+  }),
+
+  historyLinkIcon: style({
+    fontSize: vars.typography.fontSizes.xl,
+    position: "relative",
+    // Pixel adjustment to align the icon with the text.
+    top: "1px",
   }),
 };
 

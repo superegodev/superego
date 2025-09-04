@@ -1,4 +1,16 @@
 {
+  "Assistant.tsx_EWHk8s": [
+    {
+      "type": 0,
+      "value": "Error starting conversation"
+    }
+  ],
+  "Assistant.tsx_khigiR": [
+    {
+      "type": 0,
+      "value": "Previous conversations"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -113,10 +125,10 @@
       "value": "Delete conversation"
     }
   ],
-  "Conversation.tsx_HClzK5": [
+  "Conversation.tsx_eq3LES": [
     {
       "type": 0,
-      "value": "🤖 Conversation » "
+      "value": "🤖 Conversations » "
     },
     {
       "type": 1,
@@ -133,6 +145,60 @@
     {
       "type": 0,
       "value": "Conversation actions"
+    }
+  ],
+  "Conversations.tsx_PQ8A3I": [
+    {
+      "type": 0,
+      "value": "New conversation"
+    }
+  ],
+  "Conversations.tsx_YdANpb": [
+    {
+      "type": 0,
+      "value": "Conversations actions"
+    }
+  ],
+  "Conversations.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
+    }
+  ],
+  "ConversationsTable.tsx_/+r2Su": [
+    {
+      "type": 0,
+      "value": "You don't have any conversations yet."
+    }
+  ],
+  "ConversationsTable.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversations"
+    }
+  ],
+  "ConversationsTable.tsx_9a9+ww": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "ConversationsTable.tsx_AbXVP4": [
+    {
+      "type": 0,
+      "value": "Created at"
+    }
+  ],
+  "ConversationsTable.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "ConversationsTable.tsx_zQLEfz": [
+    {
+      "type": 0,
+      "value": "Format"
     }
   ],
   "CreateCollection.tsx_XQCXwU": [
@@ -813,12 +879,6 @@
       "value": "Superego"
     }
   ],
-  "Home.tsx_EWHk8s": [
-    {
-      "type": 0,
-      "value": "Error starting conversation"
-    }
-  ],
   "ListField.tsx_6ibWnb": [
     {
       "type": 0,
@@ -889,10 +949,10 @@
       "value": "Settings"
     }
   ],
-  "PrimarySidebarPanel.tsx_ejEGdx": [
+  "PrimarySidebarPanel.tsx_ZT0z9z": [
     {
       "type": 0,
-      "value": "Home"
+      "value": "Ask"
     }
   ],
   "PrimarySidebarPanel.tsx_xmcVZ0": [

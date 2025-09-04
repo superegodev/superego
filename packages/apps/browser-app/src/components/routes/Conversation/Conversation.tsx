@@ -31,9 +31,9 @@ export default function Conversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage(
-              { defaultMessage: "🤖\u2002Conversation » {conversation}" },
+              { defaultMessage: "🤖\u2002Conversations » {conversation}" },
               {
-                conversation: ConversationUtils.getDisplayName(conversation),
+                conversation: ConversationUtils.getDisplayTitle(conversation),
               },
             )}
             actionsAriaLabel={intl.formatMessage({
