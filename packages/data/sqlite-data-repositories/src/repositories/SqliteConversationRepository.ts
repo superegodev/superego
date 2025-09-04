@@ -56,6 +56,13 @@ export default class SqliteConversationRepository
     return id;
   }
 
+  async exists(id: ConversationId): Promise<boolean> {
+    const result = this.db
+      .prepare(`SELECT 1 FROM "${table}" WHERE "id" = ?`)
+      .get(id) as 1 | undefined;
+    return result !== undefined;
+  }
+
   async find(id: ConversationId): Promise<ConversationEntity | null> {
     const conversation = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)

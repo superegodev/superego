@@ -120,6 +120,58 @@ export default rd<Dependencies>("Conversations", (deps) => {
     expect(found).toEqual(null);
   });
 
+  describe("checking existence", () => {
+    it("case: exists", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const conversation: ConversationEntity = {
+        id: Id.generate.conversation(),
+        format: ConversationFormat.Text,
+        title: "title",
+        contextFingerprint: "contextFingerprint",
+        messages: [],
+        status: ConversationStatus.Idle,
+        error: null,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.conversation.upsert(conversation);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.conversation.exists(conversation.id),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(true);
+    });
+
+    it("case: doesn't exist", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.conversation.exists(
+            Id.generate.conversation(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(false);
+    });
+  });
+
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT

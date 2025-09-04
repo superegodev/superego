@@ -31,6 +31,11 @@ export default class DemoConversationRepository
     return id;
   }
 
+  async exists(id: ConversationId): Promise<boolean> {
+    this.ensureNotDisposed();
+    return this.conversations[id] !== undefined;
+  }
+
   async find(id: ConversationId): Promise<ConversationEntity | null> {
     this.ensureNotDisposed();
     return clone(this.conversations[id] ?? null);
