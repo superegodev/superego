@@ -1,9 +1,5 @@
 import { ConversationFormat, type Message } from "@superego/backend";
-import {
-  PiArrowCircleLeft,
-  PiArrowCircleRight,
-  PiClockCounterClockwise,
-} from "react-icons/pi";
+import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
