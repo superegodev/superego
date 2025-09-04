@@ -7,14 +7,19 @@ import { getDocumentVersionQuery } from "../../../../business-logic/backend/hook
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import Link from "../../../design-system/Link/Link.js";
-import * as cs from "../ConversationMessages.css.js";
+import * as cs from "./ToolResult.css.js";
 
 interface Props {
-  toolResult: ToolResult.CreateDocument & {
+  toolResult: (
+    | ToolResult.CreateDocument
+    | ToolResult.CreateNewDocumentVersion
+  ) & {
     output: { success: true };
   };
 }
-export default function CreateDocument({ toolResult }: Props) {
+export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
+  toolResult,
+}: Props) {
   const { collections } = useGlobalData();
   const { collectionId, documentId, documentVersionId } =
     toolResult.output.data;
@@ -28,9 +33,9 @@ export default function CreateDocument({ toolResult }: Props) {
       {(documentVersion) => (
         <Link
           to={{ name: RouteName.Document, collectionId, documentId }}
-          className={cs.CreateDocument.root}
+          className={cs.SuccessfulCreateDocument.root}
         >
-          <h5 className={cs.CreateDocument.title}>
+          <h5 className={cs.SuccessfulCreateDocument.title}>
             <FormattedMessage
               defaultMessage="{collection} » Document created"
               values={{
@@ -40,14 +45,21 @@ export default function CreateDocument({ toolResult }: Props) {
               }}
             />
           </h5>
-          <dl className={cs.CreateDocument.summaryProperties}>
+          <dl className={cs.SuccessfulCreateDocument.summaryProperties}>
             {documentVersion.summaryProperties.map(
               ({ name, value, valueComputationError }) => (
-                <div key={name} className={cs.CreateDocument.summaryProperty}>
-                  <dt className={cs.CreateDocument.summaryPropertyName}>
+                <div
+                  key={name}
+                  className={cs.SuccessfulCreateDocument.summaryProperty}
+                >
+                  <dt
+                    className={cs.SuccessfulCreateDocument.summaryPropertyName}
+                  >
                     {name}
                   </dt>
-                  <dd className={cs.CreateDocument.summaryPropertyValue}>
+                  <dd
+                    className={cs.SuccessfulCreateDocument.summaryPropertyValue}
+                  >
                     {value ?? valueComputationError.details.message}
                   </dd>
                 </div>

@@ -1,0 +1,49 @@
+import { Theme } from "@superego/backend";
+import * as monaco from "monaco-editor";
+import { useEffect, useRef } from "react";
+import useTheme from "../../../business-logic/theme/useTheme.js";
+import * as cs from "./CodeBlock.css.js";
+
+interface Props {
+  language: "typescript" | "javascript" | "json";
+  code: string;
+}
+export default function CodeBlock({ language, code }: Props) {
+  const theme = useTheme();
+  const codeElement = useRef<HTMLElement>(null);
+  // Rule-ignore explanation: we want the effect to re-run when code changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  useEffect(() => {
+    if (codeElement.current) {
+      monaco.editor.colorizeElement(codeElement.current, {
+        theme: theme === Theme.Light ? "vs" : "vs-dark",
+        tabSize: 2,
+      });
+    }
+  }, [theme, code]);
+  return (
+    <div className={cs.CodeBlock.root}>
+      <div className={cs.CodeBlock.lineNumbers}>
+        {code.split("\n").map((_, index) => (
+          <div
+            // Rule-ignore explanation: the index is the correct identifier
+            // for a line number.
+            // biome-ignore lint/suspicious/noArrayIndexKey: see above.
+            key={index}
+            className={cs.CodeBlock.lineNumber}
+          >
+            {index + 1}
+          </div>
+        ))}
+      </div>
+      <code
+        key={theme + code}
+        data-lang={language}
+        ref={codeElement}
+        className={cs.CodeBlock.code}
+      >
+        {code}
+      </code>
+    </div>
+  );
+}

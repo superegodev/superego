@@ -1,10 +1,4 @@
 {
-  "AssistantToolCallMessage.tsx_NnWZ6F": [
-    {
-      "type": 0,
-      "value": "Tool call"
-    }
-  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -129,6 +123,12 @@
       "value": "conversation"
     }
   ],
+  "Conversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Toggle tool calls"
+    }
+  ],
   "Conversation.tsx_w5q/I/": [
     {
       "type": 0,
@@ -181,16 +181,6 @@
     {
       "type": 0,
       "value": "Icon"
-    }
-  ],
-  "CreateDocument.tsx_hmMMs+": [
-    {
-      "type": 1,
-      "value": "collection"
-    },
-    {
-      "type": 0,
-      "value": " » Document created"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -1009,16 +999,88 @@
       "value": "null - click to set a value"
     }
   ],
+  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document created"
+    }
+  ],
   "TiptapInput.tsx_0he+1r": [
     {
       "type": 0,
       "value": "Write..."
     }
   ],
-  "ToolMessage.tsx_OJmR+3": [
+  "Title.tsx_1af260": [
     {
       "type": 0,
-      "value": "Tool result"
+      "value": "Execute JavaScript function on "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_2eWlOa": [
+    {
+      "type": 0,
+      "value": "Create document in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_RG9Nzq": [
+    {
+      "type": 0,
+      "value": "Get TypeScript schema for "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_foZAHu": [
+    {
+      "type": 0,
+      "value": "Call tool: "
+    },
+    {
+      "type": 1,
+      "value": "tool"
+    }
+  ],
+  "Title.tsx_vlxsWA": [
+    {
+      "type": 0,
+      "value": "Create new document version in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "ToolCallResult.tsx_ZpQ6us": [
+    {
+      "type": 0,
+      "value": "Result"
+    }
+  ],
+  "ToolCallResult.tsx_f+GKc4": [
+    {
+      "type": 0,
+      "value": "Call"
+    }
+  ],
+  "ToolCallResult.tsx_yq9SNC": [
+    {
+      "type": 0,
+      "value": "This call has no result."
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

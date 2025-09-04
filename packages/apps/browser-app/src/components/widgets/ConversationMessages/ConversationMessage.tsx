@@ -1,34 +1,58 @@
-import { type Message, MessageRole } from "@superego/backend";
+import {
+  type Conversation,
+  type Message,
+  MessageRole,
+} from "@superego/backend";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import AssistantContentMessage from "./AssistantContentMessage.js";
-import AssistantToolCallMessage from "./AssistantToolCallMessage.js";
+import ToolCallResult from "./ToolCallResult/ToolCallResult.jsx";
 import ToolMessage from "./ToolMessage.js";
 import UserMessage from "./UserMessage.js";
 
 interface Props {
   message: Message;
-  showTechnicalLog: boolean;
+  conversation: Conversation;
+  showToolCalls: boolean;
 }
 export default function ConversationMessage({
   message,
-  showTechnicalLog,
+  conversation,
+  showToolCalls,
 }: Props) {
   switch (message.role) {
     case MessageRole.User:
       return <UserMessage message={message} />;
     case MessageRole.Assistant:
-      return "content" in message ? (
-        <AssistantContentMessage message={message} />
-      ) : (
-        <AssistantToolCallMessage
-          message={message}
-          showTechnicalLog={showTechnicalLog}
-        />
+      if ("content" in message) {
+        return <AssistantContentMessage message={message} />;
+      }
+      return (
+        <>
+          {/* EVOLUTION: tool call messages like viz.renderChart will be rendered here. */}
+          {showToolCalls ? (
+            <ToolCallResults message={message} conversation={conversation} />
+          ) : null}
+        </>
       );
     case MessageRole.Tool:
-      return (
-        <ToolMessage message={message} showTechnicalLog={showTechnicalLog} />
-      );
+      return <ToolMessage message={message} />;
     default:
       return null;
   }
+}
+
+function ToolCallResults({
+  message,
+  conversation,
+}: {
+  message: Message.ToolCallAssistant;
+  conversation: Conversation;
+}) {
+  return message.toolCalls.map((toolCall) => (
+    <ToolCallResult
+      key={toolCall.id}
+      toolCall={toolCall}
+      toolResult={ConversationUtils.findToolResult(conversation, toolCall)}
+    />
+  ));
 }

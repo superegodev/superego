@@ -1,5 +1,6 @@
 import {
   type Conversation,
+  type ToolCall,
   ToolName,
   type ToolResult,
 } from "@superego/backend";
@@ -19,6 +20,18 @@ export default {
       : title;
   },
 
+  findToolResult(
+    { messages }: Conversation,
+    { id }: ToolCall,
+  ): ToolResult | null {
+    return (
+      messages
+        .filter((message) => "toolResults" in message)
+        .flatMap(({ toolResults }) => toolResults)
+        .find(({ toolCallId }) => toolCallId === id) ?? null
+    );
+  },
+
   isSuccessfulCreateDocumentToolResult(
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocument & {
@@ -27,5 +40,51 @@ export default {
     return (
       toolResult.tool === ToolName.CreateDocument && toolResult.output.success
     );
+  },
+
+  isSuccessfulCreateNewDocumentVersionToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.CreateNewDocumentVersion & {
+    output: { success: true };
+  } {
+    return (
+      toolResult.tool === ToolName.CreateNewDocumentVersion &&
+      toolResult.output.success
+    );
+  },
+
+  isSuccessfulGetCollectionTypescriptSchemaToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.GetCollectionTypescriptSchema & {
+    output: { success: true };
+  } {
+    return (
+      toolResult.tool === ToolName.GetCollectionTypescriptSchema &&
+      toolResult.output.success
+    );
+  },
+
+  isGetCollectionTypescriptSchemaToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.GetCollectionTypescriptSchema {
+    return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
+  },
+
+  isCreateDocumentToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.CreateDocument {
+    return toolCall.tool === ToolName.CreateDocument;
+  },
+
+  isCreateNewDocumentVersionToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.CreateNewDocumentVersion {
+    return toolCall.tool === ToolName.CreateNewDocumentVersion;
+  },
+
+  isExecuteJavascriptFunctionToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.ExecuteJavascriptFunction {
+    return toolCall.tool === ToolName.ExecuteJavascriptFunction;
   },
 };

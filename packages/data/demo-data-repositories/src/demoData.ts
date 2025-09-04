@@ -55,6 +55,7 @@ export default {
         assistantInstructions: [
           "- Use reasonable values for liters and total cost. E.g., if I say I put 5304 liters, I probably mean 53.04, even if I didn't specify the decimal.",
           "- Default to full tank if I don't specify it.",
+          "- Always ask for the odometer reading.",
         ].join("\n"),
       },
       createdAt: new Date("2025-08-28T09:29:13.582Z"),
@@ -324,13 +325,63 @@ export default {
       settings: {
         summaryProperties: [
           {
-            name: "Summary",
+            name: "Date",
             description: "",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  const date = fuelLogEntry.timestamp.slice(0, 10);\n  const price = fuelLogEntry.totalCost + " €";\n  const liters = fuelLogEntry.liters + " l";\n  return [date, price, liters].join(" - ");\n}',
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.timestamp.slice(0, 10);\n}',
               compiled:
-                'export default function getValue(fuelLogEntry) {\n    const date = fuelLogEntry.timestamp.slice(0, 10);\n    const price = fuelLogEntry.totalCost + " €";\n    const liters = fuelLogEntry.liters + " l";\n    return [date, price, liters].join(" - ");\n}\n',
+                "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.timestamp.slice(0, 10);\n}\n",
+            },
+          },
+          {
+            name: "Vehicle",
+            description: "",
+            getter: {
+              source:
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.vehicle;\n}',
+              compiled:
+                "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.vehicle;\n}\n",
+            },
+          },
+          {
+            name: "Liters",
+            description: "",
+            getter: {
+              source:
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.liters);\n}',
+              compiled:
+                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.liters);\n}\n",
+            },
+          },
+          {
+            name: "Total cost (€)",
+            description: "",
+            getter: {
+              source:
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.totalCost);\n}',
+              compiled:
+                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.totalCost);\n}\n",
+            },
+          },
+          {
+            name: "Price per liter",
+            description: "",
+            getter: {
+              source:
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.pricePerLiter);\n}',
+              compiled:
+                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.pricePerLiter);\n}\n",
+            },
+          },
+          {
+            name: "Odometer (km)",
+            description: "",
+            getter: {
+              source:
+                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.odometer);\n}',
+              compiled:
+                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.odometer);\n}\n",
             },
           },
         ],
@@ -461,6 +512,36 @@ export default {
                 'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.title;\n}',
               compiled:
                 "export default function getValue(expense) {\n    return expense.title;\n}\n",
+            },
+          },
+          {
+            name: "Amount",
+            description: "",
+            getter: {
+              source:
+                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.amount + " " + expense.currency;\n}',
+              compiled:
+                'export default function getValue(expense) {\n    return expense.amount + " " + expense.currency;\n}\n',
+            },
+          },
+          {
+            name: "Date",
+            description: "",
+            getter: {
+              source:
+                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.date.slice(0,10)\n}',
+              compiled:
+                "export default function getValue(expense) {\n    return expense.date.slice(0, 10);\n}\n",
+            },
+          },
+          {
+            name: "Category",
+            description: "",
+            getter: {
+              source:
+                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.category;\n}',
+              compiled:
+                "export default function getValue(expense) {\n    return expense.category;\n}\n",
             },
           },
         ],

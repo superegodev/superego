@@ -1,6 +1,6 @@
 import { type ConversationId, ConversationStatus } from "@superego/backend";
 import { useState } from "react";
-import { PiTrash } from "react-icons/pi";
+import { PiLightning, PiLightningSlash, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
@@ -16,6 +16,7 @@ interface Props {
 export default function Conversation({ conversationId }: Props) {
   const intl = useIntl();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [showToolCalls, setShowToolCalls] = useState(false);
   return (
     <DataLoader
       queries={[
@@ -41,6 +42,13 @@ export default function Conversation({ conversationId }: Props) {
             actions={[
               {
                 label: intl.formatMessage({
+                  defaultMessage: "Toggle tool calls",
+                }),
+                icon: showToolCalls ? <PiLightningSlash /> : <PiLightning />,
+                onPress: () => setShowToolCalls(!showToolCalls),
+              },
+              {
+                label: intl.formatMessage({
                   defaultMessage: "Delete conversation",
                 }),
                 icon: <PiTrash />,
@@ -49,7 +57,7 @@ export default function Conversation({ conversationId }: Props) {
             ]}
           />
           <Shell.Panel.Content className={cs.Conversation.root}>
-            <Chat conversation={conversation} />
+            <Chat conversation={conversation} showToolsCalls={showToolCalls} />
             <DeleteConversationModalForm
               key={`DeleteConversationModalForm_${conversationId}`}
               conversation={conversation}

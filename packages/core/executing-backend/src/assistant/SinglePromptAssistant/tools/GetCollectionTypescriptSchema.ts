@@ -1,4 +1,9 @@
-import type { Collection, ToolCall, ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import { codegen } from "@superego/schema";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
@@ -7,7 +12,7 @@ import InferenceService from "../../../requirements/InferenceService.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.GetCollectionTypescriptSchema {
-    return toolCall.tool === "getCollectionTypescriptSchema";
+    return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
   },
 
   async exec(
@@ -32,7 +37,7 @@ export default {
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: "getCollectionTypescriptSchema",
+      name: ToolName.GetCollectionTypescriptSchema,
       description: `
 Fetch the TypeScript type declarations for a collection.
 
@@ -42,7 +47,8 @@ Fetch the TypeScript type declarations for a collection.
 - **All fields are required.** If a field’s type includes \`null\`, the key
   **must** be present and may be \`null\`; otherwise it must be a non-null
   value.
-- Call this **before** any creation, versioning, or field-dependent analysis.
+- Call this **before** any javascript function execution, creation, versioning,
+  or field-dependent analysis.
       `.trim(),
       inputSchema: {
         type: "object",

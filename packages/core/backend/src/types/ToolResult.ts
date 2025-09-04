@@ -10,7 +10,10 @@ import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 
-interface ToolResult<Tool extends ToolName | string = string, Output = any> {
+interface ToolResult<
+  Tool extends ToolName | string = string,
+  Output extends Result<any, any> = Result<any, any>,
+> {
   tool: Tool;
   toolCallId: string;
   output: Output;

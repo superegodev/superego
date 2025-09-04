@@ -1,7 +1,4 @@
 {
-  "AssistantToolCallMessage.tsx_NnWZ6F": {
-    "defaultMessage": "Tool call"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -56,6 +53,9 @@
   "Conversation.tsx_HClzK5": {
     "defaultMessage": "🤖 Conversation » {conversation}"
   },
+  "Conversation.tsx_gKk3/v": {
+    "defaultMessage": "Toggle tool calls"
+  },
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
   },
@@ -82,9 +82,6 @@
   },
   "CreateCollectionForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
-  },
-  "CreateDocument.tsx_hmMMs+": {
-    "defaultMessage": "{collection} » Document created"
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
@@ -437,11 +434,35 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
+  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": {
+    "defaultMessage": "{collection} » Document created"
+  },
   "TiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
-  "ToolMessage.tsx_OJmR+3": {
-    "defaultMessage": "Tool result"
+  "Title.tsx_1af260": {
+    "defaultMessage": "Execute JavaScript function on {collection}"
+  },
+  "Title.tsx_2eWlOa": {
+    "defaultMessage": "Create document in {collection}"
+  },
+  "Title.tsx_RG9Nzq": {
+    "defaultMessage": "Get TypeScript schema for {collection}"
+  },
+  "Title.tsx_foZAHu": {
+    "defaultMessage": "Call tool: {tool}"
+  },
+  "Title.tsx_vlxsWA": {
+    "defaultMessage": "Create new document version in {collection}"
+  },
+  "ToolCallResult.tsx_ZpQ6us": {
+    "defaultMessage": "Result"
+  },
+  "ToolCallResult.tsx_f+GKc4": {
+    "defaultMessage": "Call"
+  },
+  "ToolCallResult.tsx_yq9SNC": {
+    "defaultMessage": "This call has no result."
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"

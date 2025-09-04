@@ -19,13 +19,14 @@ export default function DocumentsTable({ collection, documents }: Props) {
       selectionMode="none"
     >
       <Table.Header>
-        {collection.latestVersion.settings.summaryProperties.map(
-          ({ name }, index) => (
-            <Table.Column key={name} isRowHeader={index === 0}>
-              {name}
-            </Table.Column>
-          ),
-        )}
+        {(
+          documents[0]?.latestVersion.summaryProperties ??
+          collection.latestVersion.settings.summaryProperties
+        ).map(({ name }, index) => (
+          <Table.Column key={name} isRowHeader={index === 0}>
+            {name}
+          </Table.Column>
+        ))}
         <Table.Column align="right">
           <FormattedMessage defaultMessage="Created at" />
         </Table.Column>

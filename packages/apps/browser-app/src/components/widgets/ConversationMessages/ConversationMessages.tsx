@@ -7,12 +7,12 @@ import ThinkingMessage from "./ThinkingMessage.js";
 
 interface Props {
   conversation: Conversation;
-  showTechnicalLog: boolean;
+  showToolCalls: boolean;
   className?: string | undefined;
 }
 export default function ConversationMessages({
   conversation,
-  showTechnicalLog,
+  showToolCalls,
   className,
 }: Props) {
   return (
@@ -22,7 +22,8 @@ export default function ConversationMessages({
           // biome-ignore lint/suspicious/noArrayIndexKey: order is stable.
           key={index}
           message={message}
-          showTechnicalLog={showTechnicalLog}
+          conversation={conversation}
+          showToolCalls={showToolCalls}
         />
       ))}
       {conversation.status === ConversationStatus.Processing ? (

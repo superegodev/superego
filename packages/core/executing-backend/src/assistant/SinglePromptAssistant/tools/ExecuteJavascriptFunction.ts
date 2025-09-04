@@ -61,6 +61,10 @@ Run a **synchronous**, **read-only** JS function over **all documents** in a
 collection; return a JSON-safe result (counts, aggregates, short lists, or
 specific docs).
 
+Before you can run this tool you must call \`db.getCollectionTypescriptSchema\`
+so that you know the exact shape of the documents that will get passed to the
+function.
+
 ### Documents
 
 \`\`\`ts
