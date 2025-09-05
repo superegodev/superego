@@ -20,7 +20,8 @@ export default function AssistantSettings({ control }: Props) {
             control={control}
             name="assistant.completions.model"
             emptyInputValue={null}
-            label={intl.formatMessage({ defaultMessage: "Base URL" })}
+            label={intl.formatMessage({ defaultMessage: "Model" })}
+            placeholder="moonshotai/kimi-k2-instruct-0905"
           />
           <RHFTextField
             control={control}
@@ -29,12 +30,14 @@ export default function AssistantSettings({ control }: Props) {
             label={intl.formatMessage({
               defaultMessage: "Provider base URL",
             })}
+            placeholder="https://api.groq.com/openai/v1/chat/completions"
           />
           <RHFTextField
             control={control}
             name="assistant.completions.provider.apiKey"
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}
+            placeholder="gsk_XyZ..."
           />
         </Fieldset.Fields>
       </Fieldset>

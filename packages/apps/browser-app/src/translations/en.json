@@ -17,11 +17,11 @@
   "AssistantSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
   },
-  "AssistantSettings.tsx_dqWH5L": {
-    "defaultMessage": "Base URL"
-  },
   "AssistantSettings.tsx_lNk+Oq": {
     "defaultMessage": "Developer prompt"
+  },
+  "AssistantSettings.tsx_rhSI1/": {
+    "defaultMessage": "Model"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -380,8 +380,14 @@
   "FormattingToolbar.tsx_vEQBIa": {
     "defaultMessage": "Heading 5"
   },
+  "GlobalSettings.tsx_HZGiV3": {
+    "defaultMessage": "Settings actions"
+  },
   "GlobalSettings.tsx_cFXlu2": {
     "defaultMessage": "Superego Global Settings"
+  },
+  "GlobalSettings.tsx_jvo0vs": {
+    "defaultMessage": "Save"
   },
   "Header.tsx_9lnhZ4": {
     "defaultMessage": "Create collection"
@@ -547,12 +553,6 @@
   },
   "UpdateGlobalSettingsForm.tsx_D3idYv": {
     "defaultMessage": "Settings"
-  },
-  "UpdateGlobalSettingsForm.tsx_c9brFu": {
-    "defaultMessage": "Error saving settings"
-  },
-  "UpdateGlobalSettingsForm.tsx_muqizb": {
-    "defaultMessage": "Save settings"
   },
   "UpdateGlobalSettingsForm.tsx_wSAvhu": {
     "defaultMessage": "Assistant"

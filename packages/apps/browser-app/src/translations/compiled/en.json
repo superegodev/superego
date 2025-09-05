@@ -35,16 +35,16 @@
       "value": "Provider API key"
     }
   ],
-  "AssistantSettings.tsx_dqWH5L": [
-    {
-      "type": 0,
-      "value": "Base URL"
-    }
-  ],
   "AssistantSettings.tsx_lNk+Oq": [
     {
       "type": 0,
       "value": "Developer prompt"
+    }
+  ],
+  "AssistantSettings.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -867,10 +867,22 @@
       "value": "Heading 5"
     }
   ],
+  "GlobalSettings.tsx_HZGiV3": [
+    {
+      "type": 0,
+      "value": "Settings actions"
+    }
+  ],
   "GlobalSettings.tsx_cFXlu2": [
     {
       "type": 0,
       "value": "Superego Global Settings"
+    }
+  ],
+  "GlobalSettings.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "Header.tsx_9lnhZ4": [
@@ -1253,18 +1265,6 @@
     {
       "type": 0,
       "value": "Settings"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_c9brFu": [
-    {
-      "type": 0,
-      "value": "Error saving settings"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_muqizb": [
-    {
-      "type": 0,
-      "value": "Save settings"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_wSAvhu": [
