@@ -22,7 +22,7 @@
     "@superego/backend": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
-    "uuid": "^11.1.0",
+    "uuid": "^12.0.0",
     "valibot": "^1.1.0"
   }
 }
