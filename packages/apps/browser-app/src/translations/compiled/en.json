@@ -1,4 +1,10 @@
 {
+  "AppearanceSettings.tsx_Pe0ogR": [
+    {
+      "type": 0,
+      "value": "Theme"
+    }
+  ],
   "Assistant.tsx_EWHk8s": [
     {
       "type": 0,
@@ -9,6 +15,36 @@
     {
       "type": 0,
       "value": "Previous conversations"
+    }
+  ],
+  "AssistantSettings.tsx_BGZ5iy": [
+    {
+      "type": 0,
+      "value": "Completions"
+    }
+  ],
+  "AssistantSettings.tsx_NNEajY": [
+    {
+      "type": 0,
+      "value": "Provider base URL"
+    }
+  ],
+  "AssistantSettings.tsx_YctX0J": [
+    {
+      "type": 0,
+      "value": "Provider API key"
+    }
+  ],
+  "AssistantSettings.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "Base URL"
+    }
+  ],
+  "AssistantSettings.tsx_lNk+Oq": [
+    {
+      "type": 0,
+      "value": "Developer prompt"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -1213,46 +1249,10 @@
       "value": "Appearance"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_3g2ynP": [
+  "UpdateGlobalSettingsForm.tsx_D3idYv": [
     {
       "type": 0,
-      "value": "OpenRouter"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_BGZ5iy": [
-    {
-      "type": 0,
-      "value": "Completions"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_IL1Uey": [
-    {
-      "type": 0,
-      "value": "Providers"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_ITn8xV": [
-    {
-      "type": 0,
-      "value": "Groq"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_KTNoOq": [
-    {
-      "type": 0,
-      "value": "API key"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_Pe0ogR": [
-    {
-      "type": 0,
-      "value": "Theme"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_bV+Ymc": [
-    {
-      "type": 0,
-      "value": "Default model"
+      "value": "Settings"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_c9brFu": [
@@ -1261,28 +1261,16 @@
       "value": "Error saving settings"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_lub1St": [
-    {
-      "type": 0,
-      "value": "OpenAI"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_lzgH40": [
-    {
-      "type": 0,
-      "value": "Google"
-    }
-  ],
   "UpdateGlobalSettingsForm.tsx_muqizb": [
     {
       "type": 0,
       "value": "Save settings"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_n0wQL1": [
+  "UpdateGlobalSettingsForm.tsx_wSAvhu": [
     {
       "type": 0,
-      "value": "Inference"
+      "value": "Assistant"
     }
   ],
   "UserMessageContentInput.tsx_9WRlF4": [

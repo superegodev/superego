@@ -6,14 +6,12 @@ registerDataRepositoriesTests(async () => {
   const dataRepositoriesManager = new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     },
     false,

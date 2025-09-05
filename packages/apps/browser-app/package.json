@@ -25,7 +25,7 @@
     "@formatjs/cli": "^6.7.2",
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
-    "@superego/inference-services": "workspace:^",
+    "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",

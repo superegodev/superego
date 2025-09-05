@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { CompletionModel, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { RoutingInferenceServiceFactory } from "@superego/inference-services";
+import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { app, BrowserWindow } from "electron";
@@ -48,20 +48,18 @@ function startBackendIPCProxyServer() {
     fileName: join(app.getPath("userData"), "superego.db"),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     },
   });
   dataRepositoriesManager.runMigrations();
   const javascriptSandbox = new QuickjsJavascriptSandbox();
-  const inferenceServiceFactory = new RoutingInferenceServiceFactory();
+  const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
   const backend = new ExecutingBackend(
     dataRepositoriesManager,
     javascriptSandbox,

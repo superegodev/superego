@@ -1,9 +1,27 @@
 {
+  "AppearanceSettings.tsx_Pe0ogR": {
+    "defaultMessage": "Theme"
+  },
   "Assistant.tsx_EWHk8s": {
     "defaultMessage": "Error starting conversation"
   },
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
+  },
+  "AssistantSettings.tsx_BGZ5iy": {
+    "defaultMessage": "Completions"
+  },
+  "AssistantSettings.tsx_NNEajY": {
+    "defaultMessage": "Provider base URL"
+  },
+  "AssistantSettings.tsx_YctX0J": {
+    "defaultMessage": "Provider API key"
+  },
+  "AssistantSettings.tsx_dqWH5L": {
+    "defaultMessage": "Base URL"
+  },
+  "AssistantSettings.tsx_lNk+Oq": {
+    "defaultMessage": "Developer prompt"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -527,41 +545,17 @@
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Appearance"
   },
-  "UpdateGlobalSettingsForm.tsx_3g2ynP": {
-    "defaultMessage": "OpenRouter"
-  },
-  "UpdateGlobalSettingsForm.tsx_BGZ5iy": {
-    "defaultMessage": "Completions"
-  },
-  "UpdateGlobalSettingsForm.tsx_IL1Uey": {
-    "defaultMessage": "Providers"
-  },
-  "UpdateGlobalSettingsForm.tsx_ITn8xV": {
-    "defaultMessage": "Groq"
-  },
-  "UpdateGlobalSettingsForm.tsx_KTNoOq": {
-    "defaultMessage": "API key"
-  },
-  "UpdateGlobalSettingsForm.tsx_Pe0ogR": {
-    "defaultMessage": "Theme"
-  },
-  "UpdateGlobalSettingsForm.tsx_bV+Ymc": {
-    "defaultMessage": "Default model"
+  "UpdateGlobalSettingsForm.tsx_D3idYv": {
+    "defaultMessage": "Settings"
   },
   "UpdateGlobalSettingsForm.tsx_c9brFu": {
     "defaultMessage": "Error saving settings"
   },
-  "UpdateGlobalSettingsForm.tsx_lub1St": {
-    "defaultMessage": "OpenAI"
-  },
-  "UpdateGlobalSettingsForm.tsx_lzgH40": {
-    "defaultMessage": "Google"
-  },
   "UpdateGlobalSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"
   },
-  "UpdateGlobalSettingsForm.tsx_n0wQL1": {
-    "defaultMessage": "Inference"
+  "UpdateGlobalSettingsForm.tsx_wSAvhu": {
+    "defaultMessage": "Assistant"
   },
   "UserMessageContentInput.tsx_9WRlF4": {
     "defaultMessage": "Send"

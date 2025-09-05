@@ -7,7 +7,6 @@ export type { default as Backend } from "./Backend.js";
 // Enums
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
-export { default as CompletionModel } from "./enums/CompletionModel.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
@@ -57,6 +56,7 @@ export type { default as FileId } from "./ids/FileId.js";
 
 // Types
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as AssistantSettings } from "./types/AssistantSettings.js";
 export type { default as BackgroundJob } from "./types/BackgroundJob.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";
@@ -68,7 +68,6 @@ export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
-export type { default as InferenceSettings } from "./types/InferenceSettings.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";

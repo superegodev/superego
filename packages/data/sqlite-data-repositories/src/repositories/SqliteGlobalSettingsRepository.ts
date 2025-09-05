@@ -44,34 +44,23 @@ export default class SqliteGlobalSettingsRepository
           settings?.appearance?.theme ??
           this.defaultGlobalSettings.appearance.theme,
       },
-      inference: {
-        providers: {
-          groq: {
-            apiKey:
-              settings.inference?.providers?.groq?.apiKey ??
-              this.defaultGlobalSettings.inference.providers.groq.apiKey,
-          },
-          openai: {
-            apiKey:
-              settings.inference?.providers?.openai?.apiKey ??
-              this.defaultGlobalSettings.inference.providers.openai.apiKey,
-          },
-          google: {
-            apiKey:
-              settings.inference?.providers?.google?.apiKey ??
-              this.defaultGlobalSettings.inference.providers.google.apiKey,
-          },
-          openrouter: {
-            apiKey:
-              settings.inference?.providers?.openrouter?.apiKey ??
-              this.defaultGlobalSettings.inference.providers.openrouter.apiKey,
-          },
-        },
+      assistant: {
         completions: {
           model:
-            settings.inference?.completions?.model ??
-            this.defaultGlobalSettings.inference.completions.model,
+            settings.assistant?.completions?.model ??
+            this.defaultGlobalSettings.assistant.completions.model,
+          provider: {
+            apiKey:
+              settings.assistant?.completions?.provider?.apiKey ??
+              this.defaultGlobalSettings.assistant.completions.provider.apiKey,
+            baseUrl:
+              settings.assistant?.completions?.provider?.baseUrl ??
+              this.defaultGlobalSettings.assistant.completions.provider.baseUrl,
+          },
         },
+        developerPrompt:
+          settings.assistant?.developerPrompt ??
+          this.defaultGlobalSettings.assistant.developerPrompt,
       },
     };
   }

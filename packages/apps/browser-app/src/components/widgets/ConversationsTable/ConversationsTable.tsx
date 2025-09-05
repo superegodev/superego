@@ -3,9 +3,9 @@ import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import ConversationFormat from "../../design-system/ConversationFormat/ConversationFormat.jsx";
-import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.jsx";
-import Table from "../../design-system/Table/Table.jsx";
+import ConversationFormat from "../../design-system/ConversationFormat/ConversationFormat.js";
+import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.js";
+import Table from "../../design-system/Table/Table.js";
 
 interface Props {
   conversations: Omit<Conversation, "messages">[];

@@ -4,13 +4,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.jsx";
-import Link from "../../design-system/Link/Link.jsx";
-import ResultError from "../../design-system/ResultError/ResultError.jsx";
-import Shell from "../../design-system/Shell/Shell.jsx";
-import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.jsx";
+import Alert from "../../design-system/Alert/Alert.js";
+import Link from "../../design-system/Link/Link.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
+import Shell from "../../design-system/Shell/Shell.js";
+import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Assistant.css.js";
-import Hero from "./Hero.jsx";
+import Hero from "./Hero.js";
 
 export default function Assistant() {
   const intl = useIntl();

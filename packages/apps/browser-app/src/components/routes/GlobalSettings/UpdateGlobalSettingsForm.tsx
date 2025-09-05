@@ -1,152 +1,96 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { CompletionModel, type GlobalSettings, Theme } from "@superego/backend";
-import { useEffect } from "react";
-import { Form } from "react-aria-components";
+import type { GlobalSettings, Theme } from "@superego/backend";
+import { useEffect, useId, useRef } from "react";
+import { Form, Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import AIModelUtils from "../../../utils/AIModelUtils.js";
+import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import Fieldset from "../../design-system/Fieldset/Fieldset.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
-import Section from "../../design-system/Section/Section.js";
-import RHFSelectField from "../../widgets/RHFSelectField/RHFSelectField.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
+import AppearanceSettings from "./AppearanceSettings.jsx";
+import AssistantSettings from "./AssistantSettings.js";
 import * as cs from "./GlobalSettings.css.js";
 
-export default function UpdateGlobalSettingsForm() {
+interface Props {
+  formId: string;
+  setSubmitDisabled: (isDisabled: boolean) => void;
+}
+export default function UpdateGlobalSettingsForm({
+  formId,
+  setSubmitDisabled,
+}: Props) {
   const intl = useIntl();
 
   const { globalSettings } = useGlobalData();
-  const { result, mutate } = useUpdateGlobalSettings();
+  const { mutate } = useUpdateGlobalSettings();
 
-  const { control, handleSubmit, reset, watch } = useForm<GlobalSettings>({
-    defaultValues: globalSettings,
-    mode: "all",
-    resolver: standardSchemaResolver(forms.schemas.globalSettings()),
-  });
+  const { control, handleSubmit, reset, formState, watch } =
+    useForm<GlobalSettings>({
+      defaultValues: globalSettings,
+      mode: "all",
+      resolver: standardSchemaResolver(forms.schemas.globalSettings()),
+    });
 
   const onSubmit = async (values: GlobalSettings) => {
     const { success, data } = await mutate(values);
     if (success) {
       reset(data);
+    } else {
+      // TODO: display error in Toast.
     }
   };
+
+  // When the form dirty state changes:
+  // - Enable or disable the submit button.
+  // - If the form is dirty, schedule an autosave.
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    setSubmitDisabled(!formState.isDirty);
+    if (!formState.isDirty || !formState.isValid) {
+      return;
+    }
+    const timeoutId = setTimeout(
+      () => formRef.current?.requestSubmit(),
+      SETTINGS_AUTOSAVE_INTERVAL,
+    );
+    return () => clearTimeout(timeoutId);
+  }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
+
+  const appearanceTabId = useId();
+  const assistantTabId = useId();
 
   const theme = watch("appearance.theme");
   usePreviewTheme(globalSettings.appearance.theme, theme);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Section
-        title={intl.formatMessage({ defaultMessage: "Appearance" })}
-        level={2}
-      >
-        <RHFSelectField
-          control={control}
-          name="appearance.theme"
-          options={Object.values(Theme).map((theme) => ({
-            id: theme,
-            label: theme,
-          }))}
-          label={intl.formatMessage({ defaultMessage: "Theme" })}
-        />
-      </Section>
-      <Section
-        title={intl.formatMessage({ defaultMessage: "Inference" })}
-        level={2}
-      >
-        <Section
-          title={intl.formatMessage({ defaultMessage: "Providers" })}
-          level={3}
+    <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
+      <Tabs>
+        <TabList
+          aria-label={intl.formatMessage({ defaultMessage: "Settings" })}
+          className={cs.UpdateGlobalSettingsForm.tabList}
         >
-          <Fieldset isDisclosureDisabled={true}>
-            <Fieldset.Legend>
-              <FormattedMessage defaultMessage="Groq" />
-            </Fieldset.Legend>
-            <Fieldset.Fields>
-              <RHFTextField
-                control={control}
-                name="inference.providers.groq.apiKey"
-                emptyInputValue={null}
-                label={intl.formatMessage({ defaultMessage: "API key" })}
-              />
-            </Fieldset.Fields>
-          </Fieldset>
-          <Fieldset isDisclosureDisabled={true}>
-            <Fieldset.Legend>
-              <FormattedMessage defaultMessage="OpenAI" />
-            </Fieldset.Legend>
-            <Fieldset.Fields>
-              <RHFTextField
-                control={control}
-                name="inference.providers.openai.apiKey"
-                emptyInputValue={null}
-                label={intl.formatMessage({ defaultMessage: "API key" })}
-              />
-            </Fieldset.Fields>
-          </Fieldset>
-          <Fieldset isDisclosureDisabled={true}>
-            <Fieldset.Legend>
-              <FormattedMessage defaultMessage="Google" />
-            </Fieldset.Legend>
-            <Fieldset.Fields>
-              <RHFTextField
-                control={control}
-                name="inference.providers.google.apiKey"
-                emptyInputValue={null}
-                label={intl.formatMessage({ defaultMessage: "API key" })}
-              />
-            </Fieldset.Fields>
-          </Fieldset>
-          <Fieldset isDisclosureDisabled={true}>
-            <Fieldset.Legend>
-              <FormattedMessage defaultMessage="OpenRouter" />
-            </Fieldset.Legend>
-            <Fieldset.Fields>
-              <RHFTextField
-                control={control}
-                name="inference.providers.openrouter.apiKey"
-                emptyInputValue={null}
-                label={intl.formatMessage({ defaultMessage: "API key" })}
-              />
-            </Fieldset.Fields>
-          </Fieldset>
-        </Section>
-        <Section
-          title={intl.formatMessage({ defaultMessage: "Completions" })}
-          level={3}
+          <Tab id={assistantTabId} className={cs.UpdateGlobalSettingsForm.tab}>
+            <FormattedMessage defaultMessage="Assistant" />
+          </Tab>
+          <Tab id={appearanceTabId} className={cs.UpdateGlobalSettingsForm.tab}>
+            <FormattedMessage defaultMessage="Appearance" />
+          </Tab>
+        </TabList>
+        <TabPanel
+          id={assistantTabId}
+          className={cs.UpdateGlobalSettingsForm.tabPanel}
         >
-          <RHFSelectField
-            control={control}
-            name="inference.completions.model"
-            options={Object.values(CompletionModel).map((CompletionModel) => ({
-              id: CompletionModel,
-              label: AIModelUtils.getDisplayName(CompletionModel),
-            }))}
-            label={intl.formatMessage({ defaultMessage: "Default model" })}
-          />
-        </Section>
-      </Section>
-      <div className={cs.UpdateGlobalSettingsForm.submitButtonContainer}>
-        <RHFSubmitButton control={control} variant="primary">
-          <FormattedMessage defaultMessage="Save settings" />
-        </RHFSubmitButton>
-      </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error saving settings",
-          })}
+          <AssistantSettings control={control} />
+        </TabPanel>
+        <TabPanel
+          id={appearanceTabId}
+          className={cs.UpdateGlobalSettingsForm.tabPanel}
         >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
+          <AppearanceSettings control={control} />
+        </TabPanel>
+      </Tabs>
     </Form>
   );
 }

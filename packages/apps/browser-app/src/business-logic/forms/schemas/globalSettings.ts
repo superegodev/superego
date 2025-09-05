@@ -1,4 +1,4 @@
-import { CompletionModel, type GlobalSettings, Theme } from "@superego/backend";
+import { type GlobalSettings, Theme } from "@superego/backend";
 import * as v from "valibot";
 
 export default function globalSettings(): v.GenericSchema<
@@ -9,24 +9,15 @@ export default function globalSettings(): v.GenericSchema<
     appearance: v.strictObject({
       theme: v.picklist(Object.values(Theme)),
     }),
-    inference: v.strictObject({
-      providers: v.strictObject({
-        groq: v.strictObject({
-          apiKey: v.nullable(v.string()),
-        }),
-        openai: v.strictObject({
-          apiKey: v.nullable(v.string()),
-        }),
-        google: v.strictObject({
-          apiKey: v.nullable(v.string()),
-        }),
-        openrouter: v.strictObject({
-          apiKey: v.nullable(v.string()),
-        }),
-      }),
+    assistant: v.strictObject({
       completions: v.strictObject({
-        model: v.picklist(Object.values(CompletionModel)),
+        model: v.nullable(v.string()),
+        provider: v.strictObject({
+          baseUrl: v.nullable(v.string()),
+          apiKey: v.nullable(v.string()),
+        }),
       }),
+      developerPrompt: v.nullable(v.string()),
     }),
   });
 }

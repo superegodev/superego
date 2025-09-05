@@ -47,6 +47,8 @@ export default function CreateNewDocumentVersionForm({
     );
     if (success) {
       reset(RhfContent.toRhfContent(data.latestVersion.content, schema));
+    } else {
+      // TODO: display error in Toast.
     }
   };
 

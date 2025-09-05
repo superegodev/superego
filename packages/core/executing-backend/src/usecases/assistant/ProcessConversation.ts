@@ -90,7 +90,7 @@ export default class AssistantProcessConversation extends Usecase {
 
   private async getInferenceService(): Promise<InferenceService> {
     const globalSettings = await this.repos.globalSettings.get();
-    return this.inferenceServiceFactory.create(globalSettings.inference);
+    return this.inferenceServiceFactory.create(globalSettings.assistant);
   }
 
   // TODO: consider making AssistantFactory requirement.

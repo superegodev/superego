@@ -6,7 +6,7 @@ import {
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 
-export namespace OpenRouter {
+export namespace OpenAICompat {
   export type Message =
     | { role: "system"; content: string }
     | { role: "user"; content: ContentPart[] }
@@ -39,13 +39,13 @@ export namespace OpenRouter {
     messages: Message[];
     model: string;
     tools: Tool[];
-    reasoning: {
-      effort: "low" | "medium" | "high";
-      exclude: boolean;
-    };
-    usage: {
-      include: boolean;
-    };
+    // reasoning: {
+    //   effort: "low" | "medium" | "high";
+    //   exclude: boolean;
+    // };
+    // usage: {
+    //   include: boolean;
+    // };
     stream: boolean;
   };
 
@@ -74,24 +74,22 @@ export namespace OpenRouter {
   }
 }
 
-export function toOpenRouterRequest(
+export function toOpenAICompatRequest(
   model: CompletionModel,
   messages: Message[],
   tools: InferenceService.Tool[],
-): OpenRouter.Request {
+): OpenAICompat.Request {
   return {
-    model: model.slice("OpenRouter_".length),
-    messages: messages.flatMap(toOpenRouterMessage),
-    tools: tools.map(toOpenRouterTool),
-    reasoning: { effort: "low", exclude: true },
-    usage: { include: false },
+    model: model.split("_")[1]!,
+    messages: messages.flatMap(toOpenAICompatMessage),
+    tools: tools.map(toOpenAICompatTool),
     stream: false,
   };
 }
 
-function toOpenRouterMessage(
+function toOpenAICompatMessage(
   message: Message,
-): OpenRouter.Message | OpenRouter.Message[] {
+): OpenAICompat.Message | OpenAICompat.Message[] {
   if (message.role === MessageRole.Developer) {
     return { role: "system", content: message.content[0].text };
   }
@@ -131,7 +129,7 @@ function toOpenRouterMessage(
   return { role: "assistant", content: message.content[0].text };
 }
 
-function toOpenRouterTool(tool: InferenceService.Tool): OpenRouter.Tool {
+function toOpenAICompatTool(tool: InferenceService.Tool): OpenAICompat.Tool {
   return {
     type: "function",
     function: {
@@ -142,8 +140,8 @@ function toOpenRouterTool(tool: InferenceService.Tool): OpenRouter.Tool {
   };
 }
 
-export function fromOpenRouterResponse(
-  response: OpenRouter.Response,
+export function fromOpenAICompatResponse(
+  response: OpenAICompat.Response,
 ):
   | Omit<Message.ToolCallAssistant, "agent">
   | Omit<Message.ContentAssistant, "agent"> {
@@ -158,7 +156,6 @@ export function fromOpenRouterResponse(
       toolCalls: message.tool_calls.map((tool_call) => ({
         id: tool_call.id,
         tool: tool_call.function.name,
-        // TODO: maybe we should leave parsing to upper layers
         input: JSON.parse(tool_call.function.arguments),
       })),
     };

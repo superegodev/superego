@@ -1,7 +1,7 @@
-import { CompletionModel, Theme } from "@superego/backend";
+import { Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { RoutingInferenceServiceFactory } from "@superego/inference-services";
+import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
@@ -10,20 +10,18 @@ const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     },
     true,
   ),
   new QuickjsJavascriptSandbox(),
-  new RoutingInferenceServiceFactory(),
+  new OpenAICompatInferenceServiceFactory(),
 );
 
 const queryClient = new QueryClient({

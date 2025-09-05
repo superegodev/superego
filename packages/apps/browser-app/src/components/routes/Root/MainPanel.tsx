@@ -1,10 +1,10 @@
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Assistant from "../Assistant/Assistant.jsx";
+import Assistant from "../Assistant/Assistant.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
-import Conversations from "../Conversations/Conversations.jsx";
+import Conversations from "../Conversations/Conversations.js";
 import CreateCollection from "../CreateCollection/CreateCollection.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
 import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";

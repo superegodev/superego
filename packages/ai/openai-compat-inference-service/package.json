@@ -1,5 +1,5 @@
 {
-  "name": "@superego/inference-services",
+  "name": "@superego/openai-compat-inference-service",
   "version": "2025.7.6",
   "type": "module",
   "exports": {
@@ -13,8 +13,6 @@
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
-    "groq-sdk": "^0.30.0",
-    "openai": "^5.16.0",
     "typescript": "^5.9.2"
   },
   "dependencies": {

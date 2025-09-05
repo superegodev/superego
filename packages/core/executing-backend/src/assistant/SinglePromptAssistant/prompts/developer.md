@@ -22,7 +22,7 @@ steps.
 
 ### Creating Documents
 
-1. Identify ALL relevant collections for which documents should be created.
+1. Identify all relevant collections for which documents should be created.
 2. Get schema for each collection.
 3. Extract ALL info from user messages and prepare documents. Use the schemas as
    a guide.
@@ -71,6 +71,8 @@ MANDATORY:
 - Use field descriptions in schemas to guide your decisions.
 - Unless the user specifies otherwise, use the provided time for creating and
   updating documents.
+- For a single request, when it makes sense to create documents in multiple
+  collections, create all documents.
 
 ## Conversation Style
 

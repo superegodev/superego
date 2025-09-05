@@ -9,14 +9,12 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -29,14 +27,12 @@ export default rd<Dependencies>("Global settings", (deps) => {
     // Exercise
     const updatedSettings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -61,14 +57,12 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      inference: {
-        providers: {
-          groq: { apiKey: null },
-          openai: { apiKey: null },
-          google: { apiKey: null },
-          openrouter: { apiKey: null },
+      assistant: {
+        completions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
+        developerPrompt: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

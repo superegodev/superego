@@ -5,10 +5,10 @@ import type {
 import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedMessage } from "react-intl";
 import { vars } from "../../../../themes.css.js";
-import Title from "./Title.jsx";
-import ToolCall from "./ToolCall.jsx";
+import Title from "./Title.js";
+import ToolCall from "./ToolCall.js";
 import * as cs from "./ToolCallResult.css.js";
-import ToolResult from "./ToolResult.jsx";
+import ToolResult from "./ToolResult.js";
 
 interface Props {
   toolCall: ToolCallB;
