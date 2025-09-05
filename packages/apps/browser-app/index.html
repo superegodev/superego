@@ -5,9 +5,14 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-        default-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' data:;
-        worker-src 'self' blob:;
-        connect-src 'self' https://cdn.jsdelivr.net https://api.groq.com;
+        default-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' data: blob:;
+        connect-src
+          'self'
+          https://cdn.jsdelivr.net
+          https://api.groq.com
+          https://api.openai.com
+          https://generativelanguage.googleapis.com
+          https://openrouter.ai/api/v1/chat/completions;
       "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

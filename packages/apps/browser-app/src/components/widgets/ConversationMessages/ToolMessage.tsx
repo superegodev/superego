@@ -9,7 +9,10 @@ interface Props {
 export default function ToolMessage({ message }: Props) {
   return message.toolResults.map((toolResult) => (
     <Fragment key={toolResult.toolCallId}>
-      {ConversationUtils.isSuccessfulCreateDocumentToolResult(toolResult) ? (
+      {ConversationUtils.isSuccessfulCreateDocumentToolResult(toolResult) ||
+      ConversationUtils.isSuccessfulCreateNewDocumentVersionToolResult(
+        toolResult,
+      ) ? (
         <SuccessfulCreateDocumentOrVersion toolResult={toolResult} />
       ) : null}
     </Fragment>

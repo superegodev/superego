@@ -47,16 +47,12 @@ Fetch the TypeScript type declarations for a collection.
 - **All fields are required.** If a field’s type includes \`null\`, the key
   **must** be present and may be \`null\`; otherwise it must be a non-null
   value.
-- Call this **before** any javascript function execution, creation, versioning,
-  or field-dependent analysis.
       `.trim(),
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
             type: "string",
-            description:
-              "ID of the collection whose TypeScript schema to retrieve (e.g., 'Collection_1234567890').",
           },
         },
         required: ["collectionId"],

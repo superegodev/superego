@@ -49,8 +49,13 @@ function startBackendIPCProxyServer() {
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
       inference: {
-        providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+        providers: {
+          groq: { apiKey: null },
+          openai: { apiKey: null },
+          google: { apiKey: null },
+          openrouter: { apiKey: null },
+        },
+        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
       },
     },
   });

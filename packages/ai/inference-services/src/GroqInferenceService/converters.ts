@@ -26,14 +26,11 @@ export function toGroqMessage(
   | Groq.Chat.ChatCompletionMessageParam
   | Groq.Chat.ChatCompletionMessageParam[] {
   if (message.role === MessageRole.Tool) {
-    return message.toolResults.map(
-      (toolResult) =>
-        ({
-          role: "tool",
-          content: JSON.stringify(toolResult.output),
-          tool_call_id: toolResult.toolCallId,
-        }) satisfies Groq.Chat.ChatCompletionToolMessageParam,
-    );
+    return message.toolResults.map((toolResult) => ({
+      role: "tool",
+      content: JSON.stringify(toolResult.output),
+      tool_call_id: toolResult.toolCallId,
+    })) satisfies Groq.Chat.ChatCompletionToolMessageParam[];
   }
   if ("toolCalls" in message) {
     return {
@@ -46,7 +43,7 @@ export function toGroqMessage(
           arguments: JSON.stringify(toolCall.input),
         },
       })),
-    };
+    } satisfies Groq.Chat.ChatCompletionAssistantMessageParam;
   }
   return {
     role: toGroqRole(message.role),
@@ -61,7 +58,6 @@ export function toGroqRole(
     case MessageRole.Developer:
       return "developer";
     case MessageRole.UserContext:
-      return "user";
     case MessageRole.User:
       return "user";
     case MessageRole.Assistant:

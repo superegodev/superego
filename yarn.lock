@@ -4335,6 +4335,8 @@ __metadata:
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
+    "@superego/shared-utils": "workspace:*"
+    "@types/json-schema": "npm:^7.0.15"
     groq-sdk: "npm:^0.30.0"
     openai: "npm:^5.16.0"
     typescript: "npm:^5.9.2"

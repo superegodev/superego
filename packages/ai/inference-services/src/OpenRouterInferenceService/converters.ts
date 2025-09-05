@@ -1,0 +1,170 @@
+import {
+  type CompletionModel,
+  type Message,
+  MessageContentPartType,
+  MessageRole,
+} from "@superego/backend";
+import type { InferenceService } from "@superego/executing-backend";
+
+export namespace OpenRouter {
+  export type Message =
+    | { role: "system"; content: string }
+    | { role: "user"; content: ContentPart[] }
+    | { role: "tool"; content: string; tool_call_id: string }
+    | { role: "assistant"; content: string; tool_calls?: undefined }
+    | { role: "assistant"; content: null; tool_calls: ToolCall[] };
+
+  export interface TextPart {
+    type: "text";
+    text: string;
+  }
+  export type ContentPart = TextPart;
+
+  export interface ToolCall {
+    id: string;
+    type: "function";
+    function: FunctionCall;
+  }
+
+  export interface FunctionCall {
+    name: string;
+    arguments: string;
+  }
+
+  ///////////////////
+  // Request types //
+  ///////////////////
+
+  export type Request = {
+    messages: Message[];
+    model: string;
+    tools: Tool[];
+    reasoning: {
+      effort: "low" | "medium" | "high";
+      exclude: boolean;
+    };
+    usage: {
+      include: boolean;
+    };
+    stream: boolean;
+  };
+
+  export interface Tool {
+    type: "function";
+    function: FunctionDescription;
+  }
+
+  export interface FunctionDescription {
+    description: string;
+    name: string;
+    /** JSON schema object. */
+    parameters: object;
+  }
+
+  ////////////////////
+  // Response types //
+  ////////////////////
+
+  export interface Response {
+    choices: [Choice];
+  }
+
+  export interface Choice {
+    message: Message & { role: "assistant" };
+  }
+}
+
+export function toOpenRouterRequest(
+  model: CompletionModel,
+  messages: Message[],
+  tools: InferenceService.Tool[],
+): OpenRouter.Request {
+  return {
+    model: model.slice("OpenRouter_".length),
+    messages: messages.flatMap(toOpenRouterMessage),
+    tools: tools.map(toOpenRouterTool),
+    reasoning: { effort: "low", exclude: true },
+    usage: { include: false },
+    stream: false,
+  };
+}
+
+function toOpenRouterMessage(
+  message: Message,
+): OpenRouter.Message | OpenRouter.Message[] {
+  if (message.role === MessageRole.Developer) {
+    return { role: "system", content: message.content[0].text };
+  }
+  if (
+    message.role === MessageRole.User ||
+    message.role === MessageRole.UserContext
+  ) {
+    return {
+      role: "user",
+      content: message.content.map((part) => ({
+        type: "text",
+        text: part.text,
+      })),
+    };
+  }
+  if (message.role === MessageRole.Tool) {
+    return message.toolResults.map((toolResult) => ({
+      role: "tool",
+      content: JSON.stringify(toolResult.output),
+      tool_call_id: toolResult.toolCallId,
+    }));
+  }
+  if ("toolCalls" in message) {
+    return {
+      role: "assistant",
+      content: null,
+      tool_calls: message.toolCalls.map((toolCall) => ({
+        id: toolCall.id,
+        type: "function",
+        function: {
+          name: toolCall.tool,
+          arguments: JSON.stringify(toolCall.input),
+        },
+      })),
+    };
+  }
+  return { role: "assistant", content: message.content[0].text };
+}
+
+function toOpenRouterTool(tool: InferenceService.Tool): OpenRouter.Tool {
+  return {
+    type: "function",
+    function: {
+      name: tool.name,
+      description: tool.description,
+      parameters: tool.inputSchema as any,
+    },
+  };
+}
+
+export function fromOpenRouterResponse(
+  response: OpenRouter.Response,
+):
+  | Omit<Message.ToolCallAssistant, "agent">
+  | Omit<Message.ContentAssistant, "agent"> {
+  const { message } = response.choices[0];
+  const baseMessage = {
+    role: MessageRole.Assistant,
+    createdAt: new Date(),
+  } as const;
+  if (message.tool_calls) {
+    return {
+      ...baseMessage,
+      toolCalls: message.tool_calls.map((tool_call) => ({
+        id: tool_call.id,
+        tool: tool_call.function.name,
+        // TODO: maybe we should leave parsing to upper layers
+        input: JSON.parse(tool_call.function.arguments),
+      })),
+    };
+  }
+  return {
+    ...baseMessage,
+    content: [{ type: MessageContentPartType.Text, text: message.content }],
+  };
+}

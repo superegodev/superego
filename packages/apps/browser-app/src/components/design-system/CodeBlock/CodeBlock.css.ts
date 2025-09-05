@@ -24,7 +24,7 @@ export const CodeBlock = {
     textAlign: "right",
     flexShrink: 0,
     height: codeLineHeight,
-    paddingInlineEnd: 26,
+    paddingInlineEnd: vars.spacing._4,
     fontFamily: vars.typography.fontFamilies.monospace,
     color: "#237893",
   }),

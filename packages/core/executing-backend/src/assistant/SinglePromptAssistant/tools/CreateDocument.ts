@@ -47,41 +47,16 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateDocument,
-      description: `
-Create a **new** document.
-
-### Playbook
-
-1. Fetch schema via \`db.getCollectionTypescriptSchema\`.
-2. Gather every required field value (ask one precise question if anything
-  required is missing).
-3. Deduplicate using \`db.executeJavascriptFunction\`.
-   - If identical → **skip** and say “Already exists.”
-   - If same logical item but should change → use
-     \`db.createNewDocumentVersion\`.
-      `.trim(),
+      description: "Create a **new** document.",
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
             type: "string",
-            description:
-              "ID of the target collection (e.g., 'Collection_1234567890').",
           },
           content: {
             type: "object",
-            description: `
-**Full content for the new document.** Must match the collection's TypeScript
-schema.
-
-### How to build \`content\`
-
-- Include **only** fields defined by the schema.
-- Use \`null\` **only** if the schema allows it.
-- Respect units/currency as implied by the schema.
-- **Do not** include system fields like \`id\` or \`versionId\` (they are
-  assigned by the system).
-            `.trim(),
+            description: `**Full content for the new document.** Must match the collection's TypeScript schema.`,
           },
         },
         required: ["collectionId", "content"],

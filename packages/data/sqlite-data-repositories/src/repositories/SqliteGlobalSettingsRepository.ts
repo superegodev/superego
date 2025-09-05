@@ -50,15 +50,27 @@ export default class SqliteGlobalSettingsRepository
             apiKey:
               settings.inference?.providers?.groq?.apiKey ??
               this.defaultGlobalSettings.inference.providers.groq.apiKey,
-            baseUrl:
-              settings.inference?.providers?.groq?.baseUrl ??
-              this.defaultGlobalSettings.inference.providers.groq.baseUrl,
+          },
+          openai: {
+            apiKey:
+              settings.inference?.providers?.openai?.apiKey ??
+              this.defaultGlobalSettings.inference.providers.openai.apiKey,
+          },
+          google: {
+            apiKey:
+              settings.inference?.providers?.google?.apiKey ??
+              this.defaultGlobalSettings.inference.providers.google.apiKey,
+          },
+          openrouter: {
+            apiKey:
+              settings.inference?.providers?.openrouter?.apiKey ??
+              this.defaultGlobalSettings.inference.providers.openrouter.apiKey,
           },
         },
         completions: {
-          defaultModel:
-            settings.inference?.completions?.defaultModel ??
-            this.defaultGlobalSettings.inference.completions.defaultModel,
+          model:
+            settings.inference?.completions?.model ??
+            this.defaultGlobalSettings.inference.completions.model,
         },
       },
     };

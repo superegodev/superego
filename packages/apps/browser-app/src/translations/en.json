@@ -464,6 +464,9 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
+  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_P6wDh/": {
+    "defaultMessage": "{collection} » Document updated"
+  },
   "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": {
     "defaultMessage": "{collection} » Document created"
   },
@@ -476,20 +479,23 @@
   "Title.tsx_2eWlOa": {
     "defaultMessage": "Create document in {collection}"
   },
+  "Title.tsx_LOghU6": {
+    "defaultMessage": "Succeeded"
+  },
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Get TypeScript schema for {collection}"
+  },
+  "Title.tsx_XnBm2q": {
+    "defaultMessage": "No response"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
   },
+  "Title.tsx_vXCeIi": {
+    "defaultMessage": "Failed"
+  },
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Create new document version in {collection}"
-  },
-  "ToolCallResult.tsx_ZpQ6us": {
-    "defaultMessage": "Result"
-  },
-  "ToolCallResult.tsx_f+GKc4": {
-    "defaultMessage": "Call"
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
@@ -521,6 +527,9 @@
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Appearance"
   },
+  "UpdateGlobalSettingsForm.tsx_3g2ynP": {
+    "defaultMessage": "OpenRouter"
+  },
   "UpdateGlobalSettingsForm.tsx_BGZ5iy": {
     "defaultMessage": "Completions"
   },
@@ -542,8 +551,11 @@
   "UpdateGlobalSettingsForm.tsx_c9brFu": {
     "defaultMessage": "Error saving settings"
   },
-  "UpdateGlobalSettingsForm.tsx_dqWH5L": {
-    "defaultMessage": "Base URL"
+  "UpdateGlobalSettingsForm.tsx_lub1St": {
+    "defaultMessage": "OpenAI"
+  },
+  "UpdateGlobalSettingsForm.tsx_lzgH40": {
+    "defaultMessage": "Google"
   },
   "UpdateGlobalSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"

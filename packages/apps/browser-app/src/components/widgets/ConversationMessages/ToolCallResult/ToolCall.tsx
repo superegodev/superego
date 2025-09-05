@@ -6,19 +6,9 @@ interface Props {
   toolCall: ToolCallB;
 }
 export default function ToolCall({ toolCall }: Props) {
-  return (
-    <div>
-      {ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall) ? (
-        <CodeBlock
-          language="javascript"
-          code={toolCall.input.javascriptFunction}
-        />
-      ) : (
-        <CodeBlock
-          language="json"
-          code={JSON.stringify(toolCall.input, null, 2)}
-        />
-      )}
-    </div>
+  return ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall) ? (
+    <CodeBlock language="javascript" code={toolCall.input.javascriptFunction} />
+  ) : (
+    <CodeBlock language="json" code={JSON.stringify(toolCall.input, null, 2)} />
   );
 }

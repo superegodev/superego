@@ -1,8 +1,8 @@
 import type { DocumentVersion } from "@superego/backend";
+import { mapNonEmptyArray } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
 import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
-import mapNonEmptyArray from "../utils/mapNonEmptyArray.js";
 
 export default async function makeDocumentVersion(
   javascriptSandbox: JavascriptSandbox,

@@ -1059,6 +1059,16 @@
       "value": "null - click to set a value"
     }
   ],
+  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_P6wDh/": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document updated"
+    }
+  ],
   "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": [
     {
       "type": 1,
@@ -1095,6 +1105,12 @@
       "value": "collection"
     }
   ],
+  "Title.tsx_LOghU6": [
+    {
+      "type": 0,
+      "value": "Succeeded"
+    }
+  ],
   "Title.tsx_RG9Nzq": [
     {
       "type": 0,
@@ -1103,6 +1119,12 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "Title.tsx_XnBm2q": [
+    {
+      "type": 0,
+      "value": "No response"
     }
   ],
   "Title.tsx_foZAHu": [
@@ -1115,6 +1137,12 @@
       "value": "tool"
     }
   ],
+  "Title.tsx_vXCeIi": [
+    {
+      "type": 0,
+      "value": "Failed"
+    }
+  ],
   "Title.tsx_vlxsWA": [
     {
       "type": 0,
@@ -1123,18 +1151,6 @@
     {
       "type": 1,
       "value": "collection"
-    }
-  ],
-  "ToolCallResult.tsx_ZpQ6us": [
-    {
-      "type": 0,
-      "value": "Result"
-    }
-  ],
-  "ToolCallResult.tsx_f+GKc4": [
-    {
-      "type": 0,
-      "value": "Call"
     }
   ],
   "ToolCallResult.tsx_yq9SNC": [
@@ -1197,6 +1213,12 @@
       "value": "Appearance"
     }
   ],
+  "UpdateGlobalSettingsForm.tsx_3g2ynP": [
+    {
+      "type": 0,
+      "value": "OpenRouter"
+    }
+  ],
   "UpdateGlobalSettingsForm.tsx_BGZ5iy": [
     {
       "type": 0,
@@ -1239,10 +1261,16 @@
       "value": "Error saving settings"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_dqWH5L": [
+  "UpdateGlobalSettingsForm.tsx_lub1St": [
     {
       "type": 0,
-      "value": "Base URL"
+      "value": "OpenAI"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_lzgH40": [
+    {
+      "type": 0,
+      "value": "Google"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_muqizb": [

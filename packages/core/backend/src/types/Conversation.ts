@@ -10,6 +10,8 @@ type Conversation = {
   // TODO: hide this property from the Backend types, keeping it only on the
   // entity. Use instead canBeContinued + canBeRecovered.
   contextFingerprint: string;
+  // TODO: add model that was used. This way we can ensure that a conversation
+  // is only done with one model.
   messages: Message[];
   status: ConversationStatus;
   error: { name: string; details: any } | null;

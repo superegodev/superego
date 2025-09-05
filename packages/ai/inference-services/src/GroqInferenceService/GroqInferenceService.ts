@@ -12,13 +12,8 @@ export default class GroqInferenceService implements InferenceService {
   constructor(
     private model: CompletionModel,
     apiKey: string,
-    baseUrl: string | null,
   ) {
-    this.groq = new Groq({
-      apiKey: apiKey,
-      baseURL: baseUrl,
-      dangerouslyAllowBrowser: true,
-    });
+    this.groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
   }
 
   async generateNextMessage(

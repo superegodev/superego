@@ -13,11 +13,19 @@ export default function globalSettings(): v.GenericSchema<
       providers: v.strictObject({
         groq: v.strictObject({
           apiKey: v.nullable(v.string()),
-          baseUrl: v.nullable(v.string()),
+        }),
+        openai: v.strictObject({
+          apiKey: v.nullable(v.string()),
+        }),
+        google: v.strictObject({
+          apiKey: v.nullable(v.string()),
+        }),
+        openrouter: v.strictObject({
+          apiKey: v.nullable(v.string()),
         }),
       }),
       completions: v.strictObject({
-        defaultModel: v.picklist(Object.values(CompletionModel)),
+        model: v.picklist(Object.values(CompletionModel)),
       }),
     }),
   });

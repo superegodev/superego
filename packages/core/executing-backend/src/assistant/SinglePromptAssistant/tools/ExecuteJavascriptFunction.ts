@@ -61,10 +61,6 @@ Run a **synchronous**, **read-only** JS function over **all documents** in a
 collection; return a JSON-safe result (counts, aggregates, short lists, or
 specific docs).
 
-Before you can run this tool you must call \`db.getCollectionTypescriptSchema\`
-so that you know the exact shape of the documents that will get passed to the
-function.
-
 ### Documents
 
 \`\`\`ts
@@ -75,35 +71,22 @@ interface Document {
 }
 \`\`\`
 
-### Function signature
-
-\`\`\`js
-// Optional: helper functions and constants.
-
-export default function main(documents) {
-  // compute & return a JSON-safe value
-  return result;
-}
-\`\`\`
-
 ### Rules
 
 - No \`async\`, timers, or network.
 - Don’t mutate \`documents\`.
 - Return **JSON-safe** values only (convert Dates to ISO strings if returning
   them).
-- Keep outputs concise unless the user explicitly asked for full lists.
 - Use only fields defined in the schema.
-- You can use this to **search** (e.g., by natural key), **fetch** a specific
-  item by \`id\`, or compute aggregates.
+- The function must be default-exported.
+- You can use this to **search** (e.g., by weighed criteria), **fetch** a
+  specific item by \`id\`, or compute aggregates.
       `.trim(),
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
             type: "string",
-            description:
-              "ID of the collection to read (e.g., 'Collection_1234567890').",
           },
           javascriptFunction: {
             type: "string",

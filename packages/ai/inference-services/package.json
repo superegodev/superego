@@ -12,12 +12,14 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/json-schema": "^7.0.15",
     "groq-sdk": "^0.30.0",
     "openai": "^5.16.0",
     "typescript": "^5.9.2"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
-    "@superego/executing-backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*",
+    "@superego/shared-utils": "workspace:*"
   }
 }

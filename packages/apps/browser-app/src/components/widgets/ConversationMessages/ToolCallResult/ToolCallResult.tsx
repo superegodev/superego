@@ -2,9 +2,9 @@ import type {
   ToolCall as ToolCallB,
   ToolResult as ToolResultB,
 } from "@superego/backend";
-import { useId } from "react";
-import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
+import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedMessage } from "react-intl";
+import { vars } from "../../../../themes.css.js";
 import Title from "./Title.jsx";
 import ToolCall from "./ToolCall.jsx";
 import * as cs from "./ToolCallResult.css.js";
@@ -15,34 +15,30 @@ interface Props {
   toolResult: ToolResultB | null;
 }
 export default function ToolCallResult({ toolCall, toolResult }: Props) {
-  const toolCallId = useId();
-  const toolResultId = useId();
+  const background = toolResult
+    ? toolResult.output.success
+      ? vars.colors.greens._1
+      : vars.colors.reds._1
+    : vars.colors.yellows._1;
   return (
-    <div className={cs.ToolCallResult.root}>
-      <Title toolCall={toolCall} toolResult={toolResult} />
-      <Tabs className={cs.ToolCallResult.tabs}>
-        <TabList
-          aria-label="Input settings"
-          className={cs.ToolCallResult.tabsList}
-        >
-          <Tab id={toolCallId} className={cs.ToolCallResult.tab}>
-            <FormattedMessage defaultMessage="Call" />
-          </Tab>
-          <Tab id={toolResultId} className={cs.ToolCallResult.tab}>
-            <FormattedMessage defaultMessage="Result" />
-          </Tab>
-        </TabList>
-        <TabPanel id={toolCallId} className={cs.ToolCallResult.tabPanel}>
-          <ToolCall toolCall={toolCall} />
-        </TabPanel>
-        <TabPanel id={toolResultId} className={cs.ToolCallResult.tabPanel}>
-          {toolResult ? (
-            <ToolResult toolResult={toolResult} />
-          ) : (
-            <FormattedMessage defaultMessage="This call has no result." />
-          )}
-        </TabPanel>
-      </Tabs>
+    <div className={cs.ToolCallResult.root} style={{ background }}>
+      <Disclosure>
+        <Button slot="trigger" className={cs.ToolCallResult.triggerButton}>
+          <Title toolCall={toolCall} toolResult={toolResult} />
+        </Button>
+        <DisclosurePanel>
+          <div className={cs.ToolCallResult.call}>
+            <ToolCall toolCall={toolCall} />
+          </div>
+          <div className={cs.ToolCallResult.result}>
+            {toolResult ? (
+              <ToolResult toolResult={toolResult} />
+            ) : (
+              <FormattedMessage defaultMessage="This call has no result." />
+            )}
+          </div>
+        </DisclosurePanel>
+      </Disclosure>
     </div>
   );
 }

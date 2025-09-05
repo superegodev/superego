@@ -9,3 +9,5 @@ export const valibotSchemas = {
   icon,
 };
 export { default as extractErrorDetails } from "./extractErrorDetails.js";
+export { default as isNonEmptyArray } from "./isNonEmptyArray.js";
+export { default as mapNonEmptyArray } from "./mapNonEmptyArray.js";

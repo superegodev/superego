@@ -1,4 +1,4 @@
-import type { ToolResult } from "@superego/backend";
+import { ToolName, type ToolResult } from "@superego/backend";
 
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
@@ -36,14 +36,25 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
           className={cs.SuccessfulCreateDocument.root}
         >
           <h5 className={cs.SuccessfulCreateDocument.title}>
-            <FormattedMessage
-              defaultMessage="{collection} » Document created"
-              values={{
-                collection: collection
-                  ? CollectionUtils.getDisplayName(collection)
-                  : collectionId,
-              }}
-            />
+            {toolResult.tool === ToolName.CreateDocument ? (
+              <FormattedMessage
+                defaultMessage="{collection} » Document created"
+                values={{
+                  collection: collection
+                    ? CollectionUtils.getDisplayName(collection)
+                    : collectionId,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                defaultMessage="{collection} » Document updated"
+                values={{
+                  collection: collection
+                    ? CollectionUtils.getDisplayName(collection)
+                    : collectionId,
+                }}
+              />
+            )}
           </h5>
           <dl className={cs.SuccessfulCreateDocument.summaryProperties}>
             {documentVersion.summaryProperties.map(

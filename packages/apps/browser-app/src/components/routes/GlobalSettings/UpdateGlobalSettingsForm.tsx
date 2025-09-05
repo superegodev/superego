@@ -75,11 +75,44 @@ export default function UpdateGlobalSettingsForm() {
                 emptyInputValue={null}
                 label={intl.formatMessage({ defaultMessage: "API key" })}
               />
+            </Fieldset.Fields>
+          </Fieldset>
+          <Fieldset isDisclosureDisabled={true}>
+            <Fieldset.Legend>
+              <FormattedMessage defaultMessage="OpenAI" />
+            </Fieldset.Legend>
+            <Fieldset.Fields>
               <RHFTextField
                 control={control}
-                name="inference.providers.groq.baseUrl"
+                name="inference.providers.openai.apiKey"
                 emptyInputValue={null}
-                label={intl.formatMessage({ defaultMessage: "Base URL" })}
+                label={intl.formatMessage({ defaultMessage: "API key" })}
+              />
+            </Fieldset.Fields>
+          </Fieldset>
+          <Fieldset isDisclosureDisabled={true}>
+            <Fieldset.Legend>
+              <FormattedMessage defaultMessage="Google" />
+            </Fieldset.Legend>
+            <Fieldset.Fields>
+              <RHFTextField
+                control={control}
+                name="inference.providers.google.apiKey"
+                emptyInputValue={null}
+                label={intl.formatMessage({ defaultMessage: "API key" })}
+              />
+            </Fieldset.Fields>
+          </Fieldset>
+          <Fieldset isDisclosureDisabled={true}>
+            <Fieldset.Legend>
+              <FormattedMessage defaultMessage="OpenRouter" />
+            </Fieldset.Legend>
+            <Fieldset.Fields>
+              <RHFTextField
+                control={control}
+                name="inference.providers.openrouter.apiKey"
+                emptyInputValue={null}
+                label={intl.formatMessage({ defaultMessage: "API key" })}
               />
             </Fieldset.Fields>
           </Fieldset>
@@ -90,7 +123,7 @@ export default function UpdateGlobalSettingsForm() {
         >
           <RHFSelectField
             control={control}
-            name="inference.completions.defaultModel"
+            name="inference.completions.model"
             options={Object.values(CompletionModel).map((CompletionModel) => ({
               id: CompletionModel,
               label: AIModelUtils.getDisplayName(CompletionModel),

@@ -50,30 +50,17 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateNewDocumentVersion,
-      description: `
-Create a **new immutable version** of an existing document.
-
-### Playbook
-
-1. Read current \`content\` and \`versionId\` (via
-   \`db.executeJavascriptFunction\` by \`id\`).
-2. Copy current content; change **only** requested fields.
-3. Validate against schema.
-4. Call with the \`latestVersionId\` you just read. If conflict, re-read and
-   retry.
-      `.trim(),
+      description:
+        "Create a **new immutable version** of an existing document.",
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
             type: "string",
-            description:
-              "ID of the collection that contains the document (e.g., 'Collection_1234567890').",
           },
           id: {
             type: "string",
-            description:
-              "The document ID to version (the stable identifier of the document).",
+            description: "The document ID to version.",
           },
           latestVersionId: {
             type: "string",

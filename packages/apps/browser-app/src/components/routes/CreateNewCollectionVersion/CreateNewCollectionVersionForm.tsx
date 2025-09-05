@@ -6,6 +6,7 @@ import type {
   TypescriptModule,
 } from "@superego/backend";
 import { codegen, type Schema, valibotSchemas } from "@superego/schema";
+import { mapNonEmptyArray } from "@superego/shared-utils";
 import { dequal } from "dequal/lite";
 import { useEffect, useMemo } from "react";
 import { Form } from "react-aria-components";
@@ -16,7 +17,6 @@ import { useCreateNewCollectionVersion } from "../../../business-logic/backend/h
 import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import mapNonEmptyArray from "../../../utils/mapNonEmptyArray.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";

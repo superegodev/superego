@@ -1,7 +1,7 @@
 enum ToolName {
-  GetCollectionTypescriptSchema = "db.getCollectionTypescriptSchema",
-  CreateDocument = "db.createDocument",
-  CreateNewDocumentVersion = "db.createNewDocumentVersion",
-  ExecuteJavascriptFunction = "db.executeJavascriptFunction",
+  GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
+  CreateDocument = "createDocument",
+  CreateNewDocumentVersion = "createNewDocumentVersion",
+  ExecuteJavascriptFunction = "executeJavascriptFunction",
 }
 export default ToolName;

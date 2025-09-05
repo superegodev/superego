@@ -59,7 +59,15 @@ export default function Title({ toolCall, toolResult }: Props) {
       {"⚡\u2002"}
       {title}
       {"\u2002→\u2002"}
-      {toolResult ? (toolResult.output.success ? "✅" : "❌") : "❓"}
+      {toolResult ? (
+        toolResult.output.success ? (
+          <FormattedMessage defaultMessage="Succeeded" />
+        ) : (
+          <FormattedMessage defaultMessage="Failed" />
+        )
+      ) : (
+        <FormattedMessage defaultMessage="No response" />
+      )}
     </h5>
   );
 }

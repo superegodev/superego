@@ -1,5 +1,6 @@
 import baseX from "base-x";
 import type Route from "./Route.js";
+import { RouteName } from "./Route.js";
 
 const base58Alphabet =
   "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
@@ -15,12 +16,13 @@ export function toHref(route: Route): string {
 export function fromHref(href: string): Route {
   try {
     if (!href.startsWith(hrefPrefix)) {
-      throw new Error();
+      return { name: RouteName.Assistant };
     }
     const b58Route = href.slice(hrefPrefix.length);
     const jsonRoute = new TextDecoder().decode(bs58.decode(b58Route));
     return JSON.parse(jsonRoute);
   } catch {
-    throw new Error(`Href ${href} cannot be converted into a Route object`);
+    console.error(`Href ${href} cannot be converted into a Route object`);
+    return { name: RouteName.Assistant };
   }
 }

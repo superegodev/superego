@@ -10,8 +10,13 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+        providers: {
+          groq: { apiKey: null },
+          openai: { apiKey: null },
+          google: { apiKey: null },
+          openrouter: { apiKey: null },
+        },
+        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -25,8 +30,13 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const updatedSettings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+        providers: {
+          groq: { apiKey: null },
+          openai: { apiKey: null },
+          google: { apiKey: null },
+          openrouter: { apiKey: null },
+        },
+        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -52,8 +62,13 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        providers: { groq: { apiKey: null, baseUrl: null } },
-        completions: { defaultModel: CompletionModel.GroqKimiK2Instruct },
+        providers: {
+          groq: { apiKey: null },
+          openai: { apiKey: null },
+          google: { apiKey: null },
+          openrouter: { apiKey: null },
+        },
+        completions: { model: CompletionModel.GroqKimiK2Instruct0905 },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
