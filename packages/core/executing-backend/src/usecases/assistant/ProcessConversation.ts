@@ -1,4 +1,5 @@
 import {
+  AssistantName,
   type Collection,
   type ConversationId,
   type ConversationNotFound,
@@ -8,13 +9,13 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
-import type Assistant from "../../assistant/Assistant.js";
-import SinglePromptAssistant from "../../assistant/SinglePromptAssistant/SinglePromptAssistant.js";
+import type Assistant from "../../assistants/Assistant.js";
+import CollectionManagerAssistant from "../../assistants/CollectionManagerAssistant/CollectionManagerAssistant.js";
+import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
-import type InferenceService from "../../requirements/InferenceService.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -61,8 +62,10 @@ export default class AssistantProcessConversation extends Usecase {
       if (conversation.contextFingerprint !== contextFingerprint) {
         throw new Error("Context fingerprint changed");
       }
-      const inferenceService = await this.getInferenceService();
-      const assistant = this.createAssistant(inferenceService, collections);
+      const assistant = await this.createAssistant(
+        conversation.assistant,
+        collections,
+      );
       const messages = await assistant.generateAndProcessNextMessages(
         conversation.format,
         conversation.messages,
@@ -88,25 +91,25 @@ export default class AssistantProcessConversation extends Usecase {
     return makeSuccessfulResult(undefined);
   }
 
-  private async getInferenceService(): Promise<InferenceService> {
-    const globalSettings = await this.repos.globalSettings.get();
-    return this.inferenceServiceFactory.create(globalSettings.assistant);
-  }
-
-  // TODO: consider making AssistantFactory requirement.
-  private createAssistant(
-    inferenceService: InferenceService,
+  private async createAssistant(
+    assistant: AssistantName,
     collections: Collection[],
-  ): Assistant {
-    return new SinglePromptAssistant(
-      inferenceService,
-      collections,
-      {
-        documentsCreate: this.sub(DocumentsCreate),
-        documentsList: this.sub(DocumentsList),
-        documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
-      },
-      this.javascriptSandbox,
+  ): Promise<Assistant> {
+    const globalSettings = await this.repos.globalSettings.get();
+    const inferenceService = this.inferenceServiceFactory.create(
+      globalSettings.assistant,
     );
+    return assistant === AssistantName.Factotum
+      ? new FactotumAssistant(
+          inferenceService,
+          collections,
+          {
+            documentsCreate: this.sub(DocumentsCreate),
+            documentsList: this.sub(DocumentsList),
+            documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
+          },
+          this.javascriptSandbox,
+        )
+      : new CollectionManagerAssistant(inferenceService);
   }
 }

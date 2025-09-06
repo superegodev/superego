@@ -1,4 +1,5 @@
 import type {
+  AssistantName,
   ConversationFormat,
   ConversationId,
   ConversationStatus,
@@ -7,6 +8,7 @@ import type { ConversationEntity } from "@superego/executing-backend";
 
 export default interface SqliteConversation {
   id: ConversationId;
+  assistant: AssistantName;
   format: ConversationFormat;
   title: string;
   context_fingerprint: string;
@@ -22,6 +24,7 @@ export default interface SqliteConversation {
 export function toEntity(conversation: SqliteConversation): ConversationEntity {
   return {
     id: conversation.id,
+    assistant: conversation.assistant,
     format: conversation.format,
     title: conversation.title,
     contextFingerprint: conversation.context_fingerprint,

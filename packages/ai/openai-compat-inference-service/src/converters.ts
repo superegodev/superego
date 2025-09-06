@@ -141,9 +141,7 @@ function toOpenAICompatTool(tool: InferenceService.Tool): OpenAICompat.Tool {
 
 export function fromOpenAICompatResponse(
   response: OpenAICompat.Response,
-):
-  | Omit<Message.ToolCallAssistant, "agent">
-  | Omit<Message.ContentAssistant, "agent"> {
+): Message.ToolCallAssistant | Message.ContentAssistant {
   const { message } = response.choices[0];
   const baseMessage = {
     role: MessageRole.Assistant,

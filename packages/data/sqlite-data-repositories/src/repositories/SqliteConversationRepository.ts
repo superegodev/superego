@@ -20,6 +20,7 @@ export default class SqliteConversationRepository
         INSERT INTO "${table}"
           (
             "id",
+            "assistant",
             "format",
             "title",
             "context_fingerprint",
@@ -29,8 +30,9 @@ export default class SqliteConversationRepository
             "created_at"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT("id") DO UPDATE SET
+          "assistant" = excluded."assistant",
           "format" = excluded."format",
           "title" = excluded."title",
           "context_fingerprint" = excluded."context_fingerprint",
@@ -41,6 +43,7 @@ export default class SqliteConversationRepository
       `)
       .run(
         conversation.id,
+        conversation.assistant,
         conversation.format,
         conversation.title,
         conversation.contextFingerprint,

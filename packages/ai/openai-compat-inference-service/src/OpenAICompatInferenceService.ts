@@ -16,10 +16,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-  ): Promise<
-    | Omit<Message.ToolCallAssistant, "agent">
-    | Omit<Message.ContentAssistant, "agent">
-  > {
+  ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
     const response = await fetch(this.baseUrl, {
       method: "POST",
       headers: {

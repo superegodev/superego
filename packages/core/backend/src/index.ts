@@ -5,6 +5,7 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
+export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";

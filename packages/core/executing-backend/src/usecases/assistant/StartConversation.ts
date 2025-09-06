@@ -1,4 +1,5 @@
 import {
+  type AssistantName,
   type Backend,
   BackgroundJobName,
   type Conversation,
@@ -24,6 +25,7 @@ export default class AssistantStartConversation extends Usecase<
   Backend["assistant"]["startConversation"]
 > {
   async exec(
+    assistant: AssistantName,
     format: ConversationFormat,
     userMessageContent: NonEmptyArray<MessageContentPart.Text>,
   ): ResultPromise<Conversation, UnexpectedError> {
@@ -40,6 +42,7 @@ export default class AssistantStartConversation extends Usecase<
     };
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
+      assistant: assistant,
       format: format,
       title: userMessageContent[0].text,
       contextFingerprint: await getConversationContextFingerprint(collections),

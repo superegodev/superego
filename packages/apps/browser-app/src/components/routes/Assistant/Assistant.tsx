@@ -1,4 +1,8 @@
-import { ConversationFormat, type Message } from "@superego/backend";
+import {
+  AssistantName,
+  ConversationFormat,
+  type Message,
+} from "@superego/backend";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -19,6 +23,7 @@ export default function Assistant() {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (userMessageContent: Message.User["content"]) => {
     const { success, data } = await mutate(
+      AssistantName.Factotum,
       ConversationFormat.Text,
       userMessageContent,
     );
