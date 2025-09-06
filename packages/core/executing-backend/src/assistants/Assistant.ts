@@ -1,5 +1,4 @@
 import {
-  type ConversationFormat,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -16,7 +15,6 @@ export default abstract class Assistant {
   protected abstract getUserContextPrompt(): string;
 
   async generateAndProcessNextMessages(
-    conversationFormat: ConversationFormat,
     messages: Message[],
   ): Promise<Message[]> {
     const assistantMessage = await this.inferenceService.generateNextMessage(
@@ -60,7 +58,7 @@ export default abstract class Assistant {
       toolResults: toolResults,
       createdAt: new Date(),
     };
-    return this.generateAndProcessNextMessages(conversationFormat, [
+    return this.generateAndProcessNextMessages([
       ...messages,
       assistantMessage,
       toolMessage,

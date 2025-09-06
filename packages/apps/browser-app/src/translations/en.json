@@ -8,6 +8,12 @@
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
+  "AssistantContentMessage.tsx_J3ca41": {
+    "defaultMessage": "Play"
+  },
+  "AssistantContentMessage.tsx_tFFMkF": {
+    "defaultMessage": "Pause"
+  },
   "AssistantsSettings.tsx_M6SUEw": {
     "defaultMessage": "Collection manager developer prompt"
   },
@@ -568,6 +574,9 @@
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"
+  },
+  "UserMessage.tsx_Wf1OoY": {
+    "defaultMessage": "Transcribing audio..."
   },
   "UserMessage.tsx_tFFMkF": {
     "defaultMessage": "Pause"

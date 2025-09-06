@@ -5,6 +5,7 @@ namespace MessageContentPart {
   export interface Text {
     type: MessageContentPartType.Text;
     text: string;
+    audio?: AudioContent | undefined;
   }
   export interface Audio {
     type: MessageContentPartType.Audio;

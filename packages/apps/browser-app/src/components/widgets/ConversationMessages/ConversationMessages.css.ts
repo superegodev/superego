@@ -69,4 +69,8 @@ export const AssistantContentMessage = {
   root: style({
     marginBlock: vars.spacing._8,
   }),
+
+  playPauseButton: style({
+    borderRadius: "50%",
+  }),
 };

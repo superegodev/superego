@@ -17,6 +17,18 @@
       "value": "Previous conversations"
     }
   ],
+  "AssistantContentMessage.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Play"
+    }
+  ],
+  "AssistantContentMessage.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pause"
+    }
+  ],
   "AssistantsSettings.tsx_M6SUEw": [
     {
       "type": 0,
@@ -1409,6 +1421,12 @@
     {
       "type": 0,
       "value": "Play"
+    }
+  ],
+  "UserMessage.tsx_Wf1OoY": [
+    {
+      "type": 0,
+      "value": "Transcribing audio..."
     }
   ],
   "UserMessage.tsx_tFFMkF": [

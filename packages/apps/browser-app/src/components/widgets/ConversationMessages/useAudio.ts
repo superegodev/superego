@@ -1,5 +1,11 @@
 import type { AudioContent } from "@superego/backend";
-import { type RefObject, useEffect, useRef, useState } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default function useAudio(audioContent: AudioContent | undefined): {
   isPlaying: boolean;
@@ -14,7 +20,7 @@ export default function useAudio(audioContent: AudioContent | undefined): {
     cleanup(audioRef, audioUrlRef);
   }, []);
 
-  const togglePlayback = () => {
+  const togglePlayback = useCallback(() => {
     if (!audioContent) {
       return;
     }
@@ -35,7 +41,7 @@ export default function useAudio(audioContent: AudioContent | undefined): {
     } else {
       audioRef.current.pause();
     }
-  };
+  }, [audioContent]);
 
   return { isPlaying, togglePlayback };
 }

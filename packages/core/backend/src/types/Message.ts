@@ -29,7 +29,7 @@ namespace Message {
 
   export interface ContentAssistant {
     role: MessageRole.Assistant;
-    content: NonEmptyArray<MessageContentPart>;
+    content: NonEmptyArray<MessageContentPart.Text>;
     createdAt: Date;
   }
   export interface ToolCallAssistant {
