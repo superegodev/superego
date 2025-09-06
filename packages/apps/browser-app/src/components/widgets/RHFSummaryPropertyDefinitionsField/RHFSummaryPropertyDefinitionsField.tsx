@@ -18,6 +18,7 @@ interface Props {
   getDefaultSummaryPropertyDefinition: (
     index: number,
   ) => SummaryPropertyDefinition;
+  defaultExpanded?: boolean | undefined;
   className?: string | undefined;
 }
 export default function RHFSummaryPropertyDefinitionsField({
@@ -26,6 +27,7 @@ export default function RHFSummaryPropertyDefinitionsField({
   isDisabled,
   schemaTypescriptLib,
   getDefaultSummaryPropertyDefinition,
+  defaultExpanded,
   className,
 }: Props) {
   const intl = useIntl();
@@ -120,6 +122,7 @@ export default function RHFSummaryPropertyDefinitionsField({
               name={`${name}.${index}`}
               isDisabled={isDisabled}
               schemaTypescriptLib={schemaTypescriptLib}
+              defaultExpanded={defaultExpanded}
             />
           </div>
         ))}

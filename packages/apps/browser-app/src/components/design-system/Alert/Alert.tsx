@@ -3,7 +3,7 @@ import classnames from "../../../utils/classnames.js";
 import * as cs from "./Alert.css.js";
 
 interface Props {
-  variant: "error" | "info";
+  variant: "neutral" | "info" | "error";
   title?: string | undefined;
   children: ReactNode;
   className?: string | undefined;

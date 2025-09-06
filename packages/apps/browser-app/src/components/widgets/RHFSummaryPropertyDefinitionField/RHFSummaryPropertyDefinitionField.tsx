@@ -11,6 +11,7 @@ interface Props {
   name: string;
   isDisabled?: boolean | undefined;
   schemaTypescriptLib: TypescriptLib | null;
+  defaultExpanded?: boolean | undefined;
   className?: string | undefined;
 }
 export default function RHFSummaryPropertyDefinitionField({
@@ -18,6 +19,8 @@ export default function RHFSummaryPropertyDefinitionField({
   name,
   isDisabled,
   schemaTypescriptLib,
+  defaultExpanded,
+  className,
 }: Props) {
   const intl = useIntl();
   const summaryPropertyDefinition = useWatch({ control, name });
@@ -26,7 +29,7 @@ export default function RHFSummaryPropertyDefinitionField({
     [schemaTypescriptLib],
   );
   return (
-    <Fieldset>
+    <Fieldset defaultExpanded={defaultExpanded} className={className}>
       <Fieldset.Legend>{summaryPropertyDefinition.name}</Fieldset.Legend>
       <Fieldset.Fields>
         <RHFTextField

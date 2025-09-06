@@ -161,6 +161,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             intl,
           )
         }
+        defaultExpanded={true}
       />
       <RHFTypescriptModuleField
         control={control}

@@ -13,9 +13,11 @@ import Legend from "./Legend.js";
 
 interface Props {
   isDisclosureDisabled?: boolean | undefined;
+  defaultExpanded?: boolean | undefined;
 }
 export default function Fieldset({
   isDisclosureDisabled = false,
+  defaultExpanded = true,
   className,
   ...props
 }: Props &
@@ -23,10 +25,10 @@ export default function Fieldset({
     FieldsetHTMLAttributes<HTMLFieldSetElement>,
     HTMLFieldSetElement
   >) {
-  const disclosureState = useDisclosureState({ defaultExpanded: true });
+  const disclosureState = useDisclosureState({ defaultExpanded });
   const panelRef = useRef<HTMLDivElement | null>(null);
   const { buttonProps: triggerProps, panelProps } = useDisclosure(
-    { defaultExpanded: true },
+    { defaultExpanded },
     disclosureState,
     panelRef,
   );

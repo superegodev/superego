@@ -80,6 +80,7 @@ export default function UpdateCollectionVersionSettingsForm({
             intl,
           )
         }
+        defaultExpanded={false}
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
