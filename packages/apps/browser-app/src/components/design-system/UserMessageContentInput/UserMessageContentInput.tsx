@@ -17,7 +17,6 @@ import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.js";
 import * as cs from "./UserMessageContentInput.css.js";
-import { webmToWav } from "./webmToWav.js";
 
 interface Props {
   onSend: (messageContent: Message.User["content"]) => void;
@@ -74,13 +73,13 @@ export default function UserMessageContentInput({
         const chunksBlob = new Blob(recordedChunks, {
           type: mediaRecorder.mimeType,
         });
-        const audioContent = await webmToWav(await chunksBlob.arrayBuffer());
+        const audioContent = new Uint8Array(await chunksBlob.arrayBuffer());
         onSend([
           {
             type: MessageContentPartType.Audio,
             audio: {
               content: audioContent,
-              contentType: "audio/wav",
+              contentType: mediaRecorder.mimeType,
             },
           },
         ]);

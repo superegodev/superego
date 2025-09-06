@@ -566,6 +566,12 @@
   "UpdateGlobalSettingsForm.tsx_n0wQL1": {
     "defaultMessage": "Inference"
   },
+  "UserMessage.tsx_J3ca41": {
+    "defaultMessage": "Play"
+  },
+  "UserMessage.tsx_tFFMkF": {
+    "defaultMessage": "Pause"
+  },
   "UserMessageContentInput.tsx_9WRlF4": {
     "defaultMessage": "Send"
   },

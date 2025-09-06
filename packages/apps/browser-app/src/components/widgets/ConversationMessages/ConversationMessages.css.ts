@@ -54,6 +54,14 @@ export const UserMessage = {
     marginInlineStart: "40%",
     marginBlock: vars.spacing._8,
     fontSize: vars.typography.fontSizes.sm,
+    position: "relative",
+  }),
+
+  playPauseButton: style({
+    position: "absolute",
+    right: vars.spacing._2,
+    bottom: `calc(-1 * ${vars.spacing._2})`,
+    borderRadius: "50%",
   }),
 };
 
