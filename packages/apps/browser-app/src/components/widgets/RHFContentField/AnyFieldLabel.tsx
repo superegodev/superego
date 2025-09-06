@@ -36,7 +36,10 @@ export default function AnyFieldLabel({
       <span className={cs.AnyFieldLabel.dataType}>{dataTypeLabel}</span>
       {typeDefinition.description ? (
         <TooltipTrigger delay={500}>
-          <Button className={cs.AnyFieldLabel.descriptionTooltipTrigger}>
+          <Button
+            slot={null}
+            className={cs.AnyFieldLabel.descriptionTooltipTrigger}
+          >
             {"ℹ️"}
           </Button>
           <Tooltip>{typeDefinition.description}</Tooltip>
