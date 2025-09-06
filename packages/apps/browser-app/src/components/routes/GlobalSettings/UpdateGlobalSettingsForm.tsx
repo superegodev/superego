@@ -53,7 +53,7 @@ export default function UpdateGlobalSettingsForm({
   const onSubmit = async (values: GlobalSettings) => {
     const { success, data } = await mutate(values);
     if (success) {
-      reset(data);
+      reset(data, { keepValues: true });
     } else {
       // TODO: display error in Toast.
     }
