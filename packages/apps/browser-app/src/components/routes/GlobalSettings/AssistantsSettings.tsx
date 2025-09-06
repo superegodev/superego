@@ -1,12 +1,20 @@
-import { AssistantName, type GlobalSettings } from "@superego/backend";
+import {
+  AssistantName,
+  type DeveloperPrompts,
+  type GlobalSettings,
+} from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.jsx";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
+  developerPrompts: DeveloperPrompts;
 }
-export default function AssistantsSettings({ control }: Props) {
+export default function AssistantsSettings({
+  control,
+  developerPrompts,
+}: Props) {
   const intl = useIntl();
   return (
     <>
@@ -18,6 +26,7 @@ export default function AssistantsSettings({ control }: Props) {
         label={intl.formatMessage({
           defaultMessage: "Factotum developer prompt",
         })}
+        placeholder={developerPrompts[AssistantName.Factotum]}
       />
       <RHFTextField
         control={control}
@@ -27,6 +36,7 @@ export default function AssistantsSettings({ control }: Props) {
         label={intl.formatMessage({
           defaultMessage: "Collection manager developer prompt",
         })}
+        placeholder={developerPrompts[AssistantName.CollectionManager]}
       />
     </>
   );

@@ -101,22 +101,22 @@
       "value": " » Settings"
     }
   ],
-  "CollectionSettings.tsx_D3idYv": [
+  "CollectionSettings.tsx_GjrlL9": [
     {
       "type": 0,
-      "value": "Settings"
+      "value": "General settings"
+    }
+  ],
+  "CollectionSettings.tsx_VcipZo": [
+    {
+      "type": 0,
+      "value": "Latest version settings"
     }
   ],
   "CollectionSettings.tsx_Vl13tq": [
     {
       "type": 0,
       "value": "Create new version"
-    }
-  ],
-  "CollectionSettings.tsx_W/lYsa": [
-    {
-      "type": 0,
-      "value": "Version settings"
     }
   ],
   "CollectionSettings.tsx_m4GG4b": [
@@ -287,16 +287,6 @@
     {
       "type": 0,
       "value": "Create"
-    }
-  ],
-  "CreateNewCollectionVersion.tsx_WgkS3f": [
-    {
-      "type": 1,
-      "value": "collection"
-    },
-    {
-      "type": 0,
-      "value": " » Create New Version"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_1Og5F/": [
@@ -1265,12 +1255,6 @@
     {
       "type": 0,
       "value": "Appearance"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_D3idYv": [
-    {
-      "type": 0,
-      "value": "Settings"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [

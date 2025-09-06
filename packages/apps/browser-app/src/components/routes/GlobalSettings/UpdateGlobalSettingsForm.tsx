@@ -83,7 +83,6 @@ export default function UpdateGlobalSettingsForm({
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
       <FullPageTabs
-        ariaLabel={intl.formatMessage({ defaultMessage: "Settings" })}
         tabs={[
           {
             title: <FormattedMessage defaultMessage="Inference" />,
@@ -91,7 +90,12 @@ export default function UpdateGlobalSettingsForm({
           },
           {
             title: <FormattedMessage defaultMessage="Assistants" />,
-            panel: <AssistantsSettings control={control} />,
+            panel: (
+              <AssistantsSettings
+                control={control}
+                developerPrompts={developerPrompts}
+              />
+            ),
           },
           {
             title: <FormattedMessage defaultMessage="Appearance" />,

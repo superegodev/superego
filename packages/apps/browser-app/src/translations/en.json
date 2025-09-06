@@ -44,14 +44,14 @@
   "CollectionSettings.tsx_AHx1om": {
     "defaultMessage": "{collection} » Settings"
   },
-  "CollectionSettings.tsx_D3idYv": {
-    "defaultMessage": "Settings"
+  "CollectionSettings.tsx_GjrlL9": {
+    "defaultMessage": "General settings"
+  },
+  "CollectionSettings.tsx_VcipZo": {
+    "defaultMessage": "Latest version settings"
   },
   "CollectionSettings.tsx_Vl13tq": {
     "defaultMessage": "Create new version"
-  },
-  "CollectionSettings.tsx_W/lYsa": {
-    "defaultMessage": "Version settings"
   },
   "CollectionSettings.tsx_m4GG4b": {
     "defaultMessage": "Delete collection"
@@ -133,9 +133,6 @@
   },
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
-  },
-  "CreateNewCollectionVersion.tsx_WgkS3f": {
-    "defaultMessage": "{collection} » Create New Version"
   },
   "CreateNewCollectionVersionForm.tsx_1Og5F/": {
     "defaultMessage": "Migration"
@@ -553,9 +550,6 @@
   },
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Appearance"
-  },
-  "UpdateGlobalSettingsForm.tsx_D3idYv": {
-    "defaultMessage": "Settings"
   },
   "UpdateGlobalSettingsForm.tsx_jvrMfo": {
     "defaultMessage": "Assistants"

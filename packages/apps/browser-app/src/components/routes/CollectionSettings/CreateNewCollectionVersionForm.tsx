@@ -15,15 +15,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateNewCollectionVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
-import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
-import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
-import * as cs from "./CreateNewCollectionVersion.css.js";
+import Alert from "../../design-system/Alert/Alert.jsx";
+import ResultError from "../../design-system/ResultError/ResultError.jsx";
+import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.jsx";
+import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
+import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.jsx";
+import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.jsx";
+import * as cs from "./CollectionSettings.css.js";
 
 const schemaTypescriptLibPath = "/CollectionSchema.ts";
 const currentSchemaTypescriptLibPath = "/CurrentCollectionSchema.ts";
@@ -40,7 +38,6 @@ interface Props {
 }
 export default function CreateNewCollectionVersionForm({ collection }: Props) {
   const intl = useIntl();
-  const { navigateTo } = useNavigationState();
 
   const { result, mutate } = useCreateNewCollectionVersion();
 
@@ -112,18 +109,13 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   ]);
 
   const onSubmit = async (values: FormValues) => {
-    const { success } = await mutate(
+    await mutate(
       collection.id,
       collection.latestVersion.id,
       values.schema,
       { summaryProperties: values.summaryProperties },
       values.migration,
     );
-    if (success) {
-      if (success) {
-        navigateTo({ name: RouteName.Collection, collectionId: collection.id });
-      }
-    }
   };
 
   const summaryPropertiesSchemaTypescriptLib = useMemo(

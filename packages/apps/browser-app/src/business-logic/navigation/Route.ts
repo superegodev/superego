@@ -10,7 +10,6 @@ export enum RouteName {
   CreateCollection = "CreateCollection",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
-  CreateCollectionVersion = "CreateCollectionVersion",
   CreateDocument = "CreateDocument",
   Document = "Document",
   Conversation = "Conversation",
@@ -33,10 +32,6 @@ type Route =
     }
   | {
       name: RouteName.CollectionSettings;
-      collectionId: CollectionId;
-    }
-  | {
-      name: RouteName.CreateCollectionVersion;
       collectionId: CollectionId;
     }
   | {

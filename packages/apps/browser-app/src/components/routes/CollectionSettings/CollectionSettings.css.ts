@@ -15,6 +15,17 @@ export const UpdateCollectionSettingsForm = {
   }),
 };
 
+export const CreateNewCollectionVersionForm = {
+  schemaTextField: style({
+    minHeight: vars.spacing._80,
+  }),
+
+  submitButtonContainer: style({
+    display: "flex",
+    justifyContent: "flex-end",
+  }),
+};
+
 export const DeleteCollectionModalForm = {
   submitButtonContainer: style({
     display: "flex",

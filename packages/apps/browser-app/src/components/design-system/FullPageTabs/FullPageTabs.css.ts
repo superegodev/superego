@@ -9,9 +9,9 @@ export const FullPageTabs = {
   }),
 
   tab: style({
-    width: vars.spacing._40,
     textAlign: "center",
     color: vars.colors.text.secondary,
+    paddingInline: vars.spacing._4,
     paddingBlockEnd: vars.spacing._2,
     border: 0,
     borderBlockEndWidth: vars.borders.width.medium,
