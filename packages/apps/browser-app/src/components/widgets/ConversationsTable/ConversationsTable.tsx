@@ -3,6 +3,7 @@ import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
+import ConversationAssistant from "../../design-system/ConversationAssistant/ConversationAssistant.js";
 import ConversationFormat from "../../design-system/ConversationFormat/ConversationFormat.js";
 import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.js";
 import Table from "../../design-system/Table/Table.js";
@@ -23,6 +24,9 @@ export default function ConversationsTable({ conversations }: Props) {
         </Table.Column>
         <Table.Column>
           <FormattedMessage defaultMessage="Status" />
+        </Table.Column>
+        <Table.Column>
+          <FormattedMessage defaultMessage="Assistant" />
         </Table.Column>
         <Table.Column>
           <FormattedMessage defaultMessage="Format" />
@@ -51,6 +55,9 @@ export default function ConversationsTable({ conversations }: Props) {
             </Table.Cell>
             <Table.Cell>
               <ConversationStatus status={conversation.status} />
+            </Table.Cell>
+            <Table.Cell>
+              <ConversationAssistant assistant={conversation.assistant} />
             </Table.Cell>
             <Table.Cell>
               <ConversationFormat format={conversation.format} />

@@ -98,6 +98,9 @@
   "ConversationsTable.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
+  "ConversationsTable.tsx_wSAvhu": {
+    "defaultMessage": "Assistant"
+  },
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Format"
   },
@@ -452,12 +455,6 @@
   "RHFSummaryPropertyDefinitionField.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "RHFSummaryPropertyDefinitionField.tsx_Q8Qw5B": {
-    "defaultMessage": "Description"
-  },
-  "RHFSummaryPropertyDefinitionField.tsx_SSSuYh": {
-    "defaultMessage": "TypeScript function to get the property value (a string) from the document's content"
-  },
   "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": {
     "defaultMessage": "Value getter"
   },
@@ -469,6 +466,9 @@
   },
   "RHFSummaryPropertyDefinitionsField.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
+  },
+  "RHFSummaryPropertyDefinitionsField.tsx_vkqu5M": {
+    "defaultMessage": "<p> The <b>summary properties</b> of a document are its most important bits of information that are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property. </p> <p> You define summary properties, providing for each property: </p> <ul> <li> A<b> Name</b>, which is the label shown in the UI. </li> <li> A <b>Value getter</b>, a TypeScript function that returns the value of the property. (Must be a string.) </li> </ul> <p> There must be always at least one summary property defined. </p>"
   },
   "RenameCollectionCategoryModalForm.tsx_1CICoa": {
     "defaultMessage": "Error deleting collection"
@@ -542,6 +542,9 @@
   "UpdateCollectionSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"
   },
+  "UpdateCollectionSettingsForm.tsx_qmIyad": {
+    "defaultMessage": "Specific instructions for this collection to pass to the assistant."
+  },
   "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": {
     "defaultMessage": "Error saving collection version settings"
   },
@@ -571,9 +574,6 @@
   },
   "summaryPropertyDefinition.ts_TCx5u7": {
     "defaultMessage": "Summary property {position}"
-  },
-  "summaryPropertyDefinition.ts_gcaV8O": {
-    "defaultMessage": "Name of the document"
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "TypeScript compilation failed"

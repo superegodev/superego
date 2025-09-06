@@ -7,10 +7,8 @@ const conversationStatusRootBase = style({
   borderStyle: "solid",
   borderRadius: vars.borders.radius.lg,
   paddingBlock: vars.spacing._05,
-  paddingInline: vars.spacing._1,
-  width: vars.spacing._24,
+  paddingInline: vars.spacing._4,
   textTransform: "uppercase",
-  textAlign: "center",
   fontSize: vars.typography.fontSizes.xs2,
 });
 export const ConversationStatus = {

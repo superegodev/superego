@@ -16,6 +16,13 @@ const alertTitleBase = style({
 
 export const Alert = {
   root: styleVariants({
+    info: [
+      alertRootBase,
+      {
+        background: vars.colors.semantic.info.background,
+        borderColor: vars.colors.semantic.info.border,
+      },
+    ],
     error: [
       alertRootBase,
       {
@@ -25,6 +32,7 @@ export const Alert = {
     ],
   }),
   title: styleVariants({
+    info: [alertTitleBase, { color: vars.colors.semantic.info.text }],
     error: [alertTitleBase, { color: vars.colors.semantic.error.text }],
   }),
 };

@@ -5,7 +5,7 @@ import {
 } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.jsx";
+import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;

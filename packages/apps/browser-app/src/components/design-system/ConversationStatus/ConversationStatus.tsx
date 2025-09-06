@@ -5,5 +5,5 @@ interface Props {
   status: ConversationStatusB;
 }
 export default function ConversationStatus({ status }: Props) {
-  return <div className={cs.ConversationStatus.root[status]}>{status}</div>;
+  return <span className={cs.ConversationStatus.root[status]}>{status}</span>;
 }

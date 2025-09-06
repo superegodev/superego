@@ -35,22 +35,11 @@ export default function RHFSummaryPropertyDefinitionField({
           isDisabled={isDisabled}
           label={intl.formatMessage({ defaultMessage: "Name" })}
         />
-        <RHFTextField
-          control={control}
-          name={`${name}.description`}
-          isDisabled={isDisabled}
-          label={intl.formatMessage({ defaultMessage: "Description" })}
-          textArea={true}
-        />
         <RHFTypescriptModuleField
           control={control}
           name={`${name}.getter`}
           isDisabled={isDisabled}
           label={intl.formatMessage({ defaultMessage: "Value getter" })}
-          description={intl.formatMessage({
-            defaultMessage:
-              "TypeScript function to get the property value (a string) from the document's content",
-          })}
           typescriptLibs={typescriptLibs}
         />
       </Fieldset.Fields>

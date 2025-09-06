@@ -12,9 +12,6 @@ export default function summaryPropertyDefinition(
   return index === 0
     ? {
         name: intl.formatMessage({ defaultMessage: "Name" }),
-        description: intl.formatMessage({
-          defaultMessage: "Name of the document",
-        }),
         getter: summaryPropertyDefinitionGetter(
           schema,
           schemaTypescriptLibPath,
@@ -25,7 +22,6 @@ export default function summaryPropertyDefinition(
           { defaultMessage: "Summary property {position}" },
           { position: index + 1 },
         ),
-        description: "",
         getter: summaryPropertyDefinitionGetter(
           schema,
           schemaTypescriptLibPath,

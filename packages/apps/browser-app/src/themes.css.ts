@@ -206,6 +206,11 @@ export const [light, vars] = createTheme({
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      info: {
+        border: colors.blues._5,
+        background: colors.blues._1,
+        text: colors.blues._5,
+      },
       success: {
         border: colors.greens._5,
         background: colors.greens._1,
@@ -307,6 +312,11 @@ export const dark = createTheme(vars, {
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      info: {
+        border: colors.blues._5,
+        background: colors.blues._1,
+        text: colors.blues._5,
+      },
       success: {
         border: colors.greens._5,
         background: colors.greens._1,

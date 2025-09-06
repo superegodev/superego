@@ -17,13 +17,12 @@ export default async function makeDocumentVersion(
     summaryProperties: await Promise.all(
       mapNonEmptyArray(
         collectionVersion.settings.summaryProperties,
-        async ({ name, description, getter }) => {
+        async ({ name, getter }) => {
           const result = await javascriptSandbox.executeSyncFunction(getter, [
             documentVersion.content,
           ]);
           return {
             name,
-            description,
             value: result.success ? result.data : null,
             valueComputationError: !result.success ? result.error : null,
           };

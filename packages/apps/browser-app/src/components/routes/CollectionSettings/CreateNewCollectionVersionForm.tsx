@@ -15,12 +15,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateNewCollectionVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import Alert from "../../design-system/Alert/Alert.jsx";
-import ResultError from "../../design-system/ResultError/ResultError.jsx";
-import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.jsx";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.jsx";
-import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.jsx";
+import Alert from "../../design-system/Alert/Alert.js";
+import ResultError from "../../design-system/ResultError/ResultError.js";
+import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
+import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
+import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
+import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import * as cs from "./CollectionSettings.css.js";
 
 const schemaTypescriptLibPath = "/CollectionSchema.ts";
@@ -58,9 +58,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         migration: defaultMigration,
         summaryProperties: mapNonEmptyArray(
           collection.latestVersion.settings.summaryProperties,
-          ({ name, description, getter }) => ({
+          ({ name, getter }) => ({
             name,
-            description,
             getter: {
               ...getter,
               compiled: forms.constants.FAILED_COMPILATION_OUTPUT,

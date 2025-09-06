@@ -83,6 +83,10 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
         label={intl.formatMessage({ defaultMessage: "Assistant instructions" })}
         textArea={true}
         emptyInputValue={null}
+        description={intl.formatMessage({
+          defaultMessage:
+            "Specific instructions for this collection to pass to the assistant.",
+        })}
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">

@@ -2,7 +2,6 @@ import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascrip
 
 type SummaryProperty = {
   name: string;
-  description?: string | undefined;
 } & (
   | { value: string; valueComputationError: null }
   | { value: null; valueComputationError: ExecutingJavascriptFunctionFailed }

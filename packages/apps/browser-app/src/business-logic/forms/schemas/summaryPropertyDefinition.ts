@@ -8,7 +8,6 @@ export default function summaryPropertyDefinition(
 ): v.GenericSchema<SummaryPropertyDefinition, SummaryPropertyDefinition> {
   return v.strictObject({
     name: v.string(),
-    description: v.optional(v.string()),
     getter: typescriptModule(intl),
   });
 }

@@ -7,16 +7,16 @@ import {
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
-import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.jsx";
-import AppearanceSettings from "./AppearanceSettings.jsx";
-import AssistantsSettings from "./AssistantsSettings.jsx";
-import InferenceSettings from "./InferenceSettings.jsx";
+import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
+import AppearanceSettings from "./AppearanceSettings.js";
+import AssistantsSettings from "./AssistantsSettings.js";
+import InferenceSettings from "./InferenceSettings.js";
 
 interface Props {
   formId: string;
@@ -26,8 +26,6 @@ export default function UpdateGlobalSettingsForm({
   formId,
   setSubmitDisabled,
 }: Props) {
-  const intl = useIntl();
-
   const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 

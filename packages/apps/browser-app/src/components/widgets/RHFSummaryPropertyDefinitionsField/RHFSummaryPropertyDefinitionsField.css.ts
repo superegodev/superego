@@ -2,9 +2,15 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const RHFSummaryPropertyDefinitionsField = {
+  description: style({
+    marginBlockStart: vars.spacing._2,
+    fontSize: vars.typography.fontSizes.sm,
+  }),
+
   item: style({
     position: "relative",
   }),
+
   itemActions: style({
     position: "absolute",
     top: `calc(-1 * ${vars.spacing._1})`,
@@ -21,6 +27,7 @@ export const RHFSummaryPropertyDefinitionsField = {
       },
     },
   }),
+
   itemAction: style({
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.secondary,

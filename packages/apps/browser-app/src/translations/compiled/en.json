@@ -213,6 +213,12 @@
       "value": "Status"
     }
   ],
+  "ConversationsTable.tsx_wSAvhu": [
+    {
+      "type": 0,
+      "value": "Assistant"
+    }
+  ],
   "ConversationsTable.tsx_zQLEfz": [
     {
       "type": 0,
@@ -1023,18 +1029,6 @@
       "value": "Name"
     }
   ],
-  "RHFSummaryPropertyDefinitionField.tsx_Q8Qw5B": [
-    {
-      "type": 0,
-      "value": "Description"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_SSSuYh": [
-    {
-      "type": 0,
-      "value": "TypeScript function to get the property value (a string) from the document's content"
-    }
-  ],
   "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": [
     {
       "type": 0,
@@ -1057,6 +1051,130 @@
     {
       "type": 0,
       "value": "Delete"
+    }
+  ],
+  "RHFSummaryPropertyDefinitionsField.tsx_vkqu5M": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "summary properties"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " of a document are its most important bits of information that are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " You define summary properties, providing for each property: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " A"
+            },
+            {
+              "children": [
+                {
+                  "type": 0,
+                  "value": " Name"
+                }
+              ],
+              "type": 8,
+              "value": "b"
+            },
+            {
+              "type": 0,
+              "value": ", which is the label shown in the UI. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " A "
+            },
+            {
+              "children": [
+                {
+                  "type": 0,
+                  "value": "Value getter"
+                }
+              ],
+              "type": 8,
+              "value": "b"
+            },
+            {
+              "type": 0,
+              "value": ", a TypeScript function that returns the value of the property. (Must be a string.) "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ul"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " There must be always at least one summary property defined. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_1CICoa": [
@@ -1239,6 +1357,12 @@
       "value": "Save settings"
     }
   ],
+  "UpdateCollectionSettingsForm.tsx_qmIyad": [
+    {
+      "type": 0,
+      "value": "Specific instructions for this collection to pass to the assistant."
+    }
+  ],
   "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": [
     {
       "type": 0,
@@ -1301,12 +1425,6 @@
     {
       "type": 1,
       "value": "position"
-    }
-  ],
-  "summaryPropertyDefinition.ts_gcaV8O": [
-    {
-      "type": 0,
-      "value": "Name of the document"
     }
   ],
   "typescriptModule.ts_yZ+w+N": [

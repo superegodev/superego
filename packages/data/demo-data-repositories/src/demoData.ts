@@ -194,7 +194,6 @@ export default {
         summaryProperties: [
           {
             name: "Title",
-            description: "",
             getter: {
               source:
                 'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.title;\n}',
@@ -204,7 +203,6 @@ export default {
           },
           {
             name: "Type",
-            description: "",
             getter: {
               source:
                 'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.type;\n}',
@@ -214,7 +212,6 @@ export default {
           },
           {
             name: "Starts",
-            description: "",
             getter: {
               source:
                 'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}',
@@ -224,7 +221,6 @@ export default {
           },
           {
             name: "Ends",
-            description: "",
             getter: {
               source:
                 'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}',
@@ -326,7 +322,6 @@ export default {
         summaryProperties: [
           {
             name: "Date",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.timestamp.slice(0, 10);\n}',
@@ -336,7 +331,6 @@ export default {
           },
           {
             name: "Vehicle",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.vehicle;\n}',
@@ -346,7 +340,6 @@ export default {
           },
           {
             name: "Liters",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.liters);\n}',
@@ -356,7 +349,6 @@ export default {
           },
           {
             name: "Total cost (€)",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.totalCost);\n}',
@@ -366,7 +358,6 @@ export default {
           },
           {
             name: "Price per liter",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.pricePerLiter);\n}',
@@ -376,7 +367,6 @@ export default {
           },
           {
             name: "Odometer (km)",
-            description: "",
             getter: {
               source:
                 'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.odometer);\n}',
@@ -506,7 +496,6 @@ export default {
         summaryProperties: [
           {
             name: "Title",
-            description: "",
             getter: {
               source:
                 'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.title;\n}',
@@ -516,7 +505,6 @@ export default {
           },
           {
             name: "Amount",
-            description: "",
             getter: {
               source:
                 'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.amount + " " + expense.currency;\n}',
@@ -526,7 +514,6 @@ export default {
           },
           {
             name: "Date",
-            description: "",
             getter: {
               source:
                 'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.date.slice(0,10)\n}',
@@ -536,7 +523,6 @@ export default {
           },
           {
             name: "Category",
-            description: "",
             getter: {
               source:
                 'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.category;\n}',
@@ -658,7 +644,6 @@ export default {
         summaryProperties: [
           {
             name: "Name",
-            description: "",
             getter: {
               source:
                 'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.name;\n}',
@@ -668,7 +653,6 @@ export default {
           },
           {
             name: "Nova Group",
-            description: "",
             getter: {
               source:
                 'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.novaGroup;\n}',
@@ -678,7 +662,6 @@ export default {
           },
           {
             name: "Calories",
-            description: "",
             getter: {
               source:
                 'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}',
@@ -771,7 +754,6 @@ export default {
         summaryProperties: [
           {
             name: "Title",
-            description: "",
             getter: {
               source:
                 'import { Meal } from "./CollectionSchema.js";\n\nexport default function getValue(meal: Meal): string {\n  return meal.date + " " + meal.type;\n}',
@@ -883,7 +865,6 @@ export default {
         summaryProperties: [
           {
             name: "Name",
-            description: "",
             getter: {
               source:
                 'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.name;\n}',
@@ -893,7 +874,6 @@ export default {
           },
           {
             name: "Type",
-            description: "",
             getter: {
               source:
                 'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.type;\n}',
@@ -903,7 +883,6 @@ export default {
           },
           {
             name: "Phone",
-            description: "",
             getter: {
               source:
                 'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [phone] = contact.phones;\n  return phone ? phone.number : "";\n}',
@@ -913,7 +892,6 @@ export default {
           },
           {
             name: "Email",
-            description: "",
             getter: {
               source:
                 'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [email] = contact.emails;\n  return email ? email.address : "";\n}',
@@ -984,7 +962,6 @@ export default {
         summaryProperties: [
           {
             name: "Title",
-            description: "",
             getter: {
               source:
                 'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.title;\n}',
@@ -994,7 +971,6 @@ export default {
           },
           {
             name: "Pet",
-            description: "",
             getter: {
               source:
                 'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.pet;\n}',
@@ -1004,7 +980,6 @@ export default {
           },
           {
             name: "Date",
-            description: "",
             getter: {
               source:
                 'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.date;\n}',
@@ -1061,7 +1036,6 @@ export default {
         summaryProperties: [
           {
             name: "Summary",
-            description: "Summary",
             getter: {
               source:
                 'import { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}',
