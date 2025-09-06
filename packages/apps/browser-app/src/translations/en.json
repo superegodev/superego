@@ -410,8 +410,14 @@
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
   },
+  "InferenceSettings.tsx_mnJYBQ": {
+    "defaultMessage": "Voice"
+  },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
+  },
+  "InferenceSettings.tsx_tEYk0t": {
+    "defaultMessage": "Transcriptions"
   },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
@@ -563,11 +569,17 @@
   "UserMessageContentInput.tsx_9WRlF4": {
     "defaultMessage": "Send"
   },
+  "UserMessageContentInput.tsx_QpxPqx": {
+    "defaultMessage": "Start recording"
+  },
   "UserMessageContentInput.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
   },
   "UserMessageContentInput.tsx_rf1wfv": {
     "defaultMessage": "Message to assistant"
+  },
+  "UserMessageContentInput.tsx_sCBCDq": {
+    "defaultMessage": "Stop recording"
   },
   "summaryPropertyDefinition.ts_HAlOn1": {
     "defaultMessage": "Name"

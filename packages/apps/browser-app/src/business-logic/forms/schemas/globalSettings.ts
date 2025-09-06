@@ -17,6 +17,21 @@ export default function globalSettings(): v.GenericSchema<
           apiKey: v.nullable(v.string()),
         }),
       }),
+      transcriptions: v.strictObject({
+        model: v.nullable(v.string()),
+        provider: v.strictObject({
+          baseUrl: v.nullable(v.string()),
+          apiKey: v.nullable(v.string()),
+        }),
+      }),
+      speech: v.strictObject({
+        model: v.nullable(v.string()),
+        voice: v.nullable(v.string()),
+        provider: v.strictObject({
+          baseUrl: v.nullable(v.string()),
+          apiKey: v.nullable(v.string()),
+        }),
+      }),
     }),
     assistants: v.strictObject({
       developerPrompts: v.strictObject({

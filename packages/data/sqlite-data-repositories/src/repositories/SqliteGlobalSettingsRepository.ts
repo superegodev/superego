@@ -58,6 +58,37 @@ export default class SqliteGlobalSettingsRepository
               this.defaultGlobalSettings.inference.completions.provider.baseUrl,
           },
         },
+        transcriptions: {
+          model:
+            settings.inference?.transcriptions?.model ??
+            this.defaultGlobalSettings.inference.transcriptions.model,
+          provider: {
+            apiKey:
+              settings.inference?.transcriptions?.provider?.apiKey ??
+              this.defaultGlobalSettings.inference.transcriptions.provider
+                .apiKey,
+            baseUrl:
+              settings.inference?.transcriptions?.provider?.baseUrl ??
+              this.defaultGlobalSettings.inference.transcriptions.provider
+                .baseUrl,
+          },
+        },
+        speech: {
+          model:
+            settings.inference?.speech?.model ??
+            this.defaultGlobalSettings.inference.speech.model,
+          voice:
+            settings.inference?.speech?.voice ??
+            this.defaultGlobalSettings.inference.speech.voice,
+          provider: {
+            apiKey:
+              settings.inference?.speech?.provider?.apiKey ??
+              this.defaultGlobalSettings.inference.speech.provider.apiKey,
+            baseUrl:
+              settings.inference?.speech?.provider?.baseUrl ??
+              this.defaultGlobalSettings.inference.speech.provider.baseUrl,
+          },
+        },
       },
       assistants: {
         developerPrompts: {

@@ -2,6 +2,8 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 const alertRootBase = style({
+  width: "100%",
+  overflow: "scroll",
   marginBlock: vars.spacing._8,
   paddingInline: vars.spacing._4,
   borderRadius: vars.borders.radius.md,

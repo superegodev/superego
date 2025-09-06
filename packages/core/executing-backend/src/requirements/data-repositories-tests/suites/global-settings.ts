@@ -14,6 +14,15 @@ export default rd<Dependencies>("Global settings", (deps) => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
+        },
       },
       assistants: {
         developerPrompts: {
@@ -36,6 +45,15 @@ export default rd<Dependencies>("Global settings", (deps) => {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
+        },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
         },
       },
       assistants: {
@@ -71,6 +89,15 @@ export default rd<Dependencies>("Global settings", (deps) => {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
+        },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
         },
       },
       assistants: {

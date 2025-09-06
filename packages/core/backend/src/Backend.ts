@@ -266,8 +266,6 @@ export default interface Backend {
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
-
-    // EVOLUTION: tts and stt methods. Possibly in another section (speech).
   };
 
   backgroundJobs: {

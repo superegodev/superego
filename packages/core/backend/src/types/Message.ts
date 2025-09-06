@@ -12,12 +12,12 @@ namespace Message {
 
   export interface UserContext {
     role: MessageRole.UserContext;
-    content: NonEmptyArray<MessageContentPart.Text>;
+    content: [MessageContentPart.Text];
   }
 
   export interface User {
     role: MessageRole.User;
-    content: NonEmptyArray<MessageContentPart.Text>;
+    content: NonEmptyArray<MessageContentPart>;
     createdAt: Date;
   }
 
@@ -29,7 +29,7 @@ namespace Message {
 
   export interface ContentAssistant {
     role: MessageRole.Assistant;
-    content: NonEmptyArray<MessageContentPart.Text>;
+    content: NonEmptyArray<MessageContentPart>;
     createdAt: Date;
   }
   export interface ToolCallAssistant {

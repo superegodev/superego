@@ -1,11 +1,12 @@
 import {
   type Message,
+  type MessageContentPart,
   MessageContentPartType,
   MessageRole,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 
-export namespace OpenAICompat {
+export namespace ChatCompletions {
   export type Message =
     | { role: "system"; content: string }
     | { role: "user"; content: ContentPart[] }
@@ -73,22 +74,22 @@ export namespace OpenAICompat {
   }
 }
 
-export function toOpenAICompatRequest(
+export function toChatCompletionsRequest(
   model: string,
   messages: Message[],
   tools: InferenceService.Tool[],
-): OpenAICompat.Request {
+): ChatCompletions.Request {
   return {
     model: model,
-    messages: messages.flatMap(toOpenAICompatMessage),
-    tools: tools.map(toOpenAICompatTool),
+    messages: messages.flatMap(toChatCompletionsMessage),
+    tools: tools.map(toChatCompletionsTool),
     stream: false,
   };
 }
 
-function toOpenAICompatMessage(
+function toChatCompletionsMessage(
   message: Message,
-): OpenAICompat.Message | OpenAICompat.Message[] {
+): ChatCompletions.Message | ChatCompletions.Message[] {
   if (message.role === MessageRole.Developer) {
     return { role: "system", content: message.content[0].text };
   }
@@ -98,10 +99,12 @@ function toOpenAICompatMessage(
   ) {
     return {
       role: "user",
-      content: message.content.map((part) => ({
-        type: "text",
-        text: part.text,
-      })),
+      content: (message.content as MessageContentPart[])
+        .filter((part) => part.type === MessageContentPartType.Text)
+        .map((part) => ({
+          type: "text",
+          text: part.text,
+        })),
     };
   }
   if (message.role === MessageRole.Tool) {
@@ -125,10 +128,18 @@ function toOpenAICompatMessage(
       })),
     };
   }
-  return { role: "assistant", content: message.content[0].text };
+  return {
+    role: "assistant",
+    content: message.content
+      .filter((part) => part.type === MessageContentPartType.Text)
+      .map((part) => part.text)
+      .join("\n"),
+  };
 }
 
-function toOpenAICompatTool(tool: InferenceService.Tool): OpenAICompat.Tool {
+function toChatCompletionsTool(
+  tool: InferenceService.Tool,
+): ChatCompletions.Tool {
   return {
     type: "function",
     function: {
@@ -139,8 +150,8 @@ function toOpenAICompatTool(tool: InferenceService.Tool): OpenAICompat.Tool {
   };
 }
 
-export function fromOpenAICompatResponse(
-  response: OpenAICompat.Response,
+export function fromChatCompletionsResponse(
+  response: ChatCompletions.Response,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const { message } = response.choices[0];
   const baseMessage = {

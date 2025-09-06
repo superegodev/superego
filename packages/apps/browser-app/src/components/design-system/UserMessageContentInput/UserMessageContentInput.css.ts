@@ -39,7 +39,7 @@ export const UserMessageContentInput = {
     },
   }),
 
-  sendButton: style({
+  sendOrMicButton: style({
     position: "absolute",
     // Manual pixel adjustment to center the paper plane with the default
     // textarea height.

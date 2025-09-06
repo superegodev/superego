@@ -1,4 +1,4 @@
-import type { Message } from "@superego/backend";
+import type { AudioContent, Message } from "@superego/backend";
 import type { JSONSchema7 } from "json-schema";
 
 namespace InferenceService {
@@ -23,6 +23,10 @@ interface InferenceService {
     previousMessages: Message[],
     tools: InferenceService.Tool[],
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
+
+  tts(text: string): Promise<AudioContent>;
+
+  stt(audio: AudioContent): Promise<string>;
 }
 
 export default InferenceService;

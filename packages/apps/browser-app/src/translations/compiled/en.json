@@ -923,10 +923,22 @@
       "value": "Provider API key"
     }
   ],
+  "InferenceSettings.tsx_mnJYBQ": [
+    {
+      "type": 0,
+      "value": "Voice"
+    }
+  ],
   "InferenceSettings.tsx_rhSI1/": [
     {
       "type": 0,
       "value": "Model"
+    }
+  ],
+  "InferenceSettings.tsx_tEYk0t": [
+    {
+      "type": 0,
+      "value": "Transcriptions"
     }
   ],
   "ListField.tsx_6ibWnb": [
@@ -1399,6 +1411,12 @@
       "value": "Send"
     }
   ],
+  "UserMessageContentInput.tsx_QpxPqx": [
+    {
+      "type": 0,
+      "value": "Start recording"
+    }
+  ],
   "UserMessageContentInput.tsx_oZLZvb": [
     {
       "type": 0,
@@ -1409,6 +1427,12 @@
     {
       "type": 0,
       "value": "Message to assistant"
+    }
+  ],
+  "UserMessageContentInput.tsx_sCBCDq": [
+    {
+      "type": 0,
+      "value": "Stop recording"
     }
   ],
   "summaryPropertyDefinition.ts_HAlOn1": [

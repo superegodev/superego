@@ -17,7 +17,7 @@ interface Props {
 export default function Chat({ conversation, showToolsCalls }: Props) {
   // TODO: use https://react-spectrum.adobe.com/react-aria/Toast.html for
   // displaying errors.
-  const { mutate } = useContinueConversation();
+  const { mutate, isPending } = useContinueConversation();
 
   // When messages change, scroll to bottom and - if the last message is an
   // assistant message - focus the input.
@@ -43,7 +43,7 @@ export default function Chat({ conversation, showToolsCalls }: Props) {
           }}
           autoFocus={true}
           isProcessingMessage={
-            conversation.status === ConversationStatus.Processing
+            isPending || conversation.status === ConversationStatus.Processing
           }
           textAreaRef={inputRef}
         />

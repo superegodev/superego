@@ -11,6 +11,15 @@ registerDataRepositoriesTests(async () => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
+        },
       },
       assistants: {
         developerPrompts: {

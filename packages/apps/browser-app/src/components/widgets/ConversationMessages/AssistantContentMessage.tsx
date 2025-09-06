@@ -1,4 +1,4 @@
-import type { Message } from "@superego/backend";
+import { type Message, MessageContentPartType } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
 import * as cs from "./ConversationMessages.css.js";
 
@@ -8,19 +8,22 @@ interface Props {
 export default function AssistantContentMessage({ message }: Props) {
   return (
     <div className={cs.AssistantContentMessage.root}>
-      {message.content.map(({ text }) => (
-        <Markdown
-          key={text}
-          options={{
-            overrides: {
-              iframe: () => null,
-              a: { props: { target: "_blank", rel: "noopener noreferrer" } },
-            },
-          }}
-        >
-          {text}
-        </Markdown>
-      ))}
+      {message.content
+        // TODO: support audio parts.
+        .filter((part) => part.type === MessageContentPartType.Text)
+        .map(({ text }) => (
+          <Markdown
+            key={text}
+            options={{
+              overrides: {
+                iframe: () => null,
+                a: { props: { target: "_blank", rel: "noopener noreferrer" } },
+              },
+            }}
+          >
+            {text}
+          </Markdown>
+        ))}
     </div>
   );
 }

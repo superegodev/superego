@@ -1,12 +1,15 @@
 import type MessageContentPartType from "../enums/MessageContentPartType.js";
+import type AudioContent from "./AudioContent.js";
 
 namespace MessageContentPart {
   export interface Text {
     type: MessageContentPartType.Text;
     text: string;
-    // EVOLUTION: optional audio attached. Transcribed for user messages,
-    // synthesized for assistant messages.
+  }
+  export interface Audio {
+    type: MessageContentPartType.Audio;
+    audio: AudioContent;
   }
 }
-type MessageContentPart = MessageContentPart.Text;
+type MessageContentPart = MessageContentPart.Text | MessageContentPart.Audio;
 export default MessageContentPart;

@@ -2,6 +2,7 @@ import {
   AssistantName,
   ConversationFormat,
   type Message,
+  MessageContentPartType,
 } from "@superego/backend";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,7 +25,9 @@ export default function Assistant() {
   const onSend = async (userMessageContent: Message.User["content"]) => {
     const { success, data } = await mutate(
       AssistantName.Factotum,
-      ConversationFormat.Text,
+      userMessageContent[0].type === MessageContentPartType.Text
+        ? ConversationFormat.Text
+        : ConversationFormat.Voice,
       userMessageContent,
     );
     if (success) {

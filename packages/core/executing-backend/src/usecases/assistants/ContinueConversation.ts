@@ -8,6 +8,7 @@ import {
   ConversationStatus,
   type Message,
   type MessageContentPart,
+  MessageContentPartType,
   MessageRole,
   type NonEmptyArray,
   type UnexpectedError,
@@ -63,9 +64,12 @@ export default class AssistantsContinueConversation extends Usecase<
       );
     }
 
+    const transcribedUserMessageContent =
+      await this.transcribeUserMessageContent(userMessageContent);
+
     const userMessage: Message.User = {
       role: MessageRole.User,
-      content: userMessageContent,
+      content: transcribedUserMessageContent,
       createdAt: new Date(),
     };
     const updatedConversation: ConversationEntity = {
@@ -80,5 +84,27 @@ export default class AssistantsContinueConversation extends Usecase<
     });
 
     return makeSuccessfulResult(makeConversation(updatedConversation));
+  }
+
+  private async transcribeUserMessageContent(
+    userMessageContent: Message.User["content"],
+  ): Promise<NonEmptyArray<MessageContentPart>> {
+    const { inference } = await this.repos.globalSettings.get();
+    const inferenceService = this.inferenceServiceFactory.create(inference);
+    return (
+      await Promise.all(
+        userMessageContent.map(async (part) =>
+          part.type === MessageContentPartType.Audio
+            ? [
+                part,
+                {
+                  type: MessageContentPartType.Text,
+                  text: await inferenceService.stt(part.audio),
+                },
+              ]
+            : part,
+        ),
+      )
+    ).flat() as NonEmptyArray<MessageContentPart>;
   }
 }

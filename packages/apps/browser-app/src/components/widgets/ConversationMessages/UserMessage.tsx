@@ -5,5 +5,10 @@ interface Props {
   message: Message.User;
 }
 export default function UserMessage({ message }: Props) {
-  return <div className={cs.UserMessage.root}>{message.content[0].text}</div>;
+  return (
+    <div className={cs.UserMessage.root}>
+      {/* TODO: support audio. */}
+      {(message.content[1] as any).text}
+    </div>
+  );
 }

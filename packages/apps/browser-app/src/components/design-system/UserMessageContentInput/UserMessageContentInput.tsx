@@ -1,12 +1,23 @@
 import { type Message, MessageContentPartType } from "@superego/backend";
-import { type RefObject, useState } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TextArea, TextField } from "react-aria-components";
-import { PiPaperPlaneRightFill } from "react-icons/pi";
+import {
+  PiMicrophoneFill,
+  PiPaperPlaneRightFill,
+  PiStopFill,
+} from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.js";
 import * as cs from "./UserMessageContentInput.css.js";
+import { webmToWav } from "./webmToWav.js";
 
 interface Props {
   onSend: (messageContent: Message.User["content"]) => void;
@@ -23,11 +34,84 @@ export default function UserMessageContentInput({
   className,
 }: Props) {
   const intl = useIntl();
+
   const [text, setText] = useState("");
-  const send = () => {
-    onSend([{ type: MessageContentPartType.Text, text: text }]);
-    setText("");
+
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+
+  // Cleanup on unmount.
+  useEffect(() => {
+    return () => {
+      try {
+        if (mediaRecorderRef.current) {
+          mediaRecorderRef.current.onstop = null;
+          mediaRecorderRef.current.stop();
+        }
+      } catch {}
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+    };
+  }, []);
+
+  const startRecording = useCallback(async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaStreamRef.current = stream;
+    const mediaRecorder = new MediaRecorder(stream, {
+      audioBitsPerSecond: 16000,
+    });
+    mediaRecorderRef.current = mediaRecorder;
+    const recordedChunks: BlobPart[] = [];
+
+    mediaRecorder.ondataavailable = (evt) => {
+      if (evt.data && evt.data.size > 0) {
+        recordedChunks.push(evt.data);
+      }
+    };
+
+    mediaRecorder.onstop = async () => {
+      try {
+        const chunksBlob = new Blob(recordedChunks, {
+          type: mediaRecorder.mimeType,
+        });
+        const audioContent = await webmToWav(await chunksBlob.arrayBuffer());
+        onSend([
+          {
+            type: MessageContentPartType.Audio,
+            audio: {
+              content: audioContent,
+              contentType: "audio/wav",
+            },
+          },
+        ]);
+      } finally {
+        mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+        mediaStreamRef.current = null;
+      }
+    };
+
+    mediaRecorder.start();
+    setIsRecording(true);
+  }, [onSend]);
+
+  const stopRecordingAndSend = useCallback(() => {
+    try {
+      mediaRecorderRef.current?.stop();
+    } catch {}
+    setIsRecording(false);
+  }, []);
+
+  const handleButtonPress = () => {
+    if (text !== "") {
+      onSend([{ type: MessageContentPartType.Text, text: text }]);
+      setText("");
+    } else if (isRecording) {
+      stopRecordingAndSend();
+    } else {
+      startRecording();
+    }
   };
+
   return (
     <div className={classnames(cs.UserMessageContentInput.root, className)}>
       <TextField
@@ -42,7 +126,7 @@ export default function UserMessageContentInput({
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
-            send();
+            handleButtonPress();
           }
         }}
       >
@@ -56,15 +140,25 @@ export default function UserMessageContentInput({
       </TextField>
       <IconButton
         variant="invisible"
-        label={intl.formatMessage({ defaultMessage: "Send" })}
-        className={cs.UserMessageContentInput.sendButton}
-        isDisabled={isProcessingMessage || text === ""}
-        onPress={send}
+        label={
+          text !== ""
+            ? intl.formatMessage({ defaultMessage: "Send" })
+            : isRecording
+              ? intl.formatMessage({ defaultMessage: "Stop recording" })
+              : intl.formatMessage({ defaultMessage: "Start recording" })
+        }
+        className={cs.UserMessageContentInput.sendOrMicButton}
+        isDisabled={isProcessingMessage}
+        onPress={handleButtonPress}
       >
         {isProcessingMessage ? (
           <ThreeDotSpinner className={cs.UserMessageContentInput.spinner} />
-        ) : (
+        ) : text !== "" ? (
           <PiPaperPlaneRightFill />
+        ) : isRecording ? (
+          <PiStopFill />
+        ) : (
+          <PiMicrophoneFill />
         )}
       </IconButton>
     </div>
