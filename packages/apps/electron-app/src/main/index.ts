@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { CompletionModel, Theme } from "@superego/backend";
+import { Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";

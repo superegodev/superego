@@ -1,5 +1,4 @@
 import {
-  type CompletionModel,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -75,12 +74,12 @@ export namespace OpenAICompat {
 }
 
 export function toOpenAICompatRequest(
-  model: CompletionModel,
+  model: string,
   messages: Message[],
   tools: InferenceService.Tool[],
 ): OpenAICompat.Request {
   return {
-    model: model.split("_")[1]!,
+    model: model,
     messages: messages.flatMap(toOpenAICompatMessage),
     tools: tools.map(toOpenAICompatTool),
     stream: false,

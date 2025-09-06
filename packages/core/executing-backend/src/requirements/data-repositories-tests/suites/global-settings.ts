@@ -1,4 +1,4 @@
-import { CompletionModel, type GlobalSettings, Theme } from "@superego/backend";
+import { type GlobalSettings, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect, it } from "vitest";
 import type Dependencies from "../Dependencies.js";

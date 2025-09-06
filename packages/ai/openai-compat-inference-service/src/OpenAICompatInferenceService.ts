@@ -1,4 +1,4 @@
-import type { CompletionModel, Message } from "@superego/backend";
+import type { Message } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 import {
   fromOpenAICompatResponse,
@@ -8,7 +8,7 @@ import {
 
 export default class OpenAICompatInferenceService implements InferenceService {
   constructor(
-    private model: CompletionModel,
+    private model: string,
     private baseUrl: string,
     private apiKey: string | null,
   ) {}
@@ -23,7 +23,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
     const response = await fetch(this.baseUrl, {
       method: "POST",
       headers: {
-        Authorization: this.apiKey ? `Bearer ${this.apiKey}` : undefined,
+        ...(this.apiKey ? { Authorization: `Bearer ${this.apiKey}` } : null),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(

@@ -1,4 +1,4 @@
-import { CompletionModel, Theme } from "@superego/backend";
+import { Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import DemoDataRepositoriesManager from "./DemoDataRepositoriesManager.js";
 

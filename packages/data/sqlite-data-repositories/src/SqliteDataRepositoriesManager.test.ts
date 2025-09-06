@@ -1,7 +1,7 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { CompletionModel, Theme } from "@superego/backend";
+import { Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import { afterAll, beforeAll } from "vitest";
 import SqliteDataRepositoriesManager from "./SqliteDataRepositoriesManager.js";

@@ -15,6 +15,7 @@ export default class OpenAICompatInferenceServiceFactory
     if (!settings.completions.provider.baseUrl) {
       throw new Error("Missing Assistant Settings -> Completions -> Base URL.");
     }
+    // EVOLUTION: add other "drivers", with a setting to choose which one to use.
     return new OpenAICompatInferenceService(
       settings.completions.model,
       settings.completions.provider.baseUrl,
