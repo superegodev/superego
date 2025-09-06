@@ -4,6 +4,7 @@ import {
   MessageRole,
 } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
+import last from "../../../utils/last.js";
 import AssistantContentMessage from "./AssistantContentMessage.js";
 import ToolCallResult from "./ToolCallResult/ToolCallResult.js";
 import ToolMessage from "./ToolMessage.js";
@@ -24,7 +25,12 @@ export default function ConversationMessage({
       return <UserMessage message={message} />;
     case MessageRole.Assistant:
       if ("content" in message) {
-        return <AssistantContentMessage message={message} />;
+        return (
+          <AssistantContentMessage
+            message={message}
+            isLastMessage={last(conversation.messages) === message}
+          />
+        );
       }
       return (
         <>

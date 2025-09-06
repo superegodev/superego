@@ -5,7 +5,6 @@ export namespace Speech {
     model: string;
     voice: string;
     input: string;
-    response_format: "wav";
   }
 
   export type Response = Uint8Array<ArrayBuffer>;
@@ -20,7 +19,6 @@ export function toSpeechRequest(
     model: model,
     voice: voice,
     input: text,
-    response_format: "wav",
   };
 }
 

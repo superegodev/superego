@@ -59,9 +59,17 @@ export const UserMessage = {
 
   playPauseButton: style({
     position: "absolute",
-    right: vars.spacing._2,
-    bottom: `calc(-1 * ${vars.spacing._2})`,
+    right: 0,
+    transform: `translate(${vars.spacing._8}, calc(-1 * ${vars.spacing._1}))`,
     borderRadius: "50%",
+    opacity: 0,
+    transition: "opacity 150ms",
+    transitionDelay: "300ms",
+    selectors: {
+      "div:hover > &": {
+        opacity: 1,
+      },
+    },
   }),
 };
 
@@ -71,6 +79,16 @@ export const AssistantContentMessage = {
   }),
 
   playPauseButton: style({
+    position: "absolute",
+    transform: `translate(calc(-1 * ${vars.spacing._8}), calc(-1 * ${vars.spacing._05}))`,
     borderRadius: "50%",
+    opacity: 0,
+    transition: "opacity 500ms",
+    transitionDelay: "100ms",
+    selectors: {
+      "div:hover > &": {
+        opacity: 1,
+      },
+    },
   }),
 };

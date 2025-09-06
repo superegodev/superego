@@ -32,7 +32,7 @@ export default function UserMessage({ message }: Props) {
               ? intl.formatMessage({ defaultMessage: "Pause" })
               : intl.formatMessage({ defaultMessage: "Play" })
           }
-          variant="default"
+          variant="primary"
           className={cs.UserMessage.playPauseButton}
           onPress={togglePlayback}
         >

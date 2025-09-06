@@ -12,7 +12,7 @@ import Tooltip from "../Tooltip/Tooltip.js";
 import * as cs from "./IconButton.css.js";
 
 type Props<IsToggle extends boolean = false> = {
-  variant?: "default" | "invisible" | undefined;
+  variant?: "default" | "primary" | "invisible" | undefined;
   label: string;
   isToggle?: IsToggle | undefined;
   tooltipPlacement?: Placement | undefined;

@@ -73,7 +73,7 @@ export default function InferenceSettings({ control }: Props) {
       </Fieldset>
       <Fieldset isDisclosureDisabled={true}>
         <Fieldset.Legend>
-          <FormattedMessage defaultMessage="Completions" />
+          <FormattedMessage defaultMessage="Speech" />
         </Fieldset.Legend>
         <Fieldset.Fields>
           <RHFTextField

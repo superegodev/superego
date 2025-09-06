@@ -9,8 +9,12 @@ import useAudio from "./useAudio.js";
 
 interface Props {
   message: Message.ContentAssistant;
+  isLastMessage: boolean;
 }
-export default function AssistantContentMessage({ message }: Props) {
+export default function AssistantContentMessage({
+  message,
+  isLastMessage,
+}: Props) {
   const intl = useIntl();
 
   const [textPart] = message.content;
@@ -18,12 +22,26 @@ export default function AssistantContentMessage({ message }: Props) {
 
   // Autoplay the last message.
   useEffect(() => {
-    if (Date.now() - message.createdAt.getTime() < 1_000) {
+    if (isLastMessage && Date.now() - message.createdAt.getTime() < 10_000) {
       togglePlayback();
     }
-  }, [message, togglePlayback]);
+  }, [message, togglePlayback, isLastMessage]);
   return (
     <div className={cs.AssistantContentMessage.root}>
+      {textPart.audio ? (
+        <IconButton
+          label={
+            isPlaying
+              ? intl.formatMessage({ defaultMessage: "Pause" })
+              : intl.formatMessage({ defaultMessage: "Play" })
+          }
+          variant="primary"
+          onPress={togglePlayback}
+          className={cs.AssistantContentMessage.playPauseButton}
+        >
+          {isPlaying ? <PiPauseFill /> : <PiPlayFill />}
+        </IconButton>
+      ) : null}
       <Markdown
         key={textPart.text}
         options={{
@@ -35,20 +53,6 @@ export default function AssistantContentMessage({ message }: Props) {
       >
         {textPart.text}
       </Markdown>
-      {textPart.audio ? (
-        <IconButton
-          label={
-            isPlaying
-              ? intl.formatMessage({ defaultMessage: "Pause" })
-              : intl.formatMessage({ defaultMessage: "Play" })
-          }
-          variant="default"
-          className={cs.AssistantContentMessage.playPauseButton}
-          onPress={togglePlayback}
-        >
-          {isPlaying ? <PiPauseFill /> : <PiPlayFill />}
-        </IconButton>
-      ) : null}
     </div>
   );
 }

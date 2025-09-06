@@ -246,9 +246,21 @@ export const [light, vars] = createTheme({
         },
       },
       primary: {
-        base: { background: colors.greys._10, text: colors.greys._2 },
-        hover: { background: colors.greys._12, text: colors.greys._2 },
-        disabled: { background: colors.greys._8, text: colors.greys._2 },
+        base: {
+          background: colors.greys._10,
+          text: colors.greys._2,
+          border: colors.greys._10,
+        },
+        hover: {
+          background: colors.greys._12,
+          text: colors.greys._2,
+          border: colors.greys._12,
+        },
+        disabled: {
+          background: colors.greys._8,
+          text: colors.greys._2,
+          border: colors.greys._8,
+        },
       },
       invisible: {
         base: {
@@ -352,9 +364,21 @@ export const dark = createTheme(vars, {
         },
       },
       primary: {
-        base: { background: colors.greys._2, text: colors.greys._10 },
-        hover: { background: colors.greys._0, text: colors.greys._10 },
-        disabled: { background: colors.greys._4, text: colors.greys._10 },
+        base: {
+          background: colors.greys._2,
+          text: colors.greys._10,
+          border: colors.greys._2,
+        },
+        hover: {
+          background: colors.greys._0,
+          text: colors.greys._10,
+          border: colors.greys._0,
+        },
+        disabled: {
+          background: colors.greys._4,
+          text: colors.greys._10,
+          border: colors.greys._4,
+        },
       },
       invisible: {
         base: {

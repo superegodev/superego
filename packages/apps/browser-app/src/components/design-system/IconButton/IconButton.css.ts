@@ -40,6 +40,28 @@ export const IconButton = {
         },
       },
     ],
+    primary: [
+      iconButtonRootBase,
+      {
+        background: vars.colors.button.primary.base.background,
+        color: vars.colors.button.primary.base.text,
+        borderColor: vars.colors.button.primary.base.border,
+        borderWidth: vars.borders.width.thin,
+        borderStyle: "solid",
+        selectors: {
+          "&:hover": {
+            background: vars.colors.button.primary.hover.background,
+            color: vars.colors.button.primary.hover.text,
+            borderColor: vars.colors.button.primary.hover.border,
+          },
+          "&[disabled]": {
+            background: vars.colors.button.primary.disabled.background,
+            color: vars.colors.button.primary.disabled.text,
+            borderColor: vars.colors.button.primary.disabled.border,
+          },
+        },
+      },
+    ],
     invisible: [
       iconButtonRootBase,
       {
