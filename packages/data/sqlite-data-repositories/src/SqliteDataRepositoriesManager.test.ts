@@ -1,7 +1,7 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import { afterAll, beforeAll } from "vitest";
 import SqliteDataRepositoriesManager from "./SqliteDataRepositoriesManager.js";
@@ -23,12 +23,17 @@ registerDataRepositoriesTests(async () => {
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     },
     enableForeignKeyConstraints: false,

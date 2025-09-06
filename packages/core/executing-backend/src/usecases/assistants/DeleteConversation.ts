@@ -13,8 +13,8 @@ import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class AssistantDeleteConversation extends Usecase<
-  Backend["assistant"]["deleteConversation"]
+export default class AssistantsDeleteConversation extends Usecase<
+  Backend["assistants"]["deleteConversation"]
 > {
   async exec(
     id: ConversationId,

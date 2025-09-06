@@ -2,17 +2,25 @@ import type { ToolCall, ToolResult } from "@superego/backend";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import Assistant from "../Assistant.js";
-import developerPrompt from "./developer-prompt.md?raw";
+import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import Unknown from "./tools/Unknown.js";
 
 export default class CollectionManagerAssistant extends Assistant {
-  constructor(protected inferenceService: InferenceService) {
+  constructor(
+    private developerPrompt: string | null,
+    protected inferenceService: InferenceService,
+  ) {
     super();
   }
 
-  protected getDeveloperPrompt(): string {
-    return developerPrompt;
+  static getDefaultDeveloperPrompt(): string {
+    return defaultDeveloperPrompt;
   }
+
+  protected getDeveloperPrompt(): string {
+    return this.developerPrompt ?? defaultDeveloperPrompt;
+  }
+
   protected getUserContextPrompt(): string {
     return [
       "<local-current-date-time>",

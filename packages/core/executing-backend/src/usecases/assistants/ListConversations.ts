@@ -4,8 +4,8 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class AssistantListConversations extends Usecase<
-  Backend["assistant"]["listConversations"]
+export default class AssistantsListConversations extends Usecase<
+  Backend["assistants"]["listConversations"]
 > {
   async exec(): ResultPromise<
     Omit<Conversation, "messages">[],

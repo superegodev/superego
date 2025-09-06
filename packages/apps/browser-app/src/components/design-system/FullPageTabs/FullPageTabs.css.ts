@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const UpdateGlobalSettingsForm = {
+export const FullPageTabs = {
   tabList: style({
     display: "flex",
     fontSize: vars.typography.fontSizes.md,
@@ -11,6 +11,7 @@ export const UpdateGlobalSettingsForm = {
   tab: style({
     width: vars.spacing._40,
     textAlign: "center",
+    color: vars.colors.text.secondary,
     paddingBlockEnd: vars.spacing._2,
     border: 0,
     borderBlockEndWidth: vars.borders.width.medium,
@@ -20,6 +21,7 @@ export const UpdateGlobalSettingsForm = {
     selectors: {
       '&[data-selected="true"]': {
         borderBlockEndColor: vars.colors.border.focus,
+        color: vars.colors.text.primary,
       },
     },
   }),

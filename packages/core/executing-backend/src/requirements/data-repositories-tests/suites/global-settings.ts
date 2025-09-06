@@ -1,4 +1,4 @@
-import { type GlobalSettings, Theme } from "@superego/backend";
+import { AssistantName, type GlobalSettings, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect, it } from "vitest";
 import type Dependencies from "../Dependencies.js";
@@ -9,12 +9,17 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -27,12 +32,17 @@ export default rd<Dependencies>("Global settings", (deps) => {
     // Exercise
     const updatedSettings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -57,12 +67,17 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

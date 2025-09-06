@@ -1,4 +1,4 @@
-import { type GlobalSettings, Theme } from "@superego/backend";
+import { AssistantName, type GlobalSettings, Theme } from "@superego/backend";
 import * as v from "valibot";
 
 export default function globalSettings(): v.GenericSchema<
@@ -9,7 +9,7 @@ export default function globalSettings(): v.GenericSchema<
     appearance: v.strictObject({
       theme: v.picklist(Object.values(Theme)),
     }),
-    assistant: v.strictObject({
+    inference: v.strictObject({
       completions: v.strictObject({
         model: v.nullable(v.string()),
         provider: v.strictObject({
@@ -17,7 +17,12 @@ export default function globalSettings(): v.GenericSchema<
           apiKey: v.nullable(v.string()),
         }),
       }),
-      developerPrompt: v.nullable(v.string()),
+    }),
+    assistants: v.strictObject({
+      developerPrompts: v.strictObject({
+        [AssistantName.CollectionManager]: v.nullable(v.string()),
+        [AssistantName.Factotum]: v.nullable(v.string()),
+      }),
     }),
   });
 }

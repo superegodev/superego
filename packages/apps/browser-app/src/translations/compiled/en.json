@@ -17,34 +17,16 @@
       "value": "Previous conversations"
     }
   ],
-  "AssistantSettings.tsx_BGZ5iy": [
+  "AssistantsSettings.tsx_M6SUEw": [
     {
       "type": 0,
-      "value": "Completions"
+      "value": "Collection manager developer prompt"
     }
   ],
-  "AssistantSettings.tsx_NNEajY": [
+  "AssistantsSettings.tsx_qmPVim": [
     {
       "type": 0,
-      "value": "Provider base URL"
-    }
-  ],
-  "AssistantSettings.tsx_YctX0J": [
-    {
-      "type": 0,
-      "value": "Provider API key"
-    }
-  ],
-  "AssistantSettings.tsx_lNk+Oq": [
-    {
-      "type": 0,
-      "value": "Developer prompt"
-    }
-  ],
-  "AssistantSettings.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Model"
+      "value": "Factotum developer prompt"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -927,6 +909,30 @@
       "value": "Superego"
     }
   ],
+  "InferenceSettings.tsx_BGZ5iy": [
+    {
+      "type": 0,
+      "value": "Completions"
+    }
+  ],
+  "InferenceSettings.tsx_NNEajY": [
+    {
+      "type": 0,
+      "value": "Provider base URL"
+    }
+  ],
+  "InferenceSettings.tsx_YctX0J": [
+    {
+      "type": 0,
+      "value": "Provider API key"
+    }
+  ],
+  "InferenceSettings.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
+    }
+  ],
   "ListField.tsx_6ibWnb": [
     {
       "type": 0,
@@ -1267,10 +1273,16 @@
       "value": "Settings"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_wSAvhu": [
+  "UpdateGlobalSettingsForm.tsx_jvrMfo": [
     {
       "type": 0,
-      "value": "Assistant"
+      "value": "Assistants"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_n0wQL1": [
+    {
+      "type": 0,
+      "value": "Inference"
     }
   ],
   "UserMessageContentInput.tsx_9WRlF4": [

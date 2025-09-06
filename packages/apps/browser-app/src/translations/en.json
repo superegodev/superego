@@ -8,20 +8,11 @@
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
-  "AssistantSettings.tsx_BGZ5iy": {
-    "defaultMessage": "Completions"
+  "AssistantsSettings.tsx_M6SUEw": {
+    "defaultMessage": "Collection manager developer prompt"
   },
-  "AssistantSettings.tsx_NNEajY": {
-    "defaultMessage": "Provider base URL"
-  },
-  "AssistantSettings.tsx_YctX0J": {
-    "defaultMessage": "Provider API key"
-  },
-  "AssistantSettings.tsx_lNk+Oq": {
-    "defaultMessage": "Developer prompt"
-  },
-  "AssistantSettings.tsx_rhSI1/": {
-    "defaultMessage": "Model"
+  "AssistantsSettings.tsx_qmPVim": {
+    "defaultMessage": "Factotum developer prompt"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -410,6 +401,18 @@
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
   },
+  "InferenceSettings.tsx_BGZ5iy": {
+    "defaultMessage": "Completions"
+  },
+  "InferenceSettings.tsx_NNEajY": {
+    "defaultMessage": "Provider base URL"
+  },
+  "InferenceSettings.tsx_YctX0J": {
+    "defaultMessage": "Provider API key"
+  },
+  "InferenceSettings.tsx_rhSI1/": {
+    "defaultMessage": "Model"
+  },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
   },
@@ -554,8 +557,11 @@
   "UpdateGlobalSettingsForm.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
-  "UpdateGlobalSettingsForm.tsx_wSAvhu": {
-    "defaultMessage": "Assistant"
+  "UpdateGlobalSettingsForm.tsx_jvrMfo": {
+    "defaultMessage": "Assistants"
+  },
+  "UpdateGlobalSettingsForm.tsx_n0wQL1": {
+    "defaultMessage": "Inference"
   },
   "UserMessageContentInput.tsx_9WRlF4": {
     "defaultMessage": "Send"

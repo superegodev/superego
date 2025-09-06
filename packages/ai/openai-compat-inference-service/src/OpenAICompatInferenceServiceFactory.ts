@@ -1,4 +1,4 @@
-import type { AssistantSettings } from "@superego/backend";
+import type { InferenceSettings } from "@superego/backend";
 import type {
   InferenceService,
   InferenceServiceFactory,
@@ -8,12 +8,14 @@ import OpenAICompatInferenceService from "./OpenAICompatInferenceService.js";
 export default class OpenAICompatInferenceServiceFactory
   implements InferenceServiceFactory
 {
-  create(settings: AssistantSettings): InferenceService {
+  create(settings: InferenceSettings): InferenceService {
     if (!settings.completions.model) {
-      throw new Error("Missing Assistant Settings -> Completions -> Model.");
+      throw new Error("Missing Settings -> Inference -> Completions -> Model.");
     }
     if (!settings.completions.provider.baseUrl) {
-      throw new Error("Missing Assistant Settings -> Completions -> Base URL.");
+      throw new Error(
+        "Missing Settings -> Inference -> Completions -> Base URL.",
+      );
     }
     // EVOLUTION: add other "drivers", with a setting to choose which one to use.
     return new OpenAICompatInferenceService(

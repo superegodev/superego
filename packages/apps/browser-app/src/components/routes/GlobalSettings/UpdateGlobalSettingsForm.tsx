@@ -1,7 +1,11 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { GlobalSettings, Theme } from "@superego/backend";
-import { useEffect, useId, useRef } from "react";
-import { Form, Tab, TabList, TabPanel, Tabs } from "react-aria-components";
+import {
+  AssistantName,
+  type GlobalSettings,
+  type Theme,
+} from "@superego/backend";
+import { useEffect, useRef } from "react";
+import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -9,9 +13,10 @@ import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.j
 import forms from "../../../business-logic/forms/forms.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
+import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.jsx";
 import AppearanceSettings from "./AppearanceSettings.jsx";
-import AssistantSettings from "./AssistantSettings.js";
-import * as cs from "./GlobalSettings.css.js";
+import AssistantsSettings from "./AssistantsSettings.jsx";
+import InferenceSettings from "./InferenceSettings.jsx";
 
 interface Props {
   formId: string;
@@ -23,12 +28,26 @@ export default function UpdateGlobalSettingsForm({
 }: Props) {
   const intl = useIntl();
 
-  const { globalSettings } = useGlobalData();
+  const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 
   const { control, handleSubmit, reset, formState, watch } =
     useForm<GlobalSettings>({
-      defaultValues: globalSettings,
+      defaultValues: {
+        ...globalSettings,
+        assistants: {
+          developerPrompts: {
+            [AssistantName.CollectionManager]:
+              globalSettings.assistants.developerPrompts[
+                AssistantName.CollectionManager
+              ] ?? developerPrompts[AssistantName.CollectionManager],
+            [AssistantName.Factotum]:
+              globalSettings.assistants.developerPrompts[
+                AssistantName.Factotum
+              ] ?? developerPrompts[AssistantName.Factotum],
+          },
+        },
+      },
       mode: "all",
       resolver: standardSchemaResolver(forms.schemas.globalSettings()),
     });
@@ -58,39 +77,28 @@ export default function UpdateGlobalSettingsForm({
     return () => clearTimeout(timeoutId);
   }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
 
-  const appearanceTabId = useId();
-  const assistantTabId = useId();
-
   const theme = watch("appearance.theme");
   usePreviewTheme(globalSettings.appearance.theme, theme);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
-      <Tabs>
-        <TabList
-          aria-label={intl.formatMessage({ defaultMessage: "Settings" })}
-          className={cs.UpdateGlobalSettingsForm.tabList}
-        >
-          <Tab id={assistantTabId} className={cs.UpdateGlobalSettingsForm.tab}>
-            <FormattedMessage defaultMessage="Assistant" />
-          </Tab>
-          <Tab id={appearanceTabId} className={cs.UpdateGlobalSettingsForm.tab}>
-            <FormattedMessage defaultMessage="Appearance" />
-          </Tab>
-        </TabList>
-        <TabPanel
-          id={assistantTabId}
-          className={cs.UpdateGlobalSettingsForm.tabPanel}
-        >
-          <AssistantSettings control={control} />
-        </TabPanel>
-        <TabPanel
-          id={appearanceTabId}
-          className={cs.UpdateGlobalSettingsForm.tabPanel}
-        >
-          <AppearanceSettings control={control} />
-        </TabPanel>
-      </Tabs>
+      <FullPageTabs
+        ariaLabel={intl.formatMessage({ defaultMessage: "Settings" })}
+        tabs={[
+          {
+            title: <FormattedMessage defaultMessage="Inference" />,
+            panel: <InferenceSettings control={control} />,
+          },
+          {
+            title: <FormattedMessage defaultMessage="Assistants" />,
+            panel: <AssistantsSettings control={control} />,
+          },
+          {
+            title: <FormattedMessage defaultMessage="Appearance" />,
+            panel: <AppearanceSettings control={control} />,
+          },
+        ]}
+      />
     </Form>
   );
 }

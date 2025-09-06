@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
@@ -48,12 +48,17 @@ function startBackendIPCProxyServer() {
     fileName: join(app.getPath("userData"), "superego.db"),
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     },
   });

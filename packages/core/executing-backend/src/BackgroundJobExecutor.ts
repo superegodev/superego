@@ -5,7 +5,7 @@ import makeResultError from "./makers/makeResultError.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import AssistantProcessConversation from "./usecases/assistant/ProcessConversation.js";
+import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
 import type Millisecond from "./utils/Millisecond.js";
 
 export default class BackgroundJobExecutor {
@@ -23,7 +23,7 @@ export default class BackgroundJobExecutor {
     }
 
     const UsecaseClass = {
-      [BackgroundJobName.ProcessConversation]: AssistantProcessConversation,
+      [BackgroundJobName.ProcessConversation]: AssistantsProcessConversation,
     }[backgroundJob.name];
 
     await this.dataRepositoriesManager

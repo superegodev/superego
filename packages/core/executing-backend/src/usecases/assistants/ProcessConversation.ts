@@ -23,7 +23,7 @@ import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
 
-export default class AssistantProcessConversation extends Usecase {
+export default class AssistantsProcessConversation extends Usecase {
   async exec({
     id,
   }: {
@@ -97,10 +97,11 @@ export default class AssistantProcessConversation extends Usecase {
   ): Promise<Assistant> {
     const globalSettings = await this.repos.globalSettings.get();
     const inferenceService = this.inferenceServiceFactory.create(
-      globalSettings.assistant,
+      globalSettings.inference,
     );
     return assistant === AssistantName.Factotum
       ? new FactotumAssistant(
+          globalSettings.assistants.developerPrompts[AssistantName.Factotum],
           inferenceService,
           collections,
           {
@@ -110,6 +111,11 @@ export default class AssistantProcessConversation extends Usecase {
           },
           this.javascriptSandbox,
         )
-      : new CollectionManagerAssistant(inferenceService);
+      : new CollectionManagerAssistant(
+          globalSettings.assistants.developerPrompts[
+            AssistantName.CollectionManager
+          ],
+          inferenceService,
+        );
   }
 }

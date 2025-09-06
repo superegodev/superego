@@ -1,12 +1,15 @@
 import {
   type Backend,
   BackgroundJobName,
-  type CannotRecoverConversation,
+  type CannotContinueConversation,
   type Conversation,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
   type Message,
+  type MessageContentPart,
+  MessageRole,
+  type NonEmptyArray,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -17,21 +20,18 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
-import last from "../../utils/last.js";
-import type Millisecond from "../../utils/Millisecond.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-const PROCESSING_TIMEOUT: Millisecond = 5 * 60 * 1000;
-
-export default class AssistantRecoverConversation extends Usecase<
-  Backend["assistant"]["recoverConversation"]
+export default class AssistantsContinueConversation extends Usecase<
+  Backend["assistants"]["continueConversation"]
 > {
   async exec(
     id: ConversationId,
+    userMessageContent: NonEmptyArray<MessageContentPart.Text>,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotRecoverConversation | UnexpectedError
+    ConversationNotFound | CannotContinueConversation | UnexpectedError
   > {
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
@@ -46,29 +46,32 @@ export default class AssistantRecoverConversation extends Usecase<
     }
     const contextFingerprint =
       await getConversationContextFingerprint(collections);
-    const canBeRecovered =
-      ((conversation.status === ConversationStatus.Processing &&
-        lastMessageOlderThan(conversation.messages, PROCESSING_TIMEOUT)) ||
-        conversation.status === ConversationStatus.Error) &&
-      conversation.contextFingerprint === contextFingerprint;
-    if (!canBeRecovered) {
+    if (
+      conversation.status !== ConversationStatus.Idle ||
+      conversation.contextFingerprint !== contextFingerprint
+    ) {
       return makeUnsuccessfulResult(
-        makeResultError("CannotRecoverConversation", {
+        makeResultError("CannotContinueConversation", {
           conversationId: id,
           reason:
-            conversation.status === ConversationStatus.Idle
-              ? "ConversationIsIdle"
-              : conversation.status === ConversationStatus.Processing
-                ? "ConversationIsProcessing"
+            conversation.status === ConversationStatus.Processing
+              ? "ConversationIsProcessing"
+              : conversation.status === ConversationStatus.Error
+                ? "ConversationHasError"
                 : "ConversationContextChanged",
         }),
       );
     }
 
+    const userMessage: Message.User = {
+      role: MessageRole.User,
+      content: userMessageContent,
+      createdAt: new Date(),
+    };
     const updatedConversation: ConversationEntity = {
       ...conversation,
+      messages: [...conversation.messages, userMessage],
       status: ConversationStatus.Processing,
-      error: null,
     };
     await this.repos.conversation.upsert(updatedConversation);
 
@@ -78,16 +81,4 @@ export default class AssistantRecoverConversation extends Usecase<
 
     return makeSuccessfulResult(makeConversation(updatedConversation));
   }
-}
-
-function lastMessageOlderThan(
-  messages: Message[],
-  threshold: Millisecond,
-): boolean {
-  const lastMessage = last(messages);
-  return (
-    lastMessage !== null &&
-    "createdAt" in lastMessage &&
-    Date.now() - lastMessage.createdAt.getTime() > threshold
-  );
 }

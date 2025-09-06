@@ -21,8 +21,8 @@ import getConversationContextFingerprint from "../../utils/getConversationContex
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantStartConversation extends Usecase<
-  Backend["assistant"]["startConversation"]
+export default class AssistantsStartConversation extends Usecase<
+  Backend["assistants"]["startConversation"]
 > {
   async exec(
     assistant: AssistantName,

@@ -6,7 +6,7 @@ import type DocumentsCreate from "../../usecases/documents/Create.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
 import Assistant from "../Assistant.js";
-import developerPrompt from "./developer-prompt.md?raw";
+import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateDocument from "./tools/CreateDocument.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
@@ -15,6 +15,7 @@ import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
   constructor(
+    private developerPrompt: string | null,
     protected inferenceService: InferenceService,
     private collections: Collection[],
     private usecases: {
@@ -27,9 +28,14 @@ export default class FactotumAssistant extends Assistant {
     super();
   }
 
-  protected getDeveloperPrompt(): string {
-    return developerPrompt;
+  static getDefaultDeveloperPrompt(): string {
+    return defaultDeveloperPrompt;
   }
+
+  protected getDeveloperPrompt(): string {
+    return this.developerPrompt ?? defaultDeveloperPrompt;
+  }
+
   protected getUserContextPrompt(): string {
     return [
       "<collections>",

@@ -1,4 +1,4 @@
-export default interface AssistantSettings {
+export default interface InferenceSettings {
   completions: {
     provider: {
       baseUrl: string | null;
@@ -6,5 +6,4 @@ export default interface AssistantSettings {
     };
     model: string | null;
   };
-  developerPrompt: string | null;
 }

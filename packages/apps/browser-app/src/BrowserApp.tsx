@@ -6,6 +6,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import DataLoader from "./business-logic/backend/DataLoader.js";
 import { GlobalDataProvider } from "./business-logic/backend/GlobalData.js";
 import {
+  getDeveloperPromptsQuery,
   getGlobalSettingsQuery,
   listCollectionCategoriesQuery,
   listCollectionsQuery,
@@ -38,6 +39,7 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                   listCollectionCategoriesQuery([]),
                   listCollectionsQuery([]),
                   getGlobalSettingsQuery([]),
+                  getDeveloperPromptsQuery([]),
                 ]}
                 renderErrors={(errors) => (
                   <>
@@ -46,12 +48,18 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                   </>
                 )}
               >
-                {(collectionCategories, collections, globalSettings) => (
+                {(
+                  collectionCategories,
+                  collections,
+                  globalSettings,
+                  developerPrompts,
+                ) => (
                   <GlobalDataProvider
                     value={{
                       collectionCategories,
                       collections,
                       globalSettings,
+                      developerPrompts,
                     }}
                   >
                     <Root />

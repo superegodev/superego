@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
@@ -11,12 +11,17 @@ const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     },
     true,

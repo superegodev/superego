@@ -1,4 +1,4 @@
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
@@ -10,12 +10,17 @@ const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },
-      assistant: {
+      inference: {
         completions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        developerPrompt: null,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionManager]: null,
+        },
       },
     },
     true,

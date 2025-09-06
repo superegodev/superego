@@ -136,29 +136,35 @@ export const useDeleteDocument = makeUseBackendMutation(
 );
 
 /*
- * Assistant
+ * Assistants
  */
 
 export const listConversationsQuery = makeBackendQueryGetter(
-  "assistant",
+  "assistants",
   "listConversations",
   () => ["listConversations"],
 );
 
 export const getConversationQuery = makeBackendQueryGetter(
-  "assistant",
+  "assistants",
   "getConversation",
   (conversationId) => ["getConversation", conversationId],
 );
 
+export const getDeveloperPromptsQuery = makeBackendQueryGetter(
+  "assistants",
+  "getDeveloperPrompts",
+  () => ["getDeveloperPrompts"],
+);
+
 export const useStartConversation = makeUseBackendMutation(
-  "assistant",
+  "assistants",
   "startConversation",
   () => [["listConversations"]],
 );
 
 export const useContinueConversation = makeUseBackendMutation(
-  "assistant",
+  "assistants",
   "continueConversation",
   ([conversationId]) => [
     ["listConversations"],
@@ -167,7 +173,7 @@ export const useContinueConversation = makeUseBackendMutation(
 );
 
 export const useRecoverConversation = makeUseBackendMutation(
-  "assistant",
+  "assistants",
   "recoverConversation",
   ([conversationId]) => [
     ["listConversations"],
@@ -176,7 +182,7 @@ export const useRecoverConversation = makeUseBackendMutation(
 );
 
 export const useDeleteConversation = makeUseBackendMutation(
-  "assistant",
+  "assistants",
   "deleteConversation",
   ([conversationId]) => [
     ["listConversations"],

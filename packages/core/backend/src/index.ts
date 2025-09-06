@@ -57,7 +57,7 @@ export type { default as FileId } from "./ids/FileId.js";
 
 // Types
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
-export type { default as AssistantSettings } from "./types/AssistantSettings.js";
+export type { default as AssistantsSettings } from "./types/AssistantsSettings.js";
 export type { default as BackgroundJob } from "./types/BackgroundJob.js";
 export type { default as Collection } from "./types/Collection.js";
 export type { default as CollectionCategory } from "./types/CollectionCategory.js";
@@ -66,9 +66,11 @@ export type { default as CollectionVersion } from "./types/CollectionVersion.js"
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
 export type { default as Conversation } from "./types/Conversation.js";
 export type { default as DeletedEntities } from "./types/DeletedEntities.js";
+export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
+export type { default as InferenceSettings } from "./types/InferenceSettings.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";

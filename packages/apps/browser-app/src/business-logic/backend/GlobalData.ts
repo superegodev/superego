@@ -1,6 +1,7 @@
 import type {
   Collection,
   CollectionCategory,
+  DeveloperPrompts,
   GlobalSettings,
 } from "@superego/backend";
 import { createContext, useContext } from "react";
@@ -9,6 +10,7 @@ interface GlobalData {
   collectionCategories: CollectionCategory[];
   collections: Collection[];
   globalSettings: GlobalSettings;
+  developerPrompts: DeveloperPrompts;
 }
 
 const GlobalDataContext = createContext<GlobalData | null>(null);

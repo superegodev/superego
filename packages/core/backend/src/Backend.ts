@@ -40,6 +40,7 @@ import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
+import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
@@ -225,7 +226,7 @@ export default interface Backend {
     ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError>;
   };
 
-  assistant: {
+  assistants: {
     startConversation(
       assistant: AssistantName,
       format: ConversationFormat,
@@ -263,6 +264,8 @@ export default interface Backend {
     getConversation(
       id: ConversationId,
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
+
+    getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
 
     // EVOLUTION: tts and stt methods. Possibly in another section (speech).
   };

@@ -12,8 +12,8 @@ import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class AssistantGetConversation extends Usecase<
-  Backend["assistant"]["getConversation"]
+export default class AssistantsGetConversation extends Usecase<
+  Backend["assistants"]["getConversation"]
 > {
   async exec(
     id: ConversationId,

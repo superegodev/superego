@@ -1,5 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
-import type { GlobalSettings } from "@superego/backend";
+import { AssistantName, type GlobalSettings } from "@superego/backend";
 import type { GlobalSettingsRepository } from "@superego/executing-backend";
 import type SqliteGlobalSettings from "../types/SqliteGlobalSettings.js";
 import { toEntity } from "../types/SqliteGlobalSettings.js";
@@ -44,23 +44,36 @@ export default class SqliteGlobalSettingsRepository
           settings?.appearance?.theme ??
           this.defaultGlobalSettings.appearance.theme,
       },
-      assistant: {
+      inference: {
         completions: {
           model:
-            settings.assistant?.completions?.model ??
-            this.defaultGlobalSettings.assistant.completions.model,
+            settings.inference?.completions?.model ??
+            this.defaultGlobalSettings.inference.completions.model,
           provider: {
             apiKey:
-              settings.assistant?.completions?.provider?.apiKey ??
-              this.defaultGlobalSettings.assistant.completions.provider.apiKey,
+              settings.inference?.completions?.provider?.apiKey ??
+              this.defaultGlobalSettings.inference.completions.provider.apiKey,
             baseUrl:
-              settings.assistant?.completions?.provider?.baseUrl ??
-              this.defaultGlobalSettings.assistant.completions.provider.baseUrl,
+              settings.inference?.completions?.provider?.baseUrl ??
+              this.defaultGlobalSettings.inference.completions.provider.baseUrl,
           },
         },
-        developerPrompt:
-          settings.assistant?.developerPrompt ??
-          this.defaultGlobalSettings.assistant.developerPrompt,
+      },
+      assistants: {
+        developerPrompts: {
+          [AssistantName.CollectionManager]:
+            settings.assistants?.developerPrompts?.[
+              AssistantName.CollectionManager
+            ] ??
+            this.defaultGlobalSettings.assistants.developerPrompts[
+              AssistantName.CollectionManager
+            ],
+          [AssistantName.Factotum]:
+            settings.assistants?.developerPrompts?.[AssistantName.Factotum] ??
+            this.defaultGlobalSettings.assistants.developerPrompts[
+              AssistantName.Factotum
+            ],
+        },
       },
     };
   }

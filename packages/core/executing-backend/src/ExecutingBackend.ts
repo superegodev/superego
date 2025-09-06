@@ -7,12 +7,13 @@ import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
-import AssistantContinueConversation from "./usecases/assistant/ContinueConversation.js";
-import AssistantDeleteConversation from "./usecases/assistant/DeleteConversation.js";
-import AssistantGetConversation from "./usecases/assistant/GetConversation.js";
-import AssistantListConversations from "./usecases/assistant/ListConversations.js";
-import AssistantRecoverConversation from "./usecases/assistant/RecoverConversation.js";
-import AssistantStartConversation from "./usecases/assistant/StartConversation.js";
+import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
+import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
+import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
+import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
+import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
+import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
+import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -39,7 +40,7 @@ export default class ExecutingBackend implements Backend {
   collections: Backend["collections"];
   documents: Backend["documents"];
   files: Backend["files"];
-  assistant: Backend["assistant"];
+  assistants: Backend["assistants"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
@@ -82,16 +83,23 @@ export default class ExecutingBackend implements Backend {
       getContent: this.makeUsecase(FilesGetContent, false),
     };
 
-    this.assistant = {
-      startConversation: this.makeUsecase(AssistantStartConversation, true),
+    this.assistants = {
+      startConversation: this.makeUsecase(AssistantsStartConversation, true),
       continueConversation: this.makeUsecase(
-        AssistantContinueConversation,
+        AssistantsContinueConversation,
         true,
       ),
-      recoverConversation: this.makeUsecase(AssistantRecoverConversation, true),
-      deleteConversation: this.makeUsecase(AssistantDeleteConversation, true),
-      listConversations: this.makeUsecase(AssistantListConversations, false),
-      getConversation: this.makeUsecase(AssistantGetConversation, false),
+      recoverConversation: this.makeUsecase(
+        AssistantsRecoverConversation,
+        true,
+      ),
+      deleteConversation: this.makeUsecase(AssistantsDeleteConversation, true),
+      listConversations: this.makeUsecase(AssistantsListConversations, false),
+      getConversation: this.makeUsecase(AssistantsGetConversation, false),
+      getDeveloperPrompts: this.makeUsecase(
+        AssistantsGetDeveloperPrompts,
+        false,
+      ),
     };
 
     this.backgroundJobs = {
