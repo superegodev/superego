@@ -65,6 +65,7 @@ export default function EnumField({
         options={Object.values(typeDefinition.members).map((member) => ({
           id: member.value,
           label: member.value,
+          description: member.description,
         }))}
       />
     </Select>

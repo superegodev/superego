@@ -1,7 +1,9 @@
 import { type AnyTypeDefinition, DataType } from "@superego/schema";
 import type { ReactNode } from "react";
+import { Button, TooltipTrigger } from "react-aria-components";
 import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
+import Tooltip from "../../design-system/Tooltip/Tooltip.jsx";
 import * as cs from "./RHFContentField.css.js";
 
 interface Props {
@@ -32,6 +34,14 @@ export default function AnyFieldLabel({
     <FieldLabel actions={actions} component={component} className={className}>
       {label}
       <span className={cs.AnyFieldLabel.dataType}>{dataTypeLabel}</span>
+      {typeDefinition.description ? (
+        <TooltipTrigger delay={500}>
+          <Button className={cs.AnyFieldLabel.descriptionTooltipTrigger}>
+            {"ℹ️"}
+          </Button>
+          <Tooltip>{typeDefinition.description}</Tooltip>
+        </TooltipTrigger>
+      ) : null}
     </FieldLabel>
   );
 }

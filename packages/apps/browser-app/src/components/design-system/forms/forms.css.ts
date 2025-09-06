@@ -84,6 +84,7 @@ export const SelectButton = {
     height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
     marginBlockEnd: vars.spacing._2,
   }),
+
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -94,6 +95,7 @@ export const SelectOptions = {
   root: style({
     width: "var(--trigger-width)",
   }),
+
   option: style({
     padding: vars.spacing._2,
     cursor: "default",
@@ -120,6 +122,11 @@ export const SelectOptions = {
         cursor: "not-allowed",
       },
     },
+  }),
+
+  optionDescription: style({
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.xs,
   }),
 };
 
@@ -219,6 +226,7 @@ export const DatePickerInput = {
       display: "flex",
     },
   ]),
+
   dateInput: style({
     border: 0,
     marginBlockEnd: 0,
@@ -228,6 +236,7 @@ export const DatePickerInput = {
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
   }),
+
   dateSegment: style({
     paddingInline: vars.spacing._05,
     selectors: {
@@ -239,6 +248,7 @@ export const DatePickerInput = {
       },
     },
   }),
+
   button: style({
     display: "flex",
     justifyContent: "flex-end",
@@ -262,21 +272,25 @@ export const DatePickerCalendar = {
     border: 0,
     cursor: "pointer",
   }),
+
   header: style({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
   }),
+
   heading: style({
     flexGrow: 1,
     margin: 0,
     textAlign: "center",
     fontSize: vars.typography.fontSizes.md,
   }),
+
   headerCell: style({
     paddingBlock: vars.spacing._3,
     fontSize: vars.typography.fontSizes.xs,
   }),
+
   cell: style({
     width: vars.spacing._8,
     height: vars.spacing._8,

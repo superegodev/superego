@@ -21,10 +21,12 @@ export const FileField = {
     display: "flex",
     flexDirection: "column",
   }),
+
   legend: style({
     borderBlockEnd: "0 !important",
     marginBlockEnd: "0 !important",
   }),
+
   fields: style({
     paddingInlineStart: "0 !important",
     marginBlockEnd: vars.spacing._6,
@@ -34,15 +36,17 @@ export const FileField = {
       },
     },
   }),
+
   dropZone: style({
     width: "100%",
   }),
+
   nullFileFieldsFileTrigger: style({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
     paddingInline: 0,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -59,31 +63,36 @@ export const FileField = {
       },
     },
   }),
+
   nonNullFileFieldsRoot: style({
     display: "grid",
     gridTemplateColumns: "auto 3fr 2fr auto",
     columnGap: vars.spacing._2,
   }),
+
   nonNullFileIcon: style({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     width: vars.spacing._6,
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
     fontSize: vars.typography.fontSizes.xl3,
     marginBlockEnd: vars.spacing._2,
   }),
+
   nonNullFileTextField: style({
     marginBlockEnd: "0",
   }),
+
   nonNullFileButtons: style({
     display: "flex",
     columnGap: vars.spacing._2,
     marginBlockEnd: vars.spacing._2,
   }),
+
   nonNullFileButton: style({
     aspectRatio: "1 / 1",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
   }),
 };
 
@@ -222,5 +231,14 @@ export const AnyFieldLabel = {
     paddingInline: vars.spacing._2,
     color: vars.colors.text.secondary,
     borderRadius: vars.borders.radius.full,
+  }),
+
+  descriptionTooltipTrigger: style({
+    background: "transparent",
+    border: 0,
+    padding: 0,
+    margin: 0,
+    position: "relative",
+    fontFamily: "serif",
   }),
 };

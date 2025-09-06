@@ -51,31 +51,38 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       ),
     [collection.latestVersion.schema],
   );
-  const { control, handleSubmit, formState, resetField, watch, getValues } =
-    useForm<FormValues>({
-      defaultValues: {
-        schema: collection.latestVersion.schema,
-        migration: defaultMigration,
-        summaryProperties: mapNonEmptyArray(
-          collection.latestVersion.settings.summaryProperties,
-          ({ name, getter }) => ({
-            name,
-            getter: {
-              ...getter,
-              compiled: forms.constants.FAILED_COMPILATION_OUTPUT,
-            },
-          }),
-        ),
-      },
-      mode: "all",
-      resolver: standardSchemaResolver(
-        v.strictObject({
-          schema: valibotSchemas.schema(),
-          migration: forms.schemas.typescriptModule(intl),
-          summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+  const {
+    control,
+    handleSubmit,
+    formState,
+    resetField,
+    watch,
+    getValues,
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: {
+      schema: collection.latestVersion.schema,
+      migration: defaultMigration,
+      summaryProperties: mapNonEmptyArray(
+        collection.latestVersion.settings.summaryProperties,
+        ({ name, getter }) => ({
+          name,
+          getter: {
+            ...getter,
+            compiled: forms.constants.FAILED_COMPILATION_OUTPUT,
+          },
         }),
       ),
-    });
+    },
+    mode: "all",
+    resolver: standardSchemaResolver(
+      v.strictObject({
+        schema: valibotSchemas.schema(),
+        migration: forms.schemas.typescriptModule(intl),
+        summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+      }),
+    ),
+  });
 
   const schema = watch("schema");
   const isSchemaDirty =
@@ -108,13 +115,34 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   ]);
 
   const onSubmit = async (values: FormValues) => {
-    await mutate(
+    const { success, data } = await mutate(
       collection.id,
       collection.latestVersion.id,
       values.schema,
       { summaryProperties: values.summaryProperties },
       values.migration,
     );
+    if (success) {
+      reset({
+        schema: data.latestVersion.schema,
+        migration: forms.defaults.migration(
+          collection.latestVersion.schema,
+          currentSchemaTypescriptLibPath,
+          collection.latestVersion.schema,
+          nextSchemaTypescriptLibPath,
+        ),
+        summaryProperties: mapNonEmptyArray(
+          data.latestVersion.settings.summaryProperties,
+          ({ name, getter }) => ({
+            name,
+            getter: {
+              ...getter,
+              compiled: forms.constants.FAILED_COMPILATION_OUTPUT,
+            },
+          }),
+        ),
+      });
+    }
   };
 
   const summaryPropertiesSchemaTypescriptLib = useMemo(
