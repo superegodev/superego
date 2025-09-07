@@ -39,10 +39,11 @@ const formattingMenuItemBase = style({
 export const FormattingToolbar = {
   root: style({
     width: "100%",
+    overflow: "scroll",
     display: "flex",
     gap: vars.spacing._2,
-    marginInline: vars.spacing._4,
-    marginBlockStart: vars.spacing._4,
+    paddingInline: vars.spacing._4,
+    paddingBlockStart: vars.spacing._4,
   }),
   group: style({
     display: "flex",
