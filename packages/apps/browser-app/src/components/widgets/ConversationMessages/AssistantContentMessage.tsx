@@ -1,12 +1,16 @@
 import type { AudioContent, Conversation, Message } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
 import { useEffect, useRef, useState } from "react";
-import { PiPauseFill, PiSpeakerHigh, PiSpinnerGap } from "react-icons/pi";
+import {
+  PiPauseFill,
+  PiSpeakerSimpleHighFill,
+  PiSpinnerGap,
+} from "react-icons/pi";
 import { useIntl } from "react-intl";
+import usePlayAudio from "../../../business-logic/audio/usePlayAudio.js";
 import { useTts } from "../../../business-logic/backend/hooks.js";
 import IconButton from "../../design-system/IconButton/IconButton.jsx";
 import * as cs from "./ConversationMessages.css.js";
-import useAudio from "./useAudio.js";
 
 interface Props {
   message: Message.ContentAssistant;
@@ -20,7 +24,7 @@ export default function AssistantContentMessage({ message }: Props) {
   const { mutate, isPending } = useTts();
 
   const [textPart] = message.content;
-  const { isPlaying, togglePlayback } = useAudio(audio);
+  const { isPlaying, togglePlayback } = usePlayAudio(audio);
 
   // Play when we get the audio. (Having gotten the audio means that there was
   // a request to play the message.)
@@ -63,11 +67,11 @@ export default function AssistantContentMessage({ message }: Props) {
         className={cs.AssistantContentMessage.playPauseButton}
       >
         {isPending ? (
-          <PiSpinnerGap className={cs.AssistantContentMessage.spinner} />
+          <PiSpinnerGap />
         ) : isPlaying ? (
           <PiPauseFill />
         ) : (
-          <PiSpeakerHigh />
+          <PiSpeakerSimpleHighFill />
         )}
       </IconButton>
     </div>

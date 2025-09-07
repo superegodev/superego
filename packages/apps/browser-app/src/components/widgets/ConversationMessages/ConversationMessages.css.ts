@@ -80,8 +80,9 @@ export const AssistantContentMessage = {
       "div:hover > &": {
         opacity: 1,
       },
+      "&:focus": {
+        opacity: 1,
+      },
     },
   }),
-
-  spinner: style({}),
 };

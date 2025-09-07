@@ -1251,6 +1251,30 @@
       "value": "Icon"
     }
   ],
+  "SendRecordToolbar.tsx_3LSnIf": [
+    {
+      "type": 0,
+      "value": "Finish and send"
+    }
+  ],
+  "SendRecordToolbar.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "SendRecordToolbar.tsx_7Y6Yvq": [
+    {
+      "type": 0,
+      "value": "Record"
+    }
+  ],
+  "SendRecordToolbar.tsx_9WRlF4": [
+    {
+      "type": 0,
+      "value": "Send"
+    }
+  ],
   "StructField.tsx_Dp51E2": [
     {
       "type": 0,
@@ -1447,34 +1471,16 @@
       "value": "Pause"
     }
   ],
-  "UserMessageContentInput.tsx_9WRlF4": [
+  "UserMessageContentInput.tsx_XE7R4v": [
     {
       "type": 0,
-      "value": "Send"
-    }
-  ],
-  "UserMessageContentInput.tsx_QpxPqx": [
-    {
-      "type": 0,
-      "value": "Start recording"
+      "value": "Message assistant"
     }
   ],
   "UserMessageContentInput.tsx_oZLZvb": [
     {
       "type": 0,
       "value": "How can I help you?"
-    }
-  ],
-  "UserMessageContentInput.tsx_rf1wfv": [
-    {
-      "type": 0,
-      "value": "Message to assistant"
-    }
-  ],
-  "UserMessageContentInput.tsx_sCBCDq": [
-    {
-      "type": 0,
-      "value": "Stop recording"
     }
   ],
   "summaryPropertyDefinition.ts_HAlOn1": [

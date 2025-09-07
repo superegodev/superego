@@ -31,13 +31,11 @@ export default function Chat({ conversation, showToolsCalls }: Props) {
     if (lastMessageTimestamp) {
       // Hack: scrolling doesn't work unless we delay it a bit.
       setTimeout(() => {
-        document
-          .querySelector('[data-slot="Main"]')
-          ?.scrollTo({
-            top: 1e6,
-            behavior:
-              Date.now() - lastMessageTimestamp < 10_000 ? "smooth" : "instant",
-          });
+        document.querySelector('[data-slot="Main"]')?.scrollTo({
+          top: 1e6,
+          behavior:
+            Date.now() - lastMessageTimestamp < 10_000 ? "smooth" : "instant",
+        });
       }, 15);
     }
     if (lastMessage?.role === MessageRole.Assistant) {

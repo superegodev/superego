@@ -1,9 +1,9 @@
 import { type Message, MessageContentPartType } from "@superego/backend";
-import { PiPauseFill, PiPlayFill } from "react-icons/pi";
+import { PiPauseFill, PiSpeakerSimpleHighFill } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import usePlayAudio from "../../../business-logic/audio/usePlayAudio.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
-import useAudio from "./useAudio.js";
 
 interface Props {
   message: Message.User;
@@ -17,7 +17,7 @@ export default function UserMessage({ message }: Props) {
   const partWithAudio = message.content.find(
     (part) => part.audio !== undefined,
   );
-  const { isPlaying, togglePlayback } = useAudio(partWithAudio?.audio);
+  const { isPlaying, togglePlayback } = usePlayAudio(partWithAudio?.audio);
   return (
     <div className={cs.UserMessage.root}>
       {text !== "" ? (
@@ -36,7 +36,7 @@ export default function UserMessage({ message }: Props) {
           className={cs.UserMessage.playPauseButton}
           onPress={togglePlayback}
         >
-          {isPlaying ? <PiPauseFill /> : <PiPlayFill />}
+          {isPlaying ? <PiPauseFill /> : <PiSpeakerSimpleHighFill />}
         </IconButton>
       ) : null}
     </div>

@@ -7,19 +7,20 @@ import {
   useState,
 } from "react";
 
-export default function useAudio(
-  audioContent: AudioContent | undefined | null,
-): {
+interface UsePlayAudio {
   isPlaying: boolean;
   togglePlayback: () => void;
-} {
+}
+export default function usePlayAudio(
+  audioContent: AudioContent | undefined | null,
+): UsePlayAudio {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Cleanup on unmount.
   useEffect(() => {
-    cleanup(audioRef, audioUrlRef);
+    return () => cleanup(audioRef, audioUrlRef);
   }, []);
 
   const togglePlayback = useCallback(() => {

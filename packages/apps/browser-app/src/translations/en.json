@@ -503,6 +503,18 @@
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
+  "SendRecordToolbar.tsx_3LSnIf": {
+    "defaultMessage": "Finish and send"
+  },
+  "SendRecordToolbar.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "SendRecordToolbar.tsx_7Y6Yvq": {
+    "defaultMessage": "Record"
+  },
+  "SendRecordToolbar.tsx_9WRlF4": {
+    "defaultMessage": "Send"
+  },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
@@ -587,20 +599,11 @@
   "UserMessage.tsx_tFFMkF": {
     "defaultMessage": "Pause"
   },
-  "UserMessageContentInput.tsx_9WRlF4": {
-    "defaultMessage": "Send"
-  },
-  "UserMessageContentInput.tsx_QpxPqx": {
-    "defaultMessage": "Start recording"
+  "UserMessageContentInput.tsx_XE7R4v": {
+    "defaultMessage": "Message assistant"
   },
   "UserMessageContentInput.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
-  },
-  "UserMessageContentInput.tsx_rf1wfv": {
-    "defaultMessage": "Message to assistant"
-  },
-  "UserMessageContentInput.tsx_sCBCDq": {
-    "defaultMessage": "Stop recording"
   },
   "summaryPropertyDefinition.ts_HAlOn1": {
     "defaultMessage": "Name"

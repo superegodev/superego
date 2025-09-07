@@ -39,19 +39,32 @@ export const UserMessageContentInput = {
     },
   }),
 
-  sendOrMicButton: style({
+  spinner: style({
     position: "absolute",
-    // Manual pixel adjustment to center the paper plane with the default
+    // Manual pixel adjustment to center the buttons with the default
+    // textarea height.
+    top: `calc(${vars.spacing._4} + 1px)`,
+    right: vars.spacing._4,
+    width: vars.spacing._10,
+    height: vars.spacing._4,
+  }),
+};
+
+export const SendRecordToolbar = {
+  root: style({
+    position: "absolute",
+    // Manual pixel adjustment to center the buttons with the default
     // textarea height.
     bottom: `calc(${vars.spacing._1} + 1.5px)`,
     right: vars.spacing._4,
+  }),
+
+  button: style({
+    padding: 0,
+    marginInlineStart: `calc(-1 * ${vars.spacing._2})`,
     height: vars.spacing._10,
     width: vars.spacing._10,
     borderRadius: vars.borders.radius.full,
     fontSize: vars.typography.fontSizes.xl,
-  }),
-
-  spinner: style({
-    height: vars.spacing._4,
   }),
 };
