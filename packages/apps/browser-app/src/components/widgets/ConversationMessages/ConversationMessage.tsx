@@ -1,11 +1,9 @@
 import {
   type Conversation,
-  ConversationFormat,
   type Message,
   MessageRole,
 } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import last from "../../../utils/last.js";
 import AssistantContentMessage from "./AssistantContentMessage.js";
 import ToolCallResult from "./ToolCallResult/ToolCallResult.js";
 import ToolMessage from "./ToolMessage.js";
