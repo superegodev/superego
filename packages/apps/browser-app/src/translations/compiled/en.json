@@ -17,6 +17,12 @@
       "value": "Previous conversations"
     }
   ],
+  "AssistantContentMessage.tsx_IETTf7": [
+    {
+      "type": 0,
+      "value": "Synthesizing"
+    }
+  ],
   "AssistantContentMessage.tsx_J3ca41": [
     {
       "type": 0,
@@ -1301,6 +1307,16 @@
       "value": " » Document created"
     }
   ],
+  "ThinkingTime.tsx_uKcW4C": [
+    {
+      "type": 0,
+      "value": "Thought for "
+    },
+    {
+      "type": 1,
+      "value": "time"
+    }
+  ],
   "TiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -1481,6 +1497,70 @@
     {
       "type": 0,
       "value": "How can I help you?"
+    }
+  ],
+  "formatDuration.ts_26OSN4": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 minute"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " minutes"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "minutes"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "seconds"
+    },
+    {
+      "type": 0,
+      "value": " seconds"
+    }
+  ],
+  "formatDuration.ts_lf6GDO": [
+    {
+      "style": {
+        "parsedOptions": {
+          "maximumFractionDigits": 2
+        },
+        "tokens": [
+          {
+            "options": [
+            ],
+            "stem": ".##"
+          }
+        ],
+        "type": 0
+      },
+      "type": 2,
+      "value": "seconds"
+    },
+    {
+      "type": 0,
+      "value": " seconds"
     }
   ],
   "summaryPropertyDefinition.ts_HAlOn1": [

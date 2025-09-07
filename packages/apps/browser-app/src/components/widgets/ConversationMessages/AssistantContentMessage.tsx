@@ -1,6 +1,7 @@
 import type { AudioContent, Conversation, Message } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
 import { useEffect, useRef, useState } from "react";
+import { Separator } from "react-aria-components";
 import {
   PiPauseFill,
   PiSpeakerSimpleHighFill,
@@ -11,12 +12,16 @@ import usePlayAudio from "../../../business-logic/audio/usePlayAudio.js";
 import { useTts } from "../../../business-logic/backend/hooks.js";
 import IconButton from "../../design-system/IconButton/IconButton.jsx";
 import * as cs from "./ConversationMessages.css.js";
+import ThinkingTime from "./ThinkingTime.jsx";
 
 interface Props {
   message: Message.ContentAssistant;
   conversation: Conversation;
 }
-export default function AssistantContentMessage({ message }: Props) {
+export default function AssistantContentMessage({
+  message,
+  conversation,
+}: Props) {
   const intl = useIntl();
 
   const isMutatingRef = useRef(false);
@@ -56,24 +61,33 @@ export default function AssistantContentMessage({ message }: Props) {
       >
         {textPart.text}
       </Markdown>
-      <IconButton
-        label={
-          isPlaying
-            ? intl.formatMessage({ defaultMessage: "Pause" })
-            : intl.formatMessage({ defaultMessage: "Play" })
-        }
-        variant="invisible"
-        onPress={speak}
-        className={cs.AssistantContentMessage.playPauseButton}
-      >
-        {isPending ? (
-          <PiSpinnerGap />
-        ) : isPlaying ? (
-          <PiPauseFill />
-        ) : (
-          <PiSpeakerSimpleHighFill />
-        )}
-      </IconButton>
+      <div className={cs.AssistantContentMessage.infoAndActions}>
+        <ThinkingTime message={message} conversation={conversation} />
+        <Separator
+          orientation="vertical"
+          className={cs.AssistantContentMessage.infoAndActionsSeparator}
+        />
+        <IconButton
+          label={
+            isPending
+              ? intl.formatMessage({ defaultMessage: "Synthesizing" })
+              : isPlaying
+                ? intl.formatMessage({ defaultMessage: "Pause" })
+                : intl.formatMessage({ defaultMessage: "Play" })
+          }
+          variant="invisible"
+          onPress={speak}
+          className={cs.AssistantContentMessage.infoAndActionsAction}
+        >
+          {isPending ? (
+            <PiSpinnerGap />
+          ) : isPlaying ? (
+            <PiPauseFill />
+          ) : (
+            <PiSpeakerSimpleHighFill />
+          )}
+        </IconButton>
+      </div>
     </div>
   );
 }

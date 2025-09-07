@@ -4,6 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const ConversationMessages = {
   root: style({
     width: "100%",
+    containerType: "inline-size",
   }),
 };
 
@@ -51,10 +52,14 @@ export const UserMessage = {
     background: vars.colors.background.surfaceHighlight,
     borderRadius: vars.borders.radius.xl,
     padding: vars.spacing._4,
-    marginInlineStart: "40%",
-    marginBlock: vars.spacing._8,
+    marginBlock: vars.spacing._4,
     fontSize: vars.typography.fontSizes.sm,
     position: "relative",
+    "@container": {
+      "(min-width: 720px)": {
+        marginInlineStart: "40%",
+      },
+    },
   }),
 
   playPauseButton: style({
@@ -67,12 +72,17 @@ export const UserMessage = {
 
 export const AssistantContentMessage = {
   root: style({
-    marginBlock: vars.spacing._8,
+    marginBlockStart: vars.spacing._8,
+    marginBlockEnd: 0,
   }),
 
-  playPauseButton: style({
-    display: "block",
-    marginBlockStart: vars.spacing._2,
+  infoAndActions: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
+    marginBlockStart: vars.spacing._4,
+    fontSize: vars.typography.fontSizes.xs,
+    color: vars.colors.text.secondary,
     opacity: 0,
     transition: "opacity 500ms",
     transitionDelay: "100ms",
@@ -80,9 +90,19 @@ export const AssistantContentMessage = {
       "div:hover > &": {
         opacity: 1,
       },
-      "&:focus": {
+      "&:has(:focus)": {
         opacity: 1,
       },
     },
+  }),
+
+  infoAndActionsSeparator: style({
+    background: vars.colors.border.default,
+    height: vars.spacing._4,
+    width: vars.borders.width.thin,
+  }),
+
+  infoAndActionsAction: style({
+    color: vars.colors.text.secondary,
   }),
 };

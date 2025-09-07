@@ -8,6 +8,9 @@
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
+  "AssistantContentMessage.tsx_IETTf7": {
+    "defaultMessage": "Synthesizing"
+  },
   "AssistantContentMessage.tsx_J3ca41": {
     "defaultMessage": "Play"
   },
@@ -524,6 +527,9 @@
   "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": {
     "defaultMessage": "{collection} » Document created"
   },
+  "ThinkingTime.tsx_uKcW4C": {
+    "defaultMessage": "Thought for {time}"
+  },
   "TiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
@@ -604,6 +610,12 @@
   },
   "UserMessageContentInput.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
+  },
+  "formatDuration.ts_26OSN4": {
+    "defaultMessage": "{minutes, plural, one {1 minute} other {# minutes}} {seconds} seconds"
+  },
+  "formatDuration.ts_lf6GDO": {
+    "defaultMessage": "{seconds, number, ::.##} seconds"
   },
   "summaryPropertyDefinition.ts_HAlOn1": {
     "defaultMessage": "Name"
