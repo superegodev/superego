@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Panel from "./Panel.js";
 import * as cs from "./Shell.css.js";
+import { ShellProvider } from "./useShell.jsx";
 
 interface Props {
   locale: string;
@@ -9,9 +10,18 @@ interface Props {
 }
 export default function Shell({ locale, direction, children }: Props) {
   return (
-    <div lang={locale} dir={direction} className={cs.Shell.root}>
-      {children}
-    </div>
+    <ShellProvider>
+      {({ isPrimarySidebarOpen }) => (
+        <div
+          lang={locale}
+          dir={direction}
+          className={cs.Shell.root}
+          data-primary-sidebar-open={isPrimarySidebarOpen ? "true" : "false"}
+        >
+          {children}
+        </div>
+      )}
+    </ShellProvider>
   );
 }
 

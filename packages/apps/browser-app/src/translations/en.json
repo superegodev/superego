@@ -458,6 +458,12 @@
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },
+  "PanelHeader.tsx_+G35mR": {
+    "defaultMessage": "Open sidebar"
+  },
+  "PanelHeader.tsx_HyS0qp": {
+    "defaultMessage": "Close sidebar"
+  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
