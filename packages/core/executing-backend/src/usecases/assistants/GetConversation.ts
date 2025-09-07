@@ -6,11 +6,14 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
+import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
+import CollectionsList from "../collections/List.js";
 
 export default class AssistantsGetConversation extends Usecase<
   Backend["assistants"]["getConversation"]
@@ -25,6 +28,15 @@ export default class AssistantsGetConversation extends Usecase<
       );
     }
 
-    return makeSuccessfulResult(makeConversation(conversation));
+    const { data: collections } = await this.sub(CollectionsList).exec();
+    if (!collections) {
+      throw new UnexpectedAssistantError("Getting collections failed.");
+    }
+    const contextFingerprint =
+      await getConversationContextFingerprint(collections);
+
+    return makeSuccessfulResult(
+      makeConversation(conversation, contextFingerprint),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import {
   type Conversation,
+  ConversationFormat,
   type Message,
   MessageRole,
 } from "@superego/backend";
@@ -28,7 +29,7 @@ export default function ConversationMessage({
         return (
           <AssistantContentMessage
             message={message}
-            isLastMessage={last(conversation.messages) === message}
+            conversation={conversation}
           />
         );
       }

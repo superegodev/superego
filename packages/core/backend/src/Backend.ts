@@ -33,6 +33,7 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
@@ -266,6 +267,8 @@ export default interface Backend {
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
+
+    tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
   };
 
   backgroundJobs: {

@@ -6,7 +6,6 @@ import {
   type ConversationFormat,
   ConversationStatus,
   type Message,
-  MessageContentPartType,
   MessageRole,
   type UnexpectedError,
 } from "@superego/backend";
@@ -32,6 +31,8 @@ export default class AssistantsStartConversation extends Usecase<
     if (!collections) {
       throw new UnexpectedAssistantError("Getting collections failed.");
     }
+    const contextFingerprint =
+      await getConversationContextFingerprint(collections);
 
     const now = new Date();
     const userMessage: Message.User = {
@@ -43,8 +44,8 @@ export default class AssistantsStartConversation extends Usecase<
       id: Id.generate.conversation(),
       assistant: assistant,
       format: format,
-      title: AssistantsStartConversation.getTitle(userMessageContent),
-      contextFingerprint: await getConversationContextFingerprint(collections),
+      title: null,
+      contextFingerprint: contextFingerprint,
       messages: [userMessage],
       status: ConversationStatus.Processing,
       error: null,
@@ -56,14 +57,8 @@ export default class AssistantsStartConversation extends Usecase<
       id: conversation.id,
     });
 
-    return makeSuccessfulResult(makeConversation(conversation));
-  }
-
-  private static getTitle(userMessageContent: Message.User["content"]): string {
-    return (
-      userMessageContent.find(
-        (part) => part.type === MessageContentPartType.Text,
-      )?.text ?? "🗣️"
+    return makeSuccessfulResult(
+      makeConversation(conversation, contextFingerprint),
     );
   }
 }

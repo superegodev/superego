@@ -2,7 +2,11 @@ import type { Conversation } from "@superego/backend";
 import type ConversationEntity from "../entities/ConversationEntity.js";
 
 export default function makeConversation(
-  conversation: ConversationEntity,
+  { contextFingerprint, ...conversation }: ConversationEntity,
+  currentContextFingerprint: string,
 ): Conversation {
-  return { ...conversation };
+  return {
+    ...conversation,
+    canBeContinued: contextFingerprint === currentContextFingerprint,
+  };
 }

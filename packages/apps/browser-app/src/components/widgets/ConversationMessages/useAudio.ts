@@ -7,7 +7,9 @@ import {
   useState,
 } from "react";
 
-export default function useAudio(audioContent: AudioContent | undefined): {
+export default function useAudio(
+  audioContent: AudioContent | undefined | null,
+): {
   isPlaying: boolean;
   togglePlayback: () => void;
 } {

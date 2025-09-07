@@ -1,47 +1,46 @@
-import type { Message } from "@superego/backend";
+import type { AudioContent, Conversation, Message } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
-import { useEffect } from "react";
-import { PiPauseFill, PiPlayFill } from "react-icons/pi";
+import { useEffect, useRef, useState } from "react";
+import { PiPauseFill, PiSpeakerHigh, PiSpinnerGap } from "react-icons/pi";
 import { useIntl } from "react-intl";
+import { useTts } from "../../../business-logic/backend/hooks.js";
 import IconButton from "../../design-system/IconButton/IconButton.jsx";
 import * as cs from "./ConversationMessages.css.js";
 import useAudio from "./useAudio.js";
 
 interface Props {
   message: Message.ContentAssistant;
-  isLastMessage: boolean;
+  conversation: Conversation;
 }
-export default function AssistantContentMessage({
-  message,
-  isLastMessage,
-}: Props) {
+export default function AssistantContentMessage({ message }: Props) {
   const intl = useIntl();
 
-  const [textPart] = message.content;
-  const { isPlaying, togglePlayback } = useAudio(textPart?.audio);
+  const isMutatingRef = useRef(false);
+  const [audio, setAudio] = useState<AudioContent | null>(null);
+  const { mutate, isPending } = useTts();
 
-  // Autoplay the last message.
+  const [textPart] = message.content;
+  const { isPlaying, togglePlayback } = useAudio(audio);
+
+  // Play when we get the audio. (Having gotten the audio means that there was
+  // a request to play the message.)
   useEffect(() => {
-    if (isLastMessage && Date.now() - message.createdAt.getTime() < 10_000) {
+    togglePlayback();
+  }, [togglePlayback]);
+
+  const speak = async () => {
+    if (audio) {
       togglePlayback();
+    } else {
+      isMutatingRef.current = true;
+      const { data } = await mutate(textPart.text);
+      setAudio(data);
+      isMutatingRef.current = false;
     }
-  }, [message, togglePlayback, isLastMessage]);
+  };
+
   return (
     <div className={cs.AssistantContentMessage.root}>
-      {textPart.audio ? (
-        <IconButton
-          label={
-            isPlaying
-              ? intl.formatMessage({ defaultMessage: "Pause" })
-              : intl.formatMessage({ defaultMessage: "Play" })
-          }
-          variant="primary"
-          onPress={togglePlayback}
-          className={cs.AssistantContentMessage.playPauseButton}
-        >
-          {isPlaying ? <PiPauseFill /> : <PiPlayFill />}
-        </IconButton>
-      ) : null}
       <Markdown
         key={textPart.text}
         options={{
@@ -53,6 +52,24 @@ export default function AssistantContentMessage({
       >
         {textPart.text}
       </Markdown>
+      <IconButton
+        label={
+          isPlaying
+            ? intl.formatMessage({ defaultMessage: "Pause" })
+            : intl.formatMessage({ defaultMessage: "Play" })
+        }
+        variant="invisible"
+        onPress={speak}
+        className={cs.AssistantContentMessage.playPauseButton}
+      >
+        {isPending ? (
+          <PiSpinnerGap className={cs.AssistantContentMessage.spinner} />
+        ) : isPlaying ? (
+          <PiPauseFill />
+        ) : (
+          <PiSpeakerHigh />
+        )}
+      </IconButton>
     </div>
   );
 }

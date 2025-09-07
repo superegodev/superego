@@ -51,7 +51,7 @@ export default function ConversationsTable({ conversations }: Props) {
             })}
           >
             <Table.Cell>
-              {ConversationUtils.getDisplayTitle(conversation)}
+              {ConversationUtils.getDisplayTitle(conversation, intl)}
             </Table.Cell>
             <Table.Cell>
               <ConversationStatus status={conversation.status} />

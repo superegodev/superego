@@ -14,6 +14,7 @@ import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPro
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
 import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
+import AssistantsTts from "./usecases/assistants/Tts.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -100,6 +101,7 @@ export default class ExecutingBackend implements Backend {
         AssistantsGetDeveloperPrompts,
         false,
       ),
+      tts: this.makeUsecase(AssistantsTts, false),
     };
 
     this.backgroundJobs = {

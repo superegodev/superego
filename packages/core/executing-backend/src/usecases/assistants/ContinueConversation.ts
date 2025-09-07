@@ -79,6 +79,8 @@ export default class AssistantsContinueConversation extends Usecase<
       id,
     });
 
-    return makeSuccessfulResult(makeConversation(updatedConversation));
+    return makeSuccessfulResult(
+      makeConversation(updatedConversation, contextFingerprint),
+    );
   }
 }

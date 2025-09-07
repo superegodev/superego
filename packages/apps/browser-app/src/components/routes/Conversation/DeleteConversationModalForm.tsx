@@ -31,7 +31,10 @@ export default function DeleteConversationModalForm({
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
-  const conversationName = ConversationUtils.getDisplayTitle(conversation);
+  const conversationName = ConversationUtils.getDisplayTitle(
+    conversation,
+    intl,
+  );
 
   const { result, mutate } = useDeleteConversation();
 

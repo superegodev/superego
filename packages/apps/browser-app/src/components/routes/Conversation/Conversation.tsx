@@ -33,7 +33,10 @@ export default function Conversation({ conversationId }: Props) {
             title={intl.formatMessage(
               { defaultMessage: "🤖\u2002Conversations » {conversation}" },
               {
-                conversation: ConversationUtils.getDisplayTitle(conversation),
+                conversation: ConversationUtils.getDisplayTitle(
+                  conversation,
+                  intl,
+                ),
               },
             )}
             actionsAriaLabel={intl.formatMessage({

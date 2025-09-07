@@ -1,7 +1,6 @@
 import {
   AssistantName,
   type Collection,
-  ConversationFormat,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
@@ -24,6 +23,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import type InferenceService from "../../requirements/InferenceService.js";
+import generateTitle from "../../utils/generateTitle.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -87,19 +87,23 @@ export default class AssistantsProcessConversation extends Usecase {
         conversation.messages,
       );
 
-      const messages =
-        await assistant.generateAndProcessNextMessages(transcribedMessages);
-
-      const synthesizedMessages = await this.synthesizeLastAssistantMessage(
-        inferenceService,
-        conversation.format,
-        messages,
-      );
+      const [messages, title] = await Promise.all([
+        assistant.generateAndProcessNextMessages(transcribedMessages),
+        conversation.title === null
+          ? generateTitle(
+              inferenceService,
+              transcribedMessages.find(
+                (message) => message.role === MessageRole.User,
+              )!,
+            )
+          : conversation.title,
+      ]);
 
       updatedConversation = {
         ...conversation,
+        title: title,
         status: ConversationStatus.Idle,
-        messages: synthesizedMessages,
+        messages: messages,
       };
     } catch (error) {
       await this.repos.rollbackToSavepoint(beforeGenerateAndProcessSavepoint);
@@ -178,65 +182,6 @@ export default class AssistantsProcessConversation extends Usecase {
               : part,
           ),
         )) as NonEmptyArray<MessageContentPart>,
-      },
-    ];
-  }
-
-  private async synthesizeLastAssistantMessage(
-    inferenceService: InferenceService,
-    format: ConversationFormat,
-    messages: Message[],
-  ): Promise<Message[]> {
-    const otherMessages = [...messages];
-    const lastMessage = otherMessages.pop();
-    const lastUserMessage = messages.findLast(
-      (message) => message.role === MessageRole.User,
-    );
-
-    // There should always be a last message, it should always be an assistant
-    // content message, and it should always not have been synthesized. There
-    // should also always be a last user message. Nonetheless, we check to avoid
-    // synthesizing unnecessarily.
-    if (
-      !lastMessage ||
-      !lastUserMessage ||
-      lastMessage.role !== MessageRole.Assistant ||
-      !("content" in lastMessage) ||
-      lastMessage.content.some(
-        (part) => "audio" in part && part.audio !== undefined,
-      )
-    ) {
-      return messages;
-    }
-
-    // Only synthesize if it's a voice conversation and the last user message
-    // was an audio message.
-    if (
-      format === ConversationFormat.Text ||
-      lastUserMessage.content.every((part) => part.audio === undefined)
-    ) {
-      return messages;
-    }
-
-    return [
-      ...otherMessages,
-      {
-        ...lastMessage,
-        content: (await Promise.all(
-          lastMessage.content.map(async (part) =>
-            part.type === MessageContentPartType.Text
-              ? {
-                  type: MessageContentPartType.Text,
-                  text: part.text,
-                  audio: await inferenceService
-                    .tts(part.text)
-                    // TODO: consider if it makes sense to proceed, or if we
-                    // should instead abort.
-                    .catch(() => undefined),
-                }
-              : part,
-          ),
-        )) as NonEmptyArray<MessageContentPart.Text>,
       },
     ];
   }

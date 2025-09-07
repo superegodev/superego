@@ -190,6 +190,8 @@ export const useDeleteConversation = makeUseBackendMutation(
   ],
 );
 
+export const useTts = makeUseBackendMutation("assistants", "tts", () => []);
+
 /*
  * Background jobs
  */

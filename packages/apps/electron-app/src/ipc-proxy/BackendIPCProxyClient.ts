@@ -57,6 +57,7 @@ export default class BackendIPCProxyClient implements Backend {
       getDeveloperPrompts: this.makeMainIpcCall(
         "assistants.getDeveloperPrompts",
       ),
+      tts: this.makeMainIpcCall("assistants.tts"),
     };
 
     this.backgroundJobs = {

@@ -4,11 +4,18 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import type { IntlShape } from "react-intl";
 
 const DISPLAY_NAME_LENGTH = 16;
 
 export default {
-  getDisplayTitle({ title }: Pick<Conversation, "title">): string {
+  getDisplayTitle(
+    { title }: Pick<Conversation, "title">,
+    intl: IntlShape,
+  ): string {
+    if (title === null) {
+      return intl.formatMessage({ defaultMessage: "New conversation" });
+    }
     const segments = [
       ...new Intl.Segmenter(undefined, { granularity: "word" }).segment(title),
     ];

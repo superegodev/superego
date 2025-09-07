@@ -8,12 +8,8 @@ type Conversation = {
   id: ConversationId;
   assistant: AssistantName;
   format: ConversationFormat;
-  title: string;
-  // TODO: hide this property from the Backend types, keeping it only on the
-  // entity. Use instead canBeContinued + canBeRecovered.
-  contextFingerprint: string;
-  // TODO: add model that was used. This way we can ensure that a conversation
-  // is only done with one model.
+  title: string | null;
+  canBeContinued: boolean;
   messages: Message[];
   status: ConversationStatus;
   error: { name: string; details: any } | null;
