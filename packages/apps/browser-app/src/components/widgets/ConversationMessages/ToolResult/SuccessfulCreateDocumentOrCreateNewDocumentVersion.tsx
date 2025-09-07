@@ -1,4 +1,9 @@
-import { ToolName, type ToolResult } from "@superego/backend";
+import {
+  type SummaryProperty,
+  type SummaryPropertyDefinition,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
@@ -25,60 +30,71 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
     toolResult.output.data;
   const collection = CollectionUtils.findCollection(collections, collectionId);
   return (
-    <DataLoader
-      queries={[
-        getDocumentVersionQuery([collectionId, documentId, documentVersionId]),
-      ]}
+    <Link
+      to={{ name: RouteName.Document, collectionId, documentId }}
+      className={cs.SuccessfulCreateDocument.root}
     >
-      {(documentVersion) => (
-        <Link
-          to={{ name: RouteName.Document, collectionId, documentId }}
-          className={cs.SuccessfulCreateDocument.root}
+      <h5 className={cs.SuccessfulCreateDocument.title}>
+        {toolResult.tool === ToolName.CreateDocument ? (
+          <FormattedMessage
+            defaultMessage="{collection} » Document created"
+            values={{
+              collection: collection
+                ? CollectionUtils.getDisplayName(collection)
+                : collectionId,
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage="{collection} » Document updated"
+            values={{
+              collection: collection
+                ? CollectionUtils.getDisplayName(collection)
+                : collectionId,
+            }}
+          />
+        )}
+      </h5>
+      <dl className={cs.SuccessfulCreateDocument.summaryProperties}>
+        <DataLoader
+          queries={[
+            getDocumentVersionQuery([
+              collectionId,
+              documentId,
+              documentVersionId,
+            ]),
+          ]}
+          renderLoading={() =>
+            collection?.latestVersion.settings.summaryProperties.map(
+              renderSummaryProperty,
+            )
+          }
         >
-          <h5 className={cs.SuccessfulCreateDocument.title}>
-            {toolResult.tool === ToolName.CreateDocument ? (
-              <FormattedMessage
-                defaultMessage="{collection} » Document created"
-                values={{
-                  collection: collection
-                    ? CollectionUtils.getDisplayName(collection)
-                    : collectionId,
-                }}
-              />
-            ) : (
-              <FormattedMessage
-                defaultMessage="{collection} » Document updated"
-                values={{
-                  collection: collection
-                    ? CollectionUtils.getDisplayName(collection)
-                    : collectionId,
-                }}
-              />
-            )}
-          </h5>
-          <dl className={cs.SuccessfulCreateDocument.summaryProperties}>
-            {documentVersion.summaryProperties.map(
-              ({ name, value, valueComputationError }) => (
-                <div
-                  key={name}
-                  className={cs.SuccessfulCreateDocument.summaryProperty}
-                >
-                  <dt
-                    className={cs.SuccessfulCreateDocument.summaryPropertyName}
-                  >
-                    {name}
-                  </dt>
-                  <dd
-                    className={cs.SuccessfulCreateDocument.summaryPropertyValue}
-                  >
-                    {value ?? valueComputationError.details.message}
-                  </dd>
-                </div>
-              ),
-            )}
-          </dl>
-        </Link>
-      )}
-    </DataLoader>
+          {({ summaryProperties }) =>
+            summaryProperties.map(renderSummaryProperty)
+          }
+        </DataLoader>
+      </dl>
+    </Link>
+  );
+}
+
+function renderSummaryProperty(
+  property: SummaryProperty | SummaryPropertyDefinition,
+) {
+  return (
+    <div
+      key={property.name}
+      className={cs.SuccessfulCreateDocument.summaryProperty}
+    >
+      <dt className={cs.SuccessfulCreateDocument.summaryPropertyName}>
+        {property.name}
+      </dt>
+      <dd className={cs.SuccessfulCreateDocument.summaryPropertyValue}>
+        {"value" in property
+          ? (property.value ?? property.valueComputationError.details.message)
+          : null}
+      </dd>
+    </div>
   );
 }

@@ -20,11 +20,12 @@ type ExtractBackendQueryData<
 interface Props<Queries extends readonly BackendQuery<any>[]> {
   queries: [...Queries];
   renderErrors?: ((errors: ResultError<any, any>[]) => ReactNode) | undefined;
+  renderLoading?: (() => ReactNode) | undefined;
   children: (...args: ExtractBackendQueryData<Queries>) => ReactNode;
 }
 export default function DataLoader<
   Queries extends readonly BackendQuery<any>[],
->({ queries, renderErrors, children }: Props<Queries>) {
+>({ queries, renderErrors, renderLoading, children }: Props<Queries>) {
   const backend = useBackend();
   const results: UseQueryResult<Result<any, any>>[] = useQueries({
     queries: queries.map((query) => query(backend)),
@@ -32,7 +33,7 @@ export default function DataLoader<
 
   const anyPending = results.some(({ isPending }) => isPending);
   if (anyPending) {
-    return null;
+    return renderLoading ? renderLoading() : null;
   }
 
   const errors = results

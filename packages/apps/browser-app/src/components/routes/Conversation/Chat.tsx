@@ -21,18 +21,29 @@ export default function Chat({ conversation, showToolsCalls }: Props) {
 
   // When messages change, scroll to bottom and - if the last message is an
   // assistant message - focus the input.
+  const lastMessage = last(conversation.messages);
+  const lastMessageTimestamp =
+    lastMessage && "createdAt" in lastMessage
+      ? lastMessage.createdAt.getTime()
+      : null;
   const inputRef = useRef<HTMLTextAreaElement>(null);
   useLayoutEffect(() => {
-    // Hack: scrolling doesn't work unless we delay it a bit.
-    setTimeout(() => {
-      document
-        .querySelector('[data-slot="Main"]')
-        ?.scrollTo({ top: 1e6, behavior: "smooth" });
-    }, 15);
-    if (last(conversation.messages)?.role === MessageRole.Assistant) {
+    if (lastMessageTimestamp) {
+      // Hack: scrolling doesn't work unless we delay it a bit.
+      setTimeout(() => {
+        document
+          .querySelector('[data-slot="Main"]')
+          ?.scrollTo({
+            top: 1e6,
+            behavior:
+              Date.now() - lastMessageTimestamp < 10_000 ? "smooth" : "instant",
+          });
+      }, 15);
+    }
+    if (lastMessage?.role === MessageRole.Assistant) {
       inputRef.current?.focus();
     }
-  }, [conversation.messages]);
+  }, [lastMessage, lastMessageTimestamp]);
 
   return (
     <>

@@ -39,6 +39,7 @@ export const SuccessfulCreateDocument = {
 
   summaryPropertyValue: style({
     display: "table-cell",
+    minWidth: vars.spacing._40,
     verticalAlign: "middle",
     paddingInlineEnd: vars.spacing._8,
     color: vars.colors.text.primary,
