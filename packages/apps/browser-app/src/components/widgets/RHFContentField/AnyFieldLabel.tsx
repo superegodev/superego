@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Button, TooltipTrigger } from "react-aria-components";
 import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
-import Tooltip from "../../design-system/Tooltip/Tooltip.jsx";
+import Tooltip from "../../design-system/Tooltip/Tooltip.js";
 import * as cs from "./RHFContentField.css.js";
 
 interface Props {

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
 import classnames from "../../../utils/classnames.js";
 import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.js";
-import SendRecordToolbar from "./SendRecordToolbar.jsx";
+import SendRecordToolbar from "./SendRecordToolbar.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {

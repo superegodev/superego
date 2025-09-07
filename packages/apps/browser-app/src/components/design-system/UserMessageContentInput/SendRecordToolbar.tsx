@@ -6,7 +6,7 @@ import {
   PiX,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import IconButton from "../IconButton/IconButton.jsx";
+import IconButton from "../IconButton/IconButton.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {

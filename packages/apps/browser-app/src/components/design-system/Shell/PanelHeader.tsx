@@ -7,7 +7,7 @@ import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import IconLink from "../IconLink/IconLink.js";
 import * as cs from "./Shell.css.js";
-import { useShell } from "./useShell.jsx";
+import { useShell } from "./useShell.js";
 
 type Action = {
   label: string;

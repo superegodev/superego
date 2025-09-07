@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Panel from "./Panel.js";
 import * as cs from "./Shell.css.js";
-import { ShellProvider } from "./useShell.jsx";
+import { ShellProvider } from "./useShell.js";
 
 interface Props {
   locale: string;

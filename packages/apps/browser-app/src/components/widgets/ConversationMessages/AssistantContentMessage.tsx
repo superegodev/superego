@@ -10,9 +10,9 @@ import {
 import { useIntl } from "react-intl";
 import usePlayAudio from "../../../business-logic/audio/usePlayAudio.js";
 import { useTts } from "../../../business-logic/backend/hooks.js";
-import IconButton from "../../design-system/IconButton/IconButton.jsx";
+import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
-import ThinkingTime from "./ThinkingTime.jsx";
+import ThinkingTime from "./ThinkingTime.js";
 
 interface Props {
   message: Message.ContentAssistant;
