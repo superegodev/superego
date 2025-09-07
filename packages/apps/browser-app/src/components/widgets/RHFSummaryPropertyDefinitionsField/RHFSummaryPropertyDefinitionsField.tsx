@@ -59,7 +59,7 @@ export default function RHFSummaryPropertyDefinitionsField({
       </FieldLabel>
       <Fieldset.Fields>
         <Alert
-          variant="info"
+          variant="neutral"
           className={cs.RHFSummaryPropertyDefinitionsField.description}
         >
           <FormattedMessage

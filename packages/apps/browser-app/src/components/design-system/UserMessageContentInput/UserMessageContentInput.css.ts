@@ -13,7 +13,7 @@ export const UserMessageContentInput = {
     paddingBlock: vars.spacing._3,
     borderRadius: vars.borders.radius.xl3,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
-    boxShadow: `0 ${vars.spacing._05} ${vars.spacing._05} rgba(from ${vars.colors.neutral._12} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._05} ${vars.spacing._05} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
   }),
 
   textArea: style({
@@ -22,6 +22,8 @@ export const UserMessageContentInput = {
     fontFamily: vars.typography.fontFamilies.sansSerif,
     fontSize: vars.typography.fontSizes.sm,
     border: 0,
+    background: vars.colors.background.surface,
+    color: vars.colors.text.primary,
     // Experimental property:
     // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
     //

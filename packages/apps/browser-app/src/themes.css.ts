@@ -325,24 +325,24 @@ export const dark = createTheme(vars, {
     accent: colors.oranges._4,
     semantic: {
       info: {
-        border: colors.blues._5,
-        background: colors.blues._1,
-        text: colors.blues._5,
+        border: colors.blues._1,
+        background: colors.blues._5,
+        text: colors.blues._1,
       },
       success: {
-        border: colors.greens._5,
-        background: colors.greens._1,
-        text: colors.greens._5,
+        border: colors.greens._1,
+        background: colors.greens._5,
+        text: colors.greens._1,
       },
       pending: {
-        border: colors.oranges._5,
-        background: colors.oranges._1,
-        text: colors.oranges._5,
+        border: colors.oranges._1,
+        background: colors.oranges._5,
+        text: colors.oranges._1,
       },
       error: {
-        border: colors.reds._5,
-        background: colors.reds._1,
-        text: colors.reds._5,
+        border: colors.reds._1,
+        background: colors.reds._5,
+        text: colors.reds._1,
       },
     },
     button: {

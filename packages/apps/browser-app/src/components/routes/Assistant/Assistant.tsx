@@ -36,6 +36,7 @@ export default function Assistant() {
   };
   return (
     <Shell.Panel slot="Main">
+      <Shell.Panel.Header />
       <Shell.Panel.Content>
         <div className={cs.Assistant.root}>
           <Hero />

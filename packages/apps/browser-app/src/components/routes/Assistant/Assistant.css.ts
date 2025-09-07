@@ -32,7 +32,7 @@ export const Hero = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    paddingBlockStart: vars.spacing._32,
+    paddingBlockStart: vars.spacing._16,
   }),
 
   logo: style({
