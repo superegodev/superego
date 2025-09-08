@@ -52,6 +52,14 @@ export const UserMessageContentInput = {
   }),
 };
 
+const sendRecordToolbarButtonBase = style({
+  padding: 0,
+  marginInlineStart: `calc(-1 * ${vars.spacing._2})`,
+  height: vars.spacing._10,
+  width: vars.spacing._10,
+  borderRadius: vars.borders.radius.full,
+  fontSize: vars.typography.fontSizes.xl,
+});
 export const SendRecordToolbar = {
   root: style({
     position: "absolute",
@@ -61,12 +69,12 @@ export const SendRecordToolbar = {
     right: vars.spacing._4,
   }),
 
-  button: style({
-    padding: 0,
-    marginInlineStart: `calc(-1 * ${vars.spacing._2})`,
-    height: vars.spacing._10,
-    width: vars.spacing._10,
-    borderRadius: vars.borders.radius.full,
-    fontSize: vars.typography.fontSizes.xl,
-  }),
+  button: sendRecordToolbarButtonBase,
+
+  disabledLookingButton: style([
+    sendRecordToolbarButtonBase,
+    {
+      color: vars.colors.button.invisible.disabled.text,
+    },
+  ]),
 };

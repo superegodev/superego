@@ -6,8 +6,8 @@ import {
 import { useLayoutEffect, useRef } from "react";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
 import last from "../../../utils/last.js";
-import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
 import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.js";
+import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Conversation.css.js";
 
 interface Props {

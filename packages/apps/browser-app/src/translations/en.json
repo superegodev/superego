@@ -8,11 +8,14 @@
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
-  "AssistantContentMessage.tsx_IETTf7": {
-    "defaultMessage": "Synthesizing"
+  "AssistantContentMessage.tsx_FUvUuG": {
+    "defaultMessage": "Configure speech to play assistant messages"
   },
   "AssistantContentMessage.tsx_J3ca41": {
     "defaultMessage": "Play"
+  },
+  "AssistantContentMessage.tsx_mM7O7f": {
+    "defaultMessage": "Synthesizing speech..."
   },
   "AssistantContentMessage.tsx_tFFMkF": {
     "defaultMessage": "Pause"
@@ -512,6 +515,9 @@
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
+  "SendRecordToolbar.tsx_/8QiK8": {
+    "defaultMessage": "Configure assistant for transcription"
+  },
   "SendRecordToolbar.tsx_3LSnIf": {
     "defaultMessage": "Finish and send"
   },
@@ -523,6 +529,9 @@
   },
   "SendRecordToolbar.tsx_9WRlF4": {
     "defaultMessage": "Send"
+  },
+  "SendRecordToolbar.tsx_kNl1RN": {
+    "defaultMessage": "Configure assistant"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
@@ -610,6 +619,9 @@
   },
   "UserMessage.tsx_tFFMkF": {
     "defaultMessage": "Pause"
+  },
+  "UserMessageContentInput.tsx_8MXjTC": {
+    "defaultMessage": "Configure assistant to start chatting"
   },
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Message assistant"

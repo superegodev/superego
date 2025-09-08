@@ -33,7 +33,7 @@ export default function useRecordAudio(
     const mediaRecorder = new MediaRecorder(stream, { audioBitsPerSecond });
     mediaRecorderRef.current = mediaRecorder;
 
-    let recordedChunks: BlobPart[] = [];
+    const recordedChunks: BlobPart[] = [];
     mediaRecorder.ondataavailable = (evt) => {
       if (evt.data && evt.data.size > 0) {
         recordedChunks.push(evt.data);
@@ -41,20 +41,16 @@ export default function useRecordAudio(
     };
 
     mediaRecorder.onstop = async () => {
-      if (hasCanceledRef.current) {
-        recordedChunks = [];
-        hasCanceledRef.current = false;
-        return;
-      }
-
       try {
-        const chunksBlob = new Blob(recordedChunks, {
-          type: mediaRecorder.mimeType,
-        });
-        onFinish({
-          content: new Uint8Array(await chunksBlob.arrayBuffer()),
-          contentType: mediaRecorder.mimeType,
-        });
+        if (!hasCanceledRef.current) {
+          const chunksBlob = new Blob(recordedChunks, {
+            type: mediaRecorder.mimeType,
+          });
+          onFinish({
+            content: new Uint8Array(await chunksBlob.arrayBuffer()),
+            contentType: mediaRecorder.mimeType,
+          });
+        }
       } finally {
         cleanup(mediaStreamRef, mediaRecorderRef, hasCanceledRef);
       }

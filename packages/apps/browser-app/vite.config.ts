@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import optimizeLocales from "@react-aria/optimize-locales-plugin";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
@@ -31,4 +32,14 @@ export default defineConfig({
     }),
     vanillaExtractPlugin(),
   ],
+  test: {
+    setupFiles: ["./src/vitest-setup.ts"],
+    browser: {
+      provider: "playwright",
+      enabled: true,
+      headless: true,
+      screenshotFailures: false,
+      instances: [{ browser: "chromium" }],
+    },
+  },
 });

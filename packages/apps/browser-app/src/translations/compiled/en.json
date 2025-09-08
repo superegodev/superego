@@ -17,16 +17,22 @@
       "value": "Previous conversations"
     }
   ],
-  "AssistantContentMessage.tsx_IETTf7": [
+  "AssistantContentMessage.tsx_FUvUuG": [
     {
       "type": 0,
-      "value": "Synthesizing"
+      "value": "Configure speech to play assistant messages"
     }
   ],
   "AssistantContentMessage.tsx_J3ca41": [
     {
       "type": 0,
       "value": "Play"
+    }
+  ],
+  "AssistantContentMessage.tsx_mM7O7f": [
+    {
+      "type": 0,
+      "value": "Synthesizing speech..."
     }
   ],
   "AssistantContentMessage.tsx_tFFMkF": [
@@ -1269,6 +1275,12 @@
       "value": "Icon"
     }
   ],
+  "SendRecordToolbar.tsx_/8QiK8": [
+    {
+      "type": 0,
+      "value": "Configure assistant for transcription"
+    }
+  ],
   "SendRecordToolbar.tsx_3LSnIf": [
     {
       "type": 0,
@@ -1291,6 +1303,12 @@
     {
       "type": 0,
       "value": "Send"
+    }
+  ],
+  "SendRecordToolbar.tsx_kNl1RN": [
+    {
+      "type": 0,
+      "value": "Configure assistant"
     }
   ],
   "StructField.tsx_Dp51E2": [
@@ -1497,6 +1515,12 @@
     {
       "type": 0,
       "value": "Pause"
+    }
+  ],
+  "UserMessageContentInput.tsx_8MXjTC": [
+    {
+      "type": 0,
+      "value": "Configure assistant to start chatting"
     }
   ],
   "UserMessageContentInput.tsx_XE7R4v": [

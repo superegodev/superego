@@ -8,9 +8,12 @@ import {
   PiSpinnerGap,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
+import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import usePlayAudio from "../../../business-logic/audio/usePlayAudio.js";
 import { useTts } from "../../../business-logic/backend/hooks.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
+import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./ConversationMessages.css.js";
 import ThinkingTime from "./ThinkingTime.js";
 
@@ -23,6 +26,8 @@ export default function AssistantContentMessage({
   conversation,
 }: Props) {
   const intl = useIntl();
+
+  const isInferenceConfigured = useIsInferenceConfigured();
 
   const isMutatingRef = useRef(false);
   const [audio, setAudio] = useState<AudioContent | null>(null);
@@ -67,26 +72,42 @@ export default function AssistantContentMessage({
           orientation="vertical"
           className={cs.AssistantContentMessage.infoAndActionsSeparator}
         />
-        <IconButton
-          label={
-            isPending
-              ? intl.formatMessage({ defaultMessage: "Synthesizing" })
-              : isPlaying
-                ? intl.formatMessage({ defaultMessage: "Pause" })
-                : intl.formatMessage({ defaultMessage: "Play" })
-          }
-          variant="invisible"
-          onPress={speak}
-          className={cs.AssistantContentMessage.infoAndActionsAction}
-        >
-          {isPending ? (
-            <PiSpinnerGap />
-          ) : isPlaying ? (
-            <PiPauseFill />
-          ) : (
+        {isInferenceConfigured.speech ? (
+          <IconButton
+            variant="invisible"
+            label={
+              isPending
+                ? intl.formatMessage({
+                    defaultMessage: "Synthesizing speech...",
+                  })
+                : isPlaying
+                  ? intl.formatMessage({ defaultMessage: "Pause" })
+                  : intl.formatMessage({ defaultMessage: "Play" })
+            }
+            onPress={speak}
+            className={cs.AssistantContentMessage.infoAndActionsAction}
+          >
+            {isPending ? (
+              <PiSpinnerGap />
+            ) : isPlaying ? (
+              <PiPauseFill />
+            ) : (
+              <PiSpeakerSimpleHighFill />
+            )}
+          </IconButton>
+        ) : (
+          <IconLink
+            variant="invisible"
+            label={intl.formatMessage({
+              defaultMessage: "Configure speech to play assistant messages",
+            })}
+            to={{ name: RouteName.GlobalSettings }}
+            className={cs.AssistantContentMessage.infoAndActionsAction}
+            tooltipDelay={0}
+          >
             <PiSpeakerSimpleHighFill />
-          )}
-        </IconButton>
+          </IconLink>
+        )}
       </div>
     </div>
   );

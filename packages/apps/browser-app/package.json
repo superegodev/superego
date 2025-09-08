@@ -27,10 +27,15 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
+    "@vitest/browser": "^3.2.4",
+    "playwright": "^1.55.0",
     "typescript": "^5.9.2",
-    "vite": "^7.1.4",
+    "vite": "^7.1.5",
     "vitest": "^3.2.4"
   },
   "dependencies": {

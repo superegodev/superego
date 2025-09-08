@@ -2,9 +2,10 @@ import { type Message, MessageContentPartType } from "@superego/backend";
 import { type RefObject, useState } from "react";
 import { TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
+import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
 import classnames from "../../../utils/classnames.js";
-import ThreeDotSpinner from "../ThreeDotSpinner/ThreeDotSpinner.js";
+import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.js";
 import SendRecordToolbar from "./SendRecordToolbar.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
@@ -23,6 +24,8 @@ export default function UserMessageContentInput({
   className,
 }: Props) {
   const intl = useIntl();
+
+  const isInferenceConfigured = useIsInferenceConfigured();
 
   const [text, setText] = useState("");
   const sendText = () => {
@@ -43,7 +46,11 @@ export default function UserMessageContentInput({
         value={text}
         aria-label={intl.formatMessage({ defaultMessage: "Message assistant" })}
         autoFocus={autoFocus}
-        isDisabled={isProcessingMessage || isRecording}
+        isDisabled={
+          isProcessingMessage ||
+          isRecording ||
+          !isInferenceConfigured.completions
+        }
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
@@ -52,9 +59,13 @@ export default function UserMessageContentInput({
         }}
       >
         <TextArea
-          placeholder={intl.formatMessage({
-            defaultMessage: "How can I help you?",
-          })}
+          placeholder={
+            isInferenceConfigured.completions
+              ? intl.formatMessage({ defaultMessage: "How can I help you?" })
+              : intl.formatMessage({
+                  defaultMessage: "Configure assistant to start chatting",
+                })
+          }
           className={cs.UserMessageContentInput.textArea}
           ref={textAreaRef}
         />
@@ -63,12 +74,14 @@ export default function UserMessageContentInput({
         <ThreeDotSpinner className={cs.UserMessageContentInput.spinner} />
       ) : (
         <SendRecordToolbar
+          areCompletionsConfigured={isInferenceConfigured.completions}
+          areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
           isWriting={text !== ""}
           isRecording={isRecording}
           onSend={sendText}
           onStartRecording={startRecording}
           onCancelRecording={cancelRecording}
-          onStopRecordingAndSend={finishRecording}
+          onFinishRecording={finishRecording}
         />
       )}
     </div>

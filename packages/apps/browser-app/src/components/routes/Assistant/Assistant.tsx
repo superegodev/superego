@@ -13,7 +13,7 @@ import Alert from "../../design-system/Alert/Alert.js";
 import Link from "../../design-system/Link/Link.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import UserMessageContentInput from "../../design-system/UserMessageContentInput/UserMessageContentInput.js";
+import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Assistant.css.js";
 import Hero from "./Hero.js";
 
