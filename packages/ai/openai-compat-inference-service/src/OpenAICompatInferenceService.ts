@@ -43,6 +43,10 @@ export default class OpenAICompatInferenceService implements InferenceService {
         toChatCompletionsRequest(completions.model, previousMessages, tools),
       ),
     });
+    console.log("Previous messages:");
+    console.log(JSON.stringify(previousMessages));
+    console.log("Response:");
+    console.log(JSON.stringify(response));
 
     await this.handleError("generateNextMessage", response);
 

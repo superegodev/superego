@@ -11,8 +11,8 @@ export namespace ChatCompletions {
     | { role: "system"; content: string }
     | { role: "user"; content: ContentPart[] }
     | { role: "tool"; content: string; tool_call_id: string }
-    | { role: "assistant"; content: string; tool_calls?: undefined }
-    | { role: "assistant"; content: null; tool_calls: ToolCall[] };
+    | { role: "assistant"; content: string; tool_calls?: undefined | [] }
+    | { role: "assistant"; content: null | ""; tool_calls: ToolCall[] };
 
   export interface TextPart {
     type: "text";
@@ -39,13 +39,6 @@ export namespace ChatCompletions {
     messages: Message[];
     model: string;
     tools: Tool[];
-    // reasoning: {
-    //   effort: "low" | "medium" | "high";
-    //   exclude: boolean;
-    // };
-    // usage: {
-    //   include: boolean;
-    // };
     stream: boolean;
   };
 
@@ -158,7 +151,7 @@ export function fromChatCompletionsResponse(
     role: MessageRole.Assistant,
     createdAt: new Date(),
   } as const;
-  if (message.tool_calls) {
+  if (isChatCompletionsAssistantToolMessage(message)) {
     return {
       ...baseMessage,
       toolCalls: message.tool_calls.map((tool_call) => ({
@@ -172,4 +165,13 @@ export function fromChatCompletionsResponse(
     ...baseMessage,
     content: [{ type: MessageContentPartType.Text, text: message.content }],
   };
+}
+
+function isChatCompletionsAssistantToolMessage(
+  message: ChatCompletions.Message & { role: "assistant" },
+): message is ChatCompletions.Message & {
+  role: "assistant";
+  tool_calls: ChatCompletions.ToolCall[];
+} {
+  return !!message.tool_calls && message.tool_calls.length > 0;
 }

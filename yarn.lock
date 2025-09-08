@@ -3954,6 +3954,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests":
+  version: 0.0.0-use.local
+  resolution: "@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests"
+  dependencies:
+    "@superego/backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
+    "@superego/openai-compat-inference-service": "workspace:*"
+    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/schema": "workspace:*"
+    "@superego/sqlite-data-repositories": "workspace:*"
+    "@types/node": "npm:^24.3.1"
+    p-map: "npm:^7.0.3"
+    typescript: "npm:^5.9.2"
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "@superego/backend@workspace:*, @superego/backend@workspace:packages/core/backend":
   version: 0.0.0-use.local
   resolution: "@superego/backend@workspace:packages/core/backend"
@@ -4092,6 +4110,7 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.2"
     "@superego/backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/vitest-registered": "workspace:*"
@@ -4126,7 +4145,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/openai-compat-inference-service@workspace:^, @superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service":
+"@superego/openai-compat-inference-service@workspace:*, @superego/openai-compat-inference-service@workspace:^, @superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service":
   version: 0.0.0-use.local
   resolution: "@superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service"
   dependencies:
@@ -8518,7 +8537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-map@npm:^7.0.2":
+"p-map@npm:^7.0.2, p-map@npm:^7.0.3":
   version: 7.0.3
   resolution: "p-map@npm:7.0.3"
   checksum: 10c0/46091610da2b38ce47bcd1d8b4835a6fa4e832848a6682cf1652bc93915770f4617afc844c10a77d1b3e56d2472bb2d5622353fa3ead01a7f42b04fc8e744a5c

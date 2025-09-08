@@ -16,7 +16,7 @@ describe("generates JSON Schema from a schema", () => {
       file.endsWith(schemaExtension),
     ),
   )("case: %s", async (schemaFile) => {
-    // Setup
+    // Setup SUT
     const schemaName = schemaFile.replace(schemaExtension, "");
     const { default: testSchema } = await import(
       `${testSchemasDir}/${schemaFile}`

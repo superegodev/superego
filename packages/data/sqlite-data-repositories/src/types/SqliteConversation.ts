@@ -10,7 +10,7 @@ export default interface SqliteConversation {
   id: ConversationId;
   assistant: AssistantName;
   format: ConversationFormat;
-  title: string;
+  title: string | null;
   context_fingerprint: string;
   /** JSON */
   messages: string;

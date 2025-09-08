@@ -4,7 +4,7 @@ CREATE TABLE "conversations" (
   "id" TEXT PRIMARY KEY NOT NULL,
   "assistant" TEXT NOT NULL,
   "format" TEXT NOT NULL,
-  "title" TEXT NOT NULL,
+  "title" TEXT,
   "context_fingerprint" TEXT NOT NULL,
   "messages" TEXT NOT NULL,
   "status" TEXT NOT NULL,

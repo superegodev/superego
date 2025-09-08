@@ -29,6 +29,6 @@ export type { default as DocumentRepository } from "./requirements/DocumentRepos
 export type { default as DocumentVersionRepository } from "./requirements/DocumentVersionRepository.js";
 export type { default as FileRepository } from "./requirements/FileRepository.js";
 export type { default as GlobalSettingsRepository } from "./requirements/GlobalSettingsRepository.js";
-export type { default as InferenceService } from "./requirements/InferenceService.js";
+export { default as InferenceService } from "./requirements/InferenceService.js";
 export type { default as InferenceServiceFactory } from "./requirements/InferenceServiceFactory.js";
 export type { default as JavascriptSandbox } from "./requirements/JavascriptSandbox.js";
