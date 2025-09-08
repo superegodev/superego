@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
+import useShell from "../../../business-logic/navigation/useShell.js";
 import Panel from "./Panel.js";
 import * as cs from "./Shell.css.js";
-import { ShellProvider } from "./useShell.js";
 
 interface Props {
   locale: string;
@@ -9,19 +9,16 @@ interface Props {
   children: ReactNode;
 }
 export default function Shell({ locale, direction, children }: Props) {
+  const { isPrimarySidebarOpen } = useShell();
   return (
-    <ShellProvider>
-      {({ isPrimarySidebarOpen }) => (
-        <div
-          lang={locale}
-          dir={direction}
-          className={cs.Shell.root}
-          data-primary-sidebar-open={isPrimarySidebarOpen ? "true" : "false"}
-        >
-          {children}
-        </div>
-      )}
-    </ShellProvider>
+    <div
+      lang={locale}
+      dir={direction}
+      className={cs.Shell.root}
+      data-primary-sidebar-open={isPrimarySidebarOpen}
+    >
+      {children}
+    </div>
   );
 }
 

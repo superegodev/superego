@@ -18,7 +18,11 @@ export default function PrimarySidebarPanel() {
             <PiRobot />
             <FormattedMessage defaultMessage="Ask" />
           </PrimarySidebarPanelAction>
-          <PrimarySidebarPanelAction type="button" onPress={() => {}}>
+          <PrimarySidebarPanelAction
+            type="button"
+            isDisabled={true}
+            onPress={() => {}}
+          >
             <PiMagnifyingGlass />
             <FormattedMessage defaultMessage="Search" />
           </PrimarySidebarPanelAction>

@@ -3,11 +3,11 @@ import { Toolbar } from "react-aria-components";
 import { PiList } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import type Route from "../../../business-logic/navigation/Route.js";
+import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import IconLink from "../IconLink/IconLink.js";
 import * as cs from "./Shell.css.js";
-import { useShell } from "./useShell.js";
 
 type Action = {
   label: string;

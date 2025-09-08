@@ -9,6 +9,7 @@ import type Route from "../../../business-logic/navigation/Route.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import useShell from "../../../business-logic/navigation/useShell.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import classnames from "../../../utils/classnames.js";
 import * as cs from "./CollectionsTree.css.js";
@@ -32,6 +33,7 @@ export default function CollectionTreeItem({
   onItemDropped,
   ...props
 }: Props) {
+  const { closePrimarySidebar } = useShell();
   const { activeRoute } = useNavigationState();
   const to: Route = { name: RouteName.Collection, collectionId: item.id };
   const dragPreviewRef = useRef(null);
@@ -49,6 +51,7 @@ export default function CollectionTreeItem({
   return (
     <TreeItem
       href={toHref(to)}
+      onPress={closePrimarySidebar}
       textValue={item.name}
       className={classnames(
         cs.TreeItem.root,
