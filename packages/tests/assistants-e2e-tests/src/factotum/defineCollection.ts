@@ -1,7 +1,7 @@
 import { DataType } from "@superego/schema";
 import type { CollectionDefinition } from "./FactotumObject/createCollection.js";
 
-export const calendar = (documentContents: object[]): CollectionDefinition => ({
+const calendar = (documentContents: object[]): CollectionDefinition => ({
   name: "Calendar",
   description: "My personal calendar.",
   assistantInstructions: [
@@ -62,7 +62,7 @@ export const calendar = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-export const contacts = (documentContents: object[]): CollectionDefinition => ({
+const contacts = (documentContents: object[]): CollectionDefinition => ({
   name: "Contacts",
   description: "Address book of my contacts.",
   assistantInstructions: null,
@@ -160,7 +160,7 @@ export const contacts = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-export const expenses = (documentContents: object[]): CollectionDefinition => ({
+const expenses = (documentContents: object[]): CollectionDefinition => ({
   name: "Expenses",
   description: "A log of my expenses.",
   assistantInstructions: [
@@ -280,7 +280,7 @@ export const expenses = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
+const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
   name: "Fuel Logs",
   description: "Tracks when I refuel my vehicles.",
   assistantInstructions: [
@@ -348,9 +348,7 @@ export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-export const vetVisits = (
-  documentContents: object[],
-): CollectionDefinition => ({
+const vetVisits = (documentContents: object[]): CollectionDefinition => ({
   name: "Vet Visits",
   description: "Log of visits to the vet for my pets.",
   assistantInstructions: null,
@@ -406,3 +404,5 @@ export const vetVisits = (
   },
   documentContents: documentContents,
 });
+
+export default { calendar, contacts, expenses, fuelLogs, vetVisits };

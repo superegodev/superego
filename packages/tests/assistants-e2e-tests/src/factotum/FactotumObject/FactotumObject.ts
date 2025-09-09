@@ -8,7 +8,7 @@ import pMap from "p-map";
 import { assert, vi } from "vitest";
 import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 import type Evaluator from "../../utils/Evaluator.js";
-import assistantReply from "./assistantReply.js";
+import assistantReply from "./assertAssistantReply.js";
 import createCollection, {
   type CollectionDefinition,
 } from "./createCollection.js";
@@ -63,7 +63,7 @@ export default class FactotumObject {
     await this.waitForIdleConversation();
   }
 
-  async assistantReply(
+  async assertAssistantReply(
     requirements: string,
     scoreThreshold = 0.5,
   ): Promise<void> {

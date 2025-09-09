@@ -6,7 +6,7 @@ import {
 import { assert } from "vitest";
 import type Evaluator from "../../utils/Evaluator.js";
 
-export default async function replyMustSatisfy(
+export default async function assertAssistantReply(
   evaluator: Evaluator,
   conversation: Conversation,
   requirements: string,
