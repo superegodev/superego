@@ -4,6 +4,7 @@ import {
   type Conversation,
   ConversationStatus,
 } from "@superego/backend";
+import pMap from "p-map";
 import { assert, vi } from "vitest";
 import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 import type Evaluator from "../../utils/Evaluator.js";
@@ -24,8 +25,22 @@ export default class FactotumObject {
     private evaluator: Evaluator,
   ) {}
 
-  async createCollection(definition: CollectionDefinition) {
-    return createCollection(this.backend, definition);
+  async createCollections<
+    const Definitions extends readonly CollectionDefinition[],
+  >(
+    ...definitions: Definitions
+  ): Promise<{
+    [Index in keyof Definitions]: Awaited<ReturnType<typeof createCollection>>;
+  }> {
+    return pMap(
+      definitions,
+      (definition) => createCollection(this.backend, definition),
+      { concurrency: 1 },
+    ) as {
+      [Index in keyof Definitions]: Awaited<
+        ReturnType<typeof createCollection>
+      >;
+    };
   }
 
   async expectCollectionState(

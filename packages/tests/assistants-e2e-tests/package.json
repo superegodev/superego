@@ -8,6 +8,7 @@
     "start": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
+    "@types/luxon": "^3.7.1",
     "@types/node": "^24.3.1",
     "typescript": "^5.9.2"
   },
@@ -19,6 +20,7 @@
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
+    "luxon": "^3.7.2",
     "p-map": "^7.0.3",
     "vitest": "^3.2.4"
   }
