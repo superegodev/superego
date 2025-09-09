@@ -164,8 +164,9 @@ export const expenses = (documentContents: object[]): CollectionDefinition => ({
   name: "Expenses",
   description: "A log of my expenses.",
   assistantInstructions: [
-    "- If the currency is not supplied, default to EUR.",
-    "- If the payment method is not supplied, default to Credit Card.",
+    "- Each expense must be recorded separately.",
+    "- If the currency is not provided, default to Euros",
+    "- If the payment method is not provided, default to Credit Card.",
   ].join("\n"),
   schema: {
     types: {
@@ -188,7 +189,7 @@ export const expenses = (documentContents: object[]): CollectionDefinition => ({
           },
           DiningAndTakeout: {
             description: "Restaurants, cafés, delivery, tips.",
-            value: "DiningAndTakeout",
+            value: "Dining And Takeout",
           },
           Transportation: {
             description:
@@ -197,7 +198,7 @@ export const expenses = (documentContents: object[]): CollectionDefinition => ({
           },
           HealthAndMedical: {
             description: " Doctor visits, dental, prescriptions, copays.",
-            value: "HealthAndMedical",
+            value: "Health And Medical",
           },
           Insurance: {
             description: "Auto, health, home/renters, life premiums.",
@@ -205,15 +206,15 @@ export const expenses = (documentContents: object[]): CollectionDefinition => ({
           },
           DebtAndLoans: {
             description: "Credit card payments, student or auto loans.",
-            value: "DebtAndLoans",
+            value: "Debt And Loans",
           },
           EntertainmentAndSubscriptions: {
             description: "Streaming, games, events, hobbies, apps.",
-            value: "EntertainmentAndSubscriptions",
+            value: "Entertainment And Subscriptions",
           },
           ShoppingAndPersonalCare: {
             description: "Clothing, toiletries, cosmetics, salon/barber.",
-            value: "ShoppingAndPersonalCare",
+            value: "Shopping And PersonalCare",
           },
           Other: {
             value: "Other",

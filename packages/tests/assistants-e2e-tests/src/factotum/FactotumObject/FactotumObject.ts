@@ -8,13 +8,13 @@ import pMap from "p-map";
 import { assert, vi } from "vitest";
 import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 import type Evaluator from "../../utils/Evaluator.js";
+import assistantReply from "./assistantReply.js";
 import createCollection, {
   type CollectionDefinition,
 } from "./createCollection.js";
 import expectCollectionState, {
   type ExpectedDocumentsState,
 } from "./expectCollectionState.js";
-import replyMustSatisfy from "./replyMustSatisfy.js";
 import say from "./say.js";
 
 /** Why the name? Akin to https://martinfowler.com/bliki/PageObject.html */
@@ -63,7 +63,7 @@ export default class FactotumObject {
     await this.waitForIdleConversation();
   }
 
-  async replyMustSatisfy(
+  async assistantReply(
     requirements: string,
     scoreThreshold = 0.5,
   ): Promise<void> {
@@ -71,7 +71,9 @@ export default class FactotumObject {
       this.conversation,
       "You must say something before expecting a reply",
     );
-    await replyMustSatisfy(
+    // EVOLUTION: pass in the context of the conversation, so that the evaluator
+    // can do a better job.
+    await assistantReply(
       this.evaluator,
       this.conversation,
       requirements,
