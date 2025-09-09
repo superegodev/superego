@@ -7,8 +7,8 @@ import {
   MessageRole,
 } from "@superego/backend";
 import { assert, vi } from "vitest";
-import type { BooleanOracle } from "../../Dependencies.js";
-import assertSuccess from "../assertSuccess.js";
+import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
+import type BooleanOracle from "../../utils/BooleanOracle.js";
 
 export default async function expectReply(
   backend: Backend,
@@ -25,7 +25,7 @@ export default async function expectReply(
 
   const reply = lastMessage.content[0].text;
 
-  const { answer, reason } = await booleanOracle(
+  const { answer, reason } = await booleanOracle.ask(
     `
       Consider this reply given by an LLM:
 
@@ -43,7 +43,15 @@ export default async function expectReply(
       .replaceAll(/^ {6}/g, ""),
   );
 
-  assert.isTrue(answer, `Reply does not match requirement. Reason: ${reason}`);
+  assert.isTrue(
+    answer,
+    [
+      "Reply does not match requirement.",
+      `Reply: ${reply}`,
+      `Reason: ${reason}`,
+      "",
+    ].join("\n"),
+  );
 }
 
 async function getIdleConversation(
@@ -51,7 +59,7 @@ async function getIdleConversation(
   id: ConversationId,
 ): Promise<Conversation | null> {
   const getConversationResult = await backend.assistants.getConversation(id);
-  assertSuccess("Error getting conversation", getConversationResult);
+  assertSuccessfulResult("Error getting conversation", getConversationResult);
   const { data: conversation } = getConversationResult;
   return conversation.status === ConversationStatus.Idle ? conversation : null;
 }

@@ -1,8 +1,5 @@
 import type { Backend } from "@superego/backend";
-
-export type BooleanOracle = (
-  question: string,
-) => Promise<{ answer: boolean; reason: string }>;
+import type BooleanOracle from "./utils/BooleanOracle.js";
 
 export default interface Dependencies {
   backend: Backend;

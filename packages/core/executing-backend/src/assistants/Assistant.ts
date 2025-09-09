@@ -17,51 +17,56 @@ export default abstract class Assistant {
   async generateAndProcessNextMessages(
     messages: Message[],
   ): Promise<Message[]> {
-    const assistantMessage = await this.inferenceService.generateNextMessage(
-      [
-        {
-          role: MessageRole.Developer,
-          content: [
-            {
-              type: MessageContentPartType.Text,
-              text: this.getDeveloperPrompt(),
-            },
-          ],
-        },
-        {
-          role: MessageRole.UserContext,
-          content: [
-            {
-              type: MessageContentPartType.Text,
-              text: this.getUserContextPrompt(),
-            },
-          ],
-        },
+    try {
+      const assistantMessage = await this.inferenceService.generateNextMessage(
+        [
+          {
+            role: MessageRole.Developer,
+            content: [
+              {
+                type: MessageContentPartType.Text,
+                text: this.getDeveloperPrompt(),
+              },
+            ],
+          },
+          {
+            role: MessageRole.UserContext,
+            content: [
+              {
+                type: MessageContentPartType.Text,
+                text: this.getUserContextPrompt(),
+              },
+            ],
+          },
+          ...messages,
+        ],
+        this.getTools(),
+      );
+
+      // Case: assistantMessage is Message.ContentAssistant
+      if ("content" in assistantMessage) {
+        return [...messages, assistantMessage];
+      }
+
+      // Case: assistantMessage is Message.ToolCallAssistant.
+      const toolResults: ToolResult[] = await Promise.all(
+        assistantMessage.toolCalls.map((toolCall) =>
+          this.processToolCall(toolCall),
+        ),
+      );
+      const toolMessage: Message.Tool = {
+        role: MessageRole.Tool,
+        toolResults: toolResults,
+        createdAt: new Date(),
+      };
+      return this.generateAndProcessNextMessages([
         ...messages,
-      ],
-      this.getTools(),
-    );
-
-    // Case: assistantMessage is Message.ContentAssistant
-    if ("content" in assistantMessage) {
-      return [...messages, assistantMessage];
+        assistantMessage,
+        toolMessage,
+      ]);
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
-
-    // Case: assistantMessage is Message.ToolCallAssistant.
-    const toolResults: ToolResult[] = await Promise.all(
-      assistantMessage.toolCalls.map((toolCall) =>
-        this.processToolCall(toolCall),
-      ),
-    );
-    const toolMessage: Message.Tool = {
-      role: MessageRole.Tool,
-      toolResults: toolResults,
-      createdAt: new Date(),
-    };
-    return this.generateAndProcessNextMessages([
-      ...messages,
-      assistantMessage,
-      toolMessage,
-    ]);
   }
 }

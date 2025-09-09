@@ -31,6 +31,11 @@ export default class OpenAICompatInferenceService implements InferenceService {
       throw new Error("Missing completions model.");
     }
 
+    const requestBody = toChatCompletionsRequest(
+      completions.model,
+      previousMessages,
+      tools,
+    );
     const response = await fetch(completions.provider.baseUrl, {
       method: "POST",
       headers: {
@@ -39,16 +44,10 @@ export default class OpenAICompatInferenceService implements InferenceService {
           : null),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(
-        toChatCompletionsRequest(completions.model, previousMessages, tools),
-      ),
+      body: JSON.stringify(requestBody),
     });
-    console.log("Previous messages:");
-    console.log(JSON.stringify(previousMessages));
-    console.log("Response:");
-    console.log(JSON.stringify(response));
 
-    await this.handleError("generateNextMessage", response);
+    await this.handleError("generateNextMessage", requestBody, response);
 
     const json = (await response.json()) as ChatCompletions.Response;
     return fromChatCompletionsResponse(json);
@@ -66,6 +65,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
       throw new Error("Missing speech voice.");
     }
 
+    const requestBody = toSpeechRequest(speech.model, speech.voice, text);
     const response = await fetch(speech.provider.baseUrl, {
       method: "POST",
       headers: {
@@ -74,10 +74,10 @@ export default class OpenAICompatInferenceService implements InferenceService {
           : null),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(toSpeechRequest(speech.model, speech.voice, text)),
+      body: JSON.stringify(requestBody),
     });
 
-    await this.handleError("tts", response);
+    await this.handleError("tts", requestBody, response);
 
     const arrayBuffer = await response.arrayBuffer();
     return fromSpeechResponse(new Uint8Array(arrayBuffer));
@@ -92,6 +92,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
       throw new Error("Missing transcriptions model.");
     }
 
+    const requestBody = toTranscriptionsRequest(transcriptions.model, audio);
     const response = await fetch(transcriptions.provider.baseUrl, {
       method: "POST",
       headers: {
@@ -99,26 +100,35 @@ export default class OpenAICompatInferenceService implements InferenceService {
           ? { Authorization: `Bearer ${transcriptions.provider.apiKey}` }
           : null),
       },
-      body: toTranscriptionsRequest(transcriptions.model, audio),
+      body: requestBody,
     });
 
-    await this.handleError("stt", response);
+    await this.handleError("stt", requestBody, response);
 
     const json = (await response.json()) as Transcriptions.Response;
     return fromTranscriptionsResponse(json);
   }
 
-  private async handleError(method: string, response: Response) {
+  private async handleError(
+    method: string,
+    requestBody: object | FormData,
+    response: Response,
+  ) {
     if (!response.ok) {
       const details = await response
         .json()
         .catch(() => response.text())
-        .then((text) => ({ error: text }))
-        .catch(() => ({ statusText: response.statusText }));
+        .then((text) => text)
+        .catch(() => "Unable to get response body");
       throw new Error(
         [
           `[OpenAICompatInferenceService.${method}] HTTP ${response.status} error calling ${response.url}:`,
-          JSON.stringify(details, null, 2),
+          "Request body:",
+          requestBody instanceof FormData
+            ? JSON.stringify(Object.fromEntries(requestBody))
+            : JSON.stringify(requestBody),
+          "Response body:",
+          JSON.stringify(details),
         ].join("\n"),
       );
     }

@@ -6,7 +6,7 @@ import {
   type ConversationId,
   MessageContentPartType,
 } from "@superego/backend";
-import assertSuccess from "../assertSuccess.js";
+import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 
 export default async function say(
   backend: Backend,
@@ -24,7 +24,10 @@ export default async function say(
         },
       ],
     );
-    assertSuccess("Failed to start conversation", startConversationResult);
+    assertSuccessfulResult(
+      "Failed to start conversation",
+      startConversationResult,
+    );
     return startConversationResult.data;
   }
   const continueConversationResult =
@@ -34,6 +37,9 @@ export default async function say(
         text: message,
       },
     ]);
-  assertSuccess("Failed to continue conversation", continueConversationResult);
+  assertSuccessfulResult(
+    "Failed to continue conversation",
+    continueConversationResult,
+  );
   return continueConversationResult.data;
 }

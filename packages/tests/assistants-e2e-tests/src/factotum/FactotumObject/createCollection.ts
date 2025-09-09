@@ -1,7 +1,7 @@
 import type { Backend, Collection, Document } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import pMap from "p-map";
-import assertSuccess from "../assertSuccess.js";
+import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 
 export interface CollectionDefinition {
   name: string;
@@ -36,7 +36,7 @@ export default async function createCollection(
       ],
     },
   );
-  assertSuccess(
+  assertSuccessfulResult(
     `Error creating collection ${definition.name}`,
     createCollectionResult,
   );
@@ -49,7 +49,7 @@ export default async function createCollection(
         collection.id,
         documentContent,
       );
-      assertSuccess(
+      assertSuccessfulResult(
         `Error creating document ${index} in collection ${definition.name}`,
         createDocumentResult,
       );

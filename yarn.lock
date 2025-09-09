@@ -3954,17 +3954,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests":
+"@superego/assistants-e2e-tests@workspace:packages/tests/assistants-e2e-tests":
   version: 0.0.0-use.local
-  resolution: "@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests"
+  resolution: "@superego/assistants-e2e-tests@workspace:packages/tests/assistants-e2e-tests"
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
+    "@superego/vitest-registered": "workspace:*"
     "@types/node": "npm:^24.3.1"
     p-map: "npm:^7.0.3"
     typescript: "npm:^5.9.2"

@@ -1,11 +1,11 @@
 {
-  "name": "@superego/backend-e2e-tests",
+  "name": "@superego/assistants-e2e-tests",
   "version": "2025.7.6",
   "type": "module",
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
+    "start": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
     "@types/node": "^24.3.1",
@@ -16,9 +16,9 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:*",
-    "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
+    "@superego/vitest-registered": "workspace:*",
     "p-map": "^7.0.3",
     "vitest": "^3.2.4"
   }

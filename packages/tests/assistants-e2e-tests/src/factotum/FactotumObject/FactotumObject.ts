@@ -1,6 +1,6 @@
 import type { Backend, CollectionId, Conversation } from "@superego/backend";
 import { assert } from "vitest";
-import type { BooleanOracle } from "../../Dependencies.js";
+import type BooleanOracle from "../../utils/BooleanOracle.js";
 import createCollection, {
   type CollectionDefinition,
 } from "./createCollection.js";
@@ -11,7 +11,7 @@ import expectReply from "./expectReply.js";
 import say from "./say.js";
 
 /** Why the name? Akin to https://martinfowler.com/bliki/PageObject.html */
-export default class FactotumAssistantObject {
+export default class FactotumObject {
   private conversation: Conversation | null = null;
   constructor(
     private backend: Backend,

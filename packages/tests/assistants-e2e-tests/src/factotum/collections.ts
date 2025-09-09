@@ -1,5 +1,5 @@
 import { DataType } from "@superego/schema";
-import type { CollectionDefinition } from "../../utils/FactotumAssistantObject/createCollection.js";
+import type { CollectionDefinition } from "./FactotumObject/createCollection.js";
 
 export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
   name: "Fuel Logs",

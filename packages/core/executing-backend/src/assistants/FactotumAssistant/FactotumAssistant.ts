@@ -37,6 +37,7 @@ export default class FactotumAssistant extends Assistant {
   }
 
   protected getUserContextPrompt(): string {
+    const now = DateTime.now();
     return [
       "<collections>",
       JSON.stringify(
@@ -49,13 +50,20 @@ export default class FactotumAssistant extends Assistant {
       ),
       "</collections>",
       "",
-      "<local-current-date-time>",
-      DateTime.now().toFormat("cccc LLLL d yyyy HH:mm:ss.SSS 'GMT'ZZZ"),
-      "</local-current-date-time>",
-      "",
-      "<time-zone>",
+      "<current-date-time>",
+      now.toUTC().toISO({
+        precision: "millisecond",
+        includeOffset: true,
+        extendedZone: true,
+      }),
+      "</current-date-time>",
+      "<user-timezone>",
       DateTime.local().zone.name,
-      "</time-zone>",
+      "</user-timezone>",
+      "",
+      "<weekday>",
+      now.toFormat("cccc"),
+      "<weekday>",
     ].join("\n");
   }
 

@@ -5,7 +5,7 @@ import type {
   DocumentId,
 } from "@superego/backend";
 import { assert, expect } from "vitest";
-import assertSuccess from "../assertSuccess.js";
+import assertSuccessfulResult from "../../utils/assertSuccessfulResult.js";
 
 export interface ExpectedDocumentsState {
   created: object[];
@@ -19,7 +19,7 @@ export default async function expectCollectionState(
   expectedDocumentsState: ExpectedDocumentsState,
 ): Promise<void> {
   const listDocumentsResult = await backend.documents.list(collectionId);
-  assertSuccess(
+  assertSuccessfulResult(
     `Error listing documents for collection ${collectionId}`,
     listDocumentsResult,
   );
