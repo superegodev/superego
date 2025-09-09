@@ -7,7 +7,7 @@
       "import": "./src/index.ts"
     },
     "./vite.config.js": {
-      "import": "./vite.config.js"
+      "import": "./vite.config.ts"
     }
   },
   "private": true,
