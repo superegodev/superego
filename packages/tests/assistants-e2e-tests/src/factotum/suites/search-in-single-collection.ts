@@ -1,0 +1,102 @@
+import { registeredDescribe as rd } from "@superego/vitest-registered";
+import type Dependencies from "../../Dependencies.js";
+import { tomorrowAt } from "../../utils/dates.js";
+import pit from "../../utils/probabilisticIt.js";
+import defineCollection from "../defineCollection.js";
+import FactotumObject from "../FactotumObject/FactotumObject.js";
+
+export default rd<Dependencies>("Search in a single collection", (deps) => {
+  pit("Getting info from one document", async () => {
+    // Setup SUT
+    const { backend, booleanOracle } = await deps();
+    const factotum = new FactotumObject(backend, booleanOracle);
+
+    // Exercise + verify
+    await factotum.createCollections(
+      defineCollection.calendar([]),
+      defineCollection.contacts([
+        {
+          type: "Person",
+          name: "Mario",
+          relation: "Plumber",
+          phones: [],
+          emails: [],
+          notes: null,
+        },
+        {
+          type: "Person",
+          name: "Bob",
+          relation: "Builder",
+          phones: [],
+          emails: [],
+          notes: null,
+        },
+      ]),
+      defineCollection.expenses([]),
+      defineCollection.fuelLogs([]),
+      defineCollection.vetVisits([]),
+    );
+    await factotum.say("What's the name of my plumber?");
+    await factotum.assertAssistantReply(
+      'Is a concise answer telling the name of a person, "Mario".',
+    );
+  });
+
+  pit("Getting info from multiple documents", { passRate: 1 }, async () => {
+    // Setup SUT
+    const { backend, booleanOracle } = await deps();
+    const factotum = new FactotumObject(backend, booleanOracle);
+
+    // Exercise + verify
+    const [calendar] = await factotum.createCollections(
+      defineCollection.calendar([
+        {
+          type: "Event",
+          title: "Plumber comes to fix the leak",
+          startTime: tomorrowAt(9),
+          endTime: tomorrowAt(10),
+          notes: null,
+        },
+        {
+          type: "Event",
+          title: "Work on new AI assistant features",
+          startTime: tomorrowAt(14),
+          endTime: tomorrowAt(16),
+          notes: null,
+        },
+        {
+          type: "Event",
+          title: "Aperitif with Mario",
+          startTime: tomorrowAt(17),
+          endTime: tomorrowAt(18),
+          notes: null,
+        },
+      ]),
+      defineCollection.contacts([]),
+      defineCollection.expenses([]),
+      defineCollection.fuelLogs([]),
+      defineCollection.vetVisits([]),
+    );
+    await factotum.say("What appointments do I have tomorrow afternoon?");
+    await factotum.assertAssistantReply(
+      [
+        "Is a list of two calendar appointments:",
+        "1. Work on new AI assistant features, from 14 to 16.",
+        "2. Aperitif with Mario, from 17 to 18.",
+      ].join("\n"),
+    );
+    await factotum.expectCollectionState(calendar.collection.id, {
+      created: [],
+      updated: [
+        {
+          document: calendar.documents[0]!,
+          newContentMatching: {
+            startTime: tomorrowAt(10),
+            endTime: tomorrowAt(11),
+          },
+        },
+      ],
+      unmodified: [],
+    });
+  });
+});

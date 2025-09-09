@@ -7,3 +7,11 @@ export function tomorrowAt(hour: number): string {
     .toUTC()
     .toISO();
 }
+
+export function nDaysAgo(days: number): string {
+  return DateTime.now().minus({ days }).toUTC().toISO();
+}
+
+export function inNDays(days: number): string {
+  return DateTime.now().plus({ days }).toUTC().toISO();
+}
