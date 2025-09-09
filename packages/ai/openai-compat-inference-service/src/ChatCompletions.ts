@@ -38,7 +38,7 @@ export namespace ChatCompletions {
   export type Request = {
     messages: Message[];
     model: string;
-    tools: Tool[];
+    tools: Tool[] | undefined;
     stream: boolean;
   };
 
@@ -72,10 +72,11 @@ export function toChatCompletionsRequest(
   messages: Message[],
   tools: InferenceService.Tool[],
 ): ChatCompletions.Request {
+  const chatCompletionTools = tools.map(toChatCompletionsTool);
   return {
     model: model,
     messages: messages.flatMap(toChatCompletionsMessage),
-    tools: tools.map(toChatCompletionsTool),
+    tools: chatCompletionTools.length > 0 ? chatCompletionTools : undefined,
     stream: false,
   };
 }

@@ -8,7 +8,7 @@ import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/n
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { afterAll, assert, beforeAll, describe } from "vitest";
 import registerTests from "./registerTests.js";
-import BooleanOracle from "./utils/BooleanOracle.js";
+import Evaluator from "./utils/Evaluator.js";
 
 const completionsBaseUrl = import.meta.env[
   "SUPEREGO_TESTS_COMPLETIONS_BASE_URL"
@@ -31,12 +31,13 @@ const javascriptSandbox = new QuickjsJavascriptSandbox();
 // Inference service
 const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
 
-// Boolean oracle
-const booleanOracle = new BooleanOracle(
+// Evaluator
+const evaluatorModel = "openai/gpt-oss-120b";
+const evaluator = new Evaluator(
   inferenceServiceFactory.create({
     completions: {
       provider: { baseUrl: completionsBaseUrl, apiKey: completionsApiKey },
-      model: "openai/gpt-oss-120b",
+      model: evaluatorModel,
     },
     transcriptions: {
       provider: { baseUrl: null, apiKey: null },
@@ -50,56 +51,78 @@ const booleanOracle = new BooleanOracle(
   }),
 );
 
-const models = [
-  "qwen/qwen3-coder",
-  "moonshotai/kimi-k2-0905",
-  "openai/gpt-oss-20b",
+const assistantsModels = [
+  /* OpenAI */
+  // "openai/gpt-4.1-mini",
+  // "openai/gpt-4o-mini",
+  // "openai/gpt-oss-20b",
   "openai/gpt-oss-120b",
-  "mistralai/mistral-small-3.2-24b-instruct",
-  "mistralai/mistral-medium-3.1",
+
+  /* Google */
+  // "google/gemini-2.5-flash",
+  // "google/gemini-2.5-flash-lite",
+
+  /* Anthropic */
+  // "anthropic/claude-sonnet-4",
+
+  /* Alibaba Cloud */
+  // "qwen/qwen3-coder",
+
+  /* Moonshot AI */
+  // "moonshotai/kimi-k2-0905",
+
+  /* Mistral */
+  // "mistralai/mistral-small-3.2-24b-instruct",
+  // "mistralai/mistral-medium-3.1",
 ];
 
-describe.concurrent.each(models)("%s", (model) => {
-  registerTests(async () => {
-    const defaultGlobalSettings = {
-      appearance: { theme: Theme.Auto },
-      inference: {
-        completions: {
-          provider: { baseUrl: completionsBaseUrl, apiKey: completionsApiKey },
-          model: model,
+describe.concurrent.each(assistantsModels)(
+  `Assistants model: %s; Evaluator model: ${evaluatorModel}`,
+  (model) => {
+    registerTests(async () => {
+      const defaultGlobalSettings = {
+        appearance: { theme: Theme.Auto },
+        inference: {
+          completions: {
+            provider: {
+              baseUrl: completionsBaseUrl,
+              apiKey: completionsApiKey,
+            },
+            model: model,
+          },
+          transcriptions: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+          },
+          speech: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+            voice: null,
+          },
         },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
+        assistants: {
+          developerPrompts: {
+            [AssistantName.Factotum]: null,
+            [AssistantName.CollectionManager]: null,
+          },
         },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-      },
-      assistants: {
-        developerPrompts: {
-          [AssistantName.Factotum]: null,
-          [AssistantName.CollectionManager]: null,
-        },
-      },
-    };
+      };
 
-    // Data repositories
-    const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-      fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-      defaultGlobalSettings: defaultGlobalSettings,
+      // Data repositories
+      const dataRepositoriesManager = new SqliteDataRepositoriesManager({
+        fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
+        defaultGlobalSettings: defaultGlobalSettings,
+      });
+      dataRepositoriesManager.runMigrations();
+
+      // Backend
+      const backend = new ExecutingBackend(
+        dataRepositoriesManager,
+        javascriptSandbox,
+        inferenceServiceFactory,
+      );
+
+      return { backend, booleanOracle: evaluator };
     });
-    dataRepositoriesManager.runMigrations();
-
-    // Backend
-    const backend = new ExecutingBackend(
-      dataRepositoriesManager,
-      javascriptSandbox,
-      inferenceServiceFactory,
-    );
-
-    return { backend, booleanOracle };
-  });
-});
+  },
+);

@@ -70,7 +70,7 @@ MANDATORY:
   conflict, the playbooks take precedence.
 - Use field descriptions in schemas to guide your decisions.
 - Unless the user specifies otherwise, use the current date and time for
-  creating and updating documents. Use the correct timezone.
+  creating and updating documents.
 - For a single request, when it makes sense to create documents in multiple
   collections, create all documents.
 

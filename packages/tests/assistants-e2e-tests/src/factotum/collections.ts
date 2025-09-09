@@ -18,9 +18,9 @@ export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
             description: "My main car.",
             value: "Kia Sportage",
           },
-          KawasakiNinja: {
-            description: "My motorbike.",
-            value: "Kawasaki Ninja",
+          SuzukiJimny: {
+            description: "My off-roader.",
+            value: "Suzuki Jimny",
           },
         },
       },
@@ -28,20 +28,15 @@ export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
         description: "A single refuelling event.",
         dataType: DataType.Struct,
         properties: {
-          vehicle: {
-            description: "Which vehicle was refuelled.",
-            dataType: null,
-            ref: "Vehicle",
-          },
           timestamp: {
             description: "Timestamp of the refueling event.",
             dataType: DataType.String,
             format: "dev.superego:String.Instant",
           },
-          odometer: {
-            description:
-              "Odometer reading at the time of refueling, in kilometers.",
-            dataType: DataType.Number,
+          vehicle: {
+            description: "Which vehicle was refuelled.",
+            dataType: null,
+            ref: "Vehicle",
           },
           liters: {
             description: "Number of liters of fuel added.",
@@ -54,6 +49,11 @@ export const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
           fullTank: {
             description: "Indicates if the tank was filled completely.",
             dataType: DataType.Boolean,
+          },
+          odometer: {
+            description:
+              "Odometer reading at the time of refueling, in kilometers.",
+            dataType: DataType.Number,
           },
           notes: {
             description: "Any additional notes.",

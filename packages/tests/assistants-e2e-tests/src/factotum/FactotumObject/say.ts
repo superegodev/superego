@@ -41,5 +41,6 @@ export default async function say(
     "Failed to continue conversation",
     continueConversationResult,
   );
+
   return continueConversationResult.data;
 }

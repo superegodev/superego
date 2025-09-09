@@ -1,7 +1,7 @@
 import type { Backend } from "@superego/backend";
-import type BooleanOracle from "./utils/BooleanOracle.js";
+import type Evaluator from "./utils/Evaluator.js";
 
 export default interface Dependencies {
   backend: Backend;
-  booleanOracle: BooleanOracle;
+  booleanOracle: Evaluator;
 }
