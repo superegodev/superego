@@ -55,8 +55,8 @@ const assistantsModels = [
   /* OpenAI */
   // "openai/gpt-4.1-mini",
   // "openai/gpt-4o-mini",
-  // "openai/gpt-oss-20b",
-  "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+  // "openai/gpt-oss-120b",
 
   /* Google */
   // "google/gemini-2.5-flash",
