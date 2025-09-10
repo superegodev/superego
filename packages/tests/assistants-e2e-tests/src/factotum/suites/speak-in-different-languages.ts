@@ -2,16 +2,11 @@ import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
 import type Dependencies from "../../Dependencies.js";
 import { tomorrowAt } from "../../utils/dates.js";
-import pit from "../../utils/probabilisticIt.js";
+import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.multilingual.js";
-import FactotumObject from "../FactotumObject/FactotumObject.js";
 
 export default rd<Dependencies>("Speak in different languages", (deps) => {
-  pit("Italian", async () => {
-    // Setup SUT
-    const { backend, booleanOracle } = await deps();
-    const factotum = new FactotumObject(backend, booleanOracle);
-
+  it("Italian", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(
       defineCollection.calendarIt([]),
@@ -33,11 +28,7 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
     });
   });
 
-  pit("French", async () => {
-    // Setup SUT
-    const { backend, booleanOracle } = await deps();
-    const factotum = new FactotumObject(backend, booleanOracle);
-
+  it("French", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(
       defineCollection.calendarIt([]),
@@ -59,11 +50,7 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
     });
   });
 
-  pit("German", async () => {
-    // Setup SUT
-    const { backend, booleanOracle } = await deps();
-    const factotum = new FactotumObject(backend, booleanOracle);
-
+  it("German", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(
       defineCollection.calendarIt([]),

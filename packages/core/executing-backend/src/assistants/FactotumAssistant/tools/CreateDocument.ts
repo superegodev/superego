@@ -56,7 +56,11 @@ export default {
           },
           content: {
             type: "object",
-            description: `**Full content for the new document.** Must match the collection's TypeScript schema.`,
+            description: [
+              "Content for the new document.",
+              "Content **ONLY**, never include document ids or version ids.",
+              "Must match the collection's TypeScript schema.",
+            ].join(" "),
           },
         },
         required: ["collectionId", "content"],

@@ -14,16 +14,15 @@ export type JsonObject = {
 /**
  * My pets.
  */
-export enum Pet {
+export type Pet = 
   /**
    * Cat.
    */
-  Galois = "Galois",
+  | "Galois"
   /**
    * Dog.
    */
-  Abel = "Abel",
-}
+  | "Abel";
 
 /**
  * A visit to the vet.

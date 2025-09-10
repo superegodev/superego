@@ -1,9 +1,8 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
 import type Dependencies from "../../Dependencies.js";
-import pit from "../../utils/probabilisticIt.js";
+import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.js";
-import FactotumObject from "../FactotumObject/FactotumObject.js";
 
 // Note: we pass more than one collection to test that the assistant creates
 // documents in the right collections only.
@@ -11,11 +10,7 @@ import FactotumObject from "../FactotumObject/FactotumObject.js";
 export default rd<Dependencies>(
   "Create documents in a single collection",
   (deps) => {
-    pit("All info provided, implicit request", async () => {
-      // Setup SUT
-      const { backend, booleanOracle } = await deps();
-      const factotum = new FactotumObject(backend, booleanOracle);
-
+    it("All info provided, implicit request", { deps }, async (factotum) => {
       // Exercise + verify
       const [, , fuelLogs] = await factotum.createCollections(
         defineCollection.calendar([]),
@@ -34,7 +29,7 @@ export default rd<Dependencies>(
       await factotum.expectCollectionState(fuelLogs.collection.id, {
         created: [
           {
-            timestamp: expect.closeToNow(60_000),
+            timestamp: expect.instantCloseToNow(60_000),
             vehicle: "Kia Sportage",
             liters: 43.04,
             totalCost: 58.1,
@@ -47,47 +42,43 @@ export default rd<Dependencies>(
       });
     });
 
-    pit("All info provided, explicit request", { passRate: 1 }, async () => {
-      // Setup SUT
-      const { backend, booleanOracle } = await deps();
-      const factotum = new FactotumObject(backend, booleanOracle);
+    it(
+      "All info provided, explicit request",
+      { deps, passRate: 1 },
+      async (factotum) => {
+        // Exercise + verify
+        const [, , fuelLogs] = await factotum.createCollections(
+          defineCollection.calendar([]),
+          defineCollection.contacts([]),
+          // Omitted to avoid a document being created here as well.
+          // expenses([]),
+          defineCollection.fuelLogs([]),
+          defineCollection.vetVisits([]),
+        );
+        await factotum.say(
+          "Log a refuelling. Kia, 43.04 liters, 58.10 euros, 123456km.",
+        );
+        await factotum.assertAssistantReply(
+          "Is a concise acknowledgement that it performed one or more actions.",
+        );
+        await factotum.expectCollectionState(fuelLogs.collection.id, {
+          created: [
+            {
+              timestamp: expect.instantCloseToNow(60_000),
+              vehicle: "Kia Sportage",
+              liters: 43.04,
+              totalCost: 58.1,
+              fullTank: true,
+              odometer: 123456,
+            },
+          ],
+          updated: [],
+          unmodified: [],
+        });
+      },
+    );
 
-      // Exercise + verify
-      const [, , fuelLogs] = await factotum.createCollections(
-        defineCollection.calendar([]),
-        defineCollection.contacts([]),
-        // Omitted to avoid a document being created here as well.
-        // expenses([]),
-        defineCollection.fuelLogs([]),
-        defineCollection.vetVisits([]),
-      );
-      await factotum.say(
-        "Log a refuelling. Kia, 43.04 liters, 58.10 euros, 123456km.",
-      );
-      await factotum.assertAssistantReply(
-        "Is a concise acknowledgement that it performed one or more actions.",
-      );
-      await factotum.expectCollectionState(fuelLogs.collection.id, {
-        created: [
-          {
-            timestamp: expect.closeToNow(60_000),
-            vehicle: "Kia Sportage",
-            liters: 43.04,
-            totalCost: 58.1,
-            fullTank: true,
-            odometer: 123456,
-          },
-        ],
-        updated: [],
-        unmodified: [],
-      });
-    });
-
-    pit("One info missing, implicit request", async () => {
-      // Setup SUT
-      const { backend, booleanOracle } = await deps();
-      const factotum = new FactotumObject(backend, booleanOracle);
-
+    it("One info missing, implicit request", { deps }, async (factotum) => {
       // Exercise + verify
       const [, , fuelLogs] = await factotum.createCollections(
         defineCollection.calendar([]),
@@ -108,7 +99,7 @@ export default rd<Dependencies>(
       await factotum.expectCollectionState(fuelLogs.collection.id, {
         created: [
           {
-            timestamp: expect.closeToNow(20_000),
+            timestamp: expect.instantCloseToNow(20_000),
             vehicle: "Kia Sportage",
             liters: 43.04,
             totalCost: 58.1,
@@ -123,93 +114,93 @@ export default rd<Dependencies>(
 
     // TODO: before we can implement this we need to implement a way to categorize
     // the assistant reply and act accordingly.
-    pit(
+    it(
       "Multiple info missing, implicit request",
-      { todo: true },
+      { deps, todo: true },
       async () => {},
     );
 
-    pit("Multiple documents, all-info provided, implicit request", async () => {
-      // Setup SUT
-      const { backend, booleanOracle } = await deps();
-      const factotum = new FactotumObject(backend, booleanOracle);
+    it(
+      "Multiple documents, all-info provided, implicit request",
+      { deps },
+      async (factotum) => {
+        // Exercise + verify
+        const [, , expenses] = await factotum.createCollections(
+          defineCollection.calendar([]),
+          defineCollection.contacts([]),
+          defineCollection.expenses([]),
+          defineCollection.fuelLogs([]),
+          defineCollection.vetVisits([]),
+        );
+        await factotum.say(
+          "Went grocery shopping, spent 50.86 euros. On the way back I stopped for a coffee and a croissant, spent 4.50 euros.",
+        );
+        await factotum.assertAssistantReply(
+          "Is a concise acknowledgement that it performed one or more actions.",
+        );
+        await factotum.expectCollectionState(expenses.collection.id, {
+          created: [
+            {
+              title: expect.stringMatching(/grocer/i),
+              date: expect.todaysPlainDate(),
+              amount: 50.86,
+              category: "Groceries",
+              paymentMethod: "Credit Card",
+            },
+            {
+              title: expect.stringMatching(/coffee/i),
+              date: expect.todaysPlainDate(),
+              amount: 4.5,
+              category: "Dining And Takeout",
+              paymentMethod: "Credit Card",
+            },
+          ],
+          updated: [],
+          unmodified: [],
+        });
+      },
+    );
 
-      // Exercise + verify
-      const [, , expenses] = await factotum.createCollections(
-        defineCollection.calendar([]),
-        defineCollection.contacts([]),
-        defineCollection.expenses([]),
-        defineCollection.fuelLogs([]),
-        defineCollection.vetVisits([]),
-      );
-      await factotum.say(
-        "Went grocery shopping, spent 50.86 euros. On the way back I stopped for a coffee and a croissant, spent 4.50 euros.",
-      );
-      await factotum.assertAssistantReply(
-        "Is a concise acknowledgement that it performed one or more actions.",
-      );
-      await factotum.expectCollectionState(expenses.collection.id, {
-        created: [
-          {
-            title: expect.stringMatching(/grocer/i),
-            date: expect.closeToNow(20_000),
-            amount: 50.86,
-            category: "Groceries",
-            paymentMethod: "Credit Card",
-          },
-          {
-            title: expect.stringMatching(/coffee/i),
-            date: expect.closeToNow(20_000),
-            amount: 4.5,
-            category: "Dining And Takeout",
-            paymentMethod: "Credit Card",
-          },
-        ],
-        updated: [],
-        unmodified: [],
-      });
-    });
-
-    pit("Multiple documents, one info missing, implicit request", async () => {
-      // Setup SUT
-      const { backend, booleanOracle } = await deps();
-      const factotum = new FactotumObject(backend, booleanOracle);
-
-      // Exercise + verify
-      const [, , expenses] = await factotum.createCollections(
-        defineCollection.calendar([]),
-        defineCollection.contacts([]),
-        defineCollection.expenses([]),
-        defineCollection.fuelLogs([]),
-        defineCollection.vetVisits([]),
-      );
-      await factotum.say(
-        "Went grocery shopping, spent 50.86 euros. On the way back I stopped at the café downstairs and bought a coffee and a croissant.",
-      );
-      await factotum.assertAssistantReply(
-        "Is asking how much the coffee cost.",
-      );
-      await factotum.say("4.50");
-      await factotum.expectCollectionState(expenses.collection.id, {
-        created: [
-          {
-            title: expect.stringMatching(/grocer/i),
-            date: expect.closeToNow(20_000),
-            amount: 50.86,
-            category: "Groceries",
-            paymentMethod: "Credit Card",
-          },
-          {
-            title: expect.stringMatching(/coffee/i),
-            date: expect.closeToNow(20_000),
-            amount: 4.5,
-            category: "Dining And Takeout",
-            paymentMethod: "Credit Card",
-          },
-        ],
-        updated: [],
-        unmodified: [],
-      });
-    });
+    it(
+      "Multiple documents, one info missing, implicit request",
+      { deps },
+      async (factotum) => {
+        // Exercise + verify
+        const [, , expenses] = await factotum.createCollections(
+          defineCollection.calendar([]),
+          defineCollection.contacts([]),
+          defineCollection.expenses([]),
+          defineCollection.fuelLogs([]),
+          defineCollection.vetVisits([]),
+        );
+        await factotum.say(
+          "Went grocery shopping, spent 50.86 euros. On the way back I stopped at the café downstairs and bought a coffee and a croissant.",
+        );
+        await factotum.assertAssistantReply(
+          "Is asking how much the coffee cost.",
+        );
+        await factotum.say("4.50");
+        await factotum.expectCollectionState(expenses.collection.id, {
+          created: [
+            {
+              title: expect.stringMatching(/grocer/i),
+              date: expect.todaysPlainDate(),
+              amount: 50.86,
+              category: "Groceries",
+              paymentMethod: "Credit Card",
+            },
+            {
+              title: expect.stringMatching(/coffee/i),
+              date: expect.todaysPlainDate(),
+              amount: 4.5,
+              category: "Dining And Takeout",
+              paymentMethod: "Credit Card",
+            },
+          ],
+          updated: [],
+          unmodified: [],
+        });
+      },
+    );
   },
 );

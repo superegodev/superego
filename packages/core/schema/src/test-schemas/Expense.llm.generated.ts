@@ -14,58 +14,56 @@ export type JsonObject = {
 /**
  * Category of the expense.
  */
-export enum Category {
+export type Category = 
   /**
    * Rent or mortgage, property taxes, HOA dues, home repairs.
    */
-  Housing = "Housing",
+  | "Housing"
   /**
    * Electricity, gas, water, trash, internet, phone.
    */
-  Utilities = "Utilities",
+  | "Utilities"
   /**
    * Food and household staples for home.
    */
-  Groceries = "Groceries",
+  | "Groceries"
   /**
    * Restaurants, cafés, delivery, tips.
    */
-  DiningAndTakeout = "DiningAndTakeout",
+  | "DiningAndTakeout"
   /**
    * Fuel, public transit, rideshare, parking, maintenance.
    */
-  Transportation = "Transportation",
+  | "Transportation"
   /**
    *  Doctor visits, dental, prescriptions, copays.
    */
-  HealthAndMedical = "HealthAndMedical",
+  | "HealthAndMedical"
   /**
    * Auto, health, home/renters, life premiums.
    */
-  Insurance = "Insurance",
+  | "Insurance"
   /**
    * Credit card payments, student or auto loans.
    */
-  DebtAndLoans = "DebtAndLoans",
+  | "DebtAndLoans"
   /**
    * Streaming, games, events, hobbies, apps.
    */
-  EntertainmentAndSubscriptions = "EntertainmentAndSubscriptions",
+  | "EntertainmentAndSubscriptions"
   /**
    * Clothing, toiletries, cosmetics, salon/barber.
    */
-  ShoppingAndPersonalCare = "ShoppingAndPersonalCare",
-  Other = "Other",
-}
+  | "ShoppingAndPersonalCare"
+  | "Other";
 
 /**
  * Details of the payment method used.
  */
-export enum PaymentMethod {
-  CreditCard = "Credit Card",
-  DebitCard = "Debit Card",
-  Cash = "Cash",
-}
+export type PaymentMethod = 
+  | "Credit Card"
+  | "Debit Card"
+  | "Cash";
 
 /**
  * Represents a single financial expense.

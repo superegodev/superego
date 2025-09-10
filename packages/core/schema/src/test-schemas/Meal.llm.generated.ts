@@ -2,14 +2,13 @@
 // Schema types //
 //////////////////
 
-export enum Type {
-  Breakfast = "Breakfast",
-  MorningSnack = "MorningSnack",
-  Lunch = "Lunch",
-  AfternoonSnack = "AfternoonSnack",
-  Dinner = "Dinner",
-  EveningSnack = "EveningSnack",
-}
+export type Type = 
+  | "Breakfast"
+  | "MorningSnack"
+  | "Lunch"
+  | "AfternoonSnack"
+  | "Dinner"
+  | "EveningSnack";
 
 /**
  * A quantity of mass.

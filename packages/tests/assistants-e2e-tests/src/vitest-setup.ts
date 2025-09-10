@@ -1,15 +1,9 @@
 import { expect } from "vitest";
 
 expect.extend({
-  closeToNow(received: unknown, threshold: number) {
+  instantCloseToNow(received: unknown, threshold: number) {
     const receivedTime =
-      typeof received === "string"
-        ? Date.parse(received)
-        : received instanceof Date
-          ? received.getTime()
-          : typeof received === "number"
-            ? received
-            : Number.NaN;
+      typeof received === "string" ? Date.parse(received) : Number.NaN;
 
     const pass =
       Number.isFinite(receivedTime) &&
@@ -26,13 +20,35 @@ expect.extend({
         ].join(""),
     };
   },
+
+  todaysPlainDate(received: unknown) {
+    // TODO: account for the edge case in which the test is run around midnight.
+    // The document is created the day before, but the assertion runs the day
+    // after, making it incorrect.
+    const today = new Date().toISOString().slice(0, 10);
+
+    const pass = received === today;
+
+    return {
+      pass,
+      message: () =>
+        [
+          "expected ",
+          this.utils.printReceived(received),
+          pass ? " not " : " ",
+          `to be ${today} (today)`,
+        ].join(""),
+    };
+  },
 });
 
 declare module "vitest" {
   interface Assertion {
-    closeToNow(ms: number): void;
+    instantCloseToNow(threshold: number): void;
+    todaysPlainDate(): void;
   }
   interface AsymmetricMatchersContaining {
-    closeToNow(ms: number): void;
+    instantCloseToNow(threshold: number): void;
+    todaysPlainDate(): void;
   }
 }

@@ -1,7 +1,9 @@
 import { DataType } from "@superego/schema";
-import type { CollectionDefinition } from "./FactotumObject/createCollection.js";
+import type FactotumObject from "../utils/FactotumObject.js";
 
-const calendarIt = (documentContents: object[]): CollectionDefinition => ({
+const calendarIt = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Calendario",
   description: "Il mio calendario personale.",
   assistantInstructions: [
@@ -63,7 +65,9 @@ const calendarIt = (documentContents: object[]): CollectionDefinition => ({
   documentContents,
 });
 
-const calendarFr = (documentContents: object[]): CollectionDefinition => ({
+const calendarFr = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Calendrier",
   description: "Mon calendrier personnel.",
   assistantInstructions: [
@@ -125,7 +129,9 @@ const calendarFr = (documentContents: object[]): CollectionDefinition => ({
   documentContents,
 });
 
-const calendarDe = (documentContents: object[]): CollectionDefinition => ({
+const calendarDe = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Kalender",
   description: "Mein persönlicher Kalender.",
   assistantInstructions: [

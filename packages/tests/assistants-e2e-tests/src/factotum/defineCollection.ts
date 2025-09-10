@@ -1,7 +1,9 @@
 import { DataType } from "@superego/schema";
-import type { CollectionDefinition } from "./FactotumObject/createCollection.js";
+import type FactotumObject from "../utils/FactotumObject.js";
 
-const calendar = (documentContents: object[]): CollectionDefinition => ({
+const calendar = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Calendar",
   description: "My personal calendar.",
   assistantInstructions: [
@@ -62,7 +64,9 @@ const calendar = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-const contacts = (documentContents: object[]): CollectionDefinition => ({
+const contacts = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Contacts",
   description: "Address book of my contacts.",
   assistantInstructions: null,
@@ -160,10 +164,14 @@ const contacts = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-const expenses = (documentContents: object[]): CollectionDefinition => ({
+const expenses = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Expenses",
   description: "A log of my expenses.",
   assistantInstructions: [
+    "- Consider this collection when I talk about having spent money.",
+    "- Add each refuel as an expense here as well.",
     "- Each expense must be recorded separately.",
     "- If the currency is not provided, default to Euros",
     "- If the payment method is not provided, default to Credit Card.",
@@ -255,8 +263,7 @@ const expenses = (documentContents: object[]): CollectionDefinition => ({
           },
           currency: {
             description: "Currency code (e.g., EUR, USD).",
-            dataType: DataType.StringLiteral,
-            value: "EUR",
+            dataType: DataType.String,
           },
           category: {
             dataType: null,
@@ -280,7 +287,9 @@ const expenses = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
+const fuelLogs = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Fuel Logs",
   description: "Tracks when I refuel my vehicles.",
   assistantInstructions: [
@@ -322,7 +331,7 @@ const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
             dataType: DataType.Number,
           },
           totalCost: {
-            description: "Total cost of refueling.",
+            description: "Total cost of refueling, in Euros.",
             dataType: DataType.Number,
           },
           fullTank: {
@@ -348,7 +357,9 @@ const fuelLogs = (documentContents: object[]): CollectionDefinition => ({
   documentContents: documentContents,
 });
 
-const vetVisits = (documentContents: object[]): CollectionDefinition => ({
+const vetVisits = (
+  documentContents: object[],
+): FactotumObject.CollectionDefinition => ({
   name: "Vet Visits",
   description: "Log of visits to the vet for my pets.",
   assistantInstructions: null,
