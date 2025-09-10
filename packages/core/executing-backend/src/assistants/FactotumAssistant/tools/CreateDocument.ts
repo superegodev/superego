@@ -47,7 +47,7 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateDocument,
-      description: "Create a **new** document.",
+      description: "Creates a **new** document.",
       inputSchema: {
         type: "object",
         properties: {

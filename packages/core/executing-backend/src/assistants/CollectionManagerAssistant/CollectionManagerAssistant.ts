@@ -22,14 +22,27 @@ export default class CollectionManagerAssistant extends Assistant {
   }
 
   protected getUserContextPrompt(): string {
+    const now = DateTime.now();
     return [
-      "<local-current-date-time>",
-      DateTime.now().toFormat("cccc LLLL d yyyy HH:mm:ss.SSS 'GMT'ZZZ"),
-      "</local-current-date-time>",
-      "",
-      "<time-zone>",
+      "<utc-date-time>",
+      now.toUTC().toISO({
+        precision: "millisecond",
+        includeOffset: true,
+      }),
+      "</utc-date-time>",
+      "<local-date-time>",
+      now.toISO({
+        precision: "millisecond",
+        includeOffset: true,
+        extendedZone: true,
+      }),
+      "</local-date-time>",
+      "<weekday>",
+      now.toFormat("cccc"),
+      "<weekday>",
+      "<user-timezone>",
       DateTime.local().zone.name,
-      "</time-zone>",
+      "</user-timezone>",
     ].join("\n");
   }
 

@@ -1,4 +1,9 @@
-import type { Collection, ToolCall, ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
@@ -15,6 +20,7 @@ import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
   constructor(
+    private userName: string | null,
     private developerPrompt: string | null,
     protected inferenceService: InferenceService,
     private collections: Collection[],
@@ -33,7 +39,10 @@ export default class FactotumAssistant extends Assistant {
   }
 
   protected getDeveloperPrompt(): string {
-    return this.developerPrompt ?? defaultDeveloperPrompt;
+    return (this.developerPrompt ?? defaultDeveloperPrompt).replaceAll(
+      "$USER_NAME",
+      this.userName ?? "Alex",
+    );
   }
 
   protected getUserContextPrompt(): string {
@@ -49,25 +58,25 @@ export default class FactotumAssistant extends Assistant {
         })),
       ),
       "</collections>",
-      "<utc-date-time-utc>",
+      "<utc-date-time>",
       now.toUTC().toISO({
         precision: "millisecond",
         includeOffset: true,
       }),
-      "</utc-date-time-utc>",
+      "</utc-date-time>",
       "<local-date-time>",
-      now.toUTC().toISO({
+      now.toISO({
         precision: "millisecond",
         includeOffset: true,
         extendedZone: true,
       }),
       "</local-date-time>",
-      "<user-timezone>",
-      DateTime.local().zone.name,
-      "</user-timezone>",
       "<weekday>",
       now.toFormat("cccc"),
       "<weekday>",
+      "<user-timezone>",
+      DateTime.local().zone.name,
+      "</user-timezone>",
     ].join("\n");
   }
 

@@ -22,6 +22,7 @@ registerDataRepositoriesTests(async () => {
         },
       },
       assistants: {
+        userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionManager]: null,

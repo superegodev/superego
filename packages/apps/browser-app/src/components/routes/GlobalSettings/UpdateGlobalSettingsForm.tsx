@@ -34,6 +34,7 @@ export default function UpdateGlobalSettingsForm({
       defaultValues: {
         ...globalSettings,
         assistants: {
+          ...globalSettings.assistants,
           developerPrompts: {
             [AssistantName.CollectionManager]:
               globalSettings.assistants.developerPrompts[

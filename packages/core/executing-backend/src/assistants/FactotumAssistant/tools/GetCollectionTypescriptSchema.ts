@@ -39,7 +39,7 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.GetCollectionTypescriptSchema,
       description: `
-Fetch the TypeScript type declarations for a collection.
+Fetches the TypeScript type declarations for a collection.
 
 **Use it:**
 

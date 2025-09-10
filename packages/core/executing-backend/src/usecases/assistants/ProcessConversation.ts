@@ -129,6 +129,7 @@ export default class AssistantsProcessConversation extends Usecase {
   ): Assistant {
     return assistant === AssistantName.Factotum
       ? new FactotumAssistant(
+          globalSettings.assistants.userName,
           globalSettings.assistants.developerPrompts[AssistantName.Factotum],
           inferenceService,
           collections,

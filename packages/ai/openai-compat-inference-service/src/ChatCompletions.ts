@@ -153,7 +153,6 @@ export function fromChatCompletionsResponse(
     createdAt: new Date(),
   } as const;
   if (isChatCompletionsAssistantToolMessage(message)) {
-    console.log(message.tool_calls);
     return {
       ...baseMessage,
       toolCalls: message.tool_calls.map((tool_call) => ({

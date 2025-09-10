@@ -20,6 +20,13 @@ export default function AssistantsSettings({
     <>
       <RHFTextField
         control={control}
+        name="assistants.userName"
+        emptyInputValue={null}
+        label={intl.formatMessage({ defaultMessage: "Your name" })}
+        placeholder="Alex"
+      />
+      <RHFTextField
+        control={control}
         name={`assistants.developerPrompts.${AssistantName.Factotum}`}
         emptyInputValue={null}
         textArea={true}

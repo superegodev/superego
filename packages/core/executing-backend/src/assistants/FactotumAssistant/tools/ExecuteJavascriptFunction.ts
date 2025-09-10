@@ -57,9 +57,10 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.ExecuteJavascriptFunction,
       description: `
-Run a **synchronous**, **read-only** JS function over **all documents** in a
-collection; return a JSON-safe result (counts, aggregates, short lists, or
-specific docs).
+Runs a **synchronous**, **read-only** JS function over **all documents** in a
+collection; returns a JSON-safe result (counts, aggregates, short lists, or
+specific docs). Use this to **search** for a document (e.g., by weighed
+criteria), **fetch** a specific item by \`id\`, or compute aggregates.
 
 ### Documents
 
@@ -74,13 +75,10 @@ interface Document {
 ### Rules
 
 - No \`async\`, timers, or network.
-- Don’t mutate \`documents\`.
+- Only use fields defined in the schema.
 - Return **JSON-safe** values only (convert Dates to ISO strings if returning
   them).
-- Use only fields defined in the schema.
 - The function must be default-exported.
-- You can use this to **search** (e.g., by weighed criteria), **fetch** a
-  specific item by \`id\`, or compute aggregates.
       `.trim(),
       inputSchema: {
         type: "object",

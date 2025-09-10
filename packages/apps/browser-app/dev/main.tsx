@@ -26,6 +26,7 @@ const backend = new ExecutingBackend(
         },
       },
       assistants: {
+        userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionManager]: null,

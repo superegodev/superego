@@ -51,7 +51,7 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateNewDocumentVersion,
       description:
-        "Create a **new immutable version** of an existing document.",
+        "Use this when you want to update a document. It does so by creating a **new immutable version** of an existing document.",
       inputSchema: {
         type: "object",
         properties: {

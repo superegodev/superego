@@ -170,11 +170,12 @@ const expenses = (
   name: "Expenses",
   description: "A log of my expenses.",
   assistantInstructions: [
-    "- Consider this collection when I talk about having spent money.",
-    "- Add each refuel as an expense here as well.",
+    "- Every time you add a document in the fuel log collection, ALSO add it as an expense here.",
     "- Each expense must be recorded separately.",
-    "- If the currency is not provided, default to Euros",
-    "- If the payment method is not provided, default to Credit Card.",
+    "- Defaults for info not provided:",
+    "  - Title → generate a sensible one.",
+    "  - Currency → Euros.",
+    "  - Payment method → Credit Card.",
   ].join("\n"),
   schema: {
     types: {
@@ -294,7 +295,8 @@ const fuelLogs = (
   description: "Tracks when I refuel my vehicles.",
   assistantInstructions: [
     "- Use reasonable values for liters and total cost. E.g., if I say I put 5304 liters, I probably mean 53.04, even if I didn't specify the decimal",
-    "- Default to full tank if I don't specify it.",
+    "- Defaults for info not provided:",
+    "  - Full-tank → true.",
   ].join("\n"),
   schema: {
     types: {
