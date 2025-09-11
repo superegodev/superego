@@ -1,9 +1,9 @@
 import { Theme, type TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
-import * as monaco from "monaco-editor";
 import { type RefObject, useEffect, useRef } from "react";
 import forms from "../../../business-logic/forms/forms.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
+import monaco from "../../../monaco.js";
 import { vars } from "../../../themes.css.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import type TypescriptLib from "./TypescriptLib.js";

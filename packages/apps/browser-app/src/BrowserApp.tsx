@@ -18,7 +18,6 @@ import ResultError from "./components/design-system/ResultError/ResultError.js";
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 
-import "./setupMonacoEditor.js";
 import "./BrowserApp.css.js";
 
 interface Props {

@@ -44,3 +44,5 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   noUnusedParameters: true,
   skipLibCheck: true,
 });
+
+export default monaco;

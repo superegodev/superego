@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { render } from "../../../test-utils.jsx";
-import SendRecordToolbar from "./SendRecordToolbar.jsx";
+import { render } from "../../../test-utils.js";
+import SendRecordToolbar from "./SendRecordToolbar.js";
 
 describe("renders different buttons according to the supplied props", () => {
   interface TestCase {

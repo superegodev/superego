@@ -1,8 +1,8 @@
 import { Theme, type TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
-import * as monaco from "monaco-editor";
 import { type MouseEventHandler, useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
+import monaco from "../../../monaco.js";
 import * as cs from "./TypescriptModuleInput.css.js";
 
 interface Props {

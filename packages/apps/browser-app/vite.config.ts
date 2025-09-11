@@ -3,6 +3,7 @@ import optimizeLocales from "@react-aria/optimize-locales-plugin";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { analyzer } from "vite-bundle-analyzer";
 
 export default defineConfig({
   resolve: {
@@ -31,7 +32,12 @@ export default defineConfig({
       },
     }),
     vanillaExtractPlugin(),
+    // Enable for analyzing bundle.
+    analyzer({ enabled: false }),
   ],
+  build: {
+    sourcemap: true,
+  },
   test: {
     setupFiles: ["./src/vitest-setup.ts"],
     browser: {
