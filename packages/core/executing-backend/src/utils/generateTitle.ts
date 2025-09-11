@@ -30,7 +30,7 @@ export default async function generateTitle(
       : null;
   } catch (error) {
     console.error("Error generating title.");
-    console.log(error);
+    console.error(error);
     return null;
   }
 }

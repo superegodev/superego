@@ -1,9 +1,16 @@
-import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreateNewVersion from "../../../usecases/documents/CreateNewVersion.js";
+import { fromAssistantContent } from "../../utils/AssistantDocument.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateNewDocumentVersion {
@@ -12,9 +19,21 @@ export default {
 
   async exec(
     toolCall: ToolCall.CreateNewDocumentVersion,
+    collections: Collection[],
     documentsCreateNewVersion: DocumentsCreateNewVersion,
   ): Promise<ToolResult.CreateNewDocumentVersion> {
     const { collectionId, id, latestVersionId, content } = toolCall.input;
+
+    const collection = collections.find(({ id }) => id === collectionId);
+    if (!collection) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
+        ),
+      };
+    }
 
     const {
       success,
@@ -24,7 +43,9 @@ export default {
       collectionId,
       id,
       latestVersionId,
-      content,
+      // TODO: pass previous version content, so here the undefined->null logic
+      // can become undefined->previous version.
+      fromAssistantContent(collection.latestVersion.schema, content),
     );
 
     if (error && error.name === "UnexpectedError") {

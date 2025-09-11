@@ -36,10 +36,7 @@
       "description": "Date of the visit.\n\n## Format `dev.superego:String.PlainDate`\n\nA calendar date in the ISO8601 format, not associated with a particular time or time zone.",
       "examples": [
         "2006-08-24",
-        "2024-02-29",
-        "-000924-01-01",
-        "0924-01-01",
-        "+010924-01-01"
+        "2024-02-29"
       ],
       "type": "string"
     },

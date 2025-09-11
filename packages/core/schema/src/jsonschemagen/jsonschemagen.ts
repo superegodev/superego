@@ -10,6 +10,7 @@ import type ReferencedBuiltInTypes from "./ReferencedBuiltInTypes.js";
 
 function generateDescription(
   typeDefinition: AnyTypeDefinition,
+  llmVariant: boolean,
 ): string | undefined {
   const lines: string[] = [];
   if (typeDefinition.description) {
@@ -18,7 +19,14 @@ function generateDescription(
   if ("format" in typeDefinition) {
     const format = findFormat(typeDefinition, formats);
     if (format) {
-      lines.push("", `## Format \`${format.id}\``, "", format.description.en);
+      lines.push(
+        "",
+        `## Format \`${format.id}\``,
+        "",
+        llmVariant && format.llmDescription
+          ? format.llmDescription
+          : format.description,
+      );
     }
   }
   if (typeDefinition.dataType === DataType.Enum) {
@@ -41,7 +49,8 @@ function generateExamples(
   typeDefinition: AnyTypeDefinition,
 ): JSONSchema7Type | undefined {
   return "format" in typeDefinition
-    ? (findFormat(typeDefinition, formats)?.validExamples ?? undefined)
+    ? (findFormat(typeDefinition, formats)?.validExamples.slice(0, 2) ??
+        undefined)
     : undefined;
 }
 
@@ -50,11 +59,12 @@ function generateDefinition(
   typeName: string | undefined,
   isNullable: boolean,
   schema: Schema,
+  llmVariant: boolean,
   referencedBuiltInTypes: ReferencedBuiltInTypes,
 ): JSONSchema7 {
   const baseDefinition = {
     title: typeName,
-    description: generateDescription(typeDefinition),
+    description: generateDescription(typeDefinition, llmVariant),
     examples: generateExamples(typeDefinition),
   };
   switch (typeDefinition.dataType) {
@@ -138,6 +148,7 @@ function generateDefinition(
                 typeDefinition.nullableProperties?.includes(propertyName) ??
                   false,
                 schema,
+                llmVariant,
                 referencedBuiltInTypes,
               ),
             ],
@@ -156,6 +167,7 @@ function generateDefinition(
           undefined,
           false,
           schema,
+          llmVariant,
           referencedBuiltInTypes,
         ),
       };
@@ -175,6 +187,7 @@ function generateDefinition(
 
 export default function jsonschemagen(
   schema: Schema,
+  llmVariant = true,
 ): JSONSchema7 & { type: "object" } {
   const referencedBuiltInTypes: ReferencedBuiltInTypes = new Set();
   const jsonSchema: JSONSchema7 = {
@@ -186,6 +199,7 @@ export default function jsonschemagen(
       typeName,
       false,
       schema,
+      llmVariant,
       referencedBuiltInTypes,
     );
     if (typeName === schema.rootType) {

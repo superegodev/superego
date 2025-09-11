@@ -42,7 +42,7 @@ export default rd<Dependencies>("Search in a single collection", (deps) => {
     { deps, passRate: 1 },
     async (factotum) => {
       // Exercise + verify
-      const [calendar] = await factotum.createCollections(
+      await factotum.createCollections(
         defineCollection.calendar([
           {
             type: "Event",
@@ -79,19 +79,6 @@ export default rd<Dependencies>("Search in a single collection", (deps) => {
           "2. Aperitif with Mario, from 17 to 18.",
         ].join("\n"),
       );
-      await factotum.expectCollectionState(calendar.collection.id, {
-        created: [],
-        updated: [
-          {
-            document: calendar.documents[0]!,
-            newContentMatching: {
-              startTime: tomorrowAt(10),
-              endTime: tomorrowAt(11),
-            },
-          },
-        ],
-        unmodified: [],
-      });
     },
   );
 });

@@ -1,4 +1,3 @@
-import type { I18nString } from "@superego/global-types";
 import type * as v from "valibot";
 import type DataType from "./DataType.js";
 import type JsonObject from "./types/JsonObject.js";
@@ -21,8 +20,10 @@ export default interface Format<
 > {
   dataType: DataTypeWithFormat;
   id: string;
-  name: I18nString;
-  description: I18nString;
+  name: string;
+  description: string;
+  /** Specific description for llms. */
+  llmDescription: string | null;
   validExamples: Value[];
   invalidExamples: Value[];
   valibotSchema: v.GenericSchema<Value, Value>;

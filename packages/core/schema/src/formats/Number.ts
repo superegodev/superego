@@ -7,12 +7,9 @@ export default [
   {
     dataType: DataType.Number,
     id: FormatId.Number.Integer,
-    name: {
-      en: "Integer",
-    },
-    description: {
-      en: "An integer",
-    },
+    name: "Integer",
+    description: "An integer",
+    llmDescription: null,
     validExamples: [-1, 0, 1],
     invalidExamples: [1.1, Math.PI],
     valibotSchema: v.pipe(v.number(), v.integer()),

@@ -36,7 +36,7 @@
       "type": "object",
       "properties": {
         "time": {
-          "description": "Timestamp of the interruption.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+          "description": "Timestamp of the interruption.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
           "examples": [
             "2006-08-24T19:39:09.000Z",
             "2006-08-24T19:39:09.068Z"
@@ -68,7 +68,7 @@
   "type": "object",
   "properties": {
     "startTime": {
-      "description": "## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "description": "## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
       "examples": [
         "2006-08-24T19:39:09.000Z",
         "2006-08-24T19:39:09.068Z"
@@ -76,7 +76,7 @@
       "type": "string"
     },
     "endTime": {
-      "description": "## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "description": "## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
       "examples": [
         "2006-08-24T19:39:09.000Z",
         "2006-08-24T19:39:09.068Z"
@@ -98,8 +98,7 @@
       "description": "Sleep quality score (e.g., 0-100).\n\n## Format `dev.superego:Number.Integer`\n\nAn integer",
       "examples": [
         -1,
-        0,
-        1
+        0
       ],
       "type": [
         "number",

@@ -1,9 +1,4 @@
-import {
-  type Collection,
-  type ToolCall,
-  ToolName,
-  type ToolResult,
-} from "@superego/backend";
+import type { Collection, ToolCall, ToolResult } from "@superego/backend";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
@@ -58,12 +53,6 @@ export default class FactotumAssistant extends Assistant {
         })),
       ),
       "</collections>",
-      "<utc-date-time>",
-      now.toUTC().toISO({
-        precision: "millisecond",
-        includeOffset: true,
-      }),
-      "</utc-date-time>",
       "<local-date-time>",
       now.toISO({
         precision: "millisecond",
@@ -74,9 +63,6 @@ export default class FactotumAssistant extends Assistant {
       "<weekday>",
       now.toFormat("cccc"),
       "<weekday>",
-      "<user-timezone>",
-      DateTime.local().zone.name,
-      "</user-timezone>",
     ].join("\n");
   }
 
@@ -96,16 +82,22 @@ export default class FactotumAssistant extends Assistant {
     if (ExecuteJavascriptFunction.is(toolCall)) {
       return ExecuteJavascriptFunction.exec(
         toolCall,
+        this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
       );
     }
     if (CreateDocument.is(toolCall)) {
-      return CreateDocument.exec(toolCall, this.usecases.documentsCreate);
+      return CreateDocument.exec(
+        toolCall,
+        this.collections,
+        this.usecases.documentsCreate,
+      );
     }
     if (CreateNewDocumentVersion.is(toolCall)) {
       return CreateNewDocumentVersion.exec(
         toolCall,
+        this.collections,
         this.usecases.documentsCreateNewVersion,
       );
     }

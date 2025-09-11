@@ -177,7 +177,7 @@ export default rd<Dependencies>(
           "Went grocery shopping, spent 50.86 euros. On the way back I stopped at the café downstairs and bought a coffee and a croissant.",
         );
         await factotum.assertAssistantReply(
-          "Is asking how much the coffee cost.",
+          "Is asking how much the coffee and the croissant cost.",
         );
         await factotum.say("4.50");
         await factotum.expectCollectionState(expenses.collection.id, {

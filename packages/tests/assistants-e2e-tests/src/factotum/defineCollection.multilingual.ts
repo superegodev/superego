@@ -79,7 +79,7 @@ const calendarFr = (
         description: "Type d’une entrée de calendrier.",
         dataType: DataType.Enum,
         members: {
-          Événement: {
+          Evenement: {
             description:
               "Un événement, avec une heure de début définie et une heure de fin définie.",
             value: "Événement",
@@ -91,7 +91,7 @@ const calendarFr = (
           },
         },
       },
-      EntréeCalendrier: {
+      EntreeCalendrier: {
         description: "Une entrée dans mon calendrier.",
         dataType: DataType.Struct,
         properties: {
@@ -104,7 +104,7 @@ const calendarFr = (
             description: "Titre court pour l’entrée. 5 mots max.",
             dataType: DataType.String,
           },
-          heureDébut: {
+          heureDebut: {
             description: "Quand l’événement ou le rappel commence.",
             dataType: DataType.String,
             format: "dev.superego:String.Instant",
@@ -124,7 +124,7 @@ const calendarFr = (
         nullableProperties: ["heureFin", "notes"],
       },
     },
-    rootType: "EntréeCalendrier",
+    rootType: "EntreeCalendrier",
   },
   documentContents,
 });

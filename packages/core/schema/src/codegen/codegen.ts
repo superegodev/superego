@@ -16,6 +16,7 @@ function generateEnumMemberTsDoc({ description }: EnumMember): string {
 function generateTypeDefinitionTsDoc(
   typeDefinition: AnyTypeDefinition,
   isRootType: boolean,
+  llmVariant: boolean,
 ): string {
   const commentLines: string[] = [];
   if (typeDefinition.description) {
@@ -28,7 +29,9 @@ function generateTypeDefinitionTsDoc(
         "",
         `## Format \`${format.id}\``,
         "",
-        format.description.en,
+        llmVariant && format.llmDescription
+          ? format.llmDescription
+          : format.description,
         "",
         "### Examples",
         "",
@@ -100,6 +103,7 @@ function generateType(
             const tsDoc = generateTypeDefinitionTsDoc(
               propertyTypeDefinition,
               false,
+              llmVariant,
             );
             const typeString = generateType(
               propertyTypeDefinition,
@@ -139,7 +143,11 @@ function generateTypeDeclaration(
   llmVariant: boolean,
   referencedBuiltInTypes: ReferencedBuiltInTypes,
 ): string {
-  const tsDoc = generateTypeDefinitionTsDoc(typeDefinition, isRootType);
+  const tsDoc = generateTypeDefinitionTsDoc(
+    typeDefinition,
+    isRootType,
+    llmVariant,
+  );
   const type = generateType(
     typeDefinition,
     schema,

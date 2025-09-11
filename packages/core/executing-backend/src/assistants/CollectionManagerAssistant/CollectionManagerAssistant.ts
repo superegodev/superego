@@ -24,12 +24,6 @@ export default class CollectionManagerAssistant extends Assistant {
   protected getUserContextPrompt(): string {
     const now = DateTime.now();
     return [
-      "<utc-date-time>",
-      now.toUTC().toISO({
-        precision: "millisecond",
-        includeOffset: true,
-      }),
-      "</utc-date-time>",
       "<local-date-time>",
       now.toISO({
         precision: "millisecond",
@@ -40,9 +34,6 @@ export default class CollectionManagerAssistant extends Assistant {
       "<weekday>",
       now.toFormat("cccc"),
       "<weekday>",
-      "<user-timezone>",
-      DateTime.local().zone.name,
-      "</user-timezone>",
     ].join("\n");
   }
 

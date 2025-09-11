@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "timestamp": {
-      "description": "When the weigh-in occurred.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, in \"Zulu time\", with millisecond precision.",
+      "description": "When the weigh-in occurred.\n\n## Format `dev.superego:String.Instant`\n\nAn exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
       "examples": [
         "2006-08-24T19:39:09.000Z",
         "2006-08-24T19:39:09.068Z"

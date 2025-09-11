@@ -27,7 +27,7 @@ export default function factotumIt(
   const passRate = options.passRate ?? DEFAULT_PASS_RATE;
 
   it(
-    `${name} (x ${repeatTimes})`,
+    repeatTimes === 1 ? name : `${name} (x ${repeatTimes})`,
     { only: options.only, skip: options.skip, todo: options.todo },
     async ({ annotate }) => {
       let failedCount = 0;
@@ -38,13 +38,16 @@ export default function factotumIt(
           factotum = new FactotumObject(backend, booleanOracle);
           await testFunction(factotum);
         } catch (error) {
-          await annotate(String(error), `Repeat ${i} - Error`);
           if (factotum) {
             await annotate(
               JSON.stringify(factotum.getConversation()),
               `Repeat ${i} - Conversation log`,
             );
           }
+          if (repeatTimes === 1) {
+            throw error;
+          }
+          await annotate(String(error), `Repeat ${i} - Error`);
           failedCount += 1;
         }
       }

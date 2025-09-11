@@ -15,6 +15,7 @@
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
     "@types/json-schema": "^7.0.15",
+    "@types/luxon": "^3.7.1",
     "@types/node": "^24.3.1",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
+    "luxon": "^3.7.2",
     "valibot": "^1.1.0"
   }
 }

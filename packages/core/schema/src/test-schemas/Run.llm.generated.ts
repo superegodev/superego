@@ -132,7 +132,7 @@ export type Run = {
    *
    * ## Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
+   * An exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.
    *
    * ### Examples
    *

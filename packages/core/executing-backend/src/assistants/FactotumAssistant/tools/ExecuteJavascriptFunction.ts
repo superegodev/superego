@@ -1,9 +1,17 @@
-import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
+import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeResultError from "../../../makers/makeResultError.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
+import { toAssistantDocument } from "../../utils/AssistantDocument.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.ExecuteJavascriptFunction {
@@ -12,31 +20,45 @@ export default {
 
   async exec(
     toolCall: ToolCall.ExecuteJavascriptFunction,
+    collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
   ): Promise<ToolResult.ExecuteJavascriptFunction> {
     const { collectionId, javascriptFunction } = toolCall.input;
 
-    const { data: documents, error } = await documentsList.exec(collectionId);
-
-    if (error && error.name === "UnexpectedError") {
-      throw new UnexpectedAssistantError(
-        `Listing documents failed with UnexpectedError. Cause: ${error.details.cause}`,
-      );
-    }
-    if (error) {
+    const collection = collections.find(({ id }) => id === collectionId);
+    if (!collection) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(error),
+        output: makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
+        ),
       };
     }
 
-    const assistantDocuments = documents.map((document) => ({
-      id: document.id,
-      versionId: document.latestVersion.id,
-      content: document.latestVersion.content,
-    }));
+    const { data: documents, error: documentsListError } =
+      await documentsList.exec(collectionId);
+    if (documentsListError && documentsListError.name === "UnexpectedError") {
+      throw new UnexpectedAssistantError(
+        `Listing documents failed with UnexpectedError. Cause: ${documentsListError.details.cause}`,
+      );
+    }
+    if (documentsListError) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(documentsListError),
+      };
+    }
+
+    const assistantDocuments = documents.map((document) =>
+      toAssistantDocument(
+        collection.latestVersion.schema,
+        document,
+        DateTime.local().zoneName,
+      ),
+    );
     const result = await javascriptSandbox.executeSyncFunction(
       {
         source: "",

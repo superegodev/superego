@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { expect } from "vitest";
 
 expect.extend({
@@ -25,7 +26,7 @@ expect.extend({
     // TODO: account for the edge case in which the test is run around midnight.
     // The document is created the day before, but the assertion runs the day
     // after, making it incorrect.
-    const today = new Date().toISOString().slice(0, 10);
+    const today = DateTime.now().toLocal().toISODate();
 
     const pass = received === today;
 

@@ -8,12 +8,10 @@ export default [
   {
     dataType: DataType.String,
     id: FormatId.String.PlainDate,
-    name: {
-      en: "Plain Date",
-    },
-    description: {
-      en: "A calendar date in the ISO8601 format, not associated with a particular time or time zone.",
-    },
+    name: "Plain Date",
+    description:
+      "A calendar date in the ISO8601 format, not associated with a particular time or time zone.",
+    llmDescription: null,
     validExamples: [
       "2006-08-24",
       "2024-02-29",
@@ -54,12 +52,10 @@ export default [
   {
     dataType: DataType.String,
     id: FormatId.String.PlainTime,
-    name: {
-      en: "Plain Time",
-    },
-    description: {
-      en: "A wall-clock time in the ISO8601 format, with at most millisecond precision, not associated with a particular date or time zone.",
-    },
+    name: "Plain Time",
+    description:
+      "A wall-clock time in the ISO8601 format, with at most millisecond precision, not associated with a particular date or time zone.",
+    llmDescription: null,
     validExamples: ["T19:39:09", "T19:39:09.068", "T19:39:09.000"],
     invalidExamples: [
       "19:39:09",
@@ -86,12 +82,11 @@ export default [
   {
     dataType: DataType.String,
     id: FormatId.String.Instant,
-    name: {
-      en: "Instant",
-    },
-    description: {
-      en: 'An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.',
-    },
+    name: "Instant",
+    description:
+      'An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.',
+    llmDescription:
+      "An exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
     validExamples: ["2006-08-24T19:39:09.000Z", "2006-08-24T19:39:09.068Z"],
     invalidExamples: [
       "not an instant",

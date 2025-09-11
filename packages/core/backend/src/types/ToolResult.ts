@@ -50,6 +50,7 @@ namespace ToolResult {
         documentId: DocumentId;
         documentVersionId: DocumentVersionId;
       },
+      | CollectionNotFound
       | DocumentNotFound
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid

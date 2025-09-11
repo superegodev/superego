@@ -31,7 +31,7 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
   it("French", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(
-      defineCollection.calendarIt([]),
+      defineCollection.calendarFr([]),
     );
     await factotum.say("Demain à 9 h, le plombier arrive.");
     await factotum.assertAssistantReply(
@@ -40,9 +40,9 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
     await factotum.expectCollectionState(calendar.collection.id, {
       created: [
         {
-          titolo: expect.stringMatching(/plombier/i),
-          oraInizio: tomorrowAt(9),
-          oraFine: tomorrowAt(10),
+          titre: expect.stringMatching(/plombier/i),
+          heureDebut: tomorrowAt(9),
+          heureFin: tomorrowAt(10),
         },
       ],
       updated: [],
@@ -53,7 +53,7 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
   it("German", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(
-      defineCollection.calendarIt([]),
+      defineCollection.calendarDe([]),
     );
     await factotum.say("Morgen um 9 Uhr kommt der Klempner.");
     await factotum.assertAssistantReply(
@@ -62,9 +62,9 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
     await factotum.expectCollectionState(calendar.collection.id, {
       created: [
         {
-          titolo: expect.stringMatching(/klempner/i),
-          oraInizio: tomorrowAt(9),
-          oraFine: tomorrowAt(10),
+          titel: expect.stringMatching(/klempner/i),
+          startzeit: tomorrowAt(9),
+          endzeit: tomorrowAt(10),
         },
       ],
       updated: [],

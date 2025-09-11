@@ -1,9 +1,16 @@
-import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreate from "../../../usecases/documents/Create.js";
+import { fromAssistantContent } from "../../utils/AssistantDocument.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateDocument {
@@ -12,17 +19,30 @@ export default {
 
   async exec(
     toolCall: ToolCall.CreateDocument,
+    collections: Collection[],
     documentsCreate: DocumentsCreate,
   ): Promise<ToolResult.CreateDocument> {
     const { collectionId, content } = toolCall.input;
 
-    // TODO: if necessary, try some easy fixes to the document (e.g., if a
-    // property is not provided, but it's nullable, set it to null).
+    const collection = collections.find(({ id }) => id === collectionId);
+    if (!collection) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
+        ),
+      };
+    }
+
     const {
       success,
       data: document,
       error,
-    } = await documentsCreate.exec(collectionId, content);
+    } = await documentsCreate.exec(
+      collectionId,
+      fromAssistantContent(collection.latestVersion.schema, content),
+    );
 
     if (error && error.name === "UnexpectedError") {
       throw new UnexpectedAssistantError(
