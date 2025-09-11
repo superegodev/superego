@@ -256,18 +256,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/biome@npm:2.2.3"
+"@biomejs/biome@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/biome@npm:2.2.4"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:2.2.3"
-    "@biomejs/cli-darwin-x64": "npm:2.2.3"
-    "@biomejs/cli-linux-arm64": "npm:2.2.3"
-    "@biomejs/cli-linux-arm64-musl": "npm:2.2.3"
-    "@biomejs/cli-linux-x64": "npm:2.2.3"
-    "@biomejs/cli-linux-x64-musl": "npm:2.2.3"
-    "@biomejs/cli-win32-arm64": "npm:2.2.3"
-    "@biomejs/cli-win32-x64": "npm:2.2.3"
+    "@biomejs/cli-darwin-arm64": "npm:2.2.4"
+    "@biomejs/cli-darwin-x64": "npm:2.2.4"
+    "@biomejs/cli-linux-arm64": "npm:2.2.4"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.2.4"
+    "@biomejs/cli-linux-x64": "npm:2.2.4"
+    "@biomejs/cli-linux-x64-musl": "npm:2.2.4"
+    "@biomejs/cli-win32-arm64": "npm:2.2.4"
+    "@biomejs/cli-win32-x64": "npm:2.2.4"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -287,62 +287,62 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10c0/2a07d8c2fbec5071c53fead7d29300c40b977d9b047f4a67051eb57549e367756d50433394b658c9a0c16a4fe2ce1548e0eb9125179f03e6a633d705620d2b17
+  checksum: 10c0/7229fcc743db48f3cfd7417fb3f33d1cd9e7dfe42a12ed3c1046cd3110718237bb71ea3fe5c8b0de9bd3df2b918d0be58027602aa3720b64904b63d9cedf53e3
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-darwin-arm64@npm:2.2.3"
+"@biomejs/cli-darwin-arm64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.2.4"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-darwin-x64@npm:2.2.3"
+"@biomejs/cli-darwin-x64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-darwin-x64@npm:2.2.4"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.2.3"
+"@biomejs/cli-linux-arm64-musl@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.2.4"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-linux-arm64@npm:2.2.3"
+"@biomejs/cli-linux-arm64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-linux-arm64@npm:2.2.4"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-linux-x64-musl@npm:2.2.3"
+"@biomejs/cli-linux-x64-musl@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.2.4"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-linux-x64@npm:2.2.3"
+"@biomejs/cli-linux-x64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-linux-x64@npm:2.2.4"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-win32-arm64@npm:2.2.3"
+"@biomejs/cli-win32-arm64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-win32-arm64@npm:2.2.4"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@biomejs/cli-win32-x64@npm:2.2.3"
+"@biomejs/cli-win32-x64@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@biomejs/cli-win32-x64@npm:2.2.4"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -4191,7 +4191,7 @@ __metadata:
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:^"
-    "@tanstack/react-query": "npm:^5.87.1"
+    "@tanstack/react-query": "npm:^5.87.4"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.8.0"
     "@testing-library/react": "npm:^16.3.0"
@@ -4248,7 +4248,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:^"
-    "@tanstack/react-query": "npm:^5.87.1"
+    "@tanstack/react-query": "npm:^5.87.4"
     typescript: "npm:^5.9.2"
     vite: "npm:^7.1.5"
     wrangler: "npm:^4.35.0"
@@ -4288,7 +4288,7 @@ __metadata:
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@types/electron-squirrel-startup": "npm:^1.0.2"
-    electron: "npm:38.0.0"
+    electron: "npm:38.1.0"
     electron-squirrel-startup: "npm:^1.0.1"
     electron-vite: "npm:^4.0.0"
     typescript: "npm:^5.9.2"
@@ -4367,7 +4367,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/root@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:^2.2.3"
+    "@biomejs/biome": "npm:^2.2.4"
     playwright: "npm:^1.55.0"
     prettier: "npm:^3.6.2"
     prettier-plugin-sh: "npm:^0.18.0"
@@ -4449,21 +4449,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.87.1":
-  version: 5.87.1
-  resolution: "@tanstack/query-core@npm:5.87.1"
-  checksum: 10c0/12c83ca67d778c1065836d0215987b4b04369c8195a32b2b3bd73ed873ff72d20027b72175ee9120b98278c299bdf5161a92f7ba629ab4ee687cb4085e91568a
+"@tanstack/query-core@npm:5.87.4":
+  version: 5.87.4
+  resolution: "@tanstack/query-core@npm:5.87.4"
+  checksum: 10c0/00898c96d199ba8f0cd2004b76da8e5e3355b97473a6c16dd13de65f5063c4f2abfae64e9f32fc395557c2f446af09e1646a82f62992256fdda6062c9399c2a3
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.87.1":
-  version: 5.87.1
-  resolution: "@tanstack/react-query@npm:5.87.1"
+"@tanstack/react-query@npm:^5.87.4":
+  version: 5.87.4
+  resolution: "@tanstack/react-query@npm:5.87.4"
   dependencies:
-    "@tanstack/query-core": "npm:5.87.1"
+    "@tanstack/query-core": "npm:5.87.4"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/12b224d6e0a5b1f033c3475d475d79ca8a5693720b5cd35c3a872a67690ff3993576d2af96d3a82c054f2fe985738044ef5ef9824f8c476bc959f188f10defe8
+  checksum: 10c0/2dbfba2eabc21d9c7a6683ff8858fa2cc896d2e4319a2e4e1cb4b794fc4b7eb5b16da2b72ba98468c7bebdb035c73ad75f5d7abcc5cae64a9bcbcc728131193d
   languageName: node
   linkType: hard
 
@@ -6521,16 +6521,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:38.0.0":
-  version: 38.0.0
-  resolution: "electron@npm:38.0.0"
+"electron@npm:38.1.0":
+  version: 38.1.0
+  resolution: "electron@npm:38.1.0"
   dependencies:
     "@electron/get": "npm:^2.0.0"
     "@types/node": "npm:^22.7.7"
     extract-zip: "npm:^2.0.1"
   bin:
     electron: cli.js
-  checksum: 10c0/df3e4eaead2b0de4612a1b593f46667dfd4aff4755727371b5630aada40094cddf82b3837ce0ba3babed8c503275da59187f11da9f4ab26cd20e1362dc103ea6
+  checksum: 10c0/186082b15862b0e9617828ca395a79311ebe2a713bb2eb15a67cf6bea208e8cda892395a143e72915e189088ac71e91b29c1a46a0c4d343022cbc33004d4d302
   languageName: node
   linkType: hard
 

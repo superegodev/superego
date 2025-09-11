@@ -47,7 +47,7 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:^",
-    "@tanstack/react-query": "^5.87.1",
+    "@tanstack/react-query": "^5.87.4",
     "@tiptap/extension-code-block-lowlight": "3.4.2",
     "@tiptap/extension-list": "3.4.2",
     "@tiptap/extension-subscript": "3.4.2",
