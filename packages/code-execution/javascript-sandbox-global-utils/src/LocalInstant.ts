@@ -1,7 +1,7 @@
 import { DateTime, type WeekdayNumbers } from "luxon";
 
 /**
- * Utility to work with dates and times in the user's current timezone and
+ * Helper to work with dates and times in the user's current timezone and
  * locale. Instances are immutable. Calling methods returns new instances.
  */
 class LocalInstant {
@@ -28,7 +28,7 @@ class LocalInstant {
    * number of milliseconds. Adding days, months, or years shifts the calendar,
    * accounting for DSTs and leap years along the way.
    */
-  add(duration: LocalInstant.Duration): LocalInstant {
+  plus(duration: LocalInstant.Duration): LocalInstant {
     return new LocalInstant(this.dateTime.plus(duration));
   }
 
@@ -38,7 +38,7 @@ class LocalInstant {
    * number of milliseconds. Subtracting days, months, or years shifts the
    * calendar, accounting for DSTs and leap years along the way.
    */
-  subtract(duration: LocalInstant.Duration): LocalInstant {
+  minus(duration: LocalInstant.Duration): LocalInstant {
     return new LocalInstant(this.dateTime.minus(duration));
   }
 
@@ -60,15 +60,18 @@ class LocalInstant {
     );
   }
 
-  /** Returns the UTC ("Zulu time") ISO8601 representation of the instant. */
-  toUtcIso(): string {
-    return this.dateTime.toUTC().toISO({
+  /**
+   * Returns the ISO8601 representation of the instant, using the user's local
+   * time offset.
+   */
+  toISO(): string {
+    return this.dateTime.toISO({
       includeOffset: true,
       precision: "millisecond",
     });
   }
 
-  toJsDate(): Date {
+  toJSDate(): Date {
     return this.dateTime.toJSDate();
   }
 
@@ -103,8 +106,11 @@ class LocalInstant {
     );
   }
 
-  static fromIso(
-    /** A valid ISO8601 string with any valid time offset. */
+  /** Creates a LocalInstant from an instant ISO8601 string. */
+  static fromISO(
+    /**
+     * An ISO8601 string with millisecond precision and any valid time offset.
+     */
     instant: string,
     /** @internal Only used for tests. */
     timeZone?: string,
@@ -115,6 +121,7 @@ class LocalInstant {
     );
   }
 
+  /** Creates a LocalInstant for the current time. */
   static now() {
     return new LocalInstant(DateTime.now());
   }

@@ -4,6 +4,7 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
@@ -51,7 +52,13 @@ export default {
       };
     }
 
-    const assistantDocuments = documents.map(toAssistantDocument);
+    const assistantDocuments = documents.map((document) =>
+      toAssistantDocument(
+        collection.latestVersion.schema,
+        document,
+        DateTime.local().zoneName,
+      ),
+    );
     const result = await javascriptSandbox.executeSyncFunction(
       {
         source: "",
@@ -128,7 +135,7 @@ declare class LocalInstant {
    * number of milliseconds. Adding days, months, or years shifts the calendar,
    * accounting for DSTs and leap years along the way.
    */
-  add(duration: LocalInstant.Duration): LocalInstant;
+  plus(duration: LocalInstant.Duration): LocalInstant;
 
   /**
    * Get a new LocalInstant decreased by the given duration. Subtracting hours,
@@ -136,17 +143,20 @@ declare class LocalInstant {
    * number of milliseconds. Subtracting days, months, or years shifts the
    * calendar, accounting for DSTs and leap years along the way.
    */
-  subtract(duration: LocalInstant.Duration): LocalInstant;
+  minus(duration: LocalInstant.Duration): LocalInstant;
 
   /**
    * Get a new LocalInstant with set to the specified.
    */
   set(dateUnits: LocalInstant.DateUnits): LocalInstant;
 
-  /** Returns the UTC ("Zulu time") ISO8601 representation of the instant. */
-  toUtcIso(): string;
+  /**
+   * Returns the ISO8601 representation of the instant, using the user's local
+   * time offset.
+   */
+  toISO(): string;
 
-  toJsDate(): Date;
+  toJSDate(): Date;
 
   /**
    * Returns the instant formatted in a human-readable way, according to the
@@ -154,11 +164,15 @@ declare class LocalInstant {
    */
   toFormat(options?: LocalInstant.FormatOptions): string;
 
-  static fromIso(
-    /** A valid ISO8601 string with any valid time offset. */
+  /** Creates a LocalInstant from an instant ISO8601 string. */
+  static fromISO(
+    /**
+     * An ISO8601 string with millisecond precision and any valid time offset.
+     */
     instant: string,
   ): LocalInstant;
 
+  /** Creates a LocalInstant for the current time. */
   static now(): LocalInstant;
 }
 declare namespace LocalInstant {
@@ -228,14 +242,14 @@ export default LocalInstant;
 
 #### Usage examples
 
-To the date "tomorrow at 9":
+To get the date "tomorrow at 9":
 \`\`\`js
 LocalInstant
   .now()
   .plus({ days: 1 })
   .set({ hour: 9 })
   .startOf("hour")
-  .getJsDate();
+  .toISO();
 \`\`\`
 
 To get the date "next Friday at 11":
@@ -245,7 +259,7 @@ LocalInstant
   .plus({ weeks: 1 })
   .set({ isoWeekday: 5, hour: 11 })
   .startOf("hour")
-  .getJsDate();
+  .toISO();
 \`\`\`
 
 To compare a document string field with format \`dev.superego:String:Instant\`
@@ -256,7 +270,7 @@ const timestamp = new Date(document.timestamp);
 const threeHoursAgo = LocalInstant
   .now()
   .minus({ hours: 3 })
-  .getJsDate();
+  .toJSDate();
 const isInThePast3Hours = timestamp <= now && timestamp >= threeHoursAgo;
 \`\`\`
       `.trim(),

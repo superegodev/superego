@@ -205,16 +205,16 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
           compiled: `
             export default function localInstantTest() {
               const localInstant = LocalInstant
-                .fromIso("2025-08-12T16:06:00.000+03:00")
-                .add({ months: 6, days: 1 })
-                .subtract({ months: 1, weeks: 2 })
+                .fromISO("2025-08-12T16:06:00.000+03:00")
+                .plus({ months: 5, days: 1 })
+                .minus({ months: 1, weeks: 2 })
                 .endOf("day")
                 .startOf("week")
                 .set({ hour: 1 });
               return {
-                utcIso: localInstant.toUtcIso(),
+                iso: localInstant.toISO(),
                 format: localInstant.toFormat(),
-                jsDate: localInstant.toJsDate().toISOString()
+                jsDate: localInstant.toJSDate().toISOString()
               };
             }
           `,
@@ -224,19 +224,18 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       // Verify
       assert(result.success);
-      const expectedUtcIso = LocalInstant.fromIso(
+      const expectedLocalInstant = LocalInstant.fromISO(
         "2025-08-12T16:06:00.000+03:00",
       )
-        .add({ months: 6, days: 1 })
-        .subtract({ months: 1, weeks: 2 })
+        .plus({ months: 5, days: 1 })
+        .minus({ months: 1, weeks: 2 })
         .endOf("day")
         .startOf("week")
-        .set({ hour: 1 })
-        .toUtcIso();
+        .set({ hour: 1 });
       expect(result.data).toEqual({
-        utcIso: expectedUtcIso,
+        iso: expectedLocalInstant.toISO(),
         format: expect.stringContaining("2025"),
-        jsDate: expectedUtcIso,
+        jsDate: expectedLocalInstant.toJSDate().toISOString(),
       });
     });
   });

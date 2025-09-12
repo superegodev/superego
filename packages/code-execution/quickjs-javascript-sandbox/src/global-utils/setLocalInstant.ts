@@ -3,7 +3,7 @@ import type { QuickJSContext, Scope } from "quickjs-emscripten";
 import LocalInstantSource from "./LocalInstant.quickjs.js?raw";
 
 interface Operation {
-  name: "startOf" | "endOf" | "add" | "subtract" | "set";
+  name: "startOf" | "endOf" | "plus" | "minus" | "set";
   arguments: any[];
 }
 
@@ -11,12 +11,12 @@ export default function setLocalInstant(vm: QuickJSContext, scope: Scope) {
   const HostLocalInstantHandle = scope.manage(vm.newObject());
   vm.setProp(vm.global, "HostLocalInstant", HostLocalInstantHandle);
 
-  vm.newFunction("toUtcIso", (instant, operations) =>
+  vm.newFunction("toISO", (instant, operations) =>
     vm.newString(
-      applyOperations(vm.dump(instant), vm.dump(operations)).toUtcIso(),
+      applyOperations(vm.dump(instant), vm.dump(operations)).toISO(),
     ),
   ).consume((fnHandle) =>
-    vm.setProp(HostLocalInstantHandle, "toUtcIso", fnHandle),
+    vm.setProp(HostLocalInstantHandle, "toISO", fnHandle),
   );
 
   vm.newFunction("toFormat", (instant, operations, options) =>
@@ -40,6 +40,6 @@ function applyOperations(
     (localInstant, operation) =>
       // TypeScript is not understanding, but spreading the args is correct.
       (localInstant[operation.name] as any)(...operation.arguments),
-    LocalInstant.fromIso(instant),
+    LocalInstant.fromISO(instant),
   );
 }

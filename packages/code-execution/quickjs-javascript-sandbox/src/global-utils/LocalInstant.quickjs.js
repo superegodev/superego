@@ -3,7 +3,7 @@
 // runs in the host.
 //
 // This proxy class implements the same chainable, immutable API for the
-// `startOf`, `endOf`, `add`, `subtract`, and `set` methods. Calling those
+// `startOf`, `endOf`, `plus`, `minus`, and `set` methods. Calling those
 // doesn't do anything though: they just queue more operations to be applied
 // later. Then, when the `to*` methods are called, those actually do something,
 // delegating to the `HostLocalInstant.to*` functions that apply the operations
@@ -37,17 +37,17 @@ class LocalInstant {
     ]);
   }
 
-  add(duration) {
+  plus(duration) {
     return new LocalInstant(this.instant, [
       ...this.operations,
-      { name: "add", arguments: [duration] },
+      { name: "plus", arguments: [duration] },
     ]);
   }
 
-  subtract(duration) {
+  minus(duration) {
     return new LocalInstant(this.instant, [
       ...this.operations,
-      { name: "subtract", arguments: [duration] },
+      { name: "minus", arguments: [duration] },
     ]);
   }
 
@@ -58,12 +58,12 @@ class LocalInstant {
     ]);
   }
 
-  toUtcIso() {
-    return HostLocalInstant.toUtcIso(this.instant, this.operations);
+  toISO() {
+    return HostLocalInstant.toISO(this.instant, this.operations);
   }
 
-  toJsDate() {
-    return new Date(HostLocalInstant.toUtcIso(this.instant, this.operations));
+  toJSDate() {
+    return new Date(HostLocalInstant.toISO(this.instant, this.operations));
   }
 
   toFormat(options = {}) {
@@ -71,6 +71,6 @@ class LocalInstant {
   }
 }
 
-LocalInstant.fromIso = (instant) => new LocalInstant(instant, []);
+LocalInstant.fromISO = (instant) => new LocalInstant(instant, []);
 
 LocalInstant.now = () => new LocalInstant(new Date().toISOString(), []);
