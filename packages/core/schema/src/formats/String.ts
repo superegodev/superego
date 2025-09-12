@@ -1,6 +1,11 @@
 import * as v from "valibot";
 import DataType from "../DataType.js";
 import type Format from "../Format.js";
+import {
+  isValidInstant,
+  isValidPlainDate,
+  isValidPlainTime,
+} from "../utils/dateTimeValidators.js";
 import translate from "../utils/translate.js";
 import FormatId from "./FormatId.js";
 
@@ -11,7 +16,6 @@ export default [
     name: "Plain Date",
     description:
       "A calendar date in the ISO8601 format, not associated with a particular time or time zone.",
-    llmDescription: null,
     validExamples: [
       "2006-08-24",
       "2024-02-29",
@@ -30,21 +34,8 @@ export default [
     ],
     valibotSchema: v.pipe(
       v.string(),
-      v.check(
-        (input) => {
-          try {
-            return (
-              new Date(`${input}T00:00:00.000Z`).toISOString().split("T")[0] ===
-              input
-            );
-          } catch {
-            return false;
-          }
-        },
-        ({ received, lang }) =>
-          translate(lang, {
-            en: `Invalid plain date: Received ${received}`,
-          }),
+      v.check(isValidPlainDate, ({ received, lang }) =>
+        translate(lang, { en: `Invalid plain date: Received ${received}` }),
       ),
     ),
   },
@@ -55,7 +46,6 @@ export default [
     name: "Plain Time",
     description:
       "A wall-clock time in the ISO8601 format, with at most millisecond precision, not associated with a particular date or time zone.",
-    llmDescription: null,
     validExamples: ["T19:39:09", "T19:39:09.068", "T19:39:09.000"],
     invalidExamples: [
       "19:39:09",
@@ -68,13 +58,8 @@ export default [
     ],
     valibotSchema: v.pipe(
       v.string(),
-      v.check(
-        (input) =>
-          /^T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d{1,3})?$/.test(input),
-        ({ received, lang }) =>
-          translate(lang, {
-            en: `Invalid plain time: Received ${received}`,
-          }),
+      v.check(isValidPlainTime, ({ received, lang }) =>
+        translate(lang, { en: `Invalid plain time: Received ${received}` }),
       ),
     ),
   },
@@ -84,31 +69,29 @@ export default [
     id: FormatId.String.Instant,
     name: "Instant",
     description:
-      'An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.',
-    llmDescription:
-      "An exact point in time in the ISO8601 format, with a specified offset, with millisecond precision.",
-    validExamples: ["2006-08-24T19:39:09.000Z", "2006-08-24T19:39:09.068Z"],
+      "An exact point in time in the ISO8601 format, with millisecond precision, with a specified time offset.",
+    validExamples: [
+      "2006-08-24T19:39:09.000Z",
+      "2006-08-24T22:39:09.068+03:00",
+      "2006-08-24T22:39:09.068+0300",
+    ],
     invalidExamples: [
       "not an instant",
+      // No millisecond precision.
       "2006-08-24T19:39:09Z",
+      "2006-08-24T22:39:09+03:00",
       "2006-08-24T19:39:09.068346205Z",
+      // No time offset.
       "2006-08-24T19:39:09",
       "2006-08-24T19:39:09.000",
+      // Exception: should be valid, but JavaScript's Date implementation
+      // doesn't support this, so better to avoid it.
+      "2006-08-24T22:39:09.068+03",
     ],
     valibotSchema: v.pipe(
       v.string(),
-      v.check(
-        (input) => {
-          try {
-            return new Date(input).toISOString() === input;
-          } catch {
-            return false;
-          }
-        },
-        ({ received, lang }) =>
-          translate(lang, {
-            en: `Invalid instant: Received ${received}`,
-          }),
+      v.check(isValidInstant, ({ received, lang }) =>
+        translate(lang, { en: `Invalid instant: Received ${received}` }),
       ),
     ),
   },

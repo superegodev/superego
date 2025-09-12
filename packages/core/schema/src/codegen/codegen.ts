@@ -16,7 +16,6 @@ function generateEnumMemberTsDoc({ description }: EnumMember): string {
 function generateTypeDefinitionTsDoc(
   typeDefinition: AnyTypeDefinition,
   isRootType: boolean,
-  llmVariant: boolean,
 ): string {
   const commentLines: string[] = [];
   if (typeDefinition.description) {
@@ -27,14 +26,11 @@ function generateTypeDefinitionTsDoc(
     if (format) {
       commentLines.push(
         "",
-        `## Format \`${format.id}\``,
+        `#### Format \`${format.id}\``,
         "",
-        llmVariant && format.llmDescription
-          ? format.llmDescription
-          : format.description,
+        format.description,
         "",
-        "### Examples",
-        "",
+        "Format examples:",
         ...format.validExamples
           .slice(0, 2)
           .map((example) => `- ${JSON.stringify(example)}`),
@@ -52,31 +48,19 @@ function generateTypeDefinitionTsDoc(
 function generateType(
   typeDefinition: AnyTypeDefinition,
   schema: Schema,
-  llmVariant: boolean,
   referencedBuiltInTypes: ReferencedBuiltInTypes,
 ): string {
   switch (typeDefinition.dataType) {
     case DataType.String:
       return "string";
     case DataType.Enum: {
-      if (llmVariant) {
-        const lines = joinLines(
-          Object.entries(typeDefinition.members).map(
-            ([_memberName, member]) => {
-              const memberTsDoc = indent(generateEnumMemberTsDoc(member));
-              return `${memberTsDoc}  | ${JSON.stringify(member.value)}`;
-            },
-          ),
-        );
-        return `\n${lines}`;
-      }
-      const members = joinLines(
-        Object.entries(typeDefinition.members).map(([memberName, member]) => {
-          const memberTsDoc = generateEnumMemberTsDoc(member);
-          return `${memberTsDoc}${memberName} = ${JSON.stringify(member.value)},`;
+      const lines = joinLines(
+        Object.entries(typeDefinition.members).map(([_memberName, member]) => {
+          const memberTsDoc = indent(generateEnumMemberTsDoc(member));
+          return `${memberTsDoc}  | ${JSON.stringify(member.value)}`;
         }),
       );
-      return joinLines(["{", indent(members), "}"]);
+      return `\n${lines}`;
     }
     case DataType.Number:
       return "number";
@@ -103,12 +87,10 @@ function generateType(
             const tsDoc = generateTypeDefinitionTsDoc(
               propertyTypeDefinition,
               false,
-              llmVariant,
             );
             const typeString = generateType(
               propertyTypeDefinition,
               schema,
-              llmVariant,
               referencedBuiltInTypes,
             );
             return `${tsDoc}${propertyName}: ${typeString}${isNullable ? " | null" : ""};`;
@@ -121,7 +103,6 @@ function generateType(
       const itemsType = generateType(
         typeDefinition.items,
         schema,
-        llmVariant,
         referencedBuiltInTypes,
       );
       return `${itemsType}[]`;
@@ -140,26 +121,14 @@ function generateTypeDeclaration(
   typeDefinition: AnyTypeDefinition,
   isRootType: boolean,
   schema: Schema,
-  llmVariant: boolean,
   referencedBuiltInTypes: ReferencedBuiltInTypes,
 ): string {
-  const tsDoc = generateTypeDefinitionTsDoc(
-    typeDefinition,
-    isRootType,
-    llmVariant,
-  );
-  const type = generateType(
-    typeDefinition,
-    schema,
-    llmVariant,
-    referencedBuiltInTypes,
-  );
-  return typeDefinition.dataType === DataType.Enum && !llmVariant
-    ? `${tsDoc}export enum ${typeName} ${type}`
-    : `${tsDoc}export type ${typeName} = ${type};`;
+  const tsDoc = generateTypeDefinitionTsDoc(typeDefinition, isRootType);
+  const type = generateType(typeDefinition, schema, referencedBuiltInTypes);
+  return `${tsDoc}export type ${typeName} = ${type};`;
 }
 
-export default function codegen(schema: Schema, llmVariant = false): string {
+export default function codegen(schema: Schema): string {
   const referencedBuiltInTypes: ReferencedBuiltInTypes = new Set();
   const compiledTypeDefinitions = Object.entries(schema.types)
     .map(([typeName, typeDefinition]) =>
@@ -168,7 +137,6 @@ export default function codegen(schema: Schema, llmVariant = false): string {
         typeDefinition,
         typeName === schema.rootType,
         schema,
-        llmVariant,
         referencedBuiltInTypes,
       ),
     )

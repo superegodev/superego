@@ -191,4 +191,43 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
       });
     });
   });
+
+  describe("gives the function access to global utils", () => {
+    it("LocalInstant", async () => {
+      // Setup SUT
+      const { javascriptSandbox } = await deps();
+
+      // Exercise
+      const result = await javascriptSandbox.executeSyncFunction(
+        {
+          source: "",
+          compiled: `
+            export default function localInstantTest() {
+              const localInstant = LocalInstant
+                .fromIso("2025-08-12T16:06:00.000+03:00")
+                .add({ months: 6, days: 1 })
+                .subtract({ months: 1, weeks: 2 })
+                .endOf("day")
+                .startOf("week")
+                .set({ hour: 1 });
+              return {
+                utcIso: localInstant.toUtcIso(),
+                format: localInstant.toFormat(),
+                jsDate: localInstant.toJsDate().toISOString()
+              };
+            }
+          `,
+        },
+        [],
+      );
+
+      // Verify
+      assert(result.success);
+      expect(result.data).toEqual({
+        utcIso: "2025-12-28T23:00:00.000Z",
+        format: expect.stringContaining("2025"),
+        jsDate: "2025-12-28T23:00:00.000Z",
+      });
+    });
+  });
 });

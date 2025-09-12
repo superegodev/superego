@@ -12,7 +12,6 @@ export default [
     name: "Rich Text (Tiptap)",
     description:
       "A rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
-    llmDescription: null,
     validExamples: [
       { __dataType: DataType.JsonObject, type: "doc", content: [] },
       {

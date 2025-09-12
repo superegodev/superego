@@ -10,7 +10,6 @@ import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreateNewVersion from "../../../usecases/documents/CreateNewVersion.js";
-import { fromAssistantContent } from "../../utils/AssistantDocument.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateNewDocumentVersion {
@@ -35,35 +34,32 @@ export default {
       };
     }
 
-    const {
-      success,
-      data: document,
-      error,
-    } = await documentsCreateNewVersion.exec(
+    const createNewVersionResult = await documentsCreateNewVersion.exec(
       collectionId,
       id,
       latestVersionId,
-      // TODO: pass previous version content, so here the undefined->null logic
-      // can become undefined->previous version.
-      fromAssistantContent(collection.latestVersion.schema, content),
+      content,
     );
 
-    if (error && error.name === "UnexpectedError") {
+    if (
+      createNewVersionResult.error &&
+      createNewVersionResult.error.name === "UnexpectedError"
+    ) {
       throw new UnexpectedAssistantError(
-        `Creating new document version failed with UnexpectedError. Cause: ${error.details.cause}`,
+        `Creating new document version failed with UnexpectedError. Cause: ${createNewVersionResult.error.details.cause}`,
       );
     }
 
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: success
+      output: createNewVersionResult.success
         ? makeSuccessfulResult({
-            collectionId: document.collectionId,
-            documentId: document.id,
-            documentVersionId: document.latestVersion.id,
+            collectionId: createNewVersionResult.data.collectionId,
+            documentId: createNewVersionResult.data.id,
+            documentVersionId: createNewVersionResult.data.latestVersion.id,
           })
-        : makeUnsuccessfulResult(error),
+        : makeUnsuccessfulResult(createNewVersionResult.error),
     };
   },
 
@@ -91,6 +87,9 @@ doesn't match the actual latest version, the call must fail with a conflict.
 Then re-read the document and try again.
             `.trim(),
           },
+          // EVOLUTION: consider either using patches or even a js function that
+          // modifies the document, as for complex documents this won't really
+          // work.
           content: {
             type: "object",
             description: `

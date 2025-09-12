@@ -1,0 +1,23 @@
+{
+  "name": "@superego/javascript-sandbox-global-utils",
+  "version": "2025.7.6",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "luxon": "^3.7.2"
+  }
+}

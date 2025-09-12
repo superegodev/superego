@@ -1,10 +1,7 @@
 import * as v from "valibot";
 import DataType from "../../DataType.js";
 import type Schema from "../../Schema.js";
-import type {
-  AnyTypeDefinition,
-  EnumTypeDefinition,
-} from "../../typeDefinitions.js";
+import type { AnyTypeDefinition } from "../../typeDefinitions.js";
 import acceptedFileExtensions from "../acceptedFileExtensions/acceptedFileExtensions.js";
 import described from "../described/described.js";
 import enumMembers from "../enumMembers/enumMembers.js";
@@ -75,7 +72,7 @@ const StructTypeDefinitionValibotSchema = v.pipe(
     dataType: v.literal(DataType.Struct),
     properties: v.record(
       identifier(),
-      v.lazy(() => AnyTypeDefinitionNoEnumValibotSchema),
+      v.lazy(() => AnyTypeDefinitionValibotSchema),
     ),
     nullableProperties: v.optional(v.array(v.pipe(v.string()))),
   }),
@@ -85,7 +82,7 @@ const StructTypeDefinitionValibotSchema = v.pipe(
 const ListTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.literal(DataType.List),
-  items: v.lazy(() => AnyTypeDefinitionNoEnumValibotSchema),
+  items: v.lazy(() => AnyTypeDefinitionValibotSchema),
 });
 
 const TypeDefinitionRefValibotSchema = v.strictObject({
@@ -93,23 +90,6 @@ const TypeDefinitionRefValibotSchema = v.strictObject({
   dataType: v.null(),
   ref: v.string(),
 });
-
-const AnyTypeDefinitionNoEnumValibotSchema: v.GenericSchema<
-  Exclude<AnyTypeDefinition, EnumTypeDefinition>,
-  Exclude<AnyTypeDefinition, EnumTypeDefinition>
-> = v.variant("dataType", [
-  StringTypeDefinitionValibotSchema,
-  NumberTypeDefinitionValibotSchema,
-  BooleanTypeDefinitionValibotSchema,
-  StringLiteralTypeDefinitionValibotSchema,
-  NumberLiteralTypeDefinitionValibotSchema,
-  BooleanLiteralTypeDefinitionValibotSchema,
-  JsonObjectTypeDefinitionValibotSchema,
-  FileTypeDefinitionValibotSchema,
-  StructTypeDefinitionValibotSchema,
-  ListTypeDefinitionValibotSchema,
-  TypeDefinitionRefValibotSchema,
-]);
 
 const AnyTypeDefinitionValibotSchema: v.GenericSchema<
   AnyTypeDefinition,

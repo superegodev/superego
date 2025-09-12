@@ -65,7 +65,7 @@ Fetches the TypeScript type declarations for a collection.
 function makeTypescriptSchema(collection: Collection): string {
   const { schema } = collection.latestVersion;
   return [
-    codegen(schema, true),
+    codegen(schema),
     "////////////////////////////////",
     "// Collection document schema //",
     "////////////////////////////////",

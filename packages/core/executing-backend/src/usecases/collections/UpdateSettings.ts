@@ -1,7 +1,6 @@
 import type {
   Backend,
   Collection,
-  CollectionCategoryId,
   CollectionCategoryNotFound,
   CollectionId,
   CollectionNotFound,
@@ -47,7 +46,9 @@ export default class CollectionsUpdateSettings extends Usecase<
         v.object({
           name: valibotSchemas.collectionName(),
           icon: v.nullable(valibotSchemas.icon()),
-          collectionCategoryId: v.nullable(v.string()),
+          collectionCategoryId: v.nullable(
+            valibotSchemas.id.collectionCategory(),
+          ),
           description: v.nullable(v.string()),
           assistantInstructions: v.nullable(v.string()),
         }),
@@ -89,11 +90,10 @@ export default class CollectionsUpdateSettings extends Usecase<
           settingsValidationResult.output.icon !== undefined
             ? settingsValidationResult.output.icon
             : collection.settings.icon,
-        // TODO: custom valibot validator
-        collectionCategoryId: (settingsValidationResult.output
-          .collectionCategoryId !== undefined
-          ? settingsValidationResult.output.collectionCategoryId
-          : collection.settings.collectionCategoryId) as CollectionCategoryId,
+        collectionCategoryId:
+          settingsValidationResult.output.collectionCategoryId !== undefined
+            ? settingsValidationResult.output.collectionCategoryId
+            : collection.settings.collectionCategoryId,
         description:
           settingsPatch.description !== undefined
             ? settingsPatch.description

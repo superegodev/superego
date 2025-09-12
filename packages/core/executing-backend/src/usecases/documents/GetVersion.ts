@@ -34,6 +34,7 @@ export default class DocumentsGetVersion extends Usecase<
     ) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentVersionNotFound", {
+          collectionId,
           documentId,
           documentVersionId,
         }),

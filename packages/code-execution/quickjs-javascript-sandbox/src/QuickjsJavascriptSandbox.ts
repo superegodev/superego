@@ -7,9 +7,11 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   type QuickJSContext,
   type QuickJSHandle,
+  type QuickJSRuntime,
   type QuickJSWASMModule,
   Scope,
 } from "quickjs-emscripten";
+import setLocalInstant from "./global-utils/setLocalInstant.js";
 
 interface ImportedModule {
   vm: QuickJSContext;
@@ -20,6 +22,7 @@ interface ImportedModule {
 export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   // TODO: consider using an LRU cache to avoid memory ballooning.
   private importCache = new Map<string, ImportedModule>();
+  private runtime: QuickJSRuntime | null = null;
 
   public async moduleDefaultExportsFunction(
     typescriptModule: TypescriptModule,
@@ -69,6 +72,9 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
 
     return Scope.withScope((scope) => {
       try {
+        // Set global utils.
+        setLocalInstant(vm, scope);
+
         const argHandles = args.map((arg) =>
           scope.manage(
             vm.unwrapResult(vm.evalCode(`(${JSON.stringify(arg)})`)),
@@ -108,9 +114,8 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
       return cachedImport;
     }
 
-    const vm = await QuickjsJavascriptSandbox.getQuickJS().then((qjs) =>
-      qjs.newContext(),
-    );
+    const runtime = await this.getRuntime();
+    const vm = runtime.newContext();
     try {
       const moduleNamespace = vm.unwrapResult(
         vm.evalCode(typescriptModule.compiled, "module.js", {
@@ -129,6 +134,11 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
       vm.dispose();
       throw error;
     }
+  }
+
+  private async getRuntime(): Promise<QuickJSRuntime> {
+    this.runtime ??= (await QuickjsJavascriptSandbox.getQuickJS()).newRuntime();
+    return this.runtime;
   }
 
   private static extractErrorDetails(

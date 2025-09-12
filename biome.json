@@ -16,7 +16,7 @@
       "**/*.json",
       "!**/package.json",
       "!**/translations/**/*",
-      "!packages/core/schema/src/test-schemas/*.generated.*"
+      "!packages/core/schema/src/codegen/test-schemas/*.generated.*"
     ]
   },
   "formatter": {

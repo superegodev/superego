@@ -81,7 +81,7 @@ export interface FileTypeDefinition extends Described {
 export interface StructTypeDefinition extends Described {
   dataType: DataType.Struct;
   properties: {
-    [name: string]: Exclude<AnyTypeDefinition, EnumTypeDefinition>;
+    [name: string]: AnyTypeDefinition;
   };
   /** A Struct's properties are all non-nullable by default. */
   nullableProperties?: string[] | undefined;
@@ -89,7 +89,7 @@ export interface StructTypeDefinition extends Described {
 
 export interface ListTypeDefinition extends Described {
   dataType: DataType.List;
-  items: Exclude<AnyTypeDefinition, EnumTypeDefinition>;
+  items: AnyTypeDefinition;
 }
 
 export interface TypeDefinitionRef extends Described {

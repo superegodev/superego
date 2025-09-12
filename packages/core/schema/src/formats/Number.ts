@@ -9,7 +9,6 @@ export default [
     id: FormatId.Number.Integer,
     name: "Integer",
     description: "An integer",
-    llmDescription: null,
     validExamples: [-1, 0, 1],
     invalidExamples: [1.1, Math.PI],
     valibotSchema: v.pipe(v.number(), v.integer()),

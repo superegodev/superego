@@ -10,7 +10,6 @@ import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreate from "../../../usecases/documents/Create.js";
-import { fromAssistantContent } from "../../utils/AssistantDocument.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateDocument {
@@ -39,10 +38,7 @@ export default {
       success,
       data: document,
       error,
-    } = await documentsCreate.exec(
-      collectionId,
-      fromAssistantContent(collection.latestVersion.schema, content),
-    );
+    } = await documentsCreate.exec(collectionId, content);
 
     if (error && error.name === "UnexpectedError") {
       throw new UnexpectedAssistantError(
@@ -74,6 +70,9 @@ export default {
           collectionId: {
             type: "string",
           },
+          // EVOLUTION: figure out how to support file creation. We could pass
+          // a list of "temporary file refs" that are in the context of the
+          // conversation and that the assistant can use.
           content: {
             type: "object",
             description: [

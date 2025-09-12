@@ -11,7 +11,7 @@ export default function summaryPropertyDefinitionGetter(
   const importPath = `.${schemaTypescriptLibPath.replace(".ts", ".js")}`;
   return {
     source: [
-      `import { ${rootType} } from "${importPath}";`,
+      `import type { ${rootType} } from "${importPath}";`,
       "",
       `export default function getValue(${argName}: ${rootType}): string {`,
       "  // Implement",

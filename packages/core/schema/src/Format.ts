@@ -22,8 +22,6 @@ export default interface Format<
   id: string;
   name: string;
   description: string;
-  /** Specific description for llms. */
-  llmDescription: string | null;
   validExamples: Value[];
   invalidExamples: Value[];
   valibotSchema: v.GenericSchema<Value, Value>;

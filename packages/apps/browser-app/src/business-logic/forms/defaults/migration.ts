@@ -15,8 +15,8 @@ export default function migration(
   const nextImportPath = `.${nextSchemaTypescriptLibPath.replace(".ts", ".js")}`;
   return {
     source: [
-      `import * as Current from "${currentImportPath}";`,
-      `import * as Next from "${nextImportPath}";`,
+      `import type * as Current from "${currentImportPath}";`,
+      `import type * as Next from "${nextImportPath}";`,
       "",
       `export default function migrate(${argName}: Current.${currentRootType}): Next.${nextRootType} {`,
       "  // Implement",
