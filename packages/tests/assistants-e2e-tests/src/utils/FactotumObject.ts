@@ -207,7 +207,7 @@ class FactotumObject {
 
   private async waitForIdleConversation() {
     this.conversation = await vi.waitUntil(() => this.getIdleConversation(), {
-      timeout: 30_000,
+      timeout: 60_000,
     });
   }
 

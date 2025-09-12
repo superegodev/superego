@@ -1,3 +1,4 @@
+import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect } from "vitest";
 import type Dependencies from "../Dependencies.js";
@@ -223,10 +224,19 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       // Verify
       assert(result.success);
+      const expectedUtcIso = LocalInstant.fromIso(
+        "2025-08-12T16:06:00.000+03:00",
+      )
+        .add({ months: 6, days: 1 })
+        .subtract({ months: 1, weeks: 2 })
+        .endOf("day")
+        .startOf("week")
+        .set({ hour: 1 })
+        .toUtcIso();
       expect(result.data).toEqual({
-        utcIso: "2025-12-28T23:00:00.000Z",
+        utcIso: expectedUtcIso,
         format: expect.stringContaining("2025"),
-        jsDate: "2025-12-28T23:00:00.000Z",
+        jsDate: expectedUtcIso,
       });
     });
   });

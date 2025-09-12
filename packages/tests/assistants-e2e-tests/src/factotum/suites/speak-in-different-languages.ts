@@ -19,8 +19,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       created: [
         {
           titolo: expect.stringMatching(/idraulico/i),
-          oraInizio: tomorrowAt(9),
-          oraFine: tomorrowAt(10),
+          oraInizio: expect.instantEquivalentTo(tomorrowAt(9)),
+          oraFine: expect.instantEquivalentTo(tomorrowAt(10)),
         },
       ],
       updated: [],
@@ -41,8 +41,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       created: [
         {
           titre: expect.stringMatching(/plombier/i),
-          heureDebut: tomorrowAt(9),
-          heureFin: tomorrowAt(10),
+          heureDebut: expect.instantEquivalentTo(tomorrowAt(9)),
+          heureFin: expect.instantEquivalentTo(tomorrowAt(10)),
         },
       ],
       updated: [],
@@ -63,8 +63,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       created: [
         {
           titel: expect.stringMatching(/klempner/i),
-          startzeit: tomorrowAt(9),
-          endzeit: tomorrowAt(10),
+          startzeit: expect.instantEquivalentTo(tomorrowAt(9)),
+          endzeit: expect.instantEquivalentTo(tomorrowAt(10)),
         },
       ],
       updated: [],

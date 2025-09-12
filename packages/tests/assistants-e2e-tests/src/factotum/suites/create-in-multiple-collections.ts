@@ -27,6 +27,7 @@ export default rd<Dependencies>(
           {
             date: expect.todaysPlainDate(),
             amount: 58.1,
+            currency: "EUR",
             category: "Transportation",
             paymentMethod: "Credit Card",
           },
@@ -73,6 +74,7 @@ export default rd<Dependencies>(
             {
               date: expect.todaysPlainDate(),
               amount: 58.1,
+              currency: "EUR",
               category: "Transportation",
               paymentMethod: "Credit Card",
             },
@@ -119,6 +121,7 @@ export default rd<Dependencies>(
           {
             date: expect.todaysPlainDate(),
             amount: 58.1,
+            currency: "EUR",
             category: "Transportation",
             paymentMethod: "Credit Card",
           },

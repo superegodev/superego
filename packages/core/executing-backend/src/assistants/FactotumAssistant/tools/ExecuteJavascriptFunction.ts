@@ -90,6 +90,7 @@ interface Document {
 ### Rules
 
 - No \`async\`, timers, or network.
+- No \`import\` or \`require\`.
 - Only use fields defined in the schema.
 - Return **JSON-safe** values only (convert Dates to ISO strings if returning
   them).
@@ -97,7 +98,7 @@ interface Document {
 
 ### Working with dates and times
 
-Always use the globally-defined \`LocalInstant\` helper for **all** date/time
+Always use the global class \`LocalInstant\` helper for **all** date/time
 parsing, math, and formatting. It runs in the user’s timezone and correctly
 handles DST shifts, leap years, end-of-month rollovers, and locale formatting.
 Prefer \`LocalInstant\` over native \`Date\` arithmetic.
@@ -248,7 +249,7 @@ LocalInstant
 \`\`\`
 
 To compare a document string field with format \`dev.superego:String:Instant\`
-(ISO8601):
+(ISO8601 with millisecond precision and time offset):
 \`\`\`js
 const now = new Date();
 const timestamp = new Date(document.timestamp);

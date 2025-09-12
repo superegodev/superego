@@ -2,6 +2,25 @@ import { DateTime } from "luxon";
 import { expect } from "vitest";
 
 expect.extend({
+  instantEquivalentTo(received: unknown, instant: string) {
+    const receivedTime =
+      typeof received === "string" ? Date.parse(received) : Number.NaN;
+
+    const pass =
+      Number.isFinite(receivedTime) && receivedTime === Date.parse(instant);
+
+    return {
+      pass,
+      message: () =>
+        [
+          "expected ",
+          this.utils.printReceived(received),
+          pass ? " not " : " ",
+          `to be equivalent to ${instant}`,
+        ].join(""),
+    };
+  },
+
   instantCloseToNow(received: unknown, threshold: number) {
     const receivedTime =
       typeof received === "string" ? Date.parse(received) : Number.NaN;
@@ -45,10 +64,12 @@ expect.extend({
 
 declare module "vitest" {
   interface Assertion {
+    instantEquivalentTo(instant: string): void;
     instantCloseToNow(threshold: number): void;
     todaysPlainDate(): void;
   }
   interface AsymmetricMatchersContaining {
+    instantEquivalentTo(instant: string): void;
     instantCloseToNow(threshold: number): void;
     todaysPlainDate(): void;
   }

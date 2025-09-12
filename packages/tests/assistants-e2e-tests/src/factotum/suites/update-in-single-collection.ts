@@ -78,8 +78,8 @@ export default rd<Dependencies>(
             {
               document: calendar.documents[0]!,
               newContentMatching: {
-                startTime: tomorrowAt(10),
-                endTime: tomorrowAt(11),
+                startTime: expect.instantEquivalentTo(tomorrowAt(10)),
+                endTime: expect.instantEquivalentTo(tomorrowAt(11)),
               },
             },
           ],
@@ -118,8 +118,8 @@ export default rd<Dependencies>(
             {
               document: calendar.documents[0]!,
               newContentMatching: {
-                startTime: tomorrowAt(10),
-                endTime: tomorrowAt(11),
+                startTime: expect.instantEquivalentTo(tomorrowAt(10)),
+                endTime: expect.instantEquivalentTo(tomorrowAt(11)),
               },
             },
           ],

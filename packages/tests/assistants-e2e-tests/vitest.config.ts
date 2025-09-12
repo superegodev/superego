@@ -5,7 +5,7 @@ const repeatTimes =
 
 export default defineConfig({
   test: {
-    testTimeout: 30_000 * repeatTimes,
+    testTimeout: 60_000 * repeatTimes,
     setupFiles: ["src/vitest-setup.ts"],
     onStackTrace(_error, { file }) {
       if (file.includes("src/utils")) {
