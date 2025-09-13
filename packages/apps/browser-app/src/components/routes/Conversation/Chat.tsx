@@ -1,8 +1,4 @@
-import {
-  type Conversation,
-  ConversationStatus,
-  MessageRole,
-} from "@superego/backend";
+import { type Conversation, MessageRole } from "@superego/backend";
 import { useLayoutEffect, useRef } from "react";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
 import last from "../../../utils/last.js";
