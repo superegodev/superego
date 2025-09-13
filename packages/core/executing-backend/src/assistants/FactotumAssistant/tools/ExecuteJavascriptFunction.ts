@@ -97,7 +97,7 @@ interface Document {
 ### Rules
 
 - No \`async\`, timers, or network.
-- No \`import\` or \`require\`.
+- No \`import\` or \`require\`. They are not defined and they'll throw an error.
 - Only use fields defined in the schema.
 - Return **JSON-safe** values only (convert Dates to ISO strings if returning
   them).
@@ -114,6 +114,7 @@ Prefer \`LocalInstant\` over native \`Date\` arithmetic.
 /**
  * Helper to work with dates and times in the user's current timezone and
  * locale. Instances are immutable. Calling methods returns new instances.
+ * This class is defined in the global scope. Don't import or require it.
  */
 declare class LocalInstant {
   private constructor();

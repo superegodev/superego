@@ -1,4 +1,9 @@
-import type { Collection, ToolCall, ToolResult } from "@superego/backend";
+import {
+  type Collection,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
@@ -34,10 +39,21 @@ export default class FactotumAssistant extends Assistant {
   }
 
   protected getDeveloperPrompt(): string {
-    return (this.developerPrompt ?? defaultDeveloperPrompt).replaceAll(
-      "$USER_NAME",
-      this.userName ?? "Alex",
-    );
+    return (this.developerPrompt ?? defaultDeveloperPrompt)
+      .replaceAll("$USER_NAME", this.userName ?? "Alex")
+      .replaceAll("$TOOL_NAME_CREATE_DOCUMENT", ToolName.CreateDocument)
+      .replaceAll(
+        "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",
+        ToolName.CreateNewDocumentVersion,
+      )
+      .replaceAll(
+        "$TOOL_NAME_EXECUTE_JAVASCRIPT_FUNCTION",
+        ToolName.ExecuteJavascriptFunction,
+      )
+      .replaceAll(
+        "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
+        ToolName.GetCollectionTypescriptSchema,
+      );
   }
 
   protected getUserContextPrompt(): string {
