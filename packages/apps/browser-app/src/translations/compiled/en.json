@@ -201,6 +201,12 @@
       "value": "Conversation actions"
     }
   ],
+  "Conversation.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
+    }
+  ],
   "ConversationUtils.ts_PQ8A3I": [
     {
       "type": 0,
@@ -565,6 +571,12 @@
     {
       "type": 1,
       "value": "document"
+    }
+  ],
+  "Document.tsx_PGh2Ph": [
+    {
+      "type": 1,
+      "value": "collection"
     }
   ],
   "Document.tsx_SNguYK": [

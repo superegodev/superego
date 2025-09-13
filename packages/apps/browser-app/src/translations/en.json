@@ -92,6 +92,9 @@
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
   },
+  "Conversation.tsx_yYmfIl": {
+    "defaultMessage": "🤖 Conversations"
+  },
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "New conversation"
   },
@@ -235,6 +238,9 @@
   },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
+  },
+  "Document.tsx_PGh2Ph": {
+    "defaultMessage": "{collection}"
   },
   "Document.tsx_SNguYK": {
     "defaultMessage": "Document actions"

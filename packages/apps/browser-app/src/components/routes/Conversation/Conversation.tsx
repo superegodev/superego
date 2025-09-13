@@ -26,6 +26,15 @@ export default function Conversation({ conversationId }: Props) {
             result?.data?.status === ConversationStatus.Processing,
         }),
       ]}
+      renderLoading={() => (
+        <Shell.Panel slot="Main">
+          <Shell.Panel.Header
+            title={intl.formatMessage({
+              defaultMessage: "🤖\u2002Conversations",
+            })}
+          />
+        </Shell.Panel>
+      )}
     >
       {(conversation) => (
         <Shell.Panel slot="Main">

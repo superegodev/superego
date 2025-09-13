@@ -24,7 +24,19 @@ export default function Document({ collectionId, documentId }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
   return collection ? (
-    <DataLoader queries={[getDocumentQuery([collection.id, documentId])]}>
+    <DataLoader
+      queries={[getDocumentQuery([collection.id, documentId])]}
+      renderLoading={() => (
+        <Shell.Panel slot="Main">
+          <Shell.Panel.Header
+            title={intl.formatMessage(
+              { defaultMessage: "{collection}" },
+              { collection: CollectionUtils.getDisplayName(collection) },
+            )}
+          />
+        </Shell.Panel>
+      )}
+    >
       {(document) => (
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
