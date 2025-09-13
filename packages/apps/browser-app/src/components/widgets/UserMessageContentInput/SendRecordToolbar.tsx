@@ -17,6 +17,7 @@ interface Props {
   areTranscriptionsConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
+  isDisabled: boolean;
   onSend: () => void;
   onStartRecording: () => void;
   onFinishRecording: () => void;
@@ -27,6 +28,7 @@ export default function SendRecordToolbar({
   areTranscriptionsConfigured,
   isWriting,
   isRecording,
+  isDisabled,
   onSend,
   onStartRecording,
   onFinishRecording,
@@ -39,8 +41,9 @@ export default function SendRecordToolbar({
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Cancel" })}
-          className={cs.SendRecordToolbar.button}
           onPress={onCancelRecording}
+          isDisabled={isDisabled}
+          className={cs.SendRecordToolbar.button}
         >
           <PiX />
         </IconButton>
@@ -52,6 +55,7 @@ export default function SendRecordToolbar({
             defaultMessage: "Configure assistant for transcription",
           })}
           to={{ name: RouteName.GlobalSettings }}
+          isDisabled={isDisabled}
           className={cs.SendRecordToolbar.disabledLookingButton}
           tooltipDelay={0}
         >
@@ -67,6 +71,7 @@ export default function SendRecordToolbar({
               : intl.formatMessage({ defaultMessage: "Record" })
           }
           onPress={isRecording ? onFinishRecording : onStartRecording}
+          isDisabled={isDisabled}
           className={cs.SendRecordToolbar.button}
         >
           {isRecording ? <PiStopFill /> : <PiMicrophoneFill />}
@@ -77,6 +82,7 @@ export default function SendRecordToolbar({
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Configure assistant" })}
           to={{ name: RouteName.GlobalSettings }}
+          isDisabled={isDisabled}
           className={cs.SendRecordToolbar.button}
           tooltipDelay={0}
         >
@@ -88,9 +94,9 @@ export default function SendRecordToolbar({
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Send" })}
-          className={cs.SendRecordToolbar.button}
           onPress={onSend}
-          isDisabled={!isWriting}
+          isDisabled={!isWriting || isDisabled}
+          className={cs.SendRecordToolbar.button}
         >
           <PiPaperPlaneRightFill />
         </IconButton>

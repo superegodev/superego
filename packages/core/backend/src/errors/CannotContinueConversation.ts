@@ -8,7 +8,7 @@ type CannotContinueConversation = ResultError<
     reason:
       | "ConversationIsProcessing"
       | "ConversationHasError"
-      | "ConversationContextChanged";
+      | "ConversationHasOutdatedContext";
   }
 >;
 export default CannotContinueConversation;

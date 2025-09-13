@@ -21,7 +21,7 @@ export default function InferenceSettings({ control }: Props) {
             name="inference.completions.model"
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Model" })}
-            placeholder="moonshotai/kimi-k2-instruct-0905"
+            placeholder="openai/gpt-oss-120b"
           />
           <RHFTextField
             control={control}

@@ -41,9 +41,10 @@ export default function Assistant() {
         <div className={cs.Assistant.root}>
           <Hero />
           <UserMessageContentInput
+            conversation={null}
             onSend={onSend}
+            isSending={isPending}
             autoFocus={true}
-            isProcessingMessage={isPending}
           />
           <Link
             to={{ name: RouteName.Conversations }}

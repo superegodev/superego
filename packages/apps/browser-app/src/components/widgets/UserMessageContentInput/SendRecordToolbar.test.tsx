@@ -108,6 +108,7 @@ describe("renders different buttons according to the supplied props", () => {
             <SendRecordToolbar
               isRecording={isRecording}
               isWriting={isWriting}
+              isDisabled={false}
               areCompletionsConfigured={areCompletionsConfigured}
               areTranscriptionsConfigured={areTranscriptionsConfigured}
               onSend={vi.fn()}

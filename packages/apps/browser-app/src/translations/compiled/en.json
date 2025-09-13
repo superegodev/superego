@@ -1541,6 +1541,12 @@
       "value": "How can I help you?"
     }
   ],
+  "UserMessageContentInput.tsx_yvK6cX": [
+    {
+      "type": 0,
+      "value": "Your collections changed since having this conversation. It cannot be continued."
+    }
+  ],
   "formatDuration.ts_26OSN4": [
     {
       "offset": 0,

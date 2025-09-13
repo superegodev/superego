@@ -47,13 +47,12 @@ export default function Chat({ conversation, showToolsCalls }: Props) {
     <>
       <div className={cs.Chat.userMessageContentInputContainer}>
         <UserMessageContentInput
+          conversation={conversation}
           onSend={(userMessageContent) => {
             mutate(conversation.id, userMessageContent);
           }}
+          isSending={isPending}
           autoFocus={true}
-          isProcessingMessage={
-            isPending || conversation.status === ConversationStatus.Processing
-          }
           textAreaRef={inputRef}
         />
       </div>

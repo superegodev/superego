@@ -7,6 +7,6 @@ export default function makeConversation(
 ): Conversation {
   return {
     ...conversation,
-    canBeContinued: contextFingerprint === currentContextFingerprint,
+    hasOutdatedContext: contextFingerprint !== currentContextFingerprint,
   };
 }

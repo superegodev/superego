@@ -8,7 +8,7 @@ type CannotRecoverConversation = ResultError<
     reason:
       | "ConversationIsIdle"
       | "ConversationIsProcessing"
-      | "ConversationContextChanged";
+      | "ConversationHasOutdatedContext";
   }
 >;
 export default CannotRecoverConversation;

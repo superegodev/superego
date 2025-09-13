@@ -9,7 +9,7 @@ type Conversation = {
   assistant: AssistantName;
   format: ConversationFormat;
   title: string | null;
-  canBeContinued: boolean;
+  hasOutdatedContext: boolean;
   messages: Message[];
   status: ConversationStatus;
   error: { name: string; details: any } | null;

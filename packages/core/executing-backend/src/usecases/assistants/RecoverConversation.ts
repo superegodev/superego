@@ -60,7 +60,7 @@ export default class AssistantsRecoverConversation extends Usecase<
               ? "ConversationIsIdle"
               : conversation.status === ConversationStatus.Processing
                 ? "ConversationIsProcessing"
-                : "ConversationContextChanged",
+                : "ConversationHasOutdatedContext",
         }),
       );
     }

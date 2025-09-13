@@ -58,7 +58,7 @@ export default class AssistantsContinueConversation extends Usecase<
               ? "ConversationIsProcessing"
               : conversation.status === ConversationStatus.Error
                 ? "ConversationHasError"
-                : "ConversationContextChanged",
+                : "ConversationHasOutdatedContext",
         }),
       );
     }
