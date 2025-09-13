@@ -8,6 +8,7 @@ import {
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
+import type IncludedGlobalUtils from "../../design-system/TypescriptModuleInput/IncludedGlobalUtils.js";
 import type TypescriptLib from "../../design-system/TypescriptModuleInput/TypescriptLib.js";
 import TypescriptModuleInput from "../../design-system/TypescriptModuleInput/TypescriptModuleInput.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
@@ -21,6 +22,7 @@ interface Props {
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   typescriptLibs?: TypescriptLib[] | undefined;
+  includedGlobalUtils?: IncludedGlobalUtils | undefined;
   className?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
@@ -31,6 +33,7 @@ export default function RHFTypescriptModuleField({
   isDisabled,
   autoFocus,
   typescriptLibs,
+  includedGlobalUtils,
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
@@ -48,6 +51,7 @@ export default function RHFTypescriptModuleField({
         isInvalid={fieldState.invalid}
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
+        includedGlobalUtils={includedGlobalUtils}
         maxHeight={vars.spacing._80}
         ref={field.ref}
       />

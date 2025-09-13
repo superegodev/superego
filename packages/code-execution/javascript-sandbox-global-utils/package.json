@@ -5,12 +5,16 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./LocalInstant.d.ts": {
+      "import": "./types/LocalInstant.d.ts"
     }
   },
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "vitest --reporter=verbose"
+    "test": "vitest --reporter=verbose",
+    "generate-types": "scripts/generate-types.sh"
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",

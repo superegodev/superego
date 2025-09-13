@@ -13,6 +13,7 @@ export default function TypescriptModuleInput({
   isInvalid = false,
   isDisabled = false,
   typescriptLibs,
+  includedGlobalUtils,
   maxHeight,
   ref,
 }: Props) {
@@ -60,6 +61,7 @@ export default function TypescriptModuleInput({
         value={value}
         onChange={onChange}
         typescriptLibs={typescriptLibs}
+        includedGlobalUtils={includedGlobalUtils}
         initialPositionRef={initialPositionRef}
         maxHeight={maxHeight}
       />

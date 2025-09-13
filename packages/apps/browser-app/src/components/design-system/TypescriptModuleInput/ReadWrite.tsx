@@ -1,31 +1,50 @@
 import { Theme, type TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
+import pDebounce from "p-debounce";
 import { type RefObject, useEffect, useRef } from "react";
 import forms from "../../../business-logic/forms/forms.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
+import { MONACO_EDITOR_ON_DID_CHANGE_CONTENT_DEBOUNCE } from "../../../config.js";
 import monaco from "../../../monaco.js";
 import { vars } from "../../../themes.css.js";
 import isEmpty from "../../../utils/isEmpty.js";
+import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
+import { getGlobalUtilsTypescriptLibs } from "./IncludedGlobalUtils.js";
 import type TypescriptLib from "./TypescriptLib.js";
 
 interface Props {
   isShown: boolean;
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
-  typescriptLibs?: TypescriptLib[] | undefined;
+  typescriptLibs: TypescriptLib[] | undefined;
+  includedGlobalUtils: IncludedGlobalUtils | undefined;
   initialPositionRef: RefObject<monaco.IPosition | null>;
-  maxHeight?: Property.MaxHeight;
+  maxHeight: Property.MaxHeight | undefined;
 }
 export default function ReadWrite({
   isShown,
   value,
   onChange,
   typescriptLibs,
+  includedGlobalUtils,
   initialPositionRef,
   maxHeight,
 }: Props) {
-  useSyncTypescriptLibsModels(isShown, typescriptLibs);
-  const { sourceModelRef } = useSyncSourceModel(isShown, value, onChange);
+  const latestContentChangeProcessingPromise = useRef<Promise<void> | null>(
+    null,
+  );
+  useSyncTypescriptLibsModels(
+    isShown,
+    typescriptLibs,
+    includedGlobalUtils,
+    latestContentChangeProcessingPromise,
+  );
+  const { sourceModelRef } = useSyncSourceModel(
+    isShown,
+    value,
+    onChange,
+    latestContentChangeProcessingPromise,
+  );
   const { editorElementRef, editorRef } = useCreateEditor(
     isShown,
     sourceModelRef,
@@ -56,11 +75,17 @@ const uriScheme = "vfs:";
  */
 function useSyncTypescriptLibsModels(
   isShown: boolean,
-  typescriptLibs?: TypescriptLib[] | undefined,
+  typescriptLibs: TypescriptLib[] | undefined,
+  includedGlobalUtils: IncludedGlobalUtils | undefined,
+  latestContentChangeProcessingPromise: RefObject<Promise<void> | null>,
 ) {
   useEffect(() => {
+    const libs = [
+      ...(typescriptLibs ?? []),
+      ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
+    ];
     if (isShown && typescriptLibs) {
-      for (const { path, source } of typescriptLibs) {
+      for (const { path, source } of libs) {
         monaco.editor.createModel(
           source,
           "typescript",
@@ -80,13 +105,22 @@ function useSyncTypescriptLibsModels(
         // touch a "real" option.
         cacheBuster: crypto.randomUUID(),
       });
+      return () => {
+        (async () => {
+          await latestContentChangeProcessingPromise.current;
+          for (const { path } of libs) {
+            monaco.editor.getModel(makeTsLibModelUri(path))?.dispose();
+          }
+        })();
+      };
     }
-    return () => {
-      for (const { path } of typescriptLibs ?? []) {
-        monaco.editor.getModel(makeTsLibModelUri(path))?.dispose();
-      }
-    };
-  }, [isShown, typescriptLibs]);
+    return undefined;
+  }, [
+    isShown,
+    typescriptLibs,
+    includedGlobalUtils,
+    latestContentChangeProcessingPromise,
+  ]);
 }
 
 /**
@@ -97,6 +131,7 @@ function useSyncSourceModel(
   isShown: boolean,
   value: TypescriptModule,
   onChange: (newValue: TypescriptModule) => void,
+  latestContentChangeProcessingPromise: RefObject<Promise<void> | null>,
 ) {
   const sourceModelRef = useRef<monaco.editor.ITextModel>(null);
 
@@ -118,52 +153,62 @@ function useSyncSourceModel(
       // includes the changes to the TypeScript source AND the compiled
       // source.
       //
-      // Note: compilation is an asynchronous operation. This means that it's
+      // Note 1: compilation is an asynchronous operation. This means that it's
       // possible that an earlier change whose compilation took longer than
       // expected finishes compilation AFTER a subsequent change. If the
       // earlier change were allowed to call the onChange with its older, now
       // stale value, the user would see the value of the input "revert back".
       // To avoid this race condition, we keep track of the latest change and
       // allow onChange to be called only for the latest change.
+      //
+      // Note 2: listening for changes is debounced, since we don't want to
+      // trigger a recompilation on every keystroke.
+      //
+      // Note 3: we keep track of the promise returned by handleDidChangeContent
+      // so that we can, on component unmount, delay model disposals until the
+      // last content change has been processed.
       let latestChangeId = 0;
-      async function handleDidChangeContent() {
+      const handleDidChangeContent = pDebounce(async () => {
         const changeId = latestChangeId + 1;
         latestChangeId = changeId;
 
         const newSource = sourceModel.getValue();
+        onChange({ source: newSource, compiled: "" });
         const newCompiled = await getCompilationOutput(
           sourceModelPath,
           forms.constants.FAILED_COMPILATION_OUTPUT,
         );
 
         if (changeId === latestChangeId) {
-          onChange({
-            source: newSource,
-            compiled: newCompiled,
-          });
+          onChange({ source: newSource, compiled: newCompiled });
         }
-      }
-      sourceModel.onDidChangeContent(handleDidChangeContent);
+      }, MONACO_EDITOR_ON_DID_CHANGE_CONTENT_DEBOUNCE);
+      sourceModel.onDidChangeContent(() => {
+        latestContentChangeProcessingPromise.current = handleDidChangeContent();
+      });
       // Trigger the handler once to force recompilation on first
       // initialization.
-      handleDidChangeContent();
+      latestContentChangeProcessingPromise.current = handleDidChangeContent();
     } else if (sourceModelRef.current.getValue() !== value.source) {
       // Since setting the model's value resets the editor's position, the
       // value is set only when the "received" outside value differs from the
       // current model value.
       sourceModelRef.current.setValue(value.source);
     }
-  }, [isShown, value, onChange]);
+  }, [isShown, value, onChange, latestContentChangeProcessingPromise]);
 
   // Dispose the model and reset its ref whenever isShown changes.
-  // Rule ignore explanation: we want to re-run the effect when isShown changes.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    return () => {
-      sourceModelRef.current?.dispose();
-      sourceModelRef.current = null;
-    };
-  }, [isShown]);
+    return isShown
+      ? () => {
+          (async () => {
+            await latestContentChangeProcessingPromise.current;
+            sourceModelRef.current?.dispose();
+            sourceModelRef.current = null;
+          })();
+        }
+      : undefined;
+  }, [isShown, latestContentChangeProcessingPromise]);
 
   return { sourceModelRef };
 }

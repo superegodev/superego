@@ -1,0 +1,10 @@
+{
+  "extends": ["../../../tsconfig.common.json"],
+  "include": ["src/LocalInstant.ts"],
+  "compilerOptions": {
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "stripInternal": true,
+    "declarationMap": false
+  }
+}

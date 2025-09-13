@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
-    "@superego/javascript-sandbox-global-utils": "workspace:*",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
     "typescript": "^5.9.2"
@@ -25,6 +24,7 @@
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/global-types": "workspace:*",
+    "@superego/javascript-sandbox-global-utils": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",

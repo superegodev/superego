@@ -196,7 +196,7 @@ export default {
             name: "Title",
             getter: {
               source:
-                'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.title;\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.title;\n}',
               compiled:
                 "export default function getValue(calendarEntry) {\n    return calendarEntry.title;\n}\n",
             },
@@ -205,7 +205,7 @@ export default {
             name: "Type",
             getter: {
               source:
-                'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.type;\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.type;\n}',
               compiled:
                 "export default function getValue(calendarEntry) {\n    return calendarEntry.type;\n}\n",
             },
@@ -214,7 +214,7 @@ export default {
             name: "Starts",
             getter: {
               source:
-                'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}',
               compiled:
                 'export default function getValue(calendarEntry) {\n    return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}\n',
             },
@@ -223,7 +223,7 @@ export default {
             name: "Ends",
             getter: {
               source:
-                'import { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}',
               compiled:
                 'export default function getValue(calendarEntry) {\n    if (!calendarEntry.endTime) {\n        return "";\n    }\n    return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}\n',
             },
@@ -324,7 +324,7 @@ export default {
             name: "Date",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.timestamp.slice(0, 10);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.timestamp.slice(0, 10);\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.timestamp.slice(0, 10);\n}\n",
             },
@@ -333,7 +333,7 @@ export default {
             name: "Vehicle",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.vehicle;\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.vehicle;\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.vehicle;\n}\n",
             },
@@ -342,7 +342,7 @@ export default {
             name: "Liters",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.liters);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.liters);\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.liters);\n}\n",
             },
@@ -351,7 +351,7 @@ export default {
             name: "Total cost (€)",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.totalCost);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.totalCost);\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.totalCost);\n}\n",
             },
@@ -360,7 +360,7 @@ export default {
             name: "Price per liter",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.pricePerLiter);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.pricePerLiter);\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.pricePerLiter);\n}\n",
             },
@@ -369,7 +369,7 @@ export default {
             name: "Odometer (km)",
             getter: {
               source:
-                'import { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.odometer);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.odometer);\n}',
               compiled:
                 "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.odometer);\n}\n",
             },
@@ -498,7 +498,7 @@ export default {
             name: "Title",
             getter: {
               source:
-                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.title;\n}',
+                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.title;\n}',
               compiled:
                 "export default function getValue(expense) {\n    return expense.title;\n}\n",
             },
@@ -507,7 +507,7 @@ export default {
             name: "Amount",
             getter: {
               source:
-                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.amount + " " + expense.currency;\n}',
+                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.amount + " " + expense.currency;\n}',
               compiled:
                 'export default function getValue(expense) {\n    return expense.amount + " " + expense.currency;\n}\n',
             },
@@ -516,7 +516,7 @@ export default {
             name: "Date",
             getter: {
               source:
-                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.date.slice(0,10)\n}',
+                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.date.slice(0,10)\n}',
               compiled:
                 "export default function getValue(expense) {\n    return expense.date.slice(0, 10);\n}\n",
             },
@@ -525,7 +525,7 @@ export default {
             name: "Category",
             getter: {
               source:
-                'import { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.category;\n}',
+                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.category;\n}',
               compiled:
                 "export default function getValue(expense) {\n    return expense.category;\n}\n",
             },
@@ -646,7 +646,7 @@ export default {
             name: "Name",
             getter: {
               source:
-                'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.name;\n}',
+                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.name;\n}',
               compiled:
                 "export default function getValue(food) {\n    return food.name;\n}\n",
             },
@@ -655,7 +655,7 @@ export default {
             name: "Nova Group",
             getter: {
               source:
-                'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.novaGroup;\n}',
+                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.novaGroup;\n}',
               compiled:
                 "export default function getValue(food) {\n    return food.novaGroup;\n}\n",
             },
@@ -664,7 +664,7 @@ export default {
             name: "Calories",
             getter: {
               source:
-                'import { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}',
+                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}',
               compiled:
                 'export default function getValue(food) {\n    return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}\n',
             },
@@ -756,7 +756,7 @@ export default {
             name: "Title",
             getter: {
               source:
-                'import { Meal } from "./CollectionSchema.js";\n\nexport default function getValue(meal: Meal): string {\n  return meal.date + " " + meal.type;\n}',
+                'import type { Meal } from "./CollectionSchema.js";\n\nexport default function getValue(meal: Meal): string {\n  return meal.date + " " + meal.type;\n}',
               compiled:
                 'export default function getValue(meal) {\n    return meal.date + " " + meal.type;\n}\n',
             },
@@ -867,7 +867,7 @@ export default {
             name: "Name",
             getter: {
               source:
-                'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.name;\n}',
+                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.name;\n}',
               compiled:
                 "export default function getValue(contact) {\n    return contact.name;\n}\n",
             },
@@ -876,7 +876,7 @@ export default {
             name: "Type",
             getter: {
               source:
-                'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.type;\n}',
+                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.type;\n}',
               compiled:
                 "export default function getValue(contact) {\n    return contact.type;\n}\n",
             },
@@ -885,7 +885,7 @@ export default {
             name: "Phone",
             getter: {
               source:
-                'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [phone] = contact.phones;\n  return phone ? phone.number : "";\n}',
+                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [phone] = contact.phones;\n  return phone ? phone.number : "";\n}',
               compiled:
                 'export default function getValue(contact) {\n    const [phone] = contact.phones;\n    return phone ? phone.number : "";\n}\n',
             },
@@ -894,7 +894,7 @@ export default {
             name: "Email",
             getter: {
               source:
-                'import { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [email] = contact.emails;\n  return email ? email.address : "";\n}',
+                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [email] = contact.emails;\n  return email ? email.address : "";\n}',
               compiled:
                 'export default function getValue(contact) {\n    const [email] = contact.emails;\n    return email ? email.address : "";\n}\n',
             },
@@ -964,7 +964,7 @@ export default {
             name: "Title",
             getter: {
               source:
-                'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.title;\n}',
+                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.title;\n}',
               compiled:
                 "export default function getValue(vetVisit) {\n    return vetVisit.title;\n}\n",
             },
@@ -973,7 +973,7 @@ export default {
             name: "Pet",
             getter: {
               source:
-                'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.pet;\n}',
+                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.pet;\n}',
               compiled:
                 "export default function getValue(vetVisit) {\n    return vetVisit.pet;\n}\n",
             },
@@ -982,7 +982,7 @@ export default {
             name: "Date",
             getter: {
               source:
-                'import { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.date;\n}',
+                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.date;\n}',
               compiled:
                 "export default function getValue(vetVisit) {\n    return vetVisit.date;\n}\n",
             },
@@ -1038,7 +1038,7 @@ export default {
             name: "Summary",
             getter: {
               source:
-                'import { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}',
+                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}',
               compiled:
                 'export default function getValue(weighIn) {\n    return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}\n',
             },

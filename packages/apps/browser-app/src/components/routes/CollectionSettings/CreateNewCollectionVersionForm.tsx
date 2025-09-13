@@ -168,6 +168,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         : [],
     [collection.latestVersion.schema, schema],
   );
+  const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -201,6 +202,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             "TypeScript function expression to migrate documents from the previous schema to the updated schema.",
         })}
         typescriptLibs={migrationTypescriptLibs}
+        includedGlobalUtils={includedGlobalUtils}
       />
       <div className={cs.CreateNewCollectionVersionForm.submitButtonContainer}>
         <RHFSubmitButton

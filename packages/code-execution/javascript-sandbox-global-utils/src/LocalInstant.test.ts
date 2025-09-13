@@ -19,7 +19,7 @@ describe("allows to express dates in the past and in the future", () => {
     // Future
     {
       name: "tomorrow at 9, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -30,7 +30,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "tomorrow at 9, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-25T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -41,7 +41,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "next Saturday at 9, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -52,7 +52,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "next Saturday at 9, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-24T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -63,7 +63,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "start of next week, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -73,7 +73,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "start of next week, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-24T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -83,7 +83,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "end of next week, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -93,7 +93,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "end of next week, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-24T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -104,7 +104,7 @@ describe("allows to express dates in the past and in the future", () => {
     // Past
     {
       name: "yesterday at 9, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -115,7 +115,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "yesterday at 9, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-26T14:48:00.000+02:00",
         "Europe/Vilnius",
       )
@@ -126,7 +126,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "previous Saturday at 9, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -137,7 +137,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "previous Saturday at 9, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-30T14:48:00.000+02:00",
         "Europe/Vilnius",
       )
@@ -148,7 +148,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "start of previous week, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -158,7 +158,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "start of previous week, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-27T14:48:00.000+02:00",
         "Europe/Vilnius",
       )
@@ -168,7 +168,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "end of previous week, without DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-09-12T14:48:00.000+03:00",
         "Europe/Vilnius",
       )
@@ -178,7 +178,7 @@ describe("allows to express dates in the past and in the future", () => {
     },
     {
       name: "end of previous week, with DST changes",
-      currentLocalInstant: LocalInstant.fromISO(
+      currentLocalInstant: LocalInstant.internalFromISO(
         "2025-10-26T14:48:00.000+02:00",
         "Europe/Vilnius",
       )
@@ -191,7 +191,7 @@ describe("allows to express dates in the past and in the future", () => {
   testCases.forEach(({ name, currentLocalInstant, targetDate }) => {
     it(`case: ${name}`, () => {
       expect(currentLocalInstant.toISO()).toEqual(
-        LocalInstant.fromISO(
+        LocalInstant.internalFromISO(
           targetDate.toISOString(),
           "Europe/Vilnius",
         ).toISO(),

@@ -9,7 +9,7 @@ interface Props {
   isShown: boolean;
   value: TypescriptModule;
   onMouseDown: MouseEventHandler<HTMLDivElement>;
-  maxHeight?: Property.MaxHeight;
+  maxHeight: Property.MaxHeight | undefined;
 }
 export default function ReadOnly({
   isShown,

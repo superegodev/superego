@@ -3,9 +3,13 @@ import { DateTime, type WeekdayNumbers } from "luxon";
 /**
  * Helper to work with dates and times in the user's current timezone and
  * locale. Instances are immutable. Calling methods returns new instances.
+ * This class is defined in the global scope. Don't import or require it.
  */
 class LocalInstant {
-  private constructor(private dateTime: DateTime<true>) {}
+  private constructor(
+    /** @internal */
+    private dateTime: DateTime<true>,
+  ) {}
 
   /**
    * Get a new LocalInstant set at the beginning of the given time unit.
@@ -77,7 +81,7 @@ class LocalInstant {
 
   /**
    * Returns the instant formatted in a human-readable way, according to the
-   * user's locale. Takes the same options of Intl.DateTimeFormat.
+   * user's locale.
    */
   toFormat(options: LocalInstant.FormatOptions = {}): string {
     const intlOptions: Intl.DateTimeFormatOptions =
@@ -112,13 +116,8 @@ class LocalInstant {
      * An ISO8601 string with millisecond precision and any valid time offset.
      */
     instant: string,
-    /** @internal Only used for tests. */
-    timeZone?: string,
   ) {
-    const dateTime = LocalInstant.parse(instant);
-    return new LocalInstant(
-      (timeZone ? dateTime.setZone(timeZone) : dateTime) as DateTime<true>,
-    );
+    return new LocalInstant(LocalInstant.parse(instant));
   }
 
   /** Creates a LocalInstant for the current time. */
@@ -126,6 +125,14 @@ class LocalInstant {
     return new LocalInstant(DateTime.now());
   }
 
+  /** @internal Only used for tests. */
+  static internalFromISO(instant: string, timeZone: string) {
+    return new LocalInstant(
+      LocalInstant.parse(instant).setZone(timeZone) as DateTime<true>,
+    );
+  }
+
+  /** @internal */
   private static parse(instant: string): DateTime<true> {
     const dateTime = DateTime.fromISO(instant);
     if (!dateTime.isValid) {

@@ -4187,6 +4187,7 @@ __metadata:
     "@superego/demo-data-repositories": "workspace:^"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
+    "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:^"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
@@ -4220,6 +4221,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^7.7.13"
     monaco-editor: "npm:^0.53.0"
+    p-debounce: "npm:^4.0.0"
     playwright: "npm:^1.55.0"
     react: "npm:^19.1.1"
     react-aria: "npm:^3.43.2"
@@ -8784,6 +8786,13 @@ __metadata:
   version: 2.1.1
   resolution: "p-cancelable@npm:2.1.1"
   checksum: 10c0/8c6dc1f8dd4154fd8b96a10e55a3a832684c4365fb9108056d89e79fbf21a2465027c04a59d0d797b5ffe10b54a61a32043af287d5c4860f1e996cbdbc847f01
+  languageName: node
+  linkType: hard
+
+"p-debounce@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "p-debounce@npm:4.0.0"
+  checksum: 10c0/2d50bcb53659ad4345ef59b220581ccb40d581528949d8c63547c22b418e9a92f5138617eb2f41cd03bed293ee78a3dbb9b2795f572a4044434b89f058ccdfa2
   languageName: node
   linkType: hard
 

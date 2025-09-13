@@ -34,7 +34,7 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { result, mutate } = useUpdateLatestCollectionVersionSettings();
 
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, watch } = useForm<FormValues>({
     defaultValues: {
       summaryProperties: collection.latestVersion.settings.summaryProperties,
     },
@@ -45,6 +45,7 @@ export default function UpdateCollectionVersionSettingsForm({
       }),
     ),
   });
+  console.log(JSON.stringify(watch(), null, 2));
 
   const onSubmit = async (values: FormValues) => {
     const { success, data } = await mutate(

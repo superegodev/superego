@@ -28,6 +28,7 @@ export default function RHFSummaryPropertyDefinitionField({
     () => (schemaTypescriptLib ? [schemaTypescriptLib] : []),
     [schemaTypescriptLib],
   );
+  const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return (
     <Fieldset defaultExpanded={defaultExpanded} className={className}>
       <Fieldset.Legend>{summaryPropertyDefinition.name}</Fieldset.Legend>
@@ -44,6 +45,7 @@ export default function RHFSummaryPropertyDefinitionField({
           isDisabled={isDisabled}
           label={intl.formatMessage({ defaultMessage: "Value getter" })}
           typescriptLibs={typescriptLibs}
+          includedGlobalUtils={includedGlobalUtils}
         />
       </Fieldset.Fields>
     </Fieldset>

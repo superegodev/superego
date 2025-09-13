@@ -1,5 +1,6 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
+import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
 import type TypescriptLib from "./TypescriptLib.js";
 
 export default interface Props {
@@ -10,6 +11,7 @@ export default interface Props {
   isInvalid?: boolean | undefined;
   isDisabled?: boolean | undefined;
   typescriptLibs?: TypescriptLib[] | undefined;
+  includedGlobalUtils?: IncludedGlobalUtils | undefined;
   maxHeight?: Property.MaxHeight;
   /**
    * react-hook-form ref callback. Used to allow the input to be focused by rhf
