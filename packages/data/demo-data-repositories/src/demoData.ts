@@ -74,30 +74,6 @@ export default {
       },
       createdAt: new Date("2025-08-28T09:34:07.048Z"),
     },
-    Collection_CSZt7rdynZLdoJupfrJ9k: {
-      id: "Collection_CSZt7rdynZLdoJupfrJ9k",
-      settings: {
-        name: "Foods",
-        icon: "🍗",
-        collectionCategoryId: "CollectionCategory_CSZixTLiGFTkQpZscYArp",
-        description: "Registry of foods with their nutrition information.",
-        assistantInstructions: null,
-      },
-      createdAt: new Date("2025-08-28T09:36:47.733Z"),
-    },
-    Collection_CSZtEQ9UDJsPHB3KnXWKf: {
-      id: "Collection_CSZtEQ9UDJsPHB3KnXWKf",
-      settings: {
-        name: "Meals",
-        icon: "🍽️",
-        collectionCategoryId: "CollectionCategory_CSZixTLiGFTkQpZscYArp",
-        description: null,
-        assistantInstructions: [
-          "- Try to infer the meal type from the amount of food I consumed (small amount -> snack) and from the time: from 7 to 9 -> breakfast; from 12 to 14 -> lunch; from 18 to 20 -> dinner. Ask if unsure.",
-        ].join("\n"),
-      },
-      createdAt: new Date("2025-08-28T09:38:16.498Z"),
-    },
     Collection_CSZtNQiv6xaohffqQvPJR: {
       id: "Collection_CSZtNQiv6xaohffqQvPJR",
       settings: {
@@ -145,12 +121,12 @@ export default {
             members: {
               Event: {
                 description:
-                  "An event, with a defined start time and a defined end time.",
+                  "An event, with a defined start time and a defined end time",
                 value: "Event",
               },
               Reminder: {
                 description:
-                  "A reminder, with a defined start time but no end time.",
+                  "A reminder, with a defined start time but no end time",
                 value: "Reminder",
               },
             },
@@ -214,18 +190,18 @@ export default {
             name: "Starts",
             getter: {
               source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return LocalInstant\n    .fromISO(calendarEntry.startTime)\n    .toFormat({ dateStyle: "short", timeStyle: "short" });\n}',
               compiled:
-                'export default function getValue(calendarEntry) {\n    return calendarEntry.startTime.slice(0, 10) + " @ " + calendarEntry.startTime.slice(11, 16);\n}\n',
+                'export default function getValue(calendarEntry) {\n    return LocalInstant\n        .fromISO(calendarEntry.startTime)\n        .toFormat({ dateStyle: "short", timeStyle: "short" });\n}\n',
             },
           },
           {
             name: "Ends",
             getter: {
               source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}',
+                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return LocalInstant\n    .fromISO(calendarEntry.endTime)\n    .toFormat({ dateStyle: "short", timeStyle: "short" });\n}',
               compiled:
-                'export default function getValue(calendarEntry) {\n    if (!calendarEntry.endTime) {\n        return "";\n    }\n    return calendarEntry.endTime.slice(0, 10) + " @ " + calendarEntry.endTime.slice(11, 16);\n}\n',
+                'export default function getValue(calendarEntry) {\n    if (!calendarEntry.endTime) {\n        return "";\n    }\n    return LocalInstant\n        .fromISO(calendarEntry.endTime)\n        .toFormat({ dateStyle: "short", timeStyle: "short" });\n}\n',
             },
           },
         ],
@@ -243,13 +219,18 @@ export default {
             description: "Type of fuel that can be used for refuelling.",
             dataType: DataType.Enum,
             members: {
-              Gasoline95: {
-                description: "95 octane gasoline.",
-                value: "Gasoline 95",
+              G95E5: {
+                value: "G95E5",
+                description: "Gasoline, 95 octane, E5",
               },
-              Gasoline98: {
-                description: "98 octane gasoline.",
-                value: "Gasoline 98",
+              G95E10: {
+                value: "G95E10",
+              },
+              G98E5: {
+                value: "G98E5",
+              },
+              G98E10: {
+                value: "G98E10",
               },
             },
           },
@@ -258,11 +239,11 @@ export default {
             dataType: DataType.Enum,
             members: {
               KiaSportage: {
-                description: "My main car.",
+                description: "My main car",
                 value: "Kia Sportage",
               },
               KawasakiNinja: {
-                description: "My motorbike.",
+                description: "My motorbike",
                 value: "Kawasaki Ninja",
               },
             },
@@ -324,9 +305,9 @@ export default {
             name: "Date",
             getter: {
               source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.timestamp.slice(0, 10);\n}',
+                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return LocalInstant.fromISO(fuelLogEntry.timestamp).toFormat();\n}',
               compiled:
-                "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.timestamp.slice(0, 10);\n}\n",
+                "export default function getValue(fuelLogEntry) {\n    return LocalInstant.fromISO(fuelLogEntry.timestamp).toFormat();\n}\n",
             },
           },
           {
@@ -391,44 +372,44 @@ export default {
             members: {
               Housing: {
                 description:
-                  "Rent or mortgage, property taxes, HOA dues, home repairs.",
+                  "Rent or mortgage, property taxes, HOA dues, home repairs",
                 value: "Housing",
               },
               Utilities: {
-                description: "Electricity, gas, water, trash, internet, phone.",
+                description: "Electricity, gas, water, trash, internet, phone",
                 value: "Utilities",
               },
               Groceries: {
-                description: "Food and household staples for home.",
+                description: "Food and household staples for home",
                 value: "Groceries",
               },
               DiningAndTakeout: {
-                description: "Restaurants, cafés, delivery, tips.",
+                description: "Restaurants, cafés, delivery, tips",
                 value: "DiningAndTakeout",
               },
               Transportation: {
                 description:
-                  "Fuel, public transit, rideshare, parking, maintenance.",
+                  "Fuel, public transit, rideshare, parking, maintenance",
                 value: "Transportation",
               },
               HealthAndMedical: {
-                description: " Doctor visits, dental, prescriptions, copays.",
+                description: " Doctor visits, dental, prescriptions, copays",
                 value: "HealthAndMedical",
               },
               Insurance: {
-                description: "Auto, health, home/renters, life premiums.",
+                description: "Auto, health, home/renters, life premiums",
                 value: "Insurance",
               },
               DebtAndLoans: {
-                description: "Credit card payments, student or auto loans.",
+                description: "Credit card payments, student or auto loans",
                 value: "DebtAndLoans",
               },
               EntertainmentAndSubscriptions: {
-                description: "Streaming, games, events, hobbies, apps.",
+                description: "Streaming, games, events, hobbies, apps",
                 value: "EntertainmentAndSubscriptions",
               },
               ShoppingAndPersonalCare: {
-                description: "Clothing, toiletries, cosmetics, salon/barber.",
+                description: "Clothing, toiletries, cosmetics, salon/barber",
                 value: "ShoppingAndPersonalCare",
               },
               Other: {
@@ -516,9 +497,9 @@ export default {
             name: "Date",
             getter: {
               source:
-                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.date.slice(0,10)\n}',
+                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return LocalInstant.fromISO(expense.date).toFormat();\n}',
               compiled:
-                "export default function getValue(expense) {\n    return expense.date.slice(0, 10);\n}\n",
+                "export default function getValue(expense) {\n    return LocalInstant.fromISO(expense.date).toFormat();\n}\n",
             },
           },
           {
@@ -535,237 +516,6 @@ export default {
       migration: null,
       createdAt: new Date("2025-08-28T09:34:07.048Z"),
     },
-    CollectionVersion_CSZt7rdynZLdoN6KQtVg3: {
-      id: "CollectionVersion_CSZt7rdynZLdoN6KQtVg3",
-      previousVersionId: null,
-      collectionId: "Collection_CSZt7rdynZLdoJupfrJ9k",
-      schema: {
-        types: {
-          NovaGroup: {
-            description:
-              "The Nova classification is a framework for grouping edible substances based on the extent and purpose of food processing applied to them.",
-            dataType: DataType.Enum,
-            members: {
-              Unprocessed: {
-                description:
-                  "Group 1: Unprocessed or minimally processed foods. Unprocessed foods are the edible parts of plants, animals, algae and fungi along with water. Examples include fresh or frozen fruits and vegetables, grains, legumes, fresh meat, eggs, milk, plain yogurt, and crushed spices.",
-                value: "Unprocessed",
-              },
-              CulinaryIngredient: {
-                description:
-                  "Group 2: Processed culinary ingredients. Processed culinary ingredients are derived from group 1 foods or else from nature by processes such as pressing, refining, grinding, milling, and drying. It also includes substances mined or extracted from nature. Examples include oils produced through crushing seeds, nuts, or fruits (such as olive oil), salt, sugar, vinegar, starches, honey, syrups extracted from trees, butter, and other substances used to season and cook.",
-                value: "CulinaryIngredient",
-              },
-              Processed: {
-                description:
-                  "Group 3: Processed foods. Processed foods are relatively simple food products produced by adding processed culinary ingredients (group 2 substances) such as salt or sugar to unprocessed (group 1) foods. Examples include cheese, canned vegetables, salted nuts, fruits in syrup, and dried or canned fish. Breads, pastries, cakes, biscuits, snacks, and some meat products fall into this group when they are made predominantly from group 1 foods with the addition of group 2 ingredients.",
-                value: "Processed",
-              },
-              UltraProcessed: {
-                description:
-                  "Group 4: Ultra-processed foods. Industrially manufactured food products made up of several ingredients (formulations) including sugar, oils, fats and salt (generally in combination and in higher amounts than in processed foods) and food substances of no or rare culinary use (such as high-fructose corn syrup, hydrogenated oils, modified starches and protein isolates). Examples incluse soft drinks, packaged snacks, instant noodles, reconstituted meat products, mass-produced breads, ice-cream, frozen ready-meals.",
-                value: "UltraProcessed",
-              },
-            },
-          },
-          EnergyQuantity: {
-            description: "A quantity of energy.",
-            dataType: DataType.Struct,
-            properties: {
-              unit: {
-                description: "Kilocalories.",
-                dataType: DataType.StringLiteral,
-                value: "kcal",
-              },
-              amount: {
-                dataType: DataType.Number,
-              },
-            },
-          },
-          MassQuantity: {
-            description: "A quantity of mass.",
-            dataType: DataType.Struct,
-            properties: {
-              unit: {
-                description: "Grams.",
-                dataType: DataType.StringLiteral,
-                value: "g",
-              },
-              amount: {
-                dataType: DataType.Number,
-              },
-            },
-          },
-          Food: {
-            description:
-              "Any nourishing substance that is eaten, drunk, or otherwise taken into the body.",
-            dataType: DataType.Struct,
-            properties: {
-              name: {
-                dataType: DataType.String,
-              },
-              novaGroup: {
-                dataType: null,
-                ref: "NovaGroup",
-              },
-              servingSize: {
-                description: "The amount to which nutrition facts refer to.",
-                dataType: null,
-                ref: "MassQuantity",
-              },
-              nutritionFacts: {
-                dataType: DataType.Struct,
-                properties: {
-                  calories: {
-                    dataType: null,
-                    ref: "EnergyQuantity",
-                  },
-                  fat: {
-                    dataType: null,
-                    ref: "MassQuantity",
-                  },
-                  carbs: {
-                    dataType: null,
-                    ref: "MassQuantity",
-                  },
-                  protein: {
-                    dataType: null,
-                    ref: "MassQuantity",
-                  },
-                },
-                nullableProperties: ["fat", "carbs", "protein"],
-              },
-            },
-          },
-        },
-        rootType: "Food",
-      },
-      settings: {
-        summaryProperties: [
-          {
-            name: "Name",
-            getter: {
-              source:
-                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.name;\n}',
-              compiled:
-                "export default function getValue(food) {\n    return food.name;\n}\n",
-            },
-          },
-          {
-            name: "Nova Group",
-            getter: {
-              source:
-                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.novaGroup;\n}',
-              compiled:
-                "export default function getValue(food) {\n    return food.novaGroup;\n}\n",
-            },
-          },
-          {
-            name: "Calories",
-            getter: {
-              source:
-                'import type { Food } from "./CollectionSchema.js";\n\nexport default function getValue(food: Food): string {\n  return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}',
-              compiled:
-                'export default function getValue(food) {\n    return food.nutritionFacts.calories.amount + " per " + food.servingSize.amount + "grams";\n}\n',
-            },
-          },
-        ],
-      },
-      migration: null,
-      createdAt: new Date("2025-08-28T09:36:47.733Z"),
-    },
-    CollectionVersion_CSZtEQ9UDJsPHDVWR77h3: {
-      id: "CollectionVersion_CSZtEQ9UDJsPHDVWR77h3",
-      previousVersionId: null,
-      collectionId: "Collection_CSZtEQ9UDJsPHB3KnXWKf",
-      schema: {
-        types: {
-          Type: {
-            dataType: DataType.Enum,
-            members: {
-              Breakfast: {
-                value: "Breakfast",
-              },
-              MorningSnack: {
-                value: "MorningSnack",
-              },
-              Lunch: {
-                value: "Lunch",
-              },
-              AfternoonSnack: {
-                value: "AfternoonSnack",
-              },
-              Dinner: {
-                value: "Dinner",
-              },
-              EveningSnack: {
-                value: "EveningSnack",
-              },
-            },
-          },
-          MassQuantity: {
-            description: "A quantity of mass.",
-            dataType: DataType.Struct,
-            properties: {
-              unit: {
-                description: "Grams.",
-                dataType: DataType.StringLiteral,
-                value: "g",
-              },
-              amount: {
-                dataType: DataType.Number,
-              },
-            },
-          },
-          Meal: {
-            dataType: DataType.Struct,
-            properties: {
-              type: {
-                dataType: null,
-                ref: "Type",
-              },
-              date: {
-                description: "The date of the meal.",
-                dataType: DataType.String,
-                format: "dev.superego:String.PlainDate",
-              },
-              consumedFoods: {
-                description: "Foods consumed during the meal.",
-                dataType: DataType.List,
-                items: {
-                  dataType: DataType.Struct,
-                  properties: {
-                    foodId: {
-                      dataType: DataType.String,
-                    },
-                    quantity: {
-                      dataType: null,
-                      ref: "MassQuantity",
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        rootType: "Meal",
-      },
-      settings: {
-        summaryProperties: [
-          {
-            name: "Title",
-            getter: {
-              source:
-                'import type { Meal } from "./CollectionSchema.js";\n\nexport default function getValue(meal: Meal): string {\n  return meal.date + " " + meal.type;\n}',
-              compiled:
-                'export default function getValue(meal) {\n    return meal.date + " " + meal.type;\n}\n',
-            },
-          },
-        ],
-      },
-      migration: null,
-      createdAt: new Date("2025-08-28T09:38:16.498Z"),
-    },
     CollectionVersion_CSZtNQiv6xaohhjDbHcXT: {
       id: "CollectionVersion_CSZtNQiv6xaohhjDbHcXT",
       previousVersionId: null,
@@ -777,12 +527,12 @@ export default {
             dataType: DataType.Enum,
             members: {
               Person: {
-                description: "A single human.",
+                description: "A single human",
                 value: "Person",
               },
               Organization: {
                 description:
-                  "A company, non-profit, government entity, group, etc.",
+                  "A company, non-profit, government entity, group, etc",
                 value: "Organization",
               },
             },
@@ -915,11 +665,11 @@ export default {
             dataType: DataType.Enum,
             members: {
               Galois: {
-                description: "Cat.",
+                description: "Cat",
                 value: "Galois",
               },
               Abel: {
-                description: "Dog.",
+                description: "Dog",
                 value: "Abel",
               },
             },
@@ -1035,12 +785,21 @@ export default {
       settings: {
         summaryProperties: [
           {
-            name: "Summary",
+            name: "Date",
             getter: {
               source:
-                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}',
+                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return LocalInstant.fromISO(weighIn.timestamp).toFormat();\n}',
               compiled:
-                'export default function getValue(weighIn) {\n    return weighIn.timestamp.slice(0, 10) + " - " + weighIn.weightKg + " kg";\n}\n',
+                "export default function getValue(weighIn) {\n    return LocalInstant.fromISO(weighIn.timestamp).toFormat();\n}\n",
+            },
+          },
+          {
+            name: "Weight (kg)",
+            getter: {
+              source:
+                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return String(weighIn.weightKg);\n}',
+              compiled:
+                "export default function getValue(weighIn) {\n    return String(weighIn.weightKg);\n}\n",
             },
           },
         ],
