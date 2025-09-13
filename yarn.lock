@@ -2244,9 +2244,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/autocomplete@npm:3.0.0-rc.1":
-  version: 3.0.0-rc.1
-  resolution: "@react-aria/autocomplete@npm:3.0.0-rc.1"
+"@react-aria/autocomplete@npm:3.0.0-rc.2":
+  version: 3.0.0-rc.2
+  resolution: "@react-aria/autocomplete@npm:3.0.0-rc.2"
   dependencies:
     "@react-aria/combobox": "npm:^3.13.2"
     "@react-aria/focus": "npm:^3.21.1"
@@ -2265,7 +2265,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/375538f556f833f800ab9c8ebb957dd61fbeda07f6adf062e6a1418affdfd3abe4ef6195de328e76d1afb123650ce1e2670639baf1e79f2fd84a08ac9e9f0397
+  checksum: 10c0/18d1606fea409240120275e10c230038ea0a31f272fe2250ada6276fee163479ac824ac4e7cd3416d0f94b254806d04de9377e025693e6ea1795b77e5f124cfb
   languageName: node
   linkType: hard
 
@@ -2347,9 +2347,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/collections@npm:3.0.0-rc.6":
-  version: 3.0.0-rc.6
-  resolution: "@react-aria/collections@npm:3.0.0-rc.6"
+"@react-aria/collections@npm:3.0.0-rc.7":
+  version: 3.0.0-rc.7
+  resolution: "@react-aria/collections@npm:3.0.0-rc.7"
   dependencies:
     "@react-aria/interactions": "npm:^3.25.5"
     "@react-aria/ssr": "npm:^3.9.10"
@@ -2360,7 +2360,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/4daa4c41edc300bfc5c78b5f4c0ed23bc92ac4219cecca7b0a6ac7352a7eac903696514e62ad34e12688bcb3f203c383cceed3a71cb6b871864eeb84a6a634d3
+  checksum: 10c0/58e1d2b5a82650bed65e70c5c83cb61173cae5e0dea5c8355fed81dfeb2c9a38c35096eeb38e89ecdbb676368d308612bdad41098edaf519f2e4db50c29e9df2
   languageName: node
   linkType: hard
 
@@ -4155,7 +4155,7 @@ __metadata:
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/vitest-registered": "workspace:*"
     "@types/luxon": "npm:^3.7.1"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.3.3"
     luxon: "npm:^3.7.2"
     p-map: "npm:^7.0.3"
     typescript: "npm:^5.9.2"
@@ -4169,7 +4169,7 @@ __metadata:
   dependencies:
     "@superego/global-types": "workspace:*"
     "@superego/schema": "workspace:*"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.3.3"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -4206,7 +4206,7 @@ __metadata:
     "@tiptap/pm": "npm:3.4.2"
     "@tiptap/react": "npm:3.4.2"
     "@tiptap/starter-kit": "npm:3.4.2"
-    "@types/react": "npm:^19.1.12"
+    "@types/react": "npm:^19.1.13"
     "@types/react-dom": "npm:^19.1.9"
     "@vanilla-extract/css": "npm:^1.17.4"
     "@vanilla-extract/vite-plugin": "npm:^5.1.1"
@@ -4222,8 +4222,8 @@ __metadata:
     monaco-editor: "npm:^0.53.0"
     playwright: "npm:^1.55.0"
     react: "npm:^19.1.1"
-    react-aria: "npm:^3.43.1"
-    react-aria-components: "npm:^1.12.1"
+    react-aria: "npm:^3.43.2"
+    react-aria-components: "npm:^1.12.2"
     react-dom: "npm:^19.1.1"
     react-hook-form: "patch:react-hook-form@npm%3A7.62.0#~/.yarn/patches/react-hook-form-npm-7.62.0-69aa06accc.patch"
     react-icons: "npm:^5.5.0"
@@ -4251,7 +4251,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.87.4"
     typescript: "npm:^5.9.2"
     vite: "npm:^7.1.5"
-    wrangler: "npm:^4.35.0"
+    wrangler: "npm:^4.36.0"
   languageName: unknown
   linkType: soft
 
@@ -4399,7 +4399,7 @@ __metadata:
     "@superego/global-types": "workspace:*"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.3.3"
     ajv: "npm:^8.17.1"
     ajv-formats: "npm:^3.0.1"
     luxon: "npm:^3.7.2"
@@ -4430,7 +4430,7 @@ __metadata:
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.3.3"
     jsondiffpatch: "npm:^0.7.3"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
@@ -5126,7 +5126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.3.1":
+"@types/node@npm:*":
   version: 24.3.1
   resolution: "@types/node@npm:24.3.1"
   dependencies:
@@ -5144,6 +5144,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^24.3.3":
+  version: 24.3.3
+  resolution: "@types/node@npm:24.3.3"
+  dependencies:
+    undici-types: "npm:~7.10.0"
+  checksum: 10c0/5324108314b3d9abaafd82ea04a91ea6904580c1fbe47c52600881ae250fef3b2d3d28c7d68cb979b07241d29fe889b66bd9f92346902bea65a3e562937c7d9a
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^19.1.9":
   version: 19.1.9
   resolution: "@types/react-dom@npm:19.1.9"
@@ -5153,12 +5162,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:16 || 17 || 18 || 19, @types/react@npm:^19.1.12":
+"@types/react@npm:16 || 17 || 18 || 19":
   version: 19.1.12
   resolution: "@types/react@npm:19.1.12"
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10c0/e35912b43da0caaab5252444bab87a31ca22950cde2822b3b3dc32e39c2d42dad1a4cf7b5dde9783aa2d007f0b2cba6ab9563fc6d2dbcaaa833b35178118767c
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.1.13":
+  version: 19.1.13
+  resolution: "@types/react@npm:19.1.13"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/75e35b54883f5ed07d3b5cb16a4711b6dbb7ec6b74301bcb9bfa697c9d9fff022ec508e1719e7b2c69e2e8b042faac1125be7717b5e5e084f816a2c88e136920
   languageName: node
   linkType: hard
 
@@ -8302,9 +8320,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:4.20250906.0":
-  version: 4.20250906.0
-  resolution: "miniflare@npm:4.20250906.0"
+"miniflare@npm:4.20250906.1":
+  version: 4.20250906.1
+  resolution: "miniflare@npm:4.20250906.1"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     acorn: "npm:8.14.0"
@@ -8313,14 +8331,14 @@ __metadata:
     glob-to-regexp: "npm:0.4.1"
     sharp: "npm:^0.33.5"
     stoppable: "npm:1.1.0"
-    undici: "npm:^7.10.0"
+    undici: "npm:7.14.0"
     workerd: "npm:1.20250906.0"
     ws: "npm:8.18.0"
     youch: "npm:4.1.0-beta.10"
     zod: "npm:3.22.3"
   bin:
     miniflare: bootstrap.js
-  checksum: 10c0/7472997483c63cd4d572a5109d275b7a078a43d877919cf63d443d3f33f3450e25669bec43216da36ae758412cb264beebc9c34d000a69d4f753423a8d3329ce
+  checksum: 10c0/681123793f23e7f1c8273d52e6a67874528ed5d3a877dcd72702fd89befedfba6bc5298fbaa0b94024cd41a0071ab47fcfafe4442cbc5623736fc70d3236db29
   languageName: node
   linkType: hard
 
@@ -9400,14 +9418,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-aria-components@npm:^1.12.1":
-  version: 1.12.1
-  resolution: "react-aria-components@npm:1.12.1"
+"react-aria-components@npm:^1.12.2":
+  version: 1.12.2
+  resolution: "react-aria-components@npm:1.12.2"
   dependencies:
     "@internationalized/date": "npm:^3.9.0"
     "@internationalized/string": "npm:^3.2.7"
-    "@react-aria/autocomplete": "npm:3.0.0-rc.1"
-    "@react-aria/collections": "npm:3.0.0-rc.6"
+    "@react-aria/autocomplete": "npm:3.0.0-rc.2"
+    "@react-aria/collections": "npm:3.0.0-rc.7"
     "@react-aria/dnd": "npm:^3.11.2"
     "@react-aria/focus": "npm:^3.21.1"
     "@react-aria/interactions": "npm:^3.25.5"
@@ -9430,19 +9448,19 @@ __metadata:
     "@react-types/table": "npm:^3.13.3"
     "@swc/helpers": "npm:^0.5.0"
     client-only: "npm:^0.0.1"
-    react-aria: "npm:^3.43.1"
+    react-aria: "npm:^3.43.2"
     react-stately: "npm:^3.41.0"
     use-sync-external-store: "npm:^1.4.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/9b48a3b22d0afb45f79a224fa6b786c8761c9f3108e8da298ef66facc86f2446b11d2a20ecf0a173f0d660059a3d50025cd3907e91751ed5d4af0188378d1c7d
+  checksum: 10c0/8d93c5517a4b83ba2c6be066f7a1008cd75139481e5aa9bdf5d95462dd9e891828171f14059b4d0d716a8d5655b4e76d14abede5b06cd0cfc3aa931feb55b4f0
   languageName: node
   linkType: hard
 
-"react-aria@npm:^3.43.1":
-  version: 3.43.1
-  resolution: "react-aria@npm:3.43.1"
+"react-aria@npm:^3.43.2":
+  version: 3.43.2
+  resolution: "react-aria@npm:3.43.2"
   dependencies:
     "@internationalized/string": "npm:^3.2.7"
     "@react-aria/breadcrumbs": "npm:^3.5.28"
@@ -9489,7 +9507,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/cf4e8cc615c687ecd16fdc1a80dba70d5e8e6fa98fde22467b949b4815a03e93600da1157e6aa7658d852000944d965806edc507fd02e7e40dfd1eb62443b3ba
+  checksum: 10c0/4ae525bf805c5192758ee9ba93c0949a257d406d5d4ab04f01ba9a9ae8ce40ec1726b77603e00e4ad2a5503435037dfb67b1dfa1033cba545a122d0b4fc18599
   languageName: node
   linkType: hard
 
@@ -10656,10 +10674,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^7.10.0":
-  version: 7.16.0
-  resolution: "undici@npm:7.16.0"
-  checksum: 10c0/efd867792e9f233facf9efa0a087e2d9c3e4415c0b234061b9b40307ca4fa01d945fee4d43c7b564e1b80e0d519bcc682f9f6e0de13c717146c00a80e2f1fb0f
+"undici@npm:7.14.0":
+  version: 7.14.0
+  resolution: "undici@npm:7.14.0"
+  checksum: 10c0/4beab6a5bfb89add9e90195aee6bc993708afbabad33bff7da791b5334a6e26a591c29938822d2fb8f69ae0ad8d580d64e03247b11157af9f820d5bd9f8f16e7
   languageName: node
   linkType: hard
 
@@ -11067,16 +11085,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^4.35.0":
-  version: 4.35.0
-  resolution: "wrangler@npm:4.35.0"
+"wrangler@npm:^4.36.0":
+  version: 4.36.0
+  resolution: "wrangler@npm:4.36.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.7.3"
     blake3-wasm: "npm:2.1.5"
     esbuild: "npm:0.25.4"
     fsevents: "npm:~2.3.2"
-    miniflare: "npm:4.20250906.0"
+    miniflare: "npm:4.20250906.1"
     path-to-regexp: "npm:6.3.0"
     unenv: "npm:2.0.0-rc.21"
     workerd: "npm:1.20250906.0"
@@ -11091,7 +11109,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/8f286147d3187e1fc346f6fd2562f90a511797e93c56cb68923d392a4401dfd047a32193c0f7478894a27c05d548b6b9c35f9b56b1e740d2fa18ef248d6620f5
+  checksum: 10c0/106a6d3547a06549400c7901f077fedfb75b67640c33821d0ef9dee4ef77e7891d5d16bf9bfa84884d93981c665695b02bd4c1f50d2686c524e2e41038a184a3
   languageName: node
   linkType: hard
 
