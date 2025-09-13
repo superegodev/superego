@@ -17,7 +17,29 @@ export default async function generateTitle(
           content: [
             {
               type: MessageContentPartType.Text,
-              text: "Summarize in 5 words or less the user message.",
+              text: `
+You will receive the FIRST user message of a brand-new assistant conversation.
+
+TASK: Generate a concise, descriptive conversation title based solely on that
+message.
+
+OUTPUT REQUIREMENTS
+- Use between 3 and 5 words.
+- Title Case major words.
+- Use the message’s language.
+- Reply with the title ONLY (no extra text, quotes, emojis, or explanations).
+- Do not add punctuation, except keep punctuation that is part of names/tech
+  (e.g., Next.js, C++).
+- Prefer salient keywords and entities from the message; avoid private details
+  unless explicitly provided and central.
+- If the message is vague (e.g., “Hi”), infer a helpful, generic five-word title
+  (e.g., “Greeting And Conversation Kickoff Start”).
+
+WORD COUNT RULES
+- Words are tokens separated by single spaces.
+- Hyphenated terms count as one word.
+- Numbers and acronyms count as one word.
+              `,
             },
           ],
         },
