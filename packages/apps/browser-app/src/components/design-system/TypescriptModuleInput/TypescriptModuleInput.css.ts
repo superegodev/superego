@@ -65,3 +65,15 @@ globalStyle(`${ReadOnly.code} > span`, {
 globalStyle(`[aria-disabled="true"] > ${ReadOnly.root} *`, {
   color: `${vars.colors.text.secondary}`,
 });
+
+export const CompilationInProgressIndicator = {
+  root: style({
+    position: "absolute",
+    top: vars.spacing._1,
+    right: vars.spacing._1,
+    color: vars.colors.semantic.pending.text,
+    fontSize: vars.typography.fontSizes.xs2,
+    fontWeight: vars.typography.fontWeights.medium,
+    fontStyle: "italic",
+  }),
+};

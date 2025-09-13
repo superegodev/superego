@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import forms from "../../../business-logic/forms/forms.js";
 import type monaco from "../../../monaco.js";
+import CompilationInProgressIndicator from "./CompilationInProgressIndicator.js";
 import type Props from "./Props.js";
 import ReadOnly from "./ReadOnly.js";
 import ReadWrite from "./ReadWrite.js";
@@ -79,6 +81,11 @@ export default function TypescriptModuleInput({
           }
         }}
         maxHeight={maxHeight}
+      />
+      <CompilationInProgressIndicator
+        isShown={
+          value.compiled === forms.constants.IN_PROGRESS_COMPILATION_OUTPUT
+        }
       />
     </div>
   );

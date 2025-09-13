@@ -99,6 +99,13 @@ export default function ReadWrite({
     latestBlurIdRef.current = blurId;
 
     const newSource = sourceModelRef.current.getValue();
+    onChange({
+      source: newSource,
+      // TODO: move compilation to the backend, which should simplify the logic
+      // here quite a lot. For now, let's live with this ugly hack to keep track
+      // of the compilation state.
+      compiled: forms.constants.IN_PROGRESS_COMPILATION_OUTPUT,
+    });
     latestCompilationPromiseRef.current = pTimeout(
       getCompilationOutput(
         sourceModelRef.current.uri.toString(),
