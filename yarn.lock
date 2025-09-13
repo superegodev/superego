@@ -4220,7 +4220,7 @@ __metadata:
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^7.7.13"
-    monaco-editor: "npm:^0.53.0"
+    monaco-editor: "npm:0.52.2"
     p-debounce: "npm:^4.0.0"
     playwright: "npm:^1.55.0"
     react: "npm:^19.1.1"
@@ -5188,13 +5188,6 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/a58ba341cb9e7d74f71810a88862da7b2a6fa42e2a1fc0ce40498f6ea1d44382f0640117057da779f74c47039f7166bf48fad02dc876f94e005c7afa50f5e129
-  languageName: node
-  linkType: hard
-
-"@types/trusted-types@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@types/trusted-types@npm:1.0.6"
-  checksum: 10c0/4bc61ac65b8e42d17c77a23f29cdf94e498acd2e23f4c00cf15c8281de94263ac313d46cbcd7cd1d03c066d497f9396845e3210ff0074f5f90f212cb3e8aac28
   languageName: node
   linkType: hard
 
@@ -8543,12 +8536,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monaco-editor@npm:^0.53.0":
-  version: 0.53.0
-  resolution: "monaco-editor@npm:0.53.0"
-  dependencies:
-    "@types/trusted-types": "npm:^1.0.6"
-  checksum: 10c0/016495f0b869ea3a4151b660e5b8653999e54da9834001b4e7e88edae5c749aee2f1b56020bfece51cd08fc8e7125cd9732f414e373aea554e2f2812ee8245f1
+"monaco-editor@npm:0.52.2":
+  version: 0.52.2
+  resolution: "monaco-editor@npm:0.52.2"
+  checksum: 10c0/5a92da64f1e2ab375c0ce99364137f794d057c97bed10ecc65a08d6e6846804b8ecbd377eacf01e498f7dfbe1b21e8be64f728256681448f0484df90e767b435
   languageName: node
   linkType: hard
 

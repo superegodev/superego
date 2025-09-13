@@ -70,7 +70,7 @@
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "markdown-to-jsx": "^7.7.13",
-    "monaco-editor": "^0.53.0",
+    "monaco-editor": "0.52.2",
     "p-debounce": "^4.0.0",
     "react": "^19.1.1",
     "react-aria": "^3.43.2",
