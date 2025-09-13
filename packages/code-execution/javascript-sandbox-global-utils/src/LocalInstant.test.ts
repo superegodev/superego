@@ -191,7 +191,10 @@ describe("allows to express dates in the past and in the future", () => {
   testCases.forEach(({ name, currentLocalInstant, targetDate }) => {
     it(`case: ${name}`, () => {
       expect(currentLocalInstant.toISO()).toEqual(
-        LocalInstant.fromISO(targetDate.toISOString()).toISO(),
+        LocalInstant.fromISO(
+          targetDate.toISOString(),
+          "Europe/Vilnius",
+        ).toISO(),
       );
       expect(currentLocalInstant.toJSDate()).toEqual(targetDate);
     });
