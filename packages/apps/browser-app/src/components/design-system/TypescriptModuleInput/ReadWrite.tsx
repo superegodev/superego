@@ -1,10 +1,16 @@
 import { Theme, type TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
-import pDebounce from "p-debounce";
-import { type RefObject, useEffect, useRef } from "react";
+import pTimeout from "p-timeout";
+import {
+  type FocusEvent,
+  type RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import forms from "../../../business-logic/forms/forms.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
-import { MONACO_EDITOR_ON_DID_CHANGE_CONTENT_DEBOUNCE } from "../../../config.js";
+import { MONACO_EDITOR_COMPILATION_TIMEOUT } from "../../../config.js";
 import monaco from "../../../monaco.js";
 import { vars } from "../../../themes.css.js";
 import isEmpty from "../../../utils/isEmpty.js";
@@ -30,31 +36,91 @@ export default function ReadWrite({
   initialPositionRef,
   maxHeight,
 }: Props) {
-  const latestContentChangeProcessingPromise = useRef<Promise<void> | null>(
-    null,
-  );
+  // We use editorId as base path under which we create models. This sort-of
+  // allows multiple instances of the editor to exist at the same time, though
+  // they still share the same virtual filesystem. But we don't usually expect
+  // many instances to exist at the same time, as each instance is disposed
+  // onBlur. This is not done immediately, though. The instance is disposed only
+  // after its last compilation completed. So, if in the meantime another
+  // instance has been created, there is a brief period in which two instances
+  // coexist. Hence why we want the id to change every time isShown changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  const editorId = useMemo(() => crypto.randomUUID(), [isShown]);
+
+  // We keep track of compilation promises, so that we can, on component
+  // unmount, delay model disposals until the last content compilation has
+  // completed.
+  const latestCompilationPromiseRef = useRef<Promise<string> | null>(null);
+
   useSyncTypescriptLibsModels(
+    editorId,
     isShown,
     typescriptLibs,
     includedGlobalUtils,
-    latestContentChangeProcessingPromise,
+    latestCompilationPromiseRef,
   );
+
   const { sourceModelRef } = useSyncSourceModel(
+    editorId,
     isShown,
     value,
-    onChange,
-    latestContentChangeProcessingPromise,
+    latestCompilationPromiseRef,
   );
+
   const { editorElementRef, editorRef } = useCreateEditor(
     isShown,
     sourceModelRef,
     initialPositionRef,
   );
+
   useSyncEditorTheme(editorRef);
+
+  // On blur, propagate changes to the model to the outside world. The
+  // propagation includes the changes to the TypeScript source AND the compiled
+  // source.
+  //
+  // Note: compilation is an asynchronous operation. This means that it's
+  // possible that an earlier change whose compilation took longer than expected
+  // finishes compilation AFTER a subsequent change. If the earlier change were
+  // allowed to call the onChange with its older, now stale value, the user
+  // would see the value of the input "revert back". To avoid this race
+  // condition, we keep track of the latest change and allow onChange to be
+  // called only for the latest change.
+  const latestBlurIdRef = useRef(0);
+  const onBlur = async (evt: FocusEvent<HTMLDivElement, Element>) => {
+    if (
+      editorElementRef.current?.contains(evt.relatedTarget) ||
+      !sourceModelRef.current
+    ) {
+      return;
+    }
+
+    const blurId = latestBlurIdRef.current + 1;
+    latestBlurIdRef.current = blurId;
+
+    const newSource = sourceModelRef.current.getValue();
+    latestCompilationPromiseRef.current = pTimeout(
+      getCompilationOutput(
+        sourceModelRef.current.uri.toString(),
+        forms.constants.FAILED_COMPILATION_OUTPUT,
+      ),
+      {
+        milliseconds: MONACO_EDITOR_COMPILATION_TIMEOUT,
+        fallback: () => forms.constants.FAILED_COMPILATION_OUTPUT,
+      },
+    );
+    const newCompiled = await latestCompilationPromiseRef.current;
+
+    if (blurId === latestBlurIdRef.current) {
+      onChange({ source: newSource, compiled: newCompiled });
+    }
+  };
+
   return (
     <div
       style={{ display: !isShown ? "none" : undefined, maxHeight }}
       ref={editorElementRef}
+      onBlur={onBlur}
     />
   );
 }
@@ -74,24 +140,24 @@ const uriScheme = "vfs:";
  * sync, and removes them afterwards.
  */
 function useSyncTypescriptLibsModels(
+  editorId: string,
   isShown: boolean,
   typescriptLibs: TypescriptLib[] | undefined,
   includedGlobalUtils: IncludedGlobalUtils | undefined,
-  latestContentChangeProcessingPromise: RefObject<Promise<void> | null>,
+  latestCompilationPromiseRef: RefObject<Promise<string> | null>,
 ) {
   useEffect(() => {
-    const libs = [
-      ...(typescriptLibs ?? []),
-      ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
-    ];
     if (isShown && typescriptLibs) {
-      for (const { path, source } of libs) {
+      const libModels = [
+        ...(typescriptLibs ?? []),
+        ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
+      ].map(({ path, source }) =>
         monaco.editor.createModel(
           source,
           "typescript",
-          makeTsLibModelUri(path),
-        );
-      }
+          makeTsLibModelUri(`/${editorId}${path}`),
+        ),
+      );
       // WORKAROUND: It seems that for some reason monaco's TypeScript worker
       // caches old models even when they have been disposed, so when libs
       // update (for example when the code generated from a schema changes) the
@@ -107,9 +173,9 @@ function useSyncTypescriptLibsModels(
       });
       return () => {
         (async () => {
-          await latestContentChangeProcessingPromise.current;
-          for (const { path } of libs) {
-            monaco.editor.getModel(makeTsLibModelUri(path))?.dispose();
+          await latestCompilationPromiseRef.current;
+          for (const libModel of libModels) {
+            libModel.dispose();
           }
         })();
       };
@@ -119,7 +185,8 @@ function useSyncTypescriptLibsModels(
     isShown,
     typescriptLibs,
     includedGlobalUtils,
-    latestContentChangeProcessingPromise,
+    latestCompilationPromiseRef,
+    editorId,
   ]);
 }
 
@@ -128,10 +195,10 @@ function useSyncTypescriptLibsModels(
  * world.
  */
 function useSyncSourceModel(
+  editorId: string,
   isShown: boolean,
   value: TypescriptModule,
-  onChange: (newValue: TypescriptModule) => void,
-  latestContentChangeProcessingPromise: RefObject<Promise<void> | null>,
+  latestCompilationPromiseRef: RefObject<Promise<string> | null>,
 ) {
   const sourceModelRef = useRef<monaco.editor.ITextModel>(null);
 
@@ -141,74 +208,34 @@ function useSyncSourceModel(
     }
 
     if (sourceModelRef.current === null) {
-      const sourceModelPath = `${uriScheme}/main.ts`;
+      const sourceModelPath =
+        `${uriScheme}/${editorId}/main.ts` as `${string}.ts`;
       const sourceModel = monaco.editor.createModel(
         value.source,
         "typescript",
         monaco.Uri.parse(sourceModelPath),
       );
       sourceModelRef.current = sourceModel;
-
-      // Propagate changes to the model to the outside world. The propagation
-      // includes the changes to the TypeScript source AND the compiled
-      // source.
-      //
-      // Note 1: compilation is an asynchronous operation. This means that it's
-      // possible that an earlier change whose compilation took longer than
-      // expected finishes compilation AFTER a subsequent change. If the
-      // earlier change were allowed to call the onChange with its older, now
-      // stale value, the user would see the value of the input "revert back".
-      // To avoid this race condition, we keep track of the latest change and
-      // allow onChange to be called only for the latest change.
-      //
-      // Note 2: listening for changes is debounced, since we don't want to
-      // trigger a recompilation on every keystroke.
-      //
-      // Note 3: we keep track of the promise returned by handleDidChangeContent
-      // so that we can, on component unmount, delay model disposals until the
-      // last content change has been processed.
-      let latestChangeId = 0;
-      const handleDidChangeContent = pDebounce(async () => {
-        const changeId = latestChangeId + 1;
-        latestChangeId = changeId;
-
-        const newSource = sourceModel.getValue();
-        onChange({ source: newSource, compiled: "" });
-        const newCompiled = await getCompilationOutput(
-          sourceModelPath,
-          forms.constants.FAILED_COMPILATION_OUTPUT,
-        );
-
-        if (changeId === latestChangeId) {
-          onChange({ source: newSource, compiled: newCompiled });
-        }
-      }, MONACO_EDITOR_ON_DID_CHANGE_CONTENT_DEBOUNCE);
-      sourceModel.onDidChangeContent(() => {
-        latestContentChangeProcessingPromise.current = handleDidChangeContent();
-      });
-      // Trigger the handler once to force recompilation on first
-      // initialization.
-      latestContentChangeProcessingPromise.current = handleDidChangeContent();
     } else if (sourceModelRef.current.getValue() !== value.source) {
       // Since setting the model's value resets the editor's position, the
       // value is set only when the "received" outside value differs from the
       // current model value.
       sourceModelRef.current.setValue(value.source);
     }
-  }, [isShown, value, onChange, latestContentChangeProcessingPromise]);
+  }, [isShown, value, editorId]);
 
   // Dispose the model and reset its ref whenever isShown changes.
   useEffect(() => {
     return isShown
       ? () => {
           (async () => {
-            await latestContentChangeProcessingPromise.current;
+            await latestCompilationPromiseRef.current;
             sourceModelRef.current?.dispose();
             sourceModelRef.current = null;
           })();
         }
       : undefined;
-  }, [isShown, latestContentChangeProcessingPromise]);
+  }, [isShown, latestCompilationPromiseRef]);
 
   return { sourceModelRef };
 }
@@ -341,7 +368,7 @@ function makeTsLibModelUri(path: TypescriptLib["path"]): monaco.Uri {
 
 /** Gets the compiled output of the supplied source file. */
 async function getCompilationOutput(
-  sourcePath: `${string}.ts`,
+  sourcePath: string,
   failedCompilationOutput: string,
 ): Promise<string> {
   try {
