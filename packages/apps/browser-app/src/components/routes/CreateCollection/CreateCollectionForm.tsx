@@ -1,16 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type {
-  NonEmptyArray,
-  SummaryPropertyDefinition,
-} from "@superego/backend";
-import {
-  codegen,
-  DataType,
-  type Schema,
-  valibotSchemas as schemaValibotSchemas,
-} from "@superego/schema";
+import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import { valibotSchemas as backendUtilsValibotSchemas } from "@superego/shared-utils";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,29 +11,18 @@ import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Alert from "../../design-system/Alert/Alert.js";
+import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
-import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
-import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CreateCollection.css.js";
+import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
+import GeneralSettingsTab from "./GeneralSettingsTab.jsx";
+import SchemaTab from "./SchemaTab.jsx";
+import SummaryPropertiesTab from "./SummaryPropertiesTab.jsx";
+import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
+import TabTitle from "./TabTitle.jsx";
 
-const schemaTypescriptLibPath = "/CollectionSchema.ts";
-
-interface FormValues {
-  name: string;
-  icon: string | null;
-  description: string | null;
-  assistantInstructions: string | null;
-  schema: Schema;
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
-}
-
-const defaultSchema: Schema = {
-  types: { MyType: { dataType: DataType.Struct, properties: {} } },
-  rootType: "MyType",
-};
+const defaultSchema = forms.defaults.schema();
 
 export default function CreateCollectionForm() {
   const intl = useIntl();
@@ -60,9 +40,8 @@ export default function CreateCollectionForm() {
       ),
     [intl],
   );
-  const defaultGetterRef = useRef(defaultSummaryPropertyDefinition.getter);
-  const { control, handleSubmit, setValue, getValues, watch } =
-    useForm<FormValues>({
+  const { control, handleSubmit, setValue, getValues, watch, formState } =
+    useForm<CreateCollectionFormValues>({
       defaultValues: {
         name: "",
         icon: null,
@@ -83,25 +62,6 @@ export default function CreateCollectionForm() {
         }),
       ),
     });
-  const schema = watch("schema");
-
-  // When schema changes, for each summary property, if the user didn't make any
-  // change to the getter (hence it's still the default one), update it.
-  useEffect(() => {
-    if (typeof schema === "string") {
-      return;
-    }
-    const newDefaultGetter = forms.defaults.summaryPropertyDefinitionGetter(
-      schema,
-      schemaTypescriptLibPath,
-    );
-    getValues("summaryProperties").forEach(({ getter }, index) => {
-      if (getter.source === defaultGetterRef.current.source) {
-        setValue(`summaryProperties.${index}.getter`, newDefaultGetter);
-      }
-    });
-    defaultGetterRef.current = newDefaultGetter;
-  }, [schema, getValues, setValue]);
 
   const onSubmit = async ({
     schema,
@@ -110,7 +70,7 @@ export default function CreateCollectionForm() {
     description,
     assistantInstructions,
     summaryProperties,
-  }: FormValues) => {
+  }: CreateCollectionFormValues) => {
     const { success, data } = await mutate(
       {
         name,
@@ -127,63 +87,54 @@ export default function CreateCollectionForm() {
     }
   };
 
-  const schemaTypescriptLib = useMemo(
-    () =>
-      typeof schema !== "string"
-        ? ({ path: schemaTypescriptLibPath, source: codegen(schema) } as const)
-        : null,
-    [schema],
-  );
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <div className={cs.CreateCollectionForm.nameIconInputs}>
-        <RHFEmojiField
-          control={control}
-          name="icon"
-          label={intl.formatMessage({ defaultMessage: "Icon" })}
-        />
-        <RHFTextField
-          control={control}
-          name="name"
-          label={intl.formatMessage({ defaultMessage: "Name" })}
-          autoFocus={true}
-          className={cs.CreateCollectionForm.nameInput}
-        />
-      </div>
-      <RHFTextField
-        control={control}
-        name="description"
-        label={intl.formatMessage({ defaultMessage: "Description" })}
-        textArea={true}
-        emptyInputValue={null}
-      />
-      <RHFTextField
-        control={control}
-        name="assistantInstructions"
-        label={intl.formatMessage({ defaultMessage: "Assistant instructions" })}
-        textArea={true}
-        emptyInputValue={null}
-      />
-      <RHFSchemaField
-        control={control}
-        name="schema"
-        label={intl.formatMessage({ defaultMessage: "Schema" })}
-        className={cs.CreateCollectionForm.schemaTextField}
-      />
-      <RHFSummaryPropertyDefinitionsField
-        control={control}
-        name="summaryProperties"
-        isDisabled={typeof schema === "string"}
-        schemaTypescriptLib={schemaTypescriptLib}
-        getDefaultSummaryPropertyDefinition={(index) =>
-          forms.defaults.summaryPropertyDefinition(
-            index,
-            schema,
-            schemaTypescriptLibPath,
-            intl,
-          )
-        }
+      <FullPageTabs
+        tabs={[
+          {
+            title: (
+              <TabTitle
+                hasErrors={
+                  !!(
+                    formState.errors.icon ||
+                    formState.errors.name ||
+                    formState.errors.description ||
+                    formState.errors.assistantInstructions
+                  )
+                }
+              >
+                <FormattedMessage defaultMessage="1. General settings" />
+              </TabTitle>
+            ),
+            panel: <GeneralSettingsTab control={control} />,
+          },
+          {
+            title: (
+              <TabTitle hasErrors={!!formState.errors.schema}>
+                <FormattedMessage defaultMessage="2. Schema" />
+              </TabTitle>
+            ),
+            panel: <SchemaTab control={control} />,
+          },
+          {
+            title: (
+              <TabTitle hasErrors={!!formState.errors.summaryProperties}>
+                <FormattedMessage defaultMessage="3. Summary properties" />
+              </TabTitle>
+            ),
+            panel: (
+              <SummaryPropertiesTab
+                control={control}
+                watch={watch}
+                getValues={getValues}
+                setValue={setValue}
+                defaultSummaryPropertyDefinition={
+                  defaultSummaryPropertyDefinition
+                }
+              />
+            ),
+          },
+        ]}
       />
       <div className={cs.CreateCollectionForm.submitButtonContainer}>
         <RHFSubmitButton

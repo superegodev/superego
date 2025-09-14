@@ -137,23 +137,17 @@
   "CreateCollectionForm.tsx_+R8UFo": {
     "defaultMessage": "Error creating collection"
   },
-  "CreateCollectionForm.tsx_1W2oHf": {
-    "defaultMessage": "Assistant instructions"
+  "CreateCollectionForm.tsx_45vDAJ": {
+    "defaultMessage": "2. Schema"
   },
-  "CreateCollectionForm.tsx_HAlOn1": {
-    "defaultMessage": "Name"
-  },
-  "CreateCollectionForm.tsx_Lktmvk": {
-    "defaultMessage": "Schema"
-  },
-  "CreateCollectionForm.tsx_Q8Qw5B": {
-    "defaultMessage": "Description"
+  "CreateCollectionForm.tsx_PgbTyn": {
+    "defaultMessage": "1. General settings"
   },
   "CreateCollectionForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "CreateCollectionForm.tsx_kk4TVW": {
-    "defaultMessage": "Icon"
+  "CreateCollectionForm.tsx_wuDUd4": {
+    "defaultMessage": "3. Summary properties"
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
@@ -401,6 +395,21 @@
   "FormattingToolbar.tsx_vEQBIa": {
     "defaultMessage": "Heading 5"
   },
+  "GeneralSettingsTab.tsx_1W2oHf": {
+    "defaultMessage": "Assistant instructions"
+  },
+  "GeneralSettingsTab.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "GeneralSettingsTab.tsx_Q8Qw5B": {
+    "defaultMessage": "Description"
+  },
+  "GeneralSettingsTab.tsx_kk4TVW": {
+    "defaultMessage": "Icon"
+  },
+  "GeneralSettingsTab.tsx_qmIyad": {
+    "defaultMessage": "Specific instructions for this collection to pass to the assistant."
+  },
   "GlobalSettings.tsx_HZGiV3": {
     "defaultMessage": "Settings actions"
   },
@@ -529,6 +538,9 @@
   },
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
+  },
+  "SchemaTab.tsx_Lktmvk": {
+    "defaultMessage": "Schema"
   },
   "SendRecordToolbar.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"

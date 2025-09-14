@@ -291,28 +291,16 @@
       "value": "Error creating collection"
     }
   ],
-  "CreateCollectionForm.tsx_1W2oHf": [
+  "CreateCollectionForm.tsx_45vDAJ": [
     {
       "type": 0,
-      "value": "Assistant instructions"
+      "value": "2. Schema"
     }
   ],
-  "CreateCollectionForm.tsx_HAlOn1": [
+  "CreateCollectionForm.tsx_PgbTyn": [
     {
       "type": 0,
-      "value": "Name"
-    }
-  ],
-  "CreateCollectionForm.tsx_Lktmvk": [
-    {
-      "type": 0,
-      "value": "Schema"
-    }
-  ],
-  "CreateCollectionForm.tsx_Q8Qw5B": [
-    {
-      "type": 0,
-      "value": "Description"
+      "value": "1. General settings"
     }
   ],
   "CreateCollectionForm.tsx_VzzYJk": [
@@ -321,10 +309,10 @@
       "value": "Create"
     }
   ],
-  "CreateCollectionForm.tsx_kk4TVW": [
+  "CreateCollectionForm.tsx_wuDUd4": [
     {
       "type": 0,
-      "value": "Icon"
+      "value": "3. Summary properties"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -905,6 +893,36 @@
       "value": "Heading 5"
     }
   ],
+  "GeneralSettingsTab.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Assistant instructions"
+    }
+  ],
+  "GeneralSettingsTab.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "GeneralSettingsTab.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "GeneralSettingsTab.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "GeneralSettingsTab.tsx_qmIyad": [
+    {
+      "type": 0,
+      "value": "Specific instructions for this collection to pass to the assistant."
+    }
+  ],
   "GlobalSettings.tsx_HZGiV3": [
     {
       "type": 0,
@@ -1303,6 +1321,12 @@
     {
       "type": 0,
       "value": "Icon"
+    }
+  ],
+  "SchemaTab.tsx_Lktmvk": [
+    {
+      "type": 0,
+      "value": "Schema"
     }
   ],
   "SendRecordToolbar.tsx_/8QiK8": [
