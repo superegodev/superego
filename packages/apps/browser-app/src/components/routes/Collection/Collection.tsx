@@ -42,7 +42,7 @@ export default function Collection({ collectionId }: Props) {
           },
         ]}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content fullWidth={true}>
         <DataLoader queries={[listDocumentsQuery([collectionId])]}>
           {(documents) => (
             <DocumentsTable collection={collection} documents={documents} />

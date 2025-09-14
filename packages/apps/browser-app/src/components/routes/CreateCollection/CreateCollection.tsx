@@ -9,7 +9,7 @@ export default function CreateCollection() {
       <Shell.Panel.Header
         title={intl.formatMessage({ defaultMessage: "Create Collection" })}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content fullWidth={true}>
         <CreateCollectionForm />
       </Shell.Panel.Content>
     </Shell.Panel>

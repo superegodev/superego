@@ -2,7 +2,8 @@ import type { CollectionCategoryId, CollectionId } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { useCollator } from "react-aria";
 import { Tree } from "react-aria-components";
-import { useIntl } from "react-intl";
+import { PiArrowBendRightUpBold } from "react-icons/pi";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
   useDeleteCollectionCategory,
@@ -10,6 +11,7 @@ import {
   useUpdateCollectionSettings,
 } from "../../../business-logic/backend/hooks.js";
 import classnames from "../../../utils/classnames.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import CollectionCategoryTreeItem from "./CollectionCategoryTreeItem.js";
 import * as cs from "./CollectionsTree.css.js";
 import CollectionTreeItem from "./CollectionTreeItem.js";
@@ -46,20 +48,31 @@ export default function CollectionsTree({ className }: Props) {
       updateCollectionSettings(droppedItemId, { collectionCategoryId: target });
     }
   };
+  const collectionsTree = tree.makeTree(
+    collectionCategories,
+    collections,
+    collator,
+  );
   return (
     <IsParentDropDisabledProvider value={false}>
       <div className={classnames(cs.CollectionsTree.root, className)}>
-        <Header />
+        <Header alwaysShowToolbar={isEmpty(collectionsTree.children)} />
         <Tree
           aria-label={intl.formatMessage({
             defaultMessage: "Tree of collection categories and collections",
           })}
           selectionMode="none"
-          items={
-            tree.makeTree(collectionCategories, collections, collator).children
-          }
+          items={collectionsTree.children}
           defaultExpandedKeys={collectionCategories.map(({ id }) => id)}
           className={cs.CollectionsTree.tree}
+          renderEmptyState={() => (
+            <div className={cs.CollectionsTree.emptyTree}>
+              <FormattedMessage defaultMessage="Create collection to start." />
+              <PiArrowBendRightUpBold
+                className={cs.CollectionsTree.emptyTreeIcon}
+              />
+            </div>
+          )}
         >
           {function renderItem(item) {
             return item.type === tree.TreeItemType.CollectionCategory ? (

@@ -37,33 +37,31 @@ export default function Assistant() {
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header />
-      <Shell.Panel.Content>
-        <div className={cs.Assistant.root}>
-          <Hero />
-          <UserMessageContentInput
-            conversation={null}
-            onSend={onSend}
-            isSending={isPending}
-            autoFocus={true}
-          />
-          <Link
-            to={{ name: RouteName.Conversations }}
-            className={cs.Assistant.historyLink}
+      <Shell.Panel.Content className={cs.Assistant.panelContent}>
+        <Hero />
+        <UserMessageContentInput
+          conversation={null}
+          onSend={onSend}
+          isSending={isPending}
+          autoFocus={true}
+        />
+        <Link
+          to={{ name: RouteName.Conversations }}
+          className={cs.Assistant.historyLink}
+        >
+          <PiClockCounterClockwise className={cs.Assistant.historyLinkIcon} />
+          <FormattedMessage defaultMessage="Previous conversations" />
+        </Link>
+        {result?.error ? (
+          <Alert
+            variant="error"
+            title={intl.formatMessage({
+              defaultMessage: "Error starting conversation",
+            })}
           >
-            <PiClockCounterClockwise className={cs.Assistant.historyLinkIcon} />
-            <FormattedMessage defaultMessage="Previous conversations" />
-          </Link>
-          {result?.error ? (
-            <Alert
-              variant="error"
-              title={intl.formatMessage({
-                defaultMessage: "Error starting conversation",
-              })}
-            >
-              <ResultError error={result.error} />
-            </Alert>
-          ) : null}
-        </div>
+            <ResultError error={result.error} />
+          </Alert>
+        ) : null}
       </Shell.Panel.Content>
     </Shell.Panel>
   );

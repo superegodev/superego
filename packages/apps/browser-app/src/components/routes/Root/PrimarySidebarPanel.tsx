@@ -9,7 +9,10 @@ import * as cs from "./Root.css.js";
 export default function PrimarySidebarPanel() {
   return (
     <Shell.Panel slot="PrimarySidebar">
-      <Shell.Panel.Content className={cs.PrimarySidebarPanel.root}>
+      <Shell.Panel.Content
+        fullWidth={true}
+        className={cs.PrimarySidebarPanel.root}
+      >
         <div className={cs.PrimarySidebarPanel.topActions}>
           <PrimarySidebarPanelAction
             type="link"

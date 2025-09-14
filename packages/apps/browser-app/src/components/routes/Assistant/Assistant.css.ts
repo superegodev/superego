@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const Assistant = {
-  root: style({
+  panelContent: style({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

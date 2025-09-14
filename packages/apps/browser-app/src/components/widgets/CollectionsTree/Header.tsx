@@ -7,7 +7,10 @@ import IconButton from "../../design-system/IconButton/IconButton.js";
 import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./CollectionsTree.css.js";
 
-export default function Header() {
+interface Props {
+  alwaysShowToolbar: boolean;
+}
+export default function Header({ alwaysShowToolbar }: Props) {
   const intl = useIntl();
 
   const { isPending, mutate } = useCreateCollectionCategory();
@@ -24,7 +27,10 @@ export default function Header() {
   return (
     <div className={cs.Header.root}>
       <FormattedMessage defaultMessage="Collections" />
-      <Toolbar className={cs.Header.toolbar}>
+      <Toolbar
+        className={cs.Header.toolbar}
+        style={{ opacity: alwaysShowToolbar ? 1 : 0 }}
+      >
         <IconLink
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Create collection" })}
