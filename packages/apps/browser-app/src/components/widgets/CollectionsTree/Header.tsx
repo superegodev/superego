@@ -29,7 +29,7 @@ export default function Header({ alwaysShowToolbar }: Props) {
       <FormattedMessage defaultMessage="Collections" />
       <Toolbar
         className={cs.Header.toolbar}
-        style={{ opacity: alwaysShowToolbar ? 1 : 0 }}
+        style={alwaysShowToolbar ? { opacity: 1 } : undefined}
       >
         <IconLink
           variant="invisible"
