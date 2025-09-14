@@ -174,7 +174,7 @@ const expenses = (
     "- Each expense must be recorded separately.",
     "- Defaults for info not provided:",
     "  - Title → generate a sensible one.",
-    "  - Currency → Euros.",
+    "  - Currency → EUR.",
     "  - Payment method → Credit Card.",
   ].join("\n"),
   schema: {
