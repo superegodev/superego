@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { type Control, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
+import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
-import type TypescriptLib from "../../design-system/TypescriptModuleInput/TypescriptLib.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 

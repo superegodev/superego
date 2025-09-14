@@ -16,11 +16,11 @@ import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CreateCollection.css.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
-import GeneralSettingsTab from "./GeneralSettingsTab.jsx";
-import SchemaTab from "./SchemaTab.jsx";
-import SummaryPropertiesTab from "./SummaryPropertiesTab.jsx";
+import GeneralSettingsTab from "./GeneralSettingsTab.js";
+import SchemaTab from "./SchemaTab.js";
+import SummaryPropertiesTab from "./SummaryPropertiesTab.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
-import TabTitle from "./TabTitle.jsx";
+import TabTitle from "./TabTitle.js";
 
 const defaultSchema = forms.defaults.schema();
 

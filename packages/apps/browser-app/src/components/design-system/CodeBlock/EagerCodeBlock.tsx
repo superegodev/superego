@@ -5,7 +5,13 @@ import monaco from "../../../monaco.js";
 import * as cs from "./CodeBlock.css.js";
 import type Props from "./Props.js";
 
-export default function EagerCodeBlock({ language, code }: Props) {
+export default function EagerCodeBlock({
+  language,
+  code,
+  onMouseDown,
+  maxHeight,
+  mirrorCodeInput,
+}: Props) {
   const theme = useTheme();
   const codeElement = useRef<HTMLElement>(null);
   // Rule-ignore explanation: we want the effect to re-run when code changes.
@@ -19,7 +25,11 @@ export default function EagerCodeBlock({ language, code }: Props) {
     }
   }, [theme, code]);
   return (
-    <div className={cs.CodeBlock.root}>
+    <div
+      onMouseDown={onMouseDown}
+      className={cs.CodeBlock.root}
+      style={{ maxHeight }}
+    >
       <div className={cs.CodeBlock.lineNumbers}>
         {code.split("\n").map((_, index) => (
           <div
@@ -28,6 +38,7 @@ export default function EagerCodeBlock({ language, code }: Props) {
             // biome-ignore lint/suspicious/noArrayIndexKey: see above.
             key={index}
             className={cs.CodeBlock.lineNumber}
+            style={mirrorCodeInput ? { paddingInlineEnd: 26 } : undefined}
           >
             {index + 1}
           </div>

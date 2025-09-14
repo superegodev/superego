@@ -13,13 +13,15 @@ export const CodeBlock = {
     paddingInlineEnd: vars.spacing._4,
     maxHeight: vars.spacing._64,
     width: "100%",
-    overflow: "scroll",
+    overflowY: "scroll",
   }),
+
   lineNumbers: style({
     gridArea: "LineNumbers",
     display: "flex",
     flexDirection: "column",
   }),
+
   lineNumber: style({
     textAlign: "right",
     flexShrink: 0,
@@ -28,17 +30,22 @@ export const CodeBlock = {
     fontFamily: vars.typography.fontFamilies.monospace,
     color: "#237893",
   }),
+
   code: style({
     gridArea: "Code",
+    overflowX: "scroll",
   }),
 };
+
 globalStyle(`${CodeBlock.code} > br`, {
   display: "none",
 });
+
 globalStyle(`${CodeBlock.code} > span`, {
   display: "block",
   height: codeLineHeight,
 });
+
 globalStyle(`[aria-disabled="true"] > ${CodeBlock.root} *`, {
   color: `${vars.colors.text.secondary}`,
 });

@@ -3,16 +3,17 @@ import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
+import CodeInput from "../../design-system/CodeInput/CodeInput.js";
+import type IncludedGlobalUtils from "../../design-system/CodeInput/typescript/IncludedGlobalUtils.js";
+import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
 import {
   Description,
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
-import type IncludedGlobalUtils from "../../design-system/TypescriptModuleInput/IncludedGlobalUtils.js";
-import type TypescriptLib from "../../design-system/TypescriptModuleInput/TypescriptLib.js";
-import TypescriptModuleInput from "../../design-system/TypescriptModuleInput/TypescriptModuleInput.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
+// TODO: RHFTypescriptModuleField -> RHFCodeField
 interface Props {
   control: Control<any>;
   name: string;
@@ -43,7 +44,8 @@ export default function RHFTypescriptModuleField({
       className={classnames(cs.RHFTypescriptModuleField.root, className)}
     >
       {label ? <Label>{label}</Label> : null}
-      <TypescriptModuleInput
+      <CodeInput
+        language="typescript"
         value={field.value ?? { source: "", compiled: "" }}
         onChange={field.onChange}
         onBlur={field.onBlur}
