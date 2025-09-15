@@ -1,7 +1,7 @@
 ![Tags workflow status](https://github.com/superegodev/superego/actions/workflows/tags.yml/badge.svg)
 
 <p align="center">
-  <img alt="Superego logo" src="./docs/images/logo.png" style="height: 150px;" />
+  <img alt="Superego logo" src="./docs/images/logo.svg" style="height: 150px;" />
 </p>
 
 # Superego: Your Life's Database

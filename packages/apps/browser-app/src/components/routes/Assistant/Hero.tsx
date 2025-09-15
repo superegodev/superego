@@ -1,16 +1,11 @@
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import Logo from "../../design-system/Logo/Logo.js";
 import * as cs from "./Assistant.css.js";
-import logo from "./logo.avif";
 
 export default function Hero() {
-  const intl = useIntl();
   return (
     <div className={cs.Hero.root}>
-      <img
-        src={logo}
-        alt={intl.formatMessage({ defaultMessage: "Superego Logo" })}
-        className={cs.Hero.logo}
-      />
+      <Logo className={cs.Hero.logo} />
       <h1 className={cs.Hero.title}>
         <FormattedMessage defaultMessage="Superego" />
       </h1>

@@ -977,12 +977,6 @@
       "value": "Create collection category"
     }
   ],
-  "Hero.tsx_FbFgI4": [
-    {
-      "type": 0,
-      "value": "Superego Logo"
-    }
-  ],
   "Hero.tsx_oxShVS": [
     {
       "type": 0,
@@ -1085,6 +1079,12 @@
     {
       "type": 0,
       "value": "There are no items in the list"
+    }
+  ],
+  "Logo.tsx_FbFgI4": [
+    {
+      "type": 0,
+      "value": "Superego Logo"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [

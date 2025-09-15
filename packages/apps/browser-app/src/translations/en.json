@@ -437,9 +437,6 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Create collection category"
   },
-  "Hero.tsx_FbFgI4": {
-    "defaultMessage": "Superego Logo"
-  },
   "Hero.tsx_oxShVS": {
     "defaultMessage": "Your Life's Database"
   },
@@ -487,6 +484,9 @@
   },
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "There are no items in the list"
+  },
+  "Logo.tsx_FbFgI4": {
+    "defaultMessage": "Superego Logo"
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
