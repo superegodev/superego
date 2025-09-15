@@ -137,23 +137,8 @@
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
-  "CreateCollection.tsx_8jAKYt": {
-    "defaultMessage": "Close preview"
-  },
-  "CreateCollection.tsx_97zyiz": {
-    "defaultMessage": "Open preview"
-  },
-  "CreateCollection.tsx_99R8O/": {
-    "defaultMessage": "Close assistant"
-  },
-  "CreateCollection.tsx_VeW63I": {
-    "defaultMessage": "Open assistant"
-  },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
-  },
-  "CreateCollection.tsx_wKIdqr": {
-    "defaultMessage": "Collection creator actions"
   },
   "CreateCollectionForm.tsx_+R8UFo": {
     "defaultMessage": "Error creating collection"
