@@ -30,9 +30,3 @@ export const GeneralSettingsTab = {
     flexGrow: 1,
   }),
 };
-
-export const SchemaTab = {
-  schemaTextField: style({
-    minHeight: vars.spacing._80,
-  }),
-};

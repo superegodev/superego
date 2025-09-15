@@ -68,7 +68,7 @@ export default function Conversation({ conversationId }: Props) {
               },
             ]}
           />
-          <Shell.Panel.Content className={cs.Conversation.root}>
+          <Shell.Panel.Content className={cs.Conversation.panelContent}>
             <Chat conversation={conversation} showToolsCalls={showToolCalls} />
             <DeleteConversationModalForm
               key={`DeleteConversationModalForm_${conversationId}`}

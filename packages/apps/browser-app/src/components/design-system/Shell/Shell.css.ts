@@ -1,8 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
+const narrowWindowWidth = "70rem";
 const panelHeaderHeight = vars.spacing._12;
-const narrowWindowWidth = "66rem";
 
 export const Shell = {
   root: style({

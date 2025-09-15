@@ -13,6 +13,7 @@ type Action = {
   label: string;
   icon: ReactNode;
   isDisabled?: boolean | undefined;
+  className?: string | undefined;
 } & ({ to: Route } | { onPress: () => void } | { submit: string });
 
 interface Props {
@@ -60,7 +61,7 @@ export default function PanelHeader({
                 isDisabled={action.isDisabled}
                 to={action.to}
                 variant="invisible"
-                className={cs.PanelHeader.action}
+                className={classnames(cs.PanelHeader.action, action.className)}
               >
                 {action.icon}
               </IconLink>
@@ -73,7 +74,7 @@ export default function PanelHeader({
                 form={"submit" in action ? action.submit : undefined}
                 onPress={"onPress" in action ? action.onPress : undefined}
                 variant="invisible"
-                className={cs.PanelHeader.action}
+                className={classnames(cs.PanelHeader.action, action.className)}
               >
                 {action.icon}
               </IconButton>
