@@ -55,7 +55,8 @@ export const CopyButton = {
     display: "flex",
     alignItems: "center",
     gap: vars.spacing._1,
-    padding: 0,
+    paddingBlock: 0,
+    paddingInline: vars.spacing._1,
     position: "sticky",
     top: 0,
     right: 0,
@@ -63,6 +64,7 @@ export const CopyButton = {
     alignSelf: "start",
     justifySelf: "end",
     zIndex: 1,
+    backdropFilter: "blur(9999px)",
     fontSize: vars.typography.fontSizes.xs,
     selectors: {
       "&:hover": {
