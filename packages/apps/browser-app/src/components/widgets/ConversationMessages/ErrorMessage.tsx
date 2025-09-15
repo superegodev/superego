@@ -29,7 +29,11 @@ export default function ErrorMessage({ conversation }: Props) {
         </IconButton>
       </div>
       <Disclosure title={intl.formatMessage({ defaultMessage: "Details" })}>
-        <CodeBlock language="json" code={JSON.stringify(cause)} />
+        <CodeBlock
+          language="json"
+          code={JSON.stringify(cause)}
+          showCopyButton={true}
+        />
       </Disclosure>
     </div>
   );

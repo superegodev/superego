@@ -279,6 +279,18 @@
       "value": "Format"
     }
   ],
+  "CopyButton.tsx_4l6vz1": [
+    {
+      "type": 0,
+      "value": "Copy"
+    }
+  ],
+  "CopyButton.tsx_p556q3": [
+    {
+      "type": 0,
+      "value": "Copied"
+    }
+  ],
   "CreateCollection.tsx_XQCXwU": [
     {
       "type": 0,
@@ -617,6 +629,12 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "EagerCodeBlock.tsx_4l6vz1": [
+    {
+      "type": 0,
+      "value": "Copy"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [

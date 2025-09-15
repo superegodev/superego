@@ -7,8 +7,16 @@ interface Props {
 }
 export default function ToolCall({ toolCall }: Props) {
   return ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall) ? (
-    <CodeBlock language="javascript" code={toolCall.input.javascriptFunction} />
+    <CodeBlock
+      language="javascript"
+      code={toolCall.input.javascriptFunction}
+      showCopyButton={true}
+    />
   ) : (
-    <CodeBlock language="json" code={JSON.stringify(toolCall.input, null, 2)} />
+    <CodeBlock
+      language="json"
+      code={JSON.stringify(toolCall.input, null, 2)}
+      showCopyButton={true}
+    />
   );
 }

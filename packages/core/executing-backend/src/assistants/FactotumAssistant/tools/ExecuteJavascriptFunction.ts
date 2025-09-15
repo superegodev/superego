@@ -97,6 +97,7 @@ interface Document {
 
 ### Rules
 
+- Pure JavaScript, no TypeScript types.
 - No \`async\`, timers, or network.
 - No \`import\` or \`require\`. They are not defined and they'll throw an error.
 - Only use fields defined in the schema.

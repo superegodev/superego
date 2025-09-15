@@ -12,6 +12,7 @@ export default function ToolResult({ toolResult }: Props) {
     <CodeBlock
       language="typescript"
       code={toolResult.output.data.typescriptSchema}
+      showCopyButton={true}
     />
   ) : (
     <CodeBlock
@@ -23,6 +24,7 @@ export default function ToolResult({ toolResult }: Props) {
         null,
         2,
       )}
+      showCopyButton={true}
     />
   );
 }

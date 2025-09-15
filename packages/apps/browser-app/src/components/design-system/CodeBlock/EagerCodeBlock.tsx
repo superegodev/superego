@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import monaco from "../../../monaco.js";
 import * as cs from "./CodeBlock.css.js";
+import CopyButton from "./CopyButton.js";
 import type Props from "./Props.js";
 
 export default function EagerCodeBlock({
@@ -10,6 +11,7 @@ export default function EagerCodeBlock({
   code,
   onMouseDown,
   maxHeight,
+  showCopyButton,
   mirrorCodeInput,
 }: Props) {
   const [isColorized, setIsColorized] = useState(false);
@@ -55,6 +57,7 @@ export default function EagerCodeBlock({
       >
         {code}
       </code>
+      {showCopyButton ? <CopyButton code={code} /> : null}
     </div>
   );
 }

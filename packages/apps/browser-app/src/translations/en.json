@@ -131,6 +131,12 @@
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Format"
   },
+  "CopyButton.tsx_4l6vz1": {
+    "defaultMessage": "Copy"
+  },
+  "CopyButton.tsx_p556q3": {
+    "defaultMessage": "Copied"
+  },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
   },
@@ -259,6 +265,9 @@
   },
   "DocumentsTable.tsx_cbuMAX": {
     "defaultMessage": "Documents of collection {collection}"
+  },
+  "EagerCodeBlock.tsx_4l6vz1": {
+    "defaultMessage": "Copy"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"

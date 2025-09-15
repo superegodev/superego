@@ -49,3 +49,25 @@ globalStyle(`${CodeBlock.code} > span`, {
 globalStyle(`[aria-disabled="true"] > ${CodeBlock.root} *`, {
   color: `${vars.colors.text.secondary}`,
 });
+
+export const CopyButton = {
+  root: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._1,
+    padding: 0,
+    position: "sticky",
+    top: 0,
+    right: 0,
+    gridArea: "Code",
+    alignSelf: "start",
+    justifySelf: "end",
+    zIndex: 1,
+    fontSize: vars.typography.fontSizes.xs,
+    selectors: {
+      "&:hover": {
+        background: "transparent",
+      },
+    },
+  }),
+};
