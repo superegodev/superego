@@ -210,7 +210,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           variant="primary"
           isDisabled={!isSchemaDirty}
         >
-          <FormattedMessage defaultMessage="Update and migrate" />
+          <FormattedMessage defaultMessage="Create new version and migrate documents" />
         </RHFSubmitButton>
       </div>
       {result?.error ? (

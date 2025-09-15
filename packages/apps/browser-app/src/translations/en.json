@@ -137,8 +137,23 @@
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
+  "CreateCollection.tsx_8jAKYt": {
+    "defaultMessage": "Close preview"
+  },
+  "CreateCollection.tsx_97zyiz": {
+    "defaultMessage": "Open preview"
+  },
+  "CreateCollection.tsx_99R8O/": {
+    "defaultMessage": "Close assistant"
+  },
+  "CreateCollection.tsx_VeW63I": {
+    "defaultMessage": "Open assistant"
+  },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
+  },
+  "CreateCollection.tsx_wKIdqr": {
+    "defaultMessage": "Collection creator actions"
   },
   "CreateCollectionForm.tsx_+R8UFo": {
     "defaultMessage": "Error creating collection"
@@ -167,14 +182,14 @@
   "CreateNewCollectionVersionForm.tsx_1Og5F/": {
     "defaultMessage": "Migration"
   },
+  "CreateNewCollectionVersionForm.tsx_J/yjzE": {
+    "defaultMessage": "Create new version and migrate documents"
+  },
   "CreateNewCollectionVersionForm.tsx_Lktmvk": {
     "defaultMessage": "Schema"
   },
   "CreateNewCollectionVersionForm.tsx_WEMhIw": {
     "defaultMessage": "TypeScript function expression to migrate documents from the previous schema to the updated schema."
-  },
-  "CreateNewCollectionVersionForm.tsx_Xrb7F4": {
-    "defaultMessage": "Update and migrate"
   },
   "CreateNewCollectionVersionForm.tsx_r7rdMp": {
     "defaultMessage": "Error updating schema and migrating documents"
@@ -265,9 +280,6 @@
   },
   "DocumentsTable.tsx_cbuMAX": {
     "defaultMessage": "Documents of collection {collection}"
-  },
-  "EagerCodeBlock.tsx_4l6vz1": {
-    "defaultMessage": "Copy"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"

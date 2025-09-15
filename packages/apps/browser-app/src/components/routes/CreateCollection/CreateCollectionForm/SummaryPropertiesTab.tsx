@@ -8,8 +8,8 @@ import type {
   UseFormWatch,
 } from "react-hook-form";
 import { useIntl } from "react-intl";
-import forms from "../../../business-logic/forms/forms.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
+import forms from "../../../../business-logic/forms/forms.js";
+import RHFSummaryPropertyDefinitionsField from "../../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 
