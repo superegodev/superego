@@ -1,6 +1,5 @@
 import { useIntl } from "react-intl";
 import Shell from "../../design-system/Shell/Shell.js";
-import CollectionCreationAssistant from "./CollectionCreationAssistant/CollectionCreationAssistant.jsx";
 import CreateCollectionForm from "./CreateCollectionForm/CreateCollectionForm.js";
 
 export default function CreateCollection() {
@@ -12,7 +11,6 @@ export default function CreateCollection() {
       />
       <Shell.Panel.Content>
         <CreateCollectionForm />
-        <CollectionCreationAssistant />
       </Shell.Panel.Content>
     </Shell.Panel>
   );
