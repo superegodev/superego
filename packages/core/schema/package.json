@@ -16,7 +16,7 @@
     "@fast-check/vitest": "^0.2.2",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.3.3",
+    "@types/node": "^24.4.0",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
