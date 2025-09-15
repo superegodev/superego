@@ -13,7 +13,6 @@ import {
 } from "../../design-system/forms/forms.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
-// TODO: RHFTypescriptModuleField -> RHFCodeField
 interface Props {
   control: Control<any>;
   name: string;

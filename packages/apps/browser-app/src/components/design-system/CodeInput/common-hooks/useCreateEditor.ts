@@ -10,6 +10,7 @@ export default function useCreateEditor(
   isShown: boolean,
   codeModelRef: RefObject<monaco.editor.ITextModel | null>,
   initialPositionRef: RefObject<monaco.IPosition | null>,
+  initialScrollPositionRef: RefObject<monaco.editor.INewScrollPosition | null>,
 ) {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(null);
@@ -45,6 +46,16 @@ export default function useCreateEditor(
       editorRef.current.setPosition(
         initialPositionRef.current ?? { lineNumber: 1, column: 1 },
       );
+      editorRef.current.setScrollPosition(
+        initialScrollPositionRef.current ?? { scrollLeft: 0, scrollTop: 0 },
+        monaco.editor.ScrollType.Immediate,
+      );
+      editorRef.current.onDidScrollChange((evt) => {
+        initialScrollPositionRef.current = {
+          scrollLeft: evt.scrollLeft,
+          scrollTop: evt.scrollTop,
+        };
+      });
       // Update the initial position ref, so it restores if the user focuses
       // back to the input with their keyboard. (If they focus with the mouse,
       // the click position will be set.)
@@ -92,6 +103,7 @@ export default function useCreateEditor(
     // they are ref, they're stable and passing them here has no effect.
     codeModelRef,
     initialPositionRef,
+    initialScrollPositionRef,
   ]);
 
   return { editorElementRef, editorRef };

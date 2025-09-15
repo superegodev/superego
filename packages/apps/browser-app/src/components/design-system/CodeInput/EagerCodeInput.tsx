@@ -18,11 +18,16 @@ export default function EagerCodeInput({
   isDisabled = false,
   typescriptLibs,
   includedGlobalUtils,
+  codeFileName,
   maxHeight,
   ref,
 }: Props) {
   const [mode, setMode] = useState<"readOnly" | "readWrite">("readOnly");
   const initialPositionRef = useRef<monaco.IPosition>(null);
+  const initialScrollPositionRef = useRef<monaco.editor.INewScrollPosition>({
+    scrollLeft: 0,
+    scrollTop: 0,
+  });
   const rootElementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (rootElementRef.current) {
@@ -38,6 +43,20 @@ export default function EagerCodeInput({
       }
     }
   }, [autoFocus, ref]);
+  // Sync back *Editor scroll position with CodeBlock's.
+  useEffect(() => {
+    if (mode === "readOnly" && rootElementRef.current) {
+      const codeBlockCode = rootElementRef.current.querySelector("code");
+      const codeBlockRoot = codeBlockCode?.parentElement;
+      codeBlockRoot?.scrollTo({
+        top: initialScrollPositionRef.current.scrollTop,
+      });
+      // Scrolling left doesn't work. The behavior is acceptable, though.
+      // codeBlockCode?.scrollTo({
+      //   left: initialScrollPositionRef.current.scrollLeft,
+      // });
+    }
+  }, [mode]);
   return (
     <div
       tabIndex={0}
@@ -67,7 +86,9 @@ export default function EagerCodeInput({
           onChange={onChange}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
+          codeFileName={codeFileName}
           initialPositionRef={initialPositionRef}
+          initialScrollPositionRef={initialScrollPositionRef}
           maxHeight={maxHeight}
         />
       ) : (
@@ -75,7 +96,9 @@ export default function EagerCodeInput({
           isShown={mode === "readWrite" && !isDisabled}
           value={value}
           onChange={onChange}
+          codeFileName={codeFileName}
           initialPositionRef={initialPositionRef}
+          initialScrollPositionRef={initialScrollPositionRef}
           maxHeight={maxHeight}
         />
       )}
@@ -83,13 +106,22 @@ export default function EagerCodeInput({
         <EagerCodeBlock
           language={language}
           code={language === "typescript" ? value.source : value}
-          onMouseDown={({ nativeEvent: { clientX, clientY } }) => {
+          onMouseDown={({ target, nativeEvent: { clientX, clientY } }) => {
+            let scrollLeft = 0;
+            let scrollTop = 0;
+            if (target instanceof HTMLElement) {
+              const codeBlockCode = target.closest("code");
+              const codeBlockRoot = codeBlockCode?.parentElement;
+              scrollLeft = codeBlockCode?.scrollLeft ?? 0;
+              scrollTop = codeBlockRoot?.scrollTop ?? 0;
+              initialScrollPositionRef.current = { scrollLeft, scrollTop };
+            }
             if (rootElementRef.current) {
               const containerRect =
                 rootElementRef.current.getBoundingClientRect();
               initialPositionRef.current = positionFromClickCoords(
-                clientX - containerRect.left,
-                clientY - containerRect.top,
+                scrollLeft + clientX - containerRect.left,
+                scrollTop + clientY - containerRect.top,
               );
             }
           }}

@@ -20,7 +20,9 @@ interface Props {
   onChange: (newValue: TypescriptModule) => void;
   typescriptLibs: TypescriptLib[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
+  codeFileName?: `${string}.ts`;
   initialPositionRef: RefObject<monaco.IPosition | null>;
+  initialScrollPositionRef: RefObject<monaco.editor.INewScrollPosition | null>;
   maxHeight: Property.MaxHeight | undefined;
 }
 export default function TypescriptEditor({
@@ -29,7 +31,9 @@ export default function TypescriptEditor({
   onChange,
   typescriptLibs,
   includedGlobalUtils,
+  codeFileName,
   initialPositionRef,
+  initialScrollPositionRef,
   maxHeight,
 }: Props) {
   const editorBasePath = useEditorBasePath(isShown);
@@ -50,7 +54,7 @@ export default function TypescriptEditor({
   const { codeModelRef } = useSyncCodeModel(
     editorBasePath,
     isShown,
-    { language: "typescript", value },
+    { language: "typescript", value, fileName: codeFileName },
     latestCompilationPromiseRef,
   );
 
@@ -58,6 +62,7 @@ export default function TypescriptEditor({
     isShown,
     codeModelRef,
     initialPositionRef,
+    initialScrollPositionRef,
   );
 
   useSyncEditorTheme(editorRef);

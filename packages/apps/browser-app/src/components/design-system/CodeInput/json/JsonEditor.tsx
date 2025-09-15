@@ -10,14 +10,18 @@ interface Props {
   isShown: boolean;
   value: string;
   onChange: (newValue: string) => void;
+  codeFileName?: `${string}.json`;
   initialPositionRef: RefObject<monaco.IPosition | null>;
+  initialScrollPositionRef: RefObject<monaco.editor.INewScrollPosition | null>;
   maxHeight: Property.MaxHeight | undefined;
 }
 export default function JsonEditor({
   isShown,
   value,
   onChange,
+  codeFileName,
   initialPositionRef,
+  initialScrollPositionRef,
   maxHeight,
 }: Props) {
   const editorBasePath = useEditorBasePath(isShown);
@@ -25,12 +29,14 @@ export default function JsonEditor({
   const { codeModelRef } = useSyncCodeModel(editorBasePath, isShown, {
     language: "json",
     value: value,
+    fileName: codeFileName,
   });
 
   const { editorElementRef, editorRef } = useCreateEditor(
     isShown,
     codeModelRef,
     initialPositionRef,
+    initialScrollPositionRef,
   );
 
   useSyncEditorTheme(editorRef);

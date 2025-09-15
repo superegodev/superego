@@ -21,6 +21,7 @@ type Props = {
       onChange: (newValue: TypescriptModule) => void;
       typescriptLibs?: TypescriptLib[] | undefined;
       includedGlobalUtils?: IncludedGlobalUtils | undefined;
+      codeFileName?: `${string}.ts`;
     }
   | {
       language: "json";
@@ -28,6 +29,7 @@ type Props = {
       onChange: (newValue: string) => void;
       typescriptLibs?: never;
       includedGlobalUtils?: never;
+      codeFileName?: `${string}.json`;
     }
 );
 

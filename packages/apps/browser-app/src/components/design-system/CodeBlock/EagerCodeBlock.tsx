@@ -1,5 +1,5 @@
 import { Theme } from "@superego/backend";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import monaco from "../../../monaco.js";
 import * as cs from "./CodeBlock.css.js";
@@ -12,23 +12,26 @@ export default function EagerCodeBlock({
   maxHeight,
   mirrorCodeInput,
 }: Props) {
+  const [isColorized, setIsColorized] = useState(false);
   const theme = useTheme();
   const codeElement = useRef<HTMLElement>(null);
   // Rule-ignore explanation: we want the effect to re-run when code changes.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (codeElement.current) {
-      monaco.editor.colorizeElement(codeElement.current, {
-        theme: theme === Theme.Light ? "vs" : "vs-dark",
-        tabSize: 2,
-      });
+      monaco.editor
+        .colorizeElement(codeElement.current, {
+          theme: theme === Theme.Light ? "vs" : "vs-dark",
+          tabSize: 2,
+        })
+        .then(() => setIsColorized(true));
     }
   }, [theme, code]);
   return (
     <div
       onMouseDown={onMouseDown}
       className={cs.CodeBlock.root}
-      style={{ maxHeight }}
+      style={{ maxHeight, visibility: isColorized ? undefined : "hidden" }}
     >
       <div className={cs.CodeBlock.lineNumbers}>
         {code.split("\n").map((_, index) => (
