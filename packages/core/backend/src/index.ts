@@ -29,9 +29,9 @@ export type { default as CollectionMigrationNotValid } from "./errors/Collection
 export type { default as CollectionNotFound } from "./errors/CollectionNotFound.js";
 export type { default as CollectionSchemaNotValid } from "./errors/CollectionSchemaNotValid.js";
 export type { default as CollectionSettingsNotValid } from "./errors/CollectionSettingsNotValid.js";
-export type { default as CollectionSummaryPropertiesNotValid } from "./errors/CollectionSummaryPropertiesNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
+export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
@@ -65,6 +65,7 @@ export type { default as CollectionCategory } from "./types/CollectionCategory.j
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
+export type { default as ContentSummary } from "./types/ContentSummary.js";
 export type { default as Conversation } from "./types/Conversation.js";
 export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
@@ -75,8 +76,6 @@ export type { default as InferenceSettings } from "./types/InferenceSettings.js"
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
-export type { default as SummaryProperty } from "./types/SummaryProperty.js";
-export type { default as SummaryPropertyDefinition } from "./types/SummaryPropertyDefinition.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";

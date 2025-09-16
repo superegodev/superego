@@ -13,9 +13,9 @@ import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotVal
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
-import type CollectionSummaryPropertiesNotValid from "./errors/CollectionSummaryPropertiesNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
+import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
@@ -95,7 +95,7 @@ export default interface Backend {
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
       | UnexpectedError
     >;
 
@@ -122,7 +122,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | CollectionSchemaNotValid
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
       | CollectionMigrationNotValid
       | CollectionMigrationFailed
       | UnexpectedError
@@ -136,7 +136,7 @@ export default interface Backend {
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
       | UnexpectedError
     >;
 
