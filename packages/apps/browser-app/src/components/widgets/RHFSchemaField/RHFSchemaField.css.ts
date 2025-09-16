@@ -15,12 +15,9 @@ export const RHFSchemaField = {
     marginBlockEnd: vars.spacing._1,
   }),
 
-  pre: style({
-    display: "inline",
-    borderRadius: vars.borders.radius.md,
+  inlineCode: style({
     background: vars.colors.semantic.error.background,
-    marginInlineStart: vars.spacing._1,
-    paddingInline: vars.spacing._1,
+    color: vars.colors.semantic.error.text,
     fontSize: vars.typography.fontSizes.xs2,
   }),
 };

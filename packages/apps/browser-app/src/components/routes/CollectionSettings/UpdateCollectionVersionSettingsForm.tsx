@@ -1,9 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type {
-  Collection,
-  NonEmptyArray,
-  SummaryPropertyDefinition,
-} from "@superego/backend";
+import type { Collection, TypescriptModule } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo } from "react";
 import { Form } from "react-aria-components";
@@ -14,14 +10,14 @@ import { useUpdateLatestCollectionVersionSettings } from "../../../business-logi
 import forms from "../../../business-logic/forms/forms.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
+import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.jsx";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
 import * as cs from "./CollectionSettings.css.js";
 
 const schemaTypescriptLibPath = "/CollectionSchema.ts";
 
 interface FormValues {
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
+  contentSummaryGetter: TypescriptModule;
 }
 
 interface Props {
@@ -36,12 +32,13 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
-      summaryProperties: collection.latestVersion.settings.summaryProperties,
+      contentSummaryGetter:
+        collection.latestVersion.settings.contentSummaryGetter,
     },
     mode: "all",
     resolver: standardSchemaResolver(
       v.strictObject({
-        summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+        contentSummaryGetter: forms.schemas.typescriptModule(intl),
       }),
     ),
   });
@@ -53,8 +50,8 @@ export default function UpdateCollectionVersionSettingsForm({
       values,
     );
     if (success) {
-      const { summaryProperties } = data.latestVersion.settings;
-      reset({ summaryProperties });
+      const { contentSummaryGetter } = data.latestVersion.settings;
+      reset({ contentSummaryGetter });
     }
   };
   const schemaTypescriptLib = useMemo(
@@ -68,19 +65,10 @@ export default function UpdateCollectionVersionSettingsForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <RHFSummaryPropertyDefinitionsField
+      <RHFContentSummaryGetterField
         control={control}
-        name="summaryProperties"
+        name="contentSummaryGetter"
         schemaTypescriptLib={schemaTypescriptLib}
-        getDefaultSummaryPropertyDefinition={(index) =>
-          forms.defaults.summaryPropertyDefinition(
-            index,
-            collection.latestVersion.schema,
-            schemaTypescriptLibPath,
-            intl,
-          )
-        }
-        defaultExpanded={false}
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">

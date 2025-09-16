@@ -15,10 +15,10 @@ import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ResultError from "../../../design-system/ResultError/ResultError.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CreateCollection.css.js";
+import ContentSummaryTab from "./ContentSummaryTab.jsx";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import GeneralSettingsTab from "./GeneralSettingsTab.js";
 import SchemaTab from "./SchemaTab.js";
-import SummaryPropertiesTab from "./SummaryPropertiesTab.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 import TabTitle from "./TabTitle.js";
 
@@ -30,17 +30,15 @@ export default function CreateCollectionForm() {
 
   const { result, mutate } = useCreateCollection();
 
-  const defaultSummaryPropertyDefinition = useMemo(
+  const defaultContentSummaryGetter = useMemo(
     () =>
-      forms.defaults.summaryPropertyDefinition(
-        0,
+      forms.defaults.contentSummaryGetter(
         defaultSchema,
         schemaTypescriptLibPath,
-        intl,
       ),
-    [intl],
+    [],
   );
-  const { control, handleSubmit, setValue, getValues, watch, formState } =
+  const { control, handleSubmit, setValue, watch, formState } =
     useForm<CreateCollectionFormValues>({
       defaultValues: {
         name: "",
@@ -48,7 +46,7 @@ export default function CreateCollectionForm() {
         description: null,
         assistantInstructions: null,
         schema: defaultSchema,
-        summaryProperties: [defaultSummaryPropertyDefinition],
+        contentSummaryGetter: defaultContentSummaryGetter,
       },
       mode: "onSubmit",
       resolver: standardSchemaResolver(
@@ -58,7 +56,7 @@ export default function CreateCollectionForm() {
           description: v.nullable(v.string()),
           assistantInstructions: v.nullable(v.string()),
           schema: schemaValibotSchemas.schema(),
-          summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+          contentSummaryGetter: forms.schemas.typescriptModule(intl),
         }),
       ),
     });
@@ -69,7 +67,7 @@ export default function CreateCollectionForm() {
     icon,
     description,
     assistantInstructions,
-    summaryProperties,
+    contentSummaryGetter,
   }: CreateCollectionFormValues) => {
     const { success, data } = await mutate(
       {
@@ -80,7 +78,7 @@ export default function CreateCollectionForm() {
         assistantInstructions,
       },
       schema,
-      { summaryProperties },
+      { contentSummaryGetter },
     );
     if (success) {
       navigateTo({ name: RouteName.Collection, collectionId: data.id });
@@ -118,19 +116,16 @@ export default function CreateCollectionForm() {
           },
           {
             title: (
-              <TabTitle hasErrors={!!formState.errors.summaryProperties}>
-                <FormattedMessage defaultMessage="3. Summary properties" />
+              <TabTitle hasErrors={!!formState.errors.contentSummaryGetter}>
+                <FormattedMessage defaultMessage="3. Content summary" />
               </TabTitle>
             ),
             panel: (
-              <SummaryPropertiesTab
+              <ContentSummaryTab
                 control={control}
                 watch={watch}
-                getValues={getValues}
                 setValue={setValue}
-                defaultSummaryPropertyDefinition={
-                  defaultSummaryPropertyDefinition
-                }
+                defaultContentSummaryGetter={defaultContentSummaryGetter}
               />
             ),
           },

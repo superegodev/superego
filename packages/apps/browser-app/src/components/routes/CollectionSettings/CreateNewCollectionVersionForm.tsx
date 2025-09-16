@@ -1,12 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type {
-  Collection,
-  NonEmptyArray,
-  SummaryPropertyDefinition,
-  TypescriptModule,
-} from "@superego/backend";
+import type { Collection, TypescriptModule } from "@superego/backend";
 import { codegen, type Schema, valibotSchemas } from "@superego/schema";
-import { mapNonEmptyArray } from "@superego/shared-utils";
 import { dequal } from "dequal/lite";
 import { useEffect, useMemo } from "react";
 import { Form } from "react-aria-components";
@@ -17,9 +11,9 @@ import { useCreateNewCollectionVersion } from "../../../business-logic/backend/h
 import forms from "../../../business-logic/forms/forms.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
+import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.jsx";
 import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
 import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import * as cs from "./CollectionSettings.css.js";
 
@@ -30,7 +24,7 @@ const nextSchemaTypescriptLibPath = "/NextCollectionSchema.ts";
 interface FormValues {
   schema: Schema;
   migration: TypescriptModule;
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
+  contentSummaryGetter: TypescriptModule;
 }
 
 interface Props {
@@ -63,23 +57,17 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     defaultValues: {
       schema: collection.latestVersion.schema,
       migration: defaultMigration,
-      summaryProperties: mapNonEmptyArray(
-        collection.latestVersion.settings.summaryProperties,
-        ({ name, getter }) => ({
-          name,
-          getter: {
-            ...getter,
-            compiled: forms.constants.FAILED_COMPILATION_OUTPUT,
-          },
-        }),
-      ),
+      contentSummaryGetter: {
+        source: collection.latestVersion.settings.contentSummaryGetter.source,
+        compiled: forms.constants.COMPILATION_REQUIRED,
+      },
     },
     mode: "all",
     resolver: standardSchemaResolver(
       v.strictObject({
         schema: valibotSchemas.schema(),
         migration: forms.schemas.typescriptModule(intl),
-        summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+        contentSummaryGetter: forms.schemas.typescriptModule(intl),
       }),
     ),
   });
@@ -89,6 +77,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     formState.dirtyFields.schema &&
     !dequal(collection.latestVersion.schema, schema);
 
+  // TODO: use the reset API
   // When schema changes, if the user didn't make any change to the migration
   // (hence it's still the default one), update it.
   useEffect(() => {
@@ -119,7 +108,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       collection.id,
       collection.latestVersion.id,
       values.schema,
-      { summaryProperties: values.summaryProperties },
+      { contentSummaryGetter: values.contentSummaryGetter },
       values.migration,
     );
     if (success) {
@@ -131,21 +120,12 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           collection.latestVersion.schema,
           nextSchemaTypescriptLibPath,
         ),
-        summaryProperties: mapNonEmptyArray(
-          data.latestVersion.settings.summaryProperties,
-          ({ name, getter }) => ({
-            name,
-            getter: {
-              ...getter,
-              compiled: forms.constants.FAILED_COMPILATION_OUTPUT,
-            },
-          }),
-        ),
+        contentSummaryGetter: data.latestVersion.settings.contentSummaryGetter,
       });
     }
   };
 
-  const summaryPropertiesSchemaTypescriptLib = useMemo(
+  const contentSummaryGetterSchemaTypescriptLib = useMemo(
     () =>
       typeof schema !== "string"
         ? ({ path: schemaTypescriptLibPath, source: codegen(schema) } as const)
@@ -178,19 +158,10 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         label={intl.formatMessage({ defaultMessage: "Schema" })}
         className={cs.CreateNewCollectionVersionForm.schemaTextField}
       />
-      <RHFSummaryPropertyDefinitionsField
+      <RHFContentSummaryGetterField
         control={control}
-        name="summaryProperties"
-        schemaTypescriptLib={summaryPropertiesSchemaTypescriptLib}
-        getDefaultSummaryPropertyDefinition={(index) =>
-          forms.defaults.summaryPropertyDefinition(
-            index,
-            schema,
-            schemaTypescriptLibPath,
-            intl,
-          )
-        }
-        defaultExpanded={true}
+        name="contentSummaryGetter"
+        schemaTypescriptLib={contentSummaryGetterSchemaTypescriptLib}
       />
       <RHFTypescriptModuleField
         control={control}

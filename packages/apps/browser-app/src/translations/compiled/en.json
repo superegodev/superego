@@ -309,6 +309,12 @@
       "value": "2. Schema"
     }
   ],
+  "CreateCollectionForm.tsx_HxoW8w": [
+    {
+      "type": 0,
+      "value": "3. Content summary"
+    }
+  ],
   "CreateCollectionForm.tsx_PgbTyn": [
     {
       "type": 0,
@@ -319,12 +325,6 @@
     {
       "type": 0,
       "value": "Create"
-    }
-  ],
-  "CreateCollectionForm.tsx_wuDUd4": [
-    {
-      "type": 0,
-      "value": "3. Summary properties"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -1131,49 +1131,13 @@
       "value": "Search"
     }
   ],
-  "RHFSchemaField.tsx_9CnsYv": [
+  "RHFContentSummaryGetterField.tsx_3X4zUZ": [
     {
       "type": 0,
-      "value": "Not a valid JSON string"
+      "value": "Content summary getter"
     }
   ],
-  "RHFSchemaField.tsx_A89PQ/": [
-    {
-      "type": 0,
-      "value": "At"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": [
-    {
-      "type": 0,
-      "value": "Value getter"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_2qoZR0": [
-    {
-      "type": 0,
-      "value": "Add summary property"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_4GyJ00": [
-    {
-      "type": 0,
-      "value": "Summary properties"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_vkqu5M": [
+  "RHFContentSummaryGetterField.tsx_PNUGlY": [
     {
       "children": [
         {
@@ -1184,7 +1148,7 @@
           "children": [
             {
               "type": 0,
-              "value": "summary properties"
+              "value": "content summary"
             }
           ],
           "type": 8,
@@ -1192,95 +1156,25 @@
         },
         {
           "type": 0,
-          "value": " of a document are its most important bits of information that are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " You define summary properties, providing for each property: "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " "
+          "value": " of a document is a "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": " A"
-            },
-            {
-              "children": [
-                {
-                  "type": 0,
-                  "value": " Name"
-                }
-              ],
-              "type": 8,
-              "value": "b"
-            },
-            {
-              "type": 0,
-              "value": ", which is the label shown in the UI. "
+              "value": "Record<name: string, value: string>"
             }
           ],
           "type": 8,
-          "value": "li"
+          "value": "code"
         },
         {
           "type": 0,
-          "value": " "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": " A "
-            },
-            {
-              "children": [
-                {
-                  "type": 0,
-                  "value": "Value getter"
-                }
-              ],
-              "type": 8,
-              "value": "b"
-            },
-            {
-              "type": 0,
-              "value": ", a TypeScript function that returns the value of the property. (Must be a string.) "
-            }
-          ],
-          "type": 8,
-          "value": "li"
-        },
-        {
-          "type": 0,
-          "value": " "
+          "value": "—derived from its content—that contains its most important bits of information. These are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property of the record. "
         }
       ],
       "type": 8,
-      "value": "ul"
+      "value": "p"
     },
     {
       "type": 0,
@@ -1290,11 +1184,23 @@
       "children": [
         {
           "type": 0,
-          "value": " There must be always at least one summary property defined. "
+          "value": " This is the function that is run on the document content and derives the content summary record. "
         }
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "RHFSchemaField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Not a valid JSON string"
+    }
+  ],
+  "RHFSchemaField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "At"
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_1CICoa": [
@@ -1671,20 +1577,16 @@
       "value": " seconds"
     }
   ],
-  "summaryPropertyDefinition.ts_HAlOn1": [
+  "typescriptModule.ts_MZNYNj": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "TypeScript compilation required"
     }
   ],
-  "summaryPropertyDefinition.ts_TCx5u7": [
+  "typescriptModule.ts_lRjJvq": [
     {
       "type": 0,
-      "value": "Summary property "
-    },
-    {
-      "type": 1,
-      "value": "position"
+      "value": "TypeScript compilation in progress"
     }
   ],
   "typescriptModule.ts_yZ+w+N": [

@@ -96,16 +96,16 @@ export default function TypescriptEditor({
       // TODO: move compilation to the backend, which should simplify the logic
       // here quite a lot. For now, let's live with this ugly hack to keep track
       // of the compilation state.
-      compiled: forms.constants.IN_PROGRESS_COMPILATION_OUTPUT,
+      compiled: forms.constants.COMPILATION_IN_PROGRESS,
     });
     latestCompilationPromiseRef.current = pTimeout(
       getCompilationOutput(
         codeModelRef.current.uri.toString(),
-        forms.constants.FAILED_COMPILATION_OUTPUT,
+        forms.constants.COMPILATION_FAILED,
       ),
       {
         milliseconds: MONACO_EDITOR_COMPILATION_TIMEOUT,
-        fallback: () => forms.constants.FAILED_COMPILATION_OUTPUT,
+        fallback: () => forms.constants.COMPILATION_FAILED,
       },
     );
     const newCompiled = await latestCompilationPromiseRef.current;

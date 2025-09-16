@@ -4221,7 +4221,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^7.7.13"
     monaco-editor: "npm:0.52.2"
-    p-timeout: "npm:^7.0.0"
+    p-timeout: "npm:^6.1.4"
     playwright: "npm:^1.55.0"
     react: "npm:^19.1.1"
     react-aria: "npm:^3.43.2"
@@ -8811,10 +8811,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-timeout@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "p-timeout@npm:7.0.0"
-  checksum: 10c0/0418be5dd0269916293cfd10f738427a1a33b50d2358cf72fecee2b8a31cc2a663ae178105f1d6ef92301c50f86f78074adb32f8321856a4f332765786fedd93
+"p-timeout@npm:^6.1.4":
+  version: 6.1.4
+  resolution: "p-timeout@npm:6.1.4"
+  checksum: 10c0/019edad1c649ab07552aa456e40ce7575c4b8ae863191477f02ac8d283ac8c66cedef0ca93422735130477a051dfe952ba717641673fd3599befdd13f63bcc33
   languageName: node
   linkType: hard
 

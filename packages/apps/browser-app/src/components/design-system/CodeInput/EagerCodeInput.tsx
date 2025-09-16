@@ -130,7 +130,7 @@ export default function EagerCodeInput({
         />
       ) : null}
       {language === "typescript" &&
-      value.compiled === forms.constants.IN_PROGRESS_COMPILATION_OUTPUT ? (
+      value.compiled === forms.constants.COMPILATION_IN_PROGRESS ? (
         <CompilationInProgressIndicator />
       ) : null}
     </div>

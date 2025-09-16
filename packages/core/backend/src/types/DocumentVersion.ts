@@ -13,8 +13,8 @@ export default interface DocumentVersion<Content = Record<string, unknown>> {
   content: Content;
   /**
    * The content summary is a Record<name: string, value: string> derived from
-   * the document's content that contains its most important information, in a
-   * condensed manner. The summary is used for display purposes in various UI
+   * the document's content that contains its most important bits of
+   * information. The summary is used for display purposes in various UI
    * contexts.
    *
    * For example, the first property of the summary is considered to be

@@ -1,7 +1,4 @@
-import type {
-  NonEmptyArray,
-  SummaryPropertyDefinition,
-} from "@superego/backend";
+import type { TypescriptModule } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 
 export default interface CreateCollectionFormValues {
@@ -10,5 +7,5 @@ export default interface CreateCollectionFormValues {
   description: string | null;
   assistantInstructions: string | null;
   schema: Schema;
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
+  contentSummaryGetter: TypescriptModule;
 }

@@ -146,14 +146,14 @@
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
+  "CreateCollectionForm.tsx_HxoW8w": {
+    "defaultMessage": "3. Content summary"
+  },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
   },
   "CreateCollectionForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
-  },
-  "CreateCollectionForm.tsx_wuDUd4": {
-    "defaultMessage": "3. Summary properties"
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
@@ -506,29 +506,17 @@
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"
   },
+  "RHFContentSummaryGetterField.tsx_3X4zUZ": {
+    "defaultMessage": "Content summary getter"
+  },
+  "RHFContentSummaryGetterField.tsx_PNUGlY": {
+    "defaultMessage": "<p> The <b>content summary</b> of a document is a <code>Record'<name: string, value: string>'</code>—derived from its content—that contains its most important bits of information. These are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property of the record. </p> <p> This is the function that is run on the document content and derives the content summary record. </p>"
+  },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
   "RHFSchemaField.tsx_A89PQ/": {
     "defaultMessage": "At"
-  },
-  "RHFSummaryPropertyDefinitionField.tsx_HAlOn1": {
-    "defaultMessage": "Name"
-  },
-  "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": {
-    "defaultMessage": "Value getter"
-  },
-  "RHFSummaryPropertyDefinitionsField.tsx_2qoZR0": {
-    "defaultMessage": "Add summary property"
-  },
-  "RHFSummaryPropertyDefinitionsField.tsx_4GyJ00": {
-    "defaultMessage": "Summary properties"
-  },
-  "RHFSummaryPropertyDefinitionsField.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
-  },
-  "RHFSummaryPropertyDefinitionsField.tsx_vkqu5M": {
-    "defaultMessage": "<p> The <b>summary properties</b> of a document are its most important bits of information that are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property. </p> <p> You define summary properties, providing for each property: </p> <ul> <li> A<b> Name</b>, which is the label shown in the UI. </li> <li> A <b>Value getter</b>, a TypeScript function that returns the value of the property. (Must be a string.) </li> </ul> <p> There must be always at least one summary property defined. </p>"
   },
   "RenameCollectionCategoryModalForm.tsx_1CICoa": {
     "defaultMessage": "Error deleting collection"
@@ -671,11 +659,11 @@
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} seconds"
   },
-  "summaryPropertyDefinition.ts_HAlOn1": {
-    "defaultMessage": "Name"
+  "typescriptModule.ts_MZNYNj": {
+    "defaultMessage": "TypeScript compilation required"
   },
-  "summaryPropertyDefinition.ts_TCx5u7": {
-    "defaultMessage": "Summary property {position}"
+  "typescriptModule.ts_lRjJvq": {
+    "defaultMessage": "TypeScript compilation in progress"
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "TypeScript compilation failed"

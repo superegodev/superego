@@ -11,6 +11,7 @@ import {
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
+import InlineCode from "../../design-system/InlineCode/InlineCode.jsx";
 import * as cs from "./RHFSchemaField.css.js";
 
 interface Props {
@@ -33,8 +34,10 @@ export default function RHFSchemaField({
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
-  const [jsonValue, setJsonValue] = useState(
-    () => JSON.stringify(field.value, null, 2) ?? "",
+  const [jsonValue, setJsonValue] = useState(() =>
+    typeof field.value === "string"
+      ? field.value
+      : JSON.stringify(field.value, null, 2),
   );
   const errors = forms.utils.flattenError(fieldState.error);
   return (
@@ -75,8 +78,10 @@ export default function RHFSchemaField({
           ) : (
             errors.map(({ path, message }) => (
               <div key={path} className={cs.RHFSchemaField.errorLine}>
-                <FormattedMessage defaultMessage="At" />
-                <pre className={cs.RHFSchemaField.pre}>{path}</pre>
+                <FormattedMessage defaultMessage="At" />{" "}
+                <InlineCode className={cs.RHFSchemaField.inlineCode}>
+                  {path}
+                </InlineCode>
                 {": "}
                 {message}
               </div>
