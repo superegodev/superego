@@ -56,15 +56,12 @@ class FactotumObject {
       },
       definition.schema,
       {
-        summaryProperties: [
-          {
-            name: "name",
-            getter: {
-              source: 'export default function getValue() { return ""; }',
-              compiled: 'export default function getValue() { return ""; }',
-            },
-          },
-        ],
+        contentSummaryGetter: {
+          source:
+            'export default function getValue() { return { name: "name" }; }',
+          compiled:
+            'export default function getValue() { return { name: "name" }; }',
+        },
       },
     );
     assertSuccessfulResult(
