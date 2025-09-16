@@ -13,4 +13,13 @@ export const SuccessfulCreateDocument = {
     color: vars.colors.text.primary,
     marginBlockEnd: vars.spacing._2,
   }),
+
+  contentSummarySkeleton: style({
+    width: vars.spacing._80,
+    padding: vars.spacing._4,
+    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+    borderRadius: vars.borders.radius.md,
+    margin: 0,
+    overflow: "hidden",
+  }),
 };

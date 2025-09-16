@@ -5,9 +5,11 @@ import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { getDocumentVersionQuery } from "../../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
+import { vars } from "../../../../themes.css.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
 import Link from "../../../design-system/Link/Link.js";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
 import * as cs from "./ToolResult.css.js";
 
 interface Props {
@@ -59,9 +61,16 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
             documentVersionId,
           ]),
         ]}
-        renderLoading={
-          () => null // TODO: skeleton
-        }
+        renderLoading={() => (
+          <div className={cs.SuccessfulCreateDocument.contentSummarySkeleton}>
+            <Skeleton
+              variant="list"
+              itemCount={5}
+              itemHeight={vars.spacing._4}
+              itemGap={vars.spacing._2}
+            />
+          </div>
+        )}
       >
         {({ contentSummary }) => (
           <ContentSummary contentSummary={contentSummary} />

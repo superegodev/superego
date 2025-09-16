@@ -79,6 +79,7 @@ const commonVars = {
     _20: "5rem",
     _24: "6rem",
     _32: "8rem",
+    _36: "9rem",
     _40: "10rem",
     _48: "12rem",
     _64: "16rem",
