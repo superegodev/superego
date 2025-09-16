@@ -53,7 +53,7 @@ export default function RHFTypescriptModuleField({
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
-        maxHeight={vars.spacing._80}
+        maxHeight={vars.spacing._160}
         ref={field.ref}
       />
       <FieldErrorContext

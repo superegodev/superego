@@ -23,6 +23,7 @@ export default function RHFContentSummaryGetterField({
     () => (schemaTypescriptLib ? [schemaTypescriptLib] : []),
     [schemaTypescriptLib],
   );
+  const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return (
     <RHFTypescriptModuleField
       label={intl.formatMessage({ defaultMessage: "Content summary getter" })}
@@ -30,6 +31,7 @@ export default function RHFContentSummaryGetterField({
       name={name}
       isDisabled={isDisabled}
       typescriptLibs={typescriptLibs}
+      includedGlobalUtils={includedGlobalUtils}
       description={
         <FormattedMessage
           defaultMessage={`

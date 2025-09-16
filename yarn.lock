@@ -4220,7 +4220,7 @@ __metadata:
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^7.7.13"
-    monaco-editor: "npm:0.52.2"
+    monaco-editor: "npm:0.51.0"
     p-timeout: "npm:^6.1.4"
     playwright: "npm:^1.55.0"
     react: "npm:^19.1.1"
@@ -8494,10 +8494,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monaco-editor@npm:0.52.2":
-  version: 0.52.2
-  resolution: "monaco-editor@npm:0.52.2"
-  checksum: 10c0/5a92da64f1e2ab375c0ce99364137f794d057c97bed10ecc65a08d6e6846804b8ecbd377eacf01e498f7dfbe1b21e8be64f728256681448f0484df90e767b435
+"monaco-editor@npm:0.51.0":
+  version: 0.51.0
+  resolution: "monaco-editor@npm:0.51.0"
+  checksum: 10c0/7fde310c747e46cd7293e1a0f5e1fa85c389df9a1f8db03b9ccd58fd45356ab021a591b46198d19345566ad54556158f6489e2da4ad428a7a6ca3ea7b504afcb
   languageName: node
   linkType: hard
 

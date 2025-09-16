@@ -1,4 +1,4 @@
-import { type RefObject, useEffect } from "react";
+import { useEffect } from "react";
 import monaco from "../../../../monaco.js";
 import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
 import { getGlobalUtilsTypescriptLibs } from "./IncludedGlobalUtils.js";
@@ -10,13 +10,11 @@ import type TypescriptLib from "./TypescriptLib.js";
  */
 export default function useSyncTypescriptLibsModels(
   editorBasePath: string,
-  isShown: boolean,
   typescriptLibs: TypescriptLib[] | undefined,
   includedGlobalUtils: IncludedGlobalUtils | undefined,
-  latestCompilationPromiseRef: RefObject<Promise<string> | null>,
 ) {
   useEffect(() => {
-    if (isShown && typescriptLibs) {
+    if (typescriptLibs) {
       const libModels = [
         ...(typescriptLibs ?? []),
         ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
@@ -41,20 +39,11 @@ export default function useSyncTypescriptLibsModels(
         cacheBuster: crypto.randomUUID(),
       });
       return () => {
-        (async () => {
-          await latestCompilationPromiseRef.current;
-          for (const libModel of libModels) {
-            libModel.dispose();
-          }
-        })();
+        for (const libModel of libModels) {
+          libModel.dispose();
+        }
       };
     }
     return undefined;
-  }, [
-    isShown,
-    typescriptLibs,
-    includedGlobalUtils,
-    latestCompilationPromiseRef,
-    editorBasePath,
-  ]);
+  }, [typescriptLibs, includedGlobalUtils, editorBasePath]);
 }

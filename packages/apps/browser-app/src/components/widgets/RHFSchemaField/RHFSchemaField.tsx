@@ -57,7 +57,7 @@ export default function RHFSchemaField({
             field.onChange(newValue);
           }
         }}
-        codeFileName="schema.json"
+        fileName="schema.json"
         onBlur={field.onBlur}
         autoFocus={autoFocus}
         isInvalid={fieldState.invalid}

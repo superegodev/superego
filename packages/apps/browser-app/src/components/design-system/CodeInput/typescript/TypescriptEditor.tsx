@@ -1,71 +1,46 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import pTimeout from "p-timeout";
-import { type FocusEvent, type RefObject, useRef } from "react";
+import { type FocusEvent, useRef } from "react";
 import forms from "../../../../business-logic/forms/forms.js";
 import { MONACO_EDITOR_COMPILATION_TIMEOUT } from "../../../../config.js";
-import type monaco from "../../../../monaco.js";
-import useCreateEditor from "../common-hooks/useCreateEditor.js";
+import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
-import useSyncCodeModel from "../common-hooks/useSyncCodeModel.js";
-import useSyncEditorTheme from "../common-hooks/useSyncEditorTheme.js";
 import getCompilationOutput from "./getCompilationOutput.js";
 import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
 import type TypescriptLib from "./TypescriptLib.js";
 import useSyncTypescriptLibsModels from "./useSyncTypescriptLibsModels.js";
 
 interface Props {
-  isShown: boolean;
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
   typescriptLibs: TypescriptLib[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
-  codeFileName?: `${string}.ts`;
-  initialPositionRef: RefObject<monaco.IPosition | null>;
-  initialScrollPositionRef: RefObject<monaco.editor.INewScrollPosition | null>;
+  fileName?: `${string}.ts`;
   maxHeight: Property.MaxHeight | undefined;
 }
 export default function TypescriptEditor({
-  isShown,
   value,
   onChange,
   typescriptLibs,
   includedGlobalUtils,
-  codeFileName,
-  initialPositionRef,
-  initialScrollPositionRef,
+  fileName,
   maxHeight,
 }: Props) {
-  const editorBasePath = useEditorBasePath(isShown);
-
-  // We keep track of compilation promises, so that we can, on component
-  // unmount, delay model disposals until the last content compilation has
-  // completed.
-  const latestCompilationPromiseRef = useRef<Promise<string> | null>(null);
+  const editorBasePath = useEditorBasePath();
 
   useSyncTypescriptLibsModels(
     editorBasePath,
-    isShown,
     typescriptLibs,
     includedGlobalUtils,
-    latestCompilationPromiseRef,
   );
 
-  const { codeModelRef } = useSyncCodeModel(
+  const { editorElementRef, sourceModelRef } = useEditor(
     editorBasePath,
-    isShown,
-    { language: "typescript", value, fileName: codeFileName },
-    latestCompilationPromiseRef,
+    "typescript",
+    value.source,
+    fileName,
   );
-
-  const { editorElementRef, editorRef } = useCreateEditor(
-    isShown,
-    codeModelRef,
-    initialPositionRef,
-    initialScrollPositionRef,
-  );
-
-  useSyncEditorTheme(editorRef);
 
   // On blur, propagate changes to the model to the outside world. The
   // propagation includes the changes to the TypeScript source AND the compiled
@@ -82,7 +57,7 @@ export default function TypescriptEditor({
   const onBlur = async (evt: FocusEvent<HTMLDivElement, Element>) => {
     if (
       editorElementRef.current?.contains(evt.relatedTarget) ||
-      !codeModelRef.current
+      !sourceModelRef.current
     ) {
       return;
     }
@@ -90,17 +65,17 @@ export default function TypescriptEditor({
     const blurId = latestBlurIdRef.current + 1;
     latestBlurIdRef.current = blurId;
 
-    const newSource = codeModelRef.current.getValue();
+    const newSource = sourceModelRef.current.getValue();
     onChange({
       source: newSource,
-      // TODO: move compilation to the backend, which should simplify the logic
-      // here quite a lot. For now, let's live with this ugly hack to keep track
-      // of the compilation state.
+      // EVOLUTION: move compilation to the backend, which should simplify the
+      // logic here quite a lot. For now, let's live with this ugly hack to keep
+      // track of the compilation state.
       compiled: forms.constants.COMPILATION_IN_PROGRESS,
     });
-    latestCompilationPromiseRef.current = pTimeout(
+    const newCompiled = await pTimeout(
       getCompilationOutput(
-        codeModelRef.current.uri.toString(),
+        sourceModelRef.current.uri.toString(),
         forms.constants.COMPILATION_FAILED,
       ),
       {
@@ -108,18 +83,11 @@ export default function TypescriptEditor({
         fallback: () => forms.constants.COMPILATION_FAILED,
       },
     );
-    const newCompiled = await latestCompilationPromiseRef.current;
 
     if (blurId === latestBlurIdRef.current) {
       onChange({ source: newSource, compiled: newCompiled });
     }
   };
 
-  return (
-    <div
-      style={{ display: !isShown ? "none" : undefined, maxHeight }}
-      ref={editorElementRef}
-      onBlur={onBlur}
-    />
-  );
+  return <div style={{ maxHeight }} ref={editorElementRef} onBlur={onBlur} />;
 }
