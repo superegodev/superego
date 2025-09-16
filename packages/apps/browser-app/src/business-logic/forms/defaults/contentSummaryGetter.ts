@@ -1,8 +1,7 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Schema } from "@superego/schema";
-import { FAILED_COMPILATION_OUTPUT } from "../constants.js";
 
-export default function summaryPropertyDefinitionGetter(
+export default function contentSummaryGetter(
   schema: Schema,
   schemaTypescriptLibPath: string,
 ): TypescriptModule {
@@ -13,10 +12,16 @@ export default function summaryPropertyDefinitionGetter(
     source: [
       `import type { ${rootType} } from "${importPath}";`,
       "",
-      `export default function getValue(${argName}: ${rootType}): string {`,
-      "  // Implement",
+      "export default function getValue(",
+      `  ${argName}: ${rootType}`,
+      "): Record<string, string> {",
+      "  return {};",
       "}",
     ].join("\n"),
-    compiled: FAILED_COMPILATION_OUTPUT,
+    compiled: [
+      `export default function getValue(${argName}) {`,
+      "  return {};",
+      "}",
+    ].join("\n"),
   };
 }

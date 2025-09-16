@@ -1,6 +1,6 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Schema } from "@superego/schema";
-import { FAILED_COMPILATION_OUTPUT } from "../constants.js";
+import { COMPILATION_REQUIRED } from "../constants.js";
 
 export default function migration(
   currentSchema: Schema,
@@ -19,9 +19,9 @@ export default function migration(
       `import type * as Next from "${nextImportPath}";`,
       "",
       `export default function migrate(${argName}: Current.${currentRootType}): Next.${nextRootType} {`,
-      "  // Implement",
+      `  return ${argName};`,
       "}",
     ].join("\n"),
-    compiled: FAILED_COMPILATION_OUTPUT,
+    compiled: COMPILATION_REQUIRED,
   };
 }
