@@ -45,7 +45,8 @@ export function makeUseBackendMutation<
     const queryClient = useQueryClient();
     const isMutatingRef = useRef(false);
     const { isIdle, isPending, data, mutateAsync } = useMutation({
-      mutationFn: (args: any[]) => (backend[entity][method] as any)(...args),
+      mutationFn: (args: ArgsOf<Entity, Method>) =>
+        (backend[entity][method] as any)(...args),
       throwOnError: true,
       onSuccess(result: Result<any, any>, args: ArgsOf<Entity, Method>) {
         if (result.success) {
