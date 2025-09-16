@@ -1,5 +1,4 @@
 import type { DocumentVersion } from "@superego/backend";
-import { mapNonEmptyArray } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
 import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
@@ -14,20 +13,9 @@ export default async function makeDocumentVersion(
     previousVersionId: documentVersion.previousVersionId,
     collectionVersionId: documentVersion.collectionVersionId,
     content: documentVersion.content,
-    summaryProperties: await Promise.all(
-      mapNonEmptyArray(
-        collectionVersion.settings.summaryProperties,
-        async ({ name, getter }) => {
-          const result = await javascriptSandbox.executeSyncFunction(getter, [
-            documentVersion.content,
-          ]);
-          return {
-            name,
-            value: result.success ? result.data : null,
-            valueComputationError: !result.success ? result.error : null,
-          };
-        },
-      ),
+    contentSummary: await javascriptSandbox.executeSyncFunction(
+      collectionVersion.settings.contentSummaryGetter,
+      [documentVersion.content],
     ),
     createdAt: documentVersion.createdAt,
   };

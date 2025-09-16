@@ -5,8 +5,8 @@ import type {
   CollectionSchemaNotValid,
   CollectionSettings,
   CollectionSettingsNotValid,
-  CollectionSummaryPropertiesNotValid,
   CollectionVersionSettings,
+  ContentSummaryGetterNotValid,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -26,7 +26,6 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsCreate extends Usecase<
@@ -41,7 +40,7 @@ export default class CollectionsCreate extends Usecase<
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
     | CollectionSchemaNotValid
-    | CollectionSummaryPropertiesNotValid
+    | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -91,27 +90,22 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
-    const nonValidSummaryPropertyIndexes = (
-      await Promise.all(
-        versionSettings.summaryProperties.map(({ getter }) =>
-          this.javascriptSandbox.moduleDefaultExportsFunction(getter),
-        ),
-      )
-    ).reduce<number[]>(
-      (indexes, isValid, index) => (isValid ? indexes : [...indexes, index]),
-      [],
-    );
-    if (!isEmpty(nonValidSummaryPropertyIndexes)) {
+    const isContentSummaryGetterValid =
+      await this.javascriptSandbox.moduleDefaultExportsFunction(
+        versionSettings.contentSummaryGetter,
+      );
+    if (!isContentSummaryGetterValid) {
       return makeUnsuccessfulResult(
-        makeResultError("CollectionSummaryPropertiesNotValid", {
+        makeResultError("ContentSummaryGetterNotValid", {
           collectionId: null,
           collectionVersionId: null,
-          issues: nonValidSummaryPropertyIndexes.map((index) => ({
-            // TODO: i18n
-            message:
-              "The default export of the getter TypescriptModule is not a function",
-            path: [{ key: index }, { key: "getter" }],
-          })),
+          issues: [
+            {
+              message:
+                "The default export of the getter TypescriptModule is not a function",
+              path: [{ key: "getter" }],
+            },
+          ],
         }),
       );
     }
@@ -135,7 +129,9 @@ export default class CollectionsCreate extends Usecase<
       previousVersionId: null,
       collectionId: collection.id,
       schema: schemaValidationResult.output,
-      settings: versionSettings,
+      settings: {
+        contentSummaryGetter: versionSettings.contentSummaryGetter,
+      },
       migration: null,
       createdAt: now,
     };

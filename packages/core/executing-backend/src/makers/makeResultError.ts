@@ -10,9 +10,9 @@ import type {
   CollectionNotFound,
   CollectionSchemaNotValid,
   CollectionSettingsNotValid,
-  CollectionSummaryPropertiesNotValid,
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
+  ContentSummaryGetterNotValid,
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
@@ -38,9 +38,9 @@ type KnownResultError =
   | CollectionSettingsNotValid
   | CollectionNotFound
   | CollectionSchemaNotValid
-  | CollectionSummaryPropertiesNotValid
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
+  | ContentSummaryGetterNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid

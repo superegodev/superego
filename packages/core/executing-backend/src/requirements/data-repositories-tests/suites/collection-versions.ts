@@ -11,7 +11,7 @@ const schema: Schema = {
   rootType: "Root",
 };
 const settings: CollectionVersionSettings = {
-  summaryProperties: [{ name: "name", getter: { source: "", compiled: "" } }],
+  contentSummaryGetter: { source: "", compiled: "" },
 };
 
 export default rd<Dependencies>("Collection versions", (deps) => {
@@ -58,12 +58,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       collectionId: Id.generate.collection(),
       schema: schema,
       settings: {
-        summaryProperties: [
-          {
-            name: "original name",
-            getter: { source: "", compiled: "" },
-          },
-        ],
+        contentSummaryGetter: { source: "", compiled: "" },
       } satisfies CollectionVersionSettings,
       migration: null,
       createdAt: new Date(),
@@ -79,12 +74,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     const updatedCollectionVersion: CollectionVersionEntity = {
       ...collectionVersion,
       settings: {
-        summaryProperties: [
-          {
-            name: "updated name",
-            getter: { source: "", compiled: "" },
-          },
-        ],
+        contentSummaryGetter: { source: "", compiled: "" },
       } satisfies CollectionVersionSettings,
     };
     await dataRepositoriesManager.runInSerializableTransaction(

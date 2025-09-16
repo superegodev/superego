@@ -3,10 +3,10 @@ import type {
   Collection,
   CollectionId,
   CollectionNotFound,
-  CollectionSummaryPropertiesNotValid,
   CollectionVersionId,
   CollectionVersionIdNotMatching,
   CollectionVersionSettings,
+  ContentSummaryGetterNotValid,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -16,7 +16,6 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
@@ -30,7 +29,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     Collection,
     | CollectionNotFound
     | CollectionVersionIdNotMatching
-    | CollectionSummaryPropertiesNotValid
+    | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -53,28 +52,23 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       );
     }
 
-    if (settingsPatch.summaryProperties) {
-      const nonValidSummaryPropertyIndexes = (
-        await Promise.all(
-          settingsPatch.summaryProperties.map(({ getter }) =>
-            this.javascriptSandbox.moduleDefaultExportsFunction(getter),
-          ),
-        )
-      ).reduce<number[]>(
-        (indexes, isValid, index) => (isValid ? indexes : [...indexes, index]),
-        [],
-      );
-      if (!isEmpty(nonValidSummaryPropertyIndexes)) {
+    if (settingsPatch.contentSummaryGetter) {
+      const isContentSummaryGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          settingsPatch.contentSummaryGetter,
+        );
+      if (!isContentSummaryGetterValid) {
         return makeUnsuccessfulResult(
-          makeResultError("CollectionSummaryPropertiesNotValid", {
-            collectionId: id,
-            collectionVersionId: latestVersion.id,
-            issues: nonValidSummaryPropertyIndexes.map((index) => ({
-              // TODO: i18n
-              message:
-                "The default export of the getter TypescriptModule is not a function",
-              path: [{ key: index }, { key: "getter" }],
-            })),
+          makeResultError("ContentSummaryGetterNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the getter TypescriptModule is not a function",
+                path: [{ key: "getter" }],
+              },
+            ],
           }),
         );
       }
@@ -83,9 +77,9 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     const updatedVersion: CollectionVersionEntity = {
       ...latestVersion,
       settings: {
-        summaryProperties:
-          settingsPatch.summaryProperties ??
-          latestVersion.settings.summaryProperties,
+        contentSummaryGetter:
+          settingsPatch.contentSummaryGetter ??
+          latestVersion.settings.contentSummaryGetter,
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);

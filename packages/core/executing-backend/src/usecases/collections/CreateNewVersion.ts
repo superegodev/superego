@@ -6,10 +6,10 @@ import type {
   CollectionMigrationNotValid,
   CollectionNotFound,
   CollectionSchemaNotValid,
-  CollectionSummaryPropertiesNotValid,
   CollectionVersionId,
   CollectionVersionIdNotMatching,
   CollectionVersionSettings,
+  ContentSummaryGetterNotValid,
   TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
@@ -45,7 +45,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionNotFound
     | CollectionVersionIdNotMatching
     | CollectionSchemaNotValid
-    | CollectionSummaryPropertiesNotValid
+    | ContentSummaryGetterNotValid
     | CollectionMigrationNotValid
     | CollectionMigrationFailed
     | UnexpectedError
@@ -80,27 +80,22 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
-    const nonValidSummaryPropertyIndexes = (
-      await Promise.all(
-        settings.summaryProperties.map(({ getter }) =>
-          this.javascriptSandbox.moduleDefaultExportsFunction(getter),
-        ),
-      )
-    ).reduce<number[]>(
-      (indexes, isValid, index) => (isValid ? indexes : [...indexes, index]),
-      [],
-    );
-    if (!isEmpty(nonValidSummaryPropertyIndexes)) {
+    const isContentSummaryGetterValid =
+      await this.javascriptSandbox.moduleDefaultExportsFunction(
+        settings.contentSummaryGetter,
+      );
+    if (!isContentSummaryGetterValid) {
       return makeUnsuccessfulResult(
-        makeResultError("CollectionSummaryPropertiesNotValid", {
-          collectionId: id,
+        makeResultError("ContentSummaryGetterNotValid", {
+          collectionId: null,
           collectionVersionId: null,
-          issues: nonValidSummaryPropertyIndexes.map((index) => ({
-            // TODO: i18n
-            message:
-              "The default export of the getter TypescriptModule is not a function",
-            path: [{ key: index }, { key: "getter" }],
-          })),
+          issues: [
+            {
+              message:
+                "The default export of the getter TypescriptModule is not a function",
+              path: [{ key: "getter" }],
+            },
+          ],
         }),
       );
     }
@@ -113,7 +108,6 @@ export default class CollectionsCreateNewVersion extends Usecase<
           collectionId: id,
           issues: [
             {
-              // TODO: i18n
               message:
                 "The default export of the migration TypescriptModule is not a function",
             },
@@ -127,7 +121,9 @@ export default class CollectionsCreateNewVersion extends Usecase<
       previousVersionId: latestVersionId,
       collectionId: id,
       schema: schemaValidationResult.output,
-      settings: settings,
+      settings: {
+        contentSummaryGetter: settings.contentSummaryGetter,
+      },
       migration: migration,
       createdAt: new Date(),
     };

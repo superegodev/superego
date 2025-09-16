@@ -2,6 +2,7 @@ import type { Document } from "@superego/backend";
 import { DataType, FormatId, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
+import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import { toAssistantDocument } from "./AssistantDocument.js";
 
 describe("toAssistantDocument", () => {
@@ -83,9 +84,7 @@ describe("toAssistantDocument", () => {
           },
           list: ["2025-01-01T00:00:00.000Z"],
         },
-        summaryProperties: [
-          { name: "name", value: "value", valueComputationError: null },
-        ],
+        contentSummary: makeSuccessfulResult({}),
         createdAt: new Date(),
       },
       createdAt: new Date(),
