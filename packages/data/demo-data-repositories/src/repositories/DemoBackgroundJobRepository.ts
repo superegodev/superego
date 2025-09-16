@@ -62,6 +62,10 @@ export default class DemoBackgroundJobRepository
 
   async findAll(): Promise<BackgroundJobEntity[]> {
     this.ensureNotDisposed();
-    return clone(Object.values(this.backgroundJobs));
+    return clone(
+      Object.values(this.backgroundJobs).sort((a, b) =>
+        a.enqueuedAt > b.enqueuedAt ? -1 : 1,
+      ),
+    );
   }
 }

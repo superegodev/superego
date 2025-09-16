@@ -4,7 +4,7 @@ import { RouteName } from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
 
 const useNavigationStateStore = create<UseNavigationState>((set) => ({
-  activeRoute: fromHref(getCurrentHref()) ?? {
+  activeRoute: fromHref(window.location.pathname) ?? {
     name: RouteName.Assistant,
   },
   navigateTo(route, updateUrl = true) {
@@ -17,7 +17,7 @@ const useNavigationStateStore = create<UseNavigationState>((set) => ({
 window.addEventListener("popstate", () => {
   useNavigationStateStore
     .getState()
-    .navigateTo(fromHref(getCurrentHref()), false);
+    .navigateTo(fromHref(window.location.pathname), false);
 });
 
 interface UseNavigationState {
@@ -26,8 +26,4 @@ interface UseNavigationState {
 }
 export default function useNavigationState(): UseNavigationState {
   return useNavigationStateStore();
-}
-
-function getCurrentHref() {
-  return window.location.pathname + window.location.hash;
 }

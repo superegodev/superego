@@ -64,7 +64,6 @@
     "@vanilla-extract/vite-plugin": "^5.1.1",
     "@vitejs/plugin-react": "^5.0.2",
     "babel-plugin-formatjs": "^10.5.39",
-    "base-x": "^5.0.1",
     "debounce": "^2.2.0",
     "es-toolkit": "^1.39.10",
     "frimousse": "^0.3.0",

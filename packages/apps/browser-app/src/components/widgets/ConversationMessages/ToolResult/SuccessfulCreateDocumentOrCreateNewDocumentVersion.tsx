@@ -9,7 +9,7 @@ import { vars } from "../../../../themes.css.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
 import Link from "../../../design-system/Link/Link.js";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
 import * as cs from "./ToolResult.css.js";
 
 interface Props {
