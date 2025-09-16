@@ -24,6 +24,9 @@ export const FullPageTabs = {
         borderBlockEndColor: vars.colors.border.focus,
         color: vars.colors.text.primary,
       },
+      '&[aria-disabled="true"]': {
+        cursor: "not-allowed",
+      },
     },
   }),
 

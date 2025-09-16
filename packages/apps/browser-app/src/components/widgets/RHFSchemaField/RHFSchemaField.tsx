@@ -18,7 +18,6 @@ interface Props {
   control: Control<any>;
   name: string;
   label?: ReactNode | undefined;
-  description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
@@ -28,7 +27,6 @@ export default function RHFSchemaField({
   control,
   name,
   label,
-  description,
   isDisabled,
   autoFocus,
   className,
@@ -93,7 +91,11 @@ export default function RHFSchemaField({
           )}
         </FieldError>
       </FieldErrorContext>
-      {description ? <Description>{description}</Description> : null}
+      <Description>
+        <FormattedMessage
+          defaultMessage={`Defines the "shape" of document contents in this collection.`}
+        />
+      </Description>
     </div>
   );
 }

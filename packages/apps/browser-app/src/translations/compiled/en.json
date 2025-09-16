@@ -189,6 +189,18 @@
       "value": "error"
     }
   ],
+  "ContentSummaryTab.tsx_+R8UFo": [
+    {
+      "type": 0,
+      "value": "Error creating collection"
+    }
+  ],
+  "ContentSummaryTab.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
   "Conversation.tsx_9eR0Qp": [
     {
       "type": 0,
@@ -307,12 +319,6 @@
       "value": "Create Collection"
     }
   ],
-  "CreateCollectionForm.tsx_+R8UFo": [
-    {
-      "type": 0,
-      "value": "Error creating collection"
-    }
-  ],
   "CreateCollectionForm.tsx_45vDAJ": [
     {
       "type": 0,
@@ -329,12 +335,6 @@
     {
       "type": 0,
       "value": "1. General settings"
-    }
-  ],
-  "CreateCollectionForm.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Create"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -369,34 +369,22 @@
       "value": " » Create New Version"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_1Og5F/": [
+  "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
-      "value": "Migration"
+      "value": "2. Content summary"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_J/yjzE": [
+  "CreateNewCollectionVersionForm.tsx_jacE9I": [
     {
       "type": 0,
-      "value": "Create new version and migrate documents"
+      "value": "1. Schema"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_Lktmvk": [
+  "CreateNewCollectionVersionForm.tsx_rgWYrb": [
     {
       "type": 0,
-      "value": "Schema"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_WEMhIw": [
-    {
-      "type": 0,
-      "value": "TypeScript function expression to migrate documents from the previous schema to the updated schema."
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_r7rdMp": [
-    {
-      "type": 0,
-      "value": "Error updating schema and migrating documents"
+      "value": "3. Migration"
     }
   ],
   "CreateNewDocumentVersionForm.tsx_zq3yJy": [
@@ -1119,6 +1107,30 @@
       "value": "Superego Logo"
     }
   ],
+  "MigrationTab.tsx_0p1nAG": [
+    {
+      "type": 0,
+      "value": "Error creating new version"
+    }
+  ],
+  "MigrationTab.tsx_1Og5F/": [
+    {
+      "type": 0,
+      "value": "Migration"
+    }
+  ],
+  "MigrationTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Create new version and migrate documents"
+    }
+  ],
+  "MigrationTab.tsx_JQqWNV": [
+    {
+      "type": 0,
+      "value": "TypeScript function to migrate documents from the previous schema to the updated schema."
+    }
+  ],
   "NullifyFieldAction.tsx_MLa9CL": [
     {
       "type": 0,
@@ -1233,6 +1245,12 @@
     {
       "type": 0,
       "value": "At"
+    }
+  ],
+  "RHFSchemaField.tsx_IBR6nN": [
+    {
+      "type": 0,
+      "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_1CICoa": [

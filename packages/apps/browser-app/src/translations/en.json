@@ -86,6 +86,12 @@
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
   },
+  "ContentSummaryTab.tsx_+R8UFo": {
+    "defaultMessage": "Error creating collection"
+  },
+  "ContentSummaryTab.tsx_VzzYJk": {
+    "defaultMessage": "Create"
+  },
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
@@ -143,9 +149,6 @@
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
   },
-  "CreateCollectionForm.tsx_+R8UFo": {
-    "defaultMessage": "Error creating collection"
-  },
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
@@ -154,9 +157,6 @@
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
-  },
-  "CreateCollectionForm.tsx_VzzYJk": {
-    "defaultMessage": "Create"
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
@@ -170,20 +170,14 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
-  "CreateNewCollectionVersionForm.tsx_1Og5F/": {
-    "defaultMessage": "Migration"
+  "CreateNewCollectionVersionForm.tsx_PfbGui": {
+    "defaultMessage": "2. Content summary"
   },
-  "CreateNewCollectionVersionForm.tsx_J/yjzE": {
-    "defaultMessage": "Create new version and migrate documents"
+  "CreateNewCollectionVersionForm.tsx_jacE9I": {
+    "defaultMessage": "1. Schema"
   },
-  "CreateNewCollectionVersionForm.tsx_Lktmvk": {
-    "defaultMessage": "Schema"
-  },
-  "CreateNewCollectionVersionForm.tsx_WEMhIw": {
-    "defaultMessage": "TypeScript function expression to migrate documents from the previous schema to the updated schema."
-  },
-  "CreateNewCollectionVersionForm.tsx_r7rdMp": {
-    "defaultMessage": "Error updating schema and migrating documents"
+  "CreateNewCollectionVersionForm.tsx_rgWYrb": {
+    "defaultMessage": "3. Migration"
   },
   "CreateNewDocumentVersionForm.tsx_zq3yJy": {
     "defaultMessage": "Error updating document"
@@ -500,6 +494,18 @@
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"
   },
+  "MigrationTab.tsx_0p1nAG": {
+    "defaultMessage": "Error creating new version"
+  },
+  "MigrationTab.tsx_1Og5F/": {
+    "defaultMessage": "Migration"
+  },
+  "MigrationTab.tsx_J/yjzE": {
+    "defaultMessage": "Create new version and migrate documents"
+  },
+  "MigrationTab.tsx_JQqWNV": {
+    "defaultMessage": "TypeScript function to migrate documents from the previous schema to the updated schema."
+  },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },
@@ -529,6 +535,9 @@
   },
   "RHFSchemaField.tsx_A89PQ/": {
     "defaultMessage": "At"
+  },
+  "RHFSchemaField.tsx_IBR6nN": {
+    "defaultMessage": "Defines the \"shape\" of document contents in this collection."
   },
   "RenameCollectionCategoryModalForm.tsx_1CICoa": {
     "defaultMessage": "Error deleting collection"

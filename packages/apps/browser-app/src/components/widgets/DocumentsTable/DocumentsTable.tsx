@@ -27,7 +27,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
     >
       <Table.Header>
         {isEmpty(contentSummaryKeys) ? (
-          <Table.Column>
+          <Table.Column isRowHeader={true}>
             <FormattedMessage defaultMessage="Id" />
           </Table.Column>
         ) : null}

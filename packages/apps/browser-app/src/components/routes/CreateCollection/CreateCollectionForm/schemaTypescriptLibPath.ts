@@ -1,1 +1,1 @@
-export default "/CollectionSchema.ts";
+export default "/CollectionSchema.ts" as const;

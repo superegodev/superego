@@ -62,10 +62,12 @@ export default function EagerCodeInput({
           maxHeight={maxHeight}
         />
       )}
-      {language === "typescript" &&
-      value.compiled === forms.constants.COMPILATION_IN_PROGRESS ? (
-        <CompilationInProgressIndicator />
-      ) : null}
+      <CompilationInProgressIndicator
+        isVisible={
+          language === "typescript" &&
+          value.compiled === forms.constants.COMPILATION_IN_PROGRESS
+        }
+      />
     </div>
   );
 }

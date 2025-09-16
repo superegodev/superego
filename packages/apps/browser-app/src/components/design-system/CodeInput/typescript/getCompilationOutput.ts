@@ -38,7 +38,18 @@ export default async function getCompilationOutput(
       ? compiled
       : failedCompilationOutput;
   } catch (error) {
-    console.error("Error compiling TypescriptModule:", error);
+    // When the editor is disposed before compilation is finished, an error
+    // matching this condition is thrown. Since it's a know, expected condition,
+    // we don't log anything. (Of course the compilation still needs to be
+    // marked as failed.)
+    if (
+      !(
+        error instanceof Error &&
+        error.message.includes("Could not find source file")
+      )
+    ) {
+      console.error("Error compiling TypescriptModule:", error);
+    }
     return failedCompilationOutput;
   }
 }

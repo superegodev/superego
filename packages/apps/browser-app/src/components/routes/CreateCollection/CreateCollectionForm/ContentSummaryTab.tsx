@@ -1,55 +1,57 @@
-import type { TypescriptModule } from "@superego/backend";
-import { codegen } from "@superego/schema";
-import { useEffect, useMemo, useRef } from "react";
-import type { Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import forms from "../../../../business-logic/forms/forms.js";
+import { codegen, type Schema } from "@superego/schema";
+import { useMemo } from "react";
+import type { Control } from "react-hook-form";
+import { FormattedMessage, useIntl } from "react-intl";
+import type { ResultOf } from "../../../../business-logic/backend/typeUtils.js";
+import Alert from "../../../design-system/Alert/Alert.js";
+import ResultError from "../../../design-system/ResultError/ResultError.js";
 import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
+import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
+import * as cs from "../CreateCollection.css.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 
 interface Props {
   control: Control<CreateCollectionFormValues, any, CreateCollectionFormValues>;
-  watch: UseFormWatch<CreateCollectionFormValues>;
-  setValue: UseFormSetValue<CreateCollectionFormValues>;
-  defaultContentSummaryGetter: TypescriptModule;
+  schema: Schema;
+  result: ResultOf<"collections", "create"> | null;
 }
-export default function ContentSummaryTab({
-  control,
-  watch,
-  setValue,
-  defaultContentSummaryGetter,
-}: Props) {
-  const schema = watch("schema");
-
-  // TODO: use reset api
-  // When schema changes, for each summary property, if the user didn't make any
-  // change to the getter (hence it's still the default one), update it.
-  const defaultGetterRef = useRef(defaultContentSummaryGetter);
-  useEffect(() => {
-    if (typeof schema === "string") {
-      return;
-    }
-    const newDefaultGetter = forms.defaults.contentSummaryGetter(
-      schema,
-      schemaTypescriptLibPath,
-    );
-    setValue("contentSummaryGetter", newDefaultGetter);
-    defaultGetterRef.current = newDefaultGetter;
-  }, [schema, setValue]);
-
+export default function ContentSummaryTab({ control, schema, result }: Props) {
+  const intl = useIntl();
   const schemaTypescriptLib = useMemo(
     () =>
       typeof schema !== "string"
-        ? ({ path: schemaTypescriptLibPath, source: codegen(schema) } as const)
+        ? { path: schemaTypescriptLibPath, source: codegen(schema) }
         : null,
     [schema],
   );
   return (
-    <RHFContentSummaryGetterField
-      control={control}
-      name="contentSummaryGetter"
-      isDisabled={typeof schema === "string"}
-      schemaTypescriptLib={schemaTypescriptLib}
-    />
+    <>
+      <RHFContentSummaryGetterField
+        control={control}
+        name="contentSummaryGetter"
+        isDisabled={typeof schema === "string"}
+        schemaTypescriptLib={schemaTypescriptLib}
+      />
+      <div className={cs.CreateCollectionForm.submitButtonContainer}>
+        <RHFSubmitButton
+          control={control}
+          variant="primary"
+          disableOnNotDirty={false}
+        >
+          <FormattedMessage defaultMessage="Create" />
+        </RHFSubmitButton>
+      </div>
+      {result?.error ? (
+        <Alert
+          variant="error"
+          title={intl.formatMessage({
+            defaultMessage: "Error creating collection",
+          })}
+        >
+          <ResultError error={result.error} />
+        </Alert>
+      ) : null}
+    </>
   );
 }

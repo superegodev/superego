@@ -1,7 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import { valibotSchemas as backendUtilsValibotSchemas } from "@superego/shared-utils";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -10,11 +10,7 @@ import { useCreateCollection } from "../../../../business-logic/backend/hooks.js
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../../design-system/Alert/Alert.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
-import ResultError from "../../../design-system/ResultError/ResultError.js";
-import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import * as cs from "../CreateCollection.css.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import GeneralSettingsTab from "./GeneralSettingsTab.js";
@@ -38,28 +34,35 @@ export default function CreateCollectionForm() {
       ),
     [],
   );
-  const { control, handleSubmit, setValue, watch, formState } =
-    useForm<CreateCollectionFormValues>({
-      defaultValues: {
-        name: "",
-        icon: null,
-        description: null,
-        assistantInstructions: null,
-        schema: defaultSchema,
-        contentSummaryGetter: defaultContentSummaryGetter,
-      },
-      mode: "onSubmit",
-      resolver: standardSchemaResolver(
-        v.strictObject({
-          name: backendUtilsValibotSchemas.collectionName(),
-          icon: v.nullable(backendUtilsValibotSchemas.icon()),
-          description: v.nullable(v.string()),
-          assistantInstructions: v.nullable(v.string()),
-          schema: schemaValibotSchemas.schema(),
-          contentSummaryGetter: forms.schemas.typescriptModule(intl),
-        }),
-      ),
-    });
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    getValues,
+    resetField,
+    watch,
+    formState,
+  } = useForm<CreateCollectionFormValues>({
+    defaultValues: {
+      name: "",
+      icon: null,
+      description: null,
+      assistantInstructions: null,
+      schema: defaultSchema,
+      contentSummaryGetter: defaultContentSummaryGetter,
+    },
+    mode: "all",
+    resolver: standardSchemaResolver(
+      v.strictObject({
+        name: backendUtilsValibotSchemas.collectionName(),
+        icon: v.nullable(backendUtilsValibotSchemas.icon()),
+        description: v.nullable(v.string()),
+        assistantInstructions: v.nullable(v.string()),
+        schema: schemaValibotSchemas.schema(),
+        contentSummaryGetter: forms.schemas.typescriptModule(intl),
+      }),
+    ),
+  });
 
   const onSubmit = async ({
     schema,
@@ -84,6 +87,48 @@ export default function CreateCollectionForm() {
       navigateTo({ name: RouteName.Collection, collectionId: data.id });
     }
   };
+
+  const schema = watch("schema");
+  const isSchemaValid = !(
+    typeof schema === "string" || formState.errors.schema
+  );
+
+  // When schema changes, if it's valid:
+  // - Update contentSummaryGetter, if still the default one, and in any case
+  //   require recompilation.
+  useEffect(() => {
+    if (!isSchemaValid) {
+      return;
+    }
+
+    const defaultContentSummaryGetterSource =
+      formState.defaultValues?.contentSummaryGetter?.source;
+    const currentContentSummaryGetterSource = getValues(
+      "contentSummaryGetter.source",
+    );
+    if (
+      currentContentSummaryGetterSource === defaultContentSummaryGetterSource
+    ) {
+      resetField("contentSummaryGetter", {
+        defaultValue: forms.defaults.contentSummaryGetter(
+          schema,
+          schemaTypescriptLibPath,
+        ),
+      });
+    } else {
+      setValue(
+        "contentSummaryGetter.compiled",
+        forms.constants.COMPILATION_REQUIRED,
+      );
+    }
+  }, [
+    schema,
+    setValue,
+    getValues,
+    resetField,
+    isSchemaValid,
+    formState.defaultValues?.contentSummaryGetter?.source,
+  ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -123,33 +168,14 @@ export default function CreateCollectionForm() {
             panel: (
               <ContentSummaryTab
                 control={control}
-                watch={watch}
-                setValue={setValue}
-                defaultContentSummaryGetter={defaultContentSummaryGetter}
+                schema={schema}
+                result={result}
               />
             ),
+            isDisabled: !isSchemaValid,
           },
         ]}
       />
-      <div className={cs.CreateCollectionForm.submitButtonContainer}>
-        <RHFSubmitButton
-          control={control}
-          variant="primary"
-          disableOnNotDirty={false}
-        >
-          <FormattedMessage defaultMessage="Create" />
-        </RHFSubmitButton>
-      </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error creating collection",
-          })}
-        >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
     </Form>
   );
 }

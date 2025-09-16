@@ -5,10 +5,10 @@ import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import * as cs from "./FullPageTabs.css.js";
 
 interface Props {
-  tabs: (
-    | { title: ReactNode; panel: ReactNode }
-    | { title: ReactNode; to: Route }
-  )[];
+  tabs: ({ title: ReactNode; isDisabled?: boolean | undefined } & (
+    | { panel: ReactNode }
+    | { to: Route }
+  ))[];
 }
 export default function FullPageTabs({ tabs }: Props) {
   const tabsId = useId();
@@ -22,6 +22,7 @@ export default function FullPageTabs({ tabs }: Props) {
             id={`${tabsId}-${index}`}
             className={cs.FullPageTabs.tab}
             href={"to" in tab ? toHref(tab.to) : undefined}
+            isDisabled={tab.isDisabled}
           >
             {tab.title}
           </Tab>
