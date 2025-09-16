@@ -14,7 +14,7 @@
   "devDependencies": {
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
-    "wrangler": "^4.37.0"
+    "wrangler": "^4.37.1"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -23,6 +23,6 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:^",
-    "@tanstack/react-query": "^5.87.4"
+    "@tanstack/react-query": "^5.89.0"
   }
 }
