@@ -8,6 +8,7 @@ export enum RouteName {
   Assistant = "Assistant",
   GlobalSettings = "Settings",
   CreateCollection = "CreateCollection",
+  CreateNewCollectionVersion = "CreateNewCollectionVersion",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
@@ -25,6 +26,10 @@ type Route =
     }
   | {
       name: RouteName.CreateCollection;
+    }
+  | {
+      name: RouteName.CreateNewCollectionVersion;
+      collectionId: CollectionId;
     }
   | {
       name: RouteName.Collection;

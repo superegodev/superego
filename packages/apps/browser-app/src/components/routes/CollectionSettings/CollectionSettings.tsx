@@ -3,10 +3,10 @@ import { useState } from "react";
 import { PiTrash } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import CreateNewCollectionVersionForm from "./CreateNewCollectionVersionForm.js";
 import DeleteCollectionModalForm from "./DeleteCollectionModalForm.js";
 import UpdateCollectionSettingsForm from "./UpdateCollectionSettingsForm.js";
 import UpdateCollectionVersionSettingsForm from "./UpdateCollectionVersionSettingsForm.js";
@@ -67,12 +67,10 @@ export default function CollectionSettings({ collectionId }: Props) {
             },
             {
               title: <FormattedMessage defaultMessage="Create new version" />,
-              panel: (
-                <CreateNewCollectionVersionForm
-                  key={`CreateNewCollectionVersionForm_${collectionId}`}
-                  collection={collection}
-                />
-              ),
+              to: {
+                name: RouteName.CreateNewCollectionVersion,
+                collectionId: collection.id,
+              },
             },
           ]}
         />

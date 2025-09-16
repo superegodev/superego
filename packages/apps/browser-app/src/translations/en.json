@@ -167,6 +167,9 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
+  "CreateNewCollectionVersion.tsx_WgkS3f": {
+    "defaultMessage": "{collection} » Create New Version"
+  },
   "CreateNewCollectionVersionForm.tsx_1Og5F/": {
     "defaultMessage": "Migration"
   },

@@ -7,6 +7,7 @@ import Conversation from "../Conversation/Conversation.js";
 import Conversations from "../Conversations/Conversations.js";
 import CreateCollection from "../CreateCollection/CreateCollection.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
+import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";
 import Document from "../Document/Document.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
 
@@ -19,6 +20,10 @@ export default function MainPanel() {
       return <GlobalSettings />;
     case RouteName.CreateCollection:
       return <CreateCollection />;
+    case RouteName.CreateNewCollectionVersion:
+      return (
+        <CreateNewCollectionVersion collectionId={activeRoute.collectionId} />
+      );
     case RouteName.Collection:
       return <Collection collectionId={activeRoute.collectionId} />;
     case RouteName.CollectionSettings:

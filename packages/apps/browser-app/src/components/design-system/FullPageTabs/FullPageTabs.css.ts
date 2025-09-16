@@ -18,6 +18,7 @@ export const FullPageTabs = {
     borderStyle: "solid",
     borderBlockEndColor: "transparent",
     cursor: "pointer",
+    textDecoration: "none",
     selectors: {
       '&[data-selected="true"]': {
         borderBlockEndColor: vars.colors.border.focus,
