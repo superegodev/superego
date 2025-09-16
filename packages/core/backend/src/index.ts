@@ -32,6 +32,7 @@ export type { default as CollectionSettingsNotValid } from "./errors/CollectionS
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
+export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";

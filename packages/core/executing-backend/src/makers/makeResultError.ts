@@ -13,6 +13,7 @@ import type {
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
   ContentSummaryGetterNotValid,
+  ContentSummaryNotValid,
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
@@ -41,6 +42,7 @@ type KnownResultError =
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
   | ContentSummaryGetterNotValid
+  | ContentSummaryNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid

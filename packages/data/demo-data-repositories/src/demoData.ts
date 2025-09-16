@@ -167,44 +167,7 @@ export default {
         rootType: "CalendarEntry",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Title",
-            getter: {
-              source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.title;\n}',
-              compiled:
-                "export default function getValue(calendarEntry) {\n    return calendarEntry.title;\n}\n",
-            },
-          },
-          {
-            name: "Type",
-            getter: {
-              source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return calendarEntry.type;\n}',
-              compiled:
-                "export default function getValue(calendarEntry) {\n    return calendarEntry.type;\n}\n",
-            },
-          },
-          {
-            name: "Starts",
-            getter: {
-              source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  return LocalInstant\n    .fromISO(calendarEntry.startTime)\n    .toFormat({ dateStyle: "short", timeStyle: "short" });\n}',
-              compiled:
-                'export default function getValue(calendarEntry) {\n    return LocalInstant\n        .fromISO(calendarEntry.startTime)\n        .toFormat({ dateStyle: "short", timeStyle: "short" });\n}\n',
-            },
-          },
-          {
-            name: "Ends",
-            getter: {
-              source:
-                'import type { CalendarEntry } from "./CollectionSchema.js";\n\nexport default function getValue(calendarEntry: CalendarEntry): string {\n  if (!calendarEntry.endTime) {\n    return "";\n  }\n  return LocalInstant\n    .fromISO(calendarEntry.endTime)\n    .toFormat({ dateStyle: "short", timeStyle: "short" });\n}',
-              compiled:
-                'export default function getValue(calendarEntry) {\n    if (!calendarEntry.endTime) {\n        return "";\n    }\n    return LocalInstant\n        .fromISO(calendarEntry.endTime)\n        .toFormat({ dateStyle: "short", timeStyle: "short" });\n}\n',
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:27:11.952Z"),
@@ -300,62 +263,7 @@ export default {
         rootType: "FuelLogEntry",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Date",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return LocalInstant.fromISO(fuelLogEntry.timestamp).toFormat();\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return LocalInstant.fromISO(fuelLogEntry.timestamp).toFormat();\n}\n",
-            },
-          },
-          {
-            name: "Vehicle",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return fuelLogEntry.vehicle;\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return fuelLogEntry.vehicle;\n}\n",
-            },
-          },
-          {
-            name: "Liters",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.liters);\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.liters);\n}\n",
-            },
-          },
-          {
-            name: "Total cost (€)",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.totalCost);\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.totalCost);\n}\n",
-            },
-          },
-          {
-            name: "Price per liter",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.pricePerLiter);\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.pricePerLiter);\n}\n",
-            },
-          },
-          {
-            name: "Odometer (km)",
-            getter: {
-              source:
-                'import type { FuelLogEntry } from "./CollectionSchema.js";\n\nexport default function getValue(fuelLogEntry: FuelLogEntry): string {\n  return String(fuelLogEntry.odometer);\n}',
-              compiled:
-                "export default function getValue(fuelLogEntry) {\n    return String(fuelLogEntry.odometer);\n}\n",
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:29:13.582Z"),
@@ -474,44 +382,7 @@ export default {
         rootType: "Expense",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Title",
-            getter: {
-              source:
-                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.title;\n}',
-              compiled:
-                "export default function getValue(expense) {\n    return expense.title;\n}\n",
-            },
-          },
-          {
-            name: "Amount",
-            getter: {
-              source:
-                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.amount + " " + expense.currency;\n}',
-              compiled:
-                'export default function getValue(expense) {\n    return expense.amount + " " + expense.currency;\n}\n',
-            },
-          },
-          {
-            name: "Date",
-            getter: {
-              source:
-                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return LocalInstant.fromISO(expense.date).toFormat();\n}',
-              compiled:
-                "export default function getValue(expense) {\n    return LocalInstant.fromISO(expense.date).toFormat();\n}\n",
-            },
-          },
-          {
-            name: "Category",
-            getter: {
-              source:
-                'import type { Expense } from "./CollectionSchema.js";\n\nexport default function getValue(expense: Expense): string {\n  return expense.category;\n}',
-              compiled:
-                "export default function getValue(expense) {\n    return expense.category;\n}\n",
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:34:07.048Z"),
@@ -612,44 +483,7 @@ export default {
         rootType: "Contact",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Name",
-            getter: {
-              source:
-                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.name;\n}',
-              compiled:
-                "export default function getValue(contact) {\n    return contact.name;\n}\n",
-            },
-          },
-          {
-            name: "Type",
-            getter: {
-              source:
-                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  return contact.type;\n}',
-              compiled:
-                "export default function getValue(contact) {\n    return contact.type;\n}\n",
-            },
-          },
-          {
-            name: "Phone",
-            getter: {
-              source:
-                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [phone] = contact.phones;\n  return phone ? phone.number : "";\n}',
-              compiled:
-                'export default function getValue(contact) {\n    const [phone] = contact.phones;\n    return phone ? phone.number : "";\n}\n',
-            },
-          },
-          {
-            name: "Email",
-            getter: {
-              source:
-                'import type { Contact } from "./CollectionSchema.js";\n\nexport default function getValue(contact: Contact): string {\n  const [email] = contact.emails;\n  return email ? email.address : "";\n}',
-              compiled:
-                'export default function getValue(contact) {\n    const [email] = contact.emails;\n    return email ? email.address : "";\n}\n',
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:40:05.159Z"),
@@ -709,35 +543,7 @@ export default {
         rootType: "VetVisit",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Title",
-            getter: {
-              source:
-                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.title;\n}',
-              compiled:
-                "export default function getValue(vetVisit) {\n    return vetVisit.title;\n}\n",
-            },
-          },
-          {
-            name: "Pet",
-            getter: {
-              source:
-                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.pet;\n}',
-              compiled:
-                "export default function getValue(vetVisit) {\n    return vetVisit.pet;\n}\n",
-            },
-          },
-          {
-            name: "Date",
-            getter: {
-              source:
-                'import type { VetVisit } from "./CollectionSchema.js";\n\nexport default function getValue(vetVisit: VetVisit): string {\n  return vetVisit.date;\n}',
-              compiled:
-                "export default function getValue(vetVisit) {\n    return vetVisit.date;\n}\n",
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:42:06.031Z"),
@@ -783,26 +589,7 @@ export default {
         rootType: "WeighIn",
       },
       settings: {
-        summaryProperties: [
-          {
-            name: "Date",
-            getter: {
-              source:
-                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return LocalInstant.fromISO(weighIn.timestamp).toFormat();\n}',
-              compiled:
-                "export default function getValue(weighIn) {\n    return LocalInstant.fromISO(weighIn.timestamp).toFormat();\n}\n",
-            },
-          },
-          {
-            name: "Weight (kg)",
-            getter: {
-              source:
-                'import type { WeighIn } from "./CollectionSchema.js";\n\nexport default function getValue(weighIn: WeighIn): string {\n  return String(weighIn.weightKg);\n}',
-              compiled:
-                "export default function getValue(weighIn) {\n    return String(weighIn.weightKg);\n}\n",
-            },
-          },
-        ],
+        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:43:03.894Z"),

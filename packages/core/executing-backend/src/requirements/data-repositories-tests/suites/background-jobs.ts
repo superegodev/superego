@@ -290,7 +290,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
       expect(found).toEqual([]);
     });
 
-    it("case: some background jobs => returns them", async () => {
+    it("case: some background jobs => returns them (ordered by enqueuedAt, desc)", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const backgroundJob1: BackgroundJobEntity = {
@@ -298,7 +298,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
         name: BackgroundJobName.ProcessConversation,
         input: { id: Id.generate.conversation() },
         status: BackgroundJobStatus.Enqueued,
-        enqueuedAt: new Date(),
+        enqueuedAt: new Date(1),
         startedProcessingAt: null,
         finishedProcessingAt: null,
         error: null,
@@ -308,7 +308,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
         name: BackgroundJobName.ProcessConversation,
         input: { id: Id.generate.conversation() },
         status: BackgroundJobStatus.Enqueued,
-        enqueuedAt: new Date(),
+        enqueuedAt: new Date(2),
         startedProcessingAt: null,
         finishedProcessingAt: null,
         error: null,
@@ -330,7 +330,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
       );
 
       // Verify
-      expect(found).toEqual([backgroundJob1, backgroundJob2]);
+      expect(found).toEqual([backgroundJob2, backgroundJob1]);
     });
   });
 });
