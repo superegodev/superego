@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
+import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
 import CodeInput from "../../design-system/CodeInput/CodeInput.js";
@@ -37,6 +38,13 @@ export default function RHFTypescriptModuleField({
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
+  const isInvalid =
+    fieldState.invalid &&
+    !(
+      field.value !== null &&
+      typeof field.value === "object" &&
+      field.value.compiled === forms.constants.COMPILATION_IN_PROGRESS
+    );
   return (
     <div
       data-disabled={isDisabled}
@@ -49,7 +57,7 @@ export default function RHFTypescriptModuleField({
         onChange={field.onChange}
         onBlur={field.onBlur}
         autoFocus={autoFocus}
-        isInvalid={fieldState.invalid}
+        isInvalid={isInvalid}
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
@@ -58,7 +66,7 @@ export default function RHFTypescriptModuleField({
       />
       <FieldErrorContext
         value={{
-          isInvalid: fieldState.invalid,
+          isInvalid: isInvalid,
           validationErrors: fieldState.error?.message
             ? [fieldState.error.message]
             : [],

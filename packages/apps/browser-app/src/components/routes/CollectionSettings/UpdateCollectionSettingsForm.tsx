@@ -35,7 +35,7 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
       description: collection.settings.description,
       assistantInstructions: collection.settings.assistantInstructions,
     },
-    mode: "all",
+    mode: "onBlur",
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.collectionName(),

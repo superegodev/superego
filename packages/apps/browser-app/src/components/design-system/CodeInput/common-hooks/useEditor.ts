@@ -5,32 +5,43 @@ import monaco from "../../../../monaco.js";
 import { vars } from "../../../../themes.css.js";
 
 /**
- * Creates the monaco editor instance and the source model and disposes them on
+ * Creates the monaco editor instance and the value model and disposes them on
  * unmount.
  */
 export default function useEditor(
   basePath: string,
   language: "typescript" | "json",
-  source: string,
+  value: string,
+  onChange: (newValue: string) => void,
+  valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   fileName: `${string}.ts` | `${string}.json` = language === "typescript"
     ? "main.ts"
     : "main.json",
 ) {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(null);
-  const sourceModelRef = useRef<monaco.editor.ITextModel>(null);
+  const initialValueRef = useRef(value);
 
   useEffect(() => {
     if (!editorElementRef.current) {
       return;
     }
-    sourceModelRef.current = monaco.editor.createModel(
-      "",
+    valueModelRef.current = monaco.editor.createModel(
+      initialValueRef.current,
       language,
       monaco.Uri.parse(`${basePath}/${fileName}`),
     );
+
+    // Propagate changes to the outside world.
+    valueModelRef.current.onDidChangeContent(() => {
+      const newValue = valueModelRef.current?.getValue();
+      if (newValue !== undefined) {
+        onChange(newValue);
+      }
+    });
+
     editorRef.current = monaco.editor.create(editorElementRef.current, {
-      model: sourceModelRef.current,
+      model: valueModelRef.current,
       // Appearance
       padding: { top: 8, bottom: 8 },
       minimap: { enabled: false },
@@ -54,8 +65,6 @@ export default function useEditor(
       },
       automaticLayout: true,
     });
-
-    editorRef.current.focus();
 
     // Set initial height, auto-resize on content change, and show/hide the
     // vertical scrollbar. (If the container has no max-height, then the
@@ -86,18 +95,26 @@ export default function useEditor(
     return () => {
       editorRef.current?.dispose();
       editorRef.current = null;
-      sourceModelRef.current?.dispose();
-      sourceModelRef.current = null;
+      valueModelRef.current?.dispose();
+      valueModelRef.current = null;
     };
-  }, [basePath, language, fileName]);
+  }, [
+    basePath,
+    language,
+    onChange,
+    // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
+    // it's a ref, it's stable and passing it here has no effect.
+    valueModelRef,
+    fileName,
+  ]);
 
   // Keep editor theme in sync
   useSyncEditorTheme(editorRef);
 
-  // Keep source model in sync.
-  useSyncSourceModel(sourceModelRef, source);
+  // Keep value model in sync.
+  useSyncValueModel(valueModelRef, value);
 
-  return { editorElementRef, sourceModelRef };
+  return { editorElementRef, valueModelRef };
 }
 
 function getContainerHeight(editorContentHeigh: number): number {
@@ -122,25 +139,24 @@ function useSyncEditorTheme(
   ]);
 }
 
-function useSyncSourceModel(
-  sourceModelRef: RefObject<monaco.editor.ITextModel | null>,
-  source: string,
+function useSyncValueModel(
+  valueModelRef: RefObject<monaco.editor.ITextModel | null>,
+  value: string,
 ) {
-  // Keep source model in sync.
   useEffect(() => {
     // Since setting the model's value resets the editor's position, the value
     // is set only when the "received" outside value differs from the current
     // model value.
     if (
-      sourceModelRef.current !== null &&
-      sourceModelRef.current.getValue() !== source
+      valueModelRef.current !== null &&
+      valueModelRef.current.getValue() !== value
     ) {
-      sourceModelRef.current.setValue(source);
+      valueModelRef.current.setValue(value);
     }
   }, [
-    source,
+    value,
     // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
     // it's a ref, it's stable and passing it here has no effect.
-    sourceModelRef,
+    valueModelRef,
   ]);
 }

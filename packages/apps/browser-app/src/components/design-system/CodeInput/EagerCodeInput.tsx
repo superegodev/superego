@@ -42,6 +42,7 @@ export default function EagerCodeInput({
       onBlur={onBlur}
       aria-invalid={isInvalid}
       aria-disabled={isDisabled}
+      inert={isDisabled}
       className={cs.CodeInput.root}
     >
       {language === "typescript" ? (

@@ -1,5 +1,6 @@
 import type { Property } from "csstype";
-import type { FocusEvent } from "react";
+import { useRef } from "react";
+import type monaco from "../../../../monaco.js";
 import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
 
@@ -16,24 +17,14 @@ export default function JsonEditor({
   maxHeight,
 }: Props) {
   const editorBasePath = useEditorBasePath();
-
-  const { editorElementRef, sourceModelRef } = useEditor(
+  const valueModelRef = useRef<monaco.editor.ITextModel>(null);
+  const { editorElementRef } = useEditor(
     editorBasePath,
     "json",
     value,
+    onChange,
+    valueModelRef,
     fileName,
   );
-
-  // On blur, propagate changes to the model to the outside world.
-  const onBlur = async (evt: FocusEvent<HTMLDivElement, Element>) => {
-    if (
-      editorElementRef.current?.contains(evt.relatedTarget) ||
-      !sourceModelRef.current
-    ) {
-      return;
-    }
-    onChange(sourceModelRef.current.getValue());
-  };
-
-  return <div style={{ maxHeight }} ref={editorElementRef} onBlur={onBlur} />;
+  return <div style={{ maxHeight }} ref={editorElementRef} />;
 }

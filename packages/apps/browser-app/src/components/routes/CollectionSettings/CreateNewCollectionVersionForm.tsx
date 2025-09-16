@@ -62,7 +62,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         compiled: forms.constants.COMPILATION_REQUIRED,
       },
     },
-    mode: "all",
+    mode: "onBlur",
     resolver: standardSchemaResolver(
       v.strictObject({
         schema: valibotSchemas.schema(),
@@ -77,7 +77,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     formState.dirtyFields.schema &&
     !dequal(collection.latestVersion.schema, schema);
 
-  // TODO: use the reset API
+  // TODO: use the reset API.
+  // TODO: set compilation required on schema changes.
   // When schema changes, if the user didn't make any change to the migration
   // (hence it's still the default one), update it.
   useEffect(() => {
@@ -161,6 +162,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       <RHFContentSummaryGetterField
         control={control}
         name="contentSummaryGetter"
+        isDisabled={!isSchemaDirty || typeof schema === "string"}
         schemaTypescriptLib={contentSummaryGetterSchemaTypescriptLib}
       />
       <RHFTypescriptModuleField

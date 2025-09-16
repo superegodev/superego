@@ -67,6 +67,7 @@
     "base-x": "^5.0.1",
     "debounce": "^2.2.0",
     "dequal": "^2.0.3",
+    "es-toolkit": "^1.39.10",
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "markdown-to-jsx": "^7.7.13",

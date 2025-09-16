@@ -12,14 +12,14 @@ export default function contentSummaryGetter(
     source: [
       `import type { ${rootType} } from "${importPath}";`,
       "",
-      "export default function getValue(",
+      "export default function getContentSummary(",
       `  ${argName}: ${rootType}`,
       "): Record<string, string> {",
       "  return {};",
       "}",
     ].join("\n"),
     compiled: [
-      `export default function getValue(${argName}) {`,
+      `export default function getContentSummary(${argName}) {`,
       "  return {};",
       "}",
     ].join("\n"),

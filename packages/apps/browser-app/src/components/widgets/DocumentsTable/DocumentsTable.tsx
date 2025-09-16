@@ -1,7 +1,9 @@
 import type { Collection, Document } from "@superego/backend";
+import { uniq } from "es-toolkit";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import Table from "../../design-system/Table/Table.js";
 
 interface Props {
@@ -10,6 +12,11 @@ interface Props {
 }
 export default function DocumentsTable({ collection, documents }: Props) {
   const intl = useIntl();
+  const contentSummaryKeys = uniq(
+    documents.flatMap((document) =>
+      Object.keys(document.latestVersion.contentSummary.data ?? {}),
+    ),
+  );
   return (
     <Table
       aria-label={intl.formatMessage(
@@ -19,12 +26,14 @@ export default function DocumentsTable({ collection, documents }: Props) {
       selectionMode="none"
     >
       <Table.Header>
-        {(
-          documents[0]?.latestVersion.summaryProperties ??
-          collection.latestVersion.settings.summaryProperties
-        ).map(({ name }, index) => (
-          <Table.Column key={name} isRowHeader={index === 0}>
-            {name}
+        {isEmpty(contentSummaryKeys) ? (
+          <Table.Column>
+            <FormattedMessage defaultMessage="Id" />
+          </Table.Column>
+        ) : null}
+        {contentSummaryKeys.map((contentSummaryKey, index) => (
+          <Table.Column key={contentSummaryKey} isRowHeader={index === 0}>
+            {contentSummaryKey}
           </Table.Column>
         ))}
         <Table.Column align="right">
@@ -50,13 +59,21 @@ export default function DocumentsTable({ collection, documents }: Props) {
               documentId: document.id,
             })}
           >
-            {document.latestVersion.summaryProperties.map(
-              ({ name, value, valueComputationError }) => (
-                <Table.Cell key={name}>
-                  {value ?? valueComputationError.details.message}
-                </Table.Cell>
-              ),
-            )}
+            {isEmpty(contentSummaryKeys) ? (
+              <Table.Cell>{document.id}</Table.Cell>
+            ) : null}
+            {contentSummaryKeys.map((key) => (
+              <Table.Cell key={key}>
+                {document.latestVersion.contentSummary.success ? (
+                  document.latestVersion.contentSummary.data[key]
+                ) : document.latestVersion.contentSummary.error.name ===
+                  "ContentSummaryNotValid" ? (
+                  <FormattedMessage defaultMessage="Invalid content summary" />
+                ) : (
+                  document.latestVersion.contentSummary.error.details.message
+                )}
+              </Table.Cell>
+            ))}
             <Table.Cell align="right">
               <FormattedDate value={document.createdAt} />
             </Table.Cell>

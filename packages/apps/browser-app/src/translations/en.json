@@ -266,6 +266,12 @@
   "DocumentsTable.tsx_cbuMAX": {
     "defaultMessage": "Documents of collection {collection}"
   },
+  "DocumentsTable.tsx_kGGU2D": {
+    "defaultMessage": "Id"
+  },
+  "DocumentsTable.tsx_vT9jcW": {
+    "defaultMessage": "Invalid content summary"
+  },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"
   },

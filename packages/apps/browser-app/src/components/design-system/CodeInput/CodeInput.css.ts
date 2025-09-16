@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const CodeInput = {
@@ -24,6 +24,9 @@ export const CodeInput = {
     },
   }),
 };
+globalStyle(`${CodeInput.root}[aria-disabled="true"] *`, {
+  color: `${vars.colors.text.secondary} !important`,
+});
 
 export const CompilationInProgressIndicator = {
   root: style({

@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -40,6 +40,17 @@ export default function RHFSchemaField({
       : JSON.stringify(field.value, null, 2),
   );
   const errors = forms.utils.flattenError(fieldState.error);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setJsonValue(newValue);
+      try {
+        field.onChange(JSON.parse(newValue));
+      } catch {
+        field.onChange(newValue);
+      }
+    },
+    [field.onChange],
+  );
   return (
     <div
       data-disabled={isDisabled}
@@ -49,14 +60,7 @@ export default function RHFSchemaField({
       <CodeInput
         language="json"
         value={jsonValue}
-        onChange={(newValue) => {
-          setJsonValue(newValue);
-          try {
-            field.onChange(JSON.parse(newValue));
-          } catch {
-            field.onChange(newValue);
-          }
-        }}
+        onChange={handleChange}
         fileName="schema.json"
         onBlur={field.onBlur}
         autoFocus={autoFocus}

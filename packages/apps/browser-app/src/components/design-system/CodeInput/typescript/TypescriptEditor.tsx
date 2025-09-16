@@ -1,9 +1,10 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import pTimeout from "p-timeout";
-import { type FocusEvent, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import forms from "../../../../business-logic/forms/forms.js";
 import { MONACO_EDITOR_COMPILATION_TIMEOUT } from "../../../../config.js";
+import type monaco from "../../../../monaco.js";
 import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
 import getCompilationOutput from "./getCompilationOutput.js";
@@ -35,17 +36,8 @@ export default function TypescriptEditor({
     includedGlobalUtils,
   );
 
-  const { editorElementRef, sourceModelRef } = useEditor(
-    editorBasePath,
-    "typescript",
-    value.source,
-    fileName,
-  );
+  const valueModelRef = useRef<monaco.editor.ITextModel>(null);
 
-  // On blur, propagate changes to the model to the outside world. The
-  // propagation includes the changes to the TypeScript source AND the compiled
-  // source.
-  //
   // Note: compilation is an asynchronous operation. This means that it's
   // possible that an earlier change whose compilation took longer than expected
   // finishes compilation AFTER a subsequent change. If the earlier change were
@@ -53,41 +45,56 @@ export default function TypescriptEditor({
   // would see the value of the input "revert back". To avoid this race
   // condition, we keep track of the latest change and allow onChange to be
   // called only for the latest change.
-  const latestBlurIdRef = useRef(0);
-  const onBlur = async (evt: FocusEvent<HTMLDivElement, Element>) => {
-    if (
-      editorElementRef.current?.contains(evt.relatedTarget) ||
-      !sourceModelRef.current
-    ) {
-      return;
+  const latestChangeIdRef = useRef(0);
+  const compileSource = useCallback(
+    async (source: string) => {
+      if (!valueModelRef.current) {
+        return;
+      }
+
+      const changeId = latestChangeIdRef.current + 1;
+      latestChangeIdRef.current = changeId;
+
+      onChange({
+        source: source,
+        // EVOLUTION: move compilation to the backend, which should simplify the
+        // logic here quite a lot. For now, let's live with this ugly hack to keep
+        // track of the compilation state.
+        compiled: forms.constants.COMPILATION_IN_PROGRESS,
+      });
+      const newCompiled = await pTimeout(
+        getCompilationOutput(
+          valueModelRef.current.uri.toString(),
+          forms.constants.COMPILATION_FAILED,
+        ),
+        {
+          milliseconds: MONACO_EDITOR_COMPILATION_TIMEOUT,
+          fallback: () => forms.constants.COMPILATION_FAILED,
+        },
+      );
+
+      if (changeId === latestChangeIdRef.current) {
+        onChange({ source: source, compiled: newCompiled });
+      }
+    },
+    [onChange],
+  );
+
+  const { editorElementRef } = useEditor(
+    editorBasePath,
+    "typescript",
+    value.source,
+    compileSource,
+    valueModelRef,
+    fileName,
+  );
+
+  // Recompile on mount if compilation is required.
+  useEffect(() => {
+    if (value.compiled === forms.constants.COMPILATION_REQUIRED) {
+      compileSource(value.source);
     }
+  }, [value.compiled, value.source, compileSource]);
 
-    const blurId = latestBlurIdRef.current + 1;
-    latestBlurIdRef.current = blurId;
-
-    const newSource = sourceModelRef.current.getValue();
-    onChange({
-      source: newSource,
-      // EVOLUTION: move compilation to the backend, which should simplify the
-      // logic here quite a lot. For now, let's live with this ugly hack to keep
-      // track of the compilation state.
-      compiled: forms.constants.COMPILATION_IN_PROGRESS,
-    });
-    const newCompiled = await pTimeout(
-      getCompilationOutput(
-        sourceModelRef.current.uri.toString(),
-        forms.constants.COMPILATION_FAILED,
-      ),
-      {
-        milliseconds: MONACO_EDITOR_COMPILATION_TIMEOUT,
-        fallback: () => forms.constants.COMPILATION_FAILED,
-      },
-    );
-
-    if (blurId === latestBlurIdRef.current) {
-      onChange({ source: newSource, compiled: newCompiled });
-    }
-  };
-
-  return <div style={{ maxHeight }} ref={editorElementRef} onBlur={onBlur} />;
+  return <div style={{ maxHeight }} ref={editorElementRef} />;
 }
