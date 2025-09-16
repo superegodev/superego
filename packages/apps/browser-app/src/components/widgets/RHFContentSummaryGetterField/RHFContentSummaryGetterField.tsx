@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
-import InlineCode from "../../design-system/InlineCode/InlineCode.jsx";
+import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import * as cs from "./RHFContentSummaryGetterField.css.js";
 

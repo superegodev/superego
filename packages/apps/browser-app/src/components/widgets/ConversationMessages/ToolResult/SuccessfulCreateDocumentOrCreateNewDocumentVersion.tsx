@@ -1,9 +1,4 @@
-import {
-  type SummaryProperty,
-  type SummaryPropertyDefinition,
-  ToolName,
-  type ToolResult,
-} from "@superego/backend";
+import { ToolName, type ToolResult } from "@superego/backend";
 
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
@@ -11,6 +6,7 @@ import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js"
 import { getDocumentVersionQuery } from "../../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
+import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
 import Link from "../../../design-system/Link/Link.js";
 import * as cs from "./ToolResult.css.js";
 
@@ -55,46 +51,22 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
           />
         )}
       </h5>
-      <dl className={cs.SuccessfulCreateDocument.summaryProperties}>
-        <DataLoader
-          queries={[
-            getDocumentVersionQuery([
-              collectionId,
-              documentId,
-              documentVersionId,
-            ]),
-          ]}
-          renderLoading={() =>
-            collection?.latestVersion.settings.summaryProperties.map(
-              renderSummaryProperty,
-            )
-          }
-        >
-          {({ summaryProperties }) =>
-            summaryProperties.map(renderSummaryProperty)
-          }
-        </DataLoader>
-      </dl>
+      <DataLoader
+        queries={[
+          getDocumentVersionQuery([
+            collectionId,
+            documentId,
+            documentVersionId,
+          ]),
+        ]}
+        renderLoading={
+          () => null // TODO: skeleton
+        }
+      >
+        {({ contentSummary }) => (
+          <ContentSummary contentSummary={contentSummary} />
+        )}
+      </DataLoader>
     </Link>
-  );
-}
-
-function renderSummaryProperty(
-  property: SummaryProperty | SummaryPropertyDefinition,
-) {
-  return (
-    <div
-      key={property.name}
-      className={cs.SuccessfulCreateDocument.summaryProperty}
-    >
-      <dt className={cs.SuccessfulCreateDocument.summaryPropertyName}>
-        {property.name}
-      </dt>
-      <dd className={cs.SuccessfulCreateDocument.summaryPropertyValue}>
-        {"value" in property
-          ? (property.value ?? property.valueComputationError.details.message)
-          : null}
-      </dd>
-    </div>
   );
 }

@@ -11,7 +11,7 @@ import { useCreateNewCollectionVersion } from "../../../business-logic/backend/h
 import forms from "../../../business-logic/forms/forms.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
-import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.jsx";
+import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSchemaField from "../../widgets/RHFSchemaField/RHFSchemaField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTypescriptModuleField from "../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";

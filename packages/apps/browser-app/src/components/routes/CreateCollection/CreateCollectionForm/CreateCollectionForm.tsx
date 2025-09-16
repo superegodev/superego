@@ -15,7 +15,7 @@ import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ResultError from "../../../design-system/ResultError/ResultError.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CreateCollection.css.js";
-import ContentSummaryTab from "./ContentSummaryTab.jsx";
+import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import GeneralSettingsTab from "./GeneralSettingsTab.js";
 import SchemaTab from "./SchemaTab.js";

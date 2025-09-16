@@ -11,7 +11,7 @@ import {
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
-import InlineCode from "../../design-system/InlineCode/InlineCode.jsx";
+import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import * as cs from "./RHFSchemaField.css.js";
 
 interface Props {

@@ -18,7 +18,7 @@ export const CodeInput = {
         border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
         borderRadius: vars.borders.radius.md,
       },
-      '&[aria-invalid="true"]::before': {
+      '&[aria-invalid="true"]:not(:has(.monaco-editor.focused))::before': {
         borderColor: vars.colors.semantic.error.border,
       },
     },

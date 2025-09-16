@@ -10,7 +10,7 @@ import { useUpdateLatestCollectionVersionSettings } from "../../../business-logi
 import forms from "../../../business-logic/forms/forms.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
-import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.jsx";
+import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
 
@@ -35,7 +35,7 @@ export default function UpdateCollectionVersionSettingsForm({
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
     },
-    mode: "all",
+    mode: "onBlur",
     resolver: standardSchemaResolver(
       v.strictObject({
         contentSummaryGetter: forms.schemas.typescriptModule(intl),

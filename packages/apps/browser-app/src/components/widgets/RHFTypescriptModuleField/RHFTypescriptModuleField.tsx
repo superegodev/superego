@@ -73,7 +73,9 @@ export default function RHFTypescriptModuleField({
           validationDetails: {} as any,
         }}
       >
-        <FieldError>{fieldState.error?.message}</FieldError>
+        <FieldError className={cs.RHFTypescriptModuleField.error}>
+          {fieldState.error?.message}
+        </FieldError>
       </FieldErrorContext>
       {description ? <Description>{description}</Description> : null}
     </div>

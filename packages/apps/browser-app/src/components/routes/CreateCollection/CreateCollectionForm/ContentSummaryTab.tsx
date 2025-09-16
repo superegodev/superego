@@ -3,7 +3,7 @@ import { codegen } from "@superego/schema";
 import { useEffect, useMemo, useRef } from "react";
 import type { Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import forms from "../../../../business-logic/forms/forms.js";
-import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.jsx";
+import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 
