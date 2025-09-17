@@ -4404,6 +4404,7 @@ __metadata:
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.2"
     valibot: "npm:^1.1.0"
+    vite: "npm:^7.1.5"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft

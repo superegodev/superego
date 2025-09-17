@@ -31,7 +31,7 @@ export default function ErrorMessage({ conversation }: Props) {
       <Disclosure title={intl.formatMessage({ defaultMessage: "Details" })}>
         <CodeBlock
           language="json"
-          code={JSON.stringify(cause)}
+          code={JSON.stringify(cause, null, 2)}
           showCopyButton={true}
         />
       </Disclosure>

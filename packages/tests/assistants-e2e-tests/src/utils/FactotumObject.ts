@@ -254,7 +254,7 @@ class FactotumObject {
       </requirements>
     `
         .trim()
-        .replaceAll(/^ {6}/g, ""),
+        .replaceAll(/^ {6}/gm, ""),
     );
 
     assert.isTrue(

@@ -24,7 +24,7 @@ export default function Assistant() {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (userMessageContent: Message.User["content"]) => {
     const { success, data } = await mutate(
-      AssistantName.Factotum,
+      AssistantName.CollectionCreator,
       userMessageContent[0].type === MessageContentPartType.Text
         ? ConversationFormat.Text
         : ConversationFormat.Voice,

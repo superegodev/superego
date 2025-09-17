@@ -1,6 +1,7 @@
 import {
   AssistantName,
   type Collection,
+  type CollectionCategory,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
@@ -26,6 +27,8 @@ import type InferenceService from "../../requirements/InferenceService.js";
 import generateTitle from "../../utils/generateTitle.js";
 import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
+import CollectionCategoriesList from "../collection-categories/List.js";
+import CollectionsCreate from "../collections/Create.js";
 import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
@@ -45,6 +48,14 @@ export default class AssistantsProcessConversation extends Usecase {
       return collectionsListResult;
     }
     const { data: collections } = collectionsListResult;
+
+    const collectionCategoriesListResult = await this.sub(
+      CollectionCategoriesList,
+    ).exec();
+    if (!collectionCategoriesListResult.success) {
+      return collectionCategoriesListResult;
+    }
+    const { data: collectionCategories } = collectionCategoriesListResult;
 
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
@@ -79,6 +90,7 @@ export default class AssistantsProcessConversation extends Usecase {
         globalSettings,
         inferenceService,
         conversation.assistant,
+        collectionCategories,
         collections,
       );
 
@@ -125,6 +137,7 @@ export default class AssistantsProcessConversation extends Usecase {
     globalSettings: GlobalSettings,
     inferenceService: InferenceService,
     assistant: AssistantName,
+    collectionCategories: CollectionCategory[],
     collections: Collection[],
   ): Assistant {
     return assistant === AssistantName.Factotum
@@ -145,6 +158,11 @@ export default class AssistantsProcessConversation extends Usecase {
             AssistantName.CollectionCreator
           ],
           inferenceService,
+          collectionCategories,
+          collections,
+          {
+            collectionsCreate: this.sub(CollectionsCreate),
+          },
         );
   }
 

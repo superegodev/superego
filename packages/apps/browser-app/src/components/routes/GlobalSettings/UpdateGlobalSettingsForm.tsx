@@ -1,9 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import {
-  AssistantName,
-  type GlobalSettings,
-  type Theme,
-} from "@superego/backend";
+import type { GlobalSettings, Theme } from "@superego/backend";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
@@ -31,22 +27,7 @@ export default function UpdateGlobalSettingsForm({
 
   const { control, handleSubmit, reset, formState, watch } =
     useForm<GlobalSettings>({
-      defaultValues: {
-        ...globalSettings,
-        assistants: {
-          ...globalSettings.assistants,
-          developerPrompts: {
-            [AssistantName.CollectionCreator]:
-              globalSettings.assistants.developerPrompts[
-                AssistantName.CollectionCreator
-              ] ?? developerPrompts[AssistantName.CollectionCreator],
-            [AssistantName.Factotum]:
-              globalSettings.assistants.developerPrompts[
-                AssistantName.Factotum
-              ] ?? developerPrompts[AssistantName.Factotum],
-          },
-        },
-      },
+      defaultValues: globalSettings,
       mode: "all",
       resolver: standardSchemaResolver(forms.schemas.globalSettings()),
     });

@@ -1,4 +1,8 @@
 import type { JSONSchema7 } from "json-schema";
+import JsonObjectFormats from "./formats/JsonObject.js";
+import NumberFormats from "./formats/Number.js";
+import StringFormats from "./formats/String.js";
+import type { Format } from "./index.js";
 import identifierRegex from "./valibot-schemas/identifier/identifierRegex.js";
 import mimeTypeRegex from "./valibot-schemas/mimeType/mimeTypeRegex.js";
 import mimeTypeMatcherRegex from "./valibot-schemas/mimeTypeMatcher/mimeTypeMatcherRegex.js";
@@ -10,7 +14,8 @@ export default {
   type: "object",
   properties: {
     types: {
-      description: "A map of type names to their definitions.",
+      description:
+        "Record (by name) of type definitions. Define complex types here once and reuse them elsewhere in the schema.",
       type: "object",
       patternProperties: {
         [identifierRegex.source]: { $ref: "#/$defs/AnyTypeDefinition" },
@@ -19,7 +24,7 @@ export default {
     },
     rootType: {
       description:
-        "Name of the root type. Must be a key in 'types'. Must be a StructTypeDefinition.",
+        "Ref to the type that defines the overall structure of the document. Must exist in `types`. Must be a `StructTypeDefinition`.",
       type: "string",
     },
   },
@@ -31,7 +36,10 @@ export default {
       properties: {
         description: { type: "string" },
         dataType: { const: "String" },
-        format: { type: "string" },
+        format: {
+          description: wellKnownFormatsDescription(StringFormats),
+          type: "string",
+        },
       },
       required: ["dataType"],
       additionalProperties: false,
@@ -69,7 +77,10 @@ export default {
       properties: {
         description: { type: "string" },
         dataType: { const: "Number" },
-        format: { type: "string" },
+        format: {
+          description: wellKnownFormatsDescription(NumberFormats),
+          type: "string",
+        },
       },
       required: ["dataType"],
       additionalProperties: false,
@@ -123,7 +134,10 @@ export default {
       properties: {
         description: { type: "string" },
         dataType: { const: "JsonObject" },
-        format: { type: "string" },
+        format: {
+          description: wellKnownFormatsDescription(JsonObjectFormats),
+          type: "string",
+        },
       },
       required: ["dataType"],
       additionalProperties: false,
@@ -239,3 +253,10 @@ The object values are _accepted file extensions_, which are either:
     },
   },
 } satisfies JSONSchema7;
+
+function wellKnownFormatsDescription(formats: Format[]): string {
+  return [
+    "Well-known formats:",
+    ...formats.map((format) => `- \`${format.id}\`: ${format.description}`),
+  ].join("\n");
+}

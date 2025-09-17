@@ -35,6 +35,7 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
+    dryRun = false,
   ): ResultPromise<
     Collection,
     | CollectionSettingsNotValid
@@ -135,8 +136,10 @@ export default class CollectionsCreate extends Usecase<
       migration: null,
       createdAt: now,
     };
-    await this.repos.collection.insert(collection);
-    await this.repos.collectionVersion.insert(collectionVersion);
+    if (!dryRun) {
+      await this.repos.collection.insert(collection);
+      await this.repos.collectionVersion.insert(collectionVersion);
+    }
 
     return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
