@@ -39,13 +39,13 @@ export default function RHFContentSummaryGetterField({
               The <b>content summary</b> of a document is a
               <code>Record'<name: string, value: string>'</code>—derived from
               its content—that contains its most important bits of information.
-              These are displayed when showing a "summary view" of the document.
-              For example, they are shown in documents tables, where there's a
-              column for each property of the record.
+              These are displayed when showing a "summary view" of the document;
+              for example, in tables, where each property of the record becomes
+              a column.
             </p>
             <p>
-              This is the function that is run on the document content and
-              derives the content summary record.
+              The <b>content summary getter</b> is the function that derives the
+              summary from the document content.
             </p>
           `}
           values={{

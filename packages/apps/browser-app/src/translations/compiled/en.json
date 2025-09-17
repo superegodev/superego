@@ -1181,7 +1181,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_PNUGlY": [
+  "RHFContentSummaryGetterField.tsx_CcY8Jl": [
     {
       "children": [
         {
@@ -1214,7 +1214,7 @@
         },
         {
           "type": 0,
-          "value": "—derived from its content—that contains its most important bits of information. These are displayed when showing a \"summary view\" of the document. For example, they are shown in documents tables, where there's a column for each property of the record. "
+          "value": "—derived from its content—that contains its most important bits of information. These are displayed when showing a \"summary view\" of the document; for example, in tables, where each property of the record becomes a column. "
         }
       ],
       "type": 8,
@@ -1228,7 +1228,21 @@
       "children": [
         {
           "type": 0,
-          "value": " This is the function that is run on the document content and derives the content summary record. "
+          "value": " The "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "content summary getter"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " is the function that derives the summary from the document content. "
         }
       ],
       "type": 8,
