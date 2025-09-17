@@ -7,13 +7,13 @@ import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "./Chat.js";
-import * as cs from "./Conversation.css.js";
 import DeleteConversationModalForm from "./DeleteConversationModalForm.js";
+import * as cs from "./FactotumConversation.css.js";
 
 interface Props {
   conversationId: ConversationId;
 }
-export default function Conversation({ conversationId }: Props) {
+export default function FactotumConversation({ conversationId }: Props) {
   const intl = useIntl();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [showToolCalls, setShowToolCalls] = useState(false);
@@ -68,7 +68,7 @@ export default function Conversation({ conversationId }: Props) {
               },
             ]}
           />
-          <Shell.Panel.Content className={cs.Conversation.panelContent}>
+          <Shell.Panel.Content className={cs.FactotumConversation.panelContent}>
             <Chat conversation={conversation} showToolsCalls={showToolCalls} />
             <DeleteConversationModalForm
               key={`DeleteConversationModalForm_${conversationId}`}

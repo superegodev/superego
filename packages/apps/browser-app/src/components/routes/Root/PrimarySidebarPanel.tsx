@@ -14,10 +14,7 @@ export default function PrimarySidebarPanel() {
         className={cs.PrimarySidebarPanel.root}
       >
         <div className={cs.PrimarySidebarPanel.topActions}>
-          <PrimarySidebarPanelAction
-            type="link"
-            to={{ name: RouteName.Assistant }}
-          >
+          <PrimarySidebarPanelAction type="link" to={{ name: RouteName.Ask }}>
             <PiRobot />
             <FormattedMessage defaultMessage="Ask" />
           </PrimarySidebarPanelAction>

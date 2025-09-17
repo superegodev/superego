@@ -14,30 +14,33 @@ import Link from "../../design-system/Link/Link.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
-import * as cs from "./Assistant.css.js";
+import * as cs from "./Ask.css.js";
 import Hero from "./Hero.js";
 
-export default function Assistant() {
+export default function Ask() {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (userMessageContent: Message.User["content"]) => {
     const { success, data } = await mutate(
-      AssistantName.CollectionCreator,
+      AssistantName.Factotum,
       userMessageContent[0].type === MessageContentPartType.Text
         ? ConversationFormat.Text
         : ConversationFormat.Voice,
       userMessageContent,
     );
     if (success) {
-      navigateTo({ name: RouteName.Conversation, conversationId: data.id });
+      navigateTo({
+        name: RouteName.FactotumConversation,
+        conversationId: data.id,
+      });
     }
   };
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header />
-      <Shell.Panel.Content className={cs.Assistant.panelContent}>
+      <Shell.Panel.Content className={cs.Ask.panelContent}>
         <Hero />
         <UserMessageContentInput
           conversation={null}
@@ -50,9 +53,9 @@ export default function Assistant() {
         />
         <Link
           to={{ name: RouteName.Conversations }}
-          className={cs.Assistant.historyLink}
+          className={cs.Ask.historyLink}
         >
-          <PiClockCounterClockwise className={cs.Assistant.historyLinkIcon} />
+          <PiClockCounterClockwise className={cs.Ask.historyLinkIcon} />
           <FormattedMessage defaultMessage="Previous conversations" />
         </Link>
         {result?.error ? (

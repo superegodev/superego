@@ -5,19 +5,19 @@
       "value": "Theme"
     }
   ],
-  "Assistant.tsx_EWHk8s": [
+  "Ask.tsx_EWHk8s": [
     {
       "type": 0,
       "value": "Error starting conversation"
     }
   ],
-  "Assistant.tsx_khigiR": [
+  "Ask.tsx_khigiR": [
     {
       "type": 0,
       "value": "Previous conversations"
     }
   ],
-  "Assistant.tsx_oZLZvb": [
+  "Ask.tsx_oZLZvb": [
     {
       "type": 0,
       "value": "How can I help you?"
@@ -63,12 +63,6 @@
     {
       "type": 0,
       "value": "Your name"
-    }
-  ],
-  "AssistedMode.tsx_yWDfdE": [
-    {
-      "type": 0,
-      "value": "What kind of data do you want to store?"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -219,40 +213,6 @@
       "value": "Create"
     }
   ],
-  "Conversation.tsx_9eR0Qp": [
-    {
-      "type": 0,
-      "value": "Delete conversation"
-    }
-  ],
-  "Conversation.tsx_eq3LES": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations » "
-    },
-    {
-      "type": 1,
-      "value": "conversation"
-    }
-  ],
-  "Conversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Toggle tool calls"
-    }
-  ],
-  "Conversation.tsx_w5q/I/": [
-    {
-      "type": 0,
-      "value": "Conversation actions"
-    }
-  ],
-  "Conversation.tsx_yYmfIl": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations"
-    }
-  ],
   "ConversationUtils.ts_PQ8A3I": [
     {
       "type": 0,
@@ -331,28 +291,10 @@
       "value": "Copied"
     }
   ],
-  "CreateCollection.tsx_9/rVBT": [
+  "CreateCollectionAssisted.tsx_yWDfdE": [
     {
       "type": 0,
-      "value": "Create collection actions"
-    }
-  ],
-  "CreateCollection.tsx_CF8TPC": [
-    {
-      "type": 0,
-      "value": "Assisted mode"
-    }
-  ],
-  "CreateCollection.tsx_PCQvKY": [
-    {
-      "type": 0,
-      "value": "Manual mode"
-    }
-  ],
-  "CreateCollection.tsx_XQCXwU": [
-    {
-      "type": 0,
-      "value": "Create Collection"
+      "value": "What kind of data do you want to store?"
     }
   ],
   "CreateCollectionForm.tsx_45vDAJ": [
@@ -371,6 +313,24 @@
     {
       "type": 0,
       "value": "1. General settings"
+    }
+  ],
+  "CreateCollectionManual.tsx_0okpIz": [
+    {
+      "type": 0,
+      "value": "Create Collection (Manual)"
+    }
+  ],
+  "CreateCollectionManual.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Create collection actions"
+    }
+  ],
+  "CreateCollectionManual.tsx_vyFgZO": [
+    {
+      "type": 0,
+      "value": "Use assistant"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -743,6 +703,40 @@
     {
       "type": 0,
       "value": "The assistant encountered an error."
+    }
+  ],
+  "FactotumConversation.tsx_9eR0Qp": [
+    {
+      "type": 0,
+      "value": "Delete conversation"
+    }
+  ],
+  "FactotumConversation.tsx_eq3LES": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "FactotumConversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Toggle tool calls"
+    }
+  ],
+  "FactotumConversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Conversation actions"
+    }
+  ],
+  "FactotumConversation.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
     }
   ],
   "FileField.tsx_5q3qC0": [

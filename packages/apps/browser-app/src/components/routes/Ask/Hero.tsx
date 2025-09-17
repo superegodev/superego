@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl";
 import Logo from "../../design-system/Logo/Logo.js";
-import * as cs from "./Assistant.css.js";
+import * as cs from "./Ask.css.js";
 
 export default function Hero() {
   return (

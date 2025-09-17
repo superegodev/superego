@@ -6,13 +6,24 @@ import { fromHref, toHref } from "./RouteUtils.js";
 
 const testRoutes: Route[] = [
   {
-    name: RouteName.Assistant,
+    name: RouteName.Ask,
   },
   {
-    name: RouteName.GlobalSettings,
+    name: RouteName.Conversations,
   },
   {
-    name: RouteName.CreateCollection,
+    name: RouteName.FactotumConversation,
+    conversationId: Id.generate.conversation(),
+  },
+  {
+    name: RouteName.CollectionCreatorConversation,
+    conversationId: Id.generate.conversation(),
+  },
+  {
+    name: RouteName.CreateCollectionAssisted,
+  },
+  {
+    name: RouteName.CreateCollectionManual,
   },
   {
     name: RouteName.CreateNewCollectionVersion,
@@ -36,11 +47,7 @@ const testRoutes: Route[] = [
     documentId: Id.generate.document(),
   },
   {
-    name: RouteName.Conversations,
-  },
-  {
-    name: RouteName.Conversation,
-    conversationId: Id.generate.conversation(),
+    name: RouteName.GlobalSettings,
   },
 ];
 

@@ -1,4 +1,4 @@
-import type { Conversation } from "@superego/backend";
+import { AssistantName, type Conversation } from "@superego/backend";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
@@ -46,7 +46,10 @@ export default function ConversationsTable({ conversations }: Props) {
         {(conversation) => (
           <Table.Row
             href={toHref({
-              name: RouteName.Conversation,
+              name:
+                conversation.assistant === AssistantName.Factotum
+                  ? RouteName.FactotumConversation
+                  : RouteName.CollectionCreatorConversation,
               conversationId: conversation.id,
             })}
           >

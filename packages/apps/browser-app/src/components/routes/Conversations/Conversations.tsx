@@ -20,7 +20,7 @@ export default function Conversations() {
             label: intl.formatMessage({ defaultMessage: "New conversation" }),
             icon: <PiPlus />,
             to: {
-              name: RouteName.Assistant,
+              name: RouteName.Ask,
             },
           },
         ]}

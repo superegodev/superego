@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const Conversation = {
+export const FactotumConversation = {
   panelContent: style({
     display: "flex",
     flexDirection: "column-reverse",

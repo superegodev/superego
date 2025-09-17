@@ -8,12 +8,18 @@ import { RouteName } from "./Route.js";
 
 export function toHref(route: Route): string {
   switch (route.name) {
-    case RouteName.Assistant:
+    case RouteName.Ask:
       return "/";
-    case RouteName.GlobalSettings:
-      return "/settings";
-    case RouteName.CreateCollection:
-      return "/collections/new";
+    case RouteName.Conversations:
+      return "/conversations";
+    case RouteName.FactotumConversation:
+      return `/conversations/factotum/${route.conversationId}`;
+    case RouteName.CollectionCreatorConversation:
+      return `/conversations/collection-creator/${route.conversationId}`;
+    case RouteName.CreateCollectionAssisted:
+      return "/collections/new/assisted";
+    case RouteName.CreateCollectionManual:
+      return "/collections/new/manual";
     case RouteName.CreateNewCollectionVersion:
       return `/collections/${route.collectionId}/newVersion`;
     case RouteName.Collection:
@@ -24,10 +30,8 @@ export function toHref(route: Route): string {
       return `/collections/${route.collectionId}/documents/new`;
     case RouteName.Document:
       return `/collections/${route.collectionId}/documents/${route.documentId}`;
-    case RouteName.Conversations:
-      return "/conversations";
-    case RouteName.Conversation:
-      return `/conversations/${route.conversationId}`;
+    case RouteName.GlobalSettings:
+      return "/settings";
   }
 }
 
@@ -47,7 +51,7 @@ export function fromHref(href: string): Route {
       error,
     );
   }
-  return { name: RouteName.Assistant };
+  return { name: RouteName.Ask };
 }
 
 interface RouteMatcher {
@@ -103,8 +107,12 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
   {
-    pattern: new URLPattern({ pathname: "/collections/new" }),
-    toRoute: () => ({ name: RouteName.CreateCollection }),
+    pattern: new URLPattern({ pathname: "/collections/new/assisted" }),
+    toRoute: () => ({ name: RouteName.CreateCollectionAssisted }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/collections/new/manual" }),
+    toRoute: () => ({ name: RouteName.CreateCollectionManual }),
   },
   {
     pattern: new URLPattern({ pathname: "/collections/:collectionId" }),
@@ -116,9 +124,22 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
   {
-    pattern: new URLPattern({ pathname: "/conversations/:conversationId" }),
+    pattern: new URLPattern({
+      pathname: "/conversations/factotum/:conversationId",
+    }),
     toRoute: (match) => ({
-      name: RouteName.Conversation,
+      name: RouteName.FactotumConversation,
+      conversationId: decodePathSegment<ConversationId>(
+        match.pathname.groups["conversationId"],
+      ),
+    }),
+  },
+  {
+    pattern: new URLPattern({
+      pathname: "/conversations/collection-creator/:conversationId",
+    }),
+    toRoute: (match) => ({
+      name: RouteName.CollectionCreatorConversation,
       conversationId: decodePathSegment<ConversationId>(
         match.pathname.groups["conversationId"],
       ),
@@ -134,7 +155,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/" }),
-    toRoute: () => ({ name: RouteName.Assistant }),
+    toRoute: () => ({ name: RouteName.Ask }),
   },
 ];
 

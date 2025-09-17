@@ -13,7 +13,7 @@ import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "./Conversation.css.js";
+import * as cs from "./FactotumConversation.css.js";
 
 interface FormValues {
   commandConfirmation: string;
@@ -50,7 +50,7 @@ export default function DeleteConversationModalForm({
   const onSubmit = async ({ commandConfirmation }: FormValues) => {
     const { success } = await mutate(conversation.id, commandConfirmation);
     if (success) {
-      navigateTo({ name: RouteName.Assistant });
+      navigateTo({ name: RouteName.Ask });
     }
   };
 

@@ -37,7 +37,7 @@ export default function Header({ alwaysShowToolbar }: Props) {
         <IconLink
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Create collection" })}
-          to={{ name: RouteName.CreateCollection }}
+          to={{ name: RouteName.CreateCollectionManual }}
           onPress={() => closePrimarySidebar()}
           className={cs.Header.toolbarAction}
         >

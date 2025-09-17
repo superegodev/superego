@@ -5,7 +5,7 @@ import { useContinueConversation } from "../../../business-logic/backend/hooks.j
 import last from "../../../utils/last.js";
 import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
-import * as cs from "./Conversation.css.js";
+import * as cs from "./FactotumConversation.css.js";
 
 interface Props {
   conversation: Conversation;

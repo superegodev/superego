@@ -5,27 +5,40 @@ import type {
 } from "@superego/backend";
 
 export enum RouteName {
-  Assistant = "Assistant",
-  GlobalSettings = "Settings",
-  CreateCollection = "CreateCollection",
+  Ask = "Ask",
+  Conversations = "Conversations",
+  FactotumConversation = "FactotumConversation",
+  CollectionCreatorConversation = "CollectionCreatorConversation",
+  CreateCollectionManual = "CreateCollection",
+  CreateCollectionAssisted = "StartCollectionCreatorConversation",
   CreateNewCollectionVersion = "CreateNewCollectionVersion",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
   Document = "Document",
-  Conversation = "Conversation",
-  Conversations = "Conversations",
+  GlobalSettings = "Settings",
 }
 
 type Route =
   | {
-      name: RouteName.Assistant;
+      name: RouteName.Ask;
     }
   | {
-      name: RouteName.GlobalSettings;
+      name: RouteName.Conversations;
     }
   | {
-      name: RouteName.CreateCollection;
+      name: RouteName.FactotumConversation;
+      conversationId: ConversationId;
+    }
+  | {
+      name: RouteName.CollectionCreatorConversation;
+      conversationId: ConversationId;
+    }
+  | {
+      name: RouteName.CreateCollectionAssisted;
+    }
+  | {
+      name: RouteName.CreateCollectionManual;
     }
   | {
       name: RouteName.CreateNewCollectionVersion;
@@ -49,11 +62,7 @@ type Route =
       documentId: DocumentId;
     }
   | {
-      name: RouteName.Conversations;
-    }
-  | {
-      name: RouteName.Conversation;
-      conversationId: ConversationId;
+      name: RouteName.GlobalSettings;
     };
 
 export default Route;

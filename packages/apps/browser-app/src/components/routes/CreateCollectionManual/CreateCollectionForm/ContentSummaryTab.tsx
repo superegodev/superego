@@ -7,8 +7,8 @@ import Alert from "../../../design-system/Alert/Alert.js";
 import ResultError from "../../../design-system/ResultError/ResultError.js";
 import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
+import * as cs from "./CreateCollectionForm.css.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
-import * as cs from "./ManualMode.css.js";
 import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 
 interface Props {
