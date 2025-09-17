@@ -36,10 +36,10 @@ export default function UpdateGlobalSettingsForm({
         assistants: {
           ...globalSettings.assistants,
           developerPrompts: {
-            [AssistantName.CollectionManager]:
+            [AssistantName.CollectionCreator]:
               globalSettings.assistants.developerPrompts[
-                AssistantName.CollectionManager
-              ] ?? developerPrompts[AssistantName.CollectionManager],
+                AssistantName.CollectionCreator
+              ] ?? developerPrompts[AssistantName.CollectionCreator],
             [AssistantName.Factotum]:
               globalSettings.assistants.developerPrompts[
                 AssistantName.Factotum

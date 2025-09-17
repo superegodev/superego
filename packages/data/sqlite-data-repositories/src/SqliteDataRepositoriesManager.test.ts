@@ -42,7 +42,7 @@ registerDataRepositoriesTests(async () => {
         userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
-          [AssistantName.CollectionManager]: null,
+          [AssistantName.CollectionCreator]: null,
         },
       },
     },

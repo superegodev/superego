@@ -28,7 +28,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
         userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
-          [AssistantName.CollectionManager]: null,
+          [AssistantName.CollectionCreator]: null,
         },
       },
     };
@@ -61,7 +61,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
         userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
-          [AssistantName.CollectionManager]: null,
+          [AssistantName.CollectionCreator]: null,
         },
       },
     };
@@ -106,7 +106,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
         userName: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
-          [AssistantName.CollectionManager]: null,
+          [AssistantName.CollectionCreator]: null,
         },
       },
     };

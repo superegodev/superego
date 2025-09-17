@@ -21,7 +21,7 @@ export const ConversationAssistant = {
         background: vars.colors.cyans._1,
       },
     ],
-    [AssistantName.CollectionManager]: [
+    [AssistantName.CollectionCreator]: [
       conversationAssistantRootBase,
       {
         color: vars.colors.oranges._5,

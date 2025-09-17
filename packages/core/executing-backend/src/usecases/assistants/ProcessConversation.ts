@@ -16,7 +16,7 @@ import {
 import type { ResultPromise } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type Assistant from "../../assistants/Assistant.js";
-import CollectionManagerAssistant from "../../assistants/CollectionManagerAssistant/CollectionManagerAssistant.js";
+import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
@@ -140,9 +140,9 @@ export default class AssistantsProcessConversation extends Usecase {
           },
           this.javascriptSandbox,
         )
-      : new CollectionManagerAssistant(
+      : new CollectionCreatorAssistant(
           globalSettings.assistants.developerPrompts[
-            AssistantName.CollectionManager
+            AssistantName.CollectionCreator
           ],
           inferenceService,
         );

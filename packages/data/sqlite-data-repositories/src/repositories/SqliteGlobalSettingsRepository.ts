@@ -95,12 +95,12 @@ export default class SqliteGlobalSettingsRepository
           settings.assistants?.userName ??
           this.defaultGlobalSettings.assistants.userName,
         developerPrompts: {
-          [AssistantName.CollectionManager]:
+          [AssistantName.CollectionCreator]:
             settings.assistants?.developerPrompts?.[
-              AssistantName.CollectionManager
+              AssistantName.CollectionCreator
             ] ??
             this.defaultGlobalSettings.assistants.developerPrompts[
-              AssistantName.CollectionManager
+              AssistantName.CollectionCreator
             ],
           [AssistantName.Factotum]:
             settings.assistants?.developerPrompts?.[AssistantName.Factotum] ??

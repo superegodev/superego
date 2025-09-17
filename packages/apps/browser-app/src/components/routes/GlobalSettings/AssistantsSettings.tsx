@@ -37,13 +37,13 @@ export default function AssistantsSettings({
       />
       <RHFTextField
         control={control}
-        name={`assistants.developerPrompts.${AssistantName.CollectionManager}`}
+        name={`assistants.developerPrompts.${AssistantName.CollectionCreator}`}
         emptyInputValue={null}
         textArea={true}
         label={intl.formatMessage({
           defaultMessage: "Collection manager developer prompt",
         })}
-        placeholder={developerPrompts[AssistantName.CollectionManager]}
+        placeholder={developerPrompts[AssistantName.CollectionCreator]}
       />
     </>
   );

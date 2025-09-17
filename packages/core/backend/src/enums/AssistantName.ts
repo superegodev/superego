@@ -1,5 +1,5 @@
 enum AssistantName {
-  CollectionManager = "CollectionManager",
+  CollectionCreator = "CollectionCreator",
   Factotum = "Factotum",
 }
 export default AssistantName;

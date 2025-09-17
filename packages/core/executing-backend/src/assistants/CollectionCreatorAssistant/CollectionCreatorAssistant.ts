@@ -5,7 +5,7 @@ import Assistant from "../Assistant.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import Unknown from "./tools/Unknown.js";
 
-export default class CollectionManagerAssistant extends Assistant {
+export default class CollectionCreatorAssistant extends Assistant {
   constructor(
     private developerPrompt: string | null,
     protected inferenceService: InferenceService,

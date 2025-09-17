@@ -7,7 +7,7 @@ interface Props {
 export default function ConversationAssistant({ assistant }: Props) {
   return (
     <span className={cs.ConversationAssistant.root[assistant]}>
-      {assistant === AssistantName.CollectionManager
+      {assistant === AssistantName.CollectionCreator
         ? "Collection Manager"
         : "Factotum"}
     </span>
