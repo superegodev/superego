@@ -23,8 +23,8 @@
   "AssistantContentMessage.tsx_tFFMkF": {
     "defaultMessage": "Pause"
   },
-  "AssistantsSettings.tsx_M6SUEw": {
-    "defaultMessage": "Collection manager developer prompt"
+  "AssistantsSettings.tsx_mTE6Ss": {
+    "defaultMessage": "Collection Creator developer prompt"
   },
   "AssistantsSettings.tsx_qmPVim": {
     "defaultMessage": "Factotum developer prompt"
@@ -40,9 +40,6 @@
   },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
-  },
-  "Chat.tsx_oZLZvb": {
-    "defaultMessage": "How can I help you?"
   },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
@@ -61,6 +58,24 @@
   },
   "CollectionCategoryActionsMenu.tsx_iXNbPf": {
     "defaultMessage": "Rename"
+  },
+  "CollectionCreatorConversation.tsx_9eR0Qp": {
+    "defaultMessage": "Delete conversation"
+  },
+  "CollectionCreatorConversation.tsx_BS0cJA": {
+    "defaultMessage": "🤖 Conversations » Collection Creator"
+  },
+  "CollectionCreatorConversation.tsx_gKk3/v": {
+    "defaultMessage": "Toggle tool calls"
+  },
+  "CollectionCreatorConversation.tsx_rZybx9": {
+    "defaultMessage": "🤖 Conversations » Collection Creator » {conversation}"
+  },
+  "CollectionCreatorConversation.tsx_w5q/I/": {
+    "defaultMessage": "Conversation actions"
+  },
+  "CollectionCreatorConversation.tsx_yWDfdE": {
+    "defaultMessage": "What kind of data do you want to store?"
   },
   "CollectionSettings.tsx_AHx1om": {
     "defaultMessage": "{collection} » Settings"
@@ -314,17 +329,20 @@
   "FactotumConversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
-  "FactotumConversation.tsx_eq3LES": {
-    "defaultMessage": "🤖 Conversations » {conversation}"
+  "FactotumConversation.tsx_EuFjxK": {
+    "defaultMessage": "🤖 Conversations » Factotum » {conversation}"
+  },
+  "FactotumConversation.tsx_UZXBXa": {
+    "defaultMessage": "🤖 Conversations » Factotum"
   },
   "FactotumConversation.tsx_gKk3/v": {
     "defaultMessage": "Toggle tool calls"
   },
+  "FactotumConversation.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
+  },
   "FactotumConversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
-  },
-  "FactotumConversation.tsx_yYmfIl": {
-    "defaultMessage": "🤖 Conversations"
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"

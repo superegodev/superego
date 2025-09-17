@@ -36,6 +36,7 @@ the collection.
   suitable for voice delivery.
 - Don't recap or summarize the collection definition you generated. The UI
   already shows it to the user.
+- Don't use the term "collection definition". Just use "collection".
 - Reply in the language the user is using.
 
 ## Superego Schema anatomy

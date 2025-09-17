@@ -2,6 +2,7 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Ask from "../Ask/Ask.js";
 import Collection from "../Collection/Collection.js";
+import CollectionCreatorConversation from "../CollectionCreatorConversation/CollectionCreatorConversation.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversations from "../Conversations/Conversations.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
@@ -24,7 +25,11 @@ export default function MainPanel() {
         <FactotumConversation conversationId={activeRoute.conversationId} />
       );
     case RouteName.CollectionCreatorConversation:
-      return null; // TODO
+      return (
+        <CollectionCreatorConversation
+          conversationId={activeRoute.conversationId}
+        />
+      );
     case RouteName.CreateCollectionAssisted:
       return <CreateCollectionAssisted />;
     case RouteName.CreateCollectionManual:

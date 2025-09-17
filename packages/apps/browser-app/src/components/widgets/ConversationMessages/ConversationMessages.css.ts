@@ -64,7 +64,7 @@ export const UserMessage = {
 
   playPauseButton: style({
     position: "absolute",
-    right: `calc(-1 * ${vars.spacing._2})`,
+    right: vars.spacing._2,
     bottom: `calc(-1 * ${vars.spacing._2})`,
     borderRadius: "50%",
   }),

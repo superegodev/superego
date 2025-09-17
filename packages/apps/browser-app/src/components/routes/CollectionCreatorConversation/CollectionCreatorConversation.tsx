@@ -8,12 +8,14 @@ import ConversationUtils from "../../../utils/ConversationUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
 import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";
-import * as cs from "./FactotumConversation.css.js";
+import * as cs from "./CollectionCreatorConversation.css.js";
 
 interface Props {
   conversationId: ConversationId;
 }
-export default function FactotumConversation({ conversationId }: Props) {
+export default function CollectionCreatorConversation({
+  conversationId,
+}: Props) {
   const intl = useIntl();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [showToolCalls, setShowToolCalls] = useState(false);
@@ -30,7 +32,7 @@ export default function FactotumConversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage({
-              defaultMessage: "🤖\u2002Conversations » Factotum",
+              defaultMessage: "🤖\u2002Conversations » Collection Creator",
             })}
           />
         </Shell.Panel>
@@ -42,7 +44,7 @@ export default function FactotumConversation({ conversationId }: Props) {
             title={intl.formatMessage(
               {
                 defaultMessage:
-                  "🤖\u2002Conversations » Factotum » {conversation}",
+                  "🤖\u2002Conversations » Collection Creator » {conversation}",
               },
               {
                 conversation: ConversationUtils.getDisplayTitle(
@@ -71,12 +73,14 @@ export default function FactotumConversation({ conversationId }: Props) {
               },
             ]}
           />
-          <Shell.Panel.Content className={cs.FactotumConversation.panelContent}>
+          <Shell.Panel.Content
+            className={cs.CollectionCreatorConversation.panelContent}
+          >
             <Chat
               conversation={conversation}
               showToolsCalls={showToolCalls}
               userMessageContentInputPlaceholder={intl.formatMessage({
-                defaultMessage: "How can I help you?",
+                defaultMessage: "What kind of data do you want to store?",
               })}
             />
             <DeleteConversationModalForm

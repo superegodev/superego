@@ -41,7 +41,7 @@ export default function AssistantsSettings({
         emptyInputValue={null}
         textArea={true}
         label={intl.formatMessage({
-          defaultMessage: "Collection manager developer prompt",
+          defaultMessage: "Collection Creator developer prompt",
         })}
         placeholder={developerPrompts[AssistantName.CollectionCreator]}
       />

@@ -47,10 +47,10 @@
       "value": "Pause"
     }
   ],
-  "AssistantsSettings.tsx_M6SUEw": [
+  "AssistantsSettings.tsx_mTE6Ss": [
     {
       "type": 0,
-      "value": "Collection manager developer prompt"
+      "value": "Collection Creator developer prompt"
     }
   ],
   "AssistantsSettings.tsx_qmPVim": [
@@ -81,12 +81,6 @@
     {
       "type": 0,
       "value": "Error loading app"
-    }
-  ],
-  "Chat.tsx_oZLZvb": [
-    {
-      "type": 0,
-      "value": "How can I help you?"
     }
   ],
   "Collection.tsx_D3idYv": [
@@ -131,6 +125,46 @@
     {
       "type": 0,
       "value": "Rename"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_9eR0Qp": [
+    {
+      "type": 0,
+      "value": "Delete conversation"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_BS0cJA": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » Collection Creator"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Toggle tool calls"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_rZybx9": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » Collection Creator » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Conversation actions"
+    }
+  ],
+  "CollectionCreatorConversation.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "What kind of data do you want to store?"
     }
   ],
   "CollectionSettings.tsx_AHx1om": [
@@ -735,14 +769,20 @@
       "value": "Delete conversation"
     }
   ],
-  "FactotumConversation.tsx_eq3LES": [
+  "FactotumConversation.tsx_EuFjxK": [
     {
       "type": 0,
-      "value": "🤖 Conversations » "
+      "value": "🤖 Conversations » Factotum » "
     },
     {
       "type": 1,
       "value": "conversation"
+    }
+  ],
+  "FactotumConversation.tsx_UZXBXa": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » Factotum"
     }
   ],
   "FactotumConversation.tsx_gKk3/v": [
@@ -751,16 +791,16 @@
       "value": "Toggle tool calls"
     }
   ],
+  "FactotumConversation.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
+    }
+  ],
   "FactotumConversation.tsx_w5q/I/": [
     {
       "type": 0,
       "value": "Conversation actions"
-    }
-  ],
-  "FactotumConversation.tsx_yYmfIl": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations"
     }
   ],
   "FileField.tsx_5q3qC0": [
