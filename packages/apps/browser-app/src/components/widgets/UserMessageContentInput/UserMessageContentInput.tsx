@@ -18,6 +18,7 @@ interface Props {
   conversation: Conversation | null;
   onSend: (messageContent: Message.User["content"]) => void;
   isSending: boolean;
+  placeholder: string;
   autoFocus: boolean;
   textAreaRef?: RefObject<HTMLTextAreaElement | null> | undefined;
   className?: string | undefined;
@@ -26,6 +27,7 @@ export default function UserMessageContentInput({
   conversation,
   onSend,
   isSending,
+  placeholder,
   autoFocus,
   textAreaRef,
   className,
@@ -76,7 +78,7 @@ export default function UserMessageContentInput({
                     "Your collections changed since having this conversation. It cannot be continued.",
                 })
               : isInferenceConfigured.completions
-                ? intl.formatMessage({ defaultMessage: "How can I help you?" })
+                ? placeholder
                 : intl.formatMessage({
                     defaultMessage: "Configure assistant to start chatting",
                   })

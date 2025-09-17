@@ -8,6 +8,9 @@
   "Assistant.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
+  "Assistant.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
+  },
   "AssistantContentMessage.tsx_FUvUuG": {
     "defaultMessage": "Configure speech to play assistant messages"
   },
@@ -29,6 +32,9 @@
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Your name"
   },
+  "AssistedMode.tsx_yWDfdE": {
+    "defaultMessage": "What kind of data do you want to store?"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -37,6 +43,9 @@
   },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
+  },
+  "Chat.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
   },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
@@ -71,8 +80,8 @@
   "CollectionSettings.tsx_m4GG4b": {
     "defaultMessage": "Delete collection"
   },
-  "CollectionSettings.tsx_zYomDH": {
-    "defaultMessage": "Collection actions"
+  "CollectionSettings.tsx_zNudDK": {
+    "defaultMessage": "Collection settings actions"
   },
   "CollectionsTree.tsx_XjdXFR": {
     "defaultMessage": "Create collection to start."
@@ -145,6 +154,15 @@
   },
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
+  },
+  "CreateCollection.tsx_9/rVBT": {
+    "defaultMessage": "Create collection actions"
+  },
+  "CreateCollection.tsx_CF8TPC": {
+    "defaultMessage": "Assisted mode"
+  },
+  "CreateCollection.tsx_PCQvKY": {
+    "defaultMessage": "Manual mode"
   },
   "CreateCollection.tsx_XQCXwU": {
     "defaultMessage": "Create Collection"
@@ -667,9 +685,6 @@
   },
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Message assistant"
-  },
-  "UserMessageContentInput.tsx_oZLZvb": {
-    "defaultMessage": "How can I help you?"
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."

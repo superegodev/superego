@@ -32,7 +32,7 @@ export default function CollectionSettings({ collectionId }: Props) {
           { collection: CollectionUtils.getDisplayName(collection) },
         )}
         actionsAriaLabel={intl.formatMessage({
-          defaultMessage: "Collection actions",
+          defaultMessage: "Collection settings actions",
         })}
         actions={[
           {

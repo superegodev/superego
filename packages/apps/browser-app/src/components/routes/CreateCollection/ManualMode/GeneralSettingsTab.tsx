@@ -2,8 +2,8 @@ import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
 import RHFEmojiField from "../../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "../CreateCollection.css.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
+import * as cs from "./ManualMode.css.js";
 
 interface Props {
   control: Control<CreateCollectionFormValues, any, CreateCollectionFormValues>;

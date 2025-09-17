@@ -1,5 +1,6 @@
 import { type Conversation, MessageRole } from "@superego/backend";
 import { useLayoutEffect, useRef } from "react";
+import { useIntl } from "react-intl";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../../widgets/ConversationMessages/ConversationMessages.js";
@@ -11,6 +12,7 @@ interface Props {
   showToolsCalls: boolean;
 }
 export default function Chat({ conversation, showToolsCalls }: Props) {
+  const intl = useIntl();
   // TODO: use https://react-spectrum.adobe.com/react-aria/Toast.html for
   // displaying errors.
   const { mutate, isPending } = useContinueConversation();
@@ -48,6 +50,9 @@ export default function Chat({ conversation, showToolsCalls }: Props) {
             mutate(conversation.id, userMessageContent);
           }}
           isSending={isPending}
+          placeholder={intl.formatMessage({
+            defaultMessage: "How can I help you?",
+          })}
           autoFocus={true}
           textAreaRef={inputRef}
         />

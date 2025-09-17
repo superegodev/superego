@@ -43,6 +43,9 @@ export default function Assistant() {
           conversation={null}
           onSend={onSend}
           isSending={isPending}
+          placeholder={intl.formatMessage({
+            defaultMessage: "How can I help you?",
+          })}
           autoFocus={true}
         />
         <Link
