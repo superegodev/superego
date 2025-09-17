@@ -2,7 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 const narrowWindowWidth = "70rem";
-const panelHeaderHeight = vars.spacing._12;
 
 export const Shell = {
   root: style({
@@ -57,7 +56,7 @@ export const PanelHeader = {
     left: 0,
     zIndex: 9999,
     width: "100%",
-    height: panelHeaderHeight,
+    height: vars.shell.panelHeaderHeight,
     background: `
       linear-gradient(
         180deg,

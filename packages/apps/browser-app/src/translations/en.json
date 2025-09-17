@@ -566,6 +566,12 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
+  "Preview.tsx_9lnhZ4": {
+    "defaultMessage": "Create collection"
+  },
+  "PreviewDocumentForm.tsx_T7Y1no": {
+    "defaultMessage": "Schema preview"
+  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },

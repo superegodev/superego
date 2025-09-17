@@ -32,7 +32,7 @@ export function isValidInstant(value: string): boolean {
 }
 
 function findLastIndex(value: string, regex: RegExp): number {
-  for (let i = value.length; i >= 0; i--) {
+  for (let i = value.length - 1; i >= 0; i--) {
     if (regex.test(value[i]!)) {
       return i;
     }

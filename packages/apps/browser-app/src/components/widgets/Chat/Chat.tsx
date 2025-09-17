@@ -1,6 +1,7 @@
 import { type Conversation, MessageRole } from "@superego/backend";
 import { useEffect, useRef } from "react";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
+import classnames from "../../../utils/classnames.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../ConversationMessages/ConversationMessages.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
@@ -10,11 +11,13 @@ interface Props {
   conversation: Conversation;
   userMessageContentInputPlaceholder: string;
   showToolsCalls: boolean;
+  className?: string | undefined;
 }
 export default function Chat({
   conversation,
   userMessageContentInputPlaceholder,
   showToolsCalls,
+  className,
 }: Props) {
   // TODO: use https://react-spectrum.adobe.com/react-aria/Toast.html for
   // displaying errors.
@@ -45,7 +48,7 @@ export default function Chat({
   }, [lastMessage, lastMessageTimestamp]);
 
   return (
-    <div className={cs.Chat.root}>
+    <div className={classnames(cs.Chat.root, className)}>
       <div className={cs.Chat.userMessageContentInputContainer}>
         <UserMessageContentInput
           conversation={conversation}

@@ -131,7 +131,8 @@ Generates the definition for a collection.
             description: `
 Columns to display in the UI table used to show the documents in the collection.
 There should be a column for all the most important properties of the
-collection, though define 5 columns at most.
+collection, but define 5 columns at most. Only primitive properties can be
+selected (no list, no structs).
             `.trim(),
             type: "array",
             items: {
@@ -142,11 +143,12 @@ collection, though define 5 columns at most.
                   type: "string",
                 },
                 path: {
-                  description: "Path of the property to show in the column.",
+                  description:
+                    "Path of the primitive property to show in the column.",
                   examples: [
-                    "property",
-                    "nested.property",
-                    "list.0.elementProperty",
+                    "primitiveProperty",
+                    "nested.primitiveProperty",
+                    "list.0.elementPrimitiveProperty",
                   ],
                   type: "string",
                 },
@@ -159,7 +161,7 @@ collection, though define 5 columns at most.
           },
           exampleDocument: {
             description:
-              "An example document in the collection. Used to show a UI preview.",
+              "An example document in the collection. Make it as simple as possible. Used to show a UI preview.",
             type: "object",
             additionalProperties: true,
           },

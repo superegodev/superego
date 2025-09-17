@@ -1,6 +1,9 @@
 import { createTheme } from "@vanilla-extract/css";
 
 const commonVars = {
+  shell: {
+    panelHeaderHeight: "3rem",
+  },
   typography: {
     fontSizes: {
       xs2: "0.70rem",
