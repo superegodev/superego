@@ -137,6 +137,18 @@
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
+  "CreateCollectionAssisted.tsx_7uKYfK": {
+    "defaultMessage": "Go to manual mode"
+  },
+  "CreateCollectionAssisted.tsx_9/rVBT": {
+    "defaultMessage": "Create collection actions"
+  },
+  "CreateCollectionAssisted.tsx_EWHk8s": {
+    "defaultMessage": "Error starting conversation"
+  },
+  "CreateCollectionAssisted.tsx_u/AEeD": {
+    "defaultMessage": "Create Collection (Assisted Mode)"
+  },
   "CreateCollectionAssisted.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"
   },
@@ -149,14 +161,14 @@
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
   },
-  "CreateCollectionManual.tsx_0okpIz": {
-    "defaultMessage": "Create Collection (Manual)"
-  },
   "CreateCollectionManual.tsx_9/rVBT": {
     "defaultMessage": "Create collection actions"
   },
-  "CreateCollectionManual.tsx_vyFgZO": {
-    "defaultMessage": "Use assistant"
+  "CreateCollectionManual.tsx_a5n6RJ": {
+    "defaultMessage": "Go to assisted mode"
+  },
+  "CreateCollectionManual.tsx_ivIDMd": {
+    "defaultMessage": "Create Collection (Manual Mode)"
   },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
@@ -458,11 +470,17 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Create collection category"
   },
+  "Hero.tsx_OpKKos": {
+    "defaultMessage": "Hello!"
+  },
   "Hero.tsx_oxShVS": {
     "defaultMessage": "Your Life's Database"
   },
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
+  },
+  "Hero.tsx_rI2Xm3": {
+    "defaultMessage": "I'm the Collection Creator"
   },
   "InferenceSettings.tsx_BGZ5iy": {
     "defaultMessage": "Completions"

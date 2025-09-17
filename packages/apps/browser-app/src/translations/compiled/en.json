@@ -291,6 +291,30 @@
       "value": "Copied"
     }
   ],
+  "CreateCollectionAssisted.tsx_7uKYfK": [
+    {
+      "type": 0,
+      "value": "Go to manual mode"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Create collection actions"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_EWHk8s": [
+    {
+      "type": 0,
+      "value": "Error starting conversation"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_u/AEeD": [
+    {
+      "type": 0,
+      "value": "Create Collection (Assisted Mode)"
+    }
+  ],
   "CreateCollectionAssisted.tsx_yWDfdE": [
     {
       "type": 0,
@@ -315,22 +339,22 @@
       "value": "1. General settings"
     }
   ],
-  "CreateCollectionManual.tsx_0okpIz": [
-    {
-      "type": 0,
-      "value": "Create Collection (Manual)"
-    }
-  ],
   "CreateCollectionManual.tsx_9/rVBT": [
     {
       "type": 0,
       "value": "Create collection actions"
     }
   ],
-  "CreateCollectionManual.tsx_vyFgZO": [
+  "CreateCollectionManual.tsx_a5n6RJ": [
     {
       "type": 0,
-      "value": "Use assistant"
+      "value": "Go to assisted mode"
+    }
+  ],
+  "CreateCollectionManual.tsx_ivIDMd": [
+    {
+      "type": 0,
+      "value": "Create Collection (Manual Mode)"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -1027,6 +1051,12 @@
       "value": "Create collection category"
     }
   ],
+  "Hero.tsx_OpKKos": [
+    {
+      "type": 0,
+      "value": "Hello!"
+    }
+  ],
   "Hero.tsx_oxShVS": [
     {
       "type": 0,
@@ -1037,6 +1067,12 @@
     {
       "type": 0,
       "value": "Superego"
+    }
+  ],
+  "Hero.tsx_rI2Xm3": [
+    {
+      "type": 0,
+      "value": "I'm the Collection Creator"
     }
   ],
   "InferenceSettings.tsx_BGZ5iy": [

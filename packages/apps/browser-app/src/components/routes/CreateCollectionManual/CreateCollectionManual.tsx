@@ -10,14 +10,16 @@ export default function CreateCollectionManual() {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage({
-          defaultMessage: "Create Collection (Manual)",
+          defaultMessage: "Create Collection (Manual Mode)",
         })}
         actionsAriaLabel={intl.formatMessage({
           defaultMessage: "Create collection actions",
         })}
         actions={[
           {
-            label: intl.formatMessage({ defaultMessage: "Use assistant" }),
+            label: intl.formatMessage({
+              defaultMessage: "Go to assisted mode",
+            }),
             icon: <PiRobot />,
             to: { name: RouteName.CreateCollectionAssisted },
           },
