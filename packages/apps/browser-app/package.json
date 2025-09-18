@@ -35,7 +35,7 @@
     "@vitest/browser": "^3.2.4",
     "playwright": "^1.55.0",
     "typescript": "^5.9.2",
-    "vite": "^7.1.5",
+    "vite": "^7.1.6",
     "vite-bundle-analyzer": "^1.2.3",
     "vitest": "^3.2.4"
   },
@@ -62,7 +62,7 @@
     "@tiptap/starter-kit": "3.4.3",
     "@vanilla-extract/css": "^1.17.4",
     "@vanilla-extract/vite-plugin": "^5.1.1",
-    "@vitejs/plugin-react": "^5.0.2",
+    "@vitejs/plugin-react": "^5.0.3",
     "babel-plugin-formatjs": "^10.5.39",
     "debounce": "^2.2.0",
     "es-toolkit": "^1.39.10",

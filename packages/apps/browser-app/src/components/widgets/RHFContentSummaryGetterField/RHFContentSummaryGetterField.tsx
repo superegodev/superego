@@ -44,7 +44,7 @@ export default function RHFContentSummaryGetterField({
               a column.
             </p>
             <p>
-              The <b>content summary getter</b> is the function that derives the
+              <b>Content summary getter</b> is the function that derives the
               summary from the document content.
             </p>
           `}
