@@ -34,7 +34,7 @@ export default function StructField({
   label,
 }: Props) {
   const { field } = useController({ control, name });
-  if (utils.rootType(schema) === typeDefinition) {
+  if (utils.getRootType(schema) === typeDefinition) {
     return (
       <Fields
         schema={schema}
@@ -54,6 +54,7 @@ export default function StructField({
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
+        isNullable={isNullable}
         label={label}
         actions={
           <NullifyFieldAction

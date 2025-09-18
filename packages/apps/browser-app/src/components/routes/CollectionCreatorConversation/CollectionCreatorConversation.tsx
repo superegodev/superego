@@ -9,7 +9,6 @@ import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
 import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";
 import * as cs from "./CollectionCreatorConversation.css.js";
-import Preview from "./Preview.jsx";
 
 interface Props {
   conversationId: ConversationId;
@@ -76,7 +75,6 @@ export default function CollectionCreatorConversation({
           />
           <Shell.Panel.Content
             className={cs.CollectionCreatorConversation.panelContent}
-            fullWidth={true}
           >
             <Chat
               conversation={conversation}
@@ -84,9 +82,7 @@ export default function CollectionCreatorConversation({
               userMessageContentInputPlaceholder={intl.formatMessage({
                 defaultMessage: "What kind of data do you want to store?",
               })}
-              className={cs.CollectionCreatorConversation.chat}
             />
-            <Preview conversation={conversation} />
             <DeleteConversationModalForm
               key={`DeleteConversationModalForm_${conversationId}`}
               conversation={conversation}

@@ -39,6 +39,23 @@ export default {
     );
   },
 
+  findToolCall({ messages }: Conversation, toolResult: ToolResult): ToolCall {
+    const toolCall = messages
+      .filter((message) => "toolCalls" in message)
+      .flatMap(({ toolCalls }) => toolCalls)
+      .find(
+        (toolCall) =>
+          toolCall.id === toolResult.toolCallId &&
+          toolCall.tool === toolResult.tool,
+      );
+    if (!toolCall) {
+      throw new Error(
+        `ToolResult ${toolResult.toolCallId} for tool ${toolResult.tool} does not have a corresponding ToolCall.`,
+      );
+    }
+    return toolCall;
+  },
+
   isSuccessfulCreateDocumentToolResult(
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocument & {
@@ -71,10 +88,15 @@ export default {
     );
   },
 
-  isGetCollectionTypescriptSchemaToolCall(
-    toolCall: ToolCall,
-  ): toolCall is ToolCall.GetCollectionTypescriptSchema {
-    return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
+  isSuccessfulSuggestCollectionDefinitionToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.SuggestCollectionDefinition & {
+    output: { success: true };
+  } {
+    return (
+      toolResult.tool === ToolName.SuggestCollectionDefinition &&
+      toolResult.output.success
+    );
   },
 
   isCreateDocumentToolCall(
@@ -93,5 +115,11 @@ export default {
     toolCall: ToolCall,
   ): toolCall is ToolCall.ExecuteJavascriptFunction {
     return toolCall.tool === ToolName.ExecuteJavascriptFunction;
+  },
+
+  isGetCollectionTypescriptSchemaToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.GetCollectionTypescriptSchema {
+    return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
   },
 };

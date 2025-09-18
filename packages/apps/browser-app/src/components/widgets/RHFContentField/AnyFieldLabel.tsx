@@ -5,9 +5,11 @@ import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Tooltip from "../../design-system/Tooltip/Tooltip.js";
 import * as cs from "./RHFContentField.css.js";
+import { useShowNullability } from "./showNullability.js";
 
 interface Props {
   typeDefinition: AnyTypeDefinition;
+  isNullable: boolean;
   label: string;
   actions?: ReactNode | undefined;
   component?: "label" | "legend" | undefined;
@@ -15,11 +17,13 @@ interface Props {
 }
 export default function AnyFieldLabel({
   typeDefinition,
+  isNullable,
   label,
   actions,
   component = "label",
   className,
 }: Props) {
+  const showNullability = useShowNullability();
   const dataTypeLabel =
     typeDefinition.dataType === null
       ? typeDefinition.ref
@@ -33,7 +37,14 @@ export default function AnyFieldLabel({
   return (
     <FieldLabel actions={actions} component={component} className={className}>
       {label}
-      <span className={cs.AnyFieldLabel.dataType}>{dataTypeLabel}</span>
+      <span className={cs.AnyFieldLabel.dataType}>
+        {dataTypeLabel}
+        {showNullability
+          ? isNullable
+            ? " (Nullable)"
+            : " (Non-nullable)"
+          : null}
+      </span>
       {typeDefinition.description ? (
         <TooltipTrigger delay={500}>
           <Button

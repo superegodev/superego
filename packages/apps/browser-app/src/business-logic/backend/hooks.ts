@@ -42,7 +42,7 @@ export const listCollectionsQuery = makeBackendQueryGetter(
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
-  () => [["listCollections"]],
+  () => [["listCollections"], ["listConversations"], ["getConversation"]],
 );
 
 export const useCreateNewCollectionVersion = makeUseBackendMutation(

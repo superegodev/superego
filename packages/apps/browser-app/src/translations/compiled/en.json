@@ -413,14 +413,14 @@
       "value": "Create"
     }
   ],
-  "CreateDocumentOrVersion.tsx_P6wDh/": [
+  "CreateDocumentOrVersion.tsx_+z+eOw": [
     {
       "type": 1,
       "value": "collection"
     },
     {
       "type": 0,
-      "value": " » Document updated"
+      "value": " » New document version created"
     }
   ],
   "CreateDocumentOrVersion.tsx_hmMMs+": [
@@ -1283,18 +1283,6 @@
       "value": "Close sidebar"
     }
   ],
-  "Preview.tsx_9lnhZ4": [
-    {
-      "type": 0,
-      "value": "Create collection"
-    }
-  ],
-  "PreviewDocumentForm.tsx_T7Y1no": [
-    {
-      "type": 0,
-      "value": "Schema preview"
-    }
-  ],
   "PrimarySidebarPanel.tsx_D3idYv": [
     {
       "type": 0,
@@ -1489,6 +1477,18 @@
     {
       "type": 0,
       "value": "null - click to set a value"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_S2ZL0P": [
+    {
+      "type": 0,
+      "value": "Suggested collection"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [

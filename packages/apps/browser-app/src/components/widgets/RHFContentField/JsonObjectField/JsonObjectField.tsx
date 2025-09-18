@@ -5,6 +5,7 @@ import type Props from "./Props.js";
 
 export default function JsonObjectField({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -17,6 +18,7 @@ export default function JsonObjectField({
     <Component
       typeDefinition={typeDefinition}
       isListItem={isListItem}
+      isNullable={isNullable}
       control={control}
       name={name}
       label={label}

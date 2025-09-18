@@ -11,6 +11,7 @@ import type Props from "../Props.js";
 
 export default function PlainDate({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -34,7 +35,11 @@ export default function PlainDate({
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (
-        <AnyFieldLabel typeDefinition={typeDefinition} label={label} />
+        <AnyFieldLabel
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          label={label}
+        />
       ) : null}
       <DatePickerInput ref={field.ref} />
       <FieldError>{fieldState.error?.message}</FieldError>

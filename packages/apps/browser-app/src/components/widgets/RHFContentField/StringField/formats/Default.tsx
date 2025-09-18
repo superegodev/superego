@@ -11,6 +11,7 @@ import type Props from "../Props.js";
 
 export default function Default({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -32,7 +33,11 @@ export default function Default({
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (
-        <AnyFieldLabel typeDefinition={typeDefinition} label={label} />
+        <AnyFieldLabel
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          label={label}
+        />
       ) : null}
       <Input ref={field.ref} placeholder="null" />
       <FieldError>{fieldState.error?.message}</FieldError>

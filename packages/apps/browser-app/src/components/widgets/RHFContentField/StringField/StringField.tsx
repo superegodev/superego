@@ -5,6 +5,7 @@ import type Props from "./Props.js";
 
 export default function StringField({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -19,6 +20,7 @@ export default function StringField({
   return (
     <Component
       typeDefinition={typeDefinition}
+      isNullable={isNullable}
       isListItem={isListItem}
       control={control}
       name={name}

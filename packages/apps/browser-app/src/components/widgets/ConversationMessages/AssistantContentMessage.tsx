@@ -18,12 +18,12 @@ import * as cs from "./ConversationMessages.css.js";
 import ThinkingTime from "./ThinkingTime.js";
 
 interface Props {
-  message: Message.ContentAssistant;
   conversation: Conversation;
+  message: Message.ContentAssistant;
 }
 export default function AssistantContentMessage({
-  message,
   conversation,
+  message,
 }: Props) {
   const intl = useIntl();
 

@@ -1,4 +1,8 @@
-import rootType from "./utils/rootType.js";
+/// <reference types="vite/client" />
+import getRootType from "./utils/getRootType.js";
+import getType from "./utils/getType.js";
+import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
+import parsePath from "./utils/parsePath.js";
 import content from "./valibot-schemas/content/content.js";
 import schema from "./valibot-schemas/schema/schema.js";
 
@@ -15,4 +19,9 @@ export type { default as FileRef } from "./types/FileRef.js";
 export type { default as JsonObject } from "./types/JsonObject.js";
 export type { default as ProtoFile } from "./types/ProtoFile.js";
 export const valibotSchemas = { schema, content };
-export const utils = { rootType };
+export const utils = {
+  getRootType,
+  getType,
+  getTypeDefinitionAtPath,
+  parsePath,
+};

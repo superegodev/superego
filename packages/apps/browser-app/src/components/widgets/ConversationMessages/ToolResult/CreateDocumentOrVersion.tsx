@@ -7,9 +7,10 @@ import { getDocumentVersionQuery } from "../../../../business-logic/backend/hook
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import { vars } from "../../../../themes.css.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.jsx";
-import Link from "../../../design-system/Link/Link.jsx";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
+import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
+import Link from "../../../design-system/Link/Link.js";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
+import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
 
 interface Props {
@@ -30,7 +31,7 @@ export default function CreateDocumentOrVersion({ toolResult }: Props) {
       to={{ name: RouteName.Document, collectionId, documentId }}
       className={cs.CreateDocumentOrVersion.root}
     >
-      <h5 className={cs.CreateDocumentOrVersion.title}>
+      <Title>
         {toolResult.tool === ToolName.CreateDocument ? (
           <FormattedMessage
             defaultMessage="{collection} » Document created"
@@ -42,7 +43,7 @@ export default function CreateDocumentOrVersion({ toolResult }: Props) {
           />
         ) : (
           <FormattedMessage
-            defaultMessage="{collection} » Document updated"
+            defaultMessage="{collection} » New document version created"
             values={{
               collection: collection
                 ? CollectionUtils.getDisplayName(collection)
@@ -50,7 +51,7 @@ export default function CreateDocumentOrVersion({ toolResult }: Props) {
             }}
           />
         )}
-      </h5>
+      </Title>
       <DataLoader
         queries={[
           getDocumentVersionQuery([

@@ -7,7 +7,7 @@ import {
 
 // TODO: we should define default values at the schema and format level.
 export default function generateDefaultValues(schema: Schema) {
-  return generateAnyDefaultValues(utils.rootType(schema), schema);
+  return generateAnyDefaultValues(utils.getRootType(schema), schema);
 }
 
 // TODO: separate out into own file?
@@ -42,7 +42,7 @@ export function generateAnyDefaultValues(
       ];
     case null:
       return generateAnyDefaultValues(
-        schema.types[typeDefinition.ref]!,
+        utils.getType(schema, typeDefinition),
         schema,
       );
   }

@@ -45,6 +45,7 @@ export default function EnumField({
       {!isListItem ? (
         <AnyFieldLabel
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           label={label}
           actions={
             <NullifyFieldAction

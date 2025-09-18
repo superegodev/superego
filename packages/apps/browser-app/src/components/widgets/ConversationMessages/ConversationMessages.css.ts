@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
+export const narrowContainerWidth = "45rem";
+
 export const ConversationMessages = {
   root: style({
     width: "100%",
@@ -56,7 +58,7 @@ export const UserMessage = {
     fontSize: vars.typography.fontSizes.sm,
     position: "relative",
     "@container": {
-      "(min-width: 720px)": {
+      [`(min-width: ${narrowContainerWidth})`]: {
         marginInlineStart: "40%",
       },
     },

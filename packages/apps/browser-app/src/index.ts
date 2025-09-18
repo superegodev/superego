@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import type { Backend } from "@superego/backend";
 import type { QueryClient } from "@tanstack/react-query";
 import { createElement } from "react";

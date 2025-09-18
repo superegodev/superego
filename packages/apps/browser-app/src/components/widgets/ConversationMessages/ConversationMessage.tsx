@@ -26,38 +26,26 @@ export default function ConversationMessage({
       if ("content" in message) {
         return (
           <AssistantContentMessage
-            message={message}
             conversation={conversation}
+            message={message}
           />
         );
       }
-      return (
-        <>
-          {/* EVOLUTION: tool call messages like viz.renderChart will be rendered here. */}
-          {showToolCalls ? (
-            <ToolCallResults message={message} conversation={conversation} />
-          ) : null}
-        </>
-      );
+      return showToolCalls
+        ? message.toolCalls.map((toolCall) => (
+            <ToolCallResult
+              key={toolCall.id}
+              toolCall={toolCall}
+              toolResult={ConversationUtils.findToolResult(
+                conversation,
+                toolCall,
+              )}
+            />
+          ))
+        : null;
     case MessageRole.Tool:
-      return <ToolMessage message={message} />;
+      return <ToolMessage conversation={conversation} message={message} />;
     default:
       return null;
   }
-}
-
-function ToolCallResults({
-  message,
-  conversation,
-}: {
-  message: Message.ToolCallAssistant;
-  conversation: Conversation;
-}) {
-  return message.toolCalls.map((toolCall) => (
-    <ToolCallResult
-      key={toolCall.id}
-      toolCall={toolCall}
-      toolResult={ConversationUtils.findToolResult(conversation, toolCall)}
-    />
-  ));
 }

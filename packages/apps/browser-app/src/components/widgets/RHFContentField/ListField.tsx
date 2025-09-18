@@ -36,6 +36,7 @@ export default function ListField(props: Props) {
 function NullListField({
   schema,
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -51,6 +52,7 @@ function NullListField({
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
+        isNullable={isNullable}
         label={label}
       />
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
@@ -88,6 +90,7 @@ function NonNullListField({
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
+        isNullable={isNullable}
         label={label}
         actions={
           <>

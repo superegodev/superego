@@ -25,7 +25,7 @@ export interface FileNode {
  *   file node.
  */
 export default function findFileNodes(schema: Schema, value: any): FileNode[] {
-  return _findFileNodes(schema, value, utils.rootType(schema), []);
+  return _findFileNodes(schema, value, utils.getRootType(schema), []);
 }
 
 // "Private" version of findFileNodes with additional arguments which we don't
@@ -43,7 +43,7 @@ function _findFileNodes(
     return _findFileNodes(
       schema,
       value,
-      schema.types[typeDefinition.ref]!,
+      utils.getType(schema, typeDefinition),
       parentPath,
     );
   }

@@ -39,7 +39,7 @@ export function toAssistantDocument(
 }
 
 function toAssistantContent(schema: Schema, content: any, timeZone: string) {
-  const rootType = utils.rootType(schema);
+  const rootType = utils.getRootType(schema);
   return toAssistantValue(schema, content, rootType, timeZone);
 }
 
@@ -59,7 +59,7 @@ function toAssistantValue(
     return toAssistantValue(
       schema,
       value,
-      schema.types[typeDefinition.ref]!,
+      utils.getType(schema, typeDefinition),
       timeZone,
     );
   }

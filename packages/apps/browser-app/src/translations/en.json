@@ -194,8 +194,8 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "CreateDocumentOrVersion.tsx_P6wDh/": {
-    "defaultMessage": "{collection} » Document updated"
+  "CreateDocumentOrVersion.tsx_+z+eOw": {
+    "defaultMessage": "{collection} » New document version created"
   },
   "CreateDocumentOrVersion.tsx_hmMMs+": {
     "defaultMessage": "{collection} » Document created"
@@ -572,12 +572,6 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
-  "Preview.tsx_9lnhZ4": {
-    "defaultMessage": "Create collection"
-  },
-  "PreviewDocumentForm.tsx_T7Y1no": {
-    "defaultMessage": "Schema preview"
-  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
@@ -640,6 +634,12 @@
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
+  },
+  "SuggestCollectionDefinition.tsx_S2ZL0P": {
+    "defaultMessage": "Suggested collection"
+  },
+  "SuggestCollectionDefinition.tsx_VzzYJk": {
+    "defaultMessage": "Create"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"

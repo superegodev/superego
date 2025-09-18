@@ -1,20 +1,48 @@
-import type { Message } from "@superego/backend";
-import { Fragment } from "react";
+import type { Conversation, Message, ToolCall } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import SuccessfulCreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.jsx";
+import CreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.js";
+import SuggestCollectionDefinition from "./ToolResult/SuggestCollectionDefinition.js";
 
 interface Props {
+  conversation: Conversation;
   message: Message.Tool;
 }
-export default function ToolMessage({ message }: Props) {
-  return message.toolResults.map((toolResult) => (
-    <Fragment key={toolResult.toolCallId}>
-      {ConversationUtils.isSuccessfulCreateDocumentToolResult(toolResult) ||
+export default function ToolMessage({ conversation, message }: Props) {
+  return message.toolResults.map((toolResult) => {
+    if (
+      ConversationUtils.isSuccessfulCreateDocumentToolResult(toolResult) ||
       ConversationUtils.isSuccessfulCreateNewDocumentVersionToolResult(
         toolResult,
-      ) ? (
-        <SuccessfulCreateDocumentOrVersion toolResult={toolResult} />
-      ) : null}
-    </Fragment>
-  ));
+      )
+    ) {
+      return (
+        <CreateDocumentOrVersion
+          key={toolResult.toolCallId}
+          toolResult={toolResult}
+        />
+      );
+    }
+
+    if (
+      ConversationUtils.isSuccessfulSuggestCollectionDefinitionToolResult(
+        toolResult,
+      )
+    ) {
+      return (
+        <SuggestCollectionDefinition
+          key={toolResult.toolCallId}
+          conversation={conversation}
+          toolCall={
+            ConversationUtils.findToolCall(
+              conversation,
+              toolResult,
+            ) as ToolCall.SuggestCollectionDefinition
+          }
+          toolResult={toolResult}
+        />
+      );
+    }
+
+    return null;
+  });
 }

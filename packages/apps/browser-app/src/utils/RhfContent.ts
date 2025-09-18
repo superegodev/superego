@@ -7,10 +7,10 @@ import {
 
 export default {
   fromRhfContent(rhfContent: any, schema: Schema): any {
-    return fromRhfValue(rhfContent, utils.rootType(schema), schema);
+    return fromRhfValue(rhfContent, utils.getRootType(schema), schema);
   },
   toRhfContent(content: any, schema: Schema): any {
-    return toRhfValue(content, utils.rootType(schema), schema);
+    return toRhfValue(content, utils.getRootType(schema), schema);
   },
 };
 
@@ -49,7 +49,11 @@ function fromRhfValue(
     case DataType.List:
       return rhfValue.map((item: { value: any }) => item.value);
     case null:
-      return fromRhfValue(rhfValue, schema.types[typeDefinition.ref]!, schema);
+      return fromRhfValue(
+        rhfValue,
+        utils.getType(schema, typeDefinition),
+        schema,
+      );
   }
 }
 
@@ -84,6 +88,6 @@ function toRhfValue(
     case DataType.List:
       return value.map((item: any) => ({ value: item }));
     case null:
-      return toRhfValue(value, schema.types[typeDefinition.ref]!, schema);
+      return toRhfValue(value, utils.getType(schema, typeDefinition), schema);
   }
 }

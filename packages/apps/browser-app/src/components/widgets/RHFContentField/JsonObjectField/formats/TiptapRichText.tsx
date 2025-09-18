@@ -11,6 +11,7 @@ import type Props from "../Props.js";
 
 export default function TiptapRichText({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -26,7 +27,11 @@ export default function TiptapRichText({
   return (
     <div className={cs.JsonObjectField.TiptapRichText.root}>
       {!isListItem ? (
-        <AnyFieldLabel typeDefinition={typeDefinition} label={label} />
+        <AnyFieldLabel
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          label={label}
+        />
       ) : null}
       <TiptapInput
         value={value}
