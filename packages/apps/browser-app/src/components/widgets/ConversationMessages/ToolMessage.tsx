@@ -1,7 +1,7 @@
 import type { Message } from "@superego/backend";
 import { Fragment } from "react";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import SuccessfulCreateDocumentOrVersion from "./ToolResult/SuccessfulCreateDocumentOrCreateNewDocumentVersion.js";
+import SuccessfulCreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.jsx";
 
 interface Props {
   message: Message.Tool;

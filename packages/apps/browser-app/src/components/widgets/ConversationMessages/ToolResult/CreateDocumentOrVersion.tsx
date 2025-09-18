@@ -7,9 +7,9 @@ import { getDocumentVersionQuery } from "../../../../business-logic/backend/hook
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import { vars } from "../../../../themes.css.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
-import Link from "../../../design-system/Link/Link.js";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
+import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.jsx";
+import Link from "../../../design-system/Link/Link.jsx";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
 import * as cs from "./ToolResult.css.js";
 
 interface Props {
@@ -20,9 +20,7 @@ interface Props {
     output: { success: true };
   };
 }
-export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
-  toolResult,
-}: Props) {
+export default function CreateDocumentOrVersion({ toolResult }: Props) {
   const { collections } = useGlobalData();
   const { collectionId, documentId, documentVersionId } =
     toolResult.output.data;
@@ -30,9 +28,9 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
   return (
     <Link
       to={{ name: RouteName.Document, collectionId, documentId }}
-      className={cs.SuccessfulCreateDocument.root}
+      className={cs.CreateDocumentOrVersion.root}
     >
-      <h5 className={cs.SuccessfulCreateDocument.title}>
+      <h5 className={cs.CreateDocumentOrVersion.title}>
         {toolResult.tool === ToolName.CreateDocument ? (
           <FormattedMessage
             defaultMessage="{collection} » Document created"
@@ -62,7 +60,7 @@ export default function SuccessfulCreateDocumentOrCreateNewDocumentVersion({
           ]),
         ]}
         renderLoading={() => (
-          <div className={cs.SuccessfulCreateDocument.contentSummarySkeleton}>
+          <div className={cs.CreateDocumentOrVersion.contentSummarySkeleton}>
             <Skeleton
               variant="list"
               itemCount={5}

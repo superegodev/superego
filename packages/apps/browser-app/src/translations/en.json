@@ -194,6 +194,12 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
+  "CreateDocumentOrVersion.tsx_P6wDh/": {
+    "defaultMessage": "{collection} » Document updated"
+  },
+  "CreateDocumentOrVersion.tsx_hmMMs+": {
+    "defaultMessage": "{collection} » Document created"
+  },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
@@ -634,12 +640,6 @@
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
-  },
-  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_P6wDh/": {
-    "defaultMessage": "{collection} » Document updated"
-  },
-  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": {
-    "defaultMessage": "{collection} » Document created"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"

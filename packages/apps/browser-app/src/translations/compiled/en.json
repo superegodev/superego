@@ -413,6 +413,26 @@
       "value": "Create"
     }
   ],
+  "CreateDocumentOrVersion.tsx_P6wDh/": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document updated"
+    }
+  ],
+  "CreateDocumentOrVersion.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document created"
+    }
+  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -1469,26 +1489,6 @@
     {
       "type": 0,
       "value": "null - click to set a value"
-    }
-  ],
-  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_P6wDh/": [
-    {
-      "type": 1,
-      "value": "collection"
-    },
-    {
-      "type": 0,
-      "value": " » Document updated"
-    }
-  ],
-  "SuccessfulCreateDocumentOrCreateNewDocumentVersion.tsx_hmMMs+": [
-    {
-      "type": 1,
-      "value": "collection"
-    },
-    {
-      "type": 0,
-      "value": " » Document created"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [

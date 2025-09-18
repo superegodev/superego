@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../themes.css.js";
 
-export const SuccessfulCreateDocument = {
+export const CreateDocumentOrVersion = {
   root: style({
     display: "block",
     textDecoration: "none",
