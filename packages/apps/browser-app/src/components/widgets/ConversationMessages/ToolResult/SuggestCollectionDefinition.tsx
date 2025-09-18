@@ -33,7 +33,7 @@ export default function SuggestCollectionDefinition({
   const { settings, schema, exampleDocument, tableColumns } = toolCall.input;
   const collectionCategory = collectionCategories.find(
     ({ id }) => id === settings.collectionCategoryId,
-  )!;
+  );
 
   const { mutate, isPending } = useCreateCollection();
   const createCollection = () => {
@@ -53,9 +53,13 @@ export default function SuggestCollectionDefinition({
         <FormattedMessage defaultMessage="Suggested collection" />
         {" » "}
         {CollectionUtils.getDisplayName({ settings })}
-        {" ("}
-        {CollectionCategoryUtils.getDisplayName(collectionCategory)}
-        {")"}
+        {collectionCategory ? (
+          <>
+            {" ("}
+            {CollectionCategoryUtils.getDisplayName(collectionCategory)}
+            {")"}
+          </>
+        ) : null}
       </Title>
       <Form
         onSubmit={handleSubmit(() => {})}
