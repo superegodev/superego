@@ -167,7 +167,12 @@ export default {
         rootType: "CalendarEntry",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { CalendarEntry } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  calendarEntry: CalendarEntry,\n): Record<string, string> {\n  return {\n    "0. Title": calendarEntry.title,\n    "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({\n      dateStyle: "short",\n      timeStyle: "short",\n    }),\n    "2. End": calendarEntry.endTime\n      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({\n          dateStyle: "short",\n          timeStyle: "short",\n        })\n      : "",\n    "3. Type": calendarEntry.type,\n  };\n}\n',
+          compiled:
+            'export default function getContentSummary(calendarEntry) {\n    return {\n        "0. Title": calendarEntry.title,\n        "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({\n            dateStyle: "short",\n            timeStyle: "short",\n        }),\n        "2. End": calendarEntry.endTime\n            ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({\n                dateStyle: "short",\n                timeStyle: "short",\n            })\n            : "",\n        "3. Type": calendarEntry.type,\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:27:11.952Z"),
@@ -183,8 +188,8 @@ export default {
             dataType: DataType.Enum,
             members: {
               G95E5: {
-                value: "G95E5",
                 description: "Gasoline, 95 octane, E5",
+                value: "G95E5",
               },
               G95E10: {
                 value: "G95E10",
@@ -242,10 +247,6 @@ export default {
                 description: "Indicates if the tank was filled completely.",
                 dataType: DataType.Boolean,
               },
-              pricePerLiter: {
-                description: "Price per liter of fuel.",
-                dataType: DataType.Number,
-              },
               fuelType: {
                 description: "Type of fuel used for the refuelling.",
                 dataType: null,
@@ -257,13 +258,18 @@ export default {
                 format: "dev.superego:JsonObject.TiptapRichText",
               },
             },
-            nullableProperties: ["pricePerLiter", "fuelType", "notes"],
+            nullableProperties: ["fuelType", "notes"],
           },
         },
         rootType: "FuelLogEntry",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { FuelLogEntry } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  fuelLog: FuelLogEntry\n): Record<string, string> {\n  return {\n    "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({ dateStyle: "short", timeStyle: "short" }),\n    "1. Liters": String(fuelLog.liters),\n    "2. Total Cost (€)": String(fuelLog.totalCost),\n    "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),\n    "4. Vehicle": fuelLog.vehicle,\n    "5. Odometer (km)": String(fuelLog.odometer),\n  };\n}',
+          compiled:
+            'export default function getContentSummary(fuelLog) {\n    return {\n        "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({ dateStyle: "short", timeStyle: "short" }),\n        "1. Liters": String(fuelLog.liters),\n        "2. Total Cost (€)": String(fuelLog.totalCost),\n        "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),\n        "4. Vehicle": fuelLog.vehicle,\n        "5. Odometer (km)": String(fuelLog.odometer),\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:29:13.582Z"),
@@ -382,7 +388,12 @@ export default {
         rootType: "Expense",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { Expense } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  expense: Expense\n): Record<string, string> {\n  return {\n    "0. Title": expense.title,\n    "1. Date": expense.date,\n    "2. Amount": `${expense.amount} ${expense.currency}`,\n    "3. Category": expense.category,\n  };\n}',
+          compiled:
+            'export default function getContentSummary(expense) {\n    return {\n        "0. Title": expense.title,\n        "1. Date": expense.date,\n        "2. Amount": `${expense.amount} ${expense.currency}`,\n        "3. Category": expense.category,\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:34:07.048Z"),
@@ -483,7 +494,12 @@ export default {
         rootType: "Contact",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { Contact } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  contact: Contact,\n): Record<string, string> {\n  return {\n    "0. Name": contact.name,\n    "1. Relation": contact.relation ?? "",\n    "2. Phone": contact.phones[0]?.number ?? "",\n    "3. Email": contact.emails[0]?.address ?? "",\n    "4. Type": contact.type\n  };\n}\n',
+          compiled:
+            'export default function getContentSummary(contact) {\n    return {\n        "0. Name": contact.name,\n        "1. Relation": contact.relation ?? "",\n        "2. Phone": contact.phones[0]?.number ?? "",\n        "3. Email": contact.emails[0]?.address ?? "",\n        "4. Type": contact.type\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:40:05.159Z"),
@@ -543,7 +559,12 @@ export default {
         rootType: "VetVisit",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { VetVisit } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  vetVisit: VetVisit,\n): Record<string, string> {\n  return {\n    "0. Title": vetVisit.title,\n    "1. Date": vetVisit.date,\n    "2. Pet": vetVisit.pet,\n  };\n}\n',
+          compiled:
+            'export default function getContentSummary(vetVisit) {\n    return {\n        "0. Title": vetVisit.title,\n        "1. Date": vetVisit.date,\n        "2. Pet": vetVisit.pet,\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:42:06.031Z"),
@@ -589,7 +610,12 @@ export default {
         rootType: "WeighIn",
       },
       settings: {
-        contentSummaryGetter: { source: "TODO", compiled: "TODO" },
+        contentSummaryGetter: {
+          source:
+            'import type { WeighIn } from "./CollectionSchema";\n\nexport default function getContentSummary(\n  weighIn: WeighIn,\n): Record<string, string> {\n  return {\n    "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({\n      dateStyle: "short",\n      timeStyle: "short"\n    }),\n    "1. Weight (kg)": String(weighIn.weightKg),\n  };\n}\n',
+          compiled:
+            'export default function getContentSummary(weighIn) {\n    return {\n        "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({\n            dateStyle: "short",\n            timeStyle: "short"\n        }),\n        "1. Weight (kg)": String(weighIn.weightKg),\n    };\n}\n',
+        },
       },
       migration: null,
       createdAt: new Date("2025-08-28T09:43:03.894Z"),
