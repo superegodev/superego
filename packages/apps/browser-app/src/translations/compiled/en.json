@@ -1281,7 +1281,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_zto8Ez": [
+  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
     {
       "children": [
         {
@@ -1306,7 +1306,7 @@
           "children": [
             {
               "type": 0,
-              "value": "Record<name: string, value: string>"
+              "value": "Record<key: string, value: string>"
             }
           ],
           "type": 8,
@@ -1314,7 +1314,7 @@
         },
         {
           "type": 0,
-          "value": "—derived from its content—that contains its most important bits of information. These are displayed when showing a \"summary view\" of the document; for example, in tables, where each property of the record becomes a column. "
+          "value": "—derived from its content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
       ],
       "type": 8,
@@ -1342,7 +1342,63 @@
         },
         {
           "type": 0,
-          "value": " is the function that derives the summary from the document content. "
+          "value": " is the TypeScript function that derives the summary from the document content. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Tip:"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " to enforce a specific order for the properties of the summary, you can prefix each key with "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "$position. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ". (Example: "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "0. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ".) The prefix is stripped when displaying them. "
         }
       ],
       "type": 8,

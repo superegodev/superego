@@ -3,6 +3,7 @@ import { uniq } from "es-toolkit";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
+import DocumentUtils from "../../../utils/DocumentUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import Table from "../../design-system/Table/Table.js";
 
@@ -16,7 +17,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
     documents.flatMap((document) =>
       Object.keys(document.latestVersion.contentSummary.data ?? {}),
     ),
-  );
+  ).sort();
   return (
     <Table
       aria-label={intl.formatMessage(
@@ -33,7 +34,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
         ) : null}
         {contentSummaryKeys.map((contentSummaryKey, index) => (
           <Table.Column key={contentSummaryKey} isRowHeader={index === 0}>
-            {contentSummaryKey}
+            {DocumentUtils.formatContentSummaryKey(contentSummaryKey)}
           </Table.Column>
         ))}
         <Table.Column align="right">

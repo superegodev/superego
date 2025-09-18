@@ -8,4 +8,8 @@ export default {
       ? (head(Object.values(contentSummary.data)) ?? document.id)
       : document.id;
   },
+
+  formatContentSummaryKey(key: string): string {
+    return key.replace(/^\d+\.\s+/, "");
+  },
 };

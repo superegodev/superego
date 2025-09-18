@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: contains stringified code. */
 import { DataType } from "@superego/schema";
 import type Data from "./Data.js";
 

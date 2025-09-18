@@ -17,8 +17,8 @@ export default function makeContentSummaryGetter(
   const returnStatement = [
     "  return {",
     ...tableColumns.map(
-      ({ header, path }) =>
-        `    ${JSON.stringify(header)}: ${makePropertyValueStatement(schema, path, argName)} ?? "",`,
+      ({ header, path }, index) =>
+        `    ${JSON.stringify(`${index}. ${header}`)}: ${makePropertyValueStatement(schema, path, argName)} ?? "",`,
     ),
     "  };",
   ];

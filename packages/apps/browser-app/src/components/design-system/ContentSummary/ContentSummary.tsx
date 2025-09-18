@@ -1,5 +1,6 @@
 import type { DocumentVersion } from "@superego/backend";
 import { FormattedMessage } from "react-intl";
+import DocumentUtils from "../../../utils/DocumentUtils.js";
 import * as cs from "./ContentSummary.css.js";
 
 interface Props {
@@ -22,12 +23,16 @@ export default function ContentSummary({ contentSummary }: Props) {
   }
   return (
     <dl className={cs.ContentSummary.root}>
-      {Object.entries(contentSummary.data).map(([name, value]) => (
-        <div key={name} className={cs.ContentSummary.property}>
-          <dt className={cs.ContentSummary.propertyName}>{name}</dt>
-          <dd className={cs.ContentSummary.propertyValue}>{value}</dd>
-        </div>
-      ))}
+      {Object.entries(contentSummary.data)
+        .sort(([aKey], [bKey]) => (aKey > bKey ? 1 : -1))
+        .map(([key, value]) => (
+          <div key={key} className={cs.ContentSummary.property}>
+            <dt className={cs.ContentSummary.propertyName}>
+              {DocumentUtils.formatContentSummaryKey(key)}
+            </dt>
+            <dd className={cs.ContentSummary.propertyValue}>{value}</dd>
+          </div>
+        ))}
     </dl>
   );
 }
