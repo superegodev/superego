@@ -27,10 +27,7 @@ export default function CreateCollectionAssisted() {
       userMessageContent,
     );
     if (success) {
-      navigateTo({
-        name: RouteName.CollectionCreatorConversation,
-        conversationId: data.id,
-      });
+      navigateTo({ name: RouteName.Conversation, conversationId: data.id });
     }
   };
   return (

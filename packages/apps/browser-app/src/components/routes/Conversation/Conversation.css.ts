@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-export const FactotumConversation = {
+export const Conversation = {
   panelContent: style({
-    paddingBlockEnd: "0 !important",
+    paddingBlock: "0 !important",
   }),
 };

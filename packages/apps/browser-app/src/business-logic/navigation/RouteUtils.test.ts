@@ -12,11 +12,7 @@ const testRoutes: Route[] = [
     name: RouteName.Conversations,
   },
   {
-    name: RouteName.FactotumConversation,
-    conversationId: Id.generate.conversation(),
-  },
-  {
-    name: RouteName.CollectionCreatorConversation,
+    name: RouteName.Conversation,
     conversationId: Id.generate.conversation(),
   },
   {

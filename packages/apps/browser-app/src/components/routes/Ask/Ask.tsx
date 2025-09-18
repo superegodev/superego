@@ -31,10 +31,7 @@ export default function Ask() {
       userMessageContent,
     );
     if (success) {
-      navigateTo({
-        name: RouteName.FactotumConversation,
-        conversationId: data.id,
-      });
+      navigateTo({ name: RouteName.Conversation, conversationId: data.id });
     }
   };
   return (

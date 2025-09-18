@@ -2,15 +2,14 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Ask from "../Ask/Ask.js";
 import Collection from "../Collection/Collection.js";
-import CollectionCreatorConversation from "../CollectionCreatorConversation/CollectionCreatorConversation.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
+import Conversation from "../Conversation/Conversation.js";
 import Conversations from "../Conversations/Conversations.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
 import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionManual.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
 import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";
 import Document from "../Document/Document.js";
-import FactotumConversation from "../FactotumConversation/FactotumConversation.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
 
 export default function MainPanel() {
@@ -20,16 +19,8 @@ export default function MainPanel() {
       return <Ask />;
     case RouteName.Conversations:
       return <Conversations />;
-    case RouteName.FactotumConversation:
-      return (
-        <FactotumConversation conversationId={activeRoute.conversationId} />
-      );
-    case RouteName.CollectionCreatorConversation:
-      return (
-        <CollectionCreatorConversation
-          conversationId={activeRoute.conversationId}
-        />
-      );
+    case RouteName.Conversation:
+      return <Conversation conversationId={activeRoute.conversationId} />;
     case RouteName.CreateCollectionAssisted:
       return <CreateCollectionAssisted />;
     case RouteName.CreateCollectionManual:

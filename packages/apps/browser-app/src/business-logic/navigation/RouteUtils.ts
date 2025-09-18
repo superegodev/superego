@@ -12,10 +12,8 @@ export function toHref(route: Route): string {
       return "/";
     case RouteName.Conversations:
       return "/conversations";
-    case RouteName.FactotumConversation:
-      return `/conversations/factotum/${route.conversationId}`;
-    case RouteName.CollectionCreatorConversation:
-      return `/conversations/collection-creator/${route.conversationId}`;
+    case RouteName.Conversation:
+      return `/conversations/${route.conversationId}`;
     case RouteName.CreateCollectionAssisted:
       return "/collections/new/assisted";
     case RouteName.CreateCollectionManual:
@@ -125,21 +123,10 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/conversations/factotum/:conversationId",
+      pathname: "/conversations/:conversationId",
     }),
     toRoute: (match) => ({
-      name: RouteName.FactotumConversation,
-      conversationId: decodePathSegment<ConversationId>(
-        match.pathname.groups["conversationId"],
-      ),
-    }),
-  },
-  {
-    pattern: new URLPattern({
-      pathname: "/conversations/collection-creator/:conversationId",
-    }),
-    toRoute: (match) => ({
-      name: RouteName.CollectionCreatorConversation,
+      name: RouteName.Conversation,
       conversationId: decodePathSegment<ConversationId>(
         match.pathname.groups["conversationId"],
       ),

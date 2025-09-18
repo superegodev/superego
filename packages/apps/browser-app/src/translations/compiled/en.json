@@ -127,46 +127,6 @@
       "value": "Rename"
     }
   ],
-  "CollectionCreatorConversation.tsx_9eR0Qp": [
-    {
-      "type": 0,
-      "value": "Delete conversation"
-    }
-  ],
-  "CollectionCreatorConversation.tsx_BS0cJA": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations » Collection Creator"
-    }
-  ],
-  "CollectionCreatorConversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Toggle tool calls"
-    }
-  ],
-  "CollectionCreatorConversation.tsx_rZybx9": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations » Collection Creator » "
-    },
-    {
-      "type": 1,
-      "value": "conversation"
-    }
-  ],
-  "CollectionCreatorConversation.tsx_w5q/I/": [
-    {
-      "type": 0,
-      "value": "Conversation actions"
-    }
-  ],
-  "CollectionCreatorConversation.tsx_yWDfdE": [
-    {
-      "type": 0,
-      "value": "What kind of data do you want to store?"
-    }
-  ],
   "CollectionSettings.tsx_AHx1om": [
     {
       "type": 1,
@@ -245,6 +205,60 @@
     {
       "type": 0,
       "value": "Create"
+    }
+  ],
+  "Conversation.tsx_9eR0Qp": [
+    {
+      "type": 0,
+      "value": "Delete conversation"
+    }
+  ],
+  "Conversation.tsx_Ro7LyR": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » "
+    },
+    {
+      "type": 1,
+      "value": "assistant"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "Conversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Toggle tool calls"
+    }
+  ],
+  "Conversation.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
+    }
+  ],
+  "Conversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Conversation actions"
+    }
+  ],
+  "Conversation.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "What kind of data do you want to store?"
+    }
+  ],
+  "Conversation.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
     }
   ],
   "ConversationUtils.ts_PQ8A3I": [
@@ -781,46 +795,6 @@
     {
       "type": 0,
       "value": "The assistant encountered an error."
-    }
-  ],
-  "FactotumConversation.tsx_9eR0Qp": [
-    {
-      "type": 0,
-      "value": "Delete conversation"
-    }
-  ],
-  "FactotumConversation.tsx_EuFjxK": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations » Factotum » "
-    },
-    {
-      "type": 1,
-      "value": "conversation"
-    }
-  ],
-  "FactotumConversation.tsx_UZXBXa": [
-    {
-      "type": 0,
-      "value": "🤖 Conversations » Factotum"
-    }
-  ],
-  "FactotumConversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Toggle tool calls"
-    }
-  ],
-  "FactotumConversation.tsx_oZLZvb": [
-    {
-      "type": 0,
-      "value": "How can I help you?"
-    }
-  ],
-  "FactotumConversation.tsx_w5q/I/": [
-    {
-      "type": 0,
-      "value": "Conversation actions"
     }
   ],
   "FileField.tsx_5q3qC0": [

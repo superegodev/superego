@@ -59,24 +59,6 @@
   "CollectionCategoryActionsMenu.tsx_iXNbPf": {
     "defaultMessage": "Rename"
   },
-  "CollectionCreatorConversation.tsx_9eR0Qp": {
-    "defaultMessage": "Delete conversation"
-  },
-  "CollectionCreatorConversation.tsx_BS0cJA": {
-    "defaultMessage": "🤖 Conversations » Collection Creator"
-  },
-  "CollectionCreatorConversation.tsx_gKk3/v": {
-    "defaultMessage": "Toggle tool calls"
-  },
-  "CollectionCreatorConversation.tsx_rZybx9": {
-    "defaultMessage": "🤖 Conversations » Collection Creator » {conversation}"
-  },
-  "CollectionCreatorConversation.tsx_w5q/I/": {
-    "defaultMessage": "Conversation actions"
-  },
-  "CollectionCreatorConversation.tsx_yWDfdE": {
-    "defaultMessage": "What kind of data do you want to store?"
-  },
   "CollectionSettings.tsx_AHx1om": {
     "defaultMessage": "{collection} » Settings"
   },
@@ -112,6 +94,27 @@
   },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Create"
+  },
+  "Conversation.tsx_9eR0Qp": {
+    "defaultMessage": "Delete conversation"
+  },
+  "Conversation.tsx_Ro7LyR": {
+    "defaultMessage": "🤖 Conversations » {assistant} » {conversation}"
+  },
+  "Conversation.tsx_gKk3/v": {
+    "defaultMessage": "Toggle tool calls"
+  },
+  "Conversation.tsx_oZLZvb": {
+    "defaultMessage": "How can I help you?"
+  },
+  "Conversation.tsx_w5q/I/": {
+    "defaultMessage": "Conversation actions"
+  },
+  "Conversation.tsx_yWDfdE": {
+    "defaultMessage": "What kind of data do you want to store?"
+  },
+  "Conversation.tsx_yYmfIl": {
+    "defaultMessage": "🤖 Conversations"
   },
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "New conversation"
@@ -331,24 +334,6 @@
   },
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
-  },
-  "FactotumConversation.tsx_9eR0Qp": {
-    "defaultMessage": "Delete conversation"
-  },
-  "FactotumConversation.tsx_EuFjxK": {
-    "defaultMessage": "🤖 Conversations » Factotum » {conversation}"
-  },
-  "FactotumConversation.tsx_UZXBXa": {
-    "defaultMessage": "🤖 Conversations » Factotum"
-  },
-  "FactotumConversation.tsx_gKk3/v": {
-    "defaultMessage": "Toggle tool calls"
-  },
-  "FactotumConversation.tsx_oZLZvb": {
-    "defaultMessage": "How can I help you?"
-  },
-  "FactotumConversation.tsx_w5q/I/": {
-    "defaultMessage": "Conversation actions"
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"

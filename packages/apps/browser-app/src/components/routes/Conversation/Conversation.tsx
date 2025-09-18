@@ -1,4 +1,8 @@
-import { type ConversationId, ConversationStatus } from "@superego/backend";
+import {
+  AssistantName,
+  type ConversationId,
+  ConversationStatus,
+} from "@superego/backend";
 import { useState } from "react";
 import { PiLightning, PiLightningSlash, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -8,12 +12,12 @@ import ConversationUtils from "../../../utils/ConversationUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
 import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";
-import * as cs from "./FactotumConversation.css.js";
+import * as cs from "./Conversation.css.js";
 
 interface Props {
   conversationId: ConversationId;
 }
-export default function FactotumConversation({ conversationId }: Props) {
+export default function Conversation({ conversationId }: Props) {
   const intl = useIntl();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [showToolCalls, setShowToolCalls] = useState(false);
@@ -30,7 +34,7 @@ export default function FactotumConversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage({
-              defaultMessage: "🤖\u2002Conversations » Factotum",
+              defaultMessage: "🤖\u2002Conversations",
             })}
           />
         </Shell.Panel>
@@ -42,9 +46,13 @@ export default function FactotumConversation({ conversationId }: Props) {
             title={intl.formatMessage(
               {
                 defaultMessage:
-                  "🤖\u2002Conversations » Factotum » {conversation}",
+                  "🤖\u2002Conversations » {assistant} » {conversation}",
               },
               {
+                assistant:
+                  conversation.assistant === AssistantName.CollectionCreator
+                    ? "Collection Creator"
+                    : "Factotum",
                 conversation: ConversationUtils.getDisplayTitle(
                   conversation,
                   intl,
@@ -71,13 +79,19 @@ export default function FactotumConversation({ conversationId }: Props) {
               },
             ]}
           />
-          <Shell.Panel.Content className={cs.FactotumConversation.panelContent}>
+          <Shell.Panel.Content className={cs.Conversation.panelContent}>
             <Chat
               conversation={conversation}
               showToolsCalls={showToolCalls}
-              userMessageContentInputPlaceholder={intl.formatMessage({
-                defaultMessage: "How can I help you?",
-              })}
+              userMessageContentInputPlaceholder={
+                conversation.assistant === AssistantName.CollectionCreator
+                  ? intl.formatMessage({
+                      defaultMessage: "What kind of data do you want to store?",
+                    })
+                  : intl.formatMessage({
+                      defaultMessage: "How can I help you?",
+                    })
+              }
             />
             <DeleteConversationModalForm
               key={`DeleteConversationModalForm_${conversationId}`}

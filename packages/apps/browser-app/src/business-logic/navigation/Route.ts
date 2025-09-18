@@ -7,8 +7,7 @@ import type {
 export enum RouteName {
   Ask = "Ask",
   Conversations = "Conversations",
-  FactotumConversation = "FactotumConversation",
-  CollectionCreatorConversation = "CollectionCreatorConversation",
+  Conversation = "Conversation",
   CreateCollectionManual = "CreateCollection",
   CreateCollectionAssisted = "StartCollectionCreatorConversation",
   CreateNewCollectionVersion = "CreateNewCollectionVersion",
@@ -27,11 +26,7 @@ type Route =
       name: RouteName.Conversations;
     }
   | {
-      name: RouteName.FactotumConversation;
-      conversationId: ConversationId;
-    }
-  | {
-      name: RouteName.CollectionCreatorConversation;
+      name: RouteName.Conversation;
       conversationId: ConversationId;
     }
   | {
