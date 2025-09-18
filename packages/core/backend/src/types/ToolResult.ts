@@ -76,6 +76,7 @@ namespace ToolResult {
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
       | CollectionSettingsNotValid
+      | ResultError<"TableColumnsNotValid", { issues: ValidationIssue[] }>
       | ResultError<"ExampleDocumentNotValid", { issues: ValidationIssue[] }>
     >
   >;

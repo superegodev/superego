@@ -15,10 +15,10 @@ export default function registerFactotumTests(
     aggregateOverSingleCollection(deps);
     createInMultipleCollections(deps);
     createInSingleCollection(deps);
-    // // TODO: searchInMultipleCollection(deps);
+    // TODO: searchInMultipleCollection(deps);
     searchInSingleCollection(deps);
     speakInDifferentLanguages(deps);
-    // // TODO: updateInMultipleCollection(deps);
+    // TODO: updateInMultipleCollection(deps);
     updateInSingleCollection(deps);
   });
 }

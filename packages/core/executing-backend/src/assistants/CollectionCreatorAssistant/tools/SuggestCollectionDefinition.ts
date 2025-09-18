@@ -8,10 +8,12 @@ import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type CollectionsCreate from "../../../usecases/collections/Create.js";
+import isEmpty from "../../../utils/isEmpty.js";
+import validateTableColumns from "../utils/validateTableColumns.js";
 
 const stubContentSummaryGetter = {
-  source: "export default function todo() { return {}; }",
-  compiled: "export default function todo() { return {}; }",
+  source: "export default function stub() { return {}; }",
+  compiled: "export default function stub() { return {}; }",
 };
 
 export default {
@@ -23,7 +25,7 @@ export default {
     toolCall: ToolCall.SuggestCollectionDefinition,
     collectionsCreate: CollectionsCreate,
   ): Promise<ToolResult.SuggestCollectionDefinition> {
-    const { settings, schema, exampleDocument } = toolCall.input;
+    const { settings, schema, tableColumns, exampleDocument } = toolCall.input;
 
     const createResult = await collectionsCreate.exec(
       { ...settings, assistantInstructions: null },
@@ -56,7 +58,18 @@ export default {
       };
     }
 
-    // TODO: for each tableColumns, validate path is correct.
+    const tableColumnIssues = validateTableColumns(schema, tableColumns);
+    if (!isEmpty(tableColumnIssues)) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(
+          makeResultError("TableColumnsNotValid", {
+            issues: tableColumnIssues,
+          }),
+        ),
+      };
+    }
 
     const exampleDocumentValidationResult = v.safeParse(
       valibotSchemas.content(schema),
@@ -132,7 +145,7 @@ Generates the definition for a collection.
 Columns to display in the UI table used to show the documents in the collection.
 There should be a column for all the most important properties of the
 collection, but define 5 columns at most. Only primitive properties can be
-selected (no list, no structs).
+selected (no Files, JsonObjects, Lists, or Structs).
             `.trim(),
             type: "array",
             items: {
