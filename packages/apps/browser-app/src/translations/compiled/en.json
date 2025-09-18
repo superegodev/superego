@@ -1281,7 +1281,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_CcY8Jl": [
+  "RHFContentSummaryGetterField.tsx_zto8Ez": [
     {
       "children": [
         {
@@ -1328,13 +1328,13 @@
       "children": [
         {
           "type": 0,
-          "value": " The "
+          "value": " "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "content summary getter"
+              "value": "Content summary getter"
             }
           ],
           "type": 8,
