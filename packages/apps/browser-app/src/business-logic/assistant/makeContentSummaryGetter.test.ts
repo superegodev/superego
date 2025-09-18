@@ -101,7 +101,7 @@ it("generates the correct contentSummaryGetter for the tableColumns", async () =
 
   // Verify
   expect(contentSummaryGetter.source).toMatchInlineSnapshot(`
-    "import type { Contact } from ".TODO";
+    "import type { Contact } from "./CollectionSchema.js";
 
     export default function getContentSummary(
       contact: Contact
