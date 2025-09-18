@@ -8,13 +8,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateLatestCollectionVersionSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import ResultError from "../../design-system/ResultError/ResultError.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
-
-const schemaTypescriptLibPath = "/CollectionSchema.ts";
 
 interface FormValues {
   contentSummaryGetter: TypescriptModule;
@@ -55,11 +54,10 @@ export default function UpdateCollectionVersionSettingsForm({
     }
   };
   const schemaTypescriptLib = useMemo(
-    () =>
-      ({
-        path: schemaTypescriptLibPath,
-        source: codegen(collection.latestVersion.schema),
-      }) as const,
+    () => ({
+      path: wellKnownLibPaths.collectionSchema,
+      source: codegen(collection.latestVersion.schema),
+    }),
     [collection],
   );
 

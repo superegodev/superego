@@ -15,7 +15,6 @@ import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVers
 import MigrationTab from "./MigrationTab.js";
 import SchemaTab from "./SchemaTab.js";
 import TabTitle from "./TabTitle.js";
-import typescriptLibPaths from "./typescriptLibPaths.js";
 
 interface Props {
   collection: Collection;
@@ -29,9 +28,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     () =>
       forms.defaults.migration(
         collection.latestVersion.schema,
-        typescriptLibPaths.currentSchema,
         collection.latestVersion.schema,
-        typescriptLibPaths.nextSchema,
       ),
     [collection.latestVersion.schema],
   );
@@ -74,9 +71,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         schema: data.latestVersion.schema,
         migration: forms.defaults.migration(
           collection.latestVersion.schema,
-          typescriptLibPaths.currentSchema,
           collection.latestVersion.schema,
-          typescriptLibPaths.nextSchema,
         ),
         contentSummaryGetter: data.latestVersion.settings.contentSummaryGetter,
       });
@@ -112,9 +107,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       resetField("migration", {
         defaultValue: forms.defaults.migration(
           collection.latestVersion.schema,
-          typescriptLibPaths.currentSchema,
           schema,
-          typescriptLibPaths.nextSchema,
         ),
       });
     } else {

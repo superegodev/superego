@@ -5,8 +5,7 @@ import {
   type Schema,
   utils as schemaUtils,
 } from "@superego/schema";
-
-const schemaTypescriptLibPath = "TODO";
+import wellKnownLibPaths from "../typescript/wellKnownLibPaths.js";
 
 export default function makeContentSummaryGetter(
   schema: Schema,
@@ -14,7 +13,7 @@ export default function makeContentSummaryGetter(
 ): TypescriptModule {
   const { rootType } = schema;
   const argName = rootType[0]?.toLowerCase() + rootType.slice(1);
-  const importPath = `.${schemaTypescriptLibPath.replace(".ts", ".js")}`;
+  const importPath = `.${wellKnownLibPaths.collectionSchema.replace(".ts", ".js")}`;
   const returnStatement = [
     "  return {",
     ...tableColumns.map(

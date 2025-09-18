@@ -15,7 +15,6 @@ import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import GeneralSettingsTab from "./GeneralSettingsTab.js";
 import SchemaTab from "./SchemaTab.js";
-import schemaTypescriptLibPath from "./schemaTypescriptLibPath.js";
 import TabTitle from "./TabTitle.js";
 
 const defaultSchema = forms.defaults.schema();
@@ -27,11 +26,7 @@ export default function CreateCollectionForm() {
   const { result, mutate } = useCreateCollection();
 
   const defaultContentSummaryGetter = useMemo(
-    () =>
-      forms.defaults.contentSummaryGetter(
-        defaultSchema,
-        schemaTypescriptLibPath,
-      ),
+    () => forms.defaults.contentSummaryGetter(defaultSchema),
     [],
   );
   const {
@@ -110,10 +105,7 @@ export default function CreateCollectionForm() {
       currentContentSummaryGetterSource === defaultContentSummaryGetterSource
     ) {
       resetField("contentSummaryGetter", {
-        defaultValue: forms.defaults.contentSummaryGetter(
-          schema,
-          schemaTypescriptLibPath,
-        ),
+        defaultValue: forms.defaults.contentSummaryGetter(schema),
       });
     } else {
       setValue(

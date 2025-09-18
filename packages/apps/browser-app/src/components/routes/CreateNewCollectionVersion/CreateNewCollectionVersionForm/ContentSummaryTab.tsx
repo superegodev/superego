@@ -1,9 +1,9 @@
 import { codegen, type Schema } from "@superego/schema";
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
+import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
 import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
-import typescriptLibPaths from "./typescriptLibPaths.js";
 
 interface Props {
   control: Control<
@@ -17,7 +17,7 @@ export default function ContentSummaryTab({ control, schema }: Props) {
   const schemaTypescriptLib = useMemo(
     () =>
       typeof schema !== "string"
-        ? { path: typescriptLibPaths.schema, source: codegen(schema) }
+        ? { path: wellKnownLibPaths.collectionSchema, source: codegen(schema) }
         : null,
     [schema],
   );
