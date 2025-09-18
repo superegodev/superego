@@ -14,7 +14,7 @@
   "devDependencies": {
     "typescript": "^5.9.2",
     "vite": "^7.1.6",
-    "wrangler": "^4.37.1"
+    "wrangler": "^4.38.0"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
