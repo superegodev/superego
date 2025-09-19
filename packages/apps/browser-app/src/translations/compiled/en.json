@@ -1233,12 +1233,6 @@
       "value": "Transcriptions (required to speak to the assistant)"
     }
   ],
-  "InferenceSettings.tsx_fMrykm": [
-    {
-      "type": 0,
-      "value": ": an app that runs locally on your computer (needs a lot of RAM and beefy GPU). Only supports the Chat Completions API."
-    }
-  ],
   "InferenceSettings.tsx_gi9ckp": [
     {
       "type": 0,
@@ -1273,6 +1267,12 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_waSfdV": [
+    {
+      "type": 0,
+      "value": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
     }
   ],
   "ListField.tsx_6ibWnb": [

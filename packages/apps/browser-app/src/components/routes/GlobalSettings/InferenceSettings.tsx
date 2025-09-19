@@ -44,7 +44,7 @@ export default function InferenceSettings({ control }: Props) {
           </li>
           <li>
             <a href="https://lmstudio.ai/">{"LM Studio"}</a>
-            <FormattedMessage defaultMessage=": an app that runs locally on your computer (needs a lot of RAM and beefy GPU). Only supports the Chat Completions API." />
+            <FormattedMessage defaultMessage=": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API." />
           </li>
         </ul>
         <FormattedMessage

@@ -515,9 +515,6 @@
   "InferenceSettings.tsx_eV3UHK": {
     "defaultMessage": "Transcriptions (required to speak to the assistant)"
   },
-  "InferenceSettings.tsx_fMrykm": {
-    "defaultMessage": ": an app that runs locally on your computer (needs a lot of RAM and beefy GPU). Only supports the Chat Completions API."
-  },
   "InferenceSettings.tsx_gi9ckp": {
     "defaultMessage": ": only supports the Chat Completions API."
   },
@@ -532,6 +529,9 @@
   },
   "InferenceSettings.tsx_vuJYgx": {
     "defaultMessage": "<p> Create an account with your chosen provider, get an API key, and enter the details below. </p>"
+  },
+  "InferenceSettings.tsx_waSfdV": {
+    "defaultMessage": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
   },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
