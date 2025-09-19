@@ -2,7 +2,8 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 const codeLineHeight = 21;
-export const CodeBlock = {
+
+export const EagerCodeBlock = {
   root: style({
     display: "grid",
     gridTemplateAreas: `"LineNumbers Code"`,
@@ -37,16 +38,16 @@ export const CodeBlock = {
   }),
 };
 
-globalStyle(`${CodeBlock.code} > br`, {
+globalStyle(`${EagerCodeBlock.code} > br`, {
   display: "none",
 });
 
-globalStyle(`${CodeBlock.code} > span`, {
+globalStyle(`${EagerCodeBlock.code} > span`, {
   display: "block",
   height: codeLineHeight,
 });
 
-globalStyle(`[aria-disabled="true"] > ${CodeBlock.root} *`, {
+globalStyle(`[aria-disabled="true"] > ${EagerCodeBlock.root} *`, {
   color: `${vars.colors.text.secondary}`,
 });
 

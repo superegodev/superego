@@ -739,6 +739,12 @@
       "value": "Invalid content summary"
     }
   ],
+  "EagerTiptapInput.tsx_0he+1r": [
+    {
+      "type": 0,
+      "value": "Write..."
+    }
+  ],
   "EmojiInput.tsx_CqyOwA": [
     {
       "type": 0,
@@ -1653,12 +1659,6 @@
     {
       "type": 1,
       "value": "time"
-    }
-  ],
-  "TiptapInput.tsx_0he+1r": [
-    {
-      "type": 0,
-      "value": "Write..."
     }
   ],
   "Title.tsx_1af260": [

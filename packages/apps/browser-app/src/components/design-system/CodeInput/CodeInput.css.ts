@@ -1,7 +1,7 @@
 import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const CodeInput = {
+export const EagerCodeInput = {
   root: style({
     position: "relative",
     marginBlockEnd: vars.spacing._2,
@@ -24,7 +24,8 @@ export const CodeInput = {
     },
   }),
 };
-globalStyle(`${CodeInput.root}[aria-disabled="true"] *`, {
+
+globalStyle(`${EagerCodeInput.root}[aria-disabled="true"] *`, {
   color: `${vars.colors.text.secondary} !important`,
 });
 

@@ -43,7 +43,7 @@ export default function EagerCodeInput({
       aria-invalid={isInvalid}
       aria-disabled={isDisabled}
       inert={isDisabled}
-      className={cs.CodeInput.root}
+      className={cs.EagerCodeInput.root}
     >
       {language === "typescript" ? (
         <TypescriptEditor

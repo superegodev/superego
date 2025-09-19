@@ -32,17 +32,17 @@ export default function EagerCodeBlock({
   return (
     <div
       onMouseDown={onMouseDown}
-      className={cs.CodeBlock.root}
+      className={cs.EagerCodeBlock.root}
       style={{ maxHeight, visibility: isColorized ? undefined : "hidden" }}
     >
-      <div className={cs.CodeBlock.lineNumbers}>
+      <div className={cs.EagerCodeBlock.lineNumbers}>
         {code.split("\n").map((_, index) => (
           <div
             // Rule-ignore explanation: the index is the correct identifier
             // for a line number.
             // biome-ignore lint/suspicious/noArrayIndexKey: see above.
             key={index}
-            className={cs.CodeBlock.lineNumber}
+            className={cs.EagerCodeBlock.lineNumber}
             style={mirrorCodeInput ? { paddingInlineEnd: 26 } : undefined}
           >
             {index + 1}
@@ -53,7 +53,7 @@ export default function EagerCodeBlock({
         key={theme + code}
         data-lang={language}
         ref={codeElement}
-        className={cs.CodeBlock.code}
+        className={cs.EagerCodeBlock.code}
       >
         {code}
       </code>

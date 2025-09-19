@@ -4,6 +4,7 @@ enum ToolName {
   CreateNewDocumentVersion = "createNewDocumentVersion",
   ExecuteJavascriptFunction = "executeJavascriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
+  RenderChart = "renderChart",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
 }
