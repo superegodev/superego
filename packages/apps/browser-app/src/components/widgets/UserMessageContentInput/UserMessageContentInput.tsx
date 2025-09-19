@@ -61,7 +61,7 @@ export default function UserMessageContentInput({
               conversation?.status !== ConversationStatus.Idle)) ||
           isSending ||
           isRecording ||
-          !isInferenceConfigured.completions
+          !isInferenceConfigured.chatCompletions
         }
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
@@ -77,7 +77,7 @@ export default function UserMessageContentInput({
                   defaultMessage:
                     "Your collections changed since having this conversation. It cannot be continued.",
                 })
-              : isInferenceConfigured.completions
+              : isInferenceConfigured.chatCompletions
                 ? placeholder
                 : intl.formatMessage({
                     defaultMessage: "Configure assistant to start chatting",
@@ -91,7 +91,7 @@ export default function UserMessageContentInput({
         <ThreeDotSpinner className={cs.UserMessageContentInput.spinner} />
       ) : (
         <SendRecordToolbar
-          areCompletionsConfigured={isInferenceConfigured.completions}
+          areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
           areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
           isWriting={text !== ""}
           isRecording={isRecording}

@@ -45,17 +45,19 @@ export default class SqliteGlobalSettingsRepository
           this.defaultGlobalSettings.appearance.theme,
       },
       inference: {
-        completions: {
+        chatCompletions: {
           model:
-            settings.inference?.completions?.model ??
-            this.defaultGlobalSettings.inference.completions.model,
+            settings.inference?.chatCompletions?.model ??
+            this.defaultGlobalSettings.inference.chatCompletions.model,
           provider: {
             apiKey:
-              settings.inference?.completions?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.completions.provider.apiKey,
+              settings.inference?.chatCompletions?.provider?.apiKey ??
+              this.defaultGlobalSettings.inference.chatCompletions.provider
+                .apiKey,
             baseUrl:
-              settings.inference?.completions?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.completions.provider.baseUrl,
+              settings.inference?.chatCompletions?.provider?.baseUrl ??
+              this.defaultGlobalSettings.inference.chatCompletions.provider
+                .baseUrl,
           },
         },
         transcriptions: {

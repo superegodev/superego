@@ -13,7 +13,7 @@ import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
-  areCompletionsConfigured: boolean;
+  areChatCompletionsConfigured: boolean;
   areTranscriptionsConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
@@ -24,7 +24,7 @@ interface Props {
   onCancelRecording: () => void;
 }
 export default function SendRecordToolbar({
-  areCompletionsConfigured,
+  areChatCompletionsConfigured,
   areTranscriptionsConfigured,
   isWriting,
   isRecording,
@@ -48,7 +48,7 @@ export default function SendRecordToolbar({
           <PiX />
         </IconButton>
       ) : null}
-      {areCompletionsConfigured && !areTranscriptionsConfigured ? (
+      {areChatCompletionsConfigured && !areTranscriptionsConfigured ? (
         <IconLink
           variant="invisible"
           label={intl.formatMessage({
@@ -62,7 +62,9 @@ export default function SendRecordToolbar({
           <PiMicrophoneFill />
         </IconLink>
       ) : null}
-      {areCompletionsConfigured && areTranscriptionsConfigured && !isWriting ? (
+      {areChatCompletionsConfigured &&
+      areTranscriptionsConfigured &&
+      !isWriting ? (
         <IconButton
           variant="invisible"
           label={
@@ -77,7 +79,7 @@ export default function SendRecordToolbar({
           {isRecording ? <PiStopFill /> : <PiMicrophoneFill />}
         </IconButton>
       ) : null}
-      {!areCompletionsConfigured ? (
+      {!areChatCompletionsConfigured ? (
         <IconLink
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Configure assistant" })}
@@ -89,7 +91,7 @@ export default function SendRecordToolbar({
           <PiGear />
         </IconLink>
       ) : null}
-      {areCompletionsConfigured &&
+      {areChatCompletionsConfigured &&
       (areTranscriptionsConfigured ? isWriting : true) ? (
         <IconButton
           variant="invisible"

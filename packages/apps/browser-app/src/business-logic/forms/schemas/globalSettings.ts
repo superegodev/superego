@@ -10,7 +10,7 @@ export default function globalSettings(): v.GenericSchema<
       theme: v.picklist(Object.values(Theme)),
     }),
     inference: v.strictObject({
-      completions: v.strictObject({
+      chatCompletions: v.strictObject({
         model: v.nullable(v.string()),
         provider: v.strictObject({
           baseUrl: v.nullable(v.string()),

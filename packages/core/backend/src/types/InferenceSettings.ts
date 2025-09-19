@@ -1,5 +1,5 @@
 export default interface InferenceSettings {
-  completions: {
+  chatCompletions: {
     provider: {
       baseUrl: string | null;
       apiKey: string | null;

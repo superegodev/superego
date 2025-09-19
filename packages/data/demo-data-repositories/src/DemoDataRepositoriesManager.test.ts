@@ -7,7 +7,7 @@ registerDataRepositoriesTests(async () => {
     {
       appearance: { theme: Theme.Auto },
       inference: {
-        completions: {
+        chatCompletions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },

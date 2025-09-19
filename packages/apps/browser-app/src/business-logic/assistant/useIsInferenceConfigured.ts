@@ -1,15 +1,16 @@
 import { useGlobalData } from "../backend/GlobalData.js";
 
 interface UseIsInferenceConfigured {
-  completions: boolean;
+  chatCompletions: boolean;
   transcriptions: boolean;
   speech: boolean;
 }
 export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
   const { inference } = useGlobalData().globalSettings;
   return {
-    completions: Boolean(
-      inference.completions.model && inference.completions.provider.baseUrl,
+    chatCompletions: Boolean(
+      inference.chatCompletions.model &&
+        inference.chatCompletions.provider.baseUrl,
     ),
     transcriptions: Boolean(
       inference.transcriptions.model &&

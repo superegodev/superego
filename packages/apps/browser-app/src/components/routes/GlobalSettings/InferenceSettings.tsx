@@ -64,7 +64,7 @@ export default function InferenceSettings({ control }: Props) {
         <Fieldset.Fields>
           <RHFTextField
             control={control}
-            name="inference.completions.model"
+            name="inference.chatCompletions.model"
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Model" })}
             placeholder="openai/gpt-oss-120b"
@@ -83,7 +83,7 @@ export default function InferenceSettings({ control }: Props) {
           />
           <RHFTextField
             control={control}
-            name="inference.completions.provider.baseUrl"
+            name="inference.chatCompletions.provider.baseUrl"
             emptyInputValue={null}
             label={intl.formatMessage({
               defaultMessage: "Provider base URL",
@@ -92,7 +92,7 @@ export default function InferenceSettings({ control }: Props) {
           />
           <RHFTextField
             control={control}
-            name="inference.completions.provider.apiKey"
+            name="inference.chatCompletions.provider.apiKey"
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}
             placeholder="gsk_XyZ..."

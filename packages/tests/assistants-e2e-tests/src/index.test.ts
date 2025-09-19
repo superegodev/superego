@@ -10,12 +10,14 @@ import { afterAll, assert, beforeAll, describe } from "vitest";
 import registerTests from "./registerTests.js";
 import Evaluator from "./utils/Evaluator.js";
 
-const completionsBaseUrl = import.meta.env[
-  "SUPEREGO_TESTS_COMPLETIONS_BASE_URL"
+const chatCompletionsBaseUrl = import.meta.env[
+  "SUPEREGO_TESTS_CHAT_COMPLETIONS_BASE_URL"
 ];
-assert.isDefined(completionsBaseUrl);
-const completionsApiKey = import.meta.env["SUPEREGO_TESTS_COMPLETIONS_API_KEY"];
-assert.isDefined(completionsApiKey);
+assert.isDefined(chatCompletionsBaseUrl);
+const chatCompletionsApiKey = import.meta.env[
+  "SUPEREGO_TESTS_CHAT_COMPLETIONS_API_KEY"
+];
+assert.isDefined(chatCompletionsApiKey);
 
 const databasesTmpDir = join(tmpdir(), "superego-backend-e2e-tests");
 beforeAll(() => {
@@ -35,8 +37,11 @@ const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
 const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create({
-    completions: {
-      provider: { baseUrl: completionsBaseUrl, apiKey: completionsApiKey },
+    chatCompletions: {
+      provider: {
+        baseUrl: chatCompletionsBaseUrl,
+        apiKey: chatCompletionsApiKey,
+      },
       model: evaluatorModel,
     },
     transcriptions: {
@@ -82,10 +87,10 @@ describe.concurrent.each(assistantsModels)(
       const defaultGlobalSettings = {
         appearance: { theme: Theme.Auto },
         inference: {
-          completions: {
+          chatCompletions: {
             provider: {
-              baseUrl: completionsBaseUrl,
-              apiKey: completionsApiKey,
+              baseUrl: chatCompletionsBaseUrl,
+              apiKey: chatCompletionsApiKey,
             },
             model: model,
           },

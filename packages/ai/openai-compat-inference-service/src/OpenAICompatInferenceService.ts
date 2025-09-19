@@ -23,24 +23,24 @@ export default class OpenAICompatInferenceService implements InferenceService {
     previousMessages: Message[],
     tools: InferenceService.Tool[],
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    const { completions } = this.settings;
-    if (!completions.provider.baseUrl) {
-      throw new Error("Missing completions provider base URL.");
+    const { chatCompletions } = this.settings;
+    if (!chatCompletions.provider.baseUrl) {
+      throw new Error("Missing chat completions provider base URL.");
     }
-    if (!completions.model) {
-      throw new Error("Missing completions model.");
+    if (!chatCompletions.model) {
+      throw new Error("Missing chat completions model.");
     }
 
     const requestBody = toChatCompletionsRequest(
-      completions.model,
+      chatCompletions.model,
       previousMessages,
       tools,
     );
-    const response = await fetch(completions.provider.baseUrl, {
+    const response = await fetch(chatCompletions.provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(completions.provider.apiKey
-          ? { Authorization: `Bearer ${completions.provider.apiKey}` }
+        ...(chatCompletions.provider.apiKey
+          ? { Authorization: `Bearer ${chatCompletions.provider.apiKey}` }
           : null),
         "Content-Type": "application/json",
       },

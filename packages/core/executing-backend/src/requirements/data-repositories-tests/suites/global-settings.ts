@@ -10,7 +10,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        completions: {
+        chatCompletions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
@@ -43,7 +43,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const updatedSettings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        completions: {
+        chatCompletions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
@@ -88,7 +88,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
-        completions: {
+        chatCompletions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },

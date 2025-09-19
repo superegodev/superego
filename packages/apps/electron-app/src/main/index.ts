@@ -49,7 +49,7 @@ function startBackendIPCProxyServer() {
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
       inference: {
-        completions: {
+        chatCompletions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
