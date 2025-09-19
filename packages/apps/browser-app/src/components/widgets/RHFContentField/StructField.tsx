@@ -97,20 +97,20 @@ function Fields({
   control,
   name,
 }: Pick<Props, "schema" | "typeDefinition" | "control" | "name">) {
-  return Object.entries(typeDefinition.properties).map(
-    ([propertyName, propertyTypeDefinition]) => (
-      <AnyField
-        key={propertyName}
-        schema={schema}
-        typeDefinition={propertyTypeDefinition}
-        isNullable={
-          typeDefinition.nullableProperties?.includes(propertyName) ?? false
-        }
-        isListItem={false}
-        control={control}
-        name={name !== "" ? `${name}.${propertyName}` : propertyName}
-        label={formatIdentifier(propertyName)}
-      />
-    ),
-  );
+  const sortedPropertyNames =
+    typeDefinition.propertiesOrder ?? Object.keys(typeDefinition.properties);
+  return sortedPropertyNames.map((propertyName) => (
+    <AnyField
+      key={propertyName}
+      schema={schema}
+      typeDefinition={typeDefinition.properties[propertyName]!}
+      isNullable={
+        typeDefinition.nullableProperties?.includes(propertyName) ?? false
+      }
+      isListItem={false}
+      control={control}
+      name={name !== "" ? `${name}.${propertyName}` : propertyName}
+      label={formatIdentifier(propertyName)}
+    />
+  ));
 }

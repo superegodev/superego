@@ -77,15 +77,16 @@ $WELL_KNOWN_FORMATS_JSON_OBJECTS
 1. Unless the user asks otherwise, generate the simplest possible schema that
    contains just enough info to satisfy the user request.
 2. Define and reuse common types whenever possible.
-3. Group closely related information into structs, though don't go overboard
-   with nesting.
+3. Group closely related information into Structs.
 4. Use lists whenever it makes sense.
 5. Unless a property or type name is fully self-explanatory, include a
    description for it.
-6. Use PascalCase for enum member names.
-7. Use Title Case for enum member values (they can contain spaces).
-8. Use PascalCase for type names.
-9. Use camelCase for property names.
-10. IMPORTANT REMINDER: use the user language EVEN for type names, Struct
+6. Use `propertiesOrder` in Struct type definitions to sort properties from most
+   to least important.
+7. Use PascalCase for enum member names.
+8. Use Title Case for enum member values (they can contain spaces).
+9. Use PascalCase for type names.
+10. Use camelCase for property names.
+11. IMPORTANT REMINDER: use the user language EVEN for type names, Struct
     property names, Enum members names and values. The schema is ONLY FOR the
     user, they should not have problems understand it.

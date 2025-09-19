@@ -7,12 +7,22 @@ import {
 } from "../utils/issuePathItemMakers.js";
 
 /**
- * Struct type definition check that ensures that all nullable properties (if
- * there are any) exist in the struct.
+ * Struct type definition check that ensures that, if `nullableProperties` is
+ * specified:
+ * - Only contains `properties` of the Struct.
+ * - Doesn't contain duplicates.
  */
 export default v.rawCheck<Readonly<StructTypeDefinition>>(
   ({ dataset: { typed, value }, config: { lang }, addIssue }) => {
-    if (typed) {
+    if (typed && value.nullableProperties !== undefined) {
+      const nullableProperties = new Set(value.nullableProperties);
+      if (nullableProperties.size !== value.nullableProperties.length) {
+        addIssue({
+          message: translate(lang, { en: "Must not contain duplicates" }),
+          path: [makeObjectPathItem(value, "nullableProperties")],
+        });
+      }
+
       const properties = new Set(Object.keys(value.properties));
       value.nullableProperties?.forEach((nullableProperty, index) => {
         if (!properties.has(nullableProperty)) {

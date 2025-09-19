@@ -192,11 +192,27 @@ The object values are _accepted file extensions_, which are either:
     },
 
     StructTypeDefinition: {
+      description: `
+Schema for a structured object with a fixed set of named properties.
+
+Remarks:
+- **All properties are required.** Every key defined in \`properties\` must be
+  present in a value conforming to this type. Optional (missing) properties are
+  not allowed.
+- **\`undefined\` is never allowed** as a property value. Use \`null\` to
+  represent “no value”.
+- **Nullability is opt-in per property.** A property may be \`null\` only if its
+  name appears in \`nullableProperties\`. All other properties must be non-null.
+- \`propertiesOrder\` controls **display order** in UIs and does not affect
+  validation.
+      `.trim(),
       type: "object",
       properties: {
         description: { type: "string" },
         dataType: { const: "Struct" },
         properties: {
+          description:
+            "The complete set of properties that make up this Struct.",
           type: "object",
           patternProperties: {
             [identifierRegex.source]: { $ref: "#/$defs/AnyTypeDefinition" },
@@ -204,6 +220,24 @@ The object values are _accepted file extensions_, which are either:
           additionalProperties: false,
         },
         nullableProperties: {
+          description: `
+Names of properties that are allowed to be \`null\`.
+
+Remarks:
+- Each entry **must** be a key present in \`properties\`.
+- **Must** not contain duplicates.
+- Defaults to none (i.e., all properties are non-nullable).
+          `.trim(),
+          type: "array",
+          items: { type: "string" },
+          uniqueItems: true,
+        },
+        propertiesOrder: {
+          description: `
+Preferred order for displaying properties in UIs. If specified:
+- **Must** contain ALL properties defined in \`properties\`, and nothing else.
+- **Must** not contain duplicates.
+          `.trim(),
           type: "array",
           items: { type: "string" },
           uniqueItems: true,

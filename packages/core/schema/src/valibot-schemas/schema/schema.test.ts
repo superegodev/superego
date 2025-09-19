@@ -452,29 +452,160 @@ describe("Invalid schemas", () => {
       ],
     });
 
-    test("invalid nullableProperty in struct type definition", {
-      schema: {
-        types: {
-          Root: {
-            dataType: DataType.Struct,
-            properties: {},
-            nullableProperties: [true],
+    describe("invalid nullableProperties in struct type definition", () => {
+      test("case: invalid nullableProperty type", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              nullableProperties: [true],
+            },
           },
+          rootType: "Root",
         },
-        rootType: "Root",
-      },
-      expectedIssues: [
-        {
-          kind: "schema",
-          message: "Invalid type: Expected string but received true",
-          path: [
-            { key: "types" },
-            { key: "Root" },
-            { key: "nullableProperties" },
-            { key: 0 },
-          ],
+        expectedIssues: [
+          {
+            kind: "schema",
+            message: "Invalid type: Expected string but received true",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+              { key: 0 },
+            ],
+          },
+        ],
+      });
+
+      test("case: non-existing nullableProperty", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              nullableProperties: ["non-existing"],
+            },
+          },
+          rootType: "Root",
         },
-      ],
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: 'Property "non-existing" does not exist in struct',
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+              { key: 0 },
+            ],
+          },
+        ],
+      });
+
+      test("case: duplicate nullableProperty", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              nullableProperties: ["string", "string"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must not contain duplicates",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+            ],
+          },
+        ],
+      });
+    });
+
+    describe("invalid propertiesOrder in struct type definition", () => {
+      test("case: non-existing property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              propertiesOrder: ["non-existing"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all property names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: missing property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              propertiesOrder: [],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all property names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: duplicate property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              propertiesOrder: ["string", "string"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must not contain duplicates",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
     });
   });
 

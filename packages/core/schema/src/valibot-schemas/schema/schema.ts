@@ -7,10 +7,11 @@ import described from "../described/described.js";
 import enumMembers from "../enumMembers/enumMembers.js";
 import identifier from "../identifier/identifier.js";
 import mimeTypeMatcher from "../mimeTypeMatcher/mimeTypeMatcher.js";
-import allNullablePropertiesExist from "./checks/allNullablePropertiesExist.js";
 import allReferencedTypesExist from "./checks/allReferencedTypesExist.js";
 import noTopLevelTypeDefinitionRefs from "./checks/noTopLevelTypeDefinitionRefs.js";
 import noUnusedTypes from "./checks/noUnusedTypes.js";
+import nullablePropertiesIsValid from "./checks/nullablePropertiesIsValid.js";
+import propertiesOrderIsValid from "./checks/propertiesOrderIsValid.js";
 import rootTypeIsStruct from "./checks/rootTypeIsStruct.js";
 
 const StringTypeDefinitionValibotSchema = v.strictObject({
@@ -75,8 +76,10 @@ const StructTypeDefinitionValibotSchema = v.pipe(
       v.lazy(() => AnyTypeDefinitionValibotSchema),
     ),
     nullableProperties: v.optional(v.array(v.pipe(v.string()))),
+    propertiesOrder: v.optional(v.array(v.pipe(v.string()))),
   }),
-  allNullablePropertiesExist,
+  nullablePropertiesIsValid,
+  propertiesOrderIsValid,
 );
 
 const ListTypeDefinitionValibotSchema = v.strictObject({
