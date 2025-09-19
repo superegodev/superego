@@ -26,26 +26,33 @@ export default function Chat({
   // When messages change, scroll to bottom and - if the last message is an
   // assistant message - focus the input.
   const lastMessage = last(conversation.messages);
-  const lastMessageTimestamp =
+  const lastMessageCreatedAtTime =
     lastMessage && "createdAt" in lastMessage
       ? lastMessage.createdAt.getTime()
       : null;
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  // We want to avoid scrolling if the last message didn't change, even if the
+  // ref of the message object changed. Since messages are immutable, we can use
+  // the createdAt as an id: createdAt didn't change => message didn't change.
+  // TODO: add id to message, so we can use that instead of the createdAt date.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    if (lastMessageTimestamp) {
+    if (lastMessageCreatedAtTime) {
       // Hack: scrolling doesn't work unless we delay it a bit.
       setTimeout(() => {
         document.querySelector('[data-slot="Main"]')?.scrollTo({
           top: 1e6,
           behavior:
-            Date.now() - lastMessageTimestamp < 10_000 ? "smooth" : "instant",
+            Date.now() - lastMessageCreatedAtTime < 10_000
+              ? "smooth"
+              : "instant",
         });
       }, 15);
     }
     if (lastMessage?.role === MessageRole.Assistant) {
       inputRef.current?.focus();
     }
-  }, [lastMessage, lastMessageTimestamp]);
+  }, [lastMessageCreatedAtTime]);
 
   return (
     <div className={classnames(cs.Chat.root, className)}>

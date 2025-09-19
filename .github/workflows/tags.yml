@@ -99,6 +99,8 @@ jobs:
           ## Decode the Base64 Apple API Key string into the .p8 file
           echo $APPLE_API_KEY_BASE64 | base64 --decode -o $APPLE_API_KEY
       - name: Build electron app
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
         run: yarn build-electron
       - name: Notarize macOS app
         if: startsWith(matrix.os, 'macos')
