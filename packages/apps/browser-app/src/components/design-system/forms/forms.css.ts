@@ -94,6 +94,7 @@ export const SelectButton = {
 export const SelectOptions = {
   root: style({
     width: "var(--trigger-width)",
+    overflow: "scroll",
   }),
 
   option: style({
