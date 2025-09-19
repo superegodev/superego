@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 

@@ -76,22 +76,21 @@ export default {
             type: "string",
           },
           id: {
-            type: "string",
             description: "The document ID to version.",
+            type: "string",
           },
           latestVersionId: {
-            type: "string",
             description: `
 Optimistic concurrency check. Set this to the versionId you just read. If it
 doesn't match the actual latest version, the call must fail with a conflict.
 Then re-read the document and try again.
             `.trim(),
+            type: "string",
           },
           // EVOLUTION: consider either using patches or even a js function that
           // modifies the document, as for complex documents this won't really
           // work.
           content: {
-            type: "object",
             description: `
 Full content for the new version (complete replace, not a patch).
 
@@ -100,6 +99,7 @@ Full content for the new version (complete replace, not a patch).
 - Never drop fields accidentally; start from the current content and edit only
   what changed.
             `.trim(),
+            type: "object",
           },
         },
         required: ["collectionId", "id", "latestVersionId", "content"],

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const narrowContainerWidth = "45rem";
@@ -74,8 +74,20 @@ export const UserMessage = {
 
 export const AssistantContentMessage = {
   root: style({
+    width: "100%",
     marginBlockStart: vars.spacing._8,
     marginBlockEnd: 0,
+  }),
+
+  markdown: style({
+    width: "100%",
+    fontSize: vars.typography.fontSizes.sm,
+    lineHeight: vars.spacing._6,
+  }),
+
+  markdownTableScroller: style({
+    width: "100%",
+    overflowY: "scroll",
   }),
 
   infoAndActions: style({
@@ -108,3 +120,40 @@ export const AssistantContentMessage = {
     color: vars.colors.text.secondary,
   }),
 };
+
+// Styles for markdown elements
+globalStyle(
+  `${AssistantContentMessage.markdown} ol, ${AssistantContentMessage.markdown} ul`,
+  {
+    paddingInlineStart: vars.spacing._8,
+    lineHeight: vars.spacing._4_5,
+  },
+);
+globalStyle(`${AssistantContentMessage.markdown} li`, {
+  marginBlockEnd: vars.spacing._2,
+});
+globalStyle(`${AssistantContentMessage.markdown} table`, {
+  width: "100%",
+  borderCollapse: "collapse",
+  borderSpacing: 0,
+  marginBlock: vars.spacing._4,
+  lineHeight: vars.spacing._4_5,
+});
+globalStyle(`${AssistantContentMessage.markdown} thead th`, {
+  paddingInline: vars.spacing._2,
+  paddingBlock: vars.spacing._3,
+  textAlign: "left",
+  fontWeight: vars.typography.fontWeights.medium,
+  fontSize: vars.typography.fontSizes.sm,
+});
+globalStyle(`${AssistantContentMessage.markdown} tbody tr`, {
+  borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+});
+globalStyle(`${AssistantContentMessage.markdown} tbody tr:hover`, {
+  background: vars.colors.background.surfaceHighlight,
+});
+globalStyle(`${AssistantContentMessage.markdown} tbody td`, {
+  padding: vars.spacing._2,
+  fontSize: vars.typography.fontSizes.sm,
+  verticalAlign: "middle",
+});

@@ -74,12 +74,12 @@ export default {
           // a list of "temporary file refs" that are in the context of the
           // conversation and that the assistant can use.
           content: {
-            type: "object",
             description: [
               "Content for the new document.",
               "Content **ONLY**, never include document ids or version ids.",
               "Must match the collection's TypeScript schema.",
             ].join(" "),
+            type: "object",
           },
         },
         required: ["collectionId", "content"],

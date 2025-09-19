@@ -42,7 +42,7 @@ const primarySidebarPanelActionRootBase = style({
   width: "100%",
   paddingBlock: vars.spacing._1,
   paddingInline: vars.spacing._2,
-  marginBlock: vars.spacing._05,
+  marginBlock: vars.spacing._0_5,
   fontSize: vars.typography.fontSizes.sm,
   color: vars.colors.text.primary,
 });

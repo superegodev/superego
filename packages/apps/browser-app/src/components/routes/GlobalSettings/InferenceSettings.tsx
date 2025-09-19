@@ -1,8 +1,8 @@
 import type { GlobalSettings } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
-import Alert from "../../design-system/Alert/Alert.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
+import Alert from "../../design-system/Alert/Alert.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./GlobalSettings.css.js";

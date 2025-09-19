@@ -239,7 +239,7 @@ export const DatePickerInput = {
   }),
 
   dateSegment: style({
-    paddingInline: vars.spacing._05,
+    paddingInline: vars.spacing._0_5,
     selectors: {
       "&:focus": {
         borderRadius: vars.borders.radius.sm,
@@ -298,7 +298,7 @@ export const DatePickerCalendar = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: vars.spacing._05,
+    margin: vars.spacing._0_5,
     fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.primary,
     borderRadius: vars.borders.radius.md,

@@ -6,7 +6,7 @@ const conversationStatusRootBase = style({
   borderWidth: vars.borders.width.thin,
   borderStyle: "solid",
   borderRadius: vars.borders.radius.lg,
-  paddingBlock: vars.spacing._05,
+  paddingBlock: vars.spacing._0_5,
   paddingInline: vars.spacing._4,
   textTransform: "uppercase",
   fontSize: vars.typography.fontSizes.xs2,

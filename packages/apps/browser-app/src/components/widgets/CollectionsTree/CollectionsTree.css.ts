@@ -72,7 +72,7 @@ export const TreeItem = {
   root: style({
     paddingInlineStart: `calc(${vars.spacing._2} + (var(--tree-item-level) - 1) * ${vars.spacing._7})`,
     paddingInlineEnd: vars.spacing._2,
-    marginBlock: vars.spacing._05,
+    marginBlock: vars.spacing._0_5,
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",
     selectors: {

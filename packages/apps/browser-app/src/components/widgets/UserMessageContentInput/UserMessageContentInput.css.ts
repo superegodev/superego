@@ -13,7 +13,7 @@ export const UserMessageContentInput = {
     paddingBlock: vars.spacing._3,
     borderRadius: vars.borders.radius.xl3,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
-    boxShadow: `0 ${vars.spacing._05} ${vars.spacing._05} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
   }),
 
   textArea: style({

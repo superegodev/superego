@@ -6,10 +6,10 @@ const bounce = keyframes({
     transform: "translateY(0)",
   },
   "25%": {
-    transform: `translateY(calc(-1 * ${vars.spacing._05}))`,
+    transform: `translateY(calc(-1 * ${vars.spacing._0_5}))`,
   },
   "75%": {
-    transform: `translateY(${vars.spacing._05})`,
+    transform: `translateY(${vars.spacing._0_5})`,
   },
 });
 

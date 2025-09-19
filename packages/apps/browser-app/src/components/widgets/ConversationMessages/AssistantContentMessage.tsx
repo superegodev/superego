@@ -57,10 +57,16 @@ export default function AssistantContentMessage({
     <div className={cs.AssistantContentMessage.root}>
       <Markdown
         key={textPart.text}
+        className={cs.AssistantContentMessage.markdown}
         options={{
           overrides: {
             iframe: () => null,
             a: { props: { target: "_blank", rel: "noopener noreferrer" } },
+            table: (props) => (
+              <div className={cs.AssistantContentMessage.markdownTableScroller}>
+                <table {...props} />
+              </div>
+            ),
           },
         }}
       >
@@ -72,6 +78,7 @@ export default function AssistantContentMessage({
           orientation="vertical"
           className={cs.AssistantContentMessage.infoAndActionsSeparator}
         />
+        {/* TODO: refactor into own SpeechButton component. */}
         {isInferenceConfigured.speech ? (
           <IconButton
             variant="invisible"

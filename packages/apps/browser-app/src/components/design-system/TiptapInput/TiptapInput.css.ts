@@ -48,7 +48,7 @@ export const FormattingToolbar = {
   }),
   group: style({
     display: "flex",
-    gap: vars.spacing._05,
+    gap: vars.spacing._0_5,
   }),
   separator: style({
     alignSelf: "stretch",
@@ -131,7 +131,7 @@ globalStyle(`${TiptapInput.editor} p code`, {
   color: vars.colors.text.primary,
   fontSize: vars.typography.fontSizes.xs,
   paddingInline: vars.spacing._1,
-  paddingBlock: vars.spacing._05,
+  paddingBlock: vars.spacing._0_5,
 });
 
 // Code blocks. Uses the highlight.js github-dark theme.

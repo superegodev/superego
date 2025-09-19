@@ -40,17 +40,15 @@ export default {
 
     const { data: documents, error: documentsListError } =
       await documentsList.exec(collectionId);
-    if (documentsListError && documentsListError.name === "UnexpectedError") {
-      throw new UnexpectedAssistantError(
-        `Listing documents failed with UnexpectedError. Cause: ${documentsListError.details.cause}`,
-      );
-    }
     if (documentsListError) {
-      return {
-        tool: toolCall.tool,
-        toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(documentsListError),
-      };
+      throw new UnexpectedAssistantError(
+        [
+          `Listing documents failed with ${documentsListError.name}.`,
+          documentsListError.name === "UnexpectedError"
+            ? ` Cause: ${documentsListError.details.cause}`
+            : "",
+        ].join(""),
+      );
     }
 
     const assistantDocuments = documents.map((document) =>
@@ -157,9 +155,9 @@ const isInThePast3Hours = timestamp <= now && timestamp >= threeHoursAgo;
             type: "string",
           },
           javascriptFunction: {
-            type: "string",
             description:
               "JavaScript source string implementing `export default function main(documents) { … }`",
+            type: "string",
           },
         },
         required: ["collectionId", "javascriptFunction"],

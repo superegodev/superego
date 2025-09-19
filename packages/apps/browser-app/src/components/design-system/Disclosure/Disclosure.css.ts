@@ -6,7 +6,7 @@ export const Disclosure = {
     display: "flex",
     alignItems: "center",
     gap: vars.spacing._1,
-    marginBlockEnd: vars.spacing._05,
+    marginBlockEnd: vars.spacing._0_5,
     paddingInlineStart: 0,
     selectors: {
       "&:hover": {

@@ -14,7 +14,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
-import FormattingToolbar from "./FormattingToolbar.jsx";
+import FormattingToolbar from "./FormattingToolbar.js";
 import type Props from "./Props.js";
 import * as cs from "./TiptapInput.css.js";
 

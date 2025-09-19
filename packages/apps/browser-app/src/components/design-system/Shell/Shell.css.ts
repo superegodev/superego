@@ -120,7 +120,7 @@ export const PanelContent = {
         padding: vars.spacing._8,
       },
       '[data-slot="Main"] [data-full-width="false"]&': {
-        paddingInline: `max(calc(50% - ${vars.spacing._100}), ${vars.spacing._8})`,
+        paddingInline: `max(calc(50% - ${vars.spacing._90}), ${vars.spacing._8})`,
       },
       '[data-slot="Main"] [data-full-width="true"]&': {
         paddingInline: vars.spacing._8,

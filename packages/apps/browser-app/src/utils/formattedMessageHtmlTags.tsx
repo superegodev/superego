@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import InlineCode from "../components/design-system/InlineCode/InlineCode.jsx";
+import InlineCode from "../components/design-system/InlineCode/InlineCode.js";
 
 type Chunks = ReactNode[];
 
