@@ -68,3 +68,9 @@ export const SuggestCollectionDefinition = {
 globalStyle(`${SuggestCollectionDefinition.scrollContainer} > *`, {
   marginBlockEnd: vars.spacing._2,
 });
+
+export const RenderChart = {
+  root: style({
+    width: "100%",
+  }),
+};

@@ -59,10 +59,7 @@ export default {
       ),
     );
     const result = await javascriptSandbox.executeSyncFunction(
-      {
-        source: "",
-        compiled: javascriptFunction,
-      },
+      { source: "", compiled: javascriptFunction },
       [assistantDocuments],
     );
 
@@ -70,7 +67,7 @@ export default {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: result,
-    };
+    } as ToolResult.ExecuteJavascriptFunction;
   },
 
   get(): InferenceService.Tool {

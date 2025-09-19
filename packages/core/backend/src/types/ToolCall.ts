@@ -42,6 +42,13 @@ namespace ToolCall {
       javascriptFunction: string;
     }
   >;
+  export type RenderChart = ToolCall<
+    ToolName.RenderChart,
+    {
+      collectionId: CollectionId;
+      getEchartsOption: string;
+    }
+  >;
 
   // CollectionCreator
   export type SuggestCollectionDefinition = ToolCall<

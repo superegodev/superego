@@ -21,16 +21,23 @@ export default {
   ): Promise<ToolResult.GetCollectionTypescriptSchema> {
     const { collectionId } = toolCall.input;
     const collection = collections.find(({ id }) => id === collectionId);
+
+    if (!collection) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
+        ),
+      };
+    }
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: collection
-        ? makeSuccessfulResult({
-            typescriptSchema: makeTypescriptSchema(collection),
-          })
-        : makeUnsuccessfulResult(
-            makeResultError("CollectionNotFound", { collectionId }),
-          ),
+      output: makeSuccessfulResult({
+        typescriptSchema: makeTypescriptSchema(collection),
+      }),
     };
   },
 

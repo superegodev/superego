@@ -17,14 +17,16 @@ export const ToolCallResult = {
     cursor: "pointer",
   }),
 
-  call: style({
+  callInput: style({
     borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    marginBlockEnd: vars.spacing._2,
   }),
 
-  result: style({
+  resultOutput: style({
     borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    marginBlockEnd: vars.spacing._2,
+  }),
+
+  resultArtifacts: style({
+    borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   }),
 };
 

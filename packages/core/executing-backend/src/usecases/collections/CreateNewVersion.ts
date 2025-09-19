@@ -178,7 +178,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
           documentId: document.id,
           cause: makeResultError(
             "ApplyingMigrationFailed",
-            executionResult.error,
+            executionResult.error.details,
           ),
         };
       }

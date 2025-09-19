@@ -50,16 +50,22 @@ export default {
       );
     }
 
+    if (!createNewVersionResult.success) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(createNewVersionResult.error),
+      };
+    }
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: createNewVersionResult.success
-        ? makeSuccessfulResult({
-            collectionId: createNewVersionResult.data.collectionId,
-            documentId: createNewVersionResult.data.id,
-            documentVersionId: createNewVersionResult.data.latestVersion.id,
-          })
-        : makeUnsuccessfulResult(createNewVersionResult.error),
+      output: makeSuccessfulResult({
+        collectionId: createNewVersionResult.data.collectionId,
+        documentId: createNewVersionResult.data.id,
+        documentVersionId: createNewVersionResult.data.latestVersion.id,
+      }),
     };
   },
 

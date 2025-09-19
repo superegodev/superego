@@ -15,19 +15,38 @@ import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type ValidationIssue from "./ValidationIssue.js";
 
-interface ToolResult<
+type BaseToolResult<
   Tool extends ToolName | string = string,
   Output extends Result<any, any> = Result<any, any>,
-> {
-  tool: Tool;
-  toolCallId: string;
-  output: Output;
-}
+  Artifacts extends Record<string, any> | null = null,
+> = { tool: Tool; toolCallId: string } & (
+  | (Artifacts extends null
+      ? {
+          /** The output returned to the LLM. */
+          output: Output & { success: true };
+          artifacts?: null;
+        }
+      : {
+          /** The output returned to the LLM. */
+          output: Output & { success: true };
+          /**
+           * Artifacts produced during the processing of the tool call. These are not
+           * returned to the LLM, but they remain attached to the tool result so they
+           * can be accessed by the UI / other parts of Superego using tool results.
+           */
+          artifacts: Artifacts;
+        })
+  | {
+      /** The output returned to the LLM. */
+      output: Output & { success: false };
+      artifacts?: never;
+    }
+);
 
 // TODO: consider using specific errors, without reusing the API ones.
 namespace ToolResult {
   // Factotum
-  export type GetCollectionTypescriptSchema = ToolResult<
+  export type GetCollectionTypescriptSchema = BaseToolResult<
     ToolName.GetCollectionTypescriptSchema,
     Result<
       {
@@ -36,7 +55,7 @@ namespace ToolResult {
       CollectionNotFound
     >
   >;
-  export type CreateDocument = ToolResult<
+  export type CreateDocument = BaseToolResult<
     ToolName.CreateDocument,
     Result<
       {
@@ -47,7 +66,7 @@ namespace ToolResult {
       CollectionNotFound | DocumentContentNotValid | FilesNotFound
     >
   >;
-  export type CreateNewDocumentVersion = ToolResult<
+  export type CreateNewDocumentVersion = BaseToolResult<
     ToolName.CreateNewDocumentVersion,
     Result<
       {
@@ -63,13 +82,27 @@ namespace ToolResult {
       | FilesNotFound
     >
   >;
-  export type ExecuteJavascriptFunction = ToolResult<
+  export type ExecuteJavascriptFunction = BaseToolResult<
     ToolName.ExecuteJavascriptFunction,
     Result<any, CollectionNotFound | ExecutingJavascriptFunctionFailed>
   >;
+  export type RenderChart = BaseToolResult<
+    ToolName.RenderChart,
+    Result<
+      null,
+      | CollectionNotFound
+      | ExecutingJavascriptFunctionFailed
+      | ResultError<"EchartsOptionNotValid", { issues: ValidationIssue[] }>
+    >,
+    {
+      echartsOption: {
+        title: { text: string };
+      };
+    }
+  >;
 
   // CollectionCreator
-  export type SuggestCollectionDefinition = ToolResult<
+  export type SuggestCollectionDefinition = BaseToolResult<
     ToolName.SuggestCollectionDefinition,
     Result<
       null,
@@ -80,6 +113,21 @@ namespace ToolResult {
       | ResultError<"ExampleDocumentNotValid", { issues: ValidationIssue[] }>
     >
   >;
+
+  // Shared
+  export type Unknown = BaseToolResult<
+    string,
+    Result<null, ResultError<"ToolNotFound", null>>
+  >;
 }
+
+type ToolResult =
+  | ToolResult.CreateDocument
+  | ToolResult.CreateNewDocumentVersion
+  | ToolResult.ExecuteJavascriptFunction
+  | ToolResult.GetCollectionTypescriptSchema
+  | ToolResult.RenderChart
+  | ToolResult.SuggestCollectionDefinition
+  | ToolResult.Unknown;
 
 export default ToolResult;

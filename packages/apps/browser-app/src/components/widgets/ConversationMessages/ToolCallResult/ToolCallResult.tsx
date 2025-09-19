@@ -1,18 +1,16 @@
-import type {
-  ToolCall as ToolCallB,
-  ToolResult as ToolResultB,
-} from "@superego/backend";
+import type { ToolCall, ToolResult } from "@superego/backend";
 import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedMessage } from "react-intl";
 import { vars } from "../../../../themes.css.js";
 import Title from "./Title.js";
-import ToolCall from "./ToolCall.js";
+import ToolCallInput from "./ToolCallInput.js";
 import * as cs from "./ToolCallResult.css.js";
-import ToolResult from "./ToolResult.js";
+import ToolResultArtifacts from "./ToolResultArtifacts.js";
+import ToolResultOutput from "./ToolResultOutput.js";
 
 interface Props {
-  toolCall: ToolCallB;
-  toolResult: ToolResultB | null;
+  toolCall: ToolCall;
+  toolResult: ToolResult | null;
 }
 export default function ToolCallResult({ toolCall, toolResult }: Props) {
   const background = toolResult
@@ -27,16 +25,21 @@ export default function ToolCallResult({ toolCall, toolResult }: Props) {
           <Title toolCall={toolCall} toolResult={toolResult} />
         </Button>
         <DisclosurePanel>
-          <div className={cs.ToolCallResult.call}>
-            <ToolCall toolCall={toolCall} />
+          <div className={cs.ToolCallResult.callInput}>
+            <ToolCallInput toolCall={toolCall} />
           </div>
-          <div className={cs.ToolCallResult.result}>
+          <div className={cs.ToolCallResult.resultOutput}>
             {toolResult ? (
-              <ToolResult toolResult={toolResult} />
+              <ToolResultOutput toolResult={toolResult} />
             ) : (
               <FormattedMessage defaultMessage="This call has no result." />
             )}
           </div>
+          {toolResult && "artifacts" in toolResult ? (
+            <div className={cs.ToolCallResult.resultArtifacts}>
+              <ToolResultArtifacts toolResult={toolResult} />
+            </div>
+          ) : null}
         </DisclosurePanel>
       </Disclosure>
     </div>

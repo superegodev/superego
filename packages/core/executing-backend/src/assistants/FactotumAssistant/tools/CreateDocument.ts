@@ -46,16 +46,22 @@ export default {
       );
     }
 
+    if (!success) {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(error),
+      };
+    }
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: success
-        ? makeSuccessfulResult({
-            collectionId: document.collectionId,
-            documentId: document.id,
-            documentVersionId: document.latestVersion.id,
-          })
-        : makeUnsuccessfulResult(error),
+      output: makeSuccessfulResult({
+        collectionId: document.collectionId,
+        documentId: document.id,
+        documentVersionId: document.latestVersion.id,
+      }),
     };
   },
 

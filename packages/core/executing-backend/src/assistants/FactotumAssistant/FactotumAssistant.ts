@@ -16,6 +16,7 @@ import CreateDocument from "./tools/CreateDocument.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
+import RenderChart from "./tools/RenderChart.js";
 import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
@@ -86,6 +87,7 @@ export default class FactotumAssistant extends Assistant {
     return [
       GetCollectionTypescriptSchema.get(),
       ExecuteJavascriptFunction.get(),
+      RenderChart.get(),
       CreateDocument.get(),
       CreateNewDocumentVersion.get(),
     ];
@@ -115,6 +117,14 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.collections,
         this.usecases.documentsCreateNewVersion,
+      );
+    }
+    if (RenderChart.is(toolCall)) {
+      return RenderChart.exec(
+        toolCall,
+        this.collections,
+        this.usecases.documentsList,
+        this.javascriptSandbox,
       );
     }
     return Unknown.exec(toolCall);

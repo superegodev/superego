@@ -99,6 +99,16 @@ export default {
     );
   },
 
+  isSuccessfulRenderChartToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.RenderChart & {
+    output: { success: true };
+  } {
+    return (
+      toolResult.tool === ToolName.RenderChart && toolResult.output.success
+    );
+  },
+
   isCreateDocumentToolCall(
     toolCall: ToolCall,
   ): toolCall is ToolCall.CreateDocument {
@@ -115,6 +125,10 @@ export default {
     toolCall: ToolCall,
   ): toolCall is ToolCall.ExecuteJavascriptFunction {
     return toolCall.tool === ToolName.ExecuteJavascriptFunction;
+  },
+
+  isRenderChartToolCall(toolCall: ToolCall): toolCall is ToolCall.RenderChart {
+    return toolCall.tool === ToolName.RenderChart;
   },
 
   isGetCollectionTypescriptSchemaToolCall(

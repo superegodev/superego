@@ -1,11 +1,11 @@
-import type { ToolResult as ToolResultB } from "@superego/backend";
+import type { ToolResult } from "@superego/backend";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
 import CodeBlock from "../../../design-system/CodeBlock/CodeBlock.js";
 
 interface Props {
-  toolResult: ToolResultB;
+  toolResult: ToolResult;
 }
-export default function ToolResult({ toolResult }: Props) {
+export default function ToolResultOutput({ toolResult }: Props) {
   return ConversationUtils.isSuccessfulGetCollectionTypescriptSchemaToolResult(
     toolResult,
   ) ? (

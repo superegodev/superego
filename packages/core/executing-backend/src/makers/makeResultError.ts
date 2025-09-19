@@ -55,11 +55,11 @@ type KnownResultError =
   | ParentCollectionCategoryNotFound
   | UnexpectedError;
 
-export default function makeResultError<Name extends string>(
+export default function makeResultError<Name extends string, Details>(
   name: Name,
   details: Name extends KnownResultError["name"]
     ? Extract<KnownResultError, { name: Name }>["details"]
-    : any,
+    : Details,
 ) {
   return { name, details };
 }
