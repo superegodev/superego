@@ -12,6 +12,7 @@ import debounce from "debounce";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import forms from "../../../business-logic/forms/forms.js";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./TiptapInput.css.js";
@@ -69,7 +70,7 @@ export default function TiptapInput({
         class: cs.TiptapInput.editor,
       },
     },
-    content: value,
+    content: value ?? forms.defaults.tiptapRichTextJsonObject(),
     autofocus: autoFocus ?? false,
     onUpdate: debounce(({ editor }) => {
       onChange(editor.getJSON());

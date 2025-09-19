@@ -38,6 +38,26 @@ export default function CreateNewDocumentVersionForm({
     resolver: standardSchemaResolver(valibotSchemas.content(schema, "rhf")),
   });
 
+  // Update the form when the document content changed. Uses a ref to keep track
+  // of the current version id so that the effect is not run for changes
+  // originated from a form submission, as the submission already takes care of
+  // updating the form, and we don't want to unnecessarily reset the form to
+  // prevent ill-effects such as the cursor jumping around for the user.
+  //
+  // Not on the hook dependencies: the actual value of the
+  // document.latestVersion.content object only changes when
+  // document.latestVersion.id changes. The object reference though might
+  // change, for example if the query for the document is invalidated and
+  // re-fetched. In that case we don't care to update the form though.
+  const latestVersionIdRef = useRef(document.latestVersion.id);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  useEffect(() => {
+    if (document.latestVersion.id !== latestVersionIdRef.current) {
+      reset(RhfContent.toRhfContent(document.latestVersion.content, schema));
+      latestVersionIdRef.current = document.latestVersion.id;
+    }
+  }, [document.latestVersion.id]);
+
   const onSubmit = async (content: any) => {
     const { success, data } = await mutate(
       collection.id,
@@ -49,6 +69,7 @@ export default function CreateNewDocumentVersionForm({
       reset(RhfContent.toRhfContent(data.latestVersion.content, schema), {
         keepValues: true,
       });
+      latestVersionIdRef.current = data.latestVersion.id;
     } else {
       // TODO: display error in Toast.
     }

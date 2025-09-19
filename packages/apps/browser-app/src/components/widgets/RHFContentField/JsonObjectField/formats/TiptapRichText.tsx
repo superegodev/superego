@@ -3,6 +3,7 @@ import type { JSONContent } from "@tiptap/react";
 import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
+import forms from "../../../../../business-logic/forms/forms.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -18,7 +19,8 @@ export default function TiptapRichText({
   label,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
-  const { __dataType, ...value } = field.value ?? { type: "doc", content: [] };
+  const { __dataType, ...value } =
+    field.value ?? forms.defaults.tiptapRichTextJsonObject();
   const onChange = useCallback(
     (newValue: JSONContent) =>
       field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
