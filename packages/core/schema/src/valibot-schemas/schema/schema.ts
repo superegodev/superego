@@ -8,6 +8,7 @@ import enumMembers from "../enumMembers/enumMembers.js";
 import identifier from "../identifier/identifier.js";
 import mimeTypeMatcher from "../mimeTypeMatcher/mimeTypeMatcher.js";
 import allReferencedTypesExist from "./checks/allReferencedTypesExist.js";
+import membersOrderIsValid from "./checks/membersOrderIsValid.js";
 import noTopLevelTypeDefinitionRefs from "./checks/noTopLevelTypeDefinitionRefs.js";
 import noUnusedTypes from "./checks/noUnusedTypes.js";
 import nullablePropertiesIsValid from "./checks/nullablePropertiesIsValid.js";
@@ -20,11 +21,15 @@ const StringTypeDefinitionValibotSchema = v.strictObject({
   format: v.optional(v.string()),
 });
 
-const EnumTypeDefinitionValibotSchema = v.strictObject({
-  ...described().entries,
-  dataType: v.literal(DataType.Enum),
-  members: enumMembers(),
-});
+const EnumTypeDefinitionValibotSchema = v.pipe(
+  v.strictObject({
+    ...described().entries,
+    dataType: v.literal(DataType.Enum),
+    members: enumMembers(),
+    membersOrder: v.optional(v.array(v.pipe(v.string()))),
+  }),
+  membersOrderIsValid,
+);
 
 const NumberTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,

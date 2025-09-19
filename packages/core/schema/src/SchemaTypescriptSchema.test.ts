@@ -56,6 +56,13 @@ it("exports the Schema type definition", () => {
       members: {
         [name: string]: EnumMember;
       };
+      /**
+       * Preferred order for displaying members in UIs. If specified:
+       * - **Must** contain ALL members defined in {@link members}, and
+       *   nothing else.
+       * - **Must** not contain duplicates.
+       */
+      membersOrder?: string[] | undefined;
     }
 
     interface NumberTypeDefinition extends Described {

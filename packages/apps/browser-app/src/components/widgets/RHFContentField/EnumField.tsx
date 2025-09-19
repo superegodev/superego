@@ -29,6 +29,8 @@ export default function EnumField({
   label,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
+  const sortedMemberNames =
+    typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
   return (
     <Select
       id={field.name}
@@ -63,11 +65,14 @@ export default function EnumField({
       />
       <FieldError>{fieldState.error?.message}</FieldError>
       <SelectOptions
-        options={Object.values(typeDefinition.members).map((member) => ({
-          id: member.value,
-          label: member.value,
-          description: member.description,
-        }))}
+        options={sortedMemberNames.map((memberName) => {
+          const member = typeDefinition.members[memberName]!;
+          return {
+            id: member.value,
+            label: member.value,
+            description: member.description,
+          };
+        })}
       />
     </Select>
   );

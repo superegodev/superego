@@ -67,6 +67,17 @@ export default {
           },
           additionalProperties: false,
         },
+
+        membersOrder: {
+          description: `
+Preferred order for displaying members in UIs. If specified:
+- **Must** contain ALL members defined in \`members\`, and nothing else.
+- **Must** not contain duplicates.
+          `.trim(),
+          type: "array",
+          items: { type: "string" },
+          uniqueItems: true,
+        },
       },
       required: ["dataType", "members"],
       additionalProperties: false,

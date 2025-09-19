@@ -63,16 +63,17 @@ function makePropertyValueStatement(
   switch (typeDefinition.dataType) {
     case DataType.String:
       return typeDefinition.format === FormatId.String.Instant
-        ? `${baseStatement} ? LocalInstant.fromISO(${baseStatement}).toFormat() : ""`
+        ? `(${baseStatement} !== undefined ? LocalInstant.fromISO(${baseStatement}).toFormat() : "")`
         : baseStatement;
     case DataType.Enum:
     case DataType.StringLiteral:
       return baseStatement;
     case DataType.Number:
     case DataType.NumberLiteral:
+      return `(${baseStatement} !== undefined ? String(${baseStatement}) : "")`;
     case DataType.Boolean:
     case DataType.BooleanLiteral:
-      return `${baseStatement} ? String(${baseStatement}) : ""`;
+      return `(${baseStatement} !== undefined ? (${baseStatement} ? "✔": "✖") : "")`;
     default:
       return "";
   }
