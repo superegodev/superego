@@ -1109,10 +1109,22 @@
       "value": "I'm the Collection Creator"
     }
   ],
-  "InferenceSettings.tsx_BGZ5iy": [
+  "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
-      "value": "Completions"
+      "value": "Chat Completions"
+    }
+  ],
+  "InferenceSettings.tsx_FJPyVh": [
+    {
+      "type": 0,
+      "value": ": fast, cheap, supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_HRac2N": [
+    {
+      "type": 0,
+      "value": "Speech (required for the assistant to speak to you)"
     }
   ],
   "InferenceSettings.tsx_NNEajY": [
@@ -1121,16 +1133,116 @@
       "value": "Provider base URL"
     }
   ],
+  "InferenceSettings.tsx_RPpwVn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " To make the assistant work you need to connect it to an "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "inference provider"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "compatible with the OpenAI format."
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Providers known to work: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_WKES9e": [
+    {
+      "type": 0,
+      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "moonshotai/kimi-k2-0905"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " currently seems to be the best-performing models for Superego."
+    }
+  ],
   "InferenceSettings.tsx_YctX0J": [
     {
       "type": 0,
       "value": "Provider API key"
     }
   ],
-  "InferenceSettings.tsx_dFuUS4": [
+  "InferenceSettings.tsx_eV3UHK": [
     {
       "type": 0,
-      "value": "Speech"
+      "value": "Transcriptions (required to speak to the assistant)"
+    }
+  ],
+  "InferenceSettings.tsx_fMrykm": [
+    {
+      "type": 0,
+      "value": ": an app that runs locally on your computer (needs a lot of RAM and beefy GPU). Only supports the Chat Completions API."
+    }
+  ],
+  "InferenceSettings.tsx_gi9ckp": [
+    {
+      "type": 0,
+      "value": ": only supports the Chat Completions API."
     }
   ],
   "InferenceSettings.tsx_mnJYBQ": [
@@ -1145,10 +1257,22 @@
       "value": "Model"
     }
   ],
-  "InferenceSettings.tsx_tEYk0t": [
+  "InferenceSettings.tsx_u2jTeg": [
     {
       "type": 0,
-      "value": "Transcriptions"
+      "value": ": supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_vuJYgx": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Create an account with your chosen provider, get an API key, and enter the details below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "ListField.tsx_6ibWnb": [

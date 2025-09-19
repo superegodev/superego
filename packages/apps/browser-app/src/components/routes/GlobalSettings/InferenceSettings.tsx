@@ -1,8 +1,11 @@
 import type { GlobalSettings } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
+import Alert from "../../design-system/Alert/Alert.jsx";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
+import * as cs from "./GlobalSettings.css.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
@@ -11,9 +14,52 @@ export default function InferenceSettings({ control }: Props) {
   const intl = useIntl();
   return (
     <>
+      <Alert variant="info" className={cs.InferenceSettings.info}>
+        <FormattedMessage
+          defaultMessage={`
+            <p>
+              To make the assistant work you need to connect it to an
+              <b>inference provider</b>—a service that offers APIs for LLMs,
+              speech transcription, and speech synthesis. The provider must
+              offer APIs <b>compatible with the OpenAI format.</b>
+            </p>
+            <p>
+              Providers known to work:
+            </p>
+          `}
+          values={formattedMessageHtmlTags}
+        />
+        <ul>
+          <li>
+            <a href="https://groq.com/">{"Groq"}</a>
+            <FormattedMessage defaultMessage=": fast, cheap, supports all APIs." />
+          </li>
+          <li>
+            <a href="https://openai.com/">{"OpenAI"}</a>
+            <FormattedMessage defaultMessage=": supports all APIs." />
+          </li>
+          <li>
+            <a href="https://openrouter.ai/">{"OpenRouter"}</a>
+            <FormattedMessage defaultMessage=": only supports the Chat Completions API." />
+          </li>
+          <li>
+            <a href="https://lmstudio.ai/">{"LM Studio"}</a>
+            <FormattedMessage defaultMessage=": an app that runs locally on your computer (needs a lot of RAM and beefy GPU). Only supports the Chat Completions API." />
+          </li>
+        </ul>
+        <FormattedMessage
+          defaultMessage={`
+            <p>
+              Create an account with your chosen provider, get an API key, and
+              enter the details below.
+            </p>
+          `}
+          values={formattedMessageHtmlTags}
+        />
+      </Alert>
       <Fieldset isDisclosureDisabled={true}>
         <Fieldset.Legend>
-          <FormattedMessage defaultMessage="Completions" />
+          <FormattedMessage defaultMessage="Chat Completions" />
         </Fieldset.Legend>
         <Fieldset.Fields>
           <RHFTextField
@@ -22,6 +68,18 @@ export default function InferenceSettings({ control }: Props) {
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Model" })}
             placeholder="openai/gpt-oss-120b"
+            description={
+              <FormattedMessage
+                defaultMessage={`
+                  The name of a model supported by the provider you've chosen.
+                  You can usually find this in your provider's docs.
+                  <code>openai/gpt-oss-120b</code> and
+                  <code>moonshotai/kimi-k2-0905</code> currently seems to be the
+                  best-performing models for Superego.
+                `}
+                values={formattedMessageHtmlTags}
+              />
+            }
           />
           <RHFTextField
             control={control}
@@ -43,7 +101,7 @@ export default function InferenceSettings({ control }: Props) {
       </Fieldset>
       <Fieldset isDisclosureDisabled={true}>
         <Fieldset.Legend>
-          <FormattedMessage defaultMessage="Transcriptions" />
+          <FormattedMessage defaultMessage="Transcriptions (required to speak to the assistant)" />
         </Fieldset.Legend>
         <Fieldset.Fields>
           <RHFTextField
@@ -73,7 +131,7 @@ export default function InferenceSettings({ control }: Props) {
       </Fieldset>
       <Fieldset isDisclosureDisabled={true}>
         <Fieldset.Legend>
-          <FormattedMessage defaultMessage="Speech" />
+          <FormattedMessage defaultMessage="Speech (required for the assistant to speak to you)" />
         </Fieldset.Legend>
         <Fieldset.Fields>
           <RHFTextField

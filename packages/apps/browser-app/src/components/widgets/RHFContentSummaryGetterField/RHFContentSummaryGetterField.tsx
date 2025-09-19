@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
 import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
-import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
-import * as cs from "./RHFContentSummaryGetterField.css.js";
 
 interface Props {
   control: Control<any>;
@@ -54,20 +53,7 @@ export default function RHFContentSummaryGetterField({
               displaying them.
             </p>
           `}
-          values={{
-            // Hack to avoid React 19 key errors. Should be solved in the next
-            // version of react-intl. At that point, remove the keys.
-            b: (chunks) => <b key={(chunks as string[])[0]}>{chunks}</b>,
-            p: (chunks) => <p key={(chunks as string[])[0]}>{chunks}</p>,
-            code: (chunks) => (
-              <InlineCode
-                key={(chunks as string[])[0]}
-                className={cs.RHFContentSummaryGetterField.inlineCode}
-              >
-                {chunks}
-              </InlineCode>
-            ),
-          }}
+          values={formattedMessageHtmlTags}
         />
       }
     />

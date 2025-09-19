@@ -7,7 +7,7 @@ export const InlineCode = {
     background: vars.colors.background.surfaceHighlight,
     paddingInline: vars.spacing._1,
     fontFamily: vars.typography.fontFamilies.monospace,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: "smaller",
     fontStyle: "normal",
   }),
 };
