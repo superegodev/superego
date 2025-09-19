@@ -2,6 +2,10 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const EmojiInput = {
+  popover: style({
+    overflow: "scroll",
+  }),
+
   popoverTrigger: style({
     width: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
     height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
@@ -17,7 +21,6 @@ export const EmojiPicker = {
     width: "fit-content",
     height: vars.spacing._80,
     backgroundColor: vars.colors.background.surface,
-    isolation: "isolate",
   }),
   search: style({
     position: "relative",
@@ -96,6 +99,3 @@ export const EmojiPicker = {
     fontSize: vars.typography.fontSizes.sm,
   }),
 };
-
-// export const frimousseLoading = style(baseLoadingEmptyStyle);
-// export const frimousseEmpty = style(baseLoadingEmptyStyle);
