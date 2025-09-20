@@ -1,5 +1,6 @@
 import type { Data } from "@superego/demo-data-repositories";
 import { Finance, Health } from "./collectionCategories.js";
+import contacts from "./contacts.js";
 import expenses from "./expenses.js";
 import weighIns from "./weighIns.js";
 
@@ -22,6 +23,7 @@ const demoData: Pick<
 };
 
 for (const { collection, collectionVersion, documents, documentVersions } of [
+  contacts,
   expenses,
   weighIns,
 ]) {

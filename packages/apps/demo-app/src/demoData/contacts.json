@@ -1,0 +1,5540 @@
+[
+  {
+    "type": "Person",
+    "name": "Paul Atreides",
+    "relation": "Me",
+    "phones": [
+      {
+        "number": "+353 125-5506-350",
+        "description": "Work"
+      },
+      {
+        "number": "+353 204-9935-189",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "paul.atreides12@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Jessica Atreides",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 303-9928-529",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "jessica.atreides@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Leto Atreides",
+    "relation": "father",
+    "phones": [
+      {
+        "number": "+353 384-3547-320",
+        "description": "Private"
+      },
+      {
+        "number": "+353 489-2584-467",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "leto.atreides@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Duncan Idaho",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 665-5803-949",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "duncan.idaho30@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Gurney Halleck",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 489-5554-564",
+        "description": "Private"
+      },
+      {
+        "number": "+353 463-4432-786",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "gurney.halleck@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Thufir Hawat",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 376-4598-801",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "thufir.hawat@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Thufir Hawat swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Wellington Yueh",
+    "relation": "kinsman",
+    "phones": [
+      {
+        "number": "+353 680-6155-317",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "wellington.yueh18@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Chani",
+    "relation": "partner",
+    "phones": [
+      {
+        "number": "+964 698-8019-697",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "chani@sietch-cielago.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Stilgar",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 742-3621-911",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "stilgar@sietch-jacurutu.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Liet Kynes",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 111-2876-798",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "liet.kynes56@sietch-habbanya.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Pardot Kynes",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 369-9201-880",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "pardot.kynes@sietch-timin.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Shadout Mapes",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 256-7126-880",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "shadout.mapes@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Jamis",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 926-6038-345",
+        "description": "Personal"
+      },
+      {
+        "number": "+964 680-2290-187",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "jamis@sietch-sietch-east.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Harah",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 269-5342-640",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "harah@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Otheym",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 629-8397-223",
+        "description": "Work"
+      },
+      {
+        "number": "+964 446-1344-702",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "otheym@sietch-gara.ara",
+        "description": "Personal"
+      },
+      {
+        "address": "otheym@sietch-tabr.ara",
+        "description": "Backup"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Korba",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 626-4899-385",
+        "description": null
+      },
+      {
+        "number": "+964 235-8744-348",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "korba@sietch-jacurutu.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Farok",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 984-1887-789",
+        "description": "Personal"
+      },
+      {
+        "number": "+964 845-6559-919",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "farok@sietch-gara.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Vladimir Harkonnen",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 355-2235-553",
+        "description": "Personal"
+      },
+      {
+        "number": "+7 653-1241-195",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "vladimir.harkonnen@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Met Vladimir Harkonnen at a spice council on Arrakis. Trust level: cautious."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Feyd-Rautha Harkonnen",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 488-1035-499",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "feyd-rautha.harkonnen@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Glossu Rabban",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 258-4111-403",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "glossu.rabban41@househarkonnen.gdp",
+        "description": "Personal"
+      },
+      {
+        "address": "glossu.rabban@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Piter De Vries",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 971-4044-170",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "piter.de-vries@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Shaddam Corrino",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 183-7868-773",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "shaddam.corrino@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Irulan Corrino",
+    "relation": "political contact",
+    "phones": [
+      {
+        "number": "+39 423-2188-109",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "irulan.corrino28@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Hasimir Fenring",
+    "relation": "imperial acquaintance",
+    "phones": [
+      {
+        "number": "+39 350-7054-391",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hasimir.fenring@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Margot Fenring",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 108-5905-779",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "margot.fenring@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Gaius Helen Mohiam",
+    "relation": "teacher",
+    "phones": [
+      {
+        "number": "+41 315-6617-308",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "gaius.helen-mohiam@bene-gesserit.bgs",
+        "description": "Personal"
+      },
+      {
+        "address": "gaius.helen-mohiam@bene-gesserit.bgs",
+        "description": "Backup"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Edric",
+    "relation": "transport contact",
+    "phones": [
+      {
+        "number": "+39 265-8239-664",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "edric89@spacingguild.spc",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Scytale",
+    "relation": "bio-trader",
+    "phones": [
+      {
+        "number": "+92 665-3426-540",
+        "description": "Work"
+      },
+      {
+        "number": "+92 473-1653-466",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "scytale@tleilaxu.tlx",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Bijaz",
+    "relation": "uneasy ally",
+    "phones": [
+      {
+        "number": "+92 735-3532-342",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "bijaz@tleilaxu.tlx",
+        "description": "Personal"
+      },
+      {
+        "address": "bijaz@tleilaxu.tlx",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Bronso of Ix",
+    "relation": "Ixian technologist",
+    "phones": [
+      {
+        "number": "+41 373-3608-906",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "bronso.of-ix@ixian.ix",
+        "description": "Personal"
+      },
+      {
+        "address": "bronso.of-ix@ixian.ix",
+        "description": "Backup"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Caid Richese",
+    "relation": "craftsman",
+    "phones": [
+      {
+        "number": "+33 436-5564-985",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "caid.richese@richese.rcs",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Alia Atreides",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 439-1452-218",
+        "description": "Private"
+      },
+      {
+        "number": "+353 371-1626-211",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "alia.atreides@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tariq Cielago",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 360-1727-825",
+        "description": null
+      },
+      {
+        "number": "+964 925-9821-803",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "tariq.cielago@sietch-gara.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Naib bin Tabr",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 407-9308-416",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "naib.bin-tabr@sietch-rocknar.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Noor al-Maula",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 661-1006-411",
+        "description": "Private"
+      },
+      {
+        "number": "+964 904-6279-576",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "noor.al-maula@sietch-sietch-east.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Sihaya Cielago",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 195-4848-788",
+        "description": "Private"
+      },
+      {
+        "number": "+964 303-3414-125",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "sihaya.cielago@sietch-gara.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Haran ibn Arrakis",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 509-4997-251",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "haran.ibn-arrakis@sietch-timin.ara",
+        "description": "Personal"
+      },
+      {
+        "address": "haran.ibn-arrakis@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Haran ibn Arrakis swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Amal al-Sietch",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 643-6198-873",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "amal.al-sietch@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Amal ibn Sietch",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 752-5543-884",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "amal.ibn-sietch@sietch-rocknar.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Chakir of Tabr",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 492-3503-823",
+        "description": "Work"
+      },
+      {
+        "number": "+964 517-6421-655",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "chakir.of-tabr54@sietch-jacurutu.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Farid",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 689-7232-588",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "farid@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Naib",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 324-5471-546",
+        "description": null
+      },
+      {
+        "number": "+964 444-7624-841",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "naib@sietch-sietch-east.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Hark al-Fadaykin",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 758-8022-238",
+        "description": null
+      },
+      {
+        "number": "+964 366-7211-435",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hark.al-fadaykin@sietch-sietch-east.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zahra bin Tabr",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 119-9837-153",
+        "description": "Private"
+      },
+      {
+        "number": "+964 170-1659-872",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "zahra.bin-tabr@sietch-gara.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Tariq ibn Sietch",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 816-5198-885",
+        "description": "Private"
+      },
+      {
+        "number": "+964 721-2876-896",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tariq.ibn-sietch4@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Leila ibn Sietch",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 706-4978-204",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "leila.ibn-sietch@sietch-timin.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Yasmin al-Qadisah",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 969-7882-942",
+        "description": null
+      },
+      {
+        "number": "+964 470-8532-824",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "yasmin.al-qadisah@sietch-jacurutu.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Nadir Cielago",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 430-5022-950",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "nadir.cielago@sietch-sietch-east.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Azhar al-Qadisah",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 599-4475-463",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "azhar.al-qadisah@sietch-rocknar.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Nadir ibn Sietch",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 587-9041-558",
+        "description": "Personal"
+      },
+      {
+        "number": "+964 326-7625-808",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "nadir.ibn-sietch@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zahra",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 438-6764-819",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "zahra@sietch-rocknar.ara",
+        "description": null
+      },
+      {
+        "address": "zahra@sietch-timin.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Sihaya bin Tabr",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 298-5853-332",
+        "description": "Private"
+      },
+      {
+        "number": "+964 114-9751-229",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "sihaya.bin-tabr@sietch-tabr.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Haran",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 205-1200-687",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "haran@sietch-sietch-east.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tariq",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 603-2213-690",
+        "description": "Personal"
+      },
+      {
+        "number": "+964 930-5978-187",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tariq@sietch-timin.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Samir ibn Arrakis",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 553-5871-980",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "samir.ibn-arrakis@sietch-tabr.ara",
+        "description": null
+      },
+      {
+        "address": "samir.ibn-arrakis@sietch-gara.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Noor Tabr",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 260-1043-518",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "noor.tabr@sietch-sietch-east.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Jamail al-Maula",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 910-4241-535",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "jamail.al-maula@sietch-cielago.ara",
+        "description": "Personal"
+      },
+      {
+        "address": "jamail.al-maula@sietch-cielago.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Hark",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 227-8679-805",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hark@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zahra Cielago",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 126-2496-334",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "zahra.cielago@sietch-rocknar.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zahir Cielago",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 750-9056-193",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "zahir.cielago@sietch-habbanya.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Latif ibn Arrakis",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 878-1601-565",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "latif.ibn-arrakis99@sietch-habbanya.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Farid Tabr",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 523-1888-292",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "farid.tabr@sietch-sietch-east.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Latif al-Sietch",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 129-4920-826",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "latif.al-sietch@sietch-tabr.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tariq bin Tabr",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 952-3522-610",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tariq.bin-tabr@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Hassan Cielago",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 864-3236-984",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hassan.cielago@sietch-jacurutu.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Hark al-Sietch",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 252-8316-651",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "hark.al-sietch@sietch-sietch-south.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Samir ibn Sietch",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 894-7730-144",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "samir.ibn-sietch@sietch-jacurutu.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Hassan al-Fadaykin",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 614-6439-990",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hassan.al-fadaykin59@sietch-sietch-east.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Azhar ibn Arrakis",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 182-6383-972",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "azhar.ibn-arrakis@sietch-sietch-east.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Amal al-Maula",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 147-6314-915",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "amal.al-maula@sietch-habbanya.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Noor bin Tabr",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 991-7267-734",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "noor.bin-tabr@sietch-cielago.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Met Noor bin Tabr at a spice council on Arrakis. Trust level: cautious."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Amal",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 659-3588-175",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "amal@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Nadir ibn Arrakis",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 467-5847-816",
+        "description": "Private"
+      },
+      {
+        "number": "+964 949-7484-381",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "nadir.ibn-arrakis@sietch-tabr.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Latif ibn Sietch",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 921-6772-324",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "latif.ibn-sietch@sietch-cielago.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Sayyid of Tabr",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 402-6352-865",
+        "description": null
+      },
+      {
+        "number": "+964 235-9837-997",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "sayyid.of-tabr@sietch-sietch-south.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Latif al-Qadisah",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 217-8673-177",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "latif.al-qadisah@sietch-gara.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Yasmin ibn Arrakis",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 370-9791-226",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "yasmin.ibn-arrakis@sietch-rocknar.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Nadir Tabr",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 724-4626-763",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "nadir.tabr@sietch-sietch-east.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Met Nadir Tabr at a spice council on Arrakis. Trust level: cautious."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Sayyid al-Sietch",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 199-4846-650",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "sayyid.al-sietch@sietch-habbanya.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Hark of Tabr",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 770-2622-953",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "hark.of-tabr48@sietch-rocknar.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Chakir",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 467-1992-507",
+        "description": "Private"
+      },
+      {
+        "number": "+964 225-8450-193",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "chakir@sietch-gara.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Samir",
+    "relation": "sayyadina",
+    "phones": [
+      {
+        "number": "+964 678-4362-170",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "samir@sietch-gara.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zahir",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 233-9850-356",
+        "description": "Work"
+      },
+      {
+        "number": "+964 987-1422-234",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "zahir@sietch-habbanya.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Sayyid ibn Arrakis",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 216-2041-587",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "sayyid.ibn-arrakis@sietch-sietch-south.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Sayyid Tabr",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 569-1510-162",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "sayyid.tabr@sietch-jacurutu.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Sayyid Tabr swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Azhar bin Tabr",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 381-9984-829",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "azhar.bin-tabr@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Azhar bin Tabr swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Haran Tabr",
+    "relation": "water-seller",
+    "phones": [
+      {
+        "number": "+964 986-4522-540",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "haran.tabr@sietch-jacurutu.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Azhar al-Maula",
+    "relation": "Fedaykin",
+    "phones": [
+      {
+        "number": "+964 256-8770-168",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "azhar.al-maula@sietch-timin.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Chakir Tabr",
+    "relation": "scout",
+    "phones": [
+      {
+        "number": "+964 437-3002-520",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "chakir.tabr@sietch-jacurutu.ara",
+        "description": null
+      },
+      {
+        "address": "chakir.tabr@sietch-rocknar.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Rashid al-Sietch",
+    "relation": "sietch-mate",
+    "phones": [
+      {
+        "number": "+964 967-2773-458",
+        "description": "Private"
+      },
+      {
+        "number": "+964 385-4705-926",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rashid.al-sietch@sietch-sietch-south.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Farid al-Maula",
+    "relation": "Fremen ally",
+    "phones": [
+      {
+        "number": "+964 284-5477-819",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "farid.al-maula19@sietch-habbanya.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Met Farid al-Maula at a spice council on Arrakis. Trust level: cautious."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Jamail ibn Sietch",
+    "relation": "Naib",
+    "phones": [
+      {
+        "number": "+964 529-8432-449",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "jamail.ibn-sietch@sietch-habbanya.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Eamon Kynross",
+    "relation": "father",
+    "phones": [
+      {
+        "number": "+353 790-2336-378",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "eamon.kynross@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Ronan Atreides",
+    "relation": "retainer",
+    "phones": [
+      {
+        "number": "+353 794-8972-639",
+        "description": "Private"
+      },
+      {
+        "number": "+353 504-1897-107",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "ronan.atreides@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Ronan Atreides swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Calem Aran",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 232-7229-645",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "calem.aran95@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Ronan",
+    "relation": "armsmaster",
+    "phones": [
+      {
+        "number": "+353 687-7626-826",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "ronan42@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Kael",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 547-2734-349",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "kael40@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Seren Kelty",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 844-3419-341",
+        "description": "Personal"
+      },
+      {
+        "number": "+353 302-3842-716",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren.kelty@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Soren Innis",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 984-6179-254",
+        "description": null
+      },
+      {
+        "number": "+353 552-5961-915",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soren.innis@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Calem Kelty",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 760-2479-729",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "calem.kelty@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Brought a thumper that never fails. Likes to name sandworms."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Talor Kynross",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 613-3471-163",
+        "description": null
+      },
+      {
+        "number": "+353 957-6626-831",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "talor.kynross@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Seren Moray",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 481-5634-496",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren.moray@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Talor Kelty",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 441-2335-696",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "talor.kelty@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Talor Kelty swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Mira Innis",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 932-3093-786",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "mira.innis@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Rowan",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 296-4711-240",
+        "description": "Work"
+      },
+      {
+        "number": "+353 964-2657-619",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "rowan44@houseatreides.cal",
+        "description": null
+      },
+      {
+        "address": "rowan@houseatreides.cal",
+        "description": "Backup"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Soren Moray",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 144-7731-473",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soren.moray@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Keir Kynross",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 572-5616-896",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "keir.kynross@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Seren",
+    "relation": "steward",
+    "phones": [
+      {
+        "number": "+353 971-3042-391",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren@houseatreides.cal",
+        "description": null
+      },
+      {
+        "address": "seren29@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Seren Aran",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 483-4678-128",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren.aran@houseatreides.cal",
+        "description": "Personal"
+      },
+      {
+        "address": "seren.aran@houseatreides.cal",
+        "description": "Backup"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Niall Atreides",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 119-5193-320",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "niall.atreides@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Elara Kynross",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 164-2816-956",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "elara.kynross@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Calem Moray",
+    "relation": "armsmaster",
+    "phones": [
+      {
+        "number": "+353 291-2402-636",
+        "description": "Private"
+      },
+      {
+        "number": "+353 638-9914-619",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "calem.moray61@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Mira Kelty",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 453-4950-850",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "mira.kelty46@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Niall Moray",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 833-8498-137",
+        "description": "Private"
+      },
+      {
+        "number": "+353 910-4268-142",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "niall.moray@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Mira Atreides",
+    "relation": "mentor",
+    "phones": [
+      {
+        "number": "+353 379-3039-918",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "mira.atreides@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Seren Atreides",
+    "relation": "armsmaster",
+    "phones": [
+      {
+        "number": "+353 180-8055-716",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren.atreides42@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Eamon Kelty",
+    "relation": "loyal aide",
+    "phones": [
+      {
+        "number": "+353 143-6776-729",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "eamon.kelty82@houseatreides.cal",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Talor Atreides",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 969-8179-135",
+        "description": "Work"
+      },
+      {
+        "number": "+353 897-7001-470",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "talor.atreides@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Seren Kynross",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 368-5264-820",
+        "description": null
+      },
+      {
+        "number": "+353 726-5678-810",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "seren.kynross10@houseatreides.cal",
+        "description": "Work"
+      },
+      {
+        "address": "seren.kynross@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Rowan Innis",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 663-9882-397",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rowan.innis@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Soren Aran",
+    "relation": "father",
+    "phones": [
+      {
+        "number": "+353 469-7044-578",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soren.aran51@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Soren Kynross",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 228-6194-757",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soren.kynross@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Elara Atreides",
+    "relation": "mother",
+    "phones": [
+      {
+        "number": "+353 630-3507-411",
+        "description": "Work"
+      },
+      {
+        "number": "+353 826-4694-454",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "elara.atreides@houseatreides.cal",
+        "description": "Work"
+      },
+      {
+        "address": "elara.atreides@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Ronan Moray",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 275-6531-962",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "ronan.moray83@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Brought a thumper that never fails. Likes to name sandworms."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Niall",
+    "relation": "steward",
+    "phones": [
+      {
+        "number": "+353 396-5949-594",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "niall@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Niall Kelty",
+    "relation": "sister",
+    "phones": [
+      {
+        "number": "+353 420-6231-851",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "niall.kelty@houseatreides.cal",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Elara",
+    "relation": "armsmaster",
+    "phones": [
+      {
+        "number": "+353 354-3616-933",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "elara@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Rix",
+    "relation": "spice-run partner",
+    "phones": [
+      {
+        "number": "+964 123-2475-502",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "rix@smugglers.arrakis.ara",
+        "description": "Personal"
+      },
+      {
+        "address": "rix@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Lingar Orin",
+    "relation": "smuggler contact",
+    "phones": [
+      {
+        "number": "+964 541-3194-370",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "lingar.orin7@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Staban Skeen",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 386-2946-231",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "staban.skeen@smugglers.arrakis.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Maris Tuek",
+    "relation": "smuggler contact",
+    "phones": [
+      {
+        "number": "+964 240-6456-923",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "maris.tuek@smugglers.arrakis.ara",
+        "description": null
+      },
+      {
+        "address": "maris.tuek@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Lingar Ruin",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 645-9025-825",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "lingar.ruin@smugglers.arrakis.ara",
+        "description": null
+      },
+      {
+        "address": "lingar.ruin@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Esmar Zar",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 901-4728-838",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "esmar.zar@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tuek",
+    "relation": "smuggler contact",
+    "phones": [
+      {
+        "number": "+964 132-2800-295",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tuek@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tanis",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 844-2020-822",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tanis@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Soo-Soo Kaid",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 797-5331-724",
+        "description": null
+      },
+      {
+        "number": "+964 352-5571-671",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soo-soo.kaid@smugglers.arrakis.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Rix Zar",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 914-5480-394",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rix.zar@smugglers.arrakis.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tuek Zar",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 180-6674-552",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tuek.zar@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tanis Tuek",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 643-4697-753",
+        "description": "Work"
+      },
+      {
+        "number": "+964 523-6411-834",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tanis.tuek@smugglers.arrakis.ara",
+        "description": "Personal"
+      },
+      {
+        "address": "tanis.tuek@smugglers.arrakis.ara",
+        "description": "Backup"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Rix Orin",
+    "relation": "spice-run partner",
+    "phones": [
+      {
+        "number": "+964 428-5676-761",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rix.orin@smugglers.arrakis.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Esmar",
+    "relation": "smuggler contact",
+    "phones": [
+      {
+        "number": "+964 527-3880-137",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "esmar@smugglers.arrakis.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Brought a thumper that never fails. Likes to name sandworms."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Tanis Zar",
+    "relation": "spice-run partner",
+    "phones": [
+      {
+        "number": "+964 565-9901-636",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "tanis.zar@smugglers.arrakis.ara",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Soo-Soo Skeen",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 363-4050-114",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "soo-soo.skeen@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Jargo Skeen",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 197-4027-243",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "jargo.skeen50@smugglers.arrakis.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Gara Tuek",
+    "relation": "spice-run partner",
+    "phones": [
+      {
+        "number": "+964 414-3616-515",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "gara.tuek@smugglers.arrakis.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Rix Ruin",
+    "relation": "spice-run partner",
+    "phones": [
+      {
+        "number": "+964 525-9998-582",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rix.ruin@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Brought a thumper that never fails. Likes to name sandworms."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Staban Ruin",
+    "relation": "fixer",
+    "phones": [
+      {
+        "number": "+964 307-9792-253",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "staban.ruin@smugglers.arrakis.ara",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Gregor",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 928-1911-564",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "gregor@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Vladek Harkonnen",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 692-2196-146",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "vladek.harkonnen@househarkonnen.gdp",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Vladek Rabban",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 884-7887-483",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "vladek.rabban@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Rauth Sukol",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 282-9802-502",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "rauth.sukol@househarkonnen.gdp",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Oleg Gurov",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 353-8546-454",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "oleg.gurov85@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Gregor Gurov",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 350-1724-511",
+        "description": null
+      },
+      {
+        "number": "+7 322-1924-243",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "gregor.gurov@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Yurik Rabban",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 523-5923-381",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "yurik.rabban@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Marius Sukol",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 518-3444-407",
+        "description": null
+      },
+      {
+        "number": "+7 650-8758-346",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "marius.sukol@househarkonnen.gdp",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Klara Sukol",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 560-7079-194",
+        "description": "Work"
+      },
+      {
+        "number": "+7 486-1647-994",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "klara.sukol@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Anya Sukol",
+    "relation": "spy (turned)",
+    "phones": [
+      {
+        "number": "+7 115-4470-294",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "anya.sukol@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps quoting the Orange Catholic Bible during negotiations."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Oleg Sukol",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 577-9743-764",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "oleg.sukol@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Klara Gurov",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 676-4625-859",
+        "description": "Work"
+      },
+      {
+        "number": "+7 666-7841-402",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "klara.gurov@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Yurik Gurov",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 571-3756-850",
+        "description": "Private"
+      },
+      {
+        "number": "+7 837-9954-600",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "yurik.gurov@househarkonnen.gdp",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Vladek Gurov",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 962-4791-169",
+        "description": "Work"
+      },
+      {
+        "number": "+7 617-8471-482",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "vladek.gurov@househarkonnen.gdp",
+        "description": "Personal"
+      },
+      {
+        "address": "vladek.gurov@househarkonnen.gdp",
+        "description": "Backup"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Ilyan Sukol",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 614-8054-925",
+        "description": "Work"
+      },
+      {
+        "number": "+7 198-9591-252",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "ilyan.sukol@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Anya Volkov",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 407-2320-769",
+        "description": "Personal"
+      },
+      {
+        "number": "+7 488-7179-665",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "anya.volkov@househarkonnen.gdp",
+        "description": null
+      },
+      {
+        "address": "anya.volkov@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Petra",
+    "relation": "enemy - Harkonnen",
+    "phones": [
+      {
+        "number": "+7 640-1697-335",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "petra@househarkonnen.gdp",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Petra Rabban",
+    "relation": "spy (turned)",
+    "phones": [
+      {
+        "number": "+7 116-4394-701",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "petra.rabban@househarkonnen.gdp",
+        "description": "Work"
+      },
+      {
+        "address": "petra.rabban@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Oleg Volkov",
+    "relation": "rival noble",
+    "phones": [
+      {
+        "number": "+7 909-2284-612",
+        "description": "Private"
+      },
+      {
+        "number": "+7 547-4803-958",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "oleg.volkov@househarkonnen.gdp",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Anya Petrov",
+    "relation": "former enemy",
+    "phones": [
+      {
+        "number": "+7 542-4043-796",
+        "description": null
+      },
+      {
+        "number": "+7 733-5839-917",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "anya.petrov20@househarkonnen.gdp",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Maxen Corrino",
+    "relation": "imperial acquaintance",
+    "phones": [
+      {
+        "number": "+39 105-6050-555",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "maxen.corrino24@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Aurelia Siro",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 903-6315-984",
+        "description": null
+      },
+      {
+        "number": "+39 523-7353-897",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "aurelia.siro@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Knows a back route through the Shield Wall. Useful in a pinch."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Octavia Kait",
+    "relation": "political contact",
+    "phones": [
+      {
+        "number": "+39 604-3390-164",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "octavia.kait@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Tiber Varro",
+    "relation": "political contact",
+    "phones": [
+      {
+        "number": "+39 209-3219-411",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "tiber.varro@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Maxen",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 708-3230-407",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "maxen@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Severin Kaitani",
+    "relation": "political contact",
+    "phones": [
+      {
+        "number": "+39 689-4971-433",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "severin.kaitani@imperial.court.kai",
+        "description": null
+      },
+      {
+        "address": "severin.kaitani@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Valeria Kait",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 170-7703-789",
+        "description": null
+      },
+      {
+        "number": "+39 410-4965-358",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "valeria.kait@imperial.court.kai",
+        "description": "Work"
+      },
+      {
+        "address": "valeria.kait@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Maxen Kait",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 931-9796-708",
+        "description": "Personal"
+      },
+      {
+        "number": "+39 354-6816-270",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "maxen.kait@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Drusus Kaitani",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 326-8303-483",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "drusus.kaitani@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Drusus Kaitani swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Lucan",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 245-6707-419",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "lucan@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Aurelia Corrino",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 217-1370-969",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "aurelia.corrino@imperial.court.kai",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Aurelia Verrin",
+    "relation": "imperial acquaintance",
+    "phones": [
+      {
+        "number": "+39 916-7636-744",
+        "description": "Work"
+      },
+      {
+        "number": "+39 773-8080-505",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "aurelia.verrin@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Valeria Kaitani",
+    "relation": "imperial acquaintance",
+    "phones": [
+      {
+        "number": "+39 691-2667-918",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "valeria.kaitani@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Aurelia",
+    "relation": "court observer",
+    "phones": [
+      {
+        "number": "+39 276-5873-729",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "aurelia40@imperial.court.kai",
+        "description": "Personal"
+      },
+      {
+        "address": "aurelia@imperial.court.kai",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Livia Varro",
+    "relation": "political contact",
+    "phones": [
+      {
+        "number": "+39 750-9804-810",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "livia.varro@imperial.court.kai",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Anir",
+    "relation": "Bene Gesserit contact",
+    "phones": [
+      {
+        "number": "+41 596-3236-299",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "anir@bene-gesserit.bgs",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Garimi Reverend Mother",
+    "relation": "Bene Gesserit contact",
+    "phones": [
+      {
+        "number": "+41 914-4613-399",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "garimi.reverend-mother@bene-gesserit.bgs",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Garimi Bene Gesserit",
+    "relation": "teacher",
+    "phones": [
+      {
+        "number": "+41 216-5389-893",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "garimi.bene-gesserit@bene-gesserit.bgs",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Syachsa Reverend Mother",
+    "relation": "Bene Gesserit contact",
+    "phones": [
+      {
+        "number": "+41 404-1528-560",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "syachsa.reverend-mother@bene-gesserit.bgs",
+        "description": "Personal"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Brought a thumper that never fails. Likes to name sandworms."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Taraza",
+    "relation": "teacher",
+    "phones": [
+      {
+        "number": "+41 747-8015-269",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "taraza@bene-gesserit.bgs",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Murbella Reverend Mother",
+    "relation": "Reverend Mother advisor",
+    "phones": [
+      {
+        "number": "+41 396-5380-978",
+        "description": "Personal"
+      },
+      {
+        "number": "+41 868-7743-160",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "murbella.reverend-mother@bene-gesserit.bgs",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Lucilla Reverend Mother",
+    "relation": "Reverend Mother advisor",
+    "phones": [
+      {
+        "number": "+41 601-3329-691",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "lucilla.reverend-mother@bene-gesserit.bgs",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Sheeana of Wallach",
+    "relation": "teacher",
+    "phones": [
+      {
+        "number": "+41 998-7046-565",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "sheeana.of-wallach@bene-gesserit.bgs",
+        "description": null
+      },
+      {
+        "address": "sheeana.of-wallach@bene-gesserit.bgs",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Sheeana of Wallach swears by crysknife etiquette—never unsheathe without purpose."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Lucilla of Wallach",
+    "relation": "Reverend Mother advisor",
+    "phones": [
+      {
+        "number": "+41 445-9967-691",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "lucilla.of-wallach@bene-gesserit.bgs",
+        "description": null
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Skeptical of prescience talk; prefers hard logistics."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Anir Bene Gesserit",
+    "relation": "Reverend Mother advisor",
+    "phones": [
+      {
+        "number": "+41 567-1011-538",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "anir.bene-gesserit@bene-gesserit.bgs",
+        "description": "Work"
+      },
+      {
+        "address": "anir.bene-gesserit47@bene-gesserit.bgs",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shared a vision about the desert and moon—ominous but motivating."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Anir of Wallach",
+    "relation": "teacher",
+    "phones": [
+      {
+        "number": "+41 816-4836-539",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "anir.of-wallach@bene-gesserit.bgs",
+        "description": "Personal"
+      },
+      {
+        "address": "anir.of-wallach@bene-gesserit.bgs",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Once beat Gurney at baliset trivia—unlikely, but witnessed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Syachsa",
+    "relation": "Reverend Mother advisor",
+    "phones": [
+      {
+        "number": "+41 810-3165-589",
+        "description": "Personal"
+      },
+      {
+        "number": "+41 191-2678-205",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "syachsa@bene-gesserit.bgs",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Pilot Bridge",
+    "relation": "Guild liaison",
+    "phones": [
+      {
+        "number": "+39 170-9691-676",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "pilot.bridge@spacingguild.spc",
+        "description": null
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zensunni Steersman",
+    "relation": "Guild liaison",
+    "phones": [
+      {
+        "number": "+39 188-2646-243",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "zensunni.steersman@spacingguild.spc",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Helped me train with the weirding way. Owes me a favor."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Factor Bridge",
+    "relation": "transport contact",
+    "phones": [
+      {
+        "number": "+39 897-1439-968",
+        "description": "Private"
+      },
+      {
+        "number": "+39 721-9348-293",
+        "description": null
+      }
+    ],
+    "emails": [
+      {
+        "address": "factor.bridge@spacingguild.spc",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Pilot of the Guild",
+    "relation": "Guild liaison",
+    "phones": [
+      {
+        "number": "+39 611-2163-640",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "pilot.of-the-guild73@spacingguild.spc",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Zensunni",
+    "relation": "Guild liaison",
+    "phones": [
+      {
+        "number": "+39 117-2106-114",
+        "description": "Private"
+      },
+      {
+        "number": "+39 161-7520-618",
+        "description": "Emergency"
+      }
+    ],
+    "emails": [
+      {
+        "address": "zensunni@spacingguild.spc",
+        "description": "Work"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Smuggler with a heart, but watch the ledgers."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Guildsman Steersman",
+    "relation": "Guild liaison",
+    "phones": [
+      {
+        "number": "+39 417-2294-623",
+        "description": "Work"
+      }
+    ],
+    "emails": [
+      {
+        "address": "guildsman.steersman@spacingguild.spc",
+        "description": "Work"
+      }
+    ],
+    "notes": null
+  }
+]
