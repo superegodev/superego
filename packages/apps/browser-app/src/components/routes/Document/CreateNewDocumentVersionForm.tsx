@@ -4,12 +4,10 @@ import { valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import RhfContent from "../../../utils/RhfContent.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 
 interface Props {
@@ -25,7 +23,6 @@ export default function CreateNewDocumentVersionForm({
   setSubmitDisabled,
 }: Props) {
   const { schema } = collection.latestVersion;
-  const intl = useIntl();
 
   const { result, mutate } = useCreateNewDocumentVersion();
 
@@ -94,16 +91,7 @@ export default function CreateNewDocumentVersionForm({
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
       <RHFContentField schema={schema} control={control} document={document} />
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error updating document",
-          })}
-        >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

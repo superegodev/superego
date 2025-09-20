@@ -16,8 +16,10 @@
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose",
+    "check-translations": "scripts/check-translations.sh",
     "translations:extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file src/translations/en.json",
     "translations:compile": "formatjs compile-folder --ast src/translations/ src/translations/compiled",
+    "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/translations/*.json'",
     "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile"
   },
   "devDependencies": {

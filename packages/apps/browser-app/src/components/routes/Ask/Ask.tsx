@@ -8,9 +8,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.js";
 import Link from "../../design-system/Link/Link.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Ask.css.js";
@@ -52,16 +51,7 @@ export default function Ask() {
           <PiClockCounterClockwise className={cs.Ask.historyLinkIcon} />
           <FormattedMessage defaultMessage="Previous conversations" />
         </Link>
-        {result?.error ? (
-          <Alert
-            variant="error"
-            title={intl.formatMessage({
-              defaultMessage: "Error starting conversation",
-            })}
-          >
-            <ResultError error={result.error} />
-          </Alert>
-        ) : null}
+        {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Shell.Panel.Content>
     </Shell.Panel>
   );

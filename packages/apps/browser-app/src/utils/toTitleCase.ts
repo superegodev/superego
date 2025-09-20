@@ -1,10 +1,6 @@
-/**
- * Formats an identifier (for a type name, a property name, or an enum member
- * name) to make it more human-readable.
- */
-export default function formatIdentifier(identifier: string): string {
+export default function toTitleCase(str: string): string {
   return (
-    identifier
+    str
       // Insert a space before any uppercase letter that follows a lowercase letter.
       .replace(/([a-z])([A-Z])/g, "$1 $2")
       // Replace _ with spaces.

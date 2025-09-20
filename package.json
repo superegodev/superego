@@ -9,6 +9,7 @@
   "scripts": {
     "test": "yarn workspaces foreach --all --topological-dev --verbose run test run",
     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
+    "check-translations": "yarn workspaces foreach --all --topological-dev --verbose run check-translations",
     "check-linting": "biome lint",
     "fix-linting": "biome lint --write",
     "check-formatting": "biome check --linter-enabled=false && prettier --list-different \"**/*.(md|yml|sql|sh)\"",

@@ -5,12 +5,6 @@
       "value": "Tema"
     }
   ],
-  "Ask.tsx_EWHk8s": [
-    {
-      "type": 0,
-      "value": "Errore durante l'avvio della conversazione"
-    }
-  ],
   "Ask.tsx_khigiR": [
     {
       "type": 0,
@@ -191,12 +185,6 @@
       "value": "error"
     }
   ],
-  "ContentSummaryTab.tsx_+R8UFo": [
-    {
-      "type": 0,
-      "value": "Errore durante la creazione della raccolta"
-    }
-  ],
   "ContentSummaryTab.tsx_VzzYJk": [
     {
       "type": 0,
@@ -243,6 +231,16 @@
     {
       "type": 0,
       "value": "Azioni della conversazione"
+    }
+  ],
+  "Conversation.tsx_y2z/xn": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni » "
+    },
+    {
+      "type": 1,
+      "value": "conversationId"
     }
   ],
   "Conversation.tsx_yWDfdE": [
@@ -347,12 +345,6 @@
       "value": "Azioni per creare la raccolta"
     }
   ],
-  "CreateCollectionAssisted.tsx_EWHk8s": [
-    {
-      "type": 0,
-      "value": "Errore durante l'avvio della conversazione"
-    }
-  ],
   "CreateCollectionAssisted.tsx_u/AEeD": [
     {
       "type": 0,
@@ -411,12 +403,6 @@
       "value": " » Crea documento"
     }
   ],
-  "CreateDocumentForm.tsx_KlVScA": [
-    {
-      "type": 0,
-      "value": "Errore durante la creazione del documento"
-    }
-  ],
   "CreateDocumentForm.tsx_VzzYJk": [
     {
       "type": 0,
@@ -471,22 +457,10 @@
       "value": "3. Migrazione"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_zq3yJy": [
-    {
-      "type": 0,
-      "value": "Errore durante l'aggiornamento del documento"
-    }
-  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
       "value": "Stringa JSON non valida"
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Errore durante l'eliminazione della raccolta"
     }
   ],
   "DeleteCollectionModalForm.tsx_4S5UP3": [
@@ -555,12 +529,6 @@
       "value": "\""
     }
   ],
-  "DeleteConversationModalForm.tsx_4GxOi1": [
-    {
-      "type": 0,
-      "value": "Errore durante l'eliminazione della conversazione"
-    }
-  ],
   "DeleteConversationModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -625,12 +593,6 @@
       "value": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
     }
   ],
-  "DeleteDocumentModalForm.tsx_H7J/rn": [
-    {
-      "type": 0,
-      "value": "Errore durante l'eliminazione del documento"
-    }
-  ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -693,6 +655,20 @@
     {
       "type": 0,
       "value": "Salva"
+    }
+  ],
+  "Document.tsx_zugcbb": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "documentId"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1339,12 +1315,6 @@
       "value": "Logo di Superego"
     }
   ],
-  "MigrationTab.tsx_0p1nAG": [
-    {
-      "type": 0,
-      "value": "Errore durante la creazione della nuova versione"
-    }
-  ],
   "MigrationTab.tsx_1Og5F/": [
     {
       "type": 0,
@@ -1555,12 +1525,6 @@
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa raccolta."
     }
   ],
-  "RenameCollectionCategoryModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Errore durante l'eliminazione della raccolta"
-    }
-  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1591,6 +1555,12 @@
     {
       "type": 0,
       "value": "Icona"
+    }
+  ],
+  "ResultErrors.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Dettagli"
     }
   ],
   "SchemaTab.tsx_Lktmvk": [
@@ -1755,12 +1725,6 @@
       "value": "Descrizione"
     }
   ],
-  "UpdateCollectionSettingsForm.tsx_c9brFu": [
-    {
-      "type": 0,
-      "value": "Errore durante il salvataggio delle impostazioni"
-    }
-  ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
     {
       "type": 0,
@@ -1777,12 +1741,6 @@
     {
       "type": 0,
       "value": "Istruzioni specifiche per questa raccolta da passare all'assistente."
-    }
-  ],
-  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": [
-    {
-      "type": 0,
-      "value": "Errore durante il salvataggio delle impostazioni della versione della raccolta"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [

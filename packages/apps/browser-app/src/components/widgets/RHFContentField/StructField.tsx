@@ -6,8 +6,8 @@ import {
 import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import formatIdentifier from "../../../utils/formatIdentifier.js";
 import { generateAnyDefaultValues } from "../../../utils/generateDefaultValues.js";
+import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import AnyField from "./AnyField.js";
@@ -110,7 +110,7 @@ function Fields({
       isListItem={false}
       control={control}
       name={name !== "" ? `${name}.${propertyName}` : propertyName}
-      label={formatIdentifier(propertyName)}
+      label={toTitleCase(propertyName)}
     />
   ));
 }

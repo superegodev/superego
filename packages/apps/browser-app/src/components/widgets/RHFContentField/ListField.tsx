@@ -7,8 +7,8 @@ import {
 } from "react-hook-form";
 import { PiBackspace, PiCaretDown, PiCaretUp, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import formatIdentifier from "../../../utils/formatIdentifier.js";
 import { generateAnyDefaultValues } from "../../../utils/generateDefaultValues.js";
+import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
@@ -213,7 +213,7 @@ function ItemField({
           {
             itemName:
               typeDefinition.items.dataType === null
-                ? formatIdentifier(typeDefinition.items.ref)
+                ? toTitleCase(typeDefinition.items.ref)
                 : "Item",
             itemNumber: String(itemIndex + 1),
           },

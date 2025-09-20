@@ -6,8 +6,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionSettings } from "../../../business-logic/backend/hooks.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
@@ -93,16 +92,7 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
           <FormattedMessage defaultMessage="Save settings" />
         </RHFSubmitButton>
       </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error saving settings",
-          })}
-        >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

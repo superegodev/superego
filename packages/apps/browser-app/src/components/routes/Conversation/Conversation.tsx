@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
+import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
 import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";
@@ -38,6 +39,15 @@ export default function Conversation({ conversationId }: Props) {
             })}
           />
         </Shell.Panel>
+      )}
+      renderErrors={(errors) => (
+        <RouteLevelErrors
+          headerTitle={intl.formatMessage(
+            { defaultMessage: "🤖\u2002Conversations » {conversationId}" },
+            { conversationId },
+          )}
+          errors={errors}
+        />
       )}
     >
       {(conversation) => (

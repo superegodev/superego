@@ -2,9 +2,6 @@
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Tema"
   },
-  "Ask.tsx_EWHk8s": {
-    "defaultMessage": "Errore durante l'avvio della conversazione"
-  },
   "Ask.tsx_khigiR": {
     "defaultMessage": "Conversazioni precedenti"
   },
@@ -89,9 +86,6 @@
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
   },
-  "ContentSummaryTab.tsx_+R8UFo": {
-    "defaultMessage": "Errore durante la creazione della raccolta"
-  },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
@@ -109,6 +103,9 @@
   },
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Azioni della conversazione"
+  },
+  "Conversation.tsx_y2z/xn": {
+    "defaultMessage": "🤖 Conversazioni » {conversationId}"
   },
   "Conversation.tsx_yWDfdE": {
     "defaultMessage": "Che tipo di dati vuoi archiviare?"
@@ -161,9 +158,6 @@
   "CreateCollectionAssisted.tsx_9/rVBT": {
     "defaultMessage": "Azioni per creare la raccolta"
   },
-  "CreateCollectionAssisted.tsx_EWHk8s": {
-    "defaultMessage": "Errore durante l'avvio della conversazione"
-  },
   "CreateCollectionAssisted.tsx_u/AEeD": {
     "defaultMessage": "Crea raccolta (modalità assistita)"
   },
@@ -191,9 +185,6 @@
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Crea documento"
   },
-  "CreateDocumentForm.tsx_KlVScA": {
-    "defaultMessage": "Errore durante la creazione del documento"
-  },
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
@@ -215,14 +206,8 @@
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migrazione"
   },
-  "CreateNewDocumentVersionForm.tsx_zq3yJy": {
-    "defaultMessage": "Errore durante l'aggiornamento del documento"
-  },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
-  },
-  "DeleteCollectionModalForm.tsx_1CICoa": {
-    "defaultMessage": "Errore durante l'eliminazione della raccolta"
   },
   "DeleteCollectionModalForm.tsx_4S5UP3": {
     "defaultMessage": "Se sei sicuro di voler eliminare la raccolta, scrivi <em>delete</em> nel campo sottostante."
@@ -242,9 +227,6 @@
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Elimina la conversazione \"{conversationName}\""
   },
-  "DeleteConversationModalForm.tsx_4GxOi1": {
-    "defaultMessage": "Errore durante l'eliminazione della conversazione"
-  },
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
@@ -262,9 +244,6 @@
   },
   "DeleteDocumentModalForm.tsx_GSdOzc": {
     "defaultMessage": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
-  },
-  "DeleteDocumentModalForm.tsx_H7J/rn": {
-    "defaultMessage": "Errore durante l'eliminazione del documento"
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -289,6 +268,9 @@
   },
   "Document.tsx_jvo0vs": {
     "defaultMessage": "Salva"
+  },
+  "Document.tsx_zugcbb": {
+    "defaultMessage": "{collection} » {documentId}"
   },
   "DocumentsTable.tsx_AbXVP4": {
     "defaultMessage": "Creato il"
@@ -563,9 +545,6 @@
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Logo di Superego"
   },
-  "MigrationTab.tsx_0p1nAG": {
-    "defaultMessage": "Errore durante la creazione della nuova versione"
-  },
   "MigrationTab.tsx_1Og5F/": {
     "defaultMessage": "Migrazione"
   },
@@ -608,9 +587,6 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa raccolta."
   },
-  "RenameCollectionCategoryModalForm.tsx_1CICoa": {
-    "defaultMessage": "Errore durante l'eliminazione della raccolta"
-  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
@@ -622,6 +598,9 @@
   },
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
+  },
+  "ResultErrors.tsx_Lv0zJu": {
+    "defaultMessage": "Dettagli"
   },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
@@ -692,9 +671,6 @@
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Descrizione"
   },
-  "UpdateCollectionSettingsForm.tsx_c9brFu": {
-    "defaultMessage": "Errore durante il salvataggio delle impostazioni"
-  },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
   },
@@ -703,9 +679,6 @@
   },
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Istruzioni specifiche per questa raccolta da passare all'assistente."
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": {
-    "defaultMessage": "Errore durante il salvataggio delle impostazioni della versione della raccolta"
   },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Salva le impostazioni della versione della raccolta"

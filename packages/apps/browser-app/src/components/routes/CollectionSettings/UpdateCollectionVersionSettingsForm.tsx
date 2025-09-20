@@ -9,8 +9,7 @@ import * as v from "valibot";
 import { useUpdateLatestCollectionVersionSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -73,16 +72,7 @@ export default function UpdateCollectionVersionSettingsForm({
           <FormattedMessage defaultMessage="Save collection version settings" />
         </RHFSubmitButton>
       </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error saving collection version settings",
-          })}
-        >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

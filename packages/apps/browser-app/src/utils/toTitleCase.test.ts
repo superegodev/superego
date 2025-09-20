@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import formatIdentifier from "./formatIdentifier.js";
+import toTitleCase from "./toTitleCase.js";
 
-describe("formats an identifier into a more human-readable string", () => {
+describe("formats a string into title case", () => {
   const testCases: { identifier: string; expected: string }[] = [
     { identifier: "camelCase", expected: "Camel Case" },
     { identifier: "PascalCase", expected: "Pascal Case" },
@@ -13,7 +13,7 @@ describe("formats an identifier into a more human-readable string", () => {
     "case: $identifier -> $expected",
     ({ identifier, expected }) => {
       // Exercise
-      const formatted = formatIdentifier(identifier);
+      const formatted = toTitleCase(identifier);
 
       // Verify
       expect(formatted).toEqual(expected);

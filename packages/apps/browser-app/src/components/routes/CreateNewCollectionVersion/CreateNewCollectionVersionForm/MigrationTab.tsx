@@ -5,8 +5,7 @@ import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import type { ResultOf } from "../../../../business-logic/backend/typeUtils.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
-import Alert from "../../../design-system/Alert/Alert.js";
-import ResultError from "../../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.jsx";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import * as cs from "../CreateNewCollectionVersion.css.js";
@@ -64,16 +63,7 @@ export default function MigrationTab({
           <FormattedMessage defaultMessage="Create new version and migrate documents" />
         </RHFSubmitButton>
       </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error creating new version",
-          })}
-        >
-          <ResultError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </>
   );
 }

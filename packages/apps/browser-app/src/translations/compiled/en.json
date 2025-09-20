@@ -5,12 +5,6 @@
       "value": "Theme"
     }
   ],
-  "Ask.tsx_EWHk8s": [
-    {
-      "type": 0,
-      "value": "Error starting conversation"
-    }
-  ],
   "Ask.tsx_khigiR": [
     {
       "type": 0,
@@ -195,12 +189,6 @@
       "value": "error"
     }
   ],
-  "ContentSummaryTab.tsx_+R8UFo": [
-    {
-      "type": 0,
-      "value": "Error creating collection"
-    }
-  ],
   "ContentSummaryTab.tsx_VzzYJk": [
     {
       "type": 0,
@@ -247,6 +235,16 @@
     {
       "type": 0,
       "value": "Conversation actions"
+    }
+  ],
+  "Conversation.tsx_y2z/xn": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » "
+    },
+    {
+      "type": 1,
+      "value": "conversationId"
     }
   ],
   "Conversation.tsx_yWDfdE": [
@@ -351,12 +349,6 @@
       "value": "Create collection actions"
     }
   ],
-  "CreateCollectionAssisted.tsx_EWHk8s": [
-    {
-      "type": 0,
-      "value": "Error starting conversation"
-    }
-  ],
   "CreateCollectionAssisted.tsx_u/AEeD": [
     {
       "type": 0,
@@ -415,12 +407,6 @@
       "value": " » Create Document"
     }
   ],
-  "CreateDocumentForm.tsx_KlVScA": [
-    {
-      "type": 0,
-      "value": "Error creating document"
-    }
-  ],
   "CreateDocumentForm.tsx_VzzYJk": [
     {
       "type": 0,
@@ -475,22 +461,10 @@
       "value": "3. Migration"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_zq3yJy": [
-    {
-      "type": 0,
-      "value": "Error updating document"
-    }
-  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
       "value": "Not a valid JSON string"
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Error deleting collection"
     }
   ],
   "DeleteCollectionModalForm.tsx_4S5UP3": [
@@ -559,12 +533,6 @@
       "value": "\""
     }
   ],
-  "DeleteConversationModalForm.tsx_4GxOi1": [
-    {
-      "type": 0,
-      "value": "Error deleting conversation"
-    }
-  ],
   "DeleteConversationModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -629,12 +597,6 @@
       "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
     }
   ],
-  "DeleteDocumentModalForm.tsx_H7J/rn": [
-    {
-      "type": 0,
-      "value": "Error deleting document"
-    }
-  ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -697,6 +659,20 @@
     {
       "type": 0,
       "value": "Save"
+    }
+  ],
+  "Document.tsx_zugcbb": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "documentId"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1343,12 +1319,6 @@
       "value": "Superego Logo"
     }
   ],
-  "MigrationTab.tsx_0p1nAG": [
-    {
-      "type": 0,
-      "value": "Error creating new version"
-    }
-  ],
   "MigrationTab.tsx_1Og5F/": [
     {
       "type": 0,
@@ -1559,12 +1529,6 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
-  "RenameCollectionCategoryModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Error deleting collection"
-    }
-  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1595,6 +1559,12 @@
     {
       "type": 0,
       "value": "Icon"
+    }
+  ],
+  "ResultErrors.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Details"
     }
   ],
   "SchemaTab.tsx_Lktmvk": [
@@ -1759,12 +1729,6 @@
       "value": "Description"
     }
   ],
-  "UpdateCollectionSettingsForm.tsx_c9brFu": [
-    {
-      "type": 0,
-      "value": "Error saving settings"
-    }
-  ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
     {
       "type": 0,
@@ -1781,12 +1745,6 @@
     {
       "type": 0,
       "value": "Specific instructions for this collection to pass to the assistant."
-    }
-  ],
-  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": [
-    {
-      "type": 0,
-      "value": "Error saving collection version settings"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [

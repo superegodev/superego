@@ -2,9 +2,6 @@
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Theme"
   },
-  "Ask.tsx_EWHk8s": {
-    "defaultMessage": "Error starting conversation"
-  },
   "Ask.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
   },
@@ -89,9 +86,6 @@
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
   },
-  "ContentSummaryTab.tsx_+R8UFo": {
-    "defaultMessage": "Error creating collection"
-  },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -109,6 +103,9 @@
   },
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
+  },
+  "Conversation.tsx_y2z/xn": {
+    "defaultMessage": "🤖 Conversations » {conversationId}"
   },
   "Conversation.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"
@@ -161,9 +158,6 @@
   "CreateCollectionAssisted.tsx_9/rVBT": {
     "defaultMessage": "Create collection actions"
   },
-  "CreateCollectionAssisted.tsx_EWHk8s": {
-    "defaultMessage": "Error starting conversation"
-  },
   "CreateCollectionAssisted.tsx_u/AEeD": {
     "defaultMessage": "Create Collection (Assisted Mode)"
   },
@@ -191,9 +185,6 @@
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Create Document"
   },
-  "CreateDocumentForm.tsx_KlVScA": {
-    "defaultMessage": "Error creating document"
-  },
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -215,14 +206,8 @@
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migration"
   },
-  "CreateNewDocumentVersionForm.tsx_zq3yJy": {
-    "defaultMessage": "Error updating document"
-  },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
-  },
-  "DeleteCollectionModalForm.tsx_1CICoa": {
-    "defaultMessage": "Error deleting collection"
   },
   "DeleteCollectionModalForm.tsx_4S5UP3": {
     "defaultMessage": "If you're sure you want to delete the collection, write <em>delete</em> in the input below."
@@ -242,9 +227,6 @@
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Delete conversation \"{conversationName}\""
   },
-  "DeleteConversationModalForm.tsx_4GxOi1": {
-    "defaultMessage": "Error deleting conversation"
-  },
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -262,9 +244,6 @@
   },
   "DeleteDocumentModalForm.tsx_GSdOzc": {
     "defaultMessage": "Deleting the document will permanently delete the document, all its versions, and all its files."
-  },
-  "DeleteDocumentModalForm.tsx_H7J/rn": {
-    "defaultMessage": "Error deleting document"
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -289,6 +268,9 @@
   },
   "Document.tsx_jvo0vs": {
     "defaultMessage": "Save"
+  },
+  "Document.tsx_zugcbb": {
+    "defaultMessage": "{collection} » {documentId}"
   },
   "DocumentsTable.tsx_AbXVP4": {
     "defaultMessage": "Created at"
@@ -563,9 +545,6 @@
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"
   },
-  "MigrationTab.tsx_0p1nAG": {
-    "defaultMessage": "Error creating new version"
-  },
   "MigrationTab.tsx_1Og5F/": {
     "defaultMessage": "Migration"
   },
@@ -608,9 +587,6 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
   },
-  "RenameCollectionCategoryModalForm.tsx_1CICoa": {
-    "defaultMessage": "Error deleting collection"
-  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
@@ -622,6 +598,9 @@
   },
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
+  },
+  "ResultErrors.tsx_Lv0zJu": {
+    "defaultMessage": "Details"
   },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
@@ -692,9 +671,6 @@
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Description"
   },
-  "UpdateCollectionSettingsForm.tsx_c9brFu": {
-    "defaultMessage": "Error saving settings"
-  },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
@@ -703,9 +679,6 @@
   },
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Specific instructions for this collection to pass to the assistant."
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": {
-    "defaultMessage": "Error saving collection version settings"
   },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Save collection version settings"

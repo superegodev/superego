@@ -21,10 +21,12 @@ jobs:
         run: yarn playwright install chromium --with-deps
       - name: Check formatting
         run: yarn check-formatting
-      - name: Check types
-        run: yarn check-types
       - name: Check linting
         run: yarn check-linting
+      - name: Check translations
+        run: yarn check-translations
+      - name: Check types
+        run: yarn check-types
       - name: Test
         run: yarn test
 

@@ -7,6 +7,7 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
+import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
@@ -35,6 +36,18 @@ export default function Document({ collectionId, documentId }: Props) {
             )}
           />
         </Shell.Panel>
+      )}
+      renderErrors={(errors) => (
+        <RouteLevelErrors
+          headerTitle={intl.formatMessage(
+            { defaultMessage: "{collection} » {documentId}" },
+            {
+              collection: CollectionUtils.getDisplayName(collection),
+              documentId,
+            },
+          )}
+          errors={errors}
+        />
       )}
     >
       {(document) => (

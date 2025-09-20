@@ -7,9 +7,8 @@ import * as v from "valibot";
 import { useDeleteCollection } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import ResultError from "../../design-system/ResultError/ResultError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -91,16 +90,7 @@ export default function DeleteCollectionModalForm({
             <FormattedMessage defaultMessage="Delete" />
           </RHFSubmitButton>
         </div>
-        {result?.error ? (
-          <Alert
-            variant="error"
-            title={intl.formatMessage({
-              defaultMessage: "Error deleting collection",
-            })}
-          >
-            <ResultError error={result.error} />
-          </Alert>
-        ) : null}
+        {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>
   );
