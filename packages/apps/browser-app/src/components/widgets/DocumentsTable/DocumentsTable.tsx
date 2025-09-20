@@ -10,8 +10,13 @@ import Table from "../../design-system/Table/Table.js";
 interface Props {
   collection: Collection;
   documents: Document[];
+  className?: string | undefined;
 }
-export default function DocumentsTable({ collection, documents }: Props) {
+export default function DocumentsTable({
+  collection,
+  documents,
+  className,
+}: Props) {
   const intl = useIntl();
   const contentSummaryKeys = uniq(
     documents.flatMap((document) =>
@@ -25,6 +30,7 @@ export default function DocumentsTable({ collection, documents }: Props) {
         { collection: collection.settings.name },
       )}
       selectionMode="none"
+      className={className}
     >
       <Table.Header>
         {isEmpty(contentSummaryKeys) ? (

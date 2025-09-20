@@ -4,8 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const Table = {
   root: style({
     width: "100%",
-    borderCollapse: "collapse",
-    borderSpacing: 0,
+    overflow: "scroll",
   }),
 };
 
@@ -22,6 +21,8 @@ const columnRootBase = style({
   paddingBlock: vars.spacing._3,
   fontWeight: vars.typography.fontWeights.medium,
   fontSize: vars.typography.fontSizes.sm,
+  background: vars.colors.background.surface,
+  borderBlockEnd: `${vars.borders.width.thick} solid ${vars.colors.border.default}`,
 });
 export const Column = {
   root: styleVariants({
@@ -48,6 +49,9 @@ export const Row = {
 const cellRootBase = style({
   padding: vars.spacing._2,
   fontSize: vars.typography.fontSizes.sm,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
   verticalAlign: "middle",
 });
 export const Cell = {

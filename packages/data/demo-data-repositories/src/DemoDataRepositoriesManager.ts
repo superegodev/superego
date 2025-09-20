@@ -5,8 +5,9 @@ import type {
 } from "@superego/executing-backend";
 import type Data from "./Data.js";
 import DemoDataRepositories from "./DemoDataRepositories.js";
-import demoData from "./demoData.js";
 import clone from "./utils/clone.js";
+
+const OVERWRITE = "OVERWRITE";
 
 export default class DemoDataRepositoriesManager
   implements DataRepositoriesManager
@@ -19,9 +20,27 @@ export default class DemoDataRepositoriesManager
 
   constructor(
     private defaultGlobalSettings: GlobalSettings,
-    private useDemoDataAsDefault = false,
     private databaseName = "superego",
   ) {}
+
+  async loadData(data: Partial<Data>): Promise<void> {
+    await this.writeData(
+      {
+        version: crypto.randomUUID(),
+        backgroundJobs: {},
+        collectionCategories: {},
+        collections: {},
+        collectionVersions: {},
+        conversations: {},
+        documents: {},
+        documentVersions: {},
+        files: {},
+        globalSettings: { value: this.defaultGlobalSettings },
+        ...data,
+      },
+      OVERWRITE,
+    );
+  }
 
   async runInSerializableTransaction<ReturnValue>(
     fn: (
@@ -41,7 +60,6 @@ export default class DemoDataRepositoriesManager
       documentVersions: {},
       files: {},
       globalSettings: { value: this.defaultGlobalSettings },
-      ...(this.useDemoDataAsDefault ? demoData : {}),
     };
     const initialVersion = transactionData.version;
     const onWrite = () => {
@@ -128,6 +146,7 @@ export default class DemoDataRepositoriesManager
         getRequest.onsuccess = () => {
           if (
             getRequest.result === undefined ||
+            initialVersion === OVERWRITE ||
             getRequest.result.data.version === initialVersion
           ) {
             const putReq = store.put({

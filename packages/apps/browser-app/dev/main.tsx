@@ -7,34 +7,31 @@ import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 
 const backend = new ExecutingBackend(
-  new DemoDataRepositoriesManager(
-    {
-      appearance: { theme: Theme.Auto },
-      inference: {
-        chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
+  new DemoDataRepositoriesManager({
+    appearance: { theme: Theme.Auto },
+    inference: {
+      chatCompletions: {
+        provider: { baseUrl: null, apiKey: null },
+        model: null,
       },
-      assistants: {
-        userName: null,
-        developerPrompts: {
-          [AssistantName.Factotum]: null,
-          [AssistantName.CollectionCreator]: null,
-        },
+      transcriptions: {
+        provider: { baseUrl: null, apiKey: null },
+        model: null,
+      },
+      speech: {
+        provider: { baseUrl: null, apiKey: null },
+        model: null,
+        voice: null,
       },
     },
-    true,
-  ),
+    assistants: {
+      userName: null,
+      developerPrompts: {
+        [AssistantName.Factotum]: null,
+        [AssistantName.CollectionCreator]: null,
+      },
+    },
+  }),
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
 );

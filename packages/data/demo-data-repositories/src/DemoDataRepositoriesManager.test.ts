@@ -29,7 +29,6 @@ registerDataRepositoriesTests(async () => {
         },
       },
     },
-    false,
     crypto.randomUUID().replaceAll("-", ""),
   );
   return { dataRepositoriesManager };

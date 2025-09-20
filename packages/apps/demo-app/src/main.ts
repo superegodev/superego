@@ -7,35 +7,33 @@ import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QueryClient } from "@tanstack/react-query";
 
-const backend = new ExecutingBackend(
-  new DemoDataRepositoriesManager(
-    {
-      appearance: { theme: Theme.Auto },
-      inference: {
-        chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-      },
-      assistants: {
-        userName: null,
-        developerPrompts: {
-          [AssistantName.Factotum]: null,
-          [AssistantName.CollectionCreator]: null,
-        },
-      },
+const dataRepositoriesManager = new DemoDataRepositoriesManager({
+  appearance: { theme: Theme.Auto },
+  inference: {
+    chatCompletions: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
     },
-    true,
-  ),
+    transcriptions: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
+    },
+    speech: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
+      voice: null,
+    },
+  },
+  assistants: {
+    userName: null,
+    developerPrompts: {
+      [AssistantName.Factotum]: null,
+      [AssistantName.CollectionCreator]: null,
+    },
+  },
+});
+const backend = new ExecutingBackend(
+  dataRepositoriesManager,
   new FakeJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
 );
@@ -53,3 +51,8 @@ const queryClient = new QueryClient({
 });
 
 renderBrowserApp(backend, queryClient);
+
+(window as any).loadDemoData = async () =>
+  dataRepositoriesManager.loadData(
+    (await import("./demoData/demoData.js")).default,
+  );
