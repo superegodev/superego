@@ -152,7 +152,7 @@ export default function getContentSummary(contact) {
 const documents: DocumentEntity[] = [];
 const documentVersions: DocumentVersionEntity[] = [];
 
-for (const weighIn of contacts) {
+for (const contact of contacts) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
     collectionId: collection.id,
@@ -165,7 +165,7 @@ for (const weighIn of contacts) {
     documentId: document.id,
     collectionVersionId: collectionVersion.id,
     conversationId: null,
-    content: weighIn,
+    content: contact,
     createdBy: DocumentVersionCreator.User,
     createdAt: new Date(),
   };
