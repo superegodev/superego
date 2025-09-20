@@ -16,3 +16,11 @@ export const Health: CollectionCategoryEntity = {
   parentId: null,
   createdAt: new Date(),
 };
+
+export const Car: CollectionCategoryEntity = {
+  id: Id.generate.collectionCategory(),
+  name: "Car",
+  icon: "🚗",
+  parentId: null,
+  createdAt: new Date(),
+};

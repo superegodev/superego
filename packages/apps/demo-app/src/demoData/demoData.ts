@@ -1,8 +1,9 @@
 import type { Data } from "@superego/demo-data-repositories";
 import calendarEntries from "./calendarEntries.js";
-import { Finance, Health } from "./collectionCategories.js";
+import { Car, Finance, Health } from "./collectionCategories.js";
 import contacts from "./contacts.js";
 import expenses from "./expenses.js";
+import fuelLogs from "./fuelLogs.js";
 import weighIns from "./weighIns.js";
 
 const demoData: Pick<
@@ -14,6 +15,7 @@ const demoData: Pick<
   | "documentVersions"
 > = {
   collectionCategories: {
+    [Car.id]: Car,
     [Finance.id]: Finance,
     [Health.id]: Health,
   },
@@ -27,6 +29,7 @@ for (const { collection, collectionVersion, documents, documentVersions } of [
   calendarEntries,
   contacts,
   expenses,
+  fuelLogs,
   weighIns,
 ]) {
   demoData.collections[collection.id] = collection;
