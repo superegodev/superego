@@ -18,8 +18,9 @@ const collection: CollectionEntity = {
     collectionCategoryId: Finance.id,
     description: null,
     assistantInstructions: [
-      "- If the currency is not supplied, default to EUR.",
-      "- If the payment method is not supplied, default to Credit Card.",
+      "- Defaults for things I don't specify:",
+      "  - Currency -> EUR.",
+      "  - Payment method -> Credit Card.",
     ].join("\n"),
   },
   createdAt: new Date(),

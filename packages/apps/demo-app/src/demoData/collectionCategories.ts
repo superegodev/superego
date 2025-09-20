@@ -8,3 +8,11 @@ export const Finance: CollectionCategoryEntity = {
   parentId: null,
   createdAt: new Date(),
 };
+
+export const Health: CollectionCategoryEntity = {
+  id: Id.generate.collectionCategory(),
+  name: "Health",
+  icon: "❤️",
+  parentId: null,
+  createdAt: new Date(),
+};
