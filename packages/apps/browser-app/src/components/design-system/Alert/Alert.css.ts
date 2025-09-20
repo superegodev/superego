@@ -9,6 +9,7 @@ const alertRootBase = style({
   borderRadius: vars.borders.radius.md,
   borderWidth: vars.borders.width.thin,
   borderStyle: "solid",
+  fontSize: vars.typography.fontSizes.sm,
   selectors: {
     [`${dark} &`]: {
       borderColor: "transparent",
@@ -48,6 +49,7 @@ export const Alert = {
       },
     ],
   }),
+
   title: styleVariants({
     neutral: [alertTitleBase, { color: vars.colors.text.primary }],
     info: [alertTitleBase, { color: vars.colors.semantic.info.text }],
