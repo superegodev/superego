@@ -29,6 +29,7 @@ interface Props<
   emptyInputValue?: "" | null | undefined;
   showErrorOnError?: boolean | undefined;
   textArea?: boolean | undefined;
+  password?: boolean | undefined;
   placeholder?: string | undefined;
   className?: string | undefined;
 }
@@ -46,6 +47,7 @@ export default function RHFTextField<
   emptyInputValue = "",
   showErrorOnError = true,
   textArea = false,
+  password = false,
   placeholder,
   className,
   ...props
@@ -58,6 +60,7 @@ export default function RHFTextField<
           id={field.name}
           name={field.name}
           value={field.value ?? ""}
+          type={password ? "password" : "text"}
           isDisabled={isDisabled}
           isReadOnly={isReadOnly}
           onChange={(value) =>

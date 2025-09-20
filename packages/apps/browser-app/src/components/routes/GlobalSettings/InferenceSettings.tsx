@@ -93,6 +93,7 @@ export default function InferenceSettings({ control }: Props) {
           <RHFTextField
             control={control}
             name="inference.chatCompletions.provider.apiKey"
+            password={true}
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}
             placeholder="gsk_XyZ..."
@@ -123,6 +124,7 @@ export default function InferenceSettings({ control }: Props) {
           <RHFTextField
             control={control}
             name="inference.transcriptions.provider.apiKey"
+            password={true}
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}
             placeholder="gsk_XyZ..."
@@ -160,6 +162,7 @@ export default function InferenceSettings({ control }: Props) {
           <RHFTextField
             control={control}
             name="inference.speech.provider.apiKey"
+            password={true}
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}
             placeholder="gsk_XyZ..."

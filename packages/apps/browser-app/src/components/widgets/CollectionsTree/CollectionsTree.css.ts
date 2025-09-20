@@ -20,13 +20,16 @@ export const CollectionsTree = {
   emptyTree: style({
     display: "flex",
     gap: vars.spacing._2,
-    alignItems: "end",
-    // Pixel adjustment to line up the arrow with the toolbar button.
-    paddingInlineStart: "21px",
+    alignItems: "center",
     width: "100%",
     fontSize: vars.typography.fontSizes.xs,
     color: vars.colors.text.secondary,
-    height: vars.spacing._6,
+  }),
+
+  emptyTreeText: style({
+    // Pixel-specific width to line up the arrow with the toolbar button.
+    width: "172.5px",
+    paddingInlineStart: vars.spacing._2,
   }),
 
   emptyTreeIcon: style({

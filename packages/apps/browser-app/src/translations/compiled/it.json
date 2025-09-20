@@ -92,7 +92,7 @@
   "Collection.tsx_zYomDH": [
     {
       "type": 0,
-      "value": "Azioni della raccolta"
+      "value": "Azioni della collezione"
     }
   ],
   "CollectionCategoryActionsMenu.tsx_ISrFoo": [
@@ -148,25 +148,25 @@
   "CollectionSettings.tsx_m4GG4b": [
     {
       "type": 0,
-      "value": "Elimina raccolta"
+      "value": "Elimina collezione"
     }
   ],
   "CollectionSettings.tsx_zNudDK": [
     {
       "type": 0,
-      "value": "Azioni delle impostazioni della raccolta"
+      "value": "Azioni delle impostazioni della collezione"
     }
   ],
   "CollectionsTree.tsx_XjdXFR": [
     {
       "type": 0,
-      "value": "Crea una raccolta per iniziare."
+      "value": "Crea una collezione per iniziare."
     }
   ],
   "CollectionsTree.tsx_gykodq": [
     {
       "type": 0,
-      "value": "Albero delle categorie di raccolte e delle raccolte"
+      "value": "Albero delle categorie di collezioni e delle collezioni"
     }
   ],
   "CompilationInProgressIndicator.tsx_MCO54A": [
@@ -342,13 +342,13 @@
   "CreateCollectionAssisted.tsx_9/rVBT": [
     {
       "type": 0,
-      "value": "Azioni per creare la raccolta"
+      "value": "Azioni per creare la collezione"
     }
   ],
   "CreateCollectionAssisted.tsx_u/AEeD": [
     {
       "type": 0,
-      "value": "Crea raccolta (modalità assistita)"
+      "value": "Crea collezione (modalità assistita)"
     }
   ],
   "CreateCollectionAssisted.tsx_yWDfdE": [
@@ -378,7 +378,7 @@
   "CreateCollectionManual.tsx_9/rVBT": [
     {
       "type": 0,
-      "value": "Azioni per creare la raccolta"
+      "value": "Azioni per creare la collezione"
     }
   ],
   "CreateCollectionManual.tsx_a5n6RJ": [
@@ -390,7 +390,7 @@
   "CreateCollectionManual.tsx_ivIDMd": [
     {
       "type": 0,
-      "value": "Crea raccolta (modalità manuale)"
+      "value": "Crea collezione (modalità manuale)"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -466,7 +466,7 @@
   "DeleteCollectionModalForm.tsx_4S5UP3": [
     {
       "type": 0,
-      "value": "Se sei sicuro di voler eliminare la raccolta, scrivi "
+      "value": "Se sei sicuro di voler eliminare la collezione, scrivi "
     },
     {
       "children": [
@@ -492,7 +492,7 @@
   "DeleteCollectionModalForm.tsx_Q5SlBK": [
     {
       "type": 0,
-      "value": "Elimina la raccolta \""
+      "value": "Elimina la collezione \""
     },
     {
       "type": 1,
@@ -506,7 +506,7 @@
   "DeleteCollectionModalForm.tsx_iuFFzm": [
     {
       "type": 0,
-      "value": "Eliminando la raccolta cancellerai definitivamente tutti i suoi documenti e file."
+      "value": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -686,13 +686,13 @@
   "DocumentsTable.tsx_MzUvBt": [
     {
       "type": 0,
-      "value": "Questa raccolta non contiene ancora documenti."
+      "value": "Questa collezione non contiene ancora documenti."
     }
   ],
   "DocumentsTable.tsx_cbuMAX": [
     {
       "type": 0,
-      "value": "Documenti della raccolta "
+      "value": "Documenti della collezione "
     },
     {
       "type": 1,
@@ -1024,7 +1024,7 @@
   "GeneralSettingsTab.tsx_qmIyad": [
     {
       "type": 0,
-      "value": "Istruzioni specifiche per questa raccolta da passare all'assistente."
+      "value": "Istruzioni specifiche per questa collezione da passare all'assistente."
     }
   ],
   "GlobalSettings.tsx_HZGiV3": [
@@ -1048,25 +1048,25 @@
   "Header.tsx_9lnhZ4": [
     {
       "type": 0,
-      "value": "Crea raccolta"
+      "value": "Crea collezione"
     }
   ],
   "Header.tsx_t9KdzH": [
     {
       "type": 0,
-      "value": "Nuova categoria di raccolte"
+      "value": "Nuova categoria di collezioni"
     }
   ],
   "Header.tsx_ulh3kf": [
     {
       "type": 0,
-      "value": "Raccolte"
+      "value": "Collezioni"
     }
   ],
   "Header.tsx_zpIkYq": [
     {
       "type": 0,
-      "value": "Crea categoria di raccolte"
+      "value": "Crea categoria di collezioni"
     }
   ],
   "Hero.tsx_OpKKos": [
@@ -1522,7 +1522,7 @@
   "RHFSchemaField.tsx_IBR6nN": [
     {
       "type": 0,
-      "value": "Definisce la \"forma\" del contenuto dei documenti in questa raccolta."
+      "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
@@ -1534,7 +1534,7 @@
   "RenameCollectionCategoryModalForm.tsx_cuCM/d": [
     {
       "type": 0,
-      "value": "Rinomina la categoria della raccolta \""
+      "value": "Rinomina la categoria della collezione \""
     },
     {
       "type": 1,
@@ -1614,7 +1614,7 @@
   "SuggestCollectionDefinition.tsx_S2ZL0P": [
     {
       "type": 0,
-      "value": "Raccolta suggerita"
+      "value": "Collezione suggerita"
     }
   ],
   "SuggestCollectionDefinition.tsx_VzzYJk": [
@@ -1740,13 +1740,13 @@
   "UpdateCollectionSettingsForm.tsx_qmIyad": [
     {
       "type": 0,
-      "value": "Istruzioni specifiche per questa raccolta da passare all'assistente."
+      "value": "Istruzioni specifiche per questa collezione da passare all'assistente."
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [
     {
       "type": 0,
-      "value": "Salva le impostazioni della versione della raccolta"
+      "value": "Salva le impostazioni della versione della collezione"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_2GURQY": [
@@ -1800,7 +1800,7 @@
   "UserMessageContentInput.tsx_yvK6cX": [
     {
       "type": 0,
-      "value": "Le tue raccolte sono cambiate dopo questa conversazione. Non può essere continuata."
+      "value": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
     }
   ],
   "formatDuration.ts_26OSN4": [

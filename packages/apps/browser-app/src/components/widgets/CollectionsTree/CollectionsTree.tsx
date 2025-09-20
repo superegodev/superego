@@ -67,7 +67,9 @@ export default function CollectionsTree({ className }: Props) {
           className={cs.CollectionsTree.tree}
           renderEmptyState={() => (
             <div className={cs.CollectionsTree.emptyTree}>
-              <FormattedMessage defaultMessage="Create collection to start." />
+              <div className={cs.CollectionsTree.emptyTreeText}>
+                <FormattedMessage defaultMessage="Create collection to start." />
+              </div>
               <PiArrowBendRightUpBold
                 className={cs.CollectionsTree.emptyTreeIcon}
               />

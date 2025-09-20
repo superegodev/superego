@@ -6,7 +6,22 @@ export const ToolCallResult = {
     position: "relative",
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    marginBlockStart: vars.spacing._8,
+    selectors: {
+      // First in any contiguous run of .ToolCallResult.root items.
+      ":not(&) + &": {
+        marginBlockStart: vars.spacing._8,
+        marginBlockEnd: vars.spacing._2,
+      },
+      // Middle items.
+      "& + &:has(+ &)": {
+        marginBlock: vars.spacing._2,
+      },
+      // Last item.
+      "&:not(:has(+ &))": {
+        marginBlockStart: vars.spacing._2,
+        marginBlockEnd: vars.spacing._8,
+      },
+    },
   }),
 
   triggerButton: style({
