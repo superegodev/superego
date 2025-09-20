@@ -114,7 +114,7 @@ const commonVars = {
   },
 };
 
-const colors = {
+export const colors = {
   greys: {
     _0: "#ffffff",
     _1: "#fafafa",
@@ -204,7 +204,7 @@ const colors = {
     _4: "#e64980",
     _5: "#c2255c",
   },
-};
+} as const;
 
 export const [light, vars] = createTheme({
   ...commonVars,
@@ -443,8 +443,8 @@ export const dark = createTheme(vars, {
     },
     background: {
       surface: colors.greys._10,
-      secondarySurface: colors.greys._9,
-      surfaceHighlight: colors.greys._8,
+      secondarySurface: colors.greys._11,
+      surfaceHighlight: colors.greys._12,
       inverse: colors.greys._0,
       inverseHighlight: colors.greys._3,
     },

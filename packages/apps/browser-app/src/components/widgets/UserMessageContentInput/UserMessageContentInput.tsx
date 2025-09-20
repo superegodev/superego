@@ -66,7 +66,9 @@ export default function UserMessageContentInput({
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
-            sendText();
+            if (text.trim() !== "") {
+              sendText();
+            }
           }
         }}
       >
@@ -93,7 +95,7 @@ export default function UserMessageContentInput({
         <SendRecordToolbar
           areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
           areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
-          isWriting={text !== ""}
+          isWriting={text.trim() !== ""}
           isRecording={isRecording}
           isDisabled={
             (conversation !== null &&

@@ -1,5 +1,5 @@
 import { style, styleVariants } from "@vanilla-extract/css";
-import { vars } from "../../../themes.css.js";
+import { dark, vars } from "../../../themes.css.js";
 
 const alertRootBase = style({
   width: "100%",
@@ -9,6 +9,11 @@ const alertRootBase = style({
   borderRadius: vars.borders.radius.md,
   borderWidth: vars.borders.width.thin,
   borderStyle: "solid",
+  selectors: {
+    [`${dark} &`]: {
+      borderColor: "transparent",
+    },
+  },
 });
 
 const alertTitleBase = style({
@@ -21,6 +26,7 @@ export const Alert = {
     neutral: [
       alertRootBase,
       {
+        color: vars.colors.text.primary,
         background: vars.colors.background.surfaceHighlight,
         borderColor: vars.colors.border.default,
       },
@@ -28,6 +34,7 @@ export const Alert = {
     info: [
       alertRootBase,
       {
+        color: vars.colors.semantic.info.text,
         background: vars.colors.semantic.info.background,
         borderColor: vars.colors.semantic.info.border,
       },
@@ -35,6 +42,7 @@ export const Alert = {
     error: [
       alertRootBase,
       {
+        color: vars.colors.semantic.error.text,
         background: vars.colors.semantic.error.background,
         borderColor: vars.colors.semantic.error.border,
       },

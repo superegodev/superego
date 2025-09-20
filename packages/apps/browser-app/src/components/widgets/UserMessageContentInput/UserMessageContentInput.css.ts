@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../../themes.css.js";
+import { dark, vars } from "../../../themes.css.js";
 
 export const UserMessageContentInput = {
   root: style({
@@ -14,6 +14,12 @@ export const UserMessageContentInput = {
     borderRadius: vars.borders.radius.xl3,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
     boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
+    selectors: {
+      [`${dark} &`]: {
+        boxShadow: "none",
+        background: vars.colors.background.secondarySurface,
+      },
+    },
   }),
 
   textArea: style({
@@ -34,6 +40,9 @@ export const UserMessageContentInput = {
     selectors: {
       "&:disabled": {
         background: vars.colors.background.surface,
+      },
+      [`${dark} &, ${dark} &:disabled`]: {
+        background: vars.colors.background.secondarySurface,
       },
       "&:focus-visible": {
         outline: "none",
