@@ -3947,13 +3947,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reteps/dockerfmt@npm:^0.3.6":
-  version: 0.3.6
-  resolution: "@reteps/dockerfmt@npm:0.3.6"
-  checksum: 10c0/b6ca467ba97ea49071c44d0fbecf131fc8045165e950d0d01372c1834000c58d53f62bff42f09b851f7a9d91899047f071cd8fe57e1fc88fc27e2a3d2bdb214d
-  languageName: node
-  linkType: hard
-
 "@rolldown/pluginutils@npm:1.0.0-beta.35":
   version: 1.0.0-beta.35
   resolution: "@rolldown/pluginutils@npm:1.0.0-beta.35"
@@ -4237,6 +4230,7 @@ __metadata:
     vite-bundle-analyzer: "npm:^1.2.3"
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.8"
+    zx: "npm:8.8.2-lite"
   languageName: unknown
   linkType: soft
 
@@ -4349,6 +4343,7 @@ __metadata:
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
+    zx: "npm:8.8.2-lite"
   languageName: unknown
   linkType: soft
 
@@ -4387,9 +4382,9 @@ __metadata:
     "@biomejs/biome": "npm:^2.2.4"
     playwright: "npm:^1.55.0"
     prettier: "npm:^3.6.2"
-    prettier-plugin-sh: "npm:^0.18.0"
     prettier-plugin-sql-cst: "npm:^0.13.0"
     typescript: "npm:^5.9.2"
+    zx: "npm:8.8.2-lite"
   languageName: unknown
   linkType: soft
 
@@ -9057,18 +9052,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-sh@npm:^0.18.0":
-  version: 0.18.0
-  resolution: "prettier-plugin-sh@npm:0.18.0"
-  dependencies:
-    "@reteps/dockerfmt": "npm:^0.3.6"
-    sh-syntax: "npm:^0.5.8"
-  peerDependencies:
-    prettier: ^3.6.0
-  checksum: 10c0/d8946440abaab1c0f32cee270e0ad285e1f4bba0008aff7c55a9a1c8639032aa8b397aef8f8387a5b88c3f4fb657f1d4d1ab7ae6a1f5c4599875080fb951b9b1
-  languageName: node
-  linkType: hard
-
 "prettier-plugin-sql-cst@npm:^0.13.0":
   version: 0.13.0
   resolution: "prettier-plugin-sql-cst@npm:0.13.0"
@@ -9984,15 +9967,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sh-syntax@npm:^0.5.8":
-  version: 0.5.8
-  resolution: "sh-syntax@npm:0.5.8"
-  dependencies:
-    tslib: "npm:^2.8.1"
-  checksum: 10c0/2d2609fc8760ef97175c852be26ee3eeb196078c5aec282c8b96a59ee362be4f470d3e0df4e372da6c7a7b44ccc42910cbdcb0915271b3cb6a6212d00dde116f
-  languageName: node
-  linkType: hard
-
 "sharp@npm:^0.33.5":
   version: 0.33.5
   resolution: "sharp@npm:0.33.5"
@@ -10571,7 +10545,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
+"tslib@npm:^2.4.0, tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -11316,5 +11290,12 @@ __metadata:
     use-sync-external-store:
       optional: true
   checksum: 10c0/e865a6f7f1c0e03571701db5904151aaa7acefd6f85541a117085e129bf16e8f60b11f8cc82f277472de5c7ad5dcb201e1b0a89035ea0b40c9d9aab3cd24c8ad
+  languageName: node
+  linkType: hard
+
+"zx@npm:8.8.2-lite":
+  version: 8.8.2-lite
+  resolution: "zx@npm:8.8.2-lite"
+  checksum: 10c0/a57f38eb9e91e575ca07b4ab20ad4bfeb74ed7e7b7e11354535a2e5e702d02803840633f51de2c517dcbaa803a9adecea55570c01553ae2a869293a23753a845
   languageName: node
   linkType: hard

@@ -8,10 +8,9 @@
   "files": {
     "ignoreUnknown": true,
     "includes": [
+      "scripts/*.ts",
       "packages/**/*.js",
-      "packages/**/*.mjs",
       "packages/**/*.ts",
-      "packages/**/*.mts",
       "packages/**/*.tsx",
       "**/*.json",
       "!**/package.json",

@@ -16,7 +16,7 @@
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose",
-    "check-translations": "scripts/check-translations.sh",
+    "check-translations": "node scripts/checkTranslations.ts",
     "translations:extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file src/translations/en.json",
     "translations:compile": "formatjs compile-folder --ast src/translations/ src/translations/compiled",
     "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/translations/*.json'",
@@ -39,7 +39,8 @@
     "typescript": "^5.9.2",
     "vite": "^7.1.6",
     "vite-bundle-analyzer": "^1.2.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "zx": "8.8.2-lite"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

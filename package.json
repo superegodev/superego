@@ -18,16 +18,18 @@
     "deploy-demo": "yarn workspace @superego/demo-app deploy",
     "build-electron": "yarn workspace @superego/electron-app build",
     "deploy-electron": "yarn workspace @superego/electron-app deploy",
-    "prepare-release": "scripts/prepare-release.sh",
+    "prepare-release": "node scripts/prepareRelease.ts",
     "playwright": "playwright"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "playwright": "^1.55.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-sh": "^0.18.0",
     "prettier-plugin-sql-cst": "^0.13.0",
     "typescript": "^5.9.2"
   },
-  "packageManager": "yarn@4.10.1+sha512.45bcc0f26c64f59bbfff2a721fbc8226f7a0fe5da70c116cecb09bdfed2514a4d5a22484b75103070175cee5d7d4ad3719cd4be029c94ae5848b44346aefe2a8"
+  "packageManager": "yarn@4.10.1+sha512.45bcc0f26c64f59bbfff2a721fbc8226f7a0fe5da70c116cecb09bdfed2514a4d5a22484b75103070175cee5d7d4ad3719cd4be029c94ae5848b44346aefe2a8",
+  "dependencies": {
+    "zx": "8.8.2-lite"
+  }
 }
