@@ -724,5 +724,17 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "Compilazione TypeScript non riuscita"
+  },
+  "LoadDemoDataButton.tsx_2xPIse": {
+    "defaultMessage": "Sì, carica"
+  },
+  "LoadDemoDataButton.tsx_A84v/o": {
+    "defaultMessage": "Attenzione: caricando i dati demo cancellerai tutti i dati che hai salvato finora. Vuoi continuare?"
+  },
+  "LoadDemoDataButton.tsx_VXuroA": {
+    "defaultMessage": "Carica dati demo"
+  },
+  "LoadDemoDataButton.tsx_ZBdI8u": {
+    "defaultMessage": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
   }
 }

@@ -50,9 +50,8 @@ const queryClient = new QueryClient({
   },
 });
 
-renderBrowserApp(backend, queryClient);
-
-(window as any).loadDemoData = async () =>
+renderBrowserApp(backend, queryClient, async () =>
   dataRepositoriesManager.loadData(
     (await import("./demoData/demoData.js")).default,
-  );
+  ),
+);

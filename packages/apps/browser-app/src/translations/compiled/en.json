@@ -1313,6 +1313,30 @@
       "value": "There are no items in the list"
     }
   ],
+  "LoadDemoDataButton.tsx_2xPIse": [
+    {
+      "type": 0,
+      "value": "Yes, load"
+    }
+  ],
+  "LoadDemoDataButton.tsx_A84v/o": [
+    {
+      "type": 0,
+      "value": "Attention: loading demo data erases all the data you've saved so far. Continue?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_VXuroA": [
+    {
+      "type": 0,
+      "value": "Load demo data"
+    }
+  ],
+  "LoadDemoDataButton.tsx_ZBdI8u": [
+    {
+      "type": 0,
+      "value": "Loads some demo collections and documents for you to play around with."
+    }
+  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,

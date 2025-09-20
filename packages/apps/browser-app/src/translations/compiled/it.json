@@ -1309,6 +1309,30 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
+  "LoadDemoDataButton.tsx_2xPIse": [
+    {
+      "type": 0,
+      "value": "Sì, carica"
+    }
+  ],
+  "LoadDemoDataButton.tsx_A84v/o": [
+    {
+      "type": 0,
+      "value": "Attenzione: caricando i dati demo cancellerai tutti i dati che hai salvato finora. Vuoi continuare?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_VXuroA": [
+    {
+      "type": 0,
+      "value": "Carica dati demo"
+    }
+  ],
+  "LoadDemoDataButton.tsx_ZBdI8u": [
+    {
+      "type": 0,
+      "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
+    }
+  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,

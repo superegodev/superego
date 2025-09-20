@@ -25,7 +25,7 @@ export default function Conversations() {
           },
         ]}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content fullWidth={true}>
         <DataLoader queries={[listConversationsQuery([])]}>
           {(conversations) => (
             <ConversationsTable conversations={conversations} />

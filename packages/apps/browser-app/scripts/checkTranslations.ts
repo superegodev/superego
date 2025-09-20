@@ -5,6 +5,38 @@ import { join } from "node:path";
 import { $ } from "zx";
 
 const translationsDir = join(import.meta.dirname, "../src/translations");
+const compiledDir = join(translationsDir, "compiled");
+const tmpTranslationsDir = join(
+  tmpdir(),
+  "superego-translations-check/translations",
+);
+const tmpCompiledDir = join(tmpdir(), "superego-translations-check/compiled");
+const sourceLocale = "en.json";
+
+// Verify that all messages have been extracted.
+(() => {
+  let failed = false;
+  try {
+    const actualSourceLocalePath = join(translationsDir, sourceLocale);
+    const expectedSourceLocalePath = join(tmpTranslationsDir, sourceLocale);
+    $.sync`yarn formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file ${expectedSourceLocalePath}`;
+    const actualSourceLocale = readFileSync(actualSourceLocalePath);
+    const expectedSourceLocale = readFileSync(expectedSourceLocalePath);
+    if (!actualSourceLocale.equals(expectedSourceLocale)) {
+      console.error(
+        `Locale ${sourceLocale} is out of date and needs to be re-extracted.`,
+      );
+      throw new Error();
+    }
+  } catch {
+    failed = true;
+  } finally {
+    $.sync`rm -r ${tmpTranslationsDir}`;
+    if (failed) {
+      process.exit(1);
+    }
+  }
+})();
 
 // Verify that all messages in the source locale (en) are present in the other
 // locales.
@@ -13,7 +45,6 @@ $.sync`yarn translations:verify`;
 // Verify that other locales don't have "leftover" messages that are not in the
 // source locale.
 (() => {
-  const sourceLocale = "en.json";
   const otherLocales = readdirSync(translationsDir).filter(
     (name) => name.endsWith(".json") && name !== sourceLocale,
   );
@@ -41,8 +72,6 @@ $.sync`yarn translations:verify`;
 // compiled locales.
 (() => {
   let failed = false;
-  const compiledDir = join(translationsDir, "compiled");
-  const tmpCompiledDir = join(tmpdir(), "superego-translations-check/compiled");
   try {
     $.sync`formatjs compile-folder --ast ${translationsDir} ${tmpCompiledDir}`;
 
@@ -53,7 +82,7 @@ $.sync`yarn translations:verify`;
       actualCompiledFileNames,
     );
     if (missingLocales.size !== 0) {
-      console.error("Missing compiled locales");
+      console.error("Missing compiled locales:");
       console.error([...missingLocales]);
       throw new Error();
     }
@@ -62,7 +91,7 @@ $.sync`yarn translations:verify`;
       expectedCompiledFileNames,
     );
     if (superfluousLocales.size !== 0) {
-      console.error("Found superfluous compiled locales");
+      console.error("Found superfluous compiled locales:");
       console.error([...superfluousLocales]);
       throw new Error();
     }
@@ -75,7 +104,9 @@ $.sync`yarn translations:verify`;
         join(tmpCompiledDir, compiledFileName),
       );
       if (!actualCompiledLocale.equals(expectedCompiledLocale)) {
-        console.error(`Locale ${compiledFileName} is out of date.`);
+        console.error(
+          `Compiled locale ${compiledFileName} is out of date and needs to be recompiled.`,
+        );
         throw new Error();
       }
     }

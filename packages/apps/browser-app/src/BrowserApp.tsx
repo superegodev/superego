@@ -19,12 +19,18 @@ import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 
 import "./BrowserApp.css.js";
+import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.jsx";
 
 interface Props {
   backend: Backend;
   queryClient: QueryClient;
+  loadDemoData?: () => Promise<void>;
 }
-export default function BrowserApp({ backend, queryClient }: Props) {
+export default function BrowserApp({
+  backend,
+  queryClient,
+  loadDemoData,
+}: Props) {
   const { locale } = useLocale();
   const { navigateTo } = useNavigationState();
   return (
@@ -63,6 +69,10 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                       developerPrompts,
                     }}
                   >
+                    {import.meta.env["VITE_IS_DEMO"] === "true" &&
+                    loadDemoData ? (
+                      <LoadDemoDataButton loadDemoData={loadDemoData} />
+                    ) : null}
                     <Root />
                   </GlobalDataProvider>
                 )}
