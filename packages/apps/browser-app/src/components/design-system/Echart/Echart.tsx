@@ -3,8 +3,8 @@ import * as echarts from "echarts";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import useTheme from "../../../business-logic/theme/useTheme.js";
-import Alert from "../Alert/Alert.jsx";
-import CodeBlock from "../CodeBlock/CodeBlock.jsx";
+import Alert from "../Alert/Alert.js";
+import CodeBlock from "../CodeBlock/CodeBlock.js";
 import getTheme from "./getTheme.js";
 
 interface Props {

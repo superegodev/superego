@@ -1,9 +1,9 @@
 import type { ResultError } from "@superego/global-types";
 import { useIntl } from "react-intl";
 import toTitleCase from "../../../utils/toTitleCase.js";
-import Alert from "../Alert/Alert.jsx";
-import CodeBlock from "../CodeBlock/CodeBlock.jsx";
-import Disclosure from "../Disclosure/Disclosure.jsx";
+import Alert from "../Alert/Alert.js";
+import CodeBlock from "../CodeBlock/CodeBlock.js";
+import Disclosure from "../Disclosure/Disclosure.js";
 
 interface Props {
   errors: ResultError<string, any>[];

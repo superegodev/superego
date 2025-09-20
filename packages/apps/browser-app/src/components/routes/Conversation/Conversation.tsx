@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.jsx";
+import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
 import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";

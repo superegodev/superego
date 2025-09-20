@@ -1,7 +1,7 @@
 import type { ResultError as ResultErrorGT } from "@superego/global-types";
 import type { ReactNode } from "react";
-import ResultErrors from "../ResultErrors/ResultErrors.jsx";
-import Shell from "../Shell/Shell.jsx";
+import ResultErrors from "../ResultErrors/ResultErrors.js";
+import Shell from "../Shell/Shell.js";
 
 interface Props {
   headerTitle: ReactNode;

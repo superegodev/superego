@@ -7,7 +7,7 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
-import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.jsx";
+import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";

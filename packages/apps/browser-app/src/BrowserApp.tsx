@@ -14,7 +14,7 @@ import {
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
 import { fromHref } from "./business-logic/navigation/RouteUtils.js";
 import useNavigationState from "./business-logic/navigation/useNavigationState.js";
-import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.jsx";
+import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 

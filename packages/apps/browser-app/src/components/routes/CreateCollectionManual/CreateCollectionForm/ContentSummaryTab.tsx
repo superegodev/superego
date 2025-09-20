@@ -4,7 +4,7 @@ import type { Control } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import type { ResultOf } from "../../../../business-logic/backend/typeUtils.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
-import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.jsx";
+import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CreateCollectionForm.css.js";
