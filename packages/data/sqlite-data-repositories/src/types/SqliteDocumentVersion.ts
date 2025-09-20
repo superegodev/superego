@@ -1,7 +1,9 @@
 import type {
   CollectionId,
   CollectionVersionId,
+  ConversationId,
   DocumentId,
+  DocumentVersionCreator,
   DocumentVersionId,
 } from "@superego/backend";
 import type { DocumentVersionEntity } from "@superego/executing-backend";
@@ -13,11 +15,13 @@ type SqliteDocumentVersion = {
   collection_id: CollectionId;
   document_id: DocumentId;
   collection_version_id: CollectionVersionId;
+  conversation_id: ConversationId | null;
   /**
    * JSON. It's a jsondiffpatch delta or `null` when there is no delta from the
    * previous version.
    */
   content_delta: string | null;
+  created_by: DocumentVersionCreator;
   /** ISO8601 */
   created_at: string;
   is_latest: 0 | 1;
@@ -53,12 +57,14 @@ export function toEntity(
     collectionId: documentVersion.collection_id,
     documentId: documentVersion.document_id,
     collectionVersionId: documentVersion.collection_version_id,
+    conversationId: documentVersion.conversation_id,
     content:
       documentVersion.is_latest === 1
         ? JSON.parse(documentVersion.content_snapshot)
         : makeContent(documentVersion.id, allDocumentVersions!, jdp!),
+    createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),
-  };
+  } as DocumentVersionEntity;
 }
 
 /** Makes the specified DocumentVersion content by applying all deltas. */

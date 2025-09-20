@@ -1,4 +1,4 @@
-import type { Document } from "@superego/backend";
+import { type Document, DocumentVersionCreator } from "@superego/backend";
 import { DataType, FormatId, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
@@ -66,6 +66,7 @@ describe("toAssistantDocument", () => {
         id: Id.generate.documentVersion(),
         collectionVersionId: Id.generate.collectionVersion(),
         previousVersionId: null,
+        conversationId: null,
         content: {
           string: "string",
           wintertimeInstant: "2025-01-01T00:00:00.000Z",
@@ -85,6 +86,7 @@ describe("toAssistantDocument", () => {
           list: ["2025-01-01T00:00:00.000Z"],
         },
         contentSummary: makeSuccessfulResult({}),
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       },
       createdAt: new Date(),

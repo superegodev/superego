@@ -9,16 +9,13 @@ export default async function makeDocumentVersion(
   collectionVersion: CollectionVersionEntity,
   documentVersion: DocumentVersionEntity,
 ): Promise<DocumentVersion> {
+  const { documentId, collectionId, ...rest } = documentVersion;
   return {
-    id: documentVersion.id,
-    previousVersionId: documentVersion.previousVersionId,
-    collectionVersionId: documentVersion.collectionVersionId,
-    content: documentVersion.content,
+    ...rest,
     contentSummary: await makeContentSummary(
       javascriptSandbox,
       collectionVersion,
       documentVersion,
     ),
-    createdAt: documentVersion.createdAt,
   };
 }

@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/suspicious/noTemplateCurlyInString: contains stringified code. */
+import { DocumentVersionCreator } from "@superego/backend";
 import { DataType } from "@superego/schema";
 import type Data from "./Data.js";
 
@@ -666,6 +667,7 @@ export default {
       documentId: "Document_CSZzGaPNqnSChJU7LpD4j",
       collectionId: "Collection_CSZsv1e8QqfJTrALkYEWN",
       collectionVersionId: "CollectionVersion_CSZsv1eNcGkM79wNhXHBz",
+      conversationId: null,
       content: {
         title: "Bathroom Scale",
         date: "2025-08-28",
@@ -692,6 +694,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T10:57:26.954Z"),
     },
     DocumentVersion_CSZzMbaCct8BT6Cspd5df: {
@@ -700,6 +703,7 @@ export default {
       documentId: "Document_CSZzMbaCct8BT2LdY5ERs",
       collectionId: "Collection_CSZsYNxB2S24GWXz8k95B",
       collectionVersionId: "CollectionVersion_CSZsYNxB2S24GXt3EhVC3",
+      conversationId: null,
       content: {
         vehicle: "Kia Sportage",
         timestamp: "2025-08-28T10:57:43.732Z",
@@ -722,6 +726,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T10:58:35.061Z"),
     },
     DocumentVersion_CSZzrDWTYbZQSy4sv4F9a: {
@@ -730,6 +735,7 @@ export default {
       documentId: "Document_CSZzrDWTYbZQSwxzDfygR",
       collectionId: "Collection_CSZtNQiv6xaohffqQvPJR",
       collectionVersionId: "CollectionVersion_CSZtNQiv6xaohhjDbHcXT",
+      conversationId: null,
       content: {
         type: "Person",
         name: "Pierre de Fermat",
@@ -760,6 +766,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T11:05:03.311Z"),
     },
     DocumentVersion_CSZzzx2J9GrXnevnAi8hD: {
@@ -768,6 +775,7 @@ export default {
       documentId: "Document_CSZzzx2J9GrXndjSZfxAe",
       collectionId: "Collection_CSZtNQiv6xaohffqQvPJR",
       collectionVersionId: "CollectionVersion_CSZtNQiv6xaohhjDbHcXT",
+      conversationId: null,
       content: {
         type: "Person",
         name: "Bernhard Riemann",
@@ -792,6 +800,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T11:07:01.782Z"),
     },
     DocumentVersion_CSa17UazLgxXvPsWjmw4r: {
@@ -800,6 +809,7 @@ export default {
       documentId: "Document_CSa17UazLgxXvM4gsLPFP",
       collectionId: "Collection_CSZtNQiv6xaohffqQvPJR",
       collectionVersionId: "CollectionVersion_CSZtNQiv6xaohhjDbHcXT",
+      conversationId: null,
       content: {
         type: "Organization",
         name: "Nicolas Bourbaki",
@@ -819,6 +829,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T11:08:30.326Z"),
     },
     DocumentVersion_CSa1KAcae3U6acXDzLZ3P: {
@@ -827,6 +838,7 @@ export default {
       documentId: "Document_CSa1KAcae3U6aZhb7Yi9N",
       collectionId: "Collection_CSZtXKVtjeB2xspwyVsW4",
       collectionVersionId: "CollectionVersion_CSZtXKVtjeB2xwFM1DxNN",
+      conversationId: null,
       content: {
         pet: "Abel",
         date: "2025-08-27",
@@ -845,6 +857,7 @@ export default {
           ],
         },
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T11:11:08.912Z"),
     },
     DocumentVersion_CSa1NbUPbYZiXmcAQVMqJ: {
@@ -853,6 +866,7 @@ export default {
       documentId: "Document_CSa1NbUPbYZiXjdfxqU7r",
       collectionId: "Collection_CSZtbatUAnJNeXaxFJZgP",
       collectionVersionId: "CollectionVersion_CSZtbatUAnJNea7ReLxEe",
+      conversationId: null,
       content: {
         timestamp: "2025-08-28T11:11:22.228Z",
         weightKg: 69.5,
@@ -861,6 +875,7 @@ export default {
         measurementDevice: "Garmin Index S2",
         notes: null,
       },
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date("2025-08-28T11:11:55.425Z"),
     },
   },

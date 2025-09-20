@@ -10,6 +10,7 @@ export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
+export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";

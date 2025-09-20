@@ -1,17 +1,18 @@
-import type {
-  Backend,
-  Collection,
-  CollectionId,
-  CollectionMigrationFailed,
-  CollectionMigrationNotValid,
-  CollectionNotFound,
-  CollectionSchemaNotValid,
-  CollectionVersionId,
-  CollectionVersionIdNotMatching,
-  CollectionVersionSettings,
-  ContentSummaryGetterNotValid,
-  TypescriptModule,
-  UnexpectedError,
+import {
+  type Backend,
+  type Collection,
+  type CollectionId,
+  type CollectionMigrationFailed,
+  type CollectionMigrationNotValid,
+  type CollectionNotFound,
+  type CollectionSchemaNotValid,
+  type CollectionVersionId,
+  type CollectionVersionIdNotMatching,
+  type CollectionVersionSettings,
+  type ContentSummaryGetterNotValid,
+  DocumentVersionCreator,
+  type TypescriptModule,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { type Schema, valibotSchemas } from "@superego/schema";
@@ -188,6 +189,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
         document.id,
         latestDocumentVersion.id,
         executionResult.data,
+        DocumentVersionCreator.Migration,
       );
 
       if (!result.success) {

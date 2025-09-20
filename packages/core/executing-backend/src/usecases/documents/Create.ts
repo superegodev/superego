@@ -1,11 +1,13 @@
-import type {
-  Backend,
-  CollectionId,
-  CollectionNotFound,
-  Document,
-  DocumentContentNotValid,
-  FilesNotFound,
-  UnexpectedError,
+import {
+  type Backend,
+  type CollectionId,
+  type CollectionNotFound,
+  type ConversationId,
+  type Document,
+  type DocumentContentNotValid,
+  DocumentVersionCreator,
+  type FilesNotFound,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
@@ -24,19 +26,31 @@ import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
+type ExecReturnValue = ResultPromise<
+  Document,
+  CollectionNotFound | DocumentContentNotValid | FilesNotFound | UnexpectedError
+>;
 export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
 > {
+  async exec(collectionId: CollectionId, content: any): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     content: any,
-  ): ResultPromise<
-    Document,
-    | CollectionNotFound
-    | DocumentContentNotValid
-    | FilesNotFound
-    | UnexpectedError
-  > {
+    createdBy: DocumentVersionCreator.Migration,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    content: any,
+    createdBy: DocumentVersionCreator.Assistant,
+    conversationId: ConversationId,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    content: any,
+    createdBy = DocumentVersionCreator.User,
+    conversationId: ConversationId | null = null,
+  ): ExecReturnValue {
     if (!(await this.repos.collection.exists(collectionId))) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId }),
@@ -97,9 +111,11 @@ export default class DocumentsCreate extends Usecase<
       documentId: document.id,
       collectionId: collectionId,
       collectionVersionId: latestCollectionVersion.id,
+      conversationId: conversationId,
       content: convertedContent,
+      createdBy: createdBy,
       createdAt: now,
-    };
+    } as DocumentVersionEntity;
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({

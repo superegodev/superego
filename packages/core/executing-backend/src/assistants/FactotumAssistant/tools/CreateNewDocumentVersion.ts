@@ -1,5 +1,7 @@
 import {
   type Collection,
+  type ConversationId,
+  DocumentVersionCreator,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -18,6 +20,7 @@ export default {
 
   async exec(
     toolCall: ToolCall.CreateNewDocumentVersion,
+    conversationId: ConversationId,
     collections: Collection[],
     documentsCreateNewVersion: DocumentsCreateNewVersion,
   ): Promise<ToolResult.CreateNewDocumentVersion> {
@@ -39,6 +42,8 @@ export default {
       id,
       latestVersionId,
       content,
+      DocumentVersionCreator.Assistant,
+      conversationId,
     );
 
     if (

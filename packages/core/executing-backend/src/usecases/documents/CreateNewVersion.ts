@@ -1,14 +1,16 @@
-import type {
-  Backend,
-  CollectionId,
-  Document,
-  DocumentContentNotValid,
-  DocumentId,
-  DocumentNotFound,
-  DocumentVersionId,
-  DocumentVersionIdNotMatching,
-  FilesNotFound,
-  UnexpectedError,
+import {
+  type Backend,
+  type CollectionId,
+  type ConversationId,
+  type Document,
+  type DocumentContentNotValid,
+  type DocumentId,
+  type DocumentNotFound,
+  DocumentVersionCreator,
+  type DocumentVersionId,
+  type DocumentVersionIdNotMatching,
+  type FilesNotFound,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
@@ -28,6 +30,14 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
+type ExecReturnValue = ResultPromise<
+  Document,
+  | DocumentNotFound
+  | DocumentVersionIdNotMatching
+  | DocumentContentNotValid
+  | FilesNotFound
+  | UnexpectedError
+>;
 export default class DocumentsCreateNewVersion extends Usecase<
   Backend["documents"]["createNewVersion"]
 > {
@@ -36,14 +46,30 @@ export default class DocumentsCreateNewVersion extends Usecase<
     id: DocumentId,
     latestVersionId: DocumentVersionId,
     content: any,
-  ): ResultPromise<
-    Document,
-    | DocumentNotFound
-    | DocumentVersionIdNotMatching
-    | DocumentContentNotValid
-    | FilesNotFound
-    | UnexpectedError
-  > {
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy: DocumentVersionCreator.Migration,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy: DocumentVersionCreator.Assistant,
+    conversationId: ConversationId,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy = DocumentVersionCreator.User,
+    conversationId: ConversationId | null = null,
+  ): ExecReturnValue {
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
@@ -126,9 +152,11 @@ export default class DocumentsCreateNewVersion extends Usecase<
       documentId: id,
       collectionId: document.collectionId,
       collectionVersionId: latestCollectionVersion.id,
+      conversationId: conversationId,
       content: convertedContent,
+      createdBy: createdBy,
       createdAt: now,
-    };
+    } as DocumentVersionEntity;
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({

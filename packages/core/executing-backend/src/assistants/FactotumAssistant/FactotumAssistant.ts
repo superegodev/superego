@@ -1,5 +1,6 @@
 import {
   type Collection,
+  type ConversationId,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -21,6 +22,7 @@ import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
   constructor(
+    private conversationId: ConversationId,
     private userName: string | null,
     private developerPrompt: string | null,
     protected inferenceService: InferenceService,
@@ -108,6 +110,7 @@ export default class FactotumAssistant extends Assistant {
     if (CreateDocument.is(toolCall)) {
       return CreateDocument.exec(
         toolCall,
+        this.conversationId,
         this.collections,
         this.usecases.documentsCreate,
       );
@@ -115,6 +118,7 @@ export default class FactotumAssistant extends Assistant {
     if (CreateNewDocumentVersion.is(toolCall)) {
       return CreateNewDocumentVersion.exec(
         toolCall,
+        this.conversationId,
         this.collections,
         this.usecases.documentsCreateNewVersion,
       );

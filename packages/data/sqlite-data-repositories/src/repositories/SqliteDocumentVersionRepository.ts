@@ -43,13 +43,15 @@ export default class SqliteDocumentVersionRepository
             "collection_id",
             "document_id",
             "collection_version_id",
+            "conversation_id",
             "content_delta",
             "content_snapshot",
+            "created_by",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         documentVersion.id,
@@ -57,10 +59,12 @@ export default class SqliteDocumentVersionRepository
         documentVersion.collectionId,
         documentVersion.documentId,
         documentVersion.collectionVersionId,
+        documentVersion.conversationId,
         JSON.stringify(
           jdp.diff(previousDocumentVersion?.content, documentVersion.content),
         ) ?? null,
         JSON.stringify(documentVersion.content),
+        documentVersion.createdBy,
         documentVersion.createdAt.toISOString(),
         1,
       );

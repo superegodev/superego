@@ -1,5 +1,7 @@
 import {
   type Collection,
+  type ConversationId,
+  DocumentVersionCreator,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -18,6 +20,7 @@ export default {
 
   async exec(
     toolCall: ToolCall.CreateDocument,
+    conversationId: ConversationId,
     collections: Collection[],
     documentsCreate: DocumentsCreate,
   ): Promise<ToolResult.CreateDocument> {
@@ -38,7 +41,12 @@ export default {
       success,
       data: document,
       error,
-    } = await documentsCreate.exec(collectionId, content);
+    } = await documentsCreate.exec(
+      collectionId,
+      content,
+      DocumentVersionCreator.Assistant,
+      conversationId,
+    );
 
     if (error && error.name === "UnexpectedError") {
       throw new UnexpectedAssistantError(

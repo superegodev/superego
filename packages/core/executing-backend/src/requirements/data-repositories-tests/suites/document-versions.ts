@@ -1,3 +1,4 @@
+import { DocumentVersionCreator } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
@@ -24,8 +25,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -57,8 +60,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     const documentVersion2: DocumentVersionEntity = {
@@ -66,8 +71,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     const documentVersion3: DocumentVersionEntity = {
@@ -75,8 +82,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collection2Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -137,8 +146,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collectionId,
       documentId: document1Id,
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     const documentVersion2: DocumentVersionEntity = {
@@ -146,8 +157,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collectionId,
       documentId: document1Id,
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: documentVersion1.id,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     const documentVersion3: DocumentVersionEntity = {
@@ -155,8 +168,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
       collectionId: collectionId,
       documentId: document2Id,
       collectionVersionId: Id.generate.collectionVersion(),
+      conversationId: null,
       content: content,
       previousVersionId: null,
+      createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -202,8 +217,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -234,8 +251,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: { ...content, number: 1 },
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion2: DocumentVersionEntity = {
@@ -243,8 +262,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: { ...content, number: 2 },
         previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion3: DocumentVersionEntity = {
@@ -252,8 +273,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: { ...content, number: 3 },
         previousVersionId: documentVersion2.id,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion4: DocumentVersionEntity = {
@@ -261,8 +284,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: { ...content, number: 4 },
         previousVersionId: documentVersion3.id,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -316,8 +341,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion2: DocumentVersionEntity = {
@@ -325,8 +352,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -400,8 +429,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion2: DocumentVersionEntity = {
@@ -409,8 +440,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion3: DocumentVersionEntity = {
@@ -418,8 +451,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: collectionId,
         documentId: document2Id,
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
       const documentVersion4: DocumentVersionEntity = {
@@ -427,8 +462,10 @@ export default rd<Dependencies>("Document versions", (deps) => {
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
         content: content,
         previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
       };
 

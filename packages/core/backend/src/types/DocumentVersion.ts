@@ -1,15 +1,22 @@
 import type { Result } from "@superego/global-types";
+import type DocumentVersionCreator from "../enums/DocumentVersionCreator.js";
 import type ContentSummaryNotValid from "../errors/ContentSummaryNotValid.js";
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type CollectionVersionId from "../ids/CollectionVersionId.js";
+import type ConversationId from "../ids/ConversationId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type ContentSummary from "./ContentSummary.js";
 
-export default interface DocumentVersion<Content = Record<string, unknown>> {
+type DocumentVersion<Content = Record<string, unknown>> = {
   id: DocumentVersionId;
   collectionVersionId: CollectionVersionId;
   /** Id of the previous version. Null if this is the first version. */
   previousVersionId: DocumentVersionId | null;
+  /**
+   * Id of the conversation in which this document version was created. Not null
+   * only when createdBy === DocumentVersionCreator.Assistant.
+   */
+  conversationId: ConversationId | null;
   content: Content;
   /**
    * The content summary is a Record<name: string, value: string> derived from
@@ -28,5 +35,14 @@ export default interface DocumentVersion<Content = Record<string, unknown>> {
     ContentSummary,
     ExecutingJavascriptFunctionFailed | ContentSummaryNotValid
   >;
+  createdBy: DocumentVersionCreator;
   createdAt: Date;
-}
+} & (
+  | { createdBy: DocumentVersionCreator.User; conversationId: null }
+  | { createdBy: DocumentVersionCreator.Migration; conversationId: null }
+  | {
+      createdBy: DocumentVersionCreator.Assistant;
+      conversationId: ConversationId;
+    }
+);
+export default DocumentVersion;

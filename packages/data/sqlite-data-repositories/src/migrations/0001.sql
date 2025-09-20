@@ -1,3 +1,11 @@
+-- Document versions
+
+ALTER TABLE "document_versions"
+ADD COLUMN "conversation_id" TEXT;
+
+ALTER TABLE "document_versions"
+ADD COLUMN "created_by" TEXT NOT NULL DEFAULT 'User';
+
 -- Conversations
 
 CREATE TABLE "conversations" (

@@ -87,6 +87,7 @@ export default class AssistantsProcessConversation extends Usecase {
         globalSettings.inference,
       );
       const assistant = this.createAssistant(
+        conversation.id,
         globalSettings,
         inferenceService,
         conversation.assistant,
@@ -134,6 +135,7 @@ export default class AssistantsProcessConversation extends Usecase {
   }
 
   private createAssistant(
+    conversationId: ConversationId,
     globalSettings: GlobalSettings,
     inferenceService: InferenceService,
     assistant: AssistantName,
@@ -142,6 +144,7 @@ export default class AssistantsProcessConversation extends Usecase {
   ): Assistant {
     return assistant === AssistantName.Factotum
       ? new FactotumAssistant(
+          conversationId,
           globalSettings.assistants.userName,
           globalSettings.assistants.developerPrompts[AssistantName.Factotum],
           inferenceService,
