@@ -17,30 +17,6 @@
       "value": "Come posso aiutarti?"
     }
   ],
-  "AssistantContentMessage.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-    }
-  ],
-  "AssistantContentMessage.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Riproduci"
-    }
-  ],
-  "AssistantContentMessage.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Sintesi vocale in corso..."
-    }
-  ],
-  "AssistantContentMessage.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pausa"
-    }
-  ],
   "AssistantsSettings.tsx_mTE6Ss": [
     {
       "type": 0,
@@ -1605,6 +1581,18 @@
       "value": "Dettagli"
     }
   ],
+  "RetryButton.tsx_HMN20q": [
+    {
+      "type": 0,
+      "value": "Riprova la risposta"
+    }
+  ],
+  "RetryButton.tsx_l02CSg": [
+    {
+      "type": 0,
+      "value": "Riprovo..."
+    }
+  ],
   "SchemaTab.tsx_Lktmvk": [
     {
       "type": 0,
@@ -1645,6 +1633,30 @@
     {
       "type": 0,
       "value": "Configura assistente"
+    }
+  ],
+  "SpeakButton.tsx_FUvUuG": [
+    {
+      "type": 0,
+      "value": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
+    }
+  ],
+  "SpeakButton.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Riproduci"
+    }
+  ],
+  "SpeakButton.tsx_mM7O7f": [
+    {
+      "type": 0,
+      "value": "Sintesi vocale in corso..."
+    }
+  ],
+  "SpeakButton.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pausa"
     }
   ],
   "StructField.tsx_Dp51E2": [

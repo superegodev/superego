@@ -87,13 +87,15 @@ export const AssistantContentMessage = {
 
   markdownTableScroller: style({
     width: "100%",
-    overflowY: "scroll",
+    maxHeight: vars.spacing._80,
+    overflowY: "auto",
+    position: "relative",
+    marginBlock: vars.spacing._4,
   }),
 
   infoAndActions: style({
     display: "flex",
     alignItems: "center",
-    gap: vars.spacing._2,
     marginBlockStart: vars.spacing._4,
     fontSize: vars.typography.fontSizes.xs,
     color: vars.colors.text.secondary,
@@ -114,6 +116,7 @@ export const AssistantContentMessage = {
     background: vars.colors.border.default,
     height: vars.spacing._4,
     width: vars.borders.width.thin,
+    marginInline: vars.spacing._2,
   }),
 
   infoAndActionsAction: style({
@@ -136,7 +139,7 @@ globalStyle(`${AssistantContentMessage.markdown} table`, {
   width: "100%",
   borderCollapse: "collapse",
   borderSpacing: 0,
-  marginBlock: vars.spacing._4,
+  marginBlock: 0,
   lineHeight: vars.spacing._4_5,
 });
 globalStyle(`${AssistantContentMessage.markdown} thead th`, {
@@ -145,6 +148,10 @@ globalStyle(`${AssistantContentMessage.markdown} thead th`, {
   textAlign: "left",
   fontWeight: vars.typography.fontWeights.medium,
   fontSize: vars.typography.fontSizes.sm,
+  background: vars.colors.background.surface,
+  position: "sticky",
+  top: 0,
+  zIndex: 1,
 });
 globalStyle(`${AssistantContentMessage.markdown} tbody tr`, {
   borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,

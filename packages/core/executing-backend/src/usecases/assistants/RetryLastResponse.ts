@@ -1,15 +1,11 @@
 import {
   type Backend,
   BackgroundJobName,
-  type CannotContinueConversation,
+  type CannotRetryLastResponse,
   type Conversation,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
-  type Message,
-  type MessageContentPart,
-  MessageRole,
-  type NonEmptyArray,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -23,15 +19,14 @@ import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsContinueConversation extends Usecase<
-  Backend["assistants"]["continueConversation"]
+export default class AssistantsRetryLastResponse extends Usecase<
+  Backend["assistants"]["retryLastResponse"]
 > {
   async exec(
     id: ConversationId,
-    userMessageContent: NonEmptyArray<MessageContentPart.Text>,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotContinueConversation | UnexpectedError
+    ConversationNotFound | CannotRetryLastResponse | UnexpectedError
   > {
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
@@ -46,32 +41,33 @@ export default class AssistantsContinueConversation extends Usecase<
     }
     const contextFingerprint =
       await ConversationUtils.getContextFingerprint(collections);
-    if (
-      conversation.status !== ConversationStatus.Idle ||
-      conversation.contextFingerprint !== contextFingerprint
-    ) {
+    const hadSideEffects = ConversationUtils.lastResponseHadSideEffects(
+      conversation.messages,
+    );
+    const canBeRetried =
+      conversation.status === ConversationStatus.Idle &&
+      conversation.contextFingerprint === contextFingerprint &&
+      !hadSideEffects;
+    if (!canBeRetried) {
       return makeUnsuccessfulResult(
-        makeResultError("CannotContinueConversation", {
+        makeResultError("CannotRetryLastResponse", {
           conversationId: id,
-          reason:
-            conversation.status === ConversationStatus.Processing
-              ? "ConversationIsProcessing"
-              : conversation.status === ConversationStatus.Error
-                ? "ConversationHasError"
+          reason: hadSideEffects
+            ? "ResponseHadSideEffects"
+            : conversation.status === ConversationStatus.Error
+              ? "ConversationHasError"
+              : conversation.status === ConversationStatus.Processing
+                ? "ConversationIsProcessing"
                 : "ConversationHasOutdatedContext",
         }),
       );
     }
 
-    const userMessage: Message.User = {
-      role: MessageRole.User,
-      content: userMessageContent,
-      createdAt: new Date(),
-    };
     const updatedConversation: ConversationEntity = {
       ...conversation,
-      messages: [...conversation.messages, userMessage],
+      messages: ConversationUtils.sliceOffLastResponse(conversation.messages),
       status: ConversationStatus.Processing,
+      error: null,
     };
     await this.repos.conversation.upsert(updatedConversation);
 

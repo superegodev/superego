@@ -1,6 +1,7 @@
 import type {
   CannotContinueConversation,
   CannotRecoverConversation,
+  CannotRetryLastResponse,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
@@ -30,6 +31,7 @@ import type {
 type KnownResultError =
   | CannotContinueConversation
   | CannotRecoverConversation
+  | CannotRetryLastResponse
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid

@@ -106,7 +106,7 @@ graphical elements.
 
 The getEchartsOption function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
-executes in the same environment, and **must** abide by the same rules.
+executes in the same environment, and **must** abide by ALL its rules.
 
 Additional mandatory rules:
 - Never link the chart it in your textual follow-up response.

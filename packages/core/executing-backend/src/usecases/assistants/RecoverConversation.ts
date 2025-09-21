@@ -16,7 +16,7 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
-import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
+import ConversationUtils from "../../utils/ConversationUtils.js";
 import last from "../../utils/last.js";
 import type Millisecond from "../../utils/Millisecond.js";
 import Usecase from "../../utils/Usecase.js";
@@ -45,7 +45,7 @@ export default class AssistantsRecoverConversation extends Usecase<
       throw new UnexpectedAssistantError("Getting collections failed.");
     }
     const contextFingerprint =
-      await getConversationContextFingerprint(collections);
+      await ConversationUtils.getContextFingerprint(collections);
     const canBeRecovered =
       ((conversation.status === ConversationStatus.Processing &&
         lastMessageOlderThan(conversation.messages, PROCESSING_TIMEOUT)) ||

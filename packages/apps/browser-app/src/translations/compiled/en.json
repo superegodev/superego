@@ -17,30 +17,6 @@
       "value": "How can I help you?"
     }
   ],
-  "AssistantContentMessage.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configure speech to play assistant messages"
-    }
-  ],
-  "AssistantContentMessage.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Play"
-    }
-  ],
-  "AssistantContentMessage.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Synthesizing speech..."
-    }
-  ],
-  "AssistantContentMessage.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pause"
-    }
-  ],
   "AssistantsSettings.tsx_mTE6Ss": [
     {
       "type": 0,
@@ -1609,6 +1585,18 @@
       "value": "Details"
     }
   ],
+  "RetryButton.tsx_HMN20q": [
+    {
+      "type": 0,
+      "value": "Retry response"
+    }
+  ],
+  "RetryButton.tsx_l02CSg": [
+    {
+      "type": 0,
+      "value": "Retrying..."
+    }
+  ],
   "SchemaTab.tsx_Lktmvk": [
     {
       "type": 0,
@@ -1649,6 +1637,30 @@
     {
       "type": 0,
       "value": "Configure assistant"
+    }
+  ],
+  "SpeakButton.tsx_FUvUuG": [
+    {
+      "type": 0,
+      "value": "Configure speech to play assistant messages"
+    }
+  ],
+  "SpeakButton.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Play"
+    }
+  ],
+  "SpeakButton.tsx_mM7O7f": [
+    {
+      "type": 0,
+      "value": "Synthesizing speech..."
+    }
+  ],
+  "SpeakButton.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pause"
     }
   ],
   "StructField.tsx_Dp51E2": [

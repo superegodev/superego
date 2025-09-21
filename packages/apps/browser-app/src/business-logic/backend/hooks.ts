@@ -172,6 +172,15 @@ export const useContinueConversation = makeUseBackendMutation(
   ],
 );
 
+export const useRetryLastResponse = makeUseBackendMutation(
+  "assistants",
+  "retryLastResponse",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
 export const useRecoverConversation = makeUseBackendMutation(
   "assistants",
   "recoverConversation",

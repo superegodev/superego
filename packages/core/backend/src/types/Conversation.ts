@@ -10,6 +10,7 @@ type Conversation = {
   format: ConversationFormat;
   title: string | null;
   hasOutdatedContext: boolean;
+  canRetryLastResponse: boolean;
   messages: Message[];
   status: ConversationStatus;
   error: { name: string; details: any } | null;

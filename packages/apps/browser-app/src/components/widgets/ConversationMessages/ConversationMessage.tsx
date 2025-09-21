@@ -4,7 +4,7 @@ import {
   MessageRole,
 } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import AssistantContentMessage from "./AssistantContentMessage.js";
+import AssistantContentMessage from "./AssistantContentMessage/AssistantContentMessage.jsx";
 import ToolCallResult from "./ToolCallResult/ToolCallResult.js";
 import ToolMessage from "./ToolMessage.js";
 import UserMessage from "./UserMessage.js";

@@ -8,18 +8,6 @@
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
   },
-  "AssistantContentMessage.tsx_FUvUuG": {
-    "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-  },
-  "AssistantContentMessage.tsx_J3ca41": {
-    "defaultMessage": "Riproduci"
-  },
-  "AssistantContentMessage.tsx_mM7O7f": {
-    "defaultMessage": "Sintesi vocale in corso..."
-  },
-  "AssistantContentMessage.tsx_tFFMkF": {
-    "defaultMessage": "Pausa"
-  },
   "AssistantsSettings.tsx_mTE6Ss": {
     "defaultMessage": "Prompt per sviluppatori di Collection Creator"
   },
@@ -745,5 +733,23 @@
   },
   "LoadDemoDataButton.tsx_fxtYtB": {
     "defaultMessage": "Sì, resetta"
+  },
+  "SpeakButton.tsx_FUvUuG": {
+    "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
+  },
+  "SpeakButton.tsx_J3ca41": {
+    "defaultMessage": "Riproduci"
+  },
+  "SpeakButton.tsx_mM7O7f": {
+    "defaultMessage": "Sintesi vocale in corso..."
+  },
+  "SpeakButton.tsx_tFFMkF": {
+    "defaultMessage": "Pausa"
+  },
+  "RetryButton.tsx_HMN20q": {
+    "defaultMessage": "Riprova la risposta"
+  },
+  "RetryButton.tsx_l02CSg": {
+    "defaultMessage": "Riprovo..."
   }
 }

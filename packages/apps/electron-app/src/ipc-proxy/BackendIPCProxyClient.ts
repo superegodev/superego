@@ -48,6 +48,7 @@ export default class BackendIPCProxyClient implements Backend {
       continueConversation: this.makeMainIpcCall(
         "assistants.continueConversation",
       ),
+      retryLastResponse: this.makeMainIpcCall("assistants.retryLastResponse"),
       recoverConversation: this.makeMainIpcCall(
         "assistants.recoverConversation",
       ),

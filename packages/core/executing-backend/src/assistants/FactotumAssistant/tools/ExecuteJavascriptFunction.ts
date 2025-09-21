@@ -99,6 +99,8 @@ interface Document {
 - Return **JSON-safe** values only (convert Dates to ISO strings if returning
   them).
 - The function must be default-exported.
+- Comment at least 40% of lines with brief explanations of intent,
+  plus a one-sentence docstring per function.
 
 ### Working with dates and times
 

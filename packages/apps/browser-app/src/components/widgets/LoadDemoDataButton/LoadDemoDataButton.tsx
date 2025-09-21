@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Dialog, DialogTrigger, Heading } from "react-aria-components";
 import { PiPresentationChart } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import useLocalStorageItem from "../../../business-logic/local-storage/useLocalStorageItem.js";
+import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import { LOCAL_STORAGE_KEYS } from "../../../config.js";
 import Button from "../../design-system/Button/Button.jsx";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import Popover from "../../design-system/Popover/Popover.jsx";
@@ -19,8 +20,9 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
 
   const { navigateTo } = useNavigationState();
 
-  const [hasDemoDataLoaded, setHasLoadedDemoData] = useState(
-    localStorage.getItem(LOCAL_STORAGE_KEYS.hasLoadedDemoData) === "true",
+  const [hasDemoDataLoaded, setHasLoadedDemoData] = useLocalStorageItem(
+    WellKnownKey.HasLoadedDemoData,
+    false,
   );
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -29,7 +31,6 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
     mutationFn: loadDemoData,
     onSuccess() {
       queryClient.invalidateQueries();
-      localStorage.setItem(LOCAL_STORAGE_KEYS.hasLoadedDemoData, "true");
       setHasLoadedDemoData(true);
     },
   });

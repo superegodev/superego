@@ -24,8 +24,8 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import type InferenceService from "../../requirements/InferenceService.js";
+import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
-import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreate from "../collections/Create.js";
@@ -77,7 +77,7 @@ export default class AssistantsProcessConversation extends Usecase {
       await this.repos.createSavepoint();
     try {
       const contextFingerprint =
-        await getConversationContextFingerprint(collections);
+        await ConversationUtils.getContextFingerprint(collections);
       if (conversation.contextFingerprint !== contextFingerprint) {
         throw new Error("Context fingerprint changed");
       }

@@ -4,6 +4,7 @@ import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
+import type CannotRetryLastResponse from "./errors/CannotRetryLastResponse.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -240,6 +241,13 @@ export default interface Backend {
     ): ResultPromise<
       Conversation,
       ConversationNotFound | CannotContinueConversation | UnexpectedError
+    >;
+
+    retryLastResponse(
+      id: ConversationId,
+    ): ResultPromise<
+      Conversation,
+      ConversationNotFound | CannotRetryLastResponse | UnexpectedError
     >;
 
     recoverConversation(

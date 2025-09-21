@@ -8,18 +8,6 @@
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
   },
-  "AssistantContentMessage.tsx_FUvUuG": {
-    "defaultMessage": "Configure speech to play assistant messages"
-  },
-  "AssistantContentMessage.tsx_J3ca41": {
-    "defaultMessage": "Play"
-  },
-  "AssistantContentMessage.tsx_mM7O7f": {
-    "defaultMessage": "Synthesizing speech..."
-  },
-  "AssistantContentMessage.tsx_tFFMkF": {
-    "defaultMessage": "Pause"
-  },
   "AssistantsSettings.tsx_mTE6Ss": {
     "defaultMessage": "Collection Creator developer prompt"
   },
@@ -623,6 +611,12 @@
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Details"
   },
+  "RetryButton.tsx_HMN20q": {
+    "defaultMessage": "Retry response"
+  },
+  "RetryButton.tsx_l02CSg": {
+    "defaultMessage": "Retrying..."
+  },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
   },
@@ -643,6 +637,18 @@
   },
   "SendRecordToolbar.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
+  },
+  "SpeakButton.tsx_FUvUuG": {
+    "defaultMessage": "Configure speech to play assistant messages"
+  },
+  "SpeakButton.tsx_J3ca41": {
+    "defaultMessage": "Play"
+  },
+  "SpeakButton.tsx_mM7O7f": {
+    "defaultMessage": "Synthesizing speech..."
+  },
+  "SpeakButton.tsx_tFFMkF": {
+    "defaultMessage": "Pause"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"

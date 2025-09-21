@@ -3,7 +3,7 @@ import type { ResultPromise } from "@superego/global-types";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
+import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
@@ -21,7 +21,7 @@ export default class AssistantsListConversations extends Usecase<
       throw new UnexpectedAssistantError("Getting collections failed.");
     }
     const contextFingerprint =
-      await getConversationContextFingerprint(collections);
+      await ConversationUtils.getContextFingerprint(collections);
 
     return makeSuccessfulResult(
       conversations

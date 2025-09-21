@@ -11,7 +11,7 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
-import getConversationContextFingerprint from "../../utils/getConversationContextFingerprint.js";
+import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
@@ -33,7 +33,7 @@ export default class AssistantsGetConversation extends Usecase<
       throw new UnexpectedAssistantError("Getting collections failed.");
     }
     const contextFingerprint =
-      await getConversationContextFingerprint(collections);
+      await ConversationUtils.getContextFingerprint(collections);
 
     return makeSuccessfulResult(
       makeConversation(conversation, contextFingerprint),

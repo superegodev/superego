@@ -13,6 +13,7 @@ import AssistantsGetConversation from "./usecases/assistants/GetConversation.js"
 import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
 import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
+import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse.js";
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import AssistantsTts from "./usecases/assistants/Tts.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
@@ -90,6 +91,7 @@ export default class ExecutingBackend implements Backend {
         AssistantsContinueConversation,
         true,
       ),
+      retryLastResponse: this.makeUsecase(AssistantsRetryLastResponse, true),
       recoverConversation: this.makeUsecase(
         AssistantsRecoverConversation,
         true,

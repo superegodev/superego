@@ -8,6 +8,8 @@ import { PiLightning, PiLightningSlash, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { getConversationQuery } from "../../../business-logic/backend/hooks.js";
+import useLocalStorageItem from "../../../business-logic/local-storage/useLocalStorageItem.js";
+import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -21,7 +23,10 @@ interface Props {
 export default function Conversation({ conversationId }: Props) {
   const intl = useIntl();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [showToolCalls, setShowToolCalls] = useState(false);
+  const [showToolCalls, setShowToolCalls] = useLocalStorageItem(
+    WellKnownKey.ShowToolCalls,
+    false,
+  );
   return (
     <DataLoader
       queries={[
