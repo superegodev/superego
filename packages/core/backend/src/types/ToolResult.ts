@@ -89,14 +89,14 @@ namespace ToolResult {
   export type RenderChart = BaseToolResult<
     ToolName.RenderChart,
     Result<
-      null,
+      string,
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
       | ResultError<"EchartsOptionNotValid", { issues: ValidationIssue[] }>
     >,
     {
       echartsOption: {
-        title: { text: string };
+        title: { text: string } | [{ text: string }, ...any[]];
       };
     }
   >;

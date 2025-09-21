@@ -11,8 +11,9 @@ interface Props {
   option: echarts.EChartsOption;
   width: string;
   height: string;
+  className?: string | undefined;
 }
-export default function Echart({ option, width, height }: Props) {
+export default function Echart({ option, width, height, className }: Props) {
   const intl = useIntl();
   const [renderingError, setRenderingError] = useState<any>(null);
   const chartElementRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,11 @@ export default function Echart({ option, width, height }: Props) {
   }, [option, theme]);
 
   return renderingError === null ? (
-    <div style={{ width, height }} ref={chartElementRef} />
+    <div
+      ref={chartElementRef}
+      style={{ width, height }}
+      className={className}
+    />
   ) : (
     <Alert
       title={intl.formatMessage({

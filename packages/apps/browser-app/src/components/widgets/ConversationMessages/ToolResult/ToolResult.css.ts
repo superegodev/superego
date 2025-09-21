@@ -73,4 +73,8 @@ export const RenderChart = {
   root: style({
     width: "100%",
   }),
+
+  chart: style({
+    marginBlockStart: vars.spacing._6,
+  }),
 };

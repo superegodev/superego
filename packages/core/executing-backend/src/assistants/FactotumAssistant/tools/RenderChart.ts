@@ -71,7 +71,8 @@ export default {
       };
     }
 
-    if (typeof result.data?.title?.text !== "string") {
+    const title = result.data?.title?.text ?? result.data?.title?.[0]?.text;
+    if (typeof title !== "string") {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
@@ -88,7 +89,9 @@ export default {
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult(null),
+      output: makeSuccessfulResult(
+        "The chart has been successfully rendered. The user can now see it.",
+      ),
       artifacts: { echartsOption: result.data },
     };
   },
@@ -98,24 +101,29 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.RenderChart,
       description: `
-Renders a chart in the app UI for the user. Use this tool to enhance your
-answers with graphical elements.
+Renders a chart in the app UI. Use this tool to enhance your answers with
+graphical elements.
 
-This tool is very similar to ${ToolName.ExecuteJavascriptFunction}, but instead
-of executing a generic JavaScript function, it executes a
-function—getEchartsOption—that must return an **echarts option object**.
-
-The app runs that function and renders the chart.
-
-On a successful response to the call, the chart has ALREADY been rendered to the
-user. Never attempt to link it in your textual follow-up response.
-
-The function takes the same parameters as the function in
+The getEchartsOption function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
 executes in the same environment, and **must** abide by the same rules.
 
-Additional rules:
-- A title for the chart **must** always be set.
+Additional mandatory rules:
+- Never link the chart it in your textual follow-up response.
+- Always set a title for the chart.
+- Strongly prefer:
+  - \`tooltip:{trigger:"axis",axisPointer:{type:"cross"}}\`
+  - \`xAxis.type = "time"\` if there are timestamps on the x axis.
+  - \`grid = {left:0,right:0,top:0,bottom:0}\`
+  - \`xAxis.name = undefined\`
+  - \`yAxis.name = undefined\`
+  - \`legend = undefined\`.
+- For numeric axes:
+  - Narrow the axis to [minValue - 5%, maxValue + 5%].
+  - Format labels dynamically: pick a consistent unit (k, M, B) based on value
+    magnitude; divide all ticks by that unit; append the suffix; show ≤2
+    decimals, strip trailing zeros. Apply same formatting to axis labels,
+    tooltips, and axisPointer.
       `.trim(),
       inputSchema: {
         type: "object",
