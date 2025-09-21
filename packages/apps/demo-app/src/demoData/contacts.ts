@@ -13,7 +13,7 @@ const collection: CollectionEntity = {
   id: Id.generate.collection(),
   settings: {
     name: "Contacts",
-    icon: "️☎️",
+    icon: "️📞️",
     collectionCategoryId: null,
     description: null,
     assistantInstructions: null,

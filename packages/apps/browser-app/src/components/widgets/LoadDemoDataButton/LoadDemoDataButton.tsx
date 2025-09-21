@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Dialog, DialogTrigger, Heading } from "react-aria-components";
-import { PiPresentationChart, PiSpinner } from "react-icons/pi";
+import { PiPresentationChart } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import { LOCAL_STORAGE_KEYS } from "../../../config.js";
 import Button from "../../design-system/Button/Button.jsx";
 import IconButton from "../../design-system/IconButton/IconButton.js";
@@ -14,12 +16,16 @@ interface Props {
 }
 export default function LoadDemoDataButton({ loadDemoData }: Props) {
   const intl = useIntl();
+
+  const { navigateTo } = useNavigationState();
+
   const [hasDemoDataLoaded, setHasLoadedDemoData] = useState(
     localStorage.getItem(LOCAL_STORAGE_KEYS.hasLoadedDemoData) === "true",
   );
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   const queryClient = useQueryClient();
-  const { isPending, mutateAsync } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: loadDemoData,
     onSuccess() {
       queryClient.invalidateQueries();
@@ -27,17 +33,28 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
       setHasLoadedDemoData(true);
     },
   });
-  return !hasDemoDataLoaded ? (
+
+  return (
     <DialogTrigger>
-      <IconButton
-        variant="primary"
-        label={intl.formatMessage({ defaultMessage: "Load demo data" })}
-        tooltipDelay={0}
-        className={cs.LoadDemoDataButton.root}
-        onPress={() => setIsPopoverOpen(true)}
-      >
-        {isPending ? <PiSpinner /> : <PiPresentationChart />}
-      </IconButton>
+      <div className={cs.LoadDemoDataButton.root}>
+        <IconButton
+          variant="primary"
+          label={
+            !hasDemoDataLoaded
+              ? intl.formatMessage({ defaultMessage: "Load demo data" })
+              : intl.formatMessage({ defaultMessage: "Reset demo data" })
+          }
+          tooltipDelay={0}
+          className={
+            cs.LoadDemoDataButton.button[
+              hasDemoDataLoaded && !isPopoverOpen ? "small" : "big"
+            ]
+          }
+          onPress={() => setIsPopoverOpen(true)}
+        >
+          <PiPresentationChart />
+        </IconButton>
+      </div>
       <Popover
         isOpen={isPopoverOpen}
         onOpenChange={setIsPopoverOpen}
@@ -45,25 +62,43 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
       >
         <Dialog>
           <Heading className={cs.LoadDemoDataButton.heading}>
-            <FormattedMessage defaultMessage="Load demo data" />
+            {!hasDemoDataLoaded ? (
+              <FormattedMessage defaultMessage="Load demo data" />
+            ) : (
+              <FormattedMessage defaultMessage="Reset demo data" />
+            )}
           </Heading>
+          {!hasDemoDataLoaded ? (
+            <p>
+              <FormattedMessage defaultMessage="Loads some demo collections and documents for you to play around with." />
+            </p>
+          ) : null}
           <p>
-            <FormattedMessage defaultMessage="Loads some demo collections and documents for you to play around with." />
-          </p>
-          <p>
-            <FormattedMessage defaultMessage="Attention: loading demo data erases all the data you've saved so far. Continue?" />
+            {!hasDemoDataLoaded ? (
+              <FormattedMessage defaultMessage="Attention: loading demo data erases all the data you've saved so far. Continue?" />
+            ) : (
+              <FormattedMessage defaultMessage="Attention: resetting demo data erases all the data you've saved so far. Continue?" />
+            )}
           </p>
           <Button
             variant="primary"
             onPress={() => {
               setIsPopoverOpen(false);
-              mutateAsync();
+              setHasLoadedDemoData(true);
+              navigateTo({ name: RouteName.Ask });
+              // Since the mutation is CPU intensive and makes the CSS
+              // transition stutter, we delay its execution.
+              setTimeout(mutateAsync, 300);
             }}
           >
-            <FormattedMessage defaultMessage="Yes, load" />
+            {!hasDemoDataLoaded ? (
+              <FormattedMessage defaultMessage="Yes, load" />
+            ) : (
+              <FormattedMessage defaultMessage="Yes, reset" />
+            )}
           </Button>
         </Dialog>
       </Popover>
     </DialogTrigger>
-  ) : null;
+  );
 }

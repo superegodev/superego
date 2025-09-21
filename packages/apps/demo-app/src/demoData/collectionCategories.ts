@@ -20,7 +20,7 @@ export const Health: CollectionCategoryEntity = {
 export const Car: CollectionCategoryEntity = {
   id: Id.generate.collectionCategory(),
   name: "Car",
-  icon: "🚗",
+  icon: "🚙",
   parentId: null,
   createdAt: new Date(),
 };

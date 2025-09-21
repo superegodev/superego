@@ -1325,6 +1325,12 @@
       "value": "Attention: loading demo data erases all the data you've saved so far. Continue?"
     }
   ],
+  "LoadDemoDataButton.tsx_J1xAjB": [
+    {
+      "type": 0,
+      "value": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+    }
+  ],
   "LoadDemoDataButton.tsx_VXuroA": [
     {
       "type": 0,
@@ -1335,6 +1341,18 @@
     {
       "type": 0,
       "value": "Loads some demo collections and documents for you to play around with."
+    }
+  ],
+  "LoadDemoDataButton.tsx_cEUBT2": [
+    {
+      "type": 0,
+      "value": "Reset demo data"
+    }
+  ],
+  "LoadDemoDataButton.tsx_fxtYtB": [
+    {
+      "type": 0,
+      "value": "Yes, reset"
     }
   ],
   "Logo.tsx_FbFgI4": [

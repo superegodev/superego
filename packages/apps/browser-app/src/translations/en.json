@@ -548,11 +548,20 @@
   "LoadDemoDataButton.tsx_A84v/o": {
     "defaultMessage": "Attention: loading demo data erases all the data you've saved so far. Continue?"
   },
+  "LoadDemoDataButton.tsx_J1xAjB": {
+    "defaultMessage": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+  },
   "LoadDemoDataButton.tsx_VXuroA": {
     "defaultMessage": "Load demo data"
   },
   "LoadDemoDataButton.tsx_ZBdI8u": {
     "defaultMessage": "Loads some demo collections and documents for you to play around with."
+  },
+  "LoadDemoDataButton.tsx_cEUBT2": {
+    "defaultMessage": "Reset demo data"
+  },
+  "LoadDemoDataButton.tsx_fxtYtB": {
+    "defaultMessage": "Yes, reset"
   },
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"

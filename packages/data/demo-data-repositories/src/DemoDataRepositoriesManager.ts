@@ -24,6 +24,7 @@ export default class DemoDataRepositoriesManager
   ) {}
 
   async loadData(data: Partial<Data>): Promise<void> {
+    const currentData = await this.readData();
     await this.writeData(
       {
         version: crypto.randomUUID(),
@@ -35,7 +36,9 @@ export default class DemoDataRepositoriesManager
         documents: {},
         documentVersions: {},
         files: {},
-        globalSettings: { value: this.defaultGlobalSettings },
+        globalSettings: currentData?.globalSettings ?? {
+          value: this.defaultGlobalSettings,
+        },
         ...data,
       },
       OVERWRITE,
