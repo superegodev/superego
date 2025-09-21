@@ -16,13 +16,13 @@ export default function RenderDocumentsTable({ toolCall, toolResult }: Props) {
   const { collections } = useGlobalData();
   const { documents } = toolResult.artifacts!;
   return (
-    <div className={cs.RenderDocumentsTable.root}>
+    <div>
       <Title>{title}</Title>
       <DocumentsTable
         collectionId={collectionId}
         collection={CollectionUtils.findCollection(collections, collectionId)}
         documents={documents}
-        className={cs.RenderChart.chart}
+        className={cs.RenderDocumentsTable.table}
       />
     </div>
   );

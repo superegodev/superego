@@ -3,6 +3,7 @@ import { vars } from "../../../themes.css.js";
 
 export const Chat = {
   root: style({
+    flexGrow: 1,
     display: "flex",
     flexDirection: "column-reverse",
     paddingBlockEnd: "0 !important",

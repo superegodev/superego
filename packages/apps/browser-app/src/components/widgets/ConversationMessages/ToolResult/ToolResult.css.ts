@@ -70,17 +70,14 @@ globalStyle(`${SuggestCollectionDefinition.scrollContainer} > *`, {
 });
 
 export const RenderChart = {
-  root: style({
-    width: "100%",
-  }),
-
   chart: style({
     marginBlockStart: vars.spacing._6,
   }),
 };
 
 export const RenderDocumentsTable = {
-  root: style({
-    width: "100%",
+  table: style({
+    maxHeight: vars.spacing._80,
+    marginBlockStart: vars.spacing._2,
   }),
 };

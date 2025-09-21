@@ -11,7 +11,7 @@ export const UserMessageContentInput = {
     paddingInlineStart: vars.spacing._5,
     paddingInlineEnd: vars.spacing._12,
     paddingBlock: vars.spacing._3,
-    borderRadius: vars.borders.radius.xl3,
+    borderRadius: vars.borders.radius.full,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
     boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
     selectors: {

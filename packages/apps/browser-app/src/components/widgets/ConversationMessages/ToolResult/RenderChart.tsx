@@ -28,7 +28,7 @@ export default function RenderChart({ toolResult }: Props) {
   );
 
   return (
-    <div className={cs.RenderChart.root}>
+    <div>
       <Title>{Array.isArray(title) ? title[0].text : title.text}</Title>
       <Suspense
         fallback={

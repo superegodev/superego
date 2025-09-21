@@ -1,8 +1,8 @@
 import type { Conversation, Message } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
 import { Separator } from "react-aria-components";
-import * as cs from "../ConversationMessages.css.js";
 import ThinkingTime from "../ThinkingTime.jsx";
+import * as cs from "./AssistantContentMessage.css.js";
 import RetryButton from "./RetryButton.jsx";
 import SpeakButton from "./SpeakButton.jsx";
 
