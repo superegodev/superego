@@ -89,9 +89,14 @@ export default {
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult(
-        "The chart has been successfully rendered. The user can now see it.",
-      ),
+      output: makeSuccessfulResult(`
+The chart has been successfully rendered. The user can now see it.
+
+In your next response:
+  - DON'T mention the chart.
+  - DON'T include a table or recap with the **same** data of the chart.
+  - DON'T link to the chart.
+      `),
       artifacts: { echartsOption: result.data },
     };
   },
@@ -108,7 +113,8 @@ The getEchartsOption function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
 executes in the same environment, and **must** abide by ALL its rules.
 
-Additional mandatory rules:
+### Additional MANDATORY rules
+
 - Never link the chart it in your textual follow-up response.
 - Always set a title for the chart.
 - Strongly prefer:
@@ -117,13 +123,13 @@ Additional mandatory rules:
   - \`grid = {left:0,right:0,top:0,bottom:0}\`
   - \`xAxis.name = undefined\`
   - \`yAxis.name = undefined\`
-  - \`legend = undefined\`.
-- For numeric axes:
-  - Narrow the axis to [minValue - 5%, maxValue + 5%].
-  - Format labels dynamically: pick a consistent unit (k, M, B) based on value
-    magnitude; divide all ticks by that unit; append the suffix; show ≤2
-    decimals, strip trailing zeros. Apply same formatting to axis labels,
-    tooltips, and axisPointer.
+  - \`legend = undefined\`
+- For numeric axes, narrow them to:
+  - if minValue < 0 -> [minValue - 5%, maxValue + 5%]
+  - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%]
+- Round numeric axes boundaries.
+- In datasets and series, round all numeric values to 2 decimals. Use
+  \`Math.round(value * 100)/100)\`
       `.trim(),
       inputSchema: {
         type: "object",
