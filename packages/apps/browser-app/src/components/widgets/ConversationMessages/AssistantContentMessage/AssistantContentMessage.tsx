@@ -1,10 +1,10 @@
 import type { Conversation, Message } from "@superego/backend";
 import Markdown from "markdown-to-jsx";
 import { Separator } from "react-aria-components";
-import ThinkingTime from "../ThinkingTime.jsx";
+import ThinkingTime from "../ThinkingTime.js";
 import * as cs from "./AssistantContentMessage.css.js";
-import RetryButton from "./RetryButton.jsx";
-import SpeakButton from "./SpeakButton.jsx";
+import RetryButton from "./RetryButton.js";
+import SpeakButton from "./SpeakButton.js";
 
 interface Props {
   conversation: Conversation;

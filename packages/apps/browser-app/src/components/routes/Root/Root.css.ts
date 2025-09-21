@@ -18,6 +18,11 @@ export const PrimarySidebarPanel = {
     overscrollBehavior: "contain",
   }),
 
+  logo: style({
+    width: vars.spacing._4,
+    height: vars.spacing._4,
+  }),
+
   collectionsTree: style({
     flex: "1 1 auto",
     minHeight: 0,

@@ -1,6 +1,7 @@
-import { PiGear, PiMagnifyingGlass, PiRobot } from "react-icons/pi";
+import { PiGear, PiMagnifyingGlass } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
+import Logo from "../../design-system/Logo/Logo.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CollectionsTree from "../../widgets/CollectionsTree/CollectionsTree.js";
 import PrimarySidebarPanelAction from "./PrimarySidebarPanelAction.js";
@@ -15,7 +16,7 @@ export default function PrimarySidebarPanel() {
       >
         <div className={cs.PrimarySidebarPanel.topActions}>
           <PrimarySidebarPanelAction type="link" to={{ name: RouteName.Ask }}>
-            <PiRobot />
+            <Logo variant="pixel-art" className={cs.PrimarySidebarPanel.logo} />
             <FormattedMessage defaultMessage="Ask" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction

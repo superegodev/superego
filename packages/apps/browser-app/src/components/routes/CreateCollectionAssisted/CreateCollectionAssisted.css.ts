@@ -14,12 +14,12 @@ export const Hero = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    paddingBlockStart: vars.spacing._16,
+    paddingBlockStart: vars.spacing._8,
   }),
 
   logo: style({
     marginBlockEnd: vars.spacing._6,
-    height: vars.spacing._32,
+    height: vars.spacing._40,
   }),
 
   title: style({

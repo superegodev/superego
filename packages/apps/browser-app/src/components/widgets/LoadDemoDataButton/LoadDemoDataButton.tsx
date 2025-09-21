@@ -7,9 +7,9 @@ import useLocalStorageItem from "../../../business-logic/local-storage/useLocalS
 import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Button from "../../design-system/Button/Button.jsx";
+import Button from "../../design-system/Button/Button.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
-import Popover from "../../design-system/Popover/Popover.jsx";
+import Popover from "../../design-system/Popover/Popover.js";
 import * as cs from "./LoadDemoDataButton.css.js";
 
 interface Props {

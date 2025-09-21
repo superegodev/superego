@@ -3,7 +3,7 @@ import { PiArrowsClockwise } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.js";
 import last from "../../../../utils/last.js";
-import IconButton from "../../../design-system/IconButton/IconButton.jsx";
+import IconButton from "../../../design-system/IconButton/IconButton.js";
 
 interface Props {
   conversation: Conversation;

@@ -5,7 +5,7 @@ import * as cs from "./CreateCollectionAssisted.css.js";
 export default function Hero() {
   return (
     <div className={cs.Hero.root}>
-      <Logo className={cs.Hero.logo} />
+      <Logo variant="hard-hat" className={cs.Hero.logo} />
       <h1 className={cs.Hero.title}>
         <FormattedMessage defaultMessage="Hello!" />
       </h1>

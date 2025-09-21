@@ -10,8 +10,8 @@ import useIsInferenceConfigured from "../../../../business-logic/assistant/useIs
 import usePlayAudio from "../../../../business-logic/audio/usePlayAudio.js";
 import { useTts } from "../../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
-import IconButton from "../../../design-system/IconButton/IconButton.jsx";
-import IconLink from "../../../design-system/IconLink/IconLink.jsx";
+import IconButton from "../../../design-system/IconButton/IconButton.js";
+import IconLink from "../../../design-system/IconLink/IconLink.js";
 
 interface Props {
   message: Message.ContentAssistant;

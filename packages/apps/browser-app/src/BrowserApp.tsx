@@ -19,7 +19,7 @@ import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 
 import "./BrowserApp.css.js";
-import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.jsx";
+import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.js";
 
 interface Props {
   backend: Backend;

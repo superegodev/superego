@@ -2,7 +2,7 @@ import type { Conversation, Message, ToolCall } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import CreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.js";
 import RenderChart from "./ToolResult/RenderChart.js";
-import RenderDocumentsTable from "./ToolResult/RenderDocumentsTable.jsx";
+import RenderDocumentsTable from "./ToolResult/RenderDocumentsTable.js";
 import SuggestCollectionDefinition from "./ToolResult/SuggestCollectionDefinition.js";
 
 interface Props {
