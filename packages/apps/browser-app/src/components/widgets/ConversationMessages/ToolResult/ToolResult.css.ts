@@ -78,3 +78,9 @@ export const RenderChart = {
     marginBlockStart: vars.spacing._6,
   }),
 };
+
+export const RenderDocumentsTable = {
+  root: style({
+    width: "100%",
+  }),
+};

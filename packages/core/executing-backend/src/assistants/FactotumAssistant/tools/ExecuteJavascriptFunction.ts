@@ -39,7 +39,7 @@ export default {
     }
 
     const { data: documents, error: documentsListError } =
-      await documentsList.exec(collectionId);
+      await documentsList.exec(collectionId, false);
     if (documentsListError) {
       throw new UnexpectedAssistantError(
         [

@@ -13,6 +13,7 @@ import type FilesNotFound from "../errors/FilesNotFound.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
+import type LiteDocument from "./LiteDocument.js";
 import type ValidationIssue from "./ValidationIssue.js";
 
 type BaseToolResult<
@@ -64,7 +65,8 @@ namespace ToolResult {
         documentVersionId: DocumentVersionId;
       },
       CollectionNotFound | DocumentContentNotValid | FilesNotFound
-    >
+    >,
+    { document: LiteDocument }
   >;
   export type CreateNewDocumentVersion = BaseToolResult<
     ToolName.CreateNewDocumentVersion,
@@ -80,7 +82,8 @@ namespace ToolResult {
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
-    >
+    >,
+    { document: LiteDocument }
   >;
   export type ExecuteJavascriptFunction = BaseToolResult<
     ToolName.ExecuteJavascriptFunction,
@@ -98,6 +101,18 @@ namespace ToolResult {
       echartsOption: {
         title: { text: string } | [{ text: string }, ...any[]];
       };
+    }
+  >;
+  export type RenderDocumentsTable = BaseToolResult<
+    ToolName.RenderDocumentsTable,
+    Result<
+      string,
+      | CollectionNotFound
+      | ExecutingJavascriptFunctionFailed
+      | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
+    >,
+    {
+      documents: LiteDocument[];
     }
   >;
 
@@ -127,6 +142,7 @@ type ToolResult =
   | ToolResult.ExecuteJavascriptFunction
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.RenderChart
+  | ToolResult.RenderDocumentsTable
   | ToolResult.SuggestCollectionDefinition
   | ToolResult.Unknown;
 

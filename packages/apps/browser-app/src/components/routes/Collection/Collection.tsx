@@ -50,8 +50,11 @@ export default function Collection({ collectionId }: Props) {
         <DataLoader queries={[listDocumentsQuery([collectionId])]}>
           {(documents) => (
             <DocumentsTable
+              collectionId={collectionId}
               collection={collection}
               documents={documents}
+              showCreatedAt={true}
+              showLastModifiedAt={true}
               className={cs.Collection.documentsTable}
             />
           )}

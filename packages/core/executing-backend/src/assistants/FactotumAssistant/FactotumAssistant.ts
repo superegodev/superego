@@ -18,6 +18,7 @@ import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
 import RenderChart from "./tools/RenderChart.js";
+import RenderDocumentsTable from "./tools/RenderDocumentsTable.js";
 import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
@@ -56,6 +57,11 @@ export default class FactotumAssistant extends Assistant {
       .replaceAll(
         "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
         ToolName.GetCollectionTypescriptSchema,
+      )
+      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.RenderChart)
+      .replaceAll(
+        "$TOOL_NAME_RENDER_DOCUMENTS_TABLE",
+        ToolName.RenderDocumentsTable,
       );
   }
 
@@ -89,9 +95,10 @@ export default class FactotumAssistant extends Assistant {
     return [
       GetCollectionTypescriptSchema.get(),
       ExecuteJavascriptFunction.get(),
-      RenderChart.get(),
       CreateDocument.get(),
       CreateNewDocumentVersion.get(),
+      RenderChart.get(),
+      RenderDocumentsTable.get(),
     ];
   }
 
@@ -125,6 +132,14 @@ export default class FactotumAssistant extends Assistant {
     }
     if (RenderChart.is(toolCall)) {
       return RenderChart.exec(
+        toolCall,
+        this.collections,
+        this.usecases.documentsList,
+        this.javascriptSandbox,
+      );
+    }
+    if (RenderDocumentsTable.is(toolCall)) {
+      return RenderDocumentsTable.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,

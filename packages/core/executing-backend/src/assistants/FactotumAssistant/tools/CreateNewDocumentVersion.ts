@@ -7,6 +7,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
@@ -37,7 +38,11 @@ export default {
       };
     }
 
-    const createNewVersionResult = await documentsCreateNewVersion.exec(
+    const {
+      success,
+      data: document,
+      error,
+    } = await documentsCreateNewVersion.exec(
       collectionId,
       id,
       latestVersionId,
@@ -46,20 +51,17 @@ export default {
       conversationId,
     );
 
-    if (
-      createNewVersionResult.error &&
-      createNewVersionResult.error.name === "UnexpectedError"
-    ) {
+    if (error && error.name === "UnexpectedError") {
       throw new UnexpectedAssistantError(
-        `Creating new document version failed with UnexpectedError. Cause: ${createNewVersionResult.error.details.cause}`,
+        `Creating new document version failed with UnexpectedError. Cause: ${error.details.cause}`,
       );
     }
 
-    if (!createNewVersionResult.success) {
+    if (!success) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(createNewVersionResult.error),
+        output: makeUnsuccessfulResult(error),
       };
     }
 
@@ -67,10 +69,13 @@ export default {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: makeSuccessfulResult({
-        collectionId: createNewVersionResult.data.collectionId,
-        documentId: createNewVersionResult.data.id,
-        documentVersionId: createNewVersionResult.data.latestVersion.id,
+        collectionId: document.collectionId,
+        documentId: document.id,
+        documentVersionId: document.latestVersion.id,
       }),
+      artifacts: {
+        document: makeLiteDocument(document),
+      },
     };
   },
 

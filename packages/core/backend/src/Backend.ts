@@ -46,6 +46,7 @@ import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
@@ -203,7 +204,7 @@ export default interface Backend {
 
     list(
       collectionId: CollectionId,
-    ): ResultPromise<Document[], CollectionNotFound | UnexpectedError>;
+    ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;
 
     get(
       collectionId: CollectionId,

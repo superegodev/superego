@@ -102,7 +102,20 @@ class FactotumObject {
       `Error listing documents for collection ${collectionId}`,
       listDocumentsResult,
     );
-    const { data: foundDocuments } = listDocumentsResult;
+    const foundDocuments = await pMap(
+      listDocumentsResult.data,
+      async ({ id }) => {
+        const getDocumentResult = await this.backend.documents.get(
+          collectionId,
+          id,
+        );
+        assertSuccessfulResult(
+          `Error getting document ${id} for collection ${collectionId}`,
+          getDocumentResult,
+        );
+        return getDocumentResult.data;
+      },
+    );
 
     expect(
       foundDocuments.length,

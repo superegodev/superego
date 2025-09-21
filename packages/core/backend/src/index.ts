@@ -76,6 +76,8 @@ export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
+export type { default as LiteDocument } from "./types/LiteDocument.js";
+export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";

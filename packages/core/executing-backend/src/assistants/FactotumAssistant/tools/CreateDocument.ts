@@ -7,6 +7,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
@@ -70,6 +71,9 @@ export default {
         documentId: document.id,
         documentVersionId: document.latestVersion.id,
       }),
+      artifacts: {
+        document: makeLiteDocument(document),
+      },
     };
   },
 

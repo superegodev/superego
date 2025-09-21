@@ -49,6 +49,14 @@ namespace ToolCall {
       getEchartsOption: string;
     }
   >;
+  export type RenderDocumentsTable = ToolCall<
+    ToolName.RenderDocumentsTable,
+    {
+      collectionId: CollectionId;
+      title: string;
+      getDocumentIds: string;
+    }
+  >;
 
   // CollectionCreator
   export type SuggestCollectionDefinition = ToolCall<

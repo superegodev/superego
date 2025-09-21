@@ -5,6 +5,7 @@ enum ToolName {
   ExecuteJavascriptFunction = "executeJavascriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
   RenderChart = "renderChart",
+  RenderDocumentsTable = "renderDocumentsTable",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
 }

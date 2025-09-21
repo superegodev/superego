@@ -1,4 +1,4 @@
-import type { Collection, Document } from "@superego/backend";
+import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
 import { uniq } from "es-toolkit";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
@@ -8,13 +8,19 @@ import isEmpty from "../../../utils/isEmpty.js";
 import Table from "../../design-system/Table/Table.js";
 
 interface Props {
-  collection: Collection;
-  documents: Document[];
+  collectionId: CollectionId;
+  collection: Collection | null;
+  documents: LiteDocument[];
+  showCreatedAt?: boolean | undefined;
+  showLastModifiedAt?: boolean | undefined;
   className?: string | undefined;
 }
 export default function DocumentsTable({
+  collectionId,
   collection,
   documents,
+  showCreatedAt,
+  showLastModifiedAt,
   className,
 }: Props) {
   const intl = useIntl();
@@ -27,7 +33,7 @@ export default function DocumentsTable({
     <Table
       aria-label={intl.formatMessage(
         { defaultMessage: "Documents of collection {collection}" },
-        { collection: collection.settings.name },
+        { collection: collection?.settings.name ?? collectionId },
       )}
       selectionMode="none"
       className={className}
@@ -43,12 +49,16 @@ export default function DocumentsTable({
             {DocumentUtils.formatContentSummaryKey(contentSummaryKey)}
           </Table.Column>
         ))}
-        <Table.Column align="right">
-          <FormattedMessage defaultMessage="Created at" />
-        </Table.Column>
-        <Table.Column align="right">
-          <FormattedMessage defaultMessage="Last modified at" />
-        </Table.Column>
+        {showCreatedAt ? (
+          <Table.Column align="right">
+            <FormattedMessage defaultMessage="Created at" />
+          </Table.Column>
+        ) : null}
+        {showLastModifiedAt ? (
+          <Table.Column align="right">
+            <FormattedMessage defaultMessage="Last modified at" />
+          </Table.Column>
+        ) : null}
       </Table.Header>
       <Table.Body
         items={documents}
@@ -62,7 +72,7 @@ export default function DocumentsTable({
           <Table.Row
             href={toHref({
               name: RouteName.Document,
-              collectionId: collection.id,
+              collectionId: collectionId,
               documentId: document.id,
             })}
           >
@@ -81,12 +91,16 @@ export default function DocumentsTable({
                 )}
               </Table.Cell>
             ))}
-            <Table.Cell align="right">
-              <FormattedDate value={document.createdAt} />
-            </Table.Cell>
-            <Table.Cell align="right">
-              <FormattedDate value={document.latestVersion.createdAt} />
-            </Table.Cell>
+            {showCreatedAt ? (
+              <Table.Cell align="right">
+                <FormattedDate value={document.createdAt} />
+              </Table.Cell>
+            ) : null}
+            {showLastModifiedAt ? (
+              <Table.Cell align="right">
+                <FormattedDate value={document.latestVersion.createdAt} />
+              </Table.Cell>
+            ) : null}
           </Table.Row>
         )}
       </Table.Body>

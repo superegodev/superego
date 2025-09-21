@@ -109,6 +109,17 @@ export default {
     );
   },
 
+  isSuccessfulRenderDocumentsTableToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.RenderDocumentsTable & {
+    output: { success: true };
+  } {
+    return (
+      toolResult.tool === ToolName.RenderDocumentsTable &&
+      toolResult.output.success
+    );
+  },
+
   isCreateDocumentToolCall(
     toolCall: ToolCall,
   ): toolCall is ToolCall.CreateDocument {
