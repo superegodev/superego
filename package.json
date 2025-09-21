@@ -30,6 +30,6 @@
   },
   "packageManager": "yarn@4.10.1+sha512.45bcc0f26c64f59bbfff2a721fbc8226f7a0fe5da70c116cecb09bdfed2514a4d5a22484b75103070175cee5d7d4ad3719cd4be029c94ae5848b44346aefe2a8",
   "dependencies": {
-    "zx": "8.8.2-lite"
+    "zx": "8.8.3-lite"
   }
 }

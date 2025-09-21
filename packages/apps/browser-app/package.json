@@ -40,7 +40,7 @@
     "vite": "^7.1.6",
     "vite-bundle-analyzer": "^1.2.3",
     "vitest": "^3.2.4",
-    "zx": "8.8.2-lite"
+    "zx": "8.8.3-lite"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -79,7 +79,7 @@
     "react-aria": "^3.43.2",
     "react-aria-components": "^1.12.2",
     "react-dom": "^19.1.1",
-    "react-hook-form": "patch:react-hook-form@npm%3A7.62.0#~/.yarn/patches/react-hook-form-npm-7.62.0-69aa06accc.patch",
+    "react-hook-form": "patch:react-hook-form@npm%3A7.63.0#~/.yarn/patches/react-hook-form-npm-7.63.0-70a9e3c158.patch",
     "react-icons": "^5.5.0",
     "react-intl": "^7.1.11",
     "react-stately": "^3.41.0",
