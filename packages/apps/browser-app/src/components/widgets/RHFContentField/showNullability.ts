@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-const ShowNullabilityContext = createContext<boolean>(false);
+const ShowNullabilityContext = createContext(false);
 
 export const ShowNullabilityProvider = ShowNullabilityContext.Provider;
 

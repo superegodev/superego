@@ -71,6 +71,7 @@ export default function SuggestCollectionDefinition({
             control={control}
             document={null}
             showNullability={true}
+            zoomLevel={0.9}
           />
         </div>
       </Form>

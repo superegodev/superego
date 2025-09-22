@@ -11,6 +11,7 @@ import {
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useZoomLevel } from "./zoomLevel.js";
 
 interface Props {
   typeDefinition: EnumTypeDefinition;
@@ -28,6 +29,7 @@ export default function EnumField({
   name,
   label,
 }: Props) {
+  const zoomLevel = useZoomLevel();
   const { field, fieldState } = useController({ control, name });
   const sortedMemberNames =
     typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
@@ -73,6 +75,7 @@ export default function EnumField({
             description: member.description,
           };
         })}
+        zoomLevel={zoomLevel}
       />
     </Select>
   );

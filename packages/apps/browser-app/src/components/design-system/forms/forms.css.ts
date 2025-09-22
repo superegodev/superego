@@ -85,6 +85,14 @@ export const SelectButton = {
     marginBlockEnd: vars.spacing._2,
   }),
 
+  selectValue: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    width: "100%",
+    overflow: "hidden",
+  }),
+
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -93,11 +101,15 @@ export const SelectButton = {
 
 export const SelectOptions = {
   root: style({
-    width: "var(--trigger-width)",
+    width: "calc(var(--trigger-width) * var(--zoom-level))",
     overflow: "scroll",
   }),
 
   option: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
@@ -111,10 +123,6 @@ export const SelectOptions = {
         fontWeight: vars.typography.fontWeights.medium,
         border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
       },
-      '&[data-selected="true"]::after': {
-        content: "'✓'",
-        float: "right",
-      },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
       },
@@ -125,9 +133,21 @@ export const SelectOptions = {
     },
   }),
 
+  optionValue: style({
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
+    flexShrink: 0,
+  }),
+
   optionDescription: style({
+    flexGrow: 1,
     color: vars.colors.text.secondary,
     fontSize: vars.typography.fontSizes.xs,
+    textAlign: "left",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
   }),
 };
 

@@ -12,7 +12,7 @@ interface Props {
 export default function SelectButton({ placeholder, className }: Props) {
   return (
     <Button className={classnames(cs.SelectButton.root, className)}>
-      <SelectValue>
+      <SelectValue className={cs.SelectButton.selectValue}>
         {({ defaultChildren, isPlaceholder }) =>
           isPlaceholder ? (
             <span className={cs.SelectButton.placeholder}>{placeholder}</span>
