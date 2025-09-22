@@ -1,6 +1,6 @@
 {
   "name": "@superego/openai-compat-inference-service",
-  "version": "2025.7.6",
+  "version": "2025.9.0",
   "type": "module",
   "exports": {
     ".": {
