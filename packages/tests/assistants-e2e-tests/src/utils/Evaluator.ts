@@ -1,8 +1,6 @@
 import { MessageContentPartType, MessageRole } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
 
-const toolName = "giveScore";
-
 export default class Evaluator {
   constructor(private inferenceService: InferenceService) {}
 
@@ -20,7 +18,7 @@ export default class Evaluator {
       [
         {
           type: InferenceService.ToolType.Function,
-          name: toolName,
+          name: Evaluator.ToolName.GiveScore,
           description: "Gives a score",
           inputSchema: {
             type: "object",
@@ -44,7 +42,9 @@ export default class Evaluator {
     );
     const toolCall =
       "toolCalls" in message &&
-      message.toolCalls.find(({ tool }) => tool === toolName);
+      message.toolCalls.find(
+        ({ tool }) => tool === Evaluator.ToolName.GiveScore,
+      );
     const isValidToolCall =
       !!toolCall &&
       "score" in toolCall.input &&
@@ -57,4 +57,8 @@ export default class Evaluator {
       ? { score: toolCall.input.score, reason: toolCall.input.reason }
       : { score: 0, reason: "Evaluator failed to produce a score." };
   }
+
+  static ToolName = {
+    GiveScore: "giveScore",
+  };
 }

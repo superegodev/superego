@@ -32,8 +32,8 @@ export default rd<Dependencies>("Search in a single collection", (deps) => {
       defineCollection.vetVisits([]),
     );
     await factotum.say("What's the name of my plumber?");
-    await factotum.assertAssistantReply(
-      'Is a concise answer telling the name of a person, "Mario".',
+    await factotum.assertAssistantIs(
+      'giving a concise answer telling the name of a person, "Mario".',
     );
   });
 
@@ -72,9 +72,9 @@ export default rd<Dependencies>("Search in a single collection", (deps) => {
         defineCollection.vetVisits([]),
       );
       await factotum.say("What appointments do I have tomorrow afternoon?");
-      await factotum.assertAssistantReply(
+      await factotum.assertAssistantIs(
         [
-          "Is a list of two calendar appointments:",
+          "giving a list of two calendar appointments:",
           "1. Work on new AI assistant features, from 14 to 16.",
           "2. Aperitif with Mario, from 17 to 18.",
         ].join("\n"),

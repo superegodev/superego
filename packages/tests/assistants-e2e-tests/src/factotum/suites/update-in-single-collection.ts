@@ -24,12 +24,12 @@ export default rd<Dependencies>(
         await factotum.say(
           "Filled up the Kia. 43.04 liters for 58.10 euros. Odo 123456.",
         );
-        await factotum.assertAssistantReply(
-          "Is a concise acknowledgement that it performed one or more actions.",
+        await factotum.assertAssistantIs(
+          "giving a concise acknowledgement that one or more actions were performed.",
         );
         await factotum.say("Oh, actually it was 123457.");
-        await factotum.assertAssistantReply(
-          "Is a concise acknowledgement that it performed one or more actions.",
+        await factotum.assertAssistantIs(
+          "giving a concise acknowledgement that one or more actions were performed.",
         );
         await factotum.expectCollectionState(fuelLogs.collection.id, {
           created: [
@@ -69,8 +69,8 @@ export default rd<Dependencies>(
           defineCollection.vetVisits([]),
         );
         await factotum.say("Tomorrow the plumber will come at 10, not at 9.");
-        await factotum.assertAssistantReply(
-          "Is a concise acknowledgement that it performed one or more actions.",
+        await factotum.assertAssistantIs(
+          "giving a concise acknowledgement that one or more actions were performed.",
         );
         await factotum.expectCollectionState(calendar.collection.id, {
           created: [],
@@ -109,8 +109,8 @@ export default rd<Dependencies>(
           defineCollection.vetVisits([]),
         );
         await factotum.say("Move tomorrow's plumber appointment to 10.");
-        await factotum.assertAssistantReply(
-          "Is a concise acknowledgement that it performed one or more actions.",
+        await factotum.assertAssistantIs(
+          "giving a concise acknowledgement that one or more actions were performed.",
         );
         await factotum.expectCollectionState(calendar.collection.id, {
           created: [],

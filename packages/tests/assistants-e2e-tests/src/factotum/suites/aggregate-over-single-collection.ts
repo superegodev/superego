@@ -57,8 +57,8 @@ export default rd<Dependencies>("Search in a single collection", (deps) => {
       await factotum.say(
         "How much did I spend in the past 30 days on fuel for my Kia?",
       );
-      await factotum.assertAssistantReply(
-        'Is a concise answer telling how much the user spent on fuel in the past 30 days, "136.21 euros".',
+      await factotum.assertAssistantIs(
+        'giving a concise answer telling how much the user spent on fuel in the past 30 days, "136.21 euros".',
       );
     },
   );

@@ -19,8 +19,8 @@ export default rd<Dependencies>(
       await factotum.say(
         "Filled up the Kia. 43.04 liters for 58.10 euros. Odo 123456.",
       );
-      await factotum.assertAssistantReply(
-        "Is a concise acknowledgement that it performed one or more actions.",
+      await factotum.assertAssistantIs(
+        "giving a concise acknowledgement that one or more actions were performed.",
       );
       await factotum.expectCollectionState(expenses.collection.id, {
         created: [
@@ -66,8 +66,8 @@ export default rd<Dependencies>(
         await factotum.say(
           "Log a refuelling. Kia, 43.04 liters, 58.10 euros, 123456km. Also log it as an expense.",
         );
-        await factotum.assertAssistantReply(
-          "Is a concise acknowledgement that it performed one or more actions.",
+        await factotum.assertAssistantIs(
+          "giving a concise acknowledgement that one or more actions were performed.",
         );
         await factotum.expectCollectionState(expenses.collection.id, {
           created: [
@@ -109,12 +109,12 @@ export default rd<Dependencies>(
         defineCollection.vetVisits([]),
       );
       await factotum.say("Filled up the Kia. 43.04 liters for 58.10 euros.");
-      await factotum.assertAssistantReply(
-        "Is asking for the odometer reading or telling it's required.",
+      await factotum.assertAssistantIs(
+        "asking for the odometer reading or telling it's required.",
       );
       await factotum.say("123456");
-      await factotum.assertAssistantReply(
-        "Is a concise acknowledgement that it performed one or more actions.",
+      await factotum.assertAssistantIs(
+        "giving a concise acknowledgement that one or more actions were performed.",
       );
       await factotum.expectCollectionState(expenses.collection.id, {
         created: [

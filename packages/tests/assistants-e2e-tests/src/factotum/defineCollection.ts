@@ -8,6 +8,7 @@ const calendar = (
   description: "My personal calendar.",
   assistantInstructions: [
     "- If the duration is not supplied for events, default to them being 1 hour long.",
+    "- Afternoon for me means from 13 to 18.",
   ].join("\n"),
   schema: {
     types: {

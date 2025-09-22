@@ -12,8 +12,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       defineCollection.calendarIt([]),
     );
     await factotum.say("Domani alle 9 arriva l'idraulico.");
-    await factotum.assertAssistantReply(
-      "Is a concise acknowledgement, in Italian (mandatory), that it performed one or more actions.",
+    await factotum.assertAssistantIs(
+      "giving a concise acknowledgement, in Italian (mandatory), that one or more actions were performed.",
     );
     await factotum.expectCollectionState(calendar.collection.id, {
       created: [
@@ -34,8 +34,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       defineCollection.calendarFr([]),
     );
     await factotum.say("Demain à 9 h, le plombier arrive.");
-    await factotum.assertAssistantReply(
-      "Is a concise acknowledgement, in French (mandatory), that it performed one or more actions.",
+    await factotum.assertAssistantIs(
+      "giving a concise acknowledgement, in French (mandatory), that it one or more actions were performed.",
     );
     await factotum.expectCollectionState(calendar.collection.id, {
       created: [
@@ -56,8 +56,8 @@ export default rd<Dependencies>("Speak in different languages", (deps) => {
       defineCollection.calendarDe([]),
     );
     await factotum.say("Morgen um 9 Uhr kommt der Klempner.");
-    await factotum.assertAssistantReply(
-      "Is a concise acknowledgement, in German (mandatory), that it performed one or more actions.",
+    await factotum.assertAssistantIs(
+      "giving a concise acknowledgement, in German (mandatory), that one or more actions were performed.",
     );
     await factotum.expectCollectionState(calendar.collection.id, {
       created: [

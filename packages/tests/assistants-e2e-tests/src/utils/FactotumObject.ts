@@ -15,7 +15,7 @@ import pMap from "p-map";
 import { assert, expect, vi } from "vitest";
 import assertIsContentAssistantMessage from "./assertIsContentAssistantMessage.js";
 import assertSuccessfulResult from "./assertSuccessfulResult.js";
-import type Evaluator from "./Evaluator.js";
+import Evaluator from "./Evaluator.js";
 
 /** Why the name? Akin to https://martinfowler.com/bliki/PageObject.html */
 class FactotumObject {
@@ -236,8 +236,8 @@ class FactotumObject {
   // assertAssistantReply //
   //////////////////////////
 
-  async assertAssistantReply(
-    requirements: string,
+  async assertAssistantIs(
+    expectedReplyDescription: string,
     scoreThreshold = 0.5,
   ): Promise<void> {
     assert.isNotNull(
@@ -254,18 +254,20 @@ class FactotumObject {
     // can do a better job.
     const { score, reason } = await this.evaluator.score(
       `
-      Consider this reply given by an LLM:
+Consider this reply given by an LLM:
 
-      <reply>
-      ${reply}
-      </reply>
+<reply>
+${reply}
+</reply>
 
-      How well does it satisfy these requirements? Give a score from 0 to 1.
+How well does it satisfy this description of what the expected reply should be?
 
-      <requirements>
-      ${requirements}
-      </requirements>
-    `
+<expected-reply-description>
+The LLM is ${expectedReplyDescription}
+</expected-reply-description>
+
+Give a score from 0 to 1 by calling the ${Evaluator.ToolName.GiveScore} tool.
+      `
         .trim()
         .replaceAll(/^ {6}/gm, ""),
     );
@@ -273,7 +275,8 @@ class FactotumObject {
     assert.isTrue(
       score >= scoreThreshold,
       [
-        "Reply does not satisfy requirement.",
+        "Reply does not match expected reply description.",
+        `Expected reply description: ${expectedReplyDescription}`,
         `Reply: ${reply}`,
         `Score: ${score}`,
         `Reason: ${reason}`,
