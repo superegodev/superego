@@ -16,7 +16,7 @@ export const ModalDialog = {
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100vw",
+    width: "100dvw",
     height: "var(--visual-viewport-height)",
     display: "flex",
     justifyContent: "center",

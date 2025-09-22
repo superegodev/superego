@@ -23,6 +23,9 @@ const columnRootBase = style({
   fontSize: vars.typography.fontSizes.sm,
   background: vars.colors.background.surface,
   borderBlockEnd: `${vars.borders.width.thick} solid ${vars.colors.border.default}`,
+  textWrap: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 });
 export const Column = {
   root: styleVariants({

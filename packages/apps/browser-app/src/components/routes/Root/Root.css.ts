@@ -3,8 +3,6 @@ import { vars } from "../../../themes.css.js";
 
 export const PrimarySidebarPanel = {
   root: style({
-    height: "100%",
-    overflow: "hidden",
     display: "flex",
     flexDirection: "column",
   }),

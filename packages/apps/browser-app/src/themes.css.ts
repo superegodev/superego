@@ -1,5 +1,10 @@
 import { createTheme } from "@vanilla-extract/css";
 
+export const breakpoints = {
+  small: "45rem",
+  medium: "67.5rem",
+};
+
 const commonVars = {
   shell: {
     panelHeaderHeight: "3rem",
@@ -104,6 +109,7 @@ const commonVars = {
       xl: "0.75rem",
       xl2: "1rem",
       xl3: "1.25rem",
+      xl4: "1.5rem",
       full: "9999px",
     },
     width: {

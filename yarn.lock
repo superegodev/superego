@@ -4283,6 +4283,7 @@ __metadata:
     "@superego/shared-utils": "workspace:*"
     "@tanstack/react-query": "npm:^5.89.0"
     typescript: "npm:^5.9.2"
+    urlpattern-polyfill: "npm:^10.1.0"
     vite: "npm:^7.1.6"
     wrangler: "npm:^4.38.0"
   languageName: unknown
@@ -10763,6 +10764,13 @@ __metadata:
   bin:
     update-browserslist-db: cli.js
   checksum: 10c0/682e8ecbf9de474a626f6462aa85927936cdd256fe584c6df2508b0df9f7362c44c957e9970df55dfe44d3623807d26316ea2c7d26b80bb76a16c56c37233c32
+  languageName: node
+  linkType: hard
+
+"urlpattern-polyfill@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "urlpattern-polyfill@npm:10.1.0"
+  checksum: 10c0/5b124fd8d0ae920aa2a48b49a7a3b9ad1643b5ce7217b808fb6877826e751cabc01897fd4c85cd1989c4e729072b63aad5c3ba1c1325e4433e0d2f6329156bf1
   languageName: node
   linkType: hard
 

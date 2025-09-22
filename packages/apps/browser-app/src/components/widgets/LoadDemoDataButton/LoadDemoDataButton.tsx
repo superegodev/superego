@@ -7,6 +7,8 @@ import useLocalStorageItem from "../../../business-logic/local-storage/useLocalS
 import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
+import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import Button from "../../design-system/Button/Button.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import Popover from "../../design-system/Popover/Popover.js";
@@ -17,7 +19,7 @@ interface Props {
 }
 export default function LoadDemoDataButton({ loadDemoData }: Props) {
   const intl = useIntl();
-
+  const screenSize = useScreenSize();
   const { navigateTo } = useNavigationState();
 
   const [hasDemoDataLoaded, setHasLoadedDemoData] = useLocalStorageItem(
@@ -35,7 +37,7 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
     },
   });
 
-  return (
+  return screenSize > ScreenSize.Small || !hasDemoDataLoaded ? (
     <DialogTrigger>
       <div className={cs.LoadDemoDataButton.root}>
         <IconButton
@@ -101,5 +103,5 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
         </Dialog>
       </Popover>
     </DialogTrigger>
-  );
+  ) : null;
 }

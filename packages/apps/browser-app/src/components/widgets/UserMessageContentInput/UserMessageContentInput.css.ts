@@ -5,13 +5,12 @@ export const UserMessageContentInput = {
   root: style({
     position: "relative",
     width: "100%",
-  }),
-
-  textField: style({
+    display: "flex",
+    alignItems: "center",
     paddingInlineStart: vars.spacing._5,
-    paddingInlineEnd: vars.spacing._12,
+    paddingInlineEnd: vars.spacing._5,
     paddingBlock: vars.spacing._3,
-    borderRadius: vars.borders.radius.full,
+    borderRadius: vars.borders.radius.xl4,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
     boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
     selectors: {
@@ -22,6 +21,11 @@ export const UserMessageContentInput = {
     },
   }),
 
+  textField: style({
+    flexGrow: 1,
+    padding: 0,
+  }),
+
   textArea: style({
     width: "100%",
     maxHeight: vars.spacing._80,
@@ -30,12 +34,9 @@ export const UserMessageContentInput = {
     border: 0,
     background: vars.colors.background.surface,
     color: vars.colors.text.primary,
-    // Experimental property:
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
-    //
-    // Used even if not supported by all browsers since it just enhances the
-    // experience, which still works well without it.
-    ["fieldSizing" as any]: "content",
+    height: 16.5,
+    padding: 0,
+    marginBlock: vars.spacing._0_5,
     resize: "none",
     selectors: {
       "&:disabled": {
@@ -71,11 +72,10 @@ const sendRecordToolbarButtonBase = style({
 });
 export const SendRecordToolbar = {
   root: style({
-    position: "absolute",
-    // Manual pixel adjustment to center the buttons with the default
-    // textarea height.
-    bottom: `calc(${vars.spacing._1} + 1.5px)`,
-    right: vars.spacing._4,
+    marginBlock: `calc(-1 * ${vars.spacing._3})`,
+    alignSelf: "end",
+    position: "relative",
+    bottom: vars.spacing._1,
   }),
 
   button: sendRecordToolbarButtonBase,

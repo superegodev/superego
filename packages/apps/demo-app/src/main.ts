@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+import "urlpattern-polyfill";
 import { AssistantName, Theme } from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
