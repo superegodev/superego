@@ -1,4 +1,10 @@
+import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
+import type AssistantName from "./enums/AssistantName.js";
+import type ConversationFormat from "./enums/ConversationFormat.js";
+import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
+import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
+import type CannotRetryLastResponse from "./errors/CannotRetryLastResponse.js";
 import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasChildren.js";
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
@@ -8,63 +14,77 @@ import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotVal
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
-import type CollectionSummaryPropertiesNotValid from "./errors/CollectionSummaryPropertiesNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
+import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
+import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
+import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type UnexpectedError from "./errors/UnexpectedError.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
+import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type AudioContent from "./types/AudioContent.js";
+import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
+import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
+import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
+import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
-import type RpcResultPromise from "./types/RpcResultPromise.js";
+import type LiteDocument from "./types/LiteDocument.js";
+import type Message from "./types/Message.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
   collectionCategories: {
     create(
       proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
-    ): RpcResultPromise<
+    ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNameNotValid
       | CollectionCategoryIconNotValid
       | ParentCollectionCategoryNotFound
+      | UnexpectedError
     >;
 
     update(
       id: CollectionCategoryId,
       patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNotFound
       | CollectionCategoryNameNotValid
       | CollectionCategoryIconNotValid
       | ParentCollectionCategoryNotFound
       | CollectionCategoryIsDescendant
+      | UnexpectedError
     >;
 
     delete(
       id: CollectionCategoryId,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      CollectionCategoryNotFound | CollectionCategoryHasChildren
+      | CollectionCategoryNotFound
+      | CollectionCategoryHasChildren
+      | UnexpectedError
     >;
 
-    list(): RpcResultPromise<CollectionCategory[]>;
+    list(): ResultPromise<CollectionCategory[], UnexpectedError>;
   };
 
   collections: {
@@ -72,22 +92,24 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
+      | UnexpectedError
     >;
 
     updateSettings(
       id: CollectionId,
       settingsPatch: Partial<CollectionSettings>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | UnexpectedError
     >;
 
     /** Creates a new version for the collection and migrates all documents. */
@@ -97,25 +119,27 @@ export default interface Backend {
       schema: Schema,
       settings: CollectionVersionSettings,
       migration: TypescriptModule,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | CollectionSchemaNotValid
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
       | CollectionMigrationNotValid
       | CollectionMigrationFailed
+      | UnexpectedError
     >;
 
     updateLatestVersionSettings(
       id: CollectionId,
       latestVersionId: CollectionVersionId,
       settingsPatch: Partial<CollectionVersionSettings>,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
-      | CollectionSummaryPropertiesNotValid
+      | ContentSummaryGetterNotValid
+      | UnexpectedError
     >;
 
     /**
@@ -128,21 +152,24 @@ export default interface Backend {
     delete(
       id: CollectionId,
       commandConfirmation: string,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      CollectionNotFound | CommandConfirmationNotValid
+      CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
-    list(): RpcResultPromise<Collection[]>;
+    list(): ResultPromise<Collection[], UnexpectedError>;
   };
 
   documents: {
     create(
       collectionId: CollectionId,
       content: any,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Document,
-      CollectionNotFound | DocumentContentNotValid | FilesNotFound
+      | CollectionNotFound
+      | DocumentContentNotValid
+      | FilesNotFound
+      | UnexpectedError
     >;
 
     createNewVersion(
@@ -150,12 +177,13 @@ export default interface Backend {
       id: DocumentId,
       latestVersionId: DocumentVersionId,
       content: any,
-    ): RpcResultPromise<
+    ): ResultPromise<
       Document,
       | DocumentNotFound
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
+      | UnexpectedError
     >;
 
     /**
@@ -169,19 +197,28 @@ export default interface Backend {
       collectionId: CollectionId,
       id: DocumentId,
       commandConfirmation: string,
-    ): RpcResultPromise<
+    ): ResultPromise<
       DeletedEntities,
-      DocumentNotFound | CommandConfirmationNotValid
+      DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
     list(
       collectionId: CollectionId,
-    ): RpcResultPromise<Document[], CollectionNotFound>;
+    ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;
 
     get(
       collectionId: CollectionId,
       id: DocumentId,
-    ): RpcResultPromise<Document, DocumentNotFound>;
+    ): ResultPromise<Document, DocumentNotFound | UnexpectedError>;
+
+    getVersion(
+      collectionId: CollectionId,
+      documentId: DocumentId,
+      documentVersionId: DocumentVersionId,
+    ): ResultPromise<
+      DocumentVersion,
+      DocumentVersionNotFound | UnexpectedError
+    >;
   };
 
   files: {
@@ -189,14 +226,69 @@ export default interface Backend {
       collectionId: CollectionId,
       documentId: DocumentId,
       id: FileId,
-    ): RpcResultPromise<Uint8Array, FileNotFound>;
+    ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError>;
+  };
+
+  assistants: {
+    startConversation(
+      assistant: AssistantName,
+      format: ConversationFormat,
+      userMessageContent: Message.User["content"],
+    ): ResultPromise<Conversation, UnexpectedError>;
+
+    continueConversation(
+      id: ConversationId,
+      userMessageContent: Message.User["content"],
+    ): ResultPromise<
+      Conversation,
+      ConversationNotFound | CannotContinueConversation | UnexpectedError
+    >;
+
+    retryLastResponse(
+      id: ConversationId,
+    ): ResultPromise<
+      Conversation,
+      ConversationNotFound | CannotRetryLastResponse | UnexpectedError
+    >;
+
+    recoverConversation(
+      id: ConversationId,
+    ): ResultPromise<
+      Conversation,
+      ConversationNotFound | CannotRecoverConversation | UnexpectedError
+    >;
+
+    deleteConversation(
+      id: ConversationId,
+      commandConfirmation: string,
+    ): ResultPromise<
+      DeletedEntities,
+      ConversationNotFound | CommandConfirmationNotValid | UnexpectedError
+    >;
+
+    listConversations(): ResultPromise<
+      Omit<Conversation, "messages">[],
+      UnexpectedError
+    >;
+
+    getConversation(
+      id: ConversationId,
+    ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
+
+    getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
+
+    tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
+  };
+
+  backgroundJobs: {
+    list(): ResultPromise<BackgroundJob[], UnexpectedError>;
   };
 
   globalSettings: {
-    get(): RpcResultPromise<GlobalSettings>;
+    get(): ResultPromise<GlobalSettings, UnexpectedError>;
 
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
-    ): RpcResultPromise<GlobalSettings>;
+    ): ResultPromise<GlobalSettings, UnexpectedError>;
   };
 }

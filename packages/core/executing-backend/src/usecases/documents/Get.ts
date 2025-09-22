@@ -4,12 +4,13 @@ import type {
   Document,
   DocumentId,
   DocumentNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeDocument from "../../makers/makeDocument.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import assertDocumentVersionMatchesCollectionVersion from "../../utils/assertDocumentVersionMatchesCollectionVersion.js";
@@ -19,11 +20,11 @@ export default class DocumentsGet extends Usecase<Backend["documents"]["get"]> {
   async exec(
     collectionId: CollectionId,
     id: DocumentId,
-  ): RpcResultPromise<Document, DocumentNotFound> {
+  ): ResultPromise<Document, DocumentNotFound | UnexpectedError> {
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentNotFound", { documentId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentNotFound", { documentId: id }),
       );
     }
 
@@ -46,7 +47,7 @@ export default class DocumentsGet extends Usecase<Backend["documents"]["get"]> {
       latestVersion,
     );
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       await makeDocument(
         this.javascriptSandbox,
         latestCollectionVersion,

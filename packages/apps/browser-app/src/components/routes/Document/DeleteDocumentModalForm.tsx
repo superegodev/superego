@@ -3,14 +3,13 @@ import type { Document } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { object, pipe, string, value } from "valibot";
+import * as v from "valibot";
 import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
-import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./Document.css.js";
@@ -35,8 +34,8 @@ export default function DeleteDocumentModalForm({
 
   const { result, mutate } = useDeleteDocument();
 
-  const schema = object({
-    commandConfirmation: pipe(string(), value("delete")),
+  const schema = v.strictObject({
+    commandConfirmation: v.pipe(v.string(), v.value("delete")),
   });
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: { commandConfirmation: "" },
@@ -99,16 +98,7 @@ export default function DeleteDocumentModalForm({
             <FormattedMessage defaultMessage="Delete" />
           </RHFSubmitButton>
         </div>
-        {result?.error ? (
-          <Alert
-            variant="error"
-            title={intl.formatMessage({
-              defaultMessage: "Error deleting document",
-            })}
-          >
-            <RpcError error={result.error} />
-          </Alert>
-        ) : null}
+        {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>
   );

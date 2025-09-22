@@ -1,15 +1,17 @@
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
+import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
+import CodeInput from "../../design-system/CodeInput/CodeInput.js";
+import type IncludedGlobalUtils from "../../design-system/CodeInput/typescript/IncludedGlobalUtils.js";
+import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
 import {
   Description,
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
-import type TypescriptLib from "../../design-system/TypescriptModuleInput/TypescriptLib.js";
-import TypescriptModuleInput from "../../design-system/TypescriptModuleInput/TypescriptModuleInput.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   typescriptLibs?: TypescriptLib[] | undefined;
+  includedGlobalUtils?: IncludedGlobalUtils | undefined;
   className?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
@@ -31,36 +34,48 @@ export default function RHFTypescriptModuleField({
   isDisabled,
   autoFocus,
   typescriptLibs,
+  includedGlobalUtils,
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
+  const isInvalid =
+    fieldState.invalid &&
+    !(
+      field.value !== null &&
+      typeof field.value === "object" &&
+      field.value.compiled === forms.constants.COMPILATION_IN_PROGRESS
+    );
   return (
     <div
       data-disabled={isDisabled}
       className={classnames(cs.RHFTypescriptModuleField.root, className)}
     >
       {label ? <Label>{label}</Label> : null}
-      <TypescriptModuleInput
+      <CodeInput
+        language="typescript"
         value={field.value ?? { source: "", compiled: "" }}
         onChange={field.onChange}
         onBlur={field.onBlur}
         autoFocus={autoFocus}
-        isInvalid={fieldState.invalid}
+        isInvalid={isInvalid}
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
-        maxHeight={vars.spacing._80}
+        includedGlobalUtils={includedGlobalUtils}
+        maxHeight={vars.spacing._160}
         ref={field.ref}
       />
       <FieldErrorContext
         value={{
-          isInvalid: fieldState.invalid,
+          isInvalid: isInvalid,
           validationErrors: fieldState.error?.message
             ? [fieldState.error.message]
             : [],
           validationDetails: {} as any,
         }}
       >
-        <FieldError>{fieldState.error?.message}</FieldError>
+        <FieldError className={cs.RHFTypescriptModuleField.error}>
+          {fieldState.error?.message}
+        </FieldError>
       </FieldErrorContext>
       {description ? <Description>{description}</Description> : null}
     </div>

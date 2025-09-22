@@ -2,18 +2,19 @@ import type {
   Backend,
   Collection,
   CollectionId,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsList extends Usecase<
   Backend["collections"]["list"]
 > {
-  async exec(): RpcResultPromise<Collection[]> {
+  async exec(): ResultPromise<Collection[], UnexpectedError> {
     const collections = await this.repos.collection.findAll();
     const latestVersions = await this.repos.collectionVersion.findAllLatests();
     const latestVersionsByCollectionId = new Map<
@@ -27,7 +28,7 @@ export default class CollectionsList extends Usecase<
       );
     });
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       collections.map((collection) => {
         const latestVersion = latestVersionsByCollectionId.get(collection.id);
         assertCollectionVersionExists(collection.id, latestVersion);

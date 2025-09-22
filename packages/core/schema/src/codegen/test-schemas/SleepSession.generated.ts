@@ -2,111 +2,84 @@
 // Schema types //
 //////////////////
 
-/**
- * Summary of time spent in different sleep stages in minutes.
- */
+/** Summary of time spent in different sleep stages in minutes. */
 export type SleepStageSummary = {
-  /**
-   * Minutes in deep sleep.
-   */
+  /** Minutes in deep sleep. */
   deep: number;
-  /**
-   * Minutes in light sleep.
-   */
+  /** Minutes in light sleep. */
   light: number;
-  /**
-   * Minutes in REM sleep.
-   */
+  /** Minutes in REM sleep. */
   rem: number;
-  /**
-   * Minutes awake during the sleep period.
-   */
+  /** Minutes awake during the sleep period. */
   awake: number;
 };
 
-/**
- * Details of a sleep interruption.
- */
+/** Details of a sleep interruption. */
 export type SleepInterruption = {
   /**
    * Timestamp of the interruption.
    *
-   * Format `dev.superego:String.Instant`:
+   * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
    *
-   * Examples:
-   *
+   * Format examples:
    * - "2006-08-24T19:39:09.000Z"
-   * - "2006-08-24T19:39:09.068Z"
+   * - "2006-08-24T22:39:09.068+03:00"
    */
   time: string;
-  /**
-   * Duration of the interruption in seconds.
-   */
+  /** Duration of the interruption in seconds. */
   durationSeconds: number;
-  /**
-   * User-reported reason for interruption.
-   */
+  /** User-reported reason for interruption. */
   reason: string | null;
 };
 
 /**
  * Represents a single sleep session.
+ *
+ * Note: This is the root type of this schema.
  */
 export type SleepSession = {
   /**
-   * Format `dev.superego:String.Instant`:
+   * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
    *
-   * Examples:
-   *
+   * Format examples:
    * - "2006-08-24T19:39:09.000Z"
-   * - "2006-08-24T19:39:09.068Z"
+   * - "2006-08-24T22:39:09.068+03:00"
    */
   startTime: string;
   /**
-   * Format `dev.superego:String.Instant`:
+   * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
    *
-   * Examples:
-   *
+   * Format examples:
    * - "2006-08-24T19:39:09.000Z"
-   * - "2006-08-24T19:39:09.068Z"
+   * - "2006-08-24T22:39:09.068+03:00"
    */
   endTime: string;
-  /**
-   * Total duration in bed in minutes.
-   */
+  /** Total duration in bed in minutes. */
   totalDurationMinutes: number;
-  /**
-   * Calculated actual sleep duration in minutes.
-   */
+  /** Calculated actual sleep duration in minutes. */
   actualSleepMinutes: number | null;
   /**
    * Sleep quality score (e.g., 0-100).
    *
-   * Format `dev.superego:Number.Integer`:
+   * #### Format `dev.superego:Number.Integer`
    *
    * An integer
    *
-   * Examples:
-   *
+   * Format examples:
    * - -1
    * - 0
-   * - 1
    */
   qualityScore: number | null;
   sleepStages: SleepStageSummary | null;
   interruptions: SleepInterruption[] | null;
-  /**
-   * Whether a dream was recorded for this session.
-   */
+  /** Whether a dream was recorded for this session. */
   dreamRecorded: false;
-  /**
-   * Notes about any dreams.
-   */
+  /** Notes about any dreams. */
   dreamNotes: string | null;
 };

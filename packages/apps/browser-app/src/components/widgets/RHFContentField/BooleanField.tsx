@@ -46,6 +46,7 @@ export default function BooleanField({
     >
       <AnyFieldLabel
         typeDefinition={typeDefinition}
+        isNullable={isNullable}
         label={label}
         actions={
           <NullifyFieldAction

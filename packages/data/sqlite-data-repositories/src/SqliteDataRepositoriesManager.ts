@@ -54,6 +54,7 @@ export default class SqliteDataRepositoriesManager
     const { fileName, enableForeignKeyConstraints = true } = this.options;
     const db = new DatabaseSync(fileName, { enableForeignKeyConstraints });
     db.exec("PRAGMA journal_mode = WAL");
+    db.exec("PRAGMA synchronous = FULL");
     return db;
   }
 }

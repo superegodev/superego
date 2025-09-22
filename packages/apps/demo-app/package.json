@@ -8,13 +8,18 @@
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "build": "yarn clean && vite build",
-    "deploy": "wrangler pages deploy dist/ --project-name demosuperegodev"
+    "build:preview": "yarn clean && vite build",
+    "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production vite build",
+    "deploy:preview": "wrangler pages deploy dist/ --project-name demosuperegodev",
+    "deploy:production": "wrangler deploy",
+    "wrangler": "wrangler"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
-    "vite": "^7.0.6",
-    "wrangler": "^4.26.0"
+    "@cloudflare/vite-plugin": "^1.13.3",
+    "@cloudflare/workers-types": "^4.20250922.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.6",
+    "wrangler": "^4.38.0"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -22,6 +27,8 @@
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
-    "@tanstack/react-query": "^5.83.0"
+    "@superego/openai-compat-inference-service": "workspace:^",
+    "@superego/shared-utils": "workspace:*",
+    "@tanstack/react-query": "^5.89.0"
   }
 }

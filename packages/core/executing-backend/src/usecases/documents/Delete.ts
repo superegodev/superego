@@ -5,12 +5,13 @@ import type {
   DeletedEntities,
   DocumentId,
   DocumentNotFound,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsDelete extends Usecase<
@@ -20,13 +21,13 @@ export default class DocumentsDelete extends Usecase<
     collectionId: CollectionId,
     id: DocumentId,
     commandConfirmation: string,
-  ): RpcResultPromise<
+  ): ResultPromise<
     DeletedEntities,
-    DocumentNotFound | CommandConfirmationNotValid
+    DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CommandConfirmationNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CommandConfirmationNotValid", {
           requiredCommandConfirmation: "delete",
           suppliedCommandConfirmation: commandConfirmation,
         }),
@@ -35,8 +36,8 @@ export default class DocumentsDelete extends Usecase<
 
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentNotFound", { documentId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentNotFound", { documentId: id }),
       );
     }
 
@@ -45,7 +46,7 @@ export default class DocumentsDelete extends Usecase<
       await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
     await this.repos.document.delete(id);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       makeDeletedEntities({
         documents: [id],
         documentVersion: deletedDocumentVersionIds,

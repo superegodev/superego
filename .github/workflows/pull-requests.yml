@@ -15,13 +15,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Install Playwright
-        run: yarn dlx playwright install chromium --with-deps
+        run: yarn playwright install chromium --with-deps
       - name: Check formatting
         run: yarn check-formatting
-      - name: Check types
-        run: yarn check-types
       - name: Check linting
         run: yarn check-linting
+      - name: Check translations
+        run: yarn check-translations
+      - name: Check types
+        run: yarn check-types
       - name: Test
         run: yarn test
 
@@ -37,13 +39,13 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
-      - name: Build
-        run: yarn build-demo
-      - name: Deploy demo-app preview to *.demosuperegodev.pages.dev
+      - name: Build demo-app for preview environment
+        run: yarn build-demo:preview
+      - name: Deploy demo-app to preview environment
         env:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
-        run: yarn deploy-demo --branch ${{ github.event.number }}
+        run: yarn deploy-demo:preview --branch ${{ github.event.number }}
 
   build-deploy-electron:
     needs: qa
@@ -75,6 +77,8 @@ jobs:
           PR_NUMBER=$(echo "$GITHUB_REF" | awk -F'/' '{print $3}')
           printf '%s' "$(jq ".version = \"0.0.0-PR-${PR_NUMBER}\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
       - name: Build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
         run: yarn build-electron
       - name: Get OS friendly name
         id: get-os

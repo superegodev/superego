@@ -10,4 +10,12 @@ export const RHFTypescriptModuleField = {
       },
     },
   }),
+
+  error: style({
+    selectors: {
+      ":has(.monaco-editor.focused) &": {
+        display: "none",
+      },
+    },
+  }),
 };

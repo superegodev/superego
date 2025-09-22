@@ -1,6 +1,6 @@
-import type RpcError from "../types/RpcError.js";
+import type { ResultError } from "@superego/global-types";
 
-type CommandConfirmationNotValid = RpcError<
+type CommandConfirmationNotValid = ResultError<
   "CommandConfirmationNotValid",
   {
     suppliedCommandConfirmation: string;

@@ -2,12 +2,20 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const CreateNewCollectionVersionForm = {
-  schemaTextField: style({
-    minHeight: vars.spacing._80,
-  }),
-
   submitButtonContainer: style({
     display: "flex",
     justifyContent: "flex-end",
+  }),
+};
+
+export const TabTitle = {
+  root: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
+  }),
+
+  icon: style({
+    color: vars.colors.semantic.error.text,
   }),
 };

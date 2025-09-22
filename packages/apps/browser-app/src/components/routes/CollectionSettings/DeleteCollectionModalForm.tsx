@@ -3,13 +3,12 @@ import type { Collection } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { object, pipe, string, value } from "valibot";
+import * as v from "valibot";
 import { useDeleteCollection } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -34,8 +33,8 @@ export default function DeleteCollectionModalForm({
 
   const { result, mutate } = useDeleteCollection();
 
-  const schema = object({
-    commandConfirmation: pipe(string(), value("delete")),
+  const schema = v.strictObject({
+    commandConfirmation: v.pipe(v.string(), v.value("delete")),
   });
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: { commandConfirmation: "" },
@@ -46,7 +45,7 @@ export default function DeleteCollectionModalForm({
   const onSubmit = async ({ commandConfirmation }: FormValues) => {
     const { success } = await mutate(collection.id, commandConfirmation);
     if (success) {
-      navigateTo({ name: RouteName.Home });
+      navigateTo({ name: RouteName.Ask });
     }
   };
 
@@ -91,16 +90,7 @@ export default function DeleteCollectionModalForm({
             <FormattedMessage defaultMessage="Delete" />
           </RHFSubmitButton>
         </div>
-        {result?.error ? (
-          <Alert
-            variant="error"
-            title={intl.formatMessage({
-              defaultMessage: "Error deleting collection",
-            })}
-          >
-            <RpcError error={result.error} />
-          </Alert>
-        ) : null}
+        {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>
   );

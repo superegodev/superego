@@ -26,8 +26,10 @@ interface Props<
   isDisabled?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
+  emptyInputValue?: "" | null | undefined;
   showErrorOnError?: boolean | undefined;
   textArea?: boolean | undefined;
+  password?: boolean | undefined;
   placeholder?: string | undefined;
   className?: string | undefined;
 }
@@ -42,8 +44,10 @@ export default function RHFTextField<
   isDisabled,
   isReadOnly,
   autoFocus,
+  emptyInputValue = "",
   showErrorOnError = true,
   textArea = false,
+  password = false,
   placeholder,
   className,
   ...props
@@ -55,10 +59,13 @@ export default function RHFTextField<
         <TextField
           id={field.name}
           name={field.name}
-          value={field.value}
+          value={field.value ?? ""}
+          type={password ? "password" : "text"}
           isDisabled={isDisabled}
           isReadOnly={isReadOnly}
-          onChange={field.onChange}
+          onChange={(value) =>
+            field.onChange(value === "" ? emptyInputValue : value)
+          }
           onBlur={field.onBlur}
           validationBehavior="aria"
           isInvalid={fieldState.invalid}

@@ -5,10 +5,11 @@ import type {
   CollectionSchemaNotValid,
   CollectionSettings,
   CollectionSettingsNotValid,
-  CollectionSummaryPropertiesNotValid,
   CollectionVersionSettings,
-  RpcResultPromise,
+  ContentSummaryGetterNotValid,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   type Schema,
   valibotSchemas as schemaValibotSchemas,
@@ -21,11 +22,10 @@ import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsCreate extends Usecase<
@@ -35,23 +35,30 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-  ): RpcResultPromise<
+    dryRun = false,
+  ): ResultPromise<
     Collection,
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
     | CollectionSchemaNotValid
-    | CollectionSummaryPropertiesNotValid
+    | ContentSummaryGetterNotValid
+    | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
-      v.object({
+      v.strictObject({
         name: backedUtilsValibotSchemas.collectionName(),
         icon: v.nullable(backedUtilsValibotSchemas.icon()),
+        collectionCategoryId: v.nullable(
+          backedUtilsValibotSchemas.id.collectionCategory(),
+        ),
+        description: v.nullable(v.string()),
+        assistantInstructions: v.nullable(v.string()),
       }),
       settings,
     );
     if (!settingsValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSettingsNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSettingsNotValid", {
           collectionId: null,
           issues: makeValidationIssues(settingsValidationResult.issues),
         }),
@@ -64,8 +71,8 @@ export default class CollectionsCreate extends Usecase<
         settings.collectionCategoryId,
       ))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: settings.collectionCategoryId,
         }),
       );
@@ -76,35 +83,30 @@ export default class CollectionsCreate extends Usecase<
       schema,
     );
     if (!schemaValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSchemaNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSchemaNotValid", {
           collectionId: null,
           issues: makeValidationIssues(schemaValidationResult.issues),
         }),
       );
     }
 
-    const nonValidSummaryPropertyIndexes = (
-      await Promise.all(
-        versionSettings.summaryProperties.map(({ getter }) =>
-          this.javascriptSandbox.moduleDefaultExportsFunction(getter),
-        ),
-      )
-    ).reduce<number[]>(
-      (indexes, isValid, index) => (isValid ? indexes : [...indexes, index]),
-      [],
-    );
-    if (!isEmpty(nonValidSummaryPropertyIndexes)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSummaryPropertiesNotValid", {
+    const isContentSummaryGetterValid =
+      await this.javascriptSandbox.moduleDefaultExportsFunction(
+        versionSettings.contentSummaryGetter,
+      );
+    if (!isContentSummaryGetterValid) {
+      return makeUnsuccessfulResult(
+        makeResultError("ContentSummaryGetterNotValid", {
           collectionId: null,
           collectionVersionId: null,
-          issues: nonValidSummaryPropertyIndexes.map((index) => ({
-            // TODO: i18n
-            message:
-              "The default export of the getter TypescriptModule is not a function",
-            path: [{ key: index }, { key: "getter" }],
-          })),
+          issues: [
+            {
+              message:
+                "The default export of the getter TypescriptModule is not a function",
+              path: [{ key: "getter" }],
+            },
+          ],
         }),
       );
     }
@@ -115,7 +117,11 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         name: settingsValidationResult.output.name,
         icon: settingsValidationResult.output.icon,
-        collectionCategoryId: settings.collectionCategoryId,
+        collectionCategoryId:
+          settingsValidationResult.output.collectionCategoryId,
+        description: settingsValidationResult.output.description,
+        assistantInstructions:
+          settingsValidationResult.output.assistantInstructions,
       },
       createdAt: now,
     };
@@ -124,15 +130,17 @@ export default class CollectionsCreate extends Usecase<
       previousVersionId: null,
       collectionId: collection.id,
       schema: schemaValidationResult.output,
-      settings: versionSettings,
+      settings: {
+        contentSummaryGetter: versionSettings.contentSummaryGetter,
+      },
       migration: null,
       createdAt: now,
     };
-    await this.repos.collection.insert(collection);
-    await this.repos.collectionVersion.insert(collectionVersion);
+    if (!dryRun) {
+      await this.repos.collection.insert(collection);
+      await this.repos.collectionVersion.insert(collectionVersion);
+    }
 
-    return makeSuccessfulRpcResult(
-      makeCollection(collection, collectionVersion),
-    );
+    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
 }

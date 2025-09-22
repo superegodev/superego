@@ -1,7 +1,7 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import { afterAll, beforeAll } from "vitest";
 import SqliteDataRepositoriesManager from "./SqliteDataRepositoriesManager.js";
@@ -21,7 +21,31 @@ afterAll(() => {
 registerDataRepositoriesTests(async () => {
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-    defaultGlobalSettings: { theme: Theme.Auto },
+    defaultGlobalSettings: {
+      appearance: { theme: Theme.Auto },
+      inference: {
+        chatCompletions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
+        },
+      },
+      assistants: {
+        userName: null,
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionCreator]: null,
+        },
+      },
+    },
     enableForeignKeyConstraints: false,
   });
   dataRepositoriesManager.runMigrations();

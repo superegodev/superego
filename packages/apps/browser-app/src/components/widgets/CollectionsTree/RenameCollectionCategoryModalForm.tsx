@@ -6,9 +6,8 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionCategory } from "../../../business-logic/backend/hooks.js";
-import Alert from "../../design-system/Alert/Alert.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../RHFEmojiField/RHFEmojiField.js";
 import RHFSubmitButton from "../RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
@@ -85,16 +84,7 @@ export default function RenameCollectionCategoryModalForm({
             <FormattedMessage defaultMessage="Save" />
           </RHFSubmitButton>
         </div>
-        {result?.error ? (
-          <Alert
-            variant="error"
-            title={intl.formatMessage({
-              defaultMessage: "Error deleting collection",
-            })}
-          >
-            <RpcError error={result.error} />
-          </Alert>
-        ) : null}
+        {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>
   );

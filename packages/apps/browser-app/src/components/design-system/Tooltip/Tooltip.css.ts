@@ -20,25 +20,25 @@ export const Tooltip = {
         transform: "var(--origin)",
         opacity: 0,
       },
-      "&[data-placement=top]": {
+      '&[data-placement="top"]': {
         marginBlockEnd: vars.spacing._2,
         vars: {
           "--origin": `translateY(${vars.spacing._1})`,
         },
       },
-      "&[data-placement=bottom]": {
+      '&[data-placement="bottom"]': {
         marginBlockStart: vars.spacing._2,
         vars: {
           "--origin": `translateY(calc(-1 * ${vars.spacing._1}))`,
         },
       },
-      "&[data-placement=left]": {
+      '&[data-placement="left"]': {
         marginInlineEnd: vars.spacing._2,
         vars: {
           "--origin": `translateX(${vars.spacing._1})`,
         },
       },
-      "&[data-placement=right]": {
+      '&[data-placement="right"]': {
         marginInlineStart: vars.spacing._2,
         vars: {
           "--origin": `translateX(calc(-1 * ${vars.spacing._1}))`,

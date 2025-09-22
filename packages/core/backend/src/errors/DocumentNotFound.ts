@@ -1,7 +1,7 @@
+import type { ResultError } from "@superego/global-types";
 import type DocumentId from "../ids/DocumentId.js";
-import type RpcError from "../types/RpcError.js";
 
-type DocumentNotFound = RpcError<
+type DocumentNotFound = ResultError<
   "DocumentNotFound",
   {
     documentId: DocumentId;

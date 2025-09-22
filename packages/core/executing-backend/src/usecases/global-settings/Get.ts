@@ -1,16 +1,17 @@
 import type {
   Backend,
   GlobalSettings,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
+import type { ResultPromise } from "@superego/global-types";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class GlobalSettingsGet extends Usecase<
   Backend["globalSettings"]["get"]
 > {
-  async exec(): RpcResultPromise<GlobalSettings> {
+  async exec(): ResultPromise<GlobalSettings, UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
-    return makeSuccessfulRpcResult(globalSettings);
+    return makeSuccessfulResult(globalSettings);
   }
 }

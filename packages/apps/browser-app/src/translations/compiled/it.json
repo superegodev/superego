@@ -1,0 +1,1942 @@
+{
+  "AppearanceSettings.tsx_Pe0ogR": [
+    {
+      "type": 0,
+      "value": "Tema"
+    }
+  ],
+  "Ask.tsx_khigiR": [
+    {
+      "type": 0,
+      "value": "Conversazioni precedenti"
+    }
+  ],
+  "Ask.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "Come posso aiutarti?"
+    }
+  ],
+  "AssistantsSettings.tsx_mTE6Ss": [
+    {
+      "type": 0,
+      "value": "Prompt per sviluppatori di Collection Creator"
+    }
+  ],
+  "AssistantsSettings.tsx_qmPVim": [
+    {
+      "type": 0,
+      "value": "Prompt per sviluppatori di Factotum"
+    }
+  ],
+  "AssistantsSettings.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Il tuo nome"
+    }
+  ],
+  "BooleanField.tsx_KKkUks": [
+    {
+      "type": 0,
+      "value": "Vero"
+    }
+  ],
+  "BooleanField.tsx_rxqs5U": [
+    {
+      "type": 0,
+      "value": "Falso"
+    }
+  ],
+  "BrowserApp.tsx_w1vfWS": [
+    {
+      "type": 0,
+      "value": "Errore durante il caricamento dell'app"
+    }
+  ],
+  "Collection.tsx_D3idYv": [
+    {
+      "type": 0,
+      "value": "Impostazioni"
+    }
+  ],
+  "Collection.tsx_r0FgVC": [
+    {
+      "type": 0,
+      "value": "Crea documento"
+    }
+  ],
+  "Collection.tsx_zYomDH": [
+    {
+      "type": 0,
+      "value": "Azioni della collezione"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_ISrFoo": [
+    {
+      "type": 0,
+      "value": "Apri il menu delle azioni di "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "CollectionCategoryActionsMenu.tsx_iXNbPf": [
+    {
+      "type": 0,
+      "value": "Rinomina"
+    }
+  ],
+  "CollectionSettings.tsx_AHx1om": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Impostazioni"
+    }
+  ],
+  "CollectionSettings.tsx_GjrlL9": [
+    {
+      "type": 0,
+      "value": "Impostazioni generali"
+    }
+  ],
+  "CollectionSettings.tsx_VcipZo": [
+    {
+      "type": 0,
+      "value": "Impostazioni dell'ultima versione"
+    }
+  ],
+  "CollectionSettings.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Crea nuova versione"
+    }
+  ],
+  "CollectionSettings.tsx_m4GG4b": [
+    {
+      "type": 0,
+      "value": "Elimina collezione"
+    }
+  ],
+  "CollectionSettings.tsx_zNudDK": [
+    {
+      "type": 0,
+      "value": "Azioni delle impostazioni della collezione"
+    }
+  ],
+  "CollectionsTree.tsx_XjdXFR": [
+    {
+      "type": 0,
+      "value": "Crea una collezione per iniziare."
+    }
+  ],
+  "CollectionsTree.tsx_gykodq": [
+    {
+      "type": 0,
+      "value": "Albero delle categorie di collezioni e delle collezioni"
+    }
+  ],
+  "CompilationInProgressIndicator.tsx_MCO54A": [
+    {
+      "type": 0,
+      "value": "Compilazione in corso..."
+    }
+  ],
+  "ContentSummary.tsx_kvPscx": [
+    {
+      "type": 0,
+      "value": "Errore durante l'elaborazione del sommario dei contenuti: "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "ContentSummaryTab.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "Conversation.tsx_9eR0Qp": [
+    {
+      "type": 0,
+      "value": "Elimina conversazione"
+    }
+  ],
+  "Conversation.tsx_Ro7LyR": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni » "
+    },
+    {
+      "type": 1,
+      "value": "assistant"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "Conversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Attiva/disattiva le chiamate allo strumento"
+    }
+  ],
+  "Conversation.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "Come posso aiutarti?"
+    }
+  ],
+  "Conversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Azioni della conversazione"
+    }
+  ],
+  "Conversation.tsx_y2z/xn": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni » "
+    },
+    {
+      "type": 1,
+      "value": "conversationId"
+    }
+  ],
+  "Conversation.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "Che tipo di dati vuoi archiviare?"
+    }
+  ],
+  "Conversation.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni"
+    }
+  ],
+  "ConversationUtils.ts_PQ8A3I": [
+    {
+      "type": 0,
+      "value": "Nuova conversazione"
+    }
+  ],
+  "Conversations.tsx_PQ8A3I": [
+    {
+      "type": 0,
+      "value": "Nuova conversazione"
+    }
+  ],
+  "Conversations.tsx_YdANpb": [
+    {
+      "type": 0,
+      "value": "Azioni delle conversazioni"
+    }
+  ],
+  "Conversations.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni"
+    }
+  ],
+  "ConversationsTable.tsx_/+r2Su": [
+    {
+      "type": 0,
+      "value": "Non hai ancora conversazioni."
+    }
+  ],
+  "ConversationsTable.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversazioni"
+    }
+  ],
+  "ConversationsTable.tsx_9a9+ww": [
+    {
+      "type": 0,
+      "value": "Titolo"
+    }
+  ],
+  "ConversationsTable.tsx_AbXVP4": [
+    {
+      "type": 0,
+      "value": "Creato il"
+    }
+  ],
+  "ConversationsTable.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Stato"
+    }
+  ],
+  "ConversationsTable.tsx_wSAvhu": [
+    {
+      "type": 0,
+      "value": "Assistente"
+    }
+  ],
+  "ConversationsTable.tsx_zQLEfz": [
+    {
+      "type": 0,
+      "value": "Formato"
+    }
+  ],
+  "CopyButton.tsx_4l6vz1": [
+    {
+      "type": 0,
+      "value": "Copia"
+    }
+  ],
+  "CopyButton.tsx_p556q3": [
+    {
+      "type": 0,
+      "value": "Copiato"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_7uKYfK": [
+    {
+      "type": 0,
+      "value": "Vai alla modalità manuale"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Azioni per creare la collezione"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_u/AEeD": [
+    {
+      "type": 0,
+      "value": "Crea collezione (modalità assistita)"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "Che tipo di dati vuoi archiviare?"
+    }
+  ],
+  "CreateCollectionForm.tsx_45vDAJ": [
+    {
+      "type": 0,
+      "value": "2. Schema"
+    }
+  ],
+  "CreateCollectionForm.tsx_HxoW8w": [
+    {
+      "type": 0,
+      "value": "3. Sommario dei contenuti"
+    }
+  ],
+  "CreateCollectionForm.tsx_PgbTyn": [
+    {
+      "type": 0,
+      "value": "1. Impostazioni generali"
+    }
+  ],
+  "CreateCollectionManual.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Azioni per creare la collezione"
+    }
+  ],
+  "CreateCollectionManual.tsx_a5n6RJ": [
+    {
+      "type": 0,
+      "value": "Vai alla modalità assistita"
+    }
+  ],
+  "CreateCollectionManual.tsx_ivIDMd": [
+    {
+      "type": 0,
+      "value": "Crea collezione (modalità manuale)"
+    }
+  ],
+  "CreateDocument.tsx_saRT/V": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Crea documento"
+    }
+  ],
+  "CreateDocumentForm.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "CreateDocumentOrVersion.tsx_+z+eOw": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Nuova versione del documento creata"
+    }
+  ],
+  "CreateDocumentOrVersion.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Documento creato"
+    }
+  ],
+  "CreateNewCollectionVersion.tsx_WgkS3f": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Crea nuova versione"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_PfbGui": [
+    {
+      "type": 0,
+      "value": "2. Sommario dei contenuti"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_jacE9I": [
+    {
+      "type": 0,
+      "value": "1. Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_rgWYrb": [
+    {
+      "type": 0,
+      "value": "3. Migrazione"
+    }
+  ],
+  "Default.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Stringa JSON non valida"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_4S5UP3": [
+    {
+      "type": 0,
+      "value": "Se sei sicuro di voler eliminare la collezione, scrivi "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " nel campo sottostante."
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_Q5SlBK": [
+    {
+      "type": 0,
+      "value": "Elimina la collezione \""
+    },
+    {
+      "type": 1,
+      "value": "collectionName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_iuFFzm": [
+    {
+      "type": 0,
+      "value": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_0Gdwem": [
+    {
+      "type": 0,
+      "value": "Elimina la conversazione \""
+    },
+    {
+      "type": 1,
+      "value": "conversationName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteConversationModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_VcWPH+": [
+    {
+      "type": 0,
+      "value": "Se sei sicuro di voler eliminare la conversazione, scrivi "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " nel campo sottostante."
+    }
+  ],
+  "DeleteConversationModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_t7Vs5c": [
+    {
+      "type": 0,
+      "value": "Eliminare la conversazione è irreversibile."
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_+pXFqz": [
+    {
+      "type": 0,
+      "value": "Se sei sicuro di voler eliminare il documento, scrivi "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " nel campo sottostante."
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_GSdOzc": [
+    {
+      "type": 0,
+      "value": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_cpePvc": [
+    {
+      "type": 0,
+      "value": "Elimina il documento \""
+    },
+    {
+      "type": 1,
+      "value": "documentName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
+    }
+  ],
+  "Document.tsx_EPTOBf": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "document"
+    }
+  ],
+  "Document.tsx_PGh2Ph": [
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Document.tsx_SNguYK": [
+    {
+      "type": 0,
+      "value": "Azioni del documento"
+    }
+  ],
+  "Document.tsx_eoWkGI": [
+    {
+      "type": 0,
+      "value": "Elimina documento"
+    }
+  ],
+  "Document.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Salva"
+    }
+  ],
+  "Document.tsx_zugcbb": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "documentId"
+    }
+  ],
+  "DocumentsTable.tsx_AbXVP4": [
+    {
+      "type": 0,
+      "value": "Creato il"
+    }
+  ],
+  "DocumentsTable.tsx_JtSyau": [
+    {
+      "type": 0,
+      "value": "Ultima modifica il"
+    }
+  ],
+  "DocumentsTable.tsx_MzUvBt": [
+    {
+      "type": 0,
+      "value": "Questa collezione non contiene ancora documenti."
+    }
+  ],
+  "DocumentsTable.tsx_cbuMAX": [
+    {
+      "type": 0,
+      "value": "Documenti della collezione "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "DocumentsTable.tsx_kGGU2D": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "DocumentsTable.tsx_vT9jcW": [
+    {
+      "type": 0,
+      "value": "Sommario dei contenuti non valido"
+    }
+  ],
+  "EagerTiptapInput.tsx_0he+1r": [
+    {
+      "type": 0,
+      "value": "Scrivi..."
+    }
+  ],
+  "Echart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
+  "EmojiInput.tsx_CqyOwA": [
+    {
+      "type": 0,
+      "value": "Seleziona emoji"
+    }
+  ],
+  "EmojiPicker.tsx_0BUTMv": [
+    {
+      "type": 0,
+      "value": "Cerca..."
+    }
+  ],
+  "EmojiPicker.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "EmojiPicker.tsx_GrDv3f": [
+    {
+      "type": 0,
+      "value": "Selezionato: "
+    },
+    {
+      "type": 1,
+      "value": "selectedEmoji"
+    }
+  ],
+  "EmojiPicker.tsx_wLCEuv": [
+    {
+      "type": 0,
+      "value": "Nessun risultato."
+    }
+  ],
+  "EnumField.tsx_k0cXGK": [
+    {
+      "type": 0,
+      "value": "null - fai clic per selezionare un valore"
+    }
+  ],
+  "ErrorMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Riprova"
+    }
+  ],
+  "ErrorMessage.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Dettagli"
+    }
+  ],
+  "ErrorMessage.tsx_zg3wLI": [
+    {
+      "type": 0,
+      "value": "L'assistente ha riscontrato un errore."
+    }
+  ],
+  "FileField.tsx_5q3qC0": [
+    {
+      "type": 0,
+      "value": "Scarica"
+    }
+  ],
+  "FileField.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "FileField.tsx_SHoeDt": [
+    {
+      "type": 0,
+      "value": "Carica nuovo"
+    }
+  ],
+  "FileField.tsx_jI+nI4": [
+    {
+      "type": 0,
+      "value": "null - fai clic o rilascia un file da caricare"
+    }
+  ],
+  "FileField.tsx_xxtls6": [
+    {
+      "type": 0,
+      "value": "Tipo MIME"
+    }
+  ],
+  "FormattingToolbar.tsx_+im1ZA": [
+    {
+      "type": 0,
+      "value": "Blocchi"
+    }
+  ],
+  "FormattingToolbar.tsx_+uJ/8b": [
+    {
+      "type": 0,
+      "value": "Apice"
+    }
+  ],
+  "FormattingToolbar.tsx_/7maNQ": [
+    {
+      "type": 0,
+      "value": "Titolo 1"
+    }
+  ],
+  "FormattingToolbar.tsx_08d23j": [
+    {
+      "type": 0,
+      "value": "Formattazione del testo"
+    }
+  ],
+  "FormattingToolbar.tsx_2YLmul": [
+    {
+      "type": 0,
+      "value": "Apri il menu degli elenchi"
+    }
+  ],
+  "FormattingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Ripeti"
+    }
+  ],
+  "FormattingToolbar.tsx_5Qvm03": [
+    {
+      "type": 0,
+      "value": "Titolo 6"
+    }
+  ],
+  "FormattingToolbar.tsx_5j/gIz": [
+    {
+      "type": 0,
+      "value": "Elenco numerato"
+    }
+  ],
+  "FormattingToolbar.tsx_7mL9QE": [
+    {
+      "type": 0,
+      "value": "Stile"
+    }
+  ],
+  "FormattingToolbar.tsx_8typ4g": [
+    {
+      "type": 0,
+      "value": "Blocco di codice"
+    }
+  ],
+  "FormattingToolbar.tsx_AtPL8s": [
+    {
+      "type": 0,
+      "value": "Apri il menu dei titoli"
+    }
+  ],
+  "FormattingToolbar.tsx_BDbgCL": [
+    {
+      "type": 0,
+      "value": "Titolo 3"
+    }
+  ],
+  "FormattingToolbar.tsx_BKF2fN": [
+    {
+      "type": 0,
+      "value": "Titolo 4"
+    }
+  ],
+  "FormattingToolbar.tsx_Bz/qc/": [
+    {
+      "type": 0,
+      "value": "Allinea a destra"
+    }
+  ],
+  "FormattingToolbar.tsx_Dkkmwm": [
+    {
+      "type": 0,
+      "value": "Grassetto"
+    }
+  ],
+  "FormattingToolbar.tsx_Ig/eGK": [
+    {
+      "type": 0,
+      "value": "Allineamento"
+    }
+  ],
+  "FormattingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "FormattingToolbar.tsx_NWm89j": [
+    {
+      "type": 0,
+      "value": "Barrato"
+    }
+  ],
+  "FormattingToolbar.tsx_PO+iF4": [
+    {
+      "type": 0,
+      "value": "Elenco attività"
+    }
+  ],
+  "FormattingToolbar.tsx_QPmWTa": [
+    {
+      "type": 0,
+      "value": "Centra"
+    }
+  ],
+  "FormattingToolbar.tsx_SOtMvF": [
+    {
+      "type": 0,
+      "value": "Sottolineato"
+    }
+  ],
+  "FormattingToolbar.tsx_Zqekct": [
+    {
+      "type": 0,
+      "value": "Titolo 2"
+    }
+  ],
+  "FormattingToolbar.tsx_atzUcB": [
+    {
+      "type": 0,
+      "value": "Citazione"
+    }
+  ],
+  "FormattingToolbar.tsx_djJp6c": [
+    {
+      "type": 0,
+      "value": "Cronologia"
+    }
+  ],
+  "FormattingToolbar.tsx_drh2NU": [
+    {
+      "type": 0,
+      "value": "Elenco puntato"
+    }
+  ],
+  "FormattingToolbar.tsx_g2V+es": [
+    {
+      "type": 0,
+      "value": "Corsivo"
+    }
+  ],
+  "FormattingToolbar.tsx_h2vipu": [
+    {
+      "type": 0,
+      "value": "Codice"
+    }
+  ],
+  "FormattingToolbar.tsx_jWDuFc": [
+    {
+      "type": 0,
+      "value": "Allinea a sinistra"
+    }
+  ],
+  "FormattingToolbar.tsx_rDSlqC": [
+    {
+      "type": 0,
+      "value": "Pedice"
+    }
+  ],
+  "FormattingToolbar.tsx_uXKvtQ": [
+    {
+      "type": 0,
+      "value": "Giustifica"
+    }
+  ],
+  "FormattingToolbar.tsx_vEQBIa": [
+    {
+      "type": 0,
+      "value": "Titolo 5"
+    }
+  ],
+  "GeneralSettingsTab.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Istruzioni dell'assistente"
+    }
+  ],
+  "GeneralSettingsTab.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "GeneralSettingsTab.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Descrizione"
+    }
+  ],
+  "GeneralSettingsTab.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icona"
+    }
+  ],
+  "GeneralSettingsTab.tsx_qmIyad": [
+    {
+      "type": 0,
+      "value": "Istruzioni specifiche per questa collezione da passare all'assistente."
+    }
+  ],
+  "GlobalSettings.tsx_HZGiV3": [
+    {
+      "type": 0,
+      "value": "Azioni delle impostazioni"
+    }
+  ],
+  "GlobalSettings.tsx_cFXlu2": [
+    {
+      "type": 0,
+      "value": "Impostazioni globali di Superego"
+    }
+  ],
+  "GlobalSettings.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Salva"
+    }
+  ],
+  "Header.tsx_9lnhZ4": [
+    {
+      "type": 0,
+      "value": "Crea collezione"
+    }
+  ],
+  "Header.tsx_t9KdzH": [
+    {
+      "type": 0,
+      "value": "Nuova categoria di collezioni"
+    }
+  ],
+  "Header.tsx_ulh3kf": [
+    {
+      "type": 0,
+      "value": "Collezioni"
+    }
+  ],
+  "Header.tsx_zpIkYq": [
+    {
+      "type": 0,
+      "value": "Crea categoria di collezioni"
+    }
+  ],
+  "Hero.tsx_OpKKos": [
+    {
+      "type": 0,
+      "value": "Ciao!"
+    }
+  ],
+  "Hero.tsx_oxShVS": [
+    {
+      "type": 0,
+      "value": "Il database della tua vita"
+    }
+  ],
+  "Hero.tsx_q4FNnF": [
+    {
+      "type": 0,
+      "value": "Superego"
+    }
+  ],
+  "Hero.tsx_rI2Xm3": [
+    {
+      "type": 0,
+      "value": "Sono il Collection Creator"
+    }
+  ],
+  "InferenceSettings.tsx_25pjeS": [
+    {
+      "type": 0,
+      "value": "Chat Completions"
+    }
+  ],
+  "InferenceSettings.tsx_FJPyVh": [
+    {
+      "type": 0,
+      "value": ": veloce, economico, supporta tutte le API."
+    }
+  ],
+  "InferenceSettings.tsx_HRac2N": [
+    {
+      "type": 0,
+      "value": "Sintesi vocale (necessaria perché l'assistente ti parli)"
+    }
+  ],
+  "InferenceSettings.tsx_NNEajY": [
+    {
+      "type": 0,
+      "value": "URL di base del provider"
+    }
+  ],
+  "InferenceSettings.tsx_RPpwVn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Per far funzionare l'assistente devi collegarlo a un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fornitore di inferenza"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " — un servizio che offre API per LLM, trascrizione vocale e sintesi vocale. Il provider deve offrire API "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "compatibili con il formato OpenAI."
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Provider che funzionano: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_WKES9e": [
+    {
+      "type": 0,
+      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " e "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "moonshotai/kimi-k2-0905"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " al momento sembrano essere i modelli con le migliori prestazioni per Superego."
+    }
+  ],
+  "InferenceSettings.tsx_YctX0J": [
+    {
+      "type": 0,
+      "value": "Chiave API del provider"
+    }
+  ],
+  "InferenceSettings.tsx_eV3UHK": [
+    {
+      "type": 0,
+      "value": "Trascrizioni (necessarie per parlare con l'assistente)"
+    }
+  ],
+  "InferenceSettings.tsx_gi9ckp": [
+    {
+      "type": 0,
+      "value": ": supporta solo l'API Chat Completions."
+    }
+  ],
+  "InferenceSettings.tsx_mnJYBQ": [
+    {
+      "type": 0,
+      "value": "Voce"
+    }
+  ],
+  "InferenceSettings.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Modello"
+    }
+  ],
+  "InferenceSettings.tsx_u2jTeg": [
+    {
+      "type": 0,
+      "value": ": supporta tutte le API."
+    }
+  ],
+  "InferenceSettings.tsx_vuJYgx": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_waSfdV": [
+    {
+      "type": 0,
+      "value": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
+    }
+  ],
+  "ListField.tsx_6ibWnb": [
+    {
+      "type": 0,
+      "value": "Sposta elemento in alto"
+    }
+  ],
+  "ListField.tsx_Dp51E2": [
+    {
+      "type": 0,
+      "value": "null - fai clic per impostare un valore"
+    }
+  ],
+  "ListField.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "ListField.tsx_KDO3hW": [
+    {
+      "type": 0,
+      "value": "Aggiungi elemento"
+    }
+  ],
+  "ListField.tsx_MQ+9dH": [
+    {
+      "type": 1,
+      "value": "itemName"
+    },
+    {
+      "type": 0,
+      "value": " numero "
+    },
+    {
+      "type": 1,
+      "value": "itemNumber"
+    }
+  ],
+  "ListField.tsx_UjPa5a": [
+    {
+      "type": 0,
+      "value": "Sposta elemento in basso"
+    }
+  ],
+  "ListField.tsx_pUcgkI": [
+    {
+      "type": 0,
+      "value": "Non ci sono elementi nell'elenco"
+    }
+  ],
+  "LoadDemoDataButton.tsx_2xPIse": [
+    {
+      "type": 0,
+      "value": "Sì, carica"
+    }
+  ],
+  "LoadDemoDataButton.tsx_A84v/o": [
+    {
+      "type": 0,
+      "value": "Attenzione: caricando i dati demo cancellerai tutti i dati che hai salvato finora. Vuoi continuare?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_J1xAjB": [
+    {
+      "type": 0,
+      "value": "Attenzione: resettare i dati demo cancellerà tutti i dati che hai salvato finora. Vuoi continuare?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_VXuroA": [
+    {
+      "type": 0,
+      "value": "Carica dati demo"
+    }
+  ],
+  "LoadDemoDataButton.tsx_ZBdI8u": [
+    {
+      "type": 0,
+      "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
+    }
+  ],
+  "LoadDemoDataButton.tsx_cEUBT2": [
+    {
+      "type": 0,
+      "value": "Resetta i dati demo"
+    }
+  ],
+  "LoadDemoDataButton.tsx_fxtYtB": [
+    {
+      "type": 0,
+      "value": "Sì, resetta"
+    }
+  ],
+  "Logo.tsx_FbFgI4": [
+    {
+      "type": 0,
+      "value": "Logo di Superego"
+    }
+  ],
+  "MigrationTab.tsx_1Og5F/": [
+    {
+      "type": 0,
+      "value": "Migrazione"
+    }
+  ],
+  "MigrationTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Crea una nuova versione e migra i documenti"
+    }
+  ],
+  "MigrationTab.tsx_JQqWNV": [
+    {
+      "type": 0,
+      "value": "Funzione TypeScript per migrare i documenti dallo schema precedente a quello aggiornato."
+    }
+  ],
+  "NullifyFieldAction.tsx_MLa9CL": [
+    {
+      "type": 0,
+      "value": "Imposta "
+    },
+    {
+      "type": 1,
+      "value": "fieldLabel"
+    },
+    {
+      "type": 0,
+      "value": " su null"
+    }
+  ],
+  "PanelHeader.tsx_+G35mR": [
+    {
+      "type": 0,
+      "value": "Apri barra laterale"
+    }
+  ],
+  "PanelHeader.tsx_HyS0qp": [
+    {
+      "type": 0,
+      "value": "Chiudi barra laterale"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_D3idYv": [
+    {
+      "type": 0,
+      "value": "Impostazioni"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_ZT0z9z": [
+    {
+      "type": 0,
+      "value": "Chiedi"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Cerca"
+    }
+  ],
+  "RHFContentSummaryGetterField.tsx_3X4zUZ": [
+    {
+      "type": 0,
+      "value": "Funzione di estrazione del sommario dei contenuti"
+    }
+  ],
+  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Il "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "sommario dei contenuti"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " di un documento è un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Record<key: string, value: string>"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " — derivato dal suo contenuto — che contiene le sue informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Il "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "content summary getter"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " è la funzione TypeScript che ricava il sommario dal contenuto del documento. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Suggerimento:"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " per imporre un ordine specifico alle proprietà del sommario, puoi anteporre a ciascuna chiave "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "$position. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ". (Esempio: "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "0. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ".) Il prefisso viene rimosso durante la visualizzazione. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RHFSchemaField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Stringa JSON non valida"
+    }
+  ],
+  "RHFSchemaField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "Alle"
+    }
+  ],
+  "RHFSchemaField.tsx_IBR6nN": [
+    {
+      "type": 0,
+      "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_cuCM/d": [
+    {
+      "type": 0,
+      "value": "Rinomina la categoria della collezione \""
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Salva"
+    }
+  ],
+  "RenameCollectionCategoryModalForm.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icona"
+    }
+  ],
+  "ResultErrors.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Dettagli"
+    }
+  ],
+  "RetryButton.tsx_HMN20q": [
+    {
+      "type": 0,
+      "value": "Riprova la risposta"
+    }
+  ],
+  "RetryButton.tsx_l02CSg": [
+    {
+      "type": 0,
+      "value": "Riprovo..."
+    }
+  ],
+  "SchemaTab.tsx_Lktmvk": [
+    {
+      "type": 0,
+      "value": "Schema"
+    }
+  ],
+  "SendRecordToolbar.tsx_/8QiK8": [
+    {
+      "type": 0,
+      "value": "Configura l'assistente per la trascrizione"
+    }
+  ],
+  "SendRecordToolbar.tsx_3LSnIf": [
+    {
+      "type": 0,
+      "value": "Termina e invia"
+    }
+  ],
+  "SendRecordToolbar.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "SendRecordToolbar.tsx_7Y6Yvq": [
+    {
+      "type": 0,
+      "value": "Record"
+    }
+  ],
+  "SendRecordToolbar.tsx_9WRlF4": [
+    {
+      "type": 0,
+      "value": "Invia"
+    }
+  ],
+  "SendRecordToolbar.tsx_kNl1RN": [
+    {
+      "type": 0,
+      "value": "Configura assistente"
+    }
+  ],
+  "SpeakButton.tsx_FUvUuG": [
+    {
+      "type": 0,
+      "value": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
+    }
+  ],
+  "SpeakButton.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Riproduci"
+    }
+  ],
+  "SpeakButton.tsx_mM7O7f": [
+    {
+      "type": 0,
+      "value": "Sintesi vocale in corso..."
+    }
+  ],
+  "SpeakButton.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pausa"
+    }
+  ],
+  "StructField.tsx_Dp51E2": [
+    {
+      "type": 0,
+      "value": "null - fai clic per impostare un valore"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_S2ZL0P": [
+    {
+      "type": 0,
+      "value": "Collezione suggerita"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "ThinkingTime.tsx_uKcW4C": [
+    {
+      "type": 0,
+      "value": "Riflessione per "
+    },
+    {
+      "type": 1,
+      "value": "time"
+    }
+  ],
+  "Title.tsx_1af260": [
+    {
+      "type": 0,
+      "value": "Esegui la funzione JavaScript su "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_2eWlOa": [
+    {
+      "type": 0,
+      "value": "Crea documento in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_LOghU6": [
+    {
+      "type": 0,
+      "value": "Riuscito"
+    }
+  ],
+  "Title.tsx_RG9Nzq": [
+    {
+      "type": 0,
+      "value": "Ottieni lo schema TypeScript per "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_XnBm2q": [
+    {
+      "type": 0,
+      "value": "Nessuna risposta"
+    }
+  ],
+  "Title.tsx_foZAHu": [
+    {
+      "type": 0,
+      "value": "Chiama strumento: "
+    },
+    {
+      "type": 1,
+      "value": "tool"
+    }
+  ],
+  "Title.tsx_vXCeIi": [
+    {
+      "type": 0,
+      "value": "Fallito"
+    }
+  ],
+  "Title.tsx_vlxsWA": [
+    {
+      "type": 0,
+      "value": "Crea una nuova versione del documento in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "ToolCallResult.tsx_yq9SNC": [
+    {
+      "type": 0,
+      "value": "Questa chiamata non ha alcun risultato."
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Istruzioni dell'assistente"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Descrizione"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icona"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_muqizb": [
+    {
+      "type": 0,
+      "value": "Salva impostazioni"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_qmIyad": [
+    {
+      "type": 0,
+      "value": "Istruzioni specifiche per questa collezione da passare all'assistente."
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [
+    {
+      "type": 0,
+      "value": "Salva le impostazioni della versione della collezione"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_2GURQY": [
+    {
+      "type": 0,
+      "value": "Aspetto"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_jvrMfo": [
+    {
+      "type": 0,
+      "value": "Assistenti"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_n0wQL1": [
+    {
+      "type": 0,
+      "value": "Inferenza"
+    }
+  ],
+  "UserMessage.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Riproduci"
+    }
+  ],
+  "UserMessage.tsx_Wf1OoY": [
+    {
+      "type": 0,
+      "value": "Trascrizione audio in corso..."
+    }
+  ],
+  "UserMessage.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pausa"
+    }
+  ],
+  "UserMessageContentInput.tsx_8MXjTC": [
+    {
+      "type": 0,
+      "value": "Configura l'assistente per iniziare a chattare"
+    }
+  ],
+  "UserMessageContentInput.tsx_XE7R4v": [
+    {
+      "type": 0,
+      "value": "Invia messaggio all'assistente"
+    }
+  ],
+  "UserMessageContentInput.tsx_yvK6cX": [
+    {
+      "type": 0,
+      "value": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
+    }
+  ],
+  "formatDuration.ts_26OSN4": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 minuto"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " minuti"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "minutes"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "seconds"
+    },
+    {
+      "type": 0,
+      "value": " secondi"
+    }
+  ],
+  "formatDuration.ts_lf6GDO": [
+    {
+      "style": {
+        "parsedOptions": {
+          "maximumFractionDigits": 2
+        },
+        "tokens": [
+          {
+            "options": [
+            ],
+            "stem": ".##"
+          }
+        ],
+        "type": 0
+      },
+      "type": 2,
+      "value": "seconds"
+    },
+    {
+      "type": 0,
+      "value": " secondi"
+    }
+  ],
+  "typescriptModule.ts_MZNYNj": [
+    {
+      "type": 0,
+      "value": "È necessaria la compilazione TypeScript"
+    }
+  ],
+  "typescriptModule.ts_lRjJvq": [
+    {
+      "type": 0,
+      "value": "Compilazione TypeScript in corso"
+    }
+  ],
+  "typescriptModule.ts_yZ+w+N": [
+    {
+      "type": 0,
+      "value": "Compilazione TypeScript non riuscita"
+    }
+  ]
+}

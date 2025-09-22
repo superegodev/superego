@@ -1,6 +1,8 @@
+import type BackgroundJobRepository from "./BackgroundJobRepository.js";
 import type CollectionCategoryRepository from "./CollectionCategoryRepository.js";
 import type CollectionRepository from "./CollectionRepository.js";
 import type CollectionVersionRepository from "./CollectionVersionRepository.js";
+import type ConversationRepository from "./ConversationRepository.js";
 import type DocumentRepository from "./DocumentRepository.js";
 import type DocumentVersionRepository from "./DocumentVersionRepository.js";
 import type FileRepository from "./FileRepository.js";
@@ -13,5 +15,9 @@ export default interface DataRepositories {
   document: DocumentRepository;
   documentVersion: DocumentVersionRepository;
   file: FileRepository;
+  conversation: ConversationRepository;
+  backgroundJob: BackgroundJobRepository;
   globalSettings: GlobalSettingsRepository;
+  createSavepoint(): Promise<string>;
+  rollbackToSavepoint(name: string): Promise<void>;
 }

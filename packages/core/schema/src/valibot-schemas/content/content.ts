@@ -4,7 +4,7 @@ import formats from "../../formats/formats.js";
 import type Schema from "../../Schema.js";
 import type { AnyTypeDefinition } from "../../typeDefinitions.js";
 import findFormat from "../../utils/findFormat.js";
-import rootType from "../../utils/rootType.js";
+import getRootType from "../../utils/getRootType.js";
 import file from "../file/file.js";
 import jsonObject from "../jsonObject/jsonObject.js";
 
@@ -23,7 +23,7 @@ export default function content(
    */
   variant: "normal" | "rhf" = "normal",
 ): v.GenericSchema<any, any> {
-  return memoizedToValibotSchema(rootType(schema), schema.types, variant);
+  return memoizedToValibotSchema(getRootType(schema), schema.types, variant);
 }
 
 const valibotSchemaCache = new WeakMap();

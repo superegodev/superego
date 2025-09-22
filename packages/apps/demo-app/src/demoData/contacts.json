@@ -1,0 +1,778 @@
+[
+  {
+    "type": "Person",
+    "name": "Paul Atreides",
+    "relation": "Self",
+    "phones": [
+      {
+        "number": "+353 125-5506-350",
+        "description": "Work"
+      },
+      {
+        "number": "+353 204-9935-189",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "paul.atreides@houseatreides.cal",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Lady Jessica",
+    "relation": "Mother",
+    "phones": [
+      {
+        "number": "+353 303-9928-529",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "jessica@bene-gesserit.bgs",
+        "description": "Order liaison"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Prefers coded reports via Bene Gesserit channels."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Duke Leto Atreides",
+    "relation": "Father",
+    "phones": [
+      {
+        "number": "+353 384-3547-320",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "leto.atreides@houseatreides.cal",
+        "description": "Strategic"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Keeps contingency plans for every deployment out of Caladan."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Alia Atreides",
+    "relation": "Sister",
+    "phones": [
+      {
+        "number": "+353 439-1452-218",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "alia.atreides@houseatreides.cal",
+        "description": "Secure"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Precocious even by Bene Gesserit standards—double-check intel before sharing."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Duncan Idaho",
+    "relation": "Swordmaster",
+    "phones": [
+      {
+        "number": "+964 665-5803-949",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "duncan.idaho@houseatreides.cal",
+        "description": "Blade training"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Gurney Halleck",
+    "relation": "Weapons master",
+    "phones": [
+      {
+        "number": "+353 489-5554-564",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "gurney.halleck@houseatreides.cal",
+        "description": "Logistics"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Carries his baliset everywhere; cite a song to get his attention fast."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Thufir Hawat",
+    "relation": "Mentat adviser",
+    "phones": [
+      {
+        "number": "+353 376-4598-801",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "thufir.hawat@houseatreides.cal",
+        "description": "Mentat briefs"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Requires complete data packets—half measures only raise suspicion."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Dr. Wellington Yueh",
+    "relation": "Family physician",
+    "phones": [
+      {
+        "number": "+353 680-6155-317",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "wellington.yueh@houseatreides.cal",
+        "description": "Medical"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Liet-Kynes",
+    "relation": "Imperial ecologist",
+    "phones": [
+      {
+        "number": "+964 111-2876-798",
+        "description": "Field"
+      }
+    ],
+    "emails": [
+      {
+        "address": "liet.kynes@imperial.planetology.kai",
+        "description": "Ecology briefs"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Shares water reclamation projections when trust is earned."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Stilgar",
+    "relation": "Fremen Naib",
+    "phones": [
+      {
+        "number": "+964 742-3621-911",
+        "description": "Sietch relay"
+      }
+    ],
+    "emails": [
+      {
+        "address": "stilgar@sietch-tabr.ara",
+        "description": "Fremen council"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Chani",
+    "relation": "Partner",
+    "phones": [
+      {
+        "number": "+964 698-8019-697",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "chani@sietch-cielago.ara",
+        "description": "Personal"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Harah",
+    "relation": "Fremen household aide",
+    "phones": [
+      {
+        "number": "+964 269-5342-640",
+        "description": "Sietch"
+      }
+    ],
+    "emails": [
+      {
+        "address": "harah@sietch-tabr.ara",
+        "description": "Logistics"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Otheym",
+    "relation": "Fedaykin lieutenant",
+    "phones": [
+      {
+        "number": "+964 629-8397-223",
+        "description": "Fedaykin channel"
+      }
+    ],
+    "emails": [
+      {
+        "address": "otheym@sietch-tabrsquad.ara",
+        "description": "Raiding ops"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Korba the Panegyrist",
+    "relation": "Fedaykin chronicler",
+    "phones": [
+      {
+        "number": "+964 626-4899-385",
+        "description": "Ceremonial"
+      }
+    ],
+    "emails": [
+      {
+        "address": "korba@sietch-tabr.ara",
+        "description": "Chronicles"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Shadout Mapes",
+    "relation": "Arrakeen housekeeper",
+    "phones": [
+      {
+        "number": "+964 256-7126-880",
+        "description": "Keep"
+      }
+    ],
+    "emails": [
+      {
+        "address": "mapes@arrakeen-keep.ara",
+        "description": "House staff"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Uses coded phrases about the crysknife to signal Fremen concern."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Reverend Mother Gaius Helen Mohiam",
+    "relation": "Bene Gesserit teacher",
+    "phones": [
+      {
+        "number": "+41 315-6617-308",
+        "description": "Chapterhouse"
+      }
+    ],
+    "emails": [
+      {
+        "address": "mohiam@bene-gesserit.bgs",
+        "description": "Order directives"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Always expects the right forms of address—protocol matters."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Margot Fenring",
+    "relation": "Bene Gesserit ally",
+    "phones": [
+      {
+        "number": "+39 108-5905-779",
+        "description": "Personal"
+      }
+    ],
+    "emails": [
+      {
+        "address": "margot.fenring@imperial.court.kai",
+        "description": "Intelligence"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Emperor Shaddam Corrino IV",
+    "relation": "Emperor",
+    "phones": [
+      {
+        "number": "+39 183-7868-773",
+        "description": "Imperial palace"
+      }
+    ],
+    "emails": [
+      {
+        "address": "shaddam.corrino@imperial.court.kai",
+        "description": "Imperial decree"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Princess Irulan",
+    "relation": "Political contact",
+    "phones": [
+      {
+        "number": "+39 423-2188-109",
+        "description": "Court"
+      }
+    ],
+    "emails": [
+      {
+        "address": "irulan.corrino@imperial.court.kai",
+        "description": "Histories"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Count Hasimir Fenring",
+    "relation": "Imperial envoy",
+    "phones": [
+      {
+        "number": "+39 350-7054-391",
+        "description": "Private"
+      }
+    ],
+    "emails": [
+      {
+        "address": "hasimir.fenring@imperial.court.kai",
+        "description": "Diplomatic"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Whispers intelligence in coded epigrams—listen carefully."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Person",
+    "name": "Guild Navigator Edric",
+    "relation": "Spacing Guild contact",
+    "phones": [
+      {
+        "number": "+39 265-8239-664",
+        "description": "Foldspace chamber"
+      }
+    ],
+    "emails": [
+      {
+        "address": "edric@spacingguild.spc",
+        "description": "Transit"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Esmar Tuek",
+    "relation": "Smuggler ally",
+    "phones": [
+      {
+        "number": "+964 240-6456-923",
+        "description": "Dockside"
+      }
+    ],
+    "emails": [
+      {
+        "address": "esmar.tuek@arrakis-smugglers.ara",
+        "description": "Spice routes"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Baron Vladimir Harkonnen",
+    "relation": "Enemy",
+    "phones": [
+      {
+        "number": "+7 355-2235-553",
+        "description": "Giedi Prime keep"
+      }
+    ],
+    "emails": [
+      {
+        "address": "vladimir.harkonnen@househarkonnen.gdp",
+        "description": "Schemes"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Feyd-Rautha Harkonnen",
+    "relation": "Rival",
+    "phones": [
+      {
+        "number": "+7 488-1035-499",
+        "description": "Arena"
+      }
+    ],
+    "emails": [
+      {
+        "address": "feyd-rautha@househarkonnen.gdp",
+        "description": "Challenges"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Glossu Rabban",
+    "relation": "Enemy",
+    "phones": [
+      {
+        "number": "+7 258-4111-403",
+        "description": "Occupation"
+      }
+    ],
+    "emails": [
+      {
+        "address": "glossu.rabban@househarkonnen.gdp",
+        "description": "Governor"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Piter De Vries",
+    "relation": "Enemy Mentat",
+    "phones": [
+      {
+        "number": "+7 971-4044-170",
+        "description": "Mentat lab"
+      }
+    ],
+    "emails": [
+      {
+        "address": "piter.devries@househarkonnen.gdp",
+        "description": "Plots"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Person",
+    "name": "Scytale",
+    "relation": "Bene Tleilax operative",
+    "phones": [
+      {
+        "number": "+92 665-3426-540",
+        "description": "Tleilaxu"
+      }
+    ],
+    "emails": [
+      {
+        "address": "scytale@bene-tleilax.tlx",
+        "description": "Negotiations"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Organization",
+    "name": "House Atreides War Council",
+    "relation": "House leadership",
+    "phones": [
+      {
+        "number": "+33 210-4401-771",
+        "description": "War room"
+      },
+      {
+        "number": "+33 210-4401-800",
+        "description": "Operations"
+      }
+    ],
+    "emails": [
+      {
+        "address": "council@houseatreides.cal",
+        "description": "General"
+      }
+    ],
+    "notes": {
+      "__dataType": "JsonObject",
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Command center coordinating Caladan and Arrakis deployments."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "Organization",
+    "name": "Sietch Tabr Council",
+    "relation": "Fremen leadership",
+    "phones": [
+      {
+        "number": "+964 555-1122-330",
+        "description": "Council chamber"
+      }
+    ],
+    "emails": [
+      {
+        "address": "council@sietch-tabr.ara",
+        "description": "Secure"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Organization",
+    "name": "Fedaykin Command",
+    "relation": "Elite guard",
+    "phones": [
+      {
+        "number": "+964 447-8899-105",
+        "description": "Alert line"
+      }
+    ],
+    "emails": [
+      {
+        "address": "command@fedaykin.ara",
+        "description": "Dispatch"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Organization",
+    "name": "Bene Gesserit Chapterhouse",
+    "relation": "Order liaison",
+    "phones": [
+      {
+        "number": "+41 914-4613-399",
+        "description": "Mother Superior"
+      }
+    ],
+    "emails": [
+      {
+        "address": "chapterhouse@bene-gesserit.bgs",
+        "description": "Diplomatic"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Organization",
+    "name": "Spacing Guild Heighliner Dispatch",
+    "relation": "Transport alliance",
+    "phones": [
+      {
+        "number": "+01 447-9921-045",
+        "description": "Foldspace desk"
+      }
+    ],
+    "emails": [
+      {
+        "address": "dispatch@spacingguild.spc",
+        "description": "Primary"
+      },
+      {
+        "address": "emergency@spacingguild.spc",
+        "description": "Emergency"
+      }
+    ],
+    "notes": null
+  },
+  {
+    "type": "Organization",
+    "name": "CHOAM Board Office",
+    "relation": "Economic partner",
+    "phones": [
+      {
+        "number": "+01 310-2233-884",
+        "description": "Executive"
+      }
+    ],
+    "emails": [
+      {
+        "address": "board@choam.trade",
+        "description": "Trade desk"
+      }
+    ],
+    "notes": null
+  }
+]

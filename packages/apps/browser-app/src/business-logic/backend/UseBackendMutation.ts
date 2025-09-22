@@ -1,7 +1,8 @@
-import type { Backend, RpcResult } from "@superego/backend";
+import type { Backend } from "@superego/backend";
+import type { Result } from "@superego/global-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import type { ArgsOf, BackendMethod, RpcResultOf } from "./typeUtils.js";
+import type { ArgsOf, BackendMethod, ResultOf } from "./typeUtils.js";
 import useBackend from "./useBackend.js";
 
 type UseBackendMutation<
@@ -23,7 +24,7 @@ type UseBackendMutation<
   | {
       isIdle: false;
       isPending: false;
-      result: RpcResultOf<Entity, Method>;
+      result: ResultOf<Entity, Method>;
       mutate: BackendMethod<Entity, Method>;
     };
 export default UseBackendMutation;
@@ -36,7 +37,7 @@ export function makeUseBackendMutation<
   method: Method,
   invalidateQueryKeys: (
     args: ArgsOf<Entity, Method>,
-    result: NonNullable<RpcResultOf<Entity, Method>["data"]>,
+    result: NonNullable<ResultOf<Entity, Method>["data"]>,
   ) => string[][],
 ): () => UseBackendMutation<Entity, Method> {
   return function useBackendMutation() {
@@ -44,9 +45,10 @@ export function makeUseBackendMutation<
     const queryClient = useQueryClient();
     const isMutatingRef = useRef(false);
     const { isIdle, isPending, data, mutateAsync } = useMutation({
-      mutationFn: (args: any[]) => (backend[entity][method] as any)(...args),
+      mutationFn: (args: ArgsOf<Entity, Method>) =>
+        (backend[entity][method] as any)(...args),
       throwOnError: true,
-      onSuccess(result: RpcResult<any, any>, args: ArgsOf<Entity, Method>) {
+      onSuccess(result: Result<any, any>, args: ArgsOf<Entity, Method>) {
         if (result.success) {
           const queryKeys = invalidateQueryKeys(args, result.data);
           for (const queryKey of queryKeys) {
@@ -62,7 +64,7 @@ export function makeUseBackendMutation<
       mutate: !isPending
         ? async function mutate(
             ...args: ArgsOf<Entity, Method>
-          ): Promise<RpcResultOf<Entity, Method>> {
+          ): Promise<ResultOf<Entity, Method>> {
             // Throw if a mutation is already underway. This prevents the mutation
             // being executed twice if, for example, the user clicks twice in rapid
             // succession on a button. (In general, the button should be disabled
@@ -75,7 +77,7 @@ export function makeUseBackendMutation<
             isMutatingRef.current = true;
             const result = await mutateAsync(args);
             isMutatingRef.current = false;
-            return result as RpcResultOf<Entity, Method>;
+            return result as ResultOf<Entity, Method>;
           }
         : () => {},
     } as UseBackendMutation<Entity, Method>;

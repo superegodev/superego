@@ -84,6 +84,15 @@ export const SelectButton = {
     height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
     marginBlockEnd: vars.spacing._2,
   }),
+
+  selectValue: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    width: "100%",
+    overflow: "hidden",
+  }),
+
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -92,9 +101,15 @@ export const SelectButton = {
 
 export const SelectOptions = {
   root: style({
-    width: "var(--trigger-width)",
+    width: "calc(var(--trigger-width) * var(--zoom-level))",
+    overflow: "scroll",
   }),
+
   option: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
@@ -108,10 +123,6 @@ export const SelectOptions = {
         fontWeight: vars.typography.fontWeights.medium,
         border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
       },
-      '&[data-selected="true"]::after': {
-        content: "'✓'",
-        float: "right",
-      },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
       },
@@ -120,6 +131,23 @@ export const SelectOptions = {
         cursor: "not-allowed",
       },
     },
+  }),
+
+  optionValue: style({
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
+    flexShrink: 0,
+  }),
+
+  optionDescription: style({
+    flexGrow: 1,
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.xs,
+    textAlign: "left",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
   }),
 };
 
@@ -219,6 +247,7 @@ export const DatePickerInput = {
       display: "flex",
     },
   ]),
+
   dateInput: style({
     border: 0,
     marginBlockEnd: 0,
@@ -228,8 +257,9 @@ export const DatePickerInput = {
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
   }),
+
   dateSegment: style({
-    paddingInline: vars.spacing._05,
+    paddingInline: vars.spacing._0_5,
     selectors: {
       "&:focus": {
         borderRadius: vars.borders.radius.sm,
@@ -239,6 +269,7 @@ export const DatePickerInput = {
       },
     },
   }),
+
   button: style({
     display: "flex",
     justifyContent: "flex-end",
@@ -262,28 +293,32 @@ export const DatePickerCalendar = {
     border: 0,
     cursor: "pointer",
   }),
+
   header: style({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
   }),
+
   heading: style({
     flexGrow: 1,
     margin: 0,
     textAlign: "center",
     fontSize: vars.typography.fontSizes.md,
   }),
+
   headerCell: style({
     paddingBlock: vars.spacing._3,
     fontSize: vars.typography.fontSizes.xs,
   }),
+
   cell: style({
     width: vars.spacing._8,
     height: vars.spacing._8,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: vars.spacing._05,
+    margin: vars.spacing._0_5,
     fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.primary,
     borderRadius: vars.borders.radius.md,

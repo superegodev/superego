@@ -3,6 +3,7 @@ import type { Control } from "react-hook-form";
 
 export default interface Props {
   typeDefinition: JsonObjectTypeDefinition;
+  isNullable: boolean;
   isListItem: boolean;
   control: Control;
   name: string;

@@ -6,6 +6,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import DataLoader from "./business-logic/backend/DataLoader.js";
 import { GlobalDataProvider } from "./business-logic/backend/GlobalData.js";
 import {
+  getDeveloperPromptsQuery,
   getGlobalSettingsQuery,
   listCollectionCategoriesQuery,
   listCollectionsQuery,
@@ -13,18 +14,23 @@ import {
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
 import { fromHref } from "./business-logic/navigation/RouteUtils.js";
 import useNavigationState from "./business-logic/navigation/useNavigationState.js";
-import RpcError from "./components/design-system/RpcError/RpcError.js";
+import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 
-import "./setupMonacoEditor.js";
 import "./BrowserApp.css.js";
+import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.js";
 
 interface Props {
   backend: Backend;
   queryClient: QueryClient;
+  loadDemoData?: () => Promise<void>;
 }
-export default function BrowserApp({ backend, queryClient }: Props) {
+export default function BrowserApp({
+  backend,
+  queryClient,
+  loadDemoData,
+}: Props) {
   const { locale } = useLocale();
   const { navigateTo } = useNavigationState();
   return (
@@ -35,25 +41,38 @@ export default function BrowserApp({ backend, queryClient }: Props) {
             <RouterProvider navigate={(href) => navigateTo(fromHref(href))}>
               <DataLoader
                 queries={[
-                  listCollectionCategoriesQuery(),
-                  listCollectionsQuery(),
-                  getGlobalSettingsQuery(),
+                  listCollectionCategoriesQuery([]),
+                  listCollectionsQuery([]),
+                  getGlobalSettingsQuery([]),
+                  getDeveloperPromptsQuery([]),
                 ]}
                 renderErrors={(errors) => (
                   <>
-                    <FormattedMessage defaultMessage="Error loading app" />
-                    <RpcError errors={errors} />
+                    <h1>
+                      <FormattedMessage defaultMessage="Error loading app" />
+                    </h1>
+                    <ResultErrors errors={errors} />
                   </>
                 )}
               >
-                {(collectionCategories, collections, globalSettings) => (
+                {(
+                  collectionCategories,
+                  collections,
+                  globalSettings,
+                  developerPrompts,
+                ) => (
                   <GlobalDataProvider
                     value={{
                       collectionCategories,
                       collections,
                       globalSettings,
+                      developerPrompts,
                     }}
                   >
+                    {import.meta.env["VITE_IS_DEMO"] === "true" &&
+                    loadDemoData ? (
+                      <LoadDemoDataButton loadDemoData={loadDemoData} />
+                    ) : null}
                     <Root />
                   </GlobalDataProvider>
                 )}

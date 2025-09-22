@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-const panelHeaderHeight = vars.spacing._12;
+const narrowWindowWidth = "70rem";
 
 export const Shell = {
   root: style({
@@ -13,6 +13,20 @@ export const Shell = {
     overflow: "hidden",
     color: vars.colors.text.primary,
     background: vars.colors.background.surface,
+    position: "relative",
+    transition: "margin-inline-start 200ms ease",
+    selectors: {
+      '&[data-primary-sidebar-open="true"]': {
+        marginInlineStart: 0,
+      },
+    },
+    "@media": {
+      [`screen and (max-width: ${narrowWindowWidth})`]: {
+        width: `calc(100vw + ${vars.spacing._64})`,
+        gridTemplateColumns: `${vars.spacing._64} 100vw`,
+        marginInlineStart: `calc(-1 * ${vars.spacing._64})`,
+      },
+    },
   }),
 };
 
@@ -42,7 +56,7 @@ export const PanelHeader = {
     left: 0,
     zIndex: 9999,
     width: "100%",
-    height: panelHeaderHeight,
+    height: vars.shell.panelHeaderHeight,
     background: `
       linear-gradient(
         180deg,
@@ -63,12 +77,31 @@ export const PanelHeader = {
       },
     },
   }),
+
+  leftSection: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
+  }),
+
   title: style({
     fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.medium,
   }),
+
   action: style({
     fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  primarySidebarToggleButton: style({
+    fontSize: vars.typography.fontSizes.xl2,
+    padding: 0,
+    display: "none !important",
+    "@media": {
+      [`screen and (max-width: ${narrowWindowWidth})`]: {
+        display: "inline-flex !important",
+      },
+    },
   }),
 };
 
@@ -85,7 +118,12 @@ export const PanelContent = {
       },
       '[data-slot="Main"] &': {
         padding: vars.spacing._8,
-        paddingInline: `max(calc(50% - ${vars.spacing._120}), ${vars.spacing._8})`,
+      },
+      '[data-slot="Main"] [data-full-width="false"]&': {
+        paddingInline: `max(calc(50% - ${vars.spacing._90}), ${vars.spacing._8})`,
+      },
+      '[data-slot="Main"] [data-full-width="true"]&': {
+        paddingInline: vars.spacing._8,
       },
       '[data-slot="Main"] header + &': {
         paddingBlockStart: vars.spacing._4,

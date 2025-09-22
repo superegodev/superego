@@ -1,9 +1,22 @@
-import type { Backend, RpcResultPromise } from "@superego/backend";
-import makeRpcError from "./makers/makeRpcError.js";
-import makeUnsuccessfulRpcResult from "./makers/makeUnsuccessfulRpcResult.js";
+import type { Backend } from "@superego/backend";
+import { extractErrorDetails } from "@superego/shared-utils";
+import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
+import makeResultError from "./makers/makeResultError.js";
+import makeUnsuccessfulResult from "./makers/makeUnsuccessfulResult.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
+import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
+import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
+import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
+import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
+import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
+import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
+import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse.js";
+import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
+import AssistantsTts from "./usecases/assistants/Tts.js";
+import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -18,6 +31,7 @@ import DocumentsCreate from "./usecases/documents/Create.js";
 import DocumentsCreateNewVersion from "./usecases/documents/CreateNewVersion.js";
 import DocumentsDelete from "./usecases/documents/Delete.js";
 import DocumentsGet from "./usecases/documents/Get.js";
+import DocumentsGetVersion from "./usecases/documents/GetVersion.js";
 import DocumentsList from "./usecases/documents/List.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
@@ -28,70 +42,125 @@ export default class ExecutingBackend implements Backend {
   collections: Backend["collections"];
   documents: Backend["documents"];
   files: Backend["files"];
+  assistants: Backend["assistants"];
+  backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+
+  private backgroundJobExecutor: BackgroundJobExecutor;
 
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
+    private inferenceServiceFactory: InferenceServiceFactory,
   ) {
     this.collectionCategories = {
-      create: this.makeUsecase(CollectionCategoriesCreate),
-      update: this.makeUsecase(CollectionCategoriesUpdate),
-      delete: this.makeUsecase(CollectionCategoriesDelete),
-      list: this.makeUsecase(CollectionCategoriesList),
+      create: this.makeUsecase(CollectionCategoriesCreate, true),
+      update: this.makeUsecase(CollectionCategoriesUpdate, true),
+      delete: this.makeUsecase(CollectionCategoriesDelete, true),
+      list: this.makeUsecase(CollectionCategoriesList, false),
     };
 
     this.collections = {
-      create: this.makeUsecase(CollectionsCreate),
-      createNewVersion: this.makeUsecase(CollectionsCreateNewVersion),
-      list: this.makeUsecase(CollectionsList),
-      delete: this.makeUsecase(CollectionsDelete),
-      updateSettings: this.makeUsecase(CollectionsUpdateSettings),
+      create: this.makeUsecase(CollectionsCreate, true),
+      updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
+      createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
       updateLatestVersionSettings: this.makeUsecase(
         CollectionUpdateLatestVersionSettings,
+        true,
       ),
+      delete: this.makeUsecase(CollectionsDelete, true),
+      list: this.makeUsecase(CollectionsList, false),
     };
 
     this.documents = {
-      create: this.makeUsecase(DocumentsCreate),
-      createNewVersion: this.makeUsecase(DocumentsCreateNewVersion),
-      get: this.makeUsecase(DocumentsGet),
-      list: this.makeUsecase(DocumentsList),
-      delete: this.makeUsecase(DocumentsDelete),
+      create: this.makeUsecase(DocumentsCreate, true),
+      createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
+      delete: this.makeUsecase(DocumentsDelete, true),
+      list: this.makeUsecase(DocumentsList, false),
+      get: this.makeUsecase(DocumentsGet, false),
+      getVersion: this.makeUsecase(DocumentsGetVersion, false),
     };
 
     this.files = {
-      getContent: this.makeUsecase(FilesGetContent),
+      getContent: this.makeUsecase(FilesGetContent, false),
+    };
+
+    this.assistants = {
+      startConversation: this.makeUsecase(AssistantsStartConversation, true),
+      continueConversation: this.makeUsecase(
+        AssistantsContinueConversation,
+        true,
+      ),
+      retryLastResponse: this.makeUsecase(AssistantsRetryLastResponse, true),
+      recoverConversation: this.makeUsecase(
+        AssistantsRecoverConversation,
+        true,
+      ),
+      deleteConversation: this.makeUsecase(AssistantsDeleteConversation, true),
+      listConversations: this.makeUsecase(AssistantsListConversations, false),
+      getConversation: this.makeUsecase(AssistantsGetConversation, false),
+      getDeveloperPrompts: this.makeUsecase(
+        AssistantsGetDeveloperPrompts,
+        false,
+      ),
+      tts: this.makeUsecase(AssistantsTts, false),
+    };
+
+    this.backgroundJobs = {
+      list: this.makeUsecase(BackgroundJobsList, false),
     };
 
     this.globalSettings = {
-      get: this.makeUsecase(GlobalSettingsGet),
-      update: this.makeUsecase(GlobalSettingsUpdate),
+      get: this.makeUsecase(GlobalSettingsGet, false),
+      update: this.makeUsecase(GlobalSettingsUpdate, true),
     };
+
+    this.backgroundJobExecutor = new BackgroundJobExecutor(
+      dataRepositoriesManager,
+      javascriptSandbox,
+      inferenceServiceFactory,
+    );
   }
 
-  private makeUsecase<
-    Exec extends (...args: any[]) => RpcResultPromise<any, any>,
-  >(
-    Usecase: new (
+  private makeUsecase<Exec extends (...args: any[]) => any>(
+    UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
+      inferenceServiceFactory: InferenceServiceFactory,
     ) => { exec: Exec },
-  ) {
-    return async (...args: any[]) =>
+    triggerBackgroundJobCheck: boolean,
+  ): Exec {
+    return (async (...args: any[]) =>
       this.dataRepositoriesManager
-        .runInSerializableTransaction(async (dataRepositories) => {
-          const usecase = new Usecase(dataRepositories, this.javascriptSandbox);
-          const rpcResult = await usecase.exec(...args);
+        .runInSerializableTransaction(async (repos) => {
+          const usecase = new UsecaseClass(
+            repos,
+            this.javascriptSandbox,
+            this.inferenceServiceFactory,
+          );
+          const result = await usecase.exec(...args);
           return {
-            action: rpcResult.success ? "commit" : "rollback",
-            returnValue: rpcResult,
+            action: result.success ? "commit" : "rollback",
+            returnValue: result,
           };
         })
+        .then((result) => {
+          // We trigger a background job check only _after_ the transaction that
+          // might have created some background jobs has been committed. (Else
+          // the BackgroundJobExecutor wouldn't even see the created background
+          // jobs, since it executes in a separate transaction.)
+          if (triggerBackgroundJobCheck) {
+            // Note: this call is purposefully not awaited.
+            this.backgroundJobExecutor.executeNext();
+          }
+          return result;
+        })
         .catch((error) =>
-          makeUnsuccessfulRpcResult(
-            makeRpcError("UnexpectedError", { cause: error }),
+          makeUnsuccessfulResult(
+            makeResultError("UnexpectedError", {
+              cause: extractErrorDetails(error),
+            }),
           ),
-        );
+        )) as Exec;
   }
 }

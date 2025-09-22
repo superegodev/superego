@@ -1,0 +1,28 @@
+diff --git a/dist/index.esm.mjs b/dist/index.esm.mjs
+index 5d34fd4bf8e7213c1be065b3c4d757d196b24cc1..fa509e20a5e23c457c283bd419da9c06ac6ea56e 100644
+--- a/dist/index.esm.mjs
++++ b/dist/index.esm.mjs
+@@ -294,6 +294,8 @@ var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) =>
+ };
+ 
+ var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
++var isTypedArray = (value) =>
++    ArrayBuffer.isView(value) && !(value instanceof DataView);
+ 
+ function deepEqual(object1, object2, _internal_visited = new WeakSet()) {
+     if (isPrimitive(object1) || isPrimitive(object2)) {
+@@ -302,6 +304,14 @@ function deepEqual(object1, object2, _internal_visited = new WeakSet()) {
+     if (isDateObject(object1) && isDateObject(object2)) {
+         return object1.getTime() === object2.getTime();
+     }
++    if (isTypedArray(object1) || isTypedArray(object2)) {
++        if (!(isTypedArray(object1) && isTypedArray(object2))) return false;
++        if (object1.length !== object2.length) return false;
++        for (var i = 0; i < object1.length; i++) {
++            if (object1[i] !== object2[i]) return false;
++        }
++        return true;
++    }
+     const keys1 = Object.keys(object1);
+     const keys2 = Object.keys(object2);
+     if (keys1.length !== keys2.length) {

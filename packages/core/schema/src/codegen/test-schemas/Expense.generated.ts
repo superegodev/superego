@@ -2,106 +2,81 @@
 // Superego built-in types //
 /////////////////////////////
 
-export type FileRef = {
-  id: string;
-  /**
-   * Name + extension.
-   * @example book.pdf
-   */
-  name: string;
-  mimeType: string;
-};
-
-export type ProtoFile = {
-  /**
-   * File name + extension.
-   * @example book.pdf
-   */
-  name: string;
-  mimeType: string;
-  /** The binary content of the file. */
-  content: Uint8Array;
+export type JsonObject = {
+  __dataType: "JsonObject";
+  [key: string]: any;
 };
 
 //////////////////
 // Schema types //
 //////////////////
 
-/**
- * Category of the expense.
- */
-export enum ExpenseCategory {
-  Groceries = "GROCERIES",
-  Transport = "TRANSPORT",
-  Entertainment = "ENTERTAINMENT",
-  Bills = "BILLS",
-  Healthcare = "HEALTHCARE",
-  Shopping = "SHOPPING",
-  Other = "OTHER",
-}
+/** Category of the expense. */
+export type Category = 
+  /** Rent or mortgage, property taxes, HOA dues, home repairs. */
+  | "Housing"
+  /** Electricity, gas, water, trash, internet, phone. */
+  | "Utilities"
+  /** Food and household staples for home. */
+  | "Groceries"
+  /** Restaurants, cafés, delivery, tips. */
+  | "DiningAndTakeout"
+  /** Fuel, public transit, rideshare, parking, maintenance. */
+  | "Transportation"
+  /**  Doctor visits, dental, prescriptions, copays. */
+  | "HealthAndMedical"
+  /** Auto, health, home/renters, life premiums. */
+  | "Insurance"
+  /** Credit card payments, student or auto loans. */
+  | "DebtAndLoans"
+  /** Streaming, games, events, hobbies, apps. */
+  | "EntertainmentAndSubscriptions"
+  /** Clothing, toiletries, cosmetics, salon/barber. */
+  | "ShoppingAndPersonalCare"
+  | "Other";
 
-/**
- * Details of the payment method used.
- */
-export type PaymentMethodDetails = {
-  /**
-   * e.g., Credit Card, Debit Card, PayPal, Cash
-   */
-  type: string;
-  /**
-   * Last 4 digits for card payments.
-   */
-  last4Digits: string | null;
-  /**
-   * Card issuer or payment provider.
-   */
-  issuer: string | null;
-};
+/** Details of the payment method used. */
+export type PaymentMethod = 
+  | "Credit Card"
+  | "Debit Card"
+  | "Cash";
 
 /**
  * Represents a single financial expense.
+ *
+ * Note: This is the root type of this schema.
  */
 export type Expense = {
+  /** Short title for the expense. 5 words max. */
+  title: string;
   /**
    * Date of the expense.
    *
-   * Format `dev.superego:String.PlainDate`:
+   * #### Format `dev.superego:String.PlainDate`
    *
    * A calendar date in the ISO8601 format, not associated with a particular time or time zone.
    *
-   * Examples:
-   *
+   * Format examples:
    * - "2006-08-24"
    * - "2024-02-29"
-   * - "-000924-01-01"
-   * - "0924-01-01"
-   * - "+010924-01-01"
    */
   date: string;
-  /**
-   * Amount of the expense.
-   */
+  /** Amount of the expense. */
   amount: number;
-  /**
-   * Currency code (e.g., EUR, USD).
-   */
+  /** Currency code (e.g., EUR, USD). */
   currency: "EUR";
-  category: ExpenseCategory;
+  category: Category;
+  paymentMethod: PaymentMethod | null;
   /**
-   * Detailed description of the expense.
+   * Misc notes.
+   *
+   * #### Format `dev.superego:JsonObject.TiptapRichText`
+   *
+   * A rich-text document as represented, in JSON, by the Tiptap rich-text editor.
+   *
+   * Format examples:
+   * - {"__dataType":"JsonObject","type":"doc","content":[]}
+   * - {"__dataType":"JsonObject","type":"doc","content":[{"type":"paragraph","attrs":{"textAlign":null},"content":[{"type":"text","text":"Hello, World!"}]}]}
    */
-  description: string;
-  /**
-   * Is this a recurring expense?
-   */
-  isRecurring: boolean;
-  /**
-   * Scanned or digital receipt file.
-   */
-  receipt: ProtoFile | FileRef | null;
-  paymentMethod: PaymentMethodDetails | null;
-  /**
-   * List of user-defined tags.
-   */
-  tags: string[] | null;
+  notes: JsonObject | null;
 };

@@ -6,8 +6,8 @@ import {
 import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import formatIdentifier from "../../../utils/formatIdentifier.js";
 import { generateAnyDefaultValues } from "../../../utils/generateDefaultValues.js";
+import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import AnyField from "./AnyField.js";
@@ -34,7 +34,7 @@ export default function StructField({
   label,
 }: Props) {
   const { field } = useController({ control, name });
-  if (utils.rootType(schema) === typeDefinition) {
+  if (utils.getRootType(schema) === typeDefinition) {
     return (
       <Fields
         schema={schema}
@@ -54,6 +54,7 @@ export default function StructField({
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
+        isNullable={isNullable}
         label={label}
         actions={
           <NullifyFieldAction
@@ -96,20 +97,20 @@ function Fields({
   control,
   name,
 }: Pick<Props, "schema" | "typeDefinition" | "control" | "name">) {
-  return Object.entries(typeDefinition.properties).map(
-    ([propertyName, propertyTypeDefinition]) => (
-      <AnyField
-        key={propertyName}
-        schema={schema}
-        typeDefinition={propertyTypeDefinition}
-        isNullable={
-          typeDefinition.nullableProperties?.includes(propertyName) ?? false
-        }
-        isListItem={false}
-        control={control}
-        name={name !== "" ? `${name}.${propertyName}` : propertyName}
-        label={formatIdentifier(propertyName)}
-      />
-    ),
-  );
+  const sortedPropertyNames =
+    typeDefinition.propertiesOrder ?? Object.keys(typeDefinition.properties);
+  return sortedPropertyNames.map((propertyName) => (
+    <AnyField
+      key={propertyName}
+      schema={schema}
+      typeDefinition={typeDefinition.properties[propertyName]!}
+      isNullable={
+        typeDefinition.nullableProperties?.includes(propertyName) ?? false
+      }
+      isListItem={false}
+      control={control}
+      name={name !== "" ? `${name}.${propertyName}` : propertyName}
+      label={toTitleCase(propertyName)}
+    />
+  ));
 }

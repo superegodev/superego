@@ -10,5 +10,6 @@ export default function makeDeletedEntities(
     documents: deletedEntities.documents ?? [],
     documentVersion: deletedEntities.documentVersion ?? [],
     files: deletedEntities.files ?? [],
+    conversations: deletedEntities.conversations ?? [],
   };
 }

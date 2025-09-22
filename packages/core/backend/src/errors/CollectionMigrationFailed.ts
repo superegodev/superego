@@ -1,20 +1,20 @@
+import type { ResultError } from "@superego/global-types";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
-import type RpcError from "../types/RpcError.js";
 import type DocumentContentNotValid from "./DocumentContentNotValid.js";
 import type DocumentNotFound from "./DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./DocumentVersionIdNotMatching.js";
 import type FilesNotFound from "./FilesNotFound.js";
 import type UnexpectedError from "./UnexpectedError.js";
 
-type CollectionMigrationFailed = RpcError<
+type CollectionMigrationFailed = ResultError<
   "CollectionMigrationFailed",
   {
     collectionId: CollectionId;
     failedDocumentMigrations: {
       documentId: DocumentId;
       cause:
-        | RpcError<
+        | ResultError<
             "ApplyingMigrationFailed",
             {
               message: string;
@@ -22,7 +22,7 @@ type CollectionMigrationFailed = RpcError<
               stack?: string | undefined;
             }
           >
-        | RpcError<
+        | ResultError<
             "CreatingNewDocumentVersionFailed",
             {
               cause:

@@ -1,9 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type {
-  Collection,
-  NonEmptyArray,
-  SummaryPropertyDefinition,
-} from "@superego/backend";
+import type { Collection, TypescriptModule } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo } from "react";
 import { Form } from "react-aria-components";
@@ -12,16 +8,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateLatestCollectionVersionSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
+import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFSummaryPropertyDefinitionsField from "../../widgets/RHFSummaryPropertyDefinitionsField/RHFSummaryPropertyDefinitionsField.js";
 import * as cs from "./CollectionSettings.css.js";
 
-const schemaTypescriptLibPath = "/CollectionSchema.ts";
-
 interface FormValues {
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
+  contentSummaryGetter: TypescriptModule;
 }
 
 interface Props {
@@ -36,12 +30,13 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
-      summaryProperties: collection.latestVersion.settings.summaryProperties,
+      contentSummaryGetter:
+        collection.latestVersion.settings.contentSummaryGetter,
     },
-    mode: "all",
+    mode: "onBlur",
     resolver: standardSchemaResolver(
       v.strictObject({
-        summaryProperties: forms.schemas.summaryPropertyDefinitions(intl),
+        contentSummaryGetter: forms.schemas.typescriptModule(intl),
       }),
     ),
   });
@@ -53,49 +48,31 @@ export default function UpdateCollectionVersionSettingsForm({
       values,
     );
     if (success) {
-      const { summaryProperties } = data.latestVersion.settings;
-      reset({ summaryProperties });
+      const { contentSummaryGetter } = data.latestVersion.settings;
+      reset({ contentSummaryGetter });
     }
   };
   const schemaTypescriptLib = useMemo(
-    () =>
-      ({
-        path: schemaTypescriptLibPath,
-        source: codegen(collection.latestVersion.schema),
-      }) as const,
+    () => ({
+      path: wellKnownLibPaths.collectionSchema,
+      source: codegen(collection.latestVersion.schema),
+    }),
     [collection],
   );
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <RHFSummaryPropertyDefinitionsField
+      <RHFContentSummaryGetterField
         control={control}
-        name="summaryProperties"
+        name="contentSummaryGetter"
         schemaTypescriptLib={schemaTypescriptLib}
-        getDefaultSummaryPropertyDefinition={(index) =>
-          forms.defaults.summaryPropertyDefinition(
-            index,
-            collection.latestVersion.schema,
-            schemaTypescriptLibPath,
-            intl,
-          )
-        }
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Save collection version settings" />
         </RHFSubmitButton>
       </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error saving collection version settings",
-          })}
-        >
-          <RpcError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

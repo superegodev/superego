@@ -3,15 +3,44 @@ import { vars } from "../../../themes.css.js";
 
 export const CollectionsTree = {
   root: style({
+    overflow: "hidden",
     display: "flex",
     flexDirection: "column",
     marginInline: `calc(-1 * ${vars.spacing._2})`,
     fontSize: vars.typography.fontSizes.sm,
   }),
+
+  tree: style({
+    flex: "0 1 auto",
+    minHeight: 0,
+    overflow: "auto",
+    overscrollBehavior: "contain",
+  }),
+
+  emptyTree: style({
+    display: "flex",
+    gap: vars.spacing._2,
+    alignItems: "center",
+    width: "100%",
+    fontSize: vars.typography.fontSizes.xs,
+    color: vars.colors.text.secondary,
+  }),
+
+  emptyTreeText: style({
+    // Pixel-specific width to line up the arrow with the toolbar button.
+    width: "172.5px",
+    paddingInlineStart: vars.spacing._2,
+  }),
+
+  emptyTreeIcon: style({
+    fontSize: vars.typography.fontSizes.md,
+    marginBlockEnd: vars.spacing._2,
+  }),
 };
 
 export const Header = {
   root: style({
+    flex: "0 0 auto",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -46,7 +75,7 @@ export const TreeItem = {
   root: style({
     paddingInlineStart: `calc(${vars.spacing._2} + (var(--tree-item-level) - 1) * ${vars.spacing._7})`,
     paddingInlineEnd: vars.spacing._2,
-    marginBlock: vars.spacing._05,
+    marginBlock: vars.spacing._0_5,
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",
     selectors: {

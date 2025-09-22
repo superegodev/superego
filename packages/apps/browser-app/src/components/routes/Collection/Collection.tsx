@@ -8,6 +8,7 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DocumentsTable from "../../widgets/DocumentsTable/DocumentsTable.js";
+import * as cs from "./Collection.css.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -42,10 +43,20 @@ export default function Collection({ collectionId }: Props) {
           },
         ]}
       />
-      <Shell.Panel.Content>
-        <DataLoader queries={[listDocumentsQuery(collectionId)]}>
+      <Shell.Panel.Content
+        fullWidth={true}
+        className={cs.Collection.panelContent}
+      >
+        <DataLoader queries={[listDocumentsQuery([collectionId])]}>
           {(documents) => (
-            <DocumentsTable collection={collection} documents={documents} />
+            <DocumentsTable
+              collectionId={collectionId}
+              collection={collection}
+              documents={documents}
+              showCreatedAt={true}
+              showLastModifiedAt={true}
+              className={cs.Collection.documentsTable}
+            />
           )}
         </DataLoader>
       </Shell.Panel.Content>

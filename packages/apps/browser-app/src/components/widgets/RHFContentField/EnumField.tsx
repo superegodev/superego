@@ -11,6 +11,7 @@ import {
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useZoomLevel } from "./zoomLevel.js";
 
 interface Props {
   typeDefinition: EnumTypeDefinition;
@@ -28,7 +29,10 @@ export default function EnumField({
   name,
   label,
 }: Props) {
+  const zoomLevel = useZoomLevel();
   const { field, fieldState } = useController({ control, name });
+  const sortedMemberNames =
+    typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
   return (
     <Select
       id={field.name}
@@ -45,6 +49,7 @@ export default function EnumField({
       {!isListItem ? (
         <AnyFieldLabel
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           label={label}
           actions={
             <NullifyFieldAction
@@ -62,10 +67,15 @@ export default function EnumField({
       />
       <FieldError>{fieldState.error?.message}</FieldError>
       <SelectOptions
-        options={Object.values(typeDefinition.members).map((member) => ({
-          id: member.value,
-          label: member.value,
-        }))}
+        options={sortedMemberNames.map((memberName) => {
+          const member = typeDefinition.members[memberName]!;
+          return {
+            id: member.value,
+            label: member.value,
+            description: member.description,
+          };
+        })}
+        zoomLevel={zoomLevel}
       />
     </Select>
   );

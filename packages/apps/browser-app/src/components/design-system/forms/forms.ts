@@ -1,3 +1,6 @@
+export { default as DatePicker } from "./DatePicker.js";
+export { default as DatePickerCalendar } from "./DatePickerCalendar.js";
+export { default as DatePickerInput } from "./DatePickerInput.js";
 export { default as Description } from "./Description.js";
 export { default as FieldError } from "./FieldError.js";
 export { default as Input } from "./Input.js";

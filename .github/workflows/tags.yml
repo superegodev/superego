@@ -18,13 +18,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Install Playwright
-        run: yarn dlx playwright install chromium --with-deps
+        run: yarn playwright install chromium --with-deps
       - name: Check formatting
         run: yarn check-formatting
-      - name: Check types
-        run: yarn check-types
       - name: Check linting
         run: yarn check-linting
+      - name: Check translations
+        run: yarn check-translations
+      - name: Check types
+        run: yarn check-types
       - name: Test
         run: yarn test
 
@@ -40,13 +42,13 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
-      - name: Build demo app
-        run: yarn build-demo
-      - name: Deploy demo-app to demo.superego.dev
+      - name: Build demo-app for production environment
+        run: yarn build-demo:production
+      - name: Deploy demo-app to production environment
         env:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
-        run: yarn deploy-demo
+        run: yarn deploy-demo:production
 
   build-deploy-electron:
     needs: qa
@@ -99,6 +101,8 @@ jobs:
           ## Decode the Base64 Apple API Key string into the .p8 file
           echo $APPLE_API_KEY_BASE64 | base64 --decode -o $APPLE_API_KEY
       - name: Build electron app
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
         run: yarn build-electron
       - name: Notarize macOS app
         if: startsWith(matrix.os, 'macos')

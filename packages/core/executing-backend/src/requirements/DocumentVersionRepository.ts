@@ -13,6 +13,7 @@ export default interface DocumentVersionRepository {
   deleteAllWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<DocumentVersionId[]>;
+  find(id: DocumentVersionId): Promise<DocumentVersionEntity | null>;
   findLatestWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity | null>;

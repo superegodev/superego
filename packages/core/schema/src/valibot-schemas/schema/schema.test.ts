@@ -417,6 +417,107 @@ describe("Invalid schemas", () => {
       ],
     });
 
+    describe("invalid membersOrder in enum type definition", () => {
+      test("case: non-existing member", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                enum: {
+                  dataType: DataType.Enum,
+                  members: {
+                    A: { value: "A" },
+                  },
+                  membersOrder: ["nonExisting"],
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all member names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "properties" },
+              { key: "enum" },
+              { key: "membersOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: missing member", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                enum: {
+                  dataType: DataType.Enum,
+                  members: {
+                    A: { value: "A" },
+                  },
+                  membersOrder: [],
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all member names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "properties" },
+              { key: "enum" },
+              { key: "membersOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: duplicate member", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                enum: {
+                  dataType: DataType.Enum,
+                  members: {
+                    A: { value: "A" },
+                  },
+                  membersOrder: ["A", "A"],
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must not contain duplicates",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "properties" },
+              { key: "enum" },
+              { key: "membersOrder" },
+            ],
+          },
+        ],
+      });
+    });
+
     test("invalid accept in file type definition", {
       schema: {
         types: {
@@ -452,29 +553,160 @@ describe("Invalid schemas", () => {
       ],
     });
 
-    test("invalid nullableProperty in struct type definition", {
-      schema: {
-        types: {
-          Root: {
-            dataType: DataType.Struct,
-            properties: {},
-            nullableProperties: [true],
+    describe("invalid nullableProperties in struct type definition", () => {
+      test("case: invalid nullableProperty type", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              nullableProperties: [true],
+            },
           },
+          rootType: "Root",
         },
-        rootType: "Root",
-      },
-      expectedIssues: [
-        {
-          kind: "schema",
-          message: "Invalid type: Expected string but received true",
-          path: [
-            { key: "types" },
-            { key: "Root" },
-            { key: "nullableProperties" },
-            { key: 0 },
-          ],
+        expectedIssues: [
+          {
+            kind: "schema",
+            message: "Invalid type: Expected string but received true",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+              { key: 0 },
+            ],
+          },
+        ],
+      });
+
+      test("case: non-existing nullableProperty", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              nullableProperties: ["nonExisting"],
+            },
+          },
+          rootType: "Root",
         },
-      ],
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: 'Property "nonExisting" does not exist in struct',
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+              { key: 0 },
+            ],
+          },
+        ],
+      });
+
+      test("case: duplicate nullableProperty", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              nullableProperties: ["string", "string"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must not contain duplicates",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "nullableProperties" },
+            ],
+          },
+        ],
+      });
+    });
+
+    describe("invalid propertiesOrder in struct type definition", () => {
+      test("case: non-existing property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {},
+              propertiesOrder: ["nonExisting"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all property names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: missing property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              propertiesOrder: [],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must contain all property names and nothing else",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
+
+      test("case: duplicate property", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                string: { dataType: DataType.String },
+              },
+              propertiesOrder: ["string", "string"],
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must not contain duplicates",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "propertiesOrder" },
+            ],
+          },
+        ],
+      });
     });
   });
 
@@ -620,31 +852,6 @@ describe("Invalid schemas", () => {
     });
   });
 
-  test("Struct nullable property referencing a non-existing property", {
-    schema: {
-      types: {
-        Root: {
-          dataType: DataType.Struct,
-          properties: {},
-          nullableProperties: ["nonExisting"],
-        },
-      },
-      rootType: "Root",
-    },
-    expectedIssues: [
-      {
-        kind: "validation",
-        message: 'Property "nonExisting" does not exist in struct',
-        path: [
-          { key: "types" },
-          { key: "Root" },
-          { key: "nullableProperties" },
-          { key: 0 },
-        ],
-      },
-    ],
-  });
-
   test("Top-level type is a ref (not allowed)", {
     schema: {
       types: {
@@ -730,6 +937,10 @@ describe("Valid schemas", () => {
             name: {
               dataType: DataType.String,
             },
+            novaGroup: {
+              dataType: null,
+              ref: "NovaGroup",
+            },
             servingSize: {
               dataType: null,
               ref: "MassQuantity",
@@ -754,8 +965,15 @@ describe("Valid schemas", () => {
                   ref: "MassQuantity",
                 },
               },
+              propertiesOrder: ["calories", "fat", "carbs", "protein"],
             },
           },
+          propertiesOrder: [
+            "name",
+            "novaGroup",
+            "servingSize",
+            "nutritionFacts",
+          ],
         },
         MassQuantity: {
           dataType: DataType.Struct,
@@ -768,6 +986,7 @@ describe("Valid schemas", () => {
               dataType: DataType.Number,
             },
           },
+          propertiesOrder: ["amount", "unit"],
         },
         EnergyQuantity: {
           dataType: DataType.Struct,
@@ -780,6 +999,22 @@ describe("Valid schemas", () => {
               dataType: DataType.Number,
             },
           },
+          propertiesOrder: ["amount", "unit"],
+        },
+        NovaGroup: {
+          dataType: DataType.Enum,
+          members: {
+            Unprocessed: { value: "Unprocessed" },
+            CulinaryIngredient: { value: "CulinaryIngredient" },
+            Processed: { value: "Processed" },
+            UltraProcessed: { value: "UltraProcessed" },
+          },
+          membersOrder: [
+            "Unprocessed",
+            "CulinaryIngredient",
+            "Processed",
+            "UltraProcessed",
+          ],
         },
       },
       rootType: "Food",

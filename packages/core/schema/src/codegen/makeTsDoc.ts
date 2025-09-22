@@ -1,13 +1,14 @@
-import joinLines from "./joinLines.js";
+import joinLines from "../utils/joinLines.js";
 
 export default function makeTsDoc(content: string): string {
   const sanitizedContent = content.replaceAll("*/", "*\\/");
-  return joinLines([
-    "/**",
-    ...sanitizedContent
-      .split("\n")
-      .map((line) => (line !== "" ? ` * ${line}` : " *")),
-    " */",
-    "",
-  ]);
+  const lines = sanitizedContent.split("\n");
+  return lines.length === 1
+    ? `/** ${lines[0]} */\n`
+    : joinLines([
+        "/**",
+        ...lines.map((line) => (line !== "" ? ` * ${line}` : " *")),
+        " */",
+        "",
+      ]);
 }

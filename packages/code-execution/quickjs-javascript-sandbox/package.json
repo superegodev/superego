@@ -16,13 +16,16 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@jitl/quickjs-wasmfile-debug-sync": "^0.31.0",
     "@jitl/quickjs-wasmfile-release-sync": "^0.31.0",
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/javascript-sandbox-global-utils": "workspace:*",
     "quickjs-emscripten": "^0.31.0"
   }
 }

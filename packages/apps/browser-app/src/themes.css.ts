@@ -1,8 +1,12 @@
 import { createTheme } from "@vanilla-extract/css";
 
 const commonVars = {
+  shell: {
+    panelHeaderHeight: "3rem",
+  },
   typography: {
     fontSizes: {
+      xs2: "0.70rem",
       xs: "0.80rem",
       sm: "0.875rem",
       md: "1rem",
@@ -62,11 +66,12 @@ const commonVars = {
   },
   spacing: {
     _0: "0",
-    _05: "0.125rem",
+    _0_5: "0.125rem",
     _1: "0.25rem",
     _2: "0.5rem",
     _3: "0.75rem",
     _4: "1rem",
+    _4_5: "1.125rem",
     _5: "1.25rem",
     _6: "1.5rem",
     _7: "1.75rem",
@@ -78,9 +83,11 @@ const commonVars = {
     _20: "5rem",
     _24: "6rem",
     _32: "8rem",
+    _36: "9rem",
     _40: "10rem",
     _48: "12rem",
     _64: "16rem",
+    _72: "18rem",
     _80: "20rem",
     _90: "22.5rem",
     _100: "25rem",
@@ -95,6 +102,8 @@ const commonVars = {
       md: "0.25rem",
       lg: "0.5rem",
       xl: "0.75rem",
+      xl2: "1rem",
+      xl3: "1.25rem",
       full: "9999px",
     },
     width: {
@@ -105,7 +114,7 @@ const commonVars = {
   },
 };
 
-const colors = {
+export const colors = {
   greys: {
     _0: "#ffffff",
     _1: "#fafafa",
@@ -195,7 +204,7 @@ const colors = {
     _4: "#e64980",
     _5: "#c2255c",
   },
-};
+} as const;
 
 export const [light, vars] = createTheme({
   ...commonVars,
@@ -203,6 +212,21 @@ export const [light, vars] = createTheme({
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      info: {
+        border: colors.blues._5,
+        background: colors.blues._1,
+        text: colors.blues._5,
+      },
+      success: {
+        border: colors.greens._5,
+        background: colors.greens._1,
+        text: colors.greens._5,
+      },
+      pending: {
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
+      },
       error: {
         border: colors.reds._5,
         background: colors.reds._1,
@@ -228,9 +252,21 @@ export const [light, vars] = createTheme({
         },
       },
       primary: {
-        base: { background: colors.greys._10, text: colors.greys._2 },
-        hover: { background: colors.greys._12, text: colors.greys._2 },
-        disabled: { background: colors.greys._8, text: colors.greys._2 },
+        base: {
+          background: colors.greys._10,
+          text: colors.greys._2,
+          border: colors.greys._10,
+        },
+        hover: {
+          background: colors.greys._12,
+          text: colors.greys._2,
+          border: colors.greys._12,
+        },
+        disabled: {
+          background: colors.greys._8,
+          text: colors.greys._2,
+          border: colors.greys._8,
+        },
       },
       invisible: {
         base: {
@@ -294,10 +330,25 @@ export const dark = createTheme(vars, {
     ...colors,
     accent: colors.oranges._4,
     semantic: {
+      info: {
+        border: colors.blues._1,
+        background: colors.blues._5,
+        text: colors.blues._1,
+      },
+      success: {
+        border: colors.greens._1,
+        background: colors.greens._5,
+        text: colors.greens._1,
+      },
+      pending: {
+        border: colors.oranges._1,
+        background: colors.oranges._5,
+        text: colors.oranges._1,
+      },
       error: {
-        border: colors.reds._5,
-        background: colors.reds._1,
-        text: colors.reds._5,
+        border: colors.reds._1,
+        background: colors.reds._5,
+        text: colors.reds._1,
       },
     },
     button: {
@@ -319,9 +370,21 @@ export const dark = createTheme(vars, {
         },
       },
       primary: {
-        base: { background: colors.greys._2, text: colors.greys._10 },
-        hover: { background: colors.greys._0, text: colors.greys._10 },
-        disabled: { background: colors.greys._4, text: colors.greys._10 },
+        base: {
+          background: colors.greys._2,
+          text: colors.greys._10,
+          border: colors.greys._2,
+        },
+        hover: {
+          background: colors.greys._0,
+          text: colors.greys._10,
+          border: colors.greys._0,
+        },
+        disabled: {
+          background: colors.greys._4,
+          text: colors.greys._10,
+          border: colors.greys._4,
+        },
       },
       invisible: {
         base: {
@@ -380,8 +443,8 @@ export const dark = createTheme(vars, {
     },
     background: {
       surface: colors.greys._10,
-      secondarySurface: colors.greys._9,
-      surfaceHighlight: colors.greys._8,
+      secondarySurface: colors.greys._11,
+      surfaceHighlight: colors.greys._12,
       inverse: colors.greys._0,
       inverseHighlight: colors.greys._3,
     },

@@ -7,6 +7,7 @@ export const TiptapInput = {
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
     marginBlockEnd: vars.spacing._2,
+    background: vars.colors.background.surface,
     selectors: {
       '&[data-has-focus="true"]': {
         outline: `2px solid ${vars.colors.accent}`,
@@ -39,14 +40,15 @@ const formattingMenuItemBase = style({
 export const FormattingToolbar = {
   root: style({
     width: "100%",
+    overflow: "scroll",
     display: "flex",
     gap: vars.spacing._2,
-    marginInline: vars.spacing._4,
-    marginBlockStart: vars.spacing._4,
+    paddingInline: vars.spacing._4,
+    paddingBlockStart: vars.spacing._4,
   }),
   group: style({
     display: "flex",
-    gap: vars.spacing._05,
+    gap: vars.spacing._0_5,
   }),
   separator: style({
     alignSelf: "stretch",
@@ -129,7 +131,7 @@ globalStyle(`${TiptapInput.editor} p code`, {
   color: vars.colors.text.primary,
   fontSize: vars.typography.fontSizes.xs,
   paddingInline: vars.spacing._1,
-  paddingBlock: vars.spacing._05,
+  paddingBlock: vars.spacing._0_5,
 });
 
 // Code blocks. Uses the highlight.js github-dark theme.

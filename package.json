@@ -9,22 +9,29 @@
   "scripts": {
     "test": "yarn workspaces foreach --all --topological-dev --verbose run test run",
     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
+    "check-translations": "yarn workspaces foreach --all --topological-dev --verbose run check-translations",
     "check-linting": "biome lint",
     "fix-linting": "biome lint --write",
     "check-formatting": "biome check --linter-enabled=false && prettier --list-different \"**/*.(md|yml|sql|sh)\"",
     "fix-formatting": "biome check --linter-enabled=false --write && prettier --write \"**/*.(md|yml|sql|sh)\"",
-    "build-demo": "yarn workspace @superego/demo-app build",
-    "deploy-demo": "yarn workspace @superego/demo-app deploy",
+    "build-demo:preview": "yarn workspace @superego/demo-app build:preview",
+    "build-demo:production": "yarn workspace @superego/demo-app build:production",
+    "deploy-demo:preview": "yarn workspace @superego/demo-app deploy:preview",
+    "deploy-demo:production": "yarn workspace @superego/demo-app deploy:production",
     "build-electron": "yarn workspace @superego/electron-app build",
     "deploy-electron": "yarn workspace @superego/electron-app deploy",
-    "prepare-release": "scripts/prepare-release.sh"
+    "prepare-release": "node scripts/prepareRelease.ts",
+    "playwright": "playwright"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.2",
+    "@biomejs/biome": "^2.2.4",
+    "playwright": "^1.55.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-sh": "^0.18.0",
     "prettier-plugin-sql-cst": "^0.13.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
-  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
+  "packageManager": "yarn@4.10.1+sha512.45bcc0f26c64f59bbfff2a721fbc8226f7a0fe5da70c116cecb09bdfed2514a4d5a22484b75103070175cee5d7d4ad3719cd4be029c94ae5848b44346aefe2a8",
+  "dependencies": {
+    "zx": "8.8.3-lite"
+  }
 }

@@ -62,6 +62,7 @@ export default function FileField({
           component="legend"
           className={cs.FileField.legend}
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           label={label}
           actions={
             <NullifyFieldAction

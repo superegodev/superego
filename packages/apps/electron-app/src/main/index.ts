@@ -1,6 +1,7 @@
 import { join } from "node:path";
-import { Theme } from "@superego/backend";
+import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { app, BrowserWindow } from "electron";
@@ -45,13 +46,39 @@ app
 function startBackendIPCProxyServer() {
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(app.getPath("userData"), "superego.db"),
-    defaultGlobalSettings: { theme: Theme.Auto },
+    defaultGlobalSettings: {
+      appearance: { theme: Theme.Auto },
+      inference: {
+        chatCompletions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
+        },
+      },
+      assistants: {
+        userName: null,
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionCreator]: null,
+        },
+      },
+    },
   });
   dataRepositoriesManager.runMigrations();
   const javascriptSandbox = new QuickjsJavascriptSandbox();
+  const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
   const backend = new ExecutingBackend(
     dataRepositoriesManager,
     javascriptSandbox,
+    inferenceServiceFactory,
   );
   const backendIPCProxyServer = new BackendIPCProxyServer(backend);
   backendIPCProxyServer.start();
