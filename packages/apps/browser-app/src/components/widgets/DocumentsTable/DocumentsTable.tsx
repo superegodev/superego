@@ -34,13 +34,13 @@ export default function DocumentsTable({
   ).sort();
   return (
     <Table
+      key={screenSize}
       aria-label={intl.formatMessage(
         { defaultMessage: "Documents of collection {collection}" },
         { collection: collection?.settings.name ?? collectionId },
       )}
       selectionMode="none"
       className={className}
-      key={screenSize}
     >
       <Table.Header>
         {isEmpty(contentSummaryKeys) ? (

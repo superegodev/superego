@@ -9,6 +9,7 @@ import ConversationAssistant from "../../design-system/ConversationAssistant/Con
 import ConversationFormat from "../../design-system/ConversationFormat/ConversationFormat.js";
 import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.js";
 import Table from "../../design-system/Table/Table.js";
+import * as cs from "./ConversationsTable.css.js";
 
 interface Props {
   conversations: Omit<Conversation, "messages">[];
@@ -20,6 +21,7 @@ export default function ConversationsTable({ conversations }: Props) {
     <Table
       aria-label={intl.formatMessage({ defaultMessage: "Conversations" })}
       selectionMode="none"
+      className={cs.ConversationsTable.root}
     >
       <Table.Header>
         <Table.Column isRowHeader={true} defaultWidth="3fr">
