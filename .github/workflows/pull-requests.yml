@@ -39,13 +39,13 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
-      - name: Build
-        run: yarn build-demo
-      - name: Deploy demo-app preview to *.demosuperegodev.pages.dev
+      - name: Build demo-app for preview environment
+        run: yarn build-demo:preview
+      - name: Deploy demo-app to preview environment
         env:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
-        run: yarn deploy-demo --branch ${{ github.event.number }}
+        run: yarn deploy-demo:preview --branch ${{ github.event.number }}
 
   build-deploy-electron:
     needs: qa

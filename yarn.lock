@@ -369,6 +369,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cloudflare/vite-plugin@npm:^1.13.3":
+  version: 1.13.3
+  resolution: "@cloudflare/vite-plugin@npm:1.13.3"
+  dependencies:
+    "@cloudflare/unenv-preset": "npm:2.7.4"
+    "@remix-run/node-fetch-server": "npm:^0.8.0"
+    get-port: "npm:^7.1.0"
+    miniflare: "npm:4.20250917.0"
+    picocolors: "npm:^1.1.1"
+    tinyglobby: "npm:^0.2.12"
+    unenv: "npm:2.0.0-rc.21"
+    wrangler: "npm:4.38.0"
+    ws: "npm:8.18.0"
+  peerDependencies:
+    vite: ^6.1.0 || ^7.0.0
+    wrangler: ^4.38.0
+  checksum: 10c0/adbea673f728567588eb8c236ce9b561c38c3fe0fdf08a2bc5e4a97acbda5bea10b3c9e6fd75bda5d96a0efa38101a901b7999127ad726aebf0d0c307d78234b
+  languageName: node
+  linkType: hard
+
 "@cloudflare/workerd-darwin-64@npm:1.20250917.0":
   version: 1.20250917.0
   resolution: "@cloudflare/workerd-darwin-64@npm:1.20250917.0"
@@ -401,6 +421,13 @@ __metadata:
   version: 1.20250917.0
   resolution: "@cloudflare/workerd-windows-64@npm:1.20250917.0"
   conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@cloudflare/workers-types@npm:^4.20250922.0":
+  version: 4.20250922.0
+  resolution: "@cloudflare/workers-types@npm:4.20250922.0"
+  checksum: 10c0/3d794222be1096e429c9b5958f835c897426d5fc471c5a5069477156b9324d48e1aa56f4167abec45a9b6d1654ad70b2393b550cdce7c460b25f9ea0ef67bfc8
   languageName: node
   linkType: hard
 
@@ -3947,6 +3974,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/node-fetch-server@npm:^0.8.0":
+  version: 0.8.1
+  resolution: "@remix-run/node-fetch-server@npm:0.8.1"
+  checksum: 10c0/34aca2b115ef8983a841d3ba272dd23c55e367a80c1ac1347933948012076361e053342306ad10b50bdcedb5f310bdf96767f5e3c3ef283034a366db4bdda1ca
+  languageName: node
+  linkType: hard
+
 "@rolldown/pluginutils@npm:1.0.0-beta.35":
   version: 1.0.0-beta.35
   resolution: "@rolldown/pluginutils@npm:1.0.0-beta.35"
@@ -4238,6 +4272,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
+    "@cloudflare/vite-plugin": "npm:^1.13.3"
+    "@cloudflare/workers-types": "npm:^4.20250922.0"
     "@superego/backend": "workspace:*"
     "@superego/browser-app": "workspace:^"
     "@superego/demo-data-repositories": "workspace:^"
@@ -7279,6 +7315,13 @@ __metadata:
     lodash.get: "npm:^4.0.0"
     read-pkg-up: "npm:^2.0.0"
   checksum: 10c0/4d1a52442d876948e93d929afac609c023a1d61bc5eda17a176e1b7c520207da97e0a58d34e9e5bfc776e1c0b226745e3f672901cfa4fad6f5d46cae9a3993b5
+  languageName: node
+  linkType: hard
+
+"get-port@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "get-port@npm:7.1.0"
+  checksum: 10c0/896051fea0fd3df58c050566754ab91f46406e898ce0c708414739d908a5ac03ffef3eca7a494ea9cc1914439e8caccd2218010d1eeabdde914b9ff920fa28fc
   languageName: node
   linkType: hard
 
@@ -11033,7 +11076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^4.38.0":
+"wrangler@npm:4.38.0, wrangler@npm:^4.38.0":
   version: 4.38.0
   resolution: "wrangler@npm:4.38.0"
   dependencies:
