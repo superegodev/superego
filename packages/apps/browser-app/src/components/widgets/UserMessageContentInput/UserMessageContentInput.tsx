@@ -4,7 +4,7 @@ import {
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
-import { type RefObject, useState } from "react";
+import { type RefObject, useRef, useState } from "react";
 import { TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
@@ -13,6 +13,7 @@ import classnames from "../../../utils/classnames.js";
 import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.js";
 import SendRecordToolbar from "./SendRecordToolbar.js";
 import * as cs from "./UserMessageContentInput.css.js";
+import useAutoResizeTextArea from "./useAutoresizeTextArea.js";
 
 interface Props {
   conversation: Conversation | null;
@@ -34,6 +35,10 @@ export default function UserMessageContentInput({
 }: Props) {
   const intl = useIntl();
 
+  // We define an internal ref in case one is not provided from outside.
+  const internalTextAreaRef = useRef<HTMLTextAreaElement>(null);
+  const actualTextAreaRef = textAreaRef ?? internalTextAreaRef;
+
   const isInferenceConfigured = useIsInferenceConfigured();
 
   const [text, setText] = useState("");
@@ -46,6 +51,9 @@ export default function UserMessageContentInput({
     useRecordAudio((audio) => {
       onSend([{ type: MessageContentPartType.Audio, audio: audio }]);
     });
+
+  // Auto-resize textarea.
+  useAutoResizeTextArea(actualTextAreaRef);
 
   return (
     <div className={classnames(cs.UserMessageContentInput.root, className)}>
@@ -73,6 +81,7 @@ export default function UserMessageContentInput({
         }}
       >
         <TextArea
+          rows={1}
           placeholder={
             conversation?.hasOutdatedContext
               ? intl.formatMessage({
@@ -86,7 +95,7 @@ export default function UserMessageContentInput({
                   })
           }
           className={cs.UserMessageContentInput.textArea}
-          ref={textAreaRef}
+          ref={actualTextAreaRef}
         />
       </TextField>
       {isSending || conversation?.status === ConversationStatus.Processing ? (
