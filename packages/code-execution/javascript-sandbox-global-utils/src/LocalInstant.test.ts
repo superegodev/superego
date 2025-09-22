@@ -200,3 +200,49 @@ describe("allows to express dates in the past and in the future", () => {
     });
   });
 });
+
+describe("allows comparisons", () => {
+  it("case: >", () => {
+    // Exercise
+    const localInstant1 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+    const localInstant2 = LocalInstant.fromISO("2025-09-23T00:00:00.000+03:00");
+
+    // Verify
+    expect(localInstant2 > localInstant1).toEqual(true);
+  });
+
+  it("case: >=", () => {
+    // Exercise
+    const localInstant1 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+    const localInstant2 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+
+    // Verify
+    expect(localInstant2 >= localInstant1).toEqual(true);
+  });
+
+  it("case: <", () => {
+    // Exercise
+    const localInstant1 = LocalInstant.fromISO("2025-09-23T00:00:00.000+03:00");
+    const localInstant2 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+
+    // Verify
+    expect(localInstant2 < localInstant1).toEqual(true);
+  });
+
+  it("case: <=", () => {
+    // Exercise
+    const localInstant1 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+    const localInstant2 = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+
+    // Verify
+    expect(localInstant2 <= localInstant1).toEqual(true);
+  });
+});
+
+it("stringifies as ISO", () => {
+  // Exercise
+  const localInstant = LocalInstant.fromISO("2025-09-22T00:00:00.000+03:00");
+
+  // Verify
+  expect(String(localInstant)).toEqual(localInstant.toISO());
+});

@@ -214,7 +214,13 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
               return {
                 iso: localInstant.toISO(),
                 format: localInstant.toFormat(),
-                jsDate: localInstant.toJSDate().toISOString()
+                jsDate: localInstant.toJSDate().toISOString(),
+                comparisonGt: localInstant.set({ hour: 2 }) > localInstant,
+                comparisonGte: localInstant.set({ hour: 1 }) >= localInstant,
+                comparisonLt: localInstant.set({ hour: 0 }) < localInstant,
+                comparisonLte: localInstant.set({ hour: 1 }) <= localInstant,
+                coercionToNumber: Number(localInstant),
+                coercionToString: String(localInstant),
               };
             }
           `,
@@ -236,6 +242,12 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
         iso: expectedLocalInstant.toISO(),
         format: expect.stringContaining("2025"),
         jsDate: expectedLocalInstant.toJSDate().toISOString(),
+        comparisonGt: true,
+        comparisonGte: true,
+        comparisonLt: true,
+        comparisonLte: true,
+        coercionToNumber: expectedLocalInstant.toJSDate().getTime(),
+        coercionToString: expectedLocalInstant.toISO(),
       });
     });
   });

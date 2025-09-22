@@ -1,13 +1,19 @@
 /**
- * Helper to work with dates and times in the user's current timezone and
- * locale. Instances are immutable. Calling methods returns new instances.
+ * Helper for working with dates and times in the user's current timezone and
+ * locale.
+ *
+ * Notes:
+ * - Instances are immutable. Every method returns a new instance.
+ * - Primitive coercion:
+ *   - To number → milliseconds since Unix epoch (UTC).
+ *   - To string → ISO 8601 string with the local timezone offset.
+ * - You can use >, <, >=, <= to compare instances.
+ *
  * This class is defined in the global scope. Don't import or require it.
  */
 declare class LocalInstant {
   private constructor();
-  /**
-   * Get a new LocalInstant set at the beginning of the given time unit.
-   */
+  /** Get a new LocalInstant set at the beginning of the given time unit. */
   startOf(timeUnit: LocalInstant.TimeUnit): LocalInstant;
   /**
    * Get a new LocalInstant set at the end (meaning the last millisecond) of the
@@ -28,9 +34,7 @@ declare class LocalInstant {
    * calendar, accounting for DSTs and leap years along the way.
    */
   minus(duration: LocalInstant.Duration): LocalInstant;
-  /**
-   * Get a new LocalInstant with set to the specified.
-   */
+  /** Get a new LocalInstant with set to the specified. */
   set(dateUnits: LocalInstant.DateUnits): LocalInstant;
   /**
    * Returns the ISO8601 representation of the instant, using the user's local

@@ -1,8 +1,16 @@
 import { DateTime, type WeekdayNumbers } from "luxon";
 
 /**
- * Helper to work with dates and times in the user's current timezone and
- * locale. Instances are immutable. Calling methods returns new instances.
+ * Helper for working with dates and times in the user's current timezone and
+ * locale.
+ *
+ * Notes:
+ * - Instances are immutable. Every method returns a new instance.
+ * - Primitive coercion:
+ *   - To number → milliseconds since Unix epoch (UTC).
+ *   - To string → ISO 8601 string with the local timezone offset.
+ * - You can use >, <, >=, <= to compare instances.
+ *
  * This class is defined in the global scope. Don't import or require it.
  */
 class LocalInstant {
@@ -11,9 +19,7 @@ class LocalInstant {
     private dateTime: DateTime<true>,
   ) {}
 
-  /**
-   * Get a new LocalInstant set at the beginning of the given time unit.
-   */
+  /** Get a new LocalInstant set at the beginning of the given time unit. */
   startOf(timeUnit: LocalInstant.TimeUnit): LocalInstant {
     return new LocalInstant(this.dateTime.startOf(timeUnit));
   }
@@ -46,9 +52,7 @@ class LocalInstant {
     return new LocalInstant(this.dateTime.minus(duration));
   }
 
-  /**
-   * Get a new LocalInstant with set to the specified.
-   */
+  /** Get a new LocalInstant with set to the specified. */
   set(dateUnits: LocalInstant.DateUnits): LocalInstant {
     return new LocalInstant(
       this.dateTime.set({
@@ -108,6 +112,17 @@ class LocalInstant {
     return new Intl.DateTimeFormat(undefined, intlOptions).format(
       this.dateTime.toJSDate(),
     );
+  }
+
+  /** @internal */
+  [Symbol.toPrimitive](hint: string) {
+    if (hint === "number") {
+      return this.dateTime.toMillis();
+    }
+    if (hint === "string") {
+      return this.toISO();
+    }
+    return null;
   }
 
   /** Creates a LocalInstant from an instant ISO8601 string. */

@@ -69,6 +69,16 @@ class LocalInstant {
   toFormat(options = {}) {
     return HostLocalInstant.toFormat(this.instant, this.operations, options);
   }
+
+  [Symbol.toPrimitive](hint) {
+    if (hint === "number") {
+      return this.toJSDate().getTime();
+    }
+    if (hint === "string") {
+      return this.toISO();
+    }
+    return null;
+  }
 }
 
 LocalInstant.fromISO = (instant) => new LocalInstant(instant, []);
