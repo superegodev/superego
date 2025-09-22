@@ -13,7 +13,7 @@ import classnames from "../../../utils/classnames.js";
 import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.js";
 import SendRecordToolbar from "./SendRecordToolbar.js";
 import * as cs from "./UserMessageContentInput.css.js";
-import useAutoResizeTextArea from "./useAutoresizeTextArea.js";
+import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
 
 interface Props {
   conversation: Conversation | null;
