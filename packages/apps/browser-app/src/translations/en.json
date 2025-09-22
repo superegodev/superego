@@ -80,8 +80,8 @@
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
-  "Conversation.tsx_Ro7LyR": {
-    "defaultMessage": "🤖 Conversations » {assistant} » {conversation}"
+  "Conversation.tsx_eq3LES": {
+    "defaultMessage": "🤖 Conversations » {conversation}"
   },
   "Conversation.tsx_gKk3/v": {
     "defaultMessage": "Toggle tool calls"

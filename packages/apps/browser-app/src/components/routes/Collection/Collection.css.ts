@@ -5,7 +5,7 @@ export const Collection = {
   panelContent: style({
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${vars.shell.panelHeaderHeight})`,
+    height: `calc(100dvh - ${vars.shell.panelHeaderHeight})`,
     width: "100%",
   }),
 

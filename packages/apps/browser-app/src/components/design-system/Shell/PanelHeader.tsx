@@ -52,7 +52,10 @@ export default function PanelHeader({
         {title ? <div className={cs.PanelHeader.title}>{title}</div> : null}
       </div>
       {actions ? (
-        <Toolbar aria-label={actionsAriaLabel}>
+        <Toolbar
+          aria-label={actionsAriaLabel}
+          className={cs.PanelHeader.actionsToolbar}
+        >
           {actions.map((action) =>
             "to" in action ? (
               <IconLink

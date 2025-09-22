@@ -3,6 +3,8 @@ import { uniq } from "es-toolkit";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
+import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
+import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import Table from "../../design-system/Table/Table.js";
@@ -24,6 +26,7 @@ export default function DocumentsTable({
   className,
 }: Props) {
   const intl = useIntl();
+  const screenSize = useScreenSize();
   const contentSummaryKeys = uniq(
     documents.flatMap((document) =>
       Object.keys(document.latestVersion.contentSummary.data ?? {}),
@@ -37,6 +40,7 @@ export default function DocumentsTable({
       )}
       selectionMode="none"
       className={className}
+      key={screenSize}
     >
       <Table.Header>
         {isEmpty(contentSummaryKeys) ? (
@@ -45,16 +49,20 @@ export default function DocumentsTable({
           </Table.Column>
         ) : null}
         {contentSummaryKeys.map((contentSummaryKey, index) => (
-          <Table.Column key={contentSummaryKey} isRowHeader={index === 0}>
+          <Table.Column
+            key={contentSummaryKey}
+            isRowHeader={index === 0}
+            minWidth={120}
+          >
             {DocumentUtils.formatContentSummaryKey(contentSummaryKey)}
           </Table.Column>
         ))}
-        {showCreatedAt ? (
+        {showCreatedAt && screenSize > ScreenSize.Medium ? (
           <Table.Column align="right">
             <FormattedMessage defaultMessage="Created at" />
           </Table.Column>
         ) : null}
-        {showLastModifiedAt ? (
+        {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
           <Table.Column align="right">
             <FormattedMessage defaultMessage="Last modified at" />
           </Table.Column>
@@ -91,12 +99,12 @@ export default function DocumentsTable({
                 )}
               </Table.Cell>
             ))}
-            {showCreatedAt ? (
+            {showCreatedAt && screenSize > ScreenSize.Medium ? (
               <Table.Cell align="right">
                 <FormattedDate value={document.createdAt} />
               </Table.Cell>
             ) : null}
-            {showLastModifiedAt ? (
+            {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
               <Table.Cell align="right">
                 <FormattedDate value={document.latestVersion.createdAt} />
               </Table.Cell>
