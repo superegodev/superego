@@ -5,7 +5,7 @@
       "options": { "printWidth": 120 }
     },
     {
-      "files": "*.md",
+      "files": "*.md(x)?",
       "options": { "proseWrap": "always" }
     },
     {

@@ -9,9 +9,9 @@ export default function Hero() {
       <h1 className={cs.Hero.title}>
         <FormattedMessage defaultMessage="Superego" />
       </h1>
-      <h2 className={cs.Hero.tagLine}>
+      <p className={cs.Hero.tagLine}>
         <FormattedMessage defaultMessage="Your Life's Database" />
-      </h2>
+      </p>
     </div>
   );
 }
