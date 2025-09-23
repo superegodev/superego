@@ -22,6 +22,8 @@ dist-ssr
 .vite
 out
 .wrangler
+.astro/
+.astro-build-cache/
 
 # Misc
 .DS_Store

@@ -30,9 +30,10 @@ jobs:
       - name: Test
         run: yarn test
 
-  build-deploy-demo:
+  build-deploy-demo-and-website:
     needs: qa
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -42,12 +43,22 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Build website
+        env:
+          PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+          PUBLIC_LATEST_RELEASE_URL: https://github.com/superegodev/superego/releases/tag/${{ github.ref_name }}
+        run: yarn build-website
+      - name: Deploy website to https://sueprego.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: yarn deploy-website
       - name: Build demo-app for production environment
         run: yarn build-demo:production
       - name: Deploy demo-app to production environment
         env:
-          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
-          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: yarn deploy-demo:production
 
   build-deploy-electron:

@@ -14,11 +14,10 @@ CREATE TABLE "conversations" (
   "format" TEXT NOT NULL,
   "title" TEXT,
   "context_fingerprint" TEXT NOT NULL,
-  "messages" TEXT NOT NULL,
+  "messages" BLOB NOT NULL,
   "status" TEXT NOT NULL,
   "error" TEXT,
   "created_at" TEXT NOT NULL,
-  CHECK (json_valid("messages")),
   CHECK (json_valid("error"))
 );
 

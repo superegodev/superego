@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { ConversationId } from "@superego/backend";
 import type {
   ConversationEntity,
@@ -47,7 +48,7 @@ export default class SqliteConversationRepository
         conversation.format,
         conversation.title,
         conversation.contextFingerprint,
-        JSON.stringify(conversation.messages),
+        encode(conversation.messages),
         conversation.status,
         conversation.error ? JSON.stringify(conversation.error) : null,
         conversation.createdAt.toISOString(),

@@ -1,7 +1,10 @@
 import {
   AssistantName,
+  type AudioContent,
   ConversationFormat,
   ConversationStatus,
+  MessageContentPartType,
+  MessageRole,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -15,13 +18,32 @@ export default rd<Dependencies>("Conversations", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
+    const audio: AudioContent = {
+      // Smallest possible WAV.
+      content: new Uint8Array([
+        0x52, 0x49, 0x46, 0x46, 0x25, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
+        0x66, 0x6d, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+        0x40, 0x1f, 0x00, 0x00, 0x40, 0x1f, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+        0x64, 0x61, 0x74, 0x61, 0x01, 0x00, 0x00, 0x00, 0x80,
+      ]),
+      contentType: "audio/wav",
+    };
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
       format: ConversationFormat.Text,
       title: "title",
       contextFingerprint: "contextFingerprint",
-      messages: [],
+      messages: [
+        {
+          role: MessageRole.User,
+          content: [
+            { type: MessageContentPartType.Text, text: "text", audio },
+            { type: MessageContentPartType.Audio, audio },
+          ],
+          createdAt: new Date(),
+        },
+      ],
       status: ConversationStatus.Idle,
       error: null,
       createdAt: new Date(),
