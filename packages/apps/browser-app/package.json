@@ -35,7 +35,7 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitest/browser": "^3.2.4",
-    "playwright": "^1.55.0",
+    "playwright": "^1.55.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-bundle-analyzer": "^1.2.3",
