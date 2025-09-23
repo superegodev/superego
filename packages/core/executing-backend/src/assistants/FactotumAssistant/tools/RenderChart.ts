@@ -86,18 +86,15 @@ export default {
       };
     }
 
+    const chartId = crypto.randomUUID();
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult(`
-The chart has been successfully rendered. The user can now see it.
-
-In your next response:
-  - DON'T mention the chart.
-  - DON'T include a table or recap with the **same** data of the chart.
-  - DON'T link to the chart.
-      `),
-      artifacts: { echartsOption: result.data },
+      output: makeSuccessfulResult({
+        markdownSnippet: `<Chart id="${chartId}" />`,
+      }),
+      artifacts: { chartId, echartsOption: result.data },
     };
   },
 
@@ -106,8 +103,8 @@ In your next response:
       type: InferenceService.ToolType.Function,
       name: ToolName.RenderChart,
       description: `
-Renders a chart in the app UI. Use this tool to enhance your answers with
-graphical elements.
+Creates a chart that you can use in your textual responses by including the
+\`markdownSnippet\` returned by the tool call.
 
 The getEchartsOption function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
@@ -116,7 +113,7 @@ executes in the same environment, and **must** abide by ALL its rules.
 ### Additional MANDATORY rules
 
 - Always set a title for the chart.
-- Strongly prefer:
+- Always set:
   - \`tooltip:{trigger:"axis",axisPointer:{type:"cross"}}\`
   - \`xAxis.type = "time"\` if there are timestamps on the x axis.
   - \`grid = {left:0,right:0,top:0,bottom:0}\`

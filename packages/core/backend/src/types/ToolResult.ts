@@ -92,12 +92,15 @@ namespace ToolResult {
   export type RenderChart = BaseToolResult<
     ToolName.RenderChart,
     Result<
-      string,
+      {
+        markdownSnippet: string;
+      },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
       | ResultError<"EchartsOptionNotValid", { issues: ValidationIssue[] }>
     >,
     {
+      chartId: string;
       echartsOption: {
         title: { text: string } | [{ text: string }, ...any[]];
       };
@@ -106,12 +109,15 @@ namespace ToolResult {
   export type RenderDocumentsTable = BaseToolResult<
     ToolName.RenderDocumentsTable,
     Result<
-      string,
+      {
+        markdownSnippet: string;
+      },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
     {
+      documentsTableId: string;
       documents: LiteDocument[];
     }
   >;

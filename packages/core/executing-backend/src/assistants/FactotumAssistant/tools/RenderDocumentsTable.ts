@@ -5,6 +5,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
+import { uniq } from "es-toolkit";
 import { DateTime } from "luxon";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
@@ -101,16 +102,23 @@ export default {
       .filter(({ id }) => documentIds.has(id))
       .map(makeLiteDocument);
 
+    const documentsTableId = crypto.randomUUID();
+    // TODO: utils
+    const tableColumns = uniq(
+      documents.flatMap((document) =>
+        Object.keys(document.latestVersion.contentSummary.data ?? {}),
+      ),
+    )
+      .sort()
+      .map((key) => key.replace(/^\d+\.\s+/, ""));
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult(`
-The documents table has been successfully rendered. The user can now see it.
-Below the table, they'll see your next message. It should say something like
-"Here are the documents you asked for". Contextualize to the conversation
-though, don't just repeat this example literally.
-      `),
-      artifacts: { documents: filteredDocuments },
+      output: makeSuccessfulResult({
+        tableColumns: tableColumns,
+        markdownSnippet: `<DocumentsTable id="${documentsTableId}" />`,
+      }),
+      artifacts: { documentsTableId, documents: filteredDocuments },
     };
   },
 
@@ -119,9 +127,10 @@ though, don't just repeat this example literally.
       type: InferenceService.ToolType.Function,
       name: ToolName.RenderDocumentsTable,
       description: `
-Renders an inline table of documents in the app UI. Use this tool every time you
-want to show a set of documents to the user. For documents, prefer using this
-tool over markdown tables.
+Creates an inline table of documents that you can use in your textual responses
+by including the \`markdownSnippet\` returned by the tool call. Use this tool
+every time you want to show a set of documents to the user. For documents,
+prefer using this tool over markdown tables.
 
 The getDocumentIds function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),

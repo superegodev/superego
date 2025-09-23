@@ -1,8 +1,6 @@
 import type { Conversation, Message, ToolCall } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import CreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.js";
-import RenderChart from "./ToolResult/RenderChart.js";
-import RenderDocumentsTable from "./ToolResult/RenderDocumentsTable.js";
 import SuggestCollectionDefinition from "./ToolResult/SuggestCollectionDefinition.js";
 
 interface Props {
@@ -45,28 +43,28 @@ export default function ToolMessage({ conversation, message }: Props) {
       );
     }
 
-    if (ConversationUtils.isSuccessfulRenderChartToolResult(toolResult)) {
-      return (
-        <RenderChart key={toolResult.toolCallId} toolResult={toolResult} />
-      );
-    }
+    // if (ConversationUtils.isSuccessfulRenderChartToolResult(toolResult)) {
+    //   return (
+    //     <RenderChart key={toolResult.toolCallId} toolResult={toolResult} />
+    //   );
+    // }
 
-    if (
-      ConversationUtils.isSuccessfulRenderDocumentsTableToolResult(toolResult)
-    ) {
-      return (
-        <RenderDocumentsTable
-          key={toolResult.toolCallId}
-          toolCall={
-            ConversationUtils.findToolCall(
-              conversation,
-              toolResult,
-            ) as ToolCall.RenderDocumentsTable
-          }
-          toolResult={toolResult}
-        />
-      );
-    }
+    // if (
+    //   ConversationUtils.isSuccessfulRenderDocumentsTableToolResult(toolResult)
+    // ) {
+    //   return (
+    //     <RenderDocumentsTable
+    //       key={toolResult.toolCallId}
+    //       toolCall={
+    //         ConversationUtils.findToolCall(
+    //           conversation,
+    //           toolResult,
+    //         ) as ToolCall.RenderDocumentsTable
+    //       }
+    //       toolResult={toolResult}
+    //     />
+    //   );
+    // }
 
     return null;
   });

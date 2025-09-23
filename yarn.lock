@@ -4343,6 +4343,7 @@ __metadata:
     "@superego/vitest-registered": "workspace:*"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
+    es-toolkit: "npm:^1.39.10"
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.2"
     valibot: "npm:^1.1.0"
