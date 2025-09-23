@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.svg";
+import BaseHead from "../components/BaseHead.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Superego" description="Your Life's Database" />
+    <style></style>
+  </head>
+
+  <body>
+    <main>
+      <Image src={logo} alt="Superego Logo" width={500} height={500} />
+    </main>
+  </body>
+</html>

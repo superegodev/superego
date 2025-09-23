@@ -11,7 +11,11 @@
     {
       "files": ["*.sql"],
       "options": { "parser": "sqlite" }
+    },
+    {
+      "files": "*.astro",
+      "options": { "parser": "astro" }
     }
   ],
-  "plugins": ["prettier-plugin-sql-cst" ]
+  "plugins": ["prettier-plugin-sql-cst", "prettier-plugin-astro"]
 }

@@ -30,7 +30,7 @@ jobs:
       - name: Test
         run: yarn test
 
-  build-deploy-demo:
+  build-deploy-demo-and-website:
     needs: qa
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +42,13 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Build website
+        run: yarn build-website
+      - name: Deploy website to https://sueprego.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        run: yarn deploy-website
       - name: Build demo-app for production environment
         run: yarn build-demo:production
       - name: Deploy demo-app to production environment

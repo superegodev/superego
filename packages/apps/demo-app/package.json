@@ -11,8 +11,7 @@
     "build:preview": "yarn clean && vite build",
     "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production vite build",
     "deploy:preview": "wrangler pages deploy dist/ --project-name demosuperegodev",
-    "deploy:production": "wrangler deploy",
-    "wrangler": "wrangler"
+    "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.13.3",

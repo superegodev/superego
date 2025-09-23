@@ -1,0 +1,21 @@
+{
+  "name": "@superego/website",
+  "version": "2025.9.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "clean-astro-cache": "rm -rf .astro-build-cache",
+    "check-types": "astro check",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && astro build",
+    "astro": "astro",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.13.10",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.38.0"
+  }
+}
