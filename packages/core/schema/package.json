@@ -5,6 +5,9 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./SchemaTypescriptSchema": {
+      "import": "./src/SchemaTypescriptSchema.ts"
     }
   },
   "private": true,

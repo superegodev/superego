@@ -1,0 +1,20 @@
+{
+  "name": "@superego/demo-app-e2e-tests",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test:e2e": "playwright test --config=playwright.config.ts",
+    "playwright": "playwright"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.55.1",
+    "@superego/schema": "workspace:*",
+    "luxon": "^3.7.2"
+  }
+}

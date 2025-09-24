@@ -2712,6 +2712,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.55.1":
+  version: 1.55.1
+  resolution: "@playwright/test@npm:1.55.1"
+  dependencies:
+    playwright: "npm:1.55.1"
+  bin:
+    playwright: cli.js
+  checksum: 10c0/23fa213844bc594b03c0a907ef69da7e26a6c3295ee602b1567d26a473d30253468b832698779b02a304b71ae14aa0875645c526678227cc0675324dbf77e118
+  languageName: node
+  linkType: hard
+
 "@polka/url@npm:^1.0.0-next.24":
   version: 1.0.0-next.29
   resolution: "@polka/url@npm:1.0.0-next.29"
@@ -4978,6 +4989,18 @@ __metadata:
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.8"
     zx: "npm:8.8.3-lite"
+  languageName: unknown
+  linkType: soft
+
+"@superego/demo-app-e2e-tests@workspace:packages/tests/demo-app-e2e-tests":
+  version: 0.0.0-use.local
+  resolution: "@superego/demo-app-e2e-tests@workspace:packages/tests/demo-app-e2e-tests"
+  dependencies:
+    "@playwright/test": "npm:^1.55.1"
+    "@superego/schema": "workspace:*"
+    "@types/node": "npm:^24.5.2"
+    luxon: "npm:^3.7.2"
+    typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -11706,7 +11729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.55.1":
+"playwright@npm:1.55.1, playwright@npm:^1.55.1":
   version: 1.55.1
   resolution: "playwright@npm:1.55.1"
   dependencies:
