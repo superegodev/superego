@@ -1,11 +1,10 @@
 import type { Page } from "@playwright/test";
 
-// TODO: select by label
+// TODO:
+// - Select by label.
+// - Fix in mobile browsers and Firefox.
 export default async function writeOnCodeInput(page: Page, content: string) {
-  const typescriptContainer = page.getByTestId("code-input");
-  await typescriptContainer.click();
-
-  // Wait for the Monaco editor to become active.
+  // Wait for the Monaco editor to render.
   await page.waitForSelector(".monaco-editor", { state: "visible" });
 
   // Click on the Monaco editor's text area to ensure it's focused.
