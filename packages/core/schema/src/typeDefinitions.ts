@@ -1,8 +1,7 @@
-import type { I18nString } from "@superego/global-types";
 import type DataType from "./DataType.js";
 
 export interface Described {
-  description?: I18nString | undefined;
+  description?: string | undefined;
 }
 
 export interface StringTypeDefinition extends Described {
@@ -16,9 +15,19 @@ export interface EnumMember extends Described {
 }
 export interface EnumTypeDefinition extends Described {
   dataType: DataType.Enum;
+  /**
+   * Member names **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   */
   members: {
-    [member: string]: EnumMember;
+    [name: string]: EnumMember;
   };
+  /**
+   * Preferred order for displaying members in UIs. If specified:
+   * - **Must** contain ALL members defined in {@link members}, and
+   *   nothing else.
+   * - **Must** not contain duplicates.
+   */
+  membersOrder?: string[] | undefined;
 }
 
 export interface NumberTypeDefinition extends Described {
@@ -79,18 +88,51 @@ export interface FileTypeDefinition extends Described {
   accept?: { [mimeTypeMatcher: string]: AcceptedFileExtensions } | undefined;
 }
 
+/**
+ * Schema for a structured object with a fixed set of named properties.
+ *
+ * @remarks
+ * - **All properties are required.** Every key defined in {@link properties}
+ *   must be present in a value conforming to this type. Optional (missing)
+ *   properties are not allowed.
+ * - **`undefined` is never allowed** as a property value. Use `null` to
+ *   represent “no value”.
+ * - **Nullability is opt-in per property.** A property may be `null` only if
+ *   its name appears in {@link nullableProperties}. All other properties must
+ *   be non-null.
+ * - {@link propertiesOrder} controls **display order** in UIs and does not
+ *   affect validation.
+ */
 export interface StructTypeDefinition extends Described {
   dataType: DataType.Struct;
+  /**
+   * The complete set of properties that make up this Struct. Property names
+   * **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   */
   properties: {
-    [name: string]: Exclude<AnyTypeDefinition, EnumTypeDefinition>;
+    [name: string]: AnyTypeDefinition;
   };
-  /** A Struct's properties are all non-nullable by default. */
+  /**
+   * Names of properties that are allowed to be `null`.
+   *
+   * @remarks
+   * - Each entry **must** be a key present in {@link properties}.
+   * - **Must** not contain duplicates.
+   * - Defaults to none (i.e., all properties are non-nullable).
+   */
   nullableProperties?: string[] | undefined;
+  /**
+   * Preferred order for displaying properties in UIs. If specified:
+   * - **Must** contain ALL properties defined in {@link properties}, and
+   *   nothing else.
+   * - **Must** not contain duplicates.
+   */
+  propertiesOrder?: string[] | undefined;
 }
 
 export interface ListTypeDefinition extends Described {
   dataType: DataType.List;
-  items: Exclude<AnyTypeDefinition, EnumTypeDefinition>;
+  items: AnyTypeDefinition;
 }
 
 export interface TypeDefinitionRef extends Described {

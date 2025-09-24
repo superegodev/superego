@@ -4,12 +4,13 @@ import type {
   CollectionNotFound,
   CommandConfirmationNotValid,
   DeletedEntities,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsDelete extends Usecase<
@@ -18,13 +19,13 @@ export default class CollectionsDelete extends Usecase<
   async exec(
     id: CollectionId,
     commandConfirmation: string,
-  ): RpcResultPromise<
+  ): ResultPromise<
     DeletedEntities,
-    CollectionNotFound | CommandConfirmationNotValid
+    CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CommandConfirmationNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CommandConfirmationNotValid", {
           requiredCommandConfirmation: "delete",
           suppliedCommandConfirmation: commandConfirmation,
         }),
@@ -33,8 +34,8 @@ export default class CollectionsDelete extends Usecase<
 
     const collection = await this.repos.collection.find(id);
     if (!collection) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionNotFound", { collectionId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId: id }),
       );
     }
 
@@ -48,7 +49,7 @@ export default class CollectionsDelete extends Usecase<
       await this.repos.collectionVersion.deleteAllWhereCollectionIdEq(id);
     await this.repos.collection.delete(id);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       makeDeletedEntities({
         collections: [id],
         collectionVersions: deletedCollectionVersionIds,

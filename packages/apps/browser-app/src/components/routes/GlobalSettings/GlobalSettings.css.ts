@@ -1,8 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-export const UpdateGlobalSettingsForm = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
+export const InferenceSettings = {
+  info: style({
+    marginBlockStart: 0,
   }),
 };

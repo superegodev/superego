@@ -1,6 +1,6 @@
-import type RpcError from "../types/RpcError.js";
+import type { ResultError } from "@superego/global-types";
 
-type UnexpectedError = RpcError<
+type UnexpectedError = ResultError<
   "UnexpectedError",
   {
     cause: any;

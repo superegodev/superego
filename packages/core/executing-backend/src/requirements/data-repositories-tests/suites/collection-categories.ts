@@ -1,6 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
+import type CollectionCategoryEntity from "../../../entities/CollectionCategoryEntity.js";
 import type Dependencies from "../Dependencies.js";
 
 export default rd<Dependencies>("Collection categories", (deps) => {
@@ -9,7 +10,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     const { dataRepositoriesManager } = await deps();
 
     // Exercise
-    const collectionCategory = {
+    const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "name",
       icon: null,
@@ -24,21 +25,19 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     );
 
     // Verify
-    const exists = await dataRepositoriesManager.runInSerializableTransaction(
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.collectionCategory.exists(
-          collectionCategory.id,
-        ),
+        returnValue: await repos.collectionCategory.find(collectionCategory.id),
       }),
     );
-    expect(exists).toEqual(true);
+    expect(found).toEqual(collectionCategory);
   });
 
   it("replacing", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const collectionCategory = {
+    const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "original name",
       icon: null,
@@ -53,7 +52,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     );
 
     // Exercise
-    const updatedCollectionCategory = {
+    const updatedCollectionCategory: CollectionCategoryEntity = {
       ...collectionCategory,
       name: "updated name",
     };
@@ -77,7 +76,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   it("deleting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = await deps();
-    const collectionCategory = {
+    const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "name",
       icon: null,
@@ -119,7 +118,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     it("case: exists", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -171,7 +170,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const parentId = Id.generate.collectionCategory();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -221,7 +220,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory = {
+      const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
         icon: null,
@@ -288,14 +287,14 @@ export default rd<Dependencies>("Collection categories", (deps) => {
     it("case: some collection categories => returns them", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
-      const collectionCategory1 = {
+      const collectionCategory1: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name 1",
         icon: null,
         parentId: null,
         createdAt: new Date(),
       };
-      const collectionCategory2 = {
+      const collectionCategory2: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name 2",
         icon: null,

@@ -1,16 +1,20 @@
 import type {
+  BackgroundJobId,
   CollectionCategoryId,
   CollectionId,
   CollectionVersionId,
+  ConversationId,
   DocumentId,
   DocumentVersionId,
   FileId,
   GlobalSettings,
 } from "@superego/backend";
 import type {
+  BackgroundJobEntity,
   CollectionCategoryEntity,
   CollectionEntity,
   CollectionVersionEntity,
+  ConversationEntity,
   DocumentEntity,
   DocumentVersionEntity,
   FileEntity,
@@ -18,11 +22,13 @@ import type {
 
 export default interface Data {
   version: string;
+  backgroundJobs: Record<BackgroundJobId, BackgroundJobEntity>;
   collectionCategories: Record<CollectionCategoryId, CollectionCategoryEntity>;
   collections: Record<CollectionId, CollectionEntity>;
   collectionVersions: Record<CollectionVersionId, CollectionVersionEntity>;
+  conversations: Record<ConversationId, ConversationEntity>;
   documents: Record<DocumentId, DocumentEntity>;
   documentVersions: Record<DocumentVersionId, DocumentVersionEntity>;
-  files: Record<FileId, FileEntity & { content: Uint8Array }>;
+  files: Record<FileId, FileEntity & { content: Uint8Array<ArrayBuffer> }>;
   globalSettings: { value: GlobalSettings };
 }

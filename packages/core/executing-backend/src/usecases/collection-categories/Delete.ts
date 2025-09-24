@@ -4,12 +4,13 @@ import type {
   CollectionCategoryId,
   CollectionCategoryNotFound,
   DeletedEntities,
-  RpcResultPromise,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionCategoriesDelete extends Usecase<
@@ -17,13 +18,13 @@ export default class CollectionCategoriesDelete extends Usecase<
 > {
   async exec(
     id: CollectionCategoryId,
-  ): RpcResultPromise<
+  ): ResultPromise<
     DeletedEntities,
-    CollectionCategoryNotFound | CollectionCategoryHasChildren
+    CollectionCategoryNotFound | CollectionCategoryHasChildren | UnexpectedError
   > {
     if (!(await this.repos.collectionCategory.exists(id))) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: id,
         }),
       );
@@ -35,8 +36,8 @@ export default class CollectionCategoriesDelete extends Usecase<
         id,
       ))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionCategoryHasChildren", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionCategoryHasChildren", {
           collectionCategoryId: id,
         }),
       );
@@ -44,7 +45,7 @@ export default class CollectionCategoriesDelete extends Usecase<
 
     await this.repos.collectionCategory.delete(id);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       makeDeletedEntities({ collectionCategories: [id] }),
     );
   }

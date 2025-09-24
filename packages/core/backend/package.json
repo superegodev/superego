@@ -1,6 +1,6 @@
 {
   "name": "@superego/backend",
-  "version": "0.0.0",
+  "version": "2025.9.2",
   "type": "module",
   "exports": {
     ".": {
@@ -10,11 +10,11 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "generate-index": "node --experimental-strip-types --no-warnings scripts/generateIndex.ts"
+    "generate-index": "node scripts/generateIndex.ts"
   },
   "devDependencies": {
-    "@types/node": "^24.1.0",
-    "typescript": "^5.8.3"
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",

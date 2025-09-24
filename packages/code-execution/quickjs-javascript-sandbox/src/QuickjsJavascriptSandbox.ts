@@ -1,15 +1,17 @@
 import type {
-  JavascriptFunctionExecutionError,
-  JavascriptFunctionExecutionResult,
+  ExecutingJavascriptFunctionFailed,
   TypescriptModule,
 } from "@superego/backend";
 import type { JavascriptSandbox } from "@superego/executing-backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   type QuickJSContext,
   type QuickJSHandle,
+  type QuickJSRuntime,
   type QuickJSWASMModule,
   Scope,
 } from "quickjs-emscripten";
+import setLocalInstant from "./global-utils/setLocalInstant.js";
 
 interface ImportedModule {
   vm: QuickJSContext;
@@ -20,6 +22,7 @@ interface ImportedModule {
 export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   // TODO: consider using an LRU cache to avoid memory ballooning.
   private importCache = new Map<string, ImportedModule>();
+  private runtime: QuickJSRuntime | null = null;
 
   public async moduleDefaultExportsFunction(
     typescriptModule: TypescriptModule,
@@ -35,7 +38,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   public async executeSyncFunction(
     typescriptModule: TypescriptModule,
     args: any[],
-  ): Promise<JavascriptFunctionExecutionResult> {
+  ): ResultPromise<any, ExecutingJavascriptFunctionFailed> {
     let vm: QuickJSContext;
     let defaultExport: QuickJSHandle;
     try {
@@ -43,24 +46,35 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
     } catch (error: unknown) {
       return {
         success: false,
-        error: QuickjsJavascriptSandbox.extractErrorDetails(
-          error,
-          "Unknown error importing module",
-        ),
+        data: null,
+        error: {
+          name: "ExecutingJavascriptFunctionFailed",
+          details: QuickjsJavascriptSandbox.extractErrorDetails(
+            error,
+            "Unknown error importing module",
+          ),
+        },
       };
     }
 
     if (vm.typeof(defaultExport) !== "function") {
       return {
         success: false,
+        data: null,
         error: {
-          message: "The default export of the module is not a function",
+          name: "ExecutingJavascriptFunctionFailed",
+          details: {
+            message: "The default export of the module is not a function",
+          },
         },
       };
     }
 
     return Scope.withScope((scope) => {
       try {
+        // Set global utils.
+        setLocalInstant(vm, scope);
+
         const argHandles = args.map((arg) =>
           scope.manage(
             vm.unwrapResult(vm.evalCode(`(${JSON.stringify(arg)})`)),
@@ -72,14 +86,18 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
           ),
         );
         const returnedValue = vm.dump(resultHandle);
-        return { success: true, returnedValue };
+        return { success: true, data: returnedValue, error: null };
       } catch (error: unknown) {
         return {
           success: false,
-          error: QuickjsJavascriptSandbox.extractErrorDetails(
-            error,
-            "Unknown error executing function",
-          ),
+          data: null,
+          error: {
+            name: "ExecutingJavascriptFunctionFailed",
+            details: QuickjsJavascriptSandbox.extractErrorDetails(
+              error,
+              "Unknown error executing function",
+            ),
+          },
         };
       }
     });
@@ -96,9 +114,8 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
       return cachedImport;
     }
 
-    const vm = await QuickjsJavascriptSandbox.getQuickJS().then((qjs) =>
-      qjs.newContext(),
-    );
+    const runtime = await this.getRuntime();
+    const vm = runtime.newContext();
     try {
       const moduleNamespace = vm.unwrapResult(
         vm.evalCode(typescriptModule.compiled, "module.js", {
@@ -119,10 +136,15 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
     }
   }
 
+  private async getRuntime(): Promise<QuickJSRuntime> {
+    this.runtime ??= (await QuickjsJavascriptSandbox.getQuickJS()).newRuntime();
+    return this.runtime;
+  }
+
   private static extractErrorDetails(
     error: unknown,
     fallbackMessage: string,
-  ): JavascriptFunctionExecutionError {
+  ): ExecutingJavascriptFunctionFailed["details"] {
     return typeof error === "object" && error !== null
       ? {
           message:

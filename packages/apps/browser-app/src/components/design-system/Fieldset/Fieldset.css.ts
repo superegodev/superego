@@ -18,7 +18,7 @@ export const Legend = {
   root: style({
     display: "block",
     position: "relative",
-    cursor: "default",
+    cursor: "pointer",
     userSelect: "none",
     width: "100%",
     margin: 0,

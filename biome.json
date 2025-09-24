@@ -6,16 +6,16 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
+    "ignoreUnknown": true,
     "includes": [
-      "**/packages/**/*.js",
-      "**/packages/**/*.mjs",
-      "**/packages/**/*.ts",
-      "**/packages/**/*.mts",
-      "**/packages/**/*.tsx",
+      "scripts/*.ts",
+      "packages/**/*.js",
+      "packages/**/*.ts",
+      "packages/**/*.tsx",
       "**/*.json",
       "!**/package.json",
-      "!**/translations/**/*"
+      "!**/translations/**/*",
+      "!packages/core/schema/src/codegen/test-schemas/*.generated.*"
     ]
   },
   "formatter": {
@@ -79,7 +79,8 @@
         "noUselessElse": "error"
       },
       "suspicious": {
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "useIterableCallbackReturn": "off"
       }
     }
   },

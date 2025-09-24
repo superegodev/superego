@@ -1,7 +1,7 @@
+import type { ResultError } from "@superego/global-types";
 import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
-import type RpcError from "../types/RpcError.js";
 
-type ParentCollectionCategoryNotFound = RpcError<
+type ParentCollectionCategoryNotFound = ResultError<
   "ParentCollectionCategoryNotFound",
   {
     parentId: CollectionCategoryId;

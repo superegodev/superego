@@ -1,4 +1,8 @@
-import type { Collection, CollectionId } from "@superego/backend";
+import type {
+  Collection,
+  CollectionId,
+  CollectionSettings,
+} from "@superego/backend";
 
 export default {
   findCollection(
@@ -8,8 +12,10 @@ export default {
     return collections.find(({ id }) => id === collectionId) ?? null;
   },
 
-  getDisplayName(collection: Collection): string {
+  getDisplayName(collection: {
+    settings: Pick<CollectionSettings, "name" | "icon">;
+  }): string {
     const { icon, name } = collection.settings;
-    return icon ? `${icon} ${name}` : name;
+    return icon ? `${icon}\u2002${name}` : name;
   },
 };

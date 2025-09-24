@@ -1,5 +1,6 @@
 import * as v from "valibot";
 import translate from "../../utils/translate.js";
+import identifierRegex from "./identifierRegex.js";
 
 /**
  * An identifier is a string used to identify either:
@@ -17,12 +18,10 @@ import translate from "../../utils/translate.js";
 export default function identifier() {
   return v.pipe(
     v.string(),
-    v.regex(
-      /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/,
-      ({ received, expected, lang }) =>
-        translate(lang, {
-          en: `Invalid identifier: Should match ${expected} but received ${received}`,
-        }),
+    v.regex(identifierRegex, ({ received, expected, lang }) =>
+      translate(lang, {
+        en: `Invalid identifier: Should match ${expected} but received ${received}`,
+      }),
     ),
   );
 }

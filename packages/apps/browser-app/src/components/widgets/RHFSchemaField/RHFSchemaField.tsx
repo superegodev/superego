@@ -1,87 +1,101 @@
-import { type ReactNode, useState } from "react";
-import {
-  type FieldPath,
-  type FieldValues,
-  type UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { type ReactNode, useCallback, useState } from "react";
+import { FieldErrorContext } from "react-aria-components";
+import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import forms from "../../../business-logic/forms/forms.js";
+import { vars } from "../../../themes.css.js";
+import classnames from "../../../utils/classnames.js";
+import CodeInput from "../../design-system/CodeInput/CodeInput.js";
 import {
   Description,
   FieldError,
   Label,
-  TextArea,
-  TextField,
 } from "../../design-system/forms/forms.js";
+import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import * as cs from "./RHFSchemaField.css.js";
 
-interface Props<
-  TFieldValues extends FieldValues,
-  TName extends FieldPath<TFieldValues>,
-  TTransformedValues,
-> extends UseControllerProps<TFieldValues, TName, TTransformedValues> {
+interface Props {
+  control: Control<any>;
+  name: string;
   label?: ReactNode | undefined;
-  /** Required for a11y when there is no label. */
-  ariaLabel?: string | undefined;
-  description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   className?: string | undefined;
 }
-export default function RHFSchemaField<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TTransformedValues = TFieldValues,
->({
+export default function RHFSchemaField({
+  control,
+  name,
   label,
-  ariaLabel,
-  description,
   isDisabled,
   autoFocus,
-  placeholder,
   className,
-  ...props
-}: Props<TFieldValues, TName, TTransformedValues>) {
-  const { field, fieldState } = useController(props);
-  const [jsonValue, setJsonValue] = useState(
-    () => JSON.stringify(field.value, null, 2) ?? "",
+}: Props) {
+  const { field, fieldState } = useController({ control, name });
+  const [jsonValue, setJsonValue] = useState(() =>
+    typeof field.value === "string"
+      ? field.value
+      : JSON.stringify(field.value, null, 2),
+  );
+  const errors = forms.utils.flattenError(fieldState.error);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setJsonValue(newValue);
+      try {
+        field.onChange(JSON.parse(newValue));
+      } catch {
+        field.onChange(newValue);
+      }
+    },
+    [field.onChange],
   );
   return (
-    <TextField
-      id={field.name}
-      name={field.name}
-      value={jsonValue}
-      isDisabled={isDisabled}
-      onChange={(newValue) => {
-        setJsonValue(newValue);
-        try {
-          field.onChange(JSON.parse(newValue));
-        } catch {
-          field.onChange(newValue);
-        }
-      }}
-      onBlur={field.onBlur}
-      validationBehavior="aria"
-      isInvalid={fieldState.invalid}
-      autoFocus={autoFocus}
-      aria-label={ariaLabel}
-      className={className}
+    <div
+      data-disabled={isDisabled}
+      className={classnames(cs.RHFSchemaField.root, className)}
     >
       {label ? <Label>{label}</Label> : null}
-      <TextArea
+      <CodeInput
+        language="json"
+        value={jsonValue}
+        onChange={handleChange}
+        fileName="schema.json"
+        onBlur={field.onBlur}
+        autoFocus={autoFocus}
+        isInvalid={fieldState.invalid}
+        isDisabled={isDisabled}
+        maxHeight={vars.spacing._160}
         ref={field.ref}
-        placeholder={placeholder}
-        className={cs.RHFSchemaField.textArea}
       />
-      <FieldError>
-        {typeof field.value === "string" ? (
-          <FormattedMessage defaultMessage="Not a valid JSON string" />
-        ) : (
-          <FormattedMessage defaultMessage="Invalid schema" />
-        )}
-      </FieldError>
-      {description ? <Description>{description}</Description> : null}
-    </TextField>
+      <FieldErrorContext
+        value={{
+          isInvalid: fieldState.invalid,
+          validationErrors: errors.length > 0 ? [errors[0]!.message] : [],
+          validationDetails: {} as any,
+        }}
+      >
+        <FieldError>
+          {typeof field.value === "string" ? (
+            <FormattedMessage defaultMessage="Not a valid JSON string" />
+          ) : (
+            errors.map(({ path, message }) => (
+              <div key={path} className={cs.RHFSchemaField.errorLine}>
+                <FormattedMessage defaultMessage="At" />{" "}
+                <InlineCode className={cs.RHFSchemaField.inlineCode}>
+                  {path}
+                </InlineCode>
+                {": "}
+                {message}
+              </div>
+            ))
+          )}
+        </FieldError>
+      </FieldErrorContext>
+      <Description>
+        <FormattedMessage
+          defaultMessage={`Defines the "shape" of document contents in this collection.`}
+        />
+      </Description>
+    </div>
   );
 }

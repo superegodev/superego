@@ -1,0 +1,57 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { SITE_WIDTH_PX } from "../constants.js";
+import { Content as LandingPage } from "../copy/landing-page/landing-page.mdx";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Superego" description="Your Life's Database" />
+    <style define:vars={{ siteWidth: `${SITE_WIDTH_PX}px` }}>
+      body {
+        position: relative;
+        width: 100%;
+        padding-inline: max(calc((100% - var(--siteWidth)) / 2), 2rem);
+        padding-block: 2rem;
+        font-family: var(--sans-serif);
+        font-size: 1.5rem;
+        color: #1e1e1e;
+      }
+      body :global(h1) {
+        font-size: 1.5rem;
+        color: #f08c00;
+        margin-block-start: 6rem;
+        margin-block-end: 3rem;
+      }
+      body :global(h1:first-of-type) {
+        margin-block-start: 2rem;
+      }
+      body :global(img) {
+        max-width: 100%;
+        height: auto;
+        margin-block-start: 3rem;
+        margin-block-end: 3rem;
+      }
+      body :global(ul) {
+        list-style: none;
+        margin-inline: 0;
+        margin-block: 4rem;
+        padding: 0;
+      }
+      body :global(li) {
+        line-height: 1.5;
+      }
+      body :global(a) {
+        color: #1e1e1e;
+      }
+      body :global(a:hover) {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <LandingPage />
+  </body>
+</html>

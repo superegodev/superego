@@ -1,27 +1,29 @@
-import type {
-  Backend,
-  Collection,
-  CollectionId,
-  CollectionMigrationFailed,
-  CollectionMigrationNotValid,
-  CollectionNotFound,
-  CollectionSchemaNotValid,
-  CollectionSummaryPropertiesNotValid,
-  CollectionVersionId,
-  CollectionVersionIdNotMatching,
-  CollectionVersionSettings,
-  RpcResultPromise,
-  TypescriptModule,
+import {
+  type Backend,
+  type Collection,
+  type CollectionId,
+  type CollectionMigrationFailed,
+  type CollectionMigrationNotValid,
+  type CollectionNotFound,
+  type CollectionSchemaNotValid,
+  type CollectionVersionId,
+  type CollectionVersionIdNotMatching,
+  type CollectionVersionSettings,
+  type ContentSummaryGetterNotValid,
+  DocumentVersionCreator,
+  type TypescriptModule,
+  type UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { type Schema, valibotSchemas } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import { extractErrorDetails, Id } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import type ArrayElement from "../../utils/ArrayElement.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
@@ -39,19 +41,20 @@ export default class CollectionsCreateNewVersion extends Usecase<
     schema: Schema,
     settings: CollectionVersionSettings,
     migration: TypescriptModule,
-  ): RpcResultPromise<
+  ): ResultPromise<
     Collection,
     | CollectionNotFound
     | CollectionVersionIdNotMatching
     | CollectionSchemaNotValid
-    | CollectionSummaryPropertiesNotValid
+    | ContentSummaryGetterNotValid
     | CollectionMigrationNotValid
     | CollectionMigrationFailed
+    | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
     if (!collection) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionNotFound", { collectionId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId: id }),
       );
     }
 
@@ -59,8 +62,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
       await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);
     assertCollectionVersionExists(id, latestVersion);
     if (latestVersionId !== latestVersion.id) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionVersionIdNotMatching", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionVersionIdNotMatching", {
           collectionId: id,
           latestVersionId: latestVersion.id,
           suppliedVersionId: latestVersionId,
@@ -70,35 +73,30 @@ export default class CollectionsCreateNewVersion extends Usecase<
 
     const schemaValidationResult = v.safeParse(valibotSchemas.schema(), schema);
     if (!schemaValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSchemaNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionSchemaNotValid", {
           collectionId: id,
           issues: makeValidationIssues(schemaValidationResult.issues),
         }),
       );
     }
 
-    const nonValidSummaryPropertyIndexes = (
-      await Promise.all(
-        settings.summaryProperties.map(({ getter }) =>
-          this.javascriptSandbox.moduleDefaultExportsFunction(getter),
-        ),
-      )
-    ).reduce<number[]>(
-      (indexes, isValid, index) => (isValid ? indexes : [...indexes, index]),
-      [],
-    );
-    if (!isEmpty(nonValidSummaryPropertyIndexes)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionSummaryPropertiesNotValid", {
-          collectionId: id,
+    const isContentSummaryGetterValid =
+      await this.javascriptSandbox.moduleDefaultExportsFunction(
+        settings.contentSummaryGetter,
+      );
+    if (!isContentSummaryGetterValid) {
+      return makeUnsuccessfulResult(
+        makeResultError("ContentSummaryGetterNotValid", {
+          collectionId: null,
           collectionVersionId: null,
-          issues: nonValidSummaryPropertyIndexes.map((index) => ({
-            // TODO: i18n
-            message:
-              "The default export of the getter TypescriptModule is not a function",
-            path: [{ key: index }, { key: "getter" }],
-          })),
+          issues: [
+            {
+              message:
+                "The default export of the getter TypescriptModule is not a function",
+              path: [{ key: "getter" }],
+            },
+          ],
         }),
       );
     }
@@ -106,12 +104,11 @@ export default class CollectionsCreateNewVersion extends Usecase<
     if (
       !(await this.javascriptSandbox.moduleDefaultExportsFunction(migration))
     ) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionMigrationNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionMigrationNotValid", {
           collectionId: id,
           issues: [
             {
-              // TODO: i18n
               message:
                 "The default export of the migration TypescriptModule is not a function",
             },
@@ -125,7 +122,9 @@ export default class CollectionsCreateNewVersion extends Usecase<
       previousVersionId: latestVersionId,
       collectionId: id,
       schema: schemaValidationResult.output,
-      settings: settings,
+      settings: {
+        contentSummaryGetter: settings.contentSummaryGetter,
+      },
       migration: migration,
       createdAt: new Date(),
     };
@@ -139,17 +138,15 @@ export default class CollectionsCreateNewVersion extends Usecase<
       (migrationResult) => migrationResult !== undefined,
     );
     if (!isEmpty(failedDocumentMigrations)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionMigrationFailed", {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionMigrationFailed", {
           collectionId: id,
           failedDocumentMigrations,
         }),
       );
     }
 
-    return makeSuccessfulRpcResult(
-      makeCollection(collection, collectionVersion),
-    );
+    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
 
   private async migrateDocument(
@@ -180,31 +177,27 @@ export default class CollectionsCreateNewVersion extends Usecase<
       if (!executionResult.success) {
         return {
           documentId: document.id,
-          cause: {
-            name: "ApplyingMigrationFailed",
-            details: executionResult.error,
-          },
+          cause: makeResultError(
+            "ApplyingMigrationFailed",
+            executionResult.error.details,
+          ),
         };
       }
 
-      const documentsCreateNewVersion = new DocumentsCreateNewVersion(
-        this.repos,
-        this.javascriptSandbox,
-      );
-      const result = await documentsCreateNewVersion.exec(
+      const result = await this.sub(DocumentsCreateNewVersion).exec(
         document.collectionId,
         document.id,
         latestDocumentVersion.id,
-        executionResult.returnedValue,
+        executionResult.data,
+        DocumentVersionCreator.Migration,
       );
 
       if (!result.success) {
         return {
           documentId: document.id,
-          cause: {
-            name: "CreatingNewDocumentVersionFailed",
-            details: { cause: result.error },
-          },
+          cause: makeResultError("CreatingNewDocumentVersionFailed", {
+            cause: result.error,
+          }),
         };
       }
 
@@ -213,7 +206,9 @@ export default class CollectionsCreateNewVersion extends Usecase<
     } catch (error) {
       return {
         documentId: document.id,
-        cause: makeRpcError("UnexpectedError", { cause: error }),
+        cause: makeResultError("UnexpectedError", {
+          cause: extractErrorDetails(error),
+        }),
       };
     }
   }

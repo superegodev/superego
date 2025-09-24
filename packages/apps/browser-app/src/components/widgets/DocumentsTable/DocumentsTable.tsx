@@ -1,38 +1,72 @@
-import type { Collection, Document } from "@superego/backend";
+import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
+import { uniq } from "es-toolkit";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
-import I18nString from "../../design-system/I18nString/I18nString.js";
+import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
+import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
+import DocumentUtils from "../../../utils/DocumentUtils.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import Table from "../../design-system/Table/Table.js";
 
 interface Props {
-  collection: Collection;
-  documents: Document[];
+  collectionId: CollectionId;
+  collection: Collection | null;
+  documents: LiteDocument[];
+  showCreatedAt?: boolean | undefined;
+  showLastModifiedAt?: boolean | undefined;
+  className?: string | undefined;
 }
-export default function DocumentsTable({ collection, documents }: Props) {
+export default function DocumentsTable({
+  collectionId,
+  collection,
+  documents,
+  showCreatedAt,
+  showLastModifiedAt,
+  className,
+}: Props) {
   const intl = useIntl();
+  const screenSize = useScreenSize();
+  const contentSummaryKeys = uniq(
+    documents.flatMap((document) =>
+      Object.keys(document.latestVersion.contentSummary.data ?? {}),
+    ),
+  ).sort();
   return (
     <Table
+      key={screenSize}
       aria-label={intl.formatMessage(
         { defaultMessage: "Documents of collection {collection}" },
-        { collection: collection.settings.name },
+        { collection: collection?.settings.name ?? collectionId },
       )}
       selectionMode="none"
+      className={className}
     >
       <Table.Header>
-        {collection.latestVersion.settings.summaryProperties.map(
-          ({ name }, index) => (
-            <Table.Column key={name.en} isRowHeader={index === 0}>
-              <I18nString value={name} />
-            </Table.Column>
-          ),
-        )}
-        <Table.Column align="right">
-          <FormattedMessage defaultMessage="Created at" />
-        </Table.Column>
-        <Table.Column align="right">
-          <FormattedMessage defaultMessage="Last modified at" />
-        </Table.Column>
+        {isEmpty(contentSummaryKeys) ? (
+          <Table.Column isRowHeader={true}>
+            <FormattedMessage defaultMessage="Id" />
+          </Table.Column>
+        ) : null}
+        {contentSummaryKeys.map((contentSummaryKey, index) => (
+          <Table.Column
+            key={contentSummaryKey}
+            isRowHeader={index === 0}
+            minWidth={120}
+          >
+            {DocumentUtils.formatContentSummaryKey(contentSummaryKey)}
+          </Table.Column>
+        ))}
+        {showCreatedAt && screenSize > ScreenSize.Medium ? (
+          <Table.Column align="right">
+            <FormattedMessage defaultMessage="Created at" />
+          </Table.Column>
+        ) : null}
+        {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
+          <Table.Column align="right">
+            <FormattedMessage defaultMessage="Last modified at" />
+          </Table.Column>
+        ) : null}
       </Table.Header>
       <Table.Body
         items={documents}
@@ -46,23 +80,35 @@ export default function DocumentsTable({ collection, documents }: Props) {
           <Table.Row
             href={toHref({
               name: RouteName.Document,
-              collectionId: collection.id,
+              collectionId: collectionId,
               documentId: document.id,
             })}
           >
-            {document.latestVersion.summaryProperties.map(
-              ({ name, value, valueComputationError }) => (
-                <Table.Cell key={name.en}>
-                  {value ?? valueComputationError.message}
-                </Table.Cell>
-              ),
-            )}
-            <Table.Cell align="right">
-              <FormattedDate value={document.createdAt} />
-            </Table.Cell>
-            <Table.Cell align="right">
-              <FormattedDate value={document.latestVersion.createdAt} />
-            </Table.Cell>
+            {isEmpty(contentSummaryKeys) ? (
+              <Table.Cell>{document.id}</Table.Cell>
+            ) : null}
+            {contentSummaryKeys.map((key) => (
+              <Table.Cell key={key}>
+                {document.latestVersion.contentSummary.success ? (
+                  document.latestVersion.contentSummary.data[key]
+                ) : document.latestVersion.contentSummary.error.name ===
+                  "ContentSummaryNotValid" ? (
+                  <FormattedMessage defaultMessage="Invalid content summary" />
+                ) : (
+                  document.latestVersion.contentSummary.error.details.message
+                )}
+              </Table.Cell>
+            ))}
+            {showCreatedAt && screenSize > ScreenSize.Medium ? (
+              <Table.Cell align="right">
+                <FormattedDate value={document.createdAt} />
+              </Table.Cell>
+            ) : null}
+            {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
+              <Table.Cell align="right">
+                <FormattedDate value={document.latestVersion.createdAt} />
+              </Table.Cell>
+            ) : null}
           </Table.Row>
         )}
       </Table.Body>

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import getQuickJS from "./getQuickJS.browser.js";
 import QuickjsJavascriptSandbox from "./QuickjsJavascriptSandbox.js";
 

@@ -32,8 +32,8 @@ import {
   PiTextUnderline,
 } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import IconButton from "../IconButton/IconButton.jsx";
-import PopoverMenu from "../PopoverMenu/PopoverMenu.jsx";
+import IconButton from "../IconButton/IconButton.js";
+import PopoverMenu from "../PopoverMenu/PopoverMenu.js";
 import * as cs from "./TiptapInput.css.js";
 
 function selector({ editor: e }: EditorStateSnapshot<Editor>) {

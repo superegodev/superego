@@ -1,9 +1,11 @@
+import contentSummaryGetter from "./contentSummaryGetter.js";
 import migration from "./migration.js";
-import summaryPropertyDefinition from "./summaryPropertyDefinition.js";
-import summaryPropertyDefinitionGetter from "./summaryPropertyDefinitionGetter.js";
+import schema from "./schema.js";
+import tiptapRichTextJsonObject from "./tiptapRichTextJsonObject.js";
 
 export default {
-  summaryPropertyDefinition,
-  summaryPropertyDefinitionGetter,
+  contentSummaryGetter,
   migration,
+  schema,
+  tiptapRichTextJsonObject,
 };

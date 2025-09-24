@@ -1,7 +1,8 @@
 import type {
-  JavascriptFunctionExecutionResult,
+  ExecutingJavascriptFunctionFailed,
   TypescriptModule,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 
 export default interface JavascriptSandbox {
   /**
@@ -27,5 +28,5 @@ export default interface JavascriptSandbox {
      * JSON-invariant.
      */
     args: any[],
-  ): Promise<JavascriptFunctionExecutionResult>;
+  ): ResultPromise<any, ExecutingJavascriptFunctionFailed>;
 }

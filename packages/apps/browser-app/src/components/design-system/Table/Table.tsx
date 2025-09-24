@@ -1,5 +1,10 @@
 import type { RefAttributes } from "react";
-import { type TableProps, Table as TableRAC } from "react-aria-components";
+import {
+  TableLayout,
+  type TableProps,
+  Table as TableRAC,
+  Virtualizer,
+} from "react-aria-components";
 import classnames from "../../../utils/classnames.js";
 import Body from "./Body.js";
 import Cell from "./Cell.js";
@@ -17,7 +22,17 @@ export default function Table({
   ...props
 }: Props & RefAttributes<HTMLTableElement>) {
   return (
-    <TableRAC {...props} className={classnames(cs.Table.root, className)} />
+    <Virtualizer
+      layout={TableLayout}
+      layoutOptions={{
+        rowHeight: 33,
+        headingHeight: 41,
+        padding: 0,
+        gap: 0,
+      }}
+    >
+      <TableRAC {...props} className={classnames(cs.Table.root, className)} />
+    </Virtualizer>
   );
 }
 

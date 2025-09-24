@@ -14,6 +14,7 @@ import * as cs from "./RHFContentField.css.js";
 
 interface Props {
   typeDefinition: NumberTypeDefinition | NumberLiteralTypeDefinition;
+  isNullable: boolean;
   isListItem: boolean;
   control: Control;
   name: string;
@@ -21,6 +22,7 @@ interface Props {
 }
 export default function NumberField({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -42,7 +44,11 @@ export default function NumberField({
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (
-        <AnyFieldLabel typeDefinition={typeDefinition} label={label} />
+        <AnyFieldLabel
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          label={label}
+        />
       ) : null}
       <Input ref={field.ref} placeholder="null" />
       <FieldError>{fieldState.error?.message}</FieldError>

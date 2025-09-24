@@ -10,7 +10,7 @@ import {
   Heading,
 } from "react-aria-components";
 import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
-import Button from "../Button/Button.jsx";
+import Button from "../Button/Button.js";
 import Popover from "../Popover/Popover.js";
 import * as cs from "./forms.css.js";
 

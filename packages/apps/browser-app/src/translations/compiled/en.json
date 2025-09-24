@@ -1,4 +1,40 @@
 {
+  "AppearanceSettings.tsx_Pe0ogR": [
+    {
+      "type": 0,
+      "value": "Theme"
+    }
+  ],
+  "Ask.tsx_khigiR": [
+    {
+      "type": 0,
+      "value": "Previous conversations"
+    }
+  ],
+  "Ask.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
+    }
+  ],
+  "AssistantsSettings.tsx_mTE6Ss": [
+    {
+      "type": 0,
+      "value": "Collection Creator developer prompt"
+    }
+  ],
+  "AssistantsSettings.tsx_qmPVim": [
+    {
+      "type": 0,
+      "value": "Factotum developer prompt"
+    }
+  ],
+  "AssistantsSettings.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -71,10 +107,16 @@
       "value": " » Settings"
     }
   ],
-  "CollectionSettings.tsx_D3idYv": [
+  "CollectionSettings.tsx_GjrlL9": [
     {
       "type": 0,
-      "value": "Settings"
+      "value": "General settings"
+    }
+  ],
+  "CollectionSettings.tsx_VcipZo": [
+    {
+      "type": 0,
+      "value": "Latest version settings"
     }
   ],
   "CollectionSettings.tsx_Vl13tq": [
@@ -83,22 +125,22 @@
       "value": "Create new version"
     }
   ],
-  "CollectionSettings.tsx_W/lYsa": [
-    {
-      "type": 0,
-      "value": "Version settings"
-    }
-  ],
   "CollectionSettings.tsx_m4GG4b": [
     {
       "type": 0,
       "value": "Delete collection"
     }
   ],
-  "CollectionSettings.tsx_zYomDH": [
+  "CollectionSettings.tsx_zNudDK": [
     {
       "type": 0,
-      "value": "Collection actions"
+      "value": "Collection settings actions"
+    }
+  ],
+  "CollectionsTree.tsx_XjdXFR": [
+    {
+      "type": 0,
+      "value": "Create collection to start."
     }
   ],
   "CollectionsTree.tsx_gykodq": [
@@ -107,40 +149,220 @@
       "value": "Tree of collection categories and collections"
     }
   ],
-  "CreateCollection.tsx_XQCXwU": [
+  "CompilationInProgressIndicator.tsx_MCO54A": [
     {
       "type": 0,
-      "value": "Create Collection"
+      "value": "Compiling..."
     }
   ],
-  "CreateCollectionForm.tsx_+R8UFo": [
+  "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
-      "value": "Error creating collection"
-    }
-  ],
-  "CreateCollectionForm.tsx_HAlOn1": [
+      "value": "Error deriving content summary: "
+    },
     {
-      "type": 0,
-      "value": "Name"
+      "type": 1,
+      "value": "error"
     }
   ],
-  "CreateCollectionForm.tsx_Lktmvk": [
-    {
-      "type": 0,
-      "value": "Schema"
-    }
-  ],
-  "CreateCollectionForm.tsx_VzzYJk": [
+  "ContentSummaryTab.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Create"
     }
   ],
-  "CreateCollectionForm.tsx_kk4TVW": [
+  "Conversation.tsx_9eR0Qp": [
     {
       "type": 0,
-      "value": "Icon"
+      "value": "Delete conversation"
+    }
+  ],
+  "Conversation.tsx_eq3LES": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » "
+    },
+    {
+      "type": 1,
+      "value": "conversation"
+    }
+  ],
+  "Conversation.tsx_gKk3/v": [
+    {
+      "type": 0,
+      "value": "Toggle tool calls"
+    }
+  ],
+  "Conversation.tsx_oZLZvb": [
+    {
+      "type": 0,
+      "value": "How can I help you?"
+    }
+  ],
+  "Conversation.tsx_w5q/I/": [
+    {
+      "type": 0,
+      "value": "Conversation actions"
+    }
+  ],
+  "Conversation.tsx_y2z/xn": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations » "
+    },
+    {
+      "type": 1,
+      "value": "conversationId"
+    }
+  ],
+  "Conversation.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "What kind of data do you want to store?"
+    }
+  ],
+  "Conversation.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
+    }
+  ],
+  "ConversationUtils.ts_PQ8A3I": [
+    {
+      "type": 0,
+      "value": "New conversation"
+    }
+  ],
+  "Conversations.tsx_PQ8A3I": [
+    {
+      "type": 0,
+      "value": "New conversation"
+    }
+  ],
+  "Conversations.tsx_YdANpb": [
+    {
+      "type": 0,
+      "value": "Conversations actions"
+    }
+  ],
+  "Conversations.tsx_yYmfIl": [
+    {
+      "type": 0,
+      "value": "🤖 Conversations"
+    }
+  ],
+  "ConversationsTable.tsx_/+r2Su": [
+    {
+      "type": 0,
+      "value": "You don't have any conversations yet."
+    }
+  ],
+  "ConversationsTable.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversations"
+    }
+  ],
+  "ConversationsTable.tsx_9a9+ww": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "ConversationsTable.tsx_AbXVP4": [
+    {
+      "type": 0,
+      "value": "Created at"
+    }
+  ],
+  "ConversationsTable.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "ConversationsTable.tsx_wSAvhu": [
+    {
+      "type": 0,
+      "value": "Assistant"
+    }
+  ],
+  "ConversationsTable.tsx_zQLEfz": [
+    {
+      "type": 0,
+      "value": "Format"
+    }
+  ],
+  "CopyButton.tsx_4l6vz1": [
+    {
+      "type": 0,
+      "value": "Copy"
+    }
+  ],
+  "CopyButton.tsx_p556q3": [
+    {
+      "type": 0,
+      "value": "Copied"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_7uKYfK": [
+    {
+      "type": 0,
+      "value": "Go to manual mode"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Create collection actions"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_u/AEeD": [
+    {
+      "type": 0,
+      "value": "Create Collection (Assisted Mode)"
+    }
+  ],
+  "CreateCollectionAssisted.tsx_yWDfdE": [
+    {
+      "type": 0,
+      "value": "What kind of data do you want to store?"
+    }
+  ],
+  "CreateCollectionForm.tsx_45vDAJ": [
+    {
+      "type": 0,
+      "value": "2. Schema"
+    }
+  ],
+  "CreateCollectionForm.tsx_HxoW8w": [
+    {
+      "type": 0,
+      "value": "3. Content summary"
+    }
+  ],
+  "CreateCollectionForm.tsx_PgbTyn": [
+    {
+      "type": 0,
+      "value": "1. General settings"
+    }
+  ],
+  "CreateCollectionManual.tsx_9/rVBT": [
+    {
+      "type": 0,
+      "value": "Create collection actions"
+    }
+  ],
+  "CreateCollectionManual.tsx_a5n6RJ": [
+    {
+      "type": 0,
+      "value": "Go to assisted mode"
+    }
+  ],
+  "CreateCollectionManual.tsx_ivIDMd": [
+    {
+      "type": 0,
+      "value": "Create Collection (Manual Mode)"
     }
   ],
   "CreateDocument.tsx_saRT/V": [
@@ -153,16 +375,30 @@
       "value": " » Create Document"
     }
   ],
-  "CreateDocumentForm.tsx_KlVScA": [
-    {
-      "type": 0,
-      "value": "Error creating document"
-    }
-  ],
   "CreateDocumentForm.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Create"
+    }
+  ],
+  "CreateDocumentOrVersion.tsx_+z+eOw": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » New document version created"
+    }
+  ],
+  "CreateDocumentOrVersion.tsx_hmMMs+": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Document created"
     }
   ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
@@ -175,52 +411,28 @@
       "value": " » Create New Version"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_1Og5F/": [
+  "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
-      "value": "Migration"
+      "value": "2. Content summary"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_Lktmvk": [
+  "CreateNewCollectionVersionForm.tsx_jacE9I": [
     {
       "type": 0,
-      "value": "Schema"
+      "value": "1. Schema"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_WEMhIw": [
+  "CreateNewCollectionVersionForm.tsx_rgWYrb": [
     {
       "type": 0,
-      "value": "TypeScript function expression to migrate documents from the previous schema to the updated schema."
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_Xrb7F4": [
-    {
-      "type": 0,
-      "value": "Update and migrate"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_r7rdMp": [
-    {
-      "type": 0,
-      "value": "Error updating schema and migrating documents"
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_zq3yJy": [
-    {
-      "type": 0,
-      "value": "Error updating document"
+      "value": "3. Migration"
     }
   ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
       "value": "Not a valid JSON string"
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Error deleting collection"
     }
   ],
   "DeleteCollectionModalForm.tsx_4S5UP3": [
@@ -275,6 +487,58 @@
       "value": "Command confirmation"
     }
   ],
+  "DeleteConversationModalForm.tsx_0Gdwem": [
+    {
+      "type": 0,
+      "value": "Delete conversation \""
+    },
+    {
+      "type": 1,
+      "value": "conversationName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteConversationModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_VcWPH+": [
+    {
+      "type": 0,
+      "value": "If you're sure you want to delete the conversation, write "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "delete"
+        }
+      ],
+      "type": 8,
+      "value": "em"
+    },
+    {
+      "type": 0,
+      "value": " in the input below."
+    }
+  ],
+  "DeleteConversationModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
+    }
+  ],
+  "DeleteConversationModalForm.tsx_t7Vs5c": [
+    {
+      "type": 0,
+      "value": "Deleting the conversation is permanent."
+    }
+  ],
   "DeleteDocumentModalForm.tsx_+pXFqz": [
     {
       "type": 0,
@@ -299,12 +563,6 @@
     {
       "type": 0,
       "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_H7J/rn": [
-    {
-      "type": 0,
-      "value": "Error deleting document"
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -347,6 +605,12 @@
       "value": "document"
     }
   ],
+  "Document.tsx_PGh2Ph": [
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
   "Document.tsx_SNguYK": [
     {
       "type": 0,
@@ -363,6 +627,20 @@
     {
       "type": 0,
       "value": "Save"
+    }
+  ],
+  "Document.tsx_zugcbb": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "documentId"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -391,6 +669,30 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "DocumentsTable.tsx_kGGU2D": [
+    {
+      "type": 0,
+      "value": "Id"
+    }
+  ],
+  "DocumentsTable.tsx_vT9jcW": [
+    {
+      "type": 0,
+      "value": "Invalid content summary"
+    }
+  ],
+  "EagerTiptapInput.tsx_0he+1r": [
+    {
+      "type": 0,
+      "value": "Write..."
+    }
+  ],
+  "Echart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the chart."
     }
   ],
   "EmojiInput.tsx_CqyOwA": [
@@ -431,6 +733,24 @@
     {
       "type": 0,
       "value": "null - click to select a value"
+    }
+  ],
+  "ErrorMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Retry"
+    }
+  ],
+  "ErrorMessage.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Details"
+    }
+  ],
+  "ErrorMessage.tsx_zg3wLI": [
+    {
+      "type": 0,
+      "value": "The assistant encountered an error."
     }
   ],
   "FileField.tsx_5q3qC0": [
@@ -649,10 +969,52 @@
       "value": "Heading 5"
     }
   ],
+  "GeneralSettingsTab.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Assistant instructions"
+    }
+  ],
+  "GeneralSettingsTab.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "GeneralSettingsTab.tsx_Q8Qw5B": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "GeneralSettingsTab.tsx_kk4TVW": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "GeneralSettingsTab.tsx_qmIyad": [
+    {
+      "type": 0,
+      "value": "Specific instructions for this collection to pass to the assistant."
+    }
+  ],
+  "GlobalSettings.tsx_HZGiV3": [
+    {
+      "type": 0,
+      "value": "Settings actions"
+    }
+  ],
   "GlobalSettings.tsx_cFXlu2": [
     {
       "type": 0,
       "value": "Superego Global Settings"
+    }
+  ],
+  "GlobalSettings.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "Header.tsx_9lnhZ4": [
@@ -679,22 +1041,194 @@
       "value": "Create collection category"
     }
   ],
-  "Home.tsx_6Se3+J": [
+  "Hero.tsx_OpKKos": [
     {
       "type": 0,
-      "value": "Superego Logo - A low detail, low-poly painting of Freud's face"
+      "value": "Hello!"
     }
   ],
-  "Home.tsx_oxShVS": [
+  "Hero.tsx_oxShVS": [
     {
       "type": 0,
       "value": "Your Life's Database"
     }
   ],
-  "Home.tsx_q4FNnF": [
+  "Hero.tsx_q4FNnF": [
     {
       "type": 0,
       "value": "Superego"
+    }
+  ],
+  "Hero.tsx_rI2Xm3": [
+    {
+      "type": 0,
+      "value": "I'm the Collection Creator"
+    }
+  ],
+  "InferenceSettings.tsx_25pjeS": [
+    {
+      "type": 0,
+      "value": "Chat Completions"
+    }
+  ],
+  "InferenceSettings.tsx_FJPyVh": [
+    {
+      "type": 0,
+      "value": ": fast, cheap, supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_HRac2N": [
+    {
+      "type": 0,
+      "value": "Speech (required for the assistant to speak to you)"
+    }
+  ],
+  "InferenceSettings.tsx_NNEajY": [
+    {
+      "type": 0,
+      "value": "Provider base URL"
+    }
+  ],
+  "InferenceSettings.tsx_RPpwVn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " To make the assistant work you need to connect it to an "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "inference provider"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "compatible with the OpenAI format."
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Providers known to work: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_WKES9e": [
+    {
+      "type": 0,
+      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "moonshotai/kimi-k2-0905"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " currently seems to be the best-performing models for Superego."
+    }
+  ],
+  "InferenceSettings.tsx_YctX0J": [
+    {
+      "type": 0,
+      "value": "Provider API key"
+    }
+  ],
+  "InferenceSettings.tsx_eV3UHK": [
+    {
+      "type": 0,
+      "value": "Transcriptions (required to speak to the assistant)"
+    }
+  ],
+  "InferenceSettings.tsx_gi9ckp": [
+    {
+      "type": 0,
+      "value": ": only supports the Chat Completions API."
+    }
+  ],
+  "InferenceSettings.tsx_mnJYBQ": [
+    {
+      "type": 0,
+      "value": "Voice"
+    }
+  ],
+  "InferenceSettings.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
+    }
+  ],
+  "InferenceSettings.tsx_u2jTeg": [
+    {
+      "type": 0,
+      "value": ": supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_vuJYgx": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Create an account with your chosen provider, get an API key, and enter the details below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_waSfdV": [
+    {
+      "type": 0,
+      "value": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
     }
   ],
   "ListField.tsx_6ibWnb": [
@@ -747,6 +1281,72 @@
       "value": "There are no items in the list"
     }
   ],
+  "LoadDemoDataButton.tsx_2xPIse": [
+    {
+      "type": 0,
+      "value": "Yes, load"
+    }
+  ],
+  "LoadDemoDataButton.tsx_A84v/o": [
+    {
+      "type": 0,
+      "value": "Attention: loading demo data erases all the data you've saved so far. Continue?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_J1xAjB": [
+    {
+      "type": 0,
+      "value": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+    }
+  ],
+  "LoadDemoDataButton.tsx_VXuroA": [
+    {
+      "type": 0,
+      "value": "Load demo data"
+    }
+  ],
+  "LoadDemoDataButton.tsx_ZBdI8u": [
+    {
+      "type": 0,
+      "value": "Loads some demo collections and documents for you to play around with."
+    }
+  ],
+  "LoadDemoDataButton.tsx_cEUBT2": [
+    {
+      "type": 0,
+      "value": "Reset demo data"
+    }
+  ],
+  "LoadDemoDataButton.tsx_fxtYtB": [
+    {
+      "type": 0,
+      "value": "Yes, reset"
+    }
+  ],
+  "Logo.tsx_FbFgI4": [
+    {
+      "type": 0,
+      "value": "Superego Logo"
+    }
+  ],
+  "MigrationTab.tsx_1Og5F/": [
+    {
+      "type": 0,
+      "value": "Migration"
+    }
+  ],
+  "MigrationTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Create new version and migrate documents"
+    }
+  ],
+  "MigrationTab.tsx_JQqWNV": [
+    {
+      "type": 0,
+      "value": "TypeScript function to migrate documents from the previous schema to the updated schema."
+    }
+  ],
   "NullifyFieldAction.tsx_MLa9CL": [
     {
       "type": 0,
@@ -761,16 +1361,28 @@
       "value": " to null"
     }
   ],
+  "PanelHeader.tsx_+G35mR": [
+    {
+      "type": 0,
+      "value": "Open sidebar"
+    }
+  ],
+  "PanelHeader.tsx_HyS0qp": [
+    {
+      "type": 0,
+      "value": "Close sidebar"
+    }
+  ],
   "PrimarySidebarPanel.tsx_D3idYv": [
     {
       "type": 0,
       "value": "Settings"
     }
   ],
-  "PrimarySidebarPanel.tsx_ejEGdx": [
+  "PrimarySidebarPanel.tsx_ZT0z9z": [
     {
       "type": 0,
-      "value": "Home"
+      "value": "Ask"
     }
   ],
   "PrimarySidebarPanel.tsx_xmcVZ0": [
@@ -779,64 +1391,152 @@
       "value": "Search"
     }
   ],
+  "RHFContentSummaryGetterField.tsx_3X4zUZ": [
+    {
+      "type": 0,
+      "value": "Content summary getter"
+    }
+  ],
+  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "content summary"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " of a document is a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Record<key: string, value: string>"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": "—derived from its content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Content summary getter"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " is the TypeScript function that derives the summary from the document content. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Tip:"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " to enforce a specific order for the properties of the summary, you can prefix each key with "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "$position. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ". (Example: "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "0. "
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": ".) The prefix is stripped when displaying them. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,
       "value": "Not a valid JSON string"
     }
   ],
-  "RHFSchemaField.tsx_HkeO+7": [
+  "RHFSchemaField.tsx_A89PQ/": [
     {
       "type": 0,
-      "value": "Invalid schema"
+      "value": "At"
     }
   ],
-  "RHFSummaryPropertyDefinitionField.tsx_HAlOn1": [
+  "RHFSchemaField.tsx_IBR6nN": [
     {
       "type": 0,
-      "value": "Name"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_Q8Qw5B": [
-    {
-      "type": 0,
-      "value": "Description"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_SSSuYh": [
-    {
-      "type": 0,
-      "value": "TypeScript function to get the property value (a string) from the document's content"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionField.tsx_kLYJT9": [
-    {
-      "type": 0,
-      "value": "Value getter"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_2qoZR0": [
-    {
-      "type": 0,
-      "value": "Add summary property"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_4GyJ00": [
-    {
-      "type": 0,
-      "value": "Summary properties"
-    }
-  ],
-  "RHFSummaryPropertyDefinitionsField.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "RenameCollectionCategoryModalForm.tsx_1CICoa": [
-    {
-      "type": 0,
-      "value": "Error deleting collection"
+      "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
@@ -871,16 +1571,196 @@
       "value": "Icon"
     }
   ],
+  "ResultErrors.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Details"
+    }
+  ],
+  "RetryButton.tsx_HMN20q": [
+    {
+      "type": 0,
+      "value": "Retry response"
+    }
+  ],
+  "RetryButton.tsx_l02CSg": [
+    {
+      "type": 0,
+      "value": "Retrying..."
+    }
+  ],
+  "SchemaTab.tsx_Lktmvk": [
+    {
+      "type": 0,
+      "value": "Schema"
+    }
+  ],
+  "SendRecordToolbar.tsx_/8QiK8": [
+    {
+      "type": 0,
+      "value": "Configure assistant for transcription"
+    }
+  ],
+  "SendRecordToolbar.tsx_3LSnIf": [
+    {
+      "type": 0,
+      "value": "Finish and send"
+    }
+  ],
+  "SendRecordToolbar.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "SendRecordToolbar.tsx_7Y6Yvq": [
+    {
+      "type": 0,
+      "value": "Record"
+    }
+  ],
+  "SendRecordToolbar.tsx_9WRlF4": [
+    {
+      "type": 0,
+      "value": "Send"
+    }
+  ],
+  "SendRecordToolbar.tsx_kNl1RN": [
+    {
+      "type": 0,
+      "value": "Configure assistant"
+    }
+  ],
+  "SpeakButton.tsx_FUvUuG": [
+    {
+      "type": 0,
+      "value": "Configure speech to play assistant messages"
+    }
+  ],
+  "SpeakButton.tsx_J3ca41": [
+    {
+      "type": 0,
+      "value": "Play"
+    }
+  ],
+  "SpeakButton.tsx_mM7O7f": [
+    {
+      "type": 0,
+      "value": "Synthesizing speech..."
+    }
+  ],
+  "SpeakButton.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pause"
+    }
+  ],
   "StructField.tsx_Dp51E2": [
     {
       "type": 0,
       "value": "null - click to set a value"
     }
   ],
-  "TiptapInput.tsx_0he+1r": [
+  "SuggestCollectionDefinition.tsx_S2ZL0P": [
     {
       "type": 0,
-      "value": "Write..."
+      "value": "Suggested collection"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "ThinkingTime.tsx_uKcW4C": [
+    {
+      "type": 0,
+      "value": "Thought for "
+    },
+    {
+      "type": 1,
+      "value": "time"
+    }
+  ],
+  "Title.tsx_1af260": [
+    {
+      "type": 0,
+      "value": "Execute JavaScript function on "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_2eWlOa": [
+    {
+      "type": 0,
+      "value": "Create document in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_LOghU6": [
+    {
+      "type": 0,
+      "value": "Succeeded"
+    }
+  ],
+  "Title.tsx_RG9Nzq": [
+    {
+      "type": 0,
+      "value": "Get TypeScript schema for "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_XnBm2q": [
+    {
+      "type": 0,
+      "value": "No response"
+    }
+  ],
+  "Title.tsx_foZAHu": [
+    {
+      "type": 0,
+      "value": "Call tool: "
+    },
+    {
+      "type": 1,
+      "value": "tool"
+    }
+  ],
+  "Title.tsx_vXCeIi": [
+    {
+      "type": 0,
+      "value": "Failed"
+    }
+  ],
+  "Title.tsx_vlxsWA": [
+    {
+      "type": 0,
+      "value": "Create new document version in "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "ToolCallResult.tsx_yq9SNC": [
+    {
+      "type": 0,
+      "value": "This call has no result."
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_1W2oHf": [
+    {
+      "type": 0,
+      "value": "Assistant instructions"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_HAlOn1": [
@@ -889,10 +1769,10 @@
       "value": "Name"
     }
   ],
-  "UpdateCollectionSettingsForm.tsx_c9brFu": [
+  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": [
     {
       "type": 0,
-      "value": "Error saving settings"
+      "value": "Description"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
@@ -907,10 +1787,10 @@
       "value": "Save settings"
     }
   ],
-  "UpdateCollectionVersionSettingsForm.tsx_WtrBAJ": [
+  "UpdateCollectionSettingsForm.tsx_qmIyad": [
     {
       "type": 0,
-      "value": "Error saving collection version settings"
+      "value": "Specific instructions for this collection to pass to the assistant."
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [
@@ -919,44 +1799,134 @@
       "value": "Save collection version settings"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_Pe0ogR": [
+  "UpdateGlobalSettingsForm.tsx_2GURQY": [
     {
       "type": 0,
-      "value": "Theme"
+      "value": "Appearance"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_c9brFu": [
+  "UpdateGlobalSettingsForm.tsx_jvrMfo": [
     {
       "type": 0,
-      "value": "Error saving settings"
+      "value": "Assistants"
     }
   ],
-  "UpdateGlobalSettingsForm.tsx_muqizb": [
+  "UpdateGlobalSettingsForm.tsx_n0wQL1": [
     {
       "type": 0,
-      "value": "Save settings"
+      "value": "Inference"
     }
   ],
-  "summaryPropertyDefinition.ts_HAlOn1": [
+  "UserMessage.tsx_J3ca41": [
     {
       "type": 0,
-      "value": "Name"
+      "value": "Play"
     }
   ],
-  "summaryPropertyDefinition.ts_TCx5u7": [
+  "UserMessage.tsx_Wf1OoY": [
     {
       "type": 0,
-      "value": "Summary property "
+      "value": "Transcribing audio..."
+    }
+  ],
+  "UserMessage.tsx_tFFMkF": [
+    {
+      "type": 0,
+      "value": "Pause"
+    }
+  ],
+  "UserMessageContentInput.tsx_8MXjTC": [
+    {
+      "type": 0,
+      "value": "Configure assistant to start chatting"
+    }
+  ],
+  "UserMessageContentInput.tsx_XE7R4v": [
+    {
+      "type": 0,
+      "value": "Message assistant"
+    }
+  ],
+  "UserMessageContentInput.tsx_yvK6cX": [
+    {
+      "type": 0,
+      "value": "Your collections changed since having this conversation. It cannot be continued."
+    }
+  ],
+  "formatDuration.ts_26OSN4": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "1 minute"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " minutes"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "minutes"
+    },
+    {
+      "type": 0,
+      "value": " "
     },
     {
       "type": 1,
-      "value": "position"
-    }
-  ],
-  "summaryPropertyDefinition.ts_gcaV8O": [
+      "value": "seconds"
+    },
     {
       "type": 0,
-      "value": "Name of the document"
+      "value": " seconds"
+    }
+  ],
+  "formatDuration.ts_lf6GDO": [
+    {
+      "style": {
+        "parsedOptions": {
+          "maximumFractionDigits": 2
+        },
+        "tokens": [
+          {
+            "options": [
+            ],
+            "stem": ".##"
+          }
+        ],
+        "type": 0
+      },
+      "type": 2,
+      "value": "seconds"
+    },
+    {
+      "type": 0,
+      "value": " seconds"
+    }
+  ],
+  "typescriptModule.ts_MZNYNj": [
+    {
+      "type": 0,
+      "value": "TypeScript compilation required"
+    }
+  ],
+  "typescriptModule.ts_lRjJvq": [
+    {
+      "type": 0,
+      "value": "TypeScript compilation in progress"
     }
   ],
   "typescriptModule.ts_yZ+w+N": [

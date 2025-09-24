@@ -1,6 +1,6 @@
 {
   "name": "@superego/schema",
-  "version": "0.0.0",
+  "version": "2025.9.2",
   "type": "module",
   "exports": {
     ".": {
@@ -14,12 +14,16 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
-    "@types/node": "^24.1.0",
-    "typescript": "^5.8.3",
+    "@types/json-schema": "^7.0.15",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
     "vitest": "^3.2.4"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
+    "luxon": "^3.7.2",
     "valibot": "^1.1.0"
   }
 }

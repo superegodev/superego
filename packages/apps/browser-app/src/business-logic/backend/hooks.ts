@@ -42,13 +42,17 @@ export const listCollectionsQuery = makeBackendQueryGetter(
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
-  () => [["listCollections"]],
+  () => [["listCollections"], ["listConversations"], ["getConversation"]],
 );
 
 export const useCreateNewCollectionVersion = makeUseBackendMutation(
   "collections",
   "createNewVersion",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+  ],
 );
 
 export const useUpdateCollectionSettings = makeUseBackendMutation(
@@ -60,13 +64,23 @@ export const useUpdateCollectionSettings = makeUseBackendMutation(
 export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
   "collections",
   "updateLatestVersionSettings",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
 );
 
 export const useDeleteCollection = makeUseBackendMutation(
   "collections",
   "delete",
-  ([collectionId]) => [["listCollections"], ["listDocuments", collectionId]],
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
 );
 
 /*
@@ -83,6 +97,17 @@ export const getDocumentQuery = makeBackendQueryGetter(
   "documents",
   "get",
   (collectionId, documentId) => ["getDocument", collectionId, documentId],
+);
+
+export const getDocumentVersionQuery = makeBackendQueryGetter(
+  "documents",
+  "getVersion",
+  (collectionId, documentId, documentVersionId) => [
+    "getDocumentVersion",
+    collectionId,
+    documentId,
+    documentVersionId,
+  ],
 );
 
 export const useCreateDocument = makeUseBackendMutation(
@@ -106,7 +131,84 @@ export const useDeleteDocument = makeUseBackendMutation(
   ([collectionId, documentId]) => [
     ["listDocuments", collectionId],
     ["getDocument", collectionId, documentId],
+    ["getDocumentVersion", collectionId, documentId],
   ],
+);
+
+/*
+ * Assistants
+ */
+
+export const listConversationsQuery = makeBackendQueryGetter(
+  "assistants",
+  "listConversations",
+  () => ["listConversations"],
+);
+
+export const getConversationQuery = makeBackendQueryGetter(
+  "assistants",
+  "getConversation",
+  (conversationId) => ["getConversation", conversationId],
+);
+
+export const getDeveloperPromptsQuery = makeBackendQueryGetter(
+  "assistants",
+  "getDeveloperPrompts",
+  () => ["getDeveloperPrompts"],
+);
+
+export const useStartConversation = makeUseBackendMutation(
+  "assistants",
+  "startConversation",
+  () => [["listConversations"]],
+);
+
+export const useContinueConversation = makeUseBackendMutation(
+  "assistants",
+  "continueConversation",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+export const useRetryLastResponse = makeUseBackendMutation(
+  "assistants",
+  "retryLastResponse",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+export const useRecoverConversation = makeUseBackendMutation(
+  "assistants",
+  "recoverConversation",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+export const useDeleteConversation = makeUseBackendMutation(
+  "assistants",
+  "deleteConversation",
+  ([conversationId]) => [
+    ["listConversations"],
+    ["getConversation", conversationId],
+  ],
+);
+
+export const useTts = makeUseBackendMutation("assistants", "tts", () => []);
+
+/*
+ * Background jobs
+ */
+
+export const listBackgroundJobsQuery = makeBackendQueryGetter(
+  "backgroundJobs",
+  "list",
+  () => ["listBackgroundJobs"],
 );
 
 /*

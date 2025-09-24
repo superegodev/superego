@@ -23,7 +23,11 @@ export default function EmojiInput({ value, onChange }: Props) {
       >
         {value}
       </IconButton>
-      <Popover isOpen={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+      <Popover
+        isOpen={isPopoverOpen}
+        onOpenChange={setIsPopoverOpen}
+        className={cs.EmojiInput.popover}
+      >
         <Dialog>
           <EmojiPicker
             selectedEmoji={value}

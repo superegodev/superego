@@ -1,7 +1,11 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { IntlShape } from "react-intl";
 import * as v from "valibot";
-import { FAILED_COMPILATION_OUTPUT } from "../constants.js";
+import {
+  COMPILATION_FAILED,
+  COMPILATION_IN_PROGRESS,
+  COMPILATION_REQUIRED,
+} from "../constants.js";
 
 export default function typescriptModule(
   intl: IntlShape,
@@ -12,7 +16,17 @@ export default function typescriptModule(
       compiled: v.string(),
     }),
     v.check(
-      ({ compiled }) => compiled !== FAILED_COMPILATION_OUTPUT,
+      ({ compiled }) => compiled !== COMPILATION_REQUIRED,
+      intl.formatMessage({ defaultMessage: "TypeScript compilation required" }),
+    ),
+    v.check(
+      ({ compiled }) => compiled !== COMPILATION_IN_PROGRESS,
+      intl.formatMessage({
+        defaultMessage: "TypeScript compilation in progress",
+      }),
+    ),
+    v.check(
+      ({ compiled }) => compiled !== COMPILATION_FAILED,
       intl.formatMessage({ defaultMessage: "TypeScript compilation failed" }),
     ),
   );

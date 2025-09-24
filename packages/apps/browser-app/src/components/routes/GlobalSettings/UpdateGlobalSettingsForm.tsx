@@ -1,68 +1,88 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { type GlobalSettings, Theme } from "@superego/backend";
-import { useEffect } from "react";
+import type { GlobalSettings, Theme } from "@superego/backend";
+import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
-import RHFSelectField from "../../widgets/RHFSelectField/RHFSelectField.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import * as cs from "./GlobalSettings.css.js";
+import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
+import AppearanceSettings from "./AppearanceSettings.js";
+import AssistantsSettings from "./AssistantsSettings.js";
+import InferenceSettings from "./InferenceSettings.js";
 
-export default function UpdateGlobalSettingsForm() {
-  const intl = useIntl();
+interface Props {
+  formId: string;
+  setSubmitDisabled: (isDisabled: boolean) => void;
+}
+export default function UpdateGlobalSettingsForm({
+  formId,
+  setSubmitDisabled,
+}: Props) {
+  const { globalSettings, developerPrompts } = useGlobalData();
+  const { mutate } = useUpdateGlobalSettings();
 
-  const { globalSettings } = useGlobalData();
-  const { result, mutate } = useUpdateGlobalSettings();
-
-  const { control, handleSubmit, reset, watch } = useForm<GlobalSettings>({
-    defaultValues: globalSettings,
-    mode: "all",
-    resolver: standardSchemaResolver(forms.schemas.globalSettings()),
-  });
+  const { control, handleSubmit, reset, formState, watch } =
+    useForm<GlobalSettings>({
+      defaultValues: globalSettings,
+      mode: "all",
+      resolver: standardSchemaResolver(forms.schemas.globalSettings()),
+    });
 
   const onSubmit = async (values: GlobalSettings) => {
     const { success, data } = await mutate(values);
     if (success) {
-      reset(data);
+      reset(data, { keepValues: true });
+    } else {
+      // TODO: display error in Toast.
     }
   };
 
-  const theme = watch("theme");
-  usePreviewTheme(globalSettings.theme, theme);
+  // When the form dirty state changes:
+  // - Enable or disable the submit button.
+  // - If the form is dirty, schedule an autosave.
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    setSubmitDisabled(!formState.isDirty);
+    if (!formState.isDirty || !formState.isValid) {
+      return;
+    }
+    const timeoutId = setTimeout(
+      () => formRef.current?.requestSubmit(),
+      SETTINGS_AUTOSAVE_INTERVAL,
+    );
+    return () => clearTimeout(timeoutId);
+  }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
+
+  const theme = watch("appearance.theme");
+  usePreviewTheme(globalSettings.appearance.theme, theme);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <RHFSelectField
-        control={control}
-        name="theme"
-        options={Object.values(Theme).map((theme) => ({
-          id: theme,
-          label: theme,
-        }))}
-        autoFocus={true}
-        label={intl.formatMessage({ defaultMessage: "Theme" })}
+    <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
+      <FullPageTabs
+        tabs={[
+          {
+            title: <FormattedMessage defaultMessage="Inference" />,
+            panel: <InferenceSettings control={control} />,
+          },
+          {
+            title: <FormattedMessage defaultMessage="Assistants" />,
+            panel: (
+              <AssistantsSettings
+                control={control}
+                developerPrompts={developerPrompts}
+              />
+            ),
+          },
+          {
+            title: <FormattedMessage defaultMessage="Appearance" />,
+            panel: <AppearanceSettings control={control} />,
+          },
+        ]}
       />
-      <div className={cs.UpdateGlobalSettingsForm.submitButtonContainer}>
-        <RHFSubmitButton control={control} variant="primary">
-          <FormattedMessage defaultMessage="Save settings" />
-        </RHFSubmitButton>
-      </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error saving settings",
-          })}
-        >
-          <RpcError error={result.error} />
-        </Alert>
-      ) : null}
     </Form>
   );
 }

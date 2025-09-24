@@ -7,6 +7,8 @@ import type Data from "./Data.js";
 import DemoDataRepositories from "./DemoDataRepositories.js";
 import clone from "./utils/clone.js";
 
+const OVERWRITE = "OVERWRITE";
+
 export default class DemoDataRepositoriesManager
   implements DataRepositoriesManager
 {
@@ -21,6 +23,28 @@ export default class DemoDataRepositoriesManager
     private databaseName = "superego",
   ) {}
 
+  async loadData(data: Partial<Data>): Promise<void> {
+    const currentData = await this.readData();
+    await this.writeData(
+      {
+        version: crypto.randomUUID(),
+        backgroundJobs: {},
+        collectionCategories: {},
+        collections: {},
+        collectionVersions: {},
+        conversations: {},
+        documents: {},
+        documentVersions: {},
+        files: {},
+        globalSettings: currentData?.globalSettings ?? {
+          value: this.defaultGlobalSettings,
+        },
+        ...data,
+      },
+      OVERWRITE,
+    );
+  }
+
   async runInSerializableTransaction<ReturnValue>(
     fn: (
       repos: DataRepositories,
@@ -30,23 +54,56 @@ export default class DemoDataRepositoriesManager
     let shouldAbort = false;
     const transactionData = (await this.readData()) ?? {
       version: crypto.randomUUID(),
+      backgroundJobs: {},
       collectionCategories: {},
       collections: {},
       collectionVersions: {},
+      conversations: {},
       documents: {},
       documentVersions: {},
       files: {},
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;
-    const repos = new DemoDataRepositories(transactionData, () => {
+    const onWrite = () => {
       transactionData.version = crypto.randomUUID();
       if (this.lock === null) {
         this.lock = transactionId;
       } else if (this.lock !== transactionId) {
         shouldAbort = true;
       }
-    });
+    };
+    const savepoints: { [name: string]: Data } = {};
+    const createSavepoint = async () => {
+      const name = crypto.randomUUID();
+      savepoints[name] = clone(transactionData);
+      return name;
+    };
+    const rollbackToSavepoint = async (name: string) => {
+      transactionData.version = savepoints[name]!.version;
+      (
+        [
+          "backgroundJobs",
+          "collectionCategories",
+          "collections",
+          "collectionVersions",
+          "conversations",
+          "documents",
+          "documentVersions",
+          "files",
+          "globalSettings",
+        ] as const
+      ).forEach((property) => {
+        Object.assign(transactionData[property], savepoints[name]![property]);
+      });
+      delete savepoints[name];
+    };
+    const repos = new DemoDataRepositories(
+      transactionData,
+      onWrite,
+      createSavepoint,
+      rollbackToSavepoint,
+    );
     const { action, returnValue } = await fn(repos);
     repos.dispose();
     if (shouldAbort) {
@@ -92,6 +149,7 @@ export default class DemoDataRepositoriesManager
         getRequest.onsuccess = () => {
           if (
             getRequest.result === undefined ||
+            initialVersion === OVERWRITE ||
             getRequest.result.data.version === initialVersion
           ) {
             const putReq = store.put({

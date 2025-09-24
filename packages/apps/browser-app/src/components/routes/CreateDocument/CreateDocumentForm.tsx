@@ -3,14 +3,13 @@ import type { Collection } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { useCreateDocument } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import generateDefaultValues from "../../../utils/generateDefaultValues.js";
 import RhfContent from "../../../utils/RhfContent.js";
-import Alert from "../../design-system/Alert/Alert.js";
-import RpcError from "../../design-system/RpcError/RpcError.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CreateDocument.css.js";
@@ -20,7 +19,6 @@ interface Props {
 }
 export default function CreateDocumentForm({ collection }: Props) {
   const { schema } = collection.latestVersion;
-  const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
   const { result, mutate } = useCreateDocument();
@@ -53,16 +51,7 @@ export default function CreateDocumentForm({ collection }: Props) {
           <FormattedMessage defaultMessage="Create" />
         </RHFSubmitButton>
       </div>
-      {result?.error ? (
-        <Alert
-          variant="error"
-          title={intl.formatMessage({
-            defaultMessage: "Error creating document",
-          })}
-        >
-          <RpcError error={result.error} />
-        </Alert>
-      ) : null}
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

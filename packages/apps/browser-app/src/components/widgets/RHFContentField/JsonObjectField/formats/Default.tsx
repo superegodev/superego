@@ -8,12 +8,13 @@ import {
   TextArea,
   TextField,
 } from "../../../../design-system/forms/forms.js";
-import AnyFieldLabel from "../../AnyFieldLabel.jsx";
+import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import type Props from "../Props.js";
 
 export default function Default({
   typeDefinition,
+  isNullable,
   isListItem,
   control,
   name,
@@ -61,7 +62,11 @@ export default function Default({
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (
-        <AnyFieldLabel typeDefinition={typeDefinition} label={label} />
+        <AnyFieldLabel
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          label={label}
+        />
       ) : null}
       <TextArea
         ref={field.ref}

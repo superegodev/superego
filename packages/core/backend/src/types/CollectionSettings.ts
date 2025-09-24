@@ -4,4 +4,6 @@ export default interface CollectionSettings {
   name: string;
   icon: string | null;
   collectionCategoryId: CollectionCategoryId | null;
+  description: string | null;
+  assistantInstructions: string | null;
 }

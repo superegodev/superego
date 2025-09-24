@@ -6,24 +6,46 @@ export const PrimarySidebarPanel = {
     display: "flex",
     flexDirection: "column",
   }),
+
   topActions: style({
-    marginBlockEnd: vars.spacing._6,
+    marginInline: `calc(-1 * ${vars.spacing._2})`,
+    marginBlockEnd: vars.spacing._4,
+    flex: "0 0 auto",
+    maxHeight: vars.spacing._64,
+    overflow: "auto",
+    overscrollBehavior: "contain",
   }),
+
+  logo: style({
+    width: vars.spacing._4,
+    height: vars.spacing._4,
+  }),
+
   collectionsTree: style({
-    flexGrow: 1,
+    flex: "1 1 auto",
+    minHeight: 0,
+    overflow: "auto",
+    overscrollBehavior: "contain",
   }),
-  bottomActions: style({}),
+
+  bottomActions: style({
+    marginInline: `calc(-1 * ${vars.spacing._2})`,
+    marginBlockStart: vars.spacing._4,
+    flex: "0 0 auto",
+    maxHeight: vars.spacing._64,
+    overflow: "auto",
+    overscrollBehavior: "contain",
+  }),
 };
 
 const primarySidebarPanelActionRootBase = style({
   display: "flex",
   alignItems: "center",
   gap: vars.spacing._2,
-  width: `calc(100% + 2 * ${vars.spacing._2})`,
+  width: "100%",
   paddingBlock: vars.spacing._1,
   paddingInline: vars.spacing._2,
-  marginInline: `calc(-1 * ${vars.spacing._2})`,
-  marginBlock: vars.spacing._05,
+  marginBlock: vars.spacing._0_5,
   fontSize: vars.typography.fontSizes.sm,
   color: vars.colors.text.primary,
 });

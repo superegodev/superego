@@ -43,13 +43,15 @@ export default class SqliteDocumentVersionRepository
             "collection_id",
             "document_id",
             "collection_version_id",
+            "conversation_id",
             "content_delta",
             "content_snapshot",
+            "created_by",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         documentVersion.id,
@@ -57,10 +59,12 @@ export default class SqliteDocumentVersionRepository
         documentVersion.collectionId,
         documentVersion.documentId,
         documentVersion.collectionVersionId,
+        documentVersion.conversationId,
         JSON.stringify(
           jdp.diff(previousDocumentVersion?.content, documentVersion.content),
         ) ?? null,
         JSON.stringify(documentVersion.content),
+        documentVersion.createdBy,
         documentVersion.createdAt.toISOString(),
         1,
       );
@@ -84,6 +88,22 @@ export default class SqliteDocumentVersionRepository
       .prepare(`DELETE FROM "${table}" WHERE "document_id" = ? RETURNING "id"`)
       .all(documentId) as { id: DocumentVersionId }[];
     return result.map(({ id }) => id);
+  }
+
+  async find(id: DocumentVersionId): Promise<DocumentVersionEntity | null> {
+    const documentVersion = this.db
+      .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
+      .get(id) as SqliteDocumentVersion | undefined;
+    if (!documentVersion) {
+      return null;
+    }
+    if (documentVersion?.is_latest === 1) {
+      return toEntity(documentVersion);
+    }
+    const allDocumentVersions = this.db
+      .prepare(`SELECT * FROM "${table}"`)
+      .all() as SqliteDocumentVersion[];
+    return toEntity(documentVersion, allDocumentVersions, jdp);
   }
 
   async findLatestWhereDocumentIdEq(

@@ -6,6 +6,10 @@ globalStyle("html, body", {
   fontFamily: vars.typography.fontFamilies.sansSerif,
 });
 
+globalStyle("#root", {
+  overflow: "hidden",
+});
+
 globalStyle("*", {
   boxSizing: "border-box",
 });

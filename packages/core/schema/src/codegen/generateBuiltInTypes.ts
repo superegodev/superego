@@ -1,4 +1,4 @@
-import joinLines from "./joinLines.js";
+import joinLines from "../utils/joinLines.js";
 import type ReferencedBuiltInTypes from "./ReferencedBuiltInTypes.js";
 import removeIndent from "./removeIndent.js";
 
@@ -12,7 +12,7 @@ const file = removeIndent(`
   export type FileRef = {
     id: string;
     /**
-     * Name + extension.
+     * File name + extension.
      * @example book.pdf
      */
     name: string;
@@ -27,7 +27,7 @@ const file = removeIndent(`
     name: string;
     mimeType: string;
     /** The binary content of the file. */
-    content: Uint8Array;
+    content: Uint8Array<ArrayBuffer>;
   };
 `);
 

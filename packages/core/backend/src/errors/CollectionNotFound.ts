@@ -1,7 +1,7 @@
+import type { ResultError } from "@superego/global-types";
 import type CollectionId from "../ids/CollectionId.js";
-import type RpcError from "../types/RpcError.js";
 
-type CollectionNotFound = RpcError<
+type CollectionNotFound = ResultError<
   "CollectionNotFound",
   {
     collectionId: CollectionId;

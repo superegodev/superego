@@ -1,80 +1,32 @@
-/////////////////////////////
-// Superego built-in types //
-/////////////////////////////
-
-export type FileRef = {
-  id: string;
-  /**
-   * Name + extension.
-   * @example book.pdf
-   */
-  name: string;
-  mimeType: string;
-};
-
-export type ProtoFile = {
-  /**
-   * File name + extension.
-   * @example book.pdf
-   */
-  name: string;
-  mimeType: string;
-  /** The binary content of the file. */
-  content: Uint8Array;
-};
-
 //////////////////
 // Schema types //
 //////////////////
 
 /**
- * User's subjective feeling at the time of weigh-in.
- */
-export enum Feeling {
-  Great = "GREAT",
-  Good = "GOOD",
-  Neutral = "NEUTRAL",
-  Bad = "BAD",
-  Terrible = "TERRIBLE",
-}
-
-/**
- * Represents a single weigh-in event for the user.
+ * A single weigh-in.
+ *
+ * Note: This is the root type of this schema.
  */
 export type WeighIn = {
   /**
    * When the weigh-in occurred.
    *
-   * Format `dev.superego:String.Instant`:
+   * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, in "Zulu time", with millisecond precision.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
    *
-   * Examples:
-   *
+   * Format examples:
    * - "2006-08-24T19:39:09.000Z"
-   * - "2006-08-24T19:39:09.068Z"
+   * - "2006-08-24T22:39:09.068+03:00"
    */
   timestamp: string;
-  /**
-   * Weight in kilograms.
-   */
+  /** Weight in kilograms. */
   weightKg: number;
-  /**
-   * Body fat percentage.
-   */
+  /** Body fat percentage. */
   bodyFatPercentage: number | null;
-  /**
-   * Muscle mass in kilograms.
-   */
+  /** Muscle mass in kilograms. */
   muscleMassKg: number | null;
-  /**
-   * Device used for measurement.
-   */
-  measurementDevice: "SmartScale V3 Pro";
-  feeling: Feeling | null;
-  /**
-   * Optional photo taken at the time of weigh-in.
-   */
-  progressPhoto: ProtoFile | FileRef | null;
+  /** Device used for measurement. */
+  measurementDevice: string;
   notes: string | null;
 };

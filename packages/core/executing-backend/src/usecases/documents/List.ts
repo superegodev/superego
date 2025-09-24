@@ -4,13 +4,16 @@ import type {
   CollectionNotFound,
   Document,
   DocumentId,
-  RpcResultPromise,
+  LiteDocument,
+  UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeLiteDocument from "../../makers/makeLiteDocument.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import assertDocumentVersionMatchesCollectionVersion from "../../utils/assertDocumentVersionMatchesCollectionVersion.js";
@@ -21,10 +24,21 @@ export default class DocumentsList extends Usecase<
 > {
   async exec(
     collectionId: CollectionId,
-  ): RpcResultPromise<Document[], CollectionNotFound> {
+  ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;
+  async exec(
+    collectionId: CollectionId,
+    lite: false,
+  ): ResultPromise<Document[], CollectionNotFound | UnexpectedError>;
+  async exec(
+    collectionId: CollectionId,
+    lite = true,
+  ): ResultPromise<
+    (LiteDocument | Document)[],
+    CollectionNotFound | UnexpectedError
+  > {
     if (!(await this.repos.collection.exists(collectionId))) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("CollectionNotFound", { collectionId }),
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId }),
       );
     }
 
@@ -48,27 +62,30 @@ export default class DocumentsList extends Usecase<
       latestVersionsByDocumentId.set(latestVersion.documentId, latestVersion);
     });
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       await Promise.all(
-        documents.map((document) => {
-          const latestVersion = latestVersionsByDocumentId.get(document.id);
+        documents.map(async (documentEntity) => {
+          const latestVersion = latestVersionsByDocumentId.get(
+            documentEntity.id,
+          );
           assertDocumentVersionExists(
-            document.collectionId,
-            document.id,
+            documentEntity.collectionId,
+            documentEntity.id,
             latestVersion,
           );
           assertDocumentVersionMatchesCollectionVersion(
-            document.collectionId,
+            documentEntity.collectionId,
             latestCollectionVersion,
-            document.id,
+            documentEntity.id,
             latestVersion,
           );
-          return makeDocument(
+          const document = await makeDocument(
             this.javascriptSandbox,
             latestCollectionVersion,
-            document,
+            documentEntity,
             latestVersion,
           );
+          return lite ? makeLiteDocument(document) : document;
         }),
       ),
     );

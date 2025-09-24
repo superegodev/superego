@@ -1,3 +1,4 @@
+import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect } from "vitest";
 import type Dependencies from "../Dependencies.js";
@@ -24,7 +25,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           name: expect.stringMatching(/SyntaxError|RollupError/),
         });
       });
@@ -49,7 +50,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: "Throw!",
           name: "Error",
         });
@@ -72,7 +73,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: "The default export of the module is not a function",
         });
       });
@@ -96,7 +97,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(!result.success);
-        expect(result.error).toMatchObject({
+        expect(result.error.details).toMatchObject({
           message: expect.stringMatching("not a function"),
           name: "TypeError",
         });
@@ -165,7 +166,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(result.success);
-        expect(result.returnedValue).toEqual(2);
+        expect(result.data).toEqual(2);
       });
 
       it("composite arguments, composite return value", async () => {
@@ -187,7 +188,66 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
         // Verify
         assert(result.success);
-        expect(result.returnedValue).toEqual({ value: 2 });
+        expect(result.data).toEqual({ value: 2 });
+      });
+    });
+  });
+
+  describe("gives the function access to global utils", () => {
+    it("LocalInstant", async () => {
+      // Setup SUT
+      const { javascriptSandbox } = await deps();
+
+      // Exercise
+      const result = await javascriptSandbox.executeSyncFunction(
+        {
+          source: "",
+          compiled: `
+            export default function localInstantTest() {
+              const localInstant = LocalInstant
+                .fromISO("2025-08-12T16:06:00.000+03:00")
+                .plus({ months: 5, days: 1 })
+                .minus({ months: 1, weeks: 2 })
+                .endOf("day")
+                .startOf("week")
+                .set({ hour: 1 });
+              return {
+                iso: localInstant.toISO(),
+                format: localInstant.toFormat(),
+                jsDate: localInstant.toJSDate().toISOString(),
+                comparisonGt: localInstant.set({ hour: 2 }) > localInstant,
+                comparisonGte: localInstant.set({ hour: 1 }) >= localInstant,
+                comparisonLt: localInstant.set({ hour: 0 }) < localInstant,
+                comparisonLte: localInstant.set({ hour: 1 }) <= localInstant,
+                coercionToNumber: Number(localInstant),
+                coercionToString: String(localInstant),
+              };
+            }
+          `,
+        },
+        [],
+      );
+
+      // Verify
+      assert(result.success);
+      const expectedLocalInstant = LocalInstant.fromISO(
+        "2025-08-12T16:06:00.000+03:00",
+      )
+        .plus({ months: 5, days: 1 })
+        .minus({ months: 1, weeks: 2 })
+        .endOf("day")
+        .startOf("week")
+        .set({ hour: 1 });
+      expect(result.data).toEqual({
+        iso: expectedLocalInstant.toISO(),
+        format: expect.stringContaining("2025"),
+        jsDate: expectedLocalInstant.toJSDate().toISOString(),
+        comparisonGt: true,
+        comparisonGte: true,
+        comparisonLt: true,
+        comparisonLte: true,
+        coercionToNumber: expectedLocalInstant.toJSDate().getTime(),
+        coercionToString: expectedLocalInstant.toISO(),
       });
     });
   });

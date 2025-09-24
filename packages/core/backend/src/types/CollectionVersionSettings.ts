@@ -1,6 +1,5 @@
-import type NonEmptyArray from "./NonEmptyArray.js";
-import type SummaryPropertyDefinition from "./SummaryPropertyDefinition.js";
+import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface CollectionVersionSettings {
-  summaryProperties: NonEmptyArray<SummaryPropertyDefinition>;
+  contentSummaryGetter: TypescriptModule;
 }

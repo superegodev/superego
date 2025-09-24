@@ -12,7 +12,7 @@ export type ArgsOf<
   Method extends keyof Backend[Entity],
 > = Parameters<BackendMethod<Entity, Method>>;
 
-export type RpcResultOf<
+export type ResultOf<
   Entity extends keyof Backend,
   Method extends keyof Backend[Entity],
 > = Awaited<ReturnType<BackendMethod<Entity, Method>>>;

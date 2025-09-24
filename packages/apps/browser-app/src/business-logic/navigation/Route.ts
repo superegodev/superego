@@ -1,25 +1,43 @@
-import type { CollectionId, DocumentId } from "@superego/backend";
+import type {
+  CollectionId,
+  ConversationId,
+  DocumentId,
+} from "@superego/backend";
 
 export enum RouteName {
-  Home = "Home",
-  GlobalSettings = "Settings",
-  CreateCollection = "CreateCollection",
+  Ask = "Ask",
+  Conversations = "Conversations",
+  Conversation = "Conversation",
+  CreateCollectionManual = "CreateCollection",
+  CreateCollectionAssisted = "StartCollectionCreatorConversation",
+  CreateNewCollectionVersion = "CreateNewCollectionVersion",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
-  CreateCollectionVersion = "CreateCollectionVersion",
   CreateDocument = "CreateDocument",
   Document = "Document",
+  GlobalSettings = "Settings",
 }
 
 type Route =
   | {
-      name: RouteName.Home;
+      name: RouteName.Ask;
     }
   | {
-      name: RouteName.GlobalSettings;
+      name: RouteName.Conversations;
     }
   | {
-      name: RouteName.CreateCollection;
+      name: RouteName.Conversation;
+      conversationId: ConversationId;
+    }
+  | {
+      name: RouteName.CreateCollectionAssisted;
+    }
+  | {
+      name: RouteName.CreateCollectionManual;
+    }
+  | {
+      name: RouteName.CreateNewCollectionVersion;
+      collectionId: CollectionId;
     }
   | {
       name: RouteName.Collection;
@@ -30,10 +48,6 @@ type Route =
       collectionId: CollectionId;
     }
   | {
-      name: RouteName.CreateCollectionVersion;
-      collectionId: CollectionId;
-    }
-  | {
       name: RouteName.CreateDocument;
       collectionId: CollectionId;
     }
@@ -41,6 +55,9 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
+    }
+  | {
+      name: RouteName.GlobalSettings;
     };
 
 export default Route;

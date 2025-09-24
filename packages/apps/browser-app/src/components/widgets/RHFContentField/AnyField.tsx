@@ -2,6 +2,7 @@ import {
   type AnyTypeDefinition,
   DataType,
   type Schema,
+  utils,
 } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import BooleanField from "./BooleanField.js";
@@ -37,6 +38,7 @@ export default function AnyField({
       return (
         <StringField
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           isListItem={isListItem}
           control={control}
           name={name}
@@ -59,6 +61,7 @@ export default function AnyField({
       return (
         <NumberField
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           isListItem={isListItem}
           control={control}
           name={name}
@@ -81,6 +84,7 @@ export default function AnyField({
       return (
         <JsonObjectField
           typeDefinition={typeDefinition}
+          isNullable={isNullable}
           isListItem={isListItem}
           control={control}
           name={name}
@@ -126,7 +130,7 @@ export default function AnyField({
       return (
         <AnyField
           schema={schema}
-          typeDefinition={schema.types[typeDefinition.ref]!}
+          typeDefinition={utils.getType(schema, typeDefinition)}
           isNullable={isNullable}
           isListItem={isListItem}
           control={control}

@@ -1,19 +1,18 @@
 import * as v from "valibot";
 import DataType from "../../DataType.js";
 import type Schema from "../../Schema.js";
-import type {
-  AnyTypeDefinition,
-  EnumTypeDefinition,
-} from "../../typeDefinitions.js";
+import type { AnyTypeDefinition } from "../../typeDefinitions.js";
 import acceptedFileExtensions from "../acceptedFileExtensions/acceptedFileExtensions.js";
 import described from "../described/described.js";
 import enumMembers from "../enumMembers/enumMembers.js";
 import identifier from "../identifier/identifier.js";
 import mimeTypeMatcher from "../mimeTypeMatcher/mimeTypeMatcher.js";
-import allNullablePropertiesExist from "./checks/allNullablePropertiesExist.js";
 import allReferencedTypesExist from "./checks/allReferencedTypesExist.js";
+import membersOrderIsValid from "./checks/membersOrderIsValid.js";
 import noTopLevelTypeDefinitionRefs from "./checks/noTopLevelTypeDefinitionRefs.js";
 import noUnusedTypes from "./checks/noUnusedTypes.js";
+import nullablePropertiesIsValid from "./checks/nullablePropertiesIsValid.js";
+import propertiesOrderIsValid from "./checks/propertiesOrderIsValid.js";
 import rootTypeIsStruct from "./checks/rootTypeIsStruct.js";
 
 const StringTypeDefinitionValibotSchema = v.strictObject({
@@ -22,11 +21,15 @@ const StringTypeDefinitionValibotSchema = v.strictObject({
   format: v.optional(v.string()),
 });
 
-const EnumTypeDefinitionValibotSchema = v.strictObject({
-  ...described().entries,
-  dataType: v.literal(DataType.Enum),
-  members: enumMembers(),
-});
+const EnumTypeDefinitionValibotSchema = v.pipe(
+  v.strictObject({
+    ...described().entries,
+    dataType: v.literal(DataType.Enum),
+    members: enumMembers(),
+    membersOrder: v.optional(v.array(v.pipe(v.string()))),
+  }),
+  membersOrderIsValid,
+);
 
 const NumberTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
@@ -75,17 +78,19 @@ const StructTypeDefinitionValibotSchema = v.pipe(
     dataType: v.literal(DataType.Struct),
     properties: v.record(
       identifier(),
-      v.lazy(() => AnyTypeDefinitionNoEnumValibotSchema),
+      v.lazy(() => AnyTypeDefinitionValibotSchema),
     ),
     nullableProperties: v.optional(v.array(v.pipe(v.string()))),
+    propertiesOrder: v.optional(v.array(v.pipe(v.string()))),
   }),
-  allNullablePropertiesExist,
+  nullablePropertiesIsValid,
+  propertiesOrderIsValid,
 );
 
 const ListTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.literal(DataType.List),
-  items: v.lazy(() => AnyTypeDefinitionNoEnumValibotSchema),
+  items: v.lazy(() => AnyTypeDefinitionValibotSchema),
 });
 
 const TypeDefinitionRefValibotSchema = v.strictObject({
@@ -93,23 +98,6 @@ const TypeDefinitionRefValibotSchema = v.strictObject({
   dataType: v.null(),
   ref: v.string(),
 });
-
-const AnyTypeDefinitionNoEnumValibotSchema: v.GenericSchema<
-  Exclude<AnyTypeDefinition, EnumTypeDefinition>,
-  Exclude<AnyTypeDefinition, EnumTypeDefinition>
-> = v.variant("dataType", [
-  StringTypeDefinitionValibotSchema,
-  NumberTypeDefinitionValibotSchema,
-  BooleanTypeDefinitionValibotSchema,
-  StringLiteralTypeDefinitionValibotSchema,
-  NumberLiteralTypeDefinitionValibotSchema,
-  BooleanLiteralTypeDefinitionValibotSchema,
-  JsonObjectTypeDefinitionValibotSchema,
-  FileTypeDefinitionValibotSchema,
-  StructTypeDefinitionValibotSchema,
-  ListTypeDefinitionValibotSchema,
-  TypeDefinitionRefValibotSchema,
-]);
 
 const AnyTypeDefinitionValibotSchema: v.GenericSchema<
   AnyTypeDefinition,

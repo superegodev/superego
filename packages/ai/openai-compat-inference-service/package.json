@@ -1,0 +1,23 @@
+{
+  "name": "@superego/openai-compat-inference-service",
+  "version": "2025.9.2",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/json-schema": "^7.0.15",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/shared-utils": "workspace:*"
+  }
+}

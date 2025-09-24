@@ -30,3 +30,13 @@ it("file", () => {
   // Exercise and verify
   expect(Id.is.file(Id.generate.file())).toBe(true);
 });
+
+it("conversation", () => {
+  // Exercise and verify
+  expect(Id.is.conversation(Id.generate.conversation())).toBe(true);
+});
+
+it("backgroundJob", () => {
+  // Exercise and verify
+  expect(Id.is.backgroundJob(Id.generate.backgroundJob())).toBe(true);
+});

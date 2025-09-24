@@ -1,11 +1,11 @@
 import type { CollectionId } from "@superego/backend";
 import { useState } from "react";
-import { PiPlus, PiTrash } from "react-icons/pi";
-import { useIntl } from "react-intl";
+import { PiTrash } from "react-icons/pi";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
-import Section from "../../design-system/Section/Section.js";
+import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DeleteCollectionModalForm from "./DeleteCollectionModalForm.js";
 import UpdateCollectionSettingsForm from "./UpdateCollectionSettingsForm.js";
@@ -32,19 +32,9 @@ export default function CollectionSettings({ collectionId }: Props) {
           { collection: CollectionUtils.getDisplayName(collection) },
         )}
         actionsAriaLabel={intl.formatMessage({
-          defaultMessage: "Collection actions",
+          defaultMessage: "Collection settings actions",
         })}
         actions={[
-          {
-            label: intl.formatMessage({
-              defaultMessage: "Create new version",
-            }),
-            icon: <PiPlus />,
-            to: {
-              name: RouteName.CreateCollectionVersion,
-              collectionId: collectionId,
-            },
-          },
           {
             label: intl.formatMessage({ defaultMessage: "Delete collection" }),
             icon: <PiTrash />,
@@ -53,20 +43,37 @@ export default function CollectionSettings({ collectionId }: Props) {
         ]}
       />
       <Shell.Panel.Content>
-        <Section title={intl.formatMessage({ defaultMessage: "Settings" })}>
-          <UpdateCollectionSettingsForm
-            key={`UpdateCollectionSettingsForm_${collectionId}`}
-            collection={collection}
-          />
-        </Section>
-        <Section
-          title={intl.formatMessage({ defaultMessage: "Version settings" })}
-        >
-          <UpdateCollectionVersionSettingsForm
-            key={`UpdateCollectionVersionSettingsForm_${collectionId}`}
-            collection={collection}
-          />
-        </Section>
+        <FullPageTabs
+          tabs={[
+            {
+              title: <FormattedMessage defaultMessage="General settings" />,
+              panel: (
+                <UpdateCollectionSettingsForm
+                  key={`UpdateCollectionSettingsForm_${collectionId}`}
+                  collection={collection}
+                />
+              ),
+            },
+            {
+              title: (
+                <FormattedMessage defaultMessage="Latest version settings" />
+              ),
+              panel: (
+                <UpdateCollectionVersionSettingsForm
+                  key={`UpdateCollectionVersionSettingsForm_${collectionId}`}
+                  collection={collection}
+                />
+              ),
+            },
+            {
+              title: <FormattedMessage defaultMessage="Create new version" />,
+              to: {
+                name: RouteName.CreateNewCollectionVersion,
+                collectionId: collection.id,
+              },
+            },
+          ]}
+        />
         <DeleteCollectionModalForm
           key={`DeleteCollectionModalForm_${collectionId}`}
           collection={collection}

@@ -1,24 +1,27 @@
-import type {
-  Backend,
-  CollectionId,
-  Document,
-  DocumentContentNotValid,
-  DocumentId,
-  DocumentNotFound,
-  DocumentVersionId,
-  DocumentVersionIdNotMatching,
-  FilesNotFound,
-  RpcResultPromise,
+import {
+  type Backend,
+  type CollectionId,
+  type ConversationId,
+  type Document,
+  type DocumentContentNotValid,
+  type DocumentId,
+  type DocumentNotFound,
+  DocumentVersionCreator,
+  type DocumentVersionId,
+  type DocumentVersionIdNotMatching,
+  type FilesNotFound,
+  type UnexpectedError,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import * as v from "valibot";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
-import makeRpcError from "../../makers/makeRpcError.js";
-import makeSuccessfulRpcResult from "../../makers/makeSuccessfulRpcResult.js";
-import makeUnsuccessfulRpcResult from "../../makers/makeUnsuccessfulRpcResult.js";
+import makeResultError from "../../makers/makeResultError.js";
+import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
@@ -27,6 +30,14 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
+type ExecReturnValue = ResultPromise<
+  Document,
+  | DocumentNotFound
+  | DocumentVersionIdNotMatching
+  | DocumentContentNotValid
+  | FilesNotFound
+  | UnexpectedError
+>;
 export default class DocumentsCreateNewVersion extends Usecase<
   Backend["documents"]["createNewVersion"]
 > {
@@ -35,17 +46,34 @@ export default class DocumentsCreateNewVersion extends Usecase<
     id: DocumentId,
     latestVersionId: DocumentVersionId,
     content: any,
-  ): RpcResultPromise<
-    Document,
-    | DocumentNotFound
-    | DocumentVersionIdNotMatching
-    | DocumentContentNotValid
-    | FilesNotFound
-  > {
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy: DocumentVersionCreator.Migration,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy: DocumentVersionCreator.Assistant,
+    conversationId: ConversationId,
+  ): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    id: DocumentId,
+    latestVersionId: DocumentVersionId,
+    content: any,
+    createdBy = DocumentVersionCreator.User,
+    conversationId: ConversationId | null = null,
+  ): ExecReturnValue {
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentNotFound", { documentId: id }),
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentNotFound", { documentId: id }),
       );
     }
 
@@ -54,8 +82,8 @@ export default class DocumentsCreateNewVersion extends Usecase<
     assertDocumentVersionExists(document.collectionId, id, latestVersion);
 
     if (latestVersionId !== latestVersion.id) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentVersionIdNotMatching", {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentVersionIdNotMatching", {
           documentId: id,
           latestVersionId: latestVersion.id,
           suppliedVersionId: latestVersionId,
@@ -77,8 +105,8 @@ export default class DocumentsCreateNewVersion extends Usecase<
       content,
     );
     if (!contentValidationResult.success) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("DocumentContentNotValid", {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentContentNotValid", {
           collectionId: document.collectionId,
           collectionVersionId: latestCollectionVersion.id,
           documentId: id,
@@ -103,8 +131,8 @@ export default class DocumentsCreateNewVersion extends Usecase<
       referencedFiles.map(({ id }) => id),
     );
     if (!isEmpty(extraneousFileIds) || !isEmpty(missingFileIds)) {
-      return makeUnsuccessfulRpcResult(
-        makeRpcError("FilesNotFound", {
+      return makeUnsuccessfulResult(
+        makeResultError("FilesNotFound", {
           collectionId: document.collectionId,
           documentId: id,
           fileIds: [...extraneousFileIds, ...missingFileIds],
@@ -124,22 +152,25 @@ export default class DocumentsCreateNewVersion extends Usecase<
       documentId: id,
       collectionId: document.collectionId,
       collectionVersionId: latestCollectionVersion.id,
+      conversationId: conversationId,
       content: convertedContent,
+      createdBy: createdBy,
       createdAt: now,
-    };
-    const filesWithContent: (FileEntity & { content: Uint8Array })[] =
-      protoFilesWithIds.map((protoFileWithId) => ({
-        id: protoFileWithId.id,
-        collectionId: document.collectionId,
-        documentId: id,
-        createdWithDocumentVersionId: documentVersion.id,
-        createdAt: now,
-        content: protoFileWithId.content,
-      }));
+    } as DocumentVersionEntity;
+    const filesWithContent: (FileEntity & {
+      content: Uint8Array<ArrayBuffer>;
+    })[] = protoFilesWithIds.map((protoFileWithId) => ({
+      id: protoFileWithId.id,
+      collectionId: document.collectionId,
+      documentId: id,
+      createdWithDocumentVersionId: documentVersion.id,
+      createdAt: now,
+      content: protoFileWithId.content,
+    }));
     await this.repos.documentVersion.insert(documentVersion);
     await this.repos.file.insertAll(filesWithContent);
 
-    return makeSuccessfulRpcResult(
+    return makeSuccessfulResult(
       await makeDocument(
         this.javascriptSandbox,
         latestCollectionVersion,
