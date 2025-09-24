@@ -1,6 +1,6 @@
 {
   "name": "@superego/sqlite-data-repositories",
-  "version": "2025.9.1",
+  "version": "2025.9.2",
   "type": "module",
   "exports": {
     ".": {
@@ -18,6 +18,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^3.1.2",
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "jsondiffpatch": "^0.7.3"

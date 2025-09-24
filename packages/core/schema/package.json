@@ -1,10 +1,13 @@
 {
   "name": "@superego/schema",
-  "version": "2025.9.1",
+  "version": "2025.9.2",
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./SchemaTypescriptSchema": {
+      "import": "./src/SchemaTypescriptSchema.ts"
     }
   },
   "private": true,
@@ -18,7 +21,7 @@
     "@types/luxon": "^3.7.1",
     "@types/node": "^24.5.2",
     "typescript": "^5.9.2",
-    "vite": "^7.1.6",
+    "vite": "^7.1.7",
     "vitest": "^3.2.4"
   },
   "dependencies": {

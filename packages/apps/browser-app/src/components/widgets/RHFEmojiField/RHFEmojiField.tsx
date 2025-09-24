@@ -47,8 +47,12 @@ export default function RHFEmojiField<
       data-disabled={isDisabled}
       className={classnames(cs.RHFEmojiField.root, className)}
     >
-      {label ? <Label>{label}</Label> : null}
-      <EmojiInput value={field.value} onChange={field.onChange} />
+      {label ? <Label htmlFor={field.name}>{label}</Label> : null}
+      <EmojiInput
+        value={field.value}
+        onChange={field.onChange}
+        id={field.name}
+      />
       <FieldErrorContext
         value={{
           isInvalid: fieldState.invalid,

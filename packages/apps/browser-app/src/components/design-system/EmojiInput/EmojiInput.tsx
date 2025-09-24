@@ -9,8 +9,9 @@ import EmojiPicker from "./EmojiPicker.js";
 interface Props {
   value: string | null | undefined;
   onChange: (newValue: string | null) => void;
+  id?: string | undefined;
 }
-export default function EmojiInput({ value, onChange }: Props) {
+export default function EmojiInput({ value, onChange, id }: Props) {
   const intl = useIntl();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   return (
@@ -19,6 +20,7 @@ export default function EmojiInput({ value, onChange }: Props) {
         variant="default"
         label={intl.formatMessage({ defaultMessage: "Select emoji" })}
         onPress={() => setIsPopoverOpen(true)}
+        id={id}
         className={cs.EmojiInput.popoverTrigger}
       >
         {value}

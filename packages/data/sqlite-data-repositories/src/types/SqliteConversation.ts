@@ -1,8 +1,10 @@
+import { decode } from "@msgpack/msgpack";
 import type {
   AssistantName,
   ConversationFormat,
   ConversationId,
   ConversationStatus,
+  Message,
 } from "@superego/backend";
 import type { ConversationEntity } from "@superego/executing-backend";
 
@@ -12,8 +14,8 @@ export default interface SqliteConversation {
   format: ConversationFormat;
   title: string | null;
   context_fingerprint: string;
-  /** JSON */
-  messages: string;
+  /** MessagePack */
+  messages: Buffer;
   status: ConversationStatus;
   /** JSON */
   error: string | null;
@@ -28,7 +30,7 @@ export function toEntity(conversation: SqliteConversation): ConversationEntity {
     format: conversation.format,
     title: conversation.title,
     contextFingerprint: conversation.context_fingerprint,
-    messages: JSON.parse(conversation.messages),
+    messages: decode(conversation.messages) as Message[],
     status: conversation.status,
     error: conversation.error ? JSON.parse(conversation.error) : null,
     createdAt: new Date(conversation.created_at),

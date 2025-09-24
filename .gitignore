@@ -22,6 +22,8 @@ dist-ssr
 .vite
 out
 .wrangler
+.astro/
+.astro-build-cache/
 
 # Misc
 .DS_Store
@@ -32,3 +34,7 @@ out
 
 # Folder used for drafts that should not be committed
 /drafts/
+
+# Reports
+playwright-report
+test-results

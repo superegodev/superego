@@ -14,6 +14,7 @@ export default function useEditor(
   value: string,
   onChange: (newValue: string) => void,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
+  ariaLabel: string | undefined,
   fileName: `${string}.ts` | `${string}.json` = language === "typescript"
     ? "main.ts"
     : "main.json",
@@ -64,6 +65,8 @@ export default function useEditor(
         alwaysConsumeMouseWheel: false,
       },
       automaticLayout: true,
+      // Accessibility
+      ariaLabel: ariaLabel,
     });
 
     // Set initial height, auto-resize on content change, and show/hide the
@@ -105,6 +108,7 @@ export default function useEditor(
     // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
     // it's a ref, it's stable and passing it here has no effect.
     valueModelRef,
+    ariaLabel,
     fileName,
   ]);
 

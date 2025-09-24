@@ -7,12 +7,14 @@ import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
 interface Props {
   value: string;
   onChange: (newValue: string) => void;
+  ariaLabel?: string | undefined;
   fileName?: `${string}.json`;
   maxHeight: Property.MaxHeight | undefined;
 }
 export default function JsonEditor({
   value,
   onChange,
+  ariaLabel,
   fileName,
   maxHeight,
 }: Props) {
@@ -24,6 +26,7 @@ export default function JsonEditor({
     value,
     onChange,
     valueModelRef,
+    ariaLabel,
     fileName,
   );
   return <div style={{ maxHeight }} ref={editorElementRef} />;

@@ -15,6 +15,7 @@ import useSyncTypescriptLibsModels from "./useSyncTypescriptLibsModels.js";
 interface Props {
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
+  ariaLabel?: string | undefined;
   typescriptLibs: TypescriptLib[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
   fileName?: `${string}.ts`;
@@ -23,6 +24,7 @@ interface Props {
 export default function TypescriptEditor({
   value,
   onChange,
+  ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
   fileName,
@@ -86,6 +88,7 @@ export default function TypescriptEditor({
     value.source,
     compileSource,
     valueModelRef,
+    ariaLabel,
     fileName,
   );
 

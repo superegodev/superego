@@ -5,7 +5,8 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import { DataType, formats, SchemaTypescriptSchema } from "@superego/schema";
+import { DataType, formats } from "@superego/schema";
+import SchemaTypescriptSchema from "@superego/schema/SchemaTypescriptSchema";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreate from "../../usecases/collections/Create.js";

@@ -1,6 +1,6 @@
 {
   "name": "@superego/demo-app",
-  "version": "2025.9.1",
+  "version": "2025.9.2",
   "type": "module",
   "private": true,
   "scripts": {
@@ -11,15 +11,14 @@
     "build:preview": "yarn clean && vite build",
     "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production vite build",
     "deploy:preview": "wrangler pages deploy dist/ --project-name demosuperegodev",
-    "deploy:production": "wrangler deploy",
-    "wrangler": "wrangler"
+    "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.13.3",
-    "@cloudflare/workers-types": "^4.20250922.0",
+    "@cloudflare/vite-plugin": "^1.13.4",
+    "@cloudflare/workers-types": "^4.20250923.0",
     "typescript": "^5.9.2",
-    "vite": "^7.1.6",
-    "wrangler": "^4.38.0"
+    "vite": "^7.1.7",
+    "wrangler": "^4.39.0"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -29,7 +28,7 @@
     "@superego/fake-javascript-sandbox": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/shared-utils": "workspace:*",
-    "@tanstack/react-query": "^5.89.0",
+    "@tanstack/react-query": "^5.90.2",
     "urlpattern-polyfill": "^10.1.0"
   }
 }

@@ -14,6 +14,7 @@ export default function EagerCodeInput({
   autoFocus,
   isInvalid = false,
   isDisabled = false,
+  ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
   fileName,
@@ -44,11 +45,13 @@ export default function EagerCodeInput({
       aria-disabled={isDisabled}
       inert={isDisabled}
       className={cs.EagerCodeInput.root}
+      data-testid="code-input"
     >
       {language === "typescript" ? (
         <TypescriptEditor
           value={value}
           onChange={onChange}
+          ariaLabel={ariaLabel}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
           fileName={fileName}
@@ -58,6 +61,7 @@ export default function EagerCodeInput({
         <JsonEditor
           value={value}
           onChange={onChange}
+          ariaLabel={ariaLabel}
           fileName={fileName}
           maxHeight={maxHeight}
         />
