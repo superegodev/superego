@@ -4,8 +4,7 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import { Id } from "@superego/shared-utils";
-import { uniq } from "es-toolkit";
+import { ContentSummaryUtils, Id } from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
@@ -103,14 +102,10 @@ export default {
       .map(makeLiteDocument);
 
     const documentsTableId = crypto.randomUUID();
-    // TODO: utils
-    const tableColumns = uniq(
-      documents.flatMap((document) =>
-        Object.keys(document.latestVersion.contentSummary.data ?? {}),
-      ),
-    )
-      .sort()
-      .map((key) => key.replace(/^\d+\.\s+/, ""));
+    const tableColumns = ContentSummaryUtils.getSortedProperties(
+      documents.map((document) => document.latestVersion.contentSummary),
+    ).map(({ label }) => label);
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,

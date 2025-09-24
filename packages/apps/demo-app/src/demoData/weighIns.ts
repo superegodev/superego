@@ -66,22 +66,24 @@ export default function getContentSummary(
   weighIn: WeighIn,
 ): Record<string, string> {
   return {
-    "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({
-      dateStyle: "short",
-      timeStyle: "short"
-    }),
-    "1. Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
+      .fromISO(weighIn.timestamp).toFormat({
+        dateStyle: "short",
+        timeStyle: "short"
+      }),
+    "{position:1,sortable:true} Weight (kg)": String(weighIn.weightKg),
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(weighIn) {
   return {
-    "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({
-      dateStyle: "short",
-      timeStyle: "short"
-    }),
-    "1. Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
+      .fromISO(weighIn.timestamp).toFormat({
+        dateStyle: "short",
+        timeStyle: "short"
+      }),
+    "{position:1,sortable:true} Weight (kg)": String(weighIn.weightKg),
   };
 }
       `.trim(),

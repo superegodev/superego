@@ -87,36 +87,38 @@ export default function getContentSummary(
   calendarEntry: CalendarEntry,
 ): Record<string, string> {
   return {
-    "0. Title": calendarEntry.title,
-    "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({
-      dateStyle: "short",
-      timeStyle: "short",
-    }),
-    "2. End": calendarEntry.endTime
+    "{position:0,sortable:true} Title": calendarEntry.title,
+    "{position:1,sortable:true,default-sort:desc} Start": LocalInstant
+      .fromISO(calendarEntry.startTime).toFormat({
+        dateStyle: "short",
+        timeStyle: "short",
+      }),
+    "{position:2,sortable:true} End": calendarEntry.endTime
       ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
           dateStyle: "short",
           timeStyle: "short",
         })
       : "",
-    "3. Type": calendarEntry.type,
+    "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(calendarEntry) {
   return {
-    "0. Title": calendarEntry.title,
-    "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({
-      dateStyle: "short",
-      timeStyle: "short",
-    }),
-    "2. End": calendarEntry.endTime
-      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
+    "{position:0,sortable:true} Title": calendarEntry.title,
+    "{position:1,sortable:true,default-sort:desc} Start": LocalInstant
+      .fromISO(calendarEntry.startTime).toFormat({
         dateStyle: "short",
         timeStyle: "short",
-      })
+      }),
+    "{position:2,sortable:true} End": calendarEntry.endTime
+      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
+          dateStyle: "short",
+          timeStyle: "short",
+        })
       : "",
-    "3. Type": calendarEntry.type,
+    "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }
       `.trim(),

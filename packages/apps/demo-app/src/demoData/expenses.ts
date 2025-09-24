@@ -148,20 +148,20 @@ export default function getContentSummary(
   expense: Expense
 ): Record<string, string> {
   return {
-    "0. Title": expense.title,
-    "1. Date": expense.date,
-    "2. Amount": \`\${expense.amount} \${expense.currency}\`,
-    "3. Category": expense.category,
+    "{position:0,sortable:true} Title": expense.title,
+    "{position:1,sortable:true,default-sort:desc} Date": expense.date,
+    "{position:2,sortable:true} Amount": \`\${expense.amount} \${expense.currency}\`,
+    "{position:3,sortable:true} Category": expense.category,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(expense) {
   return {
-    "0. Title": expense.title,
-    "1. Date": expense.date,
-    "2. Amount": \`\${expense.amount} \${expense.currency}\`,
-    "3. Category": expense.category,
+    "{position:0,sortable:true} Title": expense.title,
+    "{position:1,sortable:true,default-sort:desc} Date": expense.date,
+    "{position:2,sortable:true} Amount": \`\${expense.amount} \${expense.currency}\`,
+    "{position:3,sortable:true} Category": expense.category,
   };
 }
       `.trim(),

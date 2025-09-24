@@ -5189,6 +5189,7 @@ __metadata:
     "@superego/backend": "workspace:*"
     "@superego/schema": "workspace:*"
     base-x: "npm:^5.0.1"
+    es-toolkit: "npm:^1.39.10"
     typescript: "npm:^5.9.2"
     uuid: "npm:^13.0.0"
     valibot: "npm:^1.1.0"

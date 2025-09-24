@@ -102,26 +102,28 @@ export default function getContentSummary(
   fuelLog: FuelLog
 ): Record<string, string> {
   return {
-    "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({
-      dateStyle: "short", timeStyle: "short"
-    }),
-    "1. Liters": String(fuelLog.liters),
-    "2. Total Cost (€)": String(fuelLog.totalCost),
-    "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
-    "4. Odometer (km)": String(fuelLog.odometer),
+    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
+      .fromISO(fuelLog.timestamp).toFormat({
+        dateStyle: "short", timeStyle: "short"
+      }),
+    "{position:1,sortable:true} Liters": String(fuelLog.liters),
+    "{position:2,sortable:true} Total Cost (€)": String(fuelLog.totalCost),
+    "{position:3,sortable:true} Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
+    "{position:4,sortable:true} Odometer (km)": String(fuelLog.odometer),
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(fuelLog) {
   return {
-    "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({
-      dateStyle: "short", timeStyle: "short"
-    }),
-    "1. Liters": String(fuelLog.liters),
-    "2. Total Cost (€)": String(fuelLog.totalCost),
-    "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
-    "4. Odometer (km)": String(fuelLog.odometer),
+    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
+      .fromISO(fuelLog.timestamp).toFormat({
+        dateStyle: "short", timeStyle: "short"
+      }),
+    "{position:1,sortable:true} Liters": String(fuelLog.liters),
+    "{position:2,sortable:true} Total Cost (€)": String(fuelLog.totalCost),
+    "{position:3,sortable:true} Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
+    "{position:4,sortable:true} Odometer (km)": String(fuelLog.odometer),
   };
 }
       `.trim(),

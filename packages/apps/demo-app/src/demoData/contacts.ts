@@ -124,22 +124,22 @@ export default function getContentSummary(
   contact: Contact,
 ): Record<string, string> {
   return {
-    "0. Name": contact.name,
-    "1. Relation": contact.relation ?? "",
-    "2. Phone": contact.phones[0]?.number ?? "",
-    "3. Email": contact.emails[0]?.address ?? "",
-    "4. Type": contact.type
+    "{position:0,sortable:true,default-sort:asc} Name": contact.name,
+    "{position:1} Relation": contact.relation ?? "",
+    "{position:2} Phone": contact.phones[0]?.number ?? "",
+    "{position:3} Email": contact.emails[0]?.address ?? "",
+    "{position:4,sortable:true} Type": contact.type
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(contact) {
   return {
-    "0. Name": contact.name,
-    "1. Relation": contact.relation ?? "",
-    "2. Phone": contact.phones[0]?.number ?? "",
-    "3. Email": contact.emails[0]?.address ?? "",
-    "4. Type": contact.type
+    "{position:0,sortable:true,default-sort:asc} Name": contact.name,
+    "{position:1} Relation": contact.relation ?? "",
+    "{position:2} Phone": contact.phones[0]?.number ?? "",
+    "{position:3} Email": contact.emails[0]?.address ?? "",
+    "{position:4,sortable:true} Type": contact.type
   };
 }
       `.trim(),

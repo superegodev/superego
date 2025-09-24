@@ -18,7 +18,7 @@ export default function makeContentSummaryGetter(
     "  return {",
     ...tableColumns.map(
       ({ header, path }, index) =>
-        `    ${JSON.stringify(`${index}. ${header}`)}: ${makePropertyValueStatement(schema, path, argName)} ?? "",`,
+        `    ${makePropertyName(index, header)}: ${makePropertyValueStatement(schema, path, argName)} ?? "",`,
     ),
     "  };",
   ];
@@ -38,6 +38,12 @@ export default function makeContentSummaryGetter(
       "}",
     ].join("\n"),
   };
+}
+
+function makePropertyName(index: number, header: string): string {
+  return JSON.stringify(
+    `{position:${index},sortable:true,default-sort:${index === 0 ? "asc" : "null"}} ${header}`,
+  );
 }
 
 function makePropertyValueStatement(
