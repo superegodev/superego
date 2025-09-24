@@ -3,7 +3,6 @@ import { vars } from "../../../themes.css.js";
 
 const codeLineHeight = 21;
 
-// TODO: cursor: text?
 export const EagerCodeBlock = {
   root: style({
     display: "grid",
