@@ -13,12 +13,12 @@ import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVe
 import type DocumentsList from "../../usecases/documents/List.js";
 import Assistant from "../Assistant.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
+import CreateChart from "./tools/CreateChart.js";
 import CreateDocument from "./tools/CreateDocument.js";
+import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
-import RenderChart from "./tools/RenderChart.js";
-import RenderDocumentsTable from "./tools/RenderDocumentsTable.js";
 import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
@@ -58,10 +58,10 @@ export default class FactotumAssistant extends Assistant {
         "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
         ToolName.GetCollectionTypescriptSchema,
       )
-      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.RenderChart)
+      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.CreateChart)
       .replaceAll(
         "$TOOL_NAME_RENDER_DOCUMENTS_TABLE",
-        ToolName.RenderDocumentsTable,
+        ToolName.CreateDocumentsTable,
       );
   }
 
@@ -97,8 +97,8 @@ export default class FactotumAssistant extends Assistant {
       ExecuteJavascriptFunction.get(),
       CreateDocument.get(),
       CreateNewDocumentVersion.get(),
-      RenderChart.get(),
-      RenderDocumentsTable.get(),
+      CreateChart.get(),
+      CreateDocumentsTable.get(),
     ];
   }
 
@@ -130,16 +130,16 @@ export default class FactotumAssistant extends Assistant {
         this.usecases.documentsCreateNewVersion,
       );
     }
-    if (RenderChart.is(toolCall)) {
-      return RenderChart.exec(
+    if (CreateChart.is(toolCall)) {
+      return CreateChart.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
       );
     }
-    if (RenderDocumentsTable.is(toolCall)) {
-      return RenderDocumentsTable.exec(
+    if (CreateDocumentsTable.is(toolCall)) {
+      return CreateDocumentsTable.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,

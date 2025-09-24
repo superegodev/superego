@@ -4,8 +4,8 @@ enum ToolName {
   CreateNewDocumentVersion = "createNewDocumentVersion",
   ExecuteJavascriptFunction = "executeJavascriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
-  RenderChart = "ui.createChart",
-  RenderDocumentsTable = "ui.createDocumentsTable",
+  CreateChart = "createChart",
+  CreateDocumentsTable = "createDocumentsTable",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
 }

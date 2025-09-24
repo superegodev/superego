@@ -4,14 +4,14 @@ import { colors, vars } from "../../../themes.css.js";
 
 const seriesColors = [
   colors.blues._4,
-  colors.oranges._4,
   colors.greens._4,
-  colors.violets._4,
-  colors.cyans._4,
-  colors.pinks._4,
-  colors.teals._4,
-  colors.reds._4,
   colors.yellows._4,
+  colors.reds._4,
+  colors.cyans._4,
+  colors.teals._4,
+  colors.oranges._4,
+  colors.violets._4,
+  colors.pinks._4,
 ];
 
 const CSS_VAR_REGEX = /^var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)$/;

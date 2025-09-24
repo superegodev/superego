@@ -99,23 +99,23 @@ export default {
     );
   },
 
-  isSuccessfulRenderChartToolResult(
+  isSuccessfulCreateChartToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.RenderChart & {
+  ): toolResult is ToolResult.CreateChart & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.RenderChart && toolResult.output.success
+      toolResult.tool === ToolName.CreateChart && toolResult.output.success
     );
   },
 
-  isSuccessfulRenderDocumentsTableToolResult(
+  isSuccessfulCreateDocumentsTableToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.RenderDocumentsTable & {
+  ): toolResult is ToolResult.CreateDocumentsTable & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.RenderDocumentsTable &&
+      toolResult.tool === ToolName.CreateDocumentsTable &&
       toolResult.output.success
     );
   },
@@ -138,8 +138,8 @@ export default {
     return toolCall.tool === ToolName.ExecuteJavascriptFunction;
   },
 
-  isRenderChartToolCall(toolCall: ToolCall): toolCall is ToolCall.RenderChart {
-    return toolCall.tool === ToolName.RenderChart;
+  isCreateChartToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
+    return toolCall.tool === ToolName.CreateChart;
   },
 
   isGetCollectionTypescriptSchemaToolCall(

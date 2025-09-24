@@ -43,29 +43,6 @@ export default function ToolMessage({ conversation, message }: Props) {
       );
     }
 
-    // if (ConversationUtils.isSuccessfulRenderChartToolResult(toolResult)) {
-    //   return (
-    //     <RenderChart key={toolResult.toolCallId} toolResult={toolResult} />
-    //   );
-    // }
-
-    // if (
-    //   ConversationUtils.isSuccessfulRenderDocumentsTableToolResult(toolResult)
-    // ) {
-    //   return (
-    //     <RenderDocumentsTable
-    //       key={toolResult.toolCallId}
-    //       toolCall={
-    //         ConversationUtils.findToolCall(
-    //           conversation,
-    //           toolResult,
-    //         ) as ToolCall.RenderDocumentsTable
-    //       }
-    //       toolResult={toolResult}
-    //     />
-    //   );
-    // }
-
     return null;
   });
 }

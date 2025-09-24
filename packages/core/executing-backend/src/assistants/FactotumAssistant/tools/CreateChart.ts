@@ -4,33 +4,28 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import { Id } from "@superego/shared-utils";
-import { uniq } from "es-toolkit";
 import { DateTime } from "luxon";
-import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
-import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
-import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
-  is(toolCall: ToolCall): toolCall is ToolCall.RenderDocumentsTable {
-    return toolCall.tool === ToolName.RenderDocumentsTable;
+  is(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
+    return toolCall.tool === ToolName.CreateChart;
   },
 
   async exec(
-    toolCall: ToolCall.RenderDocumentsTable,
+    toolCall: ToolCall.CreateChart,
     collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
-  ): Promise<ToolResult.RenderDocumentsTable> {
-    const { collectionId, getDocumentIds } = toolCall.input;
+  ): Promise<ToolResult.CreateChart> {
+    const { collectionId, getEchartsOption } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -64,7 +59,7 @@ export default {
       ),
     );
     const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getDocumentIds },
+      { source: "", compiled: getEchartsOption },
       [assistantDocuments],
     );
 
@@ -76,65 +71,73 @@ export default {
       };
     }
 
-    const dataValidationResult = v.safeParse(
-      v.array(
-        v.pipe(
-          v.string(),
-          v.check((input) => Id.is.document(input), "Must be a DocumentId"),
-        ),
-      ),
-      result.data,
-    );
-    if (!dataValidationResult.success) {
+    const title = result.data?.title?.text ?? result.data?.title?.[0]?.text;
+    if (typeof title !== "string") {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
-          makeResultError("ReturnValueNotValid", {
-            issues: makeValidationIssues(dataValidationResult.issues),
+          makeResultError("EchartsOptionNotValid", {
+            issues: [
+              { message: "Missing chart title.", path: [{ key: "title" }] },
+            ],
           }),
         ),
       };
     }
 
-    const documentIds = new Set(result.data);
-    const filteredDocuments = documents
-      .filter(({ id }) => documentIds.has(id))
-      .map(makeLiteDocument);
+    const chartId = crypto.randomUUID();
 
-    const documentsTableId = crypto.randomUUID();
-    // TODO: utils
-    const tableColumns = uniq(
-      documents.flatMap((document) =>
-        Object.keys(document.latestVersion.contentSummary.data ?? {}),
-      ),
-    )
-      .sort()
-      .map((key) => key.replace(/^\d+\.\s+/, ""));
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: makeSuccessfulResult({
-        tableColumns: tableColumns,
-        markdownSnippet: `<DocumentsTable id="${documentsTableId}" />`,
+        markdownSnippet: `<Chart id="${chartId}" />`,
+        chartInfo: {
+          seriesColorOrder: [
+            "blue",
+            "green",
+            "yellow",
+            "red",
+            "cyan",
+            "teal",
+            "orange",
+            "violet",
+            "pink",
+          ],
+        },
       }),
-      artifacts: { documentsTableId, documents: filteredDocuments },
+      artifacts: { chartId, echartsOption: result.data },
     };
   },
 
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: ToolName.RenderDocumentsTable,
+      name: ToolName.CreateChart,
       description: `
-Creates an inline table of documents that you can use in your textual responses
-by including the \`markdownSnippet\` returned by the tool call. Use this tool
-every time you want to show a set of documents to the user. For documents,
-prefer using this tool over markdown tables.
+Creates a chart that you can use in your textual responses by including verbatim
+the \`markdownSnippet\` returned by the tool call.
 
-The getDocumentIds function takes the same parameters as the function in
+The getEchartsOption function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
 executes in the same environment, and **must** abide by ALL its rules.
+
+### Additional MANDATORY rules
+
+- Always set a title for the chart.
+- Always set:
+  - \`tooltip:{trigger:"axis",axisPointer:{type:"cross"}}\`
+  - \`xAxis.type = "time"\` if there are timestamps on the x axis.
+  - \`grid = {left:0,right:0,top:0,bottom:0}\`
+  - \`xAxis.name = undefined\`
+  - \`yAxis.name = undefined\`
+  - \`legend = undefined\`
+- For numeric axes, narrow them to:
+  - if minValue < 0 -> [minValue - 5%, maxValue + 5%] (rounded)
+  - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%] (rounded)
+- In datasets and series, round all numeric values to 2 decimals. Use
+  \`Math.round(value * 100)/100)\`
       `.trim(),
       inputSchema: {
         type: "object",
@@ -142,17 +145,13 @@ executes in the same environment, and **must** abide by ALL its rules.
           collectionId: {
             type: "string",
           },
-          title: {
-            description: "A short title for the table (5 words max)",
-            type: "string",
-          },
-          getDocumentIds: {
+          getEchartsOption: {
             description:
-              "JavaScript function returning an array of ids of the documents to render in the table. `export default function getDocumentIds(documents) { … }`",
+              "JavaScript function returning an **echarts option object**. `export default function getEchartsOption(documents) { … }`",
             type: "string",
           },
         },
-        required: ["collectionId", "title", "getDocumentIds"],
+        required: ["collectionId", "getEchartsOption"],
         additionalProperties: false,
       },
     };

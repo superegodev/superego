@@ -68,13 +68,13 @@ globalStyle(`${SuggestCollectionDefinition.scrollContainer} > *`, {
   marginBlockEnd: vars.spacing._2,
 });
 
-export const RenderChart = {
+export const CreateChart = {
   chart: style({
     marginBlockStart: vars.spacing._6,
   }),
 };
 
-export const RenderDocumentsTable = {
+export const CreateDocumentsTable = {
   table: style({
     maxHeight: vars.spacing._80,
     marginBlockStart: vars.spacing._2,

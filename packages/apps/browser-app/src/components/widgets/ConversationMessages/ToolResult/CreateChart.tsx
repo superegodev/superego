@@ -3,18 +3,18 @@ import type { EChartsOption } from "echarts";
 import { omit } from "es-toolkit";
 import { lazy, Suspense, useMemo } from "react";
 import { vars } from "../../../../themes.css.js";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
 import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
 
-const Echart = lazy(() => import("../../../design-system/Echart/Echart.js"));
+const Echart = lazy(() => import("../../../design-system/Echart/Echart.jsx"));
 
 interface Props {
-  toolResult: ToolResult.RenderChart & {
+  toolResult: ToolResult.CreateChart & {
     output: { success: true };
   };
 }
-export default function RenderChart({ toolResult }: Props) {
+export default function CreateChart({ toolResult }: Props) {
   const { echartsOption } = toolResult.artifacts!;
   const { title } = echartsOption;
 
@@ -43,7 +43,7 @@ export default function RenderChart({ toolResult }: Props) {
           option={option}
           width="100%"
           height={vars.spacing._80}
-          className={cs.RenderChart.chart}
+          className={cs.CreateChart.chart}
         />
       </Suspense>
     </div>

@@ -89,11 +89,14 @@ namespace ToolResult {
     ToolName.ExecuteJavascriptFunction,
     Result<any, CollectionNotFound | ExecutingJavascriptFunctionFailed>
   >;
-  export type RenderChart = BaseToolResult<
-    ToolName.RenderChart,
+  export type CreateChart = BaseToolResult<
+    ToolName.CreateChart,
     Result<
       {
         markdownSnippet: string;
+        chartInfo: {
+          seriesColorOrder: string[];
+        };
       },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
@@ -106,11 +109,15 @@ namespace ToolResult {
       };
     }
   >;
-  export type RenderDocumentsTable = BaseToolResult<
-    ToolName.RenderDocumentsTable,
+  export type CreateDocumentsTable = BaseToolResult<
+    ToolName.CreateDocumentsTable,
     Result<
       {
         markdownSnippet: string;
+        tableInfo: {
+          columns: string[];
+          rowCount: number;
+        };
       },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
@@ -147,8 +154,8 @@ type ToolResult =
   | ToolResult.CreateNewDocumentVersion
   | ToolResult.ExecuteJavascriptFunction
   | ToolResult.GetCollectionTypescriptSchema
-  | ToolResult.RenderChart
-  | ToolResult.RenderDocumentsTable
+  | ToolResult.CreateChart
+  | ToolResult.CreateDocumentsTable
   | ToolResult.SuggestCollectionDefinition
   | ToolResult.Unknown;
 

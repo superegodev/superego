@@ -42,15 +42,15 @@ namespace ToolCall {
       javascriptFunction: string;
     }
   >;
-  export type RenderChart = ToolCall<
-    ToolName.RenderChart,
+  export type CreateChart = ToolCall<
+    ToolName.CreateChart,
     {
       collectionId: CollectionId;
       getEchartsOption: string;
     }
   >;
-  export type RenderDocumentsTable = ToolCall<
-    ToolName.RenderDocumentsTable,
+  export type CreateDocumentsTable = ToolCall<
+    ToolName.CreateDocumentsTable,
     {
       collectionId: CollectionId;
       title: string;
