@@ -1,5 +1,5 @@
 {
-  "name": "@superego/e2e-tests",
+  "name": "@superego/demo-app-e2e-tests",
   "version": "0.0.0",
   "type": "module",
   "private": true,
