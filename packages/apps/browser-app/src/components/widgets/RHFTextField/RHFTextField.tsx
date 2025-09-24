@@ -26,6 +26,7 @@ interface Props<
   isDisabled?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
+  autoComplete?: string | undefined;
   emptyInputValue?: "" | null | undefined;
   showErrorOnError?: boolean | undefined;
   textArea?: boolean | undefined;
@@ -44,6 +45,7 @@ export default function RHFTextField<
   isDisabled,
   isReadOnly,
   autoFocus,
+  autoComplete,
   emptyInputValue = "",
   showErrorOnError = true,
   textArea = false,
@@ -70,6 +72,7 @@ export default function RHFTextField<
           validationBehavior="aria"
           isInvalid={fieldState.invalid}
           autoFocus={autoFocus}
+          autoComplete={autoComplete}
           aria-label={ariaLabel}
           className={className}
         >

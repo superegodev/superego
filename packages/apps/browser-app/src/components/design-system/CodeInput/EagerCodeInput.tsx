@@ -14,6 +14,7 @@ export default function EagerCodeInput({
   autoFocus,
   isInvalid = false,
   isDisabled = false,
+  ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
   fileName,
@@ -50,6 +51,7 @@ export default function EagerCodeInput({
         <TypescriptEditor
           value={value}
           onChange={onChange}
+          ariaLabel={ariaLabel}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
           fileName={fileName}
@@ -59,6 +61,7 @@ export default function EagerCodeInput({
         <JsonEditor
           value={value}
           onChange={onChange}
+          ariaLabel={ariaLabel}
           fileName={fileName}
           maxHeight={maxHeight}
         />

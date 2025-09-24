@@ -4,12 +4,17 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "check-types": "tsc --noEmit",
     "test:e2e": "playwright test --config=playwright.config.ts",
-    "show-report": "playwright show-report"
+    "playwright": "playwright"
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
     "@types/node": "^24.5.2",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.55.1",
+    "@superego/schema": "workspace:*",
+    "luxon": "^3.7.2"
   }
 }

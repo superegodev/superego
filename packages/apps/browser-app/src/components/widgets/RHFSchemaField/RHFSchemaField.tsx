@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -17,7 +17,7 @@ import * as cs from "./RHFSchemaField.css.js";
 interface Props {
   control: Control<any>;
   name: string;
-  label?: ReactNode | undefined;
+  label?: string | undefined;
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
@@ -59,6 +59,7 @@ export default function RHFSchemaField({
         language="json"
         value={jsonValue}
         onChange={handleChange}
+        ariaLabel={label}
         fileName="schema.json"
         onBlur={field.onBlur}
         autoFocus={autoFocus}

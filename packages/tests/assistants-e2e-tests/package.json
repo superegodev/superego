@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "start": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
+    "test:e2e": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose run"
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",

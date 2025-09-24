@@ -21,6 +21,7 @@ export default function GeneralSettingsTab({ control }: Props) {
         <RHFTextField
           control={control}
           name="name"
+          autoComplete="off"
           label={intl.formatMessage({ defaultMessage: "Name" })}
           autoFocus={true}
           className={cs.GeneralSettingsTab.nameInput}

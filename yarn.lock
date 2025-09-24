@@ -4992,6 +4992,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@superego/demo-app-e2e-tests@workspace:packages/tests/demo-app-e2e-tests":
+  version: 0.0.0-use.local
+  resolution: "@superego/demo-app-e2e-tests@workspace:packages/tests/demo-app-e2e-tests"
+  dependencies:
+    "@playwright/test": "npm:^1.55.1"
+    "@superego/schema": "workspace:*"
+    "@types/node": "npm:^24.5.2"
+    luxon: "npm:^3.7.2"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@superego/demo-app@workspace:packages/apps/demo-app":
   version: 0.0.0-use.local
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
@@ -5023,16 +5035,6 @@ __metadata:
     playwright: "npm:^1.55.1"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
-  languageName: unknown
-  linkType: soft
-
-"@superego/e2e-tests@workspace:packages/tests/e2e":
-  version: 0.0.0-use.local
-  resolution: "@superego/e2e-tests@workspace:packages/tests/e2e"
-  dependencies:
-    "@playwright/test": "npm:^1.55.1"
-    "@types/node": "npm:^24.5.2"
-    typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
 
