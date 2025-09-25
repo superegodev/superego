@@ -1,18 +1,17 @@
 import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
-import {
-  type ContentSummaryProperty,
-  ContentSummaryUtils,
-} from "@superego/shared-utils";
-import { sortBy } from "es-toolkit";
+import { ContentSummaryUtils } from "@superego/shared-utils";
 import { useState } from "react";
-import type { SortDescriptor } from "react-aria-components";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import isEmpty from "../../../utils/isEmpty.js";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
 import Table from "../../design-system/Table/Table.js";
+import getSortDescriptor from "./getSortDescriptor.js";
+import sortDocuments from "./sortDocuments.js";
+import useColumnIds from "./useColumnIds.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -35,23 +34,16 @@ export default function DocumentsTable({
   const sortedProperties = ContentSummaryUtils.getSortedProperties(
     documents.map((document) => document.latestVersion.contentSummary),
   );
+  const columnIds = useColumnIds();
   const [sortDescriptor, setSortDescriptor] = useState(() =>
-    getSortDescriptor(sortedProperties),
+    getSortDescriptor(sortedProperties, columnIds),
   );
-  const sortedDocuments = sortBy(documents, [
-    (document: LiteDocument) =>
-      sortDescriptor
-        ? document.latestVersion.contentSummary.success
-          ? document.latestVersion.contentSummary.data[sortDescriptor.column]
-          : "ZZZ"
-        : document.id,
-  ]);
-  if (!sortDescriptor || sortDescriptor.direction === "descending") {
-    sortedDocuments.reverse();
-  }
+  const sortedDocuments = sortDocuments(documents, sortDescriptor, columnIds);
   return (
     <Table
-      key={screenSize}
+      // Re-render when these props change, otherwise react-aria-components
+      // crashes the table.
+      key={`${screenSize}${showCreatedAt}${showLastModifiedAt}`}
       aria-label={intl.formatMessage(
         { defaultMessage: "Documents of collection {collection}" },
         { collection: collection?.settings.name ?? collectionId },
@@ -70,6 +62,7 @@ export default function DocumentsTable({
         {sortedProperties.map((property, index) => (
           <Table.Column
             key={property.name}
+            id={`${columnIds.propertyPrefix}${property.name}`}
             isRowHeader={index === 0}
             minWidth={120}
             allowsSorting={property.sortable}
@@ -78,12 +71,20 @@ export default function DocumentsTable({
           </Table.Column>
         ))}
         {showCreatedAt && screenSize > ScreenSize.Medium ? (
-          <Table.Column align="right">
+          <Table.Column
+            maxWidth={160}
+            allowsSorting={true}
+            id={columnIds.createdAt}
+          >
             <FormattedMessage defaultMessage="Created at" />
           </Table.Column>
         ) : null}
         {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
-          <Table.Column align="right">
+          <Table.Column
+            maxWidth={160}
+            allowsSorting={true}
+            id={columnIds.lastModifiedAt}
+          >
             <FormattedMessage defaultMessage="Last modified at" />
           </Table.Column>
         ) : null}
@@ -110,7 +111,9 @@ export default function DocumentsTable({
             {sortedProperties.map(({ name }) => (
               <Table.Cell key={name}>
                 {document.latestVersion.contentSummary.success ? (
-                  document.latestVersion.contentSummary.data[name]
+                  <ContentSummaryPropertyValue
+                    value={document.latestVersion.contentSummary.data[name]}
+                  />
                 ) : document.latestVersion.contentSummary.error.name ===
                   "ContentSummaryNotValid" ? (
                   <FormattedMessage defaultMessage="Invalid content summary" />
@@ -120,13 +123,21 @@ export default function DocumentsTable({
               </Table.Cell>
             ))}
             {showCreatedAt && screenSize > ScreenSize.Medium ? (
-              <Table.Cell align="right">
-                <FormattedDate value={document.createdAt} />
+              <Table.Cell>
+                <FormattedDate
+                  value={document.createdAt}
+                  dateStyle="short"
+                  timeStyle="medium"
+                />
               </Table.Cell>
             ) : null}
             {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
-              <Table.Cell align="right">
-                <FormattedDate value={document.latestVersion.createdAt} />
+              <Table.Cell>
+                <FormattedDate
+                  value={document.latestVersion.createdAt}
+                  dateStyle="short"
+                  timeStyle="medium"
+                />
               </Table.Cell>
             ) : null}
           </Table.Row>
@@ -134,20 +145,4 @@ export default function DocumentsTable({
       </Table.Body>
     </Table>
   );
-}
-
-function getSortDescriptor(
-  properties: ContentSummaryProperty[],
-): SortDescriptor | undefined {
-  for (const { name, defaultSort } of properties) {
-    if (defaultSort !== null) {
-      return {
-        column: name,
-        direction: defaultSort === "asc" ? "ascending" : "descending",
-      };
-    }
-  }
-  return properties[0]
-    ? { column: properties[0].name, direction: "ascending" }
-    : undefined;
 }

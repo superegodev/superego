@@ -10,7 +10,7 @@ import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
 
 export default class FakeJavascriptSandbox implements JavascriptSandbox {
   // TODO: consider using an LRU cache to avoid memory ballooning.
-  private moduleCache = new Map<string, any>();
+  private moduleImportPromiseCache = new Map<string, Promise<unknown>>();
 
   async moduleDefaultExportsFunction(
     typescriptModule: TypescriptModule,
@@ -106,14 +106,15 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
     typescriptModule: TypescriptModule,
   ): Promise<unknown> {
     const cacheKey = typescriptModule.compiled;
-    const cachedModule = this.moduleCache.get(cacheKey);
-    if (cachedModule) {
-      return cachedModule;
+    const cachedModuleImportPromise =
+      this.moduleImportPromiseCache.get(cacheKey);
+    if (cachedModuleImportPromise) {
+      return cachedModuleImportPromise;
     }
-    const importedModule =
-      await FakeJavascriptSandbox.importModule(typescriptModule);
-    this.moduleCache.set(cacheKey, importedModule);
-    return importedModule;
+    const moduleImportPromise =
+      FakeJavascriptSandbox.importModule(typescriptModule);
+    this.moduleImportPromiseCache.set(cacheKey, moduleImportPromise);
+    return moduleImportPromise;
   }
 
   private static importedModuleDefaultExportsFunction(

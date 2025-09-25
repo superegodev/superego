@@ -118,17 +118,17 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { Contact } from "./CollectionSchema";
+import type { Contact } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   contact: Contact,
-): Record<string, string> {
+): Record<string, string | boolean | null> {
   return {
     "{position:0,sortable:true,default-sort:asc} Name": contact.name,
-    "{position:1} Relation": contact.relation ?? "",
-    "{position:2} Phone": contact.phones[0]?.number ?? "",
-    "{position:3} Email": contact.emails[0]?.address ?? "",
-    "{position:4,sortable:true} Type": contact.type
+    "{position:1} Relation": contact.relation,
+    "{position:2} Phone": contact.phones[0]?.number ?? null,
+    "{position:3} Email": contact.emails[0]?.address ?? null,
+    "{position:4,sortable:true} Type": contact.type,
   };
 }
       `.trim(),
@@ -136,10 +136,10 @@ export default function getContentSummary(
 export default function getContentSummary(contact) {
   return {
     "{position:0,sortable:true,default-sort:asc} Name": contact.name,
-    "{position:1} Relation": contact.relation ?? "",
-    "{position:2} Phone": contact.phones[0]?.number ?? "",
-    "{position:3} Email": contact.emails[0]?.address ?? "",
-    "{position:4,sortable:true} Type": contact.type
+    "{position:1} Relation": contact.relation,
+    "{position:2} Phone": contact.phones[0]?.number ?? null,
+    "{position:3} Email": contact.emails[0]?.address ?? null,
+    "{position:4,sortable:true} Type": contact.type,
   };
 }
       `.trim(),

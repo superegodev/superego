@@ -29,6 +29,9 @@
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
   },
+  "Collection.tsx_K+mLdW": {
+    "defaultMessage": "Mostra timestamp"
+  },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Crea documento"
   },
@@ -563,8 +566,8 @@
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"
   },
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": {
-    "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<key: string, value: string>'</code> — derivato dal suo contenuto — che contiene le sue informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> <b>Suggerimento:</b> per imporre un ordine specifico alle proprietà del sommario, puoi anteporre a ciascuna chiave <code>$position. </code>. (Esempio: <code>0. </code>.) Il prefisso viene rimosso durante la visualizzazione. </p>"
+  "RHFContentSummaryGetterField.tsx_TDCCVk": {
+    "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<name: string, value: string | number | boolean | null>'</code> — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, <code>'{position:0,sortable:true,default-sort:asc}' Nome</code> rende <code>Nome</code> la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"

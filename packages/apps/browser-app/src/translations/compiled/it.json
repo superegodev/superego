@@ -59,6 +59,12 @@
       "value": "Impostazioni"
     }
   ],
+  "Collection.tsx_K+mLdW": [
+    {
+      "type": 0,
+      "value": "Mostra timestamp"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
@@ -1393,7 +1399,7 @@
       "value": "Funzione di estrazione del sommario dei contenuti"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+  "RHFContentSummaryGetterField.tsx_TDCCVk": [
     {
       "children": [
         {
@@ -1418,7 +1424,7 @@
           "children": [
             {
               "type": 0,
-              "value": "Record<key: string, value: string>"
+              "value": "Record<name: string, value: string | number | boolean | null>"
             }
           ],
           "type": 8,
@@ -1426,7 +1432,7 @@
         },
         {
           "type": 0,
-          "value": " — derivato dal suo contenuto — che contiene le sue informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
+          "value": " — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
         }
       ],
       "type": 8,
@@ -1468,27 +1474,13 @@
       "children": [
         {
           "type": 0,
-          "value": " "
+          "value": " I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Suggerimento:"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " per imporre un ordine specifico alle proprietà del sommario, puoi anteporre a ciascuna chiave "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "$position. "
+              "value": "{position:0,sortable:true,default-sort:asc} Nome"
             }
           ],
           "type": 8,
@@ -1496,13 +1488,13 @@
         },
         {
           "type": 0,
-          "value": ". (Esempio: "
+          "value": " rende "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "0. "
+              "value": "Nome"
             }
           ],
           "type": 8,
@@ -1510,7 +1502,7 @@
         },
         {
           "type": 0,
-          "value": ".) Il prefisso viene rimosso durante la visualizzazione. "
+          "value": " la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. "
         }
       ],
       "type": 8,

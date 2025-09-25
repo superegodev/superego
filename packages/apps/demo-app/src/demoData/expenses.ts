@@ -142,16 +142,17 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { Expense } from "./CollectionSchema";
+import type { Expense } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   expense: Expense
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
     "{position:0,sortable:true} Title": expense.title,
     "{position:1,sortable:true,default-sort:desc} Date": expense.date,
-    "{position:2,sortable:true} Amount": \`\${expense.amount} \${expense.currency}\`,
-    "{position:3,sortable:true} Category": expense.category,
+    "{position:2,sortable:true} Amount": expense.amount,
+    "{position:3,sortable:true} Currency": expense.currency,
+    "{position:4,sortable:true} Category": expense.category,
   };
 }
       `.trim(),
@@ -160,8 +161,9 @@ export default function getContentSummary(expense) {
   return {
     "{position:0,sortable:true} Title": expense.title,
     "{position:1,sortable:true,default-sort:desc} Date": expense.date,
-    "{position:2,sortable:true} Amount": \`\${expense.amount} \${expense.currency}\`,
-    "{position:3,sortable:true} Category": expense.category,
+    "{position:2,sortable:true} Amount": expense.amount,
+    "{position:3,sortable:true} Currency": expense.currency,
+    "{position:4,sortable:true} Category": expense.category,
   };
 }
       `.trim(),

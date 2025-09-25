@@ -81,24 +81,15 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { CalendarEntry } from "./CollectionSchema";
+import type { CalendarEntry } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   calendarEntry: CalendarEntry,
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
     "{position:0,sortable:true} Title": calendarEntry.title,
-    "{position:1,sortable:true,default-sort:desc} Start": LocalInstant
-      .fromISO(calendarEntry.startTime).toFormat({
-        dateStyle: "short",
-        timeStyle: "short",
-      }),
-    "{position:2,sortable:true} End": calendarEntry.endTime
-      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
-          dateStyle: "short",
-          timeStyle: "short",
-        })
-      : "",
+    "{position:1,sortable:true,default-sort:desc} Start": calendarEntry.startTime,
+    "{position:2,sortable:true} End": calendarEntry.endTime,
     "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }
@@ -107,17 +98,8 @@ export default function getContentSummary(
 export default function getContentSummary(calendarEntry) {
   return {
     "{position:0,sortable:true} Title": calendarEntry.title,
-    "{position:1,sortable:true,default-sort:desc} Start": LocalInstant
-      .fromISO(calendarEntry.startTime).toFormat({
-        dateStyle: "short",
-        timeStyle: "short",
-      }),
-    "{position:2,sortable:true} End": calendarEntry.endTime
-      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
-          dateStyle: "short",
-          timeStyle: "short",
-        })
-      : "",
+    "{position:1,sortable:true,default-sort:desc} Start": calendarEntry.startTime,
+    "{position:2,sortable:true} End": calendarEntry.endTime,
     "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }

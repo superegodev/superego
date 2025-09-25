@@ -1,5 +1,6 @@
 import type { CollectionId } from "@superego/backend";
-import { PiGear, PiPlus } from "react-icons/pi";
+import { useState } from "react";
+import { PiGear, PiPlus, PiWatch, PiWatchFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -16,6 +17,7 @@ interface Props {
 export default function Collection({ collectionId }: Props) {
   const intl = useIntl();
   const { collections } = useGlobalData();
+  const [showTimestamps, setShowTimestamps] = useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
   return collection ? (
     <Shell.Panel slot="Main">
@@ -25,6 +27,11 @@ export default function Collection({ collectionId }: Props) {
           defaultMessage: "Collection actions",
         })}
         actions={[
+          {
+            label: intl.formatMessage({ defaultMessage: "Show timestamps" }),
+            icon: showTimestamps ? <PiWatchFill /> : <PiWatch />,
+            onPress: () => setShowTimestamps(!showTimestamps),
+          },
           {
             label: intl.formatMessage({ defaultMessage: "Settings" }),
             icon: <PiGear />,
@@ -53,8 +60,8 @@ export default function Collection({ collectionId }: Props) {
               collectionId={collectionId}
               collection={collection}
               documents={documents}
-              showCreatedAt={true}
-              showLastModifiedAt={true}
+              showCreatedAt={showTimestamps}
+              showLastModifiedAt={showTimestamps}
               className={cs.Collection.documentsTable}
             />
           )}

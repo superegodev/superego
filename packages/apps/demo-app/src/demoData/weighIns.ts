@@ -44,8 +44,8 @@ const collectionVersion: CollectionVersionEntity = {
             description: "Weight in kilograms.",
             dataType: DataType.Number,
           },
-          measurementDevice: {
-            description: "Device used for measurement.",
+          scale: {
+            description: "Scale used for measurement.",
             dataType: DataType.String,
           },
           notes: {
@@ -60,30 +60,24 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { WeighIn } from "./CollectionSchema";
+import type { WeighIn } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   weighIn: WeighIn,
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
-    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
-      .fromISO(weighIn.timestamp).toFormat({
-        dateStyle: "short",
-        timeStyle: "short"
-      }),
-    "{position:1,sortable:true} Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": weighIn.timestamp,
+    "{position:1,sortable:true} Weight (kg)": weighIn.weightKg,
+    "{position:2,sortable:true} Scale": weighIn.scale,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(weighIn) {
   return {
-    "{position:0,sortable:true,default-sort:desc} Date": LocalInstant
-      .fromISO(weighIn.timestamp).toFormat({
-        dateStyle: "short",
-        timeStyle: "short"
-      }),
-    "{position:1,sortable:true} Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": weighIn.timestamp,
+    "{position:1,sortable:true} Weight (kg)": weighIn.weightKg,
+    "{position:2,sortable:true} Scale": weighIn.scale,
   };
 }
       `.trim(),

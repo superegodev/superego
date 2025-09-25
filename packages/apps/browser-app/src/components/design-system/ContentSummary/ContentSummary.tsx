@@ -1,6 +1,7 @@
 import type { DocumentVersion } from "@superego/backend";
 import { ContentSummaryUtils } from "@superego/shared-utils";
 import { FormattedMessage } from "react-intl";
+import ContentSummaryPropertyValue from "../ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
 import * as cs from "./ContentSummary.css.js";
 
 interface Props {
@@ -28,7 +29,7 @@ export default function ContentSummary({ contentSummary }: Props) {
           <div key={name} className={cs.ContentSummary.property}>
             <dt className={cs.ContentSummary.propertyName}>{label}</dt>
             <dd className={cs.ContentSummary.propertyValue}>
-              {contentSummary.data[name]}
+              <ContentSummaryPropertyValue value={contentSummary.data[name]} />
             </dd>
           </div>
         ),

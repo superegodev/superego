@@ -7,7 +7,7 @@ import type ConversationId from "../ids/ConversationId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type ContentSummary from "./ContentSummary.js";
 
-type DocumentVersion<Content = Record<string, unknown>> = {
+type DocumentVersion = {
   id: DocumentVersionId;
   collectionVersionId: CollectionVersionId;
   /** Id of the previous version. Null if this is the first version. */
@@ -17,11 +17,11 @@ type DocumentVersion<Content = Record<string, unknown>> = {
    * only when createdBy === DocumentVersionCreator.Assistant.
    */
   conversationId: ConversationId | null;
-  content: Content;
+  content: any;
   /**
-   * The content summary is a Record<name: string, value: string> derived from
-   * the document's content that contains its most important bits of
-   * information. The summary is used for display purposes in various UI
+   * The content summary is a Record<string, string | number | boolean | null>
+   * derived from the document's content that contains its most important bits
+   * of information. The summary is used for display purposes in various UI
    * contexts.
    *
    * For example, the first property of the summary is considered to be
@@ -37,8 +37,11 @@ type DocumentVersion<Content = Record<string, unknown>> = {
    * ```js
    * const contentSummary = {
    *   "{position:0,sortable:true,default-sort:asc} First Name": "John",
-   *   "{position:1,sortable:true} Last Name": "Doe"
-   * }
+   *   "{position:1,sortable:true} Last Name": "Doe",
+   *   "{position:2,sortable:true} Age": 35,
+   *   "{position:3,sortable:true} Birthday": null,
+   *   "{position:4,sortable:true} Favorite": true,
+   * };
    * ```
    */
   contentSummary: Result<

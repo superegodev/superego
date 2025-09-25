@@ -59,6 +59,12 @@
       "value": "Settings"
     }
   ],
+  "Collection.tsx_K+mLdW": [
+    {
+      "type": 0,
+      "value": "Show timestamps"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
@@ -1397,7 +1403,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+  "RHFContentSummaryGetterField.tsx_TDCCVk": [
     {
       "children": [
         {
@@ -1422,7 +1428,7 @@
           "children": [
             {
               "type": 0,
-              "value": "Record<key: string, value: string>"
+              "value": "Record<name: string, value: string | number | boolean | null>"
             }
           ],
           "type": 8,
@@ -1430,7 +1436,7 @@
         },
         {
           "type": 0,
-          "value": "—derived from its content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
+          "value": " — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
       ],
       "type": 8,
@@ -1472,27 +1478,13 @@
       "children": [
         {
           "type": 0,
-          "value": " "
+          "value": " The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Tip:"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " to enforce a specific order for the properties of the summary, you can prefix each key with "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "$position. "
+              "value": "{position:0,sortable:true,default-sort:asc} First Name"
             }
           ],
           "type": 8,
@@ -1500,13 +1492,13 @@
         },
         {
           "type": 0,
-          "value": ". (Example: "
+          "value": " makes "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "0. "
+              "value": "First Name"
             }
           ],
           "type": 8,
@@ -1514,7 +1506,7 @@
         },
         {
           "type": 0,
-          "value": ".) The prefix is stripped when displaying them. "
+          "value": " the first column, makes it sortable, and sets the column as the default sort order of the table. "
         }
       ],
       "type": 8,
