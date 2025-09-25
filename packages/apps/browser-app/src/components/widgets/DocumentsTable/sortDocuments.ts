@@ -4,15 +4,11 @@ import type { ColumnIds } from "./useColumnIds.js";
 
 export default function sortDocuments(
   documents: LiteDocument[],
-  sortDescriptor: SortDescriptor | undefined,
+  sortDescriptor: SortDescriptor,
   columnIds: ColumnIds,
 ): LiteDocument[] {
-  const direction =
-    !sortDescriptor || sortDescriptor.direction === "ascending" ? 1 : -1;
+  const direction = sortDescriptor.direction === "ascending" ? 1 : -1;
   return documents.toSorted((a, b) => {
-    if (!sortDescriptor) {
-      return a.id >= b.id ? direction : -direction;
-    }
     const aValue = getSortableProperty(a, sortDescriptor, columnIds);
     const bValue = getSortableProperty(b, sortDescriptor, columnIds);
     if (bValue === null || bValue === undefined) {
