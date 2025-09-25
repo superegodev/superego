@@ -11,8 +11,10 @@ export default {
     const firstContentSummaryProperty = head(
       ContentSummaryUtils.getSortedProperties([contentSummary]),
     );
-    return firstContentSummaryProperty
-      ? contentSummary.data[firstContentSummaryProperty.name]!
-      : document.id;
+    if (!firstContentSummaryProperty) {
+      return document.id;
+    }
+    const value = contentSummary.data[firstContentSummaryProperty.name];
+    return value !== undefined && value !== null ? String(value) : document.id;
   },
 };

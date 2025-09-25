@@ -1,9 +1,5 @@
+import { utils } from "@superego/schema";
 import { FormattedDate, FormattedNumber, FormattedTime } from "react-intl";
-import {
-  isValidInstant,
-  isValidPlainDate,
-  isValidPlainTime,
-} from "../../../../../../core/schema/src/utils/dateTimeValidators.js";
 
 interface Props {
   value: string | number | boolean | null | undefined;
@@ -11,11 +7,11 @@ interface Props {
 export default function ContentSummaryPropertyValue({ value }: Props) {
   switch (typeof value) {
     case "string": {
-      return isValidInstant(value) ? (
+      return utils.isValidInstant(value) ? (
         <FormattedDate value={value} dateStyle="medium" timeStyle="medium" />
-      ) : isValidPlainDate(value) ? (
+      ) : utils.isValidPlainDate(value) ? (
         <FormattedDate value={value} dateStyle="medium" />
-      ) : isValidPlainTime(value) ? (
+      ) : utils.isValidPlainTime(value) ? (
         <FormattedTime value={`1970-01-01${value}`} timeStyle="medium" />
       ) : (
         value
