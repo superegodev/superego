@@ -2,7 +2,7 @@ import { createTheme } from "@vanilla-extract/css";
 
 export const breakpoints = {
   small: "45rem",
-  medium: "67.5rem",
+  medium: "65rem",
 };
 
 const commonVars = {

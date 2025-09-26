@@ -18,7 +18,7 @@ type Action = {
 
 interface Props {
   title?: ReactNode | undefined;
-  actions?: Action[] | undefined;
+  actions?: (Action | null)[] | undefined;
   actionsAriaLabel?: string | undefined;
   withPrimarySidebarToggleButton?: boolean | undefined;
   className?: string | undefined;
@@ -56,33 +56,41 @@ export default function PanelHeader({
           aria-label={actionsAriaLabel}
           className={cs.PanelHeader.actionsToolbar}
         >
-          {actions.map((action) =>
-            "to" in action ? (
-              <IconLink
-                key={action.label}
-                label={action.label}
-                isDisabled={action.isDisabled}
-                to={action.to}
-                variant="invisible"
-                className={classnames(cs.PanelHeader.action, action.className)}
-              >
-                {action.icon}
-              </IconLink>
-            ) : (
-              <IconButton
-                key={action.label}
-                label={action.label}
-                isDisabled={action.isDisabled}
-                type={"submit" in action ? "submit" : "button"}
-                form={"submit" in action ? action.submit : undefined}
-                onPress={"onPress" in action ? action.onPress : undefined}
-                variant="invisible"
-                className={classnames(cs.PanelHeader.action, action.className)}
-              >
-                {action.icon}
-              </IconButton>
-            ),
-          )}
+          {actions
+            .filter((action) => action !== null)
+            .map((action) =>
+              "to" in action ? (
+                <IconLink
+                  key={action.label}
+                  label={action.label}
+                  isDisabled={action.isDisabled}
+                  to={action.to}
+                  variant="invisible"
+                  className={classnames(
+                    cs.PanelHeader.action,
+                    action.className,
+                  )}
+                >
+                  {action.icon}
+                </IconLink>
+              ) : (
+                <IconButton
+                  key={action.label}
+                  label={action.label}
+                  isDisabled={action.isDisabled}
+                  type={"submit" in action ? "submit" : "button"}
+                  form={"submit" in action ? action.submit : undefined}
+                  onPress={"onPress" in action ? action.onPress : undefined}
+                  variant="invisible"
+                  className={classnames(
+                    cs.PanelHeader.action,
+                    action.className,
+                  )}
+                >
+                  {action.icon}
+                </IconButton>
+              ),
+            )}
         </Toolbar>
       ) : null}
     </header>
