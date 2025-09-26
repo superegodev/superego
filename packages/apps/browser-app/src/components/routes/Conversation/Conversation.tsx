@@ -1,9 +1,10 @@
 import {
   AssistantName,
+  type Conversation as ConversationB,
   type ConversationId,
   ConversationStatus,
 } from "@superego/backend";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { PiLightning, PiLightningSlash, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
@@ -25,11 +26,6 @@ interface Props {
 export default function Conversation({ conversationId }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [showToolCalls, setShowToolCalls] = useLocalStorageItem(
-    WellKnownKey.ShowToolCalls,
-    false,
-  );
   return (
     <DataLoader
       queries={[
@@ -65,69 +61,102 @@ export default function Conversation({ conversationId }: Props) {
       )}
     >
       {(conversation) => (
-        <Shell.Panel slot="Main">
-          <Shell.Panel.Header
-            title={
-              screenSize > ScreenSize.Small
-                ? intl.formatMessage(
-                    {
-                      defaultMessage: "🤖\u2002Conversations » {conversation}",
-                    },
-                    {
-                      conversation: ConversationUtils.getDisplayTitle(
-                        conversation,
-                        intl,
-                      ),
-                    },
-                  )
-                : `🤖\u2002 ${ConversationUtils.getDisplayTitle(
-                    conversation,
-                    intl,
-                  )}`
-            }
-            actionsAriaLabel={intl.formatMessage({
-              defaultMessage: "Conversation actions",
-            })}
-            actions={[
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Toggle tool calls",
-                }),
-                icon: showToolCalls ? <PiLightningSlash /> : <PiLightning />,
-                onPress: () => setShowToolCalls(!showToolCalls),
-              },
-              {
-                label: intl.formatMessage({
-                  defaultMessage: "Delete conversation",
-                }),
-                icon: <PiTrash />,
-                onPress: () => setIsDeleteModalOpen(true),
-              },
-            ]}
-          />
-          <Shell.Panel.Content className={cs.Conversation.panelContent}>
-            <Chat
-              conversation={conversation}
-              showToolsCalls={showToolCalls}
-              userMessageContentInputPlaceholder={
-                conversation.assistant === AssistantName.CollectionCreator
-                  ? intl.formatMessage({
-                      defaultMessage: "What kind of data do you want to store?",
-                    })
-                  : intl.formatMessage({
-                      defaultMessage: "How can I help you?",
-                    })
-              }
-            />
-            <DeleteConversationModalForm
-              key={`DeleteConversationModalForm_${conversationId}`}
-              conversation={conversation}
-              isOpen={isDeleteModalOpen}
-              onClose={() => setIsDeleteModalOpen(false)}
-            />
-          </Shell.Panel.Content>
-        </Shell.Panel>
+        <MemoizedConversation
+          conversation={conversation}
+          screenSize={screenSize}
+        />
       )}
     </DataLoader>
   );
 }
+
+interface MemoizedConversationProps {
+  conversation: ConversationB;
+  screenSize: ScreenSize;
+}
+// We want to memoize the conversation in order to avoid everything re-rendering
+// continuously when DataLoader is polling for an update. Currently if the
+// conversation has the same status and the same number of messages, it's
+// guaranteed to be the same, so we can use those two properties as memoization
+// key.
+const MemoizedConversation = memo(
+  function MemoizedConversation({
+    conversation,
+    screenSize,
+  }: MemoizedConversationProps) {
+    const intl = useIntl();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [showToolCalls, setShowToolCalls] = useLocalStorageItem(
+      WellKnownKey.ShowToolCalls,
+      false,
+    );
+    return (
+      <Shell.Panel slot="Main">
+        <Shell.Panel.Header
+          title={
+            screenSize > ScreenSize.Small
+              ? intl.formatMessage(
+                  {
+                    defaultMessage: "🤖\u2002Conversations » {conversation}",
+                  },
+                  {
+                    conversation: ConversationUtils.getDisplayTitle(
+                      conversation,
+                      intl,
+                    ),
+                  },
+                )
+              : `🤖\u2002 ${ConversationUtils.getDisplayTitle(
+                  conversation,
+                  intl,
+                )}`
+          }
+          actionsAriaLabel={intl.formatMessage({
+            defaultMessage: "Conversation actions",
+          })}
+          actions={[
+            {
+              label: intl.formatMessage({
+                defaultMessage: "Toggle tool calls",
+              }),
+              icon: showToolCalls ? <PiLightningSlash /> : <PiLightning />,
+              onPress: () => setShowToolCalls(!showToolCalls),
+            },
+            {
+              label: intl.formatMessage({
+                defaultMessage: "Delete conversation",
+              }),
+              icon: <PiTrash />,
+              onPress: () => setIsDeleteModalOpen(true),
+            },
+          ]}
+        />
+        <Shell.Panel.Content className={cs.Conversation.panelContent}>
+          <Chat
+            conversation={conversation}
+            showToolsCalls={showToolCalls}
+            userMessageContentInputPlaceholder={
+              conversation.assistant === AssistantName.CollectionCreator
+                ? intl.formatMessage({
+                    defaultMessage: "What kind of data do you want to store?",
+                  })
+                : intl.formatMessage({
+                    defaultMessage: "How can I help you?",
+                  })
+            }
+          />
+          <DeleteConversationModalForm
+            key={`DeleteConversationModalForm_${conversation.id}`}
+            conversation={conversation}
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+          />
+        </Shell.Panel.Content>
+      </Shell.Panel>
+    );
+  },
+  (prev, next) =>
+    prev.screenSize === next.screenSize &&
+    prev.conversation.status === next.conversation.status &&
+    prev.conversation.messages.length === next.conversation.messages.length,
+);
