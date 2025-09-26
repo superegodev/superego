@@ -23,12 +23,7 @@ export default function Title({ toolCall, toolResult }: Props) {
     />
   );
   if (ConversationUtils.isCreateDocumentsToolCall(toolCall)) {
-    title = (
-      <FormattedMessage
-        defaultMessage="Create document in {collection}"
-        values={{ collection: getCollection(collections, toolCall) }}
-      />
-    );
+    title = <FormattedMessage defaultMessage="Create documents" />;
   }
   if (ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall)) {
     title = (
