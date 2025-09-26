@@ -1,32 +1,25 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Dialog, DialogTrigger, Heading } from "react-aria-components";
-import { PiPresentationChart } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import useLoadDemoData from "../../../business-logic/load-demo-data/useLoadDemoData.js";
 import useLocalStorageItem from "../../../business-logic/local-storage/useLocalStorageItem.js";
 import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
-import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import Button from "../../design-system/Button/Button.js";
-import IconButton from "../../design-system/IconButton/IconButton.js";
-import Popover from "../../design-system/Popover/Popover.js";
+import ModalDialog from "../../design-system/ModalDialog/ModalDialog.jsx";
 import * as cs from "./LoadDemoDataButton.css.js";
 
-interface Props {
-  loadDemoData: () => Promise<void>;
-}
-export default function LoadDemoDataButton({ loadDemoData }: Props) {
+export default function LoadDemoDataButton() {
   const intl = useIntl();
-  const screenSize = useScreenSize();
   const { navigateTo } = useNavigationState();
+  const loadDemoData = useLoadDemoData();
 
   const [hasDemoDataLoaded, setHasLoadedDemoData] = useLocalStorageItem(
     WellKnownKey.HasLoadedDemoData,
     false,
   );
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isModalOpen, setIsModal] = useState(false);
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation({
@@ -37,71 +30,63 @@ export default function LoadDemoDataButton({ loadDemoData }: Props) {
     },
   });
 
-  return screenSize > ScreenSize.Small || !hasDemoDataLoaded ? (
-    <DialogTrigger>
-      <div className={cs.LoadDemoDataButton.root}>
-        <IconButton
-          variant="primary"
-          label={
-            !hasDemoDataLoaded
-              ? intl.formatMessage({ defaultMessage: "Load demo data" })
-              : intl.formatMessage({ defaultMessage: "Reset demo data" })
-          }
-          tooltipDelay={0}
-          className={
-            cs.LoadDemoDataButton.button[
-              hasDemoDataLoaded && !isPopoverOpen ? "small" : "big"
-            ]
-          }
-          onPress={() => setIsPopoverOpen(true)}
-        >
-          <PiPresentationChart />
-        </IconButton>
-      </div>
-      <Popover
-        isOpen={isPopoverOpen}
-        onOpenChange={setIsPopoverOpen}
-        className={cs.LoadDemoDataButton.popover}
+  return (
+    <>
+      <Button
+        variant="primary"
+        className={cs.LoadDemoDataButton.button}
+        onPress={() => setIsModal(true)}
       >
-        <Dialog>
-          <Heading className={cs.LoadDemoDataButton.heading}>
-            {!hasDemoDataLoaded ? (
-              <FormattedMessage defaultMessage="Load demo data" />
-            ) : (
-              <FormattedMessage defaultMessage="Reset demo data" />
-            )}
-          </Heading>
+        {!hasDemoDataLoaded
+          ? intl.formatMessage({ defaultMessage: "Load demo data" })
+          : intl.formatMessage({ defaultMessage: "Reset demo data" })}
+      </Button>
+
+      <ModalDialog
+        isDismissable={true}
+        isOpen={isModalOpen}
+        onOpenChange={setIsModal}
+      >
+        <ModalDialog.Heading>
           {!hasDemoDataLoaded ? (
-            <p>
-              <FormattedMessage defaultMessage="Loads some demo collections and documents for you to play around with." />
-            </p>
-          ) : null}
+            <FormattedMessage defaultMessage="Load demo data" />
+          ) : (
+            <FormattedMessage defaultMessage="Reset demo data" />
+          )}
+        </ModalDialog.Heading>
+        {!hasDemoDataLoaded ? (
           <p>
-            {!hasDemoDataLoaded ? (
-              <FormattedMessage defaultMessage="Attention: loading demo data erases all the data you've saved so far. Continue?" />
-            ) : (
-              <FormattedMessage defaultMessage="Attention: resetting demo data erases all the data you've saved so far. Continue?" />
-            )}
+            <FormattedMessage defaultMessage="Loads some demo collections and documents for you to play around with." />
           </p>
-          <Button
-            variant="primary"
-            onPress={() => {
-              setIsPopoverOpen(false);
+        ) : null}
+        <p>
+          {!hasDemoDataLoaded ? (
+            <FormattedMessage defaultMessage="Attention: loading demo data erases all the data you've saved so far. Continue?" />
+          ) : (
+            <FormattedMessage defaultMessage="Attention: resetting demo data erases all the data you've saved so far. Continue?" />
+          )}
+        </p>
+        <Button
+          variant="primary"
+          onPress={() => {
+            setIsModal(false);
+            navigateTo({ name: RouteName.Ask });
+            // Hack: to avoid texts changing from "load" to "reset" while the
+            // modal is closing, we first close the modal, wait a bit, then
+            // actually trigger the mutation.
+            setTimeout(async () => {
+              await mutateAsync();
               setHasLoadedDemoData(true);
-              navigateTo({ name: RouteName.Ask });
-              // Since the mutation is CPU intensive and makes the CSS
-              // transition stutter, we delay its execution.
-              setTimeout(mutateAsync, 300);
-            }}
-          >
-            {!hasDemoDataLoaded ? (
-              <FormattedMessage defaultMessage="Yes, load" />
-            ) : (
-              <FormattedMessage defaultMessage="Yes, reset" />
-            )}
-          </Button>
-        </Dialog>
-      </Popover>
-    </DialogTrigger>
-  ) : null;
+            }, 150);
+          }}
+        >
+          {!hasDemoDataLoaded ? (
+            <FormattedMessage defaultMessage="Yes, load" />
+          ) : (
+            <FormattedMessage defaultMessage="Yes, reset" />
+          )}
+        </Button>
+      </ModalDialog>
+    </>
+  );
 }

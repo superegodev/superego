@@ -18,6 +18,7 @@ import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.j
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 import "./BrowserApp.css.js";
+import LoadDemoDataProvider from "./business-logic/load-demo-data/LoadDemoDataProvider.js";
 
 interface Props {
   backend: Backend;
@@ -67,7 +68,13 @@ export default function BrowserApp({
                       developerPrompts,
                     }}
                   >
-                    <Root loadDemoData={loadDemoData} />
+                    {import.meta.env["VITE_IS_DEMO"] === "true" ? (
+                      <LoadDemoDataProvider value={loadDemoData}>
+                        <Root />
+                      </LoadDemoDataProvider>
+                    ) : (
+                      <Root />
+                    )}
                   </GlobalDataProvider>
                 )}
               </DataLoader>
