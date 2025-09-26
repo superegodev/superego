@@ -14,7 +14,7 @@ import type DocumentsList from "../../usecases/documents/List.js";
 import Assistant from "../Assistant.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateChart from "./tools/CreateChart.js";
-import CreateDocument from "./tools/CreateDocument.js";
+import CreateDocuments from "./tools/CreateDocuments.js";
 import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
@@ -45,7 +45,7 @@ export default class FactotumAssistant extends Assistant {
   protected getDeveloperPrompt(): string {
     return (this.developerPrompt ?? defaultDeveloperPrompt)
       .replaceAll("$USER_NAME", this.userName ?? "Alex")
-      .replaceAll("$TOOL_NAME_CREATE_DOCUMENT", ToolName.CreateDocument)
+      .replaceAll("$TOOL_NAME_CREATE_DOCUMENTS", ToolName.CreateDocuments)
       .replaceAll(
         "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",
         ToolName.CreateNewDocumentVersion,
@@ -95,7 +95,7 @@ export default class FactotumAssistant extends Assistant {
     return [
       GetCollectionTypescriptSchema.get(),
       ExecuteJavascriptFunction.get(),
-      CreateDocument.get(),
+      CreateDocuments.get(),
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
       CreateDocumentsTable.get(),
@@ -114,8 +114,8 @@ export default class FactotumAssistant extends Assistant {
         this.javascriptSandbox,
       );
     }
-    if (CreateDocument.is(toolCall)) {
-      return CreateDocument.exec(
+    if (CreateDocuments.is(toolCall)) {
+      return CreateDocuments.exec(
         toolCall,
         this.conversationId,
         this.collections,

@@ -393,24 +393,45 @@
       "value": "Create"
     }
   ],
-  "CreateDocumentOrVersion.tsx_+z+eOw": [
+  "CreateDocuments.tsx_98xj7V": [
     {
       "type": 1,
       "value": "collection"
     },
     {
       "type": 0,
-      "value": " » New document version created"
-    }
-  ],
-  "CreateDocumentOrVersion.tsx_hmMMs+": [
+      "value": " » "
+    },
     {
-      "type": 1,
-      "value": "collection"
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Document"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documents"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "documentsCount"
     },
     {
       "type": 0,
-      "value": " » Document created"
+      "value": " created"
     }
   ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
@@ -439,6 +460,16 @@
     {
       "type": 0,
       "value": "3. Migration"
+    }
+  ],
+  "CreateNewDocumentVersion.tsx_p5+z7U": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Created new document version"
     }
   ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [

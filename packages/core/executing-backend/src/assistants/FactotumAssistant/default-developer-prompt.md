@@ -59,7 +59,7 @@ asked for details.
    4. Else, ask the user for the value (one question at a time).
 
 5. For each document to create:
-   1. Call $TOOL_NAME_CREATE_DOCUMENT.
+   1. Call $TOOL_NAME_CREATE_DOCUMENTS.
    2. If the call succeeds, proceed. If it fails, correct the issue and retry
       (max 2 attempts). If still failing, report the error and ask for guidance.
    3. Repeat until all documents are created.

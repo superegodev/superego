@@ -56,17 +56,19 @@ namespace ToolResult {
       CollectionNotFound
     >
   >;
-  export type CreateDocument = BaseToolResult<
-    ToolName.CreateDocument,
+  export type CreateDocuments = BaseToolResult<
+    ToolName.CreateDocuments,
     Result<
       {
-        collectionId: CollectionId;
-        documentId: DocumentId;
-        documentVersionId: DocumentVersionId;
+        documents: {
+          collectionId: CollectionId;
+          documentId: DocumentId;
+          documentVersionId: DocumentVersionId;
+        }[];
       },
       CollectionNotFound | DocumentContentNotValid | FilesNotFound
     >,
-    { document: LiteDocument }
+    { documents: LiteDocument[] }
   >;
   export type CreateNewDocumentVersion = BaseToolResult<
     ToolName.CreateNewDocumentVersion,
@@ -150,7 +152,7 @@ namespace ToolResult {
 }
 
 type ToolResult =
-  | ToolResult.CreateDocument
+  | ToolResult.CreateDocuments
   | ToolResult.CreateNewDocumentVersion
   | ToolResult.ExecuteJavascriptFunction
   | ToolResult.GetCollectionTypescriptSchema

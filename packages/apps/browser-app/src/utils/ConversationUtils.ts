@@ -56,13 +56,13 @@ export default {
     return toolCall;
   },
 
-  isSuccessfulCreateDocumentToolResult(
+  isSuccessfulCreateDocumentsToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.CreateDocument & {
+  ): toolResult is ToolResult.CreateDocuments & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.CreateDocument && toolResult.output.success
+      toolResult.tool === ToolName.CreateDocuments && toolResult.output.success
     );
   },
 
@@ -120,10 +120,10 @@ export default {
     );
   },
 
-  isCreateDocumentToolCall(
+  isCreateDocumentsToolCall(
     toolCall: ToolCall,
-  ): toolCall is ToolCall.CreateDocument {
-    return toolCall.tool === ToolName.CreateDocument;
+  ): toolCall is ToolCall.CreateDocuments {
+    return toolCall.tool === ToolName.CreateDocuments;
   },
 
   isCreateNewDocumentVersionToolCall(

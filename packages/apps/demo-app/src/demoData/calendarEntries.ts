@@ -88,7 +88,7 @@ export default function getContentSummary(
 ): Record<string, string | number | boolean | null> {
   return {
     "{position:0,sortable:true} Title": calendarEntry.title,
-    "{position:1,sortable:true,default-sort:desc} Start": calendarEntry.startTime,
+    "{position:1,sortable:true,default-sort:asc} Start": calendarEntry.startTime,
     "{position:2,sortable:true} End": calendarEntry.endTime,
     "{position:3,sortable:true} Type": calendarEntry.type,
   };
@@ -98,7 +98,7 @@ export default function getContentSummary(
 export default function getContentSummary(calendarEntry) {
   return {
     "{position:0,sortable:true} Title": calendarEntry.title,
-    "{position:1,sortable:true,default-sort:desc} Start": calendarEntry.startTime,
+    "{position:1,sortable:true,default-sort:asc} Start": calendarEntry.startTime,
     "{position:2,sortable:true} End": calendarEntry.endTime,
     "{position:3,sortable:true} Type": calendarEntry.type,
   };

@@ -18,7 +18,7 @@ import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
 import "./BrowserApp.css.js";
 import LoadDemoDataProvider from "./business-logic/load-demo-data/LoadDemoDataProvider.js";
-import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.jsx";
+import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.js";
 
 interface Props {
   backend: Backend;

@@ -7,7 +7,7 @@ import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js"
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Button from "../../design-system/Button/Button.js";
-import ModalDialog from "../../design-system/ModalDialog/ModalDialog.jsx";
+import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import * as cs from "./LoadDemoDataButton.css.js";
 
 export default function LoadDemoDataButton() {

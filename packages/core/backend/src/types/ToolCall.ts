@@ -19,11 +19,13 @@ namespace ToolCall {
       collectionId: CollectionId;
     }
   >;
-  export type CreateDocument = ToolCall<
-    ToolName.CreateDocument,
+  export type CreateDocuments = ToolCall<
+    ToolName.CreateDocuments,
     {
-      collectionId: CollectionId;
-      content: any;
+      documents: {
+        collectionId: CollectionId;
+        content: any;
+      }[];
     }
   >;
   export type CreateNewDocumentVersion = ToolCall<

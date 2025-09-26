@@ -182,11 +182,8 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "CreateDocumentOrVersion.tsx_+z+eOw": {
-    "defaultMessage": "{collection} » New document version created"
-  },
-  "CreateDocumentOrVersion.tsx_hmMMs+": {
-    "defaultMessage": "{collection} » Document created"
+  "CreateDocuments.tsx_98xj7V": {
+    "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
   },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
@@ -199,6 +196,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migration"
+  },
+  "CreateNewDocumentVersion.tsx_p5+z7U": {
+    "defaultMessage": "{collection} » Created new document version"
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"

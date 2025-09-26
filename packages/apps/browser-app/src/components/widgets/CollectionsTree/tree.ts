@@ -4,7 +4,7 @@ import type {
   CollectionCategoryId,
   CollectionId,
 } from "@superego/backend";
-import groupBy from "../../../utils/groupBy.js";
+import { groupBy } from "es-toolkit";
 
 export enum TreeItemType {
   CollectionCategory = "CollectionCategory",

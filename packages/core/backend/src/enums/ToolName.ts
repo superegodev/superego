@@ -1,6 +1,6 @@
 enum ToolName {
   // Factotum
-  CreateDocument = "createDocument",
+  CreateDocuments = "createDocuments",
   CreateNewDocumentVersion = "createNewDocumentVersion",
   ExecuteJavascriptFunction = "executeJavascriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",

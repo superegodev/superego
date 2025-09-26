@@ -22,7 +22,7 @@ export default function Title({ toolCall, toolResult }: Props) {
       values={{ tool: toolCall.tool }}
     />
   );
-  if (ConversationUtils.isCreateDocumentToolCall(toolCall)) {
+  if (ConversationUtils.isCreateDocumentsToolCall(toolCall)) {
     title = (
       <FormattedMessage
         defaultMessage="Create document in {collection}"
