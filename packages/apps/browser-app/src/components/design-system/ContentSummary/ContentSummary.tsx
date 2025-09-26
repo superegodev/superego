@@ -1,7 +1,7 @@
 import type { DocumentVersion } from "@superego/backend";
 import { ContentSummaryUtils } from "@superego/shared-utils";
 import { FormattedMessage } from "react-intl";
-import ContentSummaryPropertyValue from "../ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
+import ContentSummaryPropertyValue from "../ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import * as cs from "./ContentSummary.css.js";
 
 interface Props {

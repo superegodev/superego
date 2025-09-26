@@ -3,11 +3,11 @@ import type { EChartsOption } from "echarts";
 import { omit } from "es-toolkit";
 import { lazy, Suspense, useMemo } from "react";
 import { vars } from "../../../../themes.css.js";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.jsx";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
 import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
 
-const Echart = lazy(() => import("../../../design-system/Echart/Echart.jsx"));
+const Echart = lazy(() => import("../../../design-system/Echart/Echart.js"));
 
 interface Props {
   toolResult: ToolResult.CreateChart & {

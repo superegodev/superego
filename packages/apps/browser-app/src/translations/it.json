@@ -26,6 +26,9 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Errore durante il caricamento dell'app"
   },
+  "Chat.tsx_zhku3H": {
+    "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
   },
@@ -196,6 +199,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migrazione"
+  },
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": {
+    "defaultMessage": "Errore durante il salvataggio del documento"
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
@@ -650,6 +656,9 @@
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Crea una nuova versione del documento in {collection}"
   },
+  "Toast.tsx_rbrahO": {
+    "defaultMessage": "Chiudi"
+  },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
   },
@@ -682,6 +691,9 @@
   },
   "UpdateGlobalSettingsForm.tsx_n0wQL1": {
     "defaultMessage": "Inferenza"
+  },
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": {
+    "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Riproduci"

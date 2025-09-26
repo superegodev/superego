@@ -53,6 +53,12 @@
       "value": "Errore durante il caricamento dell'app"
     }
   ],
+  "Chat.tsx_zhku3H": [
+    {
+      "type": 0,
+      "value": "Errore durante l'invio del messaggio all'assistente"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -429,6 +435,12 @@
     {
       "type": 0,
       "value": "3. Migrazione"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": [
+    {
+      "type": 0,
+      "value": "Errore durante il salvataggio del documento"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1739,6 +1751,12 @@
       "value": "collection"
     }
   ],
+  "Toast.tsx_rbrahO": [
+    {
+      "type": 0,
+      "value": "Chiudi"
+    }
+  ],
   "ToolCallResult.tsx_yq9SNC": [
     {
       "type": 0,
@@ -1803,6 +1821,12 @@
     {
       "type": 0,
       "value": "Inferenza"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": [
+    {
+      "type": 0,
+      "value": "Errore durante il salvataggio delle impostazioni globali"
     }
   ],
   "UserMessage.tsx_J3ca41": [

@@ -3,10 +3,12 @@ import type { GlobalSettings, Theme } from "@superego/backend";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
@@ -22,6 +24,7 @@ export default function UpdateGlobalSettingsForm({
   formId,
   setSubmitDisabled,
 }: Props) {
+  const intl = useIntl();
   const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 
@@ -33,11 +36,21 @@ export default function UpdateGlobalSettingsForm({
     });
 
   const onSubmit = async (values: GlobalSettings) => {
-    const { success, data } = await mutate(values);
+    const { success, data, error } = await mutate(values);
     if (success) {
       reset(data, { keepValues: true });
     } else {
-      // TODO: display error in Toast.
+      console.error(error);
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error saving global settings",
+          }),
+          description: error.name,
+        },
+        { timeout: 5_000 },
+      );
     }
   };
 

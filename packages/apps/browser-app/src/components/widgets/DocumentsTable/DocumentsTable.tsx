@@ -7,7 +7,7 @@ import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import isEmpty from "../../../utils/isEmpty.js";
-import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import Table from "../../design-system/Table/Table.js";
 import getSortDescriptor from "./getSortDescriptor.js";
 import sortDocuments from "./sortDocuments.js";

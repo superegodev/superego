@@ -53,6 +53,12 @@
       "value": "Error loading app"
     }
   ],
+  "Chat.tsx_zhku3H": [
+    {
+      "type": 0,
+      "value": "Error sending message to assistant"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -433,6 +439,12 @@
     {
       "type": 0,
       "value": "3. Migration"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": [
+    {
+      "type": 0,
+      "value": "Error saving document"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1743,6 +1755,12 @@
       "value": "collection"
     }
   ],
+  "Toast.tsx_rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
   "ToolCallResult.tsx_yq9SNC": [
     {
       "type": 0,
@@ -1807,6 +1825,12 @@
     {
       "type": 0,
       "value": "Inference"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": [
+    {
+      "type": 0,
+      "value": "Error saving global settings"
     }
   ],
   "UserMessage.tsx_J3ca41": [

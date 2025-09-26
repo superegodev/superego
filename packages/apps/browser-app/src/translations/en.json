@@ -26,6 +26,9 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
+  "Chat.tsx_zhku3H": {
+    "defaultMessage": "Error sending message to assistant"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
@@ -196,6 +199,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migration"
+  },
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": {
+    "defaultMessage": "Error saving document"
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
@@ -689,6 +695,9 @@
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Create new document version in {collection}"
   },
+  "Toast.tsx_rbrahO": {
+    "defaultMessage": "Close"
+  },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
   },
@@ -721,6 +730,9 @@
   },
   "UpdateGlobalSettingsForm.tsx_n0wQL1": {
     "defaultMessage": "Inference"
+  },
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": {
+    "defaultMessage": "Error saving global settings"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"

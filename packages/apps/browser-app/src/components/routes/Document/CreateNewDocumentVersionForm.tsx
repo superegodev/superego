@@ -4,10 +4,12 @@ import { valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import RhfContent from "../../../utils/RhfContent.js";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 
 interface Props {
@@ -22,9 +24,10 @@ export default function CreateNewDocumentVersionForm({
   formId,
   setSubmitDisabled,
 }: Props) {
+  const intl = useIntl();
   const { schema } = collection.latestVersion;
 
-  const { result, mutate } = useCreateNewDocumentVersion();
+  const { mutate } = useCreateNewDocumentVersion();
 
   const { control, handleSubmit, reset, formState } = useForm<any>({
     defaultValues: RhfContent.toRhfContent(
@@ -56,7 +59,7 @@ export default function CreateNewDocumentVersionForm({
   }, [document.latestVersion.id]);
 
   const onSubmit = async (content: any) => {
-    const { success, data } = await mutate(
+    const { success, data, error } = await mutate(
       collection.id,
       document.id,
       document.latestVersion.id,
@@ -68,7 +71,17 @@ export default function CreateNewDocumentVersionForm({
       });
       latestVersionIdRef.current = data.latestVersion.id;
     } else {
-      // TODO: display error in Toast.
+      console.error(error);
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error saving document",
+          }),
+          description: error.name,
+        },
+        { timeout: 5_000 },
+      );
     }
   };
 
@@ -91,7 +104,6 @@ export default function CreateNewDocumentVersionForm({
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
       <RHFContentField schema={schema} control={control} document={document} />
-      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
   );
 }

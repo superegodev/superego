@@ -1,7 +1,7 @@
 import type { ToolCall, ToolResult } from "@superego/backend";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import DocumentsTable from "../../DocumentsTable/DocumentsTable.jsx";
+import DocumentsTable from "../../DocumentsTable/DocumentsTable.js";
 import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
 

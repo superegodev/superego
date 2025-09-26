@@ -17,9 +17,7 @@ import useNavigationState from "./business-logic/navigation/useNavigationState.j
 import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
-
 import "./BrowserApp.css.js";
-import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.js";
 
 interface Props {
   backend: Backend;
@@ -69,11 +67,7 @@ export default function BrowserApp({
                       developerPrompts,
                     }}
                   >
-                    {import.meta.env["VITE_IS_DEMO"] === "true" &&
-                    loadDemoData ? (
-                      <LoadDemoDataButton loadDemoData={loadDemoData} />
-                    ) : null}
-                    <Root />
+                    <Root loadDemoData={loadDemoData} />
                   </GlobalDataProvider>
                 )}
               </DataLoader>
