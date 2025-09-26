@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
 import type { Backend } from "@superego/backend";
 import type { QueryClient } from "@tanstack/react-query";
-import { createElement } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import BrowserApp from "./BrowserApp.js";
+import BrowserApp from "./BrowserApp.jsx";
 
 export function renderBrowserApp(
   backend: Backend,
@@ -14,6 +14,12 @@ export function renderBrowserApp(
   root.id = "root";
   document.body.appendChild(root);
   createRoot(root).render(
-    createElement(BrowserApp, { backend, queryClient, loadDemoData }),
+    <StrictMode>
+      <BrowserApp
+        backend={backend}
+        queryClient={queryClient}
+        loadDemoData={loadDemoData}
+      />
+    </StrictMode>,
   );
 }
