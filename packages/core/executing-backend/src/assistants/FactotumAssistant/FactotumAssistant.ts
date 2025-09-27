@@ -44,7 +44,20 @@ export default class FactotumAssistant extends Assistant {
 
   protected getDeveloperPrompt(): string {
     return (this.developerPrompt ?? defaultDeveloperPrompt)
-      .replaceAll("$USER_NAME", this.userName ?? "Alex")
+      .replaceAll(
+        "$USER_IDENTITY",
+        this.userName
+          ? [
+              "User identity:",
+              `- Name: ${this.userName}.`,
+              `- Canonical reference: “the user” (${this.userName}).`,
+              "- Safety: do not infer traits from the name. Do not invent personal facts.",
+              "- Pronouns: use they/them unless provided; otherwise mirror the user's own usage.",
+              `- Coreference: “I/me/my” in user messages refers to ${this.userName};`,
+              `  “you/your” in assistant replies refers to ${this.userName}.`,
+            ].join("\n")
+          : "",
+      )
       .replaceAll("$TOOL_NAME_CREATE_DOCUMENTS", ToolName.CreateDocuments)
       .replaceAll(
         "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",

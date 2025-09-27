@@ -117,8 +117,7 @@ const collectionVersion: CollectionVersionEntity = {
           },
           currency: {
             description: "Currency code (e.g., EUR, USD).",
-            dataType: DataType.StringLiteral,
-            value: "EUR",
+            dataType: DataType.String,
           },
           category: {
             dataType: null,
