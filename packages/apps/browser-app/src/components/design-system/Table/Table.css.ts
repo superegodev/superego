@@ -67,6 +67,7 @@ export const Row = {
 };
 
 const cellRootBase = style({
+  height: "100%",
   padding: vars.spacing._2,
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   fontSize: vars.typography.fontSizes.sm,

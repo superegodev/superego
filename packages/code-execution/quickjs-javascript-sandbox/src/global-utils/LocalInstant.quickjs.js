@@ -66,6 +66,10 @@ class LocalInstant {
     return new Date(HostLocalInstant.toISO(this.iso, this.operations));
   }
 
+  toPlainDate() {
+    return HostLocalInstant.toPlainDate(this.iso, this.operations);
+  }
+
   [Symbol.toPrimitive](hint) {
     if (hint === "number") {
       return this.toJSDate().getTime();

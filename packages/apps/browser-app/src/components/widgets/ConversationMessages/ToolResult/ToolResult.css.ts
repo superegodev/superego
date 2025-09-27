@@ -6,6 +6,7 @@ export const Title = {
   root: style({
     color: vars.colors.text.primary,
     marginBlockEnd: vars.spacing._2,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };
 

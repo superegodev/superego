@@ -17,6 +17,14 @@ export default function setLocalInstant(vm: QuickJSContext, scope: Scope) {
     vm.setProp(HostLocalInstantHandle, "toISO", fnHandle),
   );
 
+  vm.newFunction("toPlainDate", (iso, operations) =>
+    vm.newString(
+      applyOperations(vm.dump(iso), vm.dump(operations)).toPlainDate(),
+    ),
+  ).consume((fnHandle) =>
+    vm.setProp(HostLocalInstantHandle, "toPlainDate", fnHandle),
+  );
+
   vm.newFunction("fromISO", (iso) =>
     vm.newString(LocalInstant.fromISO(vm.dump(iso)).toISO()),
   ).consume((fnHandle) =>

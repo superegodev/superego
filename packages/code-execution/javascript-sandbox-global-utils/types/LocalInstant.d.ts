@@ -41,6 +41,8 @@ declare class LocalInstant {
    * format.)
    */
   toISO(): string;
+  /** Returns the `dev.superego:String.PlainDate` of the instant. */
+  toPlainDate(): string;
   toJSDate(): Date;
   /**
    * Creates a LocalInstant from any valid ISO8601 string. If the string doesn't

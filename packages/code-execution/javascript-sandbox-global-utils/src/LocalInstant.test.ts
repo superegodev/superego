@@ -94,6 +94,17 @@ describe("creating LocalInstants from strings", () => {
   });
 });
 
+describe("converting LocalInstant to strings", () => {
+  it("toPlainDate returns the PlainDate of the instant", () => {
+    // Exercise
+    const plainDate = "1970-01-01";
+    const localInstant = LocalInstant.fromPlainDate(plainDate);
+
+    // Verify
+    expect(localInstant.toPlainDate()).toEqual(plainDate);
+  });
+});
+
 describe("allows to express dates in the past and in the future", () => {
   interface TestCase {
     name: string;

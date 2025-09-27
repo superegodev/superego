@@ -80,6 +80,14 @@ class LocalInstant {
     });
   }
 
+  /** Returns the `dev.superego:String.PlainDate` of the instant. */
+  toPlainDate(): string {
+    return this.dateTime.toISO({
+      includeOffset: false,
+      precision: "day",
+    });
+  }
+
   toJSDate(): Date {
     return this.dateTime.toJSDate();
   }
