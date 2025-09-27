@@ -1,14 +1,14 @@
+import { FormatId, utils } from "@superego/schema";
 import { DateTime, type WeekdayNumbers } from "luxon";
 
 /**
- * Helper for working with dates and times in the user's current timezone and
- * locale.
+ * Helper for working with dates and times in the user's timezone.
  *
  * Notes:
  * - Instances are immutable. Every method returns a new instance.
  * - Primitive coercion:
  *   - To number → milliseconds since Unix epoch (UTC).
- *   - To string → ISO 8601 string with the local timezone offset.
+ *   - To string → ISO 8601 string with the time offset of the user's timezone.
  * - You can use >, <, >=, <= to compare instances.
  *
  * This class is defined in the global scope. Don't import or require it.
@@ -52,7 +52,7 @@ class LocalInstant {
     return new LocalInstant(this.dateTime.minus(duration));
   }
 
-  /** Get a new LocalInstant with set to the specified. */
+  /** Get a new LocalInstant with set to the specified units. */
   set(dateUnits: LocalInstant.DateUnits): LocalInstant {
     return new LocalInstant(
       this.dateTime.set({
@@ -69,8 +69,9 @@ class LocalInstant {
   }
 
   /**
-   * Returns the ISO8601 representation of the instant, using the user's local
-   * time offset.
+   * Returns the ISO8601 representation of the instant, with the time offset of
+   * the user's timezone. (I.e., a string in `dev.superego:String.Instant`
+   * format.)
    */
   toISO(): string {
     return this.dateTime.toISO({
@@ -81,37 +82,6 @@ class LocalInstant {
 
   toJSDate(): Date {
     return this.dateTime.toJSDate();
-  }
-
-  /**
-   * Returns the instant formatted in a human-readable way, according to the
-   * user's locale.
-   */
-  toFormat(options: LocalInstant.FormatOptions = {}): string {
-    const intlOptions: Intl.DateTimeFormatOptions =
-      "dateStyle" in options
-        ? {
-            dateStyle: options.dateStyle,
-            timeStyle: options.timeStyle,
-          }
-        : "weekday" in options
-          ? {
-              weekday: options.weekday,
-              era: options.era,
-              year: options.year,
-              month: options.month,
-              day: options.day,
-              hour: options.hour,
-              minute: options.minute,
-              second: options.second,
-              fractionalSecondDigits: options.fractionalSecondDigits,
-              timeZoneName: options.timeZoneName,
-              dayPeriod: options.dayPeriod,
-            }
-          : {};
-    return new Intl.DateTimeFormat(undefined, intlOptions).format(
-      this.dateTime.toJSDate(),
-    );
   }
 
   /** @internal */
@@ -125,19 +95,56 @@ class LocalInstant {
     return null;
   }
 
-  /** Creates a LocalInstant from an instant ISO8601 string. */
-  static fromISO(
-    /**
-     * An ISO8601 string with millisecond precision and any valid time offset.
-     */
-    instant: string,
-  ) {
-    return new LocalInstant(LocalInstant.parse(instant));
+  /**
+   * Creates a LocalInstant from any valid ISO8601 string. If the string doesn't
+   * have a time offset, the offset of the user's timezone will be used. Throws
+   * if the string is not a valid ISO string.
+   */
+  static fromISO(iso: string) {
+    return new LocalInstant(LocalInstant.parse(iso));
   }
 
   /** Creates a LocalInstant for the current time. */
   static now() {
     return new LocalInstant(DateTime.now());
+  }
+
+  /**
+   * Creates a LocalInstant from a string with `dev.superego:String.Instant`
+   * format. Throws if the string is not a valid Instant.
+   */
+  static fromInstant(
+    /**
+     * String in `dev.superego:String.Instant` format: an exact point in time in
+     * the ISO8601 format, with mandatory millisecond precision, with a specific
+     * time offset.
+     */
+    instant: string,
+  ) {
+    if (!utils.isValidInstant(instant)) {
+      throw new Error(`"${instant}" is not a valid ${FormatId.String.Instant}`);
+    }
+    return new LocalInstant(LocalInstant.parse(instant));
+  }
+
+  /**
+   * Creates a LocalInstant from a string with `dev.superego:String.PlainDate`
+   * format. Throws if the string is not a valid PlainDate. The instant is set
+   * to the start-of-day of the supplied date in the user's timezone.
+   */
+  static fromPlainDate(
+    /**
+     * String in `dev.superego:String.PlainDate` format: a calendar date in the
+     * ISO8601 format, with no time and no time offset.
+     */
+    plainDate: string,
+  ) {
+    if (!utils.isValidPlainDate(plainDate)) {
+      throw new Error(
+        `"${plainDate}" is not a valid ${FormatId.String.PlainDate}`,
+      );
+    }
+    return new LocalInstant(LocalInstant.parse(plainDate));
   }
 
   /** @internal Only used for tests. */
@@ -148,10 +155,10 @@ class LocalInstant {
   }
 
   /** @internal */
-  private static parse(instant: string): DateTime<true> {
-    const dateTime = DateTime.fromISO(instant);
+  private static parse(iso: string): DateTime<true> {
+    const dateTime = DateTime.fromISO(iso, { zone: "local" });
     if (!dateTime.isValid) {
-      throw new Error(`Invalid instant "${instant}"`);
+      throw new Error(`"${iso}" is not a valid ISO8601 string`);
     }
     return dateTime;
   }
@@ -199,46 +206,6 @@ namespace LocalInstant {
     seconds?: number | undefined;
     milliseconds?: number | undefined;
   }
-
-  export type FormatOptions =
-    | {
-        /** Date style shortcut */
-        dateStyle?: "full" | "long" | "medium" | "short" | undefined;
-        /** Time style shortcut */
-        timeStyle?: "full" | "long" | "medium" | "short" | undefined;
-      }
-    | {
-        /** Weekday text */
-        weekday?: "long" | "short" | "narrow" | undefined;
-        /** Era text */
-        era?: "long" | "short" | "narrow" | undefined;
-        /** Year representation */
-        year?: "numeric" | "2-digit" | undefined;
-        /** Month representation */
-        month?: "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined;
-        /** Day of month */
-        day?: "numeric" | "2-digit" | undefined;
-        /** Hour/minute/second */
-        hour?: "numeric" | "2-digit" | undefined;
-        minute?: "numeric" | "2-digit" | undefined;
-        second?: "numeric" | "2-digit" | undefined;
-        /** Fractional seconds – spec allows 1–3 */
-        fractionalSecondDigits?: 1 | 2 | 3 | undefined;
-        /** Time zone name (extended set) */
-        timeZoneName?:
-          | "short"
-          | "long"
-          | "shortOffset"
-          | "longOffset"
-          | "shortGeneric"
-          | "longGeneric"
-          | undefined;
-        /**
-         * Day-period text like “in the morning”.
-         * Typically meaningful with 12-hour cycles (h11/h12).
-         */
-        dayPeriod?: "narrow" | "short" | "long" | undefined;
-      };
 }
 
 export default LocalInstant;

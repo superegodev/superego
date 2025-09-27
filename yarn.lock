@@ -5115,6 +5115,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/javascript-sandbox-global-utils@workspace:packages/code-execution/javascript-sandbox-global-utils"
   dependencies:
+    "@superego/schema": "workspace:*"
     "@types/luxon": "npm:^3.7.1"
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.2"

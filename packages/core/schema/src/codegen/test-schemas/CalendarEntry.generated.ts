@@ -33,7 +33,7 @@ export type CalendarEntry = {
    *
    * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specific time offset.
    *
    * Format examples:
    * - "2006-08-24T19:39:09.000Z"
@@ -45,7 +45,7 @@ export type CalendarEntry = {
    *
    * #### Format `dev.superego:String.Instant`
    *
-   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.
+   * An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specific time offset.
    *
    * Format examples:
    * - "2006-08-24T19:39:09.000Z"

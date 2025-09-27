@@ -54,7 +54,7 @@ export type Expense = {
    *
    * #### Format `dev.superego:String.PlainDate`
    *
-   * A calendar date in the ISO8601 format, not associated with a particular time or time zone.
+   * A calendar date in the ISO8601 format, with no time and no time offset.
    *
    * Format examples:
    * - "2006-08-24"

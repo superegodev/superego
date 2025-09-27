@@ -1,12 +1,97 @@
 import { describe, expect, it } from "vitest";
 import LocalInstant from "./LocalInstant.js";
 
-it("throws on non-valid instants", () => {
-  // Exercise
-  const troublemaker = () => LocalInstant.fromISO("not an instant");
+describe("creating LocalInstants from strings", () => {
+  describe("fromISO", () => {
+    it("throws on non-valid ISO strings", () => {
+      // Exercise
+      const troublemaker = () => LocalInstant.fromISO("not an instant");
 
-  // Verify
-  expect(troublemaker).toThrowError('Invalid instant "not an instant"');
+      // Verify
+      expect(troublemaker).toThrowError(
+        '"not an instant" is not a valid ISO8601 string',
+      );
+    });
+
+    it("correctly parses valid ISO strings", () => {
+      // Exercise
+      const nowISO = new Date().toISOString();
+      const nowLocalInstant = LocalInstant.fromISO(nowISO);
+
+      // Verify
+      expect(Date.parse(nowLocalInstant.toISO())).toEqual(Date.parse(nowISO));
+    });
+
+    it("when not specified in the input string, sets the time offset to the user's timezone", () => {
+      // Exercise
+      const isoWithoutTimeOffset = new Date().toISOString().slice(0, -1);
+      const localInstant = LocalInstant.fromISO(isoWithoutTimeOffset);
+
+      // Verify
+      expect(localInstant.toISO().startsWith(isoWithoutTimeOffset)).toEqual(
+        true,
+      );
+    });
+  });
+
+  describe("fromInstant", () => {
+    it("throws on non-valid Instant strings", () => {
+      // Exercise
+      const troublemaker = () =>
+        LocalInstant.fromInstant("1970-01-01T00:00:00.000");
+
+      // Verify
+      expect(troublemaker).toThrowError(
+        '"1970-01-01T00:00:00.000" is not a valid dev.superego:String.Instant',
+      );
+    });
+
+    describe("correctly parses valid Instants", () => {
+      it("case: Z time offset", () => {
+        // Exercise
+        const zInstant = "1970-01-01T00:00:00.000Z";
+        const localInstant = LocalInstant.fromInstant(zInstant);
+
+        // Verify
+        expect(Date.parse(localInstant.toISO())).toEqual(Date.parse(zInstant));
+      });
+
+      it("case: user's time offset", () => {
+        // Exercise
+        const nonZInstant = "1970-01-01T00:00:00.000+02:00";
+        const localInstant = LocalInstant.fromInstant(nonZInstant);
+
+        // Verify
+        expect(Date.parse(localInstant.toISO())).toEqual(
+          Date.parse(nonZInstant),
+        );
+      });
+    });
+  });
+
+  describe("fromPlainDate", () => {
+    it("throws on non-valid PlainDate strings", () => {
+      // Exercise
+      const troublemaker = () =>
+        LocalInstant.fromPlainDate("1970-01-01T00:00:00.000Z");
+
+      // Verify
+      expect(troublemaker).toThrowError(
+        '"1970-01-01T00:00:00.000Z" is not a valid dev.superego:String.PlainDate',
+      );
+    });
+
+    it("correctly parses valid PlainDates", () => {
+      // Exercise
+      const plainDate = "1970-01-01";
+      const localInstant = LocalInstant.fromPlainDate(plainDate);
+
+      // Verify
+      expect(
+        localInstant.toISO().startsWith("1970-01-01T00:00:00.000"),
+      ).toEqual(true);
+    });
+  });
 });
 
 describe("allows to express dates in the past and in the future", () => {
