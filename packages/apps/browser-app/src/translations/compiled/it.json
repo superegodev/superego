@@ -53,10 +53,22 @@
       "value": "Errore durante il caricamento dell'app"
     }
   ],
+  "Chat.tsx_zhku3H": [
+    {
+      "type": 0,
+      "value": "Errore durante l'invio del messaggio all'assistente"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
       "value": "Impostazioni"
+    }
+  ],
+  "Collection.tsx_K+mLdW": [
+    {
+      "type": 0,
+      "value": "Mostra timestamp"
     }
   ],
   "Collection.tsx_r0FgVC": [
@@ -377,24 +389,41 @@
       "value": "Crea"
     }
   ],
-  "CreateDocumentOrVersion.tsx_+z+eOw": [
+  "CreateDocuments.tsx_98xj7V": [
     {
       "type": 1,
       "value": "collection"
     },
     {
       "type": 0,
-      "value": " » Nuova versione del documento creata"
-    }
-  ],
-  "CreateDocumentOrVersion.tsx_hmMMs+": [
-    {
-      "type": 1,
-      "value": "collection"
+      "value": " » "
     },
     {
-      "type": 0,
-      "value": " » Documento creato"
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Documento creato"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documenti creati"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "documentsCount"
     }
   ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
@@ -423,6 +452,22 @@
     {
       "type": 0,
       "value": "3. Migrazione"
+    }
+  ],
+  "CreateNewDocumentVersion.tsx_p5+z7U": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Nuova versione del documento creata"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": [
+    {
+      "type": 0,
+      "value": "Errore durante il salvataggio del documento"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1393,7 +1438,7 @@
       "value": "Funzione di estrazione del sommario dei contenuti"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+  "RHFContentSummaryGetterField.tsx_TDCCVk": [
     {
       "children": [
         {
@@ -1418,7 +1463,7 @@
           "children": [
             {
               "type": 0,
-              "value": "Record<key: string, value: string>"
+              "value": "Record<name: string, value: string | number | boolean | null>"
             }
           ],
           "type": 8,
@@ -1426,7 +1471,7 @@
         },
         {
           "type": 0,
-          "value": " — derivato dal suo contenuto — che contiene le sue informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
+          "value": " — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
         }
       ],
       "type": 8,
@@ -1468,27 +1513,13 @@
       "children": [
         {
           "type": 0,
-          "value": " "
+          "value": " I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Suggerimento:"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " per imporre un ordine specifico alle proprietà del sommario, puoi anteporre a ciascuna chiave "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "$position. "
+              "value": "{position:0,sortable:true,default-sort:asc} Nome"
             }
           ],
           "type": 8,
@@ -1496,13 +1527,13 @@
         },
         {
           "type": 0,
-          "value": ". (Esempio: "
+          "value": " rende "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "0. "
+              "value": "Nome"
             }
           ],
           "type": 8,
@@ -1510,7 +1541,7 @@
         },
         {
           "type": 0,
-          "value": ".) Il prefisso viene rimosso durante la visualizzazione. "
+          "value": " la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. "
         }
       ],
       "type": 8,
@@ -1689,14 +1720,10 @@
       "value": "collection"
     }
   ],
-  "Title.tsx_2eWlOa": [
+  "Title.tsx_8yzKPa": [
     {
       "type": 0,
-      "value": "Crea documento in "
-    },
-    {
-      "type": 1,
-      "value": "collection"
+      "value": "Crea documenti"
     }
   ],
   "Title.tsx_LOghU6": [
@@ -1745,6 +1772,12 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "Toast.tsx_rbrahO": [
+    {
+      "type": 0,
+      "value": "Chiudi"
     }
   ],
   "ToolCallResult.tsx_yq9SNC": [
@@ -1811,6 +1844,12 @@
     {
       "type": 0,
       "value": "Inferenza"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": [
+    {
+      "type": 0,
+      "value": "Errore durante il salvataggio delle impostazioni globali"
     }
   ],
   "UserMessage.tsx_J3ca41": [

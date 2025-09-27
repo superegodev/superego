@@ -1,10 +1,13 @@
 import type { CollectionId } from "@superego/backend";
-import { PiGear, PiPlus } from "react-icons/pi";
+import { useState } from "react";
+import { PiGear, PiPlus, PiWatch, PiWatchFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
+import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
+import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DocumentsTable from "../../widgets/DocumentsTable/DocumentsTable.js";
@@ -15,7 +18,9 @@ interface Props {
 }
 export default function Collection({ collectionId }: Props) {
   const intl = useIntl();
+  const screenSize = useScreenSize();
   const { collections } = useGlobalData();
+  const [showTimestamps, setShowTimestamps] = useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
   return collection ? (
     <Shell.Panel slot="Main">
@@ -25,6 +30,15 @@ export default function Collection({ collectionId }: Props) {
           defaultMessage: "Collection actions",
         })}
         actions={[
+          screenSize > ScreenSize.Medium
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Show timestamps",
+                }),
+                icon: showTimestamps ? <PiWatchFill /> : <PiWatch />,
+                onPress: () => setShowTimestamps(!showTimestamps),
+              }
+            : null,
           {
             label: intl.formatMessage({ defaultMessage: "Settings" }),
             icon: <PiGear />,
@@ -53,8 +67,8 @@ export default function Collection({ collectionId }: Props) {
               collectionId={collectionId}
               collection={collection}
               documents={documents}
-              showCreatedAt={true}
-              showLastModifiedAt={true}
+              showCreatedAt={showTimestamps}
+              showLastModifiedAt={showTimestamps}
               className={cs.Collection.documentsTable}
             />
           )}

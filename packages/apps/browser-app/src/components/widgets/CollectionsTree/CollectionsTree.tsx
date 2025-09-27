@@ -12,6 +12,7 @@ import {
 } from "../../../business-logic/backend/hooks.js";
 import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";
+import LoadDemoDataButton from "../LoadDemoDataButton/LoadDemoDataButton.js";
 import CollectionCategoryTreeItem from "./CollectionCategoryTreeItem.js";
 import * as cs from "./CollectionsTree.css.js";
 import CollectionTreeItem from "./CollectionTreeItem.js";
@@ -56,6 +57,9 @@ export default function CollectionsTree({ className }: Props) {
   return (
     <IsParentDropDisabledProvider value={false}>
       <div className={classnames(cs.CollectionsTree.root, className)}>
+        {import.meta.env["VITE_IS_DEMO"] === "true" ? (
+          <LoadDemoDataButton />
+        ) : null}
         <Header alwaysShowToolbar={isEmpty(collectionsTree.children)} />
         <Tree
           aria-label={intl.formatMessage({

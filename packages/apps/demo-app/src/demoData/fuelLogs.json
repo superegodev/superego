@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2022-02-14T12:18:09.308000Z",
+    "timestamp": "2022-02-14T12:18:09.308Z",
     "odometer": 65626.3,
     "liters": 50.1,
     "totalCost": 91.13,
@@ -26,7 +26,7 @@
     }
   },
   {
-    "timestamp": "2022-02-28T12:50:07.903000Z",
+    "timestamp": "2022-02-28T12:50:07.903Z",
     "odometer": 66260.5,
     "liters": 50.74,
     "totalCost": 95.24,
@@ -35,7 +35,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-03-28T10:11:59.807000Z",
+    "timestamp": "2022-03-28T10:11:59.807Z",
     "odometer": 67577.4,
     "liters": 53.13,
     "totalCost": 101.58,
@@ -44,7 +44,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-04-11T21:38:03.174000Z",
+    "timestamp": "2022-04-11T21:38:03.174Z",
     "odometer": 68237.6,
     "liters": 52.82,
     "totalCost": 99.4,
@@ -53,7 +53,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-05-09T16:25:20.082000Z",
+    "timestamp": "2022-05-09T16:25:20.082Z",
     "odometer": 69525.9,
     "liters": 54.49,
     "totalCost": 102.16,
@@ -62,7 +62,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-05-23T19:06:37.949000Z",
+    "timestamp": "2022-05-23T19:06:37.949Z",
     "odometer": 70195.6,
     "liters": 53.57,
     "totalCost": 98.68,
@@ -71,7 +71,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-06-05T21:38:49.621000Z",
+    "timestamp": "2022-06-05T21:38:49.621Z",
     "odometer": 70824.7,
     "liters": 50.33,
     "totalCost": 95.53,
@@ -80,7 +80,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-01T19:19:31.670000Z",
+    "timestamp": "2022-07-01T19:19:31.670Z",
     "odometer": 72093.2,
     "liters": 50.05,
     "totalCost": 96.4,
@@ -89,7 +89,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-10T08:55:32.937000Z",
+    "timestamp": "2022-07-10T08:55:32.937Z",
     "odometer": 73139.9,
     "liters": 31.41,
     "totalCost": 59.43,
@@ -98,7 +98,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-12T11:27:03.310000Z",
+    "timestamp": "2022-07-12T11:27:03.310Z",
     "odometer": 74525.4,
     "liters": 53.1,
     "totalCost": 99.35,
@@ -107,7 +107,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-13T16:05:58.832000Z",
+    "timestamp": "2022-07-13T16:05:58.832Z",
     "odometer": 75277.1,
     "liters": 55.0,
     "totalCost": 108.62,
@@ -116,7 +116,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-14T21:33:00.393000Z",
+    "timestamp": "2022-07-14T21:33:00.393Z",
     "odometer": 76109.4,
     "liters": 55.0,
     "totalCost": 106.31,
@@ -125,7 +125,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-16T08:24:15.808000Z",
+    "timestamp": "2022-07-16T08:24:15.808Z",
     "odometer": 77638.3,
     "liters": 55.0,
     "totalCost": 103.23,
@@ -134,7 +134,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-18T16:14:08.068000Z",
+    "timestamp": "2022-07-18T16:14:08.068Z",
     "odometer": 78888.5,
     "liters": 55.0,
     "totalCost": 105.55,
@@ -143,7 +143,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-20T09:21:46.030000Z",
+    "timestamp": "2022-07-20T09:21:46.030Z",
     "odometer": 80285.5,
     "liters": 55.0,
     "totalCost": 106.26,
@@ -152,7 +152,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-21T15:52:17.184000Z",
+    "timestamp": "2022-07-21T15:52:17.184Z",
     "odometer": 80908.0,
     "liters": 49.8,
     "totalCost": 96.41,
@@ -161,7 +161,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-22T18:18:02.201000Z",
+    "timestamp": "2022-07-22T18:18:02.201Z",
     "odometer": 81755.0,
     "liters": 55.0,
     "totalCost": 105.27,
@@ -187,7 +187,7 @@
     }
   },
   {
-    "timestamp": "2022-07-24T20:12:58.236000Z",
+    "timestamp": "2022-07-24T20:12:58.236Z",
     "odometer": 83440.8,
     "liters": 55.0,
     "totalCost": 105.05,
@@ -196,7 +196,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-07-25T08:56:41.845000Z",
+    "timestamp": "2022-07-25T08:56:41.845Z",
     "odometer": 84090.6,
     "liters": 51.98,
     "totalCost": 100.48,
@@ -205,7 +205,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-08-24T08:45:19.580000Z",
+    "timestamp": "2022-08-24T08:45:19.580Z",
     "odometer": 85423.2,
     "liters": 54.87,
     "totalCost": 102.72,
@@ -214,7 +214,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-09-07T09:46:36.399000Z",
+    "timestamp": "2022-09-07T09:46:36.399Z",
     "odometer": 86082.2,
     "liters": 33.65,
     "totalCost": 63.19,
@@ -223,7 +223,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-09-15T18:36:29.213000Z",
+    "timestamp": "2022-09-15T18:36:29.213Z",
     "odometer": 86495.8,
     "liters": 52.16,
     "totalCost": 95.66,
@@ -232,7 +232,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-10-13T21:01:06.921000Z",
+    "timestamp": "2022-10-13T21:01:06.921Z",
     "odometer": 87815.3,
     "liters": 29.75,
     "totalCost": 54.08,
@@ -241,7 +241,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-10-20T14:18:06.355000Z",
+    "timestamp": "2022-10-20T14:18:06.355Z",
     "odometer": 88157.0,
     "liters": 49.8,
     "totalCost": 93.23,
@@ -250,7 +250,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-11-16T20:43:26.757000Z",
+    "timestamp": "2022-11-16T20:43:26.757Z",
     "odometer": 89403.3,
     "liters": 49.07,
     "totalCost": 88.92,
@@ -259,7 +259,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-11-30T13:18:46.036000Z",
+    "timestamp": "2022-11-30T13:18:46.036Z",
     "odometer": 90029.8,
     "liters": 50.12,
     "totalCost": 89.92,
@@ -268,7 +268,7 @@
     "notes": null
   },
   {
-    "timestamp": "2022-12-29T18:02:30.849000Z",
+    "timestamp": "2022-12-29T18:02:30.849Z",
     "odometer": 91348.6,
     "liters": 53.09,
     "totalCost": 94.6,
@@ -294,7 +294,7 @@
     }
   },
   {
-    "timestamp": "2023-02-11T13:37:17.668000Z",
+    "timestamp": "2023-02-11T13:37:17.668Z",
     "odometer": 91988.4,
     "liters": 51.18,
     "totalCost": 87.42,
@@ -303,7 +303,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-02-26T21:59:46.860000Z",
+    "timestamp": "2023-02-26T21:59:46.860Z",
     "odometer": 92604.3,
     "liters": 49.27,
     "totalCost": 85.73,
@@ -312,7 +312,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-03-28T11:53:23.329000Z",
+    "timestamp": "2023-03-28T11:53:23.329Z",
     "odometer": 93919.8,
     "liters": 53.95,
     "totalCost": 95.76,
@@ -321,7 +321,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-04-11T19:21:13.588000Z",
+    "timestamp": "2023-04-11T19:21:13.588Z",
     "odometer": 94557.2,
     "liters": 50.99,
     "totalCost": 88.78,
@@ -330,7 +330,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-05-10T15:07:53.675000Z",
+    "timestamp": "2023-05-10T15:07:53.675Z",
     "odometer": 95898.8,
     "liters": 55.0,
     "totalCost": 97.57,
@@ -339,7 +339,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-05-24T11:47:31.890000Z",
+    "timestamp": "2023-05-24T11:47:31.890Z",
     "odometer": 96541.1,
     "liters": 39.33,
     "totalCost": 68.83,
@@ -348,7 +348,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-06-04T10:42:20.227000Z",
+    "timestamp": "2023-06-04T10:42:20.227Z",
     "odometer": 96997.7,
     "liters": 48.58,
     "totalCost": 85.65,
@@ -357,7 +357,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-03T12:33:18.827000Z",
+    "timestamp": "2023-07-03T12:33:18.827Z",
     "odometer": 98282.5,
     "liters": 51.89,
     "totalCost": 93.76,
@@ -366,7 +366,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-10T13:23:34.464000Z",
+    "timestamp": "2023-07-10T13:23:34.464Z",
     "odometer": 99262.4,
     "liters": 55.0,
     "totalCost": 103.29,
@@ -392,7 +392,7 @@
     }
   },
   {
-    "timestamp": "2023-07-12T10:24:50.606000Z",
+    "timestamp": "2023-07-12T10:24:50.606Z",
     "odometer": 101033.8,
     "liters": 55.0,
     "totalCost": 97.3,
@@ -401,7 +401,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-14T16:23:18.897000Z",
+    "timestamp": "2023-07-14T16:23:18.897Z",
     "odometer": 102406.0,
     "liters": 55.0,
     "totalCost": 101.42,
@@ -410,7 +410,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-15T14:13:58.941000Z",
+    "timestamp": "2023-07-15T14:13:58.941Z",
     "odometer": 103201.3,
     "liters": 55.0,
     "totalCost": 101.53,
@@ -436,7 +436,7 @@
     }
   },
   {
-    "timestamp": "2023-07-17T18:34:20.379000Z",
+    "timestamp": "2023-07-17T18:34:20.379Z",
     "odometer": 104878.3,
     "liters": 55.0,
     "totalCost": 100.21,
@@ -445,7 +445,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-18T12:28:48.150000Z",
+    "timestamp": "2023-07-18T12:28:48.150Z",
     "odometer": 105646.8,
     "liters": 55.0,
     "totalCost": 100.48,
@@ -471,7 +471,7 @@
     }
   },
   {
-    "timestamp": "2023-07-20T09:27:09.467000Z",
+    "timestamp": "2023-07-20T09:27:09.467Z",
     "odometer": 107190.9,
     "liters": 55.0,
     "totalCost": 100.81,
@@ -480,7 +480,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-22T10:05:10.755000Z",
+    "timestamp": "2023-07-22T10:05:10.755Z",
     "odometer": 108368.3,
     "liters": 55.0,
     "totalCost": 98.61,
@@ -489,7 +489,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-23T18:44:42.928000Z",
+    "timestamp": "2023-07-23T18:44:42.928Z",
     "odometer": 109185.6,
     "liters": 55.0,
     "totalCost": 103.12,
@@ -498,7 +498,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-07-27T11:14:07.085000Z",
+    "timestamp": "2023-07-27T11:14:07.085Z",
     "odometer": 110471.7,
     "liters": 53.32,
     "totalCost": 100.04,
@@ -507,7 +507,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-08-09T08:52:01.544000Z",
+    "timestamp": "2023-08-09T08:52:01.544Z",
     "odometer": 111092.1,
     "liters": 49.63,
     "totalCost": 90.98,
@@ -516,7 +516,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-09-05T16:36:36.855000Z",
+    "timestamp": "2023-09-05T16:36:36.855Z",
     "odometer": 112355.1,
     "liters": 49.66,
     "totalCost": 89.39,
@@ -525,7 +525,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-09-18T14:08:06.073000Z",
+    "timestamp": "2023-09-18T14:08:06.073Z",
     "odometer": 112976.1,
     "liters": 49.67,
     "totalCost": 89.16,
@@ -534,7 +534,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-10-03T20:19:33.041000Z",
+    "timestamp": "2023-10-03T20:19:33.041Z",
     "odometer": 113654.0,
     "liters": 54.24,
     "totalCost": 96.0,
@@ -543,7 +543,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-10-31T18:12:59.315000Z",
+    "timestamp": "2023-10-31T18:12:59.315Z",
     "odometer": 114961.0,
     "liters": 26.23,
     "totalCost": 46.27,
@@ -552,7 +552,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-11-07T19:22:04.220000Z",
+    "timestamp": "2023-11-07T19:22:04.220Z",
     "odometer": 115298.1,
     "liters": 53.25,
     "totalCost": 89.72,
@@ -561,7 +561,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-12-04T21:51:28.267000Z",
+    "timestamp": "2023-12-04T21:51:28.267Z",
     "odometer": 116547.0,
     "liters": 49.4,
     "totalCost": 88.08,
@@ -570,7 +570,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-12-16T17:21:45.207000Z",
+    "timestamp": "2023-12-16T17:21:45.207Z",
     "odometer": 117190.9,
     "liters": 51.51,
     "totalCost": 91.02,
@@ -579,7 +579,7 @@
     "notes": null
   },
   {
-    "timestamp": "2023-12-29T14:51:00.188000Z",
+    "timestamp": "2023-12-29T14:51:00.188Z",
     "odometer": 117816.8,
     "liters": 50.07,
     "totalCost": 88.12,
@@ -588,7 +588,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-02-26T08:17:40.454000Z",
+    "timestamp": "2024-02-26T08:17:40.454Z",
     "odometer": 119087.1,
     "liters": 51.08,
     "totalCost": 87.5,
@@ -597,7 +597,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-03-11T16:10:05.838000Z",
+    "timestamp": "2024-03-11T16:10:05.838Z",
     "odometer": 119755.4,
     "liters": 53.46,
     "totalCost": 89.97,
@@ -606,7 +606,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-04-09T21:46:53.911000Z",
+    "timestamp": "2024-04-09T21:46:53.911Z",
     "odometer": 121099.6,
     "liters": 52.34,
     "totalCost": 91.08,
@@ -615,7 +615,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-04-24T16:47:20.824000Z",
+    "timestamp": "2024-04-24T16:47:20.824Z",
     "odometer": 121797.8,
     "liters": 55.0,
     "totalCost": 91.69,
@@ -624,7 +624,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-05-07T18:12:20.941000Z",
+    "timestamp": "2024-05-07T18:12:20.941Z",
     "odometer": 122440.5,
     "liters": 51.41,
     "totalCost": 85.14,
@@ -633,7 +633,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-06-03T10:34:59.815000Z",
+    "timestamp": "2024-06-03T10:34:59.815Z",
     "odometer": 123710.0,
     "liters": 50.55,
     "totalCost": 88.81,
@@ -642,7 +642,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-06-16T21:37:32.575000Z",
+    "timestamp": "2024-06-16T21:37:32.575Z",
     "odometer": 124354.5,
     "liters": 51.56,
     "totalCost": 89.76,
@@ -651,7 +651,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-10T20:35:23.849000Z",
+    "timestamp": "2024-07-10T20:35:23.849Z",
     "odometer": 126208.4,
     "liters": 55.0,
     "totalCost": 98.89,
@@ -660,7 +660,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-11T09:37:32.095000Z",
+    "timestamp": "2024-07-11T09:37:32.095Z",
     "odometer": 126894.3,
     "liters": 54.88,
     "totalCost": 98.12,
@@ -669,7 +669,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-12T14:58:17.889000Z",
+    "timestamp": "2024-07-12T14:58:17.889Z",
     "odometer": 127592.7,
     "liters": 55.0,
     "totalCost": 98.89,
@@ -695,7 +695,7 @@
     }
   },
   {
-    "timestamp": "2024-07-14T09:16:08.221000Z",
+    "timestamp": "2024-07-14T09:16:08.221Z",
     "odometer": 129099.4,
     "liters": 55.0,
     "totalCost": 99.16,
@@ -704,7 +704,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-15T08:13:07.610000Z",
+    "timestamp": "2024-07-15T08:13:07.610Z",
     "odometer": 129816.1,
     "liters": 55.0,
     "totalCost": 98.78,
@@ -713,7 +713,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-18T11:04:42.211000Z",
+    "timestamp": "2024-07-18T11:04:42.211Z",
     "odometer": 132119.9,
     "liters": 55.0,
     "totalCost": 96.41,
@@ -722,7 +722,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-19T09:07:23.119000Z",
+    "timestamp": "2024-07-19T09:07:23.119Z",
     "odometer": 132957.9,
     "liters": 55.0,
     "totalCost": 97.07,
@@ -731,7 +731,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-20T09:58:02.145000Z",
+    "timestamp": "2024-07-20T09:58:02.145Z",
     "odometer": 133832.6,
     "liters": 55.0,
     "totalCost": 94.44,
@@ -740,7 +740,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-22T20:43:18.502000Z",
+    "timestamp": "2024-07-22T20:43:18.502Z",
     "odometer": 135411.7,
     "liters": 55.0,
     "totalCost": 95.65,
@@ -749,7 +749,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-07-23T14:20:04.831000Z",
+    "timestamp": "2024-07-23T14:20:04.831Z",
     "odometer": 136067.8,
     "liters": 52.48,
     "totalCost": 92.05,
@@ -775,7 +775,7 @@
     }
   },
   {
-    "timestamp": "2024-07-25T10:29:56.014000Z",
+    "timestamp": "2024-07-25T10:29:56.014Z",
     "odometer": 137788.2,
     "liters": 55.0,
     "totalCost": 94.55,
@@ -784,7 +784,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-08-09T09:50:54.947000Z",
+    "timestamp": "2024-08-09T09:50:54.947Z",
     "odometer": 138459.4,
     "liters": 53.7,
     "totalCost": 96.33,
@@ -793,7 +793,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-08-22T11:05:57.040000Z",
+    "timestamp": "2024-08-22T11:05:57.040Z",
     "odometer": 139069.7,
     "liters": 48.83,
     "totalCost": 85.79,
@@ -802,7 +802,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-09-20T14:21:38.273000Z",
+    "timestamp": "2024-09-20T14:21:38.273Z",
     "odometer": 140346.6,
     "liters": 50.98,
     "totalCost": 88.86,
@@ -811,7 +811,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-10-04T16:12:51.960000Z",
+    "timestamp": "2024-10-04T16:12:51.960Z",
     "odometer": 141012.1,
     "liters": 53.25,
     "totalCost": 91.74,
@@ -820,7 +820,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-11-01T11:06:51.786000Z",
+    "timestamp": "2024-11-01T11:06:51.786Z",
     "odometer": 142270.1,
     "liters": 50.71,
     "totalCost": 87.52,
@@ -829,7 +829,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-11-15T09:51:43.866000Z",
+    "timestamp": "2024-11-15T09:51:43.866Z",
     "odometer": 142923.4,
     "liters": 52.27,
     "totalCost": 86.45,
@@ -838,7 +838,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-12-15T11:39:09.129000Z",
+    "timestamp": "2024-12-15T11:39:09.129Z",
     "odometer": 144196.1,
     "liters": 51.33,
     "totalCost": 87.36,
@@ -847,7 +847,7 @@
     "notes": null
   },
   {
-    "timestamp": "2024-12-30T14:02:12.776000Z",
+    "timestamp": "2024-12-30T14:02:12.776Z",
     "odometer": 144862.0,
     "liters": 53.27,
     "totalCost": 90.3,
@@ -856,7 +856,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-02-13T19:20:22.178000Z",
+    "timestamp": "2025-02-13T19:20:22.178Z",
     "odometer": 145526.1,
     "liters": 53.13,
     "totalCost": 97.11,
@@ -865,7 +865,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-03-13T20:50:05.562000Z",
+    "timestamp": "2025-03-13T20:50:05.562Z",
     "odometer": 146859.8,
     "liters": 52.94,
     "totalCost": 98.58,
@@ -874,7 +874,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-03-27T14:50:21.400000Z",
+    "timestamp": "2025-03-27T14:50:21.400Z",
     "odometer": 147506.1,
     "liters": 51.71,
     "totalCost": 95.04,
@@ -883,7 +883,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-04-24T21:08:22.201000Z",
+    "timestamp": "2025-04-24T21:08:22.201Z",
     "odometer": 148787.5,
     "liters": 51.58,
     "totalCost": 90.93,
@@ -909,7 +909,7 @@
     }
   },
   {
-    "timestamp": "2025-05-08T08:32:54.211000Z",
+    "timestamp": "2025-05-08T08:32:54.211Z",
     "odometer": 149417.6,
     "liters": 50.41,
     "totalCost": 88.71,
@@ -918,7 +918,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-05-21T11:45:52.732000Z",
+    "timestamp": "2025-05-21T11:45:52.732Z",
     "odometer": 150057.5,
     "liters": 51.19,
     "totalCost": 90.56,
@@ -927,7 +927,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-06-17T13:24:12.585000Z",
+    "timestamp": "2025-06-17T13:24:12.585Z",
     "odometer": 151348.7,
     "liters": 52.56,
     "totalCost": 97.44,
@@ -936,7 +936,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-01T20:20:04.466000Z",
+    "timestamp": "2025-07-01T20:20:04.466Z",
     "odometer": 151997.2,
     "liters": 51.89,
     "totalCost": 100.04,
@@ -945,7 +945,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-11T13:24:20.827000Z",
+    "timestamp": "2025-07-11T13:24:20.827Z",
     "odometer": 153854.3,
     "liters": 55.0,
     "totalCost": 105.55,
@@ -954,7 +954,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-13T10:33:47.169000Z",
+    "timestamp": "2025-07-13T10:33:47.169Z",
     "odometer": 155137.3,
     "liters": 21.6,
     "totalCost": 41.42,
@@ -963,7 +963,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-14T09:00:53.222000Z",
+    "timestamp": "2025-07-14T09:00:53.222Z",
     "odometer": 155831.1,
     "liters": 55.0,
     "totalCost": 105.05,
@@ -972,7 +972,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-16T18:38:42.861000Z",
+    "timestamp": "2025-07-16T18:38:42.861Z",
     "odometer": 157286.4,
     "liters": 49.4,
     "totalCost": 95.2,
@@ -981,7 +981,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-17T18:36:30.533000Z",
+    "timestamp": "2025-07-17T18:36:30.533Z",
     "odometer": 158153.7,
     "liters": 55.0,
     "totalCost": 103.56,
@@ -990,7 +990,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-19T14:10:46.443000Z",
+    "timestamp": "2025-07-19T14:10:46.443Z",
     "odometer": 159739.6,
     "liters": 55.0,
     "totalCost": 103.02,
@@ -1016,7 +1016,7 @@
     }
   },
   {
-    "timestamp": "2025-07-20T13:32:18.020000Z",
+    "timestamp": "2025-07-20T13:32:18.020Z",
     "odometer": 160521.2,
     "liters": 55.0,
     "totalCost": 101.91,
@@ -1025,7 +1025,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-21T11:55:44.884000Z",
+    "timestamp": "2025-07-21T11:55:44.884Z",
     "odometer": 161202.5,
     "liters": 54.5,
     "totalCost": 103.5,
@@ -1034,7 +1034,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-23T10:20:18.321000Z",
+    "timestamp": "2025-07-23T10:20:18.321Z",
     "odometer": 162715.6,
     "liters": 55.0,
     "totalCost": 104.39,
@@ -1043,7 +1043,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-07-24T15:50:08.085000Z",
+    "timestamp": "2025-07-24T15:50:08.085Z",
     "odometer": 163486.6,
     "liters": 55.0,
     "totalCost": 102.41,
@@ -1052,7 +1052,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-08-09T18:40:41.215000Z",
+    "timestamp": "2025-08-09T18:40:41.215Z",
     "odometer": 164931.9,
     "liters": 49.96,
     "totalCost": 91.88,
@@ -1061,7 +1061,7 @@
     "notes": null
   },
   {
-    "timestamp": "2025-08-22T13:51:41.780000Z",
+    "timestamp": "2025-08-22T13:51:41.780Z",
     "odometer": 165602.4,
     "liters": 53.64,
     "totalCost": 102.67,

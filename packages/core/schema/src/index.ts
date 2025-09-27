@@ -1,4 +1,9 @@
 /// <reference types="vite/client" />
+import {
+  isValidInstant,
+  isValidPlainDate,
+  isValidPlainTime,
+} from "./utils/dateTimeValidators.js";
 import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
 import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
@@ -23,4 +28,7 @@ export const utils = {
   getType,
   getTypeDefinitionAtPath,
   parsePath,
+  isValidInstant,
+  isValidPlainDate,
+  isValidPlainTime,
 };

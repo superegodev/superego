@@ -9,7 +9,8 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
-import makeDocument from "../../makers/makeDocument.js";
+import makeContentSummaries from "../../makers/makeContentSummaries.js";
+import makeDocumentGivenSummary from "../../makers/makeDocumentGivenSummary.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
@@ -61,33 +62,37 @@ export default class DocumentsList extends Usecase<
     latestVersions.forEach((latestVersion) => {
       latestVersionsByDocumentId.set(latestVersion.documentId, latestVersion);
     });
-
+    const contentSummaries = await makeContentSummaries(
+      this.javascriptSandbox,
+      latestCollectionVersion,
+      documents.map((document) => {
+        const latestVersion = latestVersionsByDocumentId.get(document.id);
+        assertDocumentVersionExists(
+          document.collectionId,
+          document.id,
+          latestVersion,
+        );
+        assertDocumentVersionMatchesCollectionVersion(
+          document.collectionId,
+          latestCollectionVersion,
+          document.id,
+          latestVersion,
+        );
+        return latestVersion;
+      }),
+    );
     return makeSuccessfulResult(
-      await Promise.all(
-        documents.map(async (documentEntity) => {
-          const latestVersion = latestVersionsByDocumentId.get(
-            documentEntity.id,
-          );
-          assertDocumentVersionExists(
-            documentEntity.collectionId,
-            documentEntity.id,
-            latestVersion,
-          );
-          assertDocumentVersionMatchesCollectionVersion(
-            documentEntity.collectionId,
-            latestCollectionVersion,
-            documentEntity.id,
-            latestVersion,
-          );
-          const document = await makeDocument(
-            this.javascriptSandbox,
-            latestCollectionVersion,
-            documentEntity,
-            latestVersion,
-          );
-          return lite ? makeLiteDocument(document) : document;
-        }),
-      ),
+      documents.map((documentEntity, index) => {
+        const document = makeDocumentGivenSummary(
+          documentEntity,
+          // latestVersion has been asserted to exist above.
+          latestVersionsByDocumentId.get(documentEntity.id)!,
+          // makeContentSummaries always returns an array with the same length
+          // as the input array, so we know the index exists.
+          contentSummaries[index]!,
+        );
+        return lite ? makeLiteDocument(document) : document;
+      }),
     );
   }
 }

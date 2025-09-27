@@ -19,11 +19,13 @@ namespace ToolCall {
       collectionId: CollectionId;
     }
   >;
-  export type CreateDocument = ToolCall<
-    ToolName.CreateDocument,
+  export type CreateDocuments = ToolCall<
+    ToolName.CreateDocuments,
     {
-      collectionId: CollectionId;
-      content: any;
+      documents: {
+        collectionId: CollectionId;
+        content: any;
+      }[];
     }
   >;
   export type CreateNewDocumentVersion = ToolCall<
@@ -42,15 +44,15 @@ namespace ToolCall {
       javascriptFunction: string;
     }
   >;
-  export type RenderChart = ToolCall<
-    ToolName.RenderChart,
+  export type CreateChart = ToolCall<
+    ToolName.CreateChart,
     {
       collectionId: CollectionId;
       getEchartsOption: string;
     }
   >;
-  export type RenderDocumentsTable = ToolCall<
-    ToolName.RenderDocumentsTable,
+  export type CreateDocumentsTable = ToolCall<
+    ToolName.CreateDocumentsTable,
     {
       collectionId: CollectionId;
       title: string;

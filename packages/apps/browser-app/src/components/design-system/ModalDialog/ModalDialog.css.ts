@@ -40,7 +40,7 @@ export const ModalDialog = {
   }),
   modal: style({
     minWidth: vars.spacing._80,
-    maxWidth: vars.spacing._160,
+    maxWidth: `min(${vars.spacing._120}, calc(100dvw - ${vars.spacing._8}))`,
     background: vars.colors.background.surface,
     padding: vars.spacing._4,
     borderRadius: vars.borders.radius.md,

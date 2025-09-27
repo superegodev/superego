@@ -27,7 +27,7 @@ export default {
       message.toolResults.some(
         (toolResult) =>
           toolResult.output.success &&
-          (toolResult.tool === ToolName.CreateDocument ||
+          (toolResult.tool === ToolName.CreateDocuments ||
             toolResult.tool === ToolName.CreateNewDocumentVersion),
       ),
     );

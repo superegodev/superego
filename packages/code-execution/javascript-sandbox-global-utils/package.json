@@ -23,6 +23,7 @@
     "zx": "8.8.3-lite"
   },
   "dependencies": {
+    "@superego/schema": "workspace:*",
     "luxon": "^3.7.2"
   }
 }

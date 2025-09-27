@@ -26,8 +26,14 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
+  "Chat.tsx_zhku3H": {
+    "defaultMessage": "Error sending message to assistant"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
+  },
+  "Collection.tsx_K+mLdW": {
+    "defaultMessage": "Show timestamps"
   },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Create document"
@@ -176,11 +182,8 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "CreateDocumentOrVersion.tsx_+z+eOw": {
-    "defaultMessage": "{collection} » New document version created"
-  },
-  "CreateDocumentOrVersion.tsx_hmMMs+": {
-    "defaultMessage": "{collection} » Document created"
+  "CreateDocuments.tsx_98xj7V": {
+    "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
   },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
@@ -193,6 +196,12 @@
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migration"
+  },
+  "CreateNewDocumentVersion.tsx_p5+z7U": {
+    "defaultMessage": "{collection} » Created new document version"
+  },
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": {
+    "defaultMessage": "Error saving document"
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
@@ -584,8 +593,8 @@
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
   },
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": {
-    "defaultMessage": "<p> The <b>content summary</b> of a document is a <code>Record'<key: string, value: string>'</code>—derived from its content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. </p> <p> <b>Content summary getter</b> is the TypeScript function that derives the summary from the document content. </p> <p> <b>Tip:</b> to enforce a specific order for the properties of the summary, you can prefix each key with <code>$position. </code>. (Example: <code>0. </code>.) The prefix is stripped when displaying them. </p>"
+  "RHFContentSummaryGetterField.tsx_TDCCVk": {
+    "defaultMessage": "<p> The <b>content summary</b> of a document is a <code>Record'<name: string, value: string | number | boolean | null>'</code> — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. </p> <p> <b>Content summary getter</b> is the TypeScript function that derives the summary from the document content. </p> <p> The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, <code>'{position:0,sortable:true,default-sort:asc}' First Name</code> makes <code>First Name</code> the first column, makes it sortable, and sets the column as the default sort order of the table. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
@@ -665,8 +674,8 @@
   "Title.tsx_1af260": {
     "defaultMessage": "Execute JavaScript function on {collection}"
   },
-  "Title.tsx_2eWlOa": {
-    "defaultMessage": "Create document in {collection}"
+  "Title.tsx_8yzKPa": {
+    "defaultMessage": "Create documents"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Succeeded"
@@ -685,6 +694,9 @@
   },
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Create new document version in {collection}"
+  },
+  "Toast.tsx_rbrahO": {
+    "defaultMessage": "Close"
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
@@ -718,6 +730,9 @@
   },
   "UpdateGlobalSettingsForm.tsx_n0wQL1": {
     "defaultMessage": "Inference"
+  },
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": {
+    "defaultMessage": "Error saving global settings"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"

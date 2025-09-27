@@ -53,10 +53,22 @@
       "value": "Error loading app"
     }
   ],
+  "Chat.tsx_zhku3H": [
+    {
+      "type": 0,
+      "value": "Error sending message to assistant"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
       "value": "Settings"
+    }
+  ],
+  "Collection.tsx_K+mLdW": [
+    {
+      "type": 0,
+      "value": "Show timestamps"
     }
   ],
   "Collection.tsx_r0FgVC": [
@@ -381,24 +393,45 @@
       "value": "Create"
     }
   ],
-  "CreateDocumentOrVersion.tsx_+z+eOw": [
+  "CreateDocuments.tsx_98xj7V": [
     {
       "type": 1,
       "value": "collection"
     },
     {
       "type": 0,
-      "value": " » New document version created"
-    }
-  ],
-  "CreateDocumentOrVersion.tsx_hmMMs+": [
+      "value": " » "
+    },
     {
-      "type": 1,
-      "value": "collection"
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 0,
+              "value": "Document"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documents"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "documentsCount"
     },
     {
       "type": 0,
-      "value": " » Document created"
+      "value": " created"
     }
   ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
@@ -427,6 +460,22 @@
     {
       "type": 0,
       "value": "3. Migration"
+    }
+  ],
+  "CreateNewDocumentVersion.tsx_p5+z7U": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Created new document version"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_p6/GR5": [
+    {
+      "type": 0,
+      "value": "Error saving document"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1397,7 +1446,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_mPU6aZ": [
+  "RHFContentSummaryGetterField.tsx_TDCCVk": [
     {
       "children": [
         {
@@ -1422,7 +1471,7 @@
           "children": [
             {
               "type": 0,
-              "value": "Record<key: string, value: string>"
+              "value": "Record<name: string, value: string | number | boolean | null>"
             }
           ],
           "type": 8,
@@ -1430,7 +1479,7 @@
         },
         {
           "type": 0,
-          "value": "—derived from its content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
+          "value": " — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
       ],
       "type": 8,
@@ -1472,27 +1521,13 @@
       "children": [
         {
           "type": 0,
-          "value": " "
+          "value": " The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Tip:"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " to enforce a specific order for the properties of the summary, you can prefix each key with "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "$position. "
+              "value": "{position:0,sortable:true,default-sort:asc} First Name"
             }
           ],
           "type": 8,
@@ -1500,13 +1535,13 @@
         },
         {
           "type": 0,
-          "value": ". (Example: "
+          "value": " makes "
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "0. "
+              "value": "First Name"
             }
           ],
           "type": 8,
@@ -1514,7 +1549,7 @@
         },
         {
           "type": 0,
-          "value": ".) The prefix is stripped when displaying them. "
+          "value": " the first column, makes it sortable, and sets the column as the default sort order of the table. "
         }
       ],
       "type": 8,
@@ -1693,14 +1728,10 @@
       "value": "collection"
     }
   ],
-  "Title.tsx_2eWlOa": [
+  "Title.tsx_8yzKPa": [
     {
       "type": 0,
-      "value": "Create document in "
-    },
-    {
-      "type": 1,
-      "value": "collection"
+      "value": "Create documents"
     }
   ],
   "Title.tsx_LOghU6": [
@@ -1749,6 +1780,12 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "Toast.tsx_rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
     }
   ],
   "ToolCallResult.tsx_yq9SNC": [
@@ -1815,6 +1852,12 @@
     {
       "type": 0,
       "value": "Inference"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": [
+    {
+      "type": 0,
+      "value": "Error saving global settings"
     }
   ],
   "UserMessage.tsx_J3ca41": [

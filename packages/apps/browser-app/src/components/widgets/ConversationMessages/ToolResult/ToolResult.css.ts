@@ -6,24 +6,25 @@ export const Title = {
   root: style({
     color: vars.colors.text.primary,
     marginBlockEnd: vars.spacing._2,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };
 
-export const CreateDocumentOrVersion = {
+export const CreateDocuments = {
   root: style({
     display: "block",
     textDecoration: "none",
     marginBlock: vars.spacing._2,
     color: vars.colors.text.primary,
   }),
+};
 
-  contentSummarySkeleton: style({
-    width: vars.spacing._80,
-    padding: vars.spacing._4,
-    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    borderRadius: vars.borders.radius.md,
-    margin: 0,
-    overflow: "hidden",
+export const CreateNewDocumentVersion = {
+  root: style({
+    display: "block",
+    textDecoration: "none",
+    marginBlock: vars.spacing._2,
+    color: vars.colors.text.primary,
   }),
 };
 
@@ -68,13 +69,13 @@ globalStyle(`${SuggestCollectionDefinition.scrollContainer} > *`, {
   marginBlockEnd: vars.spacing._2,
 });
 
-export const RenderChart = {
+export const CreateChart = {
   chart: style({
     marginBlockStart: vars.spacing._6,
   }),
 };
 
-export const RenderDocumentsTable = {
+export const CreateDocumentsTable = {
   table: style({
     maxHeight: vars.spacing._80,
     marginBlockStart: vars.spacing._2,

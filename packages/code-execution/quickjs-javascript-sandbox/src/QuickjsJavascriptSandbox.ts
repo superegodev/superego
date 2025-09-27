@@ -23,6 +23,16 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   // TODO: consider using an LRU cache to avoid memory ballooning.
   private importCache = new Map<string, ImportedModule>();
   private runtime: QuickJSRuntime | null = null;
+  private runtimePromise: Promise<QuickJSRuntime>;
+
+  constructor() {
+    this.runtimePromise = QuickjsJavascriptSandbox.getQuickJS().then(
+      (quickJS) => {
+        this.runtime = quickJS.newRuntime();
+        return this.runtime;
+      },
+    );
+  }
 
   public async moduleDefaultExportsFunction(
     typescriptModule: TypescriptModule,
@@ -108,13 +118,13 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   private async importModule(
     typescriptModule: TypescriptModule,
   ): Promise<ImportedModule> {
+    const runtime = this.runtime ?? (await this.runtimePromise);
     const cacheKey = typescriptModule.compiled;
     const cachedImport = this.importCache.get(cacheKey);
     if (cachedImport) {
       return cachedImport;
     }
 
-    const runtime = await this.getRuntime();
     const vm = runtime.newContext();
     try {
       const moduleNamespace = vm.unwrapResult(
@@ -134,11 +144,6 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
       vm.dispose();
       throw error;
     }
-  }
-
-  private async getRuntime(): Promise<QuickJSRuntime> {
-    this.runtime ??= (await QuickjsJavascriptSandbox.getQuickJS()).newRuntime();
-    return this.runtime;
   }
 
   private static extractErrorDetails(

@@ -13,7 +13,7 @@ export default function contentSummaryGetter(schema: Schema): TypescriptModule {
       "",
       "export default function getContentSummary(",
       `  ${argName}: ${rootType}`,
-      "): Record<string, string> {",
+      "): Record<string, string | number | boolean | null> {",
       "  return {};",
       "}",
     ].join("\n"),

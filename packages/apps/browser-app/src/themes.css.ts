@@ -2,7 +2,7 @@ import { createTheme } from "@vanilla-extract/css";
 
 export const breakpoints = {
   small: "45rem",
-  medium: "67.5rem",
+  medium: "65rem",
 };
 
 const commonVars = {
@@ -222,21 +222,29 @@ export const [light, vars] = createTheme({
         border: colors.blues._5,
         background: colors.blues._1,
         text: colors.blues._5,
+        backgroundFilled: colors.blues._5,
+        textFilled: colors.greys._0,
       },
       success: {
         border: colors.greens._5,
         background: colors.greens._1,
         text: colors.greens._5,
+        backgroundFilled: colors.greens._5,
+        textFilled: colors.greys._0,
       },
       pending: {
         border: colors.oranges._5,
         background: colors.oranges._1,
         text: colors.oranges._5,
+        backgroundFilled: colors.oranges._5,
+        textFilled: colors.greys._0,
       },
       error: {
         border: colors.reds._5,
         background: colors.reds._1,
         text: colors.reds._5,
+        backgroundFilled: colors.reds._5,
+        textFilled: colors.greys._0,
       },
     },
     button: {
@@ -340,21 +348,29 @@ export const dark = createTheme(vars, {
         border: colors.blues._1,
         background: colors.blues._5,
         text: colors.blues._1,
+        backgroundFilled: colors.blues._5,
+        textFilled: colors.greys._0,
       },
       success: {
         border: colors.greens._1,
         background: colors.greens._5,
         text: colors.greens._1,
+        backgroundFilled: colors.greens._5,
+        textFilled: colors.greys._0,
       },
       pending: {
         border: colors.oranges._1,
         background: colors.oranges._5,
         text: colors.oranges._1,
+        backgroundFilled: colors.oranges._5,
+        textFilled: colors.greys._0,
       },
       error: {
         border: colors.reds._1,
         background: colors.reds._5,
         text: colors.reds._1,
+        backgroundFilled: colors.reds._5,
+        textFilled: colors.greys._0,
       },
     },
     button: {

@@ -10,11 +10,11 @@ import * as cs from "./ToolResult.css.js";
 const Echart = lazy(() => import("../../../design-system/Echart/Echart.js"));
 
 interface Props {
-  toolResult: ToolResult.RenderChart & {
+  toolResult: ToolResult.CreateChart & {
     output: { success: true };
   };
 }
-export default function RenderChart({ toolResult }: Props) {
+export default function CreateChart({ toolResult }: Props) {
   const { echartsOption } = toolResult.artifacts!;
   const { title } = echartsOption;
 
@@ -43,7 +43,7 @@ export default function RenderChart({ toolResult }: Props) {
           option={option}
           width="100%"
           height={vars.spacing._80}
-          className={cs.RenderChart.chart}
+          className={cs.CreateChart.chart}
         />
       </Suspense>
     </div>

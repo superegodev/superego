@@ -36,21 +36,23 @@ export default function RHFContentSummaryGetterField({
           defaultMessage={`
             <p>
               The <b>content summary</b> of a document is a
-              <code>Record'<key: string, value: string>'</code>—derived from its
-              content—that contains its most important bits of information.
-              The properties of the record are displayed when showing a "summary
-              view" of the document; for example, in tables, where each property
-              becomes a column.
+              <code>Record'<name: string, value: string | number | boolean | null>'</code>
+              — derived from its content — that contains its most important bits
+              of information. The properties of the record are displayed when
+              showing a "summary view" of the document; for example, in tables,
+              where each property becomes a column.
             </p>
             <p>
               <b>Content summary getter</b> is the TypeScript function that
               derives the summary from the document content.
             </p>
             <p>
-              <b>Tip:</b> to enforce a specific order for the properties of the
-              summary, you can prefix each key with <code>$position. </code>.
-              (Example: <code>0. </code>.) The prefix is stripped when
-              displaying them.
+              The property names of the summary object can be prefixed by
+              attributes that configure the behavior of the UIs that render the
+              summary. For example, when rendering a table of documents,
+              <code>'{position:0,sortable:true,default-sort:asc}' First Name</code>
+              makes <code>First Name</code> the first column, makes it sortable,
+              and sets the column as the default sort order of the table.
             </p>
           `}
           values={formattedMessageHtmlTags}

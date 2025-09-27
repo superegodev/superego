@@ -11,35 +11,46 @@ export default function setLocalInstant(vm: QuickJSContext, scope: Scope) {
   const HostLocalInstantHandle = scope.manage(vm.newObject());
   vm.setProp(vm.global, "HostLocalInstant", HostLocalInstantHandle);
 
-  vm.newFunction("toISO", (instant, operations) =>
-    vm.newString(
-      applyOperations(vm.dump(instant), vm.dump(operations)).toISO(),
-    ),
+  vm.newFunction("toISO", (iso, operations) =>
+    vm.newString(applyOperations(vm.dump(iso), vm.dump(operations)).toISO()),
   ).consume((fnHandle) =>
     vm.setProp(HostLocalInstantHandle, "toISO", fnHandle),
   );
 
-  vm.newFunction("toFormat", (instant, operations, options) =>
+  vm.newFunction("toPlainDate", (iso, operations) =>
     vm.newString(
-      applyOperations(vm.dump(instant), vm.dump(operations)).toFormat(
-        options ? vm.dump(options) : undefined,
-      ),
+      applyOperations(vm.dump(iso), vm.dump(operations)).toPlainDate(),
     ),
   ).consume((fnHandle) =>
-    vm.setProp(HostLocalInstantHandle, "toFormat", fnHandle),
+    vm.setProp(HostLocalInstantHandle, "toPlainDate", fnHandle),
+  );
+
+  vm.newFunction("fromISO", (iso) =>
+    vm.newString(LocalInstant.fromISO(vm.dump(iso)).toISO()),
+  ).consume((fnHandle) =>
+    vm.setProp(HostLocalInstantHandle, "fromISO", fnHandle),
+  );
+
+  vm.newFunction("fromInstant", (instant) =>
+    vm.newString(LocalInstant.fromInstant(vm.dump(instant)).toISO()),
+  ).consume((fnHandle) =>
+    vm.setProp(HostLocalInstantHandle, "fromInstant", fnHandle),
+  );
+
+  vm.newFunction("fromPlainDate", (plainDate) =>
+    vm.newString(LocalInstant.fromPlainDate(vm.dump(plainDate)).toISO()),
+  ).consume((fnHandle) =>
+    vm.setProp(HostLocalInstantHandle, "fromPlainDate", fnHandle),
   );
 
   vm.evalCode(LocalInstantSource);
 }
 
-function applyOperations(
-  instant: string,
-  operations: Operation[],
-): LocalInstant {
+function applyOperations(iso: string, operations: Operation[]): LocalInstant {
   return operations.reduce(
     (localInstant, operation) =>
       // TypeScript is not understanding, but spreading the args is correct.
       (localInstant[operation.name] as any)(...operation.arguments),
-    LocalInstant.fromISO(instant),
+    LocalInstant.fromISO(iso),
   );
 }

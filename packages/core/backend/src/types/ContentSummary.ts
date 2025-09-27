@@ -1,2 +1,2 @@
-type ContentSummary = Record<string, string>;
+type ContentSummary = Record<string, string | number | boolean | null>;
 export default ContentSummary;

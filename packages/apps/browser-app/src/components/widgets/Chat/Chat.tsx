@@ -1,6 +1,13 @@
-import { type Conversation, MessageRole } from "@superego/backend";
+import {
+  type Conversation,
+  type Message,
+  MessageRole,
+} from "@superego/backend";
 import { useEffect, useRef } from "react";
+import { useIntl } from "react-intl";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import classnames from "../../../utils/classnames.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../ConversationMessages/ConversationMessages.js";
@@ -19,8 +26,7 @@ export default function Chat({
   showToolsCalls,
   className,
 }: Props) {
-  // TODO: use https://react-spectrum.adobe.com/react-aria/Toast.html for
-  // displaying errors.
+  const intl = useIntl();
   const { isPending, mutate } = useContinueConversation();
 
   // When messages change, scroll to bottom and - if the last message is an
@@ -54,12 +60,29 @@ export default function Chat({
     }
   }, [lastMessageCreatedAtTime]);
 
+  const onSend = async (messageContent: Message.User["content"]) => {
+    const { error } = await mutate(conversation.id, messageContent);
+    if (error) {
+      console.error(error);
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error sending message to assistant",
+          }),
+          description: error.name,
+        },
+        { timeout: 5_000 },
+      );
+    }
+  };
+
   return (
     <div className={classnames(cs.Chat.root, className)}>
       <div className={cs.Chat.userMessageContentInputContainer}>
         <UserMessageContentInput
           conversation={conversation}
-          onSend={(messageContent) => mutate(conversation.id, messageContent)}
+          onSend={onSend}
           isSending={isPending}
           placeholder={userMessageContentInputPlaceholder}
           autoFocus={true}

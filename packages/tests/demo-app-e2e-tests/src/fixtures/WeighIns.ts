@@ -25,10 +25,10 @@ import type { WeighIn } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   weighIn: WeighIn
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
     "1. Date": weighIn.date,
-    "2. Weight (kg)": String(weighIn.weight),
+    "2. Weight (kg)": weighIn.weight,
   };
 }
   `.trim(),

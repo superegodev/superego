@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../../themes.css.js";
+import { breakpoints, vars } from "../../../themes.css.js";
 
-const narrowWindowWidth = "70rem";
 const primarySidebarWidth = vars.spacing._64;
 
 export const Shell = {
@@ -22,7 +21,7 @@ export const Shell = {
       },
     },
     "@media": {
-      [`screen and (max-width: ${narrowWindowWidth})`]: {
+      [`screen and (max-width: ${breakpoints.medium})`]: {
         width: `calc(100dvw + ${primarySidebarWidth})`,
         gridTemplateColumns: `${primarySidebarWidth} 100dvw`,
         marginInlineStart: `calc(-1 * ${primarySidebarWidth})`,
@@ -109,7 +108,7 @@ export const PanelHeader = {
     padding: 0,
     display: "none !important",
     "@media": {
-      [`screen and (max-width: ${narrowWindowWidth})`]: {
+      [`screen and (max-width: ${breakpoints.medium})`]: {
         display: "inline-flex !important",
       },
     },

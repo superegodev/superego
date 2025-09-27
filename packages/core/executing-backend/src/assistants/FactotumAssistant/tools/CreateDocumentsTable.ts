@@ -4,28 +4,32 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import { ContentSummaryUtils, Id } from "@superego/shared-utils";
 import { DateTime } from "luxon";
+import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
+import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
-  is(toolCall: ToolCall): toolCall is ToolCall.RenderChart {
-    return toolCall.tool === ToolName.RenderChart;
+  is(toolCall: ToolCall): toolCall is ToolCall.CreateDocumentsTable {
+    return toolCall.tool === ToolName.CreateDocumentsTable;
   },
 
   async exec(
-    toolCall: ToolCall.RenderChart,
+    toolCall: ToolCall.CreateDocumentsTable,
     collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
-  ): Promise<ToolResult.RenderChart> {
-    const { collectionId, getEchartsOption } = toolCall.input;
+  ): Promise<ToolResult.CreateDocumentsTable> {
+    const { collectionId, getDocumentIds } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -59,7 +63,7 @@ export default {
       ),
     );
     const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getEchartsOption },
+      { source: "", compiled: getDocumentIds },
       [assistantDocuments],
     );
 
@@ -71,64 +75,64 @@ export default {
       };
     }
 
-    const title = result.data?.title?.text ?? result.data?.title?.[0]?.text;
-    if (typeof title !== "string") {
+    const dataValidationResult = v.safeParse(
+      v.array(
+        v.pipe(
+          v.string(),
+          v.check((input) => Id.is.document(input), "Must be a DocumentId"),
+        ),
+      ),
+      result.data,
+    );
+    if (!dataValidationResult.success) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
-          makeResultError("EchartsOptionNotValid", {
-            issues: [
-              { message: "Missing chart title.", path: [{ key: "title" }] },
-            ],
+          makeResultError("ReturnValueNotValid", {
+            issues: makeValidationIssues(dataValidationResult.issues),
           }),
         ),
       };
     }
 
+    const documentIds = new Set(result.data);
+    const filteredDocuments = documents
+      .filter(({ id }) => documentIds.has(id))
+      .map(makeLiteDocument);
+
+    const documentsTableId = crypto.randomUUID();
+    const tableColumns = ContentSummaryUtils.getSortedProperties(
+      documents.map((document) => document.latestVersion.contentSummary),
+    ).map(({ label }) => label);
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult(`
-The chart has been successfully rendered. The user can now see it.
-
-In your next response:
-  - DON'T mention the chart.
-  - DON'T include a table or recap with the **same** data of the chart.
-  - DON'T link to the chart.
-      `),
-      artifacts: { echartsOption: result.data },
+      output: makeSuccessfulResult({
+        markdownSnippet: `<DocumentsTable id="${documentsTableId}" />`,
+        tableInfo: {
+          columns: tableColumns,
+          rowCount: filteredDocuments.length,
+        },
+      }),
+      artifacts: { documentsTableId, documents: filteredDocuments },
     };
   },
 
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: ToolName.RenderChart,
+      name: ToolName.CreateDocumentsTable,
       description: `
-Renders a chart in the app UI. Use this tool to enhance your answers with
-graphical elements.
+Creates an inline table of documents that you can use in your textual responses
+by including verbatim the \`markdownSnippet\` returned by the tool call. Use
+this tool every time you want to show a set of documents to the user. For
+showing documents, always use this tool instead of markdown tables.
 
-The getEchartsOption function takes the same parameters as the function in
+The getDocumentIds function takes the same parameters as the function in
 ${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
 executes in the same environment, and **must** abide by ALL its rules.
-
-### Additional MANDATORY rules
-
-- Always set a title for the chart.
-- Strongly prefer:
-  - \`tooltip:{trigger:"axis",axisPointer:{type:"cross"}}\`
-  - \`xAxis.type = "time"\` if there are timestamps on the x axis.
-  - \`grid = {left:0,right:0,top:0,bottom:0}\`
-  - \`xAxis.name = undefined\`
-  - \`yAxis.name = undefined\`
-  - \`legend = undefined\`
-- For numeric axes, narrow them to:
-  - if minValue < 0 -> [minValue - 5%, maxValue + 5%]
-  - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%]
-- Round numeric axes boundaries.
-- In datasets and series, round all numeric values to 2 decimals. Use
-  \`Math.round(value * 100)/100)\`
       `.trim(),
       inputSchema: {
         type: "object",
@@ -136,13 +140,17 @@ executes in the same environment, and **must** abide by ALL its rules.
           collectionId: {
             type: "string",
           },
-          getEchartsOption: {
+          title: {
+            description: "A short title for the table (5 words max)",
+            type: "string",
+          },
+          getDocumentIds: {
             description:
-              "JavaScript function returning an **echarts option object**. `export default function getEchartsOption(documents) { … }`",
+              "JavaScript function returning an array of ids of the documents to render in the table. `export default function getDocumentIds(documents) { … }`",
             type: "string",
           },
         },
-        required: ["collectionId", "getEchartsOption"],
+        required: ["collectionId", "title", "getDocumentIds"],
         additionalProperties: false,
       },
     };
