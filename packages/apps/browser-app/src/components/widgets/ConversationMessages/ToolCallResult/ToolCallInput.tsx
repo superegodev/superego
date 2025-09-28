@@ -7,7 +7,7 @@ interface Props {
 }
 export default function ToolCallInput({ toolCall }: Props) {
   return ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall) ||
-    ConversationUtils.isRenderChartToolCall(toolCall) ? (
+    ConversationUtils.isCreateChartToolCall(toolCall) ? (
     <CodeBlock
       language="javascript"
       code={

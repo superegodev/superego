@@ -15,7 +15,7 @@ export default [
     id: FormatId.String.PlainDate,
     name: "Plain Date",
     description:
-      "A calendar date in the ISO8601 format, not associated with a particular time or time zone.",
+      "A calendar date in the ISO8601 format, with no time and no time offset.",
     validExamples: [
       "2006-08-24",
       "2024-02-29",
@@ -45,7 +45,7 @@ export default [
     id: FormatId.String.PlainTime,
     name: "Plain Time",
     description:
-      "A wall-clock time in the ISO8601 format, with at most millisecond precision, not associated with a particular date or time zone.",
+      "A wall-clock time in the ISO8601 format, with at most millisecond precision, with no date and no time offset.",
     validExamples: ["T19:39:09", "T19:39:09.068", "T19:39:09.000"],
     invalidExamples: [
       "19:39:09",
@@ -69,7 +69,7 @@ export default [
     id: FormatId.String.Instant,
     name: "Instant",
     description:
-      "An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specified time offset.",
+      "An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specific time offset.",
     validExamples: [
       "2006-08-24T19:39:09.000Z",
       "2006-08-24T22:39:09.068+03:00",

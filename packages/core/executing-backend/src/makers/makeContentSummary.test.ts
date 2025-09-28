@@ -48,7 +48,7 @@ it("ExecutingJavascriptFunctionFailed result on getter execution failed", async 
 
 it("ContentSummaryNotValid result on non-valid content summary", async () => {
   // Setup mocks
-  const mockInvalidContentSummary = { number: 0 };
+  const mockInvalidContentSummary = { object: {} };
   const mockSuccessfulExecutionResult: Result<any, never> = {
     success: true,
     data: mockInvalidContentSummary,
@@ -91,7 +91,13 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
         collectionVersionId: collectionVersion.id,
         documentId: documentVersion.documentId,
         documentVersionId: documentVersion.id,
-        issues: [{ message: "Not a string", path: [{ key: "number" }] }],
+        issues: [
+          {
+            message:
+              "Invalid type: Expected (string | number | NaN | boolean | null) but received Object",
+            path: [{ key: "object" }],
+          },
+        ],
       },
       name: "ContentSummaryNotValid",
     },
@@ -100,7 +106,12 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
 
 it("successful result on valid content summary", async () => {
   // Setup mocks
-  const mockValidContentSummary = { string: "string" };
+  const mockValidContentSummary = {
+    string: "string",
+    number: 0,
+    boolean: true,
+    null: null,
+  };
   const mockSuccessfulExecutionResult: Result<any, never> = {
     success: true,
     data: mockValidContentSummary,

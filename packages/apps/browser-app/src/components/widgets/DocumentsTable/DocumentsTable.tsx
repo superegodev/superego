@@ -1,13 +1,17 @@
 import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
-import { uniq } from "es-toolkit";
+import { ContentSummaryUtils } from "@superego/shared-utils";
+import { useState } from "react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
-import DocumentUtils from "../../../utils/DocumentUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import Table from "../../design-system/Table/Table.js";
+import getSortDescriptor from "./getSortDescriptor.js";
+import sortDocuments from "./sortDocuments.js";
+import useColumnIds from "./useColumnIds.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -27,49 +31,66 @@ export default function DocumentsTable({
 }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
-  const contentSummaryKeys = uniq(
-    documents.flatMap((document) =>
-      Object.keys(document.latestVersion.contentSummary.data ?? {}),
-    ),
-  ).sort();
+  const sortedProperties = ContentSummaryUtils.getSortedProperties(
+    documents.map((document) => document.latestVersion.contentSummary),
+  );
+  const columnIds = useColumnIds();
+  const [sortDescriptor, setSortDescriptor] = useState(() =>
+    getSortDescriptor(sortedProperties, columnIds),
+  );
+  const sortedDocuments = sortDocuments(documents, sortDescriptor, columnIds);
   return (
     <Table
-      key={screenSize}
+      // Re-render when these props change, otherwise react-aria-components
+      // crashes the table.
+      key={`${screenSize}${showCreatedAt}${showLastModifiedAt}`}
       aria-label={intl.formatMessage(
         { defaultMessage: "Documents of collection {collection}" },
         { collection: collection?.settings.name ?? collectionId },
       )}
+      sortDescriptor={sortDescriptor}
+      onSortChange={setSortDescriptor}
       selectionMode="none"
       className={className}
     >
       <Table.Header>
-        {isEmpty(contentSummaryKeys) ? (
+        {isEmpty(sortedProperties) ? (
           <Table.Column isRowHeader={true}>
             <FormattedMessage defaultMessage="Id" />
           </Table.Column>
         ) : null}
-        {contentSummaryKeys.map((contentSummaryKey, index) => (
+        {sortedProperties.map((property, index) => (
           <Table.Column
-            key={contentSummaryKey}
+            key={property.name}
+            id={`${columnIds.propertyPrefix}${property.name}`}
             isRowHeader={index === 0}
             minWidth={120}
+            allowsSorting={property.sortable}
           >
-            {DocumentUtils.formatContentSummaryKey(contentSummaryKey)}
+            {property.label}
           </Table.Column>
         ))}
         {showCreatedAt && screenSize > ScreenSize.Medium ? (
-          <Table.Column align="right">
+          <Table.Column
+            maxWidth={160}
+            allowsSorting={true}
+            id={columnIds.createdAt}
+          >
             <FormattedMessage defaultMessage="Created at" />
           </Table.Column>
         ) : null}
         {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
-          <Table.Column align="right">
+          <Table.Column
+            maxWidth={160}
+            allowsSorting={true}
+            id={columnIds.lastModifiedAt}
+          >
             <FormattedMessage defaultMessage="Last modified at" />
           </Table.Column>
         ) : null}
       </Table.Header>
       <Table.Body
-        items={documents}
+        items={sortedDocuments}
         renderEmptyState={() => (
           <Table.Empty>
             <FormattedMessage defaultMessage="This collection doesn't have any documents yet." />
@@ -84,13 +105,15 @@ export default function DocumentsTable({
               documentId: document.id,
             })}
           >
-            {isEmpty(contentSummaryKeys) ? (
+            {isEmpty(sortedProperties) ? (
               <Table.Cell>{document.id}</Table.Cell>
             ) : null}
-            {contentSummaryKeys.map((key) => (
-              <Table.Cell key={key}>
+            {sortedProperties.map(({ name }) => (
+              <Table.Cell key={name}>
                 {document.latestVersion.contentSummary.success ? (
-                  document.latestVersion.contentSummary.data[key]
+                  <ContentSummaryPropertyValue
+                    value={document.latestVersion.contentSummary.data[name]}
+                  />
                 ) : document.latestVersion.contentSummary.error.name ===
                   "ContentSummaryNotValid" ? (
                   <FormattedMessage defaultMessage="Invalid content summary" />
@@ -100,13 +123,21 @@ export default function DocumentsTable({
               </Table.Cell>
             ))}
             {showCreatedAt && screenSize > ScreenSize.Medium ? (
-              <Table.Cell align="right">
-                <FormattedDate value={document.createdAt} />
+              <Table.Cell>
+                <FormattedDate
+                  value={document.createdAt}
+                  dateStyle="short"
+                  timeStyle="medium"
+                />
               </Table.Cell>
             ) : null}
             {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
-              <Table.Cell align="right">
-                <FormattedDate value={document.latestVersion.createdAt} />
+              <Table.Cell>
+                <FormattedDate
+                  value={document.latestVersion.createdAt}
+                  dateStyle="short"
+                  timeStyle="medium"
+                />
               </Table.Cell>
             ) : null}
           </Table.Row>

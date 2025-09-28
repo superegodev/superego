@@ -8,7 +8,7 @@ import type {
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Health } from "./collectionCategories.js";
-import weighIns from "./weighIns.json" with { type: "json" };
+import weighIns from "./weighInsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -44,8 +44,8 @@ const collectionVersion: CollectionVersionEntity = {
             description: "Weight in kilograms.",
             dataType: DataType.Number,
           },
-          measurementDevice: {
-            description: "Device used for measurement.",
+          scale: {
+            description: "Scale used for measurement.",
             dataType: DataType.String,
           },
           notes: {
@@ -60,28 +60,24 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { WeighIn } from "./CollectionSchema";
+import type { WeighIn } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   weighIn: WeighIn,
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
-    "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({
-      dateStyle: "short",
-      timeStyle: "short"
-    }),
-    "1. Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": weighIn.timestamp,
+    "{position:1,sortable:true} Weight (kg)": weighIn.weightKg,
+    "{position:2,sortable:true} Scale": weighIn.scale,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(weighIn) {
   return {
-    "0. Date": LocalInstant.fromISO(weighIn.timestamp).toFormat({
-      dateStyle: "short",
-      timeStyle: "short"
-    }),
-    "1. Weight (kg)": String(weighIn.weightKg),
+    "{position:0,sortable:true,default-sort:desc} Date": weighIn.timestamp,
+    "{position:1,sortable:true} Weight (kg)": weighIn.weightKg,
+    "{position:2,sortable:true} Scale": weighIn.scale,
   };
 }
       `.trim(),

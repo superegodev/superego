@@ -7,7 +7,7 @@ import type {
 } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
-import contacts from "./contacts.json" with { type: "json" };
+import contacts from "./contactsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -118,28 +118,28 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { Contact } from "./CollectionSchema";
+import type { Contact } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   contact: Contact,
-): Record<string, string> {
+): Record<string, string | boolean | null> {
   return {
-    "0. Name": contact.name,
-    "1. Relation": contact.relation ?? "",
-    "2. Phone": contact.phones[0]?.number ?? "",
-    "3. Email": contact.emails[0]?.address ?? "",
-    "4. Type": contact.type
+    "{position:0,sortable:true,default-sort:asc} Name": contact.name,
+    "{position:1} Relation": contact.relation,
+    "{position:2} Phone": contact.phones[0]?.number ?? null,
+    "{position:3} Email": contact.emails[0]?.address ?? null,
+    "{position:4,sortable:true} Type": contact.type,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(contact) {
   return {
-    "0. Name": contact.name,
-    "1. Relation": contact.relation ?? "",
-    "2. Phone": contact.phones[0]?.number ?? "",
-    "3. Email": contact.emails[0]?.address ?? "",
-    "4. Type": contact.type
+    "{position:0,sortable:true,default-sort:asc} Name": contact.name,
+    "{position:1} Relation": contact.relation,
+    "{position:2} Phone": contact.phones[0]?.number ?? null,
+    "{position:3} Email": contact.emails[0]?.address ?? null,
+    "{position:4,sortable:true} Type": contact.type,
   };
 }
       `.trim(),

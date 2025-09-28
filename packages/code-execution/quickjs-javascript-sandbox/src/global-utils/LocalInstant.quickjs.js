@@ -18,56 +18,56 @@
 //   chainable API". (An earlier implementation tried to do this, and the limit
 //   was being hit after invoking `LocalInstant.*` a mere ~10k times.)
 class LocalInstant {
-  constructor(instant, operations) {
-    this.instant = instant;
+  constructor(iso, operations) {
+    this.iso = iso;
     this.operations = operations;
   }
 
   startOf(timeUnit) {
-    return new LocalInstant(this.instant, [
+    return new LocalInstant(this.iso, [
       ...this.operations,
       { name: "startOf", arguments: [timeUnit] },
     ]);
   }
 
   endOf(timeUnit) {
-    return new LocalInstant(this.instant, [
+    return new LocalInstant(this.iso, [
       ...this.operations,
       { name: "endOf", arguments: [timeUnit] },
     ]);
   }
 
   plus(duration) {
-    return new LocalInstant(this.instant, [
+    return new LocalInstant(this.iso, [
       ...this.operations,
       { name: "plus", arguments: [duration] },
     ]);
   }
 
   minus(duration) {
-    return new LocalInstant(this.instant, [
+    return new LocalInstant(this.iso, [
       ...this.operations,
       { name: "minus", arguments: [duration] },
     ]);
   }
 
   set(dateUnits) {
-    return new LocalInstant(this.instant, [
+    return new LocalInstant(this.iso, [
       ...this.operations,
       { name: "set", arguments: [dateUnits] },
     ]);
   }
 
   toISO() {
-    return HostLocalInstant.toISO(this.instant, this.operations);
+    return HostLocalInstant.toISO(this.iso, this.operations);
   }
 
   toJSDate() {
-    return new Date(HostLocalInstant.toISO(this.instant, this.operations));
+    return new Date(HostLocalInstant.toISO(this.iso, this.operations));
   }
 
-  toFormat(options = {}) {
-    return HostLocalInstant.toFormat(this.instant, this.operations, options);
+  toPlainDate() {
+    return HostLocalInstant.toPlainDate(this.iso, this.operations);
   }
 
   [Symbol.toPrimitive](hint) {
@@ -81,6 +81,13 @@ class LocalInstant {
   }
 }
 
-LocalInstant.fromISO = (instant) => new LocalInstant(instant, []);
+LocalInstant.fromISO = (iso) =>
+  new LocalInstant(HostLocalInstant.fromISO(iso), []);
+
+LocalInstant.fromInstant = (instant) =>
+  new LocalInstant(HostLocalInstant.fromInstant(instant), []);
+
+LocalInstant.fromPlainDate = (plainDate) =>
+  new LocalInstant(HostLocalInstant.fromPlainDate(plainDate), []);
 
 LocalInstant.now = () => new LocalInstant(new Date().toISOString(), []);

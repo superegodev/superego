@@ -7,7 +7,7 @@ import type {
 } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
-import calendarEntries from "./calendarEntries.json" with { type: "json" };
+import calendarEntries from "./calendarEntriesData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -81,42 +81,26 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { CalendarEntry } from "./CollectionSchema";
+import type { CalendarEntry } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   calendarEntry: CalendarEntry,
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
-    "0. Title": calendarEntry.title,
-    "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({
-      dateStyle: "short",
-      timeStyle: "short",
-    }),
-    "2. End": calendarEntry.endTime
-      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
-          dateStyle: "short",
-          timeStyle: "short",
-        })
-      : "",
-    "3. Type": calendarEntry.type,
+    "{position:0,sortable:true} Title": calendarEntry.title,
+    "{position:1,sortable:true,default-sort:asc} Start": calendarEntry.startTime,
+    "{position:2,sortable:true} End": calendarEntry.endTime,
+    "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(calendarEntry) {
   return {
-    "0. Title": calendarEntry.title,
-    "1. Start": LocalInstant.fromISO(calendarEntry.startTime).toFormat({
-      dateStyle: "short",
-      timeStyle: "short",
-    }),
-    "2. End": calendarEntry.endTime
-      ? LocalInstant.fromISO(calendarEntry.endTime).toFormat({
-        dateStyle: "short",
-        timeStyle: "short",
-      })
-      : "",
-    "3. Type": calendarEntry.type,
+    "{position:0,sortable:true} Title": calendarEntry.title,
+    "{position:1,sortable:true,default-sort:asc} Start": calendarEntry.startTime,
+    "{position:2,sortable:true} End": calendarEntry.endTime,
+    "{position:3,sortable:true} Type": calendarEntry.type,
   };
 }
       `.trim(),

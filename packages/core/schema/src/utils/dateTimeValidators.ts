@@ -1,6 +1,7 @@
-export function isValidPlainDate(value: string): boolean {
+export function isValidPlainDate(value: any): boolean {
   try {
     return (
+      typeof value === "string" &&
       new Date(`${value}T00:00:00.000Z`).toISOString().split("T")[0] === value
     );
   } catch {
@@ -8,15 +9,24 @@ export function isValidPlainDate(value: string): boolean {
   }
 }
 
-export function isValidPlainTime(value: string): boolean {
-  return /^T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d{1,3})?$/.test(value);
+export function isValidPlainTime(value: any): boolean {
+  return (
+    typeof value === "string" &&
+    /^T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d{1,3})?$/.test(value)
+  );
 }
 
-export function isValidOffset(value: string): boolean {
-  return value === "Z" || /^[+-]\d{2}(?::?\d{2})?$/.test(value);
+export function isValidOffset(value: any): boolean {
+  return (
+    typeof value === "string" &&
+    (value === "Z" || /^[+-]\d{2}(?::?\d{2})?$/.test(value))
+  );
 }
 
-export function isValidInstant(value: string): boolean {
+export function isValidInstant(value: any): boolean {
+  if (typeof value !== "string") {
+    return false;
+  }
   const indexOfT = value.indexOf("T");
   const indexOfOffsetChar = findLastIndex(value, /[Z+-]/);
   const plainDate = value.slice(0, indexOfT);

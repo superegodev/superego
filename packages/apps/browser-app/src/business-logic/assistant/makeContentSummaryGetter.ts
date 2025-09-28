@@ -1,10 +1,5 @@
 import type { TypescriptModule } from "@superego/backend";
-import {
-  DataType,
-  FormatId,
-  type Schema,
-  utils as schemaUtils,
-} from "@superego/schema";
+import { DataType, type Schema, utils as schemaUtils } from "@superego/schema";
 import wellKnownLibPaths from "../typescript/wellKnownLibPaths.js";
 
 export default function makeContentSummaryGetter(
@@ -18,7 +13,7 @@ export default function makeContentSummaryGetter(
     "  return {",
     ...tableColumns.map(
       ({ header, path }, index) =>
-        `    ${JSON.stringify(`${index}. ${header}`)}: ${makePropertyValueStatement(schema, path, argName)} ?? "",`,
+        `    ${makePropertyName(index, header)}: ${makePropertyValueStatement(schema, path, argName)},`,
     ),
     "  };",
   ];
@@ -28,7 +23,7 @@ export default function makeContentSummaryGetter(
       "",
       "export default function getContentSummary(",
       `  ${argName}: ${rootType}`,
-      "): Record<string, string> {",
+      "): Record<string, string | number | boolean | null> {",
       ...returnStatement,
       "}",
     ].join("\n"),
@@ -38,6 +33,17 @@ export default function makeContentSummaryGetter(
       "}",
     ].join("\n"),
   };
+}
+
+function makePropertyName(index: number, header: string): string {
+  const attributes = [
+    `position:${index}`,
+    "sortable:true",
+    index === 0 ? "default-sort:asc" : null,
+  ]
+    .filter((attribute) => attribute !== null)
+    .join(",");
+  return JSON.stringify(`{${attributes}} ${header}`);
 }
 
 function makePropertyValueStatement(
@@ -57,24 +63,19 @@ function makePropertyValueStatement(
 
   const typeDefinition = schemaUtils.getTypeDefinitionAtPath(schema, path);
   if (!typeDefinition) {
-    return `""`;
+    return "null";
   }
 
   switch (typeDefinition.dataType) {
     case DataType.String:
-      return typeDefinition.format === FormatId.String.Instant
-        ? `(${baseStatement} !== undefined ? LocalInstant.fromISO(${baseStatement}).toFormat() : "")`
-        : baseStatement;
     case DataType.Enum:
     case DataType.StringLiteral:
-      return baseStatement;
     case DataType.Number:
     case DataType.NumberLiteral:
-      return `(${baseStatement} !== undefined ? String(${baseStatement}) : "")`;
     case DataType.Boolean:
     case DataType.BooleanLiteral:
-      return `(${baseStatement} !== undefined ? (${baseStatement} ? "✔": "✖") : "")`;
+      return `${baseStatement} ?? null`;
     default:
-      return "";
+      return "null";
   }
 }

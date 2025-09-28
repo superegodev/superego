@@ -13,12 +13,12 @@ import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVe
 import type DocumentsList from "../../usecases/documents/List.js";
 import Assistant from "../Assistant.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
-import CreateDocument from "./tools/CreateDocument.js";
+import CreateChart from "./tools/CreateChart.js";
+import CreateDocuments from "./tools/CreateDocuments.js";
+import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
-import RenderChart from "./tools/RenderChart.js";
-import RenderDocumentsTable from "./tools/RenderDocumentsTable.js";
 import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
@@ -44,8 +44,21 @@ export default class FactotumAssistant extends Assistant {
 
   protected getDeveloperPrompt(): string {
     return (this.developerPrompt ?? defaultDeveloperPrompt)
-      .replaceAll("$USER_NAME", this.userName ?? "Alex")
-      .replaceAll("$TOOL_NAME_CREATE_DOCUMENT", ToolName.CreateDocument)
+      .replaceAll(
+        "$USER_IDENTITY",
+        this.userName
+          ? [
+              "User identity:",
+              `- Name: ${this.userName}.`,
+              `- Canonical reference: “the user” (${this.userName}).`,
+              "- Safety: do not infer traits from the name. Do not invent personal facts.",
+              "- Pronouns: use they/them unless provided; otherwise mirror the user's own usage.",
+              `- Coreference: “I/me/my” in user messages refers to ${this.userName};`,
+              `  “you/your” in assistant replies refers to ${this.userName}.`,
+            ].join("\n")
+          : "",
+      )
+      .replaceAll("$TOOL_NAME_CREATE_DOCUMENTS", ToolName.CreateDocuments)
       .replaceAll(
         "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",
         ToolName.CreateNewDocumentVersion,
@@ -58,10 +71,10 @@ export default class FactotumAssistant extends Assistant {
         "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
         ToolName.GetCollectionTypescriptSchema,
       )
-      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.RenderChart)
+      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.CreateChart)
       .replaceAll(
         "$TOOL_NAME_RENDER_DOCUMENTS_TABLE",
-        ToolName.RenderDocumentsTable,
+        ToolName.CreateDocumentsTable,
       );
   }
 
@@ -95,10 +108,10 @@ export default class FactotumAssistant extends Assistant {
     return [
       GetCollectionTypescriptSchema.get(),
       ExecuteJavascriptFunction.get(),
-      CreateDocument.get(),
+      CreateDocuments.get(),
       CreateNewDocumentVersion.get(),
-      RenderChart.get(),
-      RenderDocumentsTable.get(),
+      CreateChart.get(),
+      CreateDocumentsTable.get(),
     ];
   }
 
@@ -114,8 +127,8 @@ export default class FactotumAssistant extends Assistant {
         this.javascriptSandbox,
       );
     }
-    if (CreateDocument.is(toolCall)) {
-      return CreateDocument.exec(
+    if (CreateDocuments.is(toolCall)) {
+      return CreateDocuments.exec(
         toolCall,
         this.conversationId,
         this.collections,
@@ -130,16 +143,16 @@ export default class FactotumAssistant extends Assistant {
         this.usecases.documentsCreateNewVersion,
       );
     }
-    if (RenderChart.is(toolCall)) {
-      return RenderChart.exec(
+    if (CreateChart.is(toolCall)) {
+      return CreateChart.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
       );
     }
-    if (RenderDocumentsTable.is(toolCall)) {
-      return RenderDocumentsTable.exec(
+    if (CreateDocumentsTable.is(toolCall)) {
+      return CreateDocumentsTable.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,

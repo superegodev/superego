@@ -6,12 +6,12 @@ import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
 
 interface Props {
-  toolCall: ToolCall.RenderDocumentsTable;
-  toolResult: ToolResult.RenderDocumentsTable & {
+  toolCall: ToolCall.CreateDocumentsTable;
+  toolResult: ToolResult.CreateDocumentsTable & {
     output: { success: true };
   };
 }
-export default function RenderDocumentsTable({ toolCall, toolResult }: Props) {
+export default function CreateDocumentsTable({ toolCall, toolResult }: Props) {
   const { collectionId, title } = toolCall.input;
   const { collections } = useGlobalData();
   const { documents } = toolResult.artifacts!;
@@ -22,7 +22,7 @@ export default function RenderDocumentsTable({ toolCall, toolResult }: Props) {
         collectionId={collectionId}
         collection={CollectionUtils.findCollection(collections, collectionId)}
         documents={documents}
-        className={cs.RenderDocumentsTable.table}
+        className={cs.CreateDocumentsTable.table}
       />
     </div>
   );

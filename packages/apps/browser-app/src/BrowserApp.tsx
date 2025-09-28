@@ -1,6 +1,5 @@
 import type { Backend } from "@superego/backend";
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StrictMode } from "react";
 import { RouterProvider, useLocale } from "react-aria-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import DataLoader from "./business-logic/backend/DataLoader.js";
@@ -17,9 +16,9 @@ import useNavigationState from "./business-logic/navigation/useNavigationState.j
 import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";
 import Root from "./components/routes/Root/Root.js";
 import messages from "./translations/compiled/en.json" with { type: "json" };
-
 import "./BrowserApp.css.js";
-import LoadDemoDataButton from "./components/widgets/LoadDemoDataButton/LoadDemoDataButton.js";
+import LoadDemoDataProvider from "./business-logic/load-demo-data/LoadDemoDataProvider.js";
+import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.js";
 
 interface Props {
   backend: Backend;
@@ -34,11 +33,11 @@ export default function BrowserApp({
   const { locale } = useLocale();
   const { navigateTo } = useNavigationState();
   return (
-    <StrictMode>
-      <IntlProvider messages={messages} locale={locale} defaultLocale="en">
-        <BackendProvider backend={backend}>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider navigate={(href) => navigateTo(fromHref(href))}>
+    <IntlProvider messages={messages} locale={locale} defaultLocale="en">
+      <BackendProvider backend={backend}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider navigate={(href) => navigateTo(fromHref(href))}>
+            <ScreenSizeProvider>
               <DataLoader
                 queries={[
                   listCollectionCategoriesQuery([]),
@@ -69,18 +68,20 @@ export default function BrowserApp({
                       developerPrompts,
                     }}
                   >
-                    {import.meta.env["VITE_IS_DEMO"] === "true" &&
-                    loadDemoData ? (
-                      <LoadDemoDataButton loadDemoData={loadDemoData} />
-                    ) : null}
-                    <Root />
+                    {import.meta.env["VITE_IS_DEMO"] === "true" ? (
+                      <LoadDemoDataProvider value={loadDemoData}>
+                        <Root />
+                      </LoadDemoDataProvider>
+                    ) : (
+                      <Root />
+                    )}
                   </GlobalDataProvider>
                 )}
               </DataLoader>
-            </RouterProvider>
-          </QueryClientProvider>
-        </BackendProvider>
-      </IntlProvider>
-    </StrictMode>
+            </ScreenSizeProvider>
+          </RouterProvider>
+        </QueryClientProvider>
+      </BackendProvider>
+    </IntlProvider>
   );
 }

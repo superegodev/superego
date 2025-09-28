@@ -15,8 +15,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.6",
-    "astro": "^5.13.10",
+    "astro": "^5.14.1",
     "typescript": "^5.9.2",
-    "wrangler": "^4.39.0"
+    "wrangler": "^4.40.2"
   }
 }

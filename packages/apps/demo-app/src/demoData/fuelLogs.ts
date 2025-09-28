@@ -8,7 +8,7 @@ import type {
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Car } from "./collectionCategories.js";
-import fuelLogs from "./fuelLogs.json" with { type: "json" };
+import fuelLogs from "./fuelLogsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -96,32 +96,30 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { FuelLog } from "./CollectionSchema";
+import type { FuelLog } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   fuelLog: FuelLog
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
-    "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({
-      dateStyle: "short", timeStyle: "short"
-    }),
-    "1. Liters": String(fuelLog.liters),
-    "2. Total Cost (€)": String(fuelLog.totalCost),
-    "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
-    "4. Odometer (km)": String(fuelLog.odometer),
+    "{position:0,sortable:true,default-sort:desc} Date": fuelLog.timestamp,
+    "{position:1,sortable:true} Liters": fuelLog.liters,
+    "{position:2,sortable:true} Total Cost (€)": fuelLog.totalCost,
+    "{position:3,sortable:true} Price":
+      Math.round((fuelLog.totalCost / fuelLog.liters) * 1_000) / 1_000,
+    "{position:4,sortable:true} Odometer (km)": fuelLog.odometer,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(fuelLog) {
   return {
-    "0. Date": LocalInstant.fromISO(fuelLog.timestamp).toFormat({
-      dateStyle: "short", timeStyle: "short"
-    }),
-    "1. Liters": String(fuelLog.liters),
-    "2. Total Cost (€)": String(fuelLog.totalCost),
-    "3. Price": String((fuelLog.totalCost / fuelLog.liters).toFixed(3)),
-    "4. Odometer (km)": String(fuelLog.odometer),
+    "{position:0,sortable:true,default-sort:desc} Date": fuelLog.timestamp,
+    "{position:1,sortable:true} Liters": fuelLog.liters,
+    "{position:2,sortable:true} Total Cost (€)": fuelLog.totalCost,
+    "{position:3,sortable:true} Price":
+      Math.round((fuelLog.totalCost / fuelLog.liters) * 1_000) / 1_000,
+    "{position:4,sortable:true} Odometer (km)": fuelLog.odometer,
   };
 }
       `.trim(),

@@ -56,17 +56,19 @@ namespace ToolResult {
       CollectionNotFound
     >
   >;
-  export type CreateDocument = BaseToolResult<
-    ToolName.CreateDocument,
+  export type CreateDocuments = BaseToolResult<
+    ToolName.CreateDocuments,
     Result<
       {
-        collectionId: CollectionId;
-        documentId: DocumentId;
-        documentVersionId: DocumentVersionId;
+        documents: {
+          collectionId: CollectionId;
+          documentId: DocumentId;
+          documentVersionId: DocumentVersionId;
+        }[];
       },
       CollectionNotFound | DocumentContentNotValid | FilesNotFound
     >,
-    { document: LiteDocument }
+    { documents: LiteDocument[] }
   >;
   export type CreateNewDocumentVersion = BaseToolResult<
     ToolName.CreateNewDocumentVersion,
@@ -89,29 +91,42 @@ namespace ToolResult {
     ToolName.ExecuteJavascriptFunction,
     Result<any, CollectionNotFound | ExecutingJavascriptFunctionFailed>
   >;
-  export type RenderChart = BaseToolResult<
-    ToolName.RenderChart,
+  export type CreateChart = BaseToolResult<
+    ToolName.CreateChart,
     Result<
-      string,
+      {
+        markdownSnippet: string;
+        chartInfo: {
+          seriesColorOrder: string[];
+        };
+      },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
       | ResultError<"EchartsOptionNotValid", { issues: ValidationIssue[] }>
     >,
     {
+      chartId: string;
       echartsOption: {
         title: { text: string } | [{ text: string }, ...any[]];
       };
     }
   >;
-  export type RenderDocumentsTable = BaseToolResult<
-    ToolName.RenderDocumentsTable,
+  export type CreateDocumentsTable = BaseToolResult<
+    ToolName.CreateDocumentsTable,
     Result<
-      string,
+      {
+        markdownSnippet: string;
+        tableInfo: {
+          columns: string[];
+          rowCount: number;
+        };
+      },
       | CollectionNotFound
       | ExecutingJavascriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
     {
+      documentsTableId: string;
       documents: LiteDocument[];
     }
   >;
@@ -137,12 +152,12 @@ namespace ToolResult {
 }
 
 type ToolResult =
-  | ToolResult.CreateDocument
+  | ToolResult.CreateDocuments
   | ToolResult.CreateNewDocumentVersion
   | ToolResult.ExecuteJavascriptFunction
   | ToolResult.GetCollectionTypescriptSchema
-  | ToolResult.RenderChart
-  | ToolResult.RenderDocumentsTable
+  | ToolResult.CreateChart
+  | ToolResult.CreateDocumentsTable
   | ToolResult.SuggestCollectionDefinition
   | ToolResult.Unknown;
 

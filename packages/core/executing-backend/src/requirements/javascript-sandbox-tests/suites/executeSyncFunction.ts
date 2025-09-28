@@ -204,6 +204,24 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
           source: "",
           compiled: `
             export default function localInstantTest() {
+              let invalidISO = null;
+              try {
+                LocalInstant.fromISO("not-a-valid-iso");
+              } catch (error) {
+                invalidISO = error.message;
+              }
+              let invalidInstant = null;
+              try {
+                LocalInstant.fromInstant("not-a-valid-instant");
+              } catch (error) {
+                invalidInstant = error.message;
+              }
+              let invalidPlainDate = null;
+              try {
+                LocalInstant.fromPlainDate("not-a-valid-plain-date");
+              } catch (error) {
+                invalidPlainDate = error.message;
+              }
               const localInstant = LocalInstant
                 .fromISO("2025-08-12T16:06:00.000+03:00")
                 .plus({ months: 5, days: 1 })
@@ -212,9 +230,12 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
                 .startOf("week")
                 .set({ hour: 1 });
               return {
+                invalidISO: invalidISO,
+                invalidInstant: invalidInstant,
+                invalidPlainDate: invalidPlainDate,
                 iso: localInstant.toISO(),
-                format: localInstant.toFormat(),
                 jsDate: localInstant.toJSDate().toISOString(),
+                plainDate: localInstant.toPlainDate(),
                 comparisonGt: localInstant.set({ hour: 2 }) > localInstant,
                 comparisonGte: localInstant.set({ hour: 1 }) >= localInstant,
                 comparisonLt: localInstant.set({ hour: 0 }) < localInstant,
@@ -239,9 +260,14 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
         .startOf("week")
         .set({ hour: 1 });
       expect(result.data).toEqual({
+        invalidISO: '"not-a-valid-iso" is not a valid ISO8601 string',
+        invalidInstant:
+          '"not-a-valid-instant" is not a valid dev.superego:String.Instant',
+        invalidPlainDate:
+          '"not-a-valid-plain-date" is not a valid dev.superego:String.PlainDate',
         iso: expectedLocalInstant.toISO(),
-        format: expect.stringContaining("2025"),
         jsDate: expectedLocalInstant.toJSDate().toISOString(),
+        plainDate: expectedLocalInstant.toPlainDate(),
         comparisonGt: true,
         comparisonGte: true,
         comparisonLt: true,

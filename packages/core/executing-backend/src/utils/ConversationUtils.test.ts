@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import ConversationUtils from "./ConversationUtils.js";
 
 describe("lastResponseHadSideEffects", () => {
-  it("true when the last response included one or more CreateDocument calls", () => {
+  it("true when the last response included one or more CreateDocuments calls", () => {
     // Exercise
     const messages = [
       { role: MessageRole.User },
@@ -12,7 +12,7 @@ describe("lastResponseHadSideEffects", () => {
         role: MessageRole.Tool,
         toolResults: [
           {
-            tool: ToolName.CreateDocument,
+            tool: ToolName.CreateDocuments,
             toolCallId: "toolCallId",
             output: { success: true, data: {} as any, error: null },
           },

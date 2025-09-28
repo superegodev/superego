@@ -1,8 +1,7 @@
 import type { Conversation, Message, ToolCall } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
-import CreateDocumentOrVersion from "./ToolResult/CreateDocumentOrVersion.js";
-import RenderChart from "./ToolResult/RenderChart.js";
-import RenderDocumentsTable from "./ToolResult/RenderDocumentsTable.js";
+import CreateDocuments from "./ToolResult/CreateDocuments.js";
+import CreateNewDocumentVersion from "./ToolResult/CreateNewDocumentVersion.js";
 import SuggestCollectionDefinition from "./ToolResult/SuggestCollectionDefinition.js";
 
 interface Props {
@@ -11,14 +10,19 @@ interface Props {
 }
 export default function ToolMessage({ conversation, message }: Props) {
   return message.toolResults.map((toolResult) => {
+    if (ConversationUtils.isSuccessfulCreateDocumentsToolResult(toolResult)) {
+      return (
+        <CreateDocuments key={toolResult.toolCallId} toolResult={toolResult} />
+      );
+    }
+
     if (
-      ConversationUtils.isSuccessfulCreateDocumentToolResult(toolResult) ||
       ConversationUtils.isSuccessfulCreateNewDocumentVersionToolResult(
         toolResult,
       )
     ) {
       return (
-        <CreateDocumentOrVersion
+        <CreateNewDocumentVersion
           key={toolResult.toolCallId}
           toolResult={toolResult}
         />
@@ -39,29 +43,6 @@ export default function ToolMessage({ conversation, message }: Props) {
               conversation,
               toolResult,
             ) as ToolCall.SuggestCollectionDefinition
-          }
-          toolResult={toolResult}
-        />
-      );
-    }
-
-    if (ConversationUtils.isSuccessfulRenderChartToolResult(toolResult)) {
-      return (
-        <RenderChart key={toolResult.toolCallId} toolResult={toolResult} />
-      );
-    }
-
-    if (
-      ConversationUtils.isSuccessfulRenderDocumentsTableToolResult(toolResult)
-    ) {
-      return (
-        <RenderDocumentsTable
-          key={toolResult.toolCallId}
-          toolCall={
-            ConversationUtils.findToolCall(
-              conversation,
-              toolResult,
-            ) as ToolCall.RenderDocumentsTable
           }
           toolResult={toolResult}
         />

@@ -54,6 +54,7 @@ export default function factotumIt(
       const passedCount = repeatTimes - failedCount;
       const actualRate =
         Math.round((passedCount / repeatTimes + Number.EPSILON) * 100) / 100;
+      await annotate(`Pass rate = ${actualRate}`);
 
       expect(
         actualRate,

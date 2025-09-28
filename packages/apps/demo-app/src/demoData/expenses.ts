@@ -8,7 +8,7 @@ import type {
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Finance } from "./collectionCategories.js";
-import expenses from "./expenses.json" with { type: "json" };
+import expenses from "./expensesData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -117,8 +117,7 @@ const collectionVersion: CollectionVersionEntity = {
           },
           currency: {
             description: "Currency code (e.g., EUR, USD).",
-            dataType: DataType.StringLiteral,
-            value: "EUR",
+            dataType: DataType.String,
           },
           category: {
             dataType: null,
@@ -142,26 +141,28 @@ const collectionVersion: CollectionVersionEntity = {
   settings: {
     contentSummaryGetter: {
       source: `
-import type { Expense } from "./CollectionSchema";
+import type { Expense } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   expense: Expense
-): Record<string, string> {
+): Record<string, string | number | boolean | null> {
   return {
-    "0. Title": expense.title,
-    "1. Date": expense.date,
-    "2. Amount": \`\${expense.amount} \${expense.currency}\`,
-    "3. Category": expense.category,
+    "{position:0,sortable:true} Title": expense.title,
+    "{position:1,sortable:true,default-sort:desc} Date": expense.date,
+    "{position:2,sortable:true} Amount": expense.amount,
+    "{position:3,sortable:true} Currency": expense.currency,
+    "{position:4,sortable:true} Category": expense.category,
   };
 }
       `.trim(),
       compiled: `
 export default function getContentSummary(expense) {
   return {
-    "0. Title": expense.title,
-    "1. Date": expense.date,
-    "2. Amount": \`\${expense.amount} \${expense.currency}\`,
-    "3. Category": expense.category,
+    "{position:0,sortable:true} Title": expense.title,
+    "{position:1,sortable:true,default-sort:desc} Date": expense.date,
+    "{position:2,sortable:true} Amount": expense.amount,
+    "{position:3,sortable:true} Currency": expense.currency,
+    "{position:4,sortable:true} Category": expense.category,
   };
 }
       `.trim(),

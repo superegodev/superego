@@ -56,13 +56,13 @@ export default {
     return toolCall;
   },
 
-  isSuccessfulCreateDocumentToolResult(
+  isSuccessfulCreateDocumentsToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.CreateDocument & {
+  ): toolResult is ToolResult.CreateDocuments & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.CreateDocument && toolResult.output.success
+      toolResult.tool === ToolName.CreateDocuments && toolResult.output.success
     );
   },
 
@@ -99,31 +99,31 @@ export default {
     );
   },
 
-  isSuccessfulRenderChartToolResult(
+  isSuccessfulCreateChartToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.RenderChart & {
+  ): toolResult is ToolResult.CreateChart & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.RenderChart && toolResult.output.success
+      toolResult.tool === ToolName.CreateChart && toolResult.output.success
     );
   },
 
-  isSuccessfulRenderDocumentsTableToolResult(
+  isSuccessfulCreateDocumentsTableToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.RenderDocumentsTable & {
+  ): toolResult is ToolResult.CreateDocumentsTable & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.RenderDocumentsTable &&
+      toolResult.tool === ToolName.CreateDocumentsTable &&
       toolResult.output.success
     );
   },
 
-  isCreateDocumentToolCall(
+  isCreateDocumentsToolCall(
     toolCall: ToolCall,
-  ): toolCall is ToolCall.CreateDocument {
-    return toolCall.tool === ToolName.CreateDocument;
+  ): toolCall is ToolCall.CreateDocuments {
+    return toolCall.tool === ToolName.CreateDocuments;
   },
 
   isCreateNewDocumentVersionToolCall(
@@ -138,8 +138,8 @@ export default {
     return toolCall.tool === ToolName.ExecuteJavascriptFunction;
   },
 
-  isRenderChartToolCall(toolCall: ToolCall): toolCall is ToolCall.RenderChart {
-    return toolCall.tool === ToolName.RenderChart;
+  isCreateChartToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
+    return toolCall.tool === ToolName.CreateChart;
   },
 
   isGetCollectionTypescriptSchemaToolCall(

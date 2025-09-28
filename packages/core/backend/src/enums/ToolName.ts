@@ -1,11 +1,11 @@
 enum ToolName {
   // Factotum
-  CreateDocument = "createDocument",
+  CreateDocuments = "createDocuments",
   CreateNewDocumentVersion = "createNewDocumentVersion",
   ExecuteJavascriptFunction = "executeJavascriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
-  RenderChart = "renderChart",
-  RenderDocumentsTable = "renderDocumentsTable",
+  CreateChart = "createChart",
+  CreateDocumentsTable = "createDocumentsTable",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
 }
