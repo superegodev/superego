@@ -4989,7 +4989,7 @@ __metadata:
     vite-bundle-analyzer: "npm:^1.2.3"
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.8"
-    zx: "npm:8.8.3-lite"
+    zx: "npm:8.8.4-lite"
   languageName: unknown
   linkType: soft
 
@@ -5121,7 +5121,7 @@ __metadata:
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
-    zx: "npm:8.8.3-lite"
+    zx: "npm:8.8.4-lite"
   languageName: unknown
   linkType: soft
 
@@ -5163,7 +5163,7 @@ __metadata:
     prettier-plugin-astro: "npm:^0.14.1"
     prettier-plugin-sql-cst: "npm:^0.13.0"
     typescript: "npm:^5.9.2"
-    zx: "npm:8.8.3-lite"
+    zx: "npm:8.8.4-lite"
   languageName: unknown
   linkType: soft
 
@@ -15467,9 +15467,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zx@npm:8.8.3-lite":
-  version: 8.8.3-lite
-  resolution: "zx@npm:8.8.3-lite"
-  checksum: 10c0/97a6bd1d14872c43fbed6b8a599371f1ad3c91d98bcbd296426e6427be3721e4aa2e477f9ba3ed2246a081bab5aea8c65965120752422872d4f806c1cb8ed6ee
+"zx@npm:8.8.4-lite":
+  version: 8.8.4-lite
+  resolution: "zx@npm:8.8.4-lite"
+  checksum: 10c0/3a8e4f529458ce5e7628b4232f3fe48b450946f8d21a5e2341a174516b542a23ac6ac08d144dc3797bb0efb8ae7b0a8cace43998a80c34f6762f8691f609a39c
   languageName: node
   linkType: hard

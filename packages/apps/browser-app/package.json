@@ -41,7 +41,7 @@
     "vite": "^7.1.7",
     "vite-bundle-analyzer": "^1.2.3",
     "vitest": "^3.2.4",
-    "zx": "8.8.3-lite"
+    "zx": "8.8.4-lite"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

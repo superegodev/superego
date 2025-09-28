@@ -20,7 +20,7 @@
     "@types/luxon": "^3.7.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
-    "zx": "8.8.3-lite"
+    "zx": "8.8.4-lite"
   },
   "dependencies": {
     "@superego/schema": "workspace:*",
