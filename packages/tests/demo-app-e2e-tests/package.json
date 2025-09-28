@@ -1,6 +1,6 @@
 {
   "name": "@superego/demo-app-e2e-tests",
-  "version": "0.0.0",
+  "version": "2025.9.3",
   "type": "module",
   "private": true,
   "scripts": {
