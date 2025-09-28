@@ -5017,6 +5017,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:^"
+    "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@tanstack/react-query": "npm:^5.90.2"
     typescript: "npm:^5.9.2"

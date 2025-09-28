@@ -8,7 +8,7 @@ import type {
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Health } from "./collectionCategories.js";
-import weighIns from "./weighIns.json" with { type: "json" };
+import weighIns from "./weighInsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),

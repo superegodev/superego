@@ -78,6 +78,9 @@ const assistantsModels = [
   /* Mistral */
   // "mistralai/mistral-small-3.2-24b-instruct",
   // "mistralai/mistral-medium-3.1",
+
+  /* xAI */
+  // "x-ai/grok-4-fast",
 ];
 
 describe.concurrent.each(assistantsModels)(

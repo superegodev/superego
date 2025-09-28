@@ -7,7 +7,7 @@ import type {
 } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
-import calendarEntries from "./calendarEntries.json" with { type: "json" };
+import calendarEntries from "./calendarEntriesData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),

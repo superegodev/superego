@@ -8,7 +8,7 @@ import type {
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Car } from "./collectionCategories.js";
-import fuelLogs from "./fuelLogs.json" with { type: "json" };
+import fuelLogs from "./fuelLogsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),

@@ -94,7 +94,7 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
         issues: [
           {
             message:
-              "Invalid type: Expected (string | number | boolean | null) but received Object",
+              "Invalid type: Expected (string | number | NaN | boolean | null) but received Object",
             path: [{ key: "object" }],
           },
         ],

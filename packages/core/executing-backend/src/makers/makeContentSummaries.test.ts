@@ -115,7 +115,7 @@ it("ContentSummaryNotValid result for non-valid content summaries, successful re
           issues: [
             {
               message:
-                "Invalid type: Expected (string | number | boolean | null) but received Object",
+                "Invalid type: Expected (string | number | NaN | boolean | null) but received Object",
               path: [{ key: "object" }],
             },
           ],

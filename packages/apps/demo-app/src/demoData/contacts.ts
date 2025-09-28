@@ -7,7 +7,7 @@ import type {
 } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
-import contacts from "./contacts.json" with { type: "json" };
+import contacts from "./contactsData.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
