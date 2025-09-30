@@ -1,4 +1,5 @@
 import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
+import type { Milliseconds } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import makeResultError from "./makers/makeResultError.js";
@@ -6,14 +7,14 @@ import type DataRepositoriesManager from "./requirements/DataRepositoriesManager
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
-import type Millisecond from "./utils/Millisecond.js";
 
+// TODO: unit tests
 export default class BackgroundJobExecutor {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private stuckJobTimeout: Millisecond = 30 * 1000,
+    private stuckJobTimeout: Milliseconds = 30 * 1000,
   ) {}
 
   async executeNext(): Promise<void> {
@@ -35,7 +36,7 @@ export default class BackgroundJobExecutor {
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();
-        const result = await usecase.exec(backgroundJob.input);
+        const result = await usecase.exec(backgroundJob.input as any); // TODO: either fix or explain
 
         if (result.success) {
           await repos.backgroundJob.replace({

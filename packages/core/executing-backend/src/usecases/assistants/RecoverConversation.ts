@@ -9,7 +9,7 @@ import {
   type Message,
   type UnexpectedError,
 } from "@superego/backend";
-import type { ResultPromise } from "@superego/global-types";
+import type { Milliseconds, ResultPromise } from "@superego/global-types";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
@@ -18,11 +18,10 @@ import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import last from "../../utils/last.js";
-import type Millisecond from "../../utils/Millisecond.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-const PROCESSING_TIMEOUT: Millisecond = 5 * 60 * 1000;
+const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
 
 export default class AssistantsRecoverConversation extends Usecase<
   Backend["assistants"]["recoverConversation"]
@@ -72,8 +71,9 @@ export default class AssistantsRecoverConversation extends Usecase<
     };
     await this.repos.conversation.upsert(updatedConversation);
 
-    await this.enqueueBackgroundJob(BackgroundJobName.ProcessConversation, {
-      id,
+    await this.enqueueBackgroundJob({
+      name: BackgroundJobName.ProcessConversation,
+      input: { id },
     });
 
     return makeSuccessfulResult(
@@ -84,7 +84,7 @@ export default class AssistantsRecoverConversation extends Usecase<
 
 function lastMessageOlderThan(
   messages: Message[],
-  threshold: Millisecond,
+  threshold: Milliseconds,
 ): boolean {
   const lastMessage = last(messages);
   return (

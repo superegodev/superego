@@ -1,5 +1,5 @@
+import type { Milliseconds } from "@superego/global-types";
 import type { IntlShape } from "react-intl";
-import type Milliseconds from "./Milliseconds.js";
 
 export default function formatDuration(
   duration: Milliseconds,
