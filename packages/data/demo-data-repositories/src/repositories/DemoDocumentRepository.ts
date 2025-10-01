@@ -56,6 +56,19 @@ export default class DemoDocumentRepository
     return clone(this.documents[id] ?? null);
   }
 
+  async findWhereCollectionIdAndRemoteIdEq(
+    collectionId: CollectionId,
+    remoteId: string,
+  ): Promise<DocumentEntity | null> {
+    this.ensureNotDisposed();
+    const document = Object.values(this.documents).find(
+      (document) =>
+        document.collectionId === collectionId &&
+        document.remoteId === remoteId,
+    );
+    return clone(document ?? null);
+  }
+
   async findAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentEntity[]> {

@@ -19,6 +19,7 @@ const collection: CollectionEntity = {
     assistantInstructions:
       "- If the duration is not supplied for events, default to them being 1 hour long.",
   },
+  remote: null,
   createdAt: new Date(),
 };
 
@@ -107,6 +108,7 @@ export default function getContentSummary(calendarEntry) {
     },
   },
   migration: null,
+  remoteConverters: null,
   createdAt: new Date(),
 };
 
@@ -116,11 +118,13 @@ const documentVersions: DocumentVersionEntity[] = [];
 for (const calendarEntry of calendarEntries) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
+    remoteId: null,
     collectionId: collection.id,
     createdAt: new Date(),
   };
   const documentVersion: DocumentVersionEntity = {
     id: Id.generate.documentVersion(),
+    remoteId: null,
     previousVersionId: null,
     collectionId: collection.id,
     documentId: document.id,
