@@ -16,12 +16,13 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "collection_id", "created_at")
+          ("id", "remote_id", "collection_id", "created_at")
         VALUES
-          (?, ?, ?)
+          (?, ?, ?, ?)
       `)
       .run(
         document.id,
+        document.remoteId,
         document.collectionId,
         document.createdAt.toISOString(),
       );
@@ -54,6 +55,18 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     const document = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
       .get(id) as SqliteDocument | undefined;
+    return document ? toEntity(document) : null;
+  }
+
+  async findWhereCollectionIdAndRemoteIdEq(
+    collectionId: CollectionId,
+    remoteId: string,
+  ): Promise<DocumentEntity | null> {
+    const document = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "collection_id" = ? AND "remote_id" = ?`,
+      )
+      .get(collectionId, remoteId) as SqliteDocument | undefined;
     return document ? toEntity(document) : null;
   }
 

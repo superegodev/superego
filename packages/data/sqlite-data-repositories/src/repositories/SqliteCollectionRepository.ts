@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { CollectionCategoryId, CollectionId } from "@superego/backend";
 import type {
   CollectionEntity,
@@ -18,13 +19,14 @@ export default class SqliteCollectionRepository
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "settings", "created_at")
+          ("id", "settings", "remote", "created_at")
         VALUES
-          (?, ?, ?)
+          (?, ?, ?, ?)
       `)
       .run(
         collection.id,
         JSON.stringify(collection.settings),
+        collection.remote ? encode(collection.remote) : null,
         collection.createdAt.toISOString(),
       );
   }
@@ -35,11 +37,13 @@ export default class SqliteCollectionRepository
         UPDATE "${table}"
         SET
           "settings" = ?,
+          "remote" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
       .run(
         JSON.stringify(collection.settings),
+        collection.remote ? encode(collection.remote) : null,
         collection.createdAt.toISOString(),
         collection.id,
       );

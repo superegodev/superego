@@ -55,6 +55,10 @@ export default class CollectionsUnsetRemote extends Usecase<
     await this.repos.collection.replace(updatedCollection);
     await this.repos.collectionVersion.replace(updatedCollectionVersion);
 
+    // TODO:
+    // - Set all remoteId of documents and document versions to null.
+    // - Require confirmation.
+
     return makeSuccessfulResult(
       makeCollection(updatedCollection, updatedCollectionVersion),
     );

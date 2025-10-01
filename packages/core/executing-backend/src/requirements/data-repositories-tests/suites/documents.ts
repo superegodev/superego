@@ -225,7 +225,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     });
   });
 
-  describe("finding by remote id", () => {
+  describe("finding by collection id and remote id", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
@@ -247,7 +247,10 @@ export default rd<Dependencies>("Documents", (deps) => {
       const found = await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
-          returnValue: await repos.document.findWhereRemoteIdEq(remoteId),
+          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
+            document.collectionId,
+            remoteId,
+          ),
         }),
       );
 
@@ -275,8 +278,10 @@ export default rd<Dependencies>("Documents", (deps) => {
       const found = await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
-          returnValue:
-            await repos.document.findWhereRemoteIdEq("differentRemoteId"),
+          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
+            document.collectionId,
+            "differentRemoteId",
+          ),
         }),
       );
 

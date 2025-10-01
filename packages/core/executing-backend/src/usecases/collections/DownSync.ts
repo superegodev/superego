@@ -250,9 +250,11 @@ export default class CollectionsDownSync extends Usecase {
       );
     }
 
-    const document = await this.repos.document.findWhereRemoteIdEq(
-      addedOrModified.id,
-    );
+    const document =
+      await this.repos.document.findWhereCollectionIdAndRemoteIdEq(
+        collection.id,
+        addedOrModified.id,
+      );
 
     if (!document) {
       const documentsCreateResult = await this.sub(DocumentsCreate).exec(
@@ -309,7 +311,11 @@ export default class CollectionsDownSync extends Usecase {
     void,
     DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
   > {
-    const document = await this.repos.document.findWhereRemoteIdEq(deleted.id);
+    const document =
+      await this.repos.document.findWhereCollectionIdAndRemoteIdEq(
+        collection.id,
+        deleted.id,
+      );
     if (!document) {
       return makeSuccessfulResult(undefined);
     }
