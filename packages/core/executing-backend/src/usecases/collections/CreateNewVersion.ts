@@ -11,6 +11,7 @@ import {
   type CollectionVersionSettings,
   type ContentSummaryGetterNotValid,
   DocumentVersionCreator,
+  type RemoteConverters,
   type TypescriptModule,
   type UnexpectedError,
 } from "@superego/backend";
@@ -41,6 +42,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     schema: Schema,
     settings: CollectionVersionSettings,
     migration: TypescriptModule,
+    remoteConverters: RemoteConverters,
   ): ResultPromise<
     Collection,
     | CollectionNotFound
@@ -117,6 +119,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
+    // TODO: validate remote converters
+
     const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: latestVersionId,
@@ -126,6 +130,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
         contentSummaryGetter: settings.contentSummaryGetter,
       },
       migration: migration,
+      remoteConverters: remoteConverters,
       createdAt: new Date(),
     };
     await this.repos.collectionVersion.insert(collectionVersion);
@@ -189,7 +194,10 @@ export default class CollectionsCreateNewVersion extends Usecase<
         document.id,
         latestDocumentVersion.id,
         executionResult.data,
-        DocumentVersionCreator.Migration,
+        {
+          createdBy: DocumentVersionCreator.Migration,
+          remoteId: latestDocumentVersion.remoteId,
+        },
       );
 
       if (!result.success) {

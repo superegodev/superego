@@ -123,6 +123,7 @@ export default class CollectionsCreate extends Usecase<
         assistantInstructions:
           settingsValidationResult.output.assistantInstructions,
       },
+      remote: null,
       createdAt: now,
     };
     const collectionVersion: CollectionVersionEntity = {
@@ -134,6 +135,7 @@ export default class CollectionsCreate extends Usecase<
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
       migration: null,
+      remoteConverters: null,
       createdAt: now,
     };
     if (!dryRun) {

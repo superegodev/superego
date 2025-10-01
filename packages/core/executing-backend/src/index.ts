@@ -22,6 +22,7 @@ export type { default as BackgroundJobRepository } from "./requirements/Backgrou
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";
 export type { default as CollectionVersionRepository } from "./requirements/CollectionVersionRepository.js";
+export type { default as Connector } from "./requirements/Connector.js";
 export type { default as ConversationRepository } from "./requirements/ConversationRepository.js";
 export type { default as DataRepositories } from "./requirements/DataRepositories.js";
 export type { default as DataRepositoriesManager } from "./requirements/DataRepositoriesManager.js";

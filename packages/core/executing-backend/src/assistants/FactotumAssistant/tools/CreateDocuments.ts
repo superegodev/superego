@@ -43,12 +43,10 @@ export default {
         success,
         data: document,
         error,
-      } = await documentsCreate.exec(
-        collectionId,
-        content,
-        DocumentVersionCreator.Assistant,
-        conversationId,
-      );
+      } = await documentsCreate.exec(collectionId, content, {
+        createdBy: DocumentVersionCreator.Assistant,
+        conversationId: conversationId,
+      });
 
       if (error && error.name === "UnexpectedError") {
         throw new UnexpectedAssistantError(

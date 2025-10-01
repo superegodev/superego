@@ -19,6 +19,7 @@ export default rd<Dependencies>("Collections", (deps) => {
         description: null,
         assistantInstructions: null,
       },
+      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -50,6 +51,7 @@ export default rd<Dependencies>("Collections", (deps) => {
         description: null,
         assistantInstructions: null,
       },
+      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -96,6 +98,7 @@ export default rd<Dependencies>("Collections", (deps) => {
         description: null,
         assistantInstructions: null,
       },
+      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -138,6 +141,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           description: null,
           assistantInstructions: null,
         },
+        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -190,6 +194,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           description: null,
           assistantInstructions: null,
         },
+        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -247,6 +252,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           description: null,
           assistantInstructions: null,
         },
+        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -314,6 +320,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           description: null,
           assistantInstructions: null,
         },
+        remote: null,
         createdAt: new Date(),
       };
       const collection2: CollectionEntity = {
@@ -325,6 +332,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           description: null,
           assistantInstructions: null,
         },
+        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(

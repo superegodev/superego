@@ -6,6 +6,8 @@ import type {
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
   CollectionCategoryNotFound,
+  CollectionHasNoRemote,
+  CollectionIsSyncing,
   CollectionMigrationFailed,
   CollectionMigrationNotValid,
   CollectionNotFound,
@@ -13,6 +15,8 @@ import type {
   CollectionSettingsNotValid,
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
+  ConnectorNotFound,
+  ConnectorSettingsNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
   ConversationNotFound,
@@ -21,10 +25,13 @@ import type {
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
+  ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
+  RemoteConvertersNotValid,
+  SyncingChangesFailed,
   UnexpectedError,
 } from "@superego/backend";
 
@@ -36,25 +43,32 @@ type KnownResultError =
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
   | CollectionCategoryNotFound
+  | CollectionHasNoRemote
+  | CollectionIsSyncing
   | CollectionMigrationFailed
   | CollectionMigrationNotValid
-  | CollectionSettingsNotValid
   | CollectionNotFound
   | CollectionSchemaNotValid
+  | CollectionSettingsNotValid
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
+  | ConnectorNotFound
+  | ConnectorSettingsNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
-  | DocumentVersionIdNotMatching
   | DocumentNotFound
+  | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
+  | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
+  | RemoteConvertersNotValid
+  | SyncingChangesFailed
   | UnexpectedError;
 
 export default function makeResultError<Name extends string, Details>(

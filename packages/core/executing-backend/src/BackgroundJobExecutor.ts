@@ -3,10 +3,12 @@ import type { Milliseconds } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import makeResultError from "./makers/makeResultError.js";
+import type Connector from "./requirements/Connector.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
+import CollectionsDownSync from "./usecases/collections/DownSync.js";
 
 // TODO: unit tests
 export default class BackgroundJobExecutor {
@@ -14,6 +16,7 @@ export default class BackgroundJobExecutor {
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
+    private connectors: Connector[],
     private stuckJobTimeout: Milliseconds = 30 * 1000,
   ) {}
 
@@ -25,6 +28,7 @@ export default class BackgroundJobExecutor {
 
     const UsecaseClass = {
       [BackgroundJobName.ProcessConversation]: AssistantsProcessConversation,
+      [BackgroundJobName.DownSyncCollection]: CollectionsDownSync,
     }[backgroundJob.name];
 
     await this.dataRepositoriesManager
@@ -33,6 +37,7 @@ export default class BackgroundJobExecutor {
           repos,
           this.javascriptSandbox,
           this.inferenceServiceFactory,
+          this.connectors,
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();

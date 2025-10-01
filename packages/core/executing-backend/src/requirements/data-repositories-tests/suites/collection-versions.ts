@@ -27,6 +27,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       schema: schema,
       settings: settings,
       migration: null,
+      remoteConverters: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -57,10 +58,9 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       previousVersionId: null,
       collectionId: Id.generate.collection(),
       schema: schema,
-      settings: {
-        contentSummaryGetter: { source: "", compiled: "" },
-      } satisfies CollectionVersionSettings,
+      settings: settings,
       migration: null,
+      remoteConverters: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -74,8 +74,11 @@ export default rd<Dependencies>("Collection versions", (deps) => {
     const updatedCollectionVersion: CollectionVersionEntity = {
       ...collectionVersion,
       settings: {
-        contentSummaryGetter: { source: "", compiled: "" },
-      } satisfies CollectionVersionSettings,
+        contentSummaryGetter: {
+          source: "updatedSource",
+          compiled: "updatedCompiled",
+        },
+      },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
@@ -109,6 +112,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       schema: schema,
       settings: settings,
       migration: null,
+      remoteConverters: null,
       createdAt: new Date(),
     };
     const collectionVersion2: CollectionVersionEntity = {
@@ -118,6 +122,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       schema: schema,
       settings: settings,
       migration: null,
+      remoteConverters: null,
       createdAt: new Date(),
     };
     const collectionVersion3: CollectionVersionEntity = {
@@ -127,6 +132,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
       schema: schema,
       settings: settings,
       migration: null,
+      remoteConverters: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -172,6 +178,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -224,6 +231,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
       const collectionVersion2: CollectionVersionEntity = {
@@ -233,6 +241,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -307,6 +316,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
       const collectionVersion2: CollectionVersionEntity = {
@@ -316,6 +326,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
       const collectionVersion3: CollectionVersionEntity = {
@@ -325,6 +336,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
         schema: schema,
         settings: settings,
         migration: null,
+        remoteConverters: null,
         createdAt: new Date(),
       };
 

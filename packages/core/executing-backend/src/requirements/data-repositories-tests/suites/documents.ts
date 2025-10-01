@@ -12,6 +12,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     // Exercise
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -37,6 +38,7 @@ export default rd<Dependencies>("Documents", (deps) => {
     const { dataRepositoriesManager } = await deps();
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -74,16 +76,19 @@ export default rd<Dependencies>("Documents", (deps) => {
     const collection2Id = Id.generate.collection();
     const document1: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document2: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document3: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: collection2Id,
       createdAt: new Date(),
     };
@@ -134,6 +139,7 @@ export default rd<Dependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -179,6 +185,7 @@ export default rd<Dependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = await deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -218,6 +225,66 @@ export default rd<Dependencies>("Documents", (deps) => {
     });
   });
 
+  describe("finding by remote id", () => {
+    it("case: exists => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const remoteId = "remoteId";
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: remoteId,
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.findWhereRemoteIdEq(remoteId),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(document);
+    });
+
+    it("case: doesn't exist => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = await deps();
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: "remoteId",
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.document.findWhereRemoteIdEq("differentRemoteId"),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+  });
+
   describe("finding all by collection id", () => {
     it("case: no documents in collection => returns empty array", async () => {
       // Setup SUT
@@ -244,16 +311,19 @@ export default rd<Dependencies>("Documents", (deps) => {
       const collection2Id = Id.generate.collection();
       const document1: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document2: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document3: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
         collectionId: collection2Id,
         createdAt: new Date(),
       };

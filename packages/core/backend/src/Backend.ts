@@ -9,6 +9,8 @@ import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasCh
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
 import type CollectionCategoryNotFound from "./errors/CollectionCategoryNotFound.js";
+import type CollectionHasNoRemote from "./errors/CollectionHasNoRemote.js";
+import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
@@ -16,6 +18,8 @@ import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js"
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
+import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
+import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
@@ -26,6 +30,7 @@ import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
@@ -40,6 +45,7 @@ import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
+import type Connector from "./types/Connector.js";
 import type Conversation from "./types/Conversation.js";
 import type DeletedEntities from "./types/DeletedEntities.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
@@ -48,6 +54,7 @@ import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
+import type RemoteConverters from "./types/RemoteConverters.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
@@ -112,6 +119,27 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    setRemote(
+      id: CollectionId,
+      connectorName: string,
+      connectorSettings: any,
+      remoteConverters: RemoteConverters,
+    ): ResultPromise<
+      Collection,
+      | CollectionNotFound
+      | ConnectorNotFound
+      | ConnectorSettingsNotValid
+      | RemoteConvertersNotValid
+      | UnexpectedError
+    >;
+
+    unsetRemote(
+      id: CollectionId,
+    ): ResultPromise<
+      Collection,
+      CollectionNotFound | CollectionHasNoRemote | UnexpectedError
+    >;
+
     /** Creates a new version for the collection and migrates all documents. */
     createNewVersion(
       id: CollectionId,
@@ -119,6 +147,7 @@ export default interface Backend {
       schema: Schema,
       settings: CollectionVersionSettings,
       migration: TypescriptModule,
+      remoteConverters: RemoteConverters | null,
     ): ResultPromise<
       Collection,
       | CollectionNotFound
@@ -126,6 +155,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ContentSummaryGetterNotValid
       | CollectionMigrationNotValid
+      | RemoteConvertersNotValid
       | CollectionMigrationFailed
       | UnexpectedError
     >;
@@ -158,6 +188,18 @@ export default interface Backend {
     >;
 
     list(): ResultPromise<Collection[], UnexpectedError>;
+
+    triggerDownSync(
+      id: CollectionId,
+    ): ResultPromise<
+      Collection,
+      | CollectionNotFound
+      | CollectionHasNoRemote
+      | CollectionIsSyncing
+      | UnexpectedError
+    >;
+
+    listConnectors(): ResultPromise<Connector[], UnexpectedError>;
   };
 
   documents: {

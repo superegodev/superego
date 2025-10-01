@@ -13,6 +13,7 @@ export default async function makeDocument(
 ): Promise<Document> {
   return {
     id: document.id,
+    remoteId: document.remoteId,
     collectionId: document.collectionId,
     latestVersion: await makeDocumentVersion(
       javascriptSandbox,
