@@ -4,7 +4,7 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type CollectionVersionEntity from "../../../entities/CollectionVersionEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
 const schema: Schema = {
   types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -14,10 +14,10 @@ const settings: CollectionVersionSettings = {
   contentSummaryGetter: { source: "", compiled: "" },
 };
 
-export default rd<Dependencies>("Collection versions", (deps) => {
+export default rd<GetDependencies>("Collection versions", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const collectionVersion: CollectionVersionEntity = {
@@ -52,7 +52,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
 
   it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
@@ -102,7 +102,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
 
   it("deleting all by collection id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
     const collectionVersion1: CollectionVersionEntity = {
@@ -170,7 +170,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionVersion: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
         previousVersionId: null,
@@ -202,7 +202,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -222,7 +222,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
   describe("finding latest by collection id", () => {
     it("case: exists => returns latest", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
       const collectionVersion1: CollectionVersionEntity = {
         id: Id.generate.collectionVersion(),
@@ -269,7 +269,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -290,7 +290,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
   describe("finding all latests", () => {
     it("case: no collection versions => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -306,7 +306,7 @@ export default rd<Dependencies>("Collection versions", (deps) => {
 
     it("case: some collection versions => returns latest from each collection", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collection1Id = Id.generate.collection();
       const collection2Id = Id.generate.collection();
       const collectionVersion1: CollectionVersionEntity = {

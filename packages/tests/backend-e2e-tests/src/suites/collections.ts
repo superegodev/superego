@@ -1,14 +1,15 @@
+import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Collections", (deps) => {
+export default rd<GetDependencies>("Collections", (deps) => {
   describe("create", () => {
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collections.create(
@@ -52,7 +53,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const collectionCategoryId = Id.generate.collectionCategory();
@@ -89,7 +90,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: CollectionSchemaNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collections.create(
@@ -133,7 +134,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: ContentSummaryGetterNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collections.create(
@@ -178,7 +179,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("success: creates", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const createResult = await backend.collections.create(
@@ -247,7 +248,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("updateSettings", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const collectionId = Id.generate.collection();
@@ -268,7 +269,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -317,7 +318,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -359,7 +360,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("success: updates", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createCollectionCategoryResult =
         await backend.collectionCategories.create({
           name: "category",
@@ -424,10 +425,522 @@ export default rd<Dependencies>("Collections", (deps) => {
     });
   });
 
+  describe("createNewVersion", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const latestVersionId = Id.generate.collectionVersion();
+      const result = await backend.collections.createNewVersion(
+        collectionId,
+        latestVersionId,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        { contentSummaryGetter: { source: "", compiled: "" } },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CollectionVersionIdNotMatching", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const latestVersionId = Id.generate.collectionVersion();
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        latestVersionId,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        { contentSummaryGetter: { source: "", compiled: "" } },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionVersionIdNotMatching",
+          details: {
+            collectionId: createResult.data.id,
+            latestVersionId: createResult.data.latestVersion.id,
+            suppliedVersionId: latestVersionId,
+          },
+        },
+      });
+    });
+
+    it("error: CollectionSchemaNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.String } },
+          rootType: "Root",
+        },
+        { contentSummaryGetter: { source: "", compiled: "" } },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionSchemaNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message: "Root type must be a Struct",
+                path: [{ key: "rootType" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentSummaryGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export function getContentSummary() {}",
+          },
+        },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentSummaryGetterNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message:
+                  "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionMigrationNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+        { source: "", compiled: "export function migrate() {}" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "The default export of the migration TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: RemoteConvertersNotValid (case: remoteConverters not null when there is no remote)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+        { source: "", compiled: "export default function migrate() {}" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "RemoteConvertersNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "Collection has no remote; remoteConverters must be null.",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
+      // Setup SUT
+      const fakeConnector: Connector = {
+        name: "FakeConnector",
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+      const { backend } = await deps(fakeConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        fakeConnector.name,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+        { source: "", compiled: "export default function migrate() {}" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "RemoteConvertersNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "Collection has a remote; remoteConverters must not be null.",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
+      // Setup SUT
+      const fakeConnector: Connector = {
+        name: "FakeConnector",
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+      const { backend } = await deps(fakeConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        fakeConnector.name,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+        { source: "", compiled: "export default function migrate() {}" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "RemoteConvertersNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "The default export of the fromRemoteDocument TypescriptModule is not a function",
+                path: [{ key: "fromRemoteDocument" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+  });
+
   describe("updateLatestVersionSettings", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const collectionId = Id.generate.collection();
@@ -451,7 +964,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: CollectionVersionIdNotMatching", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -474,11 +987,11 @@ export default rd<Dependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
 
       // Exercise
-      const suppliedVersionId = Id.generate.collectionVersion();
+      const latestVersionId = Id.generate.collectionVersion();
       const updateLatestVersionSettingsResult =
         await backend.collections.updateLatestVersionSettings(
           createResult.data.id,
-          suppliedVersionId,
+          latestVersionId,
           {},
         );
 
@@ -491,7 +1004,7 @@ export default rd<Dependencies>("Collections", (deps) => {
           details: {
             collectionId: createResult.data.id,
             latestVersionId: createResult.data.latestVersion.id,
-            suppliedVersionId: suppliedVersionId,
+            suppliedVersionId: latestVersionId,
           },
         },
       });
@@ -499,7 +1012,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("error: ContentSummaryGetterNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -556,7 +1069,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("success: updates", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -625,7 +1138,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("list", () => {
     it("success: empty list", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collections.list();
@@ -640,7 +1153,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("success: non-empty list, sorted by name", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const zetaCreateResult = await backend.collections.create(
         {
           name: "zeta",

@@ -86,7 +86,7 @@ const assistantsModels = [
 describe.concurrent.each(assistantsModels)(
   `Assistants model: %s; Evaluator model: ${evaluatorModel}`,
   (model) => {
-    registerTests(async () => {
+    registerTests(() => {
       const defaultGlobalSettings = {
         appearance: { theme: Theme.Auto },
         inference: {

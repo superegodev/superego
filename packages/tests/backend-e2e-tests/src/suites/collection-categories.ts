@@ -3,13 +3,13 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { sortBy } from "es-toolkit";
 import { assert, describe, expect, it } from "vitest";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Collection categories", (deps) => {
+export default rd<GetDependencies>("Collection categories", (deps) => {
   describe("create", () => {
     it("error: CollectionCategoryNameNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collectionCategories.create({
@@ -39,7 +39,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: CollectionCategoryIconNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collectionCategories.create({
@@ -69,7 +69,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: ParentCollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const parentId = Id.generate.collectionCategory();
@@ -92,7 +92,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("success: creates (case: w/o icon, w/o parentId)", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collectionCategories.create({
@@ -123,7 +123,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("success: creates (case: w/ icon, w/ parentId)", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createParentResult = await backend.collectionCategories.create({
         name: "parent",
         icon: null,
@@ -166,7 +166,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("update", () => {
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const id = Id.generate.collectionCategory();
@@ -189,7 +189,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: CollectionCategoryNameNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collectionCategories.create({
         name: "name",
         icon: null,
@@ -226,7 +226,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: CollectionCategoryIconNotValid", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collectionCategories.create({
         name: "name",
         icon: null,
@@ -263,7 +263,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: ParentCollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collectionCategories.create({
         name: "name",
         icon: null,
@@ -291,7 +291,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: ParentCollectionCategoryIsDescendant", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createParentResult = await backend.collectionCategories.create({
         name: "parent",
         icon: null,
@@ -326,7 +326,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("success: updates", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createParentResult = await backend.collectionCategories.create({
         name: "parent",
         icon: null,
@@ -378,7 +378,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("delete", () => {
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const id = Id.generate.collectionCategory();
@@ -399,7 +399,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: CollectionCategoryHasChildren (case: child = collection category)", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createParentResult = await backend.collectionCategories.create({
         name: "parent",
         icon: null,
@@ -433,7 +433,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("error: CollectionCategoryHasChildren (case: child = collection)", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createParentResult = await backend.collectionCategories.create({
         name: "parent",
         icon: null,
@@ -481,7 +481,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("success: deletes", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const createResult = await backend.collectionCategories.create({
         name: "name",
         icon: null,
@@ -521,7 +521,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("list", () => {
     it("success: empty list", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
 
       // Exercise
       const result = await backend.collectionCategories.list();
@@ -536,7 +536,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("success: non-empty list, sorted by name", async () => {
       // Setup SUT
-      const { backend } = await deps();
+      const { backend } = deps();
       const zetaCreateResult = await backend.collectionCategories.create({
         name: "zeta",
         icon: null,

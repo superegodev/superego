@@ -1,5 +1,6 @@
 import type DataRepositoriesManager from "../DataRepositoriesManager.js";
 
-export default interface Dependencies {
+type GetDependencies = () => {
   dataRepositoriesManager: DataRepositoriesManager;
-}
+};
+export default GetDependencies;

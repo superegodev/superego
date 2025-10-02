@@ -10,12 +10,12 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type ConversationEntity from "../../../entities/ConversationEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Conversations", (deps) => {
+export default rd<GetDependencies>("Conversations", (deps) => {
   it("inserting (via upsert)", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const audio: AudioContent = {
@@ -67,7 +67,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
 
   it("updating (via upsert)", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
@@ -110,7 +110,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
 
   it("deleting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
@@ -152,7 +152,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
   describe("checking existence", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
@@ -185,7 +185,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -205,7 +205,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
@@ -238,7 +238,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -258,7 +258,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
   describe("finding all", () => {
     it("case: no conversations => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -274,7 +274,7 @@ export default rd<Dependencies>("Conversations", (deps) => {
 
     it("case: some conversations => returns them (ordered by createdAt, desc)", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const conversation1: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,

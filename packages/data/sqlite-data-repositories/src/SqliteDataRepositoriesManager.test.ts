@@ -18,7 +18,7 @@ afterAll(() => {
   rmSync(databasesTmpDir, { recursive: true });
 });
 
-registerDataRepositoriesTests(async () => {
+registerDataRepositoriesTests(() => {
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
     defaultGlobalSettings: {

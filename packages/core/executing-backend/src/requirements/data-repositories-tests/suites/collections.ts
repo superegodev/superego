@@ -3,12 +3,12 @@ import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { sortBy } from "es-toolkit";
 import { describe, expect, it } from "vitest";
 import type CollectionEntity from "../../../entities/CollectionEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Collections", (deps) => {
+export default rd<GetDependencies>("Collections", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const collection: CollectionEntity = {
@@ -42,7 +42,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
   it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection: CollectionEntity = {
       id: Id.generate.collection(),
       settings: {
@@ -89,7 +89,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
   it("deleting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection: CollectionEntity = {
       id: Id.generate.collection(),
       settings: {
@@ -132,7 +132,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("checking existence", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collection: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
@@ -166,7 +166,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -184,7 +184,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("checking existence by collection category", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategoryId = Id.generate.collectionCategory();
       const collection: CollectionEntity = {
         id: Id.generate.collection(),
@@ -222,7 +222,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -243,7 +243,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collection: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {
@@ -277,7 +277,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -295,7 +295,7 @@ export default rd<Dependencies>("Collections", (deps) => {
   describe("finding all", () => {
     it("case: no collections => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -311,7 +311,7 @@ export default rd<Dependencies>("Collections", (deps) => {
 
     it("case: some collections => returns them, sorted by name", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collection1: CollectionEntity = {
         id: Id.generate.collection(),
         settings: {

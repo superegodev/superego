@@ -3,7 +3,7 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
 const content = {
   string: "string",
@@ -14,10 +14,10 @@ const content = {
   null: null,
 };
 
-export default rd<Dependencies>("Document versions", (deps) => {
+export default rd<GetDependencies>("Document versions", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const documentVersion: DocumentVersionEntity = {
@@ -53,7 +53,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
   it("deleting all by collection id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
     const documentVersion1: DocumentVersionEntity = {
@@ -141,7 +141,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
   it("deleting all by document id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collectionId = Id.generate.collection();
     const document1Id = Id.generate.document();
     const document2Id = Id.generate.document();
@@ -218,7 +218,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
   describe("finding one", () => {
     it("case: exists, latest => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         remoteId: null,
@@ -252,7 +252,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
     it("case: exists, not latest => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
@@ -326,7 +326,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -346,7 +346,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
   describe("finding latest by document id", () => {
     it("case: exists => returns latest", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
@@ -395,7 +395,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -415,7 +415,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
   describe("finding all latests by collection id", () => {
     it("case: no document versions in collection => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -434,7 +434,7 @@ export default rd<Dependencies>("Document versions", (deps) => {
 
     it("case: some document versions in collection => returns latest of each document", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
       const document1Id = Id.generate.document();
       const document2Id = Id.generate.document();

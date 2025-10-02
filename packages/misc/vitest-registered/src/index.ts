@@ -1,19 +1,16 @@
 import { describe, type TestFunction, test } from "vitest";
 
-export function registeredDescribe<Dependencies>(
+export function registeredDescribe<GetDependencies>(
   name: string,
   fn: (
-    getDependencies: () => Promise<Dependencies>,
+    getDependencies: GetDependencies,
     it: {
       (name: string, testFn: TestFunction): void;
       only(name: string, testFn: TestFunction): void;
     },
   ) => void,
 ) {
-  return (
-    getDependencies: () => Promise<Dependencies>,
-    testsToSkip?: string[],
-  ) => {
+  return (getDependencies: GetDependencies, testsToSkip?: string[]) => {
     function it(name: string, testFn: TestFunction, only?: boolean) {
       test(
         name,

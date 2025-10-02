@@ -2,12 +2,12 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type FileEntity from "../../../entities/FileEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Files", (deps) => {
+export default rd<GetDependencies>("Files", (deps) => {
   it("inserting all", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const file1: FileEntity = {
@@ -71,7 +71,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
   it("deleting all by collection id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
     const file1: FileEntity = {
@@ -144,7 +144,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
   it("deleting all by document id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const document1Id = Id.generate.document();
     const document2Id = Id.generate.document();
     const file1: FileEntity = {
@@ -217,7 +217,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -247,7 +247,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -265,7 +265,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("finding all by ids", () => {
     it("case: no matching files => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -284,7 +284,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: some matching files => returns them", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file1: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -334,7 +334,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("getting content", () => {
     it("case: exists => returns content", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -365,7 +365,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const foundContent =

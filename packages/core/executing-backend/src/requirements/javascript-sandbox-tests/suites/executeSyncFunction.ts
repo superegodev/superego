@@ -1,14 +1,14 @@
 import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect } from "vitest";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
+export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
   describe("executes the function default-exported by with the supplied module, with the supplied args, and returns the result", () => {
     describe("failed executions", () => {
       it("importing the module fails (syntax error)", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -32,7 +32,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("importing the module fails (module throws)", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -58,7 +58,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("the module does not default-export a function", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -80,7 +80,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("the function throws an error", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -105,7 +105,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("the function throws a non-error", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -126,7 +126,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("the function returns a value that cannot be serialized", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -149,7 +149,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
     describe("successful executions", () => {
       it("primitive arguments, primitive return value", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -171,7 +171,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
 
       it("composite arguments, composite return value", async () => {
         // Setup SUT
-        const { javascriptSandbox } = await deps();
+        const { javascriptSandbox } = deps();
 
         // Exercise
         const result = await javascriptSandbox.executeSyncFunction(
@@ -196,7 +196,7 @@ export default rd<Dependencies>("executeSyncFunction", (deps, it) => {
   describe("gives the function access to global utils", () => {
     it("LocalInstant", async () => {
       // Setup SUT
-      const { javascriptSandbox } = await deps();
+      const { javascriptSandbox } = deps();
 
       // Exercise
       const result = await javascriptSandbox.executeSyncFunction(

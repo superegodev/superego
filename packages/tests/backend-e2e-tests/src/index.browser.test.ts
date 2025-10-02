@@ -31,7 +31,7 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests(async () => {
+registerTests((connector) => {
   // Javascript sandbox
   const javascriptSandbox = new FakeJavascriptSandbox();
 
@@ -49,7 +49,7 @@ registerTests(async () => {
     dataRepositoriesManager,
     javascriptSandbox,
     inferenceServiceFactory,
-    [],
+    connector ? [connector] : [],
   );
 
   return { backend };

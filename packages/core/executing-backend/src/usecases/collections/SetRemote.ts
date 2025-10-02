@@ -83,6 +83,7 @@ export default class CollectionsSetRemote extends Usecase<
             {
               message:
                 "The default export of the fromRemoteDocument TypescriptModule is not a function",
+              path: [{ key: "fromRemoteDocument" }],
             },
           ],
         }),
