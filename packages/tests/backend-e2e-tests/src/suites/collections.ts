@@ -1398,6 +1398,129 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
+  describe("delete", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.delete(collectionId, "delete");
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CommandConfirmationNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const commandConfirmation = "notDelete";
+      const deleteResult = await backend.collections.delete(
+        createCollectionResult.data.id,
+        commandConfirmation,
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CommandConfirmationNotValid",
+          details: {
+            requiredCommandConfirmation: "delete",
+            suppliedCommandConfirmation: commandConfirmation,
+          },
+        },
+      });
+    });
+
+    it("success: deletes", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {},
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const deleteCollectionResult = await backend.collections.delete(
+        createCollectionResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteCollectionResult).toEqual({
+        success: true,
+        data: {
+          collectionCategories: [],
+          collections: [createCollectionResult.data.id],
+          collectionVersions: [createCollectionResult.data.latestVersion.id],
+          documents: [createDocumentResult.data.id],
+          documentVersion: [createDocumentResult.data.latestVersion.id],
+          conversations: [],
+          files: [],
+        },
+        error: null,
+      });
+      const listCollectionsResult = await backend.collections.list();
+      expect(listCollectionsResult).toEqual({
+        success: true,
+        data: [],
+        error: null,
+      });
+    });
+  });
+
   describe("list", () => {
     it("success: empty list", async () => {
       // Setup SUT
