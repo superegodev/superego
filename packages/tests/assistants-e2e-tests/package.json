@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.5.2",
-    "typescript": "^5.9.2"
+    "@types/node": "^24.6.1",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

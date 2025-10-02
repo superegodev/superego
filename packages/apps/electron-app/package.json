@@ -23,9 +23,9 @@
     "@electron-forge/publisher-github": "^7.9.0",
     "@electron/fuses": "^2.0.0",
     "@types/electron-squirrel-startup": "^1.0.2",
-    "electron": "38.1.2",
+    "electron": "38.2.0",
     "electron-vite": "^4.0.1",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vite": "^7.1.7"
   },
   "dependencies": {
