@@ -6,12 +6,14 @@ export default defineConfig({
       {
         test: {
           name: "nodejs",
+          setupFiles: ["src/vitest-setup.ts"],
           include: ["src/index.nodejs.test.ts"],
         },
       },
       {
         test: {
           name: "browser",
+          setupFiles: ["src/vitest-setup.ts"],
           include: ["src/index.browser.test.ts"],
           browser: {
             provider: "playwright",

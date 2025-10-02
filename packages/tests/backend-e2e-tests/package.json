@@ -19,9 +19,11 @@
     "@superego/openai-compat-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/schema": "workspace:*",
+    "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
     "@vitest/browser": "^3.2.4",
+    "es-toolkit": "^1.39.10",
     "playwright": "^1.55.1",
     "vitest": "^3.2.4"
   }

@@ -28,7 +28,7 @@ import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatc
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
-import type CollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
+import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
@@ -78,7 +78,7 @@ export default interface Backend {
       | CollectionCategoryNameNotValid
       | CollectionCategoryIconNotValid
       | ParentCollectionCategoryNotFound
-      | CollectionCategoryIsDescendant
+      | ParentCollectionCategoryIsDescendant
       | UnexpectedError
     >;
 
