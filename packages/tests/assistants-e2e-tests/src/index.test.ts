@@ -19,7 +19,7 @@ const chatCompletionsApiKey = import.meta.env[
 ];
 assert.isDefined(chatCompletionsApiKey);
 
-const databasesTmpDir = join(tmpdir(), "superego-backend-e2e-tests");
+const databasesTmpDir = join(tmpdir(), "superego-assistants-e2e-tests");
 beforeAll(() => {
   mkdirSync(databasesTmpDir, { recursive: true });
 });

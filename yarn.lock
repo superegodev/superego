@@ -4914,6 +4914,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests":
+  version: 0.0.0-use.local
+  resolution: "@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests"
+  dependencies:
+    "@superego/backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*"
+    "@superego/fake-javascript-sandbox": "workspace:*"
+    "@superego/global-types": "workspace:*"
+    "@superego/openai-compat-inference-service": "workspace:*"
+    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/schema": "workspace:*"
+    "@superego/sqlite-data-repositories": "workspace:*"
+    "@superego/vitest-registered": "workspace:*"
+    "@types/node": "npm:^24.6.1"
+    "@vitest/browser": "npm:^3.2.4"
+    playwright: "npm:^1.55.1"
+    typescript: "npm:^5.9.3"
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "@superego/backend@workspace:*, @superego/backend@workspace:packages/core/backend":
   version: 0.0.0-use.local
   resolution: "@superego/backend@workspace:packages/core/backend"
