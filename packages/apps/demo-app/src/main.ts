@@ -63,6 +63,7 @@ const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
+  [],
 );
 
 const queryClient = new QueryClient({

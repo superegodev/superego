@@ -65,6 +65,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       values.schema,
       { contentSummaryGetter: values.contentSummaryGetter },
       values.migration,
+      null, // TODO
     );
     if (success) {
       reset({

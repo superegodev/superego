@@ -140,6 +140,16 @@ export default interface Backend {
       CollectionNotFound | CollectionHasNoRemote | UnexpectedError
     >;
 
+    triggerDownSync(
+      id: CollectionId,
+    ): ResultPromise<
+      Collection,
+      | CollectionNotFound
+      | CollectionHasNoRemote
+      | CollectionIsSyncing
+      | UnexpectedError
+    >;
+
     /** Creates a new version for the collection and migrates all documents. */
     createNewVersion(
       id: CollectionId,
@@ -188,16 +198,6 @@ export default interface Backend {
     >;
 
     list(): ResultPromise<Collection[], UnexpectedError>;
-
-    triggerDownSync(
-      id: CollectionId,
-    ): ResultPromise<
-      Collection,
-      | CollectionNotFound
-      | CollectionHasNoRemote
-      | CollectionIsSyncing
-      | UnexpectedError
-    >;
 
     listConnectors(): ResultPromise<Connector[], UnexpectedError>;
   };

@@ -128,6 +128,7 @@ describe.concurrent.each(assistantsModels)(
         dataRepositoriesManager,
         javascriptSandbox,
         inferenceServiceFactory,
+        [],
       );
 
       return { backend, booleanOracle: evaluator };

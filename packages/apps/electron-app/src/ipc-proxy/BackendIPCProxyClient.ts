@@ -21,22 +21,26 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.collections = {
       create: this.makeMainIpcCall("collections.create"),
-      createNewVersion: this.makeMainIpcCall("collections.createNewVersion"),
-      list: this.makeMainIpcCall("collections.list"),
-      delete: this.makeMainIpcCall("collections.delete"),
       updateSettings: this.makeMainIpcCall("collections.updateSettings"),
+      setRemote: this.makeMainIpcCall("collections.setRemote"),
+      unsetRemote: this.makeMainIpcCall("collections.unsetRemote"),
+      triggerDownSync: this.makeMainIpcCall("collections.triggerDownSync"),
+      createNewVersion: this.makeMainIpcCall("collections.createNewVersion"),
       updateLatestVersionSettings: this.makeMainIpcCall(
         "collections.updateLatestVersionSettings",
       ),
+      delete: this.makeMainIpcCall("collections.delete"),
+      list: this.makeMainIpcCall("collections.list"),
+      listConnectors: this.makeMainIpcCall("collections.listConnectors"),
     };
 
     this.documents = {
       create: this.makeMainIpcCall("documents.create"),
       createNewVersion: this.makeMainIpcCall("documents.createNewVersion"),
+      delete: this.makeMainIpcCall("documents.delete"),
       get: this.makeMainIpcCall("documents.get"),
       getVersion: this.makeMainIpcCall("documents.getVersion"),
       list: this.makeMainIpcCall("documents.list"),
-      delete: this.makeMainIpcCall("documents.delete"),
     };
 
     this.files = {
