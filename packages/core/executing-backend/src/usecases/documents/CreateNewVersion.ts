@@ -90,7 +90,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
     }
 
     if (
-      document.remoteId &&
+      document.remoteId !== null &&
       options?.createdBy !== DocumentVersionCreator.Connector &&
       options?.createdBy !== DocumentVersionCreator.Migration
     ) {

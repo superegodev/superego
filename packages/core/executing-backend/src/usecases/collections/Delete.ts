@@ -3,15 +3,14 @@ import type {
   CollectionId,
   CollectionNotFound,
   CommandConfirmationNotValid,
-  DeletedEntities,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
+import DocumentsDelete from "../documents/Delete.js";
 
 export default class CollectionsDelete extends Usecase<
   Backend["collections"]["delete"]
@@ -20,7 +19,7 @@ export default class CollectionsDelete extends Usecase<
     id: CollectionId,
     commandConfirmation: string,
   ): ResultPromise<
-    DeletedEntities,
+    null,
     CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
@@ -39,24 +38,13 @@ export default class CollectionsDelete extends Usecase<
       );
     }
 
-    const deletedFileIds =
-      await this.repos.file.deleteAllWhereCollectionIdEq(id);
-    const deletedDocumentVersionIds =
-      await this.repos.documentVersion.deleteAllWhereCollectionIdEq(id);
-    const deletedDocumentIds =
-      await this.repos.document.deleteAllWhereCollectionIdEq(id);
-    const deletedCollectionVersionIds =
-      await this.repos.collectionVersion.deleteAllWhereCollectionIdEq(id);
+    const documents = await this.repos.document.findAllWhereCollectionIdEq(id);
+    for (const document of documents) {
+      await this.sub(DocumentsDelete).exec(id, document.id, "delete", true);
+    }
+    await this.repos.collectionVersion.deleteAllWhereCollectionIdEq(id);
     await this.repos.collection.delete(id);
 
-    return makeSuccessfulResult(
-      makeDeletedEntities({
-        collections: [id],
-        collectionVersions: deletedCollectionVersionIds,
-        documents: deletedDocumentIds,
-        documentVersion: deletedDocumentVersionIds,
-        files: deletedFileIds,
-      }),
-    );
+    return makeSuccessfulResult(null);
   }
 }

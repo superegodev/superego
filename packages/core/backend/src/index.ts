@@ -79,7 +79,6 @@ export type { default as CollectionVersionSettings } from "./types/CollectionVer
 export type { default as Connector } from "./types/Connector.js";
 export type { default as ContentSummary } from "./types/ContentSummary.js";
 export type { default as Conversation } from "./types/Conversation.js";
-export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";

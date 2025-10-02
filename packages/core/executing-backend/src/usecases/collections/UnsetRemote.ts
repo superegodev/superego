@@ -4,6 +4,7 @@ import type {
   CollectionHasNoRemote,
   CollectionId,
   CollectionNotFound,
+  CommandConfirmationNotValid,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -15,15 +16,20 @@ import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import DocumentsDelete from "../documents/Delete.js";
 
 export default class CollectionsUnsetRemote extends Usecase<
   Backend["collections"]["unsetRemote"]
 > {
   async exec(
     id: CollectionId,
+    commandConfirmation: string,
   ): ResultPromise<
     Collection,
-    CollectionNotFound | CollectionHasNoRemote | UnexpectedError
+    | CollectionNotFound
+    | CollectionHasNoRemote
+    | CommandConfirmationNotValid
+    | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
     if (!collection) {
@@ -36,6 +42,15 @@ export default class CollectionsUnsetRemote extends Usecase<
       return makeUnsuccessfulResult(
         makeResultError("CollectionHasNoRemote", {
           collectionId: id,
+        }),
+      );
+    }
+
+    if (commandConfirmation !== "unset") {
+      return makeUnsuccessfulResult(
+        makeResultError("CommandConfirmationNotValid", {
+          requiredCommandConfirmation: "unset",
+          suppliedCommandConfirmation: commandConfirmation,
         }),
       );
     }
@@ -54,10 +69,12 @@ export default class CollectionsUnsetRemote extends Usecase<
     };
     await this.repos.collection.replace(updatedCollection);
     await this.repos.collectionVersion.replace(updatedCollectionVersion);
-
-    // TODO:
-    // - Set all remoteId of documents and document versions to null.
-    // - Require confirmation.
+    const documents = await this.repos.document.findAllWhereCollectionIdEq(id);
+    for (const document of documents) {
+      if (document.remoteId !== null) {
+        await this.sub(DocumentsDelete).exec(id, document.id, "delete", true);
+      }
+    }
 
     return makeSuccessfulResult(
       makeCollection(updatedCollection, updatedCollectionVersion),

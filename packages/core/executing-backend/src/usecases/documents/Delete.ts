@@ -2,14 +2,12 @@ import type {
   Backend,
   CollectionId,
   CommandConfirmationNotValid,
-  DeletedEntities,
   DocumentId,
   DocumentIsRemote,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
@@ -24,7 +22,7 @@ export default class DocumentsDelete extends Usecase<
     commandConfirmation: string,
     allowDeletingRemoteDocument = false,
   ): ResultPromise<
-    DeletedEntities,
+    null,
     | DocumentNotFound
     | DocumentIsRemote
     | CommandConfirmationNotValid
@@ -46,7 +44,7 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
-    if (document.remoteId && !allowDeletingRemoteDocument) {
+    if (document.remoteId !== null && !allowDeletingRemoteDocument) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentIsRemote", {
           documentId: id,
@@ -56,17 +54,10 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
-    const deletedFileIds = await this.repos.file.deleteAllWhereDocumentIdEq(id);
-    const deletedDocumentVersionIds =
-      await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
+    await this.repos.file.deleteAllWhereDocumentIdEq(id);
+    await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
     await this.repos.document.delete(id);
 
-    return makeSuccessfulResult(
-      makeDeletedEntities({
-        documents: [id],
-        documentVersion: deletedDocumentVersionIds,
-        files: deletedFileIds,
-      }),
-    );
+    return makeSuccessfulResult(null);
   }
 }

@@ -3,11 +3,9 @@ import type {
   CommandConfirmationNotValid,
   ConversationId,
   ConversationNotFound,
-  DeletedEntities,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
@@ -20,7 +18,7 @@ export default class AssistantsDeleteConversation extends Usecase<
     id: ConversationId,
     commandConfirmation: string,
   ): ResultPromise<
-    DeletedEntities,
+    null,
     ConversationNotFound | CommandConfirmationNotValid | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
@@ -42,6 +40,6 @@ export default class AssistantsDeleteConversation extends Usecase<
 
     await this.repos.conversation.delete(id);
 
-    return makeSuccessfulResult(makeDeletedEntities({ conversations: [id] }));
+    return makeSuccessfulResult(null);
   }
 }

@@ -48,7 +48,6 @@ import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Connector from "./types/Connector.js";
 import type Conversation from "./types/Conversation.js";
-import type DeletedEntities from "./types/DeletedEntities.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
@@ -86,7 +85,7 @@ export default interface Backend {
     delete(
       id: CollectionCategoryId,
     ): ResultPromise<
-      DeletedEntities,
+      null,
       | CollectionCategoryNotFound
       | CollectionCategoryHasChildren
       | UnexpectedError
@@ -136,11 +135,22 @@ export default interface Backend {
 
     // authenticateRemote(id: CollectionId): ResultPromise<any, any>;
 
+    /**
+     * Un-setting a remote of a collection deletes all of its remote documents.
+     * To prevent either the user or a bug in the client code accidentally
+     * triggering this operation, a `commandConfirmation` string needs to be
+     * passed to the server. The server checks that the string equals `"unset"`
+     * and only then performs the operation.
+     */
     unsetRemote(
       id: CollectionId,
+      commandConfirmation: string,
     ): ResultPromise<
       Collection,
-      CollectionNotFound | CollectionHasNoRemote | UnexpectedError
+      | CollectionNotFound
+      | CollectionHasNoRemote
+      | CommandConfirmationNotValid
+      | UnexpectedError
     >;
 
     triggerDownSync(
@@ -196,7 +206,7 @@ export default interface Backend {
       id: CollectionId,
       commandConfirmation: string,
     ): ResultPromise<
-      DeletedEntities,
+      null,
       CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
@@ -244,7 +254,7 @@ export default interface Backend {
       id: DocumentId,
       commandConfirmation: string,
     ): ResultPromise<
-      DeletedEntities,
+      null,
       | DocumentNotFound
       | CommandConfirmationNotValid
       | DocumentIsRemote
@@ -311,7 +321,7 @@ export default interface Backend {
       id: ConversationId,
       commandConfirmation: string,
     ): ResultPromise<
-      DeletedEntities,
+      null,
       ConversationNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 

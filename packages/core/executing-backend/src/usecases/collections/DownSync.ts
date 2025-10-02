@@ -35,7 +35,7 @@ export default class CollectionsDownSync extends Usecase {
   }: {
     id: CollectionId;
   }): ResultPromise<
-    void,
+    null,
     CollectionNotFound | CollectionHasNoRemote | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -64,7 +64,7 @@ export default class CollectionsDownSync extends Usecase {
           connectorName: collection.remote.connectorName,
         }),
       );
-      return makeSuccessfulResult(undefined);
+      return makeSuccessfulResult(null);
     }
 
     const syncDownResult = await connector.syncDown(
@@ -72,7 +72,7 @@ export default class CollectionsDownSync extends Usecase {
     );
     if (!syncDownResult.success) {
       await this.markDownSyncAsFailed(collection, syncDownResult.error);
-      return makeSuccessfulResult(undefined);
+      return makeSuccessfulResult(null);
     }
 
     const { changes, syncPoint } = syncDownResult.data;
@@ -120,7 +120,7 @@ export default class CollectionsDownSync extends Usecase {
       });
     }
 
-    return makeSuccessfulResult(undefined);
+    return makeSuccessfulResult(null);
   }
 
   private async markDownSyncAsFailed(
@@ -150,7 +150,7 @@ export default class CollectionsDownSync extends Usecase {
     },
     connector: Connector,
     changes: Connector.Changes,
-  ): ResultPromise<void, SyncingChangesFailed> {
+  ): ResultPromise<null, SyncingChangesFailed> {
     const errors: ResultError<any, any>[] = [];
 
     for (const addedOrModified of changes.addedOrModified) {
@@ -173,7 +173,7 @@ export default class CollectionsDownSync extends Usecase {
     }
 
     return isEmpty(errors)
-      ? makeSuccessfulResult(undefined)
+      ? makeSuccessfulResult(null)
       : makeUnsuccessfulResult(
           makeResultError("SyncingChangesFailed", {
             collectionId: collection.id,
@@ -190,7 +190,7 @@ export default class CollectionsDownSync extends Usecase {
     connector: Connector,
     addedOrModified: Connector.AddedOrModifiedDocument,
   ): ResultPromise<
-    void,
+    null,
     | ResultError<
         "RemoteDocumentContentNotValid",
         { issues: ValidationIssue[] }
@@ -246,7 +246,7 @@ export default class CollectionsDownSync extends Usecase {
         },
       );
       return documentsCreateResult.success
-        ? makeSuccessfulResult(undefined)
+        ? makeSuccessfulResult(null)
         : makeUnsuccessfulResult(
             makeResultError("CreatingDocumentFailed", {
               cause: documentsCreateResult.error,
@@ -272,7 +272,7 @@ export default class CollectionsDownSync extends Usecase {
         },
       );
       return documentsCreateNewVersionResult.success
-        ? makeSuccessfulResult(undefined)
+        ? makeSuccessfulResult(null)
         : makeUnsuccessfulResult(
             makeResultError("CreatingNewDocumentVersionFailed", {
               cause: documentsCreateNewVersionResult.error,
@@ -280,20 +280,20 @@ export default class CollectionsDownSync extends Usecase {
           );
     }
 
-    return makeSuccessfulResult(undefined);
+    return makeSuccessfulResult(null);
   }
 
   private async delete(
     collection: CollectionEntity & { remote: RemoteEntity },
     deleted: Connector.DeletedDocument,
-  ): ResultPromise<void, ResultError<string, any>> {
+  ): ResultPromise<null, ResultError<string, any>> {
     const document =
       await this.repos.document.findWhereCollectionIdAndRemoteIdEq(
         collection.id,
         deleted.id,
       );
     if (!document) {
-      return makeSuccessfulResult(undefined);
+      return makeSuccessfulResult(null);
     }
 
     const documentsDeleteResult = await this.sub(DocumentsDelete).exec(
@@ -303,7 +303,7 @@ export default class CollectionsDownSync extends Usecase {
       true,
     );
     return documentsDeleteResult.success
-      ? makeSuccessfulResult(undefined)
+      ? makeSuccessfulResult(null)
       : makeUnsuccessfulResult(documentsDeleteResult.error);
   }
 }

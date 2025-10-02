@@ -1501,15 +1501,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Verify
       expect(deleteCollectionResult).toEqual({
         success: true,
-        data: {
-          collectionCategories: [],
-          collections: [createCollectionResult.data.id],
-          collectionVersions: [createCollectionResult.data.latestVersion.id],
-          documents: [createDocumentResult.data.id],
-          documentVersion: [createDocumentResult.data.latestVersion.id],
-          conversations: [],
-          files: [],
-        },
+        data: null,
         error: null,
       });
       const listCollectionsResult = await backend.collections.list();
