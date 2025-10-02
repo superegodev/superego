@@ -771,7 +771,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           error: null,
         }),
       };
-      const { backend } = await deps(fakeConnector);
+      const { backend } = deps(fakeConnector);
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -859,7 +859,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           error: null,
         }),
       };
-      const { backend } = await deps(fakeConnector);
+      const { backend } = deps(fakeConnector);
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -933,6 +933,269 @@ export default rd<GetDependencies>("Collections", (deps) => {
             ],
           },
         },
+      });
+    });
+
+    it("error: CollectionMigrationFailed (case: migration function throws)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {},
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export default function getContentSummary() {}",
+            },
+          },
+          {
+            source: "",
+            compiled:
+              'export default function migrate() { throw new Error("Migration error!"); }',
+          },
+          null,
+        );
+
+      // Verify
+      expect(createNewCollectionVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            failedDocumentMigrations: [
+              {
+                documentId: createDocumentResult.data.id,
+                cause: {
+                  name: "ApplyingMigrationFailed",
+                  details: {
+                    name: "Error",
+                    message: "Migration error!",
+                    stack: expect.any(String),
+                  },
+                },
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionMigrationFailed (case: migrated content not valid)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {},
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export default function getContentSummary() {}",
+            },
+          },
+          {
+            source: "",
+            compiled: "export default function migrate() { return { a: 0 }; }",
+          },
+          null,
+        );
+
+      // Verify
+      expect(createNewCollectionVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            failedDocumentMigrations: [
+              {
+                documentId: createDocumentResult.data.id,
+                cause: {
+                  name: "CreatingNewDocumentVersionFailed",
+                  details: expect.objectContaining({
+                    cause: expect.objectContaining({
+                      name: "DocumentContentNotValid",
+                    }),
+                  }),
+                },
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("success: creates and migrates (case: collection with no remote)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {},
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const migration = {
+        source: "",
+        compiled: "export default function migrate() { return {}; }",
+      };
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export default function getContentSummary() {}",
+            },
+          },
+          migration,
+          null,
+        );
+
+      // Verify
+      expect(createNewCollectionVersionResult).toEqual({
+        success: true,
+        data: {
+          ...createCollectionResult.data,
+          latestVersion: {
+            id: expect.id("CollectionVersion"),
+            previousVersionId: createCollectionResult.data.latestVersion.id,
+            schema: {
+              rootType: "Root",
+              types: { Root: { dataType: "Struct", properties: {} } },
+            },
+            settings: {
+              contentSummaryGetter: {
+                compiled: "export default function getContentSummary() {}",
+                source: "",
+              },
+            },
+            migration: migration,
+            remoteConverters: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+        },
+        error: null,
+      });
+      assert.isTrue(createNewCollectionVersionResult.success);
+      const listCollectionsResult = await backend.collections.list();
+      expect(listCollectionsResult).toEqual({
+        success: true,
+        data: [createNewCollectionVersionResult.data],
+        error: null,
+      });
+      const getDocumentResult = await backend.documents.get(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+      );
+      expect(getDocumentResult).toEqual({
+        success: true,
+        data: {
+          ...createDocumentResult.data,
+          latestVersion: expect.objectContaining({
+            id: expect.id("DocumentVersion"),
+            remoteId: null,
+            previousVersionId: createDocumentResult.data.latestVersion.id,
+            collectionVersionId:
+              createNewCollectionVersionResult.data.latestVersion.id,
+            content: {},
+            conversationId: null,
+            createdBy: "Migration",
+            createdAt: expect.dateCloseToNow(),
+          }),
+        },
+        error: null,
       });
     });
   });
