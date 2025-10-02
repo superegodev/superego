@@ -4,6 +4,7 @@ import type {
   CommandConfirmationNotValid,
   DeletedEntities,
   DocumentId,
+  DocumentIsRemote,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -21,9 +22,13 @@ export default class DocumentsDelete extends Usecase<
     collectionId: CollectionId,
     id: DocumentId,
     commandConfirmation: string,
+    allowDeletingRemoteDocument = false,
   ): ResultPromise<
     DeletedEntities,
-    DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
+    | DocumentNotFound
+    | DocumentIsRemote
+    | CommandConfirmationNotValid
+    | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
       return makeUnsuccessfulResult(
@@ -38,6 +43,16 @@ export default class DocumentsDelete extends Usecase<
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentNotFound", { documentId: id }),
+      );
+    }
+
+    if (document.remoteId && !allowDeletingRemoteDocument) {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentIsRemote", {
+          documentId: id,
+          message:
+            "Remote documents are read-only. You can't create new versions or delete them.",
+        }),
       );
     }
 

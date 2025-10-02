@@ -22,6 +22,7 @@ import type {
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
+  DocumentIsRemote,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
@@ -59,6 +60,7 @@ type KnownResultError =
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
+  | DocumentIsRemote
   | DocumentNotFound
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound

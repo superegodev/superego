@@ -5,6 +5,7 @@ import {
   type Document,
   type DocumentContentNotValid,
   type DocumentId,
+  type DocumentIsRemote,
   type DocumentNotFound,
   DocumentVersionCreator,
   type DocumentVersionId,
@@ -33,6 +34,7 @@ import Usecase from "../../utils/Usecase.js";
 type ExecReturnValue = ResultPromise<
   Document,
   | DocumentNotFound
+  | DocumentIsRemote
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
   | FilesNotFound
@@ -84,6 +86,20 @@ export default class DocumentsCreateNewVersion extends Usecase<
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentNotFound", { documentId: id }),
+      );
+    }
+
+    if (
+      document.remoteId &&
+      options?.createdBy !== DocumentVersionCreator.Connector &&
+      options?.createdBy !== DocumentVersionCreator.Migration
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentIsRemote", {
+          documentId: id,
+          message:
+            "Remote documents are read-only. You can't create new versions or delete them.",
+        }),
       );
     }
 

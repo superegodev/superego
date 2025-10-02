@@ -23,6 +23,7 @@ import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.j
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
+import type DocumentIsRemote from "./errors/DocumentIsRemote.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
@@ -133,6 +134,8 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    // authenticateRemote(id: CollectionId): ResultPromise<any, any>;
+
     unsetRemote(
       id: CollectionId,
     ): ResultPromise<
@@ -222,6 +225,7 @@ export default interface Backend {
     ): ResultPromise<
       Document,
       | DocumentNotFound
+      | DocumentIsRemote
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
@@ -241,7 +245,10 @@ export default interface Backend {
       commandConfirmation: string,
     ): ResultPromise<
       DeletedEntities,
-      DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
+      | DocumentNotFound
+      | CommandConfirmationNotValid
+      | DocumentIsRemote
+      | UnexpectedError
     >;
 
     list(

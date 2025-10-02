@@ -43,6 +43,7 @@ export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryN
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
+export type { default as DocumentIsRemote } from "./errors/DocumentIsRemote.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";

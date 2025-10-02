@@ -2,14 +2,9 @@ import {
   type CollectionHasNoRemote,
   type CollectionId,
   type CollectionNotFound,
-  type CommandConfirmationNotValid,
-  type DocumentContentNotValid,
-  type DocumentNotFound,
   DocumentVersionCreator,
-  type DocumentVersionIdNotMatching,
   DownSyncStatus,
   type ExecutingJavascriptFunctionFailed,
-  type FilesNotFound,
   type RemoteConverters,
   type SyncingChangesFailed,
   type UnexpectedError,
@@ -204,26 +199,10 @@ export default class CollectionsDownSync extends Usecase {
         "ConvertingRemoteDocumentFailed",
         { cause: ExecutingJavascriptFunctionFailed }
       >
-    | ResultError<
-        "CreatingDocumentFailed",
-        {
-          cause:
-            | CollectionNotFound
-            | DocumentContentNotValid
-            | FilesNotFound
-            | UnexpectedError;
-        }
-      >
+    | ResultError<"CreatingDocumentFailed", { cause: ResultError<string, any> }>
     | ResultError<
         "CreatingNewDocumentVersionFailed",
-        {
-          cause:
-            | DocumentNotFound
-            | DocumentVersionIdNotMatching
-            | DocumentContentNotValid
-            | FilesNotFound
-            | UnexpectedError;
-        }
+        { cause: ResultError<string, any> }
       >
   > {
     const validationResult = v.safeParse(
@@ -307,10 +286,7 @@ export default class CollectionsDownSync extends Usecase {
   private async delete(
     collection: CollectionEntity & { remote: RemoteEntity },
     deleted: Connector.DeletedDocument,
-  ): ResultPromise<
-    void,
-    DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
-  > {
+  ): ResultPromise<void, ResultError<string, any>> {
     const document =
       await this.repos.document.findWhereCollectionIdAndRemoteIdEq(
         collection.id,
@@ -324,6 +300,7 @@ export default class CollectionsDownSync extends Usecase {
       collection.id,
       document.id,
       "delete",
+      true,
     );
     return documentsDeleteResult.success
       ? makeSuccessfulResult(undefined)
