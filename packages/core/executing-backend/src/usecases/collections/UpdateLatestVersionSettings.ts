@@ -65,8 +65,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
             issues: [
               {
                 message:
-                  "The default export of the getter TypescriptModule is not a function",
-                path: [{ key: "getter" }],
+                  "The default export of the contentSummaryGetter TypescriptModule is not a function",
               },
             ],
           }),

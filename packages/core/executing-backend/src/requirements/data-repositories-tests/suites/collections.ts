@@ -1,5 +1,6 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
+import { sortBy } from "es-toolkit";
 import { describe, expect, it } from "vitest";
 import type CollectionEntity from "../../../entities/CollectionEntity.js";
 import type Dependencies from "../Dependencies.js";
@@ -308,7 +309,7 @@ export default rd<Dependencies>("Collections", (deps) => {
       expect(found).toEqual([]);
     });
 
-    it("case: some collections => returns them", async () => {
+    it("case: some collections => returns them, sorted by name", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = await deps();
       const collection1: CollectionEntity = {
@@ -352,7 +353,9 @@ export default rd<Dependencies>("Collections", (deps) => {
       );
 
       // Verify
-      expect(found).toEqual([collection1, collection2]);
+      expect(found).toEqual(
+        sortBy([collection1, collection2], [({ settings }) => settings.name]),
+      );
     });
   });
 });

@@ -66,7 +66,7 @@ export default class SqliteCollectionRepository
   ): Promise<boolean> {
     const result = this.db
       .prepare(
-        `SELECT 1 FROM "${table}" WHERE JSON_EXTRACT("settings", '$.collectionCategoryId') = ?`,
+        `SELECT 1 FROM "${table}" WHERE "settings" ->> '$.collectionCategoryId' = ?`,
       )
       .get(settingsCollectionCategoryId) as 1 | undefined;
     return result !== undefined;
@@ -81,7 +81,7 @@ export default class SqliteCollectionRepository
 
   async findAll(): Promise<CollectionEntity[]> {
     const collections = this.db
-      .prepare(`SELECT * FROM "${table}"`)
+      .prepare(`SELECT * FROM "${table}" ORDER BY "settings" ->> '$.name' ASC`)
       .all() as any as SqliteCollection[];
     return collections.map(toEntity);
   }

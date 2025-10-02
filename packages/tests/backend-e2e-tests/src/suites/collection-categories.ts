@@ -534,7 +534,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
       });
     });
 
-    it("success: sorted by name", async () => {
+    it("success: non-empty list, sorted by name", async () => {
       // Setup SUT
       const { backend } = await deps();
       const zetaCreateResult = await backend.collectionCategories.create({
