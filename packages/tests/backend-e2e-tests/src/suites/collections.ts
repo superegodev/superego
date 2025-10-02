@@ -934,6 +934,241 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
+  describe("unsetRemote", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.unsetRemote(
+        collectionId,
+        "unset",
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CollectionHasNoRemote", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const unsetRemoteResult = await backend.collections.unsetRemote(
+        createResult.data.id,
+        "unset",
+      );
+
+      // Verify
+      expect(unsetRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionHasNoRemote",
+          details: {
+            collectionId: createResult.data.id,
+          },
+        },
+      });
+    });
+
+    it("error: CommandConfirmationNotValid", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const commandConfirmation = "not-unset";
+      const unsetRemoteResult = await backend.collections.unsetRemote(
+        createResult.data.id,
+        commandConfirmation,
+      );
+
+      // Verify
+      expect(unsetRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CommandConfirmationNotValid",
+          details: {
+            requiredCommandConfirmation: "unset",
+            suppliedCommandConfirmation: commandConfirmation,
+          },
+        },
+      });
+    });
+
+    it("success: unsets remote", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const unsetRemoteResult = await backend.collections.unsetRemote(
+        createResult.data.id,
+        "unset",
+      );
+
+      // Verify
+      expect(unsetRemoteResult).toEqual({
+        success: true,
+        data: {
+          ...setRemoteResult.data,
+          latestVersion: {
+            ...setRemoteResult.data.latestVersion,
+            remoteConverters: null,
+          },
+          remote: null,
+        },
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [unsetRemoteResult.data],
+        error: null,
+      });
+    });
+  });
+
   describe("createNewVersion", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
