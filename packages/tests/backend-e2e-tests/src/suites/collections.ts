@@ -1,3 +1,4 @@
+import { DownSyncStatus } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
@@ -425,6 +426,514 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
+  describe("setRemote", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.setRemote(
+        collectionId,
+        "Connector",
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: ConnectorNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const connectorName = "MissingConnector";
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        connectorName,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorNotFound",
+          details: {
+            collectionId: createResult.data.id,
+            connectorName: connectorName,
+          },
+        },
+      });
+    });
+
+    it("error: CannotChangeCollectionRemoteConnector", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const firstSetRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(firstSetRemoteResult.success);
+
+      // Exercise
+      const secondSetRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        "DifferentConnector",
+        {},
+        { fromRemoteDocument: { source: "", compiled: "" } },
+      );
+
+      // Verify
+      expect(secondSetRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CannotChangeCollectionRemoteConnector",
+          details: {
+            collectionId: createResult.data.id,
+            currentConnectorName: "MockConnector",
+            suppliedConnectorName: "DifferentConnector",
+          },
+        },
+      });
+    });
+
+    it("error: ConnectorSettingsNotValid", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: 0 },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorSettingsNotValid",
+          details: {
+            connectorName: mockConnector.name,
+            issues: [
+              {
+                message: "Invalid type: Expected string but received 0",
+                path: [{ key: "setting" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: RemoteConvertersNotValid", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "RemoteConvertersNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "The default export of the fromRemoteDocument TypescriptModule is not a function",
+                path: [{ key: "fromRemoteDocument" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("success: sets remote (case: w/o previous remote set)", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const connectorSettings = { setting: "setting" };
+      const remoteConverters = {
+        fromRemoteDocument: {
+          source: "",
+          compiled: "export default function fromRemoteDocument() {}",
+        },
+      };
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        connectorSettings,
+        remoteConverters,
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: true,
+        data: {
+          ...createResult.data,
+          latestVersion: {
+            ...createResult.data.latestVersion,
+            remoteConverters,
+          },
+          remote: {
+            connectorName: mockConnector.name,
+            connectorSettings,
+            syncState: {
+              down: {
+                status: DownSyncStatus.NeverSynced,
+                error: null,
+                lastSucceededAt: null,
+              },
+            },
+          },
+        },
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [setRemoteResult.data],
+        error: null,
+      });
+    });
+
+    it("success: sets remote (case: w/ previous remote set)", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        remoteDocumentSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const firstSetRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+      assert.isTrue(firstSetRemoteResult.success);
+
+      // Exercise
+      const secondSetRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { setting: "updated-setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(secondSetRemoteResult).toEqual({
+        success: true,
+        data: expect.objectContaining({
+          remote: expect.objectContaining({
+            connectorName: mockConnector.name,
+            connectorSettings: {
+              setting: "updated-setting",
+            },
+          }),
+        }),
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [secondSetRemoteResult.data],
+        error: null,
+      });
+    });
+  });
+
   describe("createNewVersion", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
@@ -755,9 +1264,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
 
     it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
-      // Setup SUT
-      const fakeConnector: Connector = {
-        name: "FakeConnector",
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
         remoteDocumentSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -771,7 +1280,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           error: null,
         }),
       };
-      const { backend } = deps(fakeConnector);
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -794,7 +1305,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
-        fakeConnector.name,
+        mockConnector.name,
         {},
         {
           fromRemoteDocument: {
@@ -843,9 +1354,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
 
     it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
-      // Setup SUT
-      const fakeConnector: Connector = {
-        name: "FakeConnector",
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
         remoteDocumentSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -859,7 +1370,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           error: null,
         }),
       };
-      const { backend } = deps(fakeConnector);
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
       const createResult = await backend.collections.create(
         {
           name: "name",
@@ -882,7 +1395,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
-        fakeConnector.name,
+        mockConnector.name,
         {},
         {
           fromRemoteDocument: {

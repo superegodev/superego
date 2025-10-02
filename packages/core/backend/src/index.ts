@@ -20,6 +20,7 @@ export { default as ToolName } from "./enums/ToolName.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
+export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
 export type { default as CannotRetryLastResponse } from "./errors/CannotRetryLastResponse.js";

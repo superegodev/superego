@@ -2,6 +2,7 @@ import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
 import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
+import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
 import type CannotRetryLastResponse from "./errors/CannotRetryLastResponse.js";
@@ -128,6 +129,7 @@ export default interface Backend {
       Collection,
       | CollectionNotFound
       | ConnectorNotFound
+      | CannotChangeCollectionRemoteConnector
       | ConnectorSettingsNotValid
       | RemoteConvertersNotValid
       | UnexpectedError

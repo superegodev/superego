@@ -1,4 +1,5 @@
 import type {
+  CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
   CannotRetryLastResponse,
@@ -37,6 +38,7 @@ import type {
 } from "@superego/backend";
 
 type KnownResultError =
+  | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation
   | CannotRetryLastResponse

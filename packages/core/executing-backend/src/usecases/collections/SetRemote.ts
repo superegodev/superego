@@ -1,5 +1,6 @@
 import {
   type Backend,
+  type CannotChangeCollectionRemoteConnector,
   type Collection,
   type CollectionId,
   type CollectionNotFound,
@@ -35,6 +36,7 @@ export default class CollectionsSetRemote extends Usecase<
     Collection,
     | CollectionNotFound
     | ConnectorNotFound
+    | CannotChangeCollectionRemoteConnector
     | ConnectorSettingsNotValid
     | RemoteConvertersNotValid
     | UnexpectedError
@@ -43,6 +45,19 @@ export default class CollectionsSetRemote extends Usecase<
     if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId: id }),
+      );
+    }
+
+    if (
+      collection.remote &&
+      collection.remote.connectorName !== connectorName
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("CannotChangeCollectionRemoteConnector", {
+          collectionId: id,
+          currentConnectorName: collection.remote.connectorName,
+          suppliedConnectorName: connectorName,
+        }),
       );
     }
 
