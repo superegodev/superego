@@ -9,10 +9,98 @@ import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it, vi } from "vitest";
+import makeResultError from "../../../../core/executing-backend/src/makers/makeResultError.js";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Collections down-sync", (deps) => {
   describe("triggerDownSync", () => {
+    it("error: UnexpectedError from connector", async () => {
+      // Setup mocks
+      const syncDownError = makeResultError("UnexpectedError", {
+        cause: "cause",
+      });
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: false,
+          data: null,
+          error: syncDownError,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
+
+      // Verify downSync failed
+      const listResult = await backend.collections.list();
+      assert.isTrue(listResult.success);
+      const collection = listResult.data.find(
+        ({ id }) => id === createCollectionResult.data.id,
+      );
+      assert.isDefined(collection);
+      expect(collection.remote?.syncState.down).toEqual(
+        expect.objectContaining({
+          status: DownSyncStatus.LastSyncFailed,
+          error: syncDownError,
+        }),
+      );
+    });
+
     it("success: syncs remote changes (case: first sync)", async () => {
       // Setup mocks
       const changes: Connector.Changes = {
