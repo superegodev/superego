@@ -5,7 +5,7 @@ import type { Schema } from "@superego/schema";
 interface Connector {
   name: string;
   // authenticationStrategy: AuthenticationStrategy;
-  // settingsSchema: Schema;
+  settingsSchema: Schema;
   remoteDocumentSchema: Schema;
   syncDown(
     // TODO: auth, settings
@@ -24,12 +24,6 @@ interface Connector {
 }
 
 namespace Connector {
-  // export type Auth = {
-  //   strategy: AuthenticationStrategy.OAuthPKCE;
-  //   accessToken: string;
-  //   refreshToken: string;
-  // };
-
   export interface AddedOrModifiedDocument {
     id: string;
     versionId: string;

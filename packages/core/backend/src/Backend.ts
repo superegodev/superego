@@ -135,8 +135,6 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    // authenticateRemote(id: CollectionId): ResultPromise<any, any>;
-
     /**
      * Un-setting a remote of a collection deletes all of its remote documents.
      * To prevent either the user or a bug in the client code accidentally
@@ -154,6 +152,8 @@ export default interface Backend {
       | CommandConfirmationNotValid
       | UnexpectedError
     >;
+
+    // authenticateRemote(id: CollectionId): ResultPromise<any, any>;
 
     triggerDownSync(
       id: CollectionId,

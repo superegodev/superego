@@ -512,15 +512,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
         remoteDocumentSchema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                setting: { dataType: DataType.String },
-              },
-            },
-          },
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -558,7 +555,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const firstSetRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        { setting: "setting" },
+        {},
         {
           fromRemoteDocument: {
             source: "",
@@ -595,7 +592,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        remoteDocumentSchema: {
+        settingsSchema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -604,6 +601,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
               },
             },
           },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -675,6 +676,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
         remoteDocumentSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -749,7 +754,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        remoteDocumentSchema: {
+        settingsSchema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -758,6 +763,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
               },
             },
           },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -843,7 +852,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        remoteDocumentSchema: {
+        settingsSchema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -852,6 +861,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
               },
             },
           },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -1004,15 +1017,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
         remoteDocumentSchema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                setting: { dataType: DataType.String },
-              },
-            },
-          },
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -1050,7 +1060,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        { setting: "setting" },
+        {},
         {
           fromRemoteDocument: {
             source: "",
@@ -1085,7 +1095,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        remoteDocumentSchema: {
+        settingsSchema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1094,6 +1104,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
               },
             },
           },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         syncDown: async () => ({
@@ -1502,6 +1516,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
         remoteDocumentSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -1592,6 +1610,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
         remoteDocumentSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
