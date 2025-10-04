@@ -1,5 +1,6 @@
 import type JavascriptSandbox from "../JavascriptSandbox.js";
 
-export default interface Dependencies {
+type GetDependencies = () => {
   javascriptSandbox: JavascriptSandbox;
-}
+};
+export default GetDependencies;

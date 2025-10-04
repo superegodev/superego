@@ -23,6 +23,7 @@ const collection: CollectionEntity = {
       "- Always ask for the odometer reading.",
     ].join("\n"),
   },
+  remote: null,
   createdAt: new Date(),
 };
 
@@ -126,6 +127,7 @@ export default function getContentSummary(fuelLog) {
     },
   },
   migration: null,
+  remoteConverters: null,
   createdAt: new Date(),
 };
 
@@ -135,11 +137,13 @@ const documentVersions: DocumentVersionEntity[] = [];
 for (const fuelLog of fuelLogs) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
+    remoteId: null,
     collectionId: collection.id,
     createdAt: new Date(),
   };
   const documentVersion: DocumentVersionEntity = {
     id: Id.generate.documentVersion(),
+    remoteId: null,
     previousVersionId: null,
     collectionId: collection.id,
     documentId: document.id,

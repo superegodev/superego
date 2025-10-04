@@ -34,6 +34,7 @@ const backend = new ExecutingBackend(
   }),
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
+  [],
 );
 
 const queryClient = new QueryClient({

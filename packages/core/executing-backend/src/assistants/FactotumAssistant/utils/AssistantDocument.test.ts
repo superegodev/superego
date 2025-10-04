@@ -61,9 +61,11 @@ describe("toAssistantDocument", () => {
     };
     const document: Document = {
       id: Id.generate.document(),
+      remoteId: null,
       collectionId: Id.generate.collection(),
       latestVersion: {
         id: Id.generate.documentVersion(),
+        remoteId: null,
         collectionVersionId: Id.generate.collectionVersion(),
         previousVersionId: null,
         conversationId: null,

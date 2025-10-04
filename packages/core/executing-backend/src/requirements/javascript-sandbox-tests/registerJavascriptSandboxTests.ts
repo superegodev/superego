@@ -1,11 +1,9 @@
-import type Dependencies from "./Dependencies.js";
+import type GetDependencies from "./GetDependencies.js";
 import executeSyncFunction from "./suites/executeSyncFunction.js";
 import moduleDefaultExportsFunction from "./suites/moduleDefaultExportsFunction.js";
 
-export type { default as Dependencies } from "./Dependencies.js";
-
 export default function registerJavascriptSandboxTests(
-  deps: () => Promise<Dependencies>,
+  deps: GetDependencies,
   testsToSkip?: string[],
 ) {
   executeSyncFunction(deps, testsToSkip);

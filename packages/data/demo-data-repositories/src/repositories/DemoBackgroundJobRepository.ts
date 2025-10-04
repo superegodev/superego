@@ -56,7 +56,7 @@ export default class DemoBackgroundJobRepository
         (backgroundJob) =>
           backgroundJob.status === BackgroundJobStatus.Enqueued,
       )
-      .sort((a, b) => (a.enqueuedAt > b.enqueuedAt ? 1 : -1));
+      .sort((a, b) => (a.enqueuedAt >= b.enqueuedAt ? 1 : -1));
     return clone(enqueued[0] ?? null);
   }
 
@@ -64,7 +64,7 @@ export default class DemoBackgroundJobRepository
     this.ensureNotDisposed();
     return clone(
       Object.values(this.backgroundJobs).sort((a, b) =>
-        a.enqueuedAt > b.enqueuedAt ? -1 : 1,
+        a.enqueuedAt <= b.enqueuedAt ? 1 : -1,
       ),
     );
   }

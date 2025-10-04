@@ -1,4 +1,9 @@
-import type { CollectionId, CollectionVersionId } from "@superego/backend";
+import { decode } from "@msgpack/msgpack";
+import type {
+  CollectionId,
+  CollectionVersionId,
+  RemoteConverters,
+} from "@superego/backend";
 import type { CollectionVersionEntity } from "@superego/executing-backend";
 
 export default interface SqliteCollectionVersion {
@@ -11,6 +16,8 @@ export default interface SqliteCollectionVersion {
   settings: string;
   /** JSON */
   migration: string | null;
+  /** MessagePack */
+  remote_converters: Buffer | null;
   /** ISO8601 */
   created_at: string;
   is_latest: 0 | 1;
@@ -27,6 +34,9 @@ export function toEntity(
     settings: JSON.parse(collectionVersion.settings),
     migration: collectionVersion.migration
       ? JSON.parse(collectionVersion.migration)
+      : null,
+    remoteConverters: collectionVersion.remote_converters
+      ? (decode(collectionVersion.remote_converters) as RemoteConverters)
       : null,
     createdAt: new Date(collectionVersion.created_at),
   };

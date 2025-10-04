@@ -23,6 +23,7 @@ const collection: CollectionEntity = {
       "  - Payment method -> Credit Card.",
     ].join("\n"),
   },
+  remote: null,
   createdAt: new Date(),
 };
 
@@ -169,6 +170,7 @@ export default function getContentSummary(expense) {
     },
   },
   migration: null,
+  remoteConverters: null,
   createdAt: new Date(),
 };
 
@@ -178,11 +180,13 @@ const documentVersions: DocumentVersionEntity[] = [];
 for (const expense of expenses) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
+    remoteId: null,
     collectionId: collection.id,
     createdAt: new Date(),
   };
   const documentVersion: DocumentVersionEntity = {
     id: Id.generate.documentVersion(),
+    remoteId: null,
     previousVersionId: null,
     collectionId: collection.id,
     documentId: document.id,

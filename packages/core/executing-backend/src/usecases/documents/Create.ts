@@ -37,19 +37,28 @@ export default class DocumentsCreate extends Usecase<
   async exec(
     collectionId: CollectionId,
     content: any,
-    createdBy: DocumentVersionCreator.Migration,
+    options:
+      | {
+          createdBy: DocumentVersionCreator.Assistant;
+          conversationId: ConversationId;
+        }
+      | {
+          createdBy: DocumentVersionCreator.Connector;
+          remoteId: string;
+          remoteVersionId: string;
+        },
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     content: any,
-    createdBy: DocumentVersionCreator.Assistant,
-    conversationId: ConversationId,
-  ): ExecReturnValue;
-  async exec(
-    collectionId: CollectionId,
-    content: any,
-    createdBy = DocumentVersionCreator.User,
-    conversationId: ConversationId | null = null,
+    options?: {
+      createdBy:
+        | DocumentVersionCreator.Assistant
+        | DocumentVersionCreator.Connector;
+      conversationId?: ConversationId | null;
+      remoteId?: string | null;
+      remoteVersionId?: string | null;
+    },
   ): ExecReturnValue {
     if (!(await this.repos.collection.exists(collectionId))) {
       return makeUnsuccessfulResult(
@@ -95,8 +104,13 @@ export default class DocumentsCreate extends Usecase<
     }
 
     const now = new Date();
+    const createdBy = options?.createdBy ?? DocumentVersionCreator.User;
+    const remoteId = options?.remoteId ?? null;
+    const remoteVersionId = options?.remoteVersionId ?? null;
+    const conversationId = options?.conversationId ?? null;
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: remoteId,
       collectionId: collectionId,
       createdAt: now,
     };
@@ -107,6 +121,7 @@ export default class DocumentsCreate extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
+      remoteId: remoteVersionId,
       previousVersionId: null,
       documentId: document.id,
       collectionId: collectionId,
@@ -115,7 +130,7 @@ export default class DocumentsCreate extends Usecase<
       content: convertedContent,
       createdBy: createdBy,
       createdAt: now,
-    } as DocumentVersionEntity;
+    };
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({

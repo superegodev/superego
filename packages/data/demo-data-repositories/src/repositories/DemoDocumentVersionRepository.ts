@@ -69,7 +69,7 @@ export default class DemoDocumentVersionRepository
     this.ensureNotDisposed();
     const [latestDocumentVersion] = Object.values(this.documentVersions)
       .filter((documentVersion) => documentVersion.documentId === documentId)
-      .sort((a, b) => (a.id > b.id ? -1 : 1));
+      .sort((a, b) => (a.id <= b.id ? 1 : -1));
     return clone(latestDocumentVersion ?? null);
   }
 

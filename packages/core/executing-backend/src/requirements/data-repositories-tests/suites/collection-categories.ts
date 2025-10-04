@@ -1,13 +1,14 @@
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
+import { sortBy } from "es-toolkit";
 import { describe, expect, it } from "vitest";
 import type CollectionCategoryEntity from "../../../entities/CollectionCategoryEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Collection categories", (deps) => {
+export default rd<GetDependencies>("Collection categories", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const collectionCategory: CollectionCategoryEntity = {
@@ -36,7 +37,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
   it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "original name",
@@ -75,7 +76,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
   it("deleting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collectionCategory: CollectionCategoryEntity = {
       id: Id.generate.collectionCategory(),
       name: "name",
@@ -117,7 +118,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("checking existence", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -148,7 +149,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -168,7 +169,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("checking existence by parent", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const parentId = Id.generate.collectionCategory();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
@@ -199,7 +200,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -219,7 +220,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -250,7 +251,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -270,7 +271,7 @@ export default rd<Dependencies>("Collection categories", (deps) => {
   describe("finding all", () => {
     it("case: no collection categories => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -284,9 +285,9 @@ export default rd<Dependencies>("Collection categories", (deps) => {
       expect(found).toEqual([]);
     });
 
-    it("case: some collection categories => returns them", async () => {
+    it("case: some collection categories => returns them, sorted by name", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory1: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name 1",
@@ -318,7 +319,9 @@ export default rd<Dependencies>("Collection categories", (deps) => {
       );
 
       // Verify
-      expect(found).toEqual([collectionCategory1, collectionCategory2]);
+      expect(found).toEqual(
+        sortBy([collectionCategory1, collectionCategory2], ["name"]),
+      );
     });
   });
 });

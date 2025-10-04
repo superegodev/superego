@@ -1,7 +1,7 @@
 import { registerJavascriptSandboxTests } from "@superego/executing-backend/tests";
 import { QuickjsJavascriptSandbox } from "./index.nodejs.js";
 
-registerJavascriptSandboxTests(async () => {
+registerJavascriptSandboxTests(() => {
   const javascriptSandbox = new QuickjsJavascriptSandbox();
   return { javascriptSandbox };
 }, [

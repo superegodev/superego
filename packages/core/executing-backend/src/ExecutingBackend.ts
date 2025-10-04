@@ -3,6 +3,7 @@ import { extractErrorDetails } from "@superego/shared-utils";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
 import makeResultError from "./makers/makeResultError.js";
 import makeUnsuccessfulResult from "./makers/makeUnsuccessfulResult.js";
+import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
@@ -25,6 +26,10 @@ import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
 import CollectionsList from "./usecases/collections/List.js";
+import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
+import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
+import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
+import CollectionsUnsetRemote from "./usecases/collections/UnsetRemote.js";
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
 import DocumentsCreate from "./usecases/documents/Create.js";
@@ -52,6 +57,7 @@ export default class ExecutingBackend implements Backend {
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
+    private connectors: Connector[],
   ) {
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate, true),
@@ -63,6 +69,8 @@ export default class ExecutingBackend implements Backend {
     this.collections = {
       create: this.makeUsecase(CollectionsCreate, true),
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
+      setRemote: this.makeUsecase(CollectionsSetRemote, true),
+      unsetRemote: this.makeUsecase(CollectionsUnsetRemote, true),
       createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
       updateLatestVersionSettings: this.makeUsecase(
         CollectionUpdateLatestVersionSettings,
@@ -70,6 +78,8 @@ export default class ExecutingBackend implements Backend {
       ),
       delete: this.makeUsecase(CollectionsDelete, true),
       list: this.makeUsecase(CollectionsList, false),
+      triggerDownSync: this.makeUsecase(CollectionsTriggerDownSync, true),
+      listConnectors: this.makeUsecase(CollectionsListConnectors, false),
     };
 
     this.documents = {
@@ -119,6 +129,7 @@ export default class ExecutingBackend implements Backend {
       dataRepositoriesManager,
       javascriptSandbox,
       inferenceServiceFactory,
+      connectors,
     );
   }
 
@@ -127,6 +138,7 @@ export default class ExecutingBackend implements Backend {
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
       inferenceServiceFactory: InferenceServiceFactory,
+      connectors: Connector[],
     ) => { exec: Exec },
     triggerBackgroundJobCheck: boolean,
   ): Exec {
@@ -137,6 +149,7 @@ export default class ExecutingBackend implements Backend {
             repos,
             this.javascriptSandbox,
             this.inferenceServiceFactory,
+            this.connectors,
           );
           const result = await usecase.exec(...args);
           return {

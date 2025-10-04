@@ -47,8 +47,10 @@ export default {
       id,
       latestVersionId,
       content,
-      DocumentVersionCreator.Assistant,
-      conversationId,
+      {
+        createdBy: DocumentVersionCreator.Assistant,
+        conversationId: conversationId,
+      },
     );
 
     if (error && error.name === "UnexpectedError") {

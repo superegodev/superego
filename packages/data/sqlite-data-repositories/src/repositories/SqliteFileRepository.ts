@@ -1,5 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
-import type { CollectionId, DocumentId, FileId } from "@superego/backend";
+import type { DocumentId, FileId } from "@superego/backend";
 import type { FileEntity, FileRepository } from "@superego/executing-backend";
 import type SqliteFile from "../types/SqliteFile.js";
 import { toEntity } from "../types/SqliteFile.js";
@@ -35,17 +35,6 @@ export default class SqliteFileRepository implements FileRepository {
         Buffer.from(file.content),
       );
     }
-  }
-
-  async deleteAllWhereCollectionIdEq(
-    collectionId: CollectionId,
-  ): Promise<FileId[]> {
-    const result = this.db
-      .prepare(
-        `DELETE FROM "${table}" WHERE "collection_id" = ? RETURNING "id"`,
-      )
-      .all(collectionId) as { id: FileId }[];
-    return result.map(({ id }) => id);
   }
 
   async deleteAllWhereDocumentIdEq(documentId: DocumentId): Promise<FileId[]> {

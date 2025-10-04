@@ -40,7 +40,7 @@ export default class AssistantsProcessConversation extends Usecase {
   }: {
     id: ConversationId;
   }): ResultPromise<
-    void,
+    null,
     ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
   > {
     const collectionsListResult = await this.sub(CollectionsList).exec();
@@ -131,7 +131,7 @@ export default class AssistantsProcessConversation extends Usecase {
 
     await this.repos.conversation.upsert(updatedConversation);
 
-    return makeSuccessfulResult(undefined);
+    return makeSuccessfulResult(null);
   }
 
   private createAssistant(

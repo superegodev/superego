@@ -79,6 +79,7 @@ function startBackendIPCProxyServer() {
     dataRepositoriesManager,
     javascriptSandbox,
     inferenceServiceFactory,
+    [],
   );
   const backendIPCProxyServer = new BackendIPCProxyServer(backend);
   backendIPCProxyServer.start();

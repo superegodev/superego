@@ -3,12 +3,12 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type BackgroundJobEntity from "../../../entities/BackgroundJobEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Background jobs", (deps) => {
+export default rd<GetDependencies>("Background jobs", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const backgroundJob: BackgroundJobEntity = {
@@ -40,7 +40,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
 
   it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const backgroundJob: BackgroundJobEntity = {
       id: Id.generate.backgroundJob(),
       name: BackgroundJobName.ProcessConversation,
@@ -84,7 +84,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
@@ -116,7 +116,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -136,7 +136,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
   describe("finding single one with status Processing", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
@@ -168,7 +168,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -186,7 +186,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
   describe("finding oldest with status Enqueued", () => {
     it("case: no background jobs with status Enqueued => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
@@ -219,7 +219,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
 
     it("case: some background jobs with status Enqueued => returns the oldest one", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const backgroundJob1: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
@@ -276,7 +276,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
   describe("finding all", () => {
     it("case: no background jobs => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -292,7 +292,7 @@ export default rd<Dependencies>("Background jobs", (deps) => {
 
     it("case: some background jobs => returns them (ordered by enqueuedAt, desc)", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const backgroundJob1: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,

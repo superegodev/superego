@@ -103,8 +103,7 @@ export default class CollectionsCreate extends Usecase<
           issues: [
             {
               message:
-                "The default export of the getter TypescriptModule is not a function",
-              path: [{ key: "getter" }],
+                "The default export of the contentSummaryGetter TypescriptModule is not a function",
             },
           ],
         }),
@@ -123,6 +122,7 @@ export default class CollectionsCreate extends Usecase<
         assistantInstructions:
           settingsValidationResult.output.assistantInstructions,
       },
+      remote: null,
       createdAt: now,
     };
     const collectionVersion: CollectionVersionEntity = {
@@ -134,6 +134,7 @@ export default class CollectionsCreate extends Usecase<
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
       migration: null,
+      remoteConverters: null,
       createdAt: now,
     };
     if (!dryRun) {
