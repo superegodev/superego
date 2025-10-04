@@ -212,6 +212,8 @@ export default class CollectionsDownSync extends Usecase {
     if (!validationResult.success) {
       return makeUnsuccessfulResult(
         makeResultError("RemoteDocumentContentNotValid", {
+          remoteDocumentId: addedOrModified.id,
+          remoteDocumentVersionId: addedOrModified.versionId,
           issues: makeValidationIssues(validationResult.issues),
         }),
       );
@@ -224,6 +226,8 @@ export default class CollectionsDownSync extends Usecase {
     if (!conversionResult.success) {
       return makeUnsuccessfulResult(
         makeResultError("ConvertingRemoteDocumentFailed", {
+          remoteDocumentId: addedOrModified.id,
+          remoteDocumentVersionId: addedOrModified.versionId,
           cause: conversionResult.error,
         }),
       );
@@ -249,6 +253,8 @@ export default class CollectionsDownSync extends Usecase {
         ? makeSuccessfulResult(null)
         : makeUnsuccessfulResult(
             makeResultError("CreatingDocumentFailed", {
+              remoteDocumentId: addedOrModified.id,
+              remoteDocumentVersionId: addedOrModified.versionId,
               cause: documentsCreateResult.error,
             }),
           );
@@ -275,6 +281,8 @@ export default class CollectionsDownSync extends Usecase {
         ? makeSuccessfulResult(null)
         : makeUnsuccessfulResult(
             makeResultError("CreatingNewDocumentVersionFailed", {
+              remoteDocumentId: addedOrModified.id,
+              remoteDocumentVersionId: addedOrModified.versionId,
               cause: documentsCreateNewVersionResult.error,
             }),
           );
