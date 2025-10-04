@@ -9,16 +9,16 @@ import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it, vi } from "vitest";
-import makeResultError from "../../../../core/executing-backend/src/makers/makeResultError.js";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Collections down-sync", (deps) => {
   describe("triggerDownSync", () => {
     it("error: UnexpectedError from connector", async () => {
       // Setup mocks
-      const syncDownError = makeResultError("UnexpectedError", {
-        cause: "cause",
-      });
+      const syncDownError = {
+        name: "UnexpectedError",
+        details: { cause: "cause" },
+      } as const;
       const mockConnector: Connector = {
         name: "MockConnector",
         settingsSchema: {
