@@ -94,6 +94,9 @@ const collectionVersion: CollectionVersionEntity = {
           DebitCard: {
             value: "Debit Card",
           },
+          BankTransfer: {
+            value: "Bank Transfer",
+          },
           Cash: {
             value: "Cash",
           },

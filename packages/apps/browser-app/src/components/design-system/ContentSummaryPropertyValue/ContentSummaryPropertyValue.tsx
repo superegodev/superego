@@ -10,9 +10,13 @@ export default function ContentSummaryPropertyValue({ value }: Props) {
       return utils.isValidInstant(value) ? (
         <FormattedDate value={value} dateStyle="medium" timeStyle="medium" />
       ) : utils.isValidPlainDate(value) ? (
-        <FormattedDate value={value} dateStyle="medium" />
+        <FormattedDate value={value} timeZone="UTC" dateStyle="medium" />
       ) : utils.isValidPlainTime(value) ? (
-        <FormattedTime value={`1970-01-01${value}`} timeStyle="medium" />
+        <FormattedTime
+          value={`1970-01-01${value}`}
+          timeZone="UTC"
+          timeStyle="medium"
+        />
       ) : (
         value
       );

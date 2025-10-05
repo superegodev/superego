@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test:e2e": "playwright test --config=playwright.config.ts",
+    "test": "playwright test --config=playwright.config.ts",
     "playwright": "playwright"
   },
   "devDependencies": {

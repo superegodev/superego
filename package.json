@@ -7,8 +7,7 @@
     "packages/**/*"
   ],
   "scripts": {
-    "test": "yarn workspaces foreach --all --topological-dev --verbose run test run",
-    "test:e2e": "yarn workspaces foreach --all --topological-dev --verbose run test:e2e",
+    "test": "CI=true yarn workspaces foreach --all --topological-dev --verbose run test",
     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
     "check-translations": "yarn workspaces foreach --all --topological-dev --verbose run check-translations",
     "check-linting": "biome lint",
