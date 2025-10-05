@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Install Playwright
-        run: yarn playwright install chromium --with-deps
+        run: yarn playwright install --with-deps
       - name: Check formatting
         run: yarn check-formatting
       - name: Check linting
