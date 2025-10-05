@@ -2794,6 +2794,167 @@ export default rd<GetDependencies>("Collections", (deps) => {
         error: null,
       });
     });
+
+    it("success: preserves remote ids", async () => {
+      // Setup mocks
+      const changes: Connector.Changes = {
+        addedOrModified: [
+          {
+            id: "remoteDocumentId",
+            versionId: "remoteDocumentVersionId",
+            content: { title: "remote title" },
+          },
+        ],
+        deleted: [],
+      };
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: { changes, syncPoint: "syncPoint" },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const remoteConverters = {
+        fromRemoteDocument: {
+          source: "",
+          compiled:
+            "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+        },
+      };
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        {},
+        remoteConverters,
+      );
+      assert.isTrue(setRemoteResult.success);
+      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
+      const createLocalDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "local title" },
+      );
+      assert.isTrue(createLocalDocumentResult.success);
+
+      // Ensure expected pre-migration state
+      const beforeMigrationDocumentsListResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(beforeMigrationDocumentsListResult.success);
+      expect(beforeMigrationDocumentsListResult.data).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            remoteId: "remoteDocumentId",
+            latestVersion: expect.objectContaining({
+              remoteId: "remoteDocumentVersionId",
+            }),
+          }),
+          expect.objectContaining({
+            id: createLocalDocumentResult.data.id,
+            remoteId: null,
+            latestVersion: expect.objectContaining({
+              id: createLocalDocumentResult.data.latestVersion.id,
+              remoteId: null,
+            }),
+          }),
+        ]),
+      );
+
+      // Exercise
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: { title: { dataType: DataType.String } },
+              },
+            },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export default function getContentSummary() {}",
+            },
+          },
+          {
+            source: "",
+            compiled:
+              "export default function migrate(content) { return content; }",
+          },
+          remoteConverters,
+        );
+
+      // Verify
+      assert.isTrue(createNewCollectionVersionResult.success);
+      const afterMigrationDocumentsListResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(afterMigrationDocumentsListResult.success);
+      expect(afterMigrationDocumentsListResult.data).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            remoteId: "remoteDocumentId",
+            latestVersion: expect.objectContaining({
+              remoteId: "remoteDocumentVersionId",
+            }),
+          }),
+          expect.objectContaining({
+            id: createLocalDocumentResult.data.id,
+            remoteId: null,
+            latestVersion: expect.objectContaining({
+              remoteId: null,
+              previousVersionId:
+                createLocalDocumentResult.data.latestVersion.id,
+            }),
+          }),
+        ]),
+      );
+    });
   });
 
   describe("updateLatestVersionSettings", () => {
