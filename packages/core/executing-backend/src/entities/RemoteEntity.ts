@@ -1,5 +1,8 @@
 import type {
-  ConnectorNotFound,
+  ConnectorAuthenticationFailed,
+  ConnectorAuthenticationSettings,
+  ConnectorAuthenticationState,
+  ConnectorNotAuthenticated,
   DownSyncStatus,
   SyncingChangesFailed,
   UnexpectedError,
@@ -7,8 +10,14 @@ import type {
 import type { ResultError } from "@superego/global-types";
 
 export default interface RemoteEntity {
-  connectorName: string;
-  connectorSettings: any;
+  connector: {
+    name: string;
+    authenticationSettings: ConnectorAuthenticationSettings;
+    settings: any;
+  };
+  connectorState: {
+    authentication: ConnectorAuthenticationState | null;
+  };
   syncState: {
     down: {
       status: DownSyncStatus;
@@ -30,7 +39,11 @@ export default interface RemoteEntity {
       | { status: DownSyncStatus.LastSyncSucceeded; error: null }
       | {
           status: DownSyncStatus.LastSyncFailed;
-          error: ConnectorNotFound | SyncingChangesFailed | UnexpectedError;
+          error:
+            | ConnectorNotAuthenticated
+            | ConnectorAuthenticationFailed
+            | SyncingChangesFailed
+            | UnexpectedError;
         }
     );
   };

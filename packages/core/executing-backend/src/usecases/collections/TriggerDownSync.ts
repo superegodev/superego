@@ -6,6 +6,7 @@ import {
   type CollectionId,
   type CollectionIsSyncing,
   type CollectionNotFound,
+  type ConnectorNotAuthenticated,
   DownSyncStatus,
   type UnexpectedError,
 } from "@superego/backend";
@@ -28,6 +29,7 @@ export default class CollectionsTriggerDownSync extends Usecase<
     | CollectionNotFound
     | CollectionHasNoRemote
     | CollectionIsSyncing
+    | ConnectorNotAuthenticated
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -46,6 +48,15 @@ export default class CollectionsTriggerDownSync extends Usecase<
     if (collection.remote.syncState.down.status === DownSyncStatus.Syncing) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionIsSyncing", { collectionId: id }),
+      );
+    }
+
+    if (!collection.remote.connectorState.authentication) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConnectorNotAuthenticated", {
+          collectionId: id,
+          connectorName: collection.remote.connector.name,
+        }),
       );
     }
 

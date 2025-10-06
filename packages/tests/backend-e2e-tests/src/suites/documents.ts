@@ -1,4 +1,7 @@
-import { DocumentVersionCreator } from "@superego/backend";
+import {
+  ConnectorAuthenticationStrategy,
+  DocumentVersionCreator,
+} from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
@@ -568,6 +571,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
       const mockConnector: Connector = {
         name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -621,6 +625,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
         {},
         {
           fromRemoteDocument: {
@@ -631,6 +636,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createCollectionResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+      assert.isTrue(authenticateRemoteConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const listDocumentsResult = await backend.documents.list(
         createCollectionResult.data.id,
@@ -1024,6 +1035,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
       const mockConnector: Connector = {
         name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -1077,6 +1089,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
         {},
         {
           fromRemoteDocument: {
@@ -1087,6 +1100,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createCollectionResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+      assert.isTrue(authenticateRemoteConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const listDocumentsResult = await backend.documents.list(
         createCollectionResult.data.id,

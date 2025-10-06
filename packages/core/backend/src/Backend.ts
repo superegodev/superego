@@ -19,6 +19,9 @@ import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js"
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
+import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
+import type ConnectorAuthenticationStateNotValid from "./errors/ConnectorAuthenticationStateNotValid.js";
+import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
@@ -48,6 +51,8 @@ import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Connector from "./types/Connector.js";
+import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticationSettings.js";
+import type ConnectorAuthenticationState from "./types/ConnectorAuthenticationState.js";
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
@@ -123,6 +128,7 @@ export default interface Backend {
     setRemote(
       id: CollectionId,
       connectorName: string,
+      connectorAuthenticationSettings: ConnectorAuthenticationSettings,
       connectorSettings: any,
       remoteConverters: RemoteConverters,
     ): ResultPromise<
@@ -130,6 +136,7 @@ export default interface Backend {
       | CollectionNotFound
       | ConnectorNotFound
       | CannotChangeCollectionRemoteConnector
+      | ConnectorAuthenticationSettingsNotValid
       | ConnectorSettingsNotValid
       | RemoteConvertersNotValid
       | UnexpectedError
@@ -153,7 +160,16 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    // authenticateRemote(id: CollectionId): ResultPromise<any, any>;
+    authenticateRemoteConnector(
+      id: CollectionId,
+      connectorAuthenticationState: ConnectorAuthenticationState,
+    ): ResultPromise<
+      Collection,
+      | CollectionNotFound
+      | CollectionHasNoRemote
+      | ConnectorAuthenticationStateNotValid
+      | UnexpectedError
+    >;
 
     triggerDownSync(
       id: CollectionId,
@@ -162,6 +178,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionHasNoRemote
       | CollectionIsSyncing
+      | ConnectorNotAuthenticated
       | UnexpectedError
     >;
 

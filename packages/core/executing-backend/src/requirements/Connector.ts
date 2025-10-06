@@ -1,16 +1,20 @@
-import type { UnexpectedError } from "@superego/backend";
+import type {
+  ConnectorAuthenticationFailed,
+  ConnectorAuthenticationState,
+  ConnectorAuthenticationStrategy,
+  UnexpectedError,
+} from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
 
 interface Connector {
   name: string;
-  // authenticationStrategy: AuthenticationStrategy;
+  authenticationStrategy: ConnectorAuthenticationStrategy;
   settingsSchema: Schema;
   remoteDocumentSchema: Schema;
   syncDown(
-    // TODO: auth, settings
-    // auth: Connector.Auth & { strategy: AuthenticationStrategy },
-    // settings: any, // TODO: typing or use valibot schema
+    authenticationState: ConnectorAuthenticationState,
+    settings: any,
     /** The point from which to sync. I.e., a previously returned syncPoint. */
     syncFrom: string | null,
   ): ResultPromise<
@@ -18,8 +22,7 @@ interface Connector {
       changes: Connector.Changes;
       syncPoint: string;
     },
-    // TODO: more errors like invalid auth etc
-    UnexpectedError
+    ConnectorAuthenticationFailed | UnexpectedError
   >;
 }
 

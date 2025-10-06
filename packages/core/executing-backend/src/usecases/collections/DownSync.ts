@@ -21,8 +21,11 @@ import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import type Connector from "../../requirements/Connector.js";
+import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import assertCollectionVersionHasRemoteConverters from "../../utils/assertCollectionVersionHasRemoteConverters.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import CollectionUtils from "../../utils/CollectionUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "../documents/Create.js";
@@ -45,29 +48,38 @@ export default class CollectionsDownSync extends Usecase {
       );
     }
 
-    const collectionVersion =
-      await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);
-    assertCollectionVersionExists(id, collectionVersion);
-
-    if (!hasRemote(collection)) {
+    if (!CollectionUtils.hasRemote(collection)) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionHasNoRemote", { collectionId: id }),
       );
     }
 
-    const connector = this.getConnector(collection.remote.connectorName);
-    if (!connector) {
+    if (!collection.remote.connectorState.authentication) {
       await this.markDownSyncAsFailed(
         collection,
-        makeResultError("ConnectorNotFound", {
+        makeResultError("ConnectorNotAuthenticated", {
           collectionId: id,
-          connectorName: collection.remote.connectorName,
+          connectorName: collection.remote.connector.name,
         }),
       );
       return makeSuccessfulResult(null);
     }
 
+    const collectionVersion =
+      await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);
+    assertCollectionVersionExists(id, collectionVersion);
+    assertCollectionVersionHasRemoteConverters(collectionVersion);
+
+    const connector = this.getConnector(collection.remote.connector.name);
+    assertCollectionRemoteConnectorExists(
+      id,
+      collection.remote.connector.name,
+      connector,
+    );
+
     const syncDownResult = await connector.syncDown(
+      collection.remote.connectorState.authentication,
+      collection.remote.connector.settings,
       collection.remote.syncState.down.syncedUntil,
     );
     if (!syncDownResult.success) {
@@ -79,9 +91,7 @@ export default class CollectionsDownSync extends Usecase {
     const beforeProcessChangesSavepoint = await this.repos.createSavepoint();
     const syncChangesResult = await this.syncChanges(
       collection,
-      collectionVersion as CollectionVersionEntity & {
-        remoteConverters: RemoteConverters;
-      }, // TODO: assert this has remoteConverters
+      collectionVersion,
       connector,
       changes,
     );
@@ -314,11 +324,4 @@ export default class CollectionsDownSync extends Usecase {
       ? makeSuccessfulResult(null)
       : makeUnsuccessfulResult(documentsDeleteResult.error);
   }
-}
-
-// TODO: move to CollectionUtils
-function hasRemote(
-  collection: CollectionEntity,
-): collection is CollectionEntity & { remote: RemoteEntity } {
-  return collection.remote !== null;
 }

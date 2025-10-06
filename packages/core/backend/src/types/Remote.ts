@@ -1,12 +1,20 @@
 import type { ResultError } from "@superego/global-types";
 import type DownSyncStatus from "../enums/DownSyncStatus.js";
-import type ConnectorNotFound from "../errors/ConnectorNotFound.js";
+import type ConnectorAuthenticationFailed from "../errors/ConnectorAuthenticationFailed.js";
+import type ConnectorNotAuthenticated from "../errors/ConnectorNotAuthenticated.js";
 import type SyncingChangesFailed from "../errors/SyncingChangesFailed.js";
 import type UnexpectedError from "../errors/UnexpectedError.js";
+import type ConnectorAuthenticationSettings from "./ConnectorAuthenticationSettings.js";
 
 export default interface Remote {
-  connectorName: string;
-  connectorSettings: any;
+  connector: {
+    name: string;
+    authenticationSettings: ConnectorAuthenticationSettings;
+    settings: any;
+  };
+  connectorState: {
+    isAuthenticated: boolean;
+  };
   syncState: {
     down: {
       status: DownSyncStatus;
@@ -22,7 +30,11 @@ export default interface Remote {
       | { status: DownSyncStatus.LastSyncSucceeded; error: null }
       | {
           status: DownSyncStatus.LastSyncFailed;
-          error: ConnectorNotFound | SyncingChangesFailed | UnexpectedError;
+          error:
+            | ConnectorNotAuthenticated
+            | ConnectorAuthenticationFailed
+            | SyncingChangesFailed
+            | UnexpectedError;
         }
     );
   };

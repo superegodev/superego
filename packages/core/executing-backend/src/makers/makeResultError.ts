@@ -16,6 +16,10 @@ import type {
   CollectionSettingsNotValid,
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
+  ConnectorAuthenticationFailed,
+  ConnectorAuthenticationSettingsNotValid,
+  ConnectorAuthenticationStateNotValid,
+  ConnectorNotAuthenticated,
   ConnectorNotFound,
   ConnectorSettingsNotValid,
   ContentSummaryGetterNotValid,
@@ -55,6 +59,10 @@ type KnownResultError =
   | CollectionSettingsNotValid
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
+  | ConnectorAuthenticationFailed
+  | ConnectorAuthenticationSettingsNotValid
+  | ConnectorAuthenticationStateNotValid
+  | ConnectorNotAuthenticated
   | ConnectorNotFound
   | ConnectorSettingsNotValid
   | ContentSummaryGetterNotValid

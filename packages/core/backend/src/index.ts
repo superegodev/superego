@@ -8,6 +8,7 @@ export type { default as Backend } from "./Backend.js";
 export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
+export { default as ConnectorAuthenticationStrategy } from "./enums/ConnectorAuthenticationStrategy.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
@@ -37,6 +38,10 @@ export type { default as CollectionSchemaNotValid } from "./errors/CollectionSch
 export type { default as CollectionSettingsNotValid } from "./errors/CollectionSettingsNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
+export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
+export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";
+export type { default as ConnectorAuthenticationStateNotValid } from "./errors/ConnectorAuthenticationStateNotValid.js";
+export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNotAuthenticated.js";
 export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
 export type { default as ConnectorSettingsNotValid } from "./errors/ConnectorSettingsNotValid.js";
 export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
@@ -78,6 +83,8 @@ export type { default as CollectionSettings } from "./types/CollectionSettings.j
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
 export type { default as Connector } from "./types/Connector.js";
+export type { default as ConnectorAuthenticationSettings } from "./types/ConnectorAuthenticationSettings.js";
+export type { default as ConnectorAuthenticationState } from "./types/ConnectorAuthenticationState.js";
 export type { default as ContentSummary } from "./types/ContentSummary.js";
 export type { default as Conversation } from "./types/Conversation.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";

@@ -1,4 +1,8 @@
-import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
+import {
+  BackgroundJobName,
+  BackgroundJobStatus,
+  ConnectorAuthenticationStrategy,
+} from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -27,6 +31,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -81,6 +86,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
         {},
         {
           fromRemoteDocument: {
@@ -91,6 +97,12 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createCollectionResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+      assert.isTrue(authenticateRemoteConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
 
       // Exercise

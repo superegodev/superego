@@ -22,6 +22,7 @@ import CollectionCategoriesCreate from "./usecases/collection-categories/Create.
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
 import CollectionCategoriesUpdate from "./usecases/collection-categories/Update.js";
+import CollectionsAuthenticateRemoteConnector from "./usecases/collections/AuthenticateRemoteConnector.js";
 import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
@@ -71,6 +72,10 @@ export default class ExecutingBackend implements Backend {
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
       setRemote: this.makeUsecase(CollectionsSetRemote, true),
       unsetRemote: this.makeUsecase(CollectionsUnsetRemote, true),
+      authenticateRemoteConnector: this.makeUsecase(
+        CollectionsAuthenticateRemoteConnector,
+        true,
+      ),
       createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
       updateLatestVersionSettings: this.makeUsecase(
         CollectionUpdateLatestVersionSettings,

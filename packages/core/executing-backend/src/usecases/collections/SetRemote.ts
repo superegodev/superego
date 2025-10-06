@@ -4,6 +4,9 @@ import {
   type Collection,
   type CollectionId,
   type CollectionNotFound,
+  type ConnectorAuthenticationSettings,
+  type ConnectorAuthenticationSettingsNotValid,
+  ConnectorAuthenticationStrategy,
   type ConnectorNotFound,
   type ConnectorSettingsNotValid,
   DownSyncStatus,
@@ -30,6 +33,7 @@ export default class CollectionsSetRemote extends Usecase<
   async exec(
     id: CollectionId,
     connectorName: string,
+    connectorAuthenticationSettings: ConnectorAuthenticationSettings,
     connectorSettings: any,
     remoteConverters: RemoteConverters,
   ): ResultPromise<
@@ -37,6 +41,7 @@ export default class CollectionsSetRemote extends Usecase<
     | CollectionNotFound
     | ConnectorNotFound
     | CannotChangeCollectionRemoteConnector
+    | ConnectorAuthenticationSettingsNotValid
     | ConnectorSettingsNotValid
     | RemoteConvertersNotValid
     | UnexpectedError
@@ -50,12 +55,12 @@ export default class CollectionsSetRemote extends Usecase<
 
     if (
       collection.remote &&
-      collection.remote.connectorName !== connectorName
+      collection.remote.connector.name !== connectorName
     ) {
       return makeUnsuccessfulResult(
         makeResultError("CannotChangeCollectionRemoteConnector", {
           collectionId: id,
-          currentConnectorName: collection.remote.connectorName,
+          currentConnectorName: collection.remote.connector.name,
           suppliedConnectorName: connectorName,
         }),
       );
@@ -67,6 +72,35 @@ export default class CollectionsSetRemote extends Usecase<
         makeResultError("ConnectorNotFound", {
           collectionId: id,
           connectorName: connectorName,
+        }),
+      );
+    }
+
+    const connectorAuthenticationSettingsValidationResult = v.safeParse(
+      v.variant("strategy", [
+        v.strictObject({
+          strategy: v.pipe(
+            v.string(),
+            v.value(ConnectorAuthenticationStrategy.OAuthPKCE),
+          ),
+          url: v.string(),
+          clientId: v.string(),
+          scopes: v.array(v.string()),
+        }),
+      ]),
+      {
+        strategy: connector.authenticationStrategy,
+        ...connectorAuthenticationSettings,
+      },
+    );
+    if (!connectorAuthenticationSettingsValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConnectorAuthenticationSettingsNotValid", {
+          collectionId: id,
+          connectorName: connectorName,
+          issues: makeValidationIssues(
+            connectorAuthenticationSettingsValidationResult.issues,
+          ),
         }),
       );
     }
@@ -109,20 +143,26 @@ export default class CollectionsSetRemote extends Usecase<
       await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);
     assertCollectionVersionExists(id, latestVersion);
 
+    // TODO: figure out in which circumstances it makes sense to reset connector
+    // and sync states.
     const updatedCollection: CollectionEntity = {
       ...collection,
       remote: {
-        connectorName: connectorName,
-        connectorSettings: connectorSettings,
-        syncState: {
-          down: collection.remote
-            ? collection.remote.syncState.down
-            : {
-                status: DownSyncStatus.NeverSynced,
-                error: null,
-                syncedUntil: null,
-                lastSucceededAt: null,
-              },
+        connector: {
+          name: connectorName,
+          authenticationSettings: connectorAuthenticationSettings,
+          settings: connectorSettings,
+        },
+        connectorState: collection.remote?.connectorState ?? {
+          authentication: null,
+        },
+        syncState: collection.remote?.syncState ?? {
+          down: {
+            status: DownSyncStatus.NeverSynced,
+            error: null,
+            syncedUntil: null,
+            lastSucceededAt: null,
+          },
         },
       },
     };
