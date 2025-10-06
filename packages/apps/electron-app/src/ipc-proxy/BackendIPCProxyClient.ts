@@ -24,6 +24,9 @@ export default class BackendIPCProxyClient implements Backend {
       updateSettings: this.makeMainIpcCall("collections.updateSettings"),
       setRemote: this.makeMainIpcCall("collections.setRemote"),
       unsetRemote: this.makeMainIpcCall("collections.unsetRemote"),
+      authenticateRemoteConnector: this.makeMainIpcCall(
+        "collections.authenticateRemoteConnector",
+      ),
       triggerDownSync: this.makeMainIpcCall("collections.triggerDownSync"),
       createNewVersion: this.makeMainIpcCall("collections.createNewVersion"),
       updateLatestVersionSettings: this.makeMainIpcCall(

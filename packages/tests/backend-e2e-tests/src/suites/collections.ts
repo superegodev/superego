@@ -1305,6 +1305,277 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
+  describe("authenticateRemoteConnector", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.authenticateRemoteConnector(
+        collectionId,
+        { accessToken: "accessToken", refreshToken: "refreshToken" },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CollectionHasNoRemote", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+
+      // Verify
+      expect(authenticateRemoteConnectorResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionHasNoRemote",
+          details: { collectionId: createResult.data.id },
+        },
+      });
+    });
+
+    it("error: ConnectorAuthenticationStateNotValid", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createResult.data.id,
+          { accessToken: "accessToken" } as any,
+        );
+
+      // Verify
+      expect(authenticateRemoteConnectorResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorAuthenticationStateNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  'Invalid key: Expected "refreshToken" but received undefined',
+                path: [{ key: "refreshToken" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("success: authenticates remote connector", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        settingsSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+
+      // Verify
+      expect(authenticateRemoteConnectorResult).toEqual({
+        success: true,
+        data: {
+          ...setRemoteResult.data,
+          remote: {
+            ...setRemoteResult.data.remote,
+            connectorState: {
+              isAuthenticated: true,
+            },
+          },
+        },
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [authenticateRemoteConnectorResult.data],
+        error: null,
+      });
+    });
+  });
+
   describe("triggerDownSync", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
