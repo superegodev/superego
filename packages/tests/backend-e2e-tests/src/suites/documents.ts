@@ -555,6 +555,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
     });
 
     it("error: DocumentIsRemote", async () => {
+      // Setup mocks
       const changes: Connector.Changes = {
         addedOrModified: [
           {
@@ -926,264 +927,250 @@ export default rd<GetDependencies>("Documents", (deps) => {
     });
   });
 
-  // TODO: review
-  // describe("delete", () => {
-  //   it.skip("error: CommandConfirmationNotValid", async () => {
-  //     // Setup SUT
-  //     const { backend } = deps();
-  //     const createCollectionResult = await backend.collections.create(
-  //       {
-  //         name: "name",
-  //         icon: null,
-  //         collectionCategoryId: null,
-  //         description: null,
-  //         assistantInstructions: null,
-  //       },
-  //       {
-  //         types: {
-  //           Root: {
-  //             dataType: DataType.Struct,
-  //             properties: {
-  //               title: { dataType: DataType.String },
-  //             },
-  //           },
-  //         },
-  //         rootType: "Root",
-  //       },
-  //       {
-  //         contentSummaryGetter: {
-  //           source: "",
-  //           compiled:
-  //             "export default function getContentSummary() { return {}; }",
-  //         },
-  //       },
-  //     );
-  //     assert.isTrue(createCollectionResult.success);
-  //     const createDocumentResult = await backend.documents.create(
-  //       createCollectionResult.data.id,
-  //       { title: "title" },
-  //     );
-  //     assert.isTrue(createDocumentResult.success);
+  describe("delete", () => {
+    it("error: DocumentNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const collectionId = Id.generate.collection();
 
-  //     // Exercise
-  //     const result = await backend.documents.delete(
-  //       createCollectionResult.data.id,
-  //       createDocumentResult.data.id,
-  //       "not-delete",
-  //     );
+      // Exercise
+      const documentId = Id.generate.document();
+      const result = await backend.documents.delete(
+        collectionId,
+        documentId,
+        "delete",
+      );
 
-  //     // Verify
-  //     expect(result).toEqual({
-  //       success: false,
-  //       data: null,
-  //       error: {
-  //         name: "CommandConfirmationNotValid",
-  //         details: {
-  //           requiredCommandConfirmation: "delete",
-  //           suppliedCommandConfirmation: "not-delete",
-  //         },
-  //       },
-  //     });
-  //   });
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentNotFound",
+          details: { documentId },
+        },
+      });
+    });
 
-  //   it.skip("error: DocumentNotFound", async () => {
-  //     // Setup SUT
-  //     const { backend } = deps();
-  //     const collectionId = Id.generate.collection();
+    it("error: CommandConfirmationNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
 
-  //     // Exercise
-  //     const documentId = Id.generate.document();
-  //     const result = await backend.documents.delete(
-  //       collectionId,
-  //       documentId,
-  //       "delete",
-  //     );
+      // Exercise
+      const deleteDocumentResult = await backend.documents.delete(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        "not-delete",
+      );
 
-  //     // Verify
-  //     expect(result).toEqual({
-  //       success: false,
-  //       data: null,
-  //       error: {
-  //         name: "DocumentNotFound",
-  //         details: { documentId },
-  //       },
-  //     });
-  //   });
+      // Verify
+      expect(deleteDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CommandConfirmationNotValid",
+          details: {
+            requiredCommandConfirmation: "delete",
+            suppliedCommandConfirmation: "not-delete",
+          },
+        },
+      });
+    });
 
-  //   it.skip("error: DocumentIsRemote", async () => {
-  //     // Setup SUT
-  //     const { backend } = deps();
-  //     const createCollectionResult = await backend.collections.create(
-  //       {
-  //         name: "name",
-  //         icon: null,
-  //         collectionCategoryId: null,
-  //         description: null,
-  //         assistantInstructions: null,
-  //       },
-  //       {
-  //         types: {
-  //           Root: {
-  //             dataType: DataType.Struct,
-  //             properties: {
-  //               title: { dataType: DataType.String },
-  //             },
-  //           },
-  //         },
-  //         rootType: "Root",
-  //       },
-  //       {
-  //         contentSummaryGetter: {
-  //           source: "",
-  //           compiled:
-  //             "export default function getContentSummary() { return {}; }",
-  //         },
-  //       },
-  //     );
-  //     assert.isTrue(createCollectionResult.success);
-  //     const createDocumentResult = await backend.documents.create(
-  //       createCollectionResult.data.id,
-  //       { title: "remote" },
-  //       {
-  //         createdBy: DocumentVersionCreator.Connector,
-  //         remoteId: "remote-document-id",
-  //         remoteVersionId: "remote-version-id",
-  //       },
-  //     );
-  //     assert.isTrue(createDocumentResult.success);
+    it("error: DocumentIsRemote", async () => {
+      // Setup mocks
+      const changes: Connector.Changes = {
+        addedOrModified: [
+          {
+            id: "remoteDocumentId",
+            versionId: "remoteDocumentVersionId",
+            content: { title: "remote title" },
+          },
+        ],
+        deleted: [],
+      };
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: { changes, syncPoint: "syncPoint" },
+          error: null,
+        }),
+      };
 
-  //     // Exercise
-  //     const result = await backend.documents.delete(
-  //       createCollectionResult.data.id,
-  //       createDocumentResult.data.id,
-  //       "delete",
-  //     );
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
+      const listDocumentsResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(listDocumentsResult.success);
+      const remoteDocument = listDocumentsResult.data[0];
+      assert.isDefined(remoteDocument);
 
-  //     // Verify
-  //     expect(result).toEqual({
-  //       success: false,
-  //       data: null,
-  //       error: {
-  //         name: "DocumentIsRemote",
-  //         details: {
-  //           documentId: createDocumentResult.data.id,
-  //           message:
-  //             "Remote documents are read-only. You can't create new versions or delete them.",
-  //         },
-  //       },
-  //     });
-  //   });
+      // Exercise
+      const deleteDocumentResult = await backend.documents.delete(
+        createCollectionResult.data.id,
+        remoteDocument.id,
+        "delete",
+      );
 
-  //   it.skip("success: deletes local document", async () => {
-  //     // Setup SUT
-  //     const { backend } = deps();
-  //     const createCollectionResult = await backend.collections.create(
-  //       {
-  //         name: "name",
-  //         icon: null,
-  //         collectionCategoryId: null,
-  //         description: null,
-  //         assistantInstructions: null,
-  //       },
-  //       {
-  //         types: {
-  //           Root: {
-  //             dataType: DataType.Struct,
-  //             properties: {
-  //               title: { dataType: DataType.String },
-  //             },
-  //           },
-  //         },
-  //         rootType: "Root",
-  //       },
-  //       {
-  //         contentSummaryGetter: {
-  //           source: "",
-  //           compiled:
-  //             "export default function getContentSummary() { return {}; }",
-  //         },
-  //       },
-  //     );
-  //     assert.isTrue(createCollectionResult.success);
-  //     const createDocumentResult = await backend.documents.create(
-  //       createCollectionResult.data.id,
-  //       { title: "title" },
-  //     );
-  //     assert.isTrue(createDocumentResult.success);
+      // Verify
+      expect(deleteDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentIsRemote",
+          details: {
+            documentId: remoteDocument.id,
+            message:
+              "Remote documents are read-only. You can't create new versions or delete them.",
+          },
+        },
+      });
+    });
 
-  //     // Exercise
-  //     const deleteResult = await backend.documents.delete(
-  //       createCollectionResult.data.id,
-  //       createDocumentResult.data.id,
-  //       "delete",
-  //     );
+    it("success: deletes", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
 
-  //     // Verify
-  //     expect(deleteResult).toEqual({ success: true, data: null, error: null });
-  //     const listResult = await backend.documents.list(
-  //       createCollectionResult.data.id,
-  //       false,
-  //     );
-  //     expect(listResult).toEqual({ success: true, data: [], error: null });
-  //   });
+      // Exercise
+      const deleteDocumentResult = await backend.documents.delete(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        "delete",
+      );
 
-  //   it.skip("success: deletes remote document when allowed", async () => {
-  //     // Setup SUT
-  //     const { backend } = deps();
-  //     const createCollectionResult = await backend.collections.create(
-  //       {
-  //         name: "name",
-  //         icon: null,
-  //         collectionCategoryId: null,
-  //         description: null,
-  //         assistantInstructions: null,
-  //       },
-  //       {
-  //         types: {
-  //           Root: {
-  //             dataType: DataType.Struct,
-  //             properties: {
-  //               title: { dataType: DataType.String },
-  //             },
-  //           },
-  //         },
-  //         rootType: "Root",
-  //       },
-  //       {
-  //         contentSummaryGetter: {
-  //           source: "",
-  //           compiled:
-  //             "export default function getContentSummary() { return {}; }",
-  //         },
-  //       },
-  //     );
-  //     assert.isTrue(createCollectionResult.success);
-  //     const createDocumentResult = await backend.documents.create(
-  //       createCollectionResult.data.id,
-  //       { title: "remote" },
-  //       {
-  //         createdBy: DocumentVersionCreator.Connector,
-  //         remoteId: "remote-document-id",
-  //         remoteVersionId: "remote-version-id",
-  //       },
-  //     );
-  //     assert.isTrue(createDocumentResult.success);
-
-  //     // Exercise
-  //     const deleteResult = await backend.documents.delete(
-  //       createCollectionResult.data.id,
-  //       createDocumentResult.data.id,
-  //       "delete",
-  //       true,
-  //     );
-
-  //     // Verify
-  //     expect(deleteResult).toEqual({ success: true, data: null, error: null });
-  //     const listResult = await backend.documents.list(
-  //       createCollectionResult.data.id,
-  //       false,
-  //     );
-  //     expect(listResult).toEqual({ success: true, data: [], error: null });
-  //   });
-  // });
+      // Verify
+      expect(deleteDocumentResult).toEqual({
+        success: true,
+        data: null,
+        error: null,
+      });
+      const listResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      expect(listResult).toEqual({ success: true, data: [], error: null });
+    });
+  });
 });
