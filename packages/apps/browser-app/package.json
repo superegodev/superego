@@ -74,7 +74,7 @@
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "markdown-to-jsx": "^7.7.14",
-    "monaco-editor": "0.51.0",
+    "monaco-editor": "0.54.0",
     "p-timeout": "^6.1.4",
     "react": "^19.2.0",
     "react-aria": "^3.44.0",
