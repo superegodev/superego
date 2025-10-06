@@ -1306,10 +1306,253 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("triggerDownSync", () => {
-    // TODO: error: CollectionNotFound
-    // TODO: error: CollectionHasNoRemote
-    // TODO: error: CollectionIsSyncing
-    // TODO: error: ConnectorNotAuthenticated
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.triggerDownSync(collectionId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CollectionHasNoRemote", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const triggerDownSyncResult = await backend.collections.triggerDownSync(
+        createCollectionResult.data.id,
+      );
+
+      // Verify
+      expect(triggerDownSyncResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionHasNoRemote",
+          details: { collectionId: createCollectionResult.data.id },
+        },
+      });
+    });
+
+    it("error: CollectionIsSyncing", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+      const authenticateRemoteConnectorResult =
+        await backend.collections.authenticateRemoteConnector(
+          createCollectionResult.data.id,
+          { accessToken: "accessToken", refreshToken: "refreshToken" },
+        );
+      assert.isTrue(authenticateRemoteConnectorResult.success);
+
+      // Exercise
+      const firstTriggerDownSyncResult =
+        await backend.collections.triggerDownSync(
+          createCollectionResult.data.id,
+        );
+      assert.isTrue(firstTriggerDownSyncResult.success);
+      const secondTriggerDownSyncResult =
+        await backend.collections.triggerDownSync(
+          createCollectionResult.data.id,
+        );
+
+      // Verify
+      expect(secondTriggerDownSyncResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionIsSyncing",
+          details: { collectionId: createCollectionResult.data.id },
+        },
+      });
+    });
+
+    it("error: ConnectorNotAuthenticated", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        { url: "url", clientId: "clientId", scopes: [] },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const triggerDownSyncResult = await backend.collections.triggerDownSync(
+        createCollectionResult.data.id,
+      );
+
+      // Verify
+      expect(triggerDownSyncResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorNotAuthenticated",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            connectorName: mockConnector.name,
+          },
+        },
+      });
+    });
 
     it("syncing error: UnexpectedError", async () => {
       // Setup mocks
