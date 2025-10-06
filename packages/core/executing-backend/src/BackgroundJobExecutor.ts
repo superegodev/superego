@@ -41,7 +41,9 @@ export default class BackgroundJobExecutor {
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();
-        const result = await usecase.exec(backgroundJob.input as any); // TODO: either fix or explain
+        // Typed `as any` since TypeScript can't understand that the class
+        // matches the input.
+        const result = await usecase.exec(backgroundJob.input as any);
 
         if (result.success) {
           await repos.backgroundJob.replace({
