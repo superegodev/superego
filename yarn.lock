@@ -5022,7 +5022,7 @@ __metadata:
     "@tiptap/react": "npm:3.6.5"
     "@tiptap/starter-kit": "npm:3.6.5"
     "@types/luxon": "npm:^3.7.1"
-    "@types/react": "npm:^19.2.0"
+    "@types/react": "npm:^19.2.1"
     "@types/react-dom": "npm:^19.2.0"
     "@vanilla-extract/css": "npm:^1.17.4"
     "@vanilla-extract/vite-plugin": "npm:^5.1.1"
@@ -5034,7 +5034,7 @@ __metadata:
     es-toolkit: "npm:^1.39.10"
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
-    markdown-to-jsx: "npm:^7.7.13"
+    markdown-to-jsx: "npm:^7.7.14"
     monaco-editor: "npm:0.51.0"
     p-timeout: "npm:^6.1.4"
     playwright: "npm:^1.56.0"
@@ -6075,12 +6075,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "@types/react@npm:19.2.0"
+"@types/react@npm:^19.2.1":
+  version: 19.2.1
+  resolution: "@types/react@npm:19.2.1"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10c0/a280e146df2abd3b06eaa2f5332dade9f7ebe916334a40699ee11139c5f22aeb49b5b78b6de8c55b53ef2fa94285e1bc2feaf4fbce6fe259a7de92dc1bf67b17
+  checksum: 10c0/c44881c275da91156ce02986ab1f59c9724db256f4850d3937c9acea561a6ab1fe1028f7a1fc4da3a2c1bcb00de29e238922e8c6d42a727ef2e6e0cd40b3db9f
   languageName: node
   linkType: hard
 
@@ -10148,12 +10148,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-to-jsx@npm:^7.7.13":
-  version: 7.7.13
-  resolution: "markdown-to-jsx@npm:7.7.13"
+"markdown-to-jsx@npm:^7.7.14":
+  version: 7.7.14
+  resolution: "markdown-to-jsx@npm:7.7.14"
   peerDependencies:
     react: ">= 0.14.0"
-  checksum: 10c0/6e423b36f62cc387b87cc17ab603108b8a3095d0fc6b4294d7149aba9ca52a356a937638cb883c44e63ea8d40212f6f81ffc683020afcbc9f84bdd2856061aa9
+  checksum: 10c0/4fc7e6e215e032975b176ffc4c4cf8f6a371011b6af9854e176d5df352ec94f70453adb31b04e4e62fe4274e4816bca7ffbe64ec775bd33e612e8e8e877ed771
   languageName: node
   linkType: hard
 
