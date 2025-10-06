@@ -4,8 +4,9 @@ import InlineCode from "../components/design-system/InlineCode/InlineCode.js";
 type Chunks = ReactNode[];
 
 export default {
-  // Hack to avoid React 19 key errors. Should be solved in the next version of
-  // react-intl. At that point, remove the keys.
+  // Hack to avoid React 19 key errors, due to a react-intl bug. Follow
+  // https://github.com/formatjs/formatjs/pull/5032 for updates. When solved,
+  // remove the keys.
   b: (chunks: Chunks) => <b key={(chunks as string[]).join("")}>{chunks}</b>,
   p: (chunks: Chunks) => <p key={(chunks as string[]).join("")}>{chunks}</p>,
   code: (chunks: Chunks) => (

@@ -14,11 +14,11 @@
     "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.13.8",
-    "@cloudflare/workers-types": "^4.20251001.0",
+    "@cloudflare/vite-plugin": "^1.13.10",
+    "@cloudflare/workers-types": "^4.20251004.0",
     "typescript": "^5.9.3",
-    "vite": "^7.1.7",
-    "wrangler": "^4.40.3"
+    "vite": "^7.1.9",
+    "wrangler": "^4.42.0"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
