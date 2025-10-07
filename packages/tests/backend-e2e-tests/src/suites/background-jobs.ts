@@ -31,7 +31,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -91,11 +91,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
-        {
-          discoveryEndpoint: "discoveryEndpoint",
-          clientId: "clientId",
-          scopes: [],
-        },
+        { clientId: "clientId", clientSecret: "clientSecret" },
         {},
         {
           fromRemoteDocument: {

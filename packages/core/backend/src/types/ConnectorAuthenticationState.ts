@@ -1,5 +1,5 @@
 type ConnectorAuthenticationState =
-  // ConnectorAuthenticationStrategy.OAuthPKCE
+  // ConnectorAuthenticationStrategy.OAuth2
   {
     email: string;
     accessToken: string;

@@ -1,8 +1,7 @@
 type ConnectorAuthenticationSettings =
-  // ConnectorAuthenticationStrategy.OAuthPKCE
+  // ConnectorAuthenticationStrategy.OAuth2
   {
-    discoveryEndpoint: string;
     clientId: string;
-    scopes: string[];
+    clientSecret: string;
   };
 export default ConnectorAuthenticationSettings;

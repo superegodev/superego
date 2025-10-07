@@ -42,7 +42,7 @@ const ACCESS_TOKEN_REFRESH_THRESHOLD_MS = 60 * 1000;
 
 export default defineConnector({
   name: "GoogleCalendar",
-  authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+  authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
   settingsSchema: {
     types: {
       Settings: {

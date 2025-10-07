@@ -61,7 +61,7 @@ export default class CollectionsAuthenticateRemoteConnector extends Usecase<
         v.strictObject({
           strategy: v.pipe(
             v.string(),
-            v.value(ConnectorAuthenticationStrategy.OAuthPKCE),
+            v.value(ConnectorAuthenticationStrategy.OAuth2),
           ),
           email: v.string(),
           accessToken: v.string(),

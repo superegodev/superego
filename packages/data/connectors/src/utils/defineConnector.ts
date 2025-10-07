@@ -4,8 +4,6 @@ import type { Schema } from "@superego/schema";
 export default function defineConnector<
   const SettingsSchema extends Schema,
   const RemoteDocumentSchema extends Schema,
->(
-  connector: Connector<SettingsSchema, RemoteDocumentSchema>,
-): Connector<SettingsSchema, RemoteDocumentSchema> {
+>(connector: Connector<SettingsSchema, RemoteDocumentSchema>): Connector {
   return connector;
 }

@@ -571,7 +571,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
       const mockConnector: Connector = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -630,11 +630,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
-        {
-          discoveryEndpoint: "discoveryEndpoint",
-          clientId: "clientId",
-          scopes: [],
-        },
+        { clientId: "clientId", clientSecret: "clientSecret" },
         {},
         {
           fromRemoteDocument: {
@@ -1049,7 +1045,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
       const mockConnector: Connector = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuthPKCE,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -1108,11 +1104,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
-        {
-          discoveryEndpoint: "discoveryEndpoint",
-          clientId: "clientId",
-          scopes: [],
-        },
+        { clientId: "clientId", clientSecret: "clientSecret" },
         {},
         {
           fromRemoteDocument: {

@@ -1,4 +1,4 @@
 enum ConnectorAuthenticationStrategy {
-  OAuthPKCE = "OAuthPKCE",
+  OAuth2 = "OAuth2",
 }
 export default ConnectorAuthenticationStrategy;
