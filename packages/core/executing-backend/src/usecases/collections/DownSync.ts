@@ -79,6 +79,7 @@ export default class CollectionsDownSync extends Usecase {
 
     const refreshAuthenticationStateResult =
       await connector.refreshAuthenticationState(
+        collection.remote.connector.authenticationSettings,
         collection.remote.connectorState.authentication,
       );
     if (!refreshAuthenticationStateResult.success) {
