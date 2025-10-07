@@ -5240,6 +5240,7 @@ __metadata:
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:^24.7.0"
     luxon: "npm:^3.7.2"
+    tsafe: "npm:^1.8.12"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.1.0"
     vite: "npm:^7.1.9"
@@ -13999,6 +14000,13 @@ __metadata:
   version: 2.2.0
   resolution: "trough@npm:2.2.0"
   checksum: 10c0/58b671fc970e7867a48514168894396dd94e6d9d6456aca427cc299c004fe67f35ed7172a36449086b2edde10e78a71a284ec0076809add6834fb8f857ccb9b0
+  languageName: node
+  linkType: hard
+
+"tsafe@npm:^1.8.12":
+  version: 1.8.12
+  resolution: "tsafe@npm:1.8.12"
+  checksum: 10c0/382b1e2eb8d92007a05bb137b1557839eb4770c944b2f1db767af4451e1f2b03aa7c2803867c634dfd557ebc887bdd9dcca98a3118921320c2cb4caa0bd68c2b
   languageName: node
   linkType: hard
 
