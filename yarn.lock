@@ -5036,7 +5036,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^7.7.14"
     monaco-editor: "npm:0.54.0"
-    p-timeout: "npm:^6.1.4"
+    p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.56.0"
     react: "npm:^19.2.0"
     react-aria: "npm:^3.44.0"
@@ -5053,6 +5053,19 @@ __metadata:
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.8"
     zx: "npm:8.8.4-lite"
+  languageName: unknown
+  linkType: soft
+
+"@superego/connectors@workspace:packages/data/connectors":
+  version: 0.0.0-use.local
+  resolution: "@superego/connectors@workspace:packages/data/connectors"
+  dependencies:
+    "@superego/backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
+    "@superego/schema": "workspace:*"
+    "@superego/shared-utils": "workspace:*"
+    typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -11598,10 +11611,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-timeout@npm:^6.1.2, p-timeout@npm:^6.1.4":
+"p-timeout@npm:^6.1.2":
   version: 6.1.4
   resolution: "p-timeout@npm:6.1.4"
   checksum: 10c0/019edad1c649ab07552aa456e40ce7575c4b8ae863191477f02ac8d283ac8c66cedef0ca93422735130477a051dfe952ba717641673fd3599befdd13f63bcc33
+  languageName: node
+  linkType: hard
+
+"p-timeout@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "p-timeout@npm:7.0.1"
+  checksum: 10c0/87d96529d1096d506607218dba6f9ec077c6dbedd0c2e2788c748e33bcd05faae8a81009fd9d22ec0b3c95fc83f4717306baba223f6e464737d8b99294c3e863
   languageName: node
   linkType: hard
 

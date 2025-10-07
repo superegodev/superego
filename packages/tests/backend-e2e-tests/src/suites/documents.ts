@@ -585,6 +585,11 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "RemoteDocument",
         },
+        refreshAuthenticationState: async (_settings, state) => ({
+          success: true,
+          data: state,
+          error: null,
+        }),
         syncDown: async () => ({
           success: true,
           data: { changes, syncPoint: "syncPoint" },
@@ -625,7 +630,11 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
-        { url: "url", clientId: "clientId", scopes: [] },
+        {
+          discoveryEndpoint: "discoveryEndpoint",
+          clientId: "clientId",
+          scopes: [],
+        },
         {},
         {
           fromRemoteDocument: {
@@ -639,7 +648,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const authenticateRemoteConnectorResult =
         await backend.collections.authenticateRemoteConnector(
           createCollectionResult.data.id,
-          { accessToken: "accessToken", refreshToken: "refreshToken" },
+          {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
         );
       assert.isTrue(authenticateRemoteConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -1049,6 +1063,11 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "RemoteDocument",
         },
+        refreshAuthenticationState: async (_settings, state) => ({
+          success: true,
+          data: state,
+          error: null,
+        }),
         syncDown: async () => ({
           success: true,
           data: { changes, syncPoint: "syncPoint" },
@@ -1089,7 +1108,11 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
-        { url: "url", clientId: "clientId", scopes: [] },
+        {
+          discoveryEndpoint: "discoveryEndpoint",
+          clientId: "clientId",
+          scopes: [],
+        },
         {},
         {
           fromRemoteDocument: {
@@ -1103,7 +1126,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const authenticateRemoteConnectorResult =
         await backend.collections.authenticateRemoteConnector(
           createCollectionResult.data.id,
-          { accessToken: "accessToken", refreshToken: "refreshToken" },
+          {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
         );
       assert.isTrue(authenticateRemoteConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);

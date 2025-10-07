@@ -63,8 +63,10 @@ export default class CollectionsAuthenticateRemoteConnector extends Usecase<
             v.string(),
             v.value(ConnectorAuthenticationStrategy.OAuthPKCE),
           ),
+          email: v.string(),
           accessToken: v.string(),
           refreshToken: v.string(),
+          accessTokenExpiresAt: v.date(),
         }),
       ]),
       {

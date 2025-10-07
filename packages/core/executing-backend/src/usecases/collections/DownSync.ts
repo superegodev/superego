@@ -77,8 +77,20 @@ export default class CollectionsDownSync extends Usecase {
       connector,
     );
 
+    const refreshAuthenticationStateResult =
+      await connector.refreshAuthenticationState(
+        collection.remote.connectorState.authentication,
+      );
+    if (!refreshAuthenticationStateResult.success) {
+      await this.markDownSyncAsFailed(
+        collection,
+        refreshAuthenticationStateResult.error,
+      );
+      return makeSuccessfulResult(null);
+    }
+
     const syncDownResult = await connector.syncDown(
-      collection.remote.connectorState.authentication,
+      refreshAuthenticationStateResult.data,
       collection.remote.connector.settings,
       collection.remote.syncState.down.syncedUntil,
     );
@@ -101,6 +113,10 @@ export default class CollectionsDownSync extends Usecase {
         ...collection,
         remote: {
           ...collection.remote,
+          connectorState: {
+            ...collection.remote.connectorState,
+            authentication: refreshAuthenticationStateResult.data,
+          },
           syncState: {
             ...collection.remote.syncState,
             down: {
@@ -118,6 +134,10 @@ export default class CollectionsDownSync extends Usecase {
         ...collection,
         remote: {
           ...collection.remote,
+          connectorState: {
+            ...collection.remote.connectorState,
+            authentication: refreshAuthenticationStateResult.data,
+          },
           syncState: {
             ...collection.remote.syncState,
             down: {

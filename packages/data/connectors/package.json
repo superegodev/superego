@@ -1,0 +1,24 @@
+{
+  "name": "@superego/connectors",
+  "version": "2025.9.3",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/schema": "workspace:*",
+    "@superego/shared-utils": "workspace:*"
+  }
+}

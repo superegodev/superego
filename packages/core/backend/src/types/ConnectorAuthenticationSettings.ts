@@ -1,7 +1,7 @@
 type ConnectorAuthenticationSettings =
   // ConnectorAuthenticationStrategy.OAuthPKCE
   {
-    url: string;
+    discoveryEndpoint: string;
     clientId: string;
     scopes: string[];
   };
