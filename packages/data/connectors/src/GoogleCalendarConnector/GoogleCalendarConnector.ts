@@ -96,9 +96,7 @@ export default defineConnector({
 
     let discoveryResponse: Response;
     try {
-      discoveryResponse = await fetch(
-        authenticationSettings.discoveryEndpoint,
-      );
+      discoveryResponse = await fetch(authenticationSettings.discoveryEndpoint);
     } catch (error) {
       return {
         success: false,
