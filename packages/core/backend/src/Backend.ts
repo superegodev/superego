@@ -20,7 +20,7 @@ import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
 import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
-import type ConnectorAuthenticationStateNotValid from "./errors/ConnectorAuthenticationStateNotValid.js";
+import type ConnectorDoesNotUseOAuth2AuthenticationStrategy from "./errors/ConnectorDoesNotUseOAuth2AuthenticationStrategy.js";
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
@@ -52,7 +52,6 @@ import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Connector from "./types/Connector.js";
 import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticationSettings.js";
-import type ConnectorAuthenticationState from "./types/ConnectorAuthenticationState.js";
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
@@ -160,14 +159,24 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    authenticateRemoteConnector(
+    getOAuth2ConnectorAuthorizationRequestUrl(
       id: CollectionId,
-      connectorAuthenticationState: ConnectorAuthenticationState,
+    ): ResultPromise<
+      string,
+      | CollectionNotFound
+      | CollectionHasNoRemote
+      | ConnectorDoesNotUseOAuth2AuthenticationStrategy
+      | UnexpectedError
+    >;
+
+    authenticateOAuth2Connector(
+      id: CollectionId,
+      authorizationResponseUrl: string,
     ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionHasNoRemote
-      | ConnectorAuthenticationStateNotValid
+      | ConnectorDoesNotUseOAuth2AuthenticationStrategy
       | UnexpectedError
     >;
 

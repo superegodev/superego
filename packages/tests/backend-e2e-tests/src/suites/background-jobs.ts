@@ -45,15 +45,22 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -102,17 +109,12 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
 
       // Exercise

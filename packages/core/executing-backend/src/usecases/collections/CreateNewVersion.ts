@@ -205,7 +205,13 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
-    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
+    return makeSuccessfulResult(
+      makeCollection(
+        collection,
+        collectionVersion,
+        this.getConnector(collection),
+      ),
+    );
   }
 
   private async migrateDocument(

@@ -81,6 +81,13 @@ export default class CollectionsSetRemote extends Usecase<
         v.strictObject({
           strategy: v.pipe(
             v.string(),
+            v.value(ConnectorAuthenticationStrategy.ApiKey),
+          ),
+          apiKey: v.string(),
+        }),
+        v.strictObject({
+          strategy: v.pipe(
+            v.string(),
             v.value(ConnectorAuthenticationStrategy.OAuth2),
           ),
           clientId: v.string(),
@@ -152,9 +159,8 @@ export default class CollectionsSetRemote extends Usecase<
           authenticationSettings: connectorAuthenticationSettings,
           settings: connectorSettings,
         },
-        connectorState: collection.remote?.connectorState ?? {
-          authentication: null,
-        },
+        connectorAuthenticationState:
+          collection.remote?.connectorAuthenticationState ?? null,
         syncState: collection.remote?.syncState ?? {
           down: {
             status: DownSyncStatus.NeverSynced,
@@ -173,7 +179,7 @@ export default class CollectionsSetRemote extends Usecase<
     await this.repos.collectionVersion.replace(updatedCollectionVersion);
 
     return makeSuccessfulResult(
-      makeCollection(updatedCollection, updatedCollectionVersion),
+      makeCollection(updatedCollection, updatedCollectionVersion, connector),
     );
   }
 }

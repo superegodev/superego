@@ -8,31 +8,60 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema, TypeOf } from "@superego/schema";
 
-interface Connector<
+type Connector<
   SettingsSchema extends Schema = Schema,
   RemoteDocumentSchema extends Schema = Schema,
-> {
+> = {
   name: string;
-  authenticationStrategy: ConnectorAuthenticationStrategy;
   settingsSchema: SettingsSchema;
   remoteDocumentSchema: RemoteDocumentSchema;
-  refreshAuthenticationState(
-    authenticationSettings: ConnectorAuthenticationSettings,
-    authenticationState: ConnectorAuthenticationState,
-  ): ResultPromise<
-    ConnectorAuthenticationState,
-    ConnectorAuthenticationFailed | UnexpectedError
-  >;
-  syncDown(
-    authenticationState: ConnectorAuthenticationState,
-    settings: TypeOf<SettingsSchema>,
-    /** The point from which to sync. I.e., a previously returned syncPoint. */
-    syncFrom: string | null,
-  ): ResultPromise<
-    { changes: Connector.Changes<RemoteDocumentSchema>; syncPoint: string },
-    ConnectorAuthenticationFailed | UnexpectedError
-  >;
-}
+} & (
+  | {
+      authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey;
+      syncDown(params: {
+        authenticationSettings: ConnectorAuthenticationSettings.ApiKey;
+        authenticationState: ConnectorAuthenticationState.ApiKey;
+        settings: TypeOf<SettingsSchema>;
+        /**
+         * The point from which to sync. I.e., a previously returned syncPoint.
+         */
+        syncFrom: string | null;
+      }): ResultPromise<
+        {
+          changes: Connector.Changes<RemoteDocumentSchema>;
+          authenticationState: ConnectorAuthenticationState.ApiKey;
+          syncPoint: string;
+        },
+        ConnectorAuthenticationFailed | UnexpectedError
+      >;
+    }
+  | {
+      authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2;
+      getAuthorizationRequestUrl(params: {
+        authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+      }): string;
+      getAuthenticationState(params: {
+        authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+        authorizationResponseUrl: string;
+      }): ResultPromise<ConnectorAuthenticationState.OAuth2, UnexpectedError>;
+      syncDown(params: {
+        authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+        authenticationState: ConnectorAuthenticationState.OAuth2;
+        settings: TypeOf<SettingsSchema>;
+        /**
+         * The point from which to sync. I.e., a previously returned syncPoint.
+         */
+        syncFrom: string | null;
+      }): ResultPromise<
+        {
+          changes: Connector.Changes<RemoteDocumentSchema>;
+          authenticationState: ConnectorAuthenticationState.OAuth2;
+          syncPoint: string;
+        },
+        ConnectorAuthenticationFailed | UnexpectedError
+      >;
+    }
+);
 
 namespace Connector {
   export interface AddedOrModifiedDocument<

@@ -2,6 +2,7 @@ import { BackgroundJobStatus } from "@superego/backend";
 import type { DistributivePick, ResultPromise } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
 import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
+import type CollectionEntity from "../entities/CollectionEntity.js";
 import type Connector from "../requirements/Connector.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
 import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
@@ -45,7 +46,15 @@ export default abstract class Usecase<
     });
   }
 
-  protected getConnector(name: string): Connector | null {
-    return this.connectors.find((connector) => connector.name === name) ?? null;
+  protected getConnector(
+    collectionOrName: CollectionEntity | string,
+  ): Connector | null {
+    const connectorName =
+      typeof collectionOrName !== "string"
+        ? (collectionOrName.remote?.connector.name ?? null)
+        : collectionOrName;
+    return connectorName !== null
+      ? (this.connectors.find(({ name }) => name === connectorName) ?? null)
+      : null;
   }
 }

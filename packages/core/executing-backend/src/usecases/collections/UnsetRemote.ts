@@ -77,7 +77,7 @@ export default class CollectionsUnsetRemote extends Usecase<
     }
 
     return makeSuccessfulResult(
-      makeCollection(updatedCollection, updatedCollectionVersion),
+      makeCollection(updatedCollection, updatedCollectionVersion, null),
     );
   }
 }

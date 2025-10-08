@@ -12,7 +12,7 @@ export default interface Remote {
     authenticationSettings: ConnectorAuthenticationSettings;
     settings: any;
   };
-  connectorState: {
+  connectorAuthenticationState: {
     isAuthenticated: boolean;
   };
   syncState: {

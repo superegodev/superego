@@ -6,6 +6,7 @@ import {
   type CollectionId,
   type CollectionIsSyncing,
   type CollectionNotFound,
+  ConnectorAuthenticationStrategy,
   type ConnectorNotAuthenticated,
   DownSyncStatus,
   type UnexpectedError,
@@ -16,6 +17,7 @@ import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
+import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -51,7 +53,17 @@ export default class CollectionsTriggerDownSync extends Usecase<
       );
     }
 
-    if (!collection.remote.connectorState.authentication) {
+    const connector = this.getConnector(collection);
+    assertCollectionRemoteConnectorExists(
+      id,
+      collection.remote.connector.name,
+      connector,
+    );
+    if (
+      connector.authenticationStrategy ===
+        ConnectorAuthenticationStrategy.OAuth2 &&
+      !collection.remote.connectorAuthenticationState
+    ) {
       return makeUnsuccessfulResult(
         makeResultError("ConnectorNotAuthenticated", {
           collectionId: id,
@@ -86,7 +98,7 @@ export default class CollectionsTriggerDownSync extends Usecase<
     });
 
     return makeSuccessfulResult(
-      makeCollection(updatedCollection, latestCollectionVersion),
+      makeCollection(updatedCollection, latestCollectionVersion, connector),
     );
   }
 }

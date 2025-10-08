@@ -2,6 +2,7 @@ import {
   type CollectionHasNoRemote,
   type CollectionId,
   type CollectionNotFound,
+  ConnectorAuthenticationStrategy,
   DocumentVersionCreator,
   DownSyncStatus,
   type ExecutingJavascriptFunctionFailed,
@@ -54,7 +55,18 @@ export default class CollectionsDownSync extends Usecase {
       );
     }
 
-    if (!collection.remote.connectorState.authentication) {
+    const connector = this.getConnector(collection);
+    assertCollectionRemoteConnectorExists(
+      id,
+      collection.remote.connector.name,
+      connector,
+    );
+
+    if (
+      connector.authenticationStrategy ===
+        ConnectorAuthenticationStrategy.OAuth2 &&
+      !collection.remote.connectorAuthenticationState
+    ) {
       await this.markDownSyncAsFailed(
         collection,
         makeResultError("ConnectorNotAuthenticated", {
@@ -70,37 +82,29 @@ export default class CollectionsDownSync extends Usecase {
     assertCollectionVersionExists(id, collectionVersion);
     assertCollectionVersionHasRemoteConverters(collectionVersion);
 
-    const connector = this.getConnector(collection.remote.connector.name);
-    assertCollectionRemoteConnectorExists(
-      id,
-      collection.remote.connector.name,
-      connector,
-    );
-
-    const refreshAuthenticationStateResult =
-      await connector.refreshAuthenticationState(
+    const syncDownParams = {
+      authenticationState: collection.remote.connectorAuthenticationState,
+      authenticationSettings:
         collection.remote.connector.authenticationSettings,
-        collection.remote.connectorState.authentication,
-      );
-    if (!refreshAuthenticationStateResult.success) {
-      await this.markDownSyncAsFailed(
-        collection,
-        refreshAuthenticationStateResult.error,
-      );
-      return makeSuccessfulResult(null);
-    }
-
+      settings: collection.remote.connector.settings,
+      syncFrom: collection.remote.syncState.down.syncedUntil,
+    };
     const syncDownResult = await connector.syncDown(
-      refreshAuthenticationStateResult.data,
-      collection.remote.connector.settings,
-      collection.remote.syncState.down.syncedUntil,
+      // Note: TypeScript sees the type of the first syncDown argument (params)
+      // to be never, because it's the intersection of two types that it sees as
+      // having nothing in common. This is just because the Connector type is
+      // "complex" in order to make it ergonomic to define a Connector. Also, we
+      // don't want to _hyper-type_ it to make it also correct, so we just
+      // accept the TypeScript error.
+      // @ts-expect-error
+      syncDownParams,
     );
     if (!syncDownResult.success) {
       await this.markDownSyncAsFailed(collection, syncDownResult.error);
       return makeSuccessfulResult(null);
     }
 
-    const { changes, syncPoint } = syncDownResult.data;
+    const { changes, authenticationState, syncPoint } = syncDownResult.data;
     const beforeProcessChangesSavepoint = await this.repos.createSavepoint();
     const syncChangesResult = await this.syncChanges(
       collection,
@@ -108,16 +112,12 @@ export default class CollectionsDownSync extends Usecase {
       connector,
       changes,
     );
-
     if (syncChangesResult.success) {
       await this.repos.collection.replace({
         ...collection,
         remote: {
           ...collection.remote,
-          connectorState: {
-            ...collection.remote.connectorState,
-            authentication: refreshAuthenticationStateResult.data,
-          },
+          connectorAuthenticationState: authenticationState,
           syncState: {
             ...collection.remote.syncState,
             down: {
@@ -135,10 +135,7 @@ export default class CollectionsDownSync extends Usecase {
         ...collection,
         remote: {
           ...collection.remote,
-          connectorState: {
-            ...collection.remote.connectorState,
-            authentication: refreshAuthenticationStateResult.data,
-          },
+          connectorAuthenticationState: authenticationState,
           syncState: {
             ...collection.remote.syncState,
             down: {

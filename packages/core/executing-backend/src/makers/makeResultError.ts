@@ -18,7 +18,7 @@ import type {
   CommandConfirmationNotValid,
   ConnectorAuthenticationFailed,
   ConnectorAuthenticationSettingsNotValid,
-  ConnectorAuthenticationStateNotValid,
+  ConnectorDoesNotUseOAuth2AuthenticationStrategy,
   ConnectorNotAuthenticated,
   ConnectorNotFound,
   ConnectorSettingsNotValid,
@@ -61,7 +61,7 @@ type KnownResultError =
   | CommandConfirmationNotValid
   | ConnectorAuthenticationFailed
   | ConnectorAuthenticationSettingsNotValid
-  | ConnectorAuthenticationStateNotValid
+  | ConnectorDoesNotUseOAuth2AuthenticationStrategy
   | ConnectorNotAuthenticated
   | ConnectorNotFound
   | ConnectorSettingsNotValid

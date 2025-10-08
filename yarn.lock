@@ -4998,7 +4998,6 @@ __metadata:
     "@react-aria/optimize-locales-plugin": "npm:^1.1.5"
     "@standard-schema/spec": "npm:^1.0.0"
     "@superego/backend": "workspace:*"
-    "@superego/connectors": "workspace:*"
     "@superego/demo-data-repositories": "workspace:^"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
@@ -5057,7 +5056,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/connectors@workspace:*, @superego/connectors@workspace:packages/data/connectors":
+"@superego/connectors@workspace:packages/data/connectors":
   version: 0.0.0-use.local
   resolution: "@superego/connectors@workspace:packages/data/connectors"
   dependencies:

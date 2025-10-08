@@ -83,6 +83,8 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     };
     await this.repos.collectionVersion.replace(updatedVersion);
 
-    return makeSuccessfulResult(makeCollection(collection, updatedVersion));
+    return makeSuccessfulResult(
+      makeCollection(collection, updatedVersion, this.getConnector(collection)),
+    );
   }
 }

@@ -527,15 +527,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -602,7 +609,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorAuthenticationSettingsNotValid", async () => {
+    it("error: ConnectorAuthenticationSettingsNotValid (case: OAuth2)", async () => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
@@ -622,15 +629,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -695,6 +709,95 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ConnectorAuthenticationSettingsNotValid (case: ApiKey)", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
+        settingsSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState: null,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        {} as any,
+        { setting: 0 },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorAuthenticationSettingsNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            connectorName: mockConnector.name,
+            issues: [
+              {
+                message:
+                  'Invalid key: Expected "apiKey" but received undefined',
+                path: [{ key: "apiKey" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("error: ConnectorSettingsNotValid", async () => {
       // Setup mocks
       const mockConnector: Connector = {
@@ -715,15 +818,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -799,15 +909,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -891,15 +1008,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -964,7 +1088,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               authenticationSettings: connectorAuthenticationSettings,
               settings: connectorSettings,
             },
-            connectorState: {
+            connectorAuthenticationState: {
               isAuthenticated: false,
             },
             syncState: {
@@ -1006,15 +1130,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1174,15 +1305,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1266,15 +1404,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1345,22 +1490,17 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
-  describe("authenticateRemoteConnector", () => {
+  describe("getOAuth2ConnectorAuthorizationRequestUrl", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
 
       // Exercise
       const collectionId = Id.generate.collection();
-      const result = await backend.collections.authenticateRemoteConnector(
-        collectionId,
-        {
-          email: "email",
-          accessToken: "accessToken",
-          refreshToken: "refreshToken",
-          accessTokenExpiresAt: new Date(),
-        },
-      );
+      const result =
+        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
+          collectionId,
+        );
 
       // Verify
       expect(result).toEqual({
@@ -1398,19 +1538,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
 
       // Exercise
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const getOAuth2ConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
           createResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
         );
 
       // Verify
-      expect(authenticateRemoteConnectorResult).toEqual({
+      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
         success: false,
         data: null,
         error: {
@@ -1420,13 +1554,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorAuthenticationStateNotValid", async () => {
+    it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
       // Setup mocks
       const mockConnector: Connector = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { setting: { dataType: DataType.String } },
+            },
+          },
           rootType: "Root",
         },
         remoteDocumentSchema: {
@@ -1438,15 +1577,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
-          success: true,
-          data: state,
-          error: null,
-        }),
         syncDown: async () => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState: null,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1464,19 +1599,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
         },
         {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
         {
           contentSummaryGetter: {
             source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
+            compiled: "export default function getContentSummary() {}",
           },
         },
       );
@@ -1484,8 +1613,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        {},
+        { apiKey: "apiKey" },
+        { setting: "setting" },
         {
           fromRemoteDocument: {
             source: "",
@@ -1497,38 +1626,28 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const getOAuth2ConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
           createResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            accessTokenExpiresAt: new Date(),
-          } as any,
         );
 
       // Verify
-      expect(authenticateRemoteConnectorResult).toEqual({
+      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
         success: false,
         data: null,
         error: {
-          name: "ConnectorAuthenticationStateNotValid",
+          name: "ConnectorDoesNotUseOAuth2AuthenticationStrategy",
           details: {
             collectionId: createResult.data.id,
-            issues: [
-              {
-                message:
-                  'Invalid key: Expected "refreshToken" but received undefined',
-                path: [{ key: "refreshToken" }],
-              },
-            ],
+            connectorName: mockConnector.name,
           },
         },
       });
     });
 
-    it("success: authenticates remote connector", async () => {
+    it("success: authenticates OAuth2 connector", async () => {
       // Setup mocks
+      const mockAuthorizationRequestUrl = "mockAuthorizationRequestUrl";
       const mockConnector: Connector = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
@@ -1552,15 +1671,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => mockAuthorizationRequestUrl,
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1611,25 +1737,282 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const getOAuth2ConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
           createResult.data.id,
-          {
+        );
+
+      // Verify
+      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
+        success: true,
+        data: mockAuthorizationRequestUrl,
+        error: null,
+      });
+    });
+  });
+
+  describe("authenticateOAuth2Connector", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.authenticateOAuth2Connector(
+        collectionId,
+        "authorizationResponseUrl",
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: CollectionHasNoRemote", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
+          createResult.data.id,
+          "authorizationResponseUrl",
+        );
+
+      // Verify
+      expect(authenticateOAuth2ConnectorResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionHasNoRemote",
+          details: { collectionId: createResult.data.id },
+        },
+      });
+    });
+
+    it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
+        settingsSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { setting: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        syncDown: async () => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState: null,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { apiKey: "apiKey" },
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
+          createResult.data.id,
+          "authorizationResponseUrl",
+        );
+
+      // Verify
+      expect(authenticateOAuth2ConnectorResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorDoesNotUseOAuth2AuthenticationStrategy",
+          details: {
+            collectionId: createResult.data.id,
+            connectorName: mockConnector.name,
+          },
+        },
+      });
+    });
+
+    it("success: authenticates OAuth2 connector", async () => {
+      // Setup mocks
+      const mockConnector: Connector = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        settingsSchema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                setting: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
             email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
           },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        { setting: "setting" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
+          createResult.data.id,
+          "authorizationResponseUrl",
         );
 
       // Verify
-      expect(authenticateRemoteConnectorResult).toEqual({
+      expect(authenticateOAuth2ConnectorResult).toEqual({
         success: true,
         data: {
           ...setRemoteResult.data,
           remote: {
             ...setRemoteResult.data.remote,
-            connectorState: {
+            connectorAuthenticationState: {
               isAuthenticated: true,
             },
           },
@@ -1639,7 +2022,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const listResult = await backend.collections.list();
       expect(listResult).toEqual({
         success: true,
-        data: [authenticateRemoteConnectorResult.data],
+        data: [authenticateOAuth2ConnectorResult.data],
         error: null,
       });
     });
@@ -1723,15 +2106,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1780,17 +2170,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       const firstTriggerDownSyncResult =
@@ -1832,15 +2217,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -1931,9 +2323,15 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
         syncDown: async () => ({
@@ -1985,17 +2383,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2033,24 +2426,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: {
               addedOrModified: [
-                {
-                  id: "remoteId",
-                  versionId: "remoteVersionId",
-                  content: {},
-                },
+                { id: "remoteId", versionId: "remoteVersionId", content: {} },
               ],
               deleted: [],
             },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -2099,17 +2495,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2160,12 +2551,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: {
@@ -2178,6 +2575,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               ],
               deleted: [],
             },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -2226,17 +2624,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2290,12 +2683,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: {
@@ -2308,6 +2707,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               ],
               deleted: [],
             },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -2356,17 +2756,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2440,17 +2835,31 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async (_authenticationState, _settings, syncFrom) => ({
+        syncDown: async ({ authenticationState, syncFrom }) => ({
           success: true,
           data:
             syncFrom === null
-              ? { changes: firstChanges, syncPoint: "syncPoint1" }
-              : { changes: secondChanges, syncPoint: "syncPoint2" },
+              ? {
+                  changes: firstChanges,
+                  authenticationState,
+                  syncPoint: "syncPoint1",
+                }
+              : {
+                  changes: secondChanges,
+                  authenticationState,
+                  syncPoint: "syncPoint2",
+                },
           error: null,
         }),
       };
@@ -2497,17 +2906,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2577,14 +2981,20 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
-          data: { changes, syncPoint: "syncPoint" },
+          data: { changes, authenticationState, syncPoint: "syncPoint" },
           error: null,
         }),
       };
@@ -2631,17 +3041,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2736,17 +3141,31 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async (_authenticationState, _settings, syncFrom) => ({
+        syncDown: async ({ authenticationState, syncFrom }) => ({
           success: true,
           data:
             syncFrom === null
-              ? { changes: firstChanges, syncPoint: "syncPoint1" }
-              : { changes: secondChanges, syncPoint: "syncPoint2" },
+              ? {
+                  changes: firstChanges,
+                  authenticationState,
+                  syncPoint: "syncPoint1",
+                }
+              : {
+                  changes: secondChanges,
+                  authenticationState,
+                  syncPoint: "syncPoint2",
+                },
           error: null,
         }),
       };
@@ -2793,17 +3212,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
 
       // Exercise first downSync
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -3201,15 +3615,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -3302,15 +3723,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
           data: {
             changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
             syncPoint: "syncPoint",
           },
           error: null,
@@ -3687,14 +4115,20 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "RemoteDocument",
         },
-        refreshAuthenticationState: async (_settings, state) => ({
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
           success: true,
-          data: state,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
           error: null,
         }),
-        syncDown: async () => ({
+        syncDown: async ({ authenticationState }) => ({
           success: true,
-          data: { changes, syncPoint: "syncPoint" },
+          data: { changes, authenticationState, syncPoint: "syncPoint" },
           error: null,
         }),
       };
@@ -3741,17 +4175,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         remoteConverters,
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateRemoteConnectorResult =
-        await backend.collections.authenticateRemoteConnector(
+      const authenticateOAuth2ConnectorResult =
+        await backend.collections.authenticateOAuth2Connector(
           createCollectionResult.data.id,
-          {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
+          "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateRemoteConnectorResult.success);
+      assert.isTrue(authenticateOAuth2ConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const createLocalDocumentResult = await backend.documents.create(
         createCollectionResult.data.id,

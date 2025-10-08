@@ -15,9 +15,7 @@ export default interface RemoteEntity {
     authenticationSettings: ConnectorAuthenticationSettings;
     settings: any;
   };
-  connectorState: {
-    authentication: ConnectorAuthenticationState | null;
-  };
+  connectorAuthenticationState: ConnectorAuthenticationState | null;
   syncState: {
     down: {
       status: DownSyncStatus;

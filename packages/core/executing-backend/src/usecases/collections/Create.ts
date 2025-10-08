@@ -142,6 +142,8 @@ export default class CollectionsCreate extends Usecase<
       await this.repos.collectionVersion.insert(collectionVersion);
     }
 
-    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
+    return makeSuccessfulResult(
+      makeCollection(collection, collectionVersion, null),
+    );
   }
 }

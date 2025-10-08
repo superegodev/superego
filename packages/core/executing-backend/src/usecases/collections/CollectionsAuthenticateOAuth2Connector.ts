@@ -4,34 +4,32 @@ import {
   type CollectionHasNoRemote,
   type CollectionId,
   type CollectionNotFound,
-  type ConnectorAuthenticationState,
-  type ConnectorAuthenticationStateNotValid,
+  type ConnectorAuthenticationSettings,
   ConnectorAuthenticationStrategy,
+  type ConnectorDoesNotUseOAuth2AuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
-import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class CollectionsAuthenticateRemoteConnector extends Usecase<
-  Backend["collections"]["authenticateRemoteConnector"]
+export default class CollectionsAuthenticateOAuth2Connector extends Usecase<
+  Backend["collections"]["authenticateOAuth2Connector"]
 > {
   async exec(
     id: CollectionId,
-    connectorAuthenticationState: ConnectorAuthenticationState,
+    authorizationResponseUrl: string,
   ): ResultPromise<
     Collection,
     | CollectionNotFound
     | CollectionHasNoRemote
-    | ConnectorAuthenticationStateNotValid
+    | ConnectorDoesNotUseOAuth2AuthenticationStrategy
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -49,38 +47,35 @@ export default class CollectionsAuthenticateRemoteConnector extends Usecase<
       );
     }
 
-    const connector = this.getConnector(collection.remote.connector.name);
+    const connector = this.getConnector(collection);
     assertCollectionRemoteConnectorExists(
       id,
       collection.remote.connector.name,
       connector,
     );
 
-    const validationResult = v.safeParse(
-      v.variant("strategy", [
-        v.strictObject({
-          strategy: v.pipe(
-            v.string(),
-            v.value(ConnectorAuthenticationStrategy.OAuth2),
-          ),
-          email: v.string(),
-          accessToken: v.string(),
-          refreshToken: v.string(),
-          accessTokenExpiresAt: v.date(),
-        }),
-      ]),
-      {
-        strategy: connector.authenticationStrategy,
-        ...connectorAuthenticationState,
-      },
-    );
-    if (!validationResult.success) {
+    if (
+      connector.authenticationStrategy !==
+      ConnectorAuthenticationStrategy.OAuth2
+    ) {
       return makeUnsuccessfulResult(
-        makeResultError("ConnectorAuthenticationStateNotValid", {
+        makeResultError("ConnectorDoesNotUseOAuth2AuthenticationStrategy", {
           collectionId: id,
-          issues: makeValidationIssues(validationResult.issues),
+          connectorName: connector.name,
         }),
       );
+    }
+
+    const getAuthenticationStateResult = await connector.getAuthenticationState(
+      {
+        authenticationSettings: collection.remote.connector
+          .authenticationSettings as ConnectorAuthenticationSettings.OAuth2,
+        authorizationResponseUrl: authorizationResponseUrl,
+      },
+    );
+
+    if (!getAuthenticationStateResult.success) {
+      return makeUnsuccessfulResult(getAuthenticationStateResult.error);
     }
 
     const latestVersion =
@@ -91,16 +86,13 @@ export default class CollectionsAuthenticateRemoteConnector extends Usecase<
       ...collection,
       remote: {
         ...collection.remote,
-        connectorState: {
-          ...collection.remote.connectorState,
-          authentication: connectorAuthenticationState,
-        },
+        connectorAuthenticationState: getAuthenticationStateResult.data,
       },
     };
     await this.repos.collection.replace(updatedCollection);
 
     return makeSuccessfulResult(
-      makeCollection(updatedCollection, latestVersion),
+      makeCollection(updatedCollection, latestVersion, connector),
     );
   }
 }
