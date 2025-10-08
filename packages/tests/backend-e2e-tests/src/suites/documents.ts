@@ -569,7 +569,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1044,7 +1044,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {

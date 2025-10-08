@@ -4,6 +4,7 @@ import {
   type CollectionId,
   type CollectionNotFound,
   type ConnectorAuthenticationSettings,
+  type ConnectorAuthenticationState,
   ConnectorAuthenticationStrategy,
   type ConnectorDoesNotUseOAuth2AuthenticationStrategy,
   type UnexpectedError,
@@ -64,6 +65,8 @@ export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extend
     const authorizationRequestUrl = connector.getAuthorizationRequestUrl({
       authenticationSettings: collection.remote.connector
         .authenticationSettings as ConnectorAuthenticationSettings.OAuth2,
+      authenticationState: collection.remote
+        .connectorAuthenticationState as ConnectorAuthenticationState.OAuth2 | null,
     });
     return makeSuccessfulResult(authorizationRequestUrl);
   }

@@ -29,7 +29,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
 
     it("success: lists down sync jobs", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {

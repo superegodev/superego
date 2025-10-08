@@ -516,7 +516,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CannotChangeCollectionRemoteConnector", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -611,7 +611,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorAuthenticationSettingsNotValid (case: OAuth2)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -711,7 +711,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorAuthenticationSettingsNotValid (case: ApiKey)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.ApiKey = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -800,7 +800,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorSettingsNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -898,7 +898,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -990,7 +990,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/o previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1112,7 +1112,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/ previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1294,7 +1294,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CommandConfirmationNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1386,7 +1386,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: unsets remote", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1556,7 +1556,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.ApiKey = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -1648,7 +1648,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
     it("success: authenticates OAuth2 connector", async () => {
       // Setup mocks
       const mockAuthorizationRequestUrl = "mockAuthorizationRequestUrl";
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -1818,7 +1818,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.ApiKey = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -1910,7 +1910,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: authenticates OAuth2 connector", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2090,7 +2090,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CollectionIsSyncing", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2201,7 +2201,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorNotAuthenticated", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2307,7 +2307,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         name: "UnexpectedError",
         details: { cause: "cause" },
       } as const;
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2410,7 +2410,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: RemoteDocumentContentNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2535,7 +2535,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: ConvertingRemoteDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2667,7 +2667,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: CreatingDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2819,7 +2819,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -2965,7 +2965,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -3125,7 +3125,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [{ id: firstChanges.addedOrModified[1]!.id }],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -3604,7 +3604,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -3712,7 +3712,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
       // Setup mocks
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
@@ -4099,7 +4099,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector = {
+      const mockConnector: Connector.OAuth2 = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
         settingsSchema: {
