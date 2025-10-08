@@ -39,6 +39,12 @@ export const listCollectionsQuery = makeBackendQueryGetter(
   () => ["listCollections"],
 );
 
+export const listConnectorsQuery = makeBackendQueryGetter(
+  "collections",
+  "listConnectors",
+  () => ["listConnectors"],
+);
+
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
@@ -64,6 +70,17 @@ export const useUpdateCollectionSettings = makeUseBackendMutation(
 export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
   "collections",
   "updateLatestVersionSettings",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
+);
+
+export const useSetCollectionRemote = makeUseBackendMutation(
+  "collections",
+  "setRemote",
   ([collectionId]) => [
     ["listCollections"],
     ["listDocuments", collectionId],

@@ -5,13 +5,7 @@ import {
   utils,
 } from "@superego/schema";
 
-// TODO: we should define default values at the schema and format level.
-export default function generateDefaultValues(schema: Schema) {
-  return generateAnyDefaultValues(utils.getRootType(schema), schema);
-}
-
-// TODO: separate out into own file?
-export function generateAnyDefaultValues(
+export default function typeDefinitionValue(
   typeDefinition: AnyTypeDefinition,
   schema: Schema,
 ): any {
@@ -32,18 +26,13 @@ export function generateAnyDefaultValues(
         Object.entries(typeDefinition.properties).map(
           ([propertyName, propertyTypeDefinition]) => [
             propertyName,
-            generateAnyDefaultValues(propertyTypeDefinition, schema),
+            typeDefinitionValue(propertyTypeDefinition, schema),
           ],
         ),
       );
     case DataType.List:
-      return [
-        { value: generateAnyDefaultValues(typeDefinition.items, schema) },
-      ];
+      return [{ value: typeDefinitionValue(typeDefinition.items, schema) }];
     case null:
-      return generateAnyDefaultValues(
-        utils.getType(schema, typeDefinition),
-        schema,
-      );
+      return typeDefinitionValue(utils.getType(schema, typeDefinition), schema);
   }
 }

@@ -35,6 +35,30 @@
       "value": "Your name"
     }
   ],
+  "AuthenticationSettings.tsx_B7p2EC": [
+    {
+      "type": 0,
+      "value": "Client secret"
+    }
+  ],
+  "AuthenticationSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "AuthenticationSettings.tsx_Q0U6OF": [
+    {
+      "type": 0,
+      "value": "Authentication settings"
+    }
+  ],
+  "AuthenticationSettings.tsx_U5+MBC": [
+    {
+      "type": 0,
+      "value": "Client ID"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -125,6 +149,12 @@
       "value": "General settings"
     }
   ],
+  "CollectionSettings.tsx_JJBzhX": [
+    {
+      "type": 0,
+      "value": "Remote"
+    }
+  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -165,6 +195,30 @@
     {
       "type": 0,
       "value": "Compiling..."
+    }
+  ],
+  "ConnectorSelect.tsx_Gnbr9F": [
+    {
+      "type": 0,
+      "value": "Select a connector"
+    }
+  ],
+  "ConnectorSelect.tsx_nSFiyf": [
+    {
+      "type": 0,
+      "value": "The connector cannot be changed once a remote is configured."
+    }
+  ],
+  "ConnectorSelect.tsx_r8XsCU": [
+    {
+      "type": 0,
+      "value": "Connector"
+    }
+  ],
+  "ConnectorSettings.tsx_1B+Bnl": [
+    {
+      "type": 0,
+      "value": "Connector settings"
     }
   ],
   "ContentSummary.tsx_kvPscx": [
@@ -1574,6 +1628,46 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Add"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Item "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Remote document converters"
+    }
+  ],
+  "RemoteConverters.tsx_vUsXo4": [
+    {
+      "type": 0,
+      "value": "TypeScript function transforming a remote document into a local document."
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1664,6 +1758,18 @@
     {
       "type": 0,
       "value": "Configure assistant"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_fsGyC4": [
+    {
+      "type": 0,
+      "value": "Update remote"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_m8TXbJ": [
+    {
+      "type": 0,
+      "value": "Set remote"
     }
   ],
   "SpeakButton.tsx_FUvUuG": [

@@ -21,3 +21,15 @@ export const DeleteCollectionModalForm = {
     justifyContent: "flex-end",
   }),
 };
+
+export const SetCollectionRemoteForm = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+
+  submitButtonContainer: style({
+    display: "flex",
+    justifyContent: "flex-end",
+  }),
+};

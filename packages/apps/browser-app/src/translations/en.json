@@ -17,6 +17,18 @@
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Your name"
   },
+  "AuthenticationSettings.tsx_B7p2EC": {
+    "defaultMessage": "Client secret"
+  },
+  "AuthenticationSettings.tsx_KTNoOq": {
+    "defaultMessage": "API key"
+  },
+  "AuthenticationSettings.tsx_Q0U6OF": {
+    "defaultMessage": "Authentication settings"
+  },
+  "AuthenticationSettings.tsx_U5+MBC": {
+    "defaultMessage": "Client ID"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -56,6 +68,9 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "General settings"
   },
+  "CollectionSettings.tsx_JJBzhX": {
+    "defaultMessage": "Remote"
+  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Latest version settings"
   },
@@ -76,6 +91,18 @@
   },
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compiling..."
+  },
+  "ConnectorSelect.tsx_Gnbr9F": {
+    "defaultMessage": "Select a connector"
+  },
+  "ConnectorSelect.tsx_nSFiyf": {
+    "defaultMessage": "The connector cannot be changed once a remote is configured."
+  },
+  "ConnectorSelect.tsx_r8XsCU": {
+    "defaultMessage": "Connector"
+  },
+  "ConnectorSettings.tsx_1B+Bnl": {
+    "defaultMessage": "Connector settings"
   },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
@@ -605,6 +632,24 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
   },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Add"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Item {number}"
+  },
+  "RemoteConverters.tsx_GqZhDC": {
+    "defaultMessage": "From remote document"
+  },
+  "RemoteConverters.tsx_abnr48": {
+    "defaultMessage": "Remote document converters"
+  },
+  "RemoteConverters.tsx_vUsXo4": {
+    "defaultMessage": "TypeScript function transforming a remote document into a local document."
+  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
@@ -646,6 +691,12 @@
   },
   "SendRecordToolbar.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
+  },
+  "SetCollectionRemoteForm.tsx_fsGyC4": {
+    "defaultMessage": "Update remote"
+  },
+  "SetCollectionRemoteForm.tsx_m8TXbJ": {
+    "defaultMessage": "Set remote"
   },
   "SpeakButton.tsx_FUvUuG": {
     "defaultMessage": "Configure speech to play assistant messages"

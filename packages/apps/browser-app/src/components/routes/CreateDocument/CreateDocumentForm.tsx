@@ -5,9 +5,9 @@ import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { useCreateDocument } from "../../../business-logic/backend/hooks.js";
+import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import generateDefaultValues from "../../../utils/generateDefaultValues.js";
 import RhfContent from "../../../utils/RhfContent.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
@@ -24,7 +24,7 @@ export default function CreateDocumentForm({ collection }: Props) {
   const { result, mutate } = useCreateDocument();
 
   const { control, handleSubmit } = useForm<any>({
-    defaultValues: generateDefaultValues(schema),
+    defaultValues: forms.defaults.schemaValue(schema),
     mode: "onSubmit",
     resolver: standardSchemaResolver(valibotSchemas.content(schema, "rhf")),
   });

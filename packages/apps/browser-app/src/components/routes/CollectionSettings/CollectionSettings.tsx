@@ -2,12 +2,16 @@ import type { CollectionId } from "@superego/backend";
 import { useState } from "react";
 import { PiTrash } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import { listConnectorsQuery } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.jsx";
 import Shell from "../../design-system/Shell/Shell.js";
 import DeleteCollectionModalForm from "./DeleteCollectionModalForm.js";
+import Remote from "./Remote/Remote.jsx";
 import UpdateCollectionSettingsForm from "./UpdateCollectionSettingsForm.js";
 import UpdateCollectionVersionSettingsForm from "./UpdateCollectionVersionSettingsForm.js";
 
@@ -63,6 +67,19 @@ export default function CollectionSettings({ collectionId }: Props) {
                   key={`UpdateCollectionVersionSettingsForm_${collectionId}`}
                   collection={collection}
                 />
+              ),
+            },
+            {
+              title: <FormattedMessage defaultMessage="Remote" />,
+              panel: (
+                <DataLoader
+                  queries={[listConnectorsQuery([])]}
+                  renderErrors={(errors) => <ResultErrors errors={errors} />}
+                >
+                  {(connectors) => (
+                    <Remote collection={collection} connectors={connectors} />
+                  )}
+                </DataLoader>
               ),
             },
             {

@@ -1,5 +1,6 @@
 import type { TypescriptModule } from "@superego/backend";
 import type { Schema } from "@superego/schema";
+import { lowerFirst } from "es-toolkit";
 import wellKnownLibPaths from "../../typescript/wellKnownLibPaths.js";
 import { COMPILATION_REQUIRED } from "../constants.js";
 
@@ -9,7 +10,7 @@ export default function migration(
 ): TypescriptModule {
   const currentRootType = currentSchema.rootType;
   const nextRootType = nextSchema.rootType;
-  const argName = currentRootType[0]?.toLowerCase() + currentRootType.slice(1);
+  const argName = lowerFirst(currentRootType);
   const currentImportPath = `.${wellKnownLibPaths.currentCollectionSchema.replace(".ts", ".js")}`;
   const nextImportPath = `.${wellKnownLibPaths.nextCollectionSchema.replace(".ts", ".js")}`;
   return {

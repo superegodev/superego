@@ -3,7 +3,7 @@ import classnames from "../../../../../utils/classnames.js";
 import {
   FieldError,
   Input,
-  TextField as TextFieldForm,
+  TextField,
 } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
@@ -19,7 +19,7 @@ export default function Default({
 }: Props) {
   const { field, fieldState } = useController({ control, name });
   return (
-    <TextFieldForm
+    <TextField
       id={field.name}
       name={field.name}
       value={field.value ?? ""}
@@ -41,6 +41,6 @@ export default function Default({
       ) : null}
       <Input ref={field.ref} placeholder="null" />
       <FieldError>{fieldState.error?.message}</FieldError>
-    </TextFieldForm>
+    </TextField>
   );
 }

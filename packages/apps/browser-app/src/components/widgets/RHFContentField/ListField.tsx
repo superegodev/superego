@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import { PiBackspace, PiCaretDown, PiCaretUp, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import { generateAnyDefaultValues } from "../../../utils/generateDefaultValues.js";
+import forms from "../../../business-logic/forms/forms.js";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
@@ -58,7 +58,9 @@ function NullListField({
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
         <Button
           onPress={() =>
-            field.onChange(generateAnyDefaultValues(typeDefinition, schema))
+            field.onChange(
+              forms.defaults.typeDefinitionValue(typeDefinition, schema),
+            )
           }
           className={cs.StructAndListField.nullValueSetValueButton}
         >
@@ -103,7 +105,10 @@ function NonNullListField({
               label={intl.formatMessage({ defaultMessage: "Add item" })}
               onPress={() =>
                 append({
-                  value: generateAnyDefaultValues(typeDefinition.items, schema),
+                  value: forms.defaults.typeDefinitionValue(
+                    typeDefinition.items,
+                    schema,
+                  ),
                 })
               }
             >

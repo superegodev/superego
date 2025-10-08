@@ -11,7 +11,7 @@ import {
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
-import { useZoomLevel } from "./zoomLevel.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   typeDefinition: EnumTypeDefinition;
@@ -29,7 +29,7 @@ export default function EnumField({
   name,
   label,
 }: Props) {
-  const zoomLevel = useZoomLevel();
+  const { zoomLevel } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   const sortedMemberNames =
     typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
@@ -37,8 +37,8 @@ export default function EnumField({
     <Select
       id={field.name}
       name={field.name}
-      selectedKey={field.value ?? null}
-      onSelectionChange={field.onChange}
+      value={field.value ?? null}
+      onChange={field.onChange}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
       aria-label={isListItem ? label : undefined}

@@ -1,4 +1,5 @@
 import { AssistantName, Theme } from "@superego/backend";
+import { GoogleCalendarConnector } from "@superego/connectors";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
@@ -34,7 +35,7 @@ const backend = new ExecutingBackend(
   }),
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
-  [],
+  [GoogleCalendarConnector],
 );
 
 const queryClient = new QueryClient({
