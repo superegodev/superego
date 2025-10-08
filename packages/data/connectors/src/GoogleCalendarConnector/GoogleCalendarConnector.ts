@@ -1,48 +1,62 @@
 import {
   type ConnectorAuthenticationFailed,
+  type ConnectorAuthenticationSettings,
+  type ConnectorAuthenticationState,
   ConnectorAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
-import { DataType, type TypeOf } from "@superego/schema";
+import { DataType } from "@superego/schema";
 import defineConnector from "../utils/defineConnector.js";
+import {
+  ACCESS_TOKEN_EXPIRATION_BUFFER,
+  GOOGLE_CALENDAR_EVENTS_ENDPOINT_BASE,
+  GOOGLE_CALENDAR_FULL_SYNC_TIME_MIN,
+  GOOGLE_CALENDAR_PAGE_SIZE,
+  GOOGLE_OAUTH2_AUTHORIZATION_ENDPOINT,
+  GOOGLE_OAUTH2_TOKEN_ENDPOINT,
+  REDIRECT_URI,
+} from "./constants.js";
 import EventSchema from "./EventSchema.js";
+import {
+  GoogleCalendarAccessTokenExpiredError,
+  GoogleCalendarAuthenticationFailedError,
+  GoogleCalendarSyncTokenExpiredError,
+} from "./errors.js";
 import makeRemoteDocument from "./makeRemoteDocument.js";
 import type {
   GoogleCalendarEvent,
   GoogleCalendarEventsResponse,
 } from "./types.js";
 
-interface FetchEventsParams {
-  accessToken: string;
-  calendarId: string;
-  syncToken: string | null;
+interface GoogleOAuth2TokenResponseBody {
+  access_token?: string;
+  expires_in?: number;
+  refresh_token?: string;
+  id_token?: string;
+  scope?: string;
+  token_type?: string;
+  error?: string;
+  error_description?: string;
 }
 
-type FetchEventsResult =
-  | {
-      kind: "success";
-      events: GoogleCalendarEvent[];
-      nextSyncToken: string;
-    }
-  | {
-      kind: "authError";
-      reason: string;
-    }
-  | {
-      kind: "syncTokenExpired";
-    }
-  | {
-      kind: "unexpectedError";
-      cause: unknown;
-    };
+type RemoteEventDocument = ReturnType<typeof makeRemoteDocument>;
 
-const GOOGLE_CALENDAR_API_BASE =
-  "https://www.googleapis.com/calendar/v3/calendars";
-const ACCESS_TOKEN_REFRESH_THRESHOLD_MS = 60 * 1000;
+interface CalendarChanges {
+  addedOrModified: {
+    id: string;
+    versionId: string;
+    content: RemoteEventDocument;
+  }[];
+  deleted: {
+    id: string;
+  }[];
+}
 
 export default defineConnector({
   name: "GoogleCalendar",
+
   authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+
   settingsSchema: {
     types: {
       Settings: {
@@ -56,492 +70,583 @@ export default defineConnector({
     },
     rootType: "Settings",
   },
+
   remoteDocumentSchema: EventSchema,
-  async refreshAuthenticationState(
+
+  getAuthorizationRequestUrl({ authenticationSettings, authenticationState }) {
+    const url = new URL(GOOGLE_OAUTH2_AUTHORIZATION_ENDPOINT);
+    url.searchParams.set("client_id", authenticationSettings.clientId);
+    url.searchParams.set("redirect_uri", REDIRECT_URI);
+    url.searchParams.set("response_type", "code");
+    url.searchParams.set(
+      "scope",
+      [
+        "https://www.googleapis.com/auth/calendar.readonly",
+        "openid",
+        "email",
+      ].join(" "),
+    );
+    url.searchParams.set("access_type", "offline");
+    url.searchParams.set("prompt", "consent");
+    url.searchParams.set("include_granted_scopes", "true");
+    if (authenticationState?.email) {
+      url.searchParams.set("login_hint", authenticationState.email);
+    }
+    return url.toString();
+  },
+
+  async getAuthenticationState({
+    authenticationSettings,
+    authorizationResponseUrl,
+  }) {
+    try {
+      const authorizationParameters = parseAuthorizationResponseParameters(
+        authorizationResponseUrl,
+      );
+      const authorizationCode = authorizationParameters.get("code");
+      if (!authorizationCode) {
+        throw new Error(
+          "Google Calendar OAuth2 response does not include code",
+        );
+      }
+
+      const exchangedTokens = await exchangeAuthorizationCodeForTokens({
+        authorizationCode,
+        authenticationSettings,
+      });
+
+      const idTokenFromCallback = authorizationParameters.get("id_token");
+      const idToken = exchangedTokens.idToken ?? idTokenFromCallback ?? null;
+      if (!idToken) {
+        throw new Error(
+          "Google Calendar OAuth2 response does not include id_token",
+        );
+      }
+
+      const userEmail = extractEmailFromIdToken(idToken);
+      const refreshToken = exchangedTokens.refreshToken;
+      if (!refreshToken) {
+        throw new Error(
+          "Google Calendar OAuth2 token response does not include refresh_token",
+        );
+      }
+
+      return makeSuccessfulResult({
+        email: userEmail,
+        accessToken: exchangedTokens.accessToken,
+        refreshToken,
+        accessTokenExpiresAt: exchangedTokens.accessTokenExpiresAt,
+      });
+    } catch (error) {
+      return makeUnexpectedError(error);
+    }
+  },
+
+  async syncDown({
     authenticationSettings,
     authenticationState,
-  ) {
-    const accessTokenExpiresAt =
-      authenticationState.accessTokenExpiresAt instanceof Date
-        ? authenticationState.accessTokenExpiresAt
-        : new Date(authenticationState.accessTokenExpiresAt);
-
-    if (Number.isNaN(accessTokenExpiresAt.getTime())) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error("Google Calendar access token expiry is not a valid date."),
-        ),
-      };
-    }
-
-    const nowMs = Date.now();
-    if (
-      accessTokenExpiresAt.getTime() - ACCESS_TOKEN_REFRESH_THRESHOLD_MS >
-      nowMs
-    ) {
-      return {
-        success: true,
-        data:
-          accessTokenExpiresAt === authenticationState.accessTokenExpiresAt
-            ? authenticationState
-            : {
-                ...authenticationState,
-                accessTokenExpiresAt,
-              },
-        error: null,
-      };
-    }
-
-    let discoveryResponse: Response;
+    settings,
+    syncFrom,
+  }) {
     try {
-      discoveryResponse = await fetch(authenticationSettings.discoveryEndpoint);
-    } catch (error) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(error),
-      };
-    }
+      const calendarId = expectNonEmptyString(
+        settings.calendarId,
+        "settings.calendarId",
+      );
 
-    if (!discoveryResponse.ok) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError({
-          status: discoveryResponse.status,
-          statusText: discoveryResponse.statusText,
-          body: await readErrorBody(discoveryResponse),
-        }),
-      };
-    }
-
-    let discoveryBody: unknown;
-    try {
-      discoveryBody = await discoveryResponse.json();
-    } catch (error) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(error),
-      };
-    }
-
-    if (typeof discoveryBody !== "object" || discoveryBody === null) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error("Google Calendar discovery document was not an object."),
-        ),
-      };
-    }
-
-    const tokenEndpointRaw = (discoveryBody as Record<string, unknown>)[
-      "token_endpoint"
-    ];
-    const tokenEndpoint =
-      typeof tokenEndpointRaw === "string" && tokenEndpointRaw.length > 0
-        ? tokenEndpointRaw
-        : null;
-
-    if (!tokenEndpoint) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error(
-            "Google Calendar discovery document missing token_endpoint.",
-          ),
-        ),
-      };
-    }
-
-    const body = new URLSearchParams({
-      client_id: authenticationSettings.clientId,
-      refresh_token: authenticationState.refreshToken,
-      grant_type: "refresh_token",
-    });
-
-    let response: Response;
-    try {
-      response = await fetch(tokenEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body,
+      let currentAuthenticationState = await ensureValidAccessToken({
+        authenticationSettings,
+        authenticationState,
       });
-    } catch (error) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(error),
-      };
-    }
+      let currentSyncToken = syncFrom;
 
-    if (
-      response.status === 400 ||
-      response.status === 401 ||
-      response.status === 403
-    ) {
-      return {
-        success: false,
-        data: null,
-        error: makeConnectorAuthenticationFailed(
-          await readErrorMessage(response),
-        ),
-      };
-    }
-
-    if (!response.ok) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError({
-          status: response.status,
-          statusText: response.statusText,
-          body: await readErrorBody(response),
-        }),
-      };
-    }
-
-    let bodyJson: unknown;
-    try {
-      bodyJson = await response.json();
-    } catch (error) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(error),
-      };
-    }
-
-    if (typeof bodyJson !== "object" || bodyJson === null) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error(
-            "Google Calendar token refresh response was not an object.",
-          ),
-        ),
-      };
-    }
-
-    const tokenResponse = bodyJson as Record<string, unknown>;
-    const accessTokenRaw = tokenResponse["access_token"];
-    const expiresInRaw = tokenResponse["expires_in"];
-    const refreshTokenRaw = tokenResponse["refresh_token"];
-
-    const accessToken =
-      typeof accessTokenRaw === "string" && accessTokenRaw.length > 0
-        ? accessTokenRaw
-        : null;
-    const expiresInSeconds =
-      typeof expiresInRaw === "number"
-        ? expiresInRaw
-        : typeof expiresInRaw === "string"
-          ? Number.parseInt(expiresInRaw, 10)
-          : Number.NaN;
-
-    if (
-      !accessToken ||
-      !Number.isFinite(expiresInSeconds) ||
-      expiresInSeconds <= 0
-    ) {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error(
-            "Google Calendar token refresh response missing required fields.",
-          ),
-        ),
-      };
-    }
-
-    const refreshToken =
-      typeof refreshTokenRaw === "string" && refreshTokenRaw.length > 0
-        ? refreshTokenRaw
-        : authenticationState.refreshToken;
-
-    const refreshedAuthenticationState = {
-      ...authenticationState,
-      accessToken,
-      refreshToken,
-      accessTokenExpiresAt: new Date(Date.now() + expiresInSeconds * 1000),
-    };
-
-    return {
-      success: true,
-      data: refreshedAuthenticationState,
-      error: null,
-    };
-  },
-  async syncDown(authenticationState, settings, syncFrom) {
-    const { accessToken } = authenticationState;
-    const { calendarId } = settings;
-
-    const initialFetchResult = await fetchAllEvents({
-      accessToken,
-      calendarId,
-      syncToken: syncFrom,
-    });
-
-    const finalFetchResult =
-      initialFetchResult.kind === "syncTokenExpired"
-        ? await fetchAllEvents({
-            accessToken,
+      // Retry loop to handle token refreshes and invalidated sync tokens.
+      while (true) {
+        try {
+          const { changes, nextSyncToken } = await downloadCalendarChanges({
             calendarId,
-            syncToken: null,
-          })
-        : initialFetchResult;
+            accessToken: currentAuthenticationState.accessToken,
+            syncToken: currentSyncToken,
+          });
 
-    if (finalFetchResult.kind === "authError") {
-      return {
-        success: false,
-        data: null,
-        error: makeConnectorAuthenticationFailed(finalFetchResult.reason),
-      };
-    }
+          return makeSuccessfulResult({
+            changes,
+            authenticationState: currentAuthenticationState,
+            syncPoint: nextSyncToken,
+          });
+        } catch (error) {
+          if (error instanceof GoogleCalendarAccessTokenExpiredError) {
+            currentAuthenticationState = await refreshAccessToken({
+              authenticationSettings,
+              authenticationState: currentAuthenticationState,
+            });
+            continue;
+          }
 
-    if (finalFetchResult.kind === "unexpectedError") {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(finalFetchResult.cause),
-      };
-    }
+          if (
+            error instanceof GoogleCalendarSyncTokenExpiredError &&
+            currentSyncToken !== null
+          ) {
+            currentSyncToken = null;
+            continue;
+          }
 
-    if (finalFetchResult.kind !== "success") {
-      return {
-        success: false,
-        data: null,
-        error: makeUnexpectedError(
-          new Error("Unknown error fetching Google Calendar events"),
-        ),
-      };
-    }
-
-    const addedOrModified: {
-      id: string;
-      versionId: string;
-      content: TypeOf<typeof EventSchema>;
-    }[] = [];
-    const deleted: { id: string }[] = [];
-
-    for (const event of finalFetchResult.events) {
-      const id =
-        typeof event.id === "string" && event.id.length > 0 ? event.id : null;
-      if (!id) {
-        continue;
+          throw error;
+        }
       }
-
-      const status =
-        typeof event.status === "string" && event.status.length > 0
-          ? event.status
-          : "confirmed";
-      if (status.toLowerCase() === "cancelled") {
-        deleted.push({ id });
-        continue;
+    } catch (error) {
+      if (error instanceof GoogleCalendarAuthenticationFailedError) {
+        return makeConnectorAuthenticationFailed(error.reason);
       }
-
-      const remoteDocument = makeRemoteDocument(event);
-      const versionId =
-        typeof event.etag === "string" && event.etag.length > 0
-          ? event.etag
-          : typeof event.updated === "string" && event.updated.length > 0
-            ? event.updated
-            : `${remoteDocument.updated}:${remoteDocument.sequence}`;
-
-      addedOrModified.push({
-        id,
-        versionId,
-        content: remoteDocument,
-      });
+      return makeUnexpectedError(error);
     }
-
-    return {
-      success: true,
-      data: {
-        changes: { addedOrModified, deleted },
-        syncPoint: finalFetchResult.nextSyncToken,
-      },
-      error: null,
-    };
   },
 });
 
-async function fetchAllEvents(
-  params: FetchEventsParams,
-): Promise<FetchEventsResult> {
-  const { accessToken, calendarId } = params;
-  let syncToken = params.syncToken;
-  let pageToken: string | undefined;
-  const events: GoogleCalendarEvent[] = [];
-  let nextSyncToken: string | undefined;
+function parseAuthorizationResponseParameters(
+  authorizationResponseUrl: string,
+): URLSearchParams {
+  const parsedUrl = new URL(authorizationResponseUrl);
+  const combinedParameters = new URLSearchParams(parsedUrl.search);
 
-  do {
-    let url: URL;
-    try {
-      url = new URL(
-        `${encodeURIComponent(calendarId)}/events`,
-        `${GOOGLE_CALENDAR_API_BASE}/`,
-      );
-    } catch (error) {
-      return {
-        kind: "unexpectedError",
-        cause: error,
-      };
-    }
+  const hash = parsedUrl.hash.startsWith("#")
+    ? parsedUrl.hash.slice(1)
+    : parsedUrl.hash;
+  if (hash.length > 0) {
+    const hashParameters = new URLSearchParams(hash);
+    hashParameters.forEach((value, key) => {
+      if (!combinedParameters.has(key)) {
+        combinedParameters.set(key, value);
+      }
+    });
+  }
 
-    url.searchParams.set("maxResults", "2500");
-    url.searchParams.set("showDeleted", "true");
-    url.searchParams.set("singleEvents", "true");
+  return combinedParameters;
+}
 
-    if (pageToken) {
-      url.searchParams.set("pageToken", pageToken);
-    }
+async function exchangeAuthorizationCodeForTokens({
+  authorizationCode,
+  authenticationSettings: googleAuthenticationSettings,
+}: {
+  authorizationCode: string;
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+}): Promise<{
+  accessToken: string;
+  refreshToken: string | null;
+  idToken: string | null;
+  accessTokenExpiresAt: Date;
+}> {
+  const body = new URLSearchParams({
+    code: authorizationCode,
+    client_id: googleAuthenticationSettings.clientId,
+    client_secret: googleAuthenticationSettings.clientSecret,
+    redirect_uri: REDIRECT_URI,
+    grant_type: "authorization_code",
+  });
 
-    if (syncToken) {
-      url.searchParams.set("syncToken", syncToken);
-    }
+  const response = await fetch(GOOGLE_OAUTH2_TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: body.toString(),
+  });
 
-    let response: Response;
-    try {
-      response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    } catch (error) {
-      return {
-        kind: "unexpectedError",
-        cause: error,
-      };
-    }
+  if (!response.ok) {
+    const errorDetail = await readErrorResponse(response);
+    throw new Error(
+      `Google OAuth2 token exchange failed (${response.status}): ${errorDetail}`,
+    );
+  }
 
-    if (response.status === 401 || response.status === 403) {
-      return {
-        kind: "authError",
-        reason: await readErrorMessage(response),
-      };
-    }
+  const json = (await response.json()) as GoogleOAuth2TokenResponseBody;
+  const accessToken = expectNonEmptyString(json.access_token, "access_token");
+  const expiresIn = expectNumber(json.expires_in, "expires_in");
 
-    if (response.status === 410) {
-      return syncToken
-        ? { kind: "syncTokenExpired" }
-        : {
-            kind: "unexpectedError",
-            cause: new Error("Received 410 Gone without a sync token."),
-          };
-    }
+  return {
+    accessToken,
+    refreshToken:
+      typeof json.refresh_token === "string" ? json.refresh_token : null,
+    idToken: typeof json.id_token === "string" ? json.id_token : null,
+    accessTokenExpiresAt: computeAccessTokenExpiration(expiresIn),
+  };
+}
 
-    if (!response.ok) {
-      return {
-        kind: "unexpectedError",
-        cause: {
-          status: response.status,
-          statusText: response.statusText,
-          body: await readErrorBody(response),
-        },
-      };
-    }
+function extractEmailFromIdToken(idToken: string): string {
+  const segments = idToken.split(".");
+  if (segments.length < 2) {
+    throw new Error("Google OAuth2 id_token is malformed");
+  }
 
-    let body: GoogleCalendarEventsResponse;
-    try {
-      body = (await response.json()) as GoogleCalendarEventsResponse;
-    } catch (error) {
-      return {
-        kind: "unexpectedError",
-        cause: error,
-      };
-    }
+  const payloadSegment = segments[1];
+  if (typeof payloadSegment !== "string" || payloadSegment.length === 0) {
+    throw new Error("Google OAuth2 id_token payload segment is missing");
+  }
 
-    if (body.items) {
-      events.push(...body.items);
-    }
+  let payloadJson: string;
+  try {
+    payloadJson = Buffer.from(payloadSegment, "base64url").toString("utf8");
+  } catch {
+    throw new Error("Google OAuth2 id_token payload cannot be decoded");
+  }
 
-    pageToken =
-      typeof body.nextPageToken === "string" && body.nextPageToken.length > 0
-        ? body.nextPageToken
-        : undefined;
+  let payload: unknown;
+  try {
+    payload = JSON.parse(payloadJson);
+  } catch {
+    throw new Error("Google OAuth2 id_token payload is not valid JSON");
+  }
 
-    if (
-      typeof body.nextSyncToken === "string" &&
-      body.nextSyncToken.length > 0
-    ) {
-      nextSyncToken = body.nextSyncToken;
-      syncToken = body.nextSyncToken;
-    }
-  } while (pageToken);
+  if (
+    typeof payload !== "object" ||
+    payload === null ||
+    typeof (payload as { email?: unknown }).email !== "string"
+  ) {
+    throw new Error("Google OAuth2 id_token payload does not include email");
+  }
 
-  if (!nextSyncToken) {
+  const email = (payload as { email: string }).email;
+  if (email.length === 0) {
+    throw new Error("Google OAuth2 id_token email is empty");
+  }
+
+  return email;
+}
+
+async function ensureValidAccessToken({
+  authenticationSettings,
+  authenticationState,
+}: {
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+  authenticationState: ConnectorAuthenticationState.OAuth2;
+}): Promise<ConnectorAuthenticationState.OAuth2> {
+  const expirationDate = new Date(authenticationState.accessTokenExpiresAt);
+  const millisecondsUntilExpiration =
+    expirationDate.getTime() - Date.now() - ACCESS_TOKEN_EXPIRATION_BUFFER;
+
+  if (millisecondsUntilExpiration > 0) {
     return {
-      kind: "unexpectedError",
-      cause: new Error("Google Calendar response missing nextSyncToken."),
+      ...authenticationState,
+      accessTokenExpiresAt: expirationDate,
     };
   }
 
+  return refreshAccessToken({
+    authenticationSettings: authenticationSettings,
+    authenticationState: {
+      ...authenticationState,
+      accessTokenExpiresAt: expirationDate,
+    },
+  });
+}
+
+async function refreshAccessToken({
+  authenticationSettings,
+  authenticationState,
+}: {
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+  authenticationState: ConnectorAuthenticationState.OAuth2;
+}): Promise<ConnectorAuthenticationState.OAuth2> {
+  const refreshToken = expectNonEmptyString(
+    authenticationState.refreshToken,
+    "refresh_token",
+  );
+
+  const body = new URLSearchParams({
+    refresh_token: refreshToken,
+    client_id: authenticationSettings.clientId,
+    client_secret: authenticationSettings.clientSecret,
+    grant_type: "refresh_token",
+  });
+
+  const response = await fetch(GOOGLE_OAUTH2_TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: body.toString(),
+  });
+
+  if (!response.ok) {
+    const errorDetail = await readErrorResponse(response);
+    if (response.status === 400 || response.status === 401) {
+      throw new GoogleCalendarAuthenticationFailedError(errorDetail);
+    }
+    throw new Error(
+      `Google OAuth2 refresh token request failed (${response.status}): ${errorDetail}`,
+    );
+  }
+
+  const json = (await response.json()) as GoogleOAuth2TokenResponseBody;
+  const accessToken = expectNonEmptyString(json.access_token, "access_token");
+  const expiresIn = expectNumber(json.expires_in, "expires_in");
+
   return {
-    kind: "success",
-    events,
+    ...authenticationState,
+    accessToken,
+    accessTokenExpiresAt: computeAccessTokenExpiration(expiresIn),
+    refreshToken:
+      typeof json.refresh_token === "string"
+        ? json.refresh_token
+        : authenticationState.refreshToken,
+  };
+}
+
+async function downloadCalendarChanges({
+  calendarId,
+  accessToken,
+  syncToken,
+}: {
+  calendarId: string;
+  accessToken: string;
+  syncToken: string | null;
+}): Promise<{ changes: CalendarChanges; nextSyncToken: string }> {
+  const aggregatedChanges: CalendarChanges = {
+    addedOrModified: [],
+    deleted: [],
+  };
+
+  let pageToken: string | null = null;
+  let nextSyncToken: string | null = null;
+
+  do {
+    const response = await fetchCalendarEventsPage({
+      calendarId,
+      accessToken,
+      syncToken,
+      pageToken,
+    });
+
+    applyEventsToChanges(response.items ?? [], aggregatedChanges);
+
+    pageToken =
+      typeof response.nextPageToken === "string"
+        ? response.nextPageToken
+        : null;
+
+    if (typeof response.nextSyncToken === "string") {
+      nextSyncToken = response.nextSyncToken;
+    }
+  } while (pageToken);
+
+  const resolvedSyncToken = expectNonEmptyString(
     nextSyncToken,
+    "nextSyncToken",
+  );
+
+  return {
+    changes: aggregatedChanges,
+    nextSyncToken: resolvedSyncToken,
   };
 }
 
-async function readErrorMessage(response: Response): Promise<string> {
-  const body = await readErrorBody(response);
-  if (typeof body === "object" && body !== null) {
-    if (typeof (body as any).error_description === "string") {
-      if (typeof (body as any).error === "string") {
-        return `${(body as any).error}: ${(body as any).error_description}`;
-      }
-      return (body as any).error_description;
-    }
-    if (
-      typeof (body as any).error === "object" &&
-      (body as any).error !== null &&
-      typeof (body as any).error.message === "string"
-    ) {
-      return (body as any).error.message;
-    }
-    if (typeof (body as any).error === "string") {
-      return (body as any).error;
-    }
+async function fetchCalendarEventsPage({
+  calendarId,
+  accessToken,
+  syncToken,
+  pageToken,
+}: {
+  calendarId: string;
+  accessToken: string;
+  syncToken: string | null;
+  pageToken: string | null;
+}): Promise<GoogleCalendarEventsResponse> {
+  const url = new URL(
+    `${GOOGLE_CALENDAR_EVENTS_ENDPOINT_BASE}/${encodeURIComponent(calendarId)}/events`,
+  );
+  url.searchParams.set("maxResults", String(GOOGLE_CALENDAR_PAGE_SIZE));
+  url.searchParams.set("showDeleted", "true");
+
+  if (pageToken) {
+    url.searchParams.set("pageToken", pageToken);
   }
-  if (typeof body === "string" && body.length > 0) {
-    return body;
+
+  if (syncToken) {
+    url.searchParams.set("syncToken", syncToken);
+  } else {
+    url.searchParams.set("timeMin", GOOGLE_CALENDAR_FULL_SYNC_TIME_MIN);
   }
-  return `${response.status} ${response.statusText}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.status === 401) {
+    throw new GoogleCalendarAccessTokenExpiredError();
+  }
+
+  if (response.status === 410) {
+    throw new GoogleCalendarSyncTokenExpiredError();
+  }
+
+  if (!response.ok) {
+    const errorDetail = await readErrorResponse(response);
+    throw new Error(
+      `Google Calendar API request failed (${response.status}): ${errorDetail}`,
+    );
+  }
+
+  return (await response.json()) as GoogleCalendarEventsResponse;
 }
 
-async function readErrorBody(response: Response): Promise<unknown> {
-  const text = await response.text();
-  if (!text) {
-    return null;
+function applyEventsToChanges(
+  events: GoogleCalendarEvent[],
+  changes: CalendarChanges,
+): void {
+  for (const event of events) {
+    if (typeof event !== "object" || event === null) {
+      continue;
+    }
+
+    const eventId = expectNonEmptyString(event.id, "event.id");
+    if (event.status === "cancelled") {
+      changes.deleted.push({ id: eventId });
+      continue;
+    }
+
+    const versionId = deriveEventVersionId(event);
+    changes.addedOrModified.push({
+      id: eventId,
+      versionId,
+      content: makeRemoteDocument(event),
+    });
   }
+}
+
+function deriveEventVersionId(event: GoogleCalendarEvent): string {
+  const candidates = [event.etag, event.updated, event.created, event.id];
+  for (const candidate of candidates) {
+    if (typeof candidate === "string" && candidate.length > 0) {
+      return candidate;
+    }
+  }
+
+  throw new Error(
+    "Google Calendar event is missing fields that can serve as versionId",
+  );
+}
+
+function expectNonEmptyString(value: unknown, fieldName: string): string {
+  if (typeof value === "string" && value.length > 0) {
+    return value;
+  }
+  throw new Error(`Expected ${fieldName} to be a non-empty string`);
+}
+
+function expectNumber(value: unknown, fieldName: string): number {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+  throw new Error(`Expected ${fieldName} to be a number`);
+}
+
+function computeAccessTokenExpiration(expiresInSeconds: number): Date {
+  return new Date(Date.now() + expiresInSeconds * 1000);
+}
+
+async function readErrorResponse(response: Response): Promise<string> {
   try {
-    return JSON.parse(text);
+    const text = await response.text();
+    try {
+      const parsed = JSON.parse(text) as unknown;
+      if (
+        typeof parsed === "object" &&
+        parsed !== null &&
+        typeof (parsed as { error?: unknown }).error === "object" &&
+        (parsed as { error: { message?: unknown } }).error !== null &&
+        typeof (parsed as { error: { message?: unknown } }).error.message ===
+          "string"
+      ) {
+        return (parsed as { error: { message: string } }).error.message;
+      }
+
+      if (
+        typeof parsed === "object" &&
+        parsed !== null &&
+        typeof (parsed as { error_description?: unknown }).error_description ===
+          "string"
+      ) {
+        return (parsed as { error_description: string }).error_description;
+      }
+
+      if (
+        typeof parsed === "object" &&
+        parsed !== null &&
+        typeof (parsed as { error?: unknown }).error === "string"
+      ) {
+        return (parsed as { error: string }).error;
+      }
+
+      return text;
+    } catch {
+      return text;
+    }
   } catch {
-    return text;
+    return "<unparseable>";
   }
 }
 
-function makeConnectorAuthenticationFailed(
-  reason: string,
-): ConnectorAuthenticationFailed {
+function makeSuccessfulResult<Data>(data: Data) {
   return {
-    name: "ConnectorAuthenticationFailed",
-    details: { reason },
+    success: true as const,
+    data,
+    error: null,
   };
 }
 
-function makeUnexpectedError(cause: unknown): UnexpectedError {
+function makeUnexpectedError(error: unknown): {
+  success: false;
+  data: null;
+  error: UnexpectedError;
+} {
   return {
-    name: "UnexpectedError",
-    details: { cause },
+    success: false as const,
+    data: null,
+    error: {
+      name: "UnexpectedError",
+      details: {
+        cause: serializeErrorCause(error),
+      },
+    },
   };
+}
+
+function makeConnectorAuthenticationFailed(reason: string): {
+  success: false;
+  data: null;
+  error: ConnectorAuthenticationFailed;
+} {
+  return {
+    success: false as const,
+    data: null,
+    error: {
+      name: "ConnectorAuthenticationFailed",
+      details: {
+        reason,
+      },
+    },
+  };
+}
+
+function serializeErrorCause(error: unknown): unknown {
+  if (error instanceof GoogleCalendarAuthenticationFailedError) {
+    return {
+      name: error.name,
+      message: error.message,
+      reason: error.reason,
+    };
+  }
+
+  if (error instanceof Error) {
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack ?? null,
+    };
+  }
+
+  return error;
 }

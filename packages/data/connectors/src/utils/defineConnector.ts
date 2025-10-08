@@ -5,5 +5,5 @@ export default function defineConnector<
   const SettingsSchema extends Schema,
   const RemoteDocumentSchema extends Schema,
 >(connector: Connector<SettingsSchema, RemoteDocumentSchema>): Connector {
-  return connector;
+  return connector as any;
 }
