@@ -55,8 +55,7 @@ export default {
     },
     Attendee: {
       dataType: DataType.Struct,
-      description:
-        "Detailed information about a single attendee on the event.",
+      description: "Detailed information about a single attendee on the event.",
       properties: {
         id: {
           dataType: DataType.String,
@@ -70,7 +69,8 @@ export default {
         },
         displayName: {
           dataType: DataType.String,
-          description: "Display name for the attendee. Null when no name is available.",
+          description:
+            "Display name for the attendee. Null when no name is available.",
         },
         organizer: {
           dataType: DataType.Boolean,
@@ -83,8 +83,7 @@ export default {
         },
         resource: {
           dataType: DataType.Boolean,
-          description:
-            "True if the attendee is a room or equipment resource.",
+          description: "True if the attendee is a room or equipment resource.",
         },
         optional: {
           dataType: DataType.Boolean,
@@ -97,7 +96,8 @@ export default {
         },
         comment: {
           dataType: DataType.String,
-          description: "Additional notes provided by the attendee. Null when no comment is stored.",
+          description:
+            "Additional notes provided by the attendee. Null when no comment is stored.",
         },
         additionalGuests: {
           dataType: DataType.Number,
@@ -121,8 +121,7 @@ export default {
       properties: {
         method: {
           dataType: DataType.String,
-          description:
-            "Delivery method for the reminder (email, popup, etc.).",
+          description: "Delivery method for the reminder (email, popup, etc.).",
         },
         minutes: {
           dataType: DataType.Number,
@@ -133,8 +132,7 @@ export default {
     },
     Reminders: {
       dataType: DataType.Struct,
-      description:
-        "Container for reminder configuration applied to the event.",
+      description: "Container for reminder configuration applied to the event.",
       properties: {
         useDefault: {
           dataType: DataType.Boolean,
@@ -389,23 +387,19 @@ export default {
         },
         anyoneCanAddSelf: {
           dataType: DataType.Boolean,
-          description:
-            "True if attendees can invite themselves to the event.",
+          description: "True if attendees can invite themselves to the event.",
         },
         guestsCanInviteOthers: {
           dataType: DataType.Boolean,
-          description:
-            "True if attendees are allowed to invite other guests.",
+          description: "True if attendees are allowed to invite other guests.",
         },
         guestsCanModify: {
           dataType: DataType.Boolean,
-          description:
-            "True if attendees can modify the event details.",
+          description: "True if attendees can modify the event details.",
         },
         guestsCanSeeOtherGuests: {
           dataType: DataType.Boolean,
-          description:
-            "True if attendees can view the list of other guests.",
+          description: "True if attendees can view the list of other guests.",
         },
         privateCopy: {
           dataType: DataType.Boolean,
@@ -414,8 +408,7 @@ export default {
         },
         locked: {
           dataType: DataType.Boolean,
-          description:
-            "True if the event cannot be modified by attendees.",
+          description: "True if the event cannot be modified by attendees.",
         },
         reminders: {
           dataType: null,
