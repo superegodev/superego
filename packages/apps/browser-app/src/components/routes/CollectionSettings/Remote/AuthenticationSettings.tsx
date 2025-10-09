@@ -39,6 +39,7 @@ export default function AuthenticationSettings({
               control={control}
               name="connectorAuthenticationSettings.clientSecret"
               label={intl.formatMessage({ defaultMessage: "Client secret" })}
+              emptyInputValue={null}
             />
           </>
         ) : null}

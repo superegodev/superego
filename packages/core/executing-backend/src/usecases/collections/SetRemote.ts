@@ -83,15 +83,15 @@ export default class CollectionsSetRemote extends Usecase<
             v.string(),
             v.value(ConnectorAuthenticationStrategy.ApiKey),
           ),
-          apiKey: v.string(),
+          apiKey: v.pipe(v.string(), v.minLength(1)),
         }),
         v.strictObject({
           strategy: v.pipe(
             v.string(),
             v.value(ConnectorAuthenticationStrategy.OAuth2PKCE),
           ),
-          clientId: v.string(),
-          clientSecret: v.string(),
+          clientId: v.pipe(v.string(), v.minLength(1)),
+          clientSecret: v.nullable(v.pipe(v.string(), v.minLength(1))),
         }),
       ]),
       {

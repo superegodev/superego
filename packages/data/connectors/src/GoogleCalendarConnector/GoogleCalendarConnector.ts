@@ -335,11 +335,13 @@ async function exchangeAuthorizationCodeForTokens({
   const body = new URLSearchParams({
     code: authorizationCode,
     client_id: authenticationSettings.clientId,
-    client_secret: authenticationSettings.clientSecret,
     redirect_uri: REDIRECT_URI,
     grant_type: "authorization_code",
     code_verifier: codeVerifier,
   });
+  if (authenticationSettings.clientSecret) {
+    body.set("client_secret", authenticationSettings.clientSecret);
+  }
 
   const response = await fetch(GOOGLE_OAUTH2_TOKEN_ENDPOINT, {
     method: "POST",
@@ -454,9 +456,11 @@ async function refreshAccessToken({
   const body = new URLSearchParams({
     refresh_token: refreshToken,
     client_id: authenticationSettings.clientId,
-    client_secret: authenticationSettings.clientSecret,
     grant_type: "refresh_token",
   });
+  if (authenticationSettings.clientSecret) {
+    body.set("client_secret", authenticationSettings.clientSecret);
+  }
 
   const response = await fetch(GOOGLE_OAUTH2_TOKEN_ENDPOINT, {
     method: "POST",

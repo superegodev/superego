@@ -1,5 +1,5 @@
 import type { Collection, Connector } from "@superego/backend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.js";
 import ConnectorSelect from "./ConnectorSelect.js";
@@ -17,6 +17,13 @@ export default function Remote({ collection, connectors }: Props) {
       ? (connectors.find(({ name }) => name === connectorName) ?? null)
       : null,
   );
+  // Reset the selected connector when the remote is unset (hence connectorName
+  // changes to undefined).
+  useEffect(() => {
+    if (!connectorName) {
+      setConnector(null);
+    }
+  }, [connectorName]);
   return (
     <>
       <ConnectorSelect

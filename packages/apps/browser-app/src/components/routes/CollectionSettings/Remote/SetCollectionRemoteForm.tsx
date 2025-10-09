@@ -44,6 +44,11 @@ export default function SetCollectionRemoteForm({
           remoteConverters: collection.latestVersion.remoteConverters!,
         }
       : {
+          connectorAuthenticationSettings:
+            connector.authenticationStrategy ===
+            ConnectorAuthenticationStrategy.ApiKey
+              ? { apiKey: undefined }
+              : { clientId: undefined, clientSecret: null },
           connectorSettings: forms.defaults.schemaValue(
             connector.settingsSchema,
           ),
@@ -60,10 +65,10 @@ export default function SetCollectionRemoteForm({
         connectorAuthenticationSettings:
           connector.authenticationStrategy ===
           ConnectorAuthenticationStrategy.ApiKey
-            ? v.strictObject({ apiKey: v.string() })
+            ? v.strictObject({ apiKey: v.pipe(v.string(), v.minLength(1)) })
             : v.strictObject({
-                clientId: v.string(),
-                clientSecret: v.string(),
+                clientId: v.pipe(v.string(), v.minLength(1)),
+                clientSecret: v.nullable(v.pipe(v.string(), v.minLength(1))),
               }),
         connectorSettings: valibotSchemas.content(
           connector.settingsSchema,
@@ -88,12 +93,11 @@ export default function SetCollectionRemoteForm({
       values.remoteConverters,
     );
     if (success) {
-      // TODO: fix typescript input bug on reset
       reset({
         connectorAuthenticationSettings:
           data.remote!.connector.authenticationSettings,
         connectorSettings: data.remote!.connector.settings,
-        remoteConverters: collection.latestVersion.remoteConverters!,
+        remoteConverters: data.latestVersion.remoteConverters!,
       });
     }
   });

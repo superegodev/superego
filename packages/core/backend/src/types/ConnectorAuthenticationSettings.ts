@@ -5,7 +5,7 @@ namespace ConnectorAuthenticationSettings {
 
   export interface OAuth2PKCE {
     clientId: string;
-    clientSecret: string;
+    clientSecret: string | null;
   }
 }
 
