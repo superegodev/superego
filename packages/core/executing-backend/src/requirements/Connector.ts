@@ -1,4 +1,5 @@
 import type {
+  CollectionId,
   ConnectorAuthenticationFailed,
   ConnectorAuthenticationSettings,
   ConnectorAuthenticationState,
@@ -44,6 +45,7 @@ namespace Connector {
     settingsSchema: SettingsSchema;
     remoteDocumentSchema: RemoteDocumentSchema;
     getAuthorizationRequestUrl(params: {
+      collectionId: CollectionId;
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
       authenticationState: ConnectorAuthenticationState.OAuth2 | null;
     }): string;

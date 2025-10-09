@@ -1,5 +1,12 @@
-import type { Collection, Connector } from "@superego/backend";
+import {
+  type Collection,
+  type Connector,
+  ConnectorAuthenticationStrategy,
+} from "@superego/backend";
 import { useState } from "react";
+import { Link } from "react-aria-components";
+import DataLoader from "../../../../business-logic/backend/DataLoader.js";
+import { getOAuth2ConnectorAuthorizationRequestUrlQuery } from "../../../../business-logic/backend/hooks.js";
 import ConnectorSelect from "./ConnectorSelect.jsx";
 import SetCollectionRemoteForm from "./SetCollectionRemoteForm.jsx";
 
@@ -8,6 +15,7 @@ interface Props {
   connectors: Connector[];
 }
 export default function Remote({ collection, connectors }: Props) {
+  const collectionHasRemote = collection.remote !== null;
   const connectorName = collection.remote?.connector.name;
   const [connector, setConnector] = useState<Connector | null>(() =>
     connectorName
@@ -20,8 +28,21 @@ export default function Remote({ collection, connectors }: Props) {
         connectors={connectors}
         value={connector}
         onChange={setConnector}
-        isDisabled={connectorName !== undefined}
+        isDisabled={collectionHasRemote}
       />
+      {collectionHasRemote &&
+      connector?.authenticationStrategy ===
+        ConnectorAuthenticationStrategy.OAuth2 ? (
+        <DataLoader
+          queries={[
+            getOAuth2ConnectorAuthorizationRequestUrlQuery([collection.id]),
+          ]}
+        >
+          {(authorizationRequestUrl) => (
+            <Link href={authorizationRequestUrl}>{"Authenticate"}</Link>
+          )}
+        </DataLoader>
+      ) : null}
       {connector ? (
         <SetCollectionRemoteForm
           key={`SetCollectionRemoteForm_${collection.id}_${connector.name}`}

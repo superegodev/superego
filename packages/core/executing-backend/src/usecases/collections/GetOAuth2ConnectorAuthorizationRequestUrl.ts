@@ -63,6 +63,7 @@ export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extend
     }
 
     const authorizationRequestUrl = connector.getAuthorizationRequestUrl({
+      collectionId: id,
       authenticationSettings: collection.remote.connector
         .authenticationSettings as ConnectorAuthenticationSettings.OAuth2,
       authenticationState: collection.remote

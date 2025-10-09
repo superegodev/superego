@@ -22,13 +22,19 @@ export default abstract class Usecase<
 
   abstract exec(...args: Parameters<Exec>): ReturnType<Exec>;
 
-  protected sub<SubUsecase extends new (...args: any[]) => Usecase>(
-    UsecaseClass: SubUsecase,
-  ): InstanceType<SubUsecase> {
+  protected sub<
+    SubUsecase extends new (
+      repos: DataRepositories,
+      javascriptSandbox: JavascriptSandbox,
+      inferenceServiceFactory: InferenceServiceFactory,
+      connectors: Connector[],
+    ) => Usecase,
+  >(UsecaseClass: SubUsecase): InstanceType<SubUsecase> {
     return new UsecaseClass(
       this.repos,
       this.javascriptSandbox,
       this.inferenceServiceFactory,
+      this.connectors,
     ) as InstanceType<SubUsecase>;
   }
 

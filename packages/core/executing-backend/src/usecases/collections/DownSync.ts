@@ -5,7 +5,6 @@ import {
   ConnectorAuthenticationStrategy,
   DocumentVersionCreator,
   DownSyncStatus,
-  type ExecutingJavascriptFunctionFailed,
   type RemoteConverters,
   type SyncingChangesFailed,
   type UnexpectedError,
@@ -182,7 +181,7 @@ export default class CollectionsDownSync extends Usecase {
     const errors: ResultError<any, any>[] = [];
 
     for (const addedOrModified of changes.addedOrModified) {
-      const addOrModifyResult = await this.addOrModify(
+      const addOrModifyResult = await this.syncAddedOrModified(
         collection,
         collectionVersion,
         connector,
@@ -194,7 +193,7 @@ export default class CollectionsDownSync extends Usecase {
     }
 
     for (const deleted of changes.deleted) {
-      const deleteResult = await this.delete(collection, deleted);
+      const deleteResult = await this.syncDeleted(collection, deleted);
       if (!deleteResult.success) {
         errors.push(deleteResult.error);
       }
@@ -210,7 +209,7 @@ export default class CollectionsDownSync extends Usecase {
         );
   }
 
-  private async addOrModify(
+  private async syncAddedOrModified(
     collection: CollectionEntity & { remote: RemoteEntity },
     collectionVersion: CollectionVersionEntity & {
       remoteConverters: RemoteConverters;
@@ -221,16 +220,22 @@ export default class CollectionsDownSync extends Usecase {
     null,
     | ResultError<
         "RemoteDocumentContentNotValid",
-        { issues: ValidationIssue[] }
+        {
+          remoteDocumentId: string;
+          remoteDocumentVersionId: string;
+          issues: ValidationIssue[];
+        }
       >
     | ResultError<
-        "ConvertingRemoteDocumentFailed",
-        { cause: ExecutingJavascriptFunctionFailed }
-      >
-    | ResultError<"CreatingDocumentFailed", { cause: ResultError<string, any> }>
-    | ResultError<
-        "CreatingNewDocumentVersionFailed",
-        { cause: ResultError<string, any> }
+        | "ConvertingRemoteDocumentFailed"
+        | "CreatingDocumentFailed"
+        | "CreatingNewDocumentVersionFailed"
+        | "DeletingDocumentFailed",
+        {
+          remoteDocumentId: string;
+          remoteDocumentVersionId: string;
+          cause: ResultError<string, any>;
+        }
       >
   > {
     const validationResult = v.safeParse(
@@ -266,6 +271,29 @@ export default class CollectionsDownSync extends Usecase {
         collection.id,
         addedOrModified.id,
       );
+
+    // Remote documents that convert to null are not synced, and if they were
+    // previously synced, they are deleted.
+    if (conversionResult.data === null) {
+      if (!document) {
+        return makeSuccessfulResult(null);
+      }
+      const documentsDeleteResult = await this.sub(DocumentsDelete).exec(
+        collection.id,
+        document.id,
+        "delete",
+        true,
+      );
+      return documentsDeleteResult.success
+        ? makeSuccessfulResult(null)
+        : makeUnsuccessfulResult(
+            makeResultError("DeletingDocumentFailed", {
+              remoteDocumentId: addedOrModified.id,
+              remoteDocumentVersionId: addedOrModified.versionId,
+              cause: documentsDeleteResult.error,
+            }),
+          );
+    }
 
     if (!document) {
       const documentsCreateResult = await this.sub(DocumentsCreate).exec(
@@ -319,7 +347,7 @@ export default class CollectionsDownSync extends Usecase {
     return makeSuccessfulResult(null);
   }
 
-  private async delete(
+  private async syncDeleted(
     collection: CollectionEntity & { remote: RemoteEntity },
     deleted: Connector.DeletedDocument,
   ): ResultPromise<null, ResultError<string, any>> {

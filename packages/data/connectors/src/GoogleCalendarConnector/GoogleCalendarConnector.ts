@@ -6,6 +6,7 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import Base64Url from "../utils/Base64Url.js";
 import defineConnector from "../utils/defineConnector.js";
 import {
   ACCESS_TOKEN_EXPIRATION_BUFFER,
@@ -52,6 +53,13 @@ interface CalendarChanges {
   }[];
 }
 
+const PKCE_ALLOWED_CHARACTERS =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+const PKCE_CODE_VERIFIER_LENGTH = 96;
+// Use the "plain" code_challenge_method to keep the flow synchronous across
+// runtime environments while still complying with PKCE requirements.
+const PKCE_CODE_CHALLENGE_METHOD = "plain";
+
 export default defineConnector({
   name: "GoogleCalendar",
 
@@ -73,7 +81,12 @@ export default defineConnector({
 
   remoteDocumentSchema: EventSchema,
 
-  getAuthorizationRequestUrl({ authenticationSettings, authenticationState }) {
+  getAuthorizationRequestUrl({
+    collectionId,
+    authenticationSettings,
+    authenticationState,
+  }) {
+    const pkceParameters = makePkceParameters();
     const url = new URL(GOOGLE_OAUTH2_AUTHORIZATION_ENDPOINT);
     url.searchParams.set("client_id", authenticationSettings.clientId);
     url.searchParams.set("redirect_uri", REDIRECT_URI);
@@ -89,6 +102,22 @@ export default defineConnector({
     url.searchParams.set("access_type", "offline");
     url.searchParams.set("prompt", "consent");
     url.searchParams.set("include_granted_scopes", "true");
+    url.searchParams.set("code_challenge", pkceParameters.codeChallenge);
+    url.searchParams.set(
+      "code_challenge_method",
+      pkceParameters.codeChallengeMethod,
+    );
+    // TODO: add a nonce to protect against CSRF attacks. They're exceedingly
+    // unlikely, since each client uses their own OAuth application, and
+    // attackers would need to know the collection id. Still, it's good practice
+    // to do so.
+    url.searchParams.set(
+      "state",
+      JSON.stringify({
+        collectionId,
+        codeVerifier: pkceParameters.codeVerifier,
+      }),
+    );
     if (authenticationState?.email) {
       url.searchParams.set("login_hint", authenticationState.email);
     }
@@ -103,6 +132,9 @@ export default defineConnector({
       const authorizationParameters = parseAuthorizationResponseParameters(
         authorizationResponseUrl,
       );
+      const { codeVerifier } = parseAuthorizationState(
+        authorizationParameters.get("state"),
+      );
       const authorizationCode = authorizationParameters.get("code");
       if (!authorizationCode) {
         throw new Error(
@@ -113,10 +145,10 @@ export default defineConnector({
       const exchangedTokens = await exchangeAuthorizationCodeForTokens({
         authorizationCode,
         authenticationSettings,
+        codeVerifier,
       });
 
-      const idTokenFromCallback = authorizationParameters.get("id_token");
-      const idToken = exchangedTokens.idToken ?? idTokenFromCallback ?? null;
+      const idToken = exchangedTokens.idToken;
       if (!idToken) {
         throw new Error(
           "Google Calendar OAuth2 response does not include id_token",
@@ -224,12 +256,74 @@ function parseAuthorizationResponseParameters(
   return combinedParameters;
 }
 
+function makePkceParameters(): {
+  codeVerifier: string;
+  codeChallenge: string;
+  codeChallengeMethod: string;
+} {
+  const codeVerifier = generatePkceCodeVerifier();
+  return {
+    codeVerifier,
+    codeChallenge: codeVerifier,
+    codeChallengeMethod: PKCE_CODE_CHALLENGE_METHOD,
+  };
+}
+
+function generatePkceCodeVerifier(): string {
+  const randomValues = new Uint8Array(PKCE_CODE_VERIFIER_LENGTH);
+  crypto.getRandomValues(randomValues);
+  const characterCount = PKCE_ALLOWED_CHARACTERS.length;
+
+  let codeVerifier = "";
+  for (const value of randomValues) {
+    codeVerifier += PKCE_ALLOWED_CHARACTERS.charAt(value % characterCount);
+  }
+  return codeVerifier;
+}
+
+interface AuthorizationStatePayload {
+  collectionId: string;
+  codeVerifier: string;
+}
+
+function parseAuthorizationState(
+  rawState: string | null,
+): AuthorizationStatePayload {
+  if (typeof rawState !== "string" || rawState.length === 0) {
+    throw new Error("Google Calendar OAuth2 response does not include state");
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(rawState);
+  } catch {
+    throw new Error("Google Calendar OAuth2 state is not valid JSON");
+  }
+
+  if (typeof parsed !== "object" || parsed === null) {
+    throw new Error("Google Calendar OAuth2 state is malformed");
+  }
+
+  const collectionId = expectNonEmptyString(
+    (parsed as { collectionId?: unknown }).collectionId,
+    "state.collectionId",
+  );
+  const codeVerifier = expectNonEmptyString(
+    (parsed as { codeVerifier?: unknown }).codeVerifier,
+    "state.codeVerifier",
+  );
+
+  return { collectionId, codeVerifier };
+}
+
 async function exchangeAuthorizationCodeForTokens({
   authorizationCode,
-  authenticationSettings: googleAuthenticationSettings,
+  authenticationSettings,
+  codeVerifier,
 }: {
   authorizationCode: string;
   authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+  codeVerifier: string;
 }): Promise<{
   accessToken: string;
   refreshToken: string | null;
@@ -238,10 +332,11 @@ async function exchangeAuthorizationCodeForTokens({
 }> {
   const body = new URLSearchParams({
     code: authorizationCode,
-    client_id: googleAuthenticationSettings.clientId,
-    client_secret: googleAuthenticationSettings.clientSecret,
+    client_id: authenticationSettings.clientId,
+    client_secret: authenticationSettings.clientSecret,
     redirect_uri: REDIRECT_URI,
     grant_type: "authorization_code",
+    code_verifier: codeVerifier,
   });
 
   const response = await fetch(GOOGLE_OAUTH2_TOKEN_ENDPOINT, {
@@ -285,7 +380,7 @@ function extractEmailFromIdToken(idToken: string): string {
 
   let payloadJson: string;
   try {
-    payloadJson = Buffer.from(payloadSegment, "base64url").toString("utf8");
+    payloadJson = Base64Url.decode(payloadSegment);
   } catch {
     throw new Error("Google OAuth2 id_token payload cannot be decoded");
   }
