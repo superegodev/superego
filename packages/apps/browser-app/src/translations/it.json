@@ -17,6 +17,18 @@
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Il tuo nome"
   },
+  "AuthenticationSettings.tsx_B7p2EC": {
+    "defaultMessage": "Segreto del client"
+  },
+  "AuthenticationSettings.tsx_KTNoOq": {
+    "defaultMessage": "Chiave API"
+  },
+  "AuthenticationSettings.tsx_Q0U6OF": {
+    "defaultMessage": "Impostazioni di autenticazione"
+  },
+  "AuthenticationSettings.tsx_U5+MBC": {
+    "defaultMessage": "ID del client"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
   },
@@ -56,6 +68,9 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "Impostazioni generali"
   },
+  "CollectionSettings.tsx_JJBzhX": {
+    "defaultMessage": "Remoto"
+  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Impostazioni dell'ultima versione"
   },
@@ -76,6 +91,18 @@
   },
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compilazione in corso..."
+  },
+  "ConnectorSelect.tsx_Gnbr9F": {
+    "defaultMessage": "Seleziona un connettore"
+  },
+  "ConnectorSelect.tsx_nSFiyf": {
+    "defaultMessage": "Il connettore non può essere modificato dopo aver configurato un remoto."
+  },
+  "ConnectorSelect.tsx_r8XsCU": {
+    "defaultMessage": "Connettore"
+  },
+  "ConnectorSettings.tsx_1B+Bnl": {
+    "defaultMessage": "Impostazioni del connettore"
   },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
@@ -584,6 +611,24 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
   },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Aggiungi"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Elemento {number}"
+  },
+  "RemoteConverters.tsx_GqZhDC": {
+    "defaultMessage": "Dal documento remoto"
+  },
+  "RemoteConverters.tsx_abnr48": {
+    "defaultMessage": "Convertitori di documenti remoti"
+  },
+  "RemoteConverters.tsx_vUsXo4": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto in un documento locale."
+  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
@@ -619,6 +664,12 @@
   },
   "SendRecordToolbar.tsx_kNl1RN": {
     "defaultMessage": "Configura assistente"
+  },
+  "SetCollectionRemoteForm.tsx_fsGyC4": {
+    "defaultMessage": "Aggiorna remoto"
+  },
+  "SetCollectionRemoteForm.tsx_m8TXbJ": {
+    "defaultMessage": "Imposta remoto"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
