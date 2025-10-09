@@ -287,6 +287,9 @@
   "Document.tsx_jvo0vs": {
     "defaultMessage": "Save"
   },
+  "Document.tsx_otVWer": {
+    "defaultMessage": "Remote document info"
+  },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
@@ -649,6 +652,15 @@
   },
   "RemoteConverters.tsx_vUsXo4": {
     "defaultMessage": "TypeScript function transforming a remote document into a local document."
+  },
+  "RemoteDocumentInfoModal.tsx_1D7voQ": {
+    "defaultMessage": "Synced with {remote}"
+  },
+  "RemoteDocumentInfoModal.tsx_h6SlY+": {
+    "defaultMessage": "Remote document ID:"
+  },
+  "RemoteDocumentInfoModal.tsx_nY1/sq": {
+    "defaultMessage": "Remote document version ID:"
   },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"

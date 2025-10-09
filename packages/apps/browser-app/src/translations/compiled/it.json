@@ -758,6 +758,12 @@
       "value": "Salva"
     }
   ],
+  "Document.tsx_otVWer": [
+    {
+      "type": 0,
+      "value": "Informazioni sul documento remoto"
+    }
+  ],
   "Document.tsx_zugcbb": [
     {
       "type": 1,
@@ -1708,6 +1714,28 @@
     {
       "type": 0,
       "value": "Funzione TypeScript che trasforma un documento remoto in un documento locale."
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Sincronizzato con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "ID documento remoto:"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "ID versione documento remoto:"
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
