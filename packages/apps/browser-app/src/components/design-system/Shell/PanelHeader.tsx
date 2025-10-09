@@ -2,23 +2,16 @@ import type { ReactNode } from "react";
 import { Toolbar } from "react-aria-components";
 import { PiList } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import type Route from "../../../business-logic/navigation/Route.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import IconLink from "../IconLink/IconLink.js";
+import type PanelHeaderAction from "./PanelHeaderAction.js";
 import * as cs from "./Shell.css.js";
-
-type Action = {
-  label: string;
-  icon: ReactNode;
-  isDisabled?: boolean | undefined;
-  className?: string | undefined;
-} & ({ to: Route } | { onPress: () => void } | { submit: string });
 
 interface Props {
   title?: ReactNode | undefined;
-  actions?: (Action | null)[] | undefined;
+  actions?: (PanelHeaderAction | null)[] | undefined;
   actionsAriaLabel?: string | undefined;
   withPrimarySidebarToggleButton?: boolean | undefined;
   className?: string | undefined;

@@ -308,6 +308,12 @@
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Invalid content summary"
   },
+  "DownSyncInfoModal.tsx_8I58x/": {
+    "defaultMessage": "Syncing with {remote}"
+  },
+  "DownSyncInfoModal.tsx_dKtz/9": {
+    "defaultMessage": "Sync"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
@@ -817,6 +823,18 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} seconds"
+  },
+  "getDownSyncAction.tsx_IJWuS/": {
+    "defaultMessage": "Last synced {lastSucceededAt, date, ::MMM d, HH:mm}"
+  },
+  "getDownSyncAction.tsx_dKtz/9": {
+    "defaultMessage": "Sync"
+  },
+  "getDownSyncAction.tsx_eOnwqs": {
+    "defaultMessage": "Syncing"
+  },
+  "getDownSyncAction.tsx_mG35sa": {
+    "defaultMessage": "Last sync failed"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

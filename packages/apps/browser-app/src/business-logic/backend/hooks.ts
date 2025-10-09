@@ -61,31 +61,10 @@ export const useCreateCollection = makeUseBackendMutation(
   () => [["listCollections"], ["listConversations"], ["getConversation"]],
 );
 
-export const useCreateNewCollectionVersion = makeUseBackendMutation(
-  "collections",
-  "createNewVersion",
-  ([collectionId]) => [
-    ["listCollections"],
-    ["listDocuments", collectionId],
-    ["getDocument", collectionId],
-  ],
-);
-
 export const useUpdateCollectionSettings = makeUseBackendMutation(
   "collections",
   "updateSettings",
   () => [["listCollections"]],
-);
-
-export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
-  "collections",
-  "updateLatestVersionSettings",
-  ([collectionId]) => [
-    ["listCollections"],
-    ["listDocuments", collectionId],
-    ["getDocument", collectionId],
-    ["getDocumentVersion", collectionId],
-  ],
 );
 
 export const useSetCollectionRemote = makeUseBackendMutation(
@@ -102,6 +81,33 @@ export const useSetCollectionRemote = makeUseBackendMutation(
 export const useUnsetCollectionRemote = makeUseBackendMutation(
   "collections",
   "unsetRemote",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
+);
+
+export const useTriggerCollectionDownSync = makeUseBackendMutation(
+  "collections",
+  "triggerDownSync",
+  () => [["listCollections"]],
+);
+
+export const useCreateNewCollectionVersion = makeUseBackendMutation(
+  "collections",
+  "createNewVersion",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+  ],
+);
+
+export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
+  "collections",
+  "updateLatestVersionSettings",
   ([collectionId]) => [
     ["listCollections"],
     ["listDocuments", collectionId],

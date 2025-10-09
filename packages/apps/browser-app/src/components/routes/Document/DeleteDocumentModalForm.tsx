@@ -8,8 +8,8 @@ import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
-import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -66,6 +66,8 @@ export default function DeleteDocumentModalForm({
           values={{
             documentName: (
               <ContentSummaryPropertyValue
+                // Key necessary due to react-intl bug #5032.
+                key={document.id}
                 value={DocumentUtils.getDisplayName(document)}
               />
             ),

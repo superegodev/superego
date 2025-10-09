@@ -1,10 +1,10 @@
 import type { Collection, Connector } from "@superego/backend";
 import { useState } from "react";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.jsx";
+import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.js";
 import ConnectorSelect from "./ConnectorSelect.js";
 import SetCollectionRemoteForm from "./SetCollectionRemoteForm.js";
-import UnsetCollectionRemoteButton from "./UnsetCollectionRemoteButton.jsx";
+import UnsetCollectionRemoteButton from "./UnsetCollectionRemoteButton.js";
 
 interface Props {
   collection: Collection;

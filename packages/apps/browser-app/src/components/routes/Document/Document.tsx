@@ -7,7 +7,7 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
-import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
@@ -60,6 +60,8 @@ export default function Document({ collectionId, documentId }: Props) {
                 collection: CollectionUtils.getDisplayName(collection),
                 document: (
                   <ContentSummaryPropertyValue
+                    // Key necessary due to react-intl bug #5032.
+                    key={document.id}
                     value={DocumentUtils.getDisplayName(document)}
                   />
                 ),

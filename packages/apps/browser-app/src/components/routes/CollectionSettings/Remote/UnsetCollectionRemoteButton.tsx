@@ -2,9 +2,9 @@ import type { Collection } from "@superego/backend";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import Button from "../../../design-system/Button/Button.jsx";
+import Button from "../../../design-system/Button/Button.js";
 import * as cs from "../CollectionSettings.css.js";
-import UnsetCollectionRemoteModalForm from "./UnsetCollectionRemoteModalForm.jsx";
+import UnsetCollectionRemoteModalForm from "./UnsetCollectionRemoteModalForm.js";
 
 interface Props {
   collection: Collection;

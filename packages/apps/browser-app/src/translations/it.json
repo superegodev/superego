@@ -308,6 +308,12 @@
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Sommario dei contenuti non valido"
   },
+  "DownSyncInfoModal.tsx_8I58x/": {
+    "defaultMessage": "Sincronizzazione con {remote}"
+  },
+  "DownSyncInfoModal.tsx_dKtz/9": {
+    "defaultMessage": "Sincronizza"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
   },
@@ -778,6 +784,18 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} secondi"
+  },
+  "getDownSyncAction.tsx_IJWuS/": {
+    "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
+  },
+  "getDownSyncAction.tsx_dKtz/9": {
+    "defaultMessage": "Sincronizza"
+  },
+  "getDownSyncAction.tsx_eOnwqs": {
+    "defaultMessage": "Sincronizzazione in corso"
+  },
+  "getDownSyncAction.tsx_mG35sa": {
+    "defaultMessage": "Ultima sincronizzazione non riuscita"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

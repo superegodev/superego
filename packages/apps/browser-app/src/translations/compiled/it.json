@@ -812,6 +812,22 @@
       "value": "Sommario dei contenuti non valido"
     }
   ],
+  "DownSyncInfoModal.tsx_8I58x/": [
+    {
+      "type": 0,
+      "value": "Sincronizzazione con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DownSyncInfoModal.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sincronizza"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -2162,6 +2178,45 @@
     {
       "type": 0,
       "value": " secondi"
+    }
+  ],
+  "getDownSyncAction.tsx_IJWuS/": [
+    {
+      "type": 0,
+      "value": "Ultima sincronizzazione "
+    },
+    {
+      "style": {
+        "parsedOptions": {
+          "day": "numeric",
+          "hour": "2-digit",
+          "hourCycle": "h23",
+          "minute": "2-digit",
+          "month": "short"
+        },
+        "pattern": "MMM d, HH:mm",
+        "type": 1
+      },
+      "type": 3,
+      "value": "lastSucceededAt"
+    }
+  ],
+  "getDownSyncAction.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sincronizza"
+    }
+  ],
+  "getDownSyncAction.tsx_eOnwqs": [
+    {
+      "type": 0,
+      "value": "Sincronizzazione in corso"
+    }
+  ],
+  "getDownSyncAction.tsx_mG35sa": [
+    {
+      "type": 0,
+      "value": "Ultima sincronizzazione non riuscita"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

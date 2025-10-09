@@ -820,6 +820,22 @@
       "value": "Invalid content summary"
     }
   ],
+  "DownSyncInfoModal.tsx_8I58x/": [
+    {
+      "type": 0,
+      "value": "Syncing with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DownSyncInfoModal.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -2170,6 +2186,45 @@
     {
       "type": 0,
       "value": " seconds"
+    }
+  ],
+  "getDownSyncAction.tsx_IJWuS/": [
+    {
+      "type": 0,
+      "value": "Last synced "
+    },
+    {
+      "style": {
+        "parsedOptions": {
+          "day": "numeric",
+          "hour": "2-digit",
+          "hourCycle": "h23",
+          "minute": "2-digit",
+          "month": "short"
+        },
+        "pattern": "MMM d, HH:mm",
+        "type": 1
+      },
+      "type": 3,
+      "value": "lastSucceededAt"
+    }
+  ],
+  "getDownSyncAction.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
+    }
+  ],
+  "getDownSyncAction.tsx_eOnwqs": [
+    {
+      "type": 0,
+      "value": "Syncing"
+    }
+  ],
+  "getDownSyncAction.tsx_mG35sa": [
+    {
+      "type": 0,
+      "value": "Last sync failed"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

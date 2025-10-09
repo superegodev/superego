@@ -13,13 +13,13 @@ import * as v from "valibot";
 import { useSetCollectionRemote } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import RhfContent from "../../../../utils/RhfContent.js";
-import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.jsx";
-import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
+import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
+import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CollectionSettings.css.js";
-import AuthenticationSettings from "./AuthenticationSettings.jsx";
-import ConnectorSettings from "./ConnectorSettings.jsx";
+import AuthenticationSettings from "./AuthenticationSettings.js";
+import ConnectorSettings from "./ConnectorSettings.js";
 import type FormValues from "./FormValues.js";
-import RemoteConverters from "./RemoteConverters.jsx";
+import RemoteConverters from "./RemoteConverters.js";
 
 interface Props {
   collection: Collection;
