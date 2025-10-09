@@ -3,11 +3,11 @@ import { type Control, useController, useWatch } from "react-hook-form";
 import { PiBackspace, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import Button from "../../design-system/Button/Button.jsx";
-import FieldLabel from "../../design-system/FieldLabel/FieldLabel.jsx";
+import Button from "../../design-system/Button/Button.js";
+import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import { Description } from "../../design-system/forms/forms.js";
-import IconButton from "../../design-system/IconButton/IconButton.jsx";
-import RHFTextField from "../RHFTextField/RHFTextField.jsx";
+import IconButton from "../../design-system/IconButton/IconButton.js";
+import RHFTextField from "../RHFTextField/RHFTextField.js";
 import * as cs from "./RHFTextListField.css.js";
 
 interface Props {

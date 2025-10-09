@@ -62,7 +62,7 @@ export const Heading = {
     width: `calc(100% + ${vars.spacing._8})`,
     marginInline: `calc(${vars.spacing._4} * -1)`,
     marginBlockStart: 0,
-    marginBlockEnd: vars.spacing._6,
+    marginBlockEnd: vars.spacing._4,
     paddingInline: vars.spacing._4,
     paddingBlockEnd: vars.spacing._4,
     fontSize: vars.typography.fontSizes.md,

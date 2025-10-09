@@ -17,6 +17,9 @@
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Il tuo nome"
   },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
+    "defaultMessage": "Autentica il connettore"
+  },
   "AuthenticationSettings.tsx_B7p2EC": {
     "defaultMessage": "Segreto del client"
   },
@@ -233,17 +236,14 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
   },
-  "DeleteCollectionModalForm.tsx_4S5UP3": {
-    "defaultMessage": "Se sei sicuro di voler eliminare la collezione, scrivi <em>delete</em> nel campo sottostante."
+  "DeleteCollectionModalForm.tsx_J24oFm": {
+    "defaultMessage": "<p> Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. </p> <p> Se sei sicuro di voler eliminare la collezione, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
   "DeleteCollectionModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
   "DeleteCollectionModalForm.tsx_Q5SlBK": {
     "defaultMessage": "Elimina la collezione \"{collectionName}\""
-  },
-  "DeleteCollectionModalForm.tsx_iuFFzm": {
-    "defaultMessage": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
   },
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
@@ -254,20 +254,11 @@
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
-  "DeleteConversationModalForm.tsx_VcWPH+": {
-    "defaultMessage": "Se sei sicuro di voler eliminare la conversazione, scrivi <em>delete</em> nel campo sottostante."
+  "DeleteConversationModalForm.tsx_jGLuOH": {
+    "defaultMessage": "<p> Eliminare la conversazione è permanente. </p> <p> Se sei sicuro di voler eliminare la conversazione, scrivi nel campo sottostante. </p>"
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
-  },
-  "DeleteConversationModalForm.tsx_t7Vs5c": {
-    "defaultMessage": "Eliminare la conversazione è irreversibile."
-  },
-  "DeleteDocumentModalForm.tsx_+pXFqz": {
-    "defaultMessage": "Se sei sicuro di voler eliminare il documento, scrivi <em>delete</em> nel campo sottostante."
-  },
-  "DeleteDocumentModalForm.tsx_GSdOzc": {
-    "defaultMessage": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -277,6 +268,9 @@
   },
   "DeleteDocumentModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
+  },
+  "DeleteDocumentModalForm.tsx_qjTjxw": {
+    "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
@@ -712,6 +706,21 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
+  },
+  "UnsetCollectionRemoteButton.tsx_P0C6J1": {
+    "defaultMessage": "Rimuovi remoto"
+  },
+  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": {
+    "defaultMessage": "<p> Rimuovendo il remoto eliminerai definitivamente tutti i documenti e i file sincronizzati da esso. </p> <p> Se sei sicuro di voler rimuovere il remoto, scrivi <i>unset</i> nel campo sottostante. </p>"
+  },
+  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": {
+    "defaultMessage": "Rimuovi il remoto \"{remote}\""
+  },
+  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": {
+    "defaultMessage": "Rimuovi"
+  },
+  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Conferma comando"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Istruzioni dell'assistente"

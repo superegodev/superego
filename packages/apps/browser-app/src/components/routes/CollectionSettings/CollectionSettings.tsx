@@ -8,10 +8,10 @@ import { listConnectorsQuery } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.jsx";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DeleteCollectionModalForm from "./DeleteCollectionModalForm.js";
-import Remote from "./Remote/Remote.jsx";
+import Remote from "./Remote/Remote.js";
 import UpdateCollectionSettingsForm from "./UpdateCollectionSettingsForm.js";
 import UpdateCollectionVersionSettingsForm from "./UpdateCollectionVersionSettingsForm.js";
 

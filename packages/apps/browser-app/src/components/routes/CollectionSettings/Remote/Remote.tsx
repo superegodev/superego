@@ -1,21 +1,16 @@
-import {
-  type Collection,
-  type Connector,
-  ConnectorAuthenticationStrategy,
-} from "@superego/backend";
+import type { Collection, Connector } from "@superego/backend";
 import { useState } from "react";
-import { Link } from "react-aria-components";
-import DataLoader from "../../../../business-logic/backend/DataLoader.js";
-import { getOAuth2PKCEConnectorAuthorizationRequestUrlQuery } from "../../../../business-logic/backend/hooks.js";
-import ConnectorSelect from "./ConnectorSelect.jsx";
-import SetCollectionRemoteForm from "./SetCollectionRemoteForm.jsx";
+import CollectionUtils from "../../../../utils/CollectionUtils.js";
+import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.jsx";
+import ConnectorSelect from "./ConnectorSelect.js";
+import SetCollectionRemoteForm from "./SetCollectionRemoteForm.js";
+import UnsetCollectionRemoteButton from "./UnsetCollectionRemoteButton.jsx";
 
 interface Props {
   collection: Collection;
   connectors: Connector[];
 }
 export default function Remote({ collection, connectors }: Props) {
-  const collectionHasRemote = collection.remote !== null;
   const connectorName = collection.remote?.connector.name;
   const [connector, setConnector] = useState<Connector | null>(() =>
     connectorName
@@ -28,26 +23,20 @@ export default function Remote({ collection, connectors }: Props) {
         connectors={connectors}
         value={connector}
         onChange={setConnector}
-        isDisabled={collectionHasRemote}
+        isDisabled={CollectionUtils.hasRemote(collection)}
       />
-      {collectionHasRemote &&
-      connector?.authenticationStrategy ===
-        ConnectorAuthenticationStrategy.OAuth2PKCE ? (
-        <DataLoader
-          queries={[
-            getOAuth2PKCEConnectorAuthorizationRequestUrlQuery([collection.id]),
-          ]}
-        >
-          {(authorizationRequestUrl) => (
-            <Link href={authorizationRequestUrl}>{"Authenticate"}</Link>
-          )}
-        </DataLoader>
-      ) : null}
+      <UnsetCollectionRemoteButton collection={collection} />
       {connector ? (
         <SetCollectionRemoteForm
           key={`SetCollectionRemoteForm_${collection.id}_${connector.name}`}
           collection={collection}
           connector={connector}
+          authenticateConnectorButton={
+            <AuthenticateOAuth2PKCEConnectorButton
+              collection={collection}
+              connector={connector}
+            />
+          }
         />
       ) : null}
     </>

@@ -35,6 +35,12 @@
       "value": "Your name"
     }
   ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
+    {
+      "type": 0,
+      "value": "Authenticate connector"
+    }
+  ],
   "AuthenticationSettings.tsx_B7p2EC": [
     {
       "type": 0,
@@ -538,24 +544,44 @@
       "value": "Not a valid JSON string"
     }
   ],
-  "DeleteCollectionModalForm.tsx_4S5UP3": [
+  "DeleteCollectionModalForm.tsx_J24oFm": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the collection will permanently delete all of its documents and files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the collection, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the collection, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -576,12 +602,6 @@
     {
       "type": 0,
       "value": "\""
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_iuFFzm": [
-    {
-      "type": 0,
-      "value": "Deleting the collection will permanently delete all of its documents and files."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -610,62 +630,36 @@
       "value": "Delete"
     }
   ],
-  "DeleteConversationModalForm.tsx_VcWPH+": [
+  "DeleteConversationModalForm.tsx_jGLuOH": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the conversation is permanent. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the conversation, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the conversation, write in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
     {
       "type": 0,
       "value": "Command confirmation"
-    }
-  ],
-  "DeleteConversationModalForm.tsx_t7Vs5c": [
-    {
-      "type": 0,
-      "value": "Deleting the conversation is permanent."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_+pXFqz": [
-    {
-      "type": 0,
-      "value": "If you're sure you want to delete the document, write "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "delete"
-        }
-      ],
-      "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_GSdOzc": [
-    {
-      "type": 0,
-      "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -692,6 +686,46 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to delete the document, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "Document.tsx_EPTOBf": [
@@ -1898,6 +1932,78 @@
     {
       "type": 0,
       "value": "This call has no result."
+    }
+  ],
+  "UnsetCollectionRemoteButton.tsx_P0C6J1": [
+    {
+      "type": 0,
+      "value": "Unset remote"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Unsetting the remote will permanently delete all the documents and files synced from it. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to unset the remote, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "unset"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": [
+    {
+      "type": 0,
+      "value": "Unset \""
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    },
+    {
+      "type": 0,
+      "value": "\" remote"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": [
+    {
+      "type": 0,
+      "value": "Unset"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

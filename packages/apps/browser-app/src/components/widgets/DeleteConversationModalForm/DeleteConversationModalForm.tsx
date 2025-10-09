@@ -8,6 +8,7 @@ import { useDeleteConversation } from "../../../business-logic/backend/hooks.js"
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../RHFSubmitButton/RHFSubmitButton.js";
@@ -61,19 +62,19 @@ export default function DeleteConversationModalForm({
           values={{ conversationName }}
         />
       </ModalDialog.Heading>
+      <FormattedMessage
+        defaultMessage={`
+          <p>
+            Deleting the conversation is permanent.
+          </p>
+          <p>
+            If you're sure you want to delete the conversation, write
+            in the input below.
+          </p>
+        `}
+        values={formattedMessageHtmlTags}
+      />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <p>
-          <FormattedMessage defaultMessage="Deleting the conversation is permanent." />
-        </p>
-        <p>
-          <FormattedMessage
-            defaultMessage={`
-              If you're sure you want to delete the conversation, write
-              <em>delete</em> in the input below.
-            `}
-            values={{ em: (chunks) => <em>{chunks}</em> }}
-          />
-        </p>
         <RHFTextField
           control={control}
           name="commandConfirmation"

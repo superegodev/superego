@@ -8,6 +8,8 @@ import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -30,7 +32,6 @@ export default function DeleteDocumentModalForm({
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
-  const documentName = DocumentUtils.getDisplayName(document);
 
   const { result, mutate } = useDeleteDocument();
 
@@ -62,27 +63,29 @@ export default function DeleteDocumentModalForm({
       <ModalDialog.Heading>
         <FormattedMessage
           defaultMessage='Delete document "{documentName}"'
-          values={{ documentName }}
+          values={{
+            documentName: (
+              <ContentSummaryPropertyValue
+                value={DocumentUtils.getDisplayName(document)}
+              />
+            ),
+          }}
         />
       </ModalDialog.Heading>
+      <FormattedMessage
+        defaultMessage={`
+          <p>
+            Deleting the document will permanently delete the document, all its
+            versions, and all its files.
+          </p>
+          <p>
+            If you're sure you want to delete the document, write <i>delete</i>
+            in the input below.
+          </p>
+        `}
+        values={formattedMessageHtmlTags}
+      />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <p>
-          <FormattedMessage
-            defaultMessage={`
-              Deleting the document will permanently delete the document, all
-              its versions, and all its files.
-            `}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            defaultMessage={`
-              If you're sure you want to delete the document, write
-              <em>delete</em> in the input below.
-            `}
-            values={{ em: (chunks) => <em>{chunks}</em> }}
-          />
-        </p>
         <RHFTextField
           control={control}
           name="commandConfirmation"

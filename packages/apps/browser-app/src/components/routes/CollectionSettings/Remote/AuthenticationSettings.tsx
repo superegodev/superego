@@ -1,8 +1,8 @@
 import { ConnectorAuthenticationStrategy } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import Fieldset from "../../../design-system/Fieldset/Fieldset.jsx";
-import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.jsx";
+import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
+import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.js";
 import type FormValues from "./FormValues.js";
 
 interface Props {

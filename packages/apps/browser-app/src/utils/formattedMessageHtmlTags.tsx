@@ -7,7 +7,10 @@ export default {
   // Hack to avoid React 19 key errors, due to a react-intl bug. Follow
   // https://github.com/formatjs/formatjs/pull/5032 for updates. When solved,
   // remove the keys.
-  b: (chunks: Chunks) => <b key={(chunks as string[]).join("")}>{chunks}</b>,
+  b: (chunks: Chunks) => (
+    <strong key={(chunks as string[]).join("")}>{chunks}</strong>
+  ),
+  i: (chunks: Chunks) => <em key={(chunks as string[]).join("")}>{chunks}</em>,
   p: (chunks: Chunks) => <p key={(chunks as string[]).join("")}>{chunks}</p>,
   code: (chunks: Chunks) => (
     <InlineCode key={(chunks as string[]).join("")}>{chunks}</InlineCode>

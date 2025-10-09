@@ -61,6 +61,7 @@ export default class CollectionsDownSync extends Usecase {
       connector,
     );
 
+    // TODO: consider adding a connector.isAuthenticated method.
     if (
       connector.authenticationStrategy ===
         ConnectorAuthenticationStrategy.OAuth2PKCE &&
@@ -157,11 +158,15 @@ export default class CollectionsDownSync extends Usecase {
     await this.repos.collection.replace({
       ...collection,
       remote: {
-        ...collection.remote!,
+        ...collection.remote,
+        connectorAuthenticationState:
+          error.name === "ConnectorAuthenticationFailed"
+            ? null
+            : collection.remote.connectorAuthenticationState,
         syncState: {
-          ...collection.remote!.syncState,
+          ...collection.remote.syncState,
           down: {
-            ...collection.remote!.syncState.down,
+            ...collection.remote.syncState.down,
             status: DownSyncStatus.LastSyncFailed,
             error: error,
           },

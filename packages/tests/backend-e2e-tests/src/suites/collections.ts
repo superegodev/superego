@@ -2408,6 +2408,116 @@ export default rd<GetDependencies>("Collections", (deps) => {
       );
     });
 
+    it("syncing error: ConnectorAuthenticationFailed (resets authentication state)", async () => {
+      // Setup mocks
+      const syncDownError = {
+        name: "ConnectorAuthenticationFailed",
+        details: { reason: "reason" },
+      } as const;
+      const mockConnector: Connector.OAuth2PKCE = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: {
+          types: { Settings: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Settings",
+        },
+        remoteDocumentSchema: {
+          types: {
+            RemoteDocument: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            email: "email",
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async () => ({
+          success: false,
+          data: null,
+          error: syncDownError,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
+          createCollectionResult.data.id,
+          "authorizationResponseUrl",
+        );
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
+
+      // Exercise
+      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
+
+      // Verify downSync failed
+      const listResult = await backend.collections.list();
+      assert.isTrue(listResult.success);
+      const collection = listResult.data.find(
+        ({ id }) => id === createCollectionResult.data.id,
+      );
+      assert.isDefined(collection);
+      expect(
+        collection.remote?.connectorAuthenticationState.isAuthenticated,
+      ).toEqual(false);
+      expect(collection.remote?.syncState.down).toEqual(
+        expect.objectContaining({
+          status: DownSyncStatus.LastSyncFailed,
+          error: syncDownError,
+        }),
+      );
+    });
+
     it("syncing error: RemoteDocumentContentNotValid", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE = {

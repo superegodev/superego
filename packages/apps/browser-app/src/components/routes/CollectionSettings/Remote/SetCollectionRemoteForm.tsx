@@ -5,6 +5,7 @@ import {
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
+import type { ReactNode } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,10 +24,12 @@ import RemoteConverters from "./RemoteConverters.jsx";
 interface Props {
   collection: Collection;
   connector: Connector;
+  authenticateConnectorButton: ReactNode;
 }
 export default function SetCollectionRemoteForm({
   collection,
   connector,
+  authenticateConnectorButton,
 }: Props) {
   const intl = useIntl();
 
@@ -107,7 +110,8 @@ export default function SetCollectionRemoteForm({
         connector={connector}
         collection={collection}
       />
-      <div className={cs.SetCollectionRemoteForm.submitButtonContainer}>
+      <div className={cs.SetCollectionRemoteForm.buttons}>
+        {authenticateConnectorButton}
         <RHFSubmitButton
           control={control}
           variant="primary"

@@ -7,6 +7,7 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.jsx";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
@@ -57,7 +58,11 @@ export default function Document({ collectionId, documentId }: Props) {
               { defaultMessage: "{collection} » {document}" },
               {
                 collection: CollectionUtils.getDisplayName(collection),
-                document: DocumentUtils.getDisplayName(document),
+                document: (
+                  <ContentSummaryPropertyValue
+                    value={DocumentUtils.getDisplayName(document)}
+                  />
+                ),
               },
             )}
             actionsAriaLabel={intl.formatMessage({

@@ -35,6 +35,12 @@
       "value": "Il tuo nome"
     }
   ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
+    {
+      "type": 0,
+      "value": "Autentica il connettore"
+    }
+  ],
   "AuthenticationSettings.tsx_B7p2EC": [
     {
       "type": 0,
@@ -530,24 +536,44 @@
       "value": "Stringa JSON non valida"
     }
   ],
-  "DeleteCollectionModalForm.tsx_4S5UP3": [
+  "DeleteCollectionModalForm.tsx_J24oFm": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "Se sei sicuro di voler eliminare la collezione, scrivi "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " Se sei sicuro di voler eliminare la collezione, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
+      "value": "p"
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -568,12 +594,6 @@
     {
       "type": 0,
       "value": "\""
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_iuFFzm": [
-    {
-      "type": 0,
-      "value": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -602,62 +622,36 @@
       "value": "Elimina"
     }
   ],
-  "DeleteConversationModalForm.tsx_VcWPH+": [
+  "DeleteConversationModalForm.tsx_jGLuOH": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminare la conversazione è permanente. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "Se sei sicuro di voler eliminare la conversazione, scrivi "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " Se sei sicuro di voler eliminare la conversazione, scrivi nel campo sottostante. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
+      "value": "p"
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
     {
       "type": 0,
       "value": "Conferma comando"
-    }
-  ],
-  "DeleteConversationModalForm.tsx_t7Vs5c": [
-    {
-      "type": 0,
-      "value": "Eliminare la conversazione è irreversibile."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_+pXFqz": [
-    {
-      "type": 0,
-      "value": "Se sei sicuro di voler eliminare il documento, scrivi "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "delete"
-        }
-      ],
-      "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_GSdOzc": [
-    {
-      "type": 0,
-      "value": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -684,6 +678,46 @@
     {
       "type": 0,
       "value": "Conferma comando"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "Document.tsx_EPTOBf": [
@@ -1890,6 +1924,78 @@
     {
       "type": 0,
       "value": "Questa chiamata non ha alcun risultato."
+    }
+  ],
+  "UnsetCollectionRemoteButton.tsx_P0C6J1": [
+    {
+      "type": 0,
+      "value": "Rimuovi remoto"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Rimuovendo il remoto eliminerai definitivamente tutti i documenti e i file sincronizzati da esso. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Se sei sicuro di voler rimuovere il remoto, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "unset"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": [
+    {
+      "type": 0,
+      "value": "Rimuovi il remoto \""
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

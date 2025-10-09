@@ -7,7 +7,6 @@ import type {
   SyncingChangesFailed,
   UnexpectedError,
 } from "@superego/backend";
-import type { ResultError } from "@superego/global-types";
 
 export default interface RemoteEntity {
   connector: {
@@ -17,24 +16,29 @@ export default interface RemoteEntity {
   };
   connectorAuthenticationState: ConnectorAuthenticationState | null;
   syncState: {
-    down: {
-      status: DownSyncStatus;
-      error: ResultError<any, any> | null;
-      /**
-       * An opaque, connector-defined token representing the point until which
-       * the collection was synced.
-       */
-      syncedUntil: string | null;
-      lastSucceededAt: Date | null;
-    } & (
+    down:
       | {
           status: DownSyncStatus.NeverSynced;
           error: null;
           syncedUntil: null;
           lastSucceededAt: null;
         }
-      | { status: DownSyncStatus.Syncing; error: null }
-      | { status: DownSyncStatus.LastSyncSucceeded; error: null }
+      | {
+          status: DownSyncStatus.Syncing;
+          error: null;
+          syncedUntil: string | null;
+          lastSucceededAt: Date | null;
+        }
+      | {
+          status: DownSyncStatus.LastSyncSucceeded;
+          error: null;
+          /**
+           * An opaque, connector-defined token representing the point until which
+           * the collection was synced.
+           */
+          syncedUntil: string;
+          lastSucceededAt: Date;
+        }
       | {
           status: DownSyncStatus.LastSyncFailed;
           error:
@@ -42,7 +46,8 @@ export default interface RemoteEntity {
             | ConnectorAuthenticationFailed
             | SyncingChangesFailed
             | UnexpectedError;
-        }
-    );
+          syncedUntil: string | null;
+          lastSucceededAt: Date | null;
+        };
   };
 }

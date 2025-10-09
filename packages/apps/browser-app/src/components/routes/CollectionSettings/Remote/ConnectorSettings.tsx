@@ -1,8 +1,8 @@
 import type { Schema } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
-import Fieldset from "../../../design-system/Fieldset/Fieldset.jsx";
-import RHFContentField from "../../../widgets/RHFContentField/RHFContentField.jsx";
+import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
+import RHFContentField from "../../../widgets/RHFContentField/RHFContentField.js";
 import type FormValues from "./FormValues.js";
 
 interface Props {
