@@ -61,7 +61,7 @@ export default class CollectionsTriggerDownSync extends Usecase<
     );
     if (
       connector.authenticationStrategy ===
-        ConnectorAuthenticationStrategy.OAuth2 &&
+        ConnectorAuthenticationStrategy.OAuth2PKCE &&
       !collection.remote.connectorAuthenticationState
     ) {
       return makeUnsuccessfulResult(

@@ -1,5 +1,5 @@
 enum ConnectorAuthenticationStrategy {
   ApiKey = "ApiKey",
-  OAuth2 = "OAuth2",
+  OAuth2PKCE = "OAuth2PKCE",
 }
 export default ConnectorAuthenticationStrategy;

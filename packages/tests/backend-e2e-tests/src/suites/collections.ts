@@ -516,9 +516,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CannotChangeCollectionRemoteConnector", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -609,11 +609,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorAuthenticationSettingsNotValid (case: OAuth2)", async () => {
+    it("error: ConnectorAuthenticationSettingsNotValid (case: OAuth2PKCE)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -800,9 +800,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorSettingsNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -898,9 +898,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -990,9 +990,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/o previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -1112,9 +1112,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/ previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -1294,9 +1294,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CommandConfirmationNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -1386,9 +1386,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: unsets remote", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -1490,7 +1490,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
-  describe("getOAuth2ConnectorAuthorizationRequestUrl", () => {
+  describe("getOAuth2PKCEConnectorAuthorizationRequestUrl", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1498,7 +1498,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Exercise
       const collectionId = Id.generate.collection();
       const result =
-        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
           collectionId,
         );
 
@@ -1538,13 +1538,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
 
       // Exercise
-      const getOAuth2ConnectorAuthorizationRequestUrlResult =
-        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
+      const getOAuth2PKCEConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
           createResult.data.id,
         );
 
       // Verify
-      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
+      expect(getOAuth2PKCEConnectorAuthorizationRequestUrlResult).toEqual({
         success: false,
         data: null,
         error: {
@@ -1554,7 +1554,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
+    it("error: ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", async () => {
       // Setup mocks
       const mockConnector: Connector.ApiKey = {
         name: "MockConnector",
@@ -1626,17 +1626,17 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const getOAuth2ConnectorAuthorizationRequestUrlResult =
-        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
+      const getOAuth2PKCEConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
           createResult.data.id,
         );
 
       // Verify
-      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
+      expect(getOAuth2PKCEConnectorAuthorizationRequestUrlResult).toEqual({
         success: false,
         data: null,
         error: {
-          name: "ConnectorDoesNotUseOAuth2AuthenticationStrategy",
+          name: "ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy",
           details: {
             collectionId: createResult.data.id,
             connectorName: mockConnector.name,
@@ -1645,12 +1645,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: authenticates OAuth2 connector", async () => {
+    it("success: authenticates OAuth2PKCE connector", async () => {
       // Setup mocks
       const mockAuthorizationRequestUrl = "mockAuthorizationRequestUrl";
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -1737,13 +1737,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const getOAuth2ConnectorAuthorizationRequestUrlResult =
-        await backend.collections.getOAuth2ConnectorAuthorizationRequestUrl(
+      const getOAuth2PKCEConnectorAuthorizationRequestUrlResult =
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
           createResult.data.id,
         );
 
       // Verify
-      expect(getOAuth2ConnectorAuthorizationRequestUrlResult).toEqual({
+      expect(getOAuth2PKCEConnectorAuthorizationRequestUrlResult).toEqual({
         success: true,
         data: mockAuthorizationRequestUrl,
         error: null,
@@ -1751,14 +1751,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
-  describe("authenticateOAuth2Connector", () => {
+  describe("authenticateOAuth2PKCEConnector", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
 
       // Exercise
       const collectionId = Id.generate.collection();
-      const result = await backend.collections.authenticateOAuth2Connector(
+      const result = await backend.collections.authenticateOAuth2PKCEConnector(
         collectionId,
         "authorizationResponseUrl",
       );
@@ -1799,14 +1799,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createResult.success);
 
       // Exercise
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createResult.data.id,
           "authorizationResponseUrl",
         );
 
       // Verify
-      expect(authenticateOAuth2ConnectorResult).toEqual({
+      expect(authenticateOAuth2PKCEConnectorResult).toEqual({
         success: false,
         data: null,
         error: {
@@ -1816,7 +1816,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorDoesNotUseOAuth2AuthenticationStrategy", async () => {
+    it("error: ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", async () => {
       // Setup mocks
       const mockConnector: Connector.ApiKey = {
         name: "MockConnector",
@@ -1888,18 +1888,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createResult.data.id,
           "authorizationResponseUrl",
         );
 
       // Verify
-      expect(authenticateOAuth2ConnectorResult).toEqual({
+      expect(authenticateOAuth2PKCEConnectorResult).toEqual({
         success: false,
         data: null,
         error: {
-          name: "ConnectorDoesNotUseOAuth2AuthenticationStrategy",
+          name: "ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy",
           details: {
             collectionId: createResult.data.id,
             connectorName: mockConnector.name,
@@ -1908,11 +1908,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: authenticates OAuth2 connector", async () => {
+    it("success: authenticates OAuth2PKCE connector", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: {
             Root: {
@@ -1999,14 +1999,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createResult.data.id,
           "authorizationResponseUrl",
         );
 
       // Verify
-      expect(authenticateOAuth2ConnectorResult).toEqual({
+      expect(authenticateOAuth2PKCEConnectorResult).toEqual({
         success: true,
         data: {
           ...setRemoteResult.data,
@@ -2022,7 +2022,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const listResult = await backend.collections.list();
       expect(listResult).toEqual({
         success: true,
-        data: [authenticateOAuth2ConnectorResult.data],
+        data: [authenticateOAuth2PKCEConnectorResult.data],
         error: null,
       });
     });
@@ -2090,9 +2090,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CollectionIsSyncing", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2170,12 +2170,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       const firstTriggerDownSyncResult =
@@ -2201,9 +2201,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorNotAuthenticated", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2307,9 +2307,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
         name: "UnexpectedError",
         details: { cause: "cause" },
       } as const;
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2383,12 +2383,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2410,9 +2410,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: RemoteDocumentContentNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2495,12 +2495,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2535,9 +2535,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: ConvertingRemoteDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2624,12 +2624,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2667,9 +2667,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: CreatingDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2756,12 +2756,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2819,9 +2819,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -2906,12 +2906,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -2965,9 +2965,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -3041,12 +3041,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -3125,9 +3125,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [{ id: firstChanges.addedOrModified[1]!.id }],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -3212,12 +3212,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
 
       // Exercise first downSync
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -3604,9 +3604,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -3712,9 +3712,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
@@ -4099,9 +4099,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -4175,12 +4175,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
         remoteConverters,
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const createLocalDocumentResult = await backend.documents.create(
         createCollectionResult.data.id,

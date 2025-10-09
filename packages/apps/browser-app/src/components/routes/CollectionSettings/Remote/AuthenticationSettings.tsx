@@ -27,7 +27,8 @@ export default function AuthenticationSettings({
             label={intl.formatMessage({ defaultMessage: "API key" })}
           />
         ) : null}
-        {authenticationStrategy === ConnectorAuthenticationStrategy.OAuth2 ? (
+        {authenticationStrategy ===
+        ConnectorAuthenticationStrategy.OAuth2PKCE ? (
           <>
             <RHFTextField
               control={control}

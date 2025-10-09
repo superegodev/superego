@@ -15,7 +15,7 @@ export default function makeRemote(
     connectorAuthenticationState: {
       isAuthenticated:
         connector.authenticationStrategy ===
-        ConnectorAuthenticationStrategy.OAuth2
+        ConnectorAuthenticationStrategy.OAuth2PKCE
           ? remote.connectorAuthenticationState !== null
           : true,
     },

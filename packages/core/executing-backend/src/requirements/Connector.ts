@@ -36,26 +36,26 @@ namespace Connector {
     >;
   }
 
-  export interface OAuth2<
+  export interface OAuth2PKCE<
     SettingsSchema extends Schema = Schema,
     RemoteDocumentSchema extends Schema = Schema,
   > {
     name: string;
-    authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2;
+    authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE;
     settingsSchema: SettingsSchema;
     remoteDocumentSchema: RemoteDocumentSchema;
     getAuthorizationRequestUrl(params: {
       collectionId: CollectionId;
-      authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
-      authenticationState: ConnectorAuthenticationState.OAuth2 | null;
+      authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+      authenticationState: ConnectorAuthenticationState.OAuth2PKCE | null;
     }): string;
     getAuthenticationState(params: {
-      authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+      authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
       authorizationResponseUrl: string;
-    }): ResultPromise<ConnectorAuthenticationState.OAuth2, UnexpectedError>;
+    }): ResultPromise<ConnectorAuthenticationState.OAuth2PKCE, UnexpectedError>;
     syncDown(params: {
-      authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
-      authenticationState: ConnectorAuthenticationState.OAuth2;
+      authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+      authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
       settings: TypeOf<SettingsSchema>;
       /**
        * The point from which to sync. I.e., a previously returned syncPoint.
@@ -64,7 +64,7 @@ namespace Connector {
     }): ResultPromise<
       {
         changes: Changes<RemoteDocumentSchema>;
-        authenticationState: ConnectorAuthenticationState.OAuth2;
+        authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
         syncPoint: string;
       },
       ConnectorAuthenticationFailed | UnexpectedError
@@ -92,6 +92,8 @@ namespace Connector {
 type Connector<
   SettingsSchema extends Schema = Schema,
   RemoteDocumentSchema extends Schema = Schema,
-> = Connector.ApiKey<SettingsSchema> | Connector.OAuth2<RemoteDocumentSchema>;
+> =
+  | Connector.ApiKey<SettingsSchema>
+  | Connector.OAuth2PKCE<RemoteDocumentSchema>;
 
 export default Connector;

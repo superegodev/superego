@@ -20,7 +20,7 @@ import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
 import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
-import type ConnectorDoesNotUseOAuth2AuthenticationStrategy from "./errors/ConnectorDoesNotUseOAuth2AuthenticationStrategy.js";
+import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
@@ -159,24 +159,24 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    getOAuth2ConnectorAuthorizationRequestUrl(
+    getOAuth2PKCEConnectorAuthorizationRequestUrl(
       id: CollectionId,
     ): ResultPromise<
       string,
       | CollectionNotFound
       | CollectionHasNoRemote
-      | ConnectorDoesNotUseOAuth2AuthenticationStrategy
+      | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
       | UnexpectedError
     >;
 
-    authenticateOAuth2Connector(
+    authenticateOAuth2PKCEConnector(
       id: CollectionId,
       authorizationResponseUrl: string,
     ): ResultPromise<
       Collection,
       | CollectionNotFound
       | CollectionHasNoRemote
-      | ConnectorDoesNotUseOAuth2AuthenticationStrategy
+      | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
       | UnexpectedError
     >;
 

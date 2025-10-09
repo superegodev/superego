@@ -63,7 +63,7 @@ export default class CollectionsDownSync extends Usecase {
 
     if (
       connector.authenticationStrategy ===
-        ConnectorAuthenticationStrategy.OAuth2 &&
+        ConnectorAuthenticationStrategy.OAuth2PKCE &&
       !collection.remote.connectorAuthenticationState
     ) {
       await this.markDownSyncAsFailed(

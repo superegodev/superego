@@ -1,7 +1,7 @@
 namespace ConnectorAuthenticationState {
   export type ApiKey = null;
 
-  export interface OAuth2 {
+  export interface OAuth2PKCE {
     email: string;
     accessToken: string;
     refreshToken: string;
@@ -11,6 +11,6 @@ namespace ConnectorAuthenticationState {
 
 type ConnectorAuthenticationState =
   | ConnectorAuthenticationState.ApiKey
-  | ConnectorAuthenticationState.OAuth2;
+  | ConnectorAuthenticationState.OAuth2PKCE;
 
 export default ConnectorAuthenticationState;

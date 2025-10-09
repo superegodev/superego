@@ -569,9 +569,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -647,12 +647,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const listDocumentsResult = await backend.documents.list(
         createCollectionResult.data.id,
@@ -1044,9 +1044,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2 = {
+      const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
@@ -1122,12 +1122,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
       );
       assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2ConnectorResult =
-        await backend.collections.authenticateOAuth2Connector(
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
           createCollectionResult.data.id,
           "authorizationResponseUrl",
         );
-      assert.isTrue(authenticateOAuth2ConnectorResult.success);
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
       const listDocumentsResult = await backend.documents.list(
         createCollectionResult.data.id,

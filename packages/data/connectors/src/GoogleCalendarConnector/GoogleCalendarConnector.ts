@@ -29,7 +29,7 @@ import type {
   GoogleCalendarEventsResponse,
 } from "./types.js";
 
-interface GoogleOAuth2TokenResponseBody {
+interface GoogleOAuth2PKCETokenResponseBody {
   access_token?: string;
   expires_in?: number;
   refresh_token?: string;
@@ -63,7 +63,7 @@ const PKCE_CODE_CHALLENGE_METHOD = "plain";
 export default defineConnector({
   name: "GoogleCalendar",
 
-  authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2,
+  authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
 
   settingsSchema: {
     types: {
@@ -138,7 +138,7 @@ export default defineConnector({
       const authorizationCode = authorizationParameters.get("code");
       if (!authorizationCode) {
         throw new Error(
-          "Google Calendar OAuth2 response does not include code",
+          "Google Calendar OAuth2PKCE response does not include code",
         );
       }
 
@@ -151,7 +151,7 @@ export default defineConnector({
       const idToken = exchangedTokens.idToken;
       if (!idToken) {
         throw new Error(
-          "Google Calendar OAuth2 response does not include id_token",
+          "Google Calendar OAuth2PKCE response does not include id_token",
         );
       }
 
@@ -159,7 +159,7 @@ export default defineConnector({
       const refreshToken = exchangedTokens.refreshToken;
       if (!refreshToken) {
         throw new Error(
-          "Google Calendar OAuth2 token response does not include refresh_token",
+          "Google Calendar OAuth2PKCE token response does not include refresh_token",
         );
       }
 
@@ -290,18 +290,20 @@ function parseAuthorizationState(
   rawState: string | null,
 ): AuthorizationStatePayload {
   if (typeof rawState !== "string" || rawState.length === 0) {
-    throw new Error("Google Calendar OAuth2 response does not include state");
+    throw new Error(
+      "Google Calendar OAuth2PKCE response does not include state",
+    );
   }
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(rawState);
   } catch {
-    throw new Error("Google Calendar OAuth2 state is not valid JSON");
+    throw new Error("Google Calendar OAuth2PKCE state is not valid JSON");
   }
 
   if (typeof parsed !== "object" || parsed === null) {
-    throw new Error("Google Calendar OAuth2 state is malformed");
+    throw new Error("Google Calendar OAuth2PKCE state is malformed");
   }
 
   const collectionId = expectNonEmptyString(
@@ -322,7 +324,7 @@ async function exchangeAuthorizationCodeForTokens({
   codeVerifier,
 }: {
   authorizationCode: string;
-  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
   codeVerifier: string;
 }): Promise<{
   accessToken: string;
@@ -350,11 +352,11 @@ async function exchangeAuthorizationCodeForTokens({
   if (!response.ok) {
     const errorDetail = await readErrorResponse(response);
     throw new Error(
-      `Google OAuth2 token exchange failed (${response.status}): ${errorDetail}`,
+      `Google OAuth2PKCE token exchange failed (${response.status}): ${errorDetail}`,
     );
   }
 
-  const json = (await response.json()) as GoogleOAuth2TokenResponseBody;
+  const json = (await response.json()) as GoogleOAuth2PKCETokenResponseBody;
   const accessToken = expectNonEmptyString(json.access_token, "access_token");
   const expiresIn = expectNumber(json.expires_in, "expires_in");
 
@@ -370,26 +372,26 @@ async function exchangeAuthorizationCodeForTokens({
 function extractEmailFromIdToken(idToken: string): string {
   const segments = idToken.split(".");
   if (segments.length < 2) {
-    throw new Error("Google OAuth2 id_token is malformed");
+    throw new Error("Google OAuth2PKCE id_token is malformed");
   }
 
   const payloadSegment = segments[1];
   if (typeof payloadSegment !== "string" || payloadSegment.length === 0) {
-    throw new Error("Google OAuth2 id_token payload segment is missing");
+    throw new Error("Google OAuth2PKCE id_token payload segment is missing");
   }
 
   let payloadJson: string;
   try {
     payloadJson = Base64Url.decode(payloadSegment);
   } catch {
-    throw new Error("Google OAuth2 id_token payload cannot be decoded");
+    throw new Error("Google OAuth2PKCE id_token payload cannot be decoded");
   }
 
   let payload: unknown;
   try {
     payload = JSON.parse(payloadJson);
   } catch {
-    throw new Error("Google OAuth2 id_token payload is not valid JSON");
+    throw new Error("Google OAuth2PKCE id_token payload is not valid JSON");
   }
 
   if (
@@ -397,12 +399,14 @@ function extractEmailFromIdToken(idToken: string): string {
     payload === null ||
     typeof (payload as { email?: unknown }).email !== "string"
   ) {
-    throw new Error("Google OAuth2 id_token payload does not include email");
+    throw new Error(
+      "Google OAuth2PKCE id_token payload does not include email",
+    );
   }
 
   const email = (payload as { email: string }).email;
   if (email.length === 0) {
-    throw new Error("Google OAuth2 id_token email is empty");
+    throw new Error("Google OAuth2PKCE id_token email is empty");
   }
 
   return email;
@@ -412,9 +416,9 @@ async function ensureValidAccessToken({
   authenticationSettings,
   authenticationState,
 }: {
-  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
-  authenticationState: ConnectorAuthenticationState.OAuth2;
-}): Promise<ConnectorAuthenticationState.OAuth2> {
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+  authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+}): Promise<ConnectorAuthenticationState.OAuth2PKCE> {
   const expirationDate = new Date(authenticationState.accessTokenExpiresAt);
   const millisecondsUntilExpiration =
     expirationDate.getTime() - Date.now() - ACCESS_TOKEN_EXPIRATION_BUFFER;
@@ -439,9 +443,9 @@ async function refreshAccessToken({
   authenticationSettings,
   authenticationState,
 }: {
-  authenticationSettings: ConnectorAuthenticationSettings.OAuth2;
-  authenticationState: ConnectorAuthenticationState.OAuth2;
-}): Promise<ConnectorAuthenticationState.OAuth2> {
+  authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+  authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+}): Promise<ConnectorAuthenticationState.OAuth2PKCE> {
   const refreshToken = expectNonEmptyString(
     authenticationState.refreshToken,
     "refresh_token",
@@ -468,11 +472,11 @@ async function refreshAccessToken({
       throw new GoogleCalendarAuthenticationFailedError(errorDetail);
     }
     throw new Error(
-      `Google OAuth2 refresh token request failed (${response.status}): ${errorDetail}`,
+      `Google OAuth2PKCE refresh token request failed (${response.status}): ${errorDetail}`,
     );
   }
 
-  const json = (await response.json()) as GoogleOAuth2TokenResponseBody;
+  const json = (await response.json()) as GoogleOAuth2PKCETokenResponseBody;
   const accessToken = expectNonEmptyString(json.access_token, "access_token");
   const expiresIn = expectNumber(json.expires_in, "expires_in");
 

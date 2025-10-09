@@ -45,12 +45,12 @@ export const listConnectorsQuery = makeBackendQueryGetter(
   () => ["listConnectors"],
 );
 
-export const getOAuth2ConnectorAuthorizationRequestUrlQuery =
+export const getOAuth2PKCEConnectorAuthorizationRequestUrlQuery =
   makeBackendQueryGetter(
     "collections",
-    "getOAuth2ConnectorAuthorizationRequestUrl",
+    "getOAuth2PKCEConnectorAuthorizationRequestUrl",
     (collectionId) => [
-      "getOAuth2ConnectorAuthorizationRequestUrl",
+      "getOAuth2PKCEConnectorAuthorizationRequestUrl",
       collectionId,
     ],
   );

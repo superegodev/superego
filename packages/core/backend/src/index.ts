@@ -40,7 +40,7 @@ export type { default as CollectionVersionIdNotMatching } from "./errors/Collect
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
 export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";
-export type { default as ConnectorDoesNotUseOAuth2AuthenticationStrategy } from "./errors/ConnectorDoesNotUseOAuth2AuthenticationStrategy.js";
+export type { default as ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy } from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
 export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNotAuthenticated.js";
 export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
 export type { default as ConnectorSettingsNotValid } from "./errors/ConnectorSettingsNotValid.js";

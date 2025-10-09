@@ -6,7 +6,7 @@ import {
   type ConnectorAuthenticationSettings,
   type ConnectorAuthenticationState,
   ConnectorAuthenticationStrategy,
-  type ConnectorDoesNotUseOAuth2AuthenticationStrategy,
+  type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -16,8 +16,8 @@ import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extends Usecase<
-  Backend["collections"]["getOAuth2ConnectorAuthorizationRequestUrl"]
+export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends Usecase<
+  Backend["collections"]["getOAuth2PKCEConnectorAuthorizationRequestUrl"]
 > {
   async exec(
     id: CollectionId,
@@ -25,7 +25,7 @@ export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extend
     string,
     | CollectionNotFound
     | CollectionHasNoRemote
-    | ConnectorDoesNotUseOAuth2AuthenticationStrategy
+    | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -52,10 +52,10 @@ export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extend
 
     if (
       connector.authenticationStrategy !==
-      ConnectorAuthenticationStrategy.OAuth2
+      ConnectorAuthenticationStrategy.OAuth2PKCE
     ) {
       return makeUnsuccessfulResult(
-        makeResultError("ConnectorDoesNotUseOAuth2AuthenticationStrategy", {
+        makeResultError("ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", {
           collectionId: id,
           connectorName: connector.name,
         }),
@@ -65,9 +65,9 @@ export default class CollectionsGetOAuth2ConnectorAuthorizationRequestUrl extend
     const authorizationRequestUrl = connector.getAuthorizationRequestUrl({
       collectionId: id,
       authenticationSettings: collection.remote.connector
-        .authenticationSettings as ConnectorAuthenticationSettings.OAuth2,
+        .authenticationSettings as ConnectorAuthenticationSettings.OAuth2PKCE,
       authenticationState: collection.remote
-        .connectorAuthenticationState as ConnectorAuthenticationState.OAuth2 | null,
+        .connectorAuthenticationState as ConnectorAuthenticationState.OAuth2PKCE | null,
     });
     return makeSuccessfulResult(authorizationRequestUrl);
   }

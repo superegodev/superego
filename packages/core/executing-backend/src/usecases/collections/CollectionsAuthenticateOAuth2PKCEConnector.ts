@@ -6,7 +6,7 @@ import {
   type CollectionNotFound,
   type ConnectorAuthenticationSettings,
   ConnectorAuthenticationStrategy,
-  type ConnectorDoesNotUseOAuth2AuthenticationStrategy,
+  type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -19,8 +19,8 @@ import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionR
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class CollectionsAuthenticateOAuth2Connector extends Usecase<
-  Backend["collections"]["authenticateOAuth2Connector"]
+export default class CollectionsAuthenticateOAuth2PKCEConnector extends Usecase<
+  Backend["collections"]["authenticateOAuth2PKCEConnector"]
 > {
   async exec(
     id: CollectionId,
@@ -29,7 +29,7 @@ export default class CollectionsAuthenticateOAuth2Connector extends Usecase<
     Collection,
     | CollectionNotFound
     | CollectionHasNoRemote
-    | ConnectorDoesNotUseOAuth2AuthenticationStrategy
+    | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -56,10 +56,10 @@ export default class CollectionsAuthenticateOAuth2Connector extends Usecase<
 
     if (
       connector.authenticationStrategy !==
-      ConnectorAuthenticationStrategy.OAuth2
+      ConnectorAuthenticationStrategy.OAuth2PKCE
     ) {
       return makeUnsuccessfulResult(
-        makeResultError("ConnectorDoesNotUseOAuth2AuthenticationStrategy", {
+        makeResultError("ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", {
           collectionId: id,
           connectorName: connector.name,
         }),
@@ -69,7 +69,7 @@ export default class CollectionsAuthenticateOAuth2Connector extends Usecase<
     const getAuthenticationStateResult = await connector.getAuthenticationState(
       {
         authenticationSettings: collection.remote.connector
-          .authenticationSettings as ConnectorAuthenticationSettings.OAuth2,
+          .authenticationSettings as ConnectorAuthenticationSettings.OAuth2PKCE,
         authorizationResponseUrl: authorizationResponseUrl,
       },
     );

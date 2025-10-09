@@ -3,7 +3,7 @@ namespace ConnectorAuthenticationSettings {
     apiKey: string;
   }
 
-  export interface OAuth2 {
+  export interface OAuth2PKCE {
     clientId: string;
     clientSecret: string;
   }
@@ -11,6 +11,6 @@ namespace ConnectorAuthenticationSettings {
 
 type ConnectorAuthenticationSettings =
   | ConnectorAuthenticationSettings.ApiKey
-  | ConnectorAuthenticationSettings.OAuth2;
+  | ConnectorAuthenticationSettings.OAuth2PKCE;
 
 export default ConnectorAuthenticationSettings;

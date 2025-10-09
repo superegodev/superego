@@ -65,7 +65,7 @@ if (window.location.pathname.startsWith("/oauth2-callback/")) {
         `state.collectionId = "${collectionId}" is not a collection id`,
       );
     }
-    const result = await backend.collections.authenticateOAuth2Connector(
+    const result = await backend.collections.authenticateOAuth2PKCEConnector(
       collectionId,
       window.location.href,
     );
@@ -76,10 +76,10 @@ if (window.location.pathname.startsWith("/oauth2-callback/")) {
         toHref({ name: RouteName.CollectionSettings, collectionId }),
       );
     } else {
-      console.error("authenticateOAuth2Connector failed", result.error);
+      console.error("authenticateOAuth2PKCEConnector failed", result.error);
     }
   } catch (error) {
-    console.error("Error processing OAuth2 callback", error);
+    console.error("Error processing OAuth2PKCE callback", error);
   }
 }
 (window as any).backend = backend;

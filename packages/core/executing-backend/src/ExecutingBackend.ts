@@ -22,11 +22,11 @@ import CollectionCategoriesCreate from "./usecases/collection-categories/Create.
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
 import CollectionCategoriesUpdate from "./usecases/collection-categories/Update.js";
-import CollectionsAuthenticateOAuth2Connector from "./usecases/collections/CollectionsAuthenticateOAuth2Connector.js";
+import CollectionsAuthenticateOAuth2PKCEConnector from "./usecases/collections/CollectionsAuthenticateOAuth2PKCEConnector.js";
 import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
-import CollectionsGetOAuth2ConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2ConnectorAuthorizationRequestUrl.js";
+import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
 import CollectionsList from "./usecases/collections/List.js";
 import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
 import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
@@ -73,12 +73,12 @@ export default class ExecutingBackend implements Backend {
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
       setRemote: this.makeUsecase(CollectionsSetRemote, true),
       unsetRemote: this.makeUsecase(CollectionsUnsetRemote, true),
-      getOAuth2ConnectorAuthorizationRequestUrl: this.makeUsecase(
-        CollectionsGetOAuth2ConnectorAuthorizationRequestUrl,
+      getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(
+        CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl,
         false,
       ),
-      authenticateOAuth2Connector: this.makeUsecase(
-        CollectionsAuthenticateOAuth2Connector,
+      authenticateOAuth2PKCEConnector: this.makeUsecase(
+        CollectionsAuthenticateOAuth2PKCEConnector,
         true,
       ),
       createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
