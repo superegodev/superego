@@ -2962,6 +2962,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
             versionId: "remoteVersionId2",
             content: { title: "title2" },
           },
+          // This remote document should not be synced.
+          {
+            id: "remoteId3",
+            versionId: "remoteVersionId3",
+            content: { title: null },
+          },
         ],
         deleted: [],
       };
@@ -2977,6 +2983,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             RemoteDocument: {
               dataType: DataType.Struct,
               properties: { title: { dataType: DataType.String } },
+              nullableProperties: ["title"],
             },
           },
           rootType: "RemoteDocument",
@@ -3035,8 +3042,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+            compiled: [
+              "export default function fromRemoteDocument(remote) {",
+              "  return remote.title ? { title: remote.title } : null;",
+              "}",
+            ].join("\n"),
           },
         },
       );
@@ -3070,27 +3080,33 @@ export default rd<GetDependencies>("Collections", (deps) => {
         createCollectionResult.data.id,
       );
       assert.isTrue(documentsListResult.success);
-      expect(documentsListResult.data).toHaveLength(
-        changes.addedOrModified.length,
-      );
-      expect(documentsListResult.data).toEqual(
-        expect.arrayContaining(
-          changes.addedOrModified.map((remoteDocument) =>
-            expect.objectContaining({
-              id: expect.id("Document"),
-              remoteId: remoteDocument.id,
-              collectionId: createCollectionResult.data.id,
-              latestVersion: expect.objectContaining({
-                id: expect.id("DocumentVersion"),
-                remoteId: remoteDocument.versionId,
-                createdBy: "Connector",
-                createdAt: expect.dateCloseToNow(),
-              }),
-              createdAt: expect.dateCloseToNow(),
-            }),
-          ),
-        ),
-      );
+      expect(documentsListResult.data).toHaveLength(2);
+      expect(documentsListResult.data).toEqual([
+        expect.objectContaining({
+          id: expect.id("Document"),
+          remoteId: "remoteId1",
+          collectionId: createCollectionResult.data.id,
+          latestVersion: expect.objectContaining({
+            id: expect.id("DocumentVersion"),
+            remoteId: "remoteVersionId1",
+            createdBy: "Connector",
+            createdAt: expect.dateCloseToNow(),
+          }),
+          createdAt: expect.dateCloseToNow(),
+        }),
+        expect.objectContaining({
+          id: expect.id("Document"),
+          remoteId: "remoteId2",
+          collectionId: createCollectionResult.data.id,
+          latestVersion: expect.objectContaining({
+            id: expect.id("DocumentVersion"),
+            remoteId: "remoteVersionId2",
+            createdBy: "Connector",
+            createdAt: expect.dateCloseToNow(),
+          }),
+          createdAt: expect.dateCloseToNow(),
+        }),
+      ]);
     });
 
     it("success: syncs remote changes (case: subsequent sync)", async () => {
@@ -3100,12 +3116,23 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: "remoteId1",
             versionId: "remoteVersionId1.0",
-            content: { title: "title1" },
+            content: { title: "title1.0" },
           },
           {
             id: "remoteId2",
             versionId: "remoteVersionId2.0",
-            content: { title: "title2" },
+            content: { title: "title2.0" },
+          },
+          {
+            id: "remoteId3",
+            versionId: "remoteVersionId3.0",
+            content: { title: "title3.0" },
+          },
+          // This remote document should not be synced with the first sync.
+          {
+            id: "remoteId4",
+            versionId: "remoteVersionId4.0",
+            content: { title: null },
           },
         ],
         deleted: [],
@@ -3113,17 +3140,29 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const secondChanges: Connector.Changes = {
         addedOrModified: [
           {
-            id: firstChanges.addedOrModified[0]!.id,
+            id: "remoteId1",
             versionId: "remoteVersionId1.1",
-            content: { title: "updated-title1" },
+            content: { title: "title1.1" },
           },
+          // This remote document should be deleted with the second sync.
           {
             id: "remoteId3",
-            versionId: "remoteVersionId3.0",
-            content: { title: "title3" },
+            versionId: "remoteVersionId3.1",
+            content: { title: null },
+          },
+          // This remote document should be synced with the second sync.
+          {
+            id: "remoteId4",
+            versionId: "remoteVersionId4.1",
+            content: { title: "title4.1" },
+          },
+          {
+            id: "remoteId5",
+            versionId: "remoteVersionId5.0",
+            content: { title: "title5.0" },
           },
         ],
-        deleted: [{ id: firstChanges.addedOrModified[1]!.id }],
+        deleted: [{ id: "remoteId2" }],
       };
       const mockConnector: Connector.OAuth2PKCE = {
         name: "MockConnector",
@@ -3137,6 +3176,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             RemoteDocument: {
               dataType: DataType.Struct,
               properties: { title: { dataType: DataType.String } },
+              nullableProperties: ["title"],
             },
           },
           rootType: "RemoteDocument",
@@ -3206,8 +3246,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+            compiled: [
+              "export default function fromRemoteDocument(remote) {",
+              "  return remote.title ? { title: remote.title } : null;",
+              "}",
+            ].join("\n"),
           },
         },
       );
@@ -3227,23 +3270,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
         createCollectionResult.data.id,
       );
       assert.isTrue(firstDocumentsListResult.success);
-      expect(firstDocumentsListResult.data).toHaveLength(2);
-      expect(firstDocumentsListResult.data).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            remoteId: firstChanges.addedOrModified[0]!.id,
-            latestVersion: expect.objectContaining({
-              remoteId: firstChanges.addedOrModified[0]!.versionId,
-            }),
+      expect(firstDocumentsListResult.data).toHaveLength(3);
+      expect(firstDocumentsListResult.data).toEqual([
+        expect.objectContaining({
+          remoteId: "remoteId1",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId1.0",
           }),
-          expect.objectContaining({
-            remoteId: firstChanges.addedOrModified[1]!.id,
-            latestVersion: expect.objectContaining({
-              remoteId: firstChanges.addedOrModified[1]!.versionId,
-            }),
+        }),
+        expect.objectContaining({
+          remoteId: "remoteId2",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId2.0",
           }),
-        ]),
-      );
+        }),
+        expect.objectContaining({
+          remoteId: "remoteId3",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId3.0",
+          }),
+        }),
+      ]);
 
       // Exercise second downSync
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
@@ -3253,23 +3300,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
         createCollectionResult.data.id,
       );
       assert.isTrue(secondDocumentsListResult.success);
-      expect(secondDocumentsListResult.data).toHaveLength(2);
-      expect(secondDocumentsListResult.data).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            remoteId: secondChanges.addedOrModified[0]!.id,
-            latestVersion: expect.objectContaining({
-              remoteId: secondChanges.addedOrModified[0]!.versionId,
-            }),
+      expect(secondDocumentsListResult.data).toHaveLength(3);
+      expect(secondDocumentsListResult.data).toEqual([
+        expect.objectContaining({
+          remoteId: "remoteId1",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId1.1",
           }),
-          expect.objectContaining({
-            remoteId: secondChanges.addedOrModified[1]!.id,
-            latestVersion: expect.objectContaining({
-              remoteId: secondChanges.addedOrModified[1]!.versionId,
-            }),
+        }),
+        expect.objectContaining({
+          remoteId: "remoteId4",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId4.1",
           }),
-        ]),
-      );
+        }),
+        expect.objectContaining({
+          remoteId: "remoteId5",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId5.0",
+          }),
+        }),
+      ]);
     });
   });
 
