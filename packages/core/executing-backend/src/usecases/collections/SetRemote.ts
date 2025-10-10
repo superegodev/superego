@@ -112,7 +112,9 @@ export default class CollectionsSetRemote extends Usecase<
     }
 
     const connectorSettingsValidationResult = v.safeParse(
-      valibotSchemas.content(connector.settingsSchema),
+      connector.settingsSchema
+        ? valibotSchemas.content(connector.settingsSchema)
+        : v.null(),
       connectorSettings,
     );
     if (!connectorSettingsValidationResult.success) {

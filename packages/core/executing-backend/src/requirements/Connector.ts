@@ -15,9 +15,9 @@ namespace Connector {
     RemoteDocumentSchema extends Schema = Schema,
   > {
     name: string;
-    settingsSchema: SettingsSchema;
-    remoteDocumentSchema: RemoteDocumentSchema;
     authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey;
+    settingsSchema: SettingsSchema | null;
+    remoteDocumentSchema: RemoteDocumentSchema;
     syncDown(params: {
       authenticationSettings: ConnectorAuthenticationSettings.ApiKey;
       authenticationState: ConnectorAuthenticationState.ApiKey;
@@ -42,7 +42,7 @@ namespace Connector {
   > {
     name: string;
     authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE;
-    settingsSchema: SettingsSchema;
+    settingsSchema: SettingsSchema | null;
     remoteDocumentSchema: RemoteDocumentSchema;
     getAuthorizationRequestUrl(params: {
       collectionId: CollectionId;

@@ -1,5 +1,8 @@
 import { AssistantName, Theme } from "@superego/backend";
-import { GoogleCalendarConnector } from "@superego/connectors";
+import {
+  GoogleCalendarConnector,
+  GoogleContactsConnector,
+} from "@superego/connectors";
 import {
   BrowserBase64Url,
   BrowserSessionStorage,
@@ -44,6 +47,11 @@ const backend = new ExecutingBackend(
   new OpenAICompatInferenceServiceFactory(),
   [
     GoogleCalendarConnector({
+      redirectUri: "TODO",
+      base64Url: new BrowserBase64Url(),
+      sessionStorage: new BrowserSessionStorage(),
+    }),
+    GoogleContactsConnector({
       redirectUri: "TODO",
       base64Url: new BrowserBase64Url(),
       sessionStorage: new BrowserSessionStorage(),

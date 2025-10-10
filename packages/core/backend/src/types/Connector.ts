@@ -4,6 +4,6 @@ import type ConnectorAuthenticationStrategy from "../enums/ConnectorAuthenticati
 export default interface Connector {
   name: string;
   authenticationStrategy: ConnectorAuthenticationStrategy;
-  settingsSchema: Schema;
+  settingsSchema: Schema | null;
   remoteDocumentSchema: Schema;
 }

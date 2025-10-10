@@ -49,9 +49,9 @@ export default function SetCollectionRemoteForm({
             ConnectorAuthenticationStrategy.ApiKey
               ? { apiKey: undefined }
               : { clientId: undefined, clientSecret: null },
-          connectorSettings: forms.defaults.schemaValue(
-            connector.settingsSchema,
-          ),
+          connectorSettings: connector.settingsSchema
+            ? forms.defaults.schemaValue(connector.settingsSchema)
+            : null,
           remoteConverters: {
             fromRemoteDocument: forms.defaults.fromRemoteDocument(
               collection.latestVersion.schema,
@@ -70,10 +70,9 @@ export default function SetCollectionRemoteForm({
                 clientId: v.pipe(v.string(), v.minLength(1)),
                 clientSecret: v.nullable(v.pipe(v.string(), v.minLength(1))),
               }),
-        connectorSettings: valibotSchemas.content(
-          connector.settingsSchema,
-          "rhf",
-        ),
+        connectorSettings: connector.settingsSchema
+          ? valibotSchemas.content(connector.settingsSchema, "rhf")
+          : v.null(),
         remoteConverters: v.strictObject({
           fromRemoteDocument: forms.schemas.typescriptModule(intl),
         }),
@@ -86,10 +85,12 @@ export default function SetCollectionRemoteForm({
       collection.id,
       connector.name,
       values.connectorAuthenticationSettings,
-      RhfContent.fromRhfContent(
-        values.connectorSettings,
-        connector.settingsSchema,
-      ),
+      connector.settingsSchema
+        ? RhfContent.fromRhfContent(
+            values.connectorSettings,
+            connector.settingsSchema,
+          )
+        : values.connectorSettings,
       values.remoteConverters,
     );
     if (success) {
@@ -108,7 +109,12 @@ export default function SetCollectionRemoteForm({
         control={control}
         authenticationStrategy={connector.authenticationStrategy}
       />
-      <ConnectorSettings control={control} schema={connector.settingsSchema} />
+      {connector.settingsSchema ? (
+        <ConnectorSettings
+          control={control}
+          schema={connector.settingsSchema}
+        />
+      ) : null}
       <RemoteConverters
         control={control}
         connector={connector}
