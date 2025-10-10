@@ -1,5 +1,9 @@
 import { AssistantName, Theme } from "@superego/backend";
 import { GoogleCalendarConnector } from "@superego/connectors";
+import {
+  BrowserBase64Url,
+  BrowserSessionStorage,
+} from "@superego/connectors/requirements/browser";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
@@ -38,7 +42,13 @@ const backend = new ExecutingBackend(
   }),
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
-  [GoogleCalendarConnector],
+  [
+    GoogleCalendarConnector({
+      redirectUri: "TODO",
+      base64Url: new BrowserBase64Url(),
+      sessionStorage: new BrowserSessionStorage(),
+    }),
+  ],
 );
 
 const queryClient = new QueryClient({
@@ -82,6 +92,5 @@ if (window.location.pathname.startsWith("/oauth2-callback/")) {
     console.error("Error processing OAuth2PKCE callback", error);
   }
 }
-(window as any).backend = backend;
 
 renderBrowserApp(backend, queryClient);

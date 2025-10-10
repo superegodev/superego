@@ -62,7 +62,7 @@ export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl ex
       );
     }
 
-    const authorizationRequestUrl = connector.getAuthorizationRequestUrl({
+    const authorizationRequestUrl = await connector.getAuthorizationRequestUrl({
       collectionId: id,
       authenticationSettings: collection.remote.connector
         .authenticationSettings as ConnectorAuthenticationSettings.OAuth2PKCE,

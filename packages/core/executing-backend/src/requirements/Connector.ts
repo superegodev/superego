@@ -48,7 +48,7 @@ namespace Connector {
       collectionId: CollectionId;
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
       authenticationState: ConnectorAuthenticationState.OAuth2PKCE | null;
-    }): string;
+    }): string | Promise<string>;
     getAuthenticationState(params: {
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
       authorizationResponseUrl: string;

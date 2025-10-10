@@ -5,9 +5,11 @@ import {
   ConnectorAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
-import { DataType } from "@superego/schema";
-import Base64Url from "../utils/Base64Url.js";
+import { DataType, type TypeOf } from "@superego/schema";
+import type Base64Url from "../requirements/Base64Url.js";
+import type SessionStorage from "../requirements/SessionStorage.js";
 import defineConnector from "../utils/defineConnector.js";
+import sha256 from "../utils/sha256.js";
 import {
   ACCESS_TOKEN_EXPIRATION_BUFFER,
   GOOGLE_CALENDAR_EVENTS_ENDPOINT_BASE,
@@ -40,13 +42,13 @@ interface GoogleOAuth2PKCETokenResponseBody {
   error_description?: string;
 }
 
-type RemoteEventDocument = ReturnType<typeof makeRemoteDocument>;
+type Event = TypeOf<typeof EventSchema>;
 
 interface CalendarChanges {
   addedOrModified: {
     id: string;
     versionId: string;
-    content: RemoteEventDocument;
+    content: Event;
   }[];
   deleted: {
     id: string;
@@ -56,11 +58,17 @@ interface CalendarChanges {
 const PKCE_ALLOWED_CHARACTERS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
 const PKCE_CODE_VERIFIER_LENGTH = 96;
-// Use the "plain" code_challenge_method to keep the flow synchronous across
-// runtime environments while still complying with PKCE requirements.
-const PKCE_CODE_CHALLENGE_METHOD = "plain";
+const PKCE_CODE_CHALLENGE_METHOD = "S256";
+const NONCE_LENGTH = 32;
+const AUTHORIZATION_FLOW_SESSION_STORAGE_KEY_PREFIX = "GoogleCalendarConnector";
 
-export default defineConnector({
+interface Options {
+  redirectUri: string;
+  base64Url: Base64Url;
+  sessionStorage: SessionStorage;
+}
+
+export default defineConnector((options: Options) => ({
   name: "GoogleCalendar",
 
   authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
@@ -81,12 +89,19 @@ export default defineConnector({
 
   remoteDocumentSchema: EventSchema,
 
-  getAuthorizationRequestUrl({
+  async getAuthorizationRequestUrl({
     collectionId,
     authenticationSettings,
     authenticationState,
   }) {
-    const pkceParameters = makePkceParameters();
+    const pkceParameters = await makePkceParameters(options.base64Url);
+    const nonce = generateNonce();
+    persistAuthorizationFlowSessionState({
+      sessionStorage: options.sessionStorage,
+      collectionId,
+      codeVerifier: pkceParameters.codeVerifier,
+      nonce,
+    });
     const url = new URL(GOOGLE_OAUTH2_AUTHORIZATION_ENDPOINT);
     url.searchParams.set("client_id", authenticationSettings.clientId);
     url.searchParams.set("redirect_uri", REDIRECT_URI);
@@ -107,17 +122,8 @@ export default defineConnector({
       "code_challenge_method",
       pkceParameters.codeChallengeMethod,
     );
-    // TODO: add a nonce to protect against CSRF attacks. They're exceedingly
-    // unlikely, since each client uses their own OAuth application, and
-    // attackers would need to know the collection id. Still, it's good practice
-    // to do so.
-    url.searchParams.set(
-      "state",
-      JSON.stringify({
-        collectionId,
-        codeVerifier: pkceParameters.codeVerifier,
-      }),
-    );
+    url.searchParams.set("nonce", nonce);
+    url.searchParams.set("state", JSON.stringify({ collectionId, nonce }));
     if (authenticationState?.email) {
       url.searchParams.set("login_hint", authenticationState.email);
     }
@@ -128,13 +134,23 @@ export default defineConnector({
     authenticationSettings,
     authorizationResponseUrl,
   }) {
+    let authorizationState: AuthorizationStatePayload | null = null;
     try {
       const authorizationParameters = parseAuthorizationResponseParameters(
         authorizationResponseUrl,
       );
-      const { codeVerifier } = parseAuthorizationState(
+      authorizationState = parseAuthorizationState(
         authorizationParameters.get("state"),
       );
+      const flowSessionState = readAuthorizationFlowSessionState({
+        sessionStorage: options.sessionStorage,
+        collectionId: authorizationState.collectionId,
+      });
+      if (flowSessionState.nonce !== authorizationState.nonce) {
+        throw new Error(
+          "Google Calendar OAuth2PKCE nonce does not match the expected value",
+        );
+      }
       const authorizationCode = authorizationParameters.get("code");
       if (!authorizationCode) {
         throw new Error(
@@ -145,7 +161,7 @@ export default defineConnector({
       const exchangedTokens = await exchangeAuthorizationCodeForTokens({
         authorizationCode,
         authenticationSettings,
-        codeVerifier,
+        codeVerifier: flowSessionState.codeVerifier,
       });
 
       const idToken = exchangedTokens.idToken;
@@ -155,7 +171,11 @@ export default defineConnector({
         );
       }
 
-      const userEmail = extractEmailFromIdToken(idToken);
+      const userEmail = extractEmailFromIdToken(
+        idToken,
+        options.base64Url,
+        authorizationState.nonce,
+      );
       const refreshToken = exchangedTokens.refreshToken;
       if (!refreshToken) {
         throw new Error(
@@ -171,6 +191,13 @@ export default defineConnector({
       });
     } catch (error) {
       return makeUnexpectedError(error);
+    } finally {
+      if (authorizationState !== null) {
+        clearAuthorizationFlowSessionState({
+          sessionStorage: options.sessionStorage,
+          collectionId: authorizationState.collectionId,
+        });
+      }
     }
   },
 
@@ -233,7 +260,11 @@ export default defineConnector({
       return makeUnexpectedError(error);
     }
   },
-});
+}));
+
+///////////
+// Utils //
+///////////
 
 function parseAuthorizationResponseParameters(
   authorizationResponseUrl: string,
@@ -256,34 +287,44 @@ function parseAuthorizationResponseParameters(
   return combinedParameters;
 }
 
-function makePkceParameters(): {
+async function makePkceParameters(base64Url: Base64Url): Promise<{
   codeVerifier: string;
   codeChallenge: string;
   codeChallengeMethod: string;
-} {
+}> {
   const codeVerifier = generatePkceCodeVerifier();
+  const codeChallengeBytes = await sha256(codeVerifier, "bytes");
+
   return {
     codeVerifier,
-    codeChallenge: codeVerifier,
+    codeChallenge: base64Url.encodeBytes(codeChallengeBytes),
     codeChallengeMethod: PKCE_CODE_CHALLENGE_METHOD,
   };
 }
 
 function generatePkceCodeVerifier(): string {
-  const randomValues = new Uint8Array(PKCE_CODE_VERIFIER_LENGTH);
+  return generateRandomString(PKCE_CODE_VERIFIER_LENGTH);
+}
+
+function generateNonce(): string {
+  return generateRandomString(NONCE_LENGTH);
+}
+
+function generateRandomString(length: number): string {
+  const randomValues = new Uint8Array(length);
   crypto.getRandomValues(randomValues);
   const characterCount = PKCE_ALLOWED_CHARACTERS.length;
 
-  let codeVerifier = "";
-  for (const value of randomValues) {
-    codeVerifier += PKCE_ALLOWED_CHARACTERS.charAt(value % characterCount);
+  let value = "";
+  for (const randomValue of randomValues) {
+    value += PKCE_ALLOWED_CHARACTERS.charAt(randomValue % characterCount);
   }
-  return codeVerifier;
+  return value;
 }
 
 interface AuthorizationStatePayload {
   collectionId: string;
-  codeVerifier: string;
+  nonce: string;
 }
 
 function parseAuthorizationState(
@@ -310,12 +351,12 @@ function parseAuthorizationState(
     (parsed as { collectionId?: unknown }).collectionId,
     "state.collectionId",
   );
-  const codeVerifier = expectNonEmptyString(
-    (parsed as { codeVerifier?: unknown }).codeVerifier,
-    "state.codeVerifier",
+  const nonce = expectNonEmptyString(
+    (parsed as { nonce?: unknown }).nonce,
+    "state.nonce",
   );
 
-  return { collectionId, codeVerifier };
+  return { collectionId, nonce };
 }
 
 async function exchangeAuthorizationCodeForTokens({
@@ -371,7 +412,11 @@ async function exchangeAuthorizationCodeForTokens({
   };
 }
 
-function extractEmailFromIdToken(idToken: string): string {
+function extractEmailFromIdToken(
+  idToken: string,
+  base64Url: Base64Url,
+  expectedNonce: string,
+): string {
   const segments = idToken.split(".");
   if (segments.length < 2) {
     throw new Error("Google OAuth2PKCE id_token is malformed");
@@ -384,7 +429,7 @@ function extractEmailFromIdToken(idToken: string): string {
 
   let payloadJson: string;
   try {
-    payloadJson = Base64Url.decode(payloadSegment);
+    payloadJson = base64Url.decodeToUtf8(payloadSegment);
   } catch {
     throw new Error("Google OAuth2PKCE id_token payload cannot be decoded");
   }
@@ -405,10 +450,17 @@ function extractEmailFromIdToken(idToken: string): string {
       "Google OAuth2PKCE id_token payload does not include email",
     );
   }
-
   const email = (payload as { email: string }).email;
   if (email.length === 0) {
     throw new Error("Google OAuth2PKCE id_token email is empty");
+  }
+
+  const nonce = expectNonEmptyString(
+    (payload as { nonce?: unknown }).nonce,
+    "id_token.nonce",
+  );
+  if (nonce !== expectedNonce) {
+    throw new Error("Google OAuth2PKCE id_token nonce does not match");
   }
 
   return email;
@@ -648,6 +700,86 @@ function expectNumber(value: unknown, fieldName: string): number {
 
 function computeAccessTokenExpiration(expiresInSeconds: number): Date {
   return new Date(Date.now() + expiresInSeconds * 1000);
+}
+
+interface AuthorizationFlowSessionState {
+  codeVerifier: string;
+  nonce: string;
+}
+
+function makeAuthorizationFlowSessionStorageKey(collectionId: string): string {
+  return `${AUTHORIZATION_FLOW_SESSION_STORAGE_KEY_PREFIX}:${collectionId}`;
+}
+
+function persistAuthorizationFlowSessionState({
+  sessionStorage,
+  collectionId,
+  codeVerifier,
+  nonce,
+}: {
+  sessionStorage: SessionStorage;
+  collectionId: string;
+  codeVerifier: string;
+  nonce: string;
+}): void {
+  sessionStorage.setItem(
+    makeAuthorizationFlowSessionStorageKey(collectionId),
+    JSON.stringify({ codeVerifier, nonce }),
+  );
+}
+
+function readAuthorizationFlowSessionState({
+  sessionStorage,
+  collectionId,
+}: {
+  sessionStorage: SessionStorage;
+  collectionId: string;
+}): AuthorizationFlowSessionState {
+  const rawValue = sessionStorage.getItem(
+    makeAuthorizationFlowSessionStorageKey(collectionId),
+  );
+  if (rawValue === null) {
+    throw new Error(
+      "Google Calendar OAuth2PKCE session state is missing from sessionStorage",
+    );
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(rawValue);
+  } catch {
+    throw new Error(
+      "Google Calendar OAuth2PKCE session state is not valid JSON",
+    );
+  }
+
+  if (typeof parsed !== "object" || parsed === null) {
+    throw new Error("Google Calendar OAuth2PKCE session state is malformed");
+  }
+
+  const codeVerifier = expectNonEmptyString(
+    (parsed as { codeVerifier?: unknown }).codeVerifier,
+    "sessionStorage.codeVerifier",
+  );
+  const nonce = expectNonEmptyString(
+    (parsed as { nonce?: unknown }).nonce,
+    "sessionStorage.nonce",
+  );
+
+  return { codeVerifier, nonce };
+}
+
+function clearAuthorizationFlowSessionState({
+  sessionStorage,
+  collectionId,
+}: {
+  sessionStorage: SessionStorage;
+  collectionId: string;
+}): void {
+  sessionStorage.setItem(
+    makeAuthorizationFlowSessionStorageKey(collectionId),
+    null,
+  );
 }
 
 async function readErrorResponse(response: Response): Promise<string> {

@@ -5068,7 +5068,6 @@ __metadata:
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     typescript: "npm:^5.9.3"
-    universal-base64url: "npm:^1.1.0"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -14393,22 +14392,6 @@ __metadata:
     unist-util-is: "npm:^6.0.0"
     unist-util-visit-parents: "npm:^6.0.0"
   checksum: 10c0/51434a1d80252c1540cce6271a90fd1a106dbe624997c09ed8879279667fb0b2d3a685e02e92bf66598dcbe6cdffa7a5f5fb363af8fdf90dda6c855449ae39a5
-  languageName: node
-  linkType: hard
-
-"universal-base64@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "universal-base64@npm:2.1.0"
-  checksum: 10c0/0945df34e6530a8c9d8b00615c4dbe5a01b41ef715c72c8e3cb1071224af03e62b234ea674b6ed7c65369cc69f34b3361ff10380fe1fc31c3d455aef507e2db6
-  languageName: node
-  linkType: hard
-
-"universal-base64url@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "universal-base64url@npm:1.1.0"
-  dependencies:
-    universal-base64: "npm:^2.1.0"
-  checksum: 10c0/1ce1df1bfae7aa5df7145dc021cc944b5fe4b0e30d2c3996e41c45b64d77e6ec1ce7601f699a1091f1f0b91a6f3fc4d6c75ec096a97c55241838f4f001a99551
   languageName: node
   linkType: hard
 

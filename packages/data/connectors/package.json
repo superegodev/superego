@@ -5,6 +5,12 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./requirements/browser": {
+      "import": "./src/requirement-implementations/browser/index.ts"
+    },
+    "./requirements/nodejs": {
+      "import": "./src/requirement-implementations/nodejs/index.ts"
     }
   },
   "private": true,
@@ -22,7 +28,6 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
-    "@superego/shared-utils": "workspace:*",
-    "universal-base64url": "^1.1.0"
+    "@superego/shared-utils": "workspace:*"
   }
 }
