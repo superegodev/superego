@@ -8,18 +8,14 @@ import {
   type RemoteConverters,
   type SyncingChangesFailed,
   type UnexpectedError,
-  type ValidationIssue,
 } from "@superego/backend";
 import type { ResultError, ResultPromise } from "@superego/global-types";
-import { valibotSchemas } from "@superego/schema";
-import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type RemoteEntity from "../../entities/RemoteEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
-import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import type Connector from "../../requirements/Connector.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
@@ -109,7 +105,6 @@ export default class CollectionsDownSync extends Usecase {
     const syncChangesResult = await this.syncChanges(
       collection,
       collectionVersion,
-      connector,
       changes,
     );
     if (syncChangesResult.success) {
@@ -180,7 +175,6 @@ export default class CollectionsDownSync extends Usecase {
     collectionVersion: CollectionVersionEntity & {
       remoteConverters: RemoteConverters;
     },
-    connector: Connector,
     changes: Connector.Changes,
   ): ResultPromise<null, SyncingChangesFailed> {
     const errors: ResultError<any, any>[] = [];
@@ -189,7 +183,6 @@ export default class CollectionsDownSync extends Usecase {
       const addOrModifyResult = await this.syncAddedOrModified(
         collection,
         collectionVersion,
-        connector,
         addedOrModified,
       );
       if (!addOrModifyResult.success) {
@@ -219,47 +212,24 @@ export default class CollectionsDownSync extends Usecase {
     collectionVersion: CollectionVersionEntity & {
       remoteConverters: RemoteConverters;
     },
-    connector: Connector,
     addedOrModified: Connector.AddedOrModifiedDocument,
   ): ResultPromise<
     null,
-    | ResultError<
-        "RemoteDocumentContentNotValid",
-        {
-          remoteDocumentId: string;
-          remoteDocumentVersionId: string;
-          issues: ValidationIssue[];
-        }
-      >
-    | ResultError<
-        | "ConvertingRemoteDocumentFailed"
-        | "CreatingDocumentFailed"
-        | "CreatingNewDocumentVersionFailed"
-        | "DeletingDocumentFailed",
-        {
-          remoteDocumentId: string;
-          remoteDocumentVersionId: string;
-          cause: ResultError<string, any>;
-        }
-      >
+    ResultError<
+      | "ConvertingRemoteDocumentFailed"
+      | "CreatingDocumentFailed"
+      | "CreatingNewDocumentVersionFailed"
+      | "DeletingDocumentFailed",
+      {
+        remoteDocumentId: string;
+        remoteDocumentVersionId: string;
+        cause: ResultError<string, any>;
+      }
+    >
   > {
-    const validationResult = v.safeParse(
-      valibotSchemas.content(connector.remoteDocumentSchema),
-      addedOrModified.content,
-    );
-    if (!validationResult.success) {
-      return makeUnsuccessfulResult(
-        makeResultError("RemoteDocumentContentNotValid", {
-          remoteDocumentId: addedOrModified.id,
-          remoteDocumentVersionId: addedOrModified.versionId,
-          issues: makeValidationIssues(validationResult.issues),
-        }),
-      );
-    }
-
     const conversionResult = await this.javascriptSandbox.executeSyncFunction(
       collectionVersion.remoteConverters.fromRemoteDocument,
-      [validationResult.output],
+      [addedOrModified.content],
     );
     if (!conversionResult.success) {
       return makeUnsuccessfulResult(

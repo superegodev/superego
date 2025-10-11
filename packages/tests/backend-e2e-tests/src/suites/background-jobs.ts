@@ -36,13 +36,8 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",

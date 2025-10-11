@@ -1,7 +1,8 @@
 import { AssistantName, Theme } from "@superego/backend";
 import {
-  GoogleCalendarConnector,
-  GoogleContactsConnector,
+  GoogleCalendar,
+  GoogleContacts,
+  StravaActivities,
 } from "@superego/connectors";
 import {
   BrowserBase64Url,
@@ -46,12 +47,17 @@ const backend = new ExecutingBackend(
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
   [
-    GoogleCalendarConnector({
+    GoogleCalendar({
       redirectUri: "TODO",
       base64Url: new BrowserBase64Url(),
       sessionStorage: new BrowserSessionStorage(),
     }),
-    GoogleContactsConnector({
+    GoogleContacts({
+      redirectUri: "TODO",
+      base64Url: new BrowserBase64Url(),
+      sessionStorage: new BrowserSessionStorage(),
+    }),
+    StravaActivities({
       redirectUri: "TODO",
       base64Url: new BrowserBase64Url(),
       sessionStorage: new BrowserSessionStorage(),

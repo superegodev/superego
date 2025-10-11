@@ -5,11 +5,12 @@ import {
   ConnectorAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
-import { DataType, type TypeOf } from "@superego/schema";
-import type Base64Url from "../requirements/Base64Url.js";
-import type SessionStorage from "../requirements/SessionStorage.js";
-import defineConnector from "../utils/defineConnector.js";
-import sha256 from "../utils/sha256.js";
+import type { Connector } from "@superego/executing-backend";
+import { DataType } from "@superego/schema";
+import type Base64Url from "../../requirements/Base64Url.js";
+import type SessionStorage from "../../requirements/SessionStorage.js";
+import defineConnector from "../../utils/defineConnector.js";
+import sha256 from "../../utils/sha256.js";
 import {
   ACCESS_TOKEN_EXPIRATION_BUFFER,
   GOOGLE_CALENDAR_EVENTS_ENDPOINT_BASE,
@@ -19,17 +20,13 @@ import {
   GOOGLE_OAUTH2_TOKEN_ENDPOINT,
   REDIRECT_URI,
 } from "./constants.js";
-import EventSchema from "./EventSchema.js";
 import {
   GoogleCalendarAccessTokenExpiredError,
   GoogleCalendarAuthenticationFailedError,
   GoogleCalendarSyncTokenExpiredError,
 } from "./errors.js";
-import makeRemoteDocument from "./makeRemoteDocument.js";
-import type {
-  GoogleCalendarEvent,
-  GoogleCalendarEventsResponse,
-} from "./types.js";
+import type { Event } from "./remoteDocumentTypes.js";
+import remoteDocumentTypes from "./remoteDocumentTypes.js?raw";
 
 interface GoogleOAuth2PKCETokenResponseBody {
   access_token?: string;
@@ -42,17 +39,10 @@ interface GoogleOAuth2PKCETokenResponseBody {
   error_description?: string;
 }
 
-type Event = TypeOf<typeof EventSchema>;
-
-interface CalendarChanges {
-  addedOrModified: {
-    id: string;
-    versionId: string;
-    content: Event;
-  }[];
-  deleted: {
-    id: string;
-  }[];
+interface EventsResponse {
+  items?: Event[];
+  nextPageToken?: string;
+  nextSyncToken?: string;
 }
 
 const PKCE_ALLOWED_CHARACTERS =
@@ -87,7 +77,10 @@ export default defineConnector((options: Options) => ({
     rootType: "Settings",
   },
 
-  remoteDocumentSchema: EventSchema,
+  remoteDocumentTypescriptSchema: {
+    types: remoteDocumentTypes,
+    rootType: "Event",
+  },
 
   async getAuthorizationRequestUrl({
     collectionId,
@@ -555,8 +548,8 @@ async function downloadCalendarChanges({
   calendarId: string;
   accessToken: string;
   syncToken: string | null;
-}): Promise<{ changes: CalendarChanges; nextSyncToken: string }> {
-  const aggregatedChanges: CalendarChanges = {
+}): Promise<{ changes: Connector.Changes<Event>; nextSyncToken: string }> {
+  const aggregatedChanges: Connector.Changes<Event> = {
     addedOrModified: [],
     deleted: [],
   };
@@ -605,7 +598,7 @@ async function fetchCalendarEventsPage({
   accessToken: string;
   syncToken: string | null;
   pageToken: string | null;
-}): Promise<GoogleCalendarEventsResponse> {
+}): Promise<EventsResponse> {
   const url = new URL(
     `${GOOGLE_CALENDAR_EVENTS_ENDPOINT_BASE}/${encodeURIComponent(calendarId)}/events`,
   );
@@ -644,12 +637,12 @@ async function fetchCalendarEventsPage({
     );
   }
 
-  return (await response.json()) as GoogleCalendarEventsResponse;
+  return (await response.json()) as EventsResponse;
 }
 
 function applyEventsToChanges(
-  events: GoogleCalendarEvent[],
-  changes: CalendarChanges,
+  events: Event[],
+  changes: Connector.Changes<Event>,
 ): void {
   for (const event of events) {
     if (typeof event !== "object" || event === null) {
@@ -666,12 +659,12 @@ function applyEventsToChanges(
     changes.addedOrModified.push({
       id: eventId,
       versionId,
-      content: makeRemoteDocument(event),
+      content: event,
     });
   }
 }
 
-function deriveEventVersionId(event: GoogleCalendarEvent): string {
+function deriveEventVersionId(event: Event): string {
   const candidates = [event.etag, event.updated, event.created, event.id];
   for (const candidate of candidates) {
     if (typeof candidate === "string" && candidate.length > 0) {

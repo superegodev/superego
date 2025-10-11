@@ -8,11 +8,11 @@ import type { Schema } from "@superego/schema";
 export default function defineConnector<
   Options,
   const SettingsSchema extends Schema,
-  const RemoteDocumentSchema extends Schema,
+  const RemoteDocument,
 >(
   connectorGetter: (
     options: Options,
-  ) => Connector<SettingsSchema, RemoteDocumentSchema>,
+  ) => Connector<SettingsSchema, RemoteDocument>,
 ): (options: Options) => Connector {
   return connectorGetter as any;
 }

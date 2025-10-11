@@ -523,9 +523,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -625,9 +625,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -725,9 +725,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         syncDown: async () => ({
           success: true,
@@ -814,9 +814,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -905,9 +905,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -1004,9 +1004,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -1126,9 +1126,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -1301,9 +1301,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -1400,9 +1400,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -1568,13 +1568,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         syncDown: async () => ({
@@ -1662,13 +1657,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => mockAuthorizationRequestUrl,
@@ -1830,13 +1820,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         syncDown: async () => ({
@@ -1924,13 +1909,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2097,13 +2077,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2208,13 +2183,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2314,13 +2284,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2421,13 +2386,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2518,131 +2478,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
       );
     });
 
-    it("syncing error: RemoteDocumentContentNotValid", async () => {
-      // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: {
-          types: { Settings: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Settings",
-        },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            email: "email",
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: {
-            changes: {
-              addedOrModified: [
-                { id: "remoteId", versionId: "remoteVersionId", content: {} },
-              ],
-              deleted: [],
-            },
-            authenticationState,
-            syncPoint: "syncPoint",
-          },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createCollectionResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        {},
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2PKCEConnectorResult =
-        await backend.collections.authenticateOAuth2PKCEConnector(
-          createCollectionResult.data.id,
-          "authorizationResponseUrl",
-        );
-      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
-
-      // Exercise
-      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
-
-      // Verify
-      const listResult = await backend.collections.list();
-      assert.isTrue(listResult.success);
-      const collection = listResult.data.find(
-        ({ id }) => id === createCollectionResult.data.id,
-      );
-      assert.isDefined(collection);
-      expect(collection.remote?.syncState.down).toEqual(
-        expect.objectContaining({
-          status: DownSyncStatus.LastSyncFailed,
-          error: expect.objectContaining({
-            name: "SyncingChangesFailed",
-            details: expect.objectContaining({
-              errors: expect.arrayContaining([
-                expect.objectContaining({
-                  name: "RemoteDocumentContentNotValid",
-                  details: expect.objectContaining({
-                    remoteDocumentId: "remoteId",
-                    remoteDocumentVersionId: "remoteVersionId",
-                  }),
-                }),
-              ]),
-            }),
-          }),
-        }),
-      );
-    });
-
     it("syncing error: ConvertingRemoteDocumentFailed", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE = {
@@ -2652,13 +2487,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2784,13 +2614,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -2936,13 +2761,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -3088,14 +2908,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-              nullableProperties: ["title"],
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string | null };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -3281,14 +3095,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-              nullableProperties: ["title"],
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string | null };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
@@ -3772,9 +3580,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -3880,9 +3688,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        remoteDocumentSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
@@ -4267,13 +4075,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Settings: { dataType: DataType.Struct, properties: {} } },
           rootType: "Settings",
         },
-        remoteDocumentSchema: {
-          types: {
-            RemoteDocument: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
         getAuthorizationRequestUrl: () => "authorizationRequestUrl",

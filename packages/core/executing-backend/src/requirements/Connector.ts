@@ -12,12 +12,15 @@ import type { Schema, TypeOf } from "@superego/schema";
 namespace Connector {
   export interface ApiKey<
     SettingsSchema extends Schema = Schema,
-    RemoteDocumentSchema extends Schema = Schema,
+    RemoteDocument = any,
   > {
     name: string;
     authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey;
     settingsSchema: SettingsSchema | null;
-    remoteDocumentSchema: RemoteDocumentSchema;
+    remoteDocumentTypescriptSchema: {
+      types: string;
+      rootType: string;
+    };
     syncDown(params: {
       authenticationSettings: ConnectorAuthenticationSettings.ApiKey;
       authenticationState: ConnectorAuthenticationState.ApiKey;
@@ -28,7 +31,7 @@ namespace Connector {
       syncFrom: string | null;
     }): ResultPromise<
       {
-        changes: Changes<RemoteDocumentSchema>;
+        changes: Changes<RemoteDocument>;
         authenticationState: ConnectorAuthenticationState.ApiKey;
         syncPoint: string;
       },
@@ -38,12 +41,15 @@ namespace Connector {
 
   export interface OAuth2PKCE<
     SettingsSchema extends Schema = Schema,
-    RemoteDocumentSchema extends Schema = Schema,
+    RemoteDocument = any,
   > {
     name: string;
     authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE;
     settingsSchema: SettingsSchema | null;
-    remoteDocumentSchema: RemoteDocumentSchema;
+    remoteDocumentTypescriptSchema: {
+      types: string;
+      rootType: string;
+    };
     getAuthorizationRequestUrl(params: {
       collectionId: CollectionId;
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
@@ -63,7 +69,7 @@ namespace Connector {
       syncFrom: string | null;
     }): ResultPromise<
       {
-        changes: Changes<RemoteDocumentSchema>;
+        changes: Changes<RemoteDocument>;
         authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
         syncPoint: string;
       },
@@ -71,29 +77,24 @@ namespace Connector {
     >;
   }
 
-  export interface AddedOrModifiedDocument<
-    RemoteDocumentSchema extends Schema = Schema,
-  > {
+  export interface AddedOrModifiedDocument<RemoteDocument = any> {
     id: string;
     versionId: string;
-    content: TypeOf<RemoteDocumentSchema>;
+    content: RemoteDocument;
   }
 
   export interface DeletedDocument {
     id: string;
   }
 
-  export interface Changes<RemoteDocumentSchema extends Schema = Schema> {
-    addedOrModified: AddedOrModifiedDocument<RemoteDocumentSchema>[];
+  export interface Changes<RemoteDocument = any> {
+    addedOrModified: AddedOrModifiedDocument<RemoteDocument>[];
     deleted: DeletedDocument[];
   }
 }
 
-type Connector<
-  SettingsSchema extends Schema = Schema,
-  RemoteDocumentSchema extends Schema = Schema,
-> =
-  | Connector.ApiKey<SettingsSchema>
-  | Connector.OAuth2PKCE<RemoteDocumentSchema>;
+type Connector<SettingsSchema extends Schema = Schema, RemoteDocument = any> =
+  | Connector.ApiKey<SettingsSchema, RemoteDocument>
+  | Connector.OAuth2PKCE<SettingsSchema, RemoteDocument>;
 
 export default Connector;

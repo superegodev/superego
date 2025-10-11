@@ -55,7 +55,7 @@ export default function SetCollectionRemoteForm({
           remoteConverters: {
             fromRemoteDocument: forms.defaults.fromRemoteDocument(
               collection.latestVersion.schema,
-              connector.remoteDocumentSchema,
+              connector.remoteDocumentTypescriptSchema,
             ),
           },
         },

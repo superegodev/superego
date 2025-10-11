@@ -1,2 +1,3 @@
-export { default as GoogleCalendarConnector } from "./GoogleCalendarConnector/GoogleCalendarConnector.js";
-export { default as GoogleContactsConnector } from "./GoogleContactsConnector/GoogleContactsConnector.js";
+export { default as GoogleCalendar } from "./connectors/GoogleCalendar/GoogleCalendar.js";
+export { default as GoogleContacts } from "./connectors/GoogleContacts/GoogleContacts.js";
+export { default as StravaActivities } from "./connectors/StravaActivities/StravaActivities.js";

@@ -31,7 +31,7 @@ export default function RemoteConverters({
       },
       {
         path: wellKnownLibPaths.remoteDocumentSchema,
-        source: codegen(connector.remoteDocumentSchema),
+        source: connector.remoteDocumentTypescriptSchema.types,
       },
     ];
   }, [connector, collection]);

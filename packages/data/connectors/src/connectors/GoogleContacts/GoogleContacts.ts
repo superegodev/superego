@@ -5,12 +5,11 @@ import {
   ConnectorAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
-import type { TypeOf } from "@superego/schema";
-import type Base64Url from "../requirements/Base64Url.js";
-import type SessionStorage from "../requirements/SessionStorage.js";
-import defineConnector from "../utils/defineConnector.js";
-import sha256 from "../utils/sha256.js";
-import ContactSchema from "./ContactSchema.js";
+import type { Connector } from "@superego/executing-backend";
+import type Base64Url from "../../requirements/Base64Url.js";
+import type SessionStorage from "../../requirements/SessionStorage.js";
+import defineConnector from "../../utils/defineConnector.js";
+import sha256 from "../../utils/sha256.js";
 import {
   ACCESS_TOKEN_EXPIRATION_BUFFER,
   GOOGLE_CONTACTS_CONNECTIONS_ENDPOINT,
@@ -26,11 +25,14 @@ import {
   GoogleContactsAuthenticationFailedError,
   GoogleContactsSyncTokenExpiredError,
 } from "./errors.js";
-import makeRemoteDocument from "./makeRemoteDocument.js";
-import type {
-  GoogleContactsConnectionsResponse,
-  GoogleContactsPerson,
-} from "./types.js";
+import type { Person } from "./remoteDocumentTypes.js";
+import remoteDocumentTypes from "./remoteDocumentTypes.js?raw";
+
+interface ConnectionsResponse {
+  connections?: Person[];
+  nextPageToken?: string;
+  nextSyncToken?: string;
+}
 
 interface GoogleOAuth2PKCETokenResponseBody {
   access_token?: string;
@@ -41,19 +43,6 @@ interface GoogleOAuth2PKCETokenResponseBody {
   token_type?: string;
   error?: string;
   error_description?: string;
-}
-
-type Contact = TypeOf<typeof ContactSchema>;
-
-interface ContactChanges {
-  addedOrModified: {
-    id: string;
-    versionId: string;
-    content: Contact;
-  }[];
-  deleted: {
-    id: string;
-  }[];
 }
 
 const PKCE_ALLOWED_CHARACTERS =
@@ -76,7 +65,10 @@ export default defineConnector((options: Options) => ({
 
   settingsSchema: null,
 
-  remoteDocumentSchema: ContactSchema,
+  remoteDocumentTypescriptSchema: {
+    types: remoteDocumentTypes,
+    rootType: "Person",
+  },
 
   async getAuthorizationRequestUrl({
     collectionId,
@@ -530,8 +522,8 @@ async function downloadContactsChanges({
 }: {
   accessToken: string;
   syncToken: string | null;
-}): Promise<{ changes: ContactChanges; nextSyncToken: string }> {
-  const aggregatedChanges: ContactChanges = {
+}): Promise<{ changes: Connector.Changes<Person>; nextSyncToken: string }> {
+  const aggregatedChanges: Connector.Changes<Person> = {
     addedOrModified: [],
     deleted: [],
   };
@@ -577,7 +569,7 @@ async function fetchContactsConnectionsPage({
   accessToken: string;
   syncToken: string | null;
   pageToken: string | null;
-}): Promise<GoogleContactsConnectionsResponse> {
+}): Promise<ConnectionsResponse> {
   const url = new URL(GOOGLE_CONTACTS_CONNECTIONS_ENDPOINT);
   url.searchParams.set("personFields", GOOGLE_CONTACTS_PERSON_FIELDS);
   url.searchParams.set("sources", GOOGLE_CONTACTS_SOURCES);
@@ -615,12 +607,12 @@ async function fetchContactsConnectionsPage({
     );
   }
 
-  return (await response.json()) as GoogleContactsConnectionsResponse;
+  return (await response.json()) as ConnectionsResponse;
 }
 
 function applyConnectionsToChanges(
-  connections: GoogleContactsPerson[],
-  changes: ContactChanges,
+  connections: Person[],
+  changes: Connector.Changes<Person>,
 ): void {
   for (const connection of connections) {
     if (typeof connection !== "object" || connection === null) {
@@ -640,12 +632,12 @@ function applyConnectionsToChanges(
     changes.addedOrModified.push({
       id: resourceName,
       versionId,
-      content: makeRemoteDocument(connection),
+      content: connection,
     });
   }
 }
 
-function deriveContactVersionId(person: GoogleContactsPerson): string {
+function deriveContactVersionId(person: Person): string {
   const candidates = [
     person.etag,
     person.metadata?.sources?.find(
