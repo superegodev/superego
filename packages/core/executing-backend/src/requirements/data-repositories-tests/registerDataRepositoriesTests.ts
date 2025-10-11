@@ -1,4 +1,4 @@
-import type Dependencies from "./Dependencies.js";
+import type GetDependencies from "./GetDependencies.js";
 import backgroundJobs from "./suites/background-jobs.js";
 import collectionCategories from "./suites/collection-categories.js";
 import collectionVersions from "./suites/collection-versions.js";
@@ -10,11 +10,7 @@ import files from "./suites/files.js";
 import globalSettings from "./suites/global-settings.js";
 import transactions from "./suites/transactions.js";
 
-export type { default as Dependencies } from "./Dependencies.js";
-
-export default function registerDataRepositoriesTests(
-  deps: () => Promise<Dependencies>,
-) {
+export default function registerDataRepositoriesTests(deps: GetDependencies) {
   collectionCategories(deps);
   collections(deps);
   collectionVersions(deps);

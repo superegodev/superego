@@ -1,7 +1,7 @@
+import type { Milliseconds } from "@superego/global-types";
 import { useState } from "react";
 import { PiCheck, PiCopy } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
-import type Milliseconds from "../../../utils/Milliseconds.js";
 import Button from "../Button/Button.js";
 import * as cs from "./CodeBlock.css.js";
 

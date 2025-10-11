@@ -32,7 +32,11 @@ export default class CollectionsList extends Usecase<
       collections.map((collection) => {
         const latestVersion = latestVersionsByCollectionId.get(collection.id);
         assertCollectionVersionExists(collection.id, latestVersion);
-        return makeCollection(collection, latestVersion);
+        return makeCollection(
+          collection,
+          latestVersion,
+          this.getConnector(collection),
+        );
       }),
     );
   }

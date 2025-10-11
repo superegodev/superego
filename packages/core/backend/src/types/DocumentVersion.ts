@@ -7,8 +7,11 @@ import type ConversationId from "../ids/ConversationId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type ContentSummary from "./ContentSummary.js";
 
-type DocumentVersion = {
+export default interface DocumentVersion {
   id: DocumentVersionId;
+  // TODO: find a name that communicates that this is not stable.
+  /** Id of the remote counterpart of this document version. */
+  remoteId: string | null;
   collectionVersionId: CollectionVersionId;
   /** Id of the previous version. Null if this is the first version. */
   previousVersionId: DocumentVersionId | null;
@@ -50,12 +53,4 @@ type DocumentVersion = {
   >;
   createdBy: DocumentVersionCreator;
   createdAt: Date;
-} & (
-  | { createdBy: DocumentVersionCreator.User; conversationId: null }
-  | { createdBy: DocumentVersionCreator.Migration; conversationId: null }
-  | {
-      createdBy: DocumentVersionCreator.Assistant;
-      conversationId: ConversationId;
-    }
-);
-export default DocumentVersion;
+}

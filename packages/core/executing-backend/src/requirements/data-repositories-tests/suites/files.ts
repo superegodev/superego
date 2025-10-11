@@ -2,12 +2,12 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type FileEntity from "../../../entities/FileEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Files", (deps) => {
+export default rd<GetDependencies>("Files", (deps) => {
   it("inserting all", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const file1: FileEntity = {
@@ -69,82 +69,9 @@ export default rd<Dependencies>("Files", (deps) => {
     expect(foundContent2).toEqual(content2);
   });
 
-  it("deleting all by collection id", async () => {
-    // Setup SUT
-    const { dataRepositoriesManager } = await deps();
-    const collection1Id = Id.generate.collection();
-    const collection2Id = Id.generate.collection();
-    const file1: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: collection1Id,
-      documentId: Id.generate.document(),
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const file2: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: collection1Id,
-      documentId: Id.generate.document(),
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const file3: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: collection2Id,
-      documentId: Id.generate.document(),
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const content = new Uint8Array([1, 2, 3, 4]);
-    await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => {
-        await repos.file.insertAll([
-          { ...file1, content },
-          { ...file2, content },
-          { ...file3, content },
-        ]);
-        return { action: "commit", returnValue: null };
-      },
-    );
-
-    // Exercise
-    const deletedIds =
-      await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => ({
-          action: "commit",
-          returnValue:
-            await repos.file.deleteAllWhereCollectionIdEq(collection1Id),
-        }),
-      );
-
-    // Verify
-    expect(deletedIds).toEqual([file1.id, file2.id]);
-    const found1 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file1.id),
-      }),
-    );
-    expect(found1).toEqual(null);
-    const found2 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file2.id),
-      }),
-    );
-    expect(found2).toEqual(null);
-    const found3 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file3.id),
-      }),
-    );
-    expect(found3).toEqual(file3);
-  });
-
   it("deleting all by document id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const document1Id = Id.generate.document();
     const document2Id = Id.generate.document();
     const file1: FileEntity = {
@@ -217,7 +144,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -247,7 +174,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -265,7 +192,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("finding all by ids", () => {
     it("case: no matching files => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -284,7 +211,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: some matching files => returns them", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file1: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -334,7 +261,7 @@ export default rd<Dependencies>("Files", (deps) => {
   describe("getting content", () => {
     it("case: exists => returns content", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
         collectionId: Id.generate.collection(),
@@ -365,7 +292,7 @@ export default rd<Dependencies>("Files", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const foundContent =

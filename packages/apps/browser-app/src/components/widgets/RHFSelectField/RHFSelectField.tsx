@@ -5,7 +5,6 @@ import {
   type UseControllerProps,
   useController,
 } from "react-hook-form";
-import classnames from "../../../utils/classnames.js";
 import {
   Description,
   FieldError,
@@ -15,7 +14,6 @@ import {
   SelectButton,
   SelectOptions,
 } from "../../design-system/forms/forms.js";
-import * as cs from "./RHFSelectField.css.js";
 
 interface Props<
   TFieldValues extends FieldValues,
@@ -50,13 +48,13 @@ export default function RHFSelectField<
     <Select
       id={field.name}
       name={field.name}
-      selectedKey={field.value ?? null}
-      onSelectionChange={field.onChange}
+      value={field.value ?? null}
+      onChange={field.onChange}
       validationBehavior="aria"
       isDisabled={isDisabled}
       autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
-      className={classnames(cs.RHFSelectField.root, className)}
+      className={className}
     >
       <Label>{label}</Label>
       <SelectButton placeholder={placeholder} />

@@ -62,6 +62,10 @@ export default class DemoCollectionCategoryRepository
 
   async findAll(): Promise<CollectionCategoryEntity[]> {
     this.ensureNotDisposed();
-    return clone(Object.values(this.collectionCategories));
+    return clone(
+      Object.values(this.collectionCategories).sort((a, b) =>
+        a.name >= b.name ? 1 : -1,
+      ),
+    );
   }
 }

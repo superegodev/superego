@@ -1,10 +1,10 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
-import type Dependencies from "../../Dependencies.js";
+import type GetDependencies from "../../GetDependencies.js";
 import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.js";
 
-export default rd<Dependencies>(
+export default rd<GetDependencies>(
   "Create documents in multiple collections",
   (deps) => {
     it("All info provided, implicit request", { deps }, async (factotum) => {

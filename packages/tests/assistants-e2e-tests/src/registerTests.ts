@@ -1,6 +1,6 @@
-import type Dependencies from "./Dependencies.js";
 import factotum from "./factotum/factotum.js";
+import type GetDependencies from "./GetDependencies.js";
 
-export default function registerTests(deps: () => Promise<Dependencies>) {
+export default function registerTests(deps: GetDependencies) {
   factotum(deps);
 }

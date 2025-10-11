@@ -1,11 +1,11 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
-import type Dependencies from "../../Dependencies.js";
+import type GetDependencies from "../../GetDependencies.js";
 import { tomorrowAt } from "../../utils/dates.js";
 import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.multilingual.js";
 
-export default rd<Dependencies>("Speak in different languages", (deps) => {
+export default rd<GetDependencies>("Speak in different languages", (deps) => {
   it("Italian", { deps }, async (factotum) => {
     // Exercise + verify
     const [calendar] = await factotum.createCollections(

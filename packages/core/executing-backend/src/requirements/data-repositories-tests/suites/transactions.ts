@@ -3,13 +3,13 @@ import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type CollectionCategoryEntity from "../../../entities/CollectionCategoryEntity.js";
 import type DataRepositories from "../../DataRepositories.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 import WorkflowEvent from "../utils/WorkflowEvent.js";
 
-export default rd<Dependencies>("Transactions", (deps) => {
+export default rd<GetDependencies>("Transactions", (deps) => {
   it("when fn completes with action commit, changes are persisted", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const collectionCategory: CollectionCategoryEntity = {
@@ -39,7 +39,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
   it("when fn completes with action rollback, changes are NOT persisted", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -68,7 +68,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
   it("when fn throws, changes are NOT persisted", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     await dataRepositoriesManager
@@ -99,7 +99,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
   it("when changes are erroneously made AFTER the transaction has been completed, an error is thrown and no change is made", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     let reposRef: DataRepositories;
@@ -131,7 +131,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
   it("uncommitted changes are not visible to other transactions", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const collectionCategory: CollectionCategoryEntity = {
@@ -185,7 +185,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     // time. Regardless of that, the outcome we're testing for is that t2 fails.
     it("case: t1 begin + write, t2 begin + read + write + commit, t1 commit => t1 ✓, t2 ✗", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -258,7 +258,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     // time. Regardless of that, the outcome we're testing for is that t2 fails.
     it("case: t1 begin + write, t2 begin + read + write, t1 commit, t2 commit => t1 ✓, t2 ✗", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -332,7 +332,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     // time. Regardless of that, the outcome we're testing for is that t1 fails.
     it("case: t1 begin + read, t2 begin + write, t1 write + commit, t2 commit => t1 ✗, t2 ✓", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -413,7 +413,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     // time. Regardless of that, the outcome we're testing for is that t1 fails.
     it("case: t1 begin + read, t2 begin + write + commit, t1 write + commit => t1 ✗, t2 ✓", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collectionCategory: CollectionCategoryEntity = {
         id: Id.generate.collectionCategory(),
         name: "name",
@@ -484,7 +484,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     describe("rolling back to a savepoint only rolls back changes made from that savepoint", () => {
       it("case: roll back to latest, with single savepoint", async () => {
         // Setup SUT
-        const { dataRepositoriesManager } = await deps();
+        const { dataRepositoriesManager } = deps();
 
         // Exercise
         const collectionCategory: CollectionCategoryEntity = {
@@ -520,7 +520,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
       it("case: roll back to latest savepoint, with multiple savepoints", async () => {
         // Setup SUT
-        const { dataRepositoriesManager } = await deps();
+        const { dataRepositoriesManager } = deps();
 
         // Exercise
         const collectionCategory: CollectionCategoryEntity = {
@@ -563,7 +563,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
       it("case: roll back to non-latest savepoint, with multiple savepoints", async () => {
         // Setup SUT
-        const { dataRepositoriesManager } = await deps();
+        const { dataRepositoriesManager } = deps();
 
         // Exercise
         const collectionCategory: CollectionCategoryEntity = {
@@ -606,7 +606,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
     describe("committing commits all changes done since savepoints (normally, as one would expect)", () => {
       it("case: single savepoint", async () => {
         // Setup SUT
-        const { dataRepositoriesManager } = await deps();
+        const { dataRepositoriesManager } = deps();
 
         // Exercise
         const collectionCategory: CollectionCategoryEntity = {
@@ -643,7 +643,7 @@ export default rd<Dependencies>("Transactions", (deps) => {
 
       it("case: multiple savepoints", async () => {
         // Setup SUT
-        const { dataRepositoriesManager } = await deps();
+        const { dataRepositoriesManager } = deps();
 
         // Exercise
         const collectionCategory: CollectionCategoryEntity = {

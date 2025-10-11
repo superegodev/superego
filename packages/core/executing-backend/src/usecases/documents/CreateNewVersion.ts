@@ -5,6 +5,7 @@ import {
   type Document,
   type DocumentContentNotValid,
   type DocumentId,
+  type DocumentIsRemote,
   type DocumentNotFound,
   DocumentVersionCreator,
   type DocumentVersionId,
@@ -33,6 +34,7 @@ import Usecase from "../../utils/Usecase.js";
 type ExecReturnValue = ResultPromise<
   Document,
   | DocumentNotFound
+  | DocumentIsRemote
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
   | FilesNotFound
@@ -52,28 +54,52 @@ export default class DocumentsCreateNewVersion extends Usecase<
     id: DocumentId,
     latestVersionId: DocumentVersionId,
     content: any,
-    createdBy: DocumentVersionCreator.Migration,
+    options:
+      | {
+          createdBy: DocumentVersionCreator.Assistant;
+          conversationId: ConversationId;
+        }
+      | {
+          createdBy: DocumentVersionCreator.Migration;
+          remoteId: string | null;
+        }
+      | {
+          createdBy: DocumentVersionCreator.Connector;
+          remoteId: string;
+        },
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
     content: any,
-    createdBy: DocumentVersionCreator.Assistant,
-    conversationId: ConversationId,
-  ): ExecReturnValue;
-  async exec(
-    collectionId: CollectionId,
-    id: DocumentId,
-    latestVersionId: DocumentVersionId,
-    content: any,
-    createdBy = DocumentVersionCreator.User,
-    conversationId: ConversationId | null = null,
+    options?: {
+      createdBy:
+        | DocumentVersionCreator.Assistant
+        | DocumentVersionCreator.Migration
+        | DocumentVersionCreator.Connector;
+      conversationId?: ConversationId;
+      remoteId?: string | null;
+    },
   ): ExecReturnValue {
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentNotFound", { documentId: id }),
+      );
+    }
+
+    if (
+      document.remoteId !== null &&
+      options?.createdBy !== DocumentVersionCreator.Connector &&
+      options?.createdBy !== DocumentVersionCreator.Migration
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentIsRemote", {
+          documentId: id,
+          message:
+            "Remote documents are read-only. You can't create new versions or delete them.",
+        }),
       );
     }
 
@@ -141,6 +167,9 @@ export default class DocumentsCreateNewVersion extends Usecase<
     }
 
     const now = new Date();
+    const createdBy = options?.createdBy ?? DocumentVersionCreator.User;
+    const conversationId = options?.conversationId ?? null;
+    const remoteId = options?.remoteId ?? null;
     const { convertedContent, protoFilesWithIds } =
       ContentFileUtils.extractAndConvertProtoFiles(
         latestCollectionVersion.schema,
@@ -148,6 +177,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
+      remoteId: remoteId,
       previousVersionId: latestVersionId,
       documentId: id,
       collectionId: document.collectionId,

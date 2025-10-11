@@ -65,12 +65,12 @@ export function makeUseBackendMutation<
         ? async function mutate(
             ...args: ArgsOf<Entity, Method>
           ): Promise<ResultOf<Entity, Method>> {
-            // Throw if a mutation is already underway. This prevents the mutation
-            // being executed twice if, for example, the user clicks twice in rapid
-            // succession on a button. (In general, the button should be disabled
-            // when the mutation is executing, but the developer might have
-            // forgotten to do so, or React might have been too slow to update the
-            // button state, disabling it.)
+            // Throw if a mutation is already underway. This prevents the
+            // mutation being executed twice if, for example, the user clicks
+            // twice in rapid succession on a button. (In general, the button
+            // should be disabled when the mutation is executing, but the
+            // developer might have forgotten to do so, or React might have been
+            // too slow to update the button state, disabling it.)
             if (isMutatingRef.current) {
               throw new Error("Mutation already executing");
             }

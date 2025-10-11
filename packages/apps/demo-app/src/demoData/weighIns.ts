@@ -22,6 +22,7 @@ const collection: CollectionEntity = {
       "  - Scale -> Garmin Index S2.",
     ].join("\n"),
   },
+  remote: null,
   createdAt: new Date(),
 };
 
@@ -84,6 +85,7 @@ export default function getContentSummary(weighIn) {
     },
   },
   migration: null,
+  remoteConverters: null,
   createdAt: new Date(),
 };
 
@@ -93,11 +95,13 @@ const documentVersions: DocumentVersionEntity[] = [];
 for (const weighIn of weighIns) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
+    remoteId: null,
     collectionId: collection.id,
     createdAt: new Date(),
   };
   const documentVersion: DocumentVersionEntity = {
     id: Id.generate.documentVersion(),
+    remoteId: null,
     previousVersionId: null,
     collectionId: collection.id,
     documentId: document.id,

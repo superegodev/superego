@@ -39,10 +39,60 @@ export const listCollectionsQuery = makeBackendQueryGetter(
   () => ["listCollections"],
 );
 
+export const listConnectorsQuery = makeBackendQueryGetter(
+  "collections",
+  "listConnectors",
+  () => ["listConnectors"],
+);
+
+export const getOAuth2PKCEConnectorAuthorizationRequestUrlQuery =
+  makeBackendQueryGetter(
+    "collections",
+    "getOAuth2PKCEConnectorAuthorizationRequestUrl",
+    (collectionId) => [
+      "getOAuth2PKCEConnectorAuthorizationRequestUrl",
+      collectionId,
+    ],
+  );
+
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
   () => [["listCollections"], ["listConversations"], ["getConversation"]],
+);
+
+export const useUpdateCollectionSettings = makeUseBackendMutation(
+  "collections",
+  "updateSettings",
+  () => [["listCollections"]],
+);
+
+export const useSetCollectionRemote = makeUseBackendMutation(
+  "collections",
+  "setRemote",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
+);
+
+export const useUnsetCollectionRemote = makeUseBackendMutation(
+  "collections",
+  "unsetRemote",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
+);
+
+export const useTriggerCollectionDownSync = makeUseBackendMutation(
+  "collections",
+  "triggerDownSync",
+  () => [["listCollections"]],
 );
 
 export const useCreateNewCollectionVersion = makeUseBackendMutation(
@@ -53,12 +103,6 @@ export const useCreateNewCollectionVersion = makeUseBackendMutation(
     ["listDocuments", collectionId],
     ["getDocument", collectionId],
   ],
-);
-
-export const useUpdateCollectionSettings = makeUseBackendMutation(
-  "collections",
-  "updateSettings",
-  () => [["listCollections"]],
 );
 
 export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(

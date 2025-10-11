@@ -5,9 +5,9 @@ import type CollectionNotFound from "../errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "../errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "../errors/CollectionSettingsNotValid.js";
 import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
+import type DocumentIsRemote from "../errors/DocumentIsRemote.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
-import type DocumentVersionNotFound from "../errors/DocumentVersionNotFound.js";
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
 import type CollectionId from "../ids/CollectionId.js";
@@ -80,7 +80,7 @@ namespace ToolResult {
       },
       | CollectionNotFound
       | DocumentNotFound
-      | DocumentVersionNotFound
+      | DocumentIsRemote
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound

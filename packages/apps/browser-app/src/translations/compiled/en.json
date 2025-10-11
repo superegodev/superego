@@ -35,6 +35,36 @@
       "value": "Your name"
     }
   ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
+    {
+      "type": 0,
+      "value": "Authenticate connector"
+    }
+  ],
+  "AuthenticationSettings.tsx_B7p2EC": [
+    {
+      "type": 0,
+      "value": "Client secret"
+    }
+  ],
+  "AuthenticationSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "AuthenticationSettings.tsx_Q0U6OF": [
+    {
+      "type": 0,
+      "value": "Authentication settings"
+    }
+  ],
+  "AuthenticationSettings.tsx_U5+MBC": [
+    {
+      "type": 0,
+      "value": "Client ID"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -125,6 +155,12 @@
       "value": "General settings"
     }
   ],
+  "CollectionSettings.tsx_JJBzhX": [
+    {
+      "type": 0,
+      "value": "Remote"
+    }
+  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -165,6 +201,30 @@
     {
       "type": 0,
       "value": "Compiling..."
+    }
+  ],
+  "ConnectorSelect.tsx_Gnbr9F": [
+    {
+      "type": 0,
+      "value": "Select a connector"
+    }
+  ],
+  "ConnectorSelect.tsx_nSFiyf": [
+    {
+      "type": 0,
+      "value": "The connector cannot be changed once a remote is configured."
+    }
+  ],
+  "ConnectorSelect.tsx_r8XsCU": [
+    {
+      "type": 0,
+      "value": "Connector"
+    }
+  ],
+  "ConnectorSettings.tsx_1B+Bnl": [
+    {
+      "type": 0,
+      "value": "Connector settings"
     }
   ],
   "ContentSummary.tsx_kvPscx": [
@@ -484,24 +544,44 @@
       "value": "Not a valid JSON string"
     }
   ],
-  "DeleteCollectionModalForm.tsx_4S5UP3": [
+  "DeleteCollectionModalForm.tsx_J24oFm": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the collection will permanently delete all of its documents and files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the collection, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the collection, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -522,12 +602,6 @@
     {
       "type": 0,
       "value": "\""
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_iuFFzm": [
-    {
-      "type": 0,
-      "value": "Deleting the collection will permanently delete all of its documents and files."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -556,62 +630,36 @@
       "value": "Delete"
     }
   ],
-  "DeleteConversationModalForm.tsx_VcWPH+": [
+  "DeleteConversationModalForm.tsx_jGLuOH": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the conversation is permanent. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the conversation, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the conversation, write in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
     {
       "type": 0,
       "value": "Command confirmation"
-    }
-  ],
-  "DeleteConversationModalForm.tsx_t7Vs5c": [
-    {
-      "type": 0,
-      "value": "Deleting the conversation is permanent."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_+pXFqz": [
-    {
-      "type": 0,
-      "value": "If you're sure you want to delete the document, write "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "delete"
-        }
-      ],
-      "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_GSdOzc": [
-    {
-      "type": 0,
-      "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -638,6 +686,46 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to delete the document, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "Document.tsx_EPTOBf": [
@@ -676,6 +764,12 @@
     {
       "type": 0,
       "value": "Save"
+    }
+  ],
+  "Document.tsx_otVWer": [
+    {
+      "type": 0,
+      "value": "Remote document info"
     }
   ],
   "Document.tsx_zugcbb": [
@@ -730,6 +824,22 @@
     {
       "type": 0,
       "value": "Invalid content summary"
+    }
+  ],
+  "DownSyncInfoModal.tsx_8I58x/": [
+    {
+      "type": 0,
+      "value": "Syncing with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DownSyncInfoModal.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
     }
   ],
   "EagerTiptapInput.tsx_0he+1r": [
@@ -1574,6 +1684,68 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Add"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Item "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Remote document converters"
+    }
+  ],
+  "RemoteConverters.tsx_vUsXo4": [
+    {
+      "type": 0,
+      "value": "TypeScript function transforming a remote document into a local document."
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Synced with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "Remote document ID:"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "Remote document version ID:"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1664,6 +1836,18 @@
     {
       "type": 0,
       "value": "Configure assistant"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_fsGyC4": [
+    {
+      "type": 0,
+      "value": "Update remote"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_m8TXbJ": [
+    {
+      "type": 0,
+      "value": "Set remote"
     }
   ],
   "SpeakButton.tsx_FUvUuG": [
@@ -1792,6 +1976,78 @@
     {
       "type": 0,
       "value": "This call has no result."
+    }
+  ],
+  "UnsetCollectionRemoteButton.tsx_P0C6J1": [
+    {
+      "type": 0,
+      "value": "Unset remote"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Unsetting the remote will permanently delete all the documents and files synced from it. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to unset the remote, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "unset"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": [
+    {
+      "type": 0,
+      "value": "Unset \""
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    },
+    {
+      "type": 0,
+      "value": "\" remote"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": [
+    {
+      "type": 0,
+      "value": "Unset"
+    }
+  ],
+  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [
@@ -1958,6 +2214,45 @@
     {
       "type": 0,
       "value": " seconds"
+    }
+  ],
+  "getDownSyncAction.tsx_IJWuS/": [
+    {
+      "type": 0,
+      "value": "Last synced "
+    },
+    {
+      "style": {
+        "parsedOptions": {
+          "day": "numeric",
+          "hour": "2-digit",
+          "hourCycle": "h23",
+          "minute": "2-digit",
+          "month": "short"
+        },
+        "pattern": "MMM d, HH:mm",
+        "type": 1
+      },
+      "type": 3,
+      "value": "lastSucceededAt"
+    }
+  ],
+  "getDownSyncAction.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
+    }
+  ],
+  "getDownSyncAction.tsx_eOnwqs": [
+    {
+      "type": 0,
+      "value": "Syncing"
+    }
+  ],
+  "getDownSyncAction.tsx_mG35sa": [
+    {
+      "type": 0,
+      "value": "Last sync failed"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

@@ -7,6 +7,7 @@ import * as v from "valibot";
 import { useDeleteCollection } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -58,23 +59,19 @@ export default function DeleteCollectionModalForm({
         />
       </ModalDialog.Heading>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <p>
-          <FormattedMessage
-            defaultMessage={`
+        <FormattedMessage
+          defaultMessage={`
+            <p>
               Deleting the collection will permanently delete all of its
               documents and files.
-            `}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            defaultMessage={`
+            </p>
+            <p>
               If you're sure you want to delete the collection, write
-              <em>delete</em> in the input below.
-            `}
-            values={{ em: (chunks) => <em>{chunks}</em> }}
-          />
-        </p>
+              <i>delete</i> in the input below.
+            </p>
+          `}
+          values={formattedMessageHtmlTags}
+        />
         <RHFTextField
           control={control}
           name="commandConfirmation"

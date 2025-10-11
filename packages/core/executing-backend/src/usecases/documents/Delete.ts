@@ -2,13 +2,12 @@ import type {
   Backend,
   CollectionId,
   CommandConfirmationNotValid,
-  DeletedEntities,
   DocumentId,
+  DocumentIsRemote,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
@@ -21,9 +20,13 @@ export default class DocumentsDelete extends Usecase<
     collectionId: CollectionId,
     id: DocumentId,
     commandConfirmation: string,
+    allowDeletingRemoteDocument = false,
   ): ResultPromise<
-    DeletedEntities,
-    DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
+    null,
+    | DocumentNotFound
+    | DocumentIsRemote
+    | CommandConfirmationNotValid
+    | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
       return makeUnsuccessfulResult(
@@ -41,17 +44,20 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
-    const deletedFileIds = await this.repos.file.deleteAllWhereDocumentIdEq(id);
-    const deletedDocumentVersionIds =
-      await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
+    if (document.remoteId !== null && !allowDeletingRemoteDocument) {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentIsRemote", {
+          documentId: id,
+          message:
+            "Remote documents are read-only. You can't create new versions or delete them.",
+        }),
+      );
+    }
+
+    await this.repos.file.deleteAllWhereDocumentIdEq(id);
+    await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
     await this.repos.document.delete(id);
 
-    return makeSuccessfulResult(
-      makeDeletedEntities({
-        documents: [id],
-        documentVersion: deletedDocumentVersionIds,
-        files: deletedFileIds,
-      }),
-    );
+    return makeSuccessfulResult(null);
   }
 }

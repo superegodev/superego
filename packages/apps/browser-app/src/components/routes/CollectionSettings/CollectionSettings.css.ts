@@ -21,3 +21,29 @@ export const DeleteCollectionModalForm = {
     justifyContent: "flex-end",
   }),
 };
+
+export const SetCollectionRemoteForm = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+
+  buttons: style({
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: vars.spacing._2,
+  }),
+};
+
+export const UnsetCollectionRemoteButton = {
+  root: style({
+    marginBlockEnd: vars.spacing._8,
+  }),
+};
+
+export const UnsetCollectionRemoteModalForm = {
+  submitButtonContainer: style({
+    display: "flex",
+    justifyContent: "flex-end",
+  }),
+};

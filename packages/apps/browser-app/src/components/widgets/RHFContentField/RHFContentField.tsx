@@ -3,13 +3,14 @@ import { type Schema, utils } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import AnyField from "./AnyField.js";
 import { DocumentProvider } from "./document.js";
-import { ShowNullabilityProvider } from "./showNullability.js";
-import { ZoomLevelProvider } from "./zoomLevel.js";
+import { UiOptionsProvider } from "./uiOptions.js";
 
 interface Props {
   schema: Schema;
-  control: Control;
+  control: Control<any>;
   document: Document | null;
+  name?: string;
+  showTypes?: boolean;
   showNullability?: boolean;
   zoomLevel?: number;
 }
@@ -17,24 +18,24 @@ export default function RHFContentField({
   schema,
   control,
   document,
+  name = "",
+  showTypes = true,
   showNullability = false,
   zoomLevel = 1,
 }: Props) {
   return (
     <DocumentProvider value={document}>
-      <ShowNullabilityProvider value={showNullability}>
-        <ZoomLevelProvider value={zoomLevel}>
-          <AnyField
-            schema={schema}
-            typeDefinition={utils.getRootType(schema)}
-            isNullable={false}
-            isListItem={false}
-            control={control}
-            name=""
-            label=""
-          />
-        </ZoomLevelProvider>
-      </ShowNullabilityProvider>
+      <UiOptionsProvider value={{ showTypes, showNullability, zoomLevel }}>
+        <AnyField
+          schema={schema}
+          typeDefinition={utils.getRootType(schema)}
+          isNullable={false}
+          isListItem={false}
+          control={control}
+          name={name}
+          label=""
+        />
+      </UiOptionsProvider>
     </DocumentProvider>
   );
 }

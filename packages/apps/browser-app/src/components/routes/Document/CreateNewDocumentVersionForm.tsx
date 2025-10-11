@@ -17,12 +17,14 @@ interface Props {
   document: Document;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
+  isReadOnly: boolean;
 }
 export default function CreateNewDocumentVersionForm({
   collection,
   document,
   formId,
   setSubmitDisabled,
+  isReadOnly,
 }: Props) {
   const intl = useIntl();
   const { schema } = collection.latestVersion;
@@ -91,7 +93,7 @@ export default function CreateNewDocumentVersionForm({
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     setSubmitDisabled(!formState.isDirty);
-    if (!formState.isDirty || !formState.isValid) {
+    if (isReadOnly || !formState.isDirty || !formState.isValid) {
       return;
     }
     const timeoutId = setTimeout(
@@ -99,7 +101,7 @@ export default function CreateNewDocumentVersionForm({
       DOCUMENT_AUTOSAVE_INTERVAL,
     );
     return () => clearTimeout(timeoutId);
-  }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
+  }, [isReadOnly, formState.isDirty, formState.isValid, setSubmitDisabled]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>

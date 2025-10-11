@@ -1,11 +1,11 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
-import type Dependencies from "../../Dependencies.js";
+import type GetDependencies from "../../GetDependencies.js";
 import { tomorrowAt } from "../../utils/dates.js";
 import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.js";
 
-export default rd<Dependencies>(
+export default rd<GetDependencies>(
   "Update documents in a single collection",
   (deps) => {
     it(

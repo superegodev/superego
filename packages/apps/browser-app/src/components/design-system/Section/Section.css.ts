@@ -24,5 +24,11 @@ export const Section = {
         fontSize: vars.typography.fontSizes.md,
       },
     ],
+    4: [
+      sectionTitleBase,
+      {
+        fontSize: vars.typography.fontSizes.sm,
+      },
+    ],
   }),
 };

@@ -3,9 +3,9 @@ import {
   type Message,
   MessageRole,
 } from "@superego/backend";
+import type { Milliseconds } from "@superego/global-types";
 import { FormattedMessage, useIntl } from "react-intl";
 import formatDuration from "../../../utils/formatDuration.js";
-import type Milliseconds from "../../../utils/Milliseconds.js";
 
 interface Props {
   message: Message.ContentAssistant;

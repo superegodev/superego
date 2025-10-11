@@ -1,4 +1,4 @@
-import type { CollectionId, DocumentId, FileId } from "@superego/backend";
+import type { DocumentId, FileId } from "@superego/backend";
 import type { FileEntity, FileRepository } from "@superego/executing-backend";
 import type Data from "../Data.js";
 import clone from "../utils/clone.js";
@@ -23,21 +23,6 @@ export default class DemoFileRepository
     files.forEach((file) => {
       this.files[file.id] = clone(file);
     });
-  }
-
-  async deleteAllWhereCollectionIdEq(
-    collectionId: CollectionId,
-  ): Promise<FileId[]> {
-    this.ensureNotDisposed();
-    this.onWrite();
-    const deletedIds: FileId[] = [];
-    Object.values(this.files).forEach((file) => {
-      if (file.collectionId === collectionId) {
-        delete this.files[file.id];
-        deletedIds.push(file.id);
-      }
-    });
-    return deletedIds;
   }
 
   async deleteAllWhereDocumentIdEq(documentId: DocumentId): Promise<FileId[]> {

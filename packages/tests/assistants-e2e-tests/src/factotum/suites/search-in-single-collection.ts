@@ -1,10 +1,10 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import type Dependencies from "../../Dependencies.js";
+import type GetDependencies from "../../GetDependencies.js";
 import { tomorrowAt } from "../../utils/dates.js";
 import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.js";
 
-export default rd<Dependencies>("Search in a single collection", (deps) => {
+export default rd<GetDependencies>("Search in a single collection", (deps) => {
   it("Getting info from one document", { deps }, async (factotum) => {
     // Exercise + verify
     await factotum.createCollections(
