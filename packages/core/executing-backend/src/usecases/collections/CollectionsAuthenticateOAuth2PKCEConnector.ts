@@ -10,11 +10,13 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";

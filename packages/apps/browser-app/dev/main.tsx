@@ -18,6 +18,10 @@ import { RouteName } from "../src/business-logic/navigation/Route.js";
 import { toHref } from "../src/business-logic/navigation/RouteUtils.js";
 import { renderBrowserApp } from "../src/index.js";
 
+const redirectUri = "http://localhost:5173/OAuth2PKCECallback";
+const base64Url = new BrowserBase64Url();
+const sessionStorage = new BrowserSessionStorage();
+
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
@@ -47,21 +51,9 @@ const backend = new ExecutingBackend(
   new QuickjsJavascriptSandbox(),
   new OpenAICompatInferenceServiceFactory(),
   [
-    GoogleCalendar({
-      redirectUri: "TODO",
-      base64Url: new BrowserBase64Url(),
-      sessionStorage: new BrowserSessionStorage(),
-    }),
-    GoogleContacts({
-      redirectUri: "TODO",
-      base64Url: new BrowserBase64Url(),
-      sessionStorage: new BrowserSessionStorage(),
-    }),
-    StravaActivities({
-      redirectUri: "TODO",
-      base64Url: new BrowserBase64Url(),
-      sessionStorage: new BrowserSessionStorage(),
-    }),
+    new GoogleCalendar(redirectUri, base64Url, sessionStorage),
+    new GoogleContacts(redirectUri, base64Url, sessionStorage),
+    new StravaActivities(redirectUri, base64Url, sessionStorage),
   ],
 );
 
@@ -77,7 +69,7 @@ const queryClient = new QueryClient({
   },
 });
 
-if (window.location.pathname.startsWith("/oauth2-callback/")) {
+if (window.location.href.startsWith(redirectUri)) {
   try {
     const stateParam = new URL(window.location.href).searchParams.get("state");
     if (!stateParam) {

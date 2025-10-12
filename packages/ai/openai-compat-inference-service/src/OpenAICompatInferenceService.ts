@@ -4,6 +4,7 @@ import type {
   Message,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
+import { failedResponseToError } from "@superego/shared-utils";
 import {
   type ChatCompletions,
   fromChatCompletionsResponse,
@@ -110,27 +111,12 @@ export default class OpenAICompatInferenceService implements InferenceService {
   }
 
   private async handleError(
-    method: string,
+    requestMethod: string,
     requestBody: object | FormData,
     response: Response,
   ) {
     if (!response.ok) {
-      const details = await response
-        .json()
-        .catch(() => response.text())
-        .then((text) => text)
-        .catch(() => "Unable to get response body");
-      throw new Error(
-        [
-          `[OpenAICompatInferenceService.${method}] HTTP ${response.status} error calling ${response.url}:`,
-          "Request body:",
-          requestBody instanceof FormData
-            ? JSON.stringify(Object.fromEntries(requestBody))
-            : JSON.stringify(requestBody),
-          "Response body:",
-          JSON.stringify(details),
-        ].join("\n"),
-      );
+      throw await failedResponseToError(requestMethod, requestBody, response);
     }
   }
 }

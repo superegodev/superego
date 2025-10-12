@@ -4,8 +4,8 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import makeBackgroundJob from "../../makers/makeBackgroundJob.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class BackgroundJobsList extends Usecase<

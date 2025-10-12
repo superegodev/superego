@@ -1,6 +1,6 @@
 import type { ToolCall, ToolResult } from "@superego/backend";
+import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 
 export default {
   // This function will only be invoked only for unknown tool calls.

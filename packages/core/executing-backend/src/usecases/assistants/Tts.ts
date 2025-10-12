@@ -1,6 +1,6 @@
 import type { AudioContent, Backend, UnexpectedError } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import Usecase from "../../utils/Usecase.js";
 
 export default class AssistantsTts extends Usecase<

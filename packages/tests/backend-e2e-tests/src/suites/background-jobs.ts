@@ -4,7 +4,7 @@ import {
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
-import { DataType } from "@superego/schema";
+import { DataType, type Schema } from "@superego/schema";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
@@ -29,7 +29,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
 
     it("success: lists down sync jobs", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -40,11 +40,10 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),

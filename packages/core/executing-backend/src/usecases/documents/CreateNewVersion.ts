@@ -15,14 +15,16 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import {
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import * as v from "valibot";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";

@@ -1,8 +1,10 @@
 import type { Backend } from "@superego/backend";
-import { extractErrorDetails } from "@superego/shared-utils";
+import {
+  extractErrorDetails,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
 import makeResultError from "./makers/makeResultError.js";
-import makeUnsuccessfulResult from "./makers/makeUnsuccessfulResult.js";
 import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
@@ -59,7 +61,7 @@ export default class ExecutingBackend implements Backend {
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private connectors: Connector[],
+    private connectors: Connector<any, any>[],
   ) {
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate, true),

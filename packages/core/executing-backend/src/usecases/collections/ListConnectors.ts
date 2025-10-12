@@ -1,7 +1,7 @@
 import type { Backend, Connector, UnexpectedError } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import makeConnector from "../../makers/makeConnector.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsListConnectors extends Usecase<

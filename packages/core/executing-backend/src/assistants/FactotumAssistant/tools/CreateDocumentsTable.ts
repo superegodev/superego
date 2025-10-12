@@ -4,14 +4,17 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import { ContentSummaryUtils, Id } from "@superego/shared-utils";
+import {
+  ContentSummaryUtils,
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";

@@ -4,15 +4,16 @@ import {
   type CollectionId,
   type CollectionNotFound,
   type ConnectorAuthenticationSettings,
-  type ConnectorAuthenticationState,
   ConnectorAuthenticationStrategy,
   type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -66,8 +67,6 @@ export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl ex
       collectionId: id,
       authenticationSettings: collection.remote.connector
         .authenticationSettings as ConnectorAuthenticationSettings.OAuth2PKCE,
-      authenticationState: collection.remote
-        .connectorAuthenticationState as ConnectorAuthenticationState.OAuth2PKCE | null,
     });
     return makeSuccessfulResult(authorizationRequestUrl);
   }

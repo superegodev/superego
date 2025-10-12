@@ -17,14 +17,14 @@ import {
 import {
   valibotSchemas as backedUtilsValibotSchemas,
   Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 

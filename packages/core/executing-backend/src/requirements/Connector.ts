@@ -11,7 +11,7 @@ import type { Schema, TypeOf } from "@superego/schema";
 
 namespace Connector {
   export interface ApiKey<
-    SettingsSchema extends Schema = Schema,
+    SettingsSchema extends Schema | null = null,
     RemoteDocument = any,
   > {
     name: string;
@@ -24,7 +24,7 @@ namespace Connector {
     syncDown(params: {
       authenticationSettings: ConnectorAuthenticationSettings.ApiKey;
       authenticationState: ConnectorAuthenticationState.ApiKey;
-      settings: TypeOf<SettingsSchema>;
+      settings: SettingsSchema extends Schema ? TypeOf<SettingsSchema> : null;
       /**
        * The point from which to sync. I.e., a previously returned syncPoint.
        */
@@ -40,7 +40,7 @@ namespace Connector {
   }
 
   export interface OAuth2PKCE<
-    SettingsSchema extends Schema = Schema,
+    SettingsSchema extends Schema | null = null,
     RemoteDocument = any,
   > {
     name: string;
@@ -53,8 +53,7 @@ namespace Connector {
     getAuthorizationRequestUrl(params: {
       collectionId: CollectionId;
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
-      authenticationState: ConnectorAuthenticationState.OAuth2PKCE | null;
-    }): string | Promise<string>;
+    }): Promise<string>;
     getAuthenticationState(params: {
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
       authorizationResponseUrl: string;
@@ -62,7 +61,7 @@ namespace Connector {
     syncDown(params: {
       authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
       authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
-      settings: TypeOf<SettingsSchema>;
+      settings: SettingsSchema extends Schema ? TypeOf<SettingsSchema> : null;
       /**
        * The point from which to sync. I.e., a previously returned syncPoint.
        */
@@ -93,7 +92,10 @@ namespace Connector {
   }
 }
 
-type Connector<SettingsSchema extends Schema = Schema, RemoteDocument = any> =
+type Connector<
+  SettingsSchema extends Schema | null = null,
+  RemoteDocument = any,
+> =
   | Connector.ApiKey<SettingsSchema, RemoteDocument>
   | Connector.OAuth2PKCE<SettingsSchema, RemoteDocument>;
 

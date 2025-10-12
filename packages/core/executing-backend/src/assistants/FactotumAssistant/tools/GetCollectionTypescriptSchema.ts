@@ -5,9 +5,11 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import { codegen } from "@superego/schema";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 
 export default {

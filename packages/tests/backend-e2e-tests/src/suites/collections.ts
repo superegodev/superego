@@ -3,7 +3,7 @@ import {
   DownSyncStatus,
 } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
-import { DataType } from "@superego/schema";
+import { DataType, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -516,7 +516,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CannotChangeCollectionRemoteConnector", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -527,11 +527,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -611,7 +610,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorAuthenticationSettingsNotValid (case: OAuth2PKCE)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -629,11 +628,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -711,7 +709,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorAuthenticationSettingsNotValid (case: ApiKey)", async () => {
       // Setup mocks
-      const mockConnector: Connector.ApiKey = {
+      const mockConnector: Connector.ApiKey<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -798,9 +796,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ConnectorSettingsNotValid", async () => {
+    it("error: ConnectorSettingsNotValid (case: schema != null)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -818,11 +816,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -896,9 +893,95 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ConnectorSettingsNotValid (case: schema == null)", async () => {
+      // Setup mocks
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: null,
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorSettingsNotValid",
+          details: {
+            connectorName: mockConnector.name,
+            issues: [
+              {
+                message: "Invalid type: Expected null but received Object",
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("error: RemoteConvertersNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -909,11 +992,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -990,7 +1072,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/o previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1008,11 +1090,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1112,7 +1193,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: sets remote (case: w/ previous remote set)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1130,11 +1211,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1294,7 +1374,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CommandConfirmationNotValid", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1305,11 +1385,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1386,7 +1465,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: unsets remote", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1404,11 +1483,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1556,7 +1634,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", async () => {
       // Setup mocks
-      const mockConnector: Connector.ApiKey = {
+      const mockConnector: Connector.ApiKey<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -1643,7 +1721,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
     it("success: authenticates OAuth2PKCE connector", async () => {
       // Setup mocks
       const mockAuthorizationRequestUrl = "mockAuthorizationRequestUrl";
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1661,11 +1739,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => mockAuthorizationRequestUrl,
+        getAuthorizationRequestUrl: async () => mockAuthorizationRequestUrl,
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1808,7 +1885,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy", async () => {
       // Setup mocks
-      const mockConnector: Connector.ApiKey = {
+      const mockConnector: Connector.ApiKey<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey,
         settingsSchema: {
@@ -1895,7 +1972,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("success: authenticates OAuth2PKCE connector", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1913,11 +1990,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2070,7 +2146,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: CollectionIsSyncing", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2081,11 +2157,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2176,7 +2251,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: ConnectorNotAuthenticated", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2187,11 +2262,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2277,7 +2351,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         name: "UnexpectedError",
         details: { cause: "cause" },
       } as const;
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2288,11 +2362,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2377,9 +2450,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup mocks
       const syncDownError = {
         name: "ConnectorAuthenticationFailed",
-        details: { reason: "reason" },
+        details: { cause: "cause" },
       } as const;
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2390,11 +2463,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2480,7 +2552,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: ConvertingRemoteDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2491,11 +2563,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2607,7 +2678,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("syncing error: CreatingDocumentFailed", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2618,11 +2689,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2754,7 +2824,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2765,11 +2835,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -2901,7 +2970,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -2912,11 +2981,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string | null };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -3088,7 +3156,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [{ id: "remoteId2" }],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -3099,11 +3167,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string | null };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -3573,7 +3640,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -3584,11 +3651,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -3681,7 +3747,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
     it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
       // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -3692,11 +3758,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = {};",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -4068,7 +4133,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -4079,11 +4144,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),

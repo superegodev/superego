@@ -5,10 +5,10 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";

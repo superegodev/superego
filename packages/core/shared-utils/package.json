@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
     "es-toolkit": "^1.40.0",
+    "safe-stringify": "^1.2.0",
     "uuid": "^13.0.0",
     "valibot": "^1.1.0"
   }

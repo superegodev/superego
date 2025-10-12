@@ -1,8 +1,7 @@
 import { type Document, DocumentVersionCreator } from "@superego/backend";
 import { DataType, FormatId, type Schema } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import { Id, makeSuccessfulResult } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import { toAssistantDocument } from "./AssistantDocument.js";
 
 describe("toAssistantDocument", () => {

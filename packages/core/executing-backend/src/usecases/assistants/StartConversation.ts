@@ -10,11 +10,10 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { Id } from "@superego/shared-utils";
+import { Id, makeSuccessfulResult } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";

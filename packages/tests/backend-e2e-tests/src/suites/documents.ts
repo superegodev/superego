@@ -3,7 +3,7 @@ import {
   DocumentVersionCreator,
 } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
-import { DataType } from "@superego/schema";
+import { DataType, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -569,7 +569,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -580,11 +580,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),
@@ -1039,7 +1038,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         ],
         deleted: [],
       };
-      const mockConnector: Connector.OAuth2PKCE = {
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
         authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
         settingsSchema: {
@@ -1050,11 +1049,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           types: "export type RemoteDocument = { title: string };",
           rootType: "RemoteDocument",
         },
-        getAuthorizationRequestUrl: () => "authorizationRequestUrl",
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
         getAuthenticationState: async () => ({
           success: true,
           data: {
-            email: "email",
             accessToken: "accessToken",
             refreshToken: "refreshToken",
             accessTokenExpiresAt: new Date(),

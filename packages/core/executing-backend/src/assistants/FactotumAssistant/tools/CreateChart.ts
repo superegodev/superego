@@ -4,11 +4,13 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
