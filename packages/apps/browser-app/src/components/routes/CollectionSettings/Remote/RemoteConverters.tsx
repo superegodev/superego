@@ -1,10 +1,10 @@
-import type { Collection, Connector } from "@superego/backend";
+import type { Collection, Connector, TypescriptLib } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
-import type TypescriptLib from "../../../design-system/CodeInput/typescript/TypescriptLib.js";
+import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import type FormValues from "./FormValues.js";
@@ -50,8 +50,25 @@ export default function RemoteConverters({
           })}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
+          assistantImplementationInstructions={`
+We're syncing a remote database collection with a local one. Remote and local
+documents have different shapes, so a function is needed to convert between the
+two shapes. This is the function. It takes in a remote document as first and
+only argument, and returns a local document. The local document must STRICTLY
+abide by the TypeScript type that describes it.
+
+If a remote document can't (e.g., missing required properties) or shouldn't
+(e.g., it not relevant) be converted into a local document, return null, and the
+remote document will not be synced into a local one.
+          `.trim()}
           description={
-            <FormattedMessage defaultMessage="TypeScript function transforming a remote document into a local document." />
+            <FormattedMessage
+              defaultMessage={`
+                TypeScript function transforming a remote document into a local
+                document. Return <code>null</code> to skip syncing the document.
+              `}
+              values={formattedMessageHtmlTags}
+            />
           }
         />
       </Fieldset.Fields>

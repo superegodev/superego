@@ -61,6 +61,7 @@ export type { default as ParentCollectionCategoryNotFound } from "./errors/Paren
 export type { default as RemoteConvertersNotValid } from "./errors/RemoteConvertersNotValid.js";
 export type { default as SyncingChangesFailed } from "./errors/SyncingChangesFailed.js";
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
+export type { default as WriteTypescriptFunctionToolNotCalled } from "./errors/WriteTypescriptFunctionToolNotCalled.js";
 
 // Ids
 export type { default as BackgroundJobId } from "./ids/BackgroundJobId.js";
@@ -101,5 +102,6 @@ export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
+export type { default as TypescriptLib } from "./types/TypescriptLib.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

@@ -509,6 +509,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "Sono il Collection Creator"
   },
+  "ImplementWithAssistantButton.tsx_40hUOu": {
+    "defaultMessage": "Implementa con l'assistente"
+  },
+  "ImplementWithAssistantButton.tsx_80aEjO": {
+    "defaultMessage": "Implementazione fallita"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },

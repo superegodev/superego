@@ -12,7 +12,7 @@ import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErr
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
-import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.jsx";
+import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
 
 interface Props {
   collectionId: CollectionId;

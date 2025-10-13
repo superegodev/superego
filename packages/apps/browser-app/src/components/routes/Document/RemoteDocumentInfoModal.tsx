@@ -1,7 +1,7 @@
 import type { Collection, Document } from "@superego/backend";
 import { FormattedMessage } from "react-intl";
 import toTitleCase from "../../../utils/toTitleCase.js";
-import ModalDialog from "../../design-system/ModalDialog/ModalDialog.jsx";
+import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import * as cs from "./Document.css.js";
 
 interface Props {

@@ -509,6 +509,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "I'm the Collection Creator"
   },
+  "ImplementWithAssistantButton.tsx_40hUOu": {
+    "defaultMessage": "Implement with assistant"
+  },
+  "ImplementWithAssistantButton.tsx_80aEjO": {
+    "defaultMessage": "Implementation failed"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -653,8 +659,8 @@
   "RemoteConverters.tsx_abnr48": {
     "defaultMessage": "Remote document converters"
   },
-  "RemoteConverters.tsx_vUsXo4": {
-    "defaultMessage": "TypeScript function transforming a remote document into a local document."
+  "RemoteConverters.tsx_siHsCH": {
+    "defaultMessage": "TypeScript function transforming a remote document into a local document. Return <code>null</code> to skip syncing the document."
   },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Synced with {remote}"

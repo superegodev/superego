@@ -235,6 +235,12 @@ export const useDeleteConversation = makeUseBackendMutation(
 
 export const useTts = makeUseBackendMutation("assistants", "tts", () => []);
 
+export const useImplementTypescriptFunction = makeUseBackendMutation(
+  "assistants",
+  "implementTypescriptFunction",
+  () => [],
+);
+
 /*
  * Background jobs
  */

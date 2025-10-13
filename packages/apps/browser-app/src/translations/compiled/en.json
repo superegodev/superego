@@ -1230,6 +1230,18 @@
       "value": "I'm the Collection Creator"
     }
   ],
+  "ImplementWithAssistantButton.tsx_40hUOu": [
+    {
+      "type": 0,
+      "value": "Implement with assistant"
+    }
+  ],
+  "ImplementWithAssistantButton.tsx_80aEjO": [
+    {
+      "type": 0,
+      "value": "Implementation failed"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -1724,10 +1736,24 @@
       "value": "Remote document converters"
     }
   ],
-  "RemoteConverters.tsx_vUsXo4": [
+  "RemoteConverters.tsx_siHsCH": [
     {
       "type": 0,
-      "value": "TypeScript function transforming a remote document into a local document."
+      "value": "TypeScript function transforming a remote document into a local document. Return "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " to skip syncing the document."
     }
   ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [

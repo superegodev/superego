@@ -39,6 +39,7 @@ import type {
   RemoteConvertersNotValid,
   SyncingChangesFailed,
   UnexpectedError,
+  WriteTypescriptFunctionToolNotCalled,
 } from "@superego/backend";
 
 type KnownResultError =
@@ -81,7 +82,8 @@ type KnownResultError =
   | ParentCollectionCategoryNotFound
   | RemoteConvertersNotValid
   | SyncingChangesFailed
-  | UnexpectedError;
+  | UnexpectedError
+  | WriteTypescriptFunctionToolNotCalled;
 
 export default function makeResultError<Name extends string, Details>(
   name: Name,

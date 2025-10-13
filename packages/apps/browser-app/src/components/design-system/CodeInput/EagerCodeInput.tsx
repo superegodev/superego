@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
-import forms from "../../../business-logic/forms/forms.js";
 import * as cs from "./CodeInput.css.js";
-import CompilationInProgressIndicator from "./CompilationInProgressIndicator.js";
 import JsonEditor from "./json/JsonEditor.js";
 import type Props from "./Props.js";
 import TypescriptEditor from "./typescript/TypescriptEditor.js";
@@ -18,6 +16,7 @@ export default function EagerCodeInput({
   typescriptLibs,
   includedGlobalUtils,
   fileName,
+  assistantImplementationInstructions,
   maxHeight,
   ref,
 }: Props) {
@@ -55,6 +54,9 @@ export default function EagerCodeInput({
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
           fileName={fileName}
+          assistantImplementationInstructions={
+            assistantImplementationInstructions
+          }
           maxHeight={maxHeight}
         />
       ) : (
@@ -66,12 +68,6 @@ export default function EagerCodeInput({
           maxHeight={maxHeight}
         />
       )}
-      <CompilationInProgressIndicator
-        isVisible={
-          language === "typescript" &&
-          value.compiled === forms.constants.COMPILATION_IN_PROGRESS
-        }
-      />
     </div>
   );
 }

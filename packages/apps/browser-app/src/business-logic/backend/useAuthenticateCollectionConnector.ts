@@ -3,7 +3,7 @@ import {
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
 import { useGlobalData } from "./GlobalData.js";
-import useBackend from "./useBackend.jsx";
+import useBackend from "./useBackend.js";
 
 export type UseAuthenticateCollectionConnector = (
   collection: Collection,

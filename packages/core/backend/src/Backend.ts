@@ -37,6 +37,7 @@ import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollection
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
+import type WriteTypescriptFunctionToolNotCalled from "./errors/WriteTypescriptFunctionToolNotCalled.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -60,6 +61,7 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
+import type TypescriptLib from "./types/TypescriptLib.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
@@ -365,6 +367,15 @@ export default interface Backend {
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
 
     tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
+
+    implementTypescriptFunction(
+      instructions: string,
+      libs: TypescriptLib[],
+      startingPoint: string,
+    ): ResultPromise<
+      string,
+      WriteTypescriptFunctionToolNotCalled | UnexpectedError
+    >;
   };
 
   backgroundJobs: {

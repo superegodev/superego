@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import * as cs from "./CodeInput.css.js";
+import * as cs from "./TypescriptEditor.css.js";
 
 interface Props {
   isVisible: boolean;
