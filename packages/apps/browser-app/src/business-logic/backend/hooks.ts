@@ -45,16 +45,6 @@ export const listConnectorsQuery = makeBackendQueryGetter(
   () => ["listConnectors"],
 );
 
-export const getOAuth2PKCEConnectorAuthorizationRequestUrlQuery =
-  makeBackendQueryGetter(
-    "collections",
-    "getOAuth2PKCEConnectorAuthorizationRequestUrl",
-    (collectionId) => [
-      "getOAuth2PKCEConnectorAuthorizationRequestUrl",
-      collectionId,
-    ],
-  );
-
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",

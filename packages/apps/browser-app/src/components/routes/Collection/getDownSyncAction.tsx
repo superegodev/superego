@@ -8,8 +8,10 @@ import {
   PiCloudArrowDown,
   PiCloudCheck,
   PiCloudX,
+  PiFingerprint,
 } from "react-icons/pi";
 import type { IntlShape } from "react-intl";
+import toTitleCase from "../../../utils/toTitleCase.js";
 import type PanelHeaderAction from "../../design-system/Shell/PanelHeaderAction.js";
 
 export default function getDownSyncAction(
@@ -17,7 +19,18 @@ export default function getDownSyncAction(
   intl: IntlShape,
   triggerDownSync: () => void,
   openDownSyncInfoModal: () => void,
+  authenticateConnector: () => void,
 ): PanelHeaderAction {
+  if (!collection.remote.connectorAuthenticationState.isAuthenticated) {
+    return {
+      label: intl.formatMessage(
+        { defaultMessage: "Authenticate with {remote}" },
+        { remote: toTitleCase(collection.remote.connector.name) },
+      ),
+      icon: <PiFingerprint />,
+      onPress: authenticateConnector,
+    };
+  }
   switch (collection.remote.syncState.down.status) {
     case DownSyncStatus.NeverSynced:
       return {

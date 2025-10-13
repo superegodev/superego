@@ -803,6 +803,9 @@
   "getDownSyncAction.tsx_IJWuS/": {
     "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
   },
+  "getDownSyncAction.tsx_RRA+40": {
+    "defaultMessage": "Autenticati con {remote}"
+  },
   "getDownSyncAction.tsx_dKtz/9": {
     "defaultMessage": "Sincronizza"
   },

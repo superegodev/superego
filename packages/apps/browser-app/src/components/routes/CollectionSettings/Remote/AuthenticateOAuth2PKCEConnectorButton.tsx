@@ -4,8 +4,7 @@ import {
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
 import { FormattedMessage } from "react-intl";
-import DataLoader from "../../../../business-logic/backend/DataLoader.js";
-import { getOAuth2PKCEConnectorAuthorizationRequestUrlQuery } from "../../../../business-logic/backend/hooks.js";
+import useAuthenticateCollectionConnector from "../../../../business-logic/backend/useAuthenticateCollectionConnector.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import Button from "../../../design-system/Button/Button.js";
 
@@ -17,34 +16,16 @@ export default function AuthenticateOAuth2PKCEConnectorButton({
   collection,
   connector,
 }: Props) {
+  const authenticateConnector = useAuthenticateCollectionConnector();
   return CollectionUtils.hasRemote(collection) &&
     connector?.authenticationStrategy ===
       ConnectorAuthenticationStrategy.OAuth2PKCE ? (
-    <DataLoader
-      queries={[
-        getOAuth2PKCEConnectorAuthorizationRequestUrlQuery([collection.id]),
-      ]}
-    >
-      {(authorizationRequestUrl) => (
-        <Button
-          onPress={() => {
-            if (
-              "openInNativeBrowser" in window &&
-              typeof window.openInNativeBrowser === "function"
-            ) {
-              window.openInNativeBrowser(authorizationRequestUrl);
-            } else {
-              window.open(authorizationRequestUrl, "_blank");
-            }
-          }}
-        >
-          {!collection.remote.connectorAuthenticationState.isAuthenticated ? (
-            <FormattedMessage defaultMessage="Authenticate connector" />
-          ) : (
-            <FormattedMessage defaultMessage="Re-authenticate connector" />
-          )}
-        </Button>
+    <Button onPress={() => authenticateConnector(collection)}>
+      {!collection.remote.connectorAuthenticationState.isAuthenticated ? (
+        <FormattedMessage defaultMessage="Authenticate connector" />
+      ) : (
+        <FormattedMessage defaultMessage="Re-authenticate connector" />
       )}
-    </DataLoader>
+    </Button>
   ) : null;
 }

@@ -2,13 +2,10 @@ import type { CollectionId } from "@superego/backend";
 import { useState } from "react";
 import { PiTrash } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import { listConnectorsQuery } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DeleteCollectionModalForm from "./DeleteCollectionModalForm.js";
 import Remote from "./Remote/Remote.js";
@@ -20,7 +17,7 @@ interface Props {
 }
 export default function CollectionSettings({ collectionId }: Props) {
   const intl = useIntl();
-  const { collections } = useGlobalData();
+  const { collections, connectors } = useGlobalData();
   const collection = CollectionUtils.findCollection(collections, collectionId);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -71,16 +68,7 @@ export default function CollectionSettings({ collectionId }: Props) {
             },
             {
               title: <FormattedMessage defaultMessage="Remote" />,
-              panel: (
-                <DataLoader
-                  queries={[listConnectorsQuery([])]}
-                  renderErrors={(errors) => <ResultErrors errors={errors} />}
-                >
-                  {(connectors) => (
-                    <Remote collection={collection} connectors={connectors} />
-                  )}
-                </DataLoader>
-              ),
+              panel: <Remote collection={collection} connectors={connectors} />,
             },
             {
               title: <FormattedMessage defaultMessage="Create new version" />,

@@ -842,6 +842,9 @@
   "getDownSyncAction.tsx_IJWuS/": {
     "defaultMessage": "Last synced {lastSucceededAt, date, ::MMM d, HH:mm}"
   },
+  "getDownSyncAction.tsx_RRA+40": {
+    "defaultMessage": "Authenticate with {remote}"
+  },
   "getDownSyncAction.tsx_dKtz/9": {
     "defaultMessage": "Sync"
   },

@@ -2243,6 +2243,16 @@
       "value": "lastSucceededAt"
     }
   ],
+  "getDownSyncAction.tsx_RRA+40": [
+    {
+      "type": 0,
+      "value": "Authenticate with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
   "getDownSyncAction.tsx_dKtz/9": [
     {
       "type": 0,

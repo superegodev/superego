@@ -8,6 +8,7 @@ import {
   listDocumentsQuery,
   useTriggerCollectionDownSync,
 } from "../../../business-logic/backend/hooks.js";
+import useAuthenticateCollectionConnector from "../../../business-logic/backend/useAuthenticateCollectionConnector.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
@@ -30,6 +31,7 @@ export default function Collection({ collectionId }: Props) {
   const [isDownSyncInfoModalOpen, setDownSyncInfoModalOpen] = useState(false);
   const { mutate: triggerDownSync } = useTriggerCollectionDownSync();
   const collection = CollectionUtils.findCollection(collections, collectionId);
+  const authenticateConnector = useAuthenticateCollectionConnector();
   usePollForDownSyncFinished(collection);
   return collection ? (
     <Shell.Panel slot="Main">
@@ -45,6 +47,7 @@ export default function Collection({ collectionId }: Props) {
                 intl,
                 () => triggerDownSync(collection.id),
                 () => setDownSyncInfoModalOpen(true),
+                () => authenticateConnector(collection),
               )
             : null,
           screenSize > ScreenSize.Medium
