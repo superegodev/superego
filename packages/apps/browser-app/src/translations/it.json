@@ -638,8 +638,8 @@
   "RemoteConverters.tsx_abnr48": {
     "defaultMessage": "Convertitori di documenti remoti"
   },
-  "RemoteConverters.tsx_vUsXo4": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto in un documento locale."
+  "RemoteConverters.tsx_siHsCH": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto in un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
   },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Sincronizzato con {remote}"
