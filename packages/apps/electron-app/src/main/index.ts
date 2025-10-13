@@ -1,12 +1,11 @@
-import { join } from "node:path";
-import { AssistantName, Theme } from "@superego/backend";
-import { ExecutingBackend } from "@superego/executing-backend";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
-import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { app, BrowserWindow } from "electron";
 import started from "electron-squirrel-startup";
-import BackendIPCProxyServer from "../ipc-proxy/BackendIPCProxyServer.js";
+import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
+import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
+import { OAUTH2_PKCE_CALLBACK_SERVER_PORT } from "./config.js";
+import createBackend from "./createBackend.js";
+import createWindow from "./createWindow.js";
+import startOAuth2PKCECallbackServer from "./startOAuth2PKCECallbackServer.js";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -15,7 +14,10 @@ if (started) {
 
 app
   .on("ready", () => {
-    startBackendIPCProxyServer();
+    const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT);
+    startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
+    new BackendIPCProxyServer(backend).start();
+    new OpenInNativeBrowserIPCProxyServer().start();
     createWindow();
   })
   .on("window-all-closed", () => {
@@ -42,63 +44,3 @@ app
         return { action: "deny" };
       });
   });
-
-function startBackendIPCProxyServer() {
-  const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-    fileName: join(app.getPath("userData"), "superego.db"),
-    defaultGlobalSettings: {
-      appearance: { theme: Theme.Auto },
-      inference: {
-        chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-      },
-      assistants: {
-        userName: null,
-        developerPrompts: {
-          [AssistantName.Factotum]: null,
-          [AssistantName.CollectionCreator]: null,
-        },
-      },
-    },
-  });
-  dataRepositoriesManager.runMigrations();
-  const javascriptSandbox = new QuickjsJavascriptSandbox();
-  const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
-  const backend = new ExecutingBackend(
-    dataRepositoriesManager,
-    javascriptSandbox,
-    inferenceServiceFactory,
-    [],
-  );
-  const backendIPCProxyServer = new BackendIPCProxyServer(backend);
-  backendIPCProxyServer.start();
-}
-
-const createWindow = () => {
-  const mainWindow = new BrowserWindow({
-    show: false,
-    webPreferences: {
-      preload: join(import.meta.dirname, "../preload/index.js"),
-    },
-  });
-  mainWindow.maximize();
-  mainWindow.show();
-  // HMR for renderer base on electron-vite cli. Load the remote URL for
-  // development or the local html file for production.
-  if (!app.isPackaged && process.env["ELECTRON_RENDERER_URL"]) {
-    mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
-  } else {
-    mainWindow.loadFile(join(import.meta.dirname, "../renderer/index.html"));
-  }
-};

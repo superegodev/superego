@@ -87,16 +87,22 @@ export default class CollectionsDownSync extends Usecase {
       settings: collection.remote.connector.settings,
       syncFrom: collection.remote.syncState.down.syncedUntil,
     };
-    const syncDownResult = await connector.syncDown(
-      // Note: TypeScript sees the type of the first syncDown argument (params)
-      // to be never, because it's the intersection of two types that it sees as
-      // having nothing in common. This is just because the Connector type is
-      // "complex" in order to make it ergonomic to define a Connector. Also, we
-      // don't want to _hyper-type_ it to make it also correct, so we just
-      // accept the TypeScript error.
-      // @ts-expect-error
-      syncDownParams,
-    );
+    const syncDownResult = await connector
+      .syncDown(
+        // Note: TypeScript sees the type of the first syncDown argument (params)
+        // to be never, because it's the intersection of two types that it sees as
+        // having nothing in common. This is just because the Connector type is
+        // "complex" in order to make it ergonomic to define a Connector. Also, we
+        // don't want to _hyper-type_ it to make it also correct, so we just
+        // accept the TypeScript error.
+        // @ts-expect-error
+        syncDownParams,
+      )
+      // Handle case in which the connector throws instead of returning an
+      // unsuccessful Result. (It should always return a Result, but bugs lurk.)
+      .catch((error) =>
+        makeUnsuccessfulResult(makeResultError("UnexpectedError", error)),
+      );
     if (!syncDownResult.success) {
       await this.markDownSyncAsFailed(collection, syncDownResult.error);
       return makeSuccessfulResult(null);

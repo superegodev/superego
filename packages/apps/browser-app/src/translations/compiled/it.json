@@ -41,6 +41,12 @@
       "value": "Autentica il connettore"
     }
   ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": [
+    {
+      "type": 0,
+      "value": "Ri-autentica il connettore"
+    }
+  ],
   "AuthenticationSettings.tsx_B7p2EC": [
     {
       "type": 0,

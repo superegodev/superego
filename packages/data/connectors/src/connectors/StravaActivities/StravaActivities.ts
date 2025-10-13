@@ -11,20 +11,15 @@ import {
 import OAuth2PKCEConnector from "../../common/OAuth2PKCEConnector/OAuth2PKCEConnector.js";
 import type Base64Url from "../../requirements/Base64Url.js";
 import type SessionStorage from "../../requirements/SessionStorage.js";
-import type {
-  GetActivityResponseBody,
-  ListAthleteActivitiesResponseBody,
-} from "./apiTypes.js";
+import sha256 from "../../utils/sha256.js";
+import type { ListAthleteActivitiesResponseBody } from "./apiTypes.js";
 import { StravaRateLimitExceeded } from "./errors.js";
-import type {
-  DetailedActivity,
-  SummaryActivity,
-} from "./remoteDocumentTypes.js";
+import type { SummaryActivity } from "./remoteDocumentTypes.js";
 import remoteDocumentTypes from "./remoteDocumentTypes.js?raw";
 
 export default class StravaActivities
   extends OAuth2PKCEConnector
-  implements Connector.OAuth2PKCE<null, DetailedActivity>
+  implements Connector.OAuth2PKCE<null, SummaryActivity>
 {
   constructor(
     redirectUri: string,
@@ -42,10 +37,10 @@ export default class StravaActivities
 
   remoteDocumentTypescriptSchema = {
     types: remoteDocumentTypes,
-    rootType: "DetailedActivity",
+    rootType: "SummaryActivity",
   };
 
-  syncDown: Connector.OAuth2PKCE<null, DetailedActivity>["syncDown"] = async ({
+  syncDown: Connector.OAuth2PKCE<null, SummaryActivity>["syncDown"] = async ({
     authenticationSettings,
     authenticationState,
     syncFrom,
@@ -56,7 +51,7 @@ export default class StravaActivities
         authenticationState,
       });
 
-      return pRetry(
+      const result = await pRetry(
         async () => {
           const { changes, nextSyncToken } =
             await StravaActivities.fetchActivitiesChanges(
@@ -86,6 +81,7 @@ export default class StravaActivities
             error instanceof OAuth2PKCEAccessTokenNotValid,
         },
       );
+      return result;
     } catch (error) {
       return {
         success: false,
@@ -106,16 +102,16 @@ export default class StravaActivities
     accessToken: string,
     syncToken: string | null,
   ): Promise<{
-    changes: Connector.Changes<DetailedActivity>;
+    changes: Connector.Changes<SummaryActivity>;
     nextSyncToken: string;
   }> {
-    const changes: Connector.Changes<DetailedActivity> = {
+    const changes: Connector.Changes<SummaryActivity> = {
       addedOrModified: [],
       deleted: [],
     };
     const after = Number.parseInt(syncToken ?? "0", 10);
 
-    let page = 0;
+    let page = 1;
     let hasMore = true;
 
     do {
@@ -134,24 +130,8 @@ export default class StravaActivities
           continue;
         }
 
-        let detailedActivity: DetailedActivity;
-        let etag: string | null;
-        try {
-          ({ detailedActivity, etag } =
-            await StravaActivities.fetchDetailedActivity(
-              accessToken,
-              summaryActivity.id,
-            ));
-        } catch (error) {
-          if (error instanceof StravaRateLimitExceeded) {
-            hasMore = false;
-            break;
-          }
-          throw error;
-        }
-
         const id = String(summaryActivity.id);
-        const versionId = etag;
+        const versionId = await sha256(JSON.stringify(summaryActivity), "hex");
 
         // Ignore activities that don't have a versionId, as we can't do much
         // with them.
@@ -162,7 +142,7 @@ export default class StravaActivities
         changes.addedOrModified.push({
           id,
           versionId,
-          content: detailedActivity,
+          content: summaryActivity,
         });
       }
     } while (hasMore);
@@ -214,30 +194,5 @@ export default class StravaActivities
     const hasMore = summaryActivities.length !== 0;
 
     return { summaryActivities, hasMore };
-  }
-
-  private static async fetchDetailedActivity(
-    accessToken: string,
-    id: number,
-  ): Promise<{ detailedActivity: DetailedActivity; etag: string | null }> {
-    const url = new URL(`https://www.strava.com/api/v3/activities/${id}`);
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    if (!response.ok) {
-      throw response.status === 401
-        ? new OAuth2PKCEAccessTokenNotValid()
-        : response.status === 429
-          ? new StravaRateLimitExceeded()
-          : await failedResponseToError("GET", undefined, response);
-    }
-
-    const detailedActivity = (await response.json()) as GetActivityResponseBody;
-    const etag = response.headers.get("etag");
-
-    return { detailedActivity, etag };
   }
 }

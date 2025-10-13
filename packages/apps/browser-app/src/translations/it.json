@@ -20,6 +20,9 @@
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
     "defaultMessage": "Autentica il connettore"
   },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": {
+    "defaultMessage": "Ri-autentica il connettore"
+  },
   "AuthenticationSettings.tsx_B7p2EC": {
     "defaultMessage": "Segreto del client"
   },

@@ -16,7 +16,7 @@ export default class CodeVerifierStorage {
     if (item === null) {
       throw new OAuth2PKCECodeVerifierNotFound(this.connectorName, nonce);
     }
-    return JSON.parse(item);
+    return item;
   }
 
   clear(nonce: string): void {

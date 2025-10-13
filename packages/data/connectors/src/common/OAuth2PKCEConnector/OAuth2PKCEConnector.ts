@@ -182,7 +182,7 @@ export default class OAuth2PKCEConnector {
       v.object({
         access_token: v.pipe(v.string(), v.minLength(1)),
         refresh_token: v.pipe(v.string(), v.minLength(1)),
-        expires_at: v.pipe(v.number(), v.integer()),
+        expires_in: v.pipe(v.number(), v.integer()),
       }),
       responseBody,
     );
@@ -193,7 +193,9 @@ export default class OAuth2PKCEConnector {
     return {
       accessToken: validResponseBody.access_token,
       refreshToken: validResponseBody.refresh_token,
-      accessTokenExpiresAt: new Date(validResponseBody.expires_at * 1000),
+      accessTokenExpiresAt: new Date(
+        Date.now() + validResponseBody.expires_in * 1_000,
+      ),
     };
   }
 

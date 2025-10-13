@@ -51,7 +51,7 @@ export default class GoogleContacts
       });
       let currentSyncToken = syncFrom;
 
-      return pRetry(
+      const result = await pRetry(
         async () => {
           const { changes, nextSyncToken } =
             await GoogleContacts.fetchContactsChanges(
@@ -85,6 +85,7 @@ export default class GoogleContacts
             error instanceof GoogleContactsSyncTokenExpired,
         },
       );
+      return result;
     } catch (error) {
       return {
         success: false,

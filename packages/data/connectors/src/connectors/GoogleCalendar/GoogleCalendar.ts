@@ -54,7 +54,7 @@ export default class GoogleCalendar
         });
         let currentSyncToken = syncFrom;
 
-        return pRetry(
+        const result = await pRetry(
           async () => {
             const { changes, nextSyncToken } =
               await GoogleCalendar.fetchCalendarChanges(
@@ -90,6 +90,7 @@ export default class GoogleCalendar
               error instanceof GoogleCalendarSyncTokenExpired,
           },
         );
+        return result;
       } catch (error) {
         return {
           success: false,

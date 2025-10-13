@@ -24,12 +24,17 @@ export default function PanelHeader({
   className,
 }: Props) {
   const intl = useIntl();
-  const { isPrimarySidebarOpen, togglePrimarySidebar } = useShell();
+  const {
+    togglePrimarySidebarButtonId,
+    isPrimarySidebarOpen,
+    togglePrimarySidebar,
+  } = useShell();
   return (
     <header className={classnames(cs.PanelHeader.root, className)}>
       <div className={cs.PanelHeader.leftSection}>
         {withPrimarySidebarToggleButton ? (
           <IconButton
+            id={togglePrimarySidebarButtonId}
             variant="invisible"
             label={
               isPrimarySidebarOpen

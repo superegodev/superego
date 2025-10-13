@@ -31,6 +31,7 @@
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
+    "@superego/connectors": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:^",

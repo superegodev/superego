@@ -2,6 +2,7 @@ import { AssistantName, Theme } from "@superego/backend";
 import {
   GoogleCalendar,
   GoogleContacts,
+  onOAuth2PKCEAuthorizationResponseUrl,
   StravaActivities,
 } from "@superego/connectors";
 import {
@@ -12,16 +13,12 @@ import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
-import { Id } from "@superego/shared-utils";
 import { QueryClient } from "@tanstack/react-query";
-import { RouteName } from "../src/business-logic/navigation/Route.js";
-import { toHref } from "../src/business-logic/navigation/RouteUtils.js";
 import { renderBrowserApp } from "../src/index.js";
 
 const redirectUri = "http://localhost:5173/OAuth2PKCECallback";
 const base64Url = new BrowserBase64Url();
 const sessionStorage = new BrowserSessionStorage();
-
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
@@ -70,33 +67,25 @@ const queryClient = new QueryClient({
 });
 
 if (window.location.href.startsWith(redirectUri)) {
-  try {
-    const stateParam = new URL(window.location.href).searchParams.get("state");
-    if (!stateParam) {
-      throw new Error("No state in search params");
+  const result = await onOAuth2PKCEAuthorizationResponseUrl(
+    backend,
+    window.location.href,
+  );
+  if (result.success) {
+    if (window.opener) {
+      window.opener.postMessage({ type: "OAuth2PKCEFlowSucceeded" }, "*");
     }
-    const { collectionId } = JSON.parse(stateParam);
-    if (!Id.is.collection(collectionId)) {
-      throw new Error(
-        `state.collectionId = "${collectionId}" is not a collection id`,
-      );
-    }
-    const result = await backend.collections.authenticateOAuth2PKCEConnector(
-      collectionId,
-      window.location.href,
-    );
-    if (result.success) {
-      window.history.replaceState(
-        {},
-        "",
-        toHref({ name: RouteName.CollectionSettings, collectionId }),
-      );
-    } else {
-      console.error("authenticateOAuth2PKCEConnector failed", result.error);
-    }
-  } catch (error) {
-    console.error("Error processing OAuth2PKCE callback", error);
+    window.close();
+  } else {
+    console.error("authenticateOAuth2PKCEConnector failed", result.error);
+    window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
   }
+} else {
+  renderBrowserApp(backend, queryClient);
 }
 
-renderBrowserApp(backend, queryClient);
+window.addEventListener("message", (evt) => {
+  if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
+    queryClient.invalidateQueries({ queryKey: ["listCollections"] });
+  }
+});

@@ -41,6 +41,7 @@ export default function UnsetCollectionRemoteModalForm({
   });
 
   const onSubmit = ({ commandConfirmation }: FormValues) => {
+    onClose();
     mutate(collection.id, commandConfirmation);
   };
 

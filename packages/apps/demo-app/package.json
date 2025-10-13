@@ -23,6 +23,7 @@
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:^",
+    "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",

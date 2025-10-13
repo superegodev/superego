@@ -3,7 +3,6 @@ import {
   type Connector,
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
-import { Link } from "react-aria-components";
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import { getOAuth2PKCEConnectorAuthorizationRequestUrlQuery } from "../../../../business-logic/backend/hooks.js";
@@ -19,7 +18,6 @@ export default function AuthenticateOAuth2PKCEConnectorButton({
   connector,
 }: Props) {
   return CollectionUtils.hasRemote(collection) &&
-    !collection.remote.connectorAuthenticationState.isAuthenticated &&
     connector?.authenticationStrategy ===
       ConnectorAuthenticationStrategy.OAuth2PKCE ? (
     <DataLoader
@@ -28,11 +26,24 @@ export default function AuthenticateOAuth2PKCEConnectorButton({
       ]}
     >
       {(authorizationRequestUrl) => (
-        <Link href={authorizationRequestUrl}>
-          <Button>
+        <Button
+          onPress={() => {
+            if (
+              "openInNativeBrowser" in window &&
+              typeof window.openInNativeBrowser === "function"
+            ) {
+              window.openInNativeBrowser(authorizationRequestUrl);
+            } else {
+              window.open(authorizationRequestUrl, "_blank");
+            }
+          }}
+        >
+          {!collection.remote.connectorAuthenticationState.isAuthenticated ? (
             <FormattedMessage defaultMessage="Authenticate connector" />
-          </Button>
-        </Link>
+          ) : (
+            <FormattedMessage defaultMessage="Re-authenticate connector" />
+          )}
+        </Button>
       )}
     </DataLoader>
   ) : null;
