@@ -653,14 +653,14 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Item {number}"
   },
+  "RemoteConverters.tsx_3cBs4J": {
+    "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
+  },
   "RemoteConverters.tsx_GqZhDC": {
     "defaultMessage": "From remote document"
   },
   "RemoteConverters.tsx_abnr48": {
     "defaultMessage": "Remote document converters"
-  },
-  "RemoteConverters.tsx_siHsCH": {
-    "defaultMessage": "TypeScript function transforming a remote document into a local document. Return <code>null</code> to skip syncing the document."
   },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Synced with {remote}"

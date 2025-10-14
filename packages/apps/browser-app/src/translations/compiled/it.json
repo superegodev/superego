@@ -1716,22 +1716,10 @@
       "value": "number"
     }
   ],
-  "RemoteConverters.tsx_GqZhDC": [
+  "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "Dal documento remoto"
-    }
-  ],
-  "RemoteConverters.tsx_abnr48": [
-    {
-      "type": 0,
-      "value": "Convertitori di documenti remoti"
-    }
-  ],
-  "RemoteConverters.tsx_siHsCH": [
-    {
-      "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto in un documento locale. Ritorna "
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
     },
     {
       "children": [
@@ -1746,6 +1734,18 @@
     {
       "type": 0,
       "value": " per non sincronizzare il documento."
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "Dal documento remoto"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Convertitori di documenti remoti"
     }
   ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [

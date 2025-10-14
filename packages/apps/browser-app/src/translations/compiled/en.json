@@ -1724,22 +1724,10 @@
       "value": "number"
     }
   ],
-  "RemoteConverters.tsx_GqZhDC": [
+  "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "From remote document"
-    }
-  ],
-  "RemoteConverters.tsx_abnr48": [
-    {
-      "type": 0,
-      "value": "Remote document converters"
-    }
-  ],
-  "RemoteConverters.tsx_siHsCH": [
-    {
-      "type": 0,
-      "value": "TypeScript function transforming a remote document into a local document. Return "
+      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
     },
     {
       "children": [
@@ -1754,6 +1742,18 @@
     {
       "type": 0,
       "value": " to skip syncing the document."
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Remote document converters"
     }
   ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [

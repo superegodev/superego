@@ -632,14 +632,14 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Elemento {number}"
   },
+  "RemoteConverters.tsx_3cBs4J": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+  },
   "RemoteConverters.tsx_GqZhDC": {
     "defaultMessage": "Dal documento remoto"
   },
   "RemoteConverters.tsx_abnr48": {
     "defaultMessage": "Convertitori di documenti remoti"
-  },
-  "RemoteConverters.tsx_siHsCH": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto in un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
   },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Sincronizzato con {remote}"

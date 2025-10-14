@@ -64,8 +64,9 @@ remote document will not be synced into a local one.
           description={
             <FormattedMessage
               defaultMessage={`
-                TypeScript function transforming a remote document into a local
-                document. Return <code>null</code> to skip syncing the document.
+                TypeScript function transforming a remote document into the
+                content of a local document. Return <code>null</code> to skip
+                syncing the document.
               `}
               values={formattedMessageHtmlTags}
             />
