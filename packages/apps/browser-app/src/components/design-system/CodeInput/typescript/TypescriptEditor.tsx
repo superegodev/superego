@@ -113,15 +113,13 @@ export default function TypescriptEditor({
       <CompilationInProgressIndicator
         isVisible={value.compiled === forms.constants.COMPILATION_IN_PROGRESS}
       />
-      {assistantImplementationInstructions ? (
-        <ImplementWithAssistantButton
-          assistantImplementationInstructions={
-            assistantImplementationInstructions
-          }
-          typescriptLibs={allTypescriptLibs}
-          valueModelRef={valueModelRef}
-        />
-      ) : null}
+      <ImplementWithAssistantButton
+        assistantImplementationInstructions={
+          assistantImplementationInstructions
+        }
+        typescriptLibs={allTypescriptLibs}
+        valueModelRef={valueModelRef}
+      />
     </>
   );
 }

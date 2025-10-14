@@ -2,6 +2,7 @@ import type { TypescriptLib } from "@superego/backend";
 import type { RefObject } from "react";
 import { PiSparkle } from "react-icons/pi";
 import { useIntl } from "react-intl";
+import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
 import { useImplementTypescriptFunction } from "../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
@@ -11,7 +12,7 @@ import Skeleton from "../../Skeleton/Skeleton.js";
 import * as cs from "./TypescriptEditor.css.js";
 
 interface Props {
-  assistantImplementationInstructions: string;
+  assistantImplementationInstructions?: string | undefined;
   typescriptLibs: TypescriptLib[];
   valueModelRef: RefObject<monaco.editor.ITextModel | null>;
 }
@@ -21,8 +22,9 @@ export default function ImplementWithAssistantButton({
   valueModelRef,
 }: Props) {
   const intl = useIntl();
+  const { chatCompletions } = useIsInferenceConfigured();
   const { isPending, mutate } = useImplementTypescriptFunction();
-  return (
+  return chatCompletions && assistantImplementationInstructions ? (
     <>
       <IconButton
         variant="invisible"
@@ -70,5 +72,5 @@ export default function ImplementWithAssistantButton({
         </div>
       ) : null}
     </>
-  );
+  ) : null;
 }

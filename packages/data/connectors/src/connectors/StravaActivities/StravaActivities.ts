@@ -148,11 +148,11 @@ export default class StravaActivities
     } while (hasMore);
 
     const maxStartDate = Math.max(
-      ...changes.addedOrModified.map(
-        ({ content }) => content.startDate?.getTime() ?? 0,
+      ...changes.addedOrModified.map(({ content }) =>
+        content.start_date ? Date.parse(content.start_date) : 0,
       ),
     );
-    const nextSyncToken = String(Math.floor(maxStartDate / 1000));
+    const nextSyncToken = String(Math.floor(maxStartDate / 1_000));
 
     return { changes, nextSyncToken };
   }

@@ -59,7 +59,7 @@ interface RouteMatcher {
 const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({
-      pathname: "/collections/:collectionId/documents/new",
+      pathname: "/collections/:collectionId/documents/new{/}?",
     }),
     toRoute: (match) => ({
       name: RouteName.CreateDocument,
@@ -70,7 +70,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/collections/:collectionId/documents/:documentId",
+      pathname: "/collections/:collectionId/documents/:documentId{/}?",
     }),
     toRoute: (match) => ({
       name: RouteName.Document,
@@ -84,7 +84,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/collections/:collectionId/settings",
+      pathname: "/collections/:collectionId/settings{/}?",
     }),
     toRoute: (match) => ({
       name: RouteName.CollectionSettings,
@@ -95,7 +95,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/collections/:collectionId/newVersion",
+      pathname: "/collections/:collectionId/newVersion{/}?",
     }),
     toRoute: (match) => ({
       name: RouteName.CreateNewCollectionVersion,
@@ -105,15 +105,15 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
   {
-    pattern: new URLPattern({ pathname: "/collections/new/assisted" }),
+    pattern: new URLPattern({ pathname: "/collections/new/assisted{/}?" }),
     toRoute: () => ({ name: RouteName.CreateCollectionAssisted }),
   },
   {
-    pattern: new URLPattern({ pathname: "/collections/new/manual" }),
+    pattern: new URLPattern({ pathname: "/collections/new/manual{/}?" }),
     toRoute: () => ({ name: RouteName.CreateCollectionManual }),
   },
   {
-    pattern: new URLPattern({ pathname: "/collections/:collectionId" }),
+    pattern: new URLPattern({ pathname: "/collections/:collectionId{/}?" }),
     toRoute: (match) => ({
       name: RouteName.Collection,
       collectionId: decodePathSegment<CollectionId>(
@@ -123,7 +123,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/conversations/:conversationId",
+      pathname: "/conversations/:conversationId{/}?",
     }),
     toRoute: (match) => ({
       name: RouteName.Conversation,
@@ -133,11 +133,11 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
   {
-    pattern: new URLPattern({ pathname: "/conversations" }),
+    pattern: new URLPattern({ pathname: "/conversations{/}?" }),
     toRoute: () => ({ name: RouteName.Conversations }),
   },
   {
-    pattern: new URLPattern({ pathname: "/settings" }),
+    pattern: new URLPattern({ pathname: "/settings{/}?" }),
     toRoute: () => ({ name: RouteName.GlobalSettings }),
   },
   {
