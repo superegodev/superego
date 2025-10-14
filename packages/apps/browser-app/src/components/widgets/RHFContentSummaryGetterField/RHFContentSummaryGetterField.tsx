@@ -31,13 +31,38 @@ export default function RHFContentSummaryGetterField({
       isDisabled={isDisabled}
       typescriptLibs={typescriptLibs}
       includedGlobalUtils={includedGlobalUtils}
+      assistantImplementationInstructions={`
+The "content summary" of a document is an object—derived from the document's
+content—that contains its most important bits of information. The properties of
+the object are displayed when showing a "summary view" of the document; for
+example, in tables where each property becomes a column.
+
+The TypeScript function you're implementing is the function that derives the
+summary from the document content. The content summary object must have between
+1 and 5 properties. The properties should always exist, but you can use \`null\`
+for empty values.
+
+The property names of the summary object can include an "attributes" prefix that
+configures the behavior of the UIs that render the summary. Examples:
+
+- \`"{position:0,sortable:true,default-sort:asc} prop0"\`:
+  - property displayed first;
+  - when rendered in a table, the property's column is sortable;
+  - when rendered in a table, the table is—by default—sorted by the property's
+    column, in ascending order.
+- \`"{position:1} prop1"\`:
+  - property displayed second;
+  - when rendered in a table, the property's column is not sortable.
+
+(Note: it only makes sense to define \`default-sort\` for one property.)
+          `.trim()}
       description={
         <FormattedMessage
           defaultMessage={`
             <p>
-              The <b>content summary</b> of a document is a
-              <code>Record'<name: string, value: string | number | boolean | null>'</code>
-              — derived from its content — that contains its most important bits
+              The <b>content summary</b> of a document is a<code>Record'<name:
+              string, value: string | number | boolean | null>' </code>—derived
+              from the document's content—that contains its most important bits
               of information. The properties of the record are displayed when
               showing a "summary view" of the document; for example, in tables,
               where each property becomes a column.

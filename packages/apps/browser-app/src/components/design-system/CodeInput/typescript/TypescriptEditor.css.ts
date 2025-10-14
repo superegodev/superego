@@ -35,9 +35,7 @@ export const ImplementWithAssistantButton = {
     left: 0,
     right: 0,
     background: vars.colors.background.surface,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     padding: vars.spacing._2,
+    overflow: "hidden",
   }),
 };

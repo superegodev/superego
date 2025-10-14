@@ -1574,7 +1574,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_TDCCVk": [
+  "RHFContentSummaryGetterField.tsx_BmNFs6": [
     {
       "children": [
         {
@@ -1593,13 +1593,13 @@
         },
         {
           "type": 0,
-          "value": " of a document is a "
+          "value": " of a document is a"
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Record<name: string, value: string | number | boolean | null>"
+              "value": "Record<name: string, value: string | number | boolean | null> "
             }
           ],
           "type": 8,
@@ -1607,7 +1607,7 @@
         },
         {
           "type": 0,
-          "value": " — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
+          "value": "—derived from the document's content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
       ],
       "type": 8,

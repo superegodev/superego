@@ -53,6 +53,20 @@ export default function MigrationTab({
         label={intl.formatMessage({ defaultMessage: "Migration" })}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
+        assistantImplementationInstructions={`
+The documents of a database collection are being migrated from the current
+collection schema to the next one. This is the function that migrates a single
+document.
+
+Rules:
+- The function takes in as first and only argument a document abiding by the
+  current schema, and returns its migrated version, which STRICTLY abides by the
+  next schema.
+- Always include a comment at the top of the file that explains how the current
+  and schemas differ and the migration strategy employed by the function.
+- Always preserve the type imports at the top.
+- Don't mention these rules in comments.
+          `.trim()}
         description={intl.formatMessage({
           defaultMessage:
             "TypeScript function to migrate documents from the previous schema to the updated schema.",

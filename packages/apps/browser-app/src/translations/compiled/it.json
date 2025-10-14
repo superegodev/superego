@@ -1566,7 +1566,7 @@
       "value": "Funzione di estrazione del sommario dei contenuti"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_TDCCVk": [
+  "RHFContentSummaryGetterField.tsx_BmNFs6": [
     {
       "children": [
         {
@@ -1599,7 +1599,7 @@
         },
         {
           "type": 0,
-          "value": " — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
+          "value": ", derivato dal contenuto del documento, che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
         }
       ],
       "type": 8,
