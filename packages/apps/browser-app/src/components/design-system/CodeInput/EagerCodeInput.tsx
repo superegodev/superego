@@ -16,7 +16,7 @@ export default function EagerCodeInput({
   typescriptLibs,
   includedGlobalUtils,
   fileName,
-  assistantImplementationInstructions,
+  assistantImplementation,
   maxHeight,
   ref,
 }: Props) {
@@ -54,9 +54,7 @@ export default function EagerCodeInput({
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
           fileName={fileName}
-          assistantImplementationInstructions={
-            assistantImplementationInstructions
-          }
+          assistantImplementation={assistantImplementation}
           maxHeight={maxHeight}
         />
       ) : (

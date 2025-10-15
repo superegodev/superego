@@ -243,6 +243,26 @@
       "value": "error"
     }
   ],
+  "ContentSummaryTab.tsx_RGFGD8": [
+    {
+      "type": 0,
+      "value": "Update the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "getContentSummary"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " function to reflect schema changes."
+    }
+  ],
   "ContentSummaryTab.tsx_VzzYJk": [
     {
       "type": 0,
@@ -510,6 +530,12 @@
       "value": " » Create New Version"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
+    {
+      "type": 0,
+      "value": "4. Migration"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
@@ -520,6 +546,12 @@
     {
       "type": 0,
       "value": "1. Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": [
+    {
+      "type": 0,
+      "value": "3. Remote converters"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_rgWYrb": [
@@ -1518,10 +1550,10 @@
       "value": "Create new version and migrate documents"
     }
   ],
-  "MigrationTab.tsx_JQqWNV": [
+  "MigrationTab.tsx_i8zErH": [
     {
       "type": 0,
-      "value": "TypeScript function to migrate documents from the previous schema to the updated schema."
+      "value": "Write a migration function to convert documents from the previous schema to the updated schema."
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -1922,6 +1954,52 @@
       "value": "Remote document converters"
     }
   ],
+  "RemoteConvertersTab.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " to skip syncing the document."
+    }
+  ],
+  "RemoteConvertersTab.tsx_CPS541": [
+    {
+      "type": 0,
+      "value": "Update the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "fromRemoteDocument"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " function to reflect schema changes."
+    }
+  ],
+  "RemoteConvertersTab.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [
     {
       "type": 0,
@@ -1992,6 +2070,88 @@
     {
       "type": 0,
       "value": "Retrying..."
+    }
+  ],
+  "SchemaTab.tsx_8oQSqZ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implement the schema changes you want to make."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Update the collection's content summary getter to reflect those changes. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " If the collection has a remote, update its remote converters as well. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Write a migration function to convert documents from the previous schema to the updated schema. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
     }
   ],
   "SchemaTab.tsx_Lktmvk": [

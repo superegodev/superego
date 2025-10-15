@@ -21,6 +21,9 @@ export default {
     </a>
   ),
   p: (chunks: Chunks) => <p key={(chunks as string[]).join("")}>{chunks}</p>,
+  ul: (chunks: Chunks) => <ul key={(chunks as string[]).join("")}>{chunks}</ul>,
+  ol: (chunks: Chunks) => <ol key={(chunks as string[]).join("")}>{chunks}</ol>,
+  li: (chunks: Chunks) => <li key={(chunks as string[]).join("")}>{chunks}</li>,
   code: (chunks: Chunks) => (
     <InlineCode key={(chunks as string[]).join("")}>{chunks}</InlineCode>
   ),

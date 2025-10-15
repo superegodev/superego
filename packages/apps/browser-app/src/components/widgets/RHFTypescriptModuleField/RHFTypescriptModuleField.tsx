@@ -24,7 +24,9 @@ interface Props {
   placeholder?: string | undefined;
   typescriptLibs?: TypescriptLib[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
-  assistantImplementationInstructions?: string | undefined;
+  assistantImplementation?:
+    | { instructions: string; template: string }
+    | undefined;
   className?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
@@ -36,7 +38,7 @@ export default function RHFTypescriptModuleField({
   autoFocus,
   typescriptLibs,
   includedGlobalUtils,
-  assistantImplementationInstructions,
+  assistantImplementation,
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
@@ -63,9 +65,7 @@ export default function RHFTypescriptModuleField({
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
-        assistantImplementationInstructions={
-          assistantImplementationInstructions
-        }
+        assistantImplementation={assistantImplementation}
         maxHeight={vars.spacing._160}
         ref={field.ref}
       />

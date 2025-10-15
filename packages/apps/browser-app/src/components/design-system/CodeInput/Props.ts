@@ -22,7 +22,9 @@ type Props = {
       typescriptLibs?: TypescriptLib[] | undefined;
       includedGlobalUtils?: IncludedGlobalUtils | undefined;
       fileName?: `${string}.ts`;
-      assistantImplementationInstructions?: string;
+      assistantImplementation?:
+        | { instructions: string; template: string }
+        | undefined;
     }
   | {
       language: "json";
@@ -31,7 +33,7 @@ type Props = {
       typescriptLibs?: never;
       includedGlobalUtils?: never;
       fileName?: `${string}.json`;
-      assistantImplementationInstructions?: never;
+      assistantImplementation?: never;
     }
 );
 

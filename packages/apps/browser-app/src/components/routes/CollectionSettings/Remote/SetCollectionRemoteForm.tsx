@@ -73,9 +73,7 @@ export default function SetCollectionRemoteForm({
         connectorSettings: connector.settingsSchema
           ? valibotSchemas.content(connector.settingsSchema, "rhf")
           : v.null(),
-        remoteConverters: v.strictObject({
-          fromRemoteDocument: forms.schemas.typescriptModule(intl),
-        }),
+        remoteConverters: forms.schemas.remoteConverters(intl),
       }),
     ),
   });

@@ -357,6 +357,7 @@ export default interface Backend {
 
     implementTypescriptFunction(
       instructions: string,
+      template: string,
       libs: TypescriptLib[],
       startingPoint: string,
     ): ResultPromise<

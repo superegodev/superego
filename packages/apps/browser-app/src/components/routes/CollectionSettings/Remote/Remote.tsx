@@ -2,7 +2,7 @@ import type { Collection, Connector } from "@superego/backend";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
-import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.jsx";
+import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
 import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.js";
 import ConnectorSelect from "./ConnectorSelect.js";

@@ -22,7 +22,9 @@ interface Props {
   includedGlobalUtils: IncludedGlobalUtils | undefined;
   fileName?: `${string}.ts`;
   maxHeight: Property.MaxHeight | undefined;
-  assistantImplementationInstructions?: string | undefined;
+  assistantImplementation?:
+    | { instructions: string; template: string }
+    | undefined;
 }
 export default function TypescriptEditor({
   value,
@@ -32,7 +34,7 @@ export default function TypescriptEditor({
   includedGlobalUtils,
   fileName,
   maxHeight,
-  assistantImplementationInstructions,
+  assistantImplementation,
 }: Props) {
   const editorBasePath = useEditorBasePath();
 
@@ -114,9 +116,7 @@ export default function TypescriptEditor({
         isVisible={value.compiled === forms.constants.COMPILATION_IN_PROGRESS}
       />
       <ImplementWithAssistantButton
-        assistantImplementationInstructions={
-          assistantImplementationInstructions
-        }
+        assistantImplementation={assistantImplementation}
         typescriptLibs={allTypescriptLibs}
         valueModelRef={valueModelRef}
       />

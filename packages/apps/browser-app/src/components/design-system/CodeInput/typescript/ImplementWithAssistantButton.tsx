@@ -12,19 +12,21 @@ import Skeleton from "../../Skeleton/Skeleton.js";
 import * as cs from "./TypescriptEditor.css.js";
 
 interface Props {
-  assistantImplementationInstructions?: string | undefined;
+  assistantImplementation?:
+    | { instructions: string; template: string }
+    | undefined;
   typescriptLibs: TypescriptLib[];
   valueModelRef: RefObject<monaco.editor.ITextModel | null>;
 }
 export default function ImplementWithAssistantButton({
-  assistantImplementationInstructions,
+  assistantImplementation,
   typescriptLibs,
   valueModelRef,
 }: Props) {
   const intl = useIntl();
   const { chatCompletions } = useIsInferenceConfigured();
   const { isPending, mutate } = useImplementTypescriptFunction();
-  return chatCompletions && assistantImplementationInstructions ? (
+  return chatCompletions && assistantImplementation ? (
     <>
       <IconButton
         variant="invisible"
@@ -37,7 +39,8 @@ export default function ImplementWithAssistantButton({
             return;
           }
           const result = await mutate(
-            assistantImplementationInstructions,
+            assistantImplementation.instructions,
+            assistantImplementation.template,
             typescriptLibs,
             valueModelRef.current.getValue(),
           );

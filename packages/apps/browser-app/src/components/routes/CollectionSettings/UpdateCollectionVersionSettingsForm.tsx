@@ -65,6 +65,7 @@ export default function UpdateCollectionVersionSettingsForm({
       <RHFContentSummaryGetterField
         control={control}
         name="contentSummaryGetter"
+        schema={collection.latestVersion.schema}
         schemaTypescriptLib={schemaTypescriptLib}
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>

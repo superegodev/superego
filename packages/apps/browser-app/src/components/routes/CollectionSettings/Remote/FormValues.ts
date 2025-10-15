@@ -1,12 +1,10 @@
 import type {
   ConnectorAuthenticationSettings,
-  TypescriptModule,
+  RemoteConverters,
 } from "@superego/backend";
 
 export default interface FormValues {
   connectorAuthenticationSettings: ConnectorAuthenticationSettings;
   connectorSettings: any;
-  remoteConverters: {
-    fromRemoteDocument: TypescriptModule;
-  };
+  remoteConverters: RemoteConverters;
 }

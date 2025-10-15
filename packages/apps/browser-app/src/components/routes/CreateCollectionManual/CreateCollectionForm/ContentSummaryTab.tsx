@@ -29,6 +29,7 @@ export default function ContentSummaryTab({ control, schema, result }: Props) {
         control={control}
         name="contentSummaryGetter"
         isDisabled={typeof schema === "string"}
+        schema={schema}
         schemaTypescriptLib={schemaTypescriptLib}
       />
       <div className={cs.CreateCollectionForm.submitButtonContainer}>

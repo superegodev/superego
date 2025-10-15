@@ -22,6 +22,7 @@ export default class AssistantsImplementTypescriptFunction extends Usecase<
 > {
   async exec(
     instructions: string,
+    template: string,
     libs: TypescriptLib[],
     startingPoint: string,
   ): ResultPromise<
@@ -40,11 +41,19 @@ export default class AssistantsImplementTypescriptFunction extends Usecase<
             {
               type: MessageContentPartType.Text,
               text: `
-Starting from the supplied <starting-point> TypeScript snippet, complete or
-revise the implementation of the TypeScript function to satisfy <instructions>.
-The function has access and can import the TypeScript files supplied in <libs>.
-The implemented function MUST compile without errors. Return the implemented
-function to the user by calling the ${ToolName.WriteTypescriptFunction} tool.
+Starting from the supplied <starting-point> TypeScript snippet, follow
+<instructions> to complete the implementation of the TypeScript function.
+
+### Rules
+
+- The function should match the supplied <template>.
+- The function has access and can import the TypeScript files supplied in
+  <libs>.
+- The implemented function MUST compile without errors.
+- Only make the changes necessary to complete the implementation.
+- Keep the same style of <starting-point>.
+- Return the implemented function to the user by calling the
+  ${ToolName.WriteTypescriptFunction} tool.
               `.trim(),
             },
           ],
@@ -58,6 +67,9 @@ function to the user by calling the ${ToolName.WriteTypescriptFunction} tool.
                 "<instructions>",
                 instructions,
                 "</instructions>",
+                "<template>",
+                template,
+                "</template>",
                 "<libs>",
                 ...libs.flatMap(({ path, source }) => [
                   `<lib path=".${path}" language="typescript">`,
