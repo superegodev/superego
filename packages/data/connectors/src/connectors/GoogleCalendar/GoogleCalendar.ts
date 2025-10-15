@@ -130,15 +130,16 @@ export default class GoogleCalendar
       for (const event of response.items) {
         const id = event.id;
         const versionId = event.etag;
-        // Ignore events that don't have an id or a versionId, as we can't do much
-        // with them.
-        if (!id || !versionId) {
+        const url = event.htmlLink;
+        // Ignore events that don't have an id, versionId, or url, as those
+        // properties are required to process changes.
+        if (!id || !versionId || !url) {
           continue;
         }
         if (event.status === "cancelled") {
           changes.deleted.push({ id });
         } else {
-          changes.addedOrModified.push({ id, versionId, content: event });
+          changes.addedOrModified.push({ id, versionId, url, content: event });
         }
       }
 

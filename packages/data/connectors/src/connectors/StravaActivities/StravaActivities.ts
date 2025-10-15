@@ -130,18 +130,20 @@ export default class StravaActivities
           continue;
         }
 
-        const id = String(summaryActivity.id);
+        const id = summaryActivity.id ? String(summaryActivity.id) : null;
         const versionId = await sha256(JSON.stringify(summaryActivity), "hex");
+        const url = `https://www.strava.com/activities/${encodeURIComponent(id)}`;
 
-        // Ignore activities that don't have a versionId, as we can't do much
-        // with them.
-        if (!versionId) {
+        // Ignore activities that don't have a id, as it's required to process
+        // changes.
+        if (!id) {
           continue;
         }
 
         changes.addedOrModified.push({
           id,
           versionId,
+          url,
           content: summaryActivity,
         });
       }

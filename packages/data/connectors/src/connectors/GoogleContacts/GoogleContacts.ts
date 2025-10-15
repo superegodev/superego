@@ -123,15 +123,16 @@ export default class GoogleContacts
       for (const person of response.connections) {
         const id = person.resourceName;
         const versionId = person.etag;
-        // Ignore persons that don't have an id or a versionId, as we can't do
-        // much with them.
-        if (!id || !versionId) {
+        const url = GoogleContacts.personUrl(person);
+        // Ignore persons that don't have an id, versionId, or url, as those
+        // properties are required to process changes.
+        if (!id || !versionId || !url) {
           continue;
         }
         if (person.metadata?.deleted) {
           changes.deleted.push({ id });
         } else {
-          changes.addedOrModified.push({ id, versionId, content: person });
+          changes.addedOrModified.push({ id, versionId, url, content: person });
         }
       }
 
@@ -151,6 +152,15 @@ export default class GoogleContacts
     // TypeScript can't understand, but when we're out of the loop nextSyncToken
     // is not null.
     return { changes, nextSyncToken: nextSyncToken! };
+  }
+
+  private static personUrl(person: Person): string | null {
+    const resourceId = person.resourceName
+      ? person.resourceName.split("/").pop()
+      : null;
+    return resourceId
+      ? `https://contacts.google.com/person/${encodeURIComponent(resourceId)}`
+      : null;
   }
 
   private static async fetchPersonsPage(
