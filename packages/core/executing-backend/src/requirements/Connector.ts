@@ -79,6 +79,7 @@ namespace Connector {
   export interface AddedOrModifiedDocument<RemoteDocument = any> {
     id: string;
     versionId: string;
+    url: string;
     content: RemoteDocument;
   }
 

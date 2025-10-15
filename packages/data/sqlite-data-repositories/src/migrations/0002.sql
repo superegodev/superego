@@ -12,6 +12,10 @@ ADD COLUMN "remote_converters" BLOB;
 
 ALTER TABLE "documents"
 ADD COLUMN "remote_id" TEXT;
+ALTER TABLE "documents"
+ADD COLUMN "remote_url" TEXT;
+ALTER TABLE "documents"
+ADD COLUMN "latest_remote_document" BLOB;
 
 CREATE UNIQUE INDEX "idx__documents__on__collection_id_remote_id__unique" ON "documents" (
   "collection_id",

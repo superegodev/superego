@@ -13,6 +13,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     const document: DocumentEntity = {
       id: Id.generate.document(),
       remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -33,12 +35,55 @@ export default rd<GetDependencies>("Documents", (deps) => {
     expect(exists).toEqual(true);
   });
 
+  it("replacing", async () => {
+    // Setup SUT
+    const { dataRepositoriesManager } = deps();
+    const document: DocumentEntity = {
+      id: Id.generate.document(),
+      remoteId: "remoteId",
+      remoteUrl: "original remoteUrl",
+      latestRemoteDocument: { original: "original" },
+      collectionId: Id.generate.collection(),
+      createdAt: new Date(),
+    };
+    await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => {
+        await repos.document.insert(document);
+        return { action: "commit", returnValue: null };
+      },
+    );
+
+    // Exercise
+    const updatedDocument: DocumentEntity = {
+      ...document,
+      remoteUrl: "updated remoteUrl",
+      latestRemoteDocument: { updated: "updated" },
+    };
+    await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => {
+        await repos.document.replace(updatedDocument);
+        return { action: "commit", returnValue: null };
+      },
+    );
+
+    // Verify
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => ({
+        action: "commit",
+        returnValue: await repos.document.find(document.id),
+      }),
+    );
+    expect(found).toEqual(updatedDocument);
+  });
+
   it("deleting", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
     const document: DocumentEntity = {
       id: Id.generate.document(),
       remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -77,18 +122,24 @@ export default rd<GetDependencies>("Documents", (deps) => {
     const document1: DocumentEntity = {
       id: Id.generate.document(),
       remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document2: DocumentEntity = {
       id: Id.generate.document(),
       remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document3: DocumentEntity = {
       id: Id.generate.document(),
       remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection2Id,
       createdAt: new Date(),
     };
@@ -140,6 +191,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -186,6 +239,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -236,6 +291,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -283,6 +340,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: remoteId,
+        remoteUrl: "remoteUrl",
+        latestRemoteDocument: {},
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -314,6 +373,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: "remoteId",
+        remoteUrl: "remoteUrl",
+        latestRemoteDocument: {},
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -367,18 +428,24 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const document1: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document2: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document3: DocumentEntity = {
         id: Id.generate.document(),
         remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection2Id,
         createdAt: new Date(),
       };

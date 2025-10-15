@@ -53,6 +53,8 @@ export default class DocumentsCreate extends Usecase<
           createdBy: DocumentVersionCreator.Connector;
           remoteId: string;
           remoteVersionId: string;
+          remoteUrl: string;
+          remoteDocument: any;
         },
   ): ExecReturnValue;
   async exec(
@@ -62,9 +64,11 @@ export default class DocumentsCreate extends Usecase<
       createdBy:
         | DocumentVersionCreator.Assistant
         | DocumentVersionCreator.Connector;
-      conversationId?: ConversationId | null;
-      remoteId?: string | null;
-      remoteVersionId?: string | null;
+      conversationId?: ConversationId;
+      remoteId?: string;
+      remoteVersionId?: string;
+      remoteUrl?: string;
+      remoteDocument?: any;
     },
   ): ExecReturnValue {
     const collection = await this.repos.collection.find(collectionId);
@@ -129,13 +133,14 @@ export default class DocumentsCreate extends Usecase<
     }
 
     const now = new Date();
-    const createdBy = options?.createdBy ?? DocumentVersionCreator.User;
-    const remoteId = options?.remoteId ?? null;
-    const remoteVersionId = options?.remoteVersionId ?? null;
-    const conversationId = options?.conversationId ?? null;
+    // TypeScript doesn't understand that if remoteId is not null all other
+    // remote* properties are not null.
+    // @ts-expect-error
     const document: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: remoteId,
+      remoteId: options?.remoteId ?? null,
+      remoteUrl: options?.remoteUrl ?? null,
+      latestRemoteDocument: options?.remoteDocument ?? null,
       collectionId: collectionId,
       createdAt: now,
     };
@@ -146,14 +151,14 @@ export default class DocumentsCreate extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: remoteVersionId,
+      remoteId: options?.remoteVersionId ?? null,
       previousVersionId: null,
       documentId: document.id,
       collectionId: collectionId,
       collectionVersionId: latestCollectionVersion.id,
-      conversationId: conversationId,
+      conversationId: options?.conversationId ?? null,
       content: convertedContent,
-      createdBy: createdBy,
+      createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     };
     const filesWithContent: (FileEntity & {

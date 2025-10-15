@@ -286,6 +286,8 @@ export default class CollectionsDownSync extends Usecase {
           createdBy: DocumentVersionCreator.Connector,
           remoteId: addedOrModified.id,
           remoteVersionId: addedOrModified.versionId,
+          remoteUrl: addedOrModified.url,
+          remoteDocument: addedOrModified.content,
         },
       );
       return documentsCreateResult.success
@@ -313,7 +315,9 @@ export default class CollectionsDownSync extends Usecase {
         conversionResult.data,
         {
           createdBy: DocumentVersionCreator.Connector,
-          remoteId: addedOrModified.versionId,
+          remoteVersionId: addedOrModified.versionId,
+          remoteUrl: addedOrModified.url,
+          remoteDocument: addedOrModified.content,
         },
       );
       return documentsCreateNewVersionResult.success

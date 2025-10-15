@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type {
   DocumentEntity,
@@ -16,15 +17,50 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "remote_id", "collection_id", "created_at")
+          (
+            "id",
+            "remote_id",
+            "remote_url",
+            "latest_remote_document",
+            "collection_id",
+            "created_at"
+          )
         VALUES
-          (?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?)
       `)
       .run(
         document.id,
         document.remoteId,
+        document.remoteUrl,
+        document.latestRemoteDocument
+          ? encode(document.latestRemoteDocument)
+          : null,
         document.collectionId,
         document.createdAt.toISOString(),
+      );
+  }
+
+  async replace(document: DocumentEntity): Promise<void> {
+    this.db
+      .prepare(`
+          UPDATE "${table}"
+          SET
+            "remote_id" = ?,
+            "remote_url" = ?,
+            "latest_remote_document" = ?,
+            "collection_id" = ?,
+            "created_at" = ?
+          WHERE "id" = ?
+        `)
+      .run(
+        document.remoteId,
+        document.remoteUrl,
+        document.latestRemoteDocument
+          ? encode(document.latestRemoteDocument)
+          : null,
+        document.collectionId,
+        document.createdAt.toISOString(),
+        document.id,
       );
   }
 

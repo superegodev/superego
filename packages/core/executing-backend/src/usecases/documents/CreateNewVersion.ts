@@ -22,6 +22,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
+import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
@@ -69,7 +70,9 @@ export default class DocumentsCreateNewVersion extends Usecase<
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
-          remoteId: string;
+          remoteVersionId: string;
+          remoteUrl: string;
+          remoteDocument: any;
         },
   ): ExecReturnValue;
   async exec(
@@ -83,7 +86,9 @@ export default class DocumentsCreateNewVersion extends Usecase<
         | DocumentVersionCreator.Migration
         | DocumentVersionCreator.Connector;
       conversationId?: ConversationId;
-      remoteId?: string | null;
+      remoteVersionId?: string | null;
+      remoteUrl?: string;
+      remoteDocument?: any;
     },
   ): ExecReturnValue {
     const collection = await this.repos.collection.find(collectionId);
@@ -182,9 +187,6 @@ export default class DocumentsCreateNewVersion extends Usecase<
     }
 
     const now = new Date();
-    const createdBy = options?.createdBy ?? DocumentVersionCreator.User;
-    const conversationId = options?.conversationId ?? null;
-    const remoteId = options?.remoteId ?? null;
     const { convertedContent, protoFilesWithIds } =
       ContentFileUtils.extractAndConvertProtoFiles(
         latestCollectionVersion.schema,
@@ -192,14 +194,14 @@ export default class DocumentsCreateNewVersion extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: remoteId,
+      remoteId: options?.remoteVersionId ?? null,
       previousVersionId: latestVersionId,
       documentId: id,
       collectionId: document.collectionId,
       collectionVersionId: latestCollectionVersion.id,
-      conversationId: conversationId,
+      conversationId: options?.conversationId ?? null,
       content: convertedContent,
-      createdBy: createdBy,
+      createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     } as DocumentVersionEntity;
     const filesWithContent: (FileEntity & {
@@ -212,6 +214,17 @@ export default class DocumentsCreateNewVersion extends Usecase<
       createdAt: now,
       content: protoFileWithId.content,
     }));
+    if (options?.createdBy === DocumentVersionCreator.Connector) {
+      const updatedDocument: DocumentEntity = {
+        ...document,
+        // TypeScript doesn't understand, but if createdBy === Connector, then
+        // options.remoteUrl is a string.
+        // @ts-expect-error
+        remoteUrl: options.remoteUrl,
+        latestRemoteDocument: options.remoteDocument,
+      };
+      await this.repos.document.replace(updatedDocument);
+    }
     await this.repos.documentVersion.insert(documentVersion);
     await this.repos.file.insertAll(filesWithContent);
 

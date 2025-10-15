@@ -3,6 +3,7 @@ import type DocumentEntity from "../entities/DocumentEntity.js";
 
 export default interface DocumentRepository {
   insert(document: DocumentEntity): Promise<void>;
+  replace(document: DocumentEntity): Promise<void>;
   delete(id: DocumentId): Promise<DocumentId>;
   deleteAllWhereCollectionIdEq(
     collectionId: CollectionId,

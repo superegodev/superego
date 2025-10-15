@@ -1,8 +1,19 @@
 import type { CollectionId, DocumentId } from "@superego/backend";
 
-export default interface DocumentEntity {
+type DocumentEntity = {
   id: DocumentId;
-  remoteId: string | null;
   collectionId: CollectionId;
   createdAt: Date;
-}
+} & (
+  | {
+      remoteId: null;
+      remoteUrl: null;
+      latestRemoteDocument: null;
+    }
+  | {
+      remoteId: string;
+      remoteUrl: string;
+      latestRemoteDocument: any;
+    }
+);
+export default DocumentEntity;

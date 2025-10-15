@@ -24,6 +24,12 @@ export default class DemoDocumentRepository
     this.documents[document.id] = clone(document);
   }
 
+  async replace(document: DocumentEntity): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    this.documents[document.id] = clone(document);
+  }
+
   async delete(id: DocumentId): Promise<DocumentId> {
     this.ensureNotDisposed();
     this.onWrite();
