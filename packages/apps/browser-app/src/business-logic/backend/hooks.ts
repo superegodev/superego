@@ -68,17 +68,6 @@ export const useSetCollectionRemote = makeUseBackendMutation(
   ],
 );
 
-export const useUnsetCollectionRemote = makeUseBackendMutation(
-  "collections",
-  "unsetRemote",
-  ([collectionId]) => [
-    ["listCollections"],
-    ["listDocuments", collectionId],
-    ["getDocument", collectionId],
-    ["getDocumentVersion", collectionId],
-  ],
-);
-
 export const useTriggerCollectionDownSync = makeUseBackendMutation(
   "collections",
   "triggerDownSync",

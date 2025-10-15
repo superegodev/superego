@@ -53,7 +53,7 @@ Fetches the TypeScript type declarations for a collection.
 **Use it:**
 
 - As the **source of truth** for fields, types, enums, constraints.
-- **All fields are required.** If a field’s type includes \`null\`, the key
+- **All fields are required.** If a field's type includes \`null\`, the key
   **must** be present and may be \`null\`; otherwise it must be a non-null
   value.
       `.trim(),

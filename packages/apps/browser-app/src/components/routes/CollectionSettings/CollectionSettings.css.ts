@@ -34,16 +34,3 @@ export const SetCollectionRemoteForm = {
     gap: vars.spacing._2,
   }),
 };
-
-export const UnsetCollectionRemoteButton = {
-  root: style({
-    marginBlockEnd: vars.spacing._8,
-  }),
-};
-
-export const UnsetCollectionRemoteModalForm = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};

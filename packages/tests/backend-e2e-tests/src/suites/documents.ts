@@ -31,6 +31,104 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
+      // Setup mocks
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: null,
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        null,
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ConnectorDoesNotSupportUpSyncing",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            connectorName: mockConnector.name,
+            message:
+              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+          },
+        },
+      });
+    });
+
     it("error: DocumentContentNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -505,6 +603,33 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+      const latestVersionId = Id.generate.documentVersion();
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          collectionId,
+          documentId,
+          latestVersionId,
+          { title: "updated" },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -557,7 +682,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("error: DocumentIsRemote", async () => {
+    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
       // Setup mocks
       const changes: Connector.Changes = {
         addedOrModified: [
@@ -611,9 +736,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           types: {
             Root: {
               dataType: DataType.Struct,
-              properties: {
-                title: { dataType: DataType.String },
-              },
+              properties: { title: { dataType: DataType.String } },
             },
           },
           rootType: "Root",
@@ -669,11 +792,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "DocumentIsRemote",
+          name: "ConnectorDoesNotSupportUpSyncing",
           details: {
-            documentId: remoteDocument.id,
+            collectionId: createCollectionResult.data.id,
+            connectorName: mockConnector.name,
             message:
-              "Remote documents are read-only. You can't create new versions or delete them.",
+              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
           },
         },
       });
@@ -944,7 +1068,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("delete", () => {
-    it("error: DocumentNotFound", async () => {
+    it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
       const collectionId = Id.generate.collection();
@@ -953,6 +1077,57 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const documentId = Id.generate.document();
       const result = await backend.documents.delete(
         collectionId,
+        documentId,
+        "delete",
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: DocumentNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const documentId = Id.generate.document();
+      const result = await backend.documents.delete(
+        createCollectionResult.data.id,
         documentId,
         "delete",
       );
@@ -1026,7 +1201,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("error: DocumentIsRemote", async () => {
+    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
       // Setup mocks
       const changes: Connector.Changes = {
         addedOrModified: [
@@ -1136,11 +1311,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "DocumentIsRemote",
+          name: "ConnectorDoesNotSupportUpSyncing",
           details: {
-            documentId: remoteDocument.id,
+            collectionId: createCollectionResult.data.id,
+            connectorName: mockConnector.name,
             message:
-              "Remote documents are read-only. You can't create new versions or delete them.",
+              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
           },
         },
       });

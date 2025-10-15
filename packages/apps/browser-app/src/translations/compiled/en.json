@@ -1724,6 +1724,172 @@
       "value": "number"
     }
   ],
+  "Remote.tsx_s8FZNF": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " You can sync a collection with an external data source (a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "remote"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "). When a remote is configured, it becomes the "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "source of truth"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " for that collection. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fromRemoteDocument"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " mapping, and you can filter which remote documents are synced. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " To set up a remote, configure a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "connector"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " to the external data source. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Some connectors support only "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "syncing down from"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " the remote, making the collection read-only. Others also support "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "syncing up to"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " the remote, so creates, updates, and deletes in the collection are propagated to the remote. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " More info at "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/connectors"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
@@ -2008,78 +2174,6 @@
     {
       "type": 0,
       "value": "This call has no result."
-    }
-  ],
-  "UnsetCollectionRemoteButton.tsx_P0C6J1": [
-    {
-      "type": 0,
-      "value": "Unset remote"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Unsetting the remote will permanently delete all the documents and files synced from it. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " If you're sure you want to unset the remote, write "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "unset"
-            }
-          ],
-          "type": 8,
-          "value": "i"
-        },
-        {
-          "type": 0,
-          "value": " in the input below. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": [
-    {
-      "type": 0,
-      "value": "Unset \""
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    },
-    {
-      "type": 0,
-      "value": "\" remote"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": [
-    {
-      "type": 0,
-      "value": "Unset"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": [
-    {
-      "type": 0,
-      "value": "Command confirmation"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

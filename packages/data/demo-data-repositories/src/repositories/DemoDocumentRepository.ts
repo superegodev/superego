@@ -51,6 +51,15 @@ export default class DemoDocumentRepository
     return this.documents[id] !== undefined;
   }
 
+  async oneExistsWhereCollectionIdEq(
+    collectionId: CollectionId,
+  ): Promise<boolean> {
+    this.ensureNotDisposed();
+    return Object.values(this.documents).some(
+      (document) => document.collectionId === collectionId,
+    );
+  }
+
   async find(id: DocumentId): Promise<DocumentEntity | null> {
     this.ensureNotDisposed();
     return clone(this.documents[id] ?? null);

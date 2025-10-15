@@ -29,6 +29,7 @@ export type { default as CollectionCategoryHasChildren } from "./errors/Collecti
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
 export type { default as CollectionCategoryNameNotValid } from "./errors/CollectionCategoryNameNotValid.js";
 export type { default as CollectionCategoryNotFound } from "./errors/CollectionCategoryNotFound.js";
+export type { default as CollectionHasDocuments } from "./errors/CollectionHasDocuments.js";
 export type { default as CollectionHasNoRemote } from "./errors/CollectionHasNoRemote.js";
 export type { default as CollectionIsSyncing } from "./errors/CollectionIsSyncing.js";
 export type { default as CollectionMigrationFailed } from "./errors/CollectionMigrationFailed.js";
@@ -40,6 +41,7 @@ export type { default as CollectionVersionIdNotMatching } from "./errors/Collect
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
 export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";
+export type { default as ConnectorDoesNotSupportUpSyncing } from "./errors/ConnectorDoesNotSupportUpSyncing.js";
 export type { default as ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy } from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
 export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNotAuthenticated.js";
 export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
@@ -49,7 +51,6 @@ export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryN
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
-export type { default as DocumentIsRemote } from "./errors/DocumentIsRemote.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";

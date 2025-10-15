@@ -461,6 +461,95 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: CollectionHasDocuments", async () => {
+      // Setup mocks
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: null,
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled: "export default function getContentSummary() {}",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {},
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const setRemoteResult = await backend.collections.setRemote(
+        createCollectionResult.data.id,
+        mockConnector.name,
+        {
+          clientId: "clientId",
+          clientSecret: "clientSecret",
+        },
+        null,
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: "export default function fromRemoteDocument() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(setRemoteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionHasDocuments",
+          details: {
+            collectionId: createCollectionResult.data.id,
+          },
+        },
+      });
+    });
+
     it("error: ConnectorNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1301,268 +1390,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(listResult).toEqual({
         success: true,
         data: [secondSetRemoteResult.data],
-        error: null,
-      });
-    });
-  });
-
-  describe("unsetRemote", () => {
-    it("error: CollectionNotFound", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise
-      const collectionId = Id.generate.collection();
-      const result = await backend.collections.unsetRemote(
-        collectionId,
-        "unset",
-      );
-
-      // Verify
-      expect(result).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "CollectionNotFound",
-          details: { collectionId },
-        },
-      });
-    });
-
-    it("error: CollectionHasNoRemote", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled: "export default function getContentSummary() {}",
-          },
-        },
-      );
-      assert.isTrue(createResult.success);
-
-      // Exercise
-      const unsetRemoteResult = await backend.collections.unsetRemote(
-        createResult.data.id,
-        "unset",
-      );
-
-      // Verify
-      expect(unsetRemoteResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "CollectionHasNoRemote",
-          details: {
-            collectionId: createResult.data.id,
-          },
-        },
-      });
-    });
-
-    it("error: CommandConfirmationNotValid", async () => {
-      // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE<Schema> = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
-        },
-        remoteDocumentTypescriptSchema: {
-          types: "export type RemoteDocument = {};",
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: {
-            changes: { addedOrModified: [], deleted: [] },
-            authenticationState,
-            syncPoint: "syncPoint",
-          },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps(mockConnector);
-      const createResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled: "export default function getContentSummary() {}",
-          },
-        },
-      );
-      assert.isTrue(createResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        {},
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled: "export default function fromRemoteDocument() {}",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-
-      // Exercise
-      const commandConfirmation = "not-unset";
-      const unsetRemoteResult = await backend.collections.unsetRemote(
-        createResult.data.id,
-        commandConfirmation,
-      );
-
-      // Verify
-      expect(unsetRemoteResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "CommandConfirmationNotValid",
-          details: {
-            requiredCommandConfirmation: "unset",
-            suppliedCommandConfirmation: commandConfirmation,
-          },
-        },
-      });
-    });
-
-    it("success: unsets remote", async () => {
-      // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE<Schema> = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                setting: { dataType: DataType.String },
-              },
-            },
-          },
-          rootType: "Root",
-        },
-        remoteDocumentTypescriptSchema: {
-          types: "export type RemoteDocument = {};",
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: {
-            changes: { addedOrModified: [], deleted: [] },
-            authenticationState,
-            syncPoint: "syncPoint",
-          },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps(mockConnector);
-      const createResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled: "export default function getContentSummary() {}",
-          },
-        },
-      );
-      assert.isTrue(createResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        { setting: "setting" },
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled: "export default function fromRemoteDocument() {}",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-
-      // Exercise
-      const unsetRemoteResult = await backend.collections.unsetRemote(
-        createResult.data.id,
-        "unset",
-      );
-
-      // Verify
-      expect(unsetRemoteResult).toEqual({
-        success: true,
-        data: {
-          ...setRemoteResult.data,
-          latestVersion: {
-            ...setRemoteResult.data.latestVersion,
-            remoteConverters: null,
-          },
-          remote: null,
-        },
-        error: null,
-      });
-      const listResult = await backend.collections.list();
-      expect(listResult).toEqual({
-        success: true,
-        data: [unsetRemoteResult.data],
         error: null,
       });
     });
@@ -4210,11 +4037,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
         );
       assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
       await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
-      const createLocalDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "local title" },
-      );
-      assert.isTrue(createLocalDocumentResult.success);
 
       // Ensure expected pre-migration state
       const beforeMigrationDocumentsListResult = await backend.documents.list(
@@ -4227,14 +4049,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
             remoteId: "remoteDocumentId",
             latestVersion: expect.objectContaining({
               remoteId: "remoteDocumentVersionId",
-            }),
-          }),
-          expect.objectContaining({
-            id: createLocalDocumentResult.data.id,
-            remoteId: null,
-            latestVersion: expect.objectContaining({
-              id: createLocalDocumentResult.data.latestVersion.id,
-              remoteId: null,
             }),
           }),
         ]),
@@ -4280,15 +4094,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
             remoteId: "remoteDocumentId",
             latestVersion: expect.objectContaining({
               remoteId: "remoteDocumentVersionId",
-            }),
-          }),
-          expect.objectContaining({
-            id: createLocalDocumentResult.data.id,
-            remoteId: null,
-            latestVersion: expect.objectContaining({
-              remoteId: null,
               previousVersionId:
-                createLocalDocumentResult.data.latestVersion.id,
+                beforeMigrationDocumentsListResult.data[0]?.latestVersion.id,
             }),
           }),
         ]),

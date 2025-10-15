@@ -9,7 +9,6 @@ import type ContentSummary from "./ContentSummary.js";
 
 export default interface DocumentVersion {
   id: DocumentVersionId;
-  // TODO: find a name that communicates that this is not stable.
   /** Id of the remote counterpart of this document version. */
   remoteId: string | null;
   collectionVersionId: CollectionVersionId;

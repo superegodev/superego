@@ -7,6 +7,7 @@ import type {
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
   CollectionCategoryNotFound,
+  CollectionHasDocuments,
   CollectionHasNoRemote,
   CollectionIsSyncing,
   CollectionMigrationFailed,
@@ -18,6 +19,7 @@ import type {
   CommandConfirmationNotValid,
   ConnectorAuthenticationFailed,
   ConnectorAuthenticationSettingsNotValid,
+  ConnectorDoesNotSupportUpSyncing,
   ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
   ConnectorNotAuthenticated,
   ConnectorNotFound,
@@ -27,7 +29,6 @@ import type {
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
-  DocumentIsRemote,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
@@ -51,6 +52,7 @@ type KnownResultError =
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
   | CollectionCategoryNotFound
+  | CollectionHasDocuments
   | CollectionHasNoRemote
   | CollectionIsSyncing
   | CollectionMigrationFailed
@@ -62,6 +64,7 @@ type KnownResultError =
   | CommandConfirmationNotValid
   | ConnectorAuthenticationFailed
   | ConnectorAuthenticationSettingsNotValid
+  | ConnectorDoesNotSupportUpSyncing
   | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
   | ConnectorNotAuthenticated
   | ConnectorNotFound
@@ -71,7 +74,6 @@ type KnownResultError =
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
-  | DocumentIsRemote
   | DocumentNotFound
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound

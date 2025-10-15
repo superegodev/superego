@@ -67,14 +67,18 @@ export default function Collection({ collectionId }: Props) {
               collectionId: collectionId,
             },
           },
-          {
-            label: intl.formatMessage({ defaultMessage: "Create document" }),
-            icon: <PiPlus />,
-            to: {
-              name: RouteName.CreateDocument,
-              collectionId: collectionId,
-            },
-          },
+          !CollectionUtils.hasRemote(collection)
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Create document",
+                }),
+                icon: <PiPlus />,
+                to: {
+                  name: RouteName.CreateDocument,
+                  collectionId: collectionId,
+                },
+              }
+            : null,
         ]}
       />
       <Shell.Panel.Content

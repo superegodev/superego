@@ -10,6 +10,7 @@ import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasCh
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
 import type CollectionCategoryNotFound from "./errors/CollectionCategoryNotFound.js";
+import type CollectionHasDocuments from "./errors/CollectionHasDocuments.js";
 import type CollectionHasNoRemote from "./errors/CollectionHasNoRemote.js";
 import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
@@ -20,6 +21,7 @@ import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
 import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
+import type ConnectorDoesNotSupportUpSyncing from "./errors/ConnectorDoesNotSupportUpSyncing.js";
 import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
@@ -27,7 +29,6 @@ import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.j
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
-import type DocumentIsRemote from "./errors/DocumentIsRemote.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
@@ -135,29 +136,12 @@ export default interface Backend {
     ): ResultPromise<
       Collection,
       | CollectionNotFound
+      | CollectionHasDocuments
       | ConnectorNotFound
       | CannotChangeCollectionRemoteConnector
       | ConnectorAuthenticationSettingsNotValid
       | ConnectorSettingsNotValid
       | RemoteConvertersNotValid
-      | UnexpectedError
-    >;
-
-    /**
-     * Un-setting a remote of a collection deletes all of its remote documents.
-     * To prevent either the user or a bug in the client code accidentally
-     * triggering this operation, a `commandConfirmation` string needs to be
-     * passed to the server. The server checks that the string equals `"unset"`
-     * and only then performs the operation.
-     */
-    unsetRemote(
-      id: CollectionId,
-      commandConfirmation: string,
-    ): ResultPromise<
-      Collection,
-      | CollectionNotFound
-      | CollectionHasNoRemote
-      | CommandConfirmationNotValid
       | UnexpectedError
     >;
 
@@ -252,6 +236,7 @@ export default interface Backend {
     ): ResultPromise<
       Document,
       | CollectionNotFound
+      | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
       | UnexpectedError
@@ -264,8 +249,9 @@ export default interface Backend {
       content: any,
     ): ResultPromise<
       Document,
+      | CollectionNotFound
       | DocumentNotFound
-      | DocumentIsRemote
+      | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
@@ -285,9 +271,10 @@ export default interface Backend {
       commandConfirmation: string,
     ): ResultPromise<
       null,
+      | CollectionNotFound
       | DocumentNotFound
       | CommandConfirmationNotValid
-      | DocumentIsRemote
+      | ConnectorDoesNotSupportUpSyncing
       | UnexpectedError
     >;
 

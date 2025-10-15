@@ -632,6 +632,9 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Elemento {number}"
   },
+  "Remote.tsx_s8FZNF": {
+    "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
+  },
   "RemoteConverters.tsx_3cBs4J": {
     "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
   },
@@ -733,21 +736,6 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
-  },
-  "UnsetCollectionRemoteButton.tsx_P0C6J1": {
-    "defaultMessage": "Rimuovi remoto"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": {
-    "defaultMessage": "<p> Rimuovendo il remoto eliminerai definitivamente tutti i documenti e i file sincronizzati da esso. </p> <p> Se sei sicuro di voler rimuovere il remoto, scrivi <i>unset</i> nel campo sottostante. </p>"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": {
-    "defaultMessage": "Rimuovi il remoto \"{remote}\""
-  },
-  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": {
-    "defaultMessage": "Rimuovi"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": {
-    "defaultMessage": "Conferma comando"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Istruzioni dell'assistente"

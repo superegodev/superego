@@ -179,6 +179,56 @@ export default rd<GetDependencies>("Documents", (deps) => {
     });
   });
 
+  describe("checking existence of at least one by collection id", () => {
+    it("case: exists", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.oneExistsWhereCollectionIdEq(
+            document.collectionId,
+          ),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(true);
+    });
+
+    it("case: doesn't exist", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.oneExistsWhereCollectionIdEq(
+            Id.generate.collection(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(false);
+    });
+  });
+
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT

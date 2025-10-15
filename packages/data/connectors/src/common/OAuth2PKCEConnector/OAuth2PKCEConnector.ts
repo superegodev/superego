@@ -203,7 +203,7 @@ export default class OAuth2PKCEConnector {
    * Parse OAuth2 response params from both query and fragment. Normally, code
    * flow uses query (?code=...), and implicit flow uses fragment
    * (#access_token=...). Some providers or response_mode settings vary, so we
-   * merge both to be robust. Spec doesn’t require both; this just tolerates
+   * merge both to be robust. Spec doesn't require both; this just tolerates
    * nonstandard or mixed responses.
    */
   private parseAuthorizationResponseUrlParams(

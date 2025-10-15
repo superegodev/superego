@@ -1716,6 +1716,172 @@
       "value": "number"
     }
   ],
+  "Remote.tsx_s8FZNF": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Puoi sincronizzare una collezione con un'origine dati esterna (un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "remoto"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "). Quando configuri un remoto, diventa la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fonte di verità"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " per quella collezione. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fromRemoteDocument"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " e puoi filtrare quali documenti remoti vengono sincronizzati. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Per configurare un remoto, configura un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "connettore"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " verso l'origine dati esterna. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Alcuni connettori supportano solo la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "sincronizzazione dal"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " remoto, rendendo la collezione in sola lettura. Altri supportano anche la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "sincronizzazione verso"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ulteriori informazioni su "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/connectors"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
@@ -2000,78 +2166,6 @@
     {
       "type": 0,
       "value": "Questa chiamata non ha alcun risultato."
-    }
-  ],
-  "UnsetCollectionRemoteButton.tsx_P0C6J1": [
-    {
-      "type": 0,
-      "value": "Rimuovi remoto"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Rimuovendo il remoto eliminerai definitivamente tutti i documenti e i file sincronizzati da esso. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Se sei sicuro di voler rimuovere il remoto, scrivi "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "unset"
-            }
-          ],
-          "type": 8,
-          "value": "i"
-        },
-        {
-          "type": 0,
-          "value": " nel campo sottostante. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": [
-    {
-      "type": 0,
-      "value": "Rimuovi il remoto \""
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": [
-    {
-      "type": 0,
-      "value": "Rimuovi"
-    }
-  ],
-  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": [
-    {
-      "type": 0,
-      "value": "Conferma comando"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [

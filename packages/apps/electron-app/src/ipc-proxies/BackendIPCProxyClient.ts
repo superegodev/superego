@@ -23,7 +23,6 @@ export default class BackendIPCProxyClient implements Backend {
       create: this.makeMainIpcCall("collections.create"),
       updateSettings: this.makeMainIpcCall("collections.updateSettings"),
       setRemote: this.makeMainIpcCall("collections.setRemote"),
-      unsetRemote: this.makeMainIpcCall("collections.unsetRemote"),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeMainIpcCall(
         "collections.getOAuth2PKCEConnectorAuthorizationRequestUrl",
       ),

@@ -1,9 +1,10 @@
 import type {
   Backend,
   CollectionId,
+  CollectionNotFound,
   CommandConfirmationNotValid,
+  ConnectorDoesNotSupportUpSyncing,
   DocumentId,
-  DocumentIsRemote,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -25,8 +26,9 @@ export default class DocumentsDelete extends Usecase<
     allowDeletingRemoteDocument = false,
   ): ResultPromise<
     null,
+    | CollectionNotFound
     | DocumentNotFound
-    | DocumentIsRemote
+    | ConnectorDoesNotSupportUpSyncing
     | CommandConfirmationNotValid
     | UnexpectedError
   > {
@@ -39,6 +41,13 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId }),
+      );
+    }
+
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
@@ -46,12 +55,16 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
-    if (document.remoteId !== null && !allowDeletingRemoteDocument) {
+    // Right now no connector supports up-syncing, so checking if the collection
+    // has a remote is sufficient. TODO: update condition once connectors
+    // support up-syncing.
+    if (collection.remote !== null && !allowDeletingRemoteDocument) {
       return makeUnsuccessfulResult(
-        makeResultError("DocumentIsRemote", {
-          documentId: id,
+        makeResultError("ConnectorDoesNotSupportUpSyncing", {
+          collectionId: collectionId,
+          connectorName: collection.remote.connector.name,
           message:
-            "Remote documents are read-only. You can't create new versions or delete them.",
+            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
         }),
       );
     }

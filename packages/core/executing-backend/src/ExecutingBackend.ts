@@ -34,7 +34,6 @@ import CollectionsList from "./usecases/collections/List.js";
 import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
 import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
 import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
-import CollectionsUnsetRemote from "./usecases/collections/UnsetRemote.js";
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
 import DocumentsCreate from "./usecases/documents/Create.js";
@@ -75,7 +74,6 @@ export default class ExecutingBackend implements Backend {
       create: this.makeUsecase(CollectionsCreate, true),
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
       setRemote: this.makeUsecase(CollectionsSetRemote, true),
-      unsetRemote: this.makeUsecase(CollectionsUnsetRemote, true),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(
         CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl,
         false,

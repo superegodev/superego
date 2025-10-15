@@ -1,11 +1,12 @@
 import {
   type Backend,
   type CollectionId,
+  type CollectionNotFound,
+  type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
   type DocumentId,
-  type DocumentIsRemote,
   type DocumentNotFound,
   DocumentVersionCreator,
   type DocumentVersionId,
@@ -35,8 +36,9 @@ import Usecase from "../../utils/Usecase.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
+  | CollectionNotFound
   | DocumentNotFound
-  | DocumentIsRemote
+  | ConnectorDoesNotSupportUpSyncing
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
   | FilesNotFound
@@ -84,6 +86,13 @@ export default class DocumentsCreateNewVersion extends Usecase<
       remoteId?: string | null;
     },
   ): ExecReturnValue {
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId }),
+      );
+    }
+
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
@@ -92,15 +101,19 @@ export default class DocumentsCreateNewVersion extends Usecase<
     }
 
     if (
-      document.remoteId !== null &&
+      // Right now no connector supports up-syncing, so checking if the
+      // collection has a remote is sufficient. TODO: update condition once
+      // connectors support up-syncing.
+      collection.remote !== null &&
       options?.createdBy !== DocumentVersionCreator.Connector &&
       options?.createdBy !== DocumentVersionCreator.Migration
     ) {
       return makeUnsuccessfulResult(
-        makeResultError("DocumentIsRemote", {
-          documentId: id,
+        makeResultError("ConnectorDoesNotSupportUpSyncing", {
+          collectionId: collectionId,
+          connectorName: collection.remote.connector.name,
           message:
-            "Remote documents are read-only. You can't create new versions or delete them.",
+            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
         }),
       );
     }

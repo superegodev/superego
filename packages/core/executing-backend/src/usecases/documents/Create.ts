@@ -2,6 +2,7 @@ import {
   type Backend,
   type CollectionId,
   type CollectionNotFound,
+  type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
@@ -30,7 +31,11 @@ import Usecase from "../../utils/Usecase.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
-  CollectionNotFound | DocumentContentNotValid | FilesNotFound | UnexpectedError
+  | CollectionNotFound
+  | ConnectorDoesNotSupportUpSyncing
+  | DocumentContentNotValid
+  | FilesNotFound
+  | UnexpectedError
 >;
 export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
@@ -62,9 +67,27 @@ export default class DocumentsCreate extends Usecase<
       remoteVersionId?: string | null;
     },
   ): ExecReturnValue {
-    if (!(await this.repos.collection.exists(collectionId))) {
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId }),
+      );
+    }
+
+    if (
+      // Right now no connector supports up-syncing, so checking if the
+      // collection has a remote is sufficient. TODO: update condition once
+      // connectors support up-syncing.
+      collection.remote !== null &&
+      options?.createdBy !== DocumentVersionCreator.Connector
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConnectorDoesNotSupportUpSyncing", {
+          collectionId: collectionId,
+          connectorName: collection.remote.connector.name,
+          message:
+            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+        }),
       );
     }
 

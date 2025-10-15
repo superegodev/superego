@@ -11,6 +11,15 @@ export default {
     <strong key={(chunks as string[]).join("")}>{chunks}</strong>
   ),
   i: (chunks: Chunks) => <em key={(chunks as string[]).join("")}>{chunks}</em>,
+  a: (chunks: Chunks) => (
+    <a
+      key={(chunks as string[]).join("")}
+      href={(chunks as string[]).join("")}
+      target="_blank"
+    >
+      {(chunks as string[]).join("")}
+    </a>
+  ),
   p: (chunks: Chunks) => <p key={(chunks as string[]).join("")}>{chunks}</p>,
   code: (chunks: Chunks) => (
     <InlineCode key={(chunks as string[]).join("")}>{chunks}</InlineCode>

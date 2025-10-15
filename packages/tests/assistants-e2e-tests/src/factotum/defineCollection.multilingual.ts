@@ -71,12 +71,12 @@ const calendarFr = (
   name: "Calendrier",
   description: "Mon calendrier personnel.",
   assistantInstructions: [
-    "- Si la durée n’est pas indiquée pour les événements, définir par défaut 1 heure.",
+    "- Si la durée n'est pas indiquée pour les événements, définir par défaut 1 heure.",
   ].join("\n"),
   schema: {
     types: {
       Type: {
-        description: "Type d’une entrée de calendrier.",
+        description: "Type d'une entrée de calendrier.",
         dataType: DataType.Enum,
         members: {
           Evenement: {
@@ -96,22 +96,22 @@ const calendarFr = (
         dataType: DataType.Struct,
         properties: {
           type: {
-            description: "Le type de l’entrée.",
+            description: "Le type de l'entrée.",
             dataType: null,
             ref: "Type",
           },
           titre: {
-            description: "Titre court pour l’entrée. 5 mots max.",
+            description: "Titre court pour l'entrée. 5 mots max.",
             dataType: DataType.String,
           },
           heureDebut: {
-            description: "Quand l’événement ou le rappel commence.",
+            description: "Quand l'événement ou le rappel commence.",
             dataType: DataType.String,
             format: "dev.superego:String.Instant",
           },
           heureFin: {
             description:
-              "Quand l’événement ou le rappel se termine. Null pour les rappels.",
+              "Quand l'événement ou le rappel se termine. Null pour les rappels.",
             dataType: DataType.String,
             format: "dev.superego:String.Instant",
           },

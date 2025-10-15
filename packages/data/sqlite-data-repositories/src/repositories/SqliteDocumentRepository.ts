@@ -51,6 +51,15 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     return result !== undefined;
   }
 
+  async oneExistsWhereCollectionIdEq(
+    collectionId: CollectionId,
+  ): Promise<boolean> {
+    const result = this.db
+      .prepare(`SELECT 1 FROM "${table}" WHERE "collection_id" = ?`)
+      .get(collectionId) as 1 | undefined;
+    return result !== undefined;
+  }
+
   async find(id: DocumentId): Promise<DocumentEntity | null> {
     const document = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)

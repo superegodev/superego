@@ -105,7 +105,7 @@ interface Document {
 ### Working with dates and times
 
 Always use the global class \`LocalInstant\` helper for **all** date/time
-parsing, math, and formatting. It runs in the user’s timezone and correctly
+parsing, math, and formatting. It runs in the user's timezone and correctly
 handles DST shifts, leap years, end-of-month rollovers, and locale formatting.
 Prefer \`LocalInstant\` over native \`Date\` arithmetic.
 

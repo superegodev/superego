@@ -653,6 +653,9 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Item {number}"
   },
+  "Remote.tsx_s8FZNF": {
+    "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
+  },
   "RemoteConverters.tsx_3cBs4J": {
     "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
   },
@@ -772,21 +775,6 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
-  },
-  "UnsetCollectionRemoteButton.tsx_P0C6J1": {
-    "defaultMessage": "Unset remote"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_3WOHEb": {
-    "defaultMessage": "<p> Unsetting the remote will permanently delete all the documents and files synced from it. </p> <p> If you're sure you want to unset the remote, write <i>unset</i> in the input below. </p>"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_9i18Lt": {
-    "defaultMessage": "Unset \"{remote}\" remote"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_V8yJy5": {
-    "defaultMessage": "Unset"
-  },
-  "UnsetCollectionRemoteModalForm.tsx_lml5ZH": {
-    "defaultMessage": "Command confirmation"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"

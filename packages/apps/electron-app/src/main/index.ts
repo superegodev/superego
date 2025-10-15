@@ -31,16 +31,10 @@ app
     }
   })
   .on("web-contents-created", (_event, contents) => {
-    contents
-      .on("will-navigate", (event) => {
-        // Disable navigation. BrowserApp doesn't use navigation, so we don't
-        // actually expect any navigation attempt. Still, if they occur, they
-        // are probably erroneous and we want to prevent them.
-        event.preventDefault();
-      })
-      .setWindowOpenHandler(() => {
-        // Disable opening new windows. In the future, if necessary, consider
-        // opening new windows for "external" URLs, like links, mailto-s, etc.
-        return { action: "deny" };
-      });
+    contents.on("will-navigate", (event) => {
+      // Disable navigation. BrowserApp doesn't use navigation, so we don't
+      // actually expect any navigation attempt. Still, if they occur, they
+      // are probably erroneous and we want to prevent them.
+      event.preventDefault();
+    });
   });

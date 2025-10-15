@@ -2,6 +2,7 @@ import {
   type Backend,
   type CannotChangeCollectionRemoteConnector,
   type Collection,
+  type CollectionHasDocuments,
   type CollectionId,
   type CollectionNotFound,
   type ConnectorAuthenticationSettings,
@@ -41,6 +42,7 @@ export default class CollectionsSetRemote extends Usecase<
   ): ResultPromise<
     Collection,
     | CollectionNotFound
+    | CollectionHasDocuments
     | ConnectorNotFound
     | CannotChangeCollectionRemoteConnector
     | ConnectorAuthenticationSettingsNotValid
@@ -52,6 +54,15 @@ export default class CollectionsSetRemote extends Usecase<
     if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId: id }),
+      );
+    }
+
+    if (
+      !collection.remote &&
+      (await this.repos.document.oneExistsWhereCollectionIdEq(id))
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionHasDocuments", { collectionId: id }),
       );
     }
 

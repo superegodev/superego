@@ -10,7 +10,6 @@ import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
 import CollectionsDownSync from "./usecases/collections/DownSync.js";
 
-// TODO: unit tests
 export default class BackgroundJobExecutor {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,

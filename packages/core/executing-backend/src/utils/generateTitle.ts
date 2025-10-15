@@ -26,7 +26,7 @@ message.
 OUTPUT REQUIREMENTS
 - Use between 3 and 5 words.
 - Title Case major words.
-- Use the message’s language.
+- Use the message's language.
 - Reply with the title ONLY (no extra text, quotes, emojis, or explanations).
 - Do not add punctuation, except keep punctuation that is part of names/tech
   (e.g., Next.js, C++).
