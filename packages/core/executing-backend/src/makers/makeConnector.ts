@@ -7,5 +7,7 @@ export default function makeConnector(connector: Connector): ConnectorB {
     authenticationStrategy: connector.authenticationStrategy,
     settingsSchema: connector.settingsSchema,
     remoteDocumentTypescriptSchema: connector.remoteDocumentTypescriptSchema,
+    protoRemoteDocumentTypescriptSchema:
+      connector.protoRemoteDocumentTypescriptSchema ?? null,
   };
 }

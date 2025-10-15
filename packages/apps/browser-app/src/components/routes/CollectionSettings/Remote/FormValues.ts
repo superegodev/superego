@@ -8,5 +8,6 @@ export default interface FormValues {
   connectorSettings: any;
   remoteConverters: {
     fromRemoteDocument: TypescriptModule;
+    toProtoRemoteDocument: TypescriptModule | null;
   };
 }

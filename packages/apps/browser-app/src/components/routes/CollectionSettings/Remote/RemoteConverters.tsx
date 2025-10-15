@@ -20,7 +20,7 @@ export default function RemoteConverters({
   collection,
 }: Props) {
   const intl = useIntl();
-  const typescriptLibs = useMemo<TypescriptLib[]>(() => {
+  const fromRemoteDocumentTypescriptLibs = useMemo<TypescriptLib[]>(() => {
     if (!connector) {
       return [];
     }
@@ -32,6 +32,22 @@ export default function RemoteConverters({
       {
         path: wellKnownLibPaths.remoteDocumentSchema,
         source: connector.remoteDocumentTypescriptSchema.types,
+      },
+    ];
+  }, [connector, collection]);
+  const toProtoRemoteDocumentTypescriptLibs = useMemo<TypescriptLib[]>(() => {
+    if (!connector) {
+      return [];
+    }
+    return [
+      {
+        path: wellKnownLibPaths.collectionSchema,
+        source: codegen(collection.latestVersion.schema),
+      },
+      {
+        path: wellKnownLibPaths.protoRemoteDocumentSchema,
+        // TODO
+        source: connector.protoRemoteDocumentTypescriptSchema!.types,
       },
     ];
   }, [connector, collection]);
@@ -48,7 +64,7 @@ export default function RemoteConverters({
           label={intl.formatMessage({
             defaultMessage: "From remote document",
           })}
-          typescriptLibs={typescriptLibs}
+          typescriptLibs={fromRemoteDocumentTypescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
           assistantImplementationInstructions={`
 We're syncing a remote database collection with a local one. Remote and local
@@ -67,6 +83,35 @@ remote document will not be synced into a local one.
                 TypeScript function transforming a remote document into the
                 content of a local document. Return <code>null</code> to skip
                 syncing the document.
+              `}
+              values={formattedMessageHtmlTags}
+            />
+          }
+        />
+        <RHFTypescriptModuleField
+          control={control}
+          name="remoteConverters.toProtoRemoteDocument"
+          label={intl.formatMessage({
+            defaultMessage: "To proto remote document",
+          })}
+          typescriptLibs={toProtoRemoteDocumentTypescriptLibs}
+          includedGlobalUtils={includedGlobalUtils}
+          assistantImplementationInstructions={`
+We're syncing a local database collection with a remote one. Local and remote
+documents have different shapes, so a function is needed to convert between the
+two shapes. This is the function. It takes in a local document as first and
+only argument, and returns the "proto remote document" from which the remote
+document will be created. The proto remote document must STRICTLY abide by the
+TypeScript type that describes it.
+
+If a local document can't (e.g., missing required properties) or shouldn't
+(e.g., it not relevant) be converted into a remote document, return null, and
+the remote document will not be created.
+          `.trim()}
+          description={
+            <FormattedMessage
+              defaultMessage={`
+                TODO
               `}
               values={formattedMessageHtmlTags}
             />

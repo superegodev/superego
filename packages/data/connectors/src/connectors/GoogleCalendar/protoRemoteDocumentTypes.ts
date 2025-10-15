@@ -3,6 +3,8 @@
 //
 // Manual adjustments:
 //
+// - Removed read-only properties, only keeping properties listed as Writable in
+//   https://developers.google.com/workspace/calendar/api/v3/reference/events/insert.
 // - Removed the Schema$ prefix.
 // - Transformed interfaces into types, to keep consistency with code generated
 //   by codegen.
@@ -63,17 +65,6 @@ export type ConferenceParametersAddOnParameters = {
   parameters?: { [key: string]: string } | null;
 };
 
-export type ConferenceRequestStatus = {
-  /**
-   * The current status of the conference create request. Read-only.
-   * The possible values are:
-   * - "pending": the conference create request is still being processed.
-   * - "success": the conference create request succeeded, the entry points are populated.
-   * - "failure": the conference create request failed, there are no entry points.
-   */
-  statusCode?: string | null;
-};
-
 export type ConferenceSolution = {
   /**
    * The user-visible icon for this solution.
@@ -112,10 +103,6 @@ export type CreateConferenceRequest = {
    * Clients should regenerate this ID for every new request. If an ID provided is the same as for the previous request, the request is ignored.
    */
   requestId?: string | null;
-  /**
-   * The status of the conference create request.
-   */
-  status?: ConferenceRequestStatus;
 };
 
 export type EntryPoint = {
@@ -203,10 +190,6 @@ export type Event = {
    */
   attendees?: EventAttendee[];
   /**
-   * Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.
-   */
-  attendeesOmitted?: boolean | null;
-  /**
    * Birthday or special event data. Used if eventType is "birthday". Immutable.
    */
   birthdayProperties?: EventBirthdayProperties;
@@ -219,40 +202,18 @@ export type Event = {
    */
   conferenceData?: ConferenceData;
   /**
-   * Creation time of the event (as a RFC3339 timestamp). Read-only.
-   */
-  created?: string | null;
-  /**
-   * The creator of the event. Read-only.
-   */
-  creator?: {
-    displayName?: string;
-    email?: string;
-    id?: string;
-    self?: boolean;
-  } | null;
-  /**
    * Description of the event. Can contain HTML. Optional.
    */
   description?: string | null;
   /**
    * The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance.
    */
-  end?: EventDateTime;
-  /**
-   * Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False.
-   */
-  endTimeUnspecified?: boolean | null;
-  /**
-   * ETag of the resource.
-   */
-  etag?: string | null;
+  end: EventDateTime;
   /**
    * Specific type of the event. This cannot be modified after the event is created. Possible values are:
    * - "birthday" - A special all-day event with an annual recurrence.
    * - "default" - A regular event or not further specified.
    * - "focusTime" - A focus-time event.
-   * - "fromGmail" - An event from Gmail. This type of event cannot be created.
    * - "outOfOffice" - An out-of-office event.
    * - "workingLocation" - A working location event.
    */
@@ -294,14 +255,6 @@ export type Event = {
    */
   guestsCanSeeOtherGuests?: boolean | null;
   /**
-   * An absolute link to the Google Hangout associated with this event. Read-only.
-   */
-  hangoutLink?: string | null;
-  /**
-   * An absolute link to this event in the Google Calendar Web UI. Read-only.
-   */
-  htmlLink?: string | null;
-  /**
    * Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.
    * Note that the iCalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same iCalUIDs. To retrieve an event using its iCalUID, call the events.list method using the iCalUID parameter. To retrieve an event using its id, call the events.get method.
    */
@@ -316,26 +269,9 @@ export type Event = {
    */
   id?: string | null;
   /**
-   * Type of the resource ("calendar#event").
-   */
-  kind?: string | null;
-  /**
    * Geographic location of the event as free-form text. Optional.
    */
   location?: string | null;
-  /**
-   * Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False. Read-Only.
-   */
-  locked?: boolean | null;
-  /**
-   * The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event.
-   */
-  organizer?: {
-    displayName?: string;
-    email?: string;
-    id?: string;
-    self?: boolean;
-  } | null;
   /**
    * For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. It uniquely identifies the instance within the recurring event series even if the instance was moved to a different time. Immutable.
    */
@@ -345,17 +281,9 @@ export type Event = {
    */
   outOfOfficeProperties?: EventOutOfOfficeProperties;
   /**
-   * If set to True, Event propagation is disabled. Note that it is not the same thing as Private event properties. Optional. Immutable. The default is False.
-   */
-  privateCopy?: boolean | null;
-  /**
    * List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events.
    */
   recurrence?: string[] | null;
-  /**
-   * For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable.
-   */
-  recurringEventId?: string | null;
   /**
    * Information about the event's reminders for the authenticated user. Note that changing reminders does not also change the updated property of the enclosing event.
    */
@@ -374,7 +302,7 @@ export type Event = {
   /**
    * The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance.
    */
-  start?: EventDateTime;
+  start: EventDateTime;
   /**
    * Status of the event. Optional. Possible values are:
    * - "confirmed" - The event is confirmed. This is the default status.
@@ -399,10 +327,6 @@ export type Event = {
    */
   transparency?: string | null;
   /**
-   * Last modification time of the main event data (as a RFC3339 timestamp). Updating event reminders will not cause this to change. Read-only.
-   */
-  updated?: string | null;
-  /**
    * Visibility of the event. Optional. Possible values are:
    * - "default" - Uses the default visibility for events on the calendar. This is the default value.
    * - "public" - The event is public and event details are visible to all readers of the calendar.
@@ -418,28 +342,11 @@ export type Event = {
 
 export type EventAttachment = {
   /**
-   * ID of the attached file. Read-only.
-   * For Google Drive files, this is the ID of the corresponding Files resource entry in the Drive API.
-   */
-  fileId?: string | null;
-  /**
    * URL link to the attachment.
    * For adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API.
    * Required when adding an attachment.
    */
   fileUrl?: string | null;
-  /**
-   * URL link to the attachment's icon. This field can only be modified for custom third-party attachments.
-   */
-  iconLink?: string | null;
-  /**
-   * Internet media type (MIME type) of the attachment.
-   */
-  mimeType?: string | null;
-  /**
-   * Attachment title.
-   */
-  title?: string | null;
 };
 
 export type EventAttendee = {
@@ -461,17 +368,9 @@ export type EventAttendee = {
    */
   email?: string | null;
   /**
-   * The attendee's Profile ID, if available.
-   */
-  id?: string | null;
-  /**
    * Whether this is an optional attendee. Optional. The default is False.
    */
   optional?: boolean | null;
-  /**
-   * Whether the attendee is the organizer of the event. Read-only. The default is False.
-   */
-  organizer?: boolean | null;
   /**
    * Whether the attendee is a resource. Can only be set when the attendee is added to the event for the first time. Subsequent modifications are ignored. Optional. The default is False.
    */
@@ -484,21 +383,9 @@ export type EventAttendee = {
    * - "accepted" - The attendee has accepted the invitation.  Warning: If you add an event using the values declined, tentative, or accepted, attendees with the "Add invitations to my calendar" setting set to "When I respond to invitation in email" or "Only if the sender is known" might have their response reset to needsAction and won't see an event in their calendar unless they change their response in the event invitation email. Furthermore, if more than 200 guests are invited to the event, response status is not propagated to the guests.
    */
   responseStatus?: string | null;
-  /**
-   * Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.
-   */
-  self?: boolean | null;
 };
 
 export type EventBirthdayProperties = {
-  /**
-   * Resource name of the contact this birthday event is linked to. This can be used to fetch contact details from People API. Format: "people/c12345". Read-only.
-   */
-  contact?: string | null;
-  /**
-   * Custom type label specified for this event. This is populated if birthdayProperties.type is set to "custom". Read-only.
-   */
-  customTypeName?: string | null;
   /**
    * Type of birthday or special event. Possible values are:
    * - "anniversary" - An anniversary other than birthday. Always has a contact.

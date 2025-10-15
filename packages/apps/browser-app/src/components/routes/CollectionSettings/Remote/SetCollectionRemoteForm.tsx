@@ -57,6 +57,12 @@ export default function SetCollectionRemoteForm({
               collection.latestVersion.schema,
               connector.remoteDocumentTypescriptSchema,
             ),
+            toProtoRemoteDocument: connector.protoRemoteDocumentTypescriptSchema
+              ? forms.defaults.toProtoRemoteDocument(
+                  collection.latestVersion.schema,
+                  connector.protoRemoteDocumentTypescriptSchema,
+                )
+              : null,
           },
         },
     mode: "onBlur",
@@ -75,6 +81,9 @@ export default function SetCollectionRemoteForm({
           : v.null(),
         remoteConverters: v.strictObject({
           fromRemoteDocument: forms.schemas.typescriptModule(intl),
+          toProtoRemoteDocument: v.nullable(
+            forms.schemas.typescriptModule(intl),
+          ),
         }),
       }),
     ),

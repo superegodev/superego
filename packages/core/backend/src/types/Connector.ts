@@ -14,4 +14,13 @@ export default interface Connector {
     /** Name of the "main" type describing the remote document. */
     rootType: string;
   };
+  protoRemoteDocumentTypescriptSchema: {
+    /**
+     * TypeScript module exporting the various types describing a remote
+     * document. Types must not be default-exported.
+     */
+    types: string;
+    /** Name of the "main" type describing the remote document. */
+    rootType: string;
+  } | null;
 }

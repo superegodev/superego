@@ -148,6 +148,25 @@ export default class CollectionsSetRemote extends Usecase<
         }),
       );
     }
+    if (
+      remoteConverters.toProtoRemoteDocument !== null &&
+      !(await this.javascriptSandbox.moduleDefaultExportsFunction(
+        remoteConverters.toProtoRemoteDocument,
+      ))
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("RemoteConvertersNotValid", {
+          collectionId: id,
+          issues: [
+            {
+              message:
+                "The default export of the toProtoRemoteDocument TypescriptModule is not a function",
+              path: [{ key: "toProtoRemoteDocument" }],
+            },
+          ],
+        }),
+      );
+    }
 
     const latestVersion =
       await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);

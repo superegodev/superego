@@ -23,6 +23,7 @@ import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
@@ -62,7 +63,8 @@ export default class DocumentsCreate extends Usecase<
       remoteVersionId?: string | null;
     },
   ): ExecReturnValue {
-    if (!(await this.repos.collection.exists(collectionId))) {
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId }),
       );
@@ -105,10 +107,75 @@ export default class DocumentsCreate extends Usecase<
       );
     }
 
+    let remoteId = options?.remoteId ?? null;
+    let remoteVersionId = options?.remoteVersionId ?? null;
+    const { protoFilesWithIds, convertedContent } =
+      ContentFileUtils.extractAndConvertProtoFiles(
+        latestCollectionVersion.schema,
+        contentValidationResult.output,
+      );
+
+    if (
+      options?.createdBy !== DocumentVersionCreator.Connector &&
+      collection.remote &&
+      latestCollectionVersion.remoteConverters?.toProtoRemoteDocument
+    ) {
+      const connector = this.getConnector(collection);
+      assertCollectionRemoteConnectorExists(
+        collection.id,
+        collection.remote.connector.name,
+        connector,
+      );
+      // TODO: assert function
+      if (!connector.createRemoteDocument) {
+        throw new Error("TODO Should have createRemoteDocument");
+      }
+
+      const protoRemoteDocumentResult =
+        await this.javascriptSandbox.executeSyncFunction(
+          latestCollectionVersion.remoteConverters.toProtoRemoteDocument,
+          [convertedContent],
+        );
+      if (!protoRemoteDocumentResult.success) {
+        // TODO: custom error
+        return makeUnsuccessfulResult(
+          makeResultError("UnexpectedError", {
+            cause: protoRemoteDocumentResult.error,
+          }),
+        );
+      }
+      const createRemoteDocumentParams = {
+        authenticationSettings:
+          collection.remote.connector.authenticationSettings,
+        authenticationState: collection.remote.connectorAuthenticationState,
+        settings: collection.remote.connector.settings,
+        protoRemoteDocument: protoRemoteDocumentResult.data,
+      };
+      const createRemoteDocumentResult = await connector
+        // TODO: explanation
+        // @ts-expect-error
+        .createRemoteDocument(createRemoteDocumentParams)
+        // Handle case in which the connector throws instead of returning an
+        // unsuccessful Result. (It should always return a Result, but bugs
+        // lurk.)
+        .catch((error) =>
+          makeUnsuccessfulResult(makeResultError("UnexpectedError", error)),
+        );
+      if (!createRemoteDocumentResult.success) {
+        // TODO: custom error
+        return makeUnsuccessfulResult(
+          makeResultError("UnexpectedError", {
+            cause: createRemoteDocumentResult.error,
+          }),
+        );
+      }
+      remoteId = createRemoteDocumentResult.data.createdDocument.id;
+      remoteVersionId =
+        createRemoteDocumentResult.data.createdDocument.versionId;
+    }
+
     const now = new Date();
     const createdBy = options?.createdBy ?? DocumentVersionCreator.User;
-    const remoteId = options?.remoteId ?? null;
-    const remoteVersionId = options?.remoteVersionId ?? null;
     const conversationId = options?.conversationId ?? null;
     const document: DocumentEntity = {
       id: Id.generate.document(),
@@ -116,11 +183,7 @@ export default class DocumentsCreate extends Usecase<
       collectionId: collectionId,
       createdAt: now,
     };
-    const { protoFilesWithIds, convertedContent } =
-      ContentFileUtils.extractAndConvertProtoFiles(
-        latestCollectionVersion.schema,
-        contentValidationResult.output,
-      );
+
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
       remoteId: remoteVersionId,

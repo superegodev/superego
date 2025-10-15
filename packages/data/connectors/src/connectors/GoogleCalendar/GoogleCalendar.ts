@@ -1,4 +1,11 @@
+import type {
+  ConnectorAuthenticationFailed,
+  ConnectorAuthenticationSettings,
+  ConnectorAuthenticationState,
+  UnexpectedError,
+} from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   failedResponseToError,
   makeSuccessfulResult,
@@ -13,6 +20,7 @@ import type Base64Url from "../../requirements/Base64Url.js";
 import type SessionStorage from "../../requirements/SessionStorage.js";
 import type { ListEventsResponseBody } from "./apiTypes.js";
 import { GoogleCalendarSyncTokenExpired } from "./errors.js";
+import ProtoRemoteDocumentTypes from "./ProtoRemoteDocumentTypes.js?raw";
 import type { Event } from "./remoteDocumentTypes.js";
 import remoteDocumentTypes from "./remoteDocumentTypes.js?raw";
 import SettingsSchema from "./SettingsSchema.js";
@@ -37,6 +45,11 @@ export default class GoogleCalendar
 
   remoteDocumentTypescriptSchema = {
     types: remoteDocumentTypes,
+    rootType: "Event",
+  };
+
+  protoRemoteDocumentTypescriptSchema = {
+    types: ProtoRemoteDocumentTypes,
     rootType: "Event",
   };
 
@@ -106,6 +119,107 @@ export default class GoogleCalendar
         };
       }
     };
+
+  createRemoteDocument: Connector.OAuth2PKCE<
+    typeof SettingsSchema,
+    Event
+  >["createRemoteDocument"] = async (params: {
+    authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+    authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+    settings: { calendarId: string };
+    protoRemoteDocument: any;
+  }): ResultPromise<
+    {
+      createdDocument: Connector.AddedOrModifiedDocument<Event>;
+      authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+    },
+    UnexpectedError | ConnectorAuthenticationFailed
+  > => {
+    const {
+      authenticationSettings,
+      authenticationState,
+      settings: { calendarId },
+      protoRemoteDocument,
+    } = params;
+
+    try {
+      let freshAuthenticationState = await this.getFreshAuthenticationState({
+        authenticationSettings,
+        authenticationState,
+      });
+
+      const url = new URL(
+        `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events`,
+      );
+      const requestBody = JSON.stringify(protoRemoteDocument ?? {});
+
+      const createdEvent = await pRetry(
+        async () => {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${freshAuthenticationState.accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: requestBody,
+          });
+
+          if (!response.ok) {
+            if (response.status === 401) {
+              throw new OAuth2PKCEAccessTokenNotValid();
+            }
+            throw await failedResponseToError("POST", requestBody, response);
+          }
+
+          return (await response.json()) as Event;
+        },
+        {
+          retries: 1,
+          onFailedAttempt: async ({ error, retriesLeft }) => {
+            if (retriesLeft === 0) {
+              return;
+            }
+            if (error instanceof OAuth2PKCEAccessTokenNotValid) {
+              freshAuthenticationState = await this.refreshAuthenticationState({
+                authenticationSettings,
+                authenticationState: freshAuthenticationState,
+              });
+            }
+          },
+          shouldRetry: ({ error }) =>
+            error instanceof OAuth2PKCEAccessTokenNotValid,
+        },
+      );
+
+      const id = createdEvent.id;
+      const versionId = createdEvent.etag;
+      if (!id || !versionId) {
+        throw new Error("Created event is missing id or etag");
+      }
+
+      return makeSuccessfulResult({
+        createdDocument: {
+          id,
+          versionId,
+          content: createdEvent,
+        },
+        authenticationState: freshAuthenticationState,
+      });
+    } catch (error) {
+      return {
+        success: false,
+        data: null,
+        error: {
+          name:
+            error instanceof OAuth2PKCEAccessTokenNotValid ||
+            error instanceof OAuth2PKCERefreshAuthenticationStateFailed
+              ? "ConnectorAuthenticationFailed"
+              : "UnexpectedError",
+          details: { cause: error },
+        },
+      };
+    }
+  };
 
   private static async fetchCalendarChanges(
     calendarId: string,

@@ -10,7 +10,6 @@ export default function migration(
 ): TypescriptModule {
   const currentRootType = currentSchema.rootType;
   const nextRootType = nextSchema.rootType;
-  const argName = lowerFirst(currentRootType);
   const currentImportPath = `.${wellKnownLibPaths.currentCollectionSchema.replace(".ts", ".js")}`;
   const nextImportPath = `.${wellKnownLibPaths.nextCollectionSchema.replace(".ts", ".js")}`;
   return {
@@ -19,9 +18,9 @@ export default function migration(
       `import type * as Next from "${nextImportPath}";`,
       "",
       "export default function migrate(",
-      `  ${argName}: Current.${currentRootType}`,
+      `  ${lowerFirst(currentRootType)}: Current.${currentRootType}`,
       `): Next.${nextRootType} {`,
-      `  return ${argName};`,
+      "  return {};",
       "}",
     ].join("\n"),
     compiled: COMPILATION_REQUIRED,

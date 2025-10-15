@@ -13,11 +13,16 @@ namespace Connector {
   export interface ApiKey<
     SettingsSchema extends Schema | null = null,
     RemoteDocument = any,
+    ProtoRemoteDocument = any,
   > {
     name: string;
     authenticationStrategy: ConnectorAuthenticationStrategy.ApiKey;
     settingsSchema: SettingsSchema | null;
     remoteDocumentTypescriptSchema: {
+      types: string;
+      rootType: string;
+    };
+    protoRemoteDocumentTypescriptSchema?: {
       types: string;
       rootType: string;
     };
@@ -37,16 +42,33 @@ namespace Connector {
       },
       ConnectorAuthenticationFailed | UnexpectedError
     >;
+    createRemoteDocument?(params: {
+      authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+      authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+      settings: SettingsSchema extends Schema ? TypeOf<SettingsSchema> : null;
+      protoRemoteDocument: ProtoRemoteDocument;
+    }): ResultPromise<
+      {
+        createdDocument: CreatedDocument<RemoteDocument>;
+        authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+      },
+      ConnectorAuthenticationFailed | UnexpectedError
+    >;
   }
 
   export interface OAuth2PKCE<
     SettingsSchema extends Schema | null = null,
     RemoteDocument = any,
+    ProtoRemoteDocument = any,
   > {
     name: string;
     authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE;
     settingsSchema: SettingsSchema | null;
     remoteDocumentTypescriptSchema: {
+      types: string;
+      rootType: string;
+    };
+    protoRemoteDocumentTypescriptSchema?: {
       types: string;
       rootType: string;
     };
@@ -74,6 +96,24 @@ namespace Connector {
       },
       ConnectorAuthenticationFailed | UnexpectedError
     >;
+    createRemoteDocument?(params: {
+      authenticationSettings: ConnectorAuthenticationSettings.OAuth2PKCE;
+      authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+      settings: SettingsSchema extends Schema ? TypeOf<SettingsSchema> : null;
+      protoRemoteDocument: ProtoRemoteDocument;
+    }): ResultPromise<
+      {
+        createdDocument: CreatedDocument<RemoteDocument>;
+        authenticationState: ConnectorAuthenticationState.OAuth2PKCE;
+      },
+      ConnectorAuthenticationFailed | UnexpectedError
+    >;
+  }
+
+  export interface CreatedDocument<RemoteDocument = any> {
+    id: string;
+    versionId: string;
+    content: RemoteDocument;
   }
 
   export interface AddedOrModifiedDocument<RemoteDocument = any> {

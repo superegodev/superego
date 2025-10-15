@@ -4,6 +4,7 @@ import migration from "./migration.js";
 import schema from "./schema.js";
 import schemaValue from "./schemaValue.js";
 import tiptapRichTextJsonObject from "./tiptapRichTextJsonObject.js";
+import toProtoRemoteDocument from "./toProtoRemoteDocument.js";
 import typeDefinitionValue from "./typeDefinitionValue.js";
 
 export default {
@@ -13,5 +14,6 @@ export default {
   schema,
   schemaValue,
   tiptapRichTextJsonObject,
+  toProtoRemoteDocument,
   typeDefinitionValue,
 };

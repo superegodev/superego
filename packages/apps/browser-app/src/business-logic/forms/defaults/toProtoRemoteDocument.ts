@@ -4,22 +4,25 @@ import { lowerFirst } from "es-toolkit";
 import wellKnownLibPaths from "../../typescript/wellKnownLibPaths.js";
 import { COMPILATION_REQUIRED } from "../constants.js";
 
-export default function fromRemoteDocument(
+export default function toProtoRemoteDocument(
   collectionSchema: Schema,
-  remoteDocumentTypescriptSchema: Connector["remoteDocumentTypescriptSchema"],
+  protoRemoteDocumentTypescriptSchema: NonNullable<
+    Connector["protoRemoteDocumentTypescriptSchema"]
+  >,
 ): TypescriptModule {
   const collectionRootType = collectionSchema.rootType;
-  const remoteDocumentRootType = remoteDocumentTypescriptSchema.rootType;
+  const protoRemoteDocumentRootType =
+    protoRemoteDocumentTypescriptSchema.rootType;
   const collectionImportPath = `.${wellKnownLibPaths.collectionSchema.replace(".ts", ".js")}`;
-  const remoteDocumentImportPath = `.${wellKnownLibPaths.remoteDocumentSchema.replace(".ts", ".js")}`;
+  const protoRemoteDocumentImportPath = `.${wellKnownLibPaths.protoRemoteDocumentSchema.replace(".ts", ".js")}`;
   return {
     source: [
       `import type * as Local from "${collectionImportPath}";`,
-      `import type * as Remote from "${remoteDocumentImportPath}";`,
+      `import type * as Remote from "${protoRemoteDocumentImportPath}";`,
       "",
-      "export default function fromRemoteDocument(",
-      `  ${lowerFirst(remoteDocumentRootType)}: Remote.${remoteDocumentRootType}`,
-      `): Local.${collectionRootType} | null {`,
+      "export default function toProtoRemoteDocument(",
+      `  ${lowerFirst(collectionRootType)}: Local.${collectionRootType}`,
+      `): Remote.${protoRemoteDocumentRootType} | null {`,
       "  return {};",
       "}",
     ].join("\n"),
