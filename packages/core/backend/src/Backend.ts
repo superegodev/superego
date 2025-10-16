@@ -183,7 +183,9 @@ export default interface Backend {
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
-      migration: TypescriptModule,
+      /** Null for collections with a remote. */
+      migration: TypescriptModule | null,
+      /** Null for collections without a remote. */
       remoteConverters: RemoteConverters | null,
     ): ResultPromise<
       Collection,
