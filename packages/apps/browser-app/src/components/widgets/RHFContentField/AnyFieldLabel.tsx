@@ -1,6 +1,7 @@
 import { type AnyTypeDefinition, DataType } from "@superego/schema";
 import type { ReactNode } from "react";
 import { Button, TooltipTrigger } from "react-aria-components";
+import { FormattedMessage } from "react-intl";
 import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Tooltip from "../../design-system/Tooltip/Tooltip.js";
@@ -40,20 +41,30 @@ export default function AnyFieldLabel({
       {showTypes ? (
         <span className={cs.AnyFieldLabel.dataType}>
           {dataTypeLabel}
-          {showNullability
-            ? isNullable
-              ? " (Nullable)"
-              : " (Non-nullable)"
-            : null}
+          {showNullability ? (
+            isNullable ? (
+              " (Nullable)"
+            ) : (
+              " (Non-nullable)"
+            )
+          ) : !isNullable ? (
+            <TooltipTrigger delay={500}>
+              <Button slot={null} className={cs.AnyFieldLabel.tooltipTrigger}>
+                <sup className={cs.AnyFieldLabel.nonNullableAsterisk}>
+                  {"*"}
+                </sup>
+              </Button>
+              <Tooltip>
+                <FormattedMessage defaultMessage="Required" />
+              </Tooltip>
+            </TooltipTrigger>
+          ) : null}
         </span>
       ) : null}
       {typeDefinition.description ? (
         <TooltipTrigger delay={500}>
-          <Button
-            slot={null}
-            className={cs.AnyFieldLabel.descriptionTooltipTrigger}
-          >
-            {"ℹ️"}
+          <Button slot={null} className={cs.AnyFieldLabel.tooltipTrigger}>
+            <sup>{"ℹ"}</sup>
           </Button>
           <Tooltip>{typeDefinition.description}</Tooltip>
         </TooltipTrigger>
