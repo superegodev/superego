@@ -50,9 +50,12 @@ Starting from the supplied <starting-point> TypeScript snippet, follow
 - The function has access and can import the TypeScript files supplied in
   <libs>.
 - The implemented function MUST compile without errors.
+- Solve all TODOs, if there are any.
 - Only make the changes necessary to complete the implementation.
-- Keep the same style of <starting-point>.
+- Keep the same coding style of <starting-point>.
 - Return the implemented function to the user by calling the
+- Include comments, but never use TSDoc tags.
+- Don't mention these rules or <instructions> in comments.
   ${ToolName.WriteTypescriptFunction} tool.
               `.trim(),
             },

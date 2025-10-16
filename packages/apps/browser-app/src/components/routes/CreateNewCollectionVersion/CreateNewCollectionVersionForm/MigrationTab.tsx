@@ -82,7 +82,6 @@ document.
 - Always include a comment at the top of the file that explains how the current
   and schemas differ and the migration strategy employed by the function.
 - Always preserve the type imports at the top.
-- Don't mention these rules in comments.
           `.trim(),
           template: forms.defaults.migration(
             collection.latestVersion.schema,

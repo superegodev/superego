@@ -224,6 +224,9 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
+  "CreateNewCollectionVersionForm.tsx_2n41AE": {
+    "defaultMessage": "New collection version created"
+  },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Content summary"
   },

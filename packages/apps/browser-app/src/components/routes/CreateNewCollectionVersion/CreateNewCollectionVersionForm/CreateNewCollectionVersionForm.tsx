@@ -10,6 +10,10 @@ import * as v from "valibot";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
+import { RouteName } from "../../../../business-logic/navigation/Route.js";
+import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
+import ToastType from "../../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
@@ -24,6 +28,7 @@ interface Props {
 }
 export default function CreateNewCollectionVersionForm({ collection }: Props) {
   const intl = useIntl();
+  const { navigateTo } = useNavigationState();
 
   const { result, mutate } = useCreateNewCollectionVersion();
 
@@ -42,7 +47,6 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     setValue,
     getValues,
     resetField,
-    reset,
     formState,
   } = useForm<CreateNewCollectionVersionFormValues>({
     defaultValues: {
@@ -64,7 +68,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   });
 
   const onSubmit = async (values: CreateNewCollectionVersionFormValues) => {
-    const { success, data } = await mutate(
+    const { success } = await mutate(
       collection.id,
       collection.latestVersion.id,
       values.schema,
@@ -73,15 +77,16 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       values.remoteConverters,
     );
     if (success) {
-      reset({
-        schema: data.latestVersion.schema,
-        migration: forms.defaults.migration(
-          collection.latestVersion.schema,
-          collection.latestVersion.schema,
-        ),
-        contentSummaryGetter: data.latestVersion.settings.contentSummaryGetter,
-        remoteConverters: data.latestVersion.remoteConverters,
-      });
+      toastQueue.add(
+        {
+          type: ToastType.Success,
+          title: intl.formatMessage({
+            defaultMessage: "New collection version created",
+          }),
+        },
+        { timeout: 5_000 },
+      );
+      navigateTo({ name: RouteName.Collection, collectionId: collection.id });
     }
   };
 
