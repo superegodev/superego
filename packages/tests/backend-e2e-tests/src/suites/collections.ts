@@ -32,7 +32,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -77,7 +78,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -113,7 +115,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -202,7 +205,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -222,7 +226,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
             settings: {
               contentSummaryGetter: {
                 source: "",
-                compiled: "export default function getContentSummary() {}",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
               },
             },
             migration: null,
@@ -290,7 +295,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -339,7 +345,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -388,7 +395,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -445,7 +453,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -509,7 +518,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -532,7 +542,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -568,7 +579,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -584,7 +596,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -654,7 +667,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -667,7 +681,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -755,7 +770,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -770,7 +786,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -844,7 +861,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -859,7 +877,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -943,7 +962,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -958,7 +978,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -1030,7 +1051,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1045,7 +1067,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -1119,7 +1142,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1217,7 +1241,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1232,7 +1257,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const remoteConverters = {
         fromRemoteDocument: {
           source: "",
-          compiled: "export default function fromRemoteDocument() {}",
+          compiled:
+            "export default function fromRemoteDocument() { return {}; }",
         },
       };
       const setRemoteResult = await backend.collections.setRemote(
@@ -1338,7 +1364,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1351,7 +1378,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -1366,7 +1394,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -1436,7 +1465,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1505,7 +1535,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1686,7 +1717,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1756,7 +1788,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -1949,7 +1982,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -2408,6 +2442,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 {
                   id: "remoteId",
                   versionId: "remoteVersionId",
+                  url: "remoteUrl",
                   content: { title: "title" },
                 },
               ],
@@ -2534,6 +2569,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 {
                   id: "remoteId",
                   versionId: "remoteVersionId",
+                  url: "remoteUrl",
                   content: { title: "title" },
                 },
               ],
@@ -2636,6 +2672,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: "remoteId",
             versionId: "remoteVersionId1",
+            url: "remoteUrl1",
             content: { title: "valid" },
           },
         ],
@@ -2646,6 +2683,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: firstChanges.addedOrModified[0]!.id,
             versionId: "remoteVersionId2",
+            url: "remoteUrl2",
             content: { title: "invalid" },
           },
         ],
@@ -2781,17 +2819,20 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: "remoteId1",
             versionId: "remoteVersionId1",
+            url: "remoteUrl1",
             content: { title: "title1" },
           },
           {
             id: "remoteId2",
             versionId: "remoteVersionId2",
+            url: "remoteUrl2",
             content: { title: "title2" },
           },
           // This remote document should not be synced.
           {
             id: "remoteId3",
             versionId: "remoteVersionId3",
+            url: "remoteUrl3",
             content: { title: null },
           },
         ],
@@ -2935,22 +2976,26 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: "remoteId1",
             versionId: "remoteVersionId1.0",
+            url: "remoteUrl1.0",
             content: { title: "title1.0" },
           },
           {
             id: "remoteId2",
             versionId: "remoteVersionId2.0",
+            url: "remoteUrl2.0",
             content: { title: "title2.0" },
           },
           {
             id: "remoteId3",
             versionId: "remoteVersionId3.0",
+            url: "remoteUrl3.0",
             content: { title: "title3.0" },
           },
           // This remote document should not be synced with the first sync.
           {
             id: "remoteId4",
             versionId: "remoteVersionId4.0",
+            url: "remoteUrl4.0",
             content: { title: null },
           },
         ],
@@ -2961,23 +3006,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             id: "remoteId1",
             versionId: "remoteVersionId1.1",
+            url: "remoteUrl1.1",
             content: { title: "title1.1" },
           },
           // This remote document should be deleted with the second sync.
           {
             id: "remoteId3",
             versionId: "remoteVersionId3.1",
+            url: "remoteUrl3.1",
             content: { title: null },
           },
           // This remote document should be synced with the second sync.
           {
             id: "remoteId4",
             versionId: "remoteVersionId4.1",
+            url: "remoteUrl4.1",
             content: { title: "title4.1" },
           },
           {
             id: "remoteId5",
             versionId: "remoteVersionId5.0",
+            url: "remoteUrl5.0",
             content: { title: "title5.0" },
           },
         ],
@@ -3185,7 +3234,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3238,7 +3288,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3294,7 +3345,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3338,7 +3390,122 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: CollectionMigrationNotValid", async () => {
+    it("error: CollectionMigrationNotValid (case: with remote, migration not null)", async () => {
+      // Setup mocks
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: {
+            changes: { addedOrModified: [], deleted: [] },
+            authenticationState,
+            syncPoint: "syncPoint",
+          },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        { source: "", compiled: "export function migrate() {}" },
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
+          },
+        },
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message: "Collection has a remote; migration must be null.",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionMigrationNotValid (case: without remote, migration null)", async () => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.collections.create(
@@ -3356,7 +3523,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3373,7 +3541,71 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            issues: [
+              {
+                message:
+                  "Collection has no remote; migration must not be null.",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionMigrationNotValid (case: without remote, migration not a default-exported function)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
         { source: "", compiled: "export function migrate() {}" },
@@ -3399,7 +3631,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: RemoteConvertersNotValid (case: remoteConverters not null when there is no remote)", async () => {
+    it("error: RemoteConvertersNotValid (case: without remote, remoteConverters not null)", async () => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.collections.create(
@@ -3417,7 +3649,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3434,14 +3667,16 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
         { source: "", compiled: "export default function migrate() {}" },
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -3465,7 +3700,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: RemoteConvertersNotValid (case: remoteConverters null when there is a remote)", async () => {
+    it("error: RemoteConvertersNotValid (case: with remote, remoteConverters null)", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
@@ -3516,7 +3751,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3529,7 +3765,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -3546,10 +3783,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
-        { source: "", compiled: "export default function migrate() {}" },
+        null,
         null,
       );
 
@@ -3572,7 +3810,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: RemoteConvertersNotValid (case: invalid fromRemoteDocument)", async () => {
+    it("error: RemoteConvertersNotValid (case: with remote, fromRemoteDocument not a default-exported function)", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE<Schema> = {
         name: "MockConnector",
@@ -3623,7 +3861,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3636,7 +3875,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           fromRemoteDocument: {
             source: "",
-            compiled: "export default function fromRemoteDocument() {}",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
           },
         },
       );
@@ -3653,10 +3893,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
-        { source: "", compiled: "export default function migrate() {}" },
+        null,
         {
           fromRemoteDocument: {
             source: "",
@@ -3703,7 +3944,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3726,7 +3968,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             contentSummaryGetter: {
               source: "",
-              compiled: "export default function getContentSummary() {}",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
             },
           },
           {
@@ -3781,7 +4024,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -3804,7 +4048,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             contentSummaryGetter: {
               source: "",
-              compiled: "export default function getContentSummary() {}",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
             },
           },
           {
@@ -3840,10 +4085,50 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: creates and migrates (case: collection with no remote)", async () => {
+    it("error: CollectionMigrationFailed (case: fromRemoteDocument function throws)", async () => {
+      // Setup mocks
+      const changes: Connector.Changes = {
+        addedOrModified: [
+          {
+            id: "remoteId",
+            versionId: "remoteVersionId",
+            url: "remoteUrl",
+            content: { title: "remote title" },
+          },
+        ],
+        deleted: [],
+      };
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: { changes, authenticationState, syncPoint: "syncPoint" },
+          error: null,
+        }),
+      };
+
       // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
         {
           name: "name",
           icon: null,
@@ -3858,26 +4143,39 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
         {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
+          },
+        },
       );
-      assert.isTrue(createDocumentResult.success);
+      assert.isTrue(setRemoteResult.success);
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
+          createResult.data.id,
+          "authorizationResponseUrl",
+        );
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
+      await triggerAndWaitForDownSync(backend, createResult.data.id);
 
       // Exercise
-      const migration = {
-        source: "",
-        compiled: "export default function migrate() { return {}; }",
-      };
       const createNewCollectionVersionResult =
         await backend.collections.createNewVersion(
-          createCollectionResult.data.id,
-          createCollectionResult.data.latestVersion.id,
+          createResult.data.id,
+          createResult.data.latestVersion.id,
           {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
             rootType: "Root",
@@ -3885,7 +4183,262 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             contentSummaryGetter: {
               source: "",
-              compiled: "export default function getContentSummary() {}",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+
+          null,
+          {
+            fromRemoteDocument: {
+              source: "",
+              compiled:
+                'export default function fromRemoteDocument() { throw new Error("Migration error!"); }',
+            },
+          },
+        );
+
+      // Verify
+      expect(createNewCollectionVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationFailed",
+          details: {
+            collectionId: createResult.data.id,
+            failedDocumentMigrations: [
+              {
+                documentId: expect.id("Document"),
+                cause: {
+                  name: "ApplyingMigrationFailed",
+                  details: {
+                    name: "Error",
+                    message: "Migration error!",
+                    stack: expect.any(String),
+                  },
+                },
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionMigrationFailed (case: fromRemoteDocument content not valid)", async () => {
+      // Setup mocks
+      const changes: Connector.Changes = {
+        addedOrModified: [
+          {
+            id: "remoteId",
+            versionId: "remoteVersionId",
+            url: "remoteUrl",
+            content: { title: "remote title" },
+          },
+        ],
+        deleted: [],
+      };
+      const mockConnector: Connector.OAuth2PKCE<Schema> = {
+        name: "MockConnector",
+        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
+        settingsSchema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        remoteDocumentTypescriptSchema: {
+          types: "export type RemoteDocument = {};",
+          rootType: "RemoteDocument",
+        },
+        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
+        getAuthenticationState: async () => ({
+          success: true,
+          data: {
+            accessToken: "accessToken",
+            refreshToken: "refreshToken",
+            accessTokenExpiresAt: new Date(),
+          },
+          error: null,
+        }),
+        syncDown: async ({ authenticationState }) => ({
+          success: true,
+          data: { changes, authenticationState, syncPoint: "syncPoint" },
+          error: null,
+        }),
+      };
+
+      // Setup SUT
+      const { backend } = deps(mockConnector);
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const setRemoteResult = await backend.collections.setRemote(
+        createResult.data.id,
+        mockConnector.name,
+        { clientId: "clientId", clientSecret: "clientSecret" },
+        {},
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled:
+              "export default function fromRemoteDocument() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(setRemoteResult.success);
+      const authenticateOAuth2PKCEConnectorResult =
+        await backend.collections.authenticateOAuth2PKCEConnector(
+          createResult.data.id,
+          "authorizationResponseUrl",
+        );
+      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
+      await triggerAndWaitForDownSync(backend, createResult.data.id);
+
+      // Exercise
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createResult.data.id,
+          createResult.data.latestVersion.id,
+          {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: { title: { dataType: DataType.String } },
+              },
+            },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+
+          null,
+          {
+            fromRemoteDocument: {
+              source: "",
+              compiled:
+                "export default function fromRemoteDocument() { return {}; }",
+            },
+          },
+        );
+
+      // Verify
+      expect(createNewCollectionVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionMigrationFailed",
+          details: {
+            collectionId: createResult.data.id,
+            failedDocumentMigrations: [
+              {
+                documentId: expect.id("Document"),
+                cause: {
+                  name: "CreatingNewDocumentVersionFailed",
+                  details: {
+                    cause: {
+                      name: "DocumentContentNotValid",
+                      details: expect.objectContaining({
+                        issues: [
+                          {
+                            message:
+                              'Invalid key: Expected "title" but received undefined',
+                            path: [{ key: "title" }],
+                          },
+                        ],
+                      }),
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("success: creates and migrates (case: collection with no remote)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const migration = {
+        source: "",
+        compiled: `
+          export default function migrate(content) {
+            return { updatedTitle: content.title };
+          }
+        `,
+      };
+      const createNewCollectionVersionResult =
+        await backend.collections.createNewVersion(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: { updatedTitle: { dataType: DataType.String } },
+              },
+            },
+            rootType: "Root",
+          },
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
             },
           },
           migration,
@@ -3901,12 +4454,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
             id: expect.id("CollectionVersion"),
             previousVersionId: createCollectionResult.data.latestVersion.id,
             schema: {
+              types: {
+                Root: {
+                  dataType: DataType.Struct,
+                  properties: { updatedTitle: { dataType: DataType.String } },
+                },
+              },
               rootType: "Root",
-              types: { Root: { dataType: "Struct", properties: {} } },
             },
             settings: {
               contentSummaryGetter: {
-                compiled: "export default function getContentSummary() {}",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
                 source: "",
               },
             },
@@ -3924,11 +4483,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
         data: [createNewCollectionVersionResult.data],
         error: null,
       });
-      const getDocumentResult = await backend.documents.get(
+      const getMigratedDocumentResult = await backend.documents.get(
         createCollectionResult.data.id,
         createDocumentResult.data.id,
       );
-      expect(getDocumentResult).toEqual({
+      expect(getMigratedDocumentResult).toEqual({
         success: true,
         data: {
           ...createDocumentResult.data,
@@ -3938,7 +4497,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
             previousVersionId: createDocumentResult.data.latestVersion.id,
             collectionVersionId:
               createNewCollectionVersionResult.data.latestVersion.id,
-            content: {},
+            content: {
+              updatedTitle: "title",
+            },
             conversationId: null,
             createdBy: "Migration",
             createdAt: expect.dateCloseToNow(),
@@ -3948,13 +4509,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: preserves remote ids", async () => {
+    it("success: creates and migrates (case: collection with remote)", async () => {
       // Setup mocks
       const changes: Connector.Changes = {
         addedOrModified: [
           {
-            id: "remoteDocumentId",
-            versionId: "remoteDocumentVersionId",
+            id: "remoteId",
+            versionId: "remoteVersionId",
+            url: "remoteUrl",
             content: { title: "remote title" },
           },
         ],
@@ -4010,24 +4572,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
       assert.isTrue(createCollectionResult.success);
-      const remoteConverters = {
-        fromRemoteDocument: {
-          source: "",
-          compiled:
-            "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
-        },
-      };
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
         mockConnector.name,
         { clientId: "clientId", clientSecret: "clientSecret" },
         {},
-        remoteConverters,
+        {
+          fromRemoteDocument: {
+            source: "",
+            compiled: `
+                export default function fromRemoteDocument(remote) {
+                  return { title: remote.title };
+                }
+              `,
+          },
+        },
       );
       assert.isTrue(setRemoteResult.success);
       const authenticateOAuth2PKCEConnectorResult =
@@ -4046,9 +4611,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(beforeMigrationDocumentsListResult.data).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            remoteId: "remoteDocumentId",
+            remoteId: "remoteId",
             latestVersion: expect.objectContaining({
-              remoteId: "remoteDocumentVersionId",
+              remoteId: "remoteVersionId",
             }),
           }),
         ]),
@@ -4063,7 +4628,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             types: {
               Root: {
                 dataType: DataType.Struct,
-                properties: { title: { dataType: DataType.String } },
+                properties: { updatedTitle: { dataType: DataType.String } },
               },
             },
             rootType: "Root",
@@ -4071,15 +4636,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             contentSummaryGetter: {
               source: "",
-              compiled: "export default function getContentSummary() {}",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
             },
           },
+          null,
           {
-            source: "",
-            compiled:
-              "export default function migrate(content) { return content; }",
+            fromRemoteDocument: {
+              source: "",
+              compiled: `
+                export default function fromRemoteDocument(remote) {
+                  return { updatedTitle: remote.title };
+                }
+              `,
+            },
           },
-          remoteConverters,
         );
 
       // Verify
@@ -4088,17 +4659,33 @@ export default rd<GetDependencies>("Collections", (deps) => {
         createCollectionResult.data.id,
       );
       assert.isTrue(afterMigrationDocumentsListResult.success);
-      expect(afterMigrationDocumentsListResult.data).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            remoteId: "remoteDocumentId",
-            latestVersion: expect.objectContaining({
-              remoteId: "remoteDocumentVersionId",
-              previousVersionId:
-                beforeMigrationDocumentsListResult.data[0]?.latestVersion.id,
-            }),
+      expect(afterMigrationDocumentsListResult.data).toEqual([
+        expect.objectContaining({
+          remoteId: "remoteId",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId",
+            previousVersionId:
+              beforeMigrationDocumentsListResult.data[0]?.latestVersion.id,
           }),
-        ]),
+        }),
+      ]);
+      const getMigratedDocumentResult = await backend.documents.get(
+        createCollectionResult.data.id,
+        afterMigrationDocumentsListResult.data[0]!.id,
+      );
+      assert.isTrue(getMigratedDocumentResult.success);
+      expect(getMigratedDocumentResult.data).toEqual(
+        expect.objectContaining({
+          remoteId: "remoteId",
+          latestVersion: expect.objectContaining({
+            remoteId: "remoteVersionId",
+            previousVersionId:
+              beforeMigrationDocumentsListResult.data[0]?.latestVersion.id,
+            content: {
+              updatedTitle: "remote title",
+            },
+          }),
+        }),
       );
     });
   });
@@ -4146,7 +4733,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4194,7 +4782,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4251,7 +4840,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4339,7 +4929,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4384,7 +4975,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4450,7 +5042,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4470,7 +5063,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );
@@ -4490,7 +5084,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );

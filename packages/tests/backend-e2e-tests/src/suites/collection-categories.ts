@@ -455,7 +455,8 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
         {
           contentSummaryGetter: {
             source: "",
-            compiled: "export default function getContentSummary() {}",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
           },
         },
       );

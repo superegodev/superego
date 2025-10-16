@@ -286,6 +286,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       expect(createDocumentResult.data).toEqual({
         id: expect.id("Document"),
         remoteId: null,
+        remoteUrl: null,
         collectionId: createCollectionResult.data.id,
         latestVersion: expect.objectContaining({
           id: expect.id("DocumentVersion"),
@@ -306,297 +307,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
       expect(getDocumentResult).toEqual({
         success: true,
         data: createDocumentResult.data,
-        error: null,
-      });
-    });
-  });
-
-  describe("list", () => {
-    it("error: CollectionNotFound", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise
-      const collectionId = Id.generate.collection();
-      const result = await backend.documents.list(collectionId);
-
-      // Verify
-      expect(result).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "CollectionNotFound",
-          details: { collectionId },
-        },
-      });
-    });
-
-    it("success: lists lite documents", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "first" },
-      );
-      assert.isTrue(createDocumentResult.success);
-
-      // Exercise
-      const listDocumentsResult = await backend.documents.list(
-        createCollectionResult.data.id,
-      );
-
-      // Verify
-      assert.isTrue(listDocumentsResult.success);
-      const document = listDocumentsResult.data.find(
-        ({ id }) => id === createDocumentResult.data.id,
-      );
-      assert.isDefined(document);
-      expect(document.latestVersion).not.toHaveProperty("content");
-      expect(document).toEqual(
-        expect.objectContaining({
-          id: createDocumentResult.data.id,
-          collectionId: createCollectionResult.data.id,
-        }),
-      );
-    });
-  });
-
-  describe("get", () => {
-    it("error: DocumentNotFound", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-
-      // Exercise
-      const documentId = Id.generate.document();
-      const getDocumentResult = await backend.documents.get(
-        createCollectionResult.data.id,
-        documentId,
-      );
-
-      // Verify
-      expect(getDocumentResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "DocumentNotFound",
-          details: { documentId },
-        },
-      });
-    });
-
-    it("success: gets", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                title: { dataType: DataType.String },
-              },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
-      assert.isTrue(createDocumentResult.success);
-
-      // Exercise
-      const getDocumentResult = await backend.documents.get(
-        createCollectionResult.data.id,
-        createDocumentResult.data.id,
-      );
-
-      // Verify
-      expect(getDocumentResult).toEqual({
-        success: true,
-        data: createDocumentResult.data,
-        error: null,
-      });
-    });
-  });
-
-  describe("getVersion", () => {
-    it("error: DocumentVersionNotFound", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-
-      // Exercise
-      const documentId = Id.generate.document();
-      const documentVersionId = Id.generate.documentVersion();
-      const getDocumentVersionResult = await backend.documents.getVersion(
-        createCollectionResult.data.id,
-        documentId,
-        documentVersionId,
-      );
-
-      // Verify
-      expect(getDocumentVersionResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "DocumentVersionNotFound",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            documentId,
-            documentVersionId,
-          },
-        },
-      });
-    });
-
-    it("success: gets version", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-      );
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
-      assert.isTrue(createDocumentResult.success);
-      const createNewDocumentVersionResult =
-        await backend.documents.createNewVersion(
-          createCollectionResult.data.id,
-          createDocumentResult.data.id,
-          createDocumentResult.data.latestVersion.id,
-          { title: "updated title" },
-        );
-      assert.isTrue(createNewDocumentVersionResult.success);
-
-      // Exercise
-      const getDocumentVersionResult = await backend.documents.getVersion(
-        createCollectionResult.data.id,
-        createDocumentResult.data.id,
-        createDocumentResult.data.latestVersion.id,
-      );
-
-      // Verify
-      expect(getDocumentVersionResult).toEqual({
-        success: true,
-        data: createDocumentResult.data.latestVersion,
         error: null,
       });
     });
@@ -687,8 +397,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const changes: Connector.Changes = {
         addedOrModified: [
           {
-            id: "remoteDocumentId",
-            versionId: "remoteDocumentVersionId",
+            id: "remoteId",
+            versionId: "remoteVersionId",
+            url: "remoteUrl",
             content: { title: "remote title" },
           },
         ],
@@ -1206,8 +917,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const changes: Connector.Changes = {
         addedOrModified: [
           {
-            id: "remoteDocumentId",
-            versionId: "remoteDocumentVersionId",
+            id: "remoteId",
+            versionId: "remoteVersionId",
+            url: "remoteUrl",
             content: { title: "remote title" },
           },
         ],
@@ -1376,6 +1088,297 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createCollectionResult.data.id,
       );
       expect(listResult).toEqual({ success: true, data: [], error: null });
+    });
+  });
+
+  describe("list", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.documents.list(collectionId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("success: lists lite documents", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "first" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const listDocumentsResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(listDocumentsResult.success);
+      const document = listDocumentsResult.data.find(
+        ({ id }) => id === createDocumentResult.data.id,
+      );
+      assert.isDefined(document);
+      expect(document.latestVersion).not.toHaveProperty("content");
+      expect(document).toEqual(
+        expect.objectContaining({
+          id: createDocumentResult.data.id,
+          collectionId: createCollectionResult.data.id,
+        }),
+      );
+    });
+  });
+
+  describe("get", () => {
+    it("error: DocumentNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const documentId = Id.generate.document();
+      const getDocumentResult = await backend.documents.get(
+        createCollectionResult.data.id,
+        documentId,
+      );
+
+      // Verify
+      expect(getDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentNotFound",
+          details: { documentId },
+        },
+      });
+    });
+
+    it("success: gets", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const getDocumentResult = await backend.documents.get(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+      );
+
+      // Verify
+      expect(getDocumentResult).toEqual({
+        success: true,
+        data: createDocumentResult.data,
+        error: null,
+      });
+    });
+  });
+
+  describe("getVersion", () => {
+    it("error: DocumentVersionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const documentId = Id.generate.document();
+      const documentVersionId = Id.generate.documentVersion();
+      const getDocumentVersionResult = await backend.documents.getVersion(
+        createCollectionResult.data.id,
+        documentId,
+        documentVersionId,
+      );
+
+      // Verify
+      expect(getDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentVersionNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId,
+            documentVersionId,
+          },
+        },
+      });
+    });
+
+    it("success: gets version", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          { title: "updated title" },
+        );
+      assert.isTrue(createNewDocumentVersionResult.success);
+
+      // Exercise
+      const getDocumentVersionResult = await backend.documents.getVersion(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        createDocumentResult.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(getDocumentVersionResult).toEqual({
+        success: true,
+        data: createDocumentResult.data.latestVersion,
+        error: null,
+      });
     });
   });
 });

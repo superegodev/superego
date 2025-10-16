@@ -295,7 +295,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
         executionResult.data,
         {
           createdBy: DocumentVersionCreator.Migration,
-          remoteId: latestDocumentVersion.remoteId,
+          remoteVersionId: latestDocumentVersion.remoteId,
         },
       );
 

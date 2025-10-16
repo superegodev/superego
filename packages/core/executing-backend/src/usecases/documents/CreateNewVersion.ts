@@ -66,7 +66,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
         }
       | {
           createdBy: DocumentVersionCreator.Migration;
-          remoteId: string | null;
+          remoteVersionId: string | null;
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
