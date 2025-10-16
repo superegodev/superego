@@ -132,7 +132,7 @@ export default class StravaActivities
 
         const id = summaryActivity.id ? String(summaryActivity.id) : null;
         const versionId = await sha256(JSON.stringify(summaryActivity), "hex");
-        const url = `https://www.strava.com/activities/${encodeURIComponent(id)}`;
+        const url = `https://www.strava.com/activities/${encodeURIComponent(id ?? "null")}`;
 
         // Ignore activities that don't have a id, as it's required to process
         // changes.

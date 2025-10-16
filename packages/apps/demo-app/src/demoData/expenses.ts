@@ -184,6 +184,8 @@ for (const expense of expenses) {
   const document: DocumentEntity = {
     id: Id.generate.document(),
     remoteId: null,
+    remoteUrl: null,
+    latestRemoteDocument: null,
     collectionId: collection.id,
     createdAt: new Date(),
   };
