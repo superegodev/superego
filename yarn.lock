@@ -5686,6 +5686,7 @@ __metadata:
     "@astrojs/check": "npm:^0.9.4"
     "@astrojs/mdx": "npm:^4.3.7"
     "@astrojs/starlight": "npm:^0.36.1"
+    "@playwright/test": "npm:^1.56.0"
     astro: "npm:^5.14.5"
     starlight-theme-nova: "npm:^0.9.5"
     typescript: "npm:^5.9.3"
