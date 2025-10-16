@@ -1,6 +1,11 @@
 import type { CollectionId, DocumentId } from "@superego/backend";
 import { useState } from "react";
-import { PiCloudCheck, PiFloppyDisk, PiTrash } from "react-icons/pi";
+import {
+  PiArrowSquareOut,
+  PiCloudCheck,
+  PiFloppyDisk,
+  PiTrash,
+} from "react-icons/pi";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -73,33 +78,43 @@ export default function Document({ collectionId, documentId }: Props) {
             actionsAriaLabel={intl.formatMessage({
               defaultMessage: "Document actions",
             })}
-            actions={
+            actions={[
               document.remoteId === null
-                ? [
-                    {
-                      label: intl.formatMessage({ defaultMessage: "Save" }),
-                      icon: <PiFloppyDisk />,
-                      submit: createFormId,
-                      isDisabled: isCreateFormSubmitDisabled,
-                    },
-                    {
-                      label: intl.formatMessage({
-                        defaultMessage: "Delete document",
-                      }),
-                      icon: <PiTrash />,
-                      onPress: () => setIsDeleteModalOpen(true),
-                    },
-                  ]
-                : [
-                    {
-                      label: intl.formatMessage({
-                        defaultMessage: "Remote document info",
-                      }),
-                      icon: <PiCloudCheck />,
-                      onPress: () => setIsRemoteDocumentInfoModalOpen(true),
-                    },
-                  ]
-            }
+                ? {
+                    label: intl.formatMessage({ defaultMessage: "Save" }),
+                    icon: <PiFloppyDisk />,
+                    submit: createFormId,
+                    isDisabled: isCreateFormSubmitDisabled,
+                  }
+                : null,
+              document.remoteId === null
+                ? {
+                    label: intl.formatMessage({
+                      defaultMessage: "Delete document",
+                    }),
+                    icon: <PiTrash />,
+                    onPress: () => setIsDeleteModalOpen(true),
+                  }
+                : null,
+              document.remoteId !== null
+                ? {
+                    label: intl.formatMessage({
+                      defaultMessage: "Remote document info",
+                    }),
+                    icon: <PiCloudCheck />,
+                    onPress: () => setIsRemoteDocumentInfoModalOpen(true),
+                  }
+                : null,
+              document.remoteUrl
+                ? {
+                    label: intl.formatMessage({
+                      defaultMessage: "Go to remote document",
+                    }),
+                    icon: <PiArrowSquareOut />,
+                    href: document.remoteUrl,
+                  }
+                : null,
+            ]}
           />
           <Shell.Panel.Content>
             <CreateNewDocumentVersionForm

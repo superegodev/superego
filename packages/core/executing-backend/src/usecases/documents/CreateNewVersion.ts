@@ -71,7 +71,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       | {
           createdBy: DocumentVersionCreator.Connector;
           remoteVersionId: string;
-          remoteUrl: string;
+          remoteUrl: string | null;
           remoteDocument: any;
         },
   ): ExecReturnValue;
@@ -87,7 +87,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
         | DocumentVersionCreator.Connector;
       conversationId?: ConversationId;
       remoteVersionId?: string | null;
-      remoteUrl?: string;
+      remoteUrl?: string | null;
       remoteDocument?: any;
     },
   ): ExecReturnValue {
@@ -218,7 +218,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       const updatedDocument: DocumentEntity = {
         ...document,
         // TypeScript doesn't understand, but if createdBy === Connector, then
-        // options.remoteUrl is a string.
+        // options.remoteUrl is not undefined.
         // @ts-expect-error
         remoteUrl: options.remoteUrl,
         latestRemoteDocument: options.remoteDocument,

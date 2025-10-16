@@ -12,7 +12,7 @@ type DocumentEntity = {
     }
   | {
       remoteId: string;
-      remoteUrl: string;
+      remoteUrl: string | null;
       latestRemoteDocument: any;
     }
 );

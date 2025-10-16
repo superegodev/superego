@@ -57,12 +57,14 @@ export default function PanelHeader({
           {actions
             .filter((action) => action !== null)
             .map((action) =>
-              "to" in action ? (
+              "to" in action || "href" in action ? (
                 <IconLink
                   key={action.label}
                   label={action.label}
                   isDisabled={action.isDisabled}
-                  to={action.to}
+                  {...("to" in action
+                    ? { to: action.to }
+                    : { href: action.href, target: "_blank" })}
                   variant="invisible"
                   className={classnames(
                     cs.PanelHeader.action,

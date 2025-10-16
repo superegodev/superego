@@ -764,6 +764,12 @@
       "value": "p"
     }
   ],
+  "Document.tsx_AB6IO/": [
+    {
+      "type": 0,
+      "value": "Vai al documento remoto"
+    }
+  ],
   "Document.tsx_EPTOBf": [
     {
       "type": 1,
@@ -860,6 +866,12 @@
     {
       "type": 0,
       "value": "Sommario dei contenuti non valido"
+    }
+  ],
+  "DocumentsTable.tsx_xIoGG9": [
+    {
+      "type": 0,
+      "value": "Vai"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -2306,6 +2318,12 @@
     {
       "type": 0,
       "value": "Crea"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_syZYsy": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione della collezione"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [

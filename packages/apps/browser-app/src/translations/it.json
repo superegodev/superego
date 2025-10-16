@@ -287,6 +287,9 @@
   "DeleteDocumentModalForm.tsx_qjTjxw": {
     "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
+  "Document.tsx_AB6IO/": {
+    "defaultMessage": "Vai al documento remoto"
+  },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },
@@ -325,6 +328,9 @@
   },
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Sommario dei contenuti non valido"
+  },
+  "DocumentsTable.tsx_xIoGG9": {
+    "defaultMessage": "Vai"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Sincronizzazione con {remote}"
@@ -730,6 +736,9 @@
   },
   "SuggestCollectionDefinition.tsx_S2ZL0P": {
     "defaultMessage": "Collezione suggerita"
+  },
+  "SuggestCollectionDefinition.tsx_syZYsy": {
+    "defaultMessage": "Errore durante la creazione della collezione"
   },
   "SuggestCollectionDefinition.tsx_VzzYJk": {
     "defaultMessage": "Crea"

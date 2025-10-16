@@ -1,12 +1,12 @@
 import { useId } from "react";
 
-export interface ColumnIds {
+export interface SortableColumnIds {
   propertyPrefix: string;
   createdAt: string;
   lastModifiedAt: string;
 }
 
-export default function useColumnIds(): ColumnIds {
+export default function useSortableColumnIds(): SortableColumnIds {
   return {
     propertyPrefix: useId(),
     createdAt: useId(),

@@ -170,7 +170,12 @@ export type SummaryActivity = MetaActivity & {
   sport_type?: SportType;
   /** The time at which the activity was started. */
   start_date?: string;
-  /** The time at which the activity was started in the local timezone. */
+  /**
+   * NEVER USE THIS FIELD.
+   * It's supposed to be the time at which the activity was started in the local
+   * timezone, but it always uses the Z timezone, which makes it a different
+   * timestamp.
+   */
   start_date_local?: string;
   /** The timezone of the activity. */
   timezone?: string;

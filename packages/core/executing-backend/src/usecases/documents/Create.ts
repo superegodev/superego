@@ -53,7 +53,7 @@ export default class DocumentsCreate extends Usecase<
           createdBy: DocumentVersionCreator.Connector;
           remoteId: string;
           remoteVersionId: string;
-          remoteUrl: string;
+          remoteUrl: string | null;
           remoteDocument: any;
         },
   ): ExecReturnValue;
@@ -67,7 +67,7 @@ export default class DocumentsCreate extends Usecase<
       conversationId?: ConversationId;
       remoteId?: string;
       remoteVersionId?: string;
-      remoteUrl?: string;
+      remoteUrl?: string | null;
       remoteDocument?: any;
     },
   ): ExecReturnValue {

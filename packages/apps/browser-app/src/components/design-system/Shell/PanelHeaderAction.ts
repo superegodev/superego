@@ -6,5 +6,10 @@ type PanelHeaderAction = {
   icon: ReactNode;
   isDisabled?: boolean | undefined;
   className?: string | undefined;
-} & ({ to: Route } | { onPress: () => void } | { submit: string });
+} & (
+  | { to: Route }
+  | { href: string }
+  | { onPress: () => void }
+  | { submit: string }
+);
 export default PanelHeaderAction;

@@ -6,10 +6,12 @@ import {
 } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import makeContentSummaryGetter from "../../../../business-logic/assistant/makeContentSummaryGetter.js";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
+import ToastType from "../../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
 import CollectionCategoryUtils from "../../../../utils/CollectionCategoryUtils.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import Button from "../../../design-system/Button/Button.js";
@@ -28,6 +30,7 @@ export default function SuggestCollectionDefinition({
   conversation,
   toolCall,
 }: Props) {
+  const intl = useIntl();
   const { collectionCategories } = useGlobalData();
 
   const { settings, schema, exampleDocument, tableColumns } = toolCall.input;
@@ -36,10 +39,22 @@ export default function SuggestCollectionDefinition({
   );
 
   const { mutate, isPending } = useCreateCollection();
-  const createCollection = () => {
-    mutate({ ...settings, assistantInstructions: null }, schema, {
-      contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns),
-    });
+  const createCollection = async () => {
+    const result = await mutate(
+      { ...settings, assistantInstructions: null },
+      schema,
+      { contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns) },
+    );
+    if (!result.success) {
+      console.error(result.error);
+      toastQueue.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error creating the collection",
+        }),
+        description: result.error.name,
+      });
+    }
   };
 
   const { control, handleSubmit } = useForm<any>({

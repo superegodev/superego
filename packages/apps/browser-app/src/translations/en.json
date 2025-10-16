@@ -287,6 +287,9 @@
   "DeleteDocumentModalForm.tsx_qjTjxw": {
     "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
   },
+  "Document.tsx_AB6IO/": {
+    "defaultMessage": "Go to remote document"
+  },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },
@@ -325,6 +328,9 @@
   },
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Invalid content summary"
+  },
+  "DocumentsTable.tsx_xIoGG9": {
+    "defaultMessage": "Go to"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Syncing with {remote}"
@@ -772,6 +778,9 @@
   },
   "SuggestCollectionDefinition.tsx_VzzYJk": {
     "defaultMessage": "Create"
+  },
+  "SuggestCollectionDefinition.tsx_syZYsy": {
+    "defaultMessage": "Error creating the collection"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"

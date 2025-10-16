@@ -18,7 +18,7 @@ type Document = {
       /** Id of the remote counterpart of this document. */
       remoteId: string;
       /** Url of the remote counterpart of this document. */
-      remoteUrl: string;
+      remoteUrl: string | null;
     }
 );
 export default Document;

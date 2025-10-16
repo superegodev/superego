@@ -154,7 +154,10 @@ export default class StravaActivities
         content.start_date ? Date.parse(content.start_date) : 0,
       ),
     );
-    const nextSyncToken = String(Math.floor(maxStartDate / 1_000));
+    const nextSyncToken =
+      changes.addedOrModified.length !== 0
+        ? String(Math.floor(maxStartDate / 1_000))
+        : (syncToken ?? "0");
 
     return { changes, nextSyncToken };
   }
