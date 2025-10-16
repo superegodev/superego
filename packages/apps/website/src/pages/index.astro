@@ -59,7 +59,9 @@ const CONTAINER_WIDTH = 720;
   }
 
   const steps = Array.from(document.querySelectorAll<HTMLElement>(".step"));
-  const scrollDownButton = document.getElementById("scroll-down-button")!;
+  const scrollDownButton = document.getElementById(
+    "scroll-down-button",
+  ) as HTMLButtonElement;
   const tosPpLink = document.getElementById("tos-pp")!;
   const hero = document.querySelector(".hero")!;
   const header = document.querySelector(
@@ -75,6 +77,7 @@ const CONTAINER_WIDTH = 720;
       scrollDownButton!.style.opacity = String(
         latestEntry.isIntersecting ? 0 : 1,
       );
+      scrollDownButton.disabled = latestEntry.isIntersecting;
       tosPpLink!.style.opacity = String(latestEntry.isIntersecting ? 1 : 0);
     },
     { threshold: 0.01 },
@@ -196,9 +199,17 @@ const CONTAINER_WIDTH = 720;
     border: 0;
     border-radius: 100%;
     transition: opacity 200ms ease;
+    outline: none;
   }
   #scroll-down-button:hover {
     background-color: #f5f5f5;
+  }
+  #scroll-down-button:focus-visible {
+    box-shadow: 0 0 0 2px #fd7e14;
+    outline-offset: 2px;
+  }
+  #scroll-down-button[disabled] {
+    cursor: auto;
   }
 
   #tos-pp {
@@ -295,8 +306,8 @@ const CONTAINER_WIDTH = 720;
       allowfullscreen></iframe>
   </div>
 
-  <button id="scroll-down-button">
-    <Icon name="down-caret" />
+  <button id="scroll-down-button" type="button" aria-label="Scroll down">
+    <Icon name="down-caret" aria-hidden="true" />
   </button>
 
   <a id="tos-pp" href="/tos-pp">Demo TOS and Privacy Policy</a>
