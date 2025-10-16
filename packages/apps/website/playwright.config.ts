@@ -33,7 +33,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "yarn dev",
+    command: "yarn build && yarn astro preview",
     url: "http://localhost:4321",
     reuseExistingServer: !process.env.CI,
   },
