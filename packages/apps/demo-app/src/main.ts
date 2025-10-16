@@ -124,3 +124,11 @@ window.addEventListener("message", (evt) => {
     queryClient.invalidateQueries({ queryKey: ["listCollections"] });
   }
 });
+
+(window as any).backend = backend;
+console.log(
+  "Want to play with Superego from here? Use the global %cbackend%c object.",
+  "font-weight:bold;",
+  "color:inherit;",
+  "Its API is here: https://github.com/superegodev/superego/blob/main/packages/core/backend/src/Backend.ts",
+);

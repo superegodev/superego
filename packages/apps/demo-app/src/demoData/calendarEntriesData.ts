@@ -1,14 +1,6 @@
-import type { JsonObject } from "@superego/schema";
+import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-
-type Type = "Event" | "Reminder";
-interface CalendarEntry {
-  type: Type;
-  title: string;
-  startTime: string;
-  endTime: string | null;
-  notes: JsonObject | null;
-}
+import type calendarEntriesSchema from "./calendarEntriesSchema.js";
 
 export default [
   {
@@ -1785,4 +1777,4 @@ export default [
       .toISO(),
     notes: null,
   },
-] satisfies CalendarEntry[];
+] satisfies TypeOf<typeof calendarEntriesSchema>[];

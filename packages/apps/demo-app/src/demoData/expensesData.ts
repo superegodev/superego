@@ -1,28 +1,6 @@
-import { DataType, type JsonObject } from "@superego/schema";
+import { DataType, type TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-
-type Category =
-  | "Housing"
-  | "Utilities"
-  | "Groceries"
-  | "Dining And Takeout"
-  | "Transportation"
-  | "Health And Medical"
-  | "Insurance"
-  | "Debt And Loans"
-  | "Entertainment And Subscriptions"
-  | "Shopping And Personal Care"
-  | "Other";
-type PaymentMethod = "Credit Card" | "Debit Card" | "Bank Transfer" | "Cash";
-interface Expense {
-  title: string;
-  date: string;
-  amount: number;
-  currency: string;
-  category: Category;
-  paymentMethod: PaymentMethod | null;
-  notes: JsonObject | null;
-}
+import type expensesSchema from "./expensesSchema.js";
 
 const recurringExpenses = (
   [
@@ -83,7 +61,7 @@ const recurringExpenses = (
   ] as const
 ).flatMap((recurringExpense) => {
   const { dayOfMonth, ...expense } = recurringExpense;
-  const expenses: Expense[] = [];
+  const expenses: TypeOf<typeof expensesSchema>[] = [];
   const paidInCurrentMonth = recurringExpense.dayOfMonth <= DateTime.now().day;
   for (let i = paidInCurrentMonth ? 0 : 1; i <= 11; i++) {
     expenses.push({
@@ -931,4 +909,4 @@ export default [
       ],
     },
   },
-] satisfies Expense[];
+] satisfies TypeOf<typeof expensesSchema>[];

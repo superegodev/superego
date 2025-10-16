@@ -5,10 +5,10 @@ import type {
   DocumentEntity,
   DocumentVersionEntity,
 } from "@superego/executing-backend";
-import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { Health } from "./collectionCategories.js";
 import weighIns from "./weighInsData.js";
+import weighInsSchema from "./weighInsSchema.js";
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -30,34 +30,7 @@ const collectionVersion: CollectionVersionEntity = {
   id: Id.generate.collectionVersion(),
   previousVersionId: null,
   collectionId: collection.id,
-  schema: {
-    types: {
-      WeighIn: {
-        description: " A single weigh-in.",
-        dataType: DataType.Struct,
-        properties: {
-          timestamp: {
-            description: "When the weigh-in occurred.",
-            dataType: DataType.String,
-            format: "dev.superego:String.Instant",
-          },
-          weightKg: {
-            description: "Weight in kilograms.",
-            dataType: DataType.Number,
-          },
-          scale: {
-            description: "Scale used for measurement.",
-            dataType: DataType.String,
-          },
-          notes: {
-            dataType: DataType.String,
-          },
-        },
-        nullableProperties: ["notes"],
-      },
-    },
-    rootType: "WeighIn",
-  },
+  schema: weighInsSchema,
   settings: {
     contentSummaryGetter: {
       source: `
