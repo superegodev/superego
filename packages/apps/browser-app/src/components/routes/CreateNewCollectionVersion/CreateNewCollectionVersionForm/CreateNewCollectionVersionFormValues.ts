@@ -3,7 +3,7 @@ import type { Schema } from "@superego/schema";
 
 export default interface CreateNewCollectionVersionFormValues {
   schema: Schema;
-  migration: TypescriptModule;
   contentSummaryGetter: TypescriptModule;
+  migration: TypescriptModule | null;
   remoteConverters: RemoteConverters | null;
 }

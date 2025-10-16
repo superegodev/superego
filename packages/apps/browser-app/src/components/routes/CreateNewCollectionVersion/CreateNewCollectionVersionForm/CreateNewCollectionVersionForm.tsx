@@ -51,17 +51,19 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   } = useForm<CreateNewCollectionVersionFormValues>({
     defaultValues: {
       schema: collection.latestVersion.schema,
-      migration: defaultMigration,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
+      migration: CollectionUtils.hasRemote(collection)
+        ? null
+        : defaultMigration,
       remoteConverters: collection.latestVersion.remoteConverters,
     },
     mode: "all",
     resolver: standardSchemaResolver(
       v.strictObject({
         schema: valibotSchemas.schema(),
-        migration: forms.schemas.typescriptModule(intl),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
+        migration: v.nullable(forms.schemas.typescriptModule(intl)),
         remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
       }),
     ),
@@ -99,11 +101,11 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   );
 
   // When schema changes, if it's valid:
-  // - Require recompilation of contentSummaryGetter and remoteConverters. Don't
-  //   update the sources, since they're what the user set in the previous
-  //   collection version.
-  // - Update migration, if still the default one, and in any case require
-  //   recompilation.
+  // - Require recompilation of contentSummaryGetter and remoteConverters (for
+  //   collections with a remote). Don't update the sources, since they're what
+  //   the user set in the previous collection version.
+  // - For collections with a remote: update migration, if still the default
+  //   one, and in any case require recompilation.
   useEffect(() => {
     if (!isSchemaValid) {
       return;
@@ -120,17 +122,19 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       );
     }
 
-    const defaultMigrationSource = formState.defaultValues?.migration?.source;
-    const currentMigrationSource = getValues("migration.source");
-    if (currentMigrationSource === defaultMigrationSource) {
-      resetField("migration", {
-        defaultValue: forms.defaults.migration(
-          collection.latestVersion.schema,
-          schema,
-        ),
-      });
-    } else {
-      setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
+    if (getValues("migration") !== null) {
+      const defaultMigrationSource = formState.defaultValues?.migration?.source;
+      const currentMigrationSource = getValues("migration.source");
+      if (currentMigrationSource === defaultMigrationSource) {
+        resetField("migration", {
+          defaultValue: forms.defaults.migration(
+            collection.latestVersion.schema,
+            schema,
+          ),
+        });
+      } else {
+        setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
+      }
     }
   }, [
     collection.latestVersion.schema,
