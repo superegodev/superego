@@ -5536,6 +5536,7 @@ __metadata:
     "@types/luxon": "npm:^3.7.1"
     es-toolkit: "npm:^1.40.0"
     luxon: "npm:^3.7.2"
+    p-map: "npm:^7.0.3"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.1.0"
     vitest: "npm:^3.2.4"

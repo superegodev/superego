@@ -24,6 +24,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import pMap from "p-map";
 import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
@@ -215,10 +216,10 @@ export default class CollectionsCreateNewVersion extends Usecase<
 
     // Migrate documents.
     const documents = await this.repos.document.findAllWhereCollectionIdEq(id);
-    const migrationResults = await Promise.all(
-      documents.map((document) =>
-        this.migrateDocument(migration, remoteConverters, document),
-      ),
+    const migrationResults = await pMap(
+      documents,
+      (document) => this.migrateDocument(migration, remoteConverters, document),
+      { concurrency: 1 },
     );
     const failedDocumentMigrations = migrationResults.filter(
       (migrationResult) => migrationResult !== undefined,

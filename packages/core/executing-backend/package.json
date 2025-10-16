@@ -30,6 +30,7 @@
     "@superego/vitest-registered": "workspace:*",
     "es-toolkit": "^1.40.0",
     "luxon": "^3.7.2",
+    "p-map": "^7.0.3",
     "valibot": "^1.1.0",
     "vitest": "^3.2.4"
   }

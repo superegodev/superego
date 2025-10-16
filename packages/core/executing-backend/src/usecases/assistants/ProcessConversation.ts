@@ -20,6 +20,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import pMap from "p-map";
 import type Assistant from "../../assistants/Assistant.js";
 import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
@@ -195,16 +196,14 @@ export default class AssistantsProcessConversation extends Usecase {
       ...otherMessages,
       {
         ...lastMessage,
-        content: (await Promise.all(
-          lastMessage.content.map(async (part) =>
-            part.type === MessageContentPartType.Audio
-              ? {
-                  type: MessageContentPartType.Text,
-                  text: await inferenceService.stt(part.audio),
-                  audio: part.audio,
-                }
-              : part,
-          ),
+        content: (await pMap(lastMessage.content, async (part) =>
+          part.type === MessageContentPartType.Audio
+            ? {
+                type: MessageContentPartType.Text,
+                text: await inferenceService.stt(part.audio),
+                audio: part.audio,
+              }
+            : part,
         )) as NonEmptyArray<MessageContentPart>,
       },
     ];
