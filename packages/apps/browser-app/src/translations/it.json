@@ -113,6 +113,9 @@
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
   },
+  "ContentSummaryTab.tsx_RGFGD8": {
+    "defaultMessage": "Aggiorna la funzione <code>getContentSummary</code> per riflettere le modifiche allo schema."
+  },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
@@ -226,6 +229,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
+  },
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
+    "defaultMessage": "3. Convertitori remoti"
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migrazione"
@@ -587,8 +593,8 @@
   "MigrationTab.tsx_J/yjzE": {
     "defaultMessage": "Crea una nuova versione e migra i documenti"
   },
-  "MigrationTab.tsx_JQqWNV": {
-    "defaultMessage": "Funzione TypeScript per migrare i documenti dallo schema precedente a quello aggiornato."
+  "MigrationTab.tsx_i8zErH": {
+    "defaultMessage": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
@@ -644,6 +650,18 @@
   "RemoteConverters.tsx_abnr48": {
     "defaultMessage": "Convertitori di documenti remoti"
   },
+  "RemoteConvertersTab.tsx_3cBs4J": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+  },
+  "RemoteConvertersTab.tsx_CPS541": {
+    "defaultMessage": "Aggiorna la funzione <code>fromRemoteDocument</code> per riflettere le modifiche allo schema."
+  },
+  "RemoteConvertersTab.tsx_GqZhDC": {
+    "defaultMessage": "Dal documento remoto"
+  },
+  "RemoteConvertersTab.tsx_J/yjzE": {
+    "defaultMessage": "Crea una nuova versione e migra i documenti"
+  },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Sincronizzato con {remote}"
   },
@@ -670,6 +688,12 @@
   },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
+  },
+  "SchemaTab.tsx_/WLKzQ": {
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. </li> </ol>"
+  },
+  "SchemaTab.tsx_Vi4BUn": {
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
   },
   "SendRecordToolbar.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"

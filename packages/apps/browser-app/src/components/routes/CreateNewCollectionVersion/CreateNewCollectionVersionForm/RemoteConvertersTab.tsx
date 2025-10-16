@@ -3,11 +3,15 @@ import { codegen, type Schema } from "@superego/schema";
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import type { ResultOf } from "../../../../business-logic/backend/typeUtils.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.jsx";
+import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
+import * as cs from "./CreateNewCollectionVersionForm.css.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 
 interface Props {
@@ -19,12 +23,14 @@ interface Props {
   collection: Collection;
   schema: string | Schema;
   connector: Connector;
+  result: ResultOf<"collections", "createNewVersion"> | null;
 }
 export default function RemoteConvertersTab({
   control,
   collection,
   schema,
   connector,
+  result,
 }: Props) {
   const intl = useIntl();
   const typescriptLibs = useMemo<TypescriptLib[]>(() => {
@@ -96,6 +102,12 @@ remote document will not be synced into a local one.
           />
         }
       />
+      <div className={cs.RemoteConvertersTab.submitButtonContainer}>
+        <RHFSubmitButton control={control} variant="primary">
+          <FormattedMessage defaultMessage="Create new version and migrate documents" />
+        </RHFSubmitButton>
+      </div>
+      {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </>
   ) : null;
 }

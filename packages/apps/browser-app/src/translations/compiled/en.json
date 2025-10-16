@@ -530,12 +530,6 @@
       "value": " » Create New Version"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
-    {
-      "type": 0,
-      "value": "4. Migration"
-    }
-  ],
   "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
@@ -2000,6 +1994,12 @@
       "value": "From remote document"
     }
   ],
+  "RemoteConvertersTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Create new version and migrate documents"
+    }
+  ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [
     {
       "type": 0,
@@ -2072,7 +2072,7 @@
       "value": "Retrying..."
     }
   ],
-  "SchemaTab.tsx_8oQSqZ": [
+  "SchemaTab.tsx_/WLKzQ": [
     {
       "children": [
         {
@@ -2125,20 +2125,6 @@
           "children": [
             {
               "type": 0,
-              "value": " If the collection has a remote, update its remote converters as well. "
-            }
-          ],
-          "type": 8,
-          "value": "li"
-        },
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
               "value": " Write a migration function to convert documents from the previous schema to the updated schema. "
             }
           ],
@@ -2158,6 +2144,74 @@
     {
       "type": 0,
       "value": "Schema"
+    }
+  ],
+  "SchemaTab.tsx_Vi4BUn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implement the schema changes you want to make."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Update the collection's content summary getter to reflect those changes. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Since this is a remote collection, update its remote converters as well. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
     }
   ],
   "SendRecordToolbar.tsx_/8QiK8": [

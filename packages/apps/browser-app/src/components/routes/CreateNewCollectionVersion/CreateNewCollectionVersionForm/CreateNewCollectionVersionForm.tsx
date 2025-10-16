@@ -10,6 +10,7 @@ import * as v from "valibot";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
+import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
@@ -150,7 +151,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
                 <FormattedMessage defaultMessage="1. Schema" />
               </TabTitle>
             ),
-            panel: <SchemaTab control={control} />,
+            panel: <SchemaTab control={control} collection={collection} />,
           },
           {
             title: (
@@ -161,7 +162,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             panel: <ContentSummaryTab control={control} schema={schema} />,
             isDisabled: !(isSchemaDirty && isSchemaValid),
           },
-          collection.remote && connector
+          CollectionUtils.hasRemote(collection) && connector
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.contentSummaryGetter}>
@@ -174,31 +175,30 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
                     collection={collection}
                     schema={schema}
                     connector={connector}
+                    result={result}
                   />
                 ),
                 isDisabled: !(isSchemaDirty && isSchemaValid),
               }
             : null,
-          {
-            title: (
-              <TabTitle hasErrors={!!formState.errors.migration}>
-                {collection.remote ? (
-                  <FormattedMessage defaultMessage="4. Migration" />
-                ) : (
-                  <FormattedMessage defaultMessage="3. Migration" />
-                )}
-              </TabTitle>
-            ),
-            panel: (
-              <MigrationTab
-                control={control}
-                schema={schema}
-                collection={collection}
-                result={result}
-              />
-            ),
-            isDisabled: !(isSchemaDirty && isSchemaValid),
-          },
+          !CollectionUtils.hasRemote(collection)
+            ? {
+                title: (
+                  <TabTitle hasErrors={!!formState.errors.migration}>
+                    <FormattedMessage defaultMessage="3. Migration" />
+                  </TabTitle>
+                ),
+                panel: (
+                  <MigrationTab
+                    control={control}
+                    schema={schema}
+                    collection={collection}
+                    result={result}
+                  />
+                ),
+                isDisabled: !(isSchemaDirty && isSchemaValid),
+              }
+            : null,
         ]}
       />
     </Form>

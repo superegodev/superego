@@ -224,9 +224,6 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
-    "defaultMessage": "4. Migration"
-  },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Content summary"
   },
@@ -683,6 +680,9 @@
   "RemoteConvertersTab.tsx_GqZhDC": {
     "defaultMessage": "From remote document"
   },
+  "RemoteConvertersTab.tsx_J/yjzE": {
+    "defaultMessage": "Create new version and migrate documents"
+  },
   "RemoteDocumentInfoModal.tsx_1D7voQ": {
     "defaultMessage": "Synced with {remote}"
   },
@@ -713,11 +713,14 @@
   "RetryButton.tsx_l02CSg": {
     "defaultMessage": "Retrying..."
   },
-  "SchemaTab.tsx_8oQSqZ": {
-    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> If the collection has a remote, update its remote converters as well. </li> <li> Write a migration function to convert documents from the previous schema to the updated schema. </li> </ol>"
+  "SchemaTab.tsx_/WLKzQ": {
+    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Write a migration function to convert documents from the previous schema to the updated schema. </li> </ol>"
   },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
+  },
+  "SchemaTab.tsx_Vi4BUn": {
+    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
   },
   "SendRecordToolbar.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"

@@ -11,7 +11,7 @@ import Alert from "../../../design-system/Alert/Alert.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
-import * as cs from "../CreateNewCollectionVersion.css.js";
+import * as cs from "./CreateNewCollectionVersionForm.css.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 
 interface Props {
@@ -90,7 +90,7 @@ document.
           ).source,
         }}
       />
-      <div className={cs.CreateNewCollectionVersionForm.submitButtonContainer}>
+      <div className={cs.MigrationTab.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Create new version and migrate documents" />
         </RHFSubmitButton>

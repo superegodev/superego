@@ -239,6 +239,26 @@
       "value": "error"
     }
   ],
+  "ContentSummaryTab.tsx_RGFGD8": [
+    {
+      "type": 0,
+      "value": "Aggiorna la funzione "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "getContentSummary"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per riflettere le modifiche allo schema."
+    }
+  ],
   "ContentSummaryTab.tsx_VzzYJk": [
     {
       "type": 0,
@@ -512,6 +532,12 @@
     {
       "type": 0,
       "value": "1. Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": [
+    {
+      "type": 0,
+      "value": "3. Convertitori remoti"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_rgWYrb": [
@@ -1510,10 +1536,10 @@
       "value": "Crea una nuova versione e migra i documenti"
     }
   ],
-  "MigrationTab.tsx_JQqWNV": [
+  "MigrationTab.tsx_i8zErH": [
     {
       "type": 0,
-      "value": "Funzione TypeScript per migrare i documenti dallo schema precedente a quello aggiornato."
+      "value": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -1914,6 +1940,58 @@
       "value": "Convertitori di documenti remoti"
     }
   ],
+  "RemoteConvertersTab.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per non sincronizzare il documento."
+    }
+  ],
+  "RemoteConvertersTab.tsx_CPS541": [
+    {
+      "type": 0,
+      "value": "Aggiorna la funzione "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "fromRemoteDocument"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per riflettere le modifiche allo schema."
+    }
+  ],
+  "RemoteConvertersTab.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "Dal documento remoto"
+    }
+  ],
+  "RemoteConvertersTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Crea una nuova versione e migra i documenti"
+    }
+  ],
   "RemoteDocumentInfoModal.tsx_1D7voQ": [
     {
       "type": 0,
@@ -1986,10 +2064,146 @@
       "value": "Riprovo..."
     }
   ],
+  "SchemaTab.tsx_/WLKzQ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implementa le modifiche allo schema che vuoi effettuare."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
+    }
+  ],
   "SchemaTab.tsx_Lktmvk": [
     {
       "type": 0,
       "value": "Schema"
+    }
+  ],
+  "SchemaTab.tsx_Vi4BUn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implementa le modifiche allo schema che vuoi effettuare."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
     }
   ],
   "SendRecordToolbar.tsx_/8QiK8": [
