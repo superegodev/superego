@@ -32,17 +32,18 @@ export const EagerCodeBlock = {
     color: "#237893",
   }),
 
-  code: style({
+  pre: style({
+    margin: 0,
     gridArea: "Code",
     overflowX: "scroll",
   }),
 };
 
-globalStyle(`${EagerCodeBlock.code} > br`, {
+globalStyle(`${EagerCodeBlock.pre} > code > br`, {
   display: "none",
 });
 
-globalStyle(`${EagerCodeBlock.code} > span`, {
+globalStyle(`${EagerCodeBlock.pre} > code > span`, {
   display: "block",
   height: codeLineHeight,
 });

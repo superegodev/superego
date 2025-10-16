@@ -4,6 +4,7 @@ import useTheme from "../../../business-logic/theme/useTheme.js";
 import monaco from "../../../monaco.js";
 import * as cs from "./CodeBlock.css.js";
 import CopyButton from "./CopyButton.js";
+import formatJson from "./formatJson.js";
 import type Props from "./Props.js";
 
 export default function EagerCodeBlock({
@@ -33,7 +34,10 @@ export default function EagerCodeBlock({
     <div
       onMouseDown={onMouseDown}
       className={cs.EagerCodeBlock.root}
-      style={{ maxHeight, visibility: isColorized ? undefined : "hidden" }}
+      style={{
+        maxHeight,
+        visibility: isColorized ? undefined : "hidden",
+      }}
     >
       <div className={cs.EagerCodeBlock.lineNumbers}>
         {code.split("\n").map((_, index) => (
@@ -49,14 +53,11 @@ export default function EagerCodeBlock({
           </div>
         ))}
       </div>
-      <code
-        key={theme + code}
-        data-lang={language}
-        ref={codeElement}
-        className={cs.EagerCodeBlock.code}
-      >
-        {code}
-      </code>
+      <pre className={cs.EagerCodeBlock.pre}>
+        <code key={theme + code} data-lang={language} ref={codeElement}>
+          {language === "json" ? formatJson(code) : code}
+        </code>
+      </pre>
       {showCopyButton ? <CopyButton code={code} /> : null}
     </div>
   );

@@ -47,6 +47,15 @@ export const ErrorMessage = {
       },
     },
   }),
+
+  disclosurePanel: style({
+    selectors: {
+      '&[aria-hidden="false"]': {
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+        borderRadius: vars.borders.radius.md,
+      },
+    },
+  }),
 };
 
 export const UserMessage = {

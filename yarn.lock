@@ -5648,7 +5648,6 @@ __metadata:
     "@superego/schema": "workspace:*"
     base-x: "npm:^5.0.1"
     es-toolkit: "npm:^1.40.0"
-    safe-stringify: "npm:^1.2.0"
     typescript: "npm:^5.9.3"
     uuid: "npm:^13.0.0"
     valibot: "npm:^1.1.0"
@@ -14333,13 +14332,6 @@ __metadata:
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: 10c0/6501914237c0a86e9675d4e51d89ca3c21ffd6a31642efeba25ad65720bce6921c9e7e974e5be91a786b25aa058b5303285d3c15dbabf983a919f5f630d349f3
-  languageName: node
-  linkType: hard
-
-"safe-stringify@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "safe-stringify@npm:1.2.0"
-  checksum: 10c0/88ce4d2c4834afa9e7b4a2e375feca3351dd49dfe2c98f98e941f17fe232af023b0dbf0997248f8609ad918b382254913d19bcbbe0c590f809f2d48afae10c2f
   languageName: node
   linkType: hard
 

@@ -1,3 +1,5 @@
+import ResponseError from "./ResponseError.js";
+
 /**
  * Extracts as much info as possible from a given an error value (which could be
  * anything in javascript).
@@ -16,6 +18,19 @@ export default function extractErrorDetails(error: unknown): any {
       typeof error === "function"
     ) {
       return String(error);
+    }
+
+    // ResponseError
+    if (error instanceof ResponseError) {
+      return {
+        message: error.message,
+        name: error.name,
+        requestMethod: error.requestMethod,
+        requestUrl: error.requestUrl,
+        requestBody: error.requestBody,
+        responseStatus: error.responseStatus,
+        responseBody: error.responseBody,
+      };
     }
 
     // Object value

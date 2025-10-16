@@ -1,4 +1,4 @@
-import safeStringify from "safe-stringify";
+import ResponseError from "./ResponseError.js";
 
 export default async function failedResponseToError(
   requestMethod: string,
@@ -10,15 +10,14 @@ export default async function failedResponseToError(
     .catch(() => response.text())
     .then((text) => text)
     .catch(() => "Unable to get response body");
-  return new Error(
-    [
-      `HTTP ${response.status} error calling ${requestMethod} ${response.url}:`,
-      "Request body:",
-      requestBody instanceof FormData
-        ? safeStringify(Object.fromEntries(requestBody))
-        : safeStringify(requestBody),
-      "Response body:",
-      safeStringify(responseBody),
-    ].join("\n"),
+  return new ResponseError(
+    `HTTP ${response.status} error calling ${requestMethod} ${response.url}`,
+    requestMethod,
+    response.url,
+    requestBody instanceof FormData
+      ? Object.fromEntries(requestBody)
+      : requestBody,
+    response.status,
+    responseBody,
   );
 }
