@@ -42,7 +42,7 @@ jobs:
 
   build-deploy-demo:
     needs: qa
-    runs-on: ubuntu-latest
+    runs-on: macos-latest-xlarge
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -65,9 +65,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-13
+          - os: macos-latest-large
             arch: x64
-          - os: macos-latest
+          - os: macos-latest-xlarge
             arch: arm64
     runs-on: ${{ matrix.os }}
     defaults:
