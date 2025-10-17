@@ -12,10 +12,14 @@ const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
 
 export default {
   packagerConfig: {
+    appBundleId: "dev.superego.superego",
     asar: true,
     ignore: ["src", "electron.vite.config.ts", "tsconfig.json"],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
+    extendInfo: {
+      CFBundleName: "Superego",
+    },
   },
   makers: [
     new MakerSquirrel({}),
