@@ -32,7 +32,7 @@ jobs:
 
   build-deploy-demo-and-website:
     needs: qa
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: actions/checkout@v4
