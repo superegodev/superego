@@ -7,7 +7,7 @@ on:
 
 jobs:
   qa:
-    runs-on: macos-latest-xlarge
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -66,9 +66,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest-large
+          - os: macos-15-intel
             arch: x64
-          - os: macos-latest-xlarge
+          - os: macos-latest
             arch: arm64
     runs-on: ${{ matrix.os }}
     defaults:
