@@ -15,7 +15,7 @@ export const ToastRegion = {
 };
 
 const toastRootBase = style({
-  width: vars.spacing._64,
+  width: vars.spacing._80,
   borderRadius: vars.borders.radius.md,
   padding: vars.spacing._4,
   display: "flex",
@@ -49,6 +49,7 @@ export const Toast = {
 
   toastContent: style({
     flexGrow: 1,
+    overflow: "hidden",
   }),
 
   title: style({

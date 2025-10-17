@@ -69,7 +69,7 @@ export default [
     id: FormatId.String.Instant,
     name: "Instant",
     description:
-      "An exact point in time in the ISO8601 format, with mandatory millisecond precision, with a specific time offset.",
+      "An exact point in time in the ISO8601 format, **REQUIRED** to include milliseconds and a time offset.",
     validExamples: [
       "2006-08-24T19:39:09.000Z",
       "2006-08-24T22:39:09.068+03:00",

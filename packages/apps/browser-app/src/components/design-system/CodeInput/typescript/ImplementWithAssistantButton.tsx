@@ -48,13 +48,16 @@ export default function ImplementWithAssistantButton({
             valueModelRef.current.setValue(result.data);
           } else {
             console.error(result.error);
-            toastQueue.add({
-              type: ToastType.Error,
-              title: intl.formatMessage({
-                defaultMessage: "Implementation failed",
-              }),
-              description: result.error.name,
-            });
+            toastQueue.add(
+              {
+                type: ToastType.Error,
+                title: intl.formatMessage({
+                  defaultMessage: "Implementation failed",
+                }),
+                description: result.error.name,
+              },
+              { timeout: 5_000 },
+            );
           }
         }}
         className={cs.ImplementWithAssistantButton.button}
