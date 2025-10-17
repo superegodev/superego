@@ -1826,6 +1826,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/petrona@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource-variable/petrona@npm:5.2.8"
+  checksum: 10c0/5acc96aae142d40b8d8d33d206c04c0ff5b5304d2480483463ab49667a399a5107ac29360a366fc48b10159ede95a45d1cdf4781449aa44301fd5c5c75af77f4
+  languageName: node
+  linkType: hard
+
 "@formatjs/cli@npm:^6.7.4":
   version: 6.7.4
   resolution: "@formatjs/cli@npm:6.7.4"
@@ -5686,6 +5693,7 @@ __metadata:
     "@astrojs/check": "npm:^0.9.4"
     "@astrojs/mdx": "npm:^4.3.7"
     "@astrojs/starlight": "npm:^0.36.1"
+    "@fontsource-variable/petrona": "npm:^5.2.8"
     "@playwright/test": "npm:^1.56.0"
     astro: "npm:^5.14.5"
     starlight-theme-nova: "npm:^0.9.5"

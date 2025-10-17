@@ -1,9 +1,8 @@
+import { PiRobot } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
-import Logo from "../../design-system/Logo/Logo.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateCollectionForm from "./CreateCollectionForm/CreateCollectionForm.js";
-import * as cs from "./CreateCollectionManual.css.js";
 
 export default function CreateCollectionManual() {
   const intl = useIntl();
@@ -21,12 +20,7 @@ export default function CreateCollectionManual() {
             label: intl.formatMessage({
               defaultMessage: "Go to assisted mode",
             }),
-            icon: (
-              <Logo
-                variant="pixel-art"
-                className={cs.CreateCollectionManual.assistedModeIcon}
-              />
-            ),
+            icon: <PiRobot />,
             to: { name: RouteName.CreateCollectionAssisted },
           },
         ]}

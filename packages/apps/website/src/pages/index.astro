@@ -1,14 +1,11 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { LinkButton } from "starlight-theme-nova/components";
 import { Icon } from "@astrojs/starlight/components";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import "@fontsource-variable/petrona";
+import "@fontsource-variable/petrona/wght-italic.css";
 import { Image } from "astro:assets";
-import image0 from "../assets/landing-page/0.png";
-import image1 from "../assets/landing-page/1.png";
-import image2 from "../assets/landing-page/2.png";
+import { LinkButton } from "starlight-theme-nova/components";
 import logo from "../assets/logo.svg";
-
-const CONTAINER_WIDTH = 720;
 ---
 
 <script>
@@ -78,14 +75,27 @@ const CONTAINER_WIDTH = 720;
         latestEntry.isIntersecting ? 0 : 1,
       );
       scrollDownButton.disabled = latestEntry.isIntersecting;
+      scrollDownButton!.style.display = latestEntry.isIntersecting
+        ? "none"
+        : "inline-block";
       tosPpLink!.style.opacity = String(latestEntry.isIntersecting ? 1 : 0);
+      tosPpLink!.style.display = latestEntry.isIntersecting
+        ? "inline-block"
+        : "none";
     },
     { threshold: 0.01 },
   ).observe(hero);
 </script>
 <style is:global>
+  body {
+    background-color: #f5f5f5;
+    color: #111827;
+  }
+
   /* Hide the header until we're scrolled to the bottom. */
   .nova-page-frame-header {
+    background-color: #f5f5f5;
+    color: #111827;
     opacity: 0;
     transition: opacity 200ms ease;
   }
@@ -93,6 +103,13 @@ const CONTAINER_WIDTH = 720;
   /* The main-frame has a padding at the top which we want to remove. */
   .main-frame {
     padding: 0;
+  }
+
+  /* Remove width restriction set by the template. */
+  .main-frame .sl-container {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Hide the title. */
@@ -104,7 +121,6 @@ const CONTAINER_WIDTH = 720;
   .main-frame .main-pane main > .content-panel {
     border: 0;
     padding: 0;
-    padding-inline: max(calc(50% - 360px), 1rem);
     width: 100%;
   }
 
@@ -115,42 +131,116 @@ const CONTAINER_WIDTH = 720;
 </style>
 
 <style>
+  .highlighted {
+    margin-inline-start: -0.2em;
+    margin-inline-end: -0.2em;
+    padding-inline-start: 0.2em;
+    padding-inline-end: 0.2em;
+    border-radius: 0.8em 0.3em;
+    background: transparent;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 212, 59, 0.1),
+      rgba(255, 212, 59, 0.7),
+      rgba(255, 212, 59, 0.3)
+    );
+    box-decoration-break: clone;
+    font-weight: 600;
+  }
+
   .step {
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
     margin: 0;
-    padding-block-start: 4rem;
+    padding-block-start: 2rem;
+    padding-inline: max(calc(50% - 600px), 1rem);
+    font-family: "Petrona Variable", serif;
+  }
+  .step.big {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .step.step.big h2 {
+    font-size: 6.9rem;
+    font-weight: normal;
   }
   .step h2 {
-    font-size: 1.6rem;
+    margin-block-end: 2rem;
+    font-size: 4rem;
   }
-  .step .details {
-    margin-block-start: 2rem;
-    font-size: 1.4rem;
+  .step h4 {
+    margin-block-end: 2rem;
+    font-size: 1.3rem;
   }
-  .step .details img {
-    margin-block-start: 4rem;
-    width: 100%;
-    padding: 2rem;
-    background: #fff;
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.16),
-      0 4px 8px rgba(0, 0, 0, 0.18);
-    border: 1px solid rgba(0, 0, 0, 0.14);
-    border-radius: 8px;
+  .step p {
+    margin-block-end: 1rem;
+    font-size: 3rem;
+  }
+  @media (max-width: 1200px) {
+    .step.step.big h2 {
+      font-size: 6rem;
+    }
+    .step h2 {
+      font-size: 4rem;
+    }
+    .step p {
+      font-size: 3rem;
+    }
+  }
+  @media (max-width: 1000px) {
+    .step.step.big h2 {
+      font-size: 5rem;
+    }
+    .step h2 {
+      font-size: 3.5rem;
+    }
+    .step p {
+      font-size: 2.5rem;
+    }
+  }
+  @media (max-width: 800px) {
+    .step.step.big h2 {
+      font-size: 4rem;
+      font-weight: bold;
+    }
+    .step h2 {
+      font-size: 3rem;
+    }
+    .step p {
+      font-size: 2.2rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .step.step.big h2 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .step h2 {
+      font-size: 2.5rem;
+    }
+    .step p {
+      font-size: 2rem;
+    }
   }
 
   .hero {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin-block-start: 5rem;
+    justify-self: start;
+    padding-inline: max(calc(50% - 560px), 1rem);
+    margin-block: 3rem;
+    font-family: sans-serif;
   }
   .hero img {
-    width: 10rem;
+    width: 15rem;
     margin-block-end: 2rem;
+  }
+  @media (max-width: 600px) {
+    .hero img {
+      width: 12rem;
+      margin-block-end: 2rem;
+    }
   }
   .hero .copy {
     display: flex;
@@ -158,24 +248,27 @@ const CONTAINER_WIDTH = 720;
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-block-end: 1rem;
+    margin-block-end: 2rem;
   }
   .hero .copy h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
+    font-weight: normal;
     margin: 0;
   }
   .hero .copy p {
-    font-size: 1.2rem;
+    font-size: 2rem;
+    font-weight: normal;
   }
   .hero .actions {
     width: 100%;
     display: flex;
     gap: 0.5rem;
     justify-content: center;
+    margin-block-end: 4rem;
   }
   .hero .actions a {
     display: inline-block;
-    width: 140px;
+    width: 128px;
     margin: 0;
     box-sizing: content-box;
     display: flex;
@@ -221,61 +314,80 @@ const CONTAINER_WIDTH = 720;
 </style>
 
 <StarlightPage frontmatter={{ title: "Superego", template: "splash" }}>
+  <div class="step big">
+    <h2>
+      Imagine this:
+      <div style={{ display: "block", height: "2rem", width: "100%" }}></div>
+      <em class="highlighted">all</em> your personal data,
+      <br />
+      in <em class="highlighted">one</em> private space.
+    </h2>
+  </div>
+
   <div class="step">
-    <h2>1. Imagine all your personal data in one private space</h2>
-    <div class="details">
-      An open-source, local database where you can store anything you want and
-      which can connect and sync with your other apps.
-      <Image
-        alt="Superego data examples"
-        src={image0}
-        width={CONTAINER_WIDTH * 2}
-        format="avif"
-        quality={100}
-      />
-    </div>
+    <h2>A local, encrypted, open-source database.</h2>
+    <p>
+      A vault you can <em class="highlighted">trust</em> with your most private records.
+    </p>
   </div>
 
-  <div class="step" id="step-1">
-    <h2>2. Add an AI assistant to interact with it</h2>
-    <div class="details">
-      Use a local model for privacy or connect to your trusted inference
-      provider.
-      <Image
-        alt="Superego assistant helping you interact with the data"
-        src={image1}
-        width={CONTAINER_WIDTH * 2}
-        format="avif"
-        quality={100}
-      />
-    </div>
+  <div class="step">
+    <h2>Pulling data from your other apps,</h2>
+    <p>
+      giving you back what's
+      <em class="highlighted">rightfully yours</em>.
+    </p>
   </div>
 
-  <div class="step" id="step-2">
-    <h2>3. Make it a platform for dashboards and small apps</h2>
-    <div class="details">
-      They're just simple TypeScript snippets and you can <i>vibe</i> them with the
-      assistant!
-      <Image
-        alt="Superego assistant helping you build dashboards"
-        src={image2}
-        width={CONTAINER_WIDTH * 2}
-        format="avif"
-        quality={100}
-      />
-    </div>
+  <div class="step big">
+    <h2>Then: connect it to an <span class="highlighted">AI</span>.</h2>
   </div>
 
-  <div class="step hero">
+  <div class="step">
+    <h2>
+      Finally! An assistant that <em class="highlighted">actually</em>
+      <br />
+      knows you.
+    </h2>
+    <p>
+      Did you know you run faster on Thursdays? Or that last year you spent 632
+      euros on shoes?
+    </p>
+  </div>
+
+  <div class="step">
+    <h2>Share your day with it.</h2>
+    <p>
+      It'll update its “memory” and get to know you
+      <em class="highlighted">even better</em>.
+    </p>
+  </div>
+
+  <div class="step big">
+    <h2>Top it off: make it <em class="highlighted">hackable</em>.</h2>
+  </div>
+
+  <div class="step">
+    <h2>Um, sorry, <em>“vibe-able”</em>.</h2>
+    <p>Need to extend it? <em class="highlighted">Just ask</em> the LLM.</p>
+  </div>
+
+  <div class="step">
+    <h2>Or, do it yourself,</h2>
+    <p>with snippets of TypeScript.</p>
+  </div>
+
+  <div class="step big">
+    <h2>But why <em class="highlighted">just</em> imagine?</h2>
+  </div>
+
+  <div class="step">
     <div class="hero">
       <div class="copy">
         <Image
           alt="Superego logo: a low-poly drawing of Freud's head"
           src={logo}
-          width={CONTAINER_WIDTH / 6}
-          height={CONTAINER_WIDTH / 6}
         />
-
         <h1>Superego</h1>
         <p>Your Life's Database</p>
       </div>
@@ -299,11 +411,13 @@ const CONTAINER_WIDTH = 720;
         width: "100%",
         aspectRatio: "720/405",
         border: 0,
-        borderRadius: "0.25rem",
+        borderRadius: "0.5rem",
       }}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen></iframe>
+      allowfullscreen
+    >
+    </iframe>
   </div>
 
   <button id="scroll-down-button" type="button" aria-label="Scroll down">
