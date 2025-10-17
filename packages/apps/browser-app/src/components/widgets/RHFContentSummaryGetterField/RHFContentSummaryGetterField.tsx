@@ -63,12 +63,12 @@ from the document content.
 The property names of the summary object can include an "attributes" prefix that
 configures the behavior of the UIs that render the summary. Examples:
 
-- \`"{position:0,sortable:true,default-sort:asc} prop0"\`:
+- \`"{position:0,sortable:true,default-sort:asc} Prop Zero"\`:
   - property displayed first;
   - when rendered in a table, the property's column is sortable;
   - when rendered in a table, the table is—by default—sorted by the property's
     column, in ascending order.
-- \`"{position:1} prop1"\`:
+- \`"{position:1} Prop One"\`:
   - property displayed second;
   - when rendered in a table, the property's column is not sortable.
 

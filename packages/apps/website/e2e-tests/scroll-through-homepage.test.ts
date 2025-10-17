@@ -2,18 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test("Scroll through homepage", async ({ page }) => {
   await page.goto("/");
-  await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot();
 
-  await page.click("#scroll-down-button");
-  await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot();
+  const stepsCount = await page.locator(".step").count();
 
-  await page.click("#scroll-down-button");
-  await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot();
-
-  await page.click("#scroll-down-button");
-  await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot();
+  for (let i = 0; i < stepsCount - 1; i++) {
+    await page.click("#scroll-down-button");
+    await expect(page).toHaveScreenshot();
+  }
 });
