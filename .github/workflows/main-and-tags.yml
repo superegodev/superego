@@ -2,6 +2,8 @@ name: QA and deploy
 
 on:
   push:
+    branches:
+      - main
     tags:
       - "v*"
 
@@ -46,7 +48,6 @@ jobs:
       - name: Build website
         env:
           PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
-          PUBLIC_LATEST_RELEASE_URL: https://github.com/superegodev/superego/releases/tag/${{ github.ref_name }}
         run: yarn build-website
       - name: Deploy website to https://sueprego.dev
         env:
@@ -62,6 +63,7 @@ jobs:
         run: yarn deploy-demo:production
 
   build-deploy-electron:
+    if: startsWith(github.ref, 'refs/tags/')
     needs: qa
     strategy:
       matrix:
