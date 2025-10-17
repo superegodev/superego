@@ -1,4 +1,10 @@
 {
+  "AnyFieldLabel.tsx_Seanpx": [
+    {
+      "type": 0,
+      "value": "Required"
+    }
+  ],
   "AppearanceSettings.tsx_Pe0ogR": [
     {
       "type": 0,
@@ -33,6 +39,42 @@
     {
       "type": 0,
       "value": "Your name"
+    }
+  ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
+    {
+      "type": 0,
+      "value": "Authenticate connector"
+    }
+  ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": [
+    {
+      "type": 0,
+      "value": "Re-authenticate connector"
+    }
+  ],
+  "AuthenticationSettings.tsx_B7p2EC": [
+    {
+      "type": 0,
+      "value": "Client secret"
+    }
+  ],
+  "AuthenticationSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "AuthenticationSettings.tsx_Q0U6OF": [
+    {
+      "type": 0,
+      "value": "Authentication settings"
+    }
+  ],
+  "AuthenticationSettings.tsx_U5+MBC": [
+    {
+      "type": 0,
+      "value": "Client ID"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -125,6 +167,12 @@
       "value": "General settings"
     }
   ],
+  "CollectionSettings.tsx_JJBzhX": [
+    {
+      "type": 0,
+      "value": "Remote"
+    }
+  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -167,6 +215,30 @@
       "value": "Compiling..."
     }
   ],
+  "ConnectorSelect.tsx_Gnbr9F": [
+    {
+      "type": 0,
+      "value": "Select a connector"
+    }
+  ],
+  "ConnectorSelect.tsx_nSFiyf": [
+    {
+      "type": 0,
+      "value": "The connector cannot be changed once a remote is configured."
+    }
+  ],
+  "ConnectorSelect.tsx_r8XsCU": [
+    {
+      "type": 0,
+      "value": "Connector"
+    }
+  ],
+  "ConnectorSettings.tsx_1B+Bnl": [
+    {
+      "type": 0,
+      "value": "Connector settings"
+    }
+  ],
   "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
@@ -175,6 +247,26 @@
     {
       "type": 1,
       "value": "error"
+    }
+  ],
+  "ContentSummaryTab.tsx_RGFGD8": [
+    {
+      "type": 0,
+      "value": "Update the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "getContentSummary"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " function to reflect schema changes."
     }
   ],
   "ContentSummaryTab.tsx_VzzYJk": [
@@ -444,6 +536,12 @@
       "value": " » Create New Version"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_2n41AE": [
+    {
+      "type": 0,
+      "value": "New collection version created"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
@@ -454,6 +552,12 @@
     {
       "type": 0,
       "value": "1. Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": [
+    {
+      "type": 0,
+      "value": "3. Remote converters"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_rgWYrb": [
@@ -484,24 +588,44 @@
       "value": "Not a valid JSON string"
     }
   ],
-  "DeleteCollectionModalForm.tsx_4S5UP3": [
+  "DeleteCollectionModalForm.tsx_J24oFm": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the collection will permanently delete all of its documents and files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the collection, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the collection, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -522,12 +646,6 @@
     {
       "type": 0,
       "value": "\""
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_iuFFzm": [
-    {
-      "type": 0,
-      "value": "Deleting the collection will permanently delete all of its documents and files."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -556,62 +674,36 @@
       "value": "Delete"
     }
   ],
-  "DeleteConversationModalForm.tsx_VcWPH+": [
+  "DeleteConversationModalForm.tsx_jGLuOH": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the conversation is permanent. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "If you're sure you want to delete the conversation, write "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " If you're sure you want to delete the conversation, write in the input below. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
+      "value": "p"
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
     {
       "type": 0,
       "value": "Command confirmation"
-    }
-  ],
-  "DeleteConversationModalForm.tsx_t7Vs5c": [
-    {
-      "type": 0,
-      "value": "Deleting the conversation is permanent."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_+pXFqz": [
-    {
-      "type": 0,
-      "value": "If you're sure you want to delete the document, write "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "delete"
-        }
-      ],
-      "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " in the input below."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_GSdOzc": [
-    {
-      "type": 0,
-      "value": "Deleting the document will permanently delete the document, all its versions, and all its files."
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -638,6 +730,52 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to delete the document, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Document.tsx_AB6IO/": [
+    {
+      "type": 0,
+      "value": "Go to remote document"
     }
   ],
   "Document.tsx_EPTOBf": [
@@ -676,6 +814,12 @@
     {
       "type": 0,
       "value": "Save"
+    }
+  ],
+  "Document.tsx_otVWer": [
+    {
+      "type": 0,
+      "value": "Remote document info"
     }
   ],
   "Document.tsx_zugcbb": [
@@ -730,6 +874,28 @@
     {
       "type": 0,
       "value": "Invalid content summary"
+    }
+  ],
+  "DocumentsTable.tsx_xIoGG9": [
+    {
+      "type": 0,
+      "value": "Go to"
+    }
+  ],
+  "DownSyncInfoModal.tsx_8I58x/": [
+    {
+      "type": 0,
+      "value": "Syncing with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DownSyncInfoModal.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
     }
   ],
   "EagerTiptapInput.tsx_0he+1r": [
@@ -1114,6 +1280,18 @@
       "value": "I'm the Collection Creator"
     }
   ],
+  "ImplementWithAssistantButton.tsx_40hUOu": [
+    {
+      "type": 0,
+      "value": "Implement with assistant"
+    }
+  ],
+  "ImplementWithAssistantButton.tsx_80aEjO": [
+    {
+      "type": 0,
+      "value": "Implementation failed"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -1390,10 +1568,10 @@
       "value": "Create new version and migrate documents"
     }
   ],
-  "MigrationTab.tsx_JQqWNV": [
+  "MigrationTab.tsx_i8zErH": [
     {
       "type": 0,
-      "value": "TypeScript function to migrate documents from the previous schema to the updated schema."
+      "value": "Write a migration function to convert documents from the previous schema to the updated schema."
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -1446,7 +1624,7 @@
       "value": "Content summary getter"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_TDCCVk": [
+  "RHFContentSummaryGetterField.tsx_BmNFs6": [
     {
       "children": [
         {
@@ -1465,13 +1643,13 @@
         },
         {
           "type": 0,
-          "value": " of a document is a "
+          "value": " of a document is a"
         },
         {
           "children": [
             {
               "type": 0,
-              "value": "Record<name: string, value: string | number | boolean | null>"
+              "value": "Record<name: string, value: string | number | boolean | null> "
             }
           ],
           "type": 8,
@@ -1479,7 +1657,7 @@
         },
         {
           "type": 0,
-          "value": " — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
+          "value": "—derived from the document's content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
       ],
       "type": 8,
@@ -1574,6 +1752,300 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Add"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Item "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "Remote.tsx_s8FZNF": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " You can sync a collection with an external data source (a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "remote"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "). When a remote is configured, it becomes the "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "source of truth"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " for that collection. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fromRemoteDocument"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " mapping, and you can filter which remote documents are synced. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " To set up a remote, configure a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "connector"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " to the external data source. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Some connectors support only "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "syncing down from"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " the remote, making the collection read-only. Others also support "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "syncing up to"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " the remote, so creates, updates, and deletes in the collection are propagated to the remote. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " More info at "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/connectors"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RemoteConverters.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " to skip syncing the document."
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Remote document converters"
+    }
+  ],
+  "RemoteConvertersTab.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " to skip syncing the document."
+    }
+  ],
+  "RemoteConvertersTab.tsx_CPS541": [
+    {
+      "type": 0,
+      "value": "Update the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "fromRemoteDocument"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " function to reflect schema changes."
+    }
+  ],
+  "RemoteConvertersTab.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "From remote document"
+    }
+  ],
+  "RemoteConvertersTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Create new version and migrate documents"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Synced with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "Remote document ID:"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "Remote document version ID:"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1624,10 +2096,146 @@
       "value": "Retrying..."
     }
   ],
+  "SchemaTab.tsx_/WLKzQ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implement the schema changes you want to make."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Update the collection's content summary getter to reflect those changes. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Write a migration function to convert documents from the previous schema to the updated schema. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
+    }
+  ],
   "SchemaTab.tsx_Lktmvk": [
     {
       "type": 0,
       "value": "Schema"
+    }
+  ],
+  "SchemaTab.tsx_Vi4BUn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implement the schema changes you want to make."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Update the collection's content summary getter to reflect those changes. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Since this is a remote collection, update its remote converters as well. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
     }
   ],
   "SendRecordToolbar.tsx_/8QiK8": [
@@ -1664,6 +2272,18 @@
     {
       "type": 0,
       "value": "Configure assistant"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_fsGyC4": [
+    {
+      "type": 0,
+      "value": "Update remote"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_m8TXbJ": [
+    {
+      "type": 0,
+      "value": "Set remote"
     }
   ],
   "SpeakButton.tsx_FUvUuG": [
@@ -1706,6 +2326,12 @@
     {
       "type": 0,
       "value": "Create"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_syZYsy": [
+    {
+      "type": 0,
+      "value": "Error creating the collection"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [
@@ -1958,6 +2584,55 @@
     {
       "type": 0,
       "value": " seconds"
+    }
+  ],
+  "getDownSyncAction.tsx_IJWuS/": [
+    {
+      "type": 0,
+      "value": "Last synced "
+    },
+    {
+      "style": {
+        "parsedOptions": {
+          "day": "numeric",
+          "hour": "2-digit",
+          "hourCycle": "h23",
+          "minute": "2-digit",
+          "month": "short"
+        },
+        "pattern": "MMM d, HH:mm",
+        "type": 1
+      },
+      "type": 3,
+      "value": "lastSucceededAt"
+    }
+  ],
+  "getDownSyncAction.tsx_RRA+40": [
+    {
+      "type": 0,
+      "value": "Authenticate with "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "getDownSyncAction.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sync"
+    }
+  ],
+  "getDownSyncAction.tsx_eOnwqs": [
+    {
+      "type": 0,
+      "value": "Syncing"
+    }
+  ],
+  "getDownSyncAction.tsx_mG35sa": [
+    {
+      "type": 0,
+      "value": "Last sync failed"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

@@ -5,9 +5,9 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class AssistantsGetDeveloperPrompts extends Usecase<

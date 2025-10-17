@@ -1,3 +1,4 @@
+import type { TypescriptLib } from "@superego/backend";
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
@@ -6,7 +7,6 @@ import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
 import CodeInput from "../../design-system/CodeInput/CodeInput.js";
 import type IncludedGlobalUtils from "../../design-system/CodeInput/typescript/IncludedGlobalUtils.js";
-import type TypescriptLib from "../../design-system/CodeInput/typescript/TypescriptLib.js";
 import {
   Description,
   FieldError,
@@ -24,6 +24,9 @@ interface Props {
   placeholder?: string | undefined;
   typescriptLibs?: TypescriptLib[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
+  assistantImplementation?:
+    | { instructions: string; template: string }
+    | undefined;
   className?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
@@ -35,6 +38,7 @@ export default function RHFTypescriptModuleField({
   autoFocus,
   typescriptLibs,
   includedGlobalUtils,
+  assistantImplementation,
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
@@ -61,6 +65,7 @@ export default function RHFTypescriptModuleField({
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
+        assistantImplementation={assistantImplementation}
         maxHeight={vars.spacing._160}
         ref={field.ref}
       />

@@ -8,5 +8,7 @@ enum ToolName {
   CreateDocumentsTable = "createDocumentsTable",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
+  // Other tools, not used by an assistant
+  WriteTypescriptFunction = "WriteTypescriptFunction",
 }
 export default ToolName;

@@ -1,11 +1,7 @@
+import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
+import type weighInsSchema from "./weighInsSchema.js";
 
-interface WeighIn {
-  timestamp: string;
-  weightKg: number;
-  scale: string;
-  notes: string | null;
-}
 export default [
   {
     timestamp: DateTime.now()
@@ -376,4 +372,4 @@ export default [
     scale: "Mi Scale 2",
     notes: null,
   },
-] satisfies WeighIn[];
+] satisfies TypeOf<typeof weighInsSchema>[];

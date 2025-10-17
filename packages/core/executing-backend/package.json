@@ -19,7 +19,7 @@
     "@fast-check/vitest": "^0.2.2",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -28,8 +28,9 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "es-toolkit": "^1.39.10",
+    "es-toolkit": "^1.40.0",
     "luxon": "^3.7.2",
+    "p-map": "^7.0.3",
     "valibot": "^1.1.0",
     "vitest": "^3.2.4"
   }

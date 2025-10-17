@@ -15,14 +15,17 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { extractErrorDetails } from "@superego/shared-utils";
+import {
+  extractErrorDetails,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
+import pMap from "p-map";
 import type Assistant from "../../assistants/Assistant.js";
 import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import type InferenceService from "../../requirements/InferenceService.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
@@ -40,7 +43,7 @@ export default class AssistantsProcessConversation extends Usecase {
   }: {
     id: ConversationId;
   }): ResultPromise<
-    void,
+    null,
     ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
   > {
     const collectionsListResult = await this.sub(CollectionsList).exec();
@@ -131,7 +134,7 @@ export default class AssistantsProcessConversation extends Usecase {
 
     await this.repos.conversation.upsert(updatedConversation);
 
-    return makeSuccessfulResult(undefined);
+    return makeSuccessfulResult(null);
   }
 
   private createAssistant(
@@ -193,16 +196,14 @@ export default class AssistantsProcessConversation extends Usecase {
       ...otherMessages,
       {
         ...lastMessage,
-        content: (await Promise.all(
-          lastMessage.content.map(async (part) =>
-            part.type === MessageContentPartType.Audio
-              ? {
-                  type: MessageContentPartType.Text,
-                  text: await inferenceService.stt(part.audio),
-                  audio: part.audio,
-                }
-              : part,
-          ),
+        content: (await pMap(lastMessage.content, async (part) =>
+          part.type === MessageContentPartType.Audio
+            ? {
+                type: MessageContentPartType.Text,
+                text: await inferenceService.stt(part.audio),
+                audio: part.audio,
+              }
+            : part,
         )) as NonEmptyArray<MessageContentPart>,
       },
     ];

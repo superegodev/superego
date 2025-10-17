@@ -1,0 +1,203 @@
+import type { Connector } from "@superego/executing-backend";
+import {
+  failedResponseToError,
+  makeSuccessfulResult,
+} from "@superego/shared-utils";
+import pRetry from "p-retry";
+import {
+  OAuth2PKCEAccessTokenNotValid,
+  OAuth2PKCERefreshAuthenticationStateFailed,
+} from "../../common/OAuth2PKCEConnector/errors.js";
+import OAuth2PKCEConnector from "../../common/OAuth2PKCEConnector/OAuth2PKCEConnector.js";
+import type Base64Url from "../../requirements/Base64Url.js";
+import type SessionStorage from "../../requirements/SessionStorage.js";
+import sha256 from "../../utils/sha256.js";
+import type { ListAthleteActivitiesResponseBody } from "./apiTypes.js";
+import { StravaRateLimitExceeded } from "./errors.js";
+import type { SummaryActivity } from "./remoteDocumentTypes.js";
+import remoteDocumentTypes from "./remoteDocumentTypes.js?raw";
+
+export default class StravaActivities
+  extends OAuth2PKCEConnector
+  implements Connector.OAuth2PKCE<null, SummaryActivity>
+{
+  constructor(
+    redirectUri: string,
+    base64Url: Base64Url,
+    sessionStorage: SessionStorage,
+  ) {
+    super("StravaActivities", redirectUri, base64Url, sessionStorage, {
+      authorizationEndpoint: "https://www.strava.com/oauth/authorize",
+      tokenEndpoint: "https://www.strava.com/api/v3/oauth/token",
+      scopes: ["activity:read_all"],
+    });
+  }
+
+  settingsSchema = null;
+
+  remoteDocumentTypescriptSchema = {
+    types: remoteDocumentTypes,
+    rootType: "SummaryActivity",
+  };
+
+  syncDown: Connector.OAuth2PKCE<null, SummaryActivity>["syncDown"] = async ({
+    authenticationSettings,
+    authenticationState,
+    syncFrom,
+  }) => {
+    try {
+      let freshAuthenticationState = await this.getFreshAuthenticationState({
+        authenticationSettings,
+        authenticationState,
+      });
+
+      const result = await pRetry(
+        async () => {
+          const { changes, nextSyncToken } =
+            await StravaActivities.fetchActivitiesChanges(
+              freshAuthenticationState.accessToken,
+              syncFrom,
+            );
+          return makeSuccessfulResult({
+            changes: changes,
+            authenticationState: freshAuthenticationState,
+            syncPoint: nextSyncToken,
+          });
+        },
+        {
+          retries: 1,
+          onFailedAttempt: async ({ error, retriesLeft }) => {
+            if (retriesLeft === 0) {
+              return;
+            }
+            if (error instanceof OAuth2PKCEAccessTokenNotValid) {
+              freshAuthenticationState = await this.refreshAuthenticationState({
+                authenticationSettings,
+                authenticationState: freshAuthenticationState,
+              });
+            }
+          },
+          shouldRetry: ({ error }) =>
+            error instanceof OAuth2PKCEAccessTokenNotValid,
+        },
+      );
+      return result;
+    } catch (error) {
+      return {
+        success: false,
+        data: null,
+        error: {
+          name:
+            error instanceof OAuth2PKCEAccessTokenNotValid ||
+            error instanceof OAuth2PKCERefreshAuthenticationStateFailed
+              ? "ConnectorAuthenticationFailed"
+              : "UnexpectedError",
+          details: { cause: error },
+        },
+      };
+    }
+  };
+
+  private static async fetchActivitiesChanges(
+    accessToken: string,
+    syncToken: string | null,
+  ): Promise<{
+    changes: Connector.Changes<SummaryActivity>;
+    nextSyncToken: string;
+  }> {
+    const changes: Connector.Changes<SummaryActivity> = {
+      addedOrModified: [],
+      deleted: [],
+    };
+    const after = Number.parseInt(syncToken ?? "0", 10);
+
+    let page = 1;
+    let hasMore = true;
+
+    do {
+      const response = await StravaActivities.fetchActivitiesPage(
+        accessToken,
+        after,
+        page,
+      );
+      page += 1;
+      hasMore = response.hasMore;
+
+      for (const summaryActivity of response.summaryActivities) {
+        // Ignore activities that don't have an id, as we can't do much with
+        // them.
+        if (!summaryActivity.id) {
+          continue;
+        }
+
+        const id = summaryActivity.id ? String(summaryActivity.id) : null;
+        const versionId = await sha256(JSON.stringify(summaryActivity), "hex");
+        const url = `https://www.strava.com/activities/${encodeURIComponent(id ?? "null")}`;
+
+        // Ignore activities that don't have a id, as it's required to process
+        // changes.
+        if (!id) {
+          continue;
+        }
+
+        changes.addedOrModified.push({
+          id,
+          versionId,
+          url,
+          content: summaryActivity,
+        });
+      }
+    } while (hasMore);
+
+    const maxStartDate = Math.max(
+      ...changes.addedOrModified.map(({ content }) =>
+        content.start_date ? Date.parse(content.start_date) : 0,
+      ),
+    );
+    const nextSyncToken =
+      changes.addedOrModified.length !== 0
+        ? String(Math.floor(maxStartDate / 1_000))
+        : (syncToken ?? "0");
+
+    return { changes, nextSyncToken };
+  }
+
+  private static async fetchActivitiesPage(
+    accessToken: string,
+    after: number | null,
+    page: number | null,
+  ): Promise<{
+    summaryActivities: SummaryActivity[];
+    hasMore: boolean;
+  }> {
+    const url = new URL("https://www.strava.com/api/v3/athlete/activities");
+    url.searchParams.set("after", String(after ?? 0));
+    url.searchParams.set("page", String(page ?? 0));
+    url.searchParams.set("per_page", "200");
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) {
+      throw response.status === 401
+        ? new OAuth2PKCEAccessTokenNotValid()
+        : response.status === 429
+          ? new StravaRateLimitExceeded()
+          : await failedResponseToError("GET", undefined, response);
+    }
+
+    const summaryActivities =
+      (await response.json()) as ListAthleteActivitiesResponseBody;
+
+    // Per the Strava documentation (https://developers.strava.com/docs/):
+    //
+    // > Note that in certain cases, the number of items returned in the
+    // > response may be lower than the requested page size, even when that page
+    // > is not the last. If you need to fully go through the full set of
+    // > results, prefer iterating until an empty page is returned.
+    const hasMore = summaryActivities.length !== 0;
+
+    return { summaryActivities, hasMore };
+  }
+}

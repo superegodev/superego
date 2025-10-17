@@ -1,16 +1,16 @@
 import type { LiteDocument } from "@superego/backend";
 import type { SortDescriptor } from "react-aria-components";
-import type { ColumnIds } from "./useColumnIds.js";
+import type { SortableColumnIds } from "./useSortableColumnIds.js";
 
 export default function sortDocuments(
   documents: LiteDocument[],
   sortDescriptor: SortDescriptor,
-  columnIds: ColumnIds,
+  sortableColumnIds: SortableColumnIds,
 ): LiteDocument[] {
   const direction = sortDescriptor.direction === "ascending" ? 1 : -1;
   return documents.toSorted((a, b) => {
-    const aValue = getSortableProperty(a, sortDescriptor, columnIds);
-    const bValue = getSortableProperty(b, sortDescriptor, columnIds);
+    const aValue = getSortableProperty(a, sortDescriptor, sortableColumnIds);
+    const bValue = getSortableProperty(b, sortDescriptor, sortableColumnIds);
     if (bValue === null || bValue === undefined) {
       return direction;
     }
@@ -31,16 +31,16 @@ export default function sortDocuments(
 function getSortableProperty(
   document: LiteDocument,
   sortDescriptor: SortDescriptor,
-  columnIds: ColumnIds,
+  sortableColumnIds: SortableColumnIds,
 ) {
-  if (sortDescriptor.column === columnIds.createdAt) {
+  if (sortDescriptor.column === sortableColumnIds.createdAt) {
     return document.createdAt.getTime();
   }
-  if (sortDescriptor.column === columnIds.lastModifiedAt) {
+  if (sortDescriptor.column === sortableColumnIds.lastModifiedAt) {
     return document.latestVersion.createdAt.getTime();
   }
   const propertyName = (sortDescriptor.column as string).slice(
-    columnIds.propertyPrefix.length,
+    sortableColumnIds.propertyPrefix.length,
   );
   const propertyValue = document.latestVersion.contentSummary.success
     ? document.latestVersion.contentSummary.data[propertyName]

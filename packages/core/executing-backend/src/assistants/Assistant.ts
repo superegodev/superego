@@ -5,6 +5,7 @@ import {
   type ToolCall,
   type ToolResult,
 } from "@superego/backend";
+import pMap from "p-map";
 import type InferenceService from "../requirements/InferenceService.js";
 
 export default abstract class Assistant {
@@ -49,10 +50,10 @@ export default abstract class Assistant {
       }
 
       // Case: assistantMessage is Message.ToolCallAssistant.
-      const toolResults: ToolResult[] = await Promise.all(
-        assistantMessage.toolCalls.map((toolCall) =>
-          this.processToolCall(toolCall),
-        ),
+      const toolResults: ToolResult[] = await pMap(
+        assistantMessage.toolCalls,
+        (toolCall) => this.processToolCall(toolCall),
+        { concurrency: 1 },
       );
       const toolMessage: Message.Tool = {
         role: MessageRole.Tool,

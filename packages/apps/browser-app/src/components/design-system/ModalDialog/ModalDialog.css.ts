@@ -39,7 +39,7 @@ export const ModalDialog = {
     },
   }),
   modal: style({
-    minWidth: vars.spacing._80,
+    minWidth: vars.spacing._100,
     maxWidth: `min(${vars.spacing._120}, calc(100dvw - ${vars.spacing._8}))`,
     background: vars.colors.background.surface,
     padding: vars.spacing._4,
@@ -62,7 +62,7 @@ export const Heading = {
     width: `calc(100% + ${vars.spacing._8})`,
     marginInline: `calc(${vars.spacing._4} * -1)`,
     marginBlockStart: 0,
-    marginBlockEnd: vars.spacing._6,
+    marginBlockEnd: vars.spacing._4,
     paddingInline: vars.spacing._4,
     paddingBlockEnd: vars.spacing._4,
     fontSize: vars.typography.fontSizes.md,

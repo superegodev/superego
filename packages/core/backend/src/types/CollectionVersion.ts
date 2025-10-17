@@ -1,6 +1,7 @@
 import type { Schema } from "@superego/schema";
 import type CollectionVersionId from "../ids/CollectionVersionId.js";
 import type CollectionVersionSettings from "./CollectionVersionSettings.js";
+import type RemoteConverters from "./RemoteConverters.js";
 import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface CollectionVersion {
@@ -14,5 +15,6 @@ export default interface CollectionVersion {
    * version to this version. Null if this is the first version.
    */
   migration: TypescriptModule | null;
+  remoteConverters: RemoteConverters | null;
   createdAt: Date;
 }

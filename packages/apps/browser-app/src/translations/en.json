@@ -1,4 +1,7 @@
 {
+  "AnyFieldLabel.tsx_Seanpx": {
+    "defaultMessage": "Required"
+  },
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Theme"
   },
@@ -16,6 +19,24 @@
   },
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Your name"
+  },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
+    "defaultMessage": "Authenticate connector"
+  },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": {
+    "defaultMessage": "Re-authenticate connector"
+  },
+  "AuthenticationSettings.tsx_B7p2EC": {
+    "defaultMessage": "Client secret"
+  },
+  "AuthenticationSettings.tsx_KTNoOq": {
+    "defaultMessage": "API key"
+  },
+  "AuthenticationSettings.tsx_Q0U6OF": {
+    "defaultMessage": "Authentication settings"
+  },
+  "AuthenticationSettings.tsx_U5+MBC": {
+    "defaultMessage": "Client ID"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -56,6 +77,9 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "General settings"
   },
+  "CollectionSettings.tsx_JJBzhX": {
+    "defaultMessage": "Remote"
+  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Latest version settings"
   },
@@ -77,8 +101,23 @@
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compiling..."
   },
+  "ConnectorSelect.tsx_Gnbr9F": {
+    "defaultMessage": "Select a connector"
+  },
+  "ConnectorSelect.tsx_nSFiyf": {
+    "defaultMessage": "The connector cannot be changed once a remote is configured."
+  },
+  "ConnectorSelect.tsx_r8XsCU": {
+    "defaultMessage": "Connector"
+  },
+  "ConnectorSettings.tsx_1B+Bnl": {
+    "defaultMessage": "Connector settings"
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
+  },
+  "ContentSummaryTab.tsx_RGFGD8": {
+    "defaultMessage": "Update the <code>getContentSummary</code> function to reflect schema changes."
   },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Create"
@@ -188,11 +227,17 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
+  "CreateNewCollectionVersionForm.tsx_2n41AE": {
+    "defaultMessage": "New collection version created"
+  },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Content summary"
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
+  },
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
+    "defaultMessage": "3. Remote converters"
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migration"
@@ -206,17 +251,14 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
-  "DeleteCollectionModalForm.tsx_4S5UP3": {
-    "defaultMessage": "If you're sure you want to delete the collection, write <em>delete</em> in the input below."
+  "DeleteCollectionModalForm.tsx_J24oFm": {
+    "defaultMessage": "<p> Deleting the collection will permanently delete all of its documents and files. </p> <p> If you're sure you want to delete the collection, write <i>delete</i> in the input below. </p>"
   },
   "DeleteCollectionModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
   "DeleteCollectionModalForm.tsx_Q5SlBK": {
     "defaultMessage": "Delete collection \"{collectionName}\""
-  },
-  "DeleteCollectionModalForm.tsx_iuFFzm": {
-    "defaultMessage": "Deleting the collection will permanently delete all of its documents and files."
   },
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
@@ -227,20 +269,11 @@
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
-  "DeleteConversationModalForm.tsx_VcWPH+": {
-    "defaultMessage": "If you're sure you want to delete the conversation, write <em>delete</em> in the input below."
+  "DeleteConversationModalForm.tsx_jGLuOH": {
+    "defaultMessage": "<p> Deleting the conversation is permanent. </p> <p> If you're sure you want to delete the conversation, write in the input below. </p>"
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
-  },
-  "DeleteConversationModalForm.tsx_t7Vs5c": {
-    "defaultMessage": "Deleting the conversation is permanent."
-  },
-  "DeleteDocumentModalForm.tsx_+pXFqz": {
-    "defaultMessage": "If you're sure you want to delete the document, write <em>delete</em> in the input below."
-  },
-  "DeleteDocumentModalForm.tsx_GSdOzc": {
-    "defaultMessage": "Deleting the document will permanently delete the document, all its versions, and all its files."
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -250,6 +283,12 @@
   },
   "DeleteDocumentModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteDocumentModalForm.tsx_qjTjxw": {
+    "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
+  },
+  "Document.tsx_AB6IO/": {
+    "defaultMessage": "Go to remote document"
   },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
@@ -265,6 +304,9 @@
   },
   "Document.tsx_jvo0vs": {
     "defaultMessage": "Save"
+  },
+  "Document.tsx_otVWer": {
+    "defaultMessage": "Remote document info"
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
@@ -286,6 +328,15 @@
   },
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Invalid content summary"
+  },
+  "DocumentsTable.tsx_xIoGG9": {
+    "defaultMessage": "Go to"
+  },
+  "DownSyncInfoModal.tsx_8I58x/": {
+    "defaultMessage": "Syncing with {remote}"
+  },
+  "DownSyncInfoModal.tsx_dKtz/9": {
+    "defaultMessage": "Sync"
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
@@ -476,6 +527,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "I'm the Collection Creator"
   },
+  "ImplementWithAssistantButton.tsx_40hUOu": {
+    "defaultMessage": "Implement with assistant"
+  },
+  "ImplementWithAssistantButton.tsx_80aEjO": {
+    "defaultMessage": "Implementation failed"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -569,8 +626,8 @@
   "MigrationTab.tsx_J/yjzE": {
     "defaultMessage": "Create new version and migrate documents"
   },
-  "MigrationTab.tsx_JQqWNV": {
-    "defaultMessage": "TypeScript function to migrate documents from the previous schema to the updated schema."
+  "MigrationTab.tsx_i8zErH": {
+    "defaultMessage": "Write a migration function to convert documents from the previous schema to the updated schema."
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
@@ -593,8 +650,8 @@
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
   },
-  "RHFContentSummaryGetterField.tsx_TDCCVk": {
-    "defaultMessage": "<p> The <b>content summary</b> of a document is a <code>Record'<name: string, value: string | number | boolean | null>'</code> — derived from its content — that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. </p> <p> <b>Content summary getter</b> is the TypeScript function that derives the summary from the document content. </p> <p> The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, <code>'{position:0,sortable:true,default-sort:asc}' First Name</code> makes <code>First Name</code> the first column, makes it sortable, and sets the column as the default sort order of the table. </p>"
+  "RHFContentSummaryGetterField.tsx_BmNFs6": {
+    "defaultMessage": "<p> The <b>content summary</b> of a document is a<code>Record'<name: string, value: string | number | boolean | null>' </code>—derived from the document's content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. </p> <p> <b>Content summary getter</b> is the TypeScript function that derives the summary from the document content. </p> <p> The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, <code>'{position:0,sortable:true,default-sort:asc}' First Name</code> makes <code>First Name</code> the first column, makes it sortable, and sets the column as the default sort order of the table. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
@@ -604,6 +661,48 @@
   },
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
+  },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Add"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Item {number}"
+  },
+  "Remote.tsx_s8FZNF": {
+    "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
+  },
+  "RemoteConverters.tsx_3cBs4J": {
+    "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
+  },
+  "RemoteConverters.tsx_GqZhDC": {
+    "defaultMessage": "From remote document"
+  },
+  "RemoteConverters.tsx_abnr48": {
+    "defaultMessage": "Remote document converters"
+  },
+  "RemoteConvertersTab.tsx_3cBs4J": {
+    "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
+  },
+  "RemoteConvertersTab.tsx_CPS541": {
+    "defaultMessage": "Update the <code>fromRemoteDocument</code> function to reflect schema changes."
+  },
+  "RemoteConvertersTab.tsx_GqZhDC": {
+    "defaultMessage": "From remote document"
+  },
+  "RemoteConvertersTab.tsx_J/yjzE": {
+    "defaultMessage": "Create new version and migrate documents"
+  },
+  "RemoteDocumentInfoModal.tsx_1D7voQ": {
+    "defaultMessage": "Synced with {remote}"
+  },
+  "RemoteDocumentInfoModal.tsx_h6SlY+": {
+    "defaultMessage": "Remote document ID:"
+  },
+  "RemoteDocumentInfoModal.tsx_nY1/sq": {
+    "defaultMessage": "Remote document version ID:"
   },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
@@ -626,8 +725,14 @@
   "RetryButton.tsx_l02CSg": {
     "defaultMessage": "Retrying..."
   },
+  "SchemaTab.tsx_/WLKzQ": {
+    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Write a migration function to convert documents from the previous schema to the updated schema. </li> </ol>"
+  },
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
+  },
+  "SchemaTab.tsx_Vi4BUn": {
+    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
   },
   "SendRecordToolbar.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
@@ -646,6 +751,12 @@
   },
   "SendRecordToolbar.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
+  },
+  "SetCollectionRemoteForm.tsx_fsGyC4": {
+    "defaultMessage": "Update remote"
+  },
+  "SetCollectionRemoteForm.tsx_m8TXbJ": {
+    "defaultMessage": "Set remote"
   },
   "SpeakButton.tsx_FUvUuG": {
     "defaultMessage": "Configure speech to play assistant messages"
@@ -667,6 +778,9 @@
   },
   "SuggestCollectionDefinition.tsx_VzzYJk": {
     "defaultMessage": "Create"
+  },
+  "SuggestCollectionDefinition.tsx_syZYsy": {
+    "defaultMessage": "Error creating the collection"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
@@ -757,6 +871,21 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} seconds"
+  },
+  "getDownSyncAction.tsx_IJWuS/": {
+    "defaultMessage": "Last synced {lastSucceededAt, date, ::MMM d, HH:mm}"
+  },
+  "getDownSyncAction.tsx_RRA+40": {
+    "defaultMessage": "Authenticate with {remote}"
+  },
+  "getDownSyncAction.tsx_dKtz/9": {
+    "defaultMessage": "Sync"
+  },
+  "getDownSyncAction.tsx_eOnwqs": {
+    "defaultMessage": "Syncing"
+  },
+  "getDownSyncAction.tsx_mG35sa": {
+    "defaultMessage": "Last sync failed"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

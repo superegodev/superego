@@ -62,15 +62,12 @@ expect.extend({
   },
 });
 
+interface CustomMatchers<R = unknown> {
+  instantEquivalentTo(instant: string): R;
+  instantCloseToNow(threshold: number): R;
+  todaysPlainDate(): R;
+}
+
 declare module "vitest" {
-  interface Assertion {
-    instantEquivalentTo(instant: string): void;
-    instantCloseToNow(threshold: number): void;
-    todaysPlainDate(): void;
-  }
-  interface AsymmetricMatchersContaining {
-    instantEquivalentTo(instant: string): void;
-    instantCloseToNow(threshold: number): void;
-    todaysPlainDate(): void;
-  }
+  interface Matchers<T = any> extends CustomMatchers<T> {}
 }

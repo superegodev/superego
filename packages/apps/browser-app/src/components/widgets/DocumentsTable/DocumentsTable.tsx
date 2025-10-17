@@ -1,17 +1,21 @@
 import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
 import { ContentSummaryUtils } from "@superego/shared-utils";
 import { useState } from "react";
+import { PiArrowSquareOut } from "react-icons/pi";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
+import Link from "../../design-system/Link/Link.js";
 import Table from "../../design-system/Table/Table.js";
+import * as cs from "./DocumentsTable.css.js";
 import getSortDescriptor from "./getSortDescriptor.js";
 import sortDocuments from "./sortDocuments.js";
-import useColumnIds from "./useColumnIds.js";
+import useSortableColumnIds from "./useSortableColumnIds.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -34,11 +38,15 @@ export default function DocumentsTable({
   const sortedProperties = ContentSummaryUtils.getSortedProperties(
     documents.map((document) => document.latestVersion.contentSummary),
   );
-  const columnIds = useColumnIds();
+  const sortableColumnIds = useSortableColumnIds();
   const [sortDescriptor, setSortDescriptor] = useState(() =>
-    getSortDescriptor(sortedProperties, columnIds),
+    getSortDescriptor(sortedProperties, sortableColumnIds),
   );
-  const sortedDocuments = sortDocuments(documents, sortDescriptor, columnIds);
+  const sortedDocuments = sortDocuments(
+    documents,
+    sortDescriptor,
+    sortableColumnIds,
+  );
   return (
     <Table
       // Re-render when these props change, otherwise react-aria-components
@@ -62,7 +70,7 @@ export default function DocumentsTable({
         {sortedProperties.map((property, index) => (
           <Table.Column
             key={property.name}
-            id={`${columnIds.propertyPrefix}${property.name}`}
+            id={`${sortableColumnIds.propertyPrefix}${property.name}`}
             isRowHeader={index === 0}
             minWidth={120}
             allowsSorting={property.sortable}
@@ -70,11 +78,20 @@ export default function DocumentsTable({
             {property.label}
           </Table.Column>
         ))}
+        {collection && CollectionUtils.hasRemote(collection) ? (
+          <Table.Column
+            align="center"
+            // Setting to zero makes it of minimal width.
+            maxWidth={0}
+          >
+            <FormattedMessage defaultMessage="Go to" />
+          </Table.Column>
+        ) : null}
         {showCreatedAt && screenSize > ScreenSize.Medium ? (
           <Table.Column
             maxWidth={160}
             allowsSorting={true}
-            id={columnIds.createdAt}
+            id={sortableColumnIds.createdAt}
           >
             <FormattedMessage defaultMessage="Created at" />
           </Table.Column>
@@ -83,7 +100,7 @@ export default function DocumentsTable({
           <Table.Column
             maxWidth={160}
             allowsSorting={true}
-            id={columnIds.lastModifiedAt}
+            id={sortableColumnIds.lastModifiedAt}
           >
             <FormattedMessage defaultMessage="Last modified at" />
           </Table.Column>
@@ -122,6 +139,19 @@ export default function DocumentsTable({
                 )}
               </Table.Cell>
             ))}
+            {collection && CollectionUtils.hasRemote(collection) ? (
+              <Table.Cell align="center">
+                {document.remoteUrl ? (
+                  <Link
+                    href={document.remoteUrl}
+                    target="_blank"
+                    className={cs.DocumentsTable.remoteUrlLink}
+                  >
+                    <PiArrowSquareOut />
+                  </Link>
+                ) : null}
+              </Table.Cell>
+            ) : null}
             {showCreatedAt && screenSize > ScreenSize.Medium ? (
               <Table.Cell>
                 <FormattedDate

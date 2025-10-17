@@ -7,11 +7,13 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsCreate from "../../../usecases/documents/Create.js";
 
@@ -43,12 +45,10 @@ export default {
         success,
         data: document,
         error,
-      } = await documentsCreate.exec(
-        collectionId,
-        content,
-        DocumentVersionCreator.Assistant,
-        conversationId,
-      );
+      } = await documentsCreate.exec(collectionId, content, {
+        createdBy: DocumentVersionCreator.Assistant,
+        conversationId: conversationId,
+      });
 
       if (error && error.name === "UnexpectedError") {
         throw new UnexpectedAssistantError(

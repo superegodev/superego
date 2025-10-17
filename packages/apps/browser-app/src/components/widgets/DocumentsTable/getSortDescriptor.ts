@@ -1,6 +1,6 @@
 import type { ContentSummaryProperty } from "@superego/shared-utils";
 import type { SortDescriptor } from "react-aria-components";
-import type { ColumnIds } from "./useColumnIds.js";
+import type { SortableColumnIds } from "./useSortableColumnIds.js";
 
 /**
  * Returns:
@@ -10,7 +10,7 @@ import type { ColumnIds } from "./useColumnIds.js";
  */
 export default function getSortDescriptor(
   properties: ContentSummaryProperty[],
-  columnIds: ColumnIds,
+  sortableColumnIds: SortableColumnIds,
 ): SortDescriptor {
   let firstSortable: ContentSummaryProperty | null = null;
   for (const property of properties) {
@@ -19,15 +19,15 @@ export default function getSortDescriptor(
     }
     if (property.sortable && property.defaultSort !== null) {
       return {
-        column: `${columnIds.propertyPrefix}${property.name}`,
+        column: `${sortableColumnIds.propertyPrefix}${property.name}`,
         direction: property.defaultSort === "asc" ? "ascending" : "descending",
       };
     }
   }
   return firstSortable
     ? {
-        column: `${columnIds.propertyPrefix}${firstSortable.name}`,
+        column: `${sortableColumnIds.propertyPrefix}${firstSortable.name}`,
         direction: "ascending",
       }
-    : { column: columnIds.lastModifiedAt, direction: "descending" };
+    : { column: sortableColumnIds.lastModifiedAt, direction: "descending" };
 }

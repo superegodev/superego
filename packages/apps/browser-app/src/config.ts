@@ -1,4 +1,4 @@
-import type Milliseconds from "./utils/Milliseconds.js";
+import type { Milliseconds } from "@superego/global-types";
 
 export const MONACO_EDITOR_COMPILATION_TIMEOUT: Milliseconds = 10_000;
 export const TIPTAP_INPUT_ON_CHANGE_DEBOUNCE: Milliseconds = 300;

@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type {
   DocumentEntity,
@@ -16,14 +17,50 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "collection_id", "created_at")
+          (
+            "id",
+            "remote_id",
+            "remote_url",
+            "latest_remote_document",
+            "collection_id",
+            "created_at"
+          )
         VALUES
-          (?, ?, ?)
+          (?, ?, ?, ?, ?, ?)
       `)
       .run(
         document.id,
+        document.remoteId,
+        document.remoteUrl,
+        document.latestRemoteDocument
+          ? encode(document.latestRemoteDocument)
+          : null,
         document.collectionId,
         document.createdAt.toISOString(),
+      );
+  }
+
+  async replace(document: DocumentEntity): Promise<void> {
+    this.db
+      .prepare(`
+          UPDATE "${table}"
+          SET
+            "remote_id" = ?,
+            "remote_url" = ?,
+            "latest_remote_document" = ?,
+            "collection_id" = ?,
+            "created_at" = ?
+          WHERE "id" = ?
+        `)
+      .run(
+        document.remoteId,
+        document.remoteUrl,
+        document.latestRemoteDocument
+          ? encode(document.latestRemoteDocument)
+          : null,
+        document.collectionId,
+        document.createdAt.toISOString(),
+        document.id,
       );
   }
 
@@ -50,10 +87,31 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     return result !== undefined;
   }
 
+  async oneExistsWhereCollectionIdEq(
+    collectionId: CollectionId,
+  ): Promise<boolean> {
+    const result = this.db
+      .prepare(`SELECT 1 FROM "${table}" WHERE "collection_id" = ?`)
+      .get(collectionId) as 1 | undefined;
+    return result !== undefined;
+  }
+
   async find(id: DocumentId): Promise<DocumentEntity | null> {
     const document = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
       .get(id) as SqliteDocument | undefined;
+    return document ? toEntity(document) : null;
+  }
+
+  async findWhereCollectionIdAndRemoteIdEq(
+    collectionId: CollectionId,
+    remoteId: string,
+  ): Promise<DocumentEntity | null> {
+    const document = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "collection_id" = ? AND "remote_id" = ?`,
+      )
+      .get(collectionId, remoteId) as SqliteDocument | undefined;
     return document ? toEntity(document) : null;
   }
 

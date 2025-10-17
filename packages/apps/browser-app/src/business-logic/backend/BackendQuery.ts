@@ -1,7 +1,6 @@
 import type { Backend } from "@superego/backend";
-import type { Result } from "@superego/global-types";
+import type { Milliseconds, Result } from "@superego/global-types";
 import type { UseQueryOptions } from "@tanstack/react-query";
-import type Milliseconds from "../../utils/Milliseconds.js";
 import type { ArgsOf, ResultOf } from "./typeUtils.js";
 
 type BackendQuery<QueryResult extends Result<any, any>> = (

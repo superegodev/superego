@@ -5,9 +5,9 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -32,7 +32,11 @@ export default class CollectionsList extends Usecase<
       collections.map((collection) => {
         const latestVersion = latestVersionsByCollectionId.get(collection.id);
         assertCollectionVersionExists(collection.id, latestVersion);
-        return makeCollection(collection, latestVersion);
+        return makeCollection(
+          collection,
+          latestVersion,
+          this.getConnector(collection),
+        );
       }),
     );
   }

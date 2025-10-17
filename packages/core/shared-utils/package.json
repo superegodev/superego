@@ -15,14 +15,15 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
-    "es-toolkit": "^1.39.10",
+    "es-toolkit": "^1.40.0",
     "uuid": "^13.0.0",
     "valibot": "^1.1.0"
   }

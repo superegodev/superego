@@ -9,12 +9,14 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -71,8 +73,9 @@ export default class AssistantsRetryLastResponse extends Usecase<
     };
     await this.repos.conversation.upsert(updatedConversation);
 
-    await this.enqueueBackgroundJob(BackgroundJobName.ProcessConversation, {
-      id,
+    await this.enqueueBackgroundJob({
+      name: BackgroundJobName.ProcessConversation,
+      input: { id },
     });
 
     return makeSuccessfulResult(

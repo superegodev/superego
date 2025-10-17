@@ -2,7 +2,7 @@ import { AssistantName, Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import DemoDataRepositoriesManager from "./DemoDataRepositoriesManager.js";
 
-registerDataRepositoriesTests(async () => {
+registerDataRepositoriesTests(() => {
   const dataRepositoriesManager = new DemoDataRepositoriesManager(
     {
       appearance: { theme: Theme.Auto },

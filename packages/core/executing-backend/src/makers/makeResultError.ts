@@ -1,4 +1,5 @@
 import type {
+  CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
   CannotRetryLastResponse,
@@ -6,6 +7,9 @@ import type {
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
   CollectionCategoryNotFound,
+  CollectionHasDocuments,
+  CollectionHasNoRemote,
+  CollectionIsSyncing,
   CollectionMigrationFailed,
   CollectionMigrationNotValid,
   CollectionNotFound,
@@ -13,6 +17,13 @@ import type {
   CollectionSettingsNotValid,
   CollectionVersionIdNotMatching,
   CommandConfirmationNotValid,
+  ConnectorAuthenticationFailed,
+  ConnectorAuthenticationSettingsNotValid,
+  ConnectorDoesNotSupportUpSyncing,
+  ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
+  ConnectorNotAuthenticated,
+  ConnectorNotFound,
+  ConnectorSettingsNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
   ConversationNotFound,
@@ -21,14 +32,19 @@ import type {
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
+  ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
+  RemoteConvertersNotValid,
+  SyncingChangesFailed,
   UnexpectedError,
+  WriteTypescriptFunctionToolNotCalled,
 } from "@superego/backend";
 
 type KnownResultError =
+  | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation
   | CannotRetryLastResponse
@@ -36,26 +52,40 @@ type KnownResultError =
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
   | CollectionCategoryNotFound
+  | CollectionHasDocuments
+  | CollectionHasNoRemote
+  | CollectionIsSyncing
   | CollectionMigrationFailed
   | CollectionMigrationNotValid
-  | CollectionSettingsNotValid
   | CollectionNotFound
   | CollectionSchemaNotValid
+  | CollectionSettingsNotValid
   | CollectionVersionIdNotMatching
   | CommandConfirmationNotValid
+  | ConnectorAuthenticationFailed
+  | ConnectorAuthenticationSettingsNotValid
+  | ConnectorDoesNotSupportUpSyncing
+  | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
+  | ConnectorNotAuthenticated
+  | ConnectorNotFound
+  | ConnectorSettingsNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
-  | DocumentVersionIdNotMatching
   | DocumentNotFound
+  | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
+  | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
-  | UnexpectedError;
+  | RemoteConvertersNotValid
+  | SyncingChangesFailed
+  | UnexpectedError
+  | WriteTypescriptFunctionToolNotCalled;
 
 export default function makeResultError<Name extends string, Details>(
   name: Name,

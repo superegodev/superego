@@ -1,17 +1,19 @@
 import type {
   Backend,
   CollectionId,
+  CollectionNotFound,
   CommandConfirmationNotValid,
-  DeletedEntities,
+  ConnectorDoesNotSupportUpSyncing,
   DocumentId,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsDelete extends Usecase<
@@ -21,9 +23,14 @@ export default class DocumentsDelete extends Usecase<
     collectionId: CollectionId,
     id: DocumentId,
     commandConfirmation: string,
+    allowDeletingRemoteDocument = false,
   ): ResultPromise<
-    DeletedEntities,
-    DocumentNotFound | CommandConfirmationNotValid | UnexpectedError
+    null,
+    | CollectionNotFound
+    | DocumentNotFound
+    | ConnectorDoesNotSupportUpSyncing
+    | CommandConfirmationNotValid
+    | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
       return makeUnsuccessfulResult(
@@ -34,6 +41,13 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionNotFound", { collectionId }),
+      );
+    }
+
     const document = await this.repos.document.find(id);
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
@@ -41,17 +55,24 @@ export default class DocumentsDelete extends Usecase<
       );
     }
 
-    const deletedFileIds = await this.repos.file.deleteAllWhereDocumentIdEq(id);
-    const deletedDocumentVersionIds =
-      await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
+    // Right now no connector supports up-syncing, so checking if the collection
+    // has a remote is sufficient. TODO: update condition once connectors
+    // support up-syncing.
+    if (collection.remote !== null && !allowDeletingRemoteDocument) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConnectorDoesNotSupportUpSyncing", {
+          collectionId: collectionId,
+          connectorName: collection.remote.connector.name,
+          message:
+            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+        }),
+      );
+    }
+
+    await this.repos.file.deleteAllWhereDocumentIdEq(id);
+    await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
     await this.repos.document.delete(id);
 
-    return makeSuccessfulResult(
-      makeDeletedEntities({
-        documents: [id],
-        documentVersion: deletedDocumentVersionIds,
-        files: deletedFileIds,
-      }),
-    );
+    return makeSuccessfulResult(null);
   }
 }

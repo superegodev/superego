@@ -17,6 +17,7 @@ export const Body = {
 };
 
 const columnTitleBase = style({
+  width: "100%",
   textWrap: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",

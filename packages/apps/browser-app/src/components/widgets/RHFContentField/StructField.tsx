@@ -5,8 +5,8 @@ import {
 } from "@superego/schema";
 import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import forms from "../../../business-logic/forms/forms.js";
 import classnames from "../../../utils/classnames.js";
-import { generateAnyDefaultValues } from "../../../utils/generateDefaultValues.js";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
@@ -72,7 +72,9 @@ export default function StructField({
         {isValueNull ? (
           <Button
             onPress={() =>
-              field.onChange(generateAnyDefaultValues(typeDefinition, schema))
+              field.onChange(
+                forms.defaults.typeDefinitionValue(typeDefinition, schema),
+              )
             }
             className={cs.StructAndListField.nullValueSetValueButton}
           >

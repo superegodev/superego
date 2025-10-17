@@ -24,6 +24,12 @@ export default class DemoDocumentRepository
     this.documents[document.id] = clone(document);
   }
 
+  async replace(document: DocumentEntity): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    this.documents[document.id] = clone(document);
+  }
+
   async delete(id: DocumentId): Promise<DocumentId> {
     this.ensureNotDisposed();
     this.onWrite();
@@ -51,9 +57,31 @@ export default class DemoDocumentRepository
     return this.documents[id] !== undefined;
   }
 
+  async oneExistsWhereCollectionIdEq(
+    collectionId: CollectionId,
+  ): Promise<boolean> {
+    this.ensureNotDisposed();
+    return Object.values(this.documents).some(
+      (document) => document.collectionId === collectionId,
+    );
+  }
+
   async find(id: DocumentId): Promise<DocumentEntity | null> {
     this.ensureNotDisposed();
     return clone(this.documents[id] ?? null);
+  }
+
+  async findWhereCollectionIdAndRemoteIdEq(
+    collectionId: CollectionId,
+    remoteId: string,
+  ): Promise<DocumentEntity | null> {
+    this.ensureNotDisposed();
+    const document = Object.values(this.documents).find(
+      (document) =>
+        document.collectionId === collectionId &&
+        document.remoteId === remoteId,
+    );
+    return clone(document ?? null);
   }
 
   async findAllWhereCollectionIdEq(

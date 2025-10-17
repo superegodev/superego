@@ -4,17 +4,15 @@ import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import makeDocumentVersionGivenSummary from "./makeDocumentVersionGivenSummary.js";
 
 export default function makeDocumentGivenSummary(
-  document: DocumentEntity,
+  { latestRemoteDocument, ...document }: DocumentEntity,
   latestVersion: DocumentVersionEntity,
   contentSummary: DocumentVersion["contentSummary"],
 ): Document {
   return {
-    id: document.id,
-    collectionId: document.collectionId,
+    ...document,
     latestVersion: makeDocumentVersionGivenSummary(
       latestVersion,
       contentSummary,
     ),
-    createdAt: document.createdAt,
   };
 }

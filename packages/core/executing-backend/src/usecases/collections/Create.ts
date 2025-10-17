@@ -17,14 +17,14 @@ import {
 import {
   valibotSchemas as backedUtilsValibotSchemas,
   Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -103,8 +103,7 @@ export default class CollectionsCreate extends Usecase<
           issues: [
             {
               message:
-                "The default export of the getter TypescriptModule is not a function",
-              path: [{ key: "getter" }],
+                "The default export of the contentSummaryGetter TypescriptModule is not a function",
             },
           ],
         }),
@@ -123,6 +122,7 @@ export default class CollectionsCreate extends Usecase<
         assistantInstructions:
           settingsValidationResult.output.assistantInstructions,
       },
+      remote: null,
       createdAt: now,
     };
     const collectionVersion: CollectionVersionEntity = {
@@ -134,6 +134,7 @@ export default class CollectionsCreate extends Usecase<
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
       migration: null,
+      remoteConverters: null,
       createdAt: now,
     };
     if (!dryRun) {
@@ -141,6 +142,8 @@ export default class CollectionsCreate extends Usecase<
       await this.repos.collectionVersion.insert(collectionVersion);
     }
 
-    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
+    return makeSuccessfulResult(
+      makeCollection(collection, collectionVersion, null),
+    );
   }
 }

@@ -8,17 +8,15 @@ import makeDocumentVersion from "./makeDocumentVersion.js";
 export default async function makeDocument(
   javascriptSandbox: JavascriptSandbox,
   collectionVersion: CollectionVersionEntity,
-  document: DocumentEntity,
+  { latestRemoteDocument, ...document }: DocumentEntity,
   latestVersion: DocumentVersionEntity,
 ): Promise<Document> {
   return {
-    id: document.id,
-    collectionId: document.collectionId,
+    ...document,
     latestVersion: await makeDocumentVersion(
       javascriptSandbox,
       collectionVersion,
       latestVersion,
     ),
-    createdAt: document.createdAt,
   };
 }

@@ -11,9 +11,30 @@ interface Props {
   children: ReactNode;
 }
 export default function Panel({ slot, className, children }: Props) {
-  const { isPrimarySidebarOpen, closePrimarySidebar } = useShell();
+  const {
+    togglePrimarySidebarButtonId,
+    isPrimarySidebarOpen,
+    closePrimarySidebar,
+  } = useShell();
   const onMainPanelInteraction =
-    isPrimarySidebarOpen && slot === "Main" ? closePrimarySidebar : undefined;
+    isPrimarySidebarOpen && slot === "Main"
+      ? (evt: { target: EventTarget | null }) => {
+          // Ignore if the event target is the the toggle sidebar button,
+          // otherwise closing the sidebar disturbs keyboard navigation.
+          // (Example: the sidebar closes as soon as the user presses any key,
+          // but at least Shift+Tab are necessary to navigate to sidebar
+          // elements.)
+          if (
+            !(
+              evt.target &&
+              "id" in evt.target &&
+              evt.target.id === togglePrimarySidebarButtonId
+            )
+          ) {
+            closePrimarySidebar();
+          }
+        }
+      : undefined;
   return (
     <div
       className={classnames(cs.Panel.root, className)}

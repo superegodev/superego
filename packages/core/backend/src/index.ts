@@ -8,9 +8,11 @@ export type { default as Backend } from "./Backend.js";
 export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
+export { default as ConnectorAuthenticationStrategy } from "./enums/ConnectorAuthenticationStrategy.js";
 export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
+export { default as DownSyncStatus } from "./enums/DownSyncStatus.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as SpeechModel } from "./enums/SpeechModel.js";
@@ -19,6 +21,7 @@ export { default as ToolName } from "./enums/ToolName.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
+export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
 export type { default as CannotRetryLastResponse } from "./errors/CannotRetryLastResponse.js";
@@ -26,6 +29,9 @@ export type { default as CollectionCategoryHasChildren } from "./errors/Collecti
 export type { default as CollectionCategoryIconNotValid } from "./errors/CollectionCategoryIconNotValid.js";
 export type { default as CollectionCategoryNameNotValid } from "./errors/CollectionCategoryNameNotValid.js";
 export type { default as CollectionCategoryNotFound } from "./errors/CollectionCategoryNotFound.js";
+export type { default as CollectionHasDocuments } from "./errors/CollectionHasDocuments.js";
+export type { default as CollectionHasNoRemote } from "./errors/CollectionHasNoRemote.js";
+export type { default as CollectionIsSyncing } from "./errors/CollectionIsSyncing.js";
 export type { default as CollectionMigrationFailed } from "./errors/CollectionMigrationFailed.js";
 export type { default as CollectionMigrationNotValid } from "./errors/CollectionMigrationNotValid.js";
 export type { default as CollectionNotFound } from "./errors/CollectionNotFound.js";
@@ -33,6 +39,13 @@ export type { default as CollectionSchemaNotValid } from "./errors/CollectionSch
 export type { default as CollectionSettingsNotValid } from "./errors/CollectionSettingsNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
+export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
+export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";
+export type { default as ConnectorDoesNotSupportUpSyncing } from "./errors/ConnectorDoesNotSupportUpSyncing.js";
+export type { default as ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy } from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
+export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNotAuthenticated.js";
+export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
+export type { default as ConnectorSettingsNotValid } from "./errors/ConnectorSettingsNotValid.js";
 export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
 export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
@@ -46,7 +59,10 @@ export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
+export type { default as RemoteConvertersNotValid } from "./errors/RemoteConvertersNotValid.js";
+export type { default as SyncingChangesFailed } from "./errors/SyncingChangesFailed.js";
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
+export type { default as WriteTypescriptFunctionToolNotCalled } from "./errors/WriteTypescriptFunctionToolNotCalled.js";
 
 // Ids
 export type { default as BackgroundJobId } from "./ids/BackgroundJobId.js";
@@ -68,9 +84,11 @@ export type { default as CollectionCategory } from "./types/CollectionCategory.j
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
+export type { default as Connector } from "./types/Connector.js";
+export type { default as ConnectorAuthenticationSettings } from "./types/ConnectorAuthenticationSettings.js";
+export type { default as ConnectorAuthenticationState } from "./types/ConnectorAuthenticationState.js";
 export type { default as ContentSummary } from "./types/ContentSummary.js";
 export type { default as Conversation } from "./types/Conversation.js";
-export type { default as DeletedEntities } from "./types/DeletedEntities.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
@@ -81,7 +99,10 @@ export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
+export type { default as Remote } from "./types/Remote.js";
+export type { default as RemoteConverters } from "./types/RemoteConverters.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
+export type { default as TypescriptLib } from "./types/TypescriptLib.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

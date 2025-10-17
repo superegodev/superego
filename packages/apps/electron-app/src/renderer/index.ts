@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import { renderBrowserApp } from "@superego/browser-app";
 import { QueryClient } from "@tanstack/react-query";
-import type BackendIPCProxyClient from "../ipc-proxy/BackendIPCProxyClient.js";
+import type BackendIPCProxyClient from "../ipc-proxies/BackendIPCProxyClient.js";
 
 declare global {
   interface Window {
@@ -22,3 +22,9 @@ const queryClient = new QueryClient({
 });
 
 renderBrowserApp(window.backend, queryClient);
+
+window.addEventListener("message", (evt) => {
+  if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
+    queryClient.invalidateQueries({ queryKey: ["listCollections"] });
+  }
+});

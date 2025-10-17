@@ -5,10 +5,10 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
@@ -105,46 +105,12 @@ interface Document {
 ### Working with dates and times
 
 Always use the global class \`LocalInstant\` helper for **all** date/time
-parsing, math, and formatting. It runs in the user’s timezone and correctly
+parsing, math, and formatting. It runs in the user's timezone and correctly
 handles DST shifts, leap years, end-of-month rollovers, and locale formatting.
 Prefer \`LocalInstant\` over native \`Date\` arithmetic.
 
 \`\`\`ts
 ${LocalInstantTypeDeclaration}
-\`\`\`ts
-
-#### Usage examples
-
-To get the date "tomorrow at 9":
-\`\`\`js
-LocalInstant
-  .now()
-  .plus({ days: 1 })
-  .set({ hour: 9 })
-  .startOf("hour")
-  .toISO();
-\`\`\`
-
-To get the date "next Friday at 11":
-\`\`\`js
-LocalInstant
-  .now()
-  .plus({ weeks: 1 })
-  .set({ isoWeekday: 5, hour: 11 })
-  .startOf("hour")
-  .toISO();
-\`\`\`
-
-To compare a document string field with format \`dev.superego:String:Instant\`
-(ISO8601 with millisecond precision and time offset):
-\`\`\`js
-const now = new Date();
-const timestamp = new Date(document.timestamp);
-const threeHoursAgo = LocalInstant
-  .now()
-  .minus({ hours: 3 })
-  .toJSDate();
-const isInThePast3Hours = timestamp <= now && timestamp >= threeHoursAgo;
 \`\`\`
       `.trim(),
       inputSchema: {

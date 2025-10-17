@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "clean-astro-cache": "rm -rf .astro-build-cache",
     "check-types": "astro check",
+    "test": "playwright test --config=playwright.config.ts",
     "clean": "rm -rf dist",
     "build": "yarn clean && astro build",
     "astro": "astro",
@@ -14,9 +15,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.3.6",
-    "astro": "^5.14.1",
-    "typescript": "^5.9.2",
-    "wrangler": "^4.40.2"
+    "@astrojs/mdx": "^4.3.7",
+    "@astrojs/starlight": "^0.36.1",
+    "@fontsource-variable/petrona": "^5.2.8",
+    "@playwright/test": "^1.56.0",
+    "astro": "^5.14.5",
+    "starlight-theme-nova": "^0.9.5",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.43.0"
   }
 }

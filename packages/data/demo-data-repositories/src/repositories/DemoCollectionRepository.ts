@@ -60,6 +60,10 @@ export default class DemoCollectionRepository
 
   async findAll(): Promise<CollectionEntity[]> {
     this.ensureNotDisposed();
-    return clone(Object.values(this.collections));
+    return clone(
+      Object.values(this.collections).sort((a, b) =>
+        a.settings.name >= b.settings.name ? 1 : -1,
+      ),
+    );
   }
 }

@@ -1,7 +1,7 @@
 import type { ContentSummaryProperty } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import getSortDescriptor from "./getSortDescriptor.js";
-import type { ColumnIds } from "./useColumnIds.js";
+import type { SortableColumnIds } from "./useSortableColumnIds.js";
 
 describe("returns the first sortable property with a default sort, when there is one", () => {
   it("case: first property has default sort", () => {
@@ -22,12 +22,12 @@ describe("returns the first sortable property with a default sort, when there is
         defaultSort: null,
       },
     ];
-    const columnIds: ColumnIds = {
+    const sortableColumnIds: SortableColumnIds = {
       propertyPrefix: "propertyPrefix",
       createdAt: "createdAt",
       lastModifiedAt: "lastModifiedAt",
     };
-    const sortDescriptor = getSortDescriptor(properties, columnIds);
+    const sortDescriptor = getSortDescriptor(properties, sortableColumnIds);
 
     // Verify
     expect(sortDescriptor).toEqual({
@@ -54,12 +54,12 @@ describe("returns the first sortable property with a default sort, when there is
         defaultSort: "asc",
       },
     ];
-    const columnIds: ColumnIds = {
+    const sortableColumnIds: SortableColumnIds = {
       propertyPrefix: "propertyPrefix",
       createdAt: "createdAt",
       lastModifiedAt: "lastModifiedAt",
     };
-    const sortDescriptor = getSortDescriptor(properties, columnIds);
+    const sortDescriptor = getSortDescriptor(properties, sortableColumnIds);
 
     // Verify
     expect(sortDescriptor).toEqual({
@@ -94,12 +94,12 @@ it("returns the first sortable property, if there is one and there are no proper
       defaultSort: null,
     },
   ];
-  const columnIds: ColumnIds = {
+  const sortableColumnIds: SortableColumnIds = {
     propertyPrefix: "propertyPrefix",
     createdAt: "createdAt",
     lastModifiedAt: "lastModifiedAt",
   };
-  const sortDescriptor = getSortDescriptor(properties, columnIds);
+  const sortDescriptor = getSortDescriptor(properties, sortableColumnIds);
 
   // Verify
   expect(sortDescriptor).toEqual({
@@ -119,12 +119,12 @@ it("returns the fallback sort descriptor for lastModifiedAt if there are no sort
       defaultSort: null,
     },
   ];
-  const columnIds: ColumnIds = {
+  const sortableColumnIds: SortableColumnIds = {
     propertyPrefix: "propertyPrefix",
     createdAt: "createdAt",
     lastModifiedAt: "lastModifiedAt",
   };
-  const sortDescriptor = getSortDescriptor(properties, columnIds);
+  const sortDescriptor = getSortDescriptor(properties, sortableColumnIds);
 
   // Verify
   expect(sortDescriptor).toEqual({

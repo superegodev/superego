@@ -2,16 +2,19 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type DocumentEntity from "../../../entities/DocumentEntity.js";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Documents", (deps) => {
+export default rd<GetDependencies>("Documents", (deps) => {
   it("inserting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
 
     // Exercise
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -32,11 +35,55 @@ export default rd<Dependencies>("Documents", (deps) => {
     expect(exists).toEqual(true);
   });
 
-  it("deleting", async () => {
+  it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: "remoteId",
+      remoteUrl: "original remoteUrl",
+      latestRemoteDocument: { original: "original" },
+      collectionId: Id.generate.collection(),
+      createdAt: new Date(),
+    };
+    await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => {
+        await repos.document.insert(document);
+        return { action: "commit", returnValue: null };
+      },
+    );
+
+    // Exercise
+    const updatedDocument: DocumentEntity = {
+      ...document,
+      remoteUrl: "updated remoteUrl",
+      latestRemoteDocument: { updated: "updated" },
+    };
+    await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => {
+        await repos.document.replace(updatedDocument);
+        return { action: "commit", returnValue: null };
+      },
+    );
+
+    // Verify
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => ({
+        action: "commit",
+        returnValue: await repos.document.find(document.id),
+      }),
+    );
+    expect(found).toEqual(updatedDocument);
+  });
+
+  it("deleting", async () => {
+    // Setup SUT
+    const { dataRepositoriesManager } = deps();
+    const document: DocumentEntity = {
+      id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -69,21 +116,30 @@ export default rd<Dependencies>("Documents", (deps) => {
 
   it("deleting all by collection id", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const collection1Id = Id.generate.collection();
     const collection2Id = Id.generate.collection();
     const document1: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document2: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document3: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
+      latestRemoteDocument: null,
       collectionId: collection2Id,
       createdAt: new Date(),
     };
@@ -131,9 +187,12 @@ export default rd<Dependencies>("Documents", (deps) => {
   describe("checking existence", () => {
     it("case: exists", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -158,7 +217,7 @@ export default rd<Dependencies>("Documents", (deps) => {
 
     it("case: doesn't exist", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
@@ -173,12 +232,67 @@ export default rd<Dependencies>("Documents", (deps) => {
     });
   });
 
+  describe("checking existence of at least one by collection id", () => {
+    it("case: exists", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.oneExistsWhereCollectionIdEq(
+            document.collectionId,
+          ),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(true);
+    });
+
+    it("case: doesn't exist", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.oneExistsWhereCollectionIdEq(
+            Id.generate.collection(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(false);
+    });
+  });
+
   describe("finding one", () => {
     it("case: exists => returns it", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -203,7 +317,7 @@ export default rd<Dependencies>("Documents", (deps) => {
 
     it("case: doesn't exist => returns null", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -218,10 +332,79 @@ export default rd<Dependencies>("Documents", (deps) => {
     });
   });
 
+  describe("finding by collection id and remote id", () => {
+    it("case: exists => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const remoteId = "remoteId";
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: remoteId,
+        remoteUrl: "remoteUrl",
+        latestRemoteDocument: {},
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
+            document.collectionId,
+            remoteId,
+          ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(document);
+    });
+
+    it("case: doesn't exist => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const document: DocumentEntity = {
+        id: Id.generate.document(),
+        remoteId: "remoteId",
+        remoteUrl: "remoteUrl",
+        latestRemoteDocument: {},
+        collectionId: Id.generate.collection(),
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.document.insert(document);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
+            document.collectionId,
+            "differentRemoteId",
+          ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+  });
+
   describe("finding all by collection id", () => {
     it("case: no documents in collection => returns empty array", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
 
       // Exercise
       const found = await dataRepositoriesManager.runInSerializableTransaction(
@@ -239,21 +422,30 @@ export default rd<Dependencies>("Documents", (deps) => {
 
     it("case: some documents in collection => returns them", async () => {
       // Setup SUT
-      const { dataRepositoriesManager } = await deps();
+      const { dataRepositoriesManager } = deps();
       const collection1Id = Id.generate.collection();
       const collection2Id = Id.generate.collection();
       const document1: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document2: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document3: DocumentEntity = {
         id: Id.generate.document(),
+        remoteId: null,
+        remoteUrl: null,
+        latestRemoteDocument: null,
         collectionId: collection2Id,
         createdAt: new Date(),
       };

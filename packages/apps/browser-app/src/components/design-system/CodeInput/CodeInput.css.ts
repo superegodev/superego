@@ -1,4 +1,4 @@
-import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const EagerCodeInput = {
@@ -28,21 +28,3 @@ export const EagerCodeInput = {
 globalStyle(`${EagerCodeInput.root}[aria-disabled="true"] *`, {
   color: `${vars.colors.text.secondary} !important`,
 });
-
-const compilationInProgressIndicatorRootBase = style({
-  position: "absolute",
-  top: vars.spacing._1,
-  right: vars.spacing._1,
-  color: vars.colors.semantic.pending.text,
-  fontSize: vars.typography.fontSizes.xs2,
-  fontWeight: vars.typography.fontWeights.medium,
-  fontStyle: "italic",
-  transition: "opacity 0ms",
-  transitionDelay: "150ms",
-});
-export const CompilationInProgressIndicator = {
-  root: styleVariants({
-    visible: [compilationInProgressIndicatorRootBase, { opacity: 1 }],
-    hidden: [compilationInProgressIndicatorRootBase, { opacity: 0 }],
-  }),
-};

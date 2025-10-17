@@ -7,8 +7,9 @@ import type {
   DocumentVersionId,
 } from "@superego/backend";
 
-type DocumentVersionEntity = {
+export default interface DocumentVersionEntity {
   id: DocumentVersionId;
+  remoteId: string | null;
   previousVersionId: DocumentVersionId | null;
   collectionId: CollectionId;
   documentId: DocumentId;
@@ -17,12 +18,4 @@ type DocumentVersionEntity = {
   content: any;
   createdBy: DocumentVersionCreator;
   createdAt: Date;
-} & (
-  | { createdBy: DocumentVersionCreator.User; conversationId: null }
-  | { createdBy: DocumentVersionCreator.Migration; conversationId: null }
-  | {
-      createdBy: DocumentVersionCreator.Assistant;
-      conversationId: ConversationId;
-    }
-);
-export default DocumentVersionEntity;
+}

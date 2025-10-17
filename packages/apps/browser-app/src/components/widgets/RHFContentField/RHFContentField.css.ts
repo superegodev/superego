@@ -227,18 +227,22 @@ export const AnyFieldLabel = {
   dataType: style({
     fontFamily: vars.typography.fontFamilies.monospace,
     fontSize: vars.typography.fontSizes.xs,
-    marginInlineStart: vars.spacing._1,
-    paddingInline: vars.spacing._2,
+    marginInlineStart: vars.spacing._2,
     color: vars.colors.text.secondary,
     borderRadius: vars.borders.radius.full,
   }),
 
-  descriptionTooltipTrigger: style({
+  tooltipTrigger: style({
     background: "transparent",
     border: 0,
     padding: 0,
     margin: 0,
     position: "relative",
     fontFamily: "serif",
+    marginInlineStart: vars.spacing._1,
+  }),
+
+  nonNullableAsterisk: style({
+    color: vars.colors.reds._5,
   }),
 };

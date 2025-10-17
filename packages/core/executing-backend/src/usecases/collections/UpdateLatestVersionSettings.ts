@@ -10,11 +10,13 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -65,8 +67,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
             issues: [
               {
                 message:
-                  "The default export of the getter TypescriptModule is not a function",
-                path: [{ key: "getter" }],
+                  "The default export of the contentSummaryGetter TypescriptModule is not a function",
               },
             ],
           }),
@@ -84,6 +85,8 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     };
     await this.repos.collectionVersion.replace(updatedVersion);
 
-    return makeSuccessfulResult(makeCollection(collection, updatedVersion));
+    return makeSuccessfulResult(
+      makeCollection(collection, updatedVersion, this.getConnector(collection)),
+    );
   }
 }

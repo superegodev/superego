@@ -19,7 +19,7 @@ const chatCompletionsApiKey = import.meta.env[
 ];
 assert.isDefined(chatCompletionsApiKey);
 
-const databasesTmpDir = join(tmpdir(), "superego-backend-e2e-tests");
+const databasesTmpDir = join(tmpdir(), "superego-assistants-e2e-tests");
 beforeAll(() => {
   mkdirSync(databasesTmpDir, { recursive: true });
 });
@@ -86,7 +86,7 @@ const assistantsModels = [
 describe.concurrent.each(assistantsModels)(
   `Assistants model: %s; Evaluator model: ${evaluatorModel}`,
   (model) => {
-    registerTests(async () => {
+    registerTests(() => {
       const defaultGlobalSettings = {
         appearance: { theme: Theme.Auto },
         inference: {
@@ -128,6 +128,7 @@ describe.concurrent.each(assistantsModels)(
         dataRepositoriesManager,
         javascriptSandbox,
         inferenceServiceFactory,
+        [],
       );
 
       return { backend, booleanOracle: evaluator };

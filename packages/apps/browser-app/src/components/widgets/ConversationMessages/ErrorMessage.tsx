@@ -28,7 +28,10 @@ export default function ErrorMessage({ conversation }: Props) {
           <PiArrowCounterClockwiseBold />
         </IconButton>
       </div>
-      <Disclosure title={intl.formatMessage({ defaultMessage: "Details" })}>
+      <Disclosure
+        title={intl.formatMessage({ defaultMessage: "Details" })}
+        panelClassName={cs.ErrorMessage.disclosurePanel}
+      >
         <CodeBlock
           language="json"
           code={JSON.stringify(cause, null, 2)}

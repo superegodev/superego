@@ -5,7 +5,7 @@ export const Tooltip = {
   root: style({
     paddingBlock: vars.spacing._1,
     paddingInline: vars.spacing._2,
-    maxWidth: vars.spacing._40,
+    maxWidth: vars.spacing._64,
     fontSize: vars.typography.fontSizes.sm,
     textAlign: "center",
     borderRadius: vars.borders.radius.sm,

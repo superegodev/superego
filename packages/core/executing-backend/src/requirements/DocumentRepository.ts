@@ -3,12 +3,18 @@ import type DocumentEntity from "../entities/DocumentEntity.js";
 
 export default interface DocumentRepository {
   insert(document: DocumentEntity): Promise<void>;
+  replace(document: DocumentEntity): Promise<void>;
   delete(id: DocumentId): Promise<DocumentId>;
   deleteAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentId[]>;
   exists(id: DocumentId): Promise<boolean>;
+  oneExistsWhereCollectionIdEq(collectionId: CollectionId): Promise<boolean>;
   find(id: DocumentId): Promise<DocumentEntity | null>;
+  findWhereCollectionIdAndRemoteIdEq(
+    collectionId: CollectionId,
+    remoteId: string,
+  ): Promise<DocumentEntity | null>;
   findAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentEntity[]>;

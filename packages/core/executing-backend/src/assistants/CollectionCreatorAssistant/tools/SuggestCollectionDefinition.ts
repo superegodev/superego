@@ -1,10 +1,12 @@
 import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type CollectionsCreate from "../../../usecases/collections/Create.js";

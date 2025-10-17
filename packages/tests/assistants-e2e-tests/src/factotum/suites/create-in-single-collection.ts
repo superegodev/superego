@@ -1,13 +1,13 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect } from "vitest";
-import type Dependencies from "../../Dependencies.js";
+import type GetDependencies from "../../GetDependencies.js";
 import it from "../../utils/factotumIt.js";
 import defineCollection from "../defineCollection.js";
 
 // Note: we pass more than one collection to test that the assistant creates
 // documents in the right collections only.
 
-export default rd<Dependencies>(
+export default rd<GetDependencies>(
   "Create documents in a single collection",
   (deps) => {
     it("All info provided, implicit request", { deps }, async (factotum) => {

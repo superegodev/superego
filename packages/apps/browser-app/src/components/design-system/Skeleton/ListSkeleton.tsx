@@ -5,11 +5,13 @@ export interface Props {
   itemCount?: number | undefined;
   itemHeight?: string | undefined;
   itemGap?: string | undefined;
+  randomizeItemWidth?: boolean | undefined;
 }
 export default function ListSkeleton({
   itemCount = 10,
   itemHeight = vars.spacing._6,
   itemGap = vars.spacing._3,
+  randomizeItemWidth = false,
 }: Props) {
   return (
     <div className={cs.ListSkeleton.root} style={{ gap: itemGap }}>
@@ -20,7 +22,12 @@ export default function ListSkeleton({
             // biome-ignore lint/suspicious/noArrayIndexKey: items identical.
             key={index}
             className={cs.ListSkeleton.item}
-            style={{ height: itemHeight }}
+            style={{
+              height: itemHeight,
+              width: randomizeItemWidth
+                ? `${Math.round(Math.random() * 100)}%`
+                : "100%",
+            }}
           />
         ))}
     </div>

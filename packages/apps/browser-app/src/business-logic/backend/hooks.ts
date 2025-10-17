@@ -39,10 +39,39 @@ export const listCollectionsQuery = makeBackendQueryGetter(
   () => ["listCollections"],
 );
 
+export const listConnectorsQuery = makeBackendQueryGetter(
+  "collections",
+  "listConnectors",
+  () => ["listConnectors"],
+);
+
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
   () => [["listCollections"], ["listConversations"], ["getConversation"]],
+);
+
+export const useUpdateCollectionSettings = makeUseBackendMutation(
+  "collections",
+  "updateSettings",
+  () => [["listCollections"]],
+);
+
+export const useSetCollectionRemote = makeUseBackendMutation(
+  "collections",
+  "setRemote",
+  ([collectionId]) => [
+    ["listCollections"],
+    ["listDocuments", collectionId],
+    ["getDocument", collectionId],
+    ["getDocumentVersion", collectionId],
+  ],
+);
+
+export const useTriggerCollectionDownSync = makeUseBackendMutation(
+  "collections",
+  "triggerDownSync",
+  () => [["listCollections"]],
 );
 
 export const useCreateNewCollectionVersion = makeUseBackendMutation(
@@ -53,12 +82,6 @@ export const useCreateNewCollectionVersion = makeUseBackendMutation(
     ["listDocuments", collectionId],
     ["getDocument", collectionId],
   ],
-);
-
-export const useUpdateCollectionSettings = makeUseBackendMutation(
-  "collections",
-  "updateSettings",
-  () => [["listCollections"]],
 );
 
 export const useUpdateLatestCollectionVersionSettings = makeUseBackendMutation(
@@ -200,6 +223,12 @@ export const useDeleteConversation = makeUseBackendMutation(
 );
 
 export const useTts = makeUseBackendMutation("assistants", "tts", () => []);
+
+export const useImplementTypescriptFunction = makeUseBackendMutation(
+  "assistants",
+  "implementTypescriptFunction",
+  () => [],
+);
 
 /*
  * Background jobs

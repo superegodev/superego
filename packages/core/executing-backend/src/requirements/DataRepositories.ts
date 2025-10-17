@@ -19,5 +19,5 @@ export default interface DataRepositories {
   backgroundJob: BackgroundJobRepository;
   globalSettings: GlobalSettingsRepository;
   createSavepoint(): Promise<string>;
-  rollbackToSavepoint(name: string): Promise<void>;
+  rollbackToSavepoint(savepoint: string): Promise<void>;
 }

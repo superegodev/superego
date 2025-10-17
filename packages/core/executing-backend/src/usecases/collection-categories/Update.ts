@@ -10,13 +10,15 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { valibotSchemas } from "@superego/shared-utils";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+  valibotSchemas,
+} from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionCategoryEntity from "../../entities/CollectionCategoryEntity.js";
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 

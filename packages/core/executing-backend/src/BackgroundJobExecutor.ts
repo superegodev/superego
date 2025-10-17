@@ -1,19 +1,22 @@
 import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
+import type { Milliseconds } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import makeResultError from "./makers/makeResultError.js";
+import type Connector from "./requirements/Connector.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
-import type Millisecond from "./utils/Millisecond.js";
+import CollectionsDownSync from "./usecases/collections/DownSync.js";
 
 export default class BackgroundJobExecutor {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private stuckJobTimeout: Millisecond = 30 * 1000,
+    private connectors: Connector[],
+    private stuckJobTimeout: Milliseconds = 30 * 1000,
   ) {}
 
   async executeNext(): Promise<void> {
@@ -24,6 +27,7 @@ export default class BackgroundJobExecutor {
 
     const UsecaseClass = {
       [BackgroundJobName.ProcessConversation]: AssistantsProcessConversation,
+      [BackgroundJobName.DownSyncCollection]: CollectionsDownSync,
     }[backgroundJob.name];
 
     await this.dataRepositoriesManager
@@ -32,10 +36,13 @@ export default class BackgroundJobExecutor {
           repos,
           this.javascriptSandbox,
           this.inferenceServiceFactory,
+          this.connectors,
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();
-        const result = await usecase.exec(backgroundJob.input);
+        // Typed `as any` since TypeScript can't understand that the class
+        // matches the input.
+        const result = await usecase.exec(backgroundJob.input as any);
 
         if (result.success) {
           await repos.backgroundJob.replace({

@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { CollectionCategoryId, CollectionId } from "@superego/backend";
 import type {
   CollectionEntity,
@@ -18,13 +19,14 @@ export default class SqliteCollectionRepository
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "settings", "created_at")
+          ("id", "settings", "remote", "created_at")
         VALUES
-          (?, ?, ?)
+          (?, ?, ?, ?)
       `)
       .run(
         collection.id,
         JSON.stringify(collection.settings),
+        collection.remote ? encode(collection.remote) : null,
         collection.createdAt.toISOString(),
       );
   }
@@ -35,11 +37,13 @@ export default class SqliteCollectionRepository
         UPDATE "${table}"
         SET
           "settings" = ?,
+          "remote" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
       .run(
         JSON.stringify(collection.settings),
+        collection.remote ? encode(collection.remote) : null,
         collection.createdAt.toISOString(),
         collection.id,
       );
@@ -62,7 +66,7 @@ export default class SqliteCollectionRepository
   ): Promise<boolean> {
     const result = this.db
       .prepare(
-        `SELECT 1 FROM "${table}" WHERE JSON_EXTRACT("settings", '$.collectionCategoryId') = ?`,
+        `SELECT 1 FROM "${table}" WHERE "settings" ->> '$.collectionCategoryId' = ?`,
       )
       .get(settingsCollectionCategoryId) as 1 | undefined;
     return result !== undefined;
@@ -77,7 +81,7 @@ export default class SqliteCollectionRepository
 
   async findAll(): Promise<CollectionEntity[]> {
     const collections = this.db
-      .prepare(`SELECT * FROM "${table}"`)
+      .prepare(`SELECT * FROM "${table}" ORDER BY "settings" ->> '$.name' ASC`)
       .all() as any as SqliteCollection[];
     return collections.map(toEntity);
   }

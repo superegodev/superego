@@ -2,23 +2,16 @@ import type { ReactNode } from "react";
 import { Toolbar } from "react-aria-components";
 import { PiList } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import type Route from "../../../business-logic/navigation/Route.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import IconLink from "../IconLink/IconLink.js";
+import type PanelHeaderAction from "./PanelHeaderAction.js";
 import * as cs from "./Shell.css.js";
-
-type Action = {
-  label: string;
-  icon: ReactNode;
-  isDisabled?: boolean | undefined;
-  className?: string | undefined;
-} & ({ to: Route } | { onPress: () => void } | { submit: string });
 
 interface Props {
   title?: ReactNode | undefined;
-  actions?: (Action | null)[] | undefined;
+  actions?: (PanelHeaderAction | null)[] | undefined;
   actionsAriaLabel?: string | undefined;
   withPrimarySidebarToggleButton?: boolean | undefined;
   className?: string | undefined;
@@ -31,12 +24,17 @@ export default function PanelHeader({
   className,
 }: Props) {
   const intl = useIntl();
-  const { isPrimarySidebarOpen, togglePrimarySidebar } = useShell();
+  const {
+    togglePrimarySidebarButtonId,
+    isPrimarySidebarOpen,
+    togglePrimarySidebar,
+  } = useShell();
   return (
     <header className={classnames(cs.PanelHeader.root, className)}>
       <div className={cs.PanelHeader.leftSection}>
         {withPrimarySidebarToggleButton ? (
           <IconButton
+            id={togglePrimarySidebarButtonId}
             variant="invisible"
             label={
               isPrimarySidebarOpen
@@ -59,12 +57,14 @@ export default function PanelHeader({
           {actions
             .filter((action) => action !== null)
             .map((action) =>
-              "to" in action ? (
+              "to" in action || "href" in action ? (
                 <IconLink
                   key={action.label}
                   label={action.label}
                   isDisabled={action.isDisabled}
-                  to={action.to}
+                  {...("to" in action
+                    ? { to: action.to }
+                    : { href: action.href, target: "_blank" })}
                   variant="invisible"
                   className={classnames(
                     cs.PanelHeader.action,

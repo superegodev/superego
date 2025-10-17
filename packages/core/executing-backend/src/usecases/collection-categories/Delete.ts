@@ -3,14 +3,14 @@ import type {
   CollectionCategoryHasChildren,
   CollectionCategoryId,
   CollectionCategoryNotFound,
-  DeletedEntities,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import makeDeletedEntities from "../../makers/makeDeletedEntities.js";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionCategoriesDelete extends Usecase<
@@ -19,7 +19,7 @@ export default class CollectionCategoriesDelete extends Usecase<
   async exec(
     id: CollectionCategoryId,
   ): ResultPromise<
-    DeletedEntities,
+    null,
     CollectionCategoryNotFound | CollectionCategoryHasChildren | UnexpectedError
   > {
     if (!(await this.repos.collectionCategory.exists(id))) {
@@ -45,8 +45,6 @@ export default class CollectionCategoriesDelete extends Usecase<
 
     await this.repos.collectionCategory.delete(id);
 
-    return makeSuccessfulResult(
-      makeDeletedEntities({ collectionCategories: [id] }),
-    );
+    return makeSuccessfulResult(null);
   }
 }

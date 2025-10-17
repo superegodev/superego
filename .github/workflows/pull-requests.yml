@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   qa:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Install Playwright
-        run: yarn playwright install chromium --with-deps
+        run: yarn playwright install --with-deps
       - name: Check formatting
         run: yarn check-formatting
       - name: Check linting
@@ -26,6 +26,19 @@ jobs:
         run: yarn check-types
       - name: Test
         run: yarn test
+      - name: Upload Playwright artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            packages/apps/website/playwright-report/
+            packages/apps/website/test-results/
+            packages/tests/demo-app-e2e-tests/playwright-report/
+            packages/tests/demo-app-e2e-tests/test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+          compression-level: 0
 
   build-deploy-demo:
     needs: qa
@@ -52,7 +65,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-13
+          - os: macos-15-intel
             arch: x64
           - os: macos-latest
             arch: arm64

@@ -5,9 +5,11 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import { codegen } from "@superego/schema";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import makeResultError from "../../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../../makers/makeUnsuccessfulResult.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 
 export default {
@@ -51,7 +53,7 @@ Fetches the TypeScript type declarations for a collection.
 **Use it:**
 
 - As the **source of truth** for fields, types, enums, constraints.
-- **All fields are required.** If a field’s type includes \`null\`, the key
+- **All fields are required.** If a field's type includes \`null\`, the key
   **must** be present and may be \`null\`; otherwise it must be a non-null
   value.
       `.trim(),

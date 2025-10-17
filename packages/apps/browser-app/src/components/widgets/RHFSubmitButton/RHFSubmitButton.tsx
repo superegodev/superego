@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import { type Control, useFormState } from "react-hook-form";
+import classnames from "../../../utils/classnames.js";
 import Button from "../../design-system/Button/Button.js";
+import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.jsx";
+import * as cs from "./RHFSubmitButton.css.js";
 
 interface Props {
   control: Control<any, any, any>;
@@ -24,8 +27,13 @@ export default function RHFSubmitButton({
       type="submit"
       isDisabled={isDisabled || (disableOnNotDirty && !isDirty) || isSubmitting}
       variant={variant}
-      className={className}
+      className={classnames(cs.RHFSubmitButton.root, className)}
     >
+      <ThreeDotSpinner
+        className={
+          cs.RHFSubmitButton.spinner[isSubmitting ? "visible" : "hidden"]
+        }
+      />
       {children}
     </Button>
   );

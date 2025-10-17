@@ -45,7 +45,7 @@ export default class DemoConversationRepository
     this.ensureNotDisposed();
     return clone(
       Object.values(this.conversations).sort((a, b) =>
-        a.createdAt > b.createdAt ? -1 : 1,
+        a.createdAt <= b.createdAt ? 1 : -1,
       ),
     );
   }

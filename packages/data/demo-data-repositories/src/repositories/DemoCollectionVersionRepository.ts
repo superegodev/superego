@@ -58,7 +58,7 @@ export default class DemoCollectionVersionRepository
       .filter(
         (collectionVersion) => collectionVersion.collectionId === collectionId,
       )
-      .sort((a, b) => (a.id > b.id ? -1 : 1));
+      .sort((a, b) => (a.id <= b.id ? 1 : -1));
     return clone(latestCollectionVersion ?? null);
   }
 

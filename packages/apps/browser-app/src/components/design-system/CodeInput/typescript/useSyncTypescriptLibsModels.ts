@@ -1,8 +1,6 @@
+import type { TypescriptLib } from "@superego/backend";
 import { useEffect } from "react";
 import monaco from "../../../../monaco.js";
-import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
-import { getGlobalUtilsTypescriptLibs } from "./IncludedGlobalUtils.js";
-import type TypescriptLib from "./TypescriptLib.js";
 
 /*
  * Creates models for typescriptLibs when the component is shown, keeps them in
@@ -10,15 +8,11 @@ import type TypescriptLib from "./TypescriptLib.js";
  */
 export default function useSyncTypescriptLibsModels(
   editorBasePath: string,
-  typescriptLibs: TypescriptLib[] | undefined,
-  includedGlobalUtils: IncludedGlobalUtils | undefined,
+  typescriptLibs: TypescriptLib[],
 ) {
   useEffect(() => {
     if (typescriptLibs) {
-      const libModels = [
-        ...(typescriptLibs ?? []),
-        ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
-      ].map(({ path, source }) =>
+      const libModels = typescriptLibs.map(({ path, source }) =>
         monaco.editor.createModel(
           source,
           "typescript",
@@ -45,5 +39,5 @@ export default function useSyncTypescriptLibsModels(
       };
     }
     return undefined;
-  }, [typescriptLibs, includedGlobalUtils, editorBasePath]);
+  }, [typescriptLibs, editorBasePath]);
 }

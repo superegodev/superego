@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { PiWarningCircleFill } from "react-icons/pi";
-import * as cs from "../CreateNewCollectionVersion.css.js";
+import * as cs from "./CreateNewCollectionVersionForm.css.js";
 
 interface Props {
   hasErrors: boolean;

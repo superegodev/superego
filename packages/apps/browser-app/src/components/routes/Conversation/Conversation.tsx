@@ -158,5 +158,7 @@ const MemoizedConversation = memo(
   (prev, next) =>
     prev.screenSize === next.screenSize &&
     prev.conversation.status === next.conversation.status &&
-    prev.conversation.messages.length === next.conversation.messages.length,
+    prev.conversation.messages.length === next.conversation.messages.length &&
+    prev.conversation.hasOutdatedContext ===
+      next.conversation.hasOutdatedContext,
 );

@@ -2,6 +2,7 @@ import type {
   Collection,
   CollectionId,
   CollectionSettings,
+  Remote,
 } from "@superego/backend";
 
 export default {
@@ -17,5 +18,11 @@ export default {
   }): string {
     const { icon, name } = collection.settings;
     return icon ? `${icon}\u2002${name}` : name;
+  },
+
+  hasRemote(
+    collection: Collection,
+  ): collection is Collection & { remote: Remote } {
+    return collection.remote !== null;
   },
 };

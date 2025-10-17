@@ -1,22 +1,6 @@
-import { DataType, type JsonObject } from "@superego/schema";
+import { DataType, type TypeOf } from "@superego/schema";
+import type contactsSchema from "./contactsSchema.js";
 
-type Type = "Person" | "Organization";
-interface Phone {
-  number: string;
-  description: string | null;
-}
-interface Email {
-  address: string;
-  description: string | null;
-}
-interface Contact {
-  type: Type;
-  name: string;
-  relation: string | null;
-  phones: Phone[];
-  emails: Email[];
-  notes: JsonObject | null;
-}
 export default [
   {
     type: "Person",
@@ -1883,4 +1867,4 @@ export default [
       ],
     },
   },
-] satisfies Contact[];
+] satisfies TypeOf<typeof contactsSchema>[];

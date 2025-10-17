@@ -1,4 +1,10 @@
 {
+  "AnyFieldLabel.tsx_Seanpx": [
+    {
+      "type": 0,
+      "value": "Obbligatorio"
+    }
+  ],
   "AppearanceSettings.tsx_Pe0ogR": [
     {
       "type": 0,
@@ -33,6 +39,42 @@
     {
       "type": 0,
       "value": "Il tuo nome"
+    }
+  ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
+    {
+      "type": 0,
+      "value": "Autentica il connettore"
+    }
+  ],
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": [
+    {
+      "type": 0,
+      "value": "Ri-autentica il connettore"
+    }
+  ],
+  "AuthenticationSettings.tsx_B7p2EC": [
+    {
+      "type": 0,
+      "value": "Segreto del client"
+    }
+  ],
+  "AuthenticationSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "Chiave API"
+    }
+  ],
+  "AuthenticationSettings.tsx_Q0U6OF": [
+    {
+      "type": 0,
+      "value": "Impostazioni di autenticazione"
+    }
+  ],
+  "AuthenticationSettings.tsx_U5+MBC": [
+    {
+      "type": 0,
+      "value": "ID del client"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -121,6 +163,12 @@
       "value": "Impostazioni generali"
     }
   ],
+  "CollectionSettings.tsx_JJBzhX": [
+    {
+      "type": 0,
+      "value": "Remoto"
+    }
+  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -163,6 +211,30 @@
       "value": "Compilazione in corso..."
     }
   ],
+  "ConnectorSelect.tsx_Gnbr9F": [
+    {
+      "type": 0,
+      "value": "Seleziona un connettore"
+    }
+  ],
+  "ConnectorSelect.tsx_nSFiyf": [
+    {
+      "type": 0,
+      "value": "Il connettore non può essere modificato dopo aver configurato un remoto."
+    }
+  ],
+  "ConnectorSelect.tsx_r8XsCU": [
+    {
+      "type": 0,
+      "value": "Connettore"
+    }
+  ],
+  "ConnectorSettings.tsx_1B+Bnl": [
+    {
+      "type": 0,
+      "value": "Impostazioni del connettore"
+    }
+  ],
   "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
@@ -171,6 +243,26 @@
     {
       "type": 1,
       "value": "error"
+    }
+  ],
+  "ContentSummaryTab.tsx_RGFGD8": [
+    {
+      "type": 0,
+      "value": "Aggiorna la funzione "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "getContentSummary"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per riflettere le modifiche allo schema."
     }
   ],
   "ContentSummaryTab.tsx_VzzYJk": [
@@ -436,6 +528,12 @@
       "value": " » Crea nuova versione"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_2n41AE": [
+    {
+      "type": 0,
+      "value": "Creata nuova versione della collezione"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_PfbGui": [
     {
       "type": 0,
@@ -446,6 +544,12 @@
     {
       "type": 0,
       "value": "1. Schema"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": [
+    {
+      "type": 0,
+      "value": "3. Convertitori remoti"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_rgWYrb": [
@@ -476,24 +580,44 @@
       "value": "Stringa JSON non valida"
     }
   ],
-  "DeleteCollectionModalForm.tsx_4S5UP3": [
+  "DeleteCollectionModalForm.tsx_J24oFm": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "Se sei sicuro di voler eliminare la collezione, scrivi "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " Se sei sicuro di voler eliminare la collezione, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
+      "value": "p"
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -514,12 +638,6 @@
     {
       "type": 0,
       "value": "\""
-    }
-  ],
-  "DeleteCollectionModalForm.tsx_iuFFzm": [
-    {
-      "type": 0,
-      "value": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
     }
   ],
   "DeleteCollectionModalForm.tsx_lml5ZH": [
@@ -548,62 +666,36 @@
       "value": "Elimina"
     }
   ],
-  "DeleteConversationModalForm.tsx_VcWPH+": [
+  "DeleteConversationModalForm.tsx_jGLuOH": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminare la conversazione è permanente. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
     {
       "type": 0,
-      "value": "Se sei sicuro di voler eliminare la conversazione, scrivi "
+      "value": " "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "delete"
+          "value": " Se sei sicuro di voler eliminare la conversazione, scrivi nel campo sottostante. "
         }
       ],
       "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
+      "value": "p"
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
     {
       "type": 0,
       "value": "Conferma comando"
-    }
-  ],
-  "DeleteConversationModalForm.tsx_t7Vs5c": [
-    {
-      "type": 0,
-      "value": "Eliminare la conversazione è irreversibile."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_+pXFqz": [
-    {
-      "type": 0,
-      "value": "Se sei sicuro di voler eliminare il documento, scrivi "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "delete"
-        }
-      ],
-      "type": 8,
-      "value": "em"
-    },
-    {
-      "type": 0,
-      "value": " nel campo sottostante."
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_GSdOzc": [
-    {
-      "type": 0,
-      "value": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -630,6 +722,52 @@
     {
       "type": 0,
       "value": "Conferma comando"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Document.tsx_AB6IO/": [
+    {
+      "type": 0,
+      "value": "Vai al documento remoto"
     }
   ],
   "Document.tsx_EPTOBf": [
@@ -668,6 +806,12 @@
     {
       "type": 0,
       "value": "Salva"
+    }
+  ],
+  "Document.tsx_otVWer": [
+    {
+      "type": 0,
+      "value": "Informazioni sul documento remoto"
     }
   ],
   "Document.tsx_zugcbb": [
@@ -722,6 +866,28 @@
     {
       "type": 0,
       "value": "Sommario dei contenuti non valido"
+    }
+  ],
+  "DocumentsTable.tsx_xIoGG9": [
+    {
+      "type": 0,
+      "value": "Vai"
+    }
+  ],
+  "DownSyncInfoModal.tsx_8I58x/": [
+    {
+      "type": 0,
+      "value": "Sincronizzazione con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DownSyncInfoModal.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sincronizza"
     }
   ],
   "EagerTiptapInput.tsx_0he+1r": [
@@ -1106,6 +1272,18 @@
       "value": "Sono il Collection Creator"
     }
   ],
+  "ImplementWithAssistantButton.tsx_40hUOu": [
+    {
+      "type": 0,
+      "value": "Implementa con l'assistente"
+    }
+  ],
+  "ImplementWithAssistantButton.tsx_80aEjO": [
+    {
+      "type": 0,
+      "value": "Implementazione fallita"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -1382,10 +1560,10 @@
       "value": "Crea una nuova versione e migra i documenti"
     }
   ],
-  "MigrationTab.tsx_JQqWNV": [
+  "MigrationTab.tsx_i8zErH": [
     {
       "type": 0,
-      "value": "Funzione TypeScript per migrare i documenti dallo schema precedente a quello aggiornato."
+      "value": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -1438,7 +1616,7 @@
       "value": "Funzione di estrazione del sommario dei contenuti"
     }
   ],
-  "RHFContentSummaryGetterField.tsx_TDCCVk": [
+  "RHFContentSummaryGetterField.tsx_BmNFs6": [
     {
       "children": [
         {
@@ -1471,7 +1649,7 @@
         },
         {
           "type": 0,
-          "value": " — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
+          "value": ", derivato dal contenuto del documento, che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. "
         }
       ],
       "type": 8,
@@ -1566,6 +1744,300 @@
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
     }
   ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Aggiungi"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Elemento "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "Remote.tsx_s8FZNF": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Puoi sincronizzare una collezione con un'origine dati esterna (un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "remoto"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": "). Quando configuri un remoto, diventa la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fonte di verità"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " per quella collezione. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "fromRemoteDocument"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " e puoi filtrare quali documenti remoti vengono sincronizzati. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Per configurare un remoto, configura un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "connettore"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " verso l'origine dati esterna. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Alcuni connettori supportano solo la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "sincronizzazione dal"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " remoto, rendendo la collezione in sola lettura. Altri supportano anche la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "sincronizzazione verso"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ulteriori informazioni su "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/connectors"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RemoteConverters.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per non sincronizzare il documento."
+    }
+  ],
+  "RemoteConverters.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "Dal documento remoto"
+    }
+  ],
+  "RemoteConverters.tsx_abnr48": [
+    {
+      "type": 0,
+      "value": "Convertitori di documenti remoti"
+    }
+  ],
+  "RemoteConvertersTab.tsx_3cBs4J": [
+    {
+      "type": 0,
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "null"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per non sincronizzare il documento."
+    }
+  ],
+  "RemoteConvertersTab.tsx_CPS541": [
+    {
+      "type": 0,
+      "value": "Aggiorna la funzione "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "fromRemoteDocument"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per riflettere le modifiche allo schema."
+    }
+  ],
+  "RemoteConvertersTab.tsx_GqZhDC": [
+    {
+      "type": 0,
+      "value": "Dal documento remoto"
+    }
+  ],
+  "RemoteConvertersTab.tsx_J/yjzE": [
+    {
+      "type": 0,
+      "value": "Crea una nuova versione e migra i documenti"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Sincronizzato con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "ID documento remoto:"
+    }
+  ],
+  "RemoteDocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "ID versione documento remoto:"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -1616,10 +2088,146 @@
       "value": "Riprovo..."
     }
   ],
+  "SchemaTab.tsx_/WLKzQ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implementa le modifiche allo schema che vuoi effettuare."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
+    }
+  ],
   "SchemaTab.tsx_Lktmvk": [
     {
       "type": 0,
       "value": "Schema"
+    }
+  ],
+  "SchemaTab.tsx_Vi4BUn": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Implementa le modifiche allo schema che vuoi effettuare."
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": " Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. "
+            }
+          ],
+          "type": 8,
+          "value": "li"
+        },
+        {
+          "type": 0,
+          "value": " "
+        }
+      ],
+      "type": 8,
+      "value": "ol"
     }
   ],
   "SendRecordToolbar.tsx_/8QiK8": [
@@ -1656,6 +2264,18 @@
     {
       "type": 0,
       "value": "Configura assistente"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_fsGyC4": [
+    {
+      "type": 0,
+      "value": "Aggiorna remoto"
+    }
+  ],
+  "SetCollectionRemoteForm.tsx_m8TXbJ": [
+    {
+      "type": 0,
+      "value": "Imposta remoto"
     }
   ],
   "SpeakButton.tsx_FUvUuG": [
@@ -1698,6 +2318,12 @@
     {
       "type": 0,
       "value": "Crea"
+    }
+  ],
+  "SuggestCollectionDefinition.tsx_syZYsy": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione della collezione"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [
@@ -1950,6 +2576,55 @@
     {
       "type": 0,
       "value": " secondi"
+    }
+  ],
+  "getDownSyncAction.tsx_IJWuS/": [
+    {
+      "type": 0,
+      "value": "Ultima sincronizzazione "
+    },
+    {
+      "style": {
+        "parsedOptions": {
+          "day": "numeric",
+          "hour": "2-digit",
+          "hourCycle": "h23",
+          "minute": "2-digit",
+          "month": "short"
+        },
+        "pattern": "MMM d, HH:mm",
+        "type": 1
+      },
+      "type": 3,
+      "value": "lastSucceededAt"
+    }
+  ],
+  "getDownSyncAction.tsx_RRA+40": [
+    {
+      "type": 0,
+      "value": "Autenticati con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "getDownSyncAction.tsx_dKtz/9": [
+    {
+      "type": 0,
+      "value": "Sincronizza"
+    }
+  ],
+  "getDownSyncAction.tsx_eOnwqs": [
+    {
+      "type": 0,
+      "value": "Sincronizzazione in corso"
+    }
+  ],
+  "getDownSyncAction.tsx_mG35sa": [
+    {
+      "type": 0,
+      "value": "Ultima sincronizzazione non riuscita"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

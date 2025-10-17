@@ -1,16 +1,7 @@
-import type { JsonObject } from "@superego/schema";
+import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
+import type fuelLogsSchema from "./fuelLogsSchema.js";
 
-type FuelType = "G95E5" | "G95E10" | "G98E5" | "G98E10";
-interface FuelLog {
-  timestamp: string;
-  odometer: number;
-  liters: number;
-  totalCost: number;
-  fullTank: boolean;
-  fuelType: FuelType | null;
-  notes: JsonObject | null;
-}
 export default [
   {
     timestamp: DateTime.now()
@@ -324,4 +315,4 @@ export default [
     fuelType: "G95E5",
     notes: null,
   },
-] satisfies FuelLog[];
+] satisfies TypeOf<typeof fuelLogsSchema>[];

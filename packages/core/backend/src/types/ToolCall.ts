@@ -75,6 +75,12 @@ namespace ToolCall {
       exampleDocument: any;
     }
   >;
+
+  // Other tools, not used by an assistant
+  export type WriteTypescriptFunction = ToolCall<
+    ToolName.WriteTypescriptFunction,
+    { source: string }
+  >;
 }
 
 export default ToolCall;

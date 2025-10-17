@@ -1,15 +1,17 @@
-import type { TypescriptModule } from "@superego/backend";
+import type { TypescriptLib, TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import pTimeout from "p-timeout";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import forms from "../../../../business-logic/forms/forms.js";
 import { MONACO_EDITOR_COMPILATION_TIMEOUT } from "../../../../config.js";
 import type monaco from "../../../../monaco.js";
 import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
+import CompilationInProgressIndicator from "./CompilationInProgressIndicator.js";
 import getCompilationOutput from "./getCompilationOutput.js";
+import ImplementWithAssistantButton from "./ImplementWithAssistantButton.js";
 import type IncludedGlobalUtils from "./IncludedGlobalUtils.js";
-import type TypescriptLib from "./TypescriptLib.js";
+import { getGlobalUtilsTypescriptLibs } from "./IncludedGlobalUtils.js";
 import useSyncTypescriptLibsModels from "./useSyncTypescriptLibsModels.js";
 
 interface Props {
@@ -20,6 +22,9 @@ interface Props {
   includedGlobalUtils: IncludedGlobalUtils | undefined;
   fileName?: `${string}.ts`;
   maxHeight: Property.MaxHeight | undefined;
+  assistantImplementation?:
+    | { instructions: string; template: string }
+    | undefined;
 }
 export default function TypescriptEditor({
   value,
@@ -29,14 +34,19 @@ export default function TypescriptEditor({
   includedGlobalUtils,
   fileName,
   maxHeight,
+  assistantImplementation,
 }: Props) {
   const editorBasePath = useEditorBasePath();
 
-  useSyncTypescriptLibsModels(
-    editorBasePath,
-    typescriptLibs,
-    includedGlobalUtils,
+  const allTypescriptLibs = useMemo(
+    () => [
+      ...(typescriptLibs ?? []),
+      ...getGlobalUtilsTypescriptLibs(includedGlobalUtils),
+    ],
+    [typescriptLibs, includedGlobalUtils],
   );
+
+  useSyncTypescriptLibsModels(editorBasePath, allTypescriptLibs);
 
   const valueModelRef = useRef<monaco.editor.ITextModel>(null);
 
@@ -99,5 +109,17 @@ export default function TypescriptEditor({
     }
   }, [value.compiled, value.source, compileSource]);
 
-  return <div style={{ maxHeight }} ref={editorElementRef} />;
+  return (
+    <>
+      <div style={{ maxHeight }} ref={editorElementRef} />
+      <CompilationInProgressIndicator
+        isVisible={value.compiled === forms.constants.COMPILATION_IN_PROGRESS}
+      />
+      <ImplementWithAssistantButton
+        assistantImplementation={assistantImplementation}
+        typescriptLibs={allTypescriptLibs}
+        valueModelRef={valueModelRef}
+      />
+    </>
+  );
 }

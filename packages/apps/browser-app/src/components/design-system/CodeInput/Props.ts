@@ -1,7 +1,6 @@
-import type { TypescriptModule } from "@superego/backend";
+import type { TypescriptLib, TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import type IncludedGlobalUtils from "./typescript/IncludedGlobalUtils.js";
-import type TypescriptLib from "./typescript/TypescriptLib.js";
 
 type Props = {
   onBlur?: (() => void) | undefined;
@@ -23,6 +22,9 @@ type Props = {
       typescriptLibs?: TypescriptLib[] | undefined;
       includedGlobalUtils?: IncludedGlobalUtils | undefined;
       fileName?: `${string}.ts`;
+      assistantImplementation?:
+        | { instructions: string; template: string }
+        | undefined;
     }
   | {
       language: "json";
@@ -31,6 +33,7 @@ type Props = {
       typescriptLibs?: never;
       includedGlobalUtils?: never;
       fileName?: `${string}.json`;
+      assistantImplementation?: never;
     }
 );
 

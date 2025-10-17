@@ -3,7 +3,7 @@ import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import sortDocuments from "./sortDocuments.js";
 
-const columnIds = {
+const sortableColumnIds = {
   propertyPrefix: "propertyPrefix",
   createdAt: "createdAt",
   lastModifiedAt: "lastModifiedAt",
@@ -44,8 +44,8 @@ describe("sorts according to the sort descriptor", () => {
     ];
     const sortedDocuments = sortDocuments(
       documents,
-      { column: columnIds.createdAt, direction: "ascending" },
-      columnIds,
+      { column: sortableColumnIds.createdAt, direction: "ascending" },
+      sortableColumnIds,
     );
 
     // Verify
@@ -65,8 +65,8 @@ describe("sorts according to the sort descriptor", () => {
     ];
     const sortedDocuments = sortDocuments(
       documents,
-      { column: columnIds.lastModifiedAt, direction: "descending" },
-      columnIds,
+      { column: sortableColumnIds.lastModifiedAt, direction: "descending" },
+      sortableColumnIds,
     );
 
     // Verify
@@ -103,10 +103,10 @@ describe("sorts according to the sort descriptor", () => {
     const sortedDocuments = sortDocuments(
       documents,
       {
-        column: `${columnIds.propertyPrefix}${propertyName}`,
+        column: `${sortableColumnIds.propertyPrefix}${propertyName}`,
         direction: "descending",
       },
-      columnIds,
+      sortableColumnIds,
     );
 
     // Verify

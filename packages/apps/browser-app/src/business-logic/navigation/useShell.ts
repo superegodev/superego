@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 const useShellStore = create<UseShell>((set) => ({
+  togglePrimarySidebarButtonId: "TogglePrimarySidebarButton",
   isPrimarySidebarOpen: false,
   openPrimarySidebar() {
     set({ isPrimarySidebarOpen: true });
@@ -16,6 +17,7 @@ const useShellStore = create<UseShell>((set) => ({
 }));
 
 interface UseShell {
+  togglePrimarySidebarButtonId: "TogglePrimarySidebarButton";
   isPrimarySidebarOpen: boolean;
   openPrimarySidebar: () => void;
   closePrimarySidebar: () => void;

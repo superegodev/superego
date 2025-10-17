@@ -1,12 +1,12 @@
 import { AssistantName, type GlobalSettings, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { expect, it } from "vitest";
-import type Dependencies from "../Dependencies.js";
+import type GetDependencies from "../GetDependencies.js";
 
-export default rd<Dependencies>("Global settings", (deps) => {
+export default rd<GetDependencies>("Global settings", (deps) => {
   it("replacing", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {
@@ -84,7 +84,7 @@ export default rd<Dependencies>("Global settings", (deps) => {
 
   it("getting", async () => {
     // Setup SUT
-    const { dataRepositoriesManager } = await deps();
+    const { dataRepositoriesManager } = deps();
     const settings: GlobalSettings = {
       appearance: { theme: Theme.Auto },
       inference: {

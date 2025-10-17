@@ -1,16 +1,19 @@
-import { style, styleVariants } from "@vanilla-extract/css";
+import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
 import { dark, vars } from "../../../themes.css.js";
 
 const alertRootBase = style({
   width: "100%",
   overflow: "scroll",
-  marginBlock: vars.spacing._8,
-  paddingInline: vars.spacing._4,
+  marginBlock: vars.spacing._4,
+  padding: vars.spacing._4,
   borderRadius: vars.borders.radius.md,
   borderWidth: vars.borders.width.thin,
   borderStyle: "solid",
   fontSize: vars.typography.fontSizes.sm,
   selectors: {
+    "&:first-child": {
+      marginBlockStart: 0,
+    },
     [`${dark} &`]: {
       borderColor: "transparent",
     },
@@ -56,3 +59,11 @@ export const Alert = {
     error: [alertTitleBase, { color: vars.colors.semantic.error.text }],
   }),
 };
+
+globalStyle(`${alertRootBase} > :first-child`, {
+  marginBlockStart: 0,
+});
+
+globalStyle(`${alertRootBase} > :last-child`, {
+  marginBlockEnd: 0,
+});

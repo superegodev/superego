@@ -2,6 +2,7 @@ import {
   type Backend,
   type CollectionId,
   type CollectionNotFound,
+  type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
@@ -11,15 +12,17 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import {
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
-import makeSuccessfulResult from "../../makers/makeSuccessfulResult.js";
-import makeUnsuccessfulResult from "../../makers/makeUnsuccessfulResult.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
@@ -28,7 +31,11 @@ import Usecase from "../../utils/Usecase.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
-  CollectionNotFound | DocumentContentNotValid | FilesNotFound | UnexpectedError
+  | CollectionNotFound
+  | ConnectorDoesNotSupportUpSyncing
+  | DocumentContentNotValid
+  | FilesNotFound
+  | UnexpectedError
 >;
 export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
@@ -37,23 +44,54 @@ export default class DocumentsCreate extends Usecase<
   async exec(
     collectionId: CollectionId,
     content: any,
-    createdBy: DocumentVersionCreator.Migration,
+    options:
+      | {
+          createdBy: DocumentVersionCreator.Assistant;
+          conversationId: ConversationId;
+        }
+      | {
+          createdBy: DocumentVersionCreator.Connector;
+          remoteId: string;
+          remoteVersionId: string;
+          remoteUrl: string | null;
+          remoteDocument: any;
+        },
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     content: any,
-    createdBy: DocumentVersionCreator.Assistant,
-    conversationId: ConversationId,
-  ): ExecReturnValue;
-  async exec(
-    collectionId: CollectionId,
-    content: any,
-    createdBy = DocumentVersionCreator.User,
-    conversationId: ConversationId | null = null,
+    options?: {
+      createdBy:
+        | DocumentVersionCreator.Assistant
+        | DocumentVersionCreator.Connector;
+      conversationId?: ConversationId;
+      remoteId?: string;
+      remoteVersionId?: string;
+      remoteUrl?: string | null;
+      remoteDocument?: any;
+    },
   ): ExecReturnValue {
-    if (!(await this.repos.collection.exists(collectionId))) {
+    const collection = await this.repos.collection.find(collectionId);
+    if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId }),
+      );
+    }
+
+    if (
+      // Right now no connector supports up-syncing, so checking if the
+      // collection has a remote is sufficient. TODO: update condition once
+      // connectors support up-syncing.
+      collection.remote !== null &&
+      options?.createdBy !== DocumentVersionCreator.Connector
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConnectorDoesNotSupportUpSyncing", {
+          collectionId: collectionId,
+          connectorName: collection.remote.connector.name,
+          message:
+            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+        }),
       );
     }
 
@@ -95,8 +133,14 @@ export default class DocumentsCreate extends Usecase<
     }
 
     const now = new Date();
+    // TypeScript doesn't understand that if remoteId is not null all other
+    // remote* properties are not null.
+    // @ts-expect-error
     const document: DocumentEntity = {
       id: Id.generate.document(),
+      remoteId: options?.remoteId ?? null,
+      remoteUrl: options?.remoteUrl ?? null,
+      latestRemoteDocument: options?.remoteDocument ?? null,
       collectionId: collectionId,
       createdAt: now,
     };
@@ -107,15 +151,16 @@ export default class DocumentsCreate extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
+      remoteId: options?.remoteVersionId ?? null,
       previousVersionId: null,
       documentId: document.id,
       collectionId: collectionId,
       collectionVersionId: latestCollectionVersion.id,
-      conversationId: conversationId,
+      conversationId: options?.conversationId ?? null,
       content: convertedContent,
-      createdBy: createdBy,
+      createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
-    } as DocumentVersionEntity;
+    };
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({

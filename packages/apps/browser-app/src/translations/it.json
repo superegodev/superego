@@ -1,4 +1,7 @@
 {
+  "AnyFieldLabel.tsx_Seanpx": {
+    "defaultMessage": "Obbligatorio"
+  },
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Tema"
   },
@@ -16,6 +19,24 @@
   },
   "AssistantsSettings.tsx_vlKhIl": {
     "defaultMessage": "Il tuo nome"
+  },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
+    "defaultMessage": "Autentica il connettore"
+  },
+  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": {
+    "defaultMessage": "Ri-autentica il connettore"
+  },
+  "AuthenticationSettings.tsx_B7p2EC": {
+    "defaultMessage": "Segreto del client"
+  },
+  "AuthenticationSettings.tsx_KTNoOq": {
+    "defaultMessage": "Chiave API"
+  },
+  "AuthenticationSettings.tsx_Q0U6OF": {
+    "defaultMessage": "Impostazioni di autenticazione"
+  },
+  "AuthenticationSettings.tsx_U5+MBC": {
+    "defaultMessage": "ID del client"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
@@ -56,6 +77,9 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "Impostazioni generali"
   },
+  "CollectionSettings.tsx_JJBzhX": {
+    "defaultMessage": "Remoto"
+  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Impostazioni dell'ultima versione"
   },
@@ -77,8 +101,23 @@
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compilazione in corso..."
   },
+  "ConnectorSelect.tsx_Gnbr9F": {
+    "defaultMessage": "Seleziona un connettore"
+  },
+  "ConnectorSelect.tsx_nSFiyf": {
+    "defaultMessage": "Il connettore non può essere modificato dopo aver configurato un remoto."
+  },
+  "ConnectorSelect.tsx_r8XsCU": {
+    "defaultMessage": "Connettore"
+  },
+  "ConnectorSettings.tsx_1B+Bnl": {
+    "defaultMessage": "Impostazioni del connettore"
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
+  },
+  "ContentSummaryTab.tsx_RGFGD8": {
+    "defaultMessage": "Aggiorna la funzione <code>getContentSummary</code> per riflettere le modifiche allo schema."
   },
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Crea"
@@ -188,11 +227,17 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Crea nuova versione"
   },
+  "CreateNewCollectionVersionForm.tsx_2n41AE": {
+    "defaultMessage": "Creata nuova versione della collezione"
+  },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Sommario dei contenuti"
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
+  },
+  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
+    "defaultMessage": "3. Convertitori remoti"
   },
   "CreateNewCollectionVersionForm.tsx_rgWYrb": {
     "defaultMessage": "3. Migrazione"
@@ -206,17 +251,14 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
   },
-  "DeleteCollectionModalForm.tsx_4S5UP3": {
-    "defaultMessage": "Se sei sicuro di voler eliminare la collezione, scrivi <em>delete</em> nel campo sottostante."
+  "DeleteCollectionModalForm.tsx_J24oFm": {
+    "defaultMessage": "<p> Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. </p> <p> Se sei sicuro di voler eliminare la collezione, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
   "DeleteCollectionModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
   "DeleteCollectionModalForm.tsx_Q5SlBK": {
     "defaultMessage": "Elimina la collezione \"{collectionName}\""
-  },
-  "DeleteCollectionModalForm.tsx_iuFFzm": {
-    "defaultMessage": "Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file."
   },
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
@@ -227,20 +269,11 @@
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
-  "DeleteConversationModalForm.tsx_VcWPH+": {
-    "defaultMessage": "Se sei sicuro di voler eliminare la conversazione, scrivi <em>delete</em> nel campo sottostante."
+  "DeleteConversationModalForm.tsx_jGLuOH": {
+    "defaultMessage": "<p> Eliminare la conversazione è permanente. </p> <p> Se sei sicuro di voler eliminare la conversazione, scrivi nel campo sottostante. </p>"
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
-  },
-  "DeleteConversationModalForm.tsx_t7Vs5c": {
-    "defaultMessage": "Eliminare la conversazione è irreversibile."
-  },
-  "DeleteDocumentModalForm.tsx_+pXFqz": {
-    "defaultMessage": "Se sei sicuro di voler eliminare il documento, scrivi <em>delete</em> nel campo sottostante."
-  },
-  "DeleteDocumentModalForm.tsx_GSdOzc": {
-    "defaultMessage": "Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file."
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -250,6 +283,12 @@
   },
   "DeleteDocumentModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
+  },
+  "DeleteDocumentModalForm.tsx_qjTjxw": {
+    "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
+  },
+  "Document.tsx_AB6IO/": {
+    "defaultMessage": "Vai al documento remoto"
   },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
@@ -265,6 +304,9 @@
   },
   "Document.tsx_jvo0vs": {
     "defaultMessage": "Salva"
+  },
+  "Document.tsx_otVWer": {
+    "defaultMessage": "Informazioni sul documento remoto"
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
@@ -286,6 +328,15 @@
   },
   "DocumentsTable.tsx_vT9jcW": {
     "defaultMessage": "Sommario dei contenuti non valido"
+  },
+  "DocumentsTable.tsx_xIoGG9": {
+    "defaultMessage": "Vai"
+  },
+  "DownSyncInfoModal.tsx_8I58x/": {
+    "defaultMessage": "Sincronizzazione con {remote}"
+  },
+  "DownSyncInfoModal.tsx_dKtz/9": {
+    "defaultMessage": "Sincronizza"
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
@@ -476,6 +527,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "Sono il Collection Creator"
   },
+  "ImplementWithAssistantButton.tsx_40hUOu": {
+    "defaultMessage": "Implementa con l'assistente"
+  },
+  "ImplementWithAssistantButton.tsx_80aEjO": {
+    "defaultMessage": "Implementazione fallita"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -548,8 +605,8 @@
   "MigrationTab.tsx_J/yjzE": {
     "defaultMessage": "Crea una nuova versione e migra i documenti"
   },
-  "MigrationTab.tsx_JQqWNV": {
-    "defaultMessage": "Funzione TypeScript per migrare i documenti dallo schema precedente a quello aggiornato."
+  "MigrationTab.tsx_i8zErH": {
+    "defaultMessage": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
@@ -572,8 +629,8 @@
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"
   },
-  "RHFContentSummaryGetterField.tsx_TDCCVk": {
-    "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<name: string, value: string | number | boolean | null>'</code> — derivato dal suo contenuto — che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, <code>'{position:0,sortable:true,default-sort:asc}' Nome</code> rende <code>Nome</code> la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. </p>"
+  "RHFContentSummaryGetterField.tsx_BmNFs6": {
+    "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<name: string, value: string | number | boolean | null>'</code>, derivato dal contenuto del documento, che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, <code>'{position:0,sortable:true,default-sort:asc}' Nome</code> rende <code>Nome</code> la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
@@ -583,6 +640,48 @@
   },
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+  },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Aggiungi"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Elemento {number}"
+  },
+  "Remote.tsx_s8FZNF": {
+    "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
+  },
+  "RemoteConverters.tsx_3cBs4J": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+  },
+  "RemoteConverters.tsx_GqZhDC": {
+    "defaultMessage": "Dal documento remoto"
+  },
+  "RemoteConverters.tsx_abnr48": {
+    "defaultMessage": "Convertitori di documenti remoti"
+  },
+  "RemoteConvertersTab.tsx_3cBs4J": {
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+  },
+  "RemoteConvertersTab.tsx_CPS541": {
+    "defaultMessage": "Aggiorna la funzione <code>fromRemoteDocument</code> per riflettere le modifiche allo schema."
+  },
+  "RemoteConvertersTab.tsx_GqZhDC": {
+    "defaultMessage": "Dal documento remoto"
+  },
+  "RemoteConvertersTab.tsx_J/yjzE": {
+    "defaultMessage": "Crea una nuova versione e migra i documenti"
+  },
+  "RemoteDocumentInfoModal.tsx_1D7voQ": {
+    "defaultMessage": "Sincronizzato con {remote}"
+  },
+  "RemoteDocumentInfoModal.tsx_h6SlY+": {
+    "defaultMessage": "ID documento remoto:"
+  },
+  "RemoteDocumentInfoModal.tsx_nY1/sq": {
+    "defaultMessage": "ID versione documento remoto:"
   },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
@@ -602,6 +701,12 @@
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
   },
+  "SchemaTab.tsx_/WLKzQ": {
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. </li> </ol>"
+  },
+  "SchemaTab.tsx_Vi4BUn": {
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
+  },
   "SendRecordToolbar.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },
@@ -620,11 +725,20 @@
   "SendRecordToolbar.tsx_kNl1RN": {
     "defaultMessage": "Configura assistente"
   },
+  "SetCollectionRemoteForm.tsx_fsGyC4": {
+    "defaultMessage": "Aggiorna remoto"
+  },
+  "SetCollectionRemoteForm.tsx_m8TXbJ": {
+    "defaultMessage": "Imposta remoto"
+  },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
   "SuggestCollectionDefinition.tsx_S2ZL0P": {
     "defaultMessage": "Collezione suggerita"
+  },
+  "SuggestCollectionDefinition.tsx_syZYsy": {
+    "defaultMessage": "Errore durante la creazione della collezione"
   },
   "SuggestCollectionDefinition.tsx_VzzYJk": {
     "defaultMessage": "Crea"
@@ -718,6 +832,21 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} secondi"
+  },
+  "getDownSyncAction.tsx_IJWuS/": {
+    "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
+  },
+  "getDownSyncAction.tsx_RRA+40": {
+    "defaultMessage": "Autenticati con {remote}"
+  },
+  "getDownSyncAction.tsx_dKtz/9": {
+    "defaultMessage": "Sincronizza"
+  },
+  "getDownSyncAction.tsx_eOnwqs": {
+    "defaultMessage": "Sincronizzazione in corso"
+  },
+  "getDownSyncAction.tsx_mG35sa": {
+    "defaultMessage": "Ultima sincronizzazione non riuscita"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

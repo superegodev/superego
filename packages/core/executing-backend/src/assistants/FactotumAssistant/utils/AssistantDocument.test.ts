@@ -1,8 +1,7 @@
 import { type Document, DocumentVersionCreator } from "@superego/backend";
 import { DataType, FormatId, type Schema } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import { Id, makeSuccessfulResult } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
-import makeSuccessfulResult from "../../../makers/makeSuccessfulResult.js";
 import { toAssistantDocument } from "./AssistantDocument.js";
 
 describe("toAssistantDocument", () => {
@@ -61,9 +60,12 @@ describe("toAssistantDocument", () => {
     };
     const document: Document = {
       id: Id.generate.document(),
+      remoteId: null,
+      remoteUrl: null,
       collectionId: Id.generate.collection(),
       latestVersion: {
         id: Id.generate.documentVersion(),
+        remoteId: null,
         collectionVersionId: Id.generate.collectionVersion(),
         previousVersionId: null,
         conversationId: null,
