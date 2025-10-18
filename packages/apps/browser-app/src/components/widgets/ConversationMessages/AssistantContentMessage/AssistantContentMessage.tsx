@@ -5,9 +5,14 @@ import {
   type ToolCall,
 } from "@superego/backend";
 import Markdown, { type MarkdownToJSX } from "markdown-to-jsx";
-import { type TableHTMLAttributes, useMemo } from "react";
+import {
+  type AnchorHTMLAttributes,
+  type TableHTMLAttributes,
+  useMemo,
+} from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
+import Link from "../../../design-system/Link/Link.jsx";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTable from "../ToolResult/CreateDocumentsTable.js";
@@ -59,7 +64,14 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
   return useMemo(() => {
     const iframe = () => null;
 
-    const a = { props: { target: "_blank", rel: "noopener noreferrer" } };
+    const a = ({ href, children }: AnchorHTMLAttributes<HTMLAnchorElement>) =>
+      href?.startsWith("/") && href ? (
+        <Link href={href}>{children}</Link>
+      ) : (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {children}
+        </a>
+      );
 
     const table = (props: TableHTMLAttributes<HTMLTableElement>) => (
       <div className={cs.AssistantContentMessage.markdownTableScroller}>

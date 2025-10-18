@@ -19,6 +19,7 @@ interface Props {
   conversation: Conversation | null;
   onSend: (messageContent: Message.User["content"]) => void;
   isSending: boolean;
+  initialMessage?: string | undefined;
   placeholder: string;
   autoFocus: boolean;
   textAreaRef?: RefObject<HTMLTextAreaElement | null> | undefined;
@@ -28,6 +29,7 @@ export default function UserMessageContentInput({
   conversation,
   onSend,
   isSending,
+  initialMessage,
   placeholder,
   autoFocus,
   textAreaRef,
@@ -41,7 +43,7 @@ export default function UserMessageContentInput({
 
   const isInferenceConfigured = useIsInferenceConfigured();
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(initialMessage ?? "");
   const sendText = () => {
     onSend([{ type: MessageContentPartType.Text, text: text }]);
     setText("");
