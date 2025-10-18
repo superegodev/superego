@@ -14,6 +14,7 @@ import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
+import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
@@ -88,8 +89,7 @@ export default {
       };
     }
 
-    const chartId = crypto.randomUUID();
-
+    const chartId = createMarkdownElementId();
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,

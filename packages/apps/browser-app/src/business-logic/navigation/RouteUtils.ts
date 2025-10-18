@@ -38,7 +38,7 @@ export function fromHref(href: string): Route {
     const url = new URL(href, location.origin);
     const pathname = url.pathname || "/";
     for (const matcher of routeMatchers) {
-      const match = matcher.pattern.exec({ pathname });
+      const match = matcher.pattern.exec({ pathname, search: url.search });
       if (match) {
         return matcher.toRoute(match);
       }
@@ -105,8 +105,15 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
   {
-    pattern: new URLPattern({ pathname: "/collections/new/assisted{/}?" }),
-    toRoute: () => ({ name: RouteName.CreateCollectionAssisted }),
+    pattern: new URLPattern({
+      pathname: "/collections/new/assisted{/}?",
+    }),
+    toRoute: (match) => ({
+      name: RouteName.CreateCollectionAssisted,
+      initialMessage:
+        new URLSearchParams(match.search.input).get("initialMessage") ??
+        undefined,
+    }),
   },
   {
     pattern: new URLPattern({ pathname: "/collections/new/manual{/}?" }),

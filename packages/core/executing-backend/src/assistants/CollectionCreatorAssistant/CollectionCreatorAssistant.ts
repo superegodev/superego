@@ -11,9 +11,9 @@ import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreate from "../../usecases/collections/Create.js";
 import Assistant from "../Assistant.js";
+import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import SuggestCollectionDefinition from "./tools/SuggestCollectionDefinition.js";
-import Unknown from "./tools/Unknown.js";
 
 export default class CollectionCreatorAssistant extends Assistant {
   constructor(

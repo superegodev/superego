@@ -4,7 +4,7 @@ import { RouteName } from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
 
 const useNavigationStateStore = create<UseNavigationState>((set) => ({
-  activeRoute: fromHref(window.location.pathname) ?? {
+  activeRoute: fromHref(window.location.href) ?? {
     name: RouteName.Ask,
   },
   navigateTo(route, updateUrl = true) {

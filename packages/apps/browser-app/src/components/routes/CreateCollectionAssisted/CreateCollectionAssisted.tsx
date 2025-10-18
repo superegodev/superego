@@ -14,7 +14,10 @@ import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserM
 import * as cs from "./CreateCollectionAssisted.css.js";
 import Hero from "./Hero.js";
 
-export default function CreateCollectionAssisted() {
+interface Props {
+  initialMessage?: string;
+}
+export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
@@ -52,6 +55,7 @@ export default function CreateCollectionAssisted() {
           conversation={null}
           onSend={onSend}
           isSending={isPending}
+          initialMessage={initialMessage}
           placeholder={intl.formatMessage({
             defaultMessage: "What kind of data do you want to store?",
           })}

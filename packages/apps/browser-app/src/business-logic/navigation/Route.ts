@@ -31,6 +31,7 @@ type Route =
     }
   | {
       name: RouteName.CreateCollectionAssisted;
+      initialMessage?: string;
     }
   | {
       name: RouteName.CreateCollectionManual;

@@ -19,6 +19,7 @@ import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
+import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
@@ -104,7 +105,7 @@ export default {
       .filter(({ id }) => documentIds.has(id))
       .map(makeLiteDocument);
 
-    const documentsTableId = crypto.randomUUID();
+    const documentsTableId = createMarkdownElementId();
     const tableColumns = ContentSummaryUtils.getSortedProperties(
       documents.map((document) => document.latestVersion.contentSummary),
     ).map(({ label }) => label);

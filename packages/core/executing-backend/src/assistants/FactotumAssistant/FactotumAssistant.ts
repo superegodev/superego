@@ -12,6 +12,7 @@ import type DocumentsCreate from "../../usecases/documents/Create.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
 import Assistant from "../Assistant.js";
+import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateChart from "./tools/CreateChart.js";
 import CreateDocuments from "./tools/CreateDocuments.js";
@@ -19,7 +20,6 @@ import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
-import Unknown from "./tools/Unknown.js";
 
 export default class FactotumAssistant extends Assistant {
   constructor(

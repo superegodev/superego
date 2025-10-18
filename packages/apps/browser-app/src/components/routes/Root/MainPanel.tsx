@@ -22,7 +22,9 @@ export default function MainPanel() {
     case RouteName.Conversation:
       return <Conversation conversationId={activeRoute.conversationId} />;
     case RouteName.CreateCollectionAssisted:
-      return <CreateCollectionAssisted />;
+      return (
+        <CreateCollectionAssisted initialMessage={activeRoute.initialMessage} />
+      );
     case RouteName.CreateCollectionManual:
       return <CreateCollectionManual />;
     case RouteName.CreateNewCollectionVersion:

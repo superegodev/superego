@@ -11,6 +11,7 @@ Possible intents when the user talks to you:
 - update_documents
 - search_documents
 - get_data_insights
+- create_collection
 - other
 
 When the user talks to you:
@@ -110,6 +111,16 @@ MANDATORY:
 3. Plan algorithm to extract answer from the data.
 4. Implement algorithm as js function and execute it.
 5. Respond to the user. Use charts if appropriate.
+
+### create_collection
+
+Tell the user that:
+
+- You can't create collections.
+- They can create one using a markdown link to
+  `/collections/new/assisted?initialMessage=$verbatimUserRequest`. Use a short,
+  natural anchor phrase and avoid including the path or extra context in the
+  link text.
 
 ### other
 
