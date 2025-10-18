@@ -69,35 +69,28 @@ import logo from "../assets/logo.svg";
 
   new IntersectionObserver(
     (entries) => {
-      const latestEntry = entries.toSorted((a, b) => a.time - b.time)[0]!;
-      header!.style.opacity = String(latestEntry.isIntersecting ? 1 : 0);
-      scrollDownButton!.style.opacity = String(
-        latestEntry.isIntersecting ? 0 : 1,
-      );
-      scrollDownButton.disabled = latestEntry.isIntersecting;
-      scrollDownButton!.style.display = latestEntry.isIntersecting
-        ? "none"
-        : "inline-block";
-      tosPpLink!.style.opacity = String(latestEntry.isIntersecting ? 1 : 0);
-      tosPpLink!.style.display = latestEntry.isIntersecting
-        ? "inline-block"
-        : "none";
+      const { isIntersecting: isLastStep } = entries.toSorted(
+        (a, b) => a.time - b.time,
+      )[0]!;
+      header.style.display = isLastStep ? "block" : "none";
+      scrollDownButton.style.display = isLastStep ? "none" : "inline-block";
+      tosPpLink.style.display = isLastStep ? "inline-block" : "none";
     },
     { threshold: 0.01 },
   ).observe(hero);
 </script>
 <style is:global>
   body {
-    background-color: #f5f5f5;
-    color: #111827;
+    background-color: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
   }
 
-  /* Hide the header until we're scrolled to the bottom. */
+  /* Start with the header being hidden. */
   .nova-page-frame-header {
-    background-color: #f5f5f5;
-    color: #111827;
-    opacity: 0;
-    transition: opacity 200ms ease;
+    display: none;
   }
 
   /* The main-frame has a padding at the top which we want to remove. */
@@ -132,6 +125,7 @@ import logo from "../assets/logo.svg";
 
 <style>
   .highlighted {
+    --highlight-color: #38d9a9;
     margin-inline-start: -0.2em;
     margin-inline-end: -0.2em;
     padding-inline-start: 0.2em;
@@ -140,9 +134,9 @@ import logo from "../assets/logo.svg";
     background: transparent;
     background-image: linear-gradient(
       to right,
-      rgba(255, 212, 59, 0.1),
-      rgba(255, 212, 59, 0.7),
-      rgba(255, 212, 59, 0.3)
+      color-mix(in srgb, var(--highlight-color) 30%, transparent),
+      color-mix(in srgb, var(--highlight-color) 90%, transparent),
+      color-mix(in srgb, var(--highlight-color) 60%, transparent)
     );
     box-decoration-break: clone;
     font-weight: 600;
@@ -283,7 +277,7 @@ import logo from "../assets/logo.svg";
     bottom: 1rem;
     left: calc(50% - 1rem);
     background-color: transparent;
-    color: #111827;
+    color: var(--sl-color-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,14 +285,16 @@ import logo from "../assets/logo.svg";
     cursor: pointer;
     border: 0;
     border-radius: 100%;
-    transition: opacity 200ms ease;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
     outline: none;
   }
   #scroll-down-button:hover {
-    background-color: #f5f5f5;
+    background-color: color-mix(in srgb, var(--sl-color-text) 10%, transparent);
   }
   #scroll-down-button:focus-visible {
-    box-shadow: 0 0 0 2px #fd7e14;
+    box-shadow: 0 0 0 2px var(--sl-color-orange);
     outline-offset: 2px;
   }
   #scroll-down-button[disabled] {
@@ -310,6 +306,8 @@ import logo from "../assets/logo.svg";
     bottom: 1rem;
     right: 1rem;
     font-size: 0.6rem;
+    /* Start with the link being hidden. */
+    display: none;
   }
 </style>
 
