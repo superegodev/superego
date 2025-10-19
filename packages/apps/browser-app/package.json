@@ -74,7 +74,7 @@
     "es-toolkit": "^1.40.0",
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
-    "markdown-to-jsx": "^7.7.15",
+    "markdown-to-jsx": "^7.7.16",
     "monaco-editor": "0.54.0",
     "p-timeout": "^7.0.1",
     "react": "^19.2.0",

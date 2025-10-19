@@ -5412,7 +5412,7 @@ __metadata:
     es-toolkit: "npm:^1.40.0"
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
-    markdown-to-jsx: "npm:^7.7.15"
+    markdown-to-jsx: "npm:^7.7.16"
     monaco-editor: "npm:0.54.0"
     p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.56.1"
@@ -11157,15 +11157,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-to-jsx@npm:^7.7.15":
-  version: 7.7.15
-  resolution: "markdown-to-jsx@npm:7.7.15"
+"markdown-to-jsx@npm:^7.7.16":
+  version: 7.7.16
+  resolution: "markdown-to-jsx@npm:7.7.16"
   peerDependencies:
     react: ">= 0.14.0"
   peerDependenciesMeta:
     react:
       optional: true
-  checksum: 10c0/f2e5222a46dfa27088113572f0206da89b373509a36145104f45142eb46eeb07ae31bb0d076a35ed2352a8b656527b1591522d2331fb65f007149085a796610a
+  checksum: 10c0/42d8b2249f5c4ba628e33181884445d9d97705ef841d49abb7fbc361f2159330c6587adaab38bdee3521214fe0839e5382beca63b32eebc7459ae9ed01916953
   languageName: node
   linkType: hard
 
