@@ -81,8 +81,8 @@ export type { default as FileId } from "./ids/FileId.js";
 
 // Types
 export type { default as App } from "./types/App.js";
-export type { default as AppVersion } from "./types/AppVersion.js";
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as AppVersion } from "./types/AppVersion.js";
 export type { default as AssistantsSettings } from "./types/AssistantsSettings.js";
 export type { default as AudioContent } from "./types/AudioContent.js";
 export type { default as BackgroundJob } from "./types/BackgroundJob.js";

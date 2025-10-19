@@ -10,6 +10,11 @@ import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import AppsCreate from "./usecases/apps/Create.js";
+import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
+import AppsDelete from "./usecases/apps/Delete.js";
+import AppsList from "./usecases/apps/List.js";
+import AppsUpdateName from "./usecases/apps/UpdateName.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
@@ -52,6 +57,7 @@ export default class ExecutingBackend implements Backend {
   documents: Backend["documents"];
   files: Backend["files"];
   assistants: Backend["assistants"];
+  apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
@@ -129,6 +135,14 @@ export default class ExecutingBackend implements Backend {
         AssistantsImplementTypescriptFunction,
         false,
       ),
+    };
+
+    this.apps = {
+      create: this.makeUsecase(AppsCreate, true),
+      updateName: this.makeUsecase(AppsUpdateName, true),
+      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
+      delete: this.makeUsecase(AppsDelete, true),
+      list: this.makeUsecase(AppsList, false),
     };
 
     this.backgroundJobs = {

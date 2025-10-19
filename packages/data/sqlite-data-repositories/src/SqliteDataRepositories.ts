@@ -4,6 +4,8 @@ import type {
   BackgroundJobRepository,
   DataRepositories,
 } from "@superego/executing-backend";
+import SqliteAppRepository from "./repositories/SqliteAppRepository.js";
+import SqliteAppVersionRepository from "./repositories/SqliteAppVersionRepository.js";
 import SqliteBackgroundJobRepository from "./repositories/SqliteBackgroundJobRepository.js";
 import SqliteCollectionCategoryRepository from "./repositories/SqliteCollectionCategoryRepository.js";
 import SqliteCollectionRepository from "./repositories/SqliteCollectionRepository.js";
@@ -15,6 +17,8 @@ import SqliteFileRepository from "./repositories/SqliteFileRepository.js";
 import SqliteGlobalSettingsRepository from "./repositories/SqliteGlobalSettingsRepository.js";
 
 export default class SqliteDataRepositories implements DataRepositories {
+  app: SqliteAppRepository;
+  appVersion: SqliteAppVersionRepository;
   backgroundJob: BackgroundJobRepository;
   collectionCategory: SqliteCollectionCategoryRepository;
   collection: SqliteCollectionRepository;
@@ -29,6 +33,8 @@ export default class SqliteDataRepositories implements DataRepositories {
     private db: DatabaseSync,
     defaultGlobalSettings: GlobalSettings,
   ) {
+    this.app = new SqliteAppRepository(db);
+    this.appVersion = new SqliteAppVersionRepository(db);
     this.backgroundJob = new SqliteBackgroundJobRepository(db);
     this.collectionCategory = new SqliteCollectionCategoryRepository(db);
     this.collection = new SqliteCollectionRepository(db);

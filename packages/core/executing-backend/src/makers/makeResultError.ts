@@ -1,4 +1,6 @@
 import type {
+  AppNameNotValid,
+  AppNotFound,
   CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
@@ -44,6 +46,8 @@ import type {
 } from "@superego/backend";
 
 type KnownResultError =
+  | AppNameNotValid
+  | AppNotFound
   | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation

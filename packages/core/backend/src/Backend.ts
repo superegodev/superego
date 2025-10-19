@@ -404,7 +404,7 @@ export default interface Backend {
       AppNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
-    list(): ResultPromise<App[], CollectionNotFound | UnexpectedError>;
+    list(): ResultPromise<App[], UnexpectedError>;
   };
 
   backgroundJobs: {

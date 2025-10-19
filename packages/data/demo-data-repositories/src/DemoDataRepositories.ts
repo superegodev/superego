@@ -1,5 +1,7 @@
 import type { DataRepositories } from "@superego/executing-backend";
 import type Data from "./Data.js";
+import DemoAppRepository from "./repositories/DemoAppRepository.js";
+import DemoAppVersionRepository from "./repositories/DemoAppVersionRepository.js";
 import DemoBackgroundJobRepository from "./repositories/DemoBackgroundJobRepository.js";
 import DemoCollectionCategoryRepository from "./repositories/DemoCollectionCategoryRepository.js";
 import DemoCollectionRepository from "./repositories/DemoCollectionRepository.js";
@@ -11,6 +13,8 @@ import DemoFileRepository from "./repositories/DemoFileRepository.js";
 import DemoGlobalSettingsRepository from "./repositories/DemoGlobalSettingsRepository.js";
 
 export default class DemoDataRepositories implements DataRepositories {
+  app: DemoAppRepository;
+  appVersion: DemoAppVersionRepository;
   backgroundJob: DemoBackgroundJobRepository;
   collectionCategory: DemoCollectionCategoryRepository;
   collection: DemoCollectionRepository;
@@ -27,6 +31,8 @@ export default class DemoDataRepositories implements DataRepositories {
     public createSavepoint: () => Promise<string>,
     public rollbackToSavepoint: (name: string) => Promise<void>,
   ) {
+    this.app = new DemoAppRepository(data.apps, onWrite);
+    this.appVersion = new DemoAppVersionRepository(data.appVersions, onWrite);
     this.backgroundJob = new DemoBackgroundJobRepository(
       data.backgroundJobs,
       onWrite,
@@ -57,6 +63,8 @@ export default class DemoDataRepositories implements DataRepositories {
   }
 
   dispose() {
+    this.app.dispose();
+    this.appVersion.dispose();
     this.backgroundJob.dispose();
     this.collectionCategory.dispose();
     this.collection.dispose();
