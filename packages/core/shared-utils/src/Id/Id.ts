@@ -13,6 +13,7 @@ export default {
     documentVersion: makeGenerateId("DocumentVersion"),
     file: makeGenerateId("File"),
     conversation: makeGenerateId("Conversation"),
+    app: makeGenerateId("App"),
     backgroundJob: makeGenerateId("BackgroundJob"),
   },
 
@@ -24,6 +25,7 @@ export default {
     documentVersion: makeIsId("DocumentVersion"),
     file: makeIsId("File"),
     conversation: makeIsId("Conversation"),
+    app: makeIsId("App"),
     backgroundJob: makeIsId("BackgroundJob"),
   },
 };

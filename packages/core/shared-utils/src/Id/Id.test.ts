@@ -36,6 +36,11 @@ it("conversation", () => {
   expect(Id.is.conversation(Id.generate.conversation())).toBe(true);
 });
 
+it("app", () => {
+  // Exercise and verify
+  expect(Id.is.app(Id.generate.app())).toBe(true);
+});
+
 it("backgroundJob", () => {
   // Exercise and verify
   expect(Id.is.backgroundJob(Id.generate.backgroundJob())).toBe(true);
