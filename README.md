@@ -1,4 +1,4 @@
-![Tags workflow status](https://github.com/superegodev/superego/actions/workflows/tags.yml/badge.svg)
+![main-and-tags workflow status](https://github.com/superegodev/superego/actions/workflows/main-and-tags.yml/badge.svg)
 
 <p align="center">
   <img alt="Superego logo" src="./docs/images/logo.svg" style="height: 150px;" />
@@ -10,7 +10,7 @@ Superego is a general-purpose database for your life. Store notes, tasks, meals,
 expenses, health logs... Whatever you want, really; you define what goes in it.
 
 Your data is stored locally, in a SQLite file you own and that you can backup
-and sync with Dropbox, Google Drive, or whatever service you already use. No
+and sync with Dropbox, Google Drive, or whichever service you already use. No
 accounts, no middlemen.
 
 ## License
