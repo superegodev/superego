@@ -1,7 +1,10 @@
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
+import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
+import type AppNameNotValid from "./errors/AppNameNotValid.js";
+import type AppNotFound from "./errors/AppNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
@@ -39,6 +42,7 @@ import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCate
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
 import type WriteTypescriptFunctionToolNotCalled from "./errors/WriteTypescriptFunctionToolNotCalled.js";
+import type AppId from "./ids/AppId.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -46,6 +50,8 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type App from "./types/App.js";
+import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
@@ -366,6 +372,39 @@ export default interface Backend {
       string,
       WriteTypescriptFunctionToolNotCalled | UnexpectedError
     >;
+  };
+
+  apps: {
+    create(
+      type: AppType,
+      name: string,
+      targetCollectionIds: CollectionId[],
+      files: AppVersion["files"],
+    ): ResultPromise<
+      App,
+      AppNameNotValid | CollectionNotFound | UnexpectedError
+    >;
+
+    updateName(
+      id: AppId,
+      name: string,
+    ): ResultPromise<App, AppNotFound | AppNameNotValid | UnexpectedError>;
+
+    createNewVersion(
+      id: AppId,
+      targetCollectionIds: CollectionId[],
+      files: AppVersion["files"],
+    ): ResultPromise<App, AppNotFound | CollectionNotFound | UnexpectedError>;
+
+    delete(
+      id: AppId,
+      commandConfirmation: string,
+    ): ResultPromise<
+      null,
+      AppNotFound | CommandConfirmationNotValid | UnexpectedError
+    >;
+
+    list(): ResultPromise<App[], CollectionNotFound | UnexpectedError>;
   };
 
   backgroundJobs: {
