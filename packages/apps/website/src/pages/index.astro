@@ -302,12 +302,13 @@ import logo from "../assets/logo.svg";
   }
 
   #tos-pp {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    width: 100%;
+    padding-inline: 1rem;
+    text-align: right;
+  }
+  #tos-pp a {
+    color: var(--sl-color-text);
     font-size: 0.6rem;
-    /* Start with the link being hidden. */
-    display: none;
   }
 </style>
 
@@ -366,13 +367,12 @@ import logo from "../assets/logo.svg";
   </div>
 
   <div class="step">
-    <h2>Um, sorry, <em>“vibe-able”</em>.</h2>
-    <p>Need to extend it? <em class="highlighted">Just ask</em> the LLM.</p>
-  </div>
-
-  <div class="step">
-    <h2>Or, do it yourself,</h2>
-    <p>with snippets of TypeScript.</p>
+    <h2>Sorry, <em>“vibe-able”</em>.</h2>
+    <p>
+      That niche app idea no one would ever make?
+      <br />
+      <em class="highlighted">Just ask</em> the AI!
+    </p>
   </div>
 
   <div class="step big">
@@ -422,5 +422,7 @@ import logo from "../assets/logo.svg";
     <Icon name="down-caret" aria-hidden="true" />
   </button>
 
-  <a id="tos-pp" href="/tos-pp">Demo TOS and Privacy Policy</a>
+  <div id="tos-pp">
+    <a href="/tos-pp">Demo TOS and Privacy Policy</a>
+  </div>
 </StarlightPage>

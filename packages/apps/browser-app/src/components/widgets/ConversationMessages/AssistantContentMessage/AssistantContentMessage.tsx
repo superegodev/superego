@@ -12,7 +12,7 @@ import {
 } from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
-import Link from "../../../design-system/Link/Link.jsx";
+import Link from "../../../design-system/Link/Link.js";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTable from "../ToolResult/CreateDocumentsTable.js";

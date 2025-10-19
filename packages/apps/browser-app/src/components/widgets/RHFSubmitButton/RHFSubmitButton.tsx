@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { type Control, useFormState } from "react-hook-form";
 import classnames from "../../../utils/classnames.js";
 import Button from "../../design-system/Button/Button.js";
-import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.jsx";
+import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.js";
 import * as cs from "./RHFSubmitButton.css.js";
 
 interface Props {
