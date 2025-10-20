@@ -1,7 +1,7 @@
 import { Group, Toolbar } from "react-aria-components";
 import {
-  PiArrowClockwise,
-  PiArrowCounterClockwise,
+  PiArrowUDownLeft,
+  PiArrowUDownRight,
   PiCode,
   PiPresentationChart,
 } from "react-icons/pi";
@@ -40,7 +40,7 @@ export default function EditingToolbar({
           onPress={onUndo}
           className={cs.EditingToolbar.button}
         >
-          <PiArrowCounterClockwise />
+          <PiArrowUDownLeft />
         </IconButton>
         <IconButton
           variant="invisible"
@@ -49,7 +49,7 @@ export default function EditingToolbar({
           onPress={onRedo}
           className={cs.EditingToolbar.button}
         >
-          <PiArrowClockwise />
+          <PiArrowUDownRight />
         </IconButton>
       </Group>
       <IconButton

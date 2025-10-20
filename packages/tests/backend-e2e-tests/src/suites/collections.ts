@@ -5154,6 +5154,70 @@ export default rd<GetDependencies>("Collections", (deps) => {
         error: null,
       });
     });
+
+    it("success: deletes CollectionView apps that only target the deleted collection", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createAppResult = await backend.apps.create(
+        AppType.CollectionView,
+        "collection view",
+        [createCollectionResult.data.id],
+        { "/main.tsx": { source: "", compiled: "" } },
+      );
+      assert.isTrue(createAppResult.success);
+
+      // Exercise
+      const deleteCollectionResult = await backend.collections.delete(
+        createCollectionResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteCollectionResult).toEqual({
+        success: true,
+        data: null,
+        error: null,
+      });
+      const listCollectionsResult = await backend.collections.list();
+      expect(listCollectionsResult).toEqual({
+        success: true,
+        data: [],
+        error: null,
+      });
+      const listAppsResult = await backend.apps.list();
+      expect(listAppsResult).toEqual({
+        success: true,
+        data: [],
+        error: null,
+      });
+    });
   });
 
   describe("list", () => {
