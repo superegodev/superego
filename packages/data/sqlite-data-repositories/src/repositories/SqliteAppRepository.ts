@@ -38,6 +38,13 @@ export default class SqliteAppRepository implements AppRepository {
     return id;
   }
 
+  async exists(id: AppId): Promise<boolean> {
+    const result = this.db
+      .prepare(`SELECT 1 FROM "${table}" WHERE "id" = ?`)
+      .get(id) as 1 | undefined;
+    return result !== undefined;
+  }
+
   async find(id: AppId): Promise<AppEntity | null> {
     const app = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)

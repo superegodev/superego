@@ -50,14 +50,32 @@
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
   },
+  "CreateApp.tsx_dtELK2": {
+    "defaultMessage": "Crea app"
+  },
+  "CreateApp.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
+  "Collection.tsx_59cQpf": {
+    "defaultMessage": "Modifica app"
+  },
+  "Collection.tsx_5WK7jL": {
+    "defaultMessage": "Crea nuova app"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
+  },
+  "Collection.tsx_gRiKLf": {
+    "defaultMessage": "App"
   },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Mostra timestamp"
   },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Crea documento"
+  },
+  "Collection.tsx_ufzv1A": {
+    "defaultMessage": "Vista tabella"
   },
   "Collection.tsx_zYomDH": {
     "defaultMessage": "Azioni della collezione"
@@ -224,6 +242,9 @@
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Documento creato} other {# documenti creati}}"
   },
+  "CreateNewAppVersionForm.tsx_6GRvO0": {
+    "defaultMessage": "Errore durante la creazione di una nuova versione dell'app"
+  },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Crea nuova versione"
   },
@@ -250,6 +271,18 @@
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
+  },
+  "DeleteAppModalForm.tsx_K3r6DQ": {
+    "defaultMessage": "Elimina"
+  },
+  "DeleteAppModalForm.tsx_U+RSUu": {
+    "defaultMessage": "<p> Eliminare l'app è definitivo. Se sei sicuro, scrivi <i>delete</i> nel campo sottostante. </p>"
+  },
+  "DeleteAppModalForm.tsx_bJAAvK": {
+    "defaultMessage": "Elimina app \"{appName}\""
+  },
+  "DeleteAppModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Conferma comando"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. </p> <p> Se sei sicuro di voler eliminare la collezione, scrivi <i>delete</i> nel campo sottostante. </p>"
@@ -330,7 +363,7 @@
     "defaultMessage": "Sommario dei contenuti non valido"
   },
   "DocumentsTable.tsx_xIoGG9": {
-    "defaultMessage": "Vai"
+    "defaultMessage": "Vai a"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Sincronizzazione con {remote}"
@@ -343,6 +376,30 @@
   },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
+  "EditApp.tsx_K3r6DQ": {
+    "defaultMessage": "Elimina"
+  },
+  "EditApp.tsx_LDlHu6": {
+    "defaultMessage": "🧩 {app} » Modifica"
+  },
+  "EditApp.tsx_Vl13tq": {
+    "defaultMessage": "Crea nuova versione"
+  },
+  "EditApp.tsx_Vva+Yr": {
+    "defaultMessage": "Modifica nome"
+  },
+  "EditingToolbar.tsx_1hhuuF": {
+    "defaultMessage": "Anteprima app"
+  },
+  "EditingToolbar.tsx_3XyF4d": {
+    "defaultMessage": "Ripeti"
+  },
+  "EditingToolbar.tsx_EwYOYc": {
+    "defaultMessage": "Visualizza codice"
+  },
+  "EditingToolbar.tsx_JkS37H": {
+    "defaultMessage": "Annulla"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Seleziona emoji"
@@ -626,6 +683,9 @@
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
   },
+  "RHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "Cosa vuoi creare?"
+  },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"
   },
@@ -731,6 +791,18 @@
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Imposta remoto"
   },
+  "SetNameAndSaveModal.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "SetNameAndSaveModal.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "SetNameAndSaveModal.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
+  "SetNameAndSaveModal.tsx_r+ksJu": {
+    "defaultMessage": "Crea app"
+  },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
@@ -808,6 +880,18 @@
   },
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
+  },
+  "UpdateNameModalForm.tsx_BWpuKl": {
+    "defaultMessage": "Aggiorna"
+  },
+  "UpdateNameModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateNameModalForm.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "UpdateNameModalForm.tsx_btR6aV": {
+    "defaultMessage": "Aggiorna il nome dell'app"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Riproduci"

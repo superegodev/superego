@@ -377,6 +377,9 @@
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
   },
+  "EditApp.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
   "EditApp.tsx_LDlHu6": {
     "defaultMessage": "🧩 {app} » Edit"
   },

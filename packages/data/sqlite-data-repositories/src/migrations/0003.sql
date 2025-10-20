@@ -29,3 +29,8 @@ CREATE UNIQUE INDEX "idx__app_versions__on__app_id__unique_is_latest_true" ON "a
   "app_id"
 )
 WHERE "is_latest" = 1;
+
+-- Collections
+
+UPDATE "collections"
+SET "settings" = json_set("settings", '$.defaultCollectionViewAppId', NULL);

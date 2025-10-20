@@ -105,6 +105,52 @@ export default rd<GetDependencies>("Apps", (deps) => {
     expect(found).toEqual(null);
   });
 
+  describe("checking existence", () => {
+    it("case: exists", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const app: AppEntity = {
+        id: Id.generate.app(),
+        type: AppType.CollectionView,
+        name: "name",
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.app.insert(app);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.app.exists(app.id),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(true);
+    });
+
+    it("case: doesn't exist", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const exists = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.app.exists(Id.generate.app()),
+        }),
+      );
+
+      // Verify
+      expect(exists).toEqual(false);
+    });
+  });
+
   describe("finding all", () => {
     it("case: no apps => returns empty array", async () => {
       // Setup SUT

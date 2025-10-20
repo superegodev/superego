@@ -34,6 +34,11 @@ export default class DemoAppRepository
     return id;
   }
 
+  async exists(id: AppId): Promise<boolean> {
+    this.ensureNotDisposed();
+    return this.apps[id] !== undefined;
+  }
+
   async find(id: AppId): Promise<AppEntity | null> {
     this.ensureNotDisposed();
     return clone(this.apps[id] ?? null);

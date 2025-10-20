@@ -101,6 +101,18 @@
       "value": "Errore durante l'invio del messaggio all'assistente"
     }
   ],
+  "Collection.tsx_59cQpf": [
+    {
+      "type": 0,
+      "value": "Modifica app"
+    }
+  ],
+  "Collection.tsx_5WK7jL": [
+    {
+      "type": 0,
+      "value": "Crea nuova app"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -113,10 +125,22 @@
       "value": "Mostra timestamp"
     }
   ],
+  "Collection.tsx_gRiKLf": [
+    {
+      "type": 0,
+      "value": "App"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
       "value": "Crea documento"
+    }
+  ],
+  "Collection.tsx_ufzv1A": [
+    {
+      "type": 0,
+      "value": "Vista tabella"
     }
   ],
   "Collection.tsx_zYomDH": [
@@ -405,6 +429,18 @@
       "value": "Copiato"
     }
   ],
+  "CreateApp.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "CreateApp.tsx_dtELK2": [
+    {
+      "type": 0,
+      "value": "Crea app"
+    }
+  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -518,6 +554,12 @@
       "value": "documentsCount"
     }
   ],
+  "CreateNewAppVersionForm.tsx_6GRvO0": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione di una nuova versione dell'app"
+    }
+  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -578,6 +620,58 @@
     {
       "type": 0,
       "value": "Stringa JSON non valida"
+    }
+  ],
+  "DeleteAppModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "DeleteAppModalForm.tsx_U+RSUu": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminare l'app è definitivo. Se sei sicuro, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "DeleteAppModalForm.tsx_bJAAvK": [
+    {
+      "type": 0,
+      "value": "Elimina app \""
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteAppModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -871,7 +965,7 @@
   "DocumentsTable.tsx_xIoGG9": [
     {
       "type": 0,
-      "value": "Vai"
+      "value": "Vai a"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -900,6 +994,62 @@
     {
       "type": 0,
       "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
+  "EditApp.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "EditApp.tsx_LDlHu6": [
+    {
+      "type": 0,
+      "value": "🧩 "
+    },
+    {
+      "type": 1,
+      "value": "app"
+    },
+    {
+      "type": 0,
+      "value": " » Modifica"
+    }
+  ],
+  "EditApp.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Crea nuova versione"
+    }
+  ],
+  "EditApp.tsx_Vva+Yr": [
+    {
+      "type": 0,
+      "value": "Modifica nome"
+    }
+  ],
+  "EditingToolbar.tsx_1hhuuF": [
+    {
+      "type": 0,
+      "value": "Anteprima app"
+    }
+  ],
+  "EditingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Ripeti"
+    }
+  ],
+  "EditingToolbar.tsx_EwYOYc": [
+    {
+      "type": 0,
+      "value": "Visualizza codice"
+    }
+  ],
+  "EditingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [
@@ -1610,6 +1760,12 @@
       "value": "Cerca"
     }
   ],
+  "RHFAppVersionFilesField.tsx_4rTNK7": [
+    {
+      "type": 0,
+      "value": "Cosa vuoi creare?"
+    }
+  ],
   "RHFContentSummaryGetterField.tsx_3X4zUZ": [
     {
       "type": 0,
@@ -2278,6 +2434,30 @@
       "value": "Imposta remoto"
     }
   ],
+  "SetNameAndSaveModal.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_r+ksJu": [
+    {
+      "type": 0,
+      "value": "Crea app"
+    }
+  ],
   "SpeakButton.tsx_FUvUuG": [
     {
       "type": 0,
@@ -2476,6 +2656,30 @@
     {
       "type": 0,
       "value": "Errore durante il salvataggio delle impostazioni globali"
+    }
+  ],
+  "UpdateNameModalForm.tsx_BWpuKl": [
+    {
+      "type": 0,
+      "value": "Aggiorna"
+    }
+  ],
+  "UpdateNameModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "UpdateNameModalForm.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "UpdateNameModalForm.tsx_btR6aV": [
+    {
+      "type": 0,
+      "value": "Aggiorna il nome dell'app"
     }
   ],
   "UserMessage.tsx_J3ca41": [

@@ -117,6 +117,7 @@ export default interface Backend {
       Collection,
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | AppNotFound
       | CollectionSchemaNotValid
       | ContentSummaryGetterNotValid
       | UnexpectedError
@@ -130,6 +131,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | AppNotFound
       | UnexpectedError
     >;
 
