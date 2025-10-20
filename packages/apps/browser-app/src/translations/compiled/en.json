@@ -113,6 +113,12 @@
       "value": "Create new"
     }
   ],
+  "Collection.tsx_B+R508": [
+    {
+      "type": 0,
+      "value": "Set as default view"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -123,6 +129,12 @@
     {
       "type": 0,
       "value": "Show timestamps"
+    }
+  ],
+  "Collection.tsx_LQONHO": [
+    {
+      "type": 0,
+      "value": "Error setting the default collection view"
     }
   ],
   "Collection.tsx_gRiKLf": [

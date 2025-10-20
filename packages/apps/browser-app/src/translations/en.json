@@ -56,11 +56,17 @@
   "Collection.tsx_5WK7jL": {
     "defaultMessage": "Create new"
   },
+  "Collection.tsx_B+R508": {
+    "defaultMessage": "Set as default view"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Show timestamps"
+  },
+  "Collection.tsx_LQONHO": {
+    "defaultMessage": "Error setting the default collection view"
   },
   "Collection.tsx_gRiKLf": {
     "defaultMessage": "Apps"

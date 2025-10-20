@@ -92,7 +92,11 @@ function renderPanelHeaderAction(
           ? { to: action.to }
           : { href: action.href, target: "_blank" })}
         variant="invisible"
-        className={classnames(cs.PanelHeader.action, action.className)}
+        className={classnames(
+          cs.PanelHeader.action,
+
+          action.className,
+        )}
       >
         {action.icon}
       </IconLink>
@@ -118,6 +122,11 @@ function renderPanelHeaderAction(
               onAction={menuItem.onAction}
               href={menuItem.to ? toHref(menuItem.to) : undefined}
               isDisabled={menuItem.isDisabled}
+              className={
+                menuItem.isActive
+                  ? cs.PanelHeader.activeActionMenuItem
+                  : undefined
+              }
             >
               {menuItem.label}
             </PopoverMenu.MenuItem>

@@ -9,7 +9,10 @@ import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
+import {
+  CollectionRouteView,
+  RouteName,
+} from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../business-logic/toasts/toastQueue.js";
@@ -71,7 +74,8 @@ export default function CreateNewAppVersionForm({
           ? {
               name: RouteName.Collection,
               collectionId: firstTargetedCollectionId,
-              activeAppId: data.id,
+              view: CollectionRouteView.App,
+              appId: data.id,
             }
           : { name: RouteName.Ask },
       );

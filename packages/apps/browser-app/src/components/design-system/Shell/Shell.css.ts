@@ -105,6 +105,17 @@ export const PanelHeader = {
     fontSize: vars.typography.fontSizes.xl,
   }),
 
+  activeActionMenuItem: style({
+    background: vars.colors.background.inverse,
+    color: `${vars.colors.text.inverse} !important`,
+    selectors: {
+      "&:hover": {
+        background: `${vars.colors.background.inverse} !important`,
+        color: `${vars.colors.text.inverse} !important`,
+      },
+    },
+  }),
+
   actionsSeparator: style({
     display: "inline-block",
     background: vars.colors.border.default,

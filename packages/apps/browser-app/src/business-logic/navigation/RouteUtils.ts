@@ -4,8 +4,9 @@ import type {
   ConversationId,
   DocumentId,
 } from "@superego/backend";
+import { Id } from "@superego/shared-utils";
 import type Route from "./Route.js";
-import { RouteName } from "./Route.js";
+import { CollectionRouteView, RouteName } from "./Route.js";
 
 export function toHref(route: Route): string {
   switch (route.name) {
@@ -24,8 +25,10 @@ export function toHref(route: Route): string {
     case RouteName.CreateNewCollectionVersion:
       return `/collections/${route.collectionId}/newVersion`;
     case RouteName.Collection:
-      return route.activeAppId
-        ? `/collections/${route.collectionId}?activeAppId=${route.activeAppId}`
+      return "view" in route
+        ? route.view === CollectionRouteView.Table
+          ? `/collections/${route.collectionId}?view=${CollectionRouteView.Table}`
+          : `/collections/${route.collectionId}?view=${CollectionRouteView.App}&appId=${route.appId}`
         : `/collections/${route.collectionId}`;
     case RouteName.CollectionSettings:
       return `/collections/${route.collectionId}/settings`;
@@ -134,15 +137,22 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/collections/:collectionId{/}?" }),
-    toRoute: (match) => ({
-      name: RouteName.Collection,
-      collectionId: decodePathSegment<CollectionId>(
-        match.pathname.groups["collectionId"],
-      ),
-      activeAppId:
-        (new URLSearchParams(match.search.input).get("activeAppId") as AppId) ??
-        undefined,
-    }),
+    toRoute: (match) => {
+      const search = new URLSearchParams(match.search.input);
+      const view = search.get("view");
+      const appId = search.get("appId");
+      const baseRoute = {
+        name: RouteName.Collection,
+        collectionId: decodePathSegment<CollectionId>(
+          match.pathname.groups["collectionId"],
+        ) as CollectionId,
+      } as const;
+      return view === CollectionRouteView.Table
+        ? { ...baseRoute, view }
+        : view === CollectionRouteView.App && Id.is.app(appId)
+          ? { ...baseRoute, view, appId }
+          : baseRoute;
+    },
   },
   {
     pattern: new URLPattern({

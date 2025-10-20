@@ -21,6 +21,11 @@ export enum RouteName {
   GlobalSettings = "Settings",
 }
 
+export enum CollectionRouteView {
+  Table = "Table",
+  App = "App",
+}
+
 type Route =
   | {
       name: RouteName.Ask;
@@ -43,11 +48,20 @@ type Route =
       name: RouteName.CreateNewCollectionVersion;
       collectionId: CollectionId;
     }
-  | {
-      name: RouteName.Collection;
-      collectionId: CollectionId;
-      activeAppId?: AppId;
-    }
+  | (
+      | { name: RouteName.Collection; collectionId: CollectionId }
+      | {
+          name: RouteName.Collection;
+          collectionId: CollectionId;
+          view: CollectionRouteView.Table;
+        }
+      | {
+          name: RouteName.Collection;
+          collectionId: CollectionId;
+          view: CollectionRouteView.App;
+          appId: AppId;
+        }
+    )
   | {
       name: RouteName.CollectionSettings;
       collectionId: CollectionId;

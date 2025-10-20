@@ -14,8 +14,9 @@ type PanelHeaderAction = {
         key: string;
         label: ReactNode;
         onAction?: () => void;
-        isDisabled?: boolean;
         to?: Route;
+        isActive?: boolean;
+        isDisabled?: boolean;
       }[];
     }
   | { onPress: () => void }

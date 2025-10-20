@@ -33,13 +33,10 @@ export default function MainPanel() {
       return (
         <CreateNewCollectionVersion collectionId={activeRoute.collectionId} />
       );
-    case RouteName.Collection:
-      return (
-        <Collection
-          collectionId={activeRoute.collectionId}
-          activeAppId={activeRoute.activeAppId}
-        />
-      );
+    case RouteName.Collection: {
+      const { name, ...props } = activeRoute;
+      return <Collection {...props} />;
+    }
     case RouteName.CollectionSettings:
       return <CollectionSettings collectionId={activeRoute.collectionId} />;
     case RouteName.CreateDocument:

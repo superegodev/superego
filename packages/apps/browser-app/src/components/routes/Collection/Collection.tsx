@@ -4,6 +4,7 @@ import {
   PiCode,
   PiGear,
   PiPlus,
+  PiPushPin,
   PiShapes,
   PiShapesFill,
   PiTable,
@@ -17,11 +18,18 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
   listDocumentsQuery,
   useTriggerCollectionDownSync,
+  useUpdateCollectionSettings,
 } from "../../../business-logic/backend/hooks.js";
 import useAuthenticateCollectionConnector from "../../../business-logic/backend/useAuthenticateCollectionConnector.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
+import type Route from "../../../business-logic/navigation/Route.js";
+import {
+  CollectionRouteView,
+  RouteName,
+} from "../../../business-logic/navigation/Route.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -31,18 +39,24 @@ import DownSyncInfoModal from "./DownSyncInfoModal.js";
 import getDownSyncAction from "./getDownSyncAction.js";
 import usePollForDownSyncFinished from "./usePollForDownSyncFinished.js";
 
-interface Props {
-  collectionId: CollectionId;
-  activeAppId?: AppId;
-}
-export default function Collection({ collectionId, activeAppId }: Props) {
+type Props =
+  | { collectionId: CollectionId }
+  | { collectionId: CollectionId; view: CollectionRouteView.Table }
+  | { collectionId: CollectionId; view: CollectionRouteView.App; appId: AppId };
+export default function Collection(props: Props) {
+  const { collectionId } = props;
   const intl = useIntl();
   const screenSize = useScreenSize();
   const { apps, collections } = useGlobalData();
 
   const collection = CollectionUtils.findCollection(collections, collectionId);
 
-  const hasActiveApp = activeAppId !== undefined;
+  const appId =
+    "view" in props
+      ? props.view === CollectionRouteView.Table
+        ? null
+        : props.appId
+      : (collection?.settings.defaultCollectionViewAppId ?? null);
 
   const [showTimestamps, setShowTimestamps] = useState(false);
 
@@ -52,6 +66,26 @@ export default function Collection({ collectionId, activeAppId }: Props) {
   const authenticateConnector = useAuthenticateCollectionConnector();
   usePollForDownSyncFinished(collection);
 
+  const { mutate } = useUpdateCollectionSettings();
+  const setAsDefaultView = async () => {
+    const { success, error } = await mutate(collection!.id, {
+      defaultCollectionViewAppId: appId,
+    });
+    if (!success) {
+      console.error(error);
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error setting the default collection view",
+          }),
+          description: error.name,
+        },
+        { timeout: 5_000 },
+      );
+    }
+  };
+
   return collection ? (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
@@ -60,16 +94,7 @@ export default function Collection({ collectionId, activeAppId }: Props) {
           defaultMessage: "Collection actions",
         })}
         actions={[
-          hasActiveApp
-            ? {
-                label: intl.formatMessage({
-                  defaultMessage: "Edit app",
-                }),
-                icon: <PiCode />,
-                to: { name: RouteName.EditApp, appId: activeAppId },
-              }
-            : null,
-          screenSize > ScreenSize.Medium && !hasActiveApp
+          !appId && screenSize > ScreenSize.Medium
             ? {
                 label: intl.formatMessage({
                   defaultMessage: "Show timestamps",
@@ -78,15 +103,41 @@ export default function Collection({ collectionId, activeAppId }: Props) {
                 onPress: () => setShowTimestamps(!showTimestamps),
               }
             : null,
+          appId
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Edit app",
+                }),
+                icon: <PiCode />,
+                to: { name: RouteName.EditApp, appId },
+              }
+            : null,
+          (
+            appId
+              ? appId !== collection.settings.defaultCollectionViewAppId
+              : collection.settings.defaultCollectionViewAppId !== null
+          )
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Set as default view",
+                }),
+                icon: <PiPushPin />,
+                onPress: setAsDefaultView,
+              }
+            : null,
           PanelHeaderActionSeparator,
           {
             label: intl.formatMessage({ defaultMessage: "Table view" }),
-            icon: hasActiveApp ? <PiTable /> : <PiTableFill />,
-            to: { name: RouteName.Collection, collectionId },
+            icon: appId ? <PiTable /> : <PiTableFill />,
+            to: {
+              name: RouteName.Collection,
+              collectionId,
+              view: CollectionRouteView.Table,
+            },
           },
           {
             label: intl.formatMessage({ defaultMessage: "Apps" }),
-            icon: hasActiveApp ? <PiShapesFill /> : <PiShapes />,
+            icon: appId ? <PiShapesFill /> : <PiShapes />,
             menuItems: [
               ...CollectionUtils.getApps(collection, apps).map((app) => ({
                 key: app.id,
@@ -94,8 +145,10 @@ export default function Collection({ collectionId, activeAppId }: Props) {
                 to: {
                   name: RouteName.Collection,
                   collectionId,
-                  activeAppId: app.id,
-                } as const,
+                  view: CollectionRouteView.App,
+                  appId: app.id,
+                } as const satisfies Route,
+                isActive: appId === app.id,
               })),
               {
                 key: "CreateApp",
@@ -131,7 +184,6 @@ export default function Collection({ collectionId, activeAppId }: Props) {
               collectionId: collectionId,
             },
           },
-          PanelHeaderActionSeparator,
           !CollectionUtils.hasRemote(collection)
             ? {
                 label: intl.formatMessage({
@@ -150,9 +202,9 @@ export default function Collection({ collectionId, activeAppId }: Props) {
         fullWidth={true}
         className={cs.Collection.panelContent}
       >
-        {hasActiveApp ? (
+        {appId ? (
           // TODO
-          <div>{activeAppId}</div>
+          <div>{appId}</div>
         ) : (
           <DataLoader queries={[listDocumentsQuery([collectionId])]}>
             {(documents) => (

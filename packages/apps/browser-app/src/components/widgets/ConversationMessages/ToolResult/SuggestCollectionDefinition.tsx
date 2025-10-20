@@ -41,7 +41,11 @@ export default function SuggestCollectionDefinition({
   const { mutate, isPending } = useCreateCollection();
   const createCollection = async () => {
     const result = await mutate(
-      { ...settings, assistantInstructions: null },
+      {
+        ...settings,
+        defaultCollectionViewAppId: null,
+        assistantInstructions: null,
+      },
       schema,
       { contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns) },
     );
