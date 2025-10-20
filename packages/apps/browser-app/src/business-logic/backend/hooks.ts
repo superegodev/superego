@@ -226,6 +226,8 @@ export const useDeleteConversation = makeUseBackendMutation(
  * Assistants
  */
 
+export const useStt = makeUseBackendMutation("inference", "stt", () => []);
+
 export const useTts = makeUseBackendMutation("inference", "tts", () => []);
 
 export const useImplementTypescriptFunction = makeUseBackendMutation(
@@ -233,6 +235,34 @@ export const useImplementTypescriptFunction = makeUseBackendMutation(
   "implementTypescriptFunction",
   () => [],
 );
+
+/*
+ * Apps
+ */
+
+export const listAppsQuery = makeBackendQueryGetter("apps", "list", () => [
+  "listApps",
+]);
+
+export const useCreateApp = makeUseBackendMutation("apps", "create", () => [
+  ["listApps"],
+]);
+
+export const useUpdateAppName = makeUseBackendMutation(
+  "apps",
+  "updateName",
+  () => [["listApps"]],
+);
+
+export const useCreateNewAppVersion = makeUseBackendMutation(
+  "apps",
+  "createNewVersion",
+  () => [["listApps"]],
+);
+
+export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
+  ["listApps"],
+]);
 
 /*
  * Background jobs

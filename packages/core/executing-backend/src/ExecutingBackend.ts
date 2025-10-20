@@ -49,6 +49,7 @@ import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptFunction from "./usecases/inference/ImplementTypescriptFunction.js";
+import InferenceStt from "./usecases/inference/Stt.js";
 import InferenceTts from "./usecases/inference/Tts.js";
 
 export default class ExecutingBackend implements Backend {
@@ -134,6 +135,7 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.inference = {
+      stt: this.makeUsecase(InferenceStt, false),
       tts: this.makeUsecase(InferenceTts, false),
       implementTypescriptFunction: this.makeUsecase(
         InferenceImplementTypescriptFunction,
