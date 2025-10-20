@@ -10,7 +10,7 @@ export enum RouteName {
   Conversations = "Conversations",
   Conversation = "Conversation",
   CreateCollectionManual = "CreateCollection",
-  CreateCollectionAssisted = "StartCollectionCreatorConversation",
+  CreateCollectionAssisted = "CreateCollectionAssisted",
   CreateNewCollectionVersion = "CreateNewCollectionVersion",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
@@ -18,6 +18,7 @@ export enum RouteName {
   Document = "Document",
   App = "App",
   CreateApp = "CreateApp",
+  CreateNewAppVersion = "CreateNewAppVersion",
   GlobalSettings = "Settings",
 }
 
@@ -61,11 +62,15 @@ type Route =
       documentId: DocumentId;
     }
   | {
+      name: RouteName.App;
+      appId: AppId;
+    }
+  | {
       name: RouteName.CreateApp;
       collectionIds: CollectionId[];
     }
   | {
-      name: RouteName.App;
+      name: RouteName.CreateNewAppVersion;
       appId: AppId;
     }
   | {

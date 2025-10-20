@@ -19,6 +19,10 @@ const testRoutes: Route[] = [
     name: RouteName.CreateCollectionAssisted,
   },
   {
+    name: RouteName.CreateCollectionAssisted,
+    initialMessage: "initialMessage",
+  },
+  {
     name: RouteName.CreateCollectionManual,
   },
   {
@@ -41,6 +45,26 @@ const testRoutes: Route[] = [
     name: RouteName.Document,
     collectionId: Id.generate.collection(),
     documentId: Id.generate.document(),
+  },
+  {
+    name: RouteName.App,
+    appId: Id.generate.app(),
+  },
+  {
+    name: RouteName.CreateApp,
+    collectionIds: [],
+  },
+  {
+    name: RouteName.CreateApp,
+    collectionIds: [Id.generate.collection()],
+  },
+  {
+    name: RouteName.CreateApp,
+    collectionIds: [Id.generate.collection(), Id.generate.collection()],
+  },
+  {
+    name: RouteName.CreateNewAppVersion,
+    appId: Id.generate.app(),
   },
   {
     name: RouteName.GlobalSettings,
