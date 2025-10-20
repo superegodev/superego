@@ -1,4 +1,5 @@
 import {
+  AppType,
   ConnectorAuthenticationStrategy,
   DownSyncStatus,
 } from "@superego/backend";
@@ -22,6 +23,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -68,6 +70,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: collectionCategoryId,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -95,6 +98,45 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const defaultCollectionViewAppId = Id.generate.app();
+      const result = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "AppNotFound",
+          details: { appId: defaultCollectionViewAppId },
+        },
+      });
+    });
+
     it("error: CollectionSchemaNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -105,6 +147,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -150,6 +193,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -195,6 +239,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -238,6 +283,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             name: "name",
             icon: null,
             collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
           },
@@ -285,6 +331,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -335,6 +382,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -370,6 +418,50 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const defaultCollectionViewAppId = Id.generate.app();
+      const updateSettingsResult = await backend.collections.updateSettings(
+        createResult.data.id,
+        { defaultCollectionViewAppId },
+      );
+
+      // Verify
+      expect(updateSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "AppNotFound",
+          details: { appId: defaultCollectionViewAppId },
+        },
+      });
+    });
+
     it("success: updates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -380,11 +472,19 @@ export default rd<GetDependencies>("Collections", (deps) => {
           parentId: null,
         });
       assert.isTrue(createCollectionCategoryResult.success);
+      const createAppResult = await backend.apps.create(
+        AppType.CollectionView,
+        "app",
+        [],
+        { "/main.tsx": { source: "", compiled: "" } },
+      );
+      assert.isTrue(createAppResult.success);
       const createResult = await backend.collections.create(
         {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -409,6 +509,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "updated-name",
           icon: "😃",
           collectionCategoryId: createCollectionCategoryResult.data.id,
+          defaultCollectionViewAppId: createAppResult.data.id,
           description: "updated description",
           assistantInstructions: "updated instructions",
         },
@@ -423,6 +524,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             name: "updated-name",
             icon: "😃",
             collectionCategoryId: createCollectionCategoryResult.data.id,
+            defaultCollectionViewAppId: createAppResult.data.id,
             description: "updated description",
             assistantInstructions: "updated instructions",
           },
@@ -508,6 +610,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -569,6 +672,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -657,6 +761,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -760,6 +865,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -851,6 +957,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -952,6 +1059,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1041,6 +1149,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1132,6 +1241,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1231,6 +1341,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1354,6 +1465,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1455,6 +1567,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1525,6 +1638,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1625,6 +1739,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1707,6 +1822,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1778,6 +1894,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1878,6 +1995,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -1972,6 +2090,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2046,6 +2165,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2151,6 +2271,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2247,6 +2368,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2348,6 +2470,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2462,6 +2585,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2589,6 +2713,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2735,6 +2860,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -2873,6 +2999,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3078,6 +3205,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3224,6 +3352,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3278,6 +3407,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3335,6 +3465,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3431,6 +3562,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3513,6 +3645,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3576,6 +3709,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3639,6 +3773,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3741,6 +3876,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3851,6 +3987,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -3934,6 +4071,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4014,6 +4152,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4133,6 +4272,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4272,6 +4412,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4385,6 +4526,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4557,6 +4699,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4723,6 +4866,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4772,6 +4916,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4830,6 +4975,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4919,6 +5065,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -4965,6 +5112,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -5032,6 +5180,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "zeta",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -5053,6 +5202,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "alpha",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
@@ -5074,6 +5224,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "beta",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },

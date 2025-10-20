@@ -445,6 +445,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
           name: "child",
           icon: null,
           collectionCategoryId: createParentResult.data.id,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },
