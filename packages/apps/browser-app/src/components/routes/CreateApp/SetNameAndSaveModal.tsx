@@ -1,9 +1,9 @@
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import ModalDialog from "../../design-system/ModalDialog/ModalDialog.jsx";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.jsx";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.jsx";
+import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
+import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
+import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CreateApp.css.js";
 
 interface Props {

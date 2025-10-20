@@ -13,9 +13,9 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
-import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.jsx";
+import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
 import * as cs from "./CreateApp.css.js";
-import SetNameAndSaveModal from "./SetNameAndSaveModal.jsx";
+import SetNameAndSaveModal from "./SetNameAndSaveModal.js";
 
 interface FormValues {
   name: string;

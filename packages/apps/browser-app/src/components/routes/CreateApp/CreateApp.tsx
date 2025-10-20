@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import CreateAppForm from "./CreateAppForm.jsx";
+import CreateAppForm from "./CreateAppForm.js";
 
 interface Props {
   collectionIds: CollectionId[];

@@ -2,7 +2,7 @@ import type { Collection } from "@superego/backend";
 import { useState } from "react";
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
-import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.jsx";
+import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
 import EditingToolbar from "./EditingToolbar.js";
 import Preview from "./Preview.js";

@@ -5,10 +5,10 @@ import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
-import Shell from "../../design-system/Shell/Shell.jsx";
-import CreateNewAppVersionForm from "./CreateNewAppVersionForm.jsx";
-import DeleteAppModalForm from "./DeleteAppModalForm.jsx";
-import UpdateNameModalForm from "./UpdateNameModalForm.jsx";
+import Shell from "../../design-system/Shell/Shell.js";
+import CreateNewAppVersionForm from "./CreateNewAppVersionForm.js";
+import DeleteAppModalForm from "./DeleteAppModalForm.js";
+import UpdateNameModalForm from "./UpdateNameModalForm.js";
 
 interface Props {
   appId: AppId;

@@ -14,7 +14,7 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import AppUtils from "../../../utils/AppUtils.js";
-import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.jsx";
+import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
 import * as cs from "./EditApp.css.js";
 
 interface FormValues {

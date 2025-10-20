@@ -7,7 +7,7 @@ import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";
 import IconLink from "../IconLink/IconLink.js";
-import PopoverMenu from "../PopoverMenu/PopoverMenu.jsx";
+import PopoverMenu from "../PopoverMenu/PopoverMenu.js";
 import type PanelHeaderAction from "./PanelHeaderAction.js";
 import PanelHeaderActionSeparator from "./PanelHeaderActionSeparator.js";
 import * as cs from "./Shell.css.js";

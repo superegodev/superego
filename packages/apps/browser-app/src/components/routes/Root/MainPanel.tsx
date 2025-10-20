@@ -11,7 +11,7 @@ import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionMa
 import CreateDocument from "../CreateDocument/CreateDocument.js";
 import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";
 import Document from "../Document/Document.js";
-import EditApp from "../EditApp/EditApp.jsx";
+import EditApp from "../EditApp/EditApp.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
 
 export default function MainPanel() {

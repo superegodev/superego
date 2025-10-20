@@ -8,11 +8,11 @@ import { useDeleteApp } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
-import ModalDialog from "../../design-system/ModalDialog/ModalDialog.jsx";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.jsx";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.jsx";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
+import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
+import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
+import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
+import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./EditApp.css.js";
 
 interface FormValues {
