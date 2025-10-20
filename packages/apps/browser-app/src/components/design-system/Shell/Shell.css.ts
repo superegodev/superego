@@ -102,6 +102,8 @@ export const PanelHeader = {
   }),
 
   action: style({
+    width: vars.spacing._7,
+    height: vars.spacing._7,
     fontSize: vars.typography.fontSizes.xl,
   }),
 
