@@ -19,10 +19,10 @@
     "@fast-check/vitest": "^0.2.2",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.8.1",
+    "@types/node": "^24.9.0",
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10",
+    "vite": "^7.1.11",
     "vitest": "^3.2.4"
   },
   "dependencies": {

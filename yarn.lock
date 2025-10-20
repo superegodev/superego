@@ -185,9 +185,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/check@npm:^0.9.4":
-  version: 0.9.4
-  resolution: "@astrojs/check@npm:0.9.4"
+"@astrojs/check@npm:^0.9.5":
+  version: 0.9.5
+  resolution: "@astrojs/check@npm:0.9.5"
   dependencies:
     "@astrojs/language-server": "npm:^2.15.0"
     chokidar: "npm:^4.0.1"
@@ -197,7 +197,7 @@ __metadata:
     typescript: ^5.0.0
   bin:
     astro-check: dist/bin.js
-  checksum: 10c0/0e9b554413319faea379a0b79380ba29e96be4cc93ae5df9154d6a4470082b314c184ac32079bbe20c83a933801e942370261a44fa35742fa87db0281d9ffb87
+  checksum: 10c0/6d495d4a33a2000890dc8c886ad1715ab51f090713ec1659e12b2ff0518aa3f2d223e1ed40e90974dc6ca80aacb002d0e03e7857f4fc7f109d4ed4cc99db079e
   languageName: node
   linkType: hard
 
@@ -805,10 +805,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:^4.20251011.0":
-  version: 4.20251011.0
-  resolution: "@cloudflare/workers-types@npm:4.20251011.0"
-  checksum: 10c0/9bfcd5a05ca3355523b9b21ed55066f3bd3dbfa3c3d83497036975dc66d6940fe574a6b1ec9cf764a1ad77b67ac4b1d58c1535c5afeba92322f3e795dd458aec
+"@cloudflare/workers-types@npm:^4.20251014.0":
+  version: 4.20251014.0
+  resolution: "@cloudflare/workers-types@npm:4.20251014.0"
+  checksum: 10c0/11cf2e509b673f4d2d980e56a074c95ae085e6685a4e7afd9907b6f32b96ad9528ee125451feed04035c4eface939503c6259a40864890ccc46e53edd4e57042
   languageName: node
   linkType: hard
 
@@ -5323,7 +5323,7 @@ __metadata:
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/vitest-registered": "workspace:*"
     "@types/luxon": "npm:^3.7.1"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     luxon: "npm:^3.7.2"
     p-map: "npm:^7.0.3"
     typescript: "npm:^5.9.3"
@@ -5345,7 +5345,7 @@ __metadata:
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/vitest-registered": "workspace:*"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     "@vitest/browser": "npm:^3.2.4"
     es-toolkit: "npm:^1.40.0"
     playwright: "npm:^1.56.1"
@@ -5360,7 +5360,7 @@ __metadata:
   dependencies:
     "@superego/global-types": "workspace:*"
     "@superego/schema": "workspace:*"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
@@ -5426,7 +5426,7 @@ __metadata:
     react-stately: "npm:^3.42.0"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.1.0"
-    vite: "npm:^7.1.10"
+    vite: "npm:^7.1.11"
     vite-bundle-analyzer: "npm:^1.2.3"
     vitest: "npm:^3.2.4"
     zustand: "npm:^5.0.8"
@@ -5457,7 +5457,7 @@ __metadata:
   dependencies:
     "@playwright/test": "npm:^1.56.1"
     "@superego/schema": "workspace:*"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     luxon: "npm:^3.7.2"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -5468,7 +5468,7 @@ __metadata:
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
     "@cloudflare/vite-plugin": "npm:^1.13.13"
-    "@cloudflare/workers-types": "npm:^4.20251011.0"
+    "@cloudflare/workers-types": "npm:^4.20251014.0"
     "@superego/backend": "workspace:*"
     "@superego/browser-app": "workspace:^"
     "@superego/connectors": "workspace:*"
@@ -5481,7 +5481,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.90.5"
     typescript: "npm:^5.9.3"
     urlpattern-polyfill: "npm:^10.1.0"
-    vite: "npm:^7.1.10"
+    vite: "npm:^7.1.11"
     wrangler: "npm:^4.43.0"
   languageName: unknown
   linkType: soft
@@ -5524,7 +5524,7 @@ __metadata:
     electron-squirrel-startup: "npm:^1.0.1"
     electron-vite: "npm:^4.0.1"
     typescript: "npm:^5.9.3"
-    vite: "npm:^7.1.10"
+    vite: "npm:^7.1.11"
   languageName: unknown
   linkType: soft
 
@@ -5636,12 +5636,12 @@ __metadata:
     "@superego/global-types": "workspace:*"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     luxon: "npm:^3.7.2"
     tsafe: "npm:^1.8.12"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.1.0"
-    vite: "npm:^7.1.10"
+    vite: "npm:^7.1.11"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -5670,7 +5670,7 @@ __metadata:
     "@msgpack/msgpack": "npm:^3.1.2"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
-    "@types/node": "npm:^24.8.1"
+    "@types/node": "npm:^24.9.0"
     jsondiffpatch: "npm:^0.7.3"
     typescript: "npm:^5.9.3"
     vitest: "npm:^3.2.4"
@@ -5690,12 +5690,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/website@workspace:packages/apps/website"
   dependencies:
-    "@astrojs/check": "npm:^0.9.4"
+    "@astrojs/check": "npm:^0.9.5"
     "@astrojs/mdx": "npm:^4.3.7"
     "@astrojs/starlight": "npm:^0.36.1"
     "@fontsource-variable/petrona": "npm:^5.2.8"
     "@playwright/test": "npm:^1.56.1"
-    astro: "npm:^5.14.6"
+    astro: "npm:^5.14.7"
     starlight-theme-nova: "npm:^0.9.5"
     typescript: "npm:^5.9.3"
     wrangler: "npm:^4.43.0"
@@ -6486,12 +6486,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.8.1":
-  version: 24.8.1
-  resolution: "@types/node@npm:24.8.1"
+"@types/node@npm:^24.9.0":
+  version: 24.9.0
+  resolution: "@types/node@npm:24.9.0"
   dependencies:
-    undici-types: "npm:~7.14.0"
-  checksum: 10c0/d185f2f14aa26cc2b482aa730bfc452943f9636df37aad6ceed80aa397f1278f894043336bd72f74c47b3dbef23e772ac9b1a256168984aa8aee26836132d290
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/c0129572f2c1528d2d1b7f4ebdbc3c4b40273964d40786c8be3596e7482394ed4882676b2a44362d4b1da5bac0274fdf2cae11dce3d76319cadac541fd76e531
   languageName: node
   linkType: hard
 
@@ -7361,9 +7361,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^5.14.6":
-  version: 5.14.6
-  resolution: "astro@npm:5.14.6"
+"astro@npm:^5.14.7":
+  version: 5.14.7
+  resolution: "astro@npm:5.14.7"
   dependencies:
     "@astrojs/compiler": "npm:^2.12.2"
     "@astrojs/internal-helpers": "npm:0.7.4"
@@ -7433,7 +7433,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/dc3359bc8c25867011469b3f34b806491ae033919410a37c17b815de5c2bb4a869ba203891d640a4da4a4b8b6a39e18902b91f8e896618cb2cfc30262b815953
+  checksum: 10c0/543277fd40db139fbeef073eae9df8417c8e0507fa42ca9f7a4c506c7dfdcd07bc5be13ffec1772e40014ae712421dc68f5384487538404fa83db251df14b41b
   languageName: node
   linkType: hard
 
@@ -15521,10 +15521,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~7.14.0":
-  version: 7.14.0
-  resolution: "undici-types@npm:7.14.0"
-  checksum: 10c0/e7f3214b45d788f03c51ceb33817be99c65dae203863aa9386b3ccc47201a245a7955fc721fb581da9c888b6ebad59fa3f53405214afec04c455a479908f0f14
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 10c0/3033e2f2b5c9f1504bdc5934646cb54e37ecaca0f9249c983f7b1fc2e87c6d18399ebb05dc7fd5419e02b2e915f734d872a65da2e3eeed1813951c427d33cc9a
   languageName: node
   linkType: hard
 
@@ -16074,9 +16074,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.1.10":
-  version: 7.1.10
-  resolution: "vite@npm:7.1.10"
+"vite@npm:^7.1.11":
+  version: 7.1.11
+  resolution: "vite@npm:7.1.11"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -16125,7 +16125,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/ea296971a3094b0e463a91af58de64dca56c8c5c563237e59d158641f8ad7f600f624c4f7c05c18fad68f414e23d50d7145118169b8dcd4bc85283c63c7185bb
+  checksum: 10c0/c4aa7f47b1fb07f734ed6f4f605d73e5acf7ff9754d75b4adbfbdddf0e520413019834620c1f7b4a207bce7e1d20a2636c584db2b1b17f5a3ba2cd23d47e50ab
   languageName: node
   linkType: hard
 
