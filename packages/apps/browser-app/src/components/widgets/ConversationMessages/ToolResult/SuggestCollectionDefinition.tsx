@@ -47,13 +47,16 @@ export default function SuggestCollectionDefinition({
     );
     if (!result.success) {
       console.error(result.error);
-      toastQueue.add({
-        type: ToastType.Error,
-        title: intl.formatMessage({
-          defaultMessage: "Error creating the collection",
-        }),
-        description: result.error.name,
-      });
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error creating the collection",
+          }),
+          description: result.error.name,
+        },
+        { timeout: 5_000 },
+      );
     }
   };
 

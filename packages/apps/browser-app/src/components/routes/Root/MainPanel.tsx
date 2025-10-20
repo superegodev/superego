@@ -9,6 +9,7 @@ import CreateApp from "../CreateApp/CreateApp.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
 import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionManual.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
+import CreateNewAppVersion from "../CreateNewAppVersion/CreateNewAppVersion.jsx";
 import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";
 import Document from "../Document/Document.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
@@ -18,8 +19,6 @@ export default function MainPanel() {
   switch (activeRoute.name) {
     case RouteName.Ask:
       return <Ask />;
-    case RouteName.CreateApp:
-      return <CreateApp collectionIds={activeRoute.collectionIds} />;
     case RouteName.Conversations:
       return <Conversations />;
     case RouteName.Conversation:
@@ -35,7 +34,12 @@ export default function MainPanel() {
         <CreateNewCollectionVersion collectionId={activeRoute.collectionId} />
       );
     case RouteName.Collection:
-      return <Collection collectionId={activeRoute.collectionId} />;
+      return (
+        <Collection
+          collectionId={activeRoute.collectionId}
+          activeAppId={activeRoute.activeAppId}
+        />
+      );
     case RouteName.CollectionSettings:
       return <CollectionSettings collectionId={activeRoute.collectionId} />;
     case RouteName.CreateDocument:
@@ -47,6 +51,10 @@ export default function MainPanel() {
           documentId={activeRoute.documentId}
         />
       );
+    case RouteName.CreateApp:
+      return <CreateApp collectionIds={activeRoute.collectionIds} />;
+    case RouteName.CreateNewAppVersion:
+      return <CreateNewAppVersion appId={activeRoute.appId} />;
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
   }

@@ -32,7 +32,6 @@ export default function SetNameAndSaveModal({
         autoFocus={true}
         label={intl.formatMessage({ defaultMessage: "Name" })}
         placeholder={intl.formatMessage({ defaultMessage: "My Awesome App" })}
-        showErrorOnError={false}
       />
       <div className={cs.SetNameAndSaveModal.submitButtonContainer}>
         <RHFSubmitButton control={control} formId={formId} variant="primary">

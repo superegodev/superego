@@ -101,6 +101,18 @@
       "value": "Error sending message to assistant"
     }
   ],
+  "Collection.tsx_59cQpf": [
+    {
+      "type": 0,
+      "value": "Edit app"
+    }
+  ],
+  "Collection.tsx_5WK7jL": [
+    {
+      "type": 0,
+      "value": "Create new"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -113,10 +125,22 @@
       "value": "Show timestamps"
     }
   ],
+  "Collection.tsx_gRiKLf": [
+    {
+      "type": 0,
+      "value": "Apps"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
       "value": "Create document"
+    }
+  ],
+  "Collection.tsx_ufzv1A": [
+    {
+      "type": 0,
+      "value": "Table view"
     }
   ],
   "Collection.tsx_zYomDH": [
@@ -536,6 +560,38 @@
     {
       "type": 0,
       "value": " created"
+    }
+  ],
+  "CreateNewAppVersion.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Create new version"
+    }
+  ],
+  "CreateNewAppVersion.tsx_Vva+Yr": [
+    {
+      "type": 0,
+      "value": "Edit name"
+    }
+  ],
+  "CreateNewAppVersion.tsx_cj9NNQ": [
+    {
+      "type": 0,
+      "value": "🧩 "
+    },
+    {
+      "type": 1,
+      "value": "app"
+    },
+    {
+      "type": 0,
+      "value": " » Create New Version"
+    }
+  ],
+  "CreateNewAppVersionForm.tsx_6GRvO0": [
+    {
+      "type": 0,
+      "value": "Error creating a new app version"
     }
   ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
@@ -2550,6 +2606,30 @@
     {
       "type": 0,
       "value": "Error saving global settings"
+    }
+  ],
+  "UpdateNameModalForm.tsx_BWpuKl": [
+    {
+      "type": 0,
+      "value": "Update"
+    }
+  ],
+  "UpdateNameModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "UpdateNameModalForm.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "UpdateNameModalForm.tsx_btR6aV": [
+    {
+      "type": 0,
+      "value": "Update app name"
     }
   ],
   "UserMessage.tsx_J3ca41": [

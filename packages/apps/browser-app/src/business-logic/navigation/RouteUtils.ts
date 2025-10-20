@@ -24,25 +24,23 @@ export function toHref(route: Route): string {
     case RouteName.CreateNewCollectionVersion:
       return `/collections/${route.collectionId}/newVersion`;
     case RouteName.Collection:
-      return `/collections/${route.collectionId}`;
+      return route.activeAppId
+        ? `/collections/${route.collectionId}?activeAppId=${route.activeAppId}`
+        : `/collections/${route.collectionId}`;
     case RouteName.CollectionSettings:
       return `/collections/${route.collectionId}/settings`;
     case RouteName.CreateDocument:
       return `/collections/${route.collectionId}/documents/new`;
     case RouteName.Document:
       return `/collections/${route.collectionId}/documents/${route.documentId}`;
-    case RouteName.App: {
-      return `/apps/${route.appId}`;
-    }
     case RouteName.CreateApp: {
       const search = new URLSearchParams(
         route.collectionIds.map((id) => ["collectionId", id]),
       );
       return `/apps/new?${search}`;
     }
-    case RouteName.CreateNewAppVersion: {
+    case RouteName.CreateNewAppVersion:
       return `/apps/${route.appId}/newVersion`;
-    }
     case RouteName.GlobalSettings:
       return "/settings";
   }
@@ -141,6 +139,9 @@ const routeMatchers: RouteMatcher[] = [
       collectionId: decodePathSegment<CollectionId>(
         match.pathname.groups["collectionId"],
       ),
+      activeAppId:
+        (new URLSearchParams(match.search.input).get("activeAppId") as AppId) ??
+        undefined,
     }),
   },
   {
@@ -177,15 +178,6 @@ const routeMatchers: RouteMatcher[] = [
     }),
     toRoute: (match) => ({
       name: RouteName.CreateNewAppVersion,
-      appId: decodePathSegment<AppId>(match.pathname.groups["appId"]),
-    }),
-  },
-  {
-    pattern: new URLPattern({
-      pathname: "/apps/:appId{/}?",
-    }),
-    toRoute: (match) => ({
-      name: RouteName.App,
       appId: decodePathSegment<AppId>(match.pathname.groups["appId"]),
     }),
   },

@@ -97,10 +97,20 @@ export const PanelHeader = {
 
   actionsToolbar: style({
     flexShrink: 0,
+    display: "flex",
+    alignItems: "center",
   }),
 
   action: style({
     fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  actionsSeparator: style({
+    display: "inline-block",
+    background: vars.colors.border.default,
+    height: vars.spacing._4,
+    width: vars.borders.width.thin,
+    marginInline: vars.spacing._2,
   }),
 
   primarySidebarToggleButton: style({

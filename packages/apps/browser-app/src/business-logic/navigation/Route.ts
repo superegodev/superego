@@ -16,7 +16,6 @@ export enum RouteName {
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
   Document = "Document",
-  App = "App",
   CreateApp = "CreateApp",
   CreateNewAppVersion = "CreateNewAppVersion",
   GlobalSettings = "Settings",
@@ -47,6 +46,7 @@ type Route =
   | {
       name: RouteName.Collection;
       collectionId: CollectionId;
+      activeAppId?: AppId;
     }
   | {
       name: RouteName.CollectionSettings;
@@ -60,10 +60,6 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
-    }
-  | {
-      name: RouteName.App;
-      appId: AppId;
     }
   | {
       name: RouteName.CreateApp;

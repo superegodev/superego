@@ -50,14 +50,26 @@
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Error sending message to assistant"
   },
+  "Collection.tsx_59cQpf": {
+    "defaultMessage": "Edit app"
+  },
+  "Collection.tsx_5WK7jL": {
+    "defaultMessage": "Create new"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Show timestamps"
   },
+  "Collection.tsx_gRiKLf": {
+    "defaultMessage": "Apps"
+  },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Create document"
+  },
+  "Collection.tsx_ufzv1A": {
+    "defaultMessage": "Table view"
   },
   "Collection.tsx_zYomDH": {
     "defaultMessage": "Collection actions"
@@ -229,6 +241,18 @@
   },
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
+  },
+  "CreateNewAppVersion.tsx_Vl13tq": {
+    "defaultMessage": "Create new version"
+  },
+  "CreateNewAppVersion.tsx_Vva+Yr": {
+    "defaultMessage": "Edit name"
+  },
+  "CreateNewAppVersion.tsx_cj9NNQ": {
+    "defaultMessage": "🧩 {app} » Create New Version"
+  },
+  "CreateNewAppVersionForm.tsx_6GRvO0": {
+    "defaultMessage": "Error creating a new app version"
   },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
@@ -880,6 +904,18 @@
   },
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
+  },
+  "UpdateNameModalForm.tsx_BWpuKl": {
+    "defaultMessage": "Update"
+  },
+  "UpdateNameModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "UpdateNameModalForm.tsx_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "UpdateNameModalForm.tsx_btR6aV": {
+    "defaultMessage": "Update app name"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"

@@ -1,4 +1,5 @@
 import type {
+  App,
   Collection,
   CollectionId,
   CollectionSettings,
@@ -13,6 +14,13 @@ export default {
     return collections.find(({ id }) => id === collectionId) ?? null;
   },
 
+  findAllCollections(
+    collections: Collection[],
+    collectionIds: CollectionId[],
+  ): Collection[] {
+    return collections.filter(({ id }) => collectionIds.includes(id));
+  },
+
   getDisplayName(collection: {
     settings: Pick<CollectionSettings, "name" | "icon">;
   }): string {
@@ -24,5 +32,13 @@ export default {
     collection: Collection,
   ): collection is Collection & { remote: Remote } {
     return collection.remote !== null;
+  },
+
+  getApps(collection: Collection, apps: App[]): App[] {
+    return apps.filter((app) =>
+      app.latestVersion.targetCollections.some(
+        ({ id }) => id === collection.id,
+      ),
+    );
   },
 };

@@ -34,6 +34,11 @@ const testRoutes: Route[] = [
     collectionId: Id.generate.collection(),
   },
   {
+    name: RouteName.Collection,
+    collectionId: Id.generate.collection(),
+    activeAppId: Id.generate.app(),
+  },
+  {
     name: RouteName.CollectionSettings,
     collectionId: Id.generate.collection(),
   },
@@ -45,10 +50,6 @@ const testRoutes: Route[] = [
     name: RouteName.Document,
     collectionId: Id.generate.collection(),
     documentId: Id.generate.document(),
-  },
-  {
-    name: RouteName.App,
-    appId: Id.generate.app(),
   },
   {
     name: RouteName.CreateApp,

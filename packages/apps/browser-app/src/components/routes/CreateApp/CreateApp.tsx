@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PiFloppyDisk } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateAppForm from "./CreateAppForm.jsx";
 
@@ -16,9 +17,6 @@ export default function CreateApp({ collectionIds }: Props) {
     useState(false);
 
   const { collections } = useGlobalData();
-  const targetCollections = collections.filter(({ id }) =>
-    collectionIds.includes(id),
-  );
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
@@ -33,7 +31,10 @@ export default function CreateApp({ collectionIds }: Props) {
       />
       <Shell.Panel.Content fullWidth={true}>
         <CreateAppForm
-          targetCollections={targetCollections}
+          targetCollections={CollectionUtils.findAllCollections(
+            collections,
+            collectionIds,
+          )}
           isSetNameAndSaveModalOpen={isSetNameAndSaveModalOpen}
           onSetNameAndSaveModalClose={() => setIsSetNameAndSaveModalOpen(false)}
         />

@@ -1,60 +1,65 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { AppType, type Collection } from "@superego/backend";
-import { valibotSchemas } from "@superego/shared-utils";
-import { useId } from "react";
+import type { App, Collection } from "@superego/backend";
+import { useEffect } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import * as v from "valibot";
-import { useCreateApp } from "../../../business-logic/backend/hooks.js";
+import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.jsx";
-import * as cs from "./CreateApp.css.js";
-import SetNameAndSaveModal from "./SetNameAndSaveModal.jsx";
+import * as cs from "./CreateNewAppVersion.css.js";
 
 interface FormValues {
-  name: string;
   files: RHFAppVersionFiles;
 }
 
 interface Props {
+  app: App;
   targetCollections: Collection[];
-  isSetNameAndSaveModalOpen: boolean;
-  onSetNameAndSaveModalClose: () => void;
+  formId: string;
+  setSubmitDisabled: (isDisabled: boolean) => void;
 }
-export default function CreateAppForm({
+export default function CreateNewAppVersionForm({
+  app,
   targetCollections,
-  isSetNameAndSaveModalOpen,
-  onSetNameAndSaveModalClose,
+  formId,
+  setSubmitDisabled,
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
-  const { result, mutate } = useCreateApp();
+  const { mutate } = useCreateNewAppVersion();
 
-  const formId = useId();
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
-      files: forms.defaults.collectionViewAppFiles(targetCollections),
+      files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+        app.latestVersion.files,
+      ),
     },
     mode: "onSubmit",
     resolver: standardSchemaResolver(
       v.strictObject({
-        name: valibotSchemas.appName(),
         files: forms.schemas.rhfAppVersionFiles(intl),
       }),
     ),
   });
 
-  const onSubmit = async ({ name, files }: FormValues) => {
-    const { success, data } = await mutate(
-      AppType.CollectionView,
-      name,
-      targetCollections.map(({ id }) => id),
+  // When the form dirty state changes, enable or disable the submit button.
+  useEffect(() => {
+    setSubmitDisabled(!formState.isDirty);
+  }, [formState.isDirty, setSubmitDisabled]);
+
+  const onSubmit = async ({ files }: FormValues) => {
+    const { success, data, error } = await mutate(
+      app.id,
+      app.latestVersion.targetCollections.map(({ id }) => id),
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
     );
     if (success) {
@@ -68,6 +73,18 @@ export default function CreateAppForm({
             }
           : { name: RouteName.Ask },
       );
+    } else {
+      console.error(error);
+      toastQueue.add(
+        {
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "Error creating a new app version",
+          }),
+          description: error.name,
+        },
+        { timeout: 5_000 },
+      );
     }
   };
 
@@ -75,19 +92,12 @@ export default function CreateAppForm({
     <Form
       onSubmit={handleSubmit(onSubmit)}
       id={formId}
-      className={cs.CreateAppForm.root}
+      className={cs.CreateNewAppVersionForm.root}
     >
       <RHFAppVersionFilesField
         control={control}
         name="files"
         targetCollections={targetCollections}
-      />
-      <SetNameAndSaveModal
-        control={control}
-        formId={formId}
-        result={result}
-        isOpen={isSetNameAndSaveModalOpen}
-        onClose={onSetNameAndSaveModalClose}
       />
     </Form>
   );

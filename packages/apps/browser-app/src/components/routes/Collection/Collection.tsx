@@ -1,7 +1,17 @@
-import type { CollectionId } from "@superego/backend";
+import type { AppId, CollectionId } from "@superego/backend";
 import { useState } from "react";
-import { PiGear, PiPlus, PiWatch, PiWatchFill } from "react-icons/pi";
-import { useIntl } from "react-intl";
+import {
+  PiCode,
+  PiGear,
+  PiPlus,
+  PiShapes,
+  PiShapesFill,
+  PiTable,
+  PiTableFill,
+  PiWatch,
+  PiWatchFill,
+} from "react-icons/pi";
+import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
@@ -13,6 +23,7 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DocumentsTable from "../../widgets/DocumentsTable/DocumentsTable.js";
 import * as cs from "./Collection.css.js";
@@ -22,17 +33,25 @@ import usePollForDownSyncFinished from "./usePollForDownSyncFinished.js";
 
 interface Props {
   collectionId: CollectionId;
+  activeAppId?: AppId;
 }
-export default function Collection({ collectionId }: Props) {
+export default function Collection({ collectionId, activeAppId }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
-  const { collections } = useGlobalData();
+  const { apps, collections } = useGlobalData();
+
+  const collection = CollectionUtils.findCollection(collections, collectionId);
+
+  const hasActiveApp = activeAppId !== undefined;
+
   const [showTimestamps, setShowTimestamps] = useState(false);
+
   const [isDownSyncInfoModalOpen, setDownSyncInfoModalOpen] = useState(false);
   const { mutate: triggerDownSync } = useTriggerCollectionDownSync();
-  const collection = CollectionUtils.findCollection(collections, collectionId);
+
   const authenticateConnector = useAuthenticateCollectionConnector();
   usePollForDownSyncFinished(collection);
+
   return collection ? (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
@@ -41,6 +60,60 @@ export default function Collection({ collectionId }: Props) {
           defaultMessage: "Collection actions",
         })}
         actions={[
+          hasActiveApp
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Edit app",
+                }),
+                icon: <PiCode />,
+                to: { name: RouteName.CreateNewAppVersion, appId: activeAppId },
+              }
+            : null,
+          screenSize > ScreenSize.Medium && !hasActiveApp
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Show timestamps",
+                }),
+                icon: showTimestamps ? <PiWatchFill /> : <PiWatch />,
+                onPress: () => setShowTimestamps(!showTimestamps),
+              }
+            : null,
+          PanelHeaderActionSeparator,
+          {
+            label: intl.formatMessage({ defaultMessage: "Table view" }),
+            icon: hasActiveApp ? <PiTable /> : <PiTableFill />,
+            to: { name: RouteName.Collection, collectionId },
+          },
+          {
+            label: intl.formatMessage({ defaultMessage: "Apps" }),
+            icon: hasActiveApp ? <PiShapesFill /> : <PiShapes />,
+            menuItems: [
+              ...CollectionUtils.getApps(collection, apps).map((app) => ({
+                key: app.id,
+                label: app.name,
+                to: {
+                  name: RouteName.Collection,
+                  collectionId,
+                  activeAppId: app.id,
+                } as const,
+              })),
+              {
+                key: "CreateApp",
+                label: (
+                  <span>
+                    <PiPlus />
+                    {"\u2002"}
+                    <FormattedMessage defaultMessage="Create new" />
+                  </span>
+                ),
+                to: {
+                  name: RouteName.CreateApp,
+                  collectionIds: [collection.id],
+                },
+              },
+            ],
+          },
+          PanelHeaderActionSeparator,
           CollectionUtils.hasRemote(collection)
             ? getDownSyncAction(
                 collection,
@@ -50,15 +123,6 @@ export default function Collection({ collectionId }: Props) {
                 () => authenticateConnector(collection),
               )
             : null,
-          screenSize > ScreenSize.Medium
-            ? {
-                label: intl.formatMessage({
-                  defaultMessage: "Show timestamps",
-                }),
-                icon: showTimestamps ? <PiWatchFill /> : <PiWatch />,
-                onPress: () => setShowTimestamps(!showTimestamps),
-              }
-            : null,
           {
             label: intl.formatMessage({ defaultMessage: "Settings" }),
             icon: <PiGear />,
@@ -67,6 +131,7 @@ export default function Collection({ collectionId }: Props) {
               collectionId: collectionId,
             },
           },
+          PanelHeaderActionSeparator,
           !CollectionUtils.hasRemote(collection)
             ? {
                 label: intl.formatMessage({
@@ -85,18 +150,23 @@ export default function Collection({ collectionId }: Props) {
         fullWidth={true}
         className={cs.Collection.panelContent}
       >
-        <DataLoader queries={[listDocumentsQuery([collectionId])]}>
-          {(documents) => (
-            <DocumentsTable
-              collectionId={collectionId}
-              collection={collection}
-              documents={documents}
-              showCreatedAt={showTimestamps}
-              showLastModifiedAt={showTimestamps}
-              className={cs.Collection.documentsTable}
-            />
-          )}
-        </DataLoader>
+        {hasActiveApp ? (
+          // TODO
+          <div>{activeAppId}</div>
+        ) : (
+          <DataLoader queries={[listDocumentsQuery([collectionId])]}>
+            {(documents) => (
+              <DocumentsTable
+                collectionId={collectionId}
+                collection={collection}
+                documents={documents}
+                showCreatedAt={showTimestamps}
+                showLastModifiedAt={showTimestamps}
+                className={cs.Collection.documentsTable}
+              />
+            )}
+          </DataLoader>
+        )}
         {CollectionUtils.hasRemote(collection) ? (
           <DownSyncInfoModal
             collection={collection}
