@@ -10,7 +10,7 @@ import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "./CreateNewAppVersion.css.js";
+import * as cs from "./EditApp.css.js";
 
 interface FormValues {
   name: string;

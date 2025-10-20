@@ -12,3 +12,10 @@ export const UpdateNameModalForm = {
     justifyContent: "flex-end",
   }),
 };
+
+export const DeleteAppModalForm = {
+  submitButtonContainer: style({
+    display: "flex",
+    justifyContent: "flex-end",
+  }),
+};

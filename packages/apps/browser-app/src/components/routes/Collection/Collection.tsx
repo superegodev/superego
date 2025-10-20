@@ -66,7 +66,7 @@ export default function Collection({ collectionId, activeAppId }: Props) {
                   defaultMessage: "Edit app",
                 }),
                 icon: <PiCode />,
-                to: { name: RouteName.CreateNewAppVersion, appId: activeAppId },
+                to: { name: RouteName.EditApp, appId: activeAppId },
               }
             : null,
           screenSize > ScreenSize.Medium && !hasActiveApp

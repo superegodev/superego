@@ -9,9 +9,9 @@ import CreateApp from "../CreateApp/CreateApp.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
 import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionManual.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
-import CreateNewAppVersion from "../CreateNewAppVersion/CreateNewAppVersion.jsx";
 import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewCollectionVersion.js";
 import Document from "../Document/Document.js";
+import EditApp from "../EditApp/EditApp.jsx";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
 
 export default function MainPanel() {
@@ -53,8 +53,8 @@ export default function MainPanel() {
       );
     case RouteName.CreateApp:
       return <CreateApp collectionIds={activeRoute.collectionIds} />;
-    case RouteName.CreateNewAppVersion:
-      return <CreateNewAppVersion appId={activeRoute.appId} />;
+    case RouteName.EditApp:
+      return <EditApp appId={activeRoute.appId} />;
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
   }

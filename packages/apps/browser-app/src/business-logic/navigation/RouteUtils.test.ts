@@ -64,7 +64,7 @@ const testRoutes: Route[] = [
     collectionIds: [Id.generate.collection(), Id.generate.collection()],
   },
   {
-    name: RouteName.CreateNewAppVersion,
+    name: RouteName.EditApp,
     appId: Id.generate.app(),
   },
   {

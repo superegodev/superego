@@ -1,22 +1,26 @@
 import type { AppId } from "@superego/backend";
 import { useId, useState } from "react";
-import { PiFloppyDisk, PiPencilSimple } from "react-icons/pi";
+import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
-import Shell from "../../design-system/Shell/Shell.js";
+import Shell from "../../design-system/Shell/Shell.jsx";
 import CreateNewAppVersionForm from "./CreateNewAppVersionForm.jsx";
+import DeleteAppModalForm from "./DeleteAppModalForm.jsx";
 import UpdateNameModalForm from "./UpdateNameModalForm.jsx";
 
 interface Props {
   appId: AppId;
 }
-export default function CreateNewAppVersion({ appId }: Props) {
+export default function EditApp({ appId }: Props) {
   const intl = useIntl();
   const { apps, collections } = useGlobalData();
 
   const [isUpdateNameModalFormOpen, setIsUpdateNameModalFormOpen] =
+    useState(false);
+
+  const [isDeleteAppModalFormOpen, setIsDeleteAppModalFormOpen] =
     useState(false);
 
   const [
@@ -31,7 +35,7 @@ export default function CreateNewAppVersion({ appId }: Props) {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage(
-          { defaultMessage: "🧩\u2002{app} » Create New Version" },
+          { defaultMessage: "🧩\u2002{app} » Edit" },
           { app: app.name },
         )}
         actions={[
@@ -45,6 +49,11 @@ export default function CreateNewAppVersion({ appId }: Props) {
             label: intl.formatMessage({ defaultMessage: "Create new version" }),
             submit: formId,
             isDisabled: isCreateNewVersionFormSubmitDisabled,
+          },
+          {
+            icon: <PiTrash />,
+            label: intl.formatMessage({ defaultMessage: "Delete" }),
+            onPress: () => setIsDeleteAppModalFormOpen(true),
           },
         ]}
       />
@@ -62,6 +71,11 @@ export default function CreateNewAppVersion({ appId }: Props) {
           app={app}
           isOpen={isUpdateNameModalFormOpen}
           onClose={() => setIsUpdateNameModalFormOpen(false)}
+        />
+        <DeleteAppModalForm
+          app={app}
+          isOpen={isDeleteAppModalFormOpen}
+          onClose={() => setIsDeleteAppModalFormOpen(false)}
         />
       </Shell.Panel.Content>
     </Shell.Panel>

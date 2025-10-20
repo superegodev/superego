@@ -242,15 +242,6 @@
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
   },
-  "CreateNewAppVersion.tsx_Vl13tq": {
-    "defaultMessage": "Create new version"
-  },
-  "CreateNewAppVersion.tsx_Vva+Yr": {
-    "defaultMessage": "Edit name"
-  },
-  "CreateNewAppVersion.tsx_cj9NNQ": {
-    "defaultMessage": "🧩 {app} » Create New Version"
-  },
   "CreateNewAppVersionForm.tsx_6GRvO0": {
     "defaultMessage": "Error creating a new app version"
   },
@@ -280,6 +271,18 @@
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
+  },
+  "DeleteAppModalForm.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "DeleteAppModalForm.tsx_U+RSUu": {
+    "defaultMessage": "<p> Deleting the app is permanent. If you're sure, write <i>delete</i> in the input below. </p>"
+  },
+  "DeleteAppModalForm.tsx_bJAAvK": {
+    "defaultMessage": "Delete app \"{appName}\""
+  },
+  "DeleteAppModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Command confirmation"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Deleting the collection will permanently delete all of its documents and files. </p> <p> If you're sure you want to delete the collection, write <i>delete</i> in the input below. </p>"
@@ -373,6 +376,15 @@
   },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
+  },
+  "EditApp.tsx_LDlHu6": {
+    "defaultMessage": "🧩 {app} » Edit"
+  },
+  "EditApp.tsx_Vl13tq": {
+    "defaultMessage": "Create new version"
+  },
+  "EditApp.tsx_Vva+Yr": {
+    "defaultMessage": "Edit name"
   },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "App preview"

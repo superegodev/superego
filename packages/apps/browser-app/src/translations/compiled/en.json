@@ -562,32 +562,6 @@
       "value": " created"
     }
   ],
-  "CreateNewAppVersion.tsx_Vl13tq": [
-    {
-      "type": 0,
-      "value": "Create new version"
-    }
-  ],
-  "CreateNewAppVersion.tsx_Vva+Yr": [
-    {
-      "type": 0,
-      "value": "Edit name"
-    }
-  ],
-  "CreateNewAppVersion.tsx_cj9NNQ": [
-    {
-      "type": 0,
-      "value": "🧩 "
-    },
-    {
-      "type": 1,
-      "value": "app"
-    },
-    {
-      "type": 0,
-      "value": " » Create New Version"
-    }
-  ],
   "CreateNewAppVersionForm.tsx_6GRvO0": [
     {
       "type": 0,
@@ -654,6 +628,58 @@
     {
       "type": 0,
       "value": "Not a valid JSON string"
+    }
+  ],
+  "DeleteAppModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteAppModalForm.tsx_U+RSUu": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the app is permanent. If you're sure, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "DeleteAppModalForm.tsx_bJAAvK": [
+    {
+      "type": 0,
+      "value": "Delete app \""
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteAppModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -976,6 +1002,32 @@
     {
       "type": 0,
       "value": "An error occurred rendering the chart."
+    }
+  ],
+  "EditApp.tsx_LDlHu6": [
+    {
+      "type": 0,
+      "value": "🧩 "
+    },
+    {
+      "type": 1,
+      "value": "app"
+    },
+    {
+      "type": 0,
+      "value": " » Edit"
+    }
+  ],
+  "EditApp.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Create new version"
+    }
+  ],
+  "EditApp.tsx_Vva+Yr": [
+    {
+      "type": 0,
+      "value": "Edit name"
     }
   ],
   "EditingToolbar.tsx_1hhuuF": [

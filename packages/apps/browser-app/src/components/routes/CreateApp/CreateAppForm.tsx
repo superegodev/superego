@@ -12,6 +12,7 @@ import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHF
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import AppUtils from "../../../utils/AppUtils.js";
 import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.jsx";
 import * as cs from "./CreateApp.css.js";
 import SetNameAndSaveModal from "./SetNameAndSaveModal.jsx";
@@ -58,13 +59,14 @@ export default function CreateAppForm({
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
     );
     if (success) {
-      const [firstTargetedCollection] = data.latestVersion.targetCollections;
+      const firstTargetedCollectionId =
+        AppUtils.getFirstTargetCollectionId(data);
       navigateTo(
-        firstTargetedCollection
-          ? // TODO: add activeAppId to route
-            {
+        firstTargetedCollectionId
+          ? {
               name: RouteName.Collection,
-              collectionId: firstTargetedCollection.id,
+              collectionId: firstTargetedCollectionId,
+              activeAppId: data.id,
             }
           : { name: RouteName.Ask },
       );

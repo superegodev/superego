@@ -39,8 +39,8 @@ export function toHref(route: Route): string {
       );
       return `/apps/new?${search}`;
     }
-    case RouteName.CreateNewAppVersion:
-      return `/apps/${route.appId}/newVersion`;
+    case RouteName.EditApp:
+      return `/apps/${route.appId}/edit`;
     case RouteName.GlobalSettings:
       return "/settings";
   }
@@ -174,10 +174,10 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
-      pathname: "/apps/:appId/newVersion{/}?",
+      pathname: "/apps/:appId/edit{/}?",
     }),
     toRoute: (match) => ({
-      name: RouteName.CreateNewAppVersion,
+      name: RouteName.EditApp,
       appId: decodePathSegment<AppId>(match.pathname.groups["appId"]),
     }),
   },

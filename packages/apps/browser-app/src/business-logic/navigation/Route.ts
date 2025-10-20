@@ -17,7 +17,7 @@ export enum RouteName {
   CreateDocument = "CreateDocument",
   Document = "Document",
   CreateApp = "CreateApp",
-  CreateNewAppVersion = "CreateNewAppVersion",
+  EditApp = "EditApp",
   GlobalSettings = "Settings",
 }
 
@@ -66,7 +66,7 @@ type Route =
       collectionIds: CollectionId[];
     }
   | {
-      name: RouteName.CreateNewAppVersion;
+      name: RouteName.EditApp;
       appId: AppId;
     }
   | {
