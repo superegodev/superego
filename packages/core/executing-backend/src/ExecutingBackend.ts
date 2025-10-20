@@ -19,12 +19,10 @@ import AssistantsContinueConversation from "./usecases/assistants/ContinueConver
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
 import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
-import AssistantsImplementTypescriptFunction from "./usecases/assistants/ImplementTypescriptFunction.js";
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
 import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
 import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse.js";
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
-import AssistantsTts from "./usecases/assistants/Tts.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -50,6 +48,8 @@ import DocumentsList from "./usecases/documents/List.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
+import InferenceImplementTypescriptFunction from "./usecases/inference/ImplementTypescriptFunction.js";
+import InferenceTts from "./usecases/inference/Tts.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -57,6 +57,7 @@ export default class ExecutingBackend implements Backend {
   documents: Backend["documents"];
   files: Backend["files"];
   assistants: Backend["assistants"];
+  inference: Backend["inference"];
   apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
@@ -130,9 +131,12 @@ export default class ExecutingBackend implements Backend {
         AssistantsGetDeveloperPrompts,
         false,
       ),
-      tts: this.makeUsecase(AssistantsTts, false),
+    };
+
+    this.inference = {
+      tts: this.makeUsecase(InferenceTts, false),
       implementTypescriptFunction: this.makeUsecase(
-        AssistantsImplementTypescriptFunction,
+        InferenceImplementTypescriptFunction,
         false,
       ),
     };

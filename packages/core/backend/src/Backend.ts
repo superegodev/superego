@@ -360,7 +360,9 @@ export default interface Backend {
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
+  };
 
+  inference: {
     tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
 
     implementTypescriptFunction(

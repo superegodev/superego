@@ -17,8 +17,8 @@ import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class AssistantsImplementTypescriptFunction extends Usecase<
-  Backend["assistants"]["implementTypescriptFunction"]
+export default class InferenceImplementTypescriptFunction extends Usecase<
+  Backend["inference"]["implementTypescriptFunction"]
 > {
   async exec(
     instructions: string,
