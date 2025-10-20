@@ -6,10 +6,11 @@ import {
 } from "@superego/schema";
 
 export default {
-  fromRhfContent(rhfContent: any, schema: Schema): any {
+  fromRHFContent(rhfContent: any, schema: Schema): any {
     return fromRhfValue(rhfContent, utils.getRootType(schema), schema);
   },
-  toRhfContent(content: any, schema: Schema): any {
+
+  toRHFContent(content: any, schema: Schema): any {
     return toRhfValue(content, utils.getRootType(schema), schema);
   },
 };

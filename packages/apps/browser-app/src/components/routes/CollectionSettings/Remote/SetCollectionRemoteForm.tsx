@@ -12,7 +12,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useSetCollectionRemote } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
-import RhfContent from "../../../../utils/RhfContent.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CollectionSettings.css.js";
@@ -84,7 +83,7 @@ export default function SetCollectionRemoteForm({
       connector.name,
       values.connectorAuthenticationSettings,
       connector.settingsSchema
-        ? RhfContent.fromRhfContent(
+        ? forms.utils.RHFContent.fromRHFContent(
             values.connectorSettings,
             connector.settingsSchema,
           )

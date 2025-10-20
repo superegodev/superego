@@ -9,6 +9,7 @@ type Props = {
   isDisabled?: boolean | undefined;
   maxHeight?: Property.MaxHeight;
   ariaLabel?: string | undefined;
+  className?: string | undefined;
   /**
    * react-hook-form ref callback. Used to allow the input to be focused by rhf
    * in certain circumstances.

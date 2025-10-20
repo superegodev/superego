@@ -5,6 +5,7 @@ import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
 import Conversations from "../Conversations/Conversations.js";
+import CreateApp from "../CreateApp/CreateApp.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
 import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionManual.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
@@ -17,6 +18,8 @@ export default function MainPanel() {
   switch (activeRoute.name) {
     case RouteName.Ask:
       return <Ask />;
+    case RouteName.CreateApp:
+      return <CreateApp collectionIds={activeRoute.collectionIds} />;
     case RouteName.Conversations:
       return <Conversations />;
     case RouteName.Conversation:

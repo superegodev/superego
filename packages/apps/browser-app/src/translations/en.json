@@ -185,6 +185,12 @@
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
+  "CreateApp.tsx_VzzYJk": {
+    "defaultMessage": "Create"
+  },
+  "CreateApp.tsx_dtELK2": {
+    "defaultMessage": "Create App"
+  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -343,6 +349,18 @@
   },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
+  },
+  "EditingToolbar.tsx_1hhuuF": {
+    "defaultMessage": "App preview"
+  },
+  "EditingToolbar.tsx_3XyF4d": {
+    "defaultMessage": "Redo"
+  },
+  "EditingToolbar.tsx_EwYOYc": {
+    "defaultMessage": "View code"
+  },
+  "EditingToolbar.tsx_JkS37H": {
+    "defaultMessage": "Undo"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"
@@ -647,6 +665,9 @@
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"
   },
+  "RHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "What do you want to build?"
+  },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
   },
@@ -757,6 +778,18 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Set remote"
+  },
+  "SetNameAndSaveModal.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "SetNameAndSaveModal.tsx_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "SetNameAndSaveModal.tsx_VzzYJk": {
+    "defaultMessage": "Create"
+  },
+  "SetNameAndSaveModal.tsx_r+ksJu": {
+    "defaultMessage": "Create app"
   },
   "SpeakButton.tsx_FUvUuG": {
     "defaultMessage": "Configure speech to play assistant messages"

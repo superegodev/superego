@@ -27,7 +27,9 @@ interface Props {
   assistantImplementation?:
     | { instructions: string; template: string }
     | undefined;
+  maxHeight?: string | undefined;
   className?: string | undefined;
+  codeInputClassName?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
   control,
@@ -39,7 +41,9 @@ export default function RHFTypescriptModuleField({
   typescriptLibs,
   includedGlobalUtils,
   assistantImplementation,
+  maxHeight,
   className,
+  codeInputClassName,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
   const isInvalid =
@@ -66,7 +70,8 @@ export default function RHFTypescriptModuleField({
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
         assistantImplementation={assistantImplementation}
-        maxHeight={vars.spacing._160}
+        maxHeight={maxHeight ?? vars.spacing._160}
+        className={codeInputClassName}
         ref={field.ref}
       />
       <FieldErrorContext

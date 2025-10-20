@@ -1,6 +1,6 @@
 import type { TypescriptLib } from "@superego/backend";
 import type { RefObject } from "react";
-import { PiSparkle } from "react-icons/pi";
+import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
 import { useImplementTypescriptFunction } from "../../../../business-logic/backend/hooks.js";
@@ -62,7 +62,7 @@ export default function ImplementWithAssistantButton({
         }}
         className={cs.ImplementWithAssistantButton.button}
       >
-        <PiSparkle />
+        <PiMagicWand />
       </IconButton>
       {isPending ? (
         <div className={cs.ImplementWithAssistantButton.implementingMask}>

@@ -39,6 +39,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   strict: true,
   allowUnusedLabels: false,
   allowUnreachableCode: false,
+  allowSyntheticDefaultImports: true,
   exactOptionalPropertyTypes: true,
   noFallthroughCasesInSwitch: true,
   noImplicitOverride: true,
@@ -48,6 +49,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   noUnusedLocals: true,
   noUnusedParameters: true,
   skipLibCheck: true,
+  jsx: monaco.languages.typescript.JsxEmit.React,
 });
 monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   schemas: [

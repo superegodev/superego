@@ -99,6 +99,7 @@ const commonVars = {
     _120: "30rem",
     _160: "40rem",
     _180: "45rem",
+    _200: "50rem",
   },
   borders: {
     radius: {

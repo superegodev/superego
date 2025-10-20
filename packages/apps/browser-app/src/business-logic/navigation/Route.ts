@@ -1,4 +1,5 @@
 import type {
+  AppId,
   CollectionId,
   ConversationId,
   DocumentId,
@@ -15,6 +16,8 @@ export enum RouteName {
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
   Document = "Document",
+  App = "App",
+  CreateApp = "CreateApp",
   GlobalSettings = "Settings",
 }
 
@@ -56,6 +59,14 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
+    }
+  | {
+      name: RouteName.CreateApp;
+      collectionIds: CollectionId[];
+    }
+  | {
+      name: RouteName.App;
+      appId: AppId;
     }
   | {
       name: RouteName.GlobalSettings;

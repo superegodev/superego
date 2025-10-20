@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import classnames from "../../../utils/classnames.js";
 import * as cs from "./CodeInput.css.js";
 import JsonEditor from "./json/JsonEditor.js";
 import type Props from "./Props.js";
@@ -18,6 +19,7 @@ export default function EagerCodeInput({
   fileName,
   assistantImplementation,
   maxHeight,
+  className,
   ref,
 }: Props) {
   const rootElementRef = useRef<HTMLDivElement>(null);
@@ -43,7 +45,7 @@ export default function EagerCodeInput({
       aria-invalid={isInvalid}
       aria-disabled={isDisabled}
       inert={isDisabled}
-      className={cs.EagerCodeInput.root}
+      className={classnames(cs.EagerCodeInput.root, className)}
       data-testid="code-input"
     >
       {language === "typescript" ? (

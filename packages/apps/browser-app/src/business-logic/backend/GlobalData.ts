@@ -1,4 +1,5 @@
 import type {
+  App,
   Collection,
   CollectionCategory,
   Connector,
@@ -10,6 +11,7 @@ import { createContext, useContext } from "react";
 interface GlobalData {
   collectionCategories: CollectionCategory[];
   collections: Collection[];
+  apps: App[];
   connectors: Connector[];
   globalSettings: GlobalSettings;
   developerPrompts: DeveloperPrompts;

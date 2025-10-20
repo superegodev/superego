@@ -10,6 +10,13 @@ export function toHref(route: Route): string {
   switch (route.name) {
     case RouteName.Ask:
       return "/";
+    case RouteName.CreateApp: {
+      const search = new URLSearchParams();
+      for (const collectionId of route.collectionIds) {
+        search.append("collectionId", collectionId);
+      }
+      return `/apps/new?collectionIds=${search}`;
+    }
     case RouteName.Conversations:
       return "/conversations";
     case RouteName.Conversation:
@@ -146,6 +153,15 @@ const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({ pathname: "/settings{/}?" }),
     toRoute: () => ({ name: RouteName.GlobalSettings }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/apps/new{/}?" }),
+    toRoute: (match) => ({
+      name: RouteName.CreateApp,
+      collectionIds: new URLSearchParams(match.search.input).getAll(
+        "collectionId",
+      ) as CollectionId[],
+    }),
   },
   {
     pattern: new URLPattern({ pathname: "/" }),

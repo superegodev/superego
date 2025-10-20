@@ -409,6 +409,18 @@
       "value": "Copied"
     }
   ],
+  "CreateApp.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "CreateApp.tsx_dtELK2": [
+    {
+      "type": 0,
+      "value": "Create App"
+    }
+  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -908,6 +920,30 @@
     {
       "type": 0,
       "value": "An error occurred rendering the chart."
+    }
+  ],
+  "EditingToolbar.tsx_1hhuuF": [
+    {
+      "type": 0,
+      "value": "App preview"
+    }
+  ],
+  "EditingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Redo"
+    }
+  ],
+  "EditingToolbar.tsx_EwYOYc": [
+    {
+      "type": 0,
+      "value": "View code"
+    }
+  ],
+  "EditingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Undo"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [
@@ -1618,6 +1654,12 @@
       "value": "Search"
     }
   ],
+  "RHFAppVersionFilesField.tsx_4rTNK7": [
+    {
+      "type": 0,
+      "value": "What do you want to build?"
+    }
+  ],
   "RHFContentSummaryGetterField.tsx_3X4zUZ": [
     {
       "type": 0,
@@ -2284,6 +2326,30 @@
     {
       "type": 0,
       "value": "Set remote"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_r+ksJu": [
+    {
+      "type": 0,
+      "value": "Create app"
     }
   ],
   "SpeakButton.tsx_FUvUuG": [
