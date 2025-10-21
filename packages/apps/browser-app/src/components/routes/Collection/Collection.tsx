@@ -34,7 +34,7 @@ import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import AppRenderer from "../../widgets/AppRenderer/AppRenderer.jsx";
+import AppRenderer from "../../widgets/AppRenderer/AppRenderer.js";
 import DocumentsTable from "../../widgets/DocumentsTable/DocumentsTable.js";
 import * as cs from "./Collection.css.js";
 import DownSyncInfoModal from "./DownSyncInfoModal.js";

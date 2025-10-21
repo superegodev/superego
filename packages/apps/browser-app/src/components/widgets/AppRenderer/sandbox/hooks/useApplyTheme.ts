@@ -1,25 +1,27 @@
 import type { Theme } from "@superego/backend";
 import { useEffect, useState } from "react";
-import resolveTheme from "../../utils/resolveTheme.js";
-import { useGlobalData } from "../backend/GlobalData.js";
+import applyTheme from "../../../../../utils/applyTheme.js";
+import resolveTheme from "../../../../../utils/resolveTheme.js";
 
-export default function useTheme(): Exclude<Theme, typeof Theme.Auto> {
-  const globalData = useGlobalData();
-  const [theme, setTheme] = useState(
-    resolveTheme(globalData.globalSettings.appearance.theme),
-  );
+// Copy of the BrowserApp useApplyTheme that allows using it without calling
+// useGlobalData.
+export default function useApplyTheme(settingsTheme: Theme) {
+  const [theme, setTheme] = useState(resolveTheme(settingsTheme));
 
   // Update theme when color scheme changes. (The user might have set their OS
   // to change theme based on time of day.)
   useEffect(() => {
     const prefersLightMQL = window.matchMedia("(prefers-color-scheme: light)");
-    const onPrefersLightMQLChange = () =>
-      setTheme(resolveTheme(globalData.globalSettings.appearance.theme));
+    const onPrefersLightMQLChange = () => setTheme(resolveTheme(settingsTheme));
     prefersLightMQL.addEventListener("change", onPrefersLightMQLChange);
     return () => {
       prefersLightMQL.removeEventListener("change", onPrefersLightMQLChange);
     };
-  }, [globalData.globalSettings.appearance.theme]);
+  }, [settingsTheme]);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   return theme;
 }

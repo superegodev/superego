@@ -54,18 +54,17 @@ function buildReplacement(
     return "";
   }
 
-  const dependencyKey = toDependencyKey(moduleSpecifier);
   const statements: string[] = [];
 
   if (parsed.defaultImport) {
     statements.push(
-      `${indent}const ${parsed.defaultImport} = ${dependenciesGlobalVar}["${dependencyKey}"];`,
+      `${indent}const ${parsed.defaultImport} = ${dependenciesGlobalVar}["${moduleSpecifier}"];`,
     );
   }
 
   if (parsed.namespaceImport) {
     statements.push(
-      `${indent}const ${parsed.namespaceImport} = ${dependenciesGlobalVar}["${dependencyKey}"];`,
+      `${indent}const ${parsed.namespaceImport} = ${dependenciesGlobalVar}["${moduleSpecifier}"];`,
     );
   }
 
@@ -76,7 +75,7 @@ function buildReplacement(
       )
       .join(", ");
     statements.push(
-      `${indent}const { ${specifiers} } = ${dependenciesGlobalVar}["${dependencyKey}"];`,
+      `${indent}const { ${specifiers} } = ${dependenciesGlobalVar}["${moduleSpecifier}"];`,
     );
   }
 
@@ -184,22 +183,4 @@ function parseImportClause(clause: string): ParsedImportClause {
   }
 
   return result;
-}
-
-function toDependencyKey(moduleSpecifier: string): string {
-  const sanitizedParts = moduleSpecifier
-    .replace(/^@/, "")
-    .split(/[/\\]/)
-    .flatMap((part) => part.split(/[^A-Za-z0-9_$]+/))
-    .filter(Boolean);
-
-  if (sanitizedParts.length === 0) {
-    return moduleSpecifier;
-  }
-
-  const pascalCase = sanitizedParts
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
-
-  return pascalCase || moduleSpecifier;
 }

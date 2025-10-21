@@ -13,7 +13,16 @@ const testCases: {
       import Lib from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
+    `,
+  },
+  {
+    name: "default import from scoped package",
+    source: `
+      import Lib from "@scope/lib";
+    `,
+    expectedTranspiled: `
+      const Lib = ${dependenciesGlobalVar}["@scope/lib"];
     `,
   },
   {
@@ -22,7 +31,7 @@ const testCases: {
       import * as Lib from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -31,7 +40,7 @@ const testCases: {
       import { useState } from "lib";
     `,
     expectedTranspiled: `
-      const { useState } = ${dependenciesGlobalVar}["Lib"];
+      const { useState } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -40,8 +49,8 @@ const testCases: {
       import Lib, { useState } from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
-      const { useState } = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
+      const { useState } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -50,8 +59,8 @@ const testCases: {
       import Lib, * as NS from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
-      const NS = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
+      const NS = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -60,7 +69,7 @@ const testCases: {
       import { useState, useEffect } from "lib";
     `,
     expectedTranspiled: `
-      const { useState, useEffect } = ${dependenciesGlobalVar}["Lib"];
+      const { useState, useEffect } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -69,7 +78,7 @@ const testCases: {
       import { useEffect as effect } from "lib";
     `,
     expectedTranspiled: `
-      const { useEffect: effect } = ${dependenciesGlobalVar}["Lib"];
+      const { useEffect: effect } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -81,8 +90,8 @@ const testCases: {
       } from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
-      const { useState, useEffect } = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
+      const { useState, useEffect } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -94,7 +103,7 @@ const testCases: {
       } from "lib";
     `,
     expectedTranspiled: `
-      const { useState, useEffect: effect } = ${dependenciesGlobalVar}["Lib"];
+      const { useState, useEffect: effect } = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -103,7 +112,7 @@ const testCases: {
       import { default as Lib } from "lib";
     `,
     expectedTranspiled: `
-      const Lib = ${dependenciesGlobalVar}["Lib"];
+      const Lib = ${dependenciesGlobalVar}["lib"];
     `,
   },
   {
@@ -113,8 +122,8 @@ const testCases: {
       import Lib2 from "lib2";
     `,
     expectedTranspiled: `
-      const Lib1 = ${dependenciesGlobalVar}["Lib1"];
-      const Lib2 = ${dependenciesGlobalVar}["Lib2"];
+      const Lib1 = ${dependenciesGlobalVar}["lib1"];
+      const Lib2 = ${dependenciesGlobalVar}["lib2"];
     `,
   },
 ];

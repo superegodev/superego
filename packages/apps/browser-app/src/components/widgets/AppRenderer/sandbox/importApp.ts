@@ -1,7 +1,8 @@
+import { memoize } from "es-toolkit";
 import type AppComponent from "../AppComponent.js";
 import transpileImports from "./transpileImports.js";
 
-export default async function importApp(
+export default memoize(async function importApp(
   appCode: string,
 ): Promise<AppComponent> {
   const transpiledAppCode = transpileImports(appCode);
@@ -12,4 +13,4 @@ export default async function importApp(
     /* @vite-ignore */ moduleBlobUrl
   ).finally(() => URL.revokeObjectURL(moduleBlobUrl));
   return App;
-}
+});

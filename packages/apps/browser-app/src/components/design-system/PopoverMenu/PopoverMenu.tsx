@@ -6,7 +6,7 @@ import {
 } from "react";
 import { MenuTrigger } from "react-aria-components";
 import Popover from "../Popover/Popover.js";
-import Menu from "./Menu.jsx";
+import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import Trigger from "./Trigger.js";
 

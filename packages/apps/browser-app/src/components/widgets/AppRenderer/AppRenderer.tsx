@@ -2,7 +2,7 @@ import type { App, Document } from "@superego/backend";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
-import Sandbox from "./Sandbox.jsx";
+import Sandbox from "./Sandbox.js";
 
 interface Props {
   app: App;

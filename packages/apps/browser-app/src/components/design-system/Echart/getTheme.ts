@@ -208,13 +208,12 @@ function buildTheme(
   };
 }
 
-const styles = getComputedStyle(document.body);
-
 const LIGHT_THEME_NAME = "superego-light";
 const DARK_THEME_NAME = "superego-dark";
-echarts.registerTheme(LIGHT_THEME_NAME, buildTheme(Theme.Light, styles));
-echarts.registerTheme(DARK_THEME_NAME, buildTheme(Theme.Dark, styles));
 
 export default function getTheme(theme: Theme.Light | Theme.Dark): string {
+  const styles = getComputedStyle(document.body);
+  echarts.registerTheme(LIGHT_THEME_NAME, buildTheme(Theme.Light, styles));
+  echarts.registerTheme(DARK_THEME_NAME, buildTheme(Theme.Dark, styles));
   return theme === Theme.Dark ? DARK_THEME_NAME : LIGHT_THEME_NAME;
 }

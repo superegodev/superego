@@ -1,3 +1,4 @@
+import type { GlobalData } from "../../../business-logic/backend/GlobalData.js";
 import type AppComponentProps from "./AppComponentProps.js";
 
 export enum MessageType {
@@ -5,6 +6,7 @@ export enum MessageType {
   RenderApp = "RenderApp",
   // Sent by sandbox:
   SandboxReady = "SandboxReady",
+  HeightChanged = "HeightChanged",
 }
 
 interface BaseMessage<Type extends MessageType, Payload> {
@@ -21,6 +23,7 @@ export type RenderAppMessage = BaseMessage<
   {
     appCode: string;
     appProps: AppComponentProps;
+    globalData: GlobalData;
   }
 >;
 export function isRenderAppMessage(
@@ -47,5 +50,23 @@ export function isSandboxReadyMessage(
     typeof message === "object" &&
     "type" in message &&
     message.type === MessageType.SandboxReady
+  );
+}
+
+export type HeightChangedMessage = BaseMessage<
+  MessageType.HeightChanged,
+  {
+    /** Height in px. */
+    height: number;
+  }
+>;
+export function isHeightChangedMessage(
+  message: unknown,
+): message is HeightChangedMessage {
+  return (
+    message !== null &&
+    typeof message === "object" &&
+    "type" in message &&
+    message.type === MessageType.HeightChanged
   );
 }
