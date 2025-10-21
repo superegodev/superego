@@ -1,13 +1,7 @@
-import type { GlobalData } from "../../../business-logic/backend/GlobalData.js";
-import type AppComponentProps from "./AppComponentProps.js";
-
-export enum MessageType {
-  // Sent by host:
-  RenderApp = "RenderApp",
-  // Sent by sandbox:
-  SandboxReady = "SandboxReady",
-  HeightChanged = "HeightChanged",
-}
+import type { Theme } from "@superego/backend";
+import type AppComponentProps from "../AppComponentProps.js";
+import isMessageWithType from "./isMessageWithType.js";
+import MessageType from "./MessageType.js";
 
 interface BaseMessage<Type extends MessageType, Payload> {
   type: Type;
@@ -23,18 +17,16 @@ export type RenderAppMessage = BaseMessage<
   {
     appCode: string;
     appProps: AppComponentProps;
-    globalData: GlobalData;
+    settings: {
+      locale: string;
+      theme: Theme.Light | Theme.Dark;
+    };
   }
 >;
 export function isRenderAppMessage(
   message: unknown,
 ): message is RenderAppMessage {
-  return (
-    message !== null &&
-    typeof message === "object" &&
-    "type" in message &&
-    message.type === MessageType.RenderApp
-  );
+  return isMessageWithType(message, MessageType.RenderApp);
 }
 
 /////////////////////
@@ -45,12 +37,7 @@ export type SandboxReadyMessage = BaseMessage<MessageType.SandboxReady, null>;
 export function isSandboxReadyMessage(
   message: unknown,
 ): message is SandboxReadyMessage {
-  return (
-    message !== null &&
-    typeof message === "object" &&
-    "type" in message &&
-    message.type === MessageType.SandboxReady
-  );
+  return isMessageWithType(message, MessageType.SandboxReady);
 }
 
 export type HeightChangedMessage = BaseMessage<
@@ -63,10 +50,5 @@ export type HeightChangedMessage = BaseMessage<
 export function isHeightChangedMessage(
   message: unknown,
 ): message is HeightChangedMessage {
-  return (
-    message !== null &&
-    typeof message === "object" &&
-    "type" in message &&
-    message.type === MessageType.HeightChanged
-  );
+  return isMessageWithType(message, MessageType.HeightChanged);
 }

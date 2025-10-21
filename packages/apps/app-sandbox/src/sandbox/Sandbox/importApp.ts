@@ -1,10 +1,16 @@
-import { memoize } from "es-toolkit";
-import type AppComponent from "../AppComponent.js";
+import type AppComponent from "../../AppComponent.js";
+import registerDependencies from "./registerDependencies.js";
 import transpileImports from "./transpileImports.js";
 
-export default memoize(async function importApp(
+const importCache = new Map<string, AppComponent>();
+export default async function importApp(
   appCode: string,
 ): Promise<AppComponent> {
+  const cachedApp = importCache.get(appCode);
+  if (cachedApp) {
+    return cachedApp;
+  }
+  registerDependencies();
   const transpiledAppCode = transpileImports(appCode);
   const moduleBlobUrl = URL.createObjectURL(
     new Blob([transpiledAppCode], { type: "text/javascript" }),
@@ -12,5 +18,6 @@ export default memoize(async function importApp(
   const { default: App } = await import(
     /* @vite-ignore */ moduleBlobUrl
   ).finally(() => URL.revokeObjectURL(moduleBlobUrl));
+  importCache.set(appCode, App);
   return App;
-});
+}

@@ -5311,6 +5311,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@superego/app-sandbox@workspace:^, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
+  version: 0.0.0-use.local
+  resolution: "@superego/app-sandbox@workspace:packages/apps/app-sandbox"
+  dependencies:
+    "@superego/backend": "workspace:*"
+    "@types/react": "npm:^19.2.2"
+    "@types/react-dom": "npm:^19.2.2"
+    "@vanilla-extract/css": "npm:^1.17.4"
+    "@vitest/browser": "npm:^3.2.4"
+    echarts: "npm:^6.0.0"
+    playwright: "npm:^1.56.1"
+    react: "npm:^19.2.0"
+    react-aria: "npm:^3.44.0"
+    react-aria-components: "npm:^1.13.0"
+    react-dom: "npm:^19.2.0"
+    react-icons: "npm:^5.5.0"
+    react-intl: "npm:^7.1.14"
+    react-stately: "npm:^3.42.0"
+    typescript: "npm:^5.9.3"
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "@superego/assistants-e2e-tests@workspace:packages/tests/assistants-e2e-tests":
   version: 0.0.0-use.local
   resolution: "@superego/assistants-e2e-tests@workspace:packages/tests/assistants-e2e-tests"
@@ -5374,6 +5397,7 @@ __metadata:
     "@hookform/resolvers": "npm:^5.2.2"
     "@react-aria/optimize-locales-plugin": "npm:^1.1.5"
     "@standard-schema/spec": "npm:^1.0.0"
+    "@superego/app-sandbox": "workspace:^"
     "@superego/backend": "workspace:*"
     "@superego/connectors": "workspace:*"
     "@superego/demo-data-repositories": "workspace:^"

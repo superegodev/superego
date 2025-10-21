@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-export const Sandbox = {
-  root: style({
+export const AppRenderer = {
+  sandbox: style({
     border: 0,
   }),
 };

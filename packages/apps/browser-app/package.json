@@ -25,6 +25,7 @@
   "devDependencies": {
     "@fast-check/vitest": "^0.2.2",
     "@formatjs/cli": "^6.7.4",
+    "@superego/app-sandbox": "workspace:^",
     "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",

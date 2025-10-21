@@ -1,13 +1,19 @@
+import { Sandbox } from "@superego/app-sandbox/host";
 import type { App, Document } from "@superego/backend";
+import { useMemo } from "react";
+import { useLocale } from "react-aria-components";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
-import Sandbox from "./Sandbox.js";
+import useTheme from "../../../business-logic/theme/useTheme.js";
+import * as cs from "./AppRenderer.css.js";
 
 interface Props {
   app: App;
 }
 export default function AppRenderer({ app }: Props) {
+  const { locale } = useLocale();
+  const theme = useTheme();
   const { collections } = useGlobalData();
 
   const targetCollections = collections.filter((collection) =>
@@ -17,6 +23,8 @@ export default function AppRenderer({ app }: Props) {
         collection.latestVersion.id === targetCollection.versionId,
     ),
   );
+
+  const settings = useMemo(() => ({ locale, theme }), [locale, theme]);
 
   if (targetCollections.length !== app.latestVersion.targetCollections.length) {
     // TODO: warn if app references a non-existing or out of date collection
@@ -31,6 +39,8 @@ export default function AppRenderer({ app }: Props) {
     >
       {(...documentsLists) => (
         <Sandbox
+          // TODO: pass from outside? See when building electron.
+          iframeSrc="/app-sandbox.html"
           appName={app.name}
           appCode={app.latestVersion.files["/main.tsx"].compiled}
           appProps={{
@@ -44,6 +54,8 @@ export default function AppRenderer({ app }: Props) {
               })),
             })),
           }}
+          settings={settings}
+          className={cs.AppRenderer.sandbox}
         />
       )}
     </DataLoader>

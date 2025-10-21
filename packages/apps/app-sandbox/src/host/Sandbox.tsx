@@ -1,21 +1,32 @@
+import type { Theme } from "@superego/backend";
 import { useEffect, useRef, useState } from "react";
-import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import type AppComponentProps from "./AppComponentProps.js";
-import * as cs from "./AppRenderer.css.js";
+import type AppComponentProps from "../AppComponentProps.js";
 import {
   isHeightChangedMessage,
   isSandboxReadyMessage,
-  MessageType,
   type RenderAppMessage,
-} from "./ipc.js";
+} from "../ipc/ipc.js";
+import MessageType from "../ipc/MessageType.js";
 
 interface Props {
+  iframeSrc: string;
   appName: string;
   appCode: string;
   appProps: AppComponentProps;
+  settings: {
+    locale: string;
+    theme: Theme;
+  };
+  className?: string | undefined;
 }
-export default function Sandbox({ appName, appCode, appProps }: Props) {
-  const globalData = useGlobalData();
+export default function Sandbox({
+  iframeSrc,
+  appName,
+  appCode,
+  appProps,
+  settings: { locale, theme },
+  className,
+}: Props) {
   const [sandboxReady, setSandboxReady] = useState(false);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -40,21 +51,20 @@ export default function Sandbox({ appName, appCode, appProps }: Props) {
       iframeRef.current.contentWindow?.postMessage(
         {
           type: MessageType.RenderApp,
-          payload: { appCode, appProps, globalData },
+          payload: { appCode, appProps, settings: { locale, theme } },
         } satisfies RenderAppMessage,
         new URL(iframeRef.current.src, window.location.origin).origin,
       );
     }
-  }, [sandboxReady, appCode, appProps, globalData]);
+  }, [sandboxReady, appCode, appProps, locale, theme]);
 
   return (
     <iframe
       key={appCode}
       ref={iframeRef}
       title={appName}
-      // TODO: pass from outside?
-      src="/app-sandbox.html"
-      className={cs.Sandbox.root}
+      src={iframeSrc}
+      className={className}
     />
   );
 }

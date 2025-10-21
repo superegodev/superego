@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { vars } from "../../../../themes.css.js";
+import { vars } from "../themes.css.js";
 
 globalStyle("html", {
   overflow: "hidden",

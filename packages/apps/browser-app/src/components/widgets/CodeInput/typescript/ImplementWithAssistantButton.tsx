@@ -7,8 +7,8 @@ import { useImplementTypescriptFunction } from "../../../../business-logic/backe
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
 import type monaco from "../../../../monaco.js";
-import IconButton from "../../IconButton/IconButton.js";
-import Skeleton from "../../Skeleton/Skeleton.js";
+import IconButton from "../../../design-system/IconButton/IconButton.js";
+import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
 import * as cs from "./TypescriptEditor.css.js";
 
 interface Props {

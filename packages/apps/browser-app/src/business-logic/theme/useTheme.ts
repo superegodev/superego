@@ -1,7 +1,8 @@
-import type { Theme } from "@superego/backend";
+import { Theme } from "@superego/backend";
 import { useEffect, useState } from "react";
-import resolveTheme from "../../utils/resolveTheme.js";
 import { useGlobalData } from "../backend/GlobalData.js";
+
+const prefersLightMediaQuery = "(prefers-color-scheme: light)";
 
 export default function useTheme(): Exclude<Theme, typeof Theme.Auto> {
   const globalData = useGlobalData();
@@ -12,14 +13,22 @@ export default function useTheme(): Exclude<Theme, typeof Theme.Auto> {
   // Update theme when color scheme changes. (The user might have set their OS
   // to change theme based on time of day.)
   useEffect(() => {
-    const prefersLightMQL = window.matchMedia("(prefers-color-scheme: light)");
-    const onPrefersLightMQLChange = () =>
+    const prefersLight = window.matchMedia(prefersLightMediaQuery);
+    const onPrefersLightChange = () =>
       setTheme(resolveTheme(globalData.globalSettings.appearance.theme));
-    prefersLightMQL.addEventListener("change", onPrefersLightMQLChange);
+    prefersLight.addEventListener("change", onPrefersLightChange);
     return () => {
-      prefersLightMQL.removeEventListener("change", onPrefersLightMQLChange);
+      prefersLight.removeEventListener("change", onPrefersLightChange);
     };
   }, [globalData.globalSettings.appearance.theme]);
 
   return theme;
+}
+
+function resolveTheme(theme: Theme): Theme.Light | Theme.Dark {
+  return theme === Theme.Auto
+    ? window.matchMedia(prefersLightMediaQuery).matches
+      ? Theme.Light
+      : Theme.Dark
+    : theme;
 }

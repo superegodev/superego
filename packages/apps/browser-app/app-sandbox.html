@@ -6,9 +6,9 @@
     <title>Superego Browser App Dev Environment - App Sandbox</title>
   </head>
   <body>
-    <script
-      type="module"
-      src="./src/components/widgets/AppRenderer/sandbox/main.tsx"
-    ></script>
+    <script type="module">
+      import { renderSandbox } from "@superego/app-sandbox/sandbox";
+      renderSandbox();
+    </script>
   </body>
 </html>
