@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import importApp from "./importApp.js";
 import "./Sandbox.css.js";
-import type AppComponent from "../../common-types/AppComponent.js";
-import type AppComponentProps from "../../common-types/AppComponentProps.js";
+import type AppComponent from "../../types/AppComponent.js";
+import type AppComponentProps from "../../types/AppComponentProps.js";
 import useApplyTheme from "../business-logic/theme/useApplyTheme.js";
 
 interface Props {

@@ -1,6 +1,6 @@
 import { Theme } from "@superego/backend";
 import * as echarts from "echarts";
-import { colors, vars } from "../../../themes.css.js";
+import { colors, vars } from "../../themes.css.js";
 
 const seriesColors = [
   colors.blues._4,

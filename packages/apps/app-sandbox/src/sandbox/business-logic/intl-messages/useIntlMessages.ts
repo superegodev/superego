@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import type IntlMessages from "../../../common-types/IntlMessages.js";
+import type IntlMessages from "../../../types/IntlMessages.js";
 import IntlMessagesContext from "./IntlMessagesContext.js";
 
 export default function useIntlMessages(

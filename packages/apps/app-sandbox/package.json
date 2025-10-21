@@ -8,6 +8,9 @@
     },
     "./sandbox": {
       "import": "./src/sandbox/index.ts"
+    },
+    "./types": {
+      "import": "./src/types/index.ts"
     }
   },
   "private": true,

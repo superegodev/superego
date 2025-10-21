@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import type Settings from "../../../common-types/Settings.js";
+import type Settings from "../../../types/Settings.js";
 import SettingsContext from "./SettingsContext.js";
 
 export default function useSettings(): Settings {

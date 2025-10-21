@@ -2851,6 +2851,12 @@
       "value": "Last sync failed"
     }
   ],
+  "getIntlMessages.ts_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the chart."
+    }
+  ],
   "typescriptModule.ts_MZNYNj": [
     {
       "type": 0,

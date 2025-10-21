@@ -977,6 +977,9 @@
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Last sync failed"
   },
+  "getIntlMessages.ts_1nnRAQ": {
+    "defaultMessage": "An error occurred rendering the chart."
+  },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"
   },

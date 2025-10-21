@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import type AppComponentProps from "../common-types/AppComponentProps.js";
-import type IntlMessages from "../common-types/IntlMessages.js";
-import type Settings from "../common-types/Settings.js";
 import {
   isHeightChangedMessage,
   isSandboxReadyMessage,
   type RenderAppMessage,
 } from "../ipc/ipc.js";
 import MessageType from "../ipc/MessageType.js";
+import type AppComponentProps from "../types/AppComponentProps.js";
+import type IntlMessages from "../types/IntlMessages.js";
+import type Settings from "../types/Settings.js";
 
 interface Props {
   iframeSrc: string;

@@ -1,18 +1,20 @@
 import { Sandbox } from "@superego/app-sandbox/host";
+import type { IntlMessages, Settings } from "@superego/app-sandbox/types";
 import type { App, Document } from "@superego/backend";
 import { useMemo } from "react";
-import { useLocale } from "react-aria-components";
+import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import * as cs from "./AppRenderer.css.js";
+import getIntlMessages from "./getIntlMessages.js";
 
 interface Props {
   app: App;
 }
 export default function AppRenderer({ app }: Props) {
-  const { locale } = useLocale();
+  const intl = useIntl();
   const theme = useTheme();
   const { collections } = useGlobalData();
 
@@ -24,7 +26,11 @@ export default function AppRenderer({ app }: Props) {
     ),
   );
 
-  const settings = useMemo(() => ({ locale, theme }), [locale, theme]);
+  const settings: Settings = useMemo(() => ({ theme }), [theme]);
+  const intlMessages: IntlMessages = useMemo(
+    () => getIntlMessages(intl),
+    [intl],
+  );
 
   if (targetCollections.length !== app.latestVersion.targetCollections.length) {
     // TODO: warn if app references a non-existing or out of date collection
@@ -55,6 +61,7 @@ export default function AppRenderer({ app }: Props) {
             })),
           }}
           settings={settings}
+          intlMessages={intlMessages}
           className={cs.AppRenderer.sandbox}
         />
       )}
