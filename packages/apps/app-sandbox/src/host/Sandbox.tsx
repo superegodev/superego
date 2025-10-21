@@ -62,8 +62,9 @@ export default function Sandbox({
     <iframe
       key={appCode}
       ref={iframeRef}
-      title={appName}
       src={iframeSrc}
+      sandbox="allow-scripts allow-same-origin"
+      title={appName}
       className={className}
     />
   );

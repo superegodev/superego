@@ -105,7 +105,7 @@ function renderPanelHeaderAction(
 
   if ("menuItems" in action) {
     return (
-      <PopoverMenu key={action.label}>
+      <PopoverMenu key={action.label} placement="bottom right">
         <PopoverMenu.Trigger>
           <IconButton
             label={action.label}
