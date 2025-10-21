@@ -5,13 +5,13 @@ import { type Control, useController } from "react-hook-form";
 import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
-import CodeInput from "../../design-system/CodeInput/CodeInput.js";
-import type IncludedGlobalUtils from "../../design-system/CodeInput/typescript/IncludedGlobalUtils.js";
 import {
   Description,
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
+import CodeInput from "../CodeInput/CodeInput.js";
+import type IncludedGlobalUtils from "../CodeInput/typescript/IncludedGlobalUtils.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
 interface Props {

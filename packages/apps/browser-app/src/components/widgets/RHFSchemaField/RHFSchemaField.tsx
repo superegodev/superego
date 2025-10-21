@@ -5,13 +5,13 @@ import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
-import CodeInput from "../../design-system/CodeInput/CodeInput.js";
 import {
   Description,
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
 import InlineCode from "../../design-system/InlineCode/InlineCode.js";
+import CodeInput from "../CodeInput/CodeInput.js";
 import * as cs from "./RHFSchemaField.css.js";
 
 interface Props {
