@@ -1,5 +1,5 @@
 import React from "react";
-import Echart from "../../sandbox-components/Echart/Echart.js";
+import Echart from "../components/Echart/Echart.js";
 
 export const dependenciesGlobalVar = "__dependencies__";
 

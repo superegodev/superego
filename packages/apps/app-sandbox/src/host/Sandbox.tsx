@@ -1,6 +1,7 @@
-import type { Theme } from "@superego/backend";
 import { useEffect, useRef, useState } from "react";
-import type AppComponentProps from "../AppComponentProps.js";
+import type AppComponentProps from "../common-types/AppComponentProps.js";
+import type IntlMessages from "../common-types/IntlMessages.js";
+import type Settings from "../common-types/Settings.js";
 import {
   isHeightChangedMessage,
   isSandboxReadyMessage,
@@ -13,10 +14,8 @@ interface Props {
   appName: string;
   appCode: string;
   appProps: AppComponentProps;
-  settings: {
-    locale: string;
-    theme: Theme;
-  };
+  settings: Settings;
+  intlMessages: IntlMessages;
   className?: string | undefined;
 }
 export default function Sandbox({
@@ -24,7 +23,8 @@ export default function Sandbox({
   appName,
   appCode,
   appProps,
-  settings: { locale, theme },
+  settings,
+  intlMessages,
   className,
 }: Props) {
   const [sandboxReady, setSandboxReady] = useState(false);
@@ -51,12 +51,12 @@ export default function Sandbox({
       iframeRef.current.contentWindow?.postMessage(
         {
           type: MessageType.RenderApp,
-          payload: { appCode, appProps, settings: { locale, theme } },
+          payload: { appCode, appProps, settings, intlMessages },
         } satisfies RenderAppMessage,
         new URL(iframeRef.current.src, window.location.origin).origin,
       );
     }
-  }, [sandboxReady, appCode, appProps, locale, theme]);
+  }, [sandboxReady, appCode, appProps, settings, intlMessages]);
 
   return (
     <iframe

@@ -5320,6 +5320,7 @@ __metadata:
     "@types/react-dom": "npm:^19.2.2"
     "@vanilla-extract/css": "npm:^1.17.4"
     "@vitest/browser": "npm:^3.2.4"
+    clsx: "npm:^2.1.1"
     echarts: "npm:^6.0.0"
     playwright: "npm:^1.56.1"
     react: "npm:^19.2.0"

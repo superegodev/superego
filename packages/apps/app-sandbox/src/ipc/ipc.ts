@@ -1,5 +1,6 @@
-import type { Theme } from "@superego/backend";
-import type AppComponentProps from "../AppComponentProps.js";
+import type AppComponentProps from "../common-types/AppComponentProps.js";
+import type IntlMessages from "../common-types/IntlMessages.js";
+import type Settings from "../common-types/Settings.js";
 import isMessageWithType from "./isMessageWithType.js";
 import MessageType from "./MessageType.js";
 
@@ -17,10 +18,8 @@ export type RenderAppMessage = BaseMessage<
   {
     appCode: string;
     appProps: AppComponentProps;
-    settings: {
-      locale: string;
-      theme: Theme.Light | Theme.Dark;
-    };
+    settings: Settings;
+    intlMessages: IntlMessages;
   }
 >;
 export function isRenderAppMessage(

@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import type AppComponent from "../../AppComponent.js";
-import type { RenderAppMessage } from "../../ipc/ipc.js";
-import useApplyTheme from "../hooks/useApplyTheme.js";
 import importApp from "./importApp.js";
 import "./Sandbox.css.js";
+import type AppComponent from "../../common-types/AppComponent.js";
+import type AppComponentProps from "../../common-types/AppComponentProps.js";
+import useApplyTheme from "../business-logic/theme/useApplyTheme.js";
 
-export default function Sandbox({
-  appCode,
-  appProps,
-  settings,
-}: RenderAppMessage["payload"]) {
-  useApplyTheme(settings.theme);
+interface Props {
+  appCode: string;
+  appProps: AppComponentProps;
+}
+export default function Sandbox({ appCode, appProps }: Props) {
+  useApplyTheme();
+
   const [App, setApp] = useState<AppComponent | null>(null);
 
   useEffect(() => {

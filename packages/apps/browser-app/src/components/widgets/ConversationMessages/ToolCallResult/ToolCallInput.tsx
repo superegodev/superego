@@ -20,7 +20,7 @@ export default function ToolCallInput({ toolCall }: Props) {
   ) : (
     <CodeBlock
       language="json"
-      code={JSON.stringify(toolCall.input, null, 2)}
+      code={JSON.stringify(toolCall.input)}
       showCopyButton={true}
     />
   );

@@ -1,4 +1,4 @@
-import type AppComponent from "../../AppComponent.js";
+import type AppComponent from "../../common-types/AppComponent.js";
 import registerDependencies from "./registerDependencies.js";
 import transpileImports from "./transpileImports.js";
 

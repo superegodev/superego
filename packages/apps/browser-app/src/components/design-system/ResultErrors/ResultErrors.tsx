@@ -16,7 +16,7 @@ export default function ResultErrors({ errors }: Props) {
       <Disclosure title={intl.formatMessage({ defaultMessage: "Details" })}>
         <CodeBlock
           language="json"
-          code={JSON.stringify(error.details, null, 2)}
+          code={JSON.stringify(error.details)}
           showCopyButton={true}
         />
       </Disclosure>
