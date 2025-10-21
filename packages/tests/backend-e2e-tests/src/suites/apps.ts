@@ -114,7 +114,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             targetCollections: [
               {
                 id: createCollectionResult.data.id,
-                version: createCollectionResult.data.latestVersion.id,
+                versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
             files,
@@ -342,7 +342,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             targetCollections: [
               {
                 id: createCollectionResult.data.id,
-                version: createCollectionResult.data.latestVersion.id,
+                versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
             files: updatedFiles,

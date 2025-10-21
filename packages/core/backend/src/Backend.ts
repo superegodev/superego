@@ -291,6 +291,17 @@ export default interface Backend {
     list(
       collectionId: CollectionId,
     ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;
+    list(
+      collectionId: CollectionId,
+      lite: false,
+    ): ResultPromise<Document[], CollectionNotFound | UnexpectedError>;
+    list(
+      collectionId: CollectionId,
+      lite?: false,
+    ): ResultPromise<
+      (LiteDocument | Document)[],
+      CollectionNotFound | UnexpectedError
+    >;
 
     get(
       collectionId: CollectionId,

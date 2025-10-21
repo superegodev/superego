@@ -125,7 +125,7 @@ Generates the definition for a collection.
               },
               icon: {
                 description:
-                  "An emoji for the collection. Should be meaningful and representative.",
+                  "A single emoji for the collection (can be a ZWJ sequence). Should be meaningful and representative.",
                 type: ["string", "null"],
               },
               description: {

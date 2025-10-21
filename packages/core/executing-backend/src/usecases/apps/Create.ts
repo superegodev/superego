@@ -59,7 +59,7 @@ export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
       assertCollectionVersionExists(collectionId, latestCollectionVersion);
       targetCollections.push({
         id: collectionId,
-        version: latestCollectionVersion.id,
+        versionId: latestCollectionVersion.id,
       });
     }
 

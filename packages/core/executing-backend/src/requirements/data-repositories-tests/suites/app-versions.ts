@@ -14,7 +14,7 @@ const appVersionFiles: AppVersionEntity["files"] = {
 const targetCollections: AppVersionEntity["targetCollections"] = [
   {
     id: Id.generate.collection(),
-    version: Id.generate.collectionVersion(),
+    versionId: Id.generate.collectionVersion(),
   },
 ];
 

@@ -30,9 +30,11 @@ import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";
 import Shell from "../../design-system/Shell/Shell.js";
+import AppRenderer from "../../widgets/AppRenderer/AppRenderer.jsx";
 import DocumentsTable from "../../widgets/DocumentsTable/DocumentsTable.js";
 import * as cs from "./Collection.css.js";
 import DownSyncInfoModal from "./DownSyncInfoModal.js";
@@ -57,6 +59,7 @@ export default function Collection(props: Props) {
         ? null
         : props.appId
       : (collection?.settings.defaultCollectionViewAppId ?? null);
+  const app = appId ? AppUtils.findApp(apps, appId) : null;
 
   const [showTimestamps, setShowTimestamps] = useState(false);
 
@@ -94,7 +97,7 @@ export default function Collection(props: Props) {
           defaultMessage: "Collection actions",
         })}
         actions={[
-          !appId && screenSize > ScreenSize.Medium
+          !app && screenSize > ScreenSize.Medium
             ? {
                 label: intl.formatMessage({
                   defaultMessage: "Show timestamps",
@@ -103,18 +106,18 @@ export default function Collection(props: Props) {
                 onPress: () => setShowTimestamps(!showTimestamps),
               }
             : null,
-          appId
+          app
             ? {
                 label: intl.formatMessage({
                   defaultMessage: "Edit app",
                 }),
                 icon: <PiCode />,
-                to: { name: RouteName.EditApp, appId },
+                to: { name: RouteName.EditApp, appId: app.id },
               }
             : null,
           (
-            appId
-              ? appId !== collection.settings.defaultCollectionViewAppId
+            app
+              ? app.id !== collection.settings.defaultCollectionViewAppId
               : collection.settings.defaultCollectionViewAppId !== null
           )
             ? {
@@ -128,7 +131,7 @@ export default function Collection(props: Props) {
           PanelHeaderActionSeparator,
           {
             label: intl.formatMessage({ defaultMessage: "Table view" }),
-            icon: appId ? <PiTable /> : <PiTableFill />,
+            icon: app ? <PiTable /> : <PiTableFill />,
             to: {
               name: RouteName.Collection,
               collectionId,
@@ -137,19 +140,21 @@ export default function Collection(props: Props) {
           },
           {
             label: intl.formatMessage({ defaultMessage: "Apps" }),
-            icon: appId ? <PiShapesFill /> : <PiShapes />,
+            icon: app ? <PiShapesFill /> : <PiShapes />,
             menuItems: [
-              ...CollectionUtils.getApps(collection, apps).map((app) => ({
-                key: app.id,
-                label: app.name,
-                to: {
-                  name: RouteName.Collection,
-                  collectionId,
-                  view: CollectionRouteView.App,
-                  appId: app.id,
-                } as const satisfies Route,
-                isActive: appId === app.id,
-              })),
+              ...CollectionUtils.getApps(collection, apps).map(
+                (collectionApp) => ({
+                  key: collectionApp.id,
+                  label: collectionApp.name,
+                  to: {
+                    name: RouteName.Collection,
+                    collectionId,
+                    view: CollectionRouteView.App,
+                    appId: collectionApp.id,
+                  } as const satisfies Route,
+                  isActive: app !== null && app.id === collectionApp.id,
+                }),
+              ),
               {
                 key: "CreateApp",
                 label: (
@@ -202,9 +207,8 @@ export default function Collection(props: Props) {
         fullWidth={true}
         className={cs.Collection.panelContent}
       >
-        {appId ? (
-          // TODO
-          <div>{appId}</div>
+        {app ? (
+          <AppRenderer app={app} />
         ) : (
           <DataLoader queries={[listDocumentsQuery([collectionId])]}>
             {(documents) => (

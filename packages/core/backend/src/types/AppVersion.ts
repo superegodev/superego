@@ -7,7 +7,7 @@ export default interface AppVersion {
   id: AppVersionId;
   targetCollections: {
     id: CollectionId;
-    version: CollectionVersionId;
+    versionId: CollectionVersionId;
   }[];
   files: {
     "/main.tsx": TypescriptModule;
