@@ -1,4 +1,4 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import { useEffect } from "react";
 import monaco from "../../../../monaco.js";
 
@@ -8,7 +8,7 @@ import monaco from "../../../../monaco.js";
  */
 export default function useSyncTypescriptLibsModels(
   editorBasePath: string,
-  typescriptLibs: TypescriptLib[],
+  typescriptLibs: TypescriptFile[],
 ) {
   useEffect(() => {
     if (typescriptLibs) {

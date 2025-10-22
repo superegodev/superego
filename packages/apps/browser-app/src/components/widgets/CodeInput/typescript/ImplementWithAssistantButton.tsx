@@ -1,4 +1,4 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -15,7 +15,7 @@ interface Props {
   assistantImplementation?:
     | { instructions: string; template: string }
     | undefined;
-  typescriptLibs: TypescriptLib[];
+  typescriptLibs: TypescriptFile[];
   valueModelRef: RefObject<monaco.editor.ITextModel | null>;
 }
 export default function ImplementWithAssistantButton({

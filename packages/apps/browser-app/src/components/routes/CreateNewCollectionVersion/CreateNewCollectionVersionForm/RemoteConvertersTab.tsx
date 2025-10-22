@@ -1,4 +1,4 @@
-import type { Collection, Connector, TypescriptLib } from "@superego/backend";
+import type { Collection, Connector, TypescriptFile } from "@superego/backend";
 import { codegen, type Schema } from "@superego/schema";
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
@@ -33,7 +33,7 @@ export default function RemoteConvertersTab({
   result,
 }: Props) {
   const intl = useIntl();
-  const typescriptLibs = useMemo<TypescriptLib[]>(() => {
+  const typescriptLibs = useMemo<TypescriptFile[]>(() => {
     return typeof schema !== "string"
       ? [
           {

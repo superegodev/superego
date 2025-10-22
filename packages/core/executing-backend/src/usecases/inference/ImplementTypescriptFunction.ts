@@ -4,7 +4,7 @@ import {
   MessageRole,
   type ToolCall,
   ToolName,
-  type TypescriptLib,
+  type TypescriptFile,
   type UnexpectedError,
   type WriteTypescriptFunctionToolNotCalled,
 } from "@superego/backend";
@@ -23,7 +23,7 @@ export default class InferenceImplementTypescriptFunction extends Usecase<
   async exec(
     instructions: string,
     template: string,
-    libs: TypescriptLib[],
+    libs: TypescriptFile[],
     startingPoint: string,
   ): ResultPromise<
     string,

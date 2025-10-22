@@ -1,4 +1,4 @@
-import type { TypescriptLib, TypescriptModule } from "@superego/backend";
+import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import pTimeout from "p-timeout";
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -18,7 +18,7 @@ interface Props {
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
   ariaLabel?: string | undefined;
-  typescriptLibs: TypescriptLib[] | undefined;
+  typescriptLibs: TypescriptFile[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
   fileName?: `${string}.ts`;
   maxHeight: Property.MaxHeight | undefined;

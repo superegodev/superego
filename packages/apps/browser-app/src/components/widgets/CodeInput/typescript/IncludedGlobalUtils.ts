@@ -1,4 +1,4 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import LocalInstantDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 
 export default interface IncludedGlobalUtils {
@@ -7,8 +7,8 @@ export default interface IncludedGlobalUtils {
 
 export function getGlobalUtilsTypescriptLibs(
   includedGlobalUtils?: IncludedGlobalUtils,
-): TypescriptLib[] {
-  const libs: TypescriptLib[] = [];
+): TypescriptFile[] {
+  const libs: TypescriptFile[] = [];
   if (includedGlobalUtils?.LocalInstant) {
     libs.push({ source: LocalInstantDeclaration, path: "/LocalInstant.d.ts" });
   }

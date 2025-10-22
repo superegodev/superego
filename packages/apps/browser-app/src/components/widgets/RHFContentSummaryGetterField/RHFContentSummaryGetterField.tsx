@@ -1,4 +1,4 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import { useMemo } from "react";
 import type { Control } from "react-hook-form";
@@ -12,7 +12,7 @@ interface Props {
   name: string;
   isDisabled?: boolean | undefined;
   schema: Schema;
-  schemaTypescriptLib: TypescriptLib | null;
+  schemaTypescriptLib: TypescriptFile | null;
 }
 export default function RHFContentSummaryGetterField({
   control,

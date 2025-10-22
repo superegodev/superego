@@ -1,4 +1,4 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
@@ -22,7 +22,7 @@ interface Props {
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
-  typescriptLibs?: TypescriptLib[] | undefined;
+  typescriptLibs?: TypescriptFile[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
   assistantImplementation?:
     | { instructions: string; template: string }

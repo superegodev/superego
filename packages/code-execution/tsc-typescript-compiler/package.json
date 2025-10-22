@@ -1,0 +1,26 @@
+{
+  "name": "@superego/tsc-typescript-compiler",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/shared-utils": "workspace:*",
+    "@typescript/vfs": "^1.6.1",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,4 +1,4 @@
-import type { TypescriptLib, TypescriptModule } from "@superego/backend";
+import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import type IncludedGlobalUtils from "./typescript/IncludedGlobalUtils.js";
 
@@ -20,7 +20,7 @@ type Props = {
       language: "typescript";
       value: TypescriptModule;
       onChange: (newValue: TypescriptModule) => void;
-      typescriptLibs?: TypescriptLib[] | undefined;
+      typescriptLibs?: TypescriptFile[] | undefined;
       includedGlobalUtils?: IncludedGlobalUtils | undefined;
       fileName?: `${string}.ts`;
       assistantImplementation?:

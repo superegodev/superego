@@ -68,7 +68,7 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
-import type TypescriptLib from "./types/TypescriptLib.js";
+import type TypescriptFile from "./types/TypescriptFile.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
@@ -383,7 +383,7 @@ export default interface Backend {
     implementTypescriptFunction(
       instructions: string,
       template: string,
-      libs: TypescriptLib[],
+      libs: TypescriptFile[],
       startingPoint: string,
     ): ResultPromise<
       string,
