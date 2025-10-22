@@ -29,7 +29,7 @@ export default async function getCompilationOutput(
       ])
     ).flat();
 
-    const compiledPath = sourcePath.replace(/\.ts$/, ".js");
+    const compiledPath = sourcePath.replace(/\.tsx?$/, ".js");
     const compiled = emitOutput.outputFiles.find(
       ({ name }) => name === compiledPath,
     )?.text;

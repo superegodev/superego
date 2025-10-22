@@ -1,7 +1,7 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const RHFAppVersionFilesField = {
+export const EagerRHFAppVersionFilesField = {
   root: style({
     height: "100%",
     display: "flex",

@@ -10,7 +10,7 @@ import { vars } from "../../../../themes.css.js";
  */
 export default function useEditor(
   basePath: string,
-  language: "typescript" | "typescript-jsx" | "json",
+  language: "typescript" | "json",
   value: string,
   onChange: (newValue: string) => void,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,

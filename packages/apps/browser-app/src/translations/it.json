@@ -371,6 +371,9 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sincronizza"
   },
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "Cosa vuoi creare?"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
   },
@@ -682,9 +685,6 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
-  },
-  "RHFAppVersionFilesField.tsx_4rTNK7": {
-    "defaultMessage": "Cosa vuoi creare?"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"

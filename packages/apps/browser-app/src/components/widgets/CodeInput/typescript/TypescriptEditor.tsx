@@ -101,7 +101,10 @@ export default function TypescriptEditor({
 
   const { editorElementRef } = useEditor(
     editorBasePath,
-    language,
+    // For the monaco editor, both "typescript" and "typescript-jsx" can be
+    // handled with the "typescript" language. We use the differentiation
+    // externally to be able to set the correct filePath (.ts or .tsx).
+    "typescript",
     value.source,
     compileSource,
     valueModelRef,

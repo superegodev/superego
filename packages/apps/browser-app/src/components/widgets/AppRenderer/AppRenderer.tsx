@@ -50,15 +50,21 @@ export default function AppRenderer({ app }: Props) {
           appName={app.name}
           appCode={app.latestVersion.files["/main.tsx"].compiled}
           appProps={{
-            collections: targetCollections.map((collection, index) => ({
-              id: collection.id,
-              name: collection.settings.name,
-              icon: collection.settings.icon,
-              documents: documentsLists[index]!.map((document) => ({
-                id: document.id,
-                content: (document as Document).latestVersion.content,
-              })),
-            })),
+            collections: targetCollections.reduce(
+              (collections, collection, index) => ({
+                ...collections,
+                [collection.id]: {
+                  id: collection.id,
+                  name: collection.settings.name,
+                  icon: collection.settings.icon,
+                  documents: documentsLists[index]!.map((document) => ({
+                    id: document.id,
+                    content: (document as Document).latestVersion.content,
+                  })),
+                },
+              }),
+              {},
+            ),
           }}
           settings={settings}
           intlMessages={intlMessages}

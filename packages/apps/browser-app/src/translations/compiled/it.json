@@ -984,6 +984,12 @@
       "value": "Sincronizza"
     }
   ],
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
+    {
+      "type": 0,
+      "value": "Cosa vuoi creare?"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -1758,12 +1764,6 @@
     {
       "type": 0,
       "value": "Cerca"
-    }
-  ],
-  "RHFAppVersionFilesField.tsx_4rTNK7": [
-    {
-      "type": 0,
-      "value": "Cosa vuoi creare?"
     }
   ],
   "RHFContentSummaryGetterField.tsx_3X4zUZ": [

@@ -11,6 +11,9 @@
     },
     "./types": {
       "import": "./src/types/index.ts"
+    },
+    "./typescript-libs": {
+      "import": "./src/typescript-libs/index.ts"
     }
   },
   "private": true,

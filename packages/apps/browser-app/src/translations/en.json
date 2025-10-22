@@ -377,6 +377,9 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sync"
   },
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "What do you want to build?"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
@@ -709,9 +712,6 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"
-  },
-  "RHFAppVersionFilesField.tsx_4rTNK7": {
-    "defaultMessage": "What do you want to build?"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
