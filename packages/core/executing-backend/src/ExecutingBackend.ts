@@ -10,6 +10,7 @@ import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
 import AppsCreate from "./usecases/apps/Create.js";
 import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
@@ -48,7 +49,7 @@ import DocumentsList from "./usecases/documents/List.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
-import InferenceImplementTypescriptFunction from "./usecases/inference/ImplementTypescriptFunction.js";
+import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import InferenceTts from "./usecases/inference/Tts.js";
 
@@ -68,6 +69,7 @@ export default class ExecutingBackend implements Backend {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
+    private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector<any, any>[],
   ) {
@@ -137,8 +139,8 @@ export default class ExecutingBackend implements Backend {
     this.inference = {
       stt: this.makeUsecase(InferenceStt, false),
       tts: this.makeUsecase(InferenceTts, false),
-      implementTypescriptFunction: this.makeUsecase(
-        InferenceImplementTypescriptFunction,
+      implementTypescriptModule: this.makeUsecase(
+        InferenceImplementTypescriptModule,
         false,
       ),
     };
@@ -172,6 +174,7 @@ export default class ExecutingBackend implements Backend {
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
+      typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
     ) => { exec: Exec },
@@ -183,6 +186,7 @@ export default class ExecutingBackend implements Backend {
           const usecase = new UsecaseClass(
             repos,
             this.javascriptSandbox,
+            this.typescriptCompiler,
             this.inferenceServiceFactory,
             this.connectors,
           );

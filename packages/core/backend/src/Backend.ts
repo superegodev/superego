@@ -40,8 +40,9 @@ import type FilesNotFound from "./errors/FilesNotFound.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
+import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
-import type WriteTypescriptFunctionToolNotCalled from "./errors/WriteTypescriptFunctionToolNotCalled.js";
+import type WriteTypescriptModuleToolNotCalled from "./errors/WriteTypescriptModuleToolNotCalled.js";
 import type AppId from "./ids/AppId.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
@@ -380,14 +381,18 @@ export default interface Backend {
 
     tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
 
-    implementTypescriptFunction(
-      instructions: string,
-      template: string,
-      libs: TypescriptFile[],
-      startingPoint: string,
-    ): ResultPromise<
-      string,
-      WriteTypescriptFunctionToolNotCalled | UnexpectedError
+    implementTypescriptModule(spec: {
+      description: string;
+      rules: string;
+      template: string;
+      libs: TypescriptFile[];
+      startingPoint: TypescriptFile;
+      userRequest: string;
+    }): ResultPromise<
+      TypescriptModule,
+      | WriteTypescriptModuleToolNotCalled
+      | TooManyFailedImplementationAttempts
+      | UnexpectedError
     >;
   };
 

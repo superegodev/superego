@@ -64,8 +64,10 @@ export type { default as ParentCollectionCategoryIsDescendant } from "./errors/P
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
 export type { default as RemoteConvertersNotValid } from "./errors/RemoteConvertersNotValid.js";
 export type { default as SyncingChangesFailed } from "./errors/SyncingChangesFailed.js";
+export type { default as TooManyFailedImplementationAttempts } from "./errors/TooManyFailedImplementationAttempts.js";
+export type { default as TypescriptCompilationFailed } from "./errors/TypescriptCompilationFailed.js";
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
-export type { default as WriteTypescriptFunctionToolNotCalled } from "./errors/WriteTypescriptFunctionToolNotCalled.js";
+export type { default as WriteTypescriptModuleToolNotCalled } from "./errors/WriteTypescriptModuleToolNotCalled.js";
 
 // Ids
 export type { default as AppId } from "./ids/AppId.js";

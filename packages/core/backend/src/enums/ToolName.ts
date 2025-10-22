@@ -9,6 +9,6 @@ enum ToolName {
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
   // Other tools, not used by an assistant
-  WriteTypescriptFunction = "WriteTypescriptFunction",
+  WriteTypescriptModule = "WriteTypescriptModule",
 }
 export default ToolName;

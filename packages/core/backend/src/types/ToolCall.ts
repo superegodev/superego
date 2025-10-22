@@ -77,8 +77,8 @@ namespace ToolCall {
   >;
 
   // Other tools, not used by an assistant
-  export type WriteTypescriptFunction = ToolCall<
-    ToolName.WriteTypescriptFunction,
+  export type WriteTypescriptModule = ToolCall<
+    ToolName.WriteTypescriptModule,
     { source: string }
   >;
 }
