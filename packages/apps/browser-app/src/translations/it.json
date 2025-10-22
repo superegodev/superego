@@ -62,14 +62,20 @@
   "Collection.tsx_5WK7jL": {
     "defaultMessage": "Crea nuova app"
   },
+  "Collection.tsx_B+R508": {
+    "defaultMessage": "Imposta come vista predefinita"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
   },
-  "Collection.tsx_gRiKLf": {
-    "defaultMessage": "App"
-  },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Mostra timestamp"
+  },
+  "Collection.tsx_LQONHO": {
+    "defaultMessage": "Errore durante l'impostazione della vista predefinita della collezione"
+  },
+  "Collection.tsx_gRiKLf": {
+    "defaultMessage": "App"
   },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Crea documento"
@@ -677,6 +683,9 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Chiudi barra laterale"
   },
+  "Preview.tsx_Dd6cIb": {
+    "defaultMessage": "Compilazione dell'app non riuscita."
+  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
   },
@@ -931,6 +940,9 @@
   },
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Ultima sincronizzazione non riuscita"
+  },
+  "getIntlMessages.ts_1nnRAQ": {
+    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

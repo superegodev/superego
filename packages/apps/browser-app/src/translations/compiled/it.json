@@ -113,6 +113,12 @@
       "value": "Crea nuova app"
     }
   ],
+  "Collection.tsx_B+R508": [
+    {
+      "type": 0,
+      "value": "Imposta come vista predefinita"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -123,6 +129,12 @@
     {
       "type": 0,
       "value": "Mostra timestamp"
+    }
+  ],
+  "Collection.tsx_LQONHO": [
+    {
+      "type": 0,
+      "value": "Errore durante l'impostazione della vista predefinita della collezione"
     }
   ],
   "Collection.tsx_gRiKLf": [
@@ -1748,6 +1760,12 @@
       "value": "Chiudi barra laterale"
     }
   ],
+  "Preview.tsx_Dd6cIb": [
+    {
+      "type": 0,
+      "value": "Compilazione dell'app non riuscita."
+    }
+  ],
   "PrimarySidebarPanel.tsx_D3idYv": [
     {
       "type": 0,
@@ -2829,6 +2847,12 @@
     {
       "type": 0,
       "value": "Ultima sincronizzazione non riuscita"
+    }
+  ],
+  "getIntlMessages.ts_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
   "typescriptModule.ts_MZNYNj": [
