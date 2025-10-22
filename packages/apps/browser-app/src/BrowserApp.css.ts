@@ -17,7 +17,7 @@ globalStyle("*", {
 globalStyle("*:focus-visible", {
   outline: "none",
 });
-globalStyle('*[data-focus-visible="true"]', {
+globalStyle('*:focus-visible[data-focus-visible="true"]', {
   outline: `2px solid ${vars.colors.accent}`,
   outlineOffset: "-2px",
 });

@@ -10,14 +10,12 @@ import { vars } from "../../../../themes.css.js";
  */
 export default function useEditor(
   basePath: string,
-  language: "typescript" | "json",
+  language: "typescript" | "typescript-jsx" | "json",
   value: string,
   onChange: (newValue: string) => void,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   ariaLabel: string | undefined,
-  fileName: `${string}.ts` | `${string}.json` = language === "typescript"
-    ? "main.ts"
-    : "main.json",
+  filePath: `/${string}.ts` | `/${string}.tsx` | `/${string}.json`,
 ) {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(null);
@@ -30,7 +28,7 @@ export default function useEditor(
     valueModelRef.current = monaco.editor.createModel(
       initialValueRef.current,
       language,
-      monaco.Uri.parse(`${basePath}/${fileName}`),
+      monaco.Uri.parse(`${basePath}${filePath}`),
     );
 
     // Propagate changes to the outside world.
@@ -109,7 +107,7 @@ export default function useEditor(
     // it's a ref, it's stable and passing it here has no effect.
     valueModelRef,
     ariaLabel,
-    fileName,
+    filePath,
   ]);
 
   // Keep editor theme in sync

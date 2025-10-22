@@ -16,7 +16,7 @@ export default function EagerCodeInput({
   ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
-  fileName,
+  filePath,
   assistantImplementation,
   maxHeight,
   className,
@@ -48,23 +48,24 @@ export default function EagerCodeInput({
       className={classnames(cs.EagerCodeInput.root, className)}
       data-testid="code-input"
     >
-      {language === "typescript" ? (
+      {language === "json" ? (
+        <JsonEditor
+          value={value}
+          onChange={onChange}
+          ariaLabel={ariaLabel}
+          filePath={filePath}
+          maxHeight={maxHeight}
+        />
+      ) : (
         <TypescriptEditor
+          language={language}
           value={value}
           onChange={onChange}
           ariaLabel={ariaLabel}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}
-          fileName={fileName}
+          filePath={filePath}
           assistantImplementation={assistantImplementation}
-          maxHeight={maxHeight}
-        />
-      ) : (
-        <JsonEditor
-          value={value}
-          onChange={onChange}
-          ariaLabel={ariaLabel}
-          fileName={fileName}
           maxHeight={maxHeight}
         />
       )}

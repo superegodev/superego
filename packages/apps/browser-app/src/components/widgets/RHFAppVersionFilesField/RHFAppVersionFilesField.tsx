@@ -37,6 +37,7 @@ export default function RHFAppVersionFilesField({ control, name }: Props) {
         <RHFTypescriptModuleField
           control={control}
           name={`${name}./main__DOT__tsx`}
+          language="typescript-jsx"
           // There doesn't seem to be a better way to do this, as the monaco
           // editor manages its own width and makes controlling its height
           // externally difficult. Hence the manual pixel value.

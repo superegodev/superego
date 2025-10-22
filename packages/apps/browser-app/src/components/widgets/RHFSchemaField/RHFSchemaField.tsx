@@ -60,7 +60,7 @@ export default function RHFSchemaField({
         value={jsonValue}
         onChange={handleChange}
         ariaLabel={label}
-        fileName="schema.json"
+        filePath="/schema.json"
         onBlur={field.onBlur}
         autoFocus={autoFocus}
         isInvalid={fieldState.invalid}

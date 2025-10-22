@@ -230,9 +230,9 @@ export const useStt = makeUseBackendMutation("inference", "stt", () => []);
 
 export const useTts = makeUseBackendMutation("inference", "tts", () => []);
 
-export const useImplementTypescriptFunction = makeUseBackendMutation(
+export const useImplementTypescriptModule = makeUseBackendMutation(
   "inference",
-  "implementTypescriptFunction",
+  "implementTypescriptModule",
   () => [],
 );
 

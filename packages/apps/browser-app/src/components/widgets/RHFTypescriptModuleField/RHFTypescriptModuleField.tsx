@@ -22,10 +22,16 @@ interface Props {
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
+  language: "typescript" | "typescript-jsx";
   typescriptLibs?: TypescriptFile[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
   assistantImplementation?:
-    | { instructions: string; template: string }
+    | {
+        description: string;
+        rules?: string | undefined;
+        template: string;
+        userRequest: string;
+      }
     | undefined;
   maxHeight?: string | undefined;
   className?: string | undefined;
@@ -38,6 +44,7 @@ export default function RHFTypescriptModuleField({
   description,
   isDisabled,
   autoFocus,
+  language,
   typescriptLibs,
   includedGlobalUtils,
   assistantImplementation,
@@ -60,7 +67,7 @@ export default function RHFTypescriptModuleField({
     >
       {label ? <Label>{label}</Label> : null}
       <CodeInput
-        language="typescript"
+        language={language}
         value={field.value ?? { source: "", compiled: "" }}
         onChange={field.onChange}
         onBlur={field.onBlur}

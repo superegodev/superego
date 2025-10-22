@@ -8,14 +8,14 @@ interface Props {
   value: string;
   onChange: (newValue: string) => void;
   ariaLabel?: string | undefined;
-  fileName?: `${string}.json`;
+  filePath?: `/${string}.json`;
   maxHeight: Property.MaxHeight | undefined;
 }
 export default function JsonEditor({
   value,
   onChange,
   ariaLabel,
-  fileName,
+  filePath = "/main.json",
   maxHeight,
 }: Props) {
   const editorBasePath = useEditorBasePath();
@@ -27,7 +27,7 @@ export default function JsonEditor({
     onChange,
     valueModelRef,
     ariaLabel,
-    fileName,
+    filePath,
   );
   return <div style={{ maxHeight }} ref={editorElementRef} />;
 }

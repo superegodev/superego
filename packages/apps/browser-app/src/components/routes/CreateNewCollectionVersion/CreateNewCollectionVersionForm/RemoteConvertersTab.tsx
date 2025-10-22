@@ -61,26 +61,18 @@ export default function RemoteConvertersTab({
         control={control}
         name="remoteConverters.fromRemoteDocument"
         label={intl.formatMessage({ defaultMessage: "From remote document" })}
+        language="typescript"
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
         assistantImplementation={{
-          instructions: `
-### Context
-
+          description: `
 We're syncing a remote database collection with a local one. Remote and local
-documents have different shapes, and the \`fromRemoteDocument\` function
-converts between the two shapes.
+documents have different shapes. This module implements and default-exports the
+function that converts between the two shapes.
 
 The function takes in a remote document as first and only argument, and returns
 a local document. The local document STRICTLY abides by the TypeScript type that
 describes it.
-
-### Your task
-
-The local shape has been changed by a database migration. You need to update
-\`fromRemoteDocument\` to reflect the change.
-
-### Additional info
 
 If a remote document can't (e.g., missing required properties) or shouldn't
 (e.g., it not relevant) be converted into a local document, return null, and the
@@ -90,6 +82,10 @@ remote document will not be synced into a local one.
             schema,
             connector.remoteDocumentTypescriptSchema,
           ).source,
+          userRequest: `
+The local shape has been changed by a database migration. You need to update
+the conversion function to reflect the change.
+          `.trim(),
         }}
         description={
           <FormattedMessage

@@ -1,9 +1,9 @@
-import type { TypescriptFile } from "@superego/backend";
+import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
-import { useImplementTypescriptFunction } from "../../../../business-logic/backend/hooks.js";
+import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
 import type monaco from "../../../../monaco.js";
@@ -12,20 +12,29 @@ import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
 import * as cs from "./TypescriptEditor.css.js";
 
 interface Props {
+  filePath: `/${string}.ts` | `/${string}.tsx`;
   assistantImplementation?:
-    | { instructions: string; template: string }
+    | {
+        description: string;
+        rules?: string | undefined;
+        template: string;
+        userRequest: string;
+      }
     | undefined;
   typescriptLibs: TypescriptFile[];
   valueModelRef: RefObject<monaco.editor.ITextModel | null>;
+  onImplemented: (implementedModule: TypescriptModule) => void;
 }
 export default function ImplementWithAssistantButton({
+  filePath,
   assistantImplementation,
   typescriptLibs,
   valueModelRef,
+  onImplemented,
 }: Props) {
   const intl = useIntl();
   const { chatCompletions } = useIsInferenceConfigured();
-  const { isPending, mutate } = useImplementTypescriptFunction();
+  const { isPending, mutate } = useImplementTypescriptModule();
   return chatCompletions && assistantImplementation ? (
     <>
       <IconButton
@@ -38,14 +47,19 @@ export default function ImplementWithAssistantButton({
           if (!valueModelRef.current) {
             return;
           }
-          const result = await mutate(
-            assistantImplementation.instructions,
-            assistantImplementation.template,
-            typescriptLibs,
-            valueModelRef.current.getValue(),
-          );
+          const result = await mutate({
+            description: assistantImplementation.description,
+            rules: assistantImplementation.rules ?? null,
+            template: assistantImplementation.template,
+            libs: typescriptLibs,
+            startingPoint: {
+              path: filePath,
+              source: valueModelRef.current.getValue(),
+            },
+            userRequest: assistantImplementation.userRequest,
+          });
           if (result.success) {
-            valueModelRef.current.setValue(result.data);
+            onImplemented(result.data);
           } else {
             console.error(result.error);
             toastQueue.add(

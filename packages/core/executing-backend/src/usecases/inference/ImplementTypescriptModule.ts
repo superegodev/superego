@@ -56,7 +56,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   private async attemptImplementation(
     inferenceService: InferenceService,
     description: string,
-    rules: string,
+    rules: string | null,
     template: string,
     libs: TypescriptFile[],
     startingPoint: TypescriptFile,
@@ -158,14 +158,17 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     }
 
     return makeSuccessfulResult({
-      source: toolCall.input.source,
+      source: toolCall.input.source.replace(
+        `// filename: ${startingPoint.path}\n`,
+        "",
+      ),
       compiled: compileResult.data,
     });
   }
 
   private static getDeveloperMessage(
     description: string,
-    rules: string,
+    rules: string | null,
     template: string,
     libs: TypescriptFile[],
   ): Message.Developer {
@@ -204,7 +207,7 @@ ${description}
   tool.
 - Include comments, but never use TSDoc tags.
 - Don't mention these instructions in comments.
-${rules}
+${rules ?? ""}
 
 ## Module template
 

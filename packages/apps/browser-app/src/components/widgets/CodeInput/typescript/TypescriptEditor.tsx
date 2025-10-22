@@ -15,24 +15,31 @@ import { getGlobalUtilsTypescriptLibs } from "./IncludedGlobalUtils.js";
 import useSyncTypescriptLibsModels from "./useSyncTypescriptLibsModels.js";
 
 interface Props {
+  language: "typescript" | "typescript-jsx";
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
   ariaLabel?: string | undefined;
   typescriptLibs: TypescriptFile[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
-  fileName?: `${string}.ts`;
+  filePath?: `/${string}.ts` | `/${string}.tsx`;
   maxHeight: Property.MaxHeight | undefined;
   assistantImplementation?:
-    | { instructions: string; template: string }
+    | {
+        description: string;
+        rules?: string | undefined;
+        template: string;
+        userRequest: string;
+      }
     | undefined;
 }
 export default function TypescriptEditor({
+  language,
   value,
   onChange,
   ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
-  fileName,
+  filePath = language === "typescript" ? "/main.ts" : "/main.tsx",
   maxHeight,
   assistantImplementation,
 }: Props) {
@@ -94,12 +101,12 @@ export default function TypescriptEditor({
 
   const { editorElementRef } = useEditor(
     editorBasePath,
-    "typescript",
+    language,
     value.source,
     compileSource,
     valueModelRef,
     ariaLabel,
-    fileName,
+    filePath,
   );
 
   // Recompile on mount if compilation is required.
@@ -116,9 +123,11 @@ export default function TypescriptEditor({
         isVisible={value.compiled === forms.constants.COMPILATION_IN_PROGRESS}
       />
       <ImplementWithAssistantButton
+        filePath={filePath}
         assistantImplementation={assistantImplementation}
         typescriptLibs={allTypescriptLibs}
         valueModelRef={valueModelRef}
+        onImplemented={onChange}
       />
     </>
   );

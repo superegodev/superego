@@ -33,30 +33,18 @@ export default function RHFContentSummaryGetterField({
       control={control}
       name={name}
       isDisabled={isDisabled}
+      language="typescript"
       typescriptLibs={typescriptLibs}
       includedGlobalUtils={includedGlobalUtils}
       assistantImplementation={{
-        instructions: `
-### Context
-
+        description: `
 The "content summary" of a document is an object—derived from the document's
 content—that contains its most important bits of information. The properties of
 the object are displayed when showing a "summary view" of the document; for
 example, in tables where each property becomes a column.
 
-### Your task
-
-You need to complete the implementation of the function that derives the summary
+This module implements and default-exports the function that derives the summary
 from the document content.
-
-### Rules
-
-- The content summary object must have between 1 and 5 properties.
-- Only include the most salient and useful pieces of information.
-- A summary property doesn't necessarily need to have a 1-to-1 correspondence
-  with a document property: it can be a value derived from more than one
-  document properties.
-- The properties must always exist, but you can use \`null\` for empty values.
 
 ### Additional info
 
@@ -74,7 +62,16 @@ configures the behavior of the UIs that render the summary. Examples:
 
 (Note: it only makes sense to define \`default-sort\` for one property.)
         `.trim(),
+        rules: `
+- The content summary object must have between 1 and 5 properties.
+- Only include the most salient and useful pieces of information.
+- A summary property doesn't necessarily need to have a 1-to-1 correspondence
+  with a document property: it can be a value derived from more than one
+  document properties.
+- The properties must always exist, but you can use \`null\` for empty values.
+        `.trim(),
         template: forms.defaults.contentSummaryGetter(schema).source,
+        userRequest: "Complete the implementation.",
       }}
       description={
         <FormattedMessage

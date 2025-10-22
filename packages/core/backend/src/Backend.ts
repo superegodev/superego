@@ -383,7 +383,7 @@ export default interface Backend {
 
     implementTypescriptModule(spec: {
       description: string;
-      rules: string;
+      rules: string | null;
       template: string;
       libs: TypescriptFile[];
       startingPoint: TypescriptFile;

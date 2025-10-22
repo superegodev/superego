@@ -5405,6 +5405,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/javascript-sandbox-global-utils": "workspace:*"
+    "@superego/monaco-typescript-compiler": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:^"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
@@ -5611,7 +5612,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler":
+"@superego/monaco-typescript-compiler@workspace:*, @superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler":
   version: 0.0.0-use.local
   resolution: "@superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler"
   dependencies:

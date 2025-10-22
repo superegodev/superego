@@ -17,14 +17,19 @@ type Props = {
   ref?: (refObject: { focus: () => void }) => void;
 } & (
   | {
-      language: "typescript";
+      language: "typescript" | "typescript-jsx";
       value: TypescriptModule;
       onChange: (newValue: TypescriptModule) => void;
       typescriptLibs?: TypescriptFile[] | undefined;
       includedGlobalUtils?: IncludedGlobalUtils | undefined;
-      fileName?: `${string}.ts`;
+      filePath?: `/${string}.ts` | `/${string}.tsx`;
       assistantImplementation?:
-        | { instructions: string; template: string }
+        | {
+            description: string;
+            rules?: string | undefined;
+            template: string;
+            userRequest: string;
+          }
         | undefined;
     }
   | {
@@ -33,7 +38,7 @@ type Props = {
       onChange: (newValue: string) => void;
       typescriptLibs?: never;
       includedGlobalUtils?: never;
-      fileName?: `${string}.json`;
+      filePath?: `/${string}.json`;
       assistantImplementation?: never;
     }
 );
