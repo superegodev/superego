@@ -1,4 +1,8 @@
-import type { TypescriptFile, UnexpectedError } from "@superego/backend";
+import type {
+  TypescriptCompilationFailed,
+  TypescriptFile,
+  UnexpectedError,
+} from "@superego/backend";
 import type { TypescriptCompiler } from "@superego/executing-backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -15,12 +19,7 @@ export default class MonacoTypescriptCompiler implements TypescriptCompiler {
   async compile(
     main: TypescriptFile,
     libs: TypescriptFile[],
-  ): ResultPromise<
-    string,
-    | TypescriptCompiler.TypeErrors
-    | TypescriptCompiler.MissingOutput
-    | UnexpectedError
-  > {
+  ): ResultPromise<string, TypescriptCompilationFailed | UnexpectedError> {
     const monaco = await this.getMonaco();
 
     const basePath = crypto.randomUUID();
@@ -66,8 +65,9 @@ export default class MonacoTypescriptCompiler implements TypescriptCompiler {
 
       if (diagnostics.length !== 0) {
         return makeUnsuccessfulResult({
-          name: "TypeErrors",
+          name: "TypescriptCompilationFailed",
           details: {
+            reason: "TypeErrors",
             errors: diagnostics.map((diagnostic) => {
               const message = flattenDiagnosticMessageText(
                 diagnostic.messageText,
@@ -86,9 +86,9 @@ export default class MonacoTypescriptCompiler implements TypescriptCompiler {
 
       if (!compiledCode) {
         return makeUnsuccessfulResult({
-          name: "MissingOutput",
+          name: "TypescriptCompilationFailed",
           details: {
-            message: "Compilation didn't produce any output.",
+            reason: "MissingOutput",
           },
         });
       }

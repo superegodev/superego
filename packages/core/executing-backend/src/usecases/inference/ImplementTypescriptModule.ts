@@ -195,6 +195,7 @@ ${description}
 
 - The module should match the template below.
 - The module has access and can import the TypeScript files supplied below.
+- The module has no access to any other library.
 - The implemented module MUST compile without errors.
 - Solve all TODOs, if there are any.
 - Only make the changes necessary to satisfy the user request.

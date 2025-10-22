@@ -165,6 +165,7 @@ export default class ExecutingBackend implements Backend {
     this.backgroundJobExecutor = new BackgroundJobExecutor(
       dataRepositoriesManager,
       javascriptSandbox,
+      typescriptCompiler,
       inferenceServiceFactory,
       connectors,
     );

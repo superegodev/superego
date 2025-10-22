@@ -7,6 +7,7 @@ import type Connector from "./requirements/Connector.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
 import CollectionsDownSync from "./usecases/collections/DownSync.js";
 
@@ -14,6 +15,7 @@ export default class BackgroundJobExecutor {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
+    private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector[],
     private stuckJobTimeout: Milliseconds = 30 * 1000,
@@ -35,6 +37,7 @@ export default class BackgroundJobExecutor {
         const usecase = new UsecaseClass(
           repos,
           this.javascriptSandbox,
+          this.typescriptCompiler,
           this.inferenceServiceFactory,
           this.connectors,
         );

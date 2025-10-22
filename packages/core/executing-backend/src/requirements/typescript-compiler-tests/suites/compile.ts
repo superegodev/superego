@@ -1,7 +1,9 @@
-import type { TypescriptFile } from "@superego/backend";
+import type {
+  TypescriptCompilationFailed,
+  TypescriptFile,
+} from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, expect, it } from "vitest";
-import type TypescriptCompiler from "../../TypescriptCompiler.js";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("compile", (deps) => {
@@ -10,7 +12,12 @@ export default rd<GetDependencies>("compile", (deps) => {
     source: string;
     libs?: TypescriptFile[];
   } & (
-    | { expectedTypeErrors: TypescriptCompiler.TypeError[] }
+    | {
+        expectedTypeErrors: Exclude<
+          TypescriptCompilationFailed["details"],
+          { reason: "MissingOutput" }
+        >["errors"];
+      }
     | { expectedCompiled: string }
   );
   const testCases: TestCase[] = [
@@ -123,8 +130,11 @@ export default rd<GetDependencies>("compile", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "TypeErrors",
-          details: { errors: testCase.expectedTypeErrors },
+          name: "TypescriptCompilationFailed",
+          details: {
+            reason: "TypeErrors",
+            errors: testCase.expectedTypeErrors,
+          },
         },
       });
     } else {
