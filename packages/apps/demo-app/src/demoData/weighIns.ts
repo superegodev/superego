@@ -16,6 +16,7 @@ const collection: CollectionEntity = {
     name: "Weigh-ins",
     icon: "⚖️",
     collectionCategoryId: Health.id,
+    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions: [
       "- Defaults for things I don't specify:",

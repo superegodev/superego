@@ -15,6 +15,7 @@ const collection: CollectionEntity = {
     name: "Calendar",
     icon: "📅",
     collectionCategoryId: null,
+    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions:
       "- If the duration is not supplied for events, default to them being 1 hour long.",

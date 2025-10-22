@@ -27,6 +27,7 @@
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
+    "@superego/monaco-typescript-compiler": "workspace:^",
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
