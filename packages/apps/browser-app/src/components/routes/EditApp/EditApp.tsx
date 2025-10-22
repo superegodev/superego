@@ -1,5 +1,5 @@
 import type { AppId } from "@superego/backend";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -8,6 +8,7 @@ import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewAppVersionForm from "./CreateNewAppVersionForm.js";
 import DeleteAppModalForm from "./DeleteAppModalForm.js";
+import * as cs from "./EditApp.css.js";
 import UpdateNameModalForm from "./UpdateNameModalForm.js";
 
 interface Props {
@@ -31,7 +32,18 @@ export default function EditApp({ appId }: Props) {
   const formId = useId();
 
   const app = AppUtils.findApp(apps, appId);
-  return app ? (
+  const targetCollections = useMemo(
+    () =>
+      app
+        ? CollectionUtils.findAllCollections(
+            collections,
+            app.latestVersion.targetCollections.map(({ id }) => id),
+          )
+        : null,
+    [collections, app],
+  );
+
+  return app && targetCollections ? (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage(
@@ -57,13 +69,10 @@ export default function EditApp({ appId }: Props) {
           },
         ]}
       />
-      <Shell.Panel.Content fullWidth={true}>
+      <Shell.Panel.Content fullWidth={true} className={cs.EditApp.panelContent}>
         <CreateNewAppVersionForm
           app={app}
-          targetCollections={CollectionUtils.findAllCollections(
-            collections,
-            app.latestVersion.targetCollections.map(({ id }) => id),
-          )}
+          targetCollections={targetCollections}
           formId={formId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}
         />

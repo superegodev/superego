@@ -15,10 +15,17 @@ export const EagerRHFAppVersionFilesField = {
 
   content: style({
     flexGrow: 1,
+    minHeight: 0,
+    overflow: "scroll",
+  }),
+
+  preview: styleVariants({
+    visible: {},
+    hidden: { display: "none !important" },
   }),
 
   typescriptModule: styleVariants({
-    visible: { height: "100%" },
+    visible: {},
     hidden: { display: "none" },
   }),
 
@@ -33,11 +40,26 @@ export const EagerRHFAppVersionFilesField = {
   }),
 };
 
+const previewRootBase = style({
+  border: `${vars.borders.width.thin} dotted ${vars.colors.border.subtle}`,
+  width: "100%",
+  height: "100%",
+  overflow: "scroll",
+});
 export const Preview = {
-  root: style({
-    border: `${vars.borders.width.thin} dotted ${vars.colors.border.subtle}`,
-    width: "100%",
-    height: "100%",
+  root: styleVariants({
+    valid: [previewRootBase],
+    invalid: [
+      previewRootBase,
+      {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: vars.typography.fontSizes.lg,
+        color: vars.colors.semantic.error.text,
+        borderColor: vars.colors.semantic.error.border,
+      },
+    ],
   }),
 };
 

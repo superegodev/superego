@@ -205,7 +205,7 @@ export default function Collection(props: Props) {
       />
       <Shell.Panel.Content
         fullWidth={true}
-        className={cs.Collection.panelContent}
+        className={cs.Collection.panelContent[app ? "app" : "table"]}
       >
         {app ? (
           <AppRenderer app={app} />

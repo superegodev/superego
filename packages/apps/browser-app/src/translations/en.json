@@ -704,6 +704,9 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
+  "Preview.tsx_Dd6cIb": {
+    "defaultMessage": "App compilation failed."
+  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },

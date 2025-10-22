@@ -1,7 +1,8 @@
 import sandboxTypescriptLibs from "@superego/app-sandbox/typescript-libs";
-import type { TypescriptFile } from "@superego/backend";
+import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo, useState } from "react";
+import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.jsx";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.jsx";
@@ -18,6 +19,9 @@ export default function EagerRHFAppVersionFilesField({
 }: Props) {
   const intl = useIntl();
   const [activeView, setActiveView] = useState(View.Preview);
+
+  const fieldName = `${name}./main__DOT__tsx`;
+  const mainTsx: TypescriptModule = useWatch({ control, name: fieldName });
 
   const typescriptLibs = useMemo(
     () => [
@@ -49,10 +53,18 @@ export default function EagerRHFAppVersionFilesField({
         className={cs.EagerRHFAppVersionFilesField.editingToolbar}
       />
       <div className={cs.EagerRHFAppVersionFilesField.content}>
-        {activeView === View.Preview ? <Preview /> : null}
+        <Preview
+          mainTsx={mainTsx}
+          targetCollections={targetCollections}
+          className={
+            cs.EagerRHFAppVersionFilesField.preview[
+              activeView === View.Preview ? "visible" : "hidden"
+            ]
+          }
+        />
         <RHFTypescriptModuleField
           control={control}
-          name={`${name}./main__DOT__tsx`}
+          name={fieldName}
           language="typescript-jsx"
           typescriptLibs={typescriptLibs}
           // There doesn't seem to be a better way to do this, as the monaco
