@@ -605,6 +605,36 @@
   "ImplementWithAssistantButton.tsx_80aEjO": {
     "defaultMessage": "Implementation failed"
   },
+  "ImplementingSpinner.tsx_93mRKW": {
+    "defaultMessage": "Let me work on that"
+  },
+  "ImplementingSpinner.tsx_BZWtmi": {
+    "defaultMessage": "Making changes"
+  },
+  "ImplementingSpinner.tsx_Bk6B6r": {
+    "defaultMessage": "Almost there"
+  },
+  "ImplementingSpinner.tsx_Hy/tAh": {
+    "defaultMessage": "It’s more complex than I estimated"
+  },
+  "ImplementingSpinner.tsx_Mdz/x3": {
+    "defaultMessage": "It'll be done in no time"
+  },
+  "ImplementingSpinner.tsx_ZRWqDd": {
+    "defaultMessage": "Please don't fire me"
+  },
+  "ImplementingSpinner.tsx_k61bRC": {
+    "defaultMessage": "Just a little refactor"
+  },
+  "ImplementingSpinner.tsx_m0Hh22": {
+    "defaultMessage": "One more fix"
+  },
+  "ImplementingSpinner.tsx_pJh6Bf": {
+    "defaultMessage": "Compiling code"
+  },
+  "ImplementingSpinner.tsx_q462mT": {
+    "defaultMessage": "It’s a hard problem"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },

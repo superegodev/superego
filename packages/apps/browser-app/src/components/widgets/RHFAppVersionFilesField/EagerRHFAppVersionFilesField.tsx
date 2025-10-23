@@ -19,6 +19,7 @@ import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
 import EditingToolbar from "./EditingToolbar.js";
+import ImplementingSpinner from "./ImplementingSpinner.jsx";
 import Preview from "./Preview.js";
 import type Props from "./Props.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
@@ -55,6 +56,8 @@ export default function EagerRHFAppVersionFilesField({
     isPending: isImplementTypescriptModulePending,
     mutate: implementTypescriptModule,
   } = useImplementTypescriptModule();
+  const isImplementing = isSttPending || isImplementTypescriptModulePending;
+
   const onSend = async (messageContent: Message.User["content"]) => {
     const [part] = messageContent;
 
@@ -146,8 +149,8 @@ ${targetCollectionsSnippet}
         className={cs.EagerRHFAppVersionFilesField.editingToolbar}
       />
       <div className={cs.EagerRHFAppVersionFilesField.content}>
+        {isImplementing ? <ImplementingSpinner /> : null}
         <Preview
-          // TODO: show spinner while generating
           mainTsx={mainTsx}
           targetCollections={targetCollections}
           className={
@@ -178,7 +181,7 @@ ${targetCollectionsSnippet}
       <UserMessageContentInput
         conversation={null}
         onSend={onSend}
-        isSending={isSttPending || isImplementTypescriptModulePending}
+        isSending={isImplementing}
         placeholder={intl.formatMessage({
           defaultMessage: "What do you want to build?",
         })}
