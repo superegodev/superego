@@ -172,7 +172,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     template: string,
     libs: TypescriptFile[],
   ): Message.Developer {
-    const availableLibs = libs
+    const availableLibs = slimLibs(libs)
       .flatMap((lib) => [
         "```ts",
         `// filename: ${lib.path}`,
@@ -196,8 +196,13 @@ ${description}
 
 ## Implementation rules
 
-- The module should match the template below.
-- The module has access and can import the TypeScript files supplied below.
+- The module’s default export **must match exactly** the type specified in the
+  template below — no deviations or additional properties.
+- The module can import and use the TypeScript files provided below. Some
+  libraries are marked as **SLIM**, meaning their full type definitions have
+  been omitted for brevity. Treat these libraries as if they include their
+  complete and correct TypeScript type definitions, and rely on your internal
+  knowledge of their APIs when generating code.
 - The module has no access to any other library.
 - The implemented module MUST compile without errors.
 - Solve all TODOs, if there are any.
@@ -273,3 +278,29 @@ const WriteTypescriptModuleTool = {
     } as const;
   },
 };
+
+function slimLibs(libs: TypescriptFile[]): TypescriptFile[] {
+  return libs.map(slimLib);
+}
+
+// TODO: rework
+function slimLib(lib: TypescriptFile): TypescriptFile {
+  if (
+    !(
+      lib.path.startsWith("/node_modules/react") ||
+      lib.path.startsWith("/node_modules/echarts")
+    )
+  ) {
+    return lib;
+  }
+  const [, libName, fileName] = lib.path.split("/");
+  return {
+    path: lib.path,
+    source: [
+      "// SLIM",
+      fileName === "index.d.ts"
+        ? `declare module "${libName}"`
+        : `declare module "${libName}/${fileName?.replace(".d.ts", "")}"`,
+    ].join("\n"),
+  };
+}

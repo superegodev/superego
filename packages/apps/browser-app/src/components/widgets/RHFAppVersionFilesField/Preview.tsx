@@ -5,11 +5,10 @@ import {
   type TypescriptModule,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
-import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import classnames from "../../../utils/classnames.js";
-import AppRenderer from "../AppRenderer/AppRenderer.jsx";
+import AppRenderer from "../AppRenderer/AppRenderer.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
 
 const invalidCompiledValues = new Set([
@@ -30,21 +29,7 @@ export default function Preview({
 }: Props) {
   const appCompilationFailed =
     mainTsx.compiled === forms.constants.COMPILATION_FAILED;
-
-  // Cache the app so we can show the old version while it's compiling.
-  const [app, setApp] = useState<App | null>(() =>
-    getApp(mainTsx, targetCollections),
-  );
-  // The app only effectively changes when mainTsx.compiled changes, and not
-  // when the object or source change.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
-  useEffect(() => {
-    const newApp = getApp(mainTsx, targetCollections);
-    if (newApp) {
-      setApp(newApp);
-    }
-  }, [mainTsx.compiled, targetCollections]);
-
+  const app = getApp(mainTsx, targetCollections);
   return (
     <div
       className={classnames(
@@ -52,7 +37,7 @@ export default function Preview({
         className,
       )}
     >
-      {app && !appCompilationFailed ? <AppRenderer app={app} /> : null}
+      {app ? <AppRenderer app={app} /> : null}
       {appCompilationFailed ? (
         <FormattedMessage defaultMessage="App compilation failed." />
       ) : null}

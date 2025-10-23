@@ -380,6 +380,12 @@
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
+  "EagerRHFAppVersionFilesField.tsx_RGKGRx": {
+    "defaultMessage": "An error occurred transcribing your message"
+  },
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+    "defaultMessage": "An error occurred generating the app"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },

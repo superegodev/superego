@@ -29,8 +29,9 @@ export default function SetNameAndSaveModal({
       <RHFTextField
         control={control}
         name="name"
-        autoFocus={true}
+        form={formId}
         label={intl.formatMessage({ defaultMessage: "Name" })}
+        autoFocus={true}
         placeholder={intl.formatMessage({ defaultMessage: "My Awesome App" })}
       />
       <div className={cs.SetNameAndSaveModal.submitButtonContainer}>

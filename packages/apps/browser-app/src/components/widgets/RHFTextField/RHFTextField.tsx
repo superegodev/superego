@@ -19,6 +19,7 @@ interface Props<
   TName extends FieldPath<TFieldValues>,
   TTransformedValues,
 > extends UseControllerProps<TFieldValues, TName, TTransformedValues> {
+  form?: string | undefined;
   label?: ReactNode | undefined;
   /** Required for a11y when there is no label. */
   ariaLabel?: string | undefined;
@@ -39,6 +40,7 @@ export default function RHFTextField<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 >({
+  form,
   label,
   ariaLabel,
   description,
@@ -63,6 +65,7 @@ export default function RHFTextField<
           name={field.name}
           value={field.value ?? ""}
           type={password ? "password" : "text"}
+          form={form}
           isDisabled={isDisabled}
           isReadOnly={isReadOnly}
           onChange={(value) =>

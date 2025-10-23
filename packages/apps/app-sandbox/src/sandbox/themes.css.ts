@@ -51,6 +51,22 @@ const commonVars = {
         Arial,              /* 13. Fallback (Ubiquitous) */
         sans-serif          /* 14. Generic CSS Fallback */
       `,
+      serif: `
+        ui-serif,           /* 1. OS Default UI Serif (Modern Standard) */
+        "New York",         /* 2. Apple (SF Serif; macOS/iOS 13+) */
+        "Times",            /* 3. Apple (Legacy macOS) */
+        "Iowan Old Style",  /* 4. Apple (iOS/iPadOS) */
+        "Palatino",         /* 5. Apple (macOS) */
+        "Sitka Text",       /* 6. Windows 8+ */
+        Cambria,            /* 7. Windows (Vista+) */
+        Constantia,         /* 8. Windows */
+        "Book Antiqua",     /* 9. Windows (Palatino clone) */
+        "Times New Roman",  /* 10. Windows (Ubiquitous) */
+        "Noto Serif",       /* 11. Linux/Android/Chrome OS (Google) */
+        "DejaVu Serif",     /* 12. Linux (General) */
+        Georgia,            /* 13. Common Web Serif */
+        serif               /* 14. Generic CSS Fallback */
+      `,
       monospace: `
         ui-monospace,     /* 1. OS Default UI Monospace (Modern Standard) */
         Menlo,            /* 2. Apple (macOS Newer) */
@@ -124,19 +140,23 @@ const commonVars = {
 export const colors = {
   greys: {
     _0: "#ffffff",
+    _0_5: "#fdfdfd",
     _1: "#fafafa",
+    _1_5: "#fafafa",
     _2: "#f5f5f5",
     _3: "#f0f0f0",
-    _35: "#e4e4e4",
+    _3_5: "#e4e4e4",
     _4: "#d9d9d9",
     _5: "#bfbfbf",
     _6: "#8c8c8c",
     _7: "#595959",
     _8: "#434343",
-    _85: "#343434",
+    _8_5: "#343434",
     _9: "#262626",
     _10: "#1f1f1f",
+    _10_5: "#191919",
     _11: "#141414",
+    _11_5: "#111111",
     _12: "#000000",
   },
 
@@ -324,6 +344,7 @@ export const [light, vars] = createTheme({
     },
     background: {
       surface: colors.greys._0,
+      subtleSurface: colors.greys._0_5,
       secondarySurface: colors.greys._1,
       surfaceHighlight: colors.greys._3,
       inverse: colors.greys._10,
@@ -332,7 +353,7 @@ export const [light, vars] = createTheme({
     border: {
       default: colors.greys._4,
       strong: colors.greys._5,
-      subtle: colors.greys._35,
+      subtle: colors.greys._3_5,
       focus: colors.greys._7,
       disabled: colors.greys._2,
     },
@@ -443,19 +464,23 @@ export const dark = createTheme(vars, {
     },
     neutral: {
       _0: colors.greys._12,
+      _0_5: colors.greys._11_5,
       _1: colors.greys._11,
+      _1_5: colors.greys._10_5,
       _2: colors.greys._10,
       _3: colors.greys._9,
-      _35: colors.greys._85,
+      _3_5: colors.greys._8_5,
       _4: colors.greys._8,
       _5: colors.greys._7,
       _6: colors.greys._6,
       _7: colors.greys._5,
       _8: colors.greys._4,
-      _85: colors.greys._35,
+      _8_5: colors.greys._3_5,
       _9: colors.greys._3,
       _10: colors.greys._2,
+      _10_5: colors.greys._1_5,
       _11: colors.greys._1,
+      _11_5: colors.greys._0_5,
       _12: colors.greys._0,
     },
     text: {
@@ -466,6 +491,7 @@ export const dark = createTheme(vars, {
     },
     background: {
       surface: colors.greys._10,
+      subtleSurface: colors.greys._10_5,
       secondarySurface: colors.greys._11,
       surfaceHighlight: colors.greys._12,
       inverse: colors.greys._0,

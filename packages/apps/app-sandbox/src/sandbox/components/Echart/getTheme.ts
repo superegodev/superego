@@ -77,7 +77,10 @@ function buildTheme(
   styles: CSSStyleDeclaration,
 ) {
   const accentColor = resolveVar(styles, vars.colors.accent);
-  const backgroundSurface = resolveVar(styles, vars.colors.background.surface);
+  const backgroundSubtleSurface = resolveVar(
+    styles,
+    vars.colors.background.subtleSurface,
+  );
   const backgroundSecondarySurface = resolveVar(
     styles,
     vars.colors.background.secondarySurface,
@@ -116,7 +119,7 @@ function buildTheme(
 
   return {
     color: seriesColors,
-    backgroundColor: backgroundSurface,
+    backgroundColor: backgroundSubtleSurface,
     textStyle: {
       color: textPrimary,
     },

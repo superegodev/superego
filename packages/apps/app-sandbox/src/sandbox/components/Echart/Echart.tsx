@@ -10,9 +10,8 @@ interface Props {
   option: echarts.EChartsOption;
   width: string;
   height: string;
-  className?: string | undefined;
 }
-export default function Echart({ option, width, height, className }: Props) {
+export default function Echart({ option, width, height }: Props) {
   const [renderingError, setRenderingError] = useState<any>(null);
   const chartElementRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -38,11 +37,7 @@ export default function Echart({ option, width, height, className }: Props) {
   }, [option, theme]);
 
   return renderingError === null ? (
-    <div
-      ref={chartElementRef}
-      style={{ width, height }}
-      className={className}
-    />
+    <div ref={chartElementRef} style={{ width, height }} />
   ) : (
     <Alert
       title={intlMessages.renderingErrorAlertTitle}

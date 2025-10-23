@@ -1,13 +1,25 @@
 import sandboxTypescriptLibs from "@superego/app-sandbox/typescript-libs";
-import type { TypescriptFile, TypescriptModule } from "@superego/backend";
+import {
+  type Message,
+  MessageContentPartType,
+  type TypescriptFile,
+  type TypescriptModule,
+} from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo, useState } from "react";
-import { useWatch } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
-import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.jsx";
-import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.jsx";
-import EditingToolbar from "./EditingToolbar.jsx";
-import Preview from "./Preview.jsx";
+import {
+  useImplementTypescriptModule,
+  useStt,
+} from "../../../business-logic/backend/hooks.js";
+import forms from "../../../business-logic/forms/forms.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
+import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
+import EditingToolbar from "./EditingToolbar.js";
+import Preview from "./Preview.js";
 import type Props from "./Props.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
 import View from "./View.js";
@@ -21,7 +33,8 @@ export default function EagerRHFAppVersionFilesField({
   const [activeView, setActiveView] = useState(View.Preview);
 
   const fieldName = `${name}./main__DOT__tsx`;
-  const mainTsx: TypescriptModule = useWatch({ control, name: fieldName });
+  const { field } = useController({ control, name: fieldName });
+  const mainTsx: TypescriptModule = field.value;
 
   const typescriptLibs = useMemo(
     () => [
@@ -36,6 +49,86 @@ export default function EagerRHFAppVersionFilesField({
     ],
     [targetCollections],
   );
+
+  const { isPending: isSttPending, mutate: stt } = useStt();
+  const {
+    isPending: isImplementTypescriptModulePending,
+    mutate: implementTypescriptModule,
+  } = useImplementTypescriptModule();
+  const onSend = async (messageContent: Message.User["content"]) => {
+    const [part] = messageContent;
+
+    let userRequest: string;
+
+    if (part.type === MessageContentPartType.Audio) {
+      const sttResult = await stt(part.audio);
+      if (!sttResult.success) {
+        console.error(sttResult.error);
+        toastQueue.add({
+          type: ToastType.Error,
+          title: intl.formatMessage({
+            defaultMessage: "An error occurred transcribing your message",
+          }),
+          description: sttResult.error.name,
+        });
+        return;
+      }
+      userRequest = sttResult.data;
+    } else {
+      userRequest = part.text;
+    }
+
+    const targetCollectionsSnippet = targetCollections
+      .flatMap((collection) => {
+        if (!collection.settings.description) {
+          return `- ${collection.settings.name}`;
+        }
+        const [firstDescriptionLine, ...otherDescriptionLines] =
+          collection.settings.description.split("\n");
+
+        return [
+          `- ${collection.settings.name}: ${firstDescriptionLine}`,
+          otherDescriptionLines.map((line) => `  ${line}`),
+        ];
+      })
+      .join("\n");
+
+    const implementTypescriptModuleResult = await implementTypescriptModule({
+      description: `
+This module implements and default-exports a single-file React app for
+visualizing the documents in the following collections:
+
+${targetCollectionsSnippet}
+      `.trim(),
+      rules: `
+- Always include, at the top of the file, a comment with a "summarized spec" for
+  the app.
+      `.trim(),
+      libs: typescriptLibs,
+      template:
+        forms.defaults.collectionViewAppFiles(targetCollections)[
+          "/main__DOT__tsx"
+        ].source,
+      startingPoint: {
+        path: "/main.tsx",
+        source: mainTsx.source,
+      },
+      userRequest: userRequest,
+    });
+    if (implementTypescriptModuleResult.success) {
+      field.onChange(implementTypescriptModuleResult.data);
+    } else {
+      console.error(implementTypescriptModuleResult.error);
+      toastQueue.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "An error occurred generating the app",
+        }),
+        description: implementTypescriptModuleResult.error.name,
+      });
+      return;
+    }
+  };
 
   return (
     <div className={cs.EagerRHFAppVersionFilesField.root}>
@@ -54,6 +147,7 @@ export default function EagerRHFAppVersionFilesField({
       />
       <div className={cs.EagerRHFAppVersionFilesField.content}>
         <Preview
+          // TODO: show spinner while generating
           mainTsx={mainTsx}
           targetCollections={targetCollections}
           className={
@@ -83,15 +177,12 @@ export default function EagerRHFAppVersionFilesField({
       </div>
       <UserMessageContentInput
         conversation={null}
-        onSend={(messageContent) => {
-          // TODO
-          console.log(messageContent);
-        }}
-        isSending={false}
+        onSend={onSend}
+        isSending={isSttPending || isImplementTypescriptModulePending}
         placeholder={intl.formatMessage({
           defaultMessage: "What do you want to build?",
         })}
-        autoFocus={false}
+        autoFocus={true}
         className={cs.EagerRHFAppVersionFilesField.userMessageContentInput}
       />
     </div>

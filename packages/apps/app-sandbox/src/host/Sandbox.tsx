@@ -53,7 +53,7 @@ export default function Sandbox({
           type: MessageType.RenderApp,
           payload: { appCode, appProps, settings, intlMessages },
         } satisfies RenderAppMessage,
-        new URL(iframeRef.current.src, window.location.origin).origin,
+        "*",
       );
     }
   }, [sandboxReady, appCode, appProps, settings, intlMessages]);
