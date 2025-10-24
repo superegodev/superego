@@ -34,8 +34,7 @@ export default function Sandbox({
     const handleSandboxMessage = ({ data: message }: MessageEvent) => {
       if (isSandboxReadyMessage(message)) {
         setSandboxReady(true);
-      }
-      if (isHeightChangedMessage(message)) {
+      } else if (isHeightChangedMessage(message)) {
         const height = `${message.payload.height}px`;
         if (iframeRef.current && iframeRef.current.style.height !== height) {
           iframeRef.current.style.height = height;
@@ -60,11 +59,11 @@ export default function Sandbox({
 
   return (
     <iframe
-      key={appCode}
       ref={iframeRef}
       src={iframeSrc}
       sandbox="allow-scripts allow-same-origin"
       title={appName}
+      style={{ height: 0 }}
       className={className}
     />
   );

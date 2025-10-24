@@ -42,7 +42,8 @@ export const EagerRHFAppVersionFilesField = {
 };
 
 const previewRootBase = style({
-  border: `${vars.borders.width.thin} dotted ${vars.colors.border.subtle}`,
+  border: `${vars.borders.width.thin} dashed ${vars.colors.border.default}`,
+  borderRadius: vars.borders.radius.md,
   padding: vars.spacing._2,
   width: "100%",
   height: "100%",
