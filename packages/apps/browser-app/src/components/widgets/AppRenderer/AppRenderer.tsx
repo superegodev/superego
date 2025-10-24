@@ -1,5 +1,9 @@
 import { Sandbox } from "@superego/app-sandbox/host";
-import type { IntlMessages, Settings } from "@superego/app-sandbox/types";
+import type {
+  AppComponentProps,
+  IntlMessages,
+  Settings,
+} from "@superego/app-sandbox/types";
 import type { App, Document } from "@superego/backend";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -7,6 +11,7 @@ import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import * as cs from "./AppRenderer.css.js";
 import getIntlMessages from "./getIntlMessages.js";
 
@@ -50,21 +55,19 @@ export default function AppRenderer({ app }: Props) {
           appName={app.name}
           appCode={app.latestVersion.files["/main.tsx"].compiled}
           appProps={{
-            collections: targetCollections.reduce(
-              (collections, collection, index) => ({
-                ...collections,
-                [collection.id]: {
+            collections: Object.fromEntries(
+              targetCollections.map((collection, index) => [
+                collection.id,
+                {
                   id: collection.id,
-                  name: collection.settings.name,
-                  icon: collection.settings.icon,
+                  displayName: CollectionUtils.getDisplayName(collection),
                   documents: documentsLists[index]!.map((document) => ({
                     id: document.id,
                     content: (document as Document).latestVersion.content,
                   })),
                 },
-              }),
-              {},
-            ),
+              ]),
+            ) satisfies AppComponentProps["collections"],
           }}
           settings={settings}
           intlMessages={intlMessages}

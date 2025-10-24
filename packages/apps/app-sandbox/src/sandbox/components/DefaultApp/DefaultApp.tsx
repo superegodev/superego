@@ -24,11 +24,7 @@ export default function DefaultApp({ collections }: AppComponentProps) {
       <Text element="p">{collectionInfo}</Text>
       <ul>
         {Object.values(collections).map((collection) => (
-          <li key={collection.id}>
-            {collection.icon}
-            {"\u2002"}
-            {collection.name}
-          </li>
+          <li key={collection.id}>{collection.displayName}</li>
         ))}
       </ul>
     </div>

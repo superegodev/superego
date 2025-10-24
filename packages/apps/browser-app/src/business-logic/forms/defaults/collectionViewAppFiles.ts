@@ -39,9 +39,7 @@ function makeCollectionPropSnippet(collection: Collection): string {
 ${makeCollectionTsDoc(collection)}
 ${collection.id}: {
   id: "${collection.id}";
-  name: string;
-  /** If not null, a single emoji. */
-  icon: string | null;
+  displayName: string;
   documents: {
     id: \`Document_\${string}\`;
     content: ${collection.id}.${collection.latestVersion.schema.rootType};
@@ -55,16 +53,23 @@ function makeCollectionTsDoc(collection: Collection): string {
     "*/",
     "*\\/",
   );
+  const nameDoc = ` * ${JSON.stringify(collection.settings.name)} collection.`;
   const descriptionDoc = sanitizedDescription
     ?.split("\n")
     .map((line) => (line !== "" ? ` * ${line}` : " *"));
-  return `
+  return descriptionDoc
+    ? `
 /**
- * ${JSON.stringify(collection.settings.name)} collection.
+${nameDoc}
  *
 ${descriptionDoc}
  */
-  `.trim();
+      `.trim()
+    : `
+/**
+${nameDoc}
+ */
+      `.trim();
 }
 
 function makeCollectionImport(collection: Collection): string {

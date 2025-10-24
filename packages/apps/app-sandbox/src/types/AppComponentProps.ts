@@ -4,9 +4,7 @@ export default interface AppComponentProps {
   collections: {
     [id: CollectionId]: {
       id: CollectionId;
-      name: string;
-      /** If not null, a single emoji. */
-      icon: string | null;
+      displayName: string;
       documents: {
         id: DocumentId;
         content: any;
