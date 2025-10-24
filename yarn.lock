@@ -5316,6 +5316,8 @@ __metadata:
   resolution: "@superego/app-sandbox@workspace:packages/apps/app-sandbox"
   dependencies:
     "@superego/backend": "workspace:*"
+    "@superego/global-types": "workspace:*"
+    "@superego/shared-utils": "workspace:*"
     "@types/react": "npm:^19.2.2"
     "@types/react-dom": "npm:^19.2.2"
     "@vanilla-extract/css": "npm:^1.17.4"

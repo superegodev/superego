@@ -1019,6 +1019,12 @@
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
   },
+  "getIntlMessages.ts_UfI09W": {
+    "defaultMessage": "An error occurred importing the app."
+  },
+  "getIntlMessages.ts_bzhBew": {
+    "defaultMessage": "An error occurred rendering the app."
+  },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"
   },

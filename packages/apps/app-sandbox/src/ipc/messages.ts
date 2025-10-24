@@ -1,19 +1,26 @@
 import type AppComponentProps from "../types/AppComponentProps.js";
 import type IntlMessages from "../types/IntlMessages.js";
 import type Settings from "../types/Settings.js";
-import isMessageWithType from "./isMessageWithType.js";
+import isMessageWith from "./isMessageWith.js";
+import MessageSender from "./MessageSender.js";
 import MessageType from "./MessageType.js";
 
-interface BaseMessage<Type extends MessageType, Payload> {
+interface BaseMessage<
+  Sender extends MessageSender,
+  Type extends MessageType,
+  Payload,
+> {
+  sender: Sender;
   type: Type;
   payload: Payload;
 }
 
-//////////////////
-// Sent by host //
-//////////////////
+///////////////////
+// Host messages //
+///////////////////
 
 export type RenderAppMessage = BaseMessage<
+  MessageSender.Host,
   MessageType.RenderApp,
   {
     appCode: string;
@@ -25,21 +32,30 @@ export type RenderAppMessage = BaseMessage<
 export function isRenderAppMessage(
   message: unknown,
 ): message is RenderAppMessage {
-  return isMessageWithType(message, MessageType.RenderApp);
+  return isMessageWith(message, MessageSender.Host, MessageType.RenderApp);
 }
 
-/////////////////////
-// Sent by sandbox //
-/////////////////////
+//////////////////////
+// Sandbox messages //
+//////////////////////
 
-export type SandboxReadyMessage = BaseMessage<MessageType.SandboxReady, null>;
+export type SandboxReadyMessage = BaseMessage<
+  MessageSender.Sandbox,
+  MessageType.SandboxReady,
+  null
+>;
 export function isSandboxReadyMessage(
   message: unknown,
 ): message is SandboxReadyMessage {
-  return isMessageWithType(message, MessageType.SandboxReady);
+  return isMessageWith(
+    message,
+    MessageSender.Sandbox,
+    MessageType.SandboxReady,
+  );
 }
 
 export type HeightChangedMessage = BaseMessage<
+  MessageSender.Sandbox,
   MessageType.HeightChanged,
   {
     /** Height in px. */
@@ -49,5 +65,9 @@ export type HeightChangedMessage = BaseMessage<
 export function isHeightChangedMessage(
   message: unknown,
 ): message is HeightChangedMessage {
-  return isMessageWithType(message, MessageType.HeightChanged);
+  return isMessageWith(
+    message,
+    MessageSender.Sandbox,
+    MessageType.HeightChanged,
+  );
 }

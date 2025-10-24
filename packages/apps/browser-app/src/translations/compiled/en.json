@@ -2935,6 +2935,18 @@
       "value": "An error occurred rendering the chart."
     }
   ],
+  "getIntlMessages.ts_UfI09W": [
+    {
+      "type": 0,
+      "value": "An error occurred importing the app."
+    }
+  ],
+  "getIntlMessages.ts_bzhBew": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the app."
+    }
+  ],
   "typescriptModule.ts_MZNYNj": [
     {
       "type": 0,

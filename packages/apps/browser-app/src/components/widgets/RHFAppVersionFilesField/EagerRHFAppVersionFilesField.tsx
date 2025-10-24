@@ -108,10 +108,9 @@ ${targetCollectionsSnippet}
   the app.
       `.trim(),
       libs: typescriptLibs,
-      template:
-        forms.defaults.collectionViewAppFiles(targetCollections)[
-          "/main__DOT__tsx"
-        ].source,
+      template: forms.defaults.collectionViewAppFiles(targetCollections, true)[
+        "/main__DOT__tsx"
+      ].source,
       startingPoint: {
         path: "/main.tsx",
         source: mainTsx.source,

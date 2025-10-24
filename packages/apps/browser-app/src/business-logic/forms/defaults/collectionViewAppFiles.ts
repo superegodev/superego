@@ -4,7 +4,16 @@ import type { RHFAppVersionFiles } from "../utils/RHFAppVersionFiles.js";
 
 export default function collectionViewAppFiles(
   targetCollections: Collection[],
+  isImplementationTemplate: boolean,
 ): RHFAppVersionFiles {
+  const code = isImplementationTemplate
+    ? '  throw new Error("Not implemented")'
+    : // TODO: define a Sandbox component for this
+      [
+        "  // Default app. Remove when implementing the real one.",
+        "  return null;",
+      ].join("\n");
+
   return {
     "/main__DOT__tsx": {
       source: `
@@ -16,12 +25,12 @@ interface Props {
 ${indent(targetCollections.map(makeCollectionPropSnippet).join("\n"), 2)}
   };
 }
-export default function App(props: Props): React.ReactElement | null {
-  // Implementation goes here.
-  console.log(props);
-  return null;
+export default function App({ collections }: Props): React.ReactElement | null {
+  console.log(collections);
+${code}
 }
       `.trim(),
+      // TODO: give a compiled version for first render
       compiled: COMPILATION_REQUIRED,
     },
   };

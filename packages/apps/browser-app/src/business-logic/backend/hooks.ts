@@ -113,7 +113,7 @@ export const useDeleteCollection = makeUseBackendMutation(
 export const listDocumentsQuery = makeBackendQueryGetter(
   "documents",
   "list",
-  (collectionId) => ["listDocuments", collectionId],
+  (collectionId, lite) => ["listDocuments", collectionId, String(lite ?? true)],
 );
 
 export const getDocumentQuery = makeBackendQueryGetter(

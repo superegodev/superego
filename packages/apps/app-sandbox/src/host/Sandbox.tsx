@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  isHeightChangedMessage,
-  isSandboxReadyMessage,
-  type RenderAppMessage,
-} from "../ipc/ipc.js";
+import HostIpc from "../ipc/HostIpc.js";
 import MessageType from "../ipc/MessageType.js";
 import type AppComponentProps from "../types/AppComponentProps.js";
 import type IntlMessages from "../types/IntlMessages.js";
@@ -27,33 +23,33 @@ export default function Sandbox({
   intlMessages,
   className,
 }: Props) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const hostIpcRef = useRef<HostIpc>(null);
+
   const [sandboxReady, setSandboxReady] = useState(false);
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
-    const handleSandboxMessage = ({ data: message }: MessageEvent) => {
-      if (isSandboxReadyMessage(message)) {
-        setSandboxReady(true);
-      } else if (isHeightChangedMessage(message)) {
+    if (!(iframeRef.current && iframeRef.current.contentWindow)) {
+      return;
+    }
+    hostIpcRef.current = new HostIpc(window, iframeRef.current.contentWindow);
+    return hostIpcRef.current.registerHandlers({
+      [MessageType.SandboxReady]: () => setSandboxReady(true),
+      [MessageType.HeightChanged]: (message) => {
         const height = `${message.payload.height}px`;
         if (iframeRef.current && iframeRef.current.style.height !== height) {
           iframeRef.current.style.height = height;
         }
-      }
-    };
-    window.addEventListener("message", handleSandboxMessage);
-    return () => window.removeEventListener("message", handleSandboxMessage);
+      },
+    });
   }, []);
 
   useEffect(() => {
-    if (iframeRef.current && sandboxReady) {
-      iframeRef.current.contentWindow?.postMessage(
-        {
-          type: MessageType.RenderApp,
-          payload: { appCode, appProps, settings, intlMessages },
-        } satisfies RenderAppMessage,
-        "*",
-      );
+    if (hostIpcRef.current && sandboxReady) {
+      hostIpcRef.current.send({
+        type: MessageType.RenderApp,
+        payload: { appCode, appProps, settings, intlMessages },
+      });
     }
   }, [sandboxReady, appCode, appProps, settings, intlMessages]);
 
