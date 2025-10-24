@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import Logo from "../../design-system/Logo/Logo.jsx";
+import Logo from "../../design-system/Logo/Logo.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
 
 const totalDots = 3;

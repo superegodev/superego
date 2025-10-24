@@ -19,7 +19,7 @@ import toastQueue from "../../../business-logic/toasts/toastQueue.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
 import EditingToolbar from "./EditingToolbar.js";
-import ImplementingSpinner from "./ImplementingSpinner.jsx";
+import ImplementingSpinner from "./ImplementingSpinner.js";
 import Preview from "./Preview.js";
 import type Props from "./Props.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";

@@ -3,8 +3,8 @@ import type SandboxIpc from "../../ipc/SandboxIpc.js";
 import IntlMessagesContext from "../business-logic/intl-messages/IntlMessagesContext.js";
 import SettingsContext from "../business-logic/settings/SettingsContext.js";
 import useApplyTheme from "../business-logic/theme/useApplyTheme.js";
-import AppErrorBoundary from "./AppErrorBoundary.jsx";
-import AppImportingError from "./AppImportingError.jsx";
+import AppErrorBoundary from "./AppErrorBoundary.js";
+import AppImportingError from "./AppImportingError.js";
 import useAppRenderingParams from "./useAppRenderingParams.js";
 
 interface Props {
