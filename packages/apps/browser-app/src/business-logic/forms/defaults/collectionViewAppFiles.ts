@@ -1,23 +1,14 @@
 import type { Collection } from "@superego/backend";
-import { COMPILATION_REQUIRED } from "../constants.js";
 import type { RHFAppVersionFiles } from "../utils/RHFAppVersionFiles.js";
 
 export default function collectionViewAppFiles(
   targetCollections: Collection[],
-  isImplementationTemplate: boolean,
 ): RHFAppVersionFiles {
-  const code = isImplementationTemplate
-    ? '  throw new Error("Not implemented")'
-    : // TODO: define a Sandbox component for this
-      [
-        "  // Default app. Remove when implementing the real one.",
-        "  return null;",
-      ].join("\n");
-
   return {
     "/main__DOT__tsx": {
       source: `
 import React from "react";
+import { DefaultApp } from "@superego/app-sandbox/components";
 ${targetCollections.map(makeCollectionImport).join("\n")}
 
 interface Props {
@@ -25,13 +16,20 @@ interface Props {
 ${indent(targetCollections.map(makeCollectionPropSnippet).join("\n"), 2)}
   };
 }
-export default function App({ collections }: Props): React.ReactElement | null {
-  console.log(collections);
-${code}
+export default function App(props: Props): React.ReactElement | null {
+  // The DefaultApp component is only a placeholder. Don't include it in the
+  // final version of the app.
+  return <DefaultApp {...props} />;
 }
       `.trim(),
-      // TODO: give a compiled version for first render
-      compiled: COMPILATION_REQUIRED,
+      compiled: `
+import React from "react";
+import { DefaultApp } from "@superego/app-sandbox/components";
+
+export default function App(props) {
+  return React.createElement(DefaultApp, props);
+}
+      `.trim(),
     },
   };
 }

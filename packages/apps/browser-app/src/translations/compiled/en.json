@@ -2935,16 +2935,46 @@
       "value": "An error occurred rendering the chart."
     }
   ],
+  "getIntlMessages.ts_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "getIntlMessages.ts_PyA0WU": [
+    {
+      "type": 0,
+      "value": "You can vibe-code the app by asking the assistant."
+    }
+  ],
   "getIntlMessages.ts_UfI09W": [
     {
       "type": 0,
       "value": "An error occurred importing the app."
     }
   ],
+  "getIntlMessages.ts_XBQLkj": [
+    {
+      "type": 0,
+      "value": "Or, you can write the code yourself by switching to the code view."
+    }
+  ],
   "getIntlMessages.ts_bzhBew": [
     {
       "type": 0,
       "value": "An error occurred rendering the app."
+    }
+  ],
+  "getIntlMessages.ts_eIxrAW": [
+    {
+      "type": 0,
+      "value": "This app has access to the following collections:"
+    }
+  ],
+  "getIntlMessages.ts_hPMG1H": [
+    {
+      "type": 0,
+      "value": "In this section you can see the live preview of your app."
     }
   ],
   "typescriptModule.ts_MZNYNj": [

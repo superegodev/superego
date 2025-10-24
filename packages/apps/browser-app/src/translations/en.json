@@ -1019,11 +1019,26 @@
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
   },
+  "getIntlMessages.ts_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "getIntlMessages.ts_PyA0WU": {
+    "defaultMessage": "You can vibe-code the app by asking the assistant."
+  },
   "getIntlMessages.ts_UfI09W": {
     "defaultMessage": "An error occurred importing the app."
   },
+  "getIntlMessages.ts_XBQLkj": {
+    "defaultMessage": "Or, you can write the code yourself by switching to the code view."
+  },
   "getIntlMessages.ts_bzhBew": {
     "defaultMessage": "An error occurred rendering the app."
+  },
+  "getIntlMessages.ts_eIxrAW": {
+    "defaultMessage": "This app has access to the following collections:"
+  },
+  "getIntlMessages.ts_hPMG1H": {
+    "defaultMessage": "In this section you can see the live preview of your app."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

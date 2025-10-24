@@ -56,8 +56,8 @@ export default function EditingToolbar({
         variant="invisible"
         label={
           activeView === View.Code
-            ? intl.formatMessage({ defaultMessage: "View code" })
-            : intl.formatMessage({ defaultMessage: "App preview" })
+            ? intl.formatMessage({ defaultMessage: "App preview" })
+            : intl.formatMessage({ defaultMessage: "View code" })
         }
         onPress={() =>
           onActivateView(activeView === View.Code ? View.Preview : View.Code)

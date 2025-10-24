@@ -19,6 +19,9 @@ export declare function Button(
   } & ReactAriaComponentsButtonProps,
 ): JSX.Element;
 
+/** Default app used as placeholder. Do not use. */
+export declare function DefaultApp(props: { collections: any }): JSX.Element;
+
 /** Renders a chart using the echarts library. */
 export declare function Echart(props: {
   /**

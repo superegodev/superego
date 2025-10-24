@@ -16,5 +16,24 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
         defaultMessage: "An error occurred rendering the chart.",
       }),
     },
+    DefaultApp: {
+      name: intl.formatMessage({
+        defaultMessage: "My Awesome App",
+      }),
+      infoLine1: intl.formatMessage({
+        defaultMessage:
+          "In this section you can see the live preview of your app.",
+      }),
+      infoLine2: intl.formatMessage({
+        defaultMessage: "You can vibe-code the app by asking the assistant.",
+      }),
+      infoLine3: intl.formatMessage({
+        defaultMessage:
+          "Or, you can write the code yourself by switching to the code view.",
+      }),
+      collectionInfo: intl.formatMessage({
+        defaultMessage: "This app has access to the following collections:",
+      }),
+    },
   };
 }

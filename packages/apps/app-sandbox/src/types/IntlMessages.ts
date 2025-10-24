@@ -6,4 +6,11 @@ export default interface IntlMessages {
   Echart: {
     renderingErrorAlertTitle: string;
   };
+  DefaultApp: {
+    name: string;
+    infoLine1: string;
+    infoLine2: string;
+    infoLine3: string;
+    collectionInfo: string;
+  };
 }
