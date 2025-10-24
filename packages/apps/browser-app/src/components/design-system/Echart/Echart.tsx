@@ -1,11 +1,11 @@
 import { extractErrorDetails } from "@superego/shared-utils";
+import { getEchartsTheme } from "@superego/themes";
 import * as echarts from "echarts";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import Alert from "../Alert/Alert.js";
 import CodeBlock from "../CodeBlock/CodeBlock.js";
-import getTheme from "./getTheme.js";
 
 interface Props {
   option: echarts.EChartsOption;
@@ -24,7 +24,7 @@ export default function Echart({ option, width, height, className }: Props) {
       return;
     }
     setRenderingError(null);
-    const chart = echarts.init(chartElementRef.current, getTheme(theme));
+    const chart = echarts.init(chartElementRef.current, getEchartsTheme(theme));
     try {
       chart.setOption(option);
     } catch (error) {

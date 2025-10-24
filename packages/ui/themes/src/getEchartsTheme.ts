@@ -1,6 +1,6 @@
 import { Theme } from "@superego/backend";
 import * as echarts from "echarts";
-import { colors, vars } from "../../../themes.css.js";
+import { colors, vars } from "./themes.css.js";
 
 const seriesColors = [
   colors.blues._4,
@@ -77,7 +77,10 @@ function buildTheme(
   styles: CSSStyleDeclaration,
 ) {
   const accentColor = resolveVar(styles, vars.colors.accent);
-  const backgroundSurface = resolveVar(styles, vars.colors.background.surface);
+  const backgroundSubtleSurface = resolveVar(
+    styles,
+    vars.colors.background.subtleSurface,
+  );
   const backgroundSecondarySurface = resolveVar(
     styles,
     vars.colors.background.secondarySurface,
@@ -116,7 +119,7 @@ function buildTheme(
 
   return {
     color: seriesColors,
-    backgroundColor: backgroundSurface,
+    backgroundColor: backgroundSubtleSurface,
     textStyle: {
       color: textPrimary,
     },
