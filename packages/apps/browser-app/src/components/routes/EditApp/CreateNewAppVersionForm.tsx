@@ -100,6 +100,7 @@ export default function CreateNewAppVersionForm({
       <RHFAppVersionFilesField
         control={control}
         name="files"
+        app={app}
         targetCollections={targetCollections}
       />
     </Form>

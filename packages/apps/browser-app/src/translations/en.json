@@ -836,6 +836,21 @@
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
+  "ResolveIncompatibilityModal.tsx_3DyFfU": {
+    "defaultMessage": "I'll do it myself"
+  },
+  "ResolveIncompatibilityModal.tsx_5HfPcg": {
+    "defaultMessage": "<p> The collections used by this app have changed since the app was created. Update the app to ensure that it works correctly. </p> <p>Collection changes:</p>"
+  },
+  "ResolveIncompatibilityModal.tsx_5daczq": {
+    "defaultMessage": "Resolve incompatibility"
+  },
+  "ResolveIncompatibilityModal.tsx_EaZlsM": {
+    "defaultMessage": "Ask the assistant"
+  },
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": {
+    "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
+  },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Details"
   },

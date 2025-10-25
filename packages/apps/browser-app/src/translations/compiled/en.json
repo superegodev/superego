@@ -2374,6 +2374,94 @@
       "value": "Icon"
     }
   ],
+  "ResolveIncompatibilityModal.tsx_3DyFfU": [
+    {
+      "type": 0,
+      "value": "I'll do it myself"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5HfPcg": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The collections used by this app have changed since the app was created. Update the app to ensure that it works correctly. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Collection changes:"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5daczq": [
+    {
+      "type": 0,
+      "value": "Resolve incompatibility"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_EaZlsM": [
+    {
+      "type": 0,
+      "value": "Ask the assistant"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": [
+    {
+      "options": {
+        "WasDeleted": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " was deleted."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " has a new version."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "type"
+    }
+  ],
   "ResultErrors.tsx_Lv0zJu": [
     {
       "type": 0,

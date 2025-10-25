@@ -23,11 +23,11 @@ export default function AppRenderer({ app }: Props) {
   const intl = useIntl();
   const theme = useTheme();
   const { collections } = useGlobalData();
-  const collectionsMap = CollectionUtils.makeMap(collections);
+  const collectionsById = CollectionUtils.makeByIdMap(collections);
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
-  // Reset incompatibilityWarningDismissed when the app changes.
+  // We want to reset incompatibilityWarningDismissed when the app changes.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     setIncompatibilityWarningDismissed(false);
@@ -41,7 +41,7 @@ export default function AppRenderer({ app }: Props) {
 
   const isCompatible = app.latestVersion.targetCollections.every(
     (targetCollection) =>
-      collectionsMap[targetCollection.id]?.latestVersion.id ===
+      collectionsById[targetCollection.id]?.latestVersion.id ===
       targetCollection.versionId,
   );
   if (!isCompatible && !incompatibilityWarningDismissed) {
@@ -54,7 +54,7 @@ export default function AppRenderer({ app }: Props) {
   }
 
   const targetCollections = app.latestVersion.targetCollections
-    .map((targetCollection) => collectionsMap[targetCollection.id])
+    .map((targetCollection) => collectionsById[targetCollection.id])
     .filter((collection) => collection !== undefined);
   return (
     <DataLoader
@@ -74,6 +74,7 @@ export default function AppRenderer({ app }: Props) {
                 collection.id,
                 {
                   id: collection.id,
+                  versionId: collection.latestVersion.id,
                   displayName: CollectionUtils.getDisplayName(collection),
                   documents: documentsLists[index]!.map((document) => ({
                     id: document.id,

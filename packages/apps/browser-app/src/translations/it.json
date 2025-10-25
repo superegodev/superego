@@ -638,6 +638,18 @@
   "ImplementingSpinner.tsx_q462mT": {
     "defaultMessage": "È un problema difficile"
   },
+  "IncompatibilityWarning.tsx_8OtepV": {
+    "defaultMessage": "Aggiorna l'app"
+  },
+  "IncompatibilityWarning.tsx_QL2z4z": {
+    "defaultMessage": "<p> Questa app potrebbe non funzionare correttamente, perché utilizza collezioni che sono state modificate o eliminate da quando è stata creata. </p> <p> Aggiorna l'app per evitare questo avviso. </p>"
+  },
+  "IncompatibilityWarning.tsx_q9XsfI": {
+    "defaultMessage": "Mostra comunque"
+  },
+  "IncompatibilityWarning.tsx_s36xxK": {
+    "defaultMessage": "Avviso di incompatibilità"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -802,6 +814,21 @@
   },
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
+  },
+  "ResolveIncompatibilityModal.tsx_3DyFfU": {
+    "defaultMessage": "Lo faccio io"
+  },
+  "ResolveIncompatibilityModal.tsx_5HfPcg": {
+    "defaultMessage": "<p> Le collezioni utilizzate da questa app sono cambiate da quando è stata creata. Aggiorna l'app per assicurarti che funzioni correttamente. </p> <p>Modifiche alle collezioni:</p>"
+  },
+  "ResolveIncompatibilityModal.tsx_5daczq": {
+    "defaultMessage": "Risolvi incompatibilità"
+  },
+  "ResolveIncompatibilityModal.tsx_EaZlsM": {
+    "defaultMessage": "Chiedi all'assistente"
+  },
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": {
+    "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> è stata eliminata.} other {<code>{collectionId}</code> ha una nuova versione.} }"
   },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Dettagli"

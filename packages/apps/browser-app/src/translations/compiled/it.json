@@ -1530,6 +1530,50 @@
       "value": "È un problema difficile"
     }
   ],
+  "IncompatibilityWarning.tsx_8OtepV": [
+    {
+      "type": 0,
+      "value": "Aggiorna l'app"
+    }
+  ],
+  "IncompatibilityWarning.tsx_QL2z4z": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Questa app potrebbe non funzionare correttamente, perché utilizza collezioni che sono state modificate o eliminate da quando è stata creata. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Aggiorna l'app per evitare questo avviso. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "IncompatibilityWarning.tsx_q9XsfI": [
+    {
+      "type": 0,
+      "value": "Mostra comunque"
+    }
+  ],
+  "IncompatibilityWarning.tsx_s36xxK": [
+    {
+      "type": 0,
+      "value": "Avviso di incompatibilità"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -2320,6 +2364,94 @@
     {
       "type": 0,
       "value": "Icona"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_3DyFfU": [
+    {
+      "type": 0,
+      "value": "Lo faccio io"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5HfPcg": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Le collezioni utilizzate da questa app sono cambiate da quando è stata creata. Aggiorna l'app per assicurarti che funzioni correttamente. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Modifiche alle collezioni:"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5daczq": [
+    {
+      "type": 0,
+      "value": "Risolvi incompatibilità"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_EaZlsM": [
+    {
+      "type": 0,
+      "value": "Chiedi all'assistente"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": [
+    {
+      "options": {
+        "WasDeleted": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " è stata eliminata."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " ha una nuova versione."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "type"
     }
   ],
   "ResultErrors.tsx_Lv0zJu": [

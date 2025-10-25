@@ -21,7 +21,7 @@ export default function EagerCodeBlock({
   const theme = useTheme();
   const codeElement = useRef<HTMLElement>(null);
   const formattedCode = language === "json" ? formatJson(code) : code;
-  // Rule-ignore explanation: we want the effect to re-run when code changes.
+  // We want the effect to re-run when code changes.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (codeElement.current) {

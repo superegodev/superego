@@ -1,24 +1,18 @@
 import { type RefObject, useEffect } from "react";
 
 export default function useAutoResizeTextArea(
-  ref: RefObject<HTMLTextAreaElement | null>,
+  textAreaRef: RefObject<HTMLTextAreaElement | null>,
+  content: string,
 ) {
+  // We want to resize the textarea on content change.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    if (ref.current) {
-      const resize = () => {
-        if (ref?.current) {
-          ref.current.style.overflowY = "hidden";
-          ref.current.style.height = "auto";
-          const lineCount = Math.round(ref.current.scrollHeight / 16.5);
-          ref.current.style.height = `${lineCount * 16.5}px`;
-          ref.current.style.overflowY = "scroll";
-        }
-      };
-      ref.current.addEventListener("input", resize);
-      return () => {
-        ref.current?.removeEventListener("input", resize);
-      };
+    if (textAreaRef.current) {
+      textAreaRef.current.style.overflowY = "hidden";
+      textAreaRef.current.style.height = "auto";
+      const lineCount = Math.round(textAreaRef.current.scrollHeight / 16.5);
+      textAreaRef.current.style.height = `${lineCount * 16.5}px`;
+      textAreaRef.current.style.overflowY = "scroll";
     }
-    return undefined;
-  }, [ref]);
+  }, [textAreaRef, content]);
 }

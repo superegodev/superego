@@ -11,8 +11,8 @@ export const AppRenderer = {
 
 export const IncompatibilityWarning = {
   buttons: style({
+    marginBlockStart: vars.spacing._8,
     display: "flex",
-    alignItems: "center",
     gap: vars.spacing._2,
   }),
 };

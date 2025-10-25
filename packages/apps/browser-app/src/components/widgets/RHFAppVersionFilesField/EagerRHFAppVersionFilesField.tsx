@@ -1,11 +1,5 @@
-import sandboxTypescriptLibs from "@superego/app-sandbox/typescript-libs";
-import type {
-  Message,
-  TypescriptFile,
-  TypescriptModule,
-} from "@superego/backend";
-import { codegen } from "@superego/schema";
-import { useMemo, useState } from "react";
+import type { Message, TypescriptModule } from "@superego/backend";
+import { useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
@@ -17,13 +11,16 @@ import EditingToolbar from "./EditingToolbar.js";
 import ImplementingSpinner from "./ImplementingSpinner.js";
 import Preview from "./Preview.js";
 import type Props from "./Props.js";
+import ResolveIncompatibilityModal from "./ResolveIncompatibilityModal.jsx";
 import * as cs from "./RHFAppVersionFilesField.css.js";
 import useSttAndImplement from "./useSttAndImplement.js";
+import useTypescriptLibs from "./useTypescriptLibs.js";
 import View from "./View.js";
 
 export default function EagerRHFAppVersionFilesField({
   control,
   name,
+  app,
   targetCollections,
 }: Props) {
   const intl = useIntl();
@@ -33,16 +30,7 @@ export default function EagerRHFAppVersionFilesField({
   const { field } = useController({ control, name: fieldName });
   const mainTsx: TypescriptModule = field.value;
 
-  const typescriptLibs = useMemo<TypescriptFile[]>(
-    () => [
-      ...sandboxTypescriptLibs,
-      ...targetCollections.map((targetCollection) => ({
-        path: `/${targetCollection.id}.ts` as const,
-        source: codegen(targetCollection.latestVersion.schema),
-      })),
-    ],
-    [targetCollections],
-  );
+  const typescriptLibs = useTypescriptLibs(targetCollections);
 
   const { isPending, mutate } = useSttAndImplement(
     targetCollections,
@@ -80,6 +68,13 @@ export default function EagerRHFAppVersionFilesField({
         className={cs.EagerRHFAppVersionFilesField.editingToolbar}
       />
       <div className={cs.EagerRHFAppVersionFilesField.content}>
+        {app ? (
+          <ResolveIncompatibilityModal
+            app={app}
+            targetCollections={targetCollections}
+            onResolveWithAssistant={onSend}
+          />
+        ) : null}
         {isPending ? <ImplementingSpinner /> : null}
         <Preview
           mainTsx={mainTsx}

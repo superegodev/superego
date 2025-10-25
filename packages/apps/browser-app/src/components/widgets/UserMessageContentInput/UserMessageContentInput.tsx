@@ -55,7 +55,7 @@ export default function UserMessageContentInput({
     });
 
   // Auto-resize textarea.
-  useAutoResizeTextArea(actualTextAreaRef);
+  useAutoResizeTextArea(actualTextAreaRef, text);
 
   return (
     <div className={classnames(cs.UserMessageContentInput.root, className)}>

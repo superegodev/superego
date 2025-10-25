@@ -39,7 +39,7 @@ export default function ImplementWithAssistantButton({
   return chatCompletions && assistantImplementation ? (
     <>
       <IconButton
-        variant="invisible"
+        variant="primary"
         label={intl.formatMessage({
           defaultMessage: "Implement with assistant",
         })}

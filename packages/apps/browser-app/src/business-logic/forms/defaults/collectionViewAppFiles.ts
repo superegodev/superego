@@ -42,6 +42,7 @@ function makeCollectionPropSnippet(collection: Collection): string {
 ${makeCollectionTsDoc(collection)}
 ${collection.id}: {
   id: "${collection.id}";
+  versionId: "${collection.latestVersion.id}";
   displayName: string;
   documents: {
     id: \`Document_\${string}\`;

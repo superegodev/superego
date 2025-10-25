@@ -86,6 +86,7 @@ export default function CreateAppForm({
       <RHFAppVersionFilesField
         control={control}
         name="files"
+        app={null}
         targetCollections={targetCollections}
       />
       <SetNameAndSaveModal
