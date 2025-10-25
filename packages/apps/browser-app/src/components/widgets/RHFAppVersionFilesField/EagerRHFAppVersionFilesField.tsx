@@ -58,6 +58,7 @@ export default function EagerRHFAppVersionFilesField({
   } = useImplementTypescriptModule();
   const isImplementing = isSttPending || isImplementTypescriptModulePending;
 
+  // TODO: clean up
   const onSend = async (messageContent: Message.User["content"]) => {
     const [part] = messageContent;
 
@@ -102,15 +103,25 @@ This module implements and default-exports a single-file React app for
 visualizing the documents in the following collections:
 
 ${targetCollectionsSnippet}
+
       `.trim(),
-      rules: `
-- Always include, at the top of the file, a comment with a "summarized spec" for
-  the app.
+      rules: null,
+      additionalInstructions: `
+The "USER REQUEST HISTORY" comment at the top of the file records all previous
+user requests that shaped the current implementation. Review it to understand
+the context and intent behind the existing code before addressing the new
+request.
+
+After completing the implementation:
+  - Add a bullet point with a concise summary of the current user request to the
+    history comment.
+  - If this change supersedes one or more older requests, remove them.
       `.trim(),
+      template:
+        forms.defaults.collectionViewAppFiles(targetCollections)[
+          "/main__DOT__tsx"
+        ].source,
       libs: typescriptLibs,
-      template: forms.defaults.collectionViewAppFiles(targetCollections, true)[
-        "/main__DOT__tsx"
-      ].source,
       startingPoint: {
         path: "/main.tsx",
         source: mainTsx.source,

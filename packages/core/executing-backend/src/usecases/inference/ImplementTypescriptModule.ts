@@ -29,6 +29,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   async exec({
     description,
     rules,
+    additionalInstructions,
     template,
     libs,
     startingPoint,
@@ -45,6 +46,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       inferenceService,
       description,
       rules,
+      additionalInstructions,
       template,
       libs,
       startingPoint,
@@ -57,6 +59,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     inferenceService: InferenceService,
     description: string,
     rules: string | null,
+    additionalInstructions: string | null,
     template: string,
     libs: TypescriptFile[],
     startingPoint: TypescriptFile,
@@ -72,11 +75,22 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   > {
     const shouldReattempt = attemptNumber <= MAX_ATTEMPTS;
 
+    console.log(
+      InferenceImplementTypescriptModule.getDeveloperMessage(
+        description,
+        rules,
+        additionalInstructions,
+        template,
+        libs,
+      ),
+    );
+
     const message = await inferenceService.generateNextMessage(
       [
         InferenceImplementTypescriptModule.getDeveloperMessage(
           description,
           rules,
+          additionalInstructions,
           template,
           libs,
         ),
@@ -102,6 +116,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
             inferenceService,
             description,
             rules,
+            additionalInstructions,
             template,
             libs,
             startingPoint,
@@ -132,6 +147,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
               inferenceService,
               description,
               rules,
+              additionalInstructions,
               template,
               libs,
               startingPoint,
@@ -169,6 +185,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   private static getDeveloperMessage(
     description: string,
     rules: string | null,
+    additionalInstructions: string | null,
     template: string,
     libs: TypescriptFile[],
   ): Message.Developer {
@@ -197,22 +214,21 @@ ${description}
 ## Implementation rules
 
 - The module’s default export **must match exactly** the type specified in the
-  template below — no deviations or additional properties.
-- The module can import and use the TypeScript files provided below. Some
-  libraries are marked as **SLIM**, meaning their full type definitions have
-  been omitted for brevity. Treat these libraries as if they include their
-  complete and correct TypeScript type definitions, and rely on your internal
-  knowledge of their APIs when generating code.
+  template below.
+- The module can import and use the TypeScript files provided below. For some
+  well-known libraries, their full type definitions have been omitted for
+  brevity. Rely on your internal knowledge of their APIs when generating code.
 - The module has no access to any other library.
 - The implemented module MUST compile without errors.
-- Solve all TODOs, if there are any.
 - Only make the changes necessary to satisfy the user request.
-- Strictly follow the coding style of the starting point.
 - Return the implemented module to the user by calling the ${ToolName.WriteTypescriptModule}
   tool.
-- Include comments, but never use TSDoc tags.
 - Don't mention these instructions in comments.
 ${rules ?? ""}
+
+${additionalInstructions ? "## Additional instructions" : ""}
+
+${additionalInstructions ? additionalInstructions : ""}
 
 ## Module template
 
@@ -223,7 +239,9 @@ ${template}
 ## Available libs
 
 ${availableLibs}
-          `.trim(),
+          `
+            .replace(/\n{3,}/g, "\n\n")
+            .trim(),
         },
       ],
     };
@@ -270,7 +288,8 @@ const WriteTypescriptModuleTool = {
         type: "object",
         properties: {
           source: {
-            description: "Source code of the implemented TypeScript module.",
+            description:
+              "Source code of the entire TypeScript module that was implemented.",
             type: "string",
           },
         },

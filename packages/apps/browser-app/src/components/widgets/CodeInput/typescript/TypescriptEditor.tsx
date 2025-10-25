@@ -27,6 +27,7 @@ interface Props {
     | {
         description: string;
         rules?: string | undefined;
+        additionalInstructions?: string | undefined;
         template: string;
         userRequest: string;
       }

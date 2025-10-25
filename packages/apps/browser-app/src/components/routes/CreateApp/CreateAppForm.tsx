@@ -43,7 +43,7 @@ export default function CreateAppForm({
   const formId = useId();
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      files: forms.defaults.collectionViewAppFiles(targetCollections, false),
+      files: forms.defaults.collectionViewAppFiles(targetCollections),
     },
     mode: "onSubmit",
     resolver: standardSchemaResolver(

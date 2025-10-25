@@ -17,6 +17,7 @@ interface Props {
     | {
         description: string;
         rules?: string | undefined;
+        additionalInstructions?: string | undefined;
         template: string;
         userRequest: string;
       }
@@ -50,6 +51,8 @@ export default function ImplementWithAssistantButton({
           const result = await mutate({
             description: assistantImplementation.description,
             rules: assistantImplementation.rules ?? null,
+            additionalInstructions:
+              assistantImplementation.additionalInstructions ?? null,
             template: assistantImplementation.template,
             libs: typescriptLibs,
             startingPoint: {

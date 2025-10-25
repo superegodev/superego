@@ -7,6 +7,9 @@ export default function collectionViewAppFiles(
   return {
     "/main__DOT__tsx": {
       source: `
+/*
+ * USER REQUEST HISTORY:
+ */
 import React from "react";
 import { DefaultApp } from "@superego/app-sandbox/components";
 ${targetCollections.map(makeCollectionImport).join("\n")}
