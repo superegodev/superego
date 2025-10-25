@@ -380,6 +380,9 @@
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
   },
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+    "defaultMessage": "Si è verificato un errore durante la generazione dell'app"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
   },
@@ -598,6 +601,42 @@
   },
   "ImplementWithAssistantButton.tsx_80aEjO": {
     "defaultMessage": "Implementazione fallita"
+  },
+  "ImplementingSpinner.tsx_93mRKW": {
+    "defaultMessage": "Lascia che me ne occupi"
+  },
+  "ImplementingSpinner.tsx_BZWtmi": {
+    "defaultMessage": "Sto apportando modifiche"
+  },
+  "ImplementingSpinner.tsx_Bk6B6r": {
+    "defaultMessage": "Ci siamo quasi"
+  },
+  "ImplementingSpinner.tsx_Fhu9fI": {
+    "defaultMessage": "Solo un ultimo refactor"
+  },
+  "ImplementingSpinner.tsx_Hy/tAh": {
+    "defaultMessage": "È più complesso di quanto avessi previsto"
+  },
+  "ImplementingSpinner.tsx_MQVNHz": {
+    "defaultMessage": "Subito"
+  },
+  "ImplementingSpinner.tsx_Mdz/x3": {
+    "defaultMessage": "Sarà pronto in un attimo"
+  },
+  "ImplementingSpinner.tsx_ZRWqDd": {
+    "defaultMessage": "Per favore non licenziarmi"
+  },
+  "ImplementingSpinner.tsx_m0Hh22": {
+    "defaultMessage": "Ancora una correzione"
+  },
+  "ImplementingSpinner.tsx_mLuQZP": {
+    "defaultMessage": "Mi metto al lavoro"
+  },
+  "ImplementingSpinner.tsx_pJh6Bf": {
+    "defaultMessage": "Sto compilando il codice"
+  },
+  "ImplementingSpinner.tsx_q462mT": {
+    "defaultMessage": "È un problema difficile"
   },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
@@ -851,6 +890,9 @@
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Crea una nuova versione del documento in {collection}"
   },
+  "Toast.tsx_Lv0zJu": {
+    "defaultMessage": "Dettagli"
+  },
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Chiudi"
   },
@@ -943,6 +985,27 @@
   },
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
+  "getIntlMessages.ts_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "getIntlMessages.ts_PyA0WU": {
+    "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
+  },
+  "getIntlMessages.ts_UfI09W": {
+    "defaultMessage": "Si è verificato un errore durante l'importazione dell'app."
+  },
+  "getIntlMessages.ts_XBQLkj": {
+    "defaultMessage": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
+  },
+  "getIntlMessages.ts_bzhBew": {
+    "defaultMessage": "Si è verificato un errore durante il rendering dell'app."
+  },
+  "getIntlMessages.ts_eIxrAW": {
+    "defaultMessage": "Questa app ha accesso alle seguenti collezioni:"
+  },
+  "getIntlMessages.ts_hPMG1H": {
+    "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

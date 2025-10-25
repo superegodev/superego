@@ -1002,6 +1002,12 @@
       "value": "Cosa vuoi creare?"
     }
   ],
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante la generazione dell'app"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -1450,6 +1456,78 @@
     {
       "type": 0,
       "value": "Implementazione fallita"
+    }
+  ],
+  "ImplementingSpinner.tsx_93mRKW": [
+    {
+      "type": 0,
+      "value": "Lascia che me ne occupi"
+    }
+  ],
+  "ImplementingSpinner.tsx_BZWtmi": [
+    {
+      "type": 0,
+      "value": "Sto apportando modifiche"
+    }
+  ],
+  "ImplementingSpinner.tsx_Bk6B6r": [
+    {
+      "type": 0,
+      "value": "Ci siamo quasi"
+    }
+  ],
+  "ImplementingSpinner.tsx_Fhu9fI": [
+    {
+      "type": 0,
+      "value": "Solo un ultimo refactor"
+    }
+  ],
+  "ImplementingSpinner.tsx_Hy/tAh": [
+    {
+      "type": 0,
+      "value": "È più complesso di quanto avessi previsto"
+    }
+  ],
+  "ImplementingSpinner.tsx_MQVNHz": [
+    {
+      "type": 0,
+      "value": "Subito"
+    }
+  ],
+  "ImplementingSpinner.tsx_Mdz/x3": [
+    {
+      "type": 0,
+      "value": "Sarà pronto in un attimo"
+    }
+  ],
+  "ImplementingSpinner.tsx_ZRWqDd": [
+    {
+      "type": 0,
+      "value": "Per favore non licenziarmi"
+    }
+  ],
+  "ImplementingSpinner.tsx_m0Hh22": [
+    {
+      "type": 0,
+      "value": "Ancora una correzione"
+    }
+  ],
+  "ImplementingSpinner.tsx_mLuQZP": [
+    {
+      "type": 0,
+      "value": "Mi metto al lavoro"
+    }
+  ],
+  "ImplementingSpinner.tsx_pJh6Bf": [
+    {
+      "type": 0,
+      "value": "Sto compilando il codice"
+    }
+  ],
+  "ImplementingSpinner.tsx_q462mT": [
+    {
+      "type": 0,
+      "value": "È un problema difficile"
     }
   ],
   "InferenceSettings.tsx_25pjeS": [
@@ -2598,6 +2676,12 @@
       "value": "collection"
     }
   ],
+  "Toast.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Dettagli"
+    }
+  ],
   "Toast.tsx_rbrahO": [
     {
       "type": 0,
@@ -2853,6 +2937,48 @@
     {
       "type": 0,
       "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
+  "getIntlMessages.ts_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "getIntlMessages.ts_PyA0WU": [
+    {
+      "type": 0,
+      "value": "Puoi vibe-codare l'app chiedendo all'assistente."
+    }
+  ],
+  "getIntlMessages.ts_UfI09W": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante l'importazione dell'app."
+    }
+  ],
+  "getIntlMessages.ts_XBQLkj": [
+    {
+      "type": 0,
+      "value": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
+    }
+  ],
+  "getIntlMessages.ts_bzhBew": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering dell'app."
+    }
+  ],
+  "getIntlMessages.ts_eIxrAW": [
+    {
+      "type": 0,
+      "value": "Questa app ha accesso alle seguenti collezioni:"
+    }
+  ],
+  "getIntlMessages.ts_hPMG1H": [
+    {
+      "type": 0,
+      "value": "In questa sezione puoi vedere l'anteprima live della tua app."
     }
   ],
   "typescriptModule.ts_MZNYNj": [
