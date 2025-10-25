@@ -8,8 +8,8 @@ import { PiXCircleFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import type ToastContent from "../../../business-logic/toasts/ToastContent.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import CodeBlock from "../../design-system/CodeBlock/CodeBlock.jsx";
-import Disclosure from "../../design-system/Disclosure/Disclosure.jsx";
+import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
+import Disclosure from "../../design-system/Disclosure/Disclosure.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ToastRegion.css.js";
 

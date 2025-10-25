@@ -6,6 +6,7 @@ import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
+import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { afterAll, beforeAll } from "vitest";
 import registerTests from "./registerTests.js";
 
@@ -45,26 +46,19 @@ const defaultGlobalSettings = {
 };
 
 registerTests((connector) => {
-  // Javascript sandbox
-  const javascriptSandbox = new QuickjsJavascriptSandbox();
-
-  // Inference service
-  const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
-
-  // Data repositories
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
     defaultGlobalSettings: defaultGlobalSettings,
   });
   dataRepositoriesManager.runMigrations();
 
-  // Backend
-  const backend = new ExecutingBackend(
-    dataRepositoriesManager,
-    javascriptSandbox,
-    inferenceServiceFactory,
-    connector ? [connector] : [],
-  );
-
-  return { backend };
+  return {
+    backend: new ExecutingBackend(
+      dataRepositoriesManager,
+      new QuickjsJavascriptSandbox(),
+      new TscTypescriptCompiler(),
+      new OpenAICompatInferenceServiceFactory(),
+      connector ? [connector] : [],
+    ),
+  };
 });

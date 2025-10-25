@@ -19,6 +19,7 @@
     "@superego/openai-compat-inference-service": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
+    "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
     "luxon": "^3.7.2",
     "p-map": "^7.0.3",

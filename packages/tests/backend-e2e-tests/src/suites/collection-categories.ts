@@ -61,6 +61,10 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
                 message: 'Invalid emoji: Received "not-an-emoji"',
                 path: undefined,
               },
+              {
+                message: "Invalid graphemes: Expected <=1 but received 12",
+                path: undefined,
+              },
             ],
           },
         },
@@ -253,6 +257,10 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
             issues: [
               {
                 message: 'Invalid emoji: Received "not-an-emoji"',
+                path: undefined,
+              },
+              {
+                message: "Invalid graphemes: Expected <=1 but received 12",
                 path: undefined,
               },
             ],

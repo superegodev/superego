@@ -6,8 +6,7 @@ import Echart from "../components/Echart/Echart.js";
 import Grid from "../components/Grid/Grid.js";
 import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
-
-export const dependenciesGlobalVar = "__dependencies__";
+import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
 export default function registerDependencies() {
   if (!(window as any)[dependenciesGlobalVar]) {

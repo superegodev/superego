@@ -37,6 +37,7 @@
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
+    "@superego/tsc-typescript-compiler": "workspace:*",
     "electron-squirrel-startup": "^1.0.1"
   }
 }

@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { dependenciesGlobalVar } from "./registerDependencies.js";
+import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 import transpileImports from "./transpileImports.js";
 
 const testCases: {

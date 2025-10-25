@@ -1,4 +1,4 @@
-import { dependenciesGlobalVar } from "./registerDependencies.js";
+import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
 /**
  * Transpiles the ESM imports in the passed-in source code, turning them into
