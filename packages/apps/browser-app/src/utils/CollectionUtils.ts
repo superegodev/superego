@@ -41,4 +41,12 @@ export default {
       ),
     );
   },
+
+  makeMap(collections: Collection[]): Record<CollectionId, Collection> {
+    const map: Record<CollectionId, Collection> = {};
+    for (const collection of collections) {
+      map[collection.id] = collection;
+    }
+    return map;
+  },
 };

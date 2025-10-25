@@ -260,6 +260,13 @@ export const [light, vars] = createTheme({
         backgroundFilled: colors.oranges._5,
         textFilled: colors.greys._0,
       },
+      warning: {
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
+        backgroundFilled: colors.oranges._5,
+        textFilled: colors.greys._0,
+      },
       error: {
         border: colors.reds._5,
         background: colors.reds._1,
@@ -381,6 +388,13 @@ export const dark = createTheme(vars, {
         textFilled: colors.greys._0,
       },
       pending: {
+        border: colors.oranges._1,
+        background: colors.oranges._5,
+        text: colors.oranges._1,
+        backgroundFilled: colors.oranges._5,
+        textFilled: colors.greys._0,
+      },
+      warning: {
         border: colors.oranges._1,
         background: colors.oranges._5,
         text: colors.oranges._1,

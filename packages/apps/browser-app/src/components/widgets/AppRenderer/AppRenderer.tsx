@@ -5,7 +5,7 @@ import type {
   Settings,
 } from "@superego/app-sandbox/types";
 import type { App, Document } from "@superego/backend";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -14,6 +14,7 @@ import useTheme from "../../../business-logic/theme/useTheme.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import * as cs from "./AppRenderer.css.js";
 import getIntlMessages from "./getIntlMessages.js";
+import IncompatibilityWarning from "./IncompatibilityWarning.js";
 
 interface Props {
   app: App;
@@ -22,14 +23,15 @@ export default function AppRenderer({ app }: Props) {
   const intl = useIntl();
   const theme = useTheme();
   const { collections } = useGlobalData();
+  const collectionsMap = CollectionUtils.makeMap(collections);
 
-  const targetCollections = collections.filter((collection) =>
-    app.latestVersion.targetCollections.some(
-      (targetCollection) =>
-        collection.id === targetCollection.id &&
-        collection.latestVersion.id === targetCollection.versionId,
-    ),
-  );
+  const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
+    useState(false);
+  // Reset incompatibilityWarningDismissed when the app changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  useEffect(() => {
+    setIncompatibilityWarningDismissed(false);
+  }, [app.id]);
 
   const settings: Settings = useMemo(() => ({ theme }), [theme]);
   const intlMessages: IntlMessages = useMemo(
@@ -37,11 +39,23 @@ export default function AppRenderer({ app }: Props) {
     [intl],
   );
 
-  if (targetCollections.length !== app.latestVersion.targetCollections.length) {
-    // TODO: warn if app references a non-existing or out of date collection
-    return null;
+  const isCompatible = app.latestVersion.targetCollections.every(
+    (targetCollection) =>
+      collectionsMap[targetCollection.id]?.latestVersion.id ===
+      targetCollection.versionId,
+  );
+  if (!isCompatible && !incompatibilityWarningDismissed) {
+    return (
+      <IncompatibilityWarning
+        app={app}
+        onDismiss={() => setIncompatibilityWarningDismissed(true)}
+      />
+    );
   }
 
+  const targetCollections = app.latestVersion.targetCollections
+    .map((targetCollection) => collectionsMap[targetCollection.id])
+    .filter((collection) => collection !== undefined);
   return (
     <DataLoader
       queries={targetCollections.map(({ id }) =>

@@ -1538,6 +1538,50 @@
       "value": "It’s a hard problem"
     }
   ],
+  "IncompatibilityWarning.tsx_8OtepV": [
+    {
+      "type": 0,
+      "value": "Update the app"
+    }
+  ],
+  "IncompatibilityWarning.tsx_QL2z4z": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " This app might not work correctly, as it uses collections that were either changed or deleted since the app was made. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Update the app to avoid this warning. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "IncompatibilityWarning.tsx_q9XsfI": [
+    {
+      "type": 0,
+      "value": "Display anyway"
+    }
+  ],
+  "IncompatibilityWarning.tsx_s36xxK": [
+    {
+      "type": 0,
+      "value": "Incompatibility warning"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,

@@ -638,6 +638,18 @@
   "ImplementingSpinner.tsx_q462mT": {
     "defaultMessage": "It’s a hard problem"
   },
+  "IncompatibilityWarning.tsx_8OtepV": {
+    "defaultMessage": "Update the app"
+  },
+  "IncompatibilityWarning.tsx_QL2z4z": {
+    "defaultMessage": "<p> This app might not work correctly, as it uses collections that were either changed or deleted since the app was made. </p> <p> Update the app to avoid this warning. </p>"
+  },
+  "IncompatibilityWarning.tsx_q9XsfI": {
+    "defaultMessage": "Display anyway"
+  },
+  "IncompatibilityWarning.tsx_s36xxK": {
+    "defaultMessage": "Incompatibility warning"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
