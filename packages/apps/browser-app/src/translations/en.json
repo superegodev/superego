@@ -611,8 +611,14 @@
   "ImplementingSpinner.tsx_Bk6B6r": {
     "defaultMessage": "Almost there"
   },
+  "ImplementingSpinner.tsx_Fhu9fI": {
+    "defaultMessage": "Just one last refactor"
+  },
   "ImplementingSpinner.tsx_Hy/tAh": {
     "defaultMessage": "It’s more complex than I estimated"
+  },
+  "ImplementingSpinner.tsx_MQVNHz": {
+    "defaultMessage": "Right away"
   },
   "ImplementingSpinner.tsx_Mdz/x3": {
     "defaultMessage": "It'll be done in no time"
@@ -620,11 +626,11 @@
   "ImplementingSpinner.tsx_ZRWqDd": {
     "defaultMessage": "Please don't fire me"
   },
-  "ImplementingSpinner.tsx_k61bRC": {
-    "defaultMessage": "Just a little refactor"
-  },
   "ImplementingSpinner.tsx_m0Hh22": {
     "defaultMessage": "One more fix"
+  },
+  "ImplementingSpinner.tsx_mLuQZP": {
+    "defaultMessage": "Getting to work"
   },
   "ImplementingSpinner.tsx_pJh6Bf": {
     "defaultMessage": "Compiling code"

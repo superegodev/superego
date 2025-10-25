@@ -1,3 +1,4 @@
+import { sample, shuffle } from "es-toolkit";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import Logo from "../../design-system/Logo/Logo.js";
@@ -11,18 +12,26 @@ export default function ImplementingSpinner() {
 
   const sentences = useMemo(
     () => [
-      intl.formatMessage({ defaultMessage: "Let me work on that" }),
-      intl.formatMessage({ defaultMessage: "It'll be done in no time" }),
-      intl.formatMessage({ defaultMessage: "Making changes" }),
-      intl.formatMessage({ defaultMessage: "Compiling code" }),
-      intl.formatMessage({ defaultMessage: "One more fix" }),
-      intl.formatMessage({
-        defaultMessage: "It’s more complex than I estimated",
-      }),
-      intl.formatMessage({ defaultMessage: "Almost there" }),
-      intl.formatMessage({ defaultMessage: "Please don't fire me" }),
-      intl.formatMessage({ defaultMessage: "It’s a hard problem" }),
-      intl.formatMessage({ defaultMessage: "Just a little refactor" }),
+      sample([
+        intl.formatMessage({ defaultMessage: "Let me work on that" }),
+        intl.formatMessage({ defaultMessage: "Right away" }),
+        intl.formatMessage({ defaultMessage: "Getting to work" }),
+      ]),
+      ...shuffle([
+        intl.formatMessage({ defaultMessage: "It'll be done in no time" }),
+        intl.formatMessage({ defaultMessage: "Making changes" }),
+        intl.formatMessage({ defaultMessage: "Compiling code" }),
+        intl.formatMessage({ defaultMessage: "One more fix" }),
+      ]),
+      ...shuffle([
+        intl.formatMessage({
+          defaultMessage: "It’s more complex than I estimated",
+        }),
+        intl.formatMessage({ defaultMessage: "Almost there" }),
+        intl.formatMessage({ defaultMessage: "Please don't fire me" }),
+        intl.formatMessage({ defaultMessage: "It’s a hard problem" }),
+        intl.formatMessage({ defaultMessage: "Just one last refactor" }),
+      ]),
     ],
     [intl],
   );

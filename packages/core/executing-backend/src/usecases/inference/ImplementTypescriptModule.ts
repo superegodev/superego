@@ -179,7 +179,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     template: string,
     libs: TypescriptFile[],
   ): Message.Developer {
-    const availableLibs = slimLibs(libs)
+    const availableLibs = slimDownLibs(libs)
       .flatMap((lib) => [
         "```ts",
         `// filename: ${lib.path}`,
@@ -288,28 +288,25 @@ const WriteTypescriptModuleTool = {
   },
 };
 
-function slimLibs(libs: TypescriptFile[]): TypescriptFile[] {
-  return libs.map(slimLib);
-}
-
-// TODO: rework
-function slimLib(lib: TypescriptFile): TypescriptFile {
-  if (
-    !(
-      lib.path.startsWith("/node_modules/react") ||
-      lib.path.startsWith("/node_modules/echarts")
-    )
-  ) {
-    return lib;
-  }
-  const [, libName, fileName] = lib.path.split("/");
-  return {
-    path: lib.path,
-    source: [
-      "// SLIM",
-      fileName === "index.d.ts"
-        ? `declare module "${libName}"`
-        : `declare module "${libName}/${fileName?.replace(".d.ts", "")}"`,
-    ].join("\n"),
-  };
+/** Slims down libs to avoid a huge and largely useless context. */
+function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
+  return [
+    ...libs.filter(
+      // Remove full definitions of well-known libraries.
+      (lib) =>
+        !(
+          lib.path.startsWith("/node_modules/react") ||
+          lib.path.startsWith("/node_modules/echarts")
+        ),
+    ),
+    // Add shim definitions for well-known libraries.
+    {
+      path: "/node_modules/react/index.d.ts",
+      source: 'declare module "react";',
+    },
+    {
+      path: "/node_modules/echarts/index.d.ts",
+      source: 'declare module "echarts";',
+    },
+  ];
 }

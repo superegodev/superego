@@ -22,7 +22,10 @@ export const EagerRHFAppVersionFilesField = {
 
   preview: styleVariants({
     visible: {},
-    hidden: { display: "none !important" },
+    hidden: {
+      position: "absolute",
+      visibility: "hidden",
+    },
   }),
 
   typescriptModule: styleVariants({
