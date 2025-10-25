@@ -8,7 +8,7 @@ import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
@@ -41,16 +41,13 @@ export default function UpdateGlobalSettingsForm({
       reset(data, { keepValues: true });
     } else {
       console.error(error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error saving global settings",
-          }),
-          description: error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error saving global settings",
+        }),
+        error: error,
+      });
     }
   };
 

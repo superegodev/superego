@@ -72,6 +72,7 @@ export default function CreateCollectionForm() {
         name,
         icon,
         collectionCategoryId: null,
+        defaultCollectionViewAppId: null,
         description,
         assistantInstructions,
       },

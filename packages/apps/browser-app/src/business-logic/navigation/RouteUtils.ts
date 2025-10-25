@@ -1,10 +1,12 @@
 import type {
+  AppId,
   CollectionId,
   ConversationId,
   DocumentId,
 } from "@superego/backend";
+import { Id } from "@superego/shared-utils";
 import type Route from "./Route.js";
-import { RouteName } from "./Route.js";
+import { CollectionRouteView, RouteName } from "./Route.js";
 
 export function toHref(route: Route): string {
   switch (route.name) {
@@ -15,19 +17,33 @@ export function toHref(route: Route): string {
     case RouteName.Conversation:
       return `/conversations/${route.conversationId}`;
     case RouteName.CreateCollectionAssisted:
-      return "/collections/new/assisted";
+      return route.initialMessage
+        ? `/collections/new/assisted?initialMessage=${encodeURIComponent(route.initialMessage)}`
+        : "/collections/new/assisted";
     case RouteName.CreateCollectionManual:
       return "/collections/new/manual";
     case RouteName.CreateNewCollectionVersion:
       return `/collections/${route.collectionId}/newVersion`;
     case RouteName.Collection:
-      return `/collections/${route.collectionId}`;
+      return "view" in route
+        ? route.view === CollectionRouteView.Table
+          ? `/collections/${route.collectionId}?view=${CollectionRouteView.Table}`
+          : `/collections/${route.collectionId}?view=${CollectionRouteView.App}&appId=${route.appId}`
+        : `/collections/${route.collectionId}`;
     case RouteName.CollectionSettings:
       return `/collections/${route.collectionId}/settings`;
     case RouteName.CreateDocument:
       return `/collections/${route.collectionId}/documents/new`;
     case RouteName.Document:
       return `/collections/${route.collectionId}/documents/${route.documentId}`;
+    case RouteName.CreateApp: {
+      const search = new URLSearchParams(
+        route.collectionIds.map((id) => ["collectionId", id]),
+      );
+      return `/apps/new?${search}`;
+    }
+    case RouteName.EditApp:
+      return `/apps/${route.appId}/edit`;
     case RouteName.GlobalSettings:
       return "/settings";
   }
@@ -121,12 +137,22 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/collections/:collectionId{/}?" }),
-    toRoute: (match) => ({
-      name: RouteName.Collection,
-      collectionId: decodePathSegment<CollectionId>(
-        match.pathname.groups["collectionId"],
-      ),
-    }),
+    toRoute: (match) => {
+      const search = new URLSearchParams(match.search.input);
+      const view = search.get("view");
+      const appId = search.get("appId");
+      const baseRoute = {
+        name: RouteName.Collection,
+        collectionId: decodePathSegment<CollectionId>(
+          match.pathname.groups["collectionId"],
+        ) as CollectionId,
+      } as const;
+      return view === CollectionRouteView.Table
+        ? { ...baseRoute, view }
+        : view === CollectionRouteView.App && Id.is.app(appId)
+          ? { ...baseRoute, view, appId }
+          : baseRoute;
+    },
   },
   {
     pattern: new URLPattern({
@@ -146,6 +172,24 @@ const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({ pathname: "/settings{/}?" }),
     toRoute: () => ({ name: RouteName.GlobalSettings }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/apps/new{/}?" }),
+    toRoute: (match) => ({
+      name: RouteName.CreateApp,
+      collectionIds: new URLSearchParams(match.search.input).getAll(
+        "collectionId",
+      ) as CollectionId[],
+    }),
+  },
+  {
+    pattern: new URLPattern({
+      pathname: "/apps/:appId/edit{/}?",
+    }),
+    toRoute: (match) => ({
+      name: RouteName.EditApp,
+      appId: decodePathSegment<AppId>(match.pathname.groups["appId"]),
+    }),
   },
   {
     pattern: new URLPattern({ pathname: "/" }),

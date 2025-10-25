@@ -15,10 +15,12 @@ export const ToastRegion = {
 };
 
 const toastRootBase = style({
-  width: vars.spacing._80,
+  minWidth: vars.spacing._80,
+  maxWidth: vars.spacing._160,
   borderRadius: vars.borders.radius.md,
   padding: vars.spacing._4,
   display: "flex",
+  gap: vars.spacing._4,
 });
 const toastCloseButtonBase = style({
   fontSize: vars.typography.fontSizes.xl,
@@ -31,18 +33,18 @@ const toastCloseButtonBase = style({
 });
 export const Toast = {
   root: styleVariants({
-    [ToastType.Error]: [
-      toastRootBase,
-      {
-        background: vars.colors.semantic.error.backgroundFilled,
-        color: vars.colors.semantic.error.textFilled,
-      },
-    ],
     [ToastType.Success]: [
       toastRootBase,
       {
         background: vars.colors.semantic.success.backgroundFilled,
         color: vars.colors.semantic.success.textFilled,
+      },
+    ],
+    [ToastType.Error]: [
+      toastRootBase,
+      {
+        background: vars.colors.semantic.error.backgroundFilled,
+        color: vars.colors.semantic.error.textFilled,
       },
     ],
   }),
@@ -58,24 +60,25 @@ export const Toast = {
     marginBlockEnd: vars.spacing._2,
   }),
 
-  description: style({
+  errorDetails: style({
     display: "block",
     fontSize: vars.typography.fontSizes.sm,
   }),
 
-  closeButton: styleVariants({
-    [ToastType.Error]: [
-      toastCloseButtonBase,
-      {
-        background: vars.colors.semantic.error.backgroundFilled,
+  errorDetailsTitle: style({
+    color: vars.colors.semantic.error.textFilled,
+    selectors: {
+      "&:hover": {
         color: vars.colors.semantic.error.textFilled,
-        selectors: {
-          "&:hover": {
-            color: vars.colors.semantic.error.textFilled,
-          },
-        },
       },
-    ],
+    },
+  }),
+
+  errorDetailsCodeBlock: style({
+    borderRadius: vars.borders.radius.md,
+  }),
+
+  closeButton: styleVariants({
     [ToastType.Success]: [
       toastCloseButtonBase,
       {
@@ -84,6 +87,18 @@ export const Toast = {
         selectors: {
           "&:hover": {
             color: vars.colors.semantic.success.textFilled,
+          },
+        },
+      },
+    ],
+    [ToastType.Error]: [
+      toastCloseButtonBase,
+      {
+        background: vars.colors.semantic.error.backgroundFilled,
+        color: vars.colors.semantic.error.textFilled,
+        selectors: {
+          "&:hover": {
+            color: vars.colors.semantic.error.textFilled,
           },
         },
       },

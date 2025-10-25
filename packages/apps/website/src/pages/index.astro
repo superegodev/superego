@@ -142,6 +142,10 @@ import logo from "../assets/logo.svg";
     font-weight: 600;
   }
 
+  .balanced {
+    text-wrap: balance;
+  }
+
   .step {
     display: flex;
     flex-direction: column;
@@ -302,12 +306,13 @@ import logo from "../assets/logo.svg";
   }
 
   #tos-pp {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    width: 100%;
+    padding-inline: 1rem;
+    text-align: right;
+  }
+  #tos-pp a {
+    color: var(--sl-color-text);
     font-size: 0.6rem;
-    /* Start with the link being hidden. */
-    display: none;
   }
 </style>
 
@@ -331,21 +336,21 @@ import logo from "../assets/logo.svg";
 
   <div class="step">
     <h2>Pulling data from your other apps,</h2>
-    <p>
+    <p class="balanced">
       giving you back what's
       <em class="highlighted">rightfully yours</em>.
     </p>
   </div>
 
   <div class="step big">
-    <h2>Then: connect it to an <span class="highlighted">AI</span>.</h2>
+    <h2 class="balanced">
+      Then: connect it to an <span class="highlighted">AI</span>.
+    </h2>
   </div>
 
   <div class="step">
-    <h2>
-      Finally! An assistant that <em class="highlighted">actually</em>
-      <br />
-      knows you.
+    <h2 class="balanced">
+      Finally! An assistant that <em class="highlighted">actually</em> knows you.
     </h2>
     <p>
       Did you know you run faster <em>on Thursdays</em>? Or that last year you
@@ -366,13 +371,12 @@ import logo from "../assets/logo.svg";
   </div>
 
   <div class="step">
-    <h2>Um, sorry, <em>“vibe-able”</em>.</h2>
-    <p>Need to extend it? <em class="highlighted">Just ask</em> the LLM.</p>
-  </div>
-
-  <div class="step">
-    <h2>Or, do it yourself,</h2>
-    <p>with snippets of TypeScript.</p>
+    <h2>Sorry, <em>“vibe-able”</em>.</h2>
+    <p>
+      That niche app idea no one would ever make?
+      <br />
+      <em class="highlighted">Just ask</em> the AI!
+    </p>
   </div>
 
   <div class="step big">
@@ -422,5 +426,7 @@ import logo from "../assets/logo.svg";
     <Icon name="down-caret" aria-hidden="true" />
   </button>
 
-  <a id="tos-pp" href="/tos-pp">Demo TOS and Privacy Policy</a>
+  <div id="tos-pp">
+    <a href="/tos-pp">Demo TOS and Privacy Policy</a>
+  </div>
 </StarlightPage>

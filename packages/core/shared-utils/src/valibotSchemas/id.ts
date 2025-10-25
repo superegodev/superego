@@ -1,4 +1,8 @@
-import type { CollectionCategoryId, CollectionId } from "@superego/backend";
+import type {
+  AppId,
+  CollectionCategoryId,
+  CollectionId,
+} from "@superego/backend";
 import * as v from "valibot";
 import Id from "../Id/Id.js";
 
@@ -13,4 +17,8 @@ function collection(): v.GenericSchema<CollectionId, CollectionId> {
   return v.custom(Id.is.collection);
 }
 
-export default { collectionCategory, collection };
+function app(): v.GenericSchema<AppId, AppId> {
+  return v.custom(Id.is.app);
+}
+
+export default { collectionCategory, collection, app };

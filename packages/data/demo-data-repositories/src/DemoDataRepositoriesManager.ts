@@ -28,6 +28,8 @@ export default class DemoDataRepositoriesManager
     await this.writeData(
       {
         version: crypto.randomUUID(),
+        apps: {},
+        appVersions: {},
         backgroundJobs: {},
         collectionCategories: {},
         collections: {},
@@ -54,6 +56,8 @@ export default class DemoDataRepositoriesManager
     let shouldAbort = false;
     const transactionData = (await this.readData()) ?? {
       version: crypto.randomUUID(),
+      apps: {},
+      appVersions: {},
       backgroundJobs: {},
       collectionCategories: {},
       collections: {},
@@ -83,6 +87,8 @@ export default class DemoDataRepositoriesManager
       transactionData.version = savepoints[name]!.version;
       (
         [
+          "apps",
+          "appVersions",
           "backgroundJobs",
           "collectionCategories",
           "collections",

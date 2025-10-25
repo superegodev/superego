@@ -1,17 +1,18 @@
-import type { TypescriptLib } from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
 import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
-import CodeInput from "../../design-system/CodeInput/CodeInput.js";
-import type IncludedGlobalUtils from "../../design-system/CodeInput/typescript/IncludedGlobalUtils.js";
 import {
   Description,
   FieldError,
   Label,
 } from "../../design-system/forms/forms.js";
+import CodeInput from "../CodeInput/CodeInput.js";
+import type IncludedGlobalUtils from "../CodeInput/typescript/IncludedGlobalUtils.js";
+import type UndoRedo from "../CodeInput/UndoRedo.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
 interface Props {
@@ -22,12 +23,22 @@ interface Props {
   isDisabled?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
-  typescriptLibs?: TypescriptLib[] | undefined;
+  language: "typescript" | "typescript-jsx";
+  undoRedo?: UndoRedo | undefined;
+  typescriptLibs?: TypescriptFile[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
   assistantImplementation?:
-    | { instructions: string; template: string }
+    | {
+        description: string;
+        rules?: string | undefined;
+        additionalInstructions?: string | undefined;
+        template: string;
+        userRequest: string;
+      }
     | undefined;
+  maxHeight?: string | undefined;
   className?: string | undefined;
+  codeInputClassName?: string | undefined;
 }
 export default function RHFTypescriptModuleField({
   control,
@@ -36,10 +47,14 @@ export default function RHFTypescriptModuleField({
   description,
   isDisabled,
   autoFocus,
+  language,
+  undoRedo,
   typescriptLibs,
   includedGlobalUtils,
   assistantImplementation,
+  maxHeight,
   className,
+  codeInputClassName,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
   const isInvalid =
@@ -56,17 +71,19 @@ export default function RHFTypescriptModuleField({
     >
       {label ? <Label>{label}</Label> : null}
       <CodeInput
-        language="typescript"
+        language={language}
         value={field.value ?? { source: "", compiled: "" }}
         onChange={field.onChange}
         onBlur={field.onBlur}
+        undoRedo={undoRedo}
         autoFocus={autoFocus}
         isInvalid={isInvalid}
         isDisabled={isDisabled}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
         assistantImplementation={assistantImplementation}
-        maxHeight={vars.spacing._160}
+        maxHeight={maxHeight ?? vars.spacing._160}
+        className={codeInputClassName}
         ref={field.ref}
       />
       <FieldErrorContext

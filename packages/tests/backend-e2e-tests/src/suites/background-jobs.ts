@@ -68,6 +68,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           name: "name",
           icon: null,
           collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
         },

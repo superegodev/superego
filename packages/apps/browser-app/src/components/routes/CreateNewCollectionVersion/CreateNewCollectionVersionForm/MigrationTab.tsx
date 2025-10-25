@@ -60,33 +60,28 @@ export default function MigrationTab({
         control={control}
         name="migration"
         label={intl.formatMessage({ defaultMessage: "Migration" })}
+        language="typescript"
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
         assistantImplementation={{
-          instructions: `
-### Context
-
+          description: `
 The documents of a database collection are being migrated from the previous
-collection schema to the next one.
+collection schema to the next one. This module implements and default-exports
+the function that converts a document.
 
-### Your task
-
-You need to complete the implementation of the function that migrates a single
-document.
-
-### Rules
-
-- The function takes in as first and only argument a document abiding by the
-  current schema, and returns its migrated version, which STRICTLY abides by the
-  next schema.
+The function takes in as first and only argument a document abiding by the
+current schema, and returns its migrated version, which STRICTLY abides by the
+next schema.
+          `.trim(),
+          rules: `
 - Always include a comment at the top of the file that explains how the current
   and schemas differ and the migration strategy employed by the function.
-- Always preserve the type imports at the top.
           `.trim(),
           template: forms.defaults.migration(
             collection.latestVersion.schema,
             schema,
           ).source,
+          userRequest: "Complete the implementation.",
         }}
       />
       <div className={cs.MigrationTab.submitButtonContainer}>

@@ -15,6 +15,7 @@ import {
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
+import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -77,6 +78,9 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
+  new MonacoTypescriptCompiler(
+    async () => (await import("monaco-editor")).default,
+  ),
   new OpenAICompatInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, base64Url, sessionStorage),

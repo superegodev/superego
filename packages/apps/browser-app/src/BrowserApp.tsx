@@ -7,6 +7,7 @@ import { GlobalDataProvider } from "./business-logic/backend/GlobalData.js";
 import {
   getDeveloperPromptsQuery,
   getGlobalSettingsQuery,
+  listAppsQuery,
   listCollectionCategoriesQuery,
   listCollectionsQuery,
   listConnectorsQuery,
@@ -43,6 +44,7 @@ export default function BrowserApp({
                 queries={[
                   listCollectionCategoriesQuery([]),
                   listCollectionsQuery([]),
+                  listAppsQuery([]),
                   listConnectorsQuery([]),
                   getGlobalSettingsQuery([]),
                   getDeveloperPromptsQuery([]),
@@ -59,6 +61,7 @@ export default function BrowserApp({
                 {(
                   collectionCategories,
                   collections,
+                  apps,
                   connectors,
                   globalSettings,
                   developerPrompts,
@@ -67,6 +70,7 @@ export default function BrowserApp({
                     value={{
                       collectionCategories,
                       collections,
+                      apps,
                       connectors,
                       globalSettings,
                       developerPrompts,

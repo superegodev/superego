@@ -26,7 +26,7 @@
     "electron": "38.3.0",
     "electron-vite": "^4.0.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "vite": "^7.1.11"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -37,6 +37,7 @@
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
+    "@superego/tsc-typescript-compiler": "workspace:*",
     "electron-squirrel-startup": "^1.0.1"
   }
 }

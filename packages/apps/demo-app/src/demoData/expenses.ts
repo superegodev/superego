@@ -16,6 +16,7 @@ const collection: CollectionEntity = {
     name: "Expenses",
     icon: "💸",
     collectionCategoryId: Finance.id,
+    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions: [
       "- Defaults for things I don't specify:",

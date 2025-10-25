@@ -53,6 +53,7 @@ class FactotumObject {
         collectionCategoryId: null,
         description: definition.description ?? null,
         assistantInstructions: definition.assistantInstructions ?? null,
+        defaultCollectionViewAppId: null,
       },
       definition.schema,
       {

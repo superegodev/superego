@@ -61,7 +61,7 @@ function toExports(category: CategoryValue, fileNames: string[]): string[] {
         (fileName) =>
           fileName.endsWith(".ts") && !fileName.endsWith(".test.ts"),
       )
-      .sort()
+      .sort((a, b) => (a.toLowerCase() >= b.toLowerCase() ? 1 : -1))
       .map((fileName) => {
         const name = fileName.replace(".ts", "");
         const dir = toDirectory(category);

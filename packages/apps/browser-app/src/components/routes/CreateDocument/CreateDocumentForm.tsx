@@ -8,7 +8,6 @@ import { useCreateDocument } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import RhfContent from "../../../utils/RhfContent.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -32,7 +31,7 @@ export default function CreateDocumentForm({ collection }: Props) {
   const onSubmit = async (content: any) => {
     const { success, data } = await mutate(
       collection.id,
-      RhfContent.fromRhfContent(content, schema),
+      forms.utils.RHFContent.fromRHFContent(content, schema),
     );
     if (success) {
       navigateTo({

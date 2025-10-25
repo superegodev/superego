@@ -9,6 +9,7 @@ export const EagerCodeBlock = {
     gridTemplateAreas: `"LineNumbers Code"`,
     gridTemplateColumns: "51px 1fr",
     fontSize: vars.typography.fontSizes.sm,
+    background: vars.colors.background.surface,
     paddingBlockStart: 10,
     paddingBlockEnd: 8,
     paddingInlineEnd: vars.spacing._4,

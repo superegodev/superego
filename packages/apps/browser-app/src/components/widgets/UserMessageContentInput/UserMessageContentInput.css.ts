@@ -45,7 +45,7 @@ export const UserMessageContentInput = {
       [`${dark} &, ${dark} &:disabled`]: {
         background: vars.colors.background.secondarySurface,
       },
-      "&:focus-visible": {
+      '&:focus-visible[data-focus-visible="true"]': {
         outline: "none",
       },
     },

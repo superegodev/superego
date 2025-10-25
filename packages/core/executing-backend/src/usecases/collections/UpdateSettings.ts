@@ -1,4 +1,5 @@
 import type {
+  AppNotFound,
   Backend,
   Collection,
   CollectionCategoryNotFound,
@@ -33,6 +34,7 @@ export default class CollectionsUpdateSettings extends Usecase<
     | CollectionNotFound
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
+    | AppNotFound
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -51,6 +53,7 @@ export default class CollectionsUpdateSettings extends Usecase<
           collectionCategoryId: v.nullable(
             valibotSchemas.id.collectionCategory(),
           ),
+          defaultCollectionViewAppId: v.nullable(valibotSchemas.id.app()),
           description: v.nullable(v.string()),
           assistantInstructions: v.nullable(v.string()),
         }),
@@ -80,6 +83,17 @@ export default class CollectionsUpdateSettings extends Usecase<
       );
     }
 
+    if (
+      settingsPatch.defaultCollectionViewAppId &&
+      !(await this.repos.app.exists(settingsPatch.defaultCollectionViewAppId))
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppNotFound", {
+          appId: settingsPatch.defaultCollectionViewAppId,
+        }),
+      );
+    }
+
     const latestVersion =
       await this.repos.collectionVersion.findLatestWhereCollectionIdEq(id);
     assertCollectionVersionExists(id, latestVersion);
@@ -96,6 +110,11 @@ export default class CollectionsUpdateSettings extends Usecase<
           settingsValidationResult.output.collectionCategoryId !== undefined
             ? settingsValidationResult.output.collectionCategoryId
             : collection.settings.collectionCategoryId,
+        defaultCollectionViewAppId:
+          settingsValidationResult.output.defaultCollectionViewAppId !==
+          undefined
+            ? settingsValidationResult.output.defaultCollectionViewAppId
+            : collection.settings.defaultCollectionViewAppId,
         description:
           settingsPatch.description !== undefined
             ? settingsPatch.description

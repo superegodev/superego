@@ -15,6 +15,7 @@ const collection: CollectionEntity = {
     name: "Contacts",
     icon: "️📞️",
     collectionCategoryId: null,
+    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions: null,
   },

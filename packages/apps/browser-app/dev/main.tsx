@@ -11,6 +11,7 @@ import {
 } from "@superego/connectors/requirements/browser";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
 import { QueryClient } from "@tanstack/react-query";
@@ -46,6 +47,9 @@ const backend = new ExecutingBackend(
     },
   }),
   new QuickjsJavascriptSandbox(),
+  new MonacoTypescriptCompiler(
+    async () => (await import("../src/monaco.js")).default,
+  ),
   new OpenAICompatInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, base64Url, sessionStorage),

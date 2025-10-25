@@ -10,7 +10,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { common, createLowlight } from "lowlight";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
@@ -29,29 +29,32 @@ export default function EagerTiptapInput({
   const intl = useIntl();
   const id = useId();
   const [hasFocus, setHasFocus] = useState(autoFocus);
-  const [extensions] = useState(() => [
-    CodeBlockLowlight.configure({
-      lowlight: createLowlight(common),
-    }),
-    Placeholder.configure({
-      placeholder: intl.formatMessage({ defaultMessage: "Write..." }),
-    }),
-    StarterKit.configure({
-      link: false,
-      codeBlock: false,
-    }),
-    Subscript,
-    Superscript,
-    TaskList,
-    TaskItem.configure({
-      nested: true,
-    }),
-    TextAlign.configure({
-      types: ["heading", "paragraph"],
-    }),
-    TextStyleKit,
-    Typography,
-  ]);
+  const extensions = useMemo(
+    () => [
+      CodeBlockLowlight.configure({
+        lowlight: createLowlight(common),
+      }),
+      Placeholder.configure({
+        placeholder: intl.formatMessage({ defaultMessage: "Write..." }),
+      }),
+      StarterKit.configure({
+        link: false,
+        codeBlock: false,
+      }),
+      Subscript,
+      Superscript,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      TextStyleKit,
+      Typography,
+    ],
+    [intl],
+  );
   const editor = useEditor({
     extensions: extensions,
     editorProps: {

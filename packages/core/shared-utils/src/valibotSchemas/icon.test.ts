@@ -18,9 +18,25 @@ it("non-emoji is not valid", () => {
   expect(isValid).toBe(false);
 });
 
+it("multiple emojis is not valid", () => {
+  // Exercise
+  const isValid = v.is(icon(), "💡💡");
+
+  // Verify
+  expect(isValid).toBe(false);
+});
+
 it("emoji is valid", () => {
   // Exercise
   const isValid = v.is(icon(), "💡");
+
+  // Verify
+  expect(isValid).toBe(true);
+});
+
+it("emoji ZWJ sequence is valid", () => {
+  // Exercise
+  const isValid = v.is(icon(), "👩🏿‍💼");
 
   // Verify
   expect(isValid).toBe(true);

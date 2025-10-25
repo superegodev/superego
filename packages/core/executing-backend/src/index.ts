@@ -5,6 +5,8 @@ export { default as ExecutingBackend } from "./ExecutingBackend.js";
 // Entities //
 //////////////
 
+export type { default as AppEntity } from "./entities/AppEntity.js";
+export type { default as AppVersionEntity } from "./entities/AppVersionEntity.js";
 export type { default as BackgroundJobEntity } from "./entities/BackgroundJobEntity.js";
 export type { default as CollectionCategoryEntity } from "./entities/CollectionCategoryEntity.js";
 export type { default as CollectionEntity } from "./entities/CollectionEntity.js";
@@ -19,6 +21,8 @@ export type { default as RemoteEntity } from "./entities/RemoteEntity.js";
 // Requirements //
 //////////////////
 
+export type { default as AppRepository } from "./requirements/AppRepository.js";
+export type { default as AppVersionRepository } from "./requirements/AppVersionRepository.js";
 export type { default as BackgroundJobRepository } from "./requirements/BackgroundJobRepository.js";
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";
@@ -34,3 +38,4 @@ export type { default as GlobalSettingsRepository } from "./requirements/GlobalS
 export { default as InferenceService } from "./requirements/InferenceService.js";
 export type { default as InferenceServiceFactory } from "./requirements/InferenceServiceFactory.js";
 export type { default as JavascriptSandbox } from "./requirements/JavascriptSandbox.js";
+export type { default as TypescriptCompiler } from "./requirements/TypescriptCompiler.js";

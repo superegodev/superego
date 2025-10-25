@@ -1,4 +1,5 @@
 import type {
+  AppNotFound,
   Backend,
   Collection,
   CollectionCategoryNotFound,
@@ -40,6 +41,7 @@ export default class CollectionsCreate extends Usecase<
     Collection,
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
+    | AppNotFound
     | CollectionSchemaNotValid
     | ContentSummaryGetterNotValid
     | UnexpectedError
@@ -50,6 +52,9 @@ export default class CollectionsCreate extends Usecase<
         icon: v.nullable(backedUtilsValibotSchemas.icon()),
         collectionCategoryId: v.nullable(
           backedUtilsValibotSchemas.id.collectionCategory(),
+        ),
+        defaultCollectionViewAppId: v.nullable(
+          backedUtilsValibotSchemas.id.app(),
         ),
         description: v.nullable(v.string()),
         assistantInstructions: v.nullable(v.string()),
@@ -74,6 +79,17 @@ export default class CollectionsCreate extends Usecase<
       return makeUnsuccessfulResult(
         makeResultError("CollectionCategoryNotFound", {
           collectionCategoryId: settings.collectionCategoryId,
+        }),
+      );
+    }
+
+    if (
+      settings.defaultCollectionViewAppId &&
+      !(await this.repos.app.exists(settings.defaultCollectionViewAppId))
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppNotFound", {
+          appId: settings.defaultCollectionViewAppId,
         }),
       );
     }
@@ -118,6 +134,8 @@ export default class CollectionsCreate extends Usecase<
         icon: settingsValidationResult.output.icon,
         collectionCategoryId:
           settingsValidationResult.output.collectionCategoryId,
+        defaultCollectionViewAppId:
+          settingsValidationResult.output.defaultCollectionViewAppId,
         description: settingsValidationResult.output.description,
         assistantInstructions:
           settingsValidationResult.output.assistantInstructions,

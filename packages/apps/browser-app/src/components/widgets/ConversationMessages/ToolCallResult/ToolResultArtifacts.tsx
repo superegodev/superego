@@ -8,7 +8,7 @@ export default function ToolResultArtifacts({ toolResult }: Props) {
   return (
     <CodeBlock
       language="json"
-      code={JSON.stringify(toolResult.artifacts, null, 2)}
+      code={JSON.stringify(toolResult.artifacts)}
       showCopyButton={true}
     />
   );
