@@ -380,9 +380,6 @@
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
-  "EagerRHFAppVersionFilesField.tsx_RGKGRx": {
-    "defaultMessage": "An error occurred transcribing your message"
-  },
   "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
     "defaultMessage": "An error occurred generating the app"
   },
@@ -925,6 +922,9 @@
   },
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Create new document version in {collection}"
+  },
+  "Toast.tsx_Lv0zJu": {
+    "defaultMessage": "Details"
   },
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Close"

@@ -15,7 +15,7 @@ import {
 } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
 import * as cs from "./EditApp.css.js";
@@ -81,16 +81,13 @@ export default function CreateNewAppVersionForm({
       );
     } else {
       console.error(error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error creating a new app version",
-          }),
-          description: error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error creating a new app version",
+        }),
+        error: error,
+      });
     }
   };
 

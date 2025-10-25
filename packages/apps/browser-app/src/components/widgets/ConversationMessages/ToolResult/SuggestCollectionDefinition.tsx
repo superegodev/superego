@@ -11,7 +11,7 @@ import makeContentSummaryGetter from "../../../../business-logic/assistant/makeC
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../../business-logic/toasts/toasts.js";
 import CollectionCategoryUtils from "../../../../utils/CollectionCategoryUtils.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import Button from "../../../design-system/Button/Button.js";
@@ -51,16 +51,13 @@ export default function SuggestCollectionDefinition({
     );
     if (!result.success) {
       console.error(result.error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error creating the collection",
-          }),
-          description: result.error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error creating the collection",
+        }),
+        error: result.error,
+      });
     }
   };
 

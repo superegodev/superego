@@ -77,10 +77,6 @@ function buildTheme(
   styles: CSSStyleDeclaration,
 ) {
   const accentColor = resolveVar(styles, vars.colors.accent);
-  const backgroundSubtleSurface = resolveVar(
-    styles,
-    vars.colors.background.subtleSurface,
-  );
   const backgroundSecondarySurface = resolveVar(
     styles,
     vars.colors.background.secondarySurface,
@@ -119,7 +115,7 @@ function buildTheme(
 
   return {
     color: seriesColors,
-    backgroundColor: backgroundSubtleSurface,
+    backgroundColor: "transparent",
     textStyle: {
       color: textPrimary,
     },

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
 import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../../business-logic/toasts/toasts.js";
 import type monaco from "../../../../monaco.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
 import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
@@ -65,16 +65,13 @@ export default function ImplementWithAssistantButton({
             onImplemented(result.data);
           } else {
             console.error(result.error);
-            toastQueue.add(
-              {
-                type: ToastType.Error,
-                title: intl.formatMessage({
-                  defaultMessage: "Implementation failed",
-                }),
-                description: result.error.name,
-              },
-              { timeout: 5_000 },
-            );
+            toasts.add({
+              type: ToastType.Error,
+              title: intl.formatMessage({
+                defaultMessage: "Implementation failed",
+              }),
+              error: result.error,
+            });
           }
         }}
         className={cs.ImplementWithAssistantButton.button}

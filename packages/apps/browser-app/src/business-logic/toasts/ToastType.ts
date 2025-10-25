@@ -1,5 +1,5 @@
 enum ToastType {
-  Error = "Error",
   Success = "Success",
+  Error = "Error",
 }
 export default ToastType;

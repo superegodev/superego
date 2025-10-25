@@ -1010,12 +1010,6 @@
       "value": "What do you want to build?"
     }
   ],
-  "EagerRHFAppVersionFilesField.tsx_RGKGRx": [
-    {
-      "type": 0,
-      "value": "An error occurred transcribing your message"
-    }
-  ],
   "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
     {
       "type": 0,
@@ -2676,6 +2670,12 @@
     {
       "type": 1,
       "value": "collection"
+    }
+  ],
+  "Toast.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Details"
     }
   ],
   "Toast.tsx_rbrahO": [

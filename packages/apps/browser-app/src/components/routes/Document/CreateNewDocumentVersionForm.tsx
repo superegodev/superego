@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 
@@ -82,16 +82,11 @@ export default function CreateNewDocumentVersionForm({
       latestVersionIdRef.current = data.latestVersion.id;
     } else {
       console.error(error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error saving document",
-          }),
-          description: error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({ defaultMessage: "Error saving document" }),
+        error: error,
+      });
     }
   };
 
