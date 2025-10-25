@@ -12,6 +12,7 @@ import {
 } from "../../design-system/forms/forms.js";
 import CodeInput from "../CodeInput/CodeInput.js";
 import type IncludedGlobalUtils from "../CodeInput/typescript/IncludedGlobalUtils.js";
+import type UndoRedo from "../CodeInput/UndoRedo.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   language: "typescript" | "typescript-jsx";
+  undoRedo?: UndoRedo | undefined;
   typescriptLibs?: TypescriptFile[] | undefined;
   includedGlobalUtils?: IncludedGlobalUtils | undefined;
   assistantImplementation?:
@@ -46,6 +48,7 @@ export default function RHFTypescriptModuleField({
   isDisabled,
   autoFocus,
   language,
+  undoRedo,
   typescriptLibs,
   includedGlobalUtils,
   assistantImplementation,
@@ -72,6 +75,7 @@ export default function RHFTypescriptModuleField({
         value={field.value ?? { source: "", compiled: "" }}
         onChange={field.onChange}
         onBlur={field.onBlur}
+        undoRedo={undoRedo}
         autoFocus={autoFocus}
         isInvalid={isInvalid}
         isDisabled={isDisabled}

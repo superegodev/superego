@@ -6,7 +6,7 @@ import {
   type TypescriptModule,
 } from "@superego/backend";
 import { codegen } from "@superego/schema";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 import {
@@ -16,6 +16,7 @@ import {
 import forms from "../../../business-logic/forms/forms.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import type UndoRedo from "../CodeInput/UndoRedo.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
 import EditingToolbar from "./EditingToolbar.js";
@@ -143,17 +144,24 @@ After completing the implementation:
     }
   };
 
+  // TODO: custom useUndoRedo hook exported by CodeInput directly?
+  const [undoRedoState, setUndoRedoState] = useState({
+    canUndo: false,
+    canRedo: false,
+  });
+  const undoRedoCommandsRef = useRef<UndoRedo.Commands>(null);
+  const undoRedo = useMemo<UndoRedo>(
+    () => ({ setState: setUndoRedoState, commandsRef: undoRedoCommandsRef }),
+    [],
+  );
+
   return (
     <div className={cs.EagerRHFAppVersionFilesField.root}>
       <EditingToolbar
-        onUndo={(): void => {
-          throw new Error("Function not implemented.");
-        }}
-        isUndoDisabled={true}
-        onRedo={(): void => {
-          throw new Error("Function not implemented.");
-        }}
-        isRedoDisabled={true}
+        onUndo={() => undoRedoCommandsRef.current?.undo()}
+        isUndoDisabled={!undoRedoState.canUndo}
+        onRedo={() => undoRedoCommandsRef.current?.redo()}
+        isRedoDisabled={!undoRedoState.canRedo}
         onActivateView={setActiveView}
         activeView={activeView}
         className={cs.EagerRHFAppVersionFilesField.editingToolbar}
@@ -173,6 +181,7 @@ After completing the implementation:
           control={control}
           name={fieldName}
           language="typescript-jsx"
+          undoRedo={undoRedo}
           typescriptLibs={typescriptLibs}
           // There doesn't seem to be a better way to do this, as the monaco
           // editor manages its own width and makes controlling its height

@@ -1,9 +1,11 @@
 import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import type { Property } from "csstype";
 import type IncludedGlobalUtils from "./typescript/IncludedGlobalUtils.js";
+import type UndoRedo from "./UndoRedo.js";
 
 type Props = {
   onBlur?: (() => void) | undefined;
+  undoRedo?: UndoRedo | undefined;
   autoFocus?: boolean | undefined;
   isInvalid?: boolean | undefined;
   isDisabled?: boolean | undefined;

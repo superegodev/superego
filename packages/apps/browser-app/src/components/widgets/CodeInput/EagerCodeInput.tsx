@@ -10,6 +10,7 @@ export default function EagerCodeInput({
   value,
   onChange,
   onBlur,
+  undoRedo,
   autoFocus,
   isInvalid = false,
   isDisabled = false,
@@ -46,12 +47,12 @@ export default function EagerCodeInput({
       aria-disabled={isDisabled}
       inert={isDisabled}
       className={classnames(cs.EagerCodeInput.root, className)}
-      data-testid="code-input"
     >
       {language === "json" ? (
         <JsonEditor
           value={value}
           onChange={onChange}
+          undoRedo={undoRedo}
           ariaLabel={ariaLabel}
           filePath={filePath}
           maxHeight={maxHeight}
@@ -61,6 +62,7 @@ export default function EagerCodeInput({
           language={language}
           value={value}
           onChange={onChange}
+          undoRedo={undoRedo}
           ariaLabel={ariaLabel}
           typescriptLibs={typescriptLibs}
           includedGlobalUtils={includedGlobalUtils}

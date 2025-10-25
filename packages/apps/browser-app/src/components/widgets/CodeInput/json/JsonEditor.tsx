@@ -3,10 +3,12 @@ import { useRef } from "react";
 import type monaco from "../../../../monaco.js";
 import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
+import type UndoRedo from "../UndoRedo.js";
 
 interface Props {
   value: string;
   onChange: (newValue: string) => void;
+  undoRedo?: UndoRedo | undefined;
   ariaLabel?: string | undefined;
   filePath?: `/${string}.json`;
   maxHeight: Property.MaxHeight | undefined;
@@ -14,6 +16,7 @@ interface Props {
 export default function JsonEditor({
   value,
   onChange,
+  undoRedo,
   ariaLabel,
   filePath = "/main.json",
   maxHeight,
@@ -25,6 +28,7 @@ export default function JsonEditor({
     "json",
     value,
     onChange,
+    undoRedo,
     valueModelRef,
     ariaLabel,
     filePath,

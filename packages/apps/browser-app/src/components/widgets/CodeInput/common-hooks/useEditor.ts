@@ -3,6 +3,7 @@ import { type RefObject, useEffect, useRef } from "react";
 import useTheme from "../../../../business-logic/theme/useTheme.js";
 import monaco from "../../../../monaco.js";
 import { vars } from "../../../../themes.css.js";
+import type UndoRedo from "../UndoRedo.js";
 
 /**
  * Creates the monaco editor instance and the value model and disposes them on
@@ -13,6 +14,7 @@ export default function useEditor(
   language: "typescript" | "json",
   value: string,
   onChange: (newValue: string) => void,
+  undoRedo: UndoRedo | undefined,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   ariaLabel: string | undefined,
   filePath: `/${string}.ts` | `/${string}.tsx` | `/${string}.json`,
@@ -31,11 +33,27 @@ export default function useEditor(
       monaco.Uri.parse(`${basePath}${filePath}`),
     );
 
+    if (undoRedo) {
+      undoRedo.commandsRef.current = {
+        undo: valueModelRef.current.undo.bind(valueModelRef.current),
+        redo: valueModelRef.current.redo.bind(valueModelRef.current),
+      };
+    }
+
     // Propagate changes to the outside world.
     valueModelRef.current.onDidChangeContent(() => {
-      const newValue = valueModelRef.current?.getValue();
+      if (!valueModelRef.current) {
+        return;
+      }
+      const newValue = valueModelRef.current.getValue();
       if (newValue !== undefined) {
         onChange(newValue);
+        if (undoRedo) {
+          undoRedo.setState({
+            canUndo: valueModelRef.current.canUndo(),
+            canRedo: valueModelRef.current.canRedo(),
+          });
+        }
       }
     });
 
@@ -98,11 +116,15 @@ export default function useEditor(
       editorRef.current = null;
       valueModelRef.current?.dispose();
       valueModelRef.current = null;
+      if (undoRedo) {
+        undoRedo.commandsRef.current = null;
+      }
     };
   }, [
     basePath,
     language,
     onChange,
+    undoRedo,
     // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
     // it's a ref, it's stable and passing it here has no effect.
     valueModelRef,
@@ -114,7 +136,7 @@ export default function useEditor(
   useSyncEditorTheme(editorRef);
 
   // Keep value model in sync.
-  useSyncValueModel(valueModelRef, value);
+  useSyncValueModel(editorRef, valueModelRef, value);
 
   return { editorElementRef, valueModelRef };
 }
@@ -142,6 +164,7 @@ function useSyncEditorTheme(
 }
 
 function useSyncValueModel(
+  editorRef: RefObject<monaco.editor.IStandaloneCodeEditor | null>,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   value: string,
 ) {
@@ -150,15 +173,20 @@ function useSyncValueModel(
     // is set only when the "received" outside value differs from the current
     // model value.
     if (
+      editorRef.current !== null &&
       valueModelRef.current !== null &&
       valueModelRef.current.getValue() !== value
     ) {
-      valueModelRef.current.setValue(value);
+      editorRef.current.executeEdits("replace-all", [
+        { range: valueModelRef.current.getFullModelRange(), text: value },
+      ]);
+      editorRef.current.pushUndoStop();
     }
   }, [
     value,
     // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
     // it's a ref, it's stable and passing it here has no effect.
+    editorRef,
     valueModelRef,
   ]);
 }

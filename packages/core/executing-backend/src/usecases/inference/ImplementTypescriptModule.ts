@@ -75,16 +75,6 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   > {
     const shouldReattempt = attemptNumber <= MAX_ATTEMPTS;
 
-    console.log(
-      InferenceImplementTypescriptModule.getDeveloperMessage(
-        description,
-        rules,
-        additionalInstructions,
-        template,
-        libs,
-      ),
-    );
-
     const message = await inferenceService.generateNextMessage(
       [
         InferenceImplementTypescriptModule.getDeveloperMessage(

@@ -7,6 +7,7 @@ import { MONACO_EDITOR_COMPILATION_TIMEOUT } from "../../../../config.js";
 import type monaco from "../../../../monaco.js";
 import useEditor from "../common-hooks/useEditor.js";
 import useEditorBasePath from "../common-hooks/useEditorBasePath.js";
+import type UndoRedo from "../UndoRedo.js";
 import CompilationInProgressIndicator from "./CompilationInProgressIndicator.js";
 import getCompilationOutput from "./getCompilationOutput.js";
 import ImplementWithAssistantButton from "./ImplementWithAssistantButton.js";
@@ -18,6 +19,7 @@ interface Props {
   language: "typescript" | "typescript-jsx";
   value: TypescriptModule;
   onChange: (newValue: TypescriptModule) => void;
+  undoRedo?: UndoRedo | undefined;
   ariaLabel?: string | undefined;
   typescriptLibs: TypescriptFile[] | undefined;
   includedGlobalUtils: IncludedGlobalUtils | undefined;
@@ -37,6 +39,7 @@ export default function TypescriptEditor({
   language,
   value,
   onChange,
+  undoRedo,
   ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
@@ -108,6 +111,7 @@ export default function TypescriptEditor({
     "typescript",
     value.source,
     compileSource,
+    undoRedo,
     valueModelRef,
     ariaLabel,
     filePath,
