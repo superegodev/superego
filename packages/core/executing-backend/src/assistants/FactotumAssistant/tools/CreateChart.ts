@@ -140,6 +140,7 @@ executes in the same environment, and **must** abide by ALL its rules.
   - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%] (rounded)
 - In datasets and series, round all numeric values to 2 decimals. Use
   \`Math.round(value * 100)/100)\`
+- Prefer column charts over line charts for discrete time series data.
       `.trim(),
       inputSchema: {
         type: "object",
