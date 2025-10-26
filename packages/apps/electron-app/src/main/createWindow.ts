@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 
 export default function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -7,6 +7,10 @@ export default function createWindow() {
     webPreferences: {
       preload: join(import.meta.dirname, "../preload/index.js"),
     },
+  });
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: "deny" };
   });
   mainWindow.maximize();
   mainWindow.show();

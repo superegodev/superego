@@ -16,6 +16,7 @@ export default {
       key={(chunks as string[]).join("")}
       href={(chunks as string[]).join("")}
       target="_blank"
+      rel="noopener noreferrer"
     >
       {(chunks as string[]).join("")}
     </a>
