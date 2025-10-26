@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import { join, resolve } from "node:path";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
@@ -11,10 +13,31 @@ const { GITHUB_REF: githubRef } = process.env;
 const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
 
 export default {
+  hooks: {
+    async prePackage() {
+      const dirname = import.meta.dirname;
+      const repoNodeModules = resolve(dirname, "../../../node_modules");
+      const localNodeModules = resolve(dirname, "node_modules");
+
+      const externalizedPackages = ["typescript"];
+      for (const pkg of externalizedPackages) {
+        const src = join(repoNodeModules, pkg);
+        const dest = join(localNodeModules, pkg);
+        fs.mkdirSync(localNodeModules, { recursive: true });
+        fs.rmSync(dest, { recursive: true, force: true });
+        fs.cpSync(src, dest, { recursive: true, dereference: true });
+      }
+    },
+  },
   packagerConfig: {
     appBundleId: "dev.superego.superego",
     asar: true,
-    ignore: ["src", "electron.vite.config.ts", "tsconfig.json"],
+    ignore: [
+      "src",
+      "electron.vite.config.ts",
+      "forge.config.ts",
+      "tsconfig.json",
+    ],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {

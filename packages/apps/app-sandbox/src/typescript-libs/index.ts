@@ -1,4 +1,5 @@
 import type { TypescriptFile } from "@superego/backend";
+import react_global_dts from "../../../../../node_modules/@types/react/global.d.ts?raw";
 import react_index_dts from "../../../../../node_modules/@types/react/index.d.ts?raw";
 import react_jsxRuntime_dts from "../../../../../node_modules/@types/react/jsx-runtime.d.ts?raw";
 import echarts_charts_dts from "../../../../../node_modules/echarts/types/dist/charts.d.ts?raw";
@@ -16,6 +17,10 @@ export default [
   {
     path: "/node_modules/react/index.d.ts",
     source: react_index_dts,
+  },
+  {
+    path: "/node_modules/react/global.d.ts",
+    source: react_global_dts,
   },
   {
     path: "/node_modules/react/jsx-runtime.d.ts",

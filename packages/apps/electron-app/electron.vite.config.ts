@@ -1,19 +1,20 @@
 import browserAppViteConfig from "@superego/browser-app/vite.config.js";
 import { defineConfig } from "electron-vite";
+import { mergeConfig, type UserConfig } from "vite";
 
 export default defineConfig({
   main: {
     build: {
-      sourcemap: true,
       rollupOptions: {
         output: { format: "es" },
+        external: ["typescript"],
       },
     },
   },
-  preload: {
+  preload: {},
+  renderer: mergeConfig(browserAppViteConfig as UserConfig, {
     build: {
-      sourcemap: true,
+      sourcemap: false,
     },
-  },
-  renderer: browserAppViteConfig,
+  }),
 });
