@@ -436,6 +436,78 @@ export default rd<GetDependencies>("Apps", (deps) => {
         error: null,
       });
     });
+
+    it("success: clears default collection view app", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createAppResult = await backend.apps.create(
+        AppType.CollectionView,
+        "default-app",
+        [createCollectionResult.data.id],
+        { "/main.tsx": { source: "", compiled: "" } },
+      );
+      assert.isTrue(createAppResult.success);
+      const updateCollectionSettingsResult =
+        await backend.collections.updateSettings(
+          createCollectionResult.data.id,
+          { defaultCollectionViewAppId: createAppResult.data.id },
+        );
+      assert.isTrue(updateCollectionSettingsResult.success);
+
+      // Exercise
+      const deleteResult = await backend.apps.delete(
+        createAppResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: true,
+        data: null,
+        error: null,
+      });
+      const listCollectionsResult = await backend.collections.list();
+      expect(listCollectionsResult).toEqual({
+        success: true,
+        data: [
+          {
+            ...updateCollectionSettingsResult.data,
+            settings: {
+              ...updateCollectionSettingsResult.data.settings,
+              defaultCollectionViewAppId: null,
+            },
+          },
+        ],
+        error: null,
+      });
+    });
   });
 
   describe("list", () => {

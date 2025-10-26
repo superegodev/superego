@@ -37,6 +37,18 @@ export default class AppsDelete extends Usecase<Backend["apps"]["delete"]> {
       );
     }
 
+    const collections = await this.repos.collection.findAll();
+    for (const collection of collections) {
+      if (collection.settings.defaultCollectionViewAppId === id) {
+        await this.repos.collection.replace({
+          ...collection,
+          settings: {
+            ...collection.settings,
+            defaultCollectionViewAppId: null,
+          },
+        });
+      }
+    }
     await this.repos.appVersion.deleteAllWhereAppIdEq(id);
     await this.repos.app.delete(id);
 
