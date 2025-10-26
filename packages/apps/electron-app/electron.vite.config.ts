@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import browserAppViteConfig from "@superego/browser-app/vite.config.js";
 import { defineConfig } from "electron-vite";
 import { mergeConfig, type UserConfig } from "vite";
@@ -15,6 +16,15 @@ export default defineConfig({
   renderer: mergeConfig(browserAppViteConfig as UserConfig, {
     build: {
       sourcemap: false,
+      rollupOptions: {
+        input: {
+          index: resolve(import.meta.dirname, "./src/renderer/index.html"),
+          appSandbox: resolve(
+            import.meta.dirname,
+            "./src/renderer/app-sandbox.html",
+          ),
+        },
+      },
     },
   }),
 });

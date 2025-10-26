@@ -28,6 +28,7 @@
     "vite": "^7.1.11"
   },
   "dependencies": {
+    "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
     "@superego/connectors": "workspace:*",

@@ -64,8 +64,10 @@ export default function AppRenderer({ app }: Props) {
     >
       {(...documentsLists) => (
         <Sandbox
-          // TODO: pass from outside? See when building electron.
-          iframeSrc="http://sandbox.localhost:5173/app-sandbox.html"
+          iframeSrc={
+            import.meta.env["VITE_SANDBOX_URL"] ??
+            "http://app-sandbox.localhost:5173/app-sandbox.html"
+          }
           appName={app.name}
           appCode={app.latestVersion.files["/main.tsx"].compiled}
           appProps={{

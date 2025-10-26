@@ -6,14 +6,15 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src 'self' 'unsafe-inline' data: blob:;
-        frame-src 'self' dev.superego.app-sandbox:;
-        connect-src 'self' https://cdn.jsdelivr.net;
       "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Superego</title>
+    <title>Superego - App Sandbox</title>
   </head>
   <body>
-    <script type="module" src="/index.js"></script>
+    <script type="module">
+      import { renderSandbox } from "@superego/app-sandbox/sandbox";
+      renderSandbox();
+    </script>
   </body>
 </html>

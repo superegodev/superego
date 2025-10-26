@@ -5311,7 +5311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superego/app-sandbox@workspace:^, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
+"@superego/app-sandbox@workspace:*, @superego/app-sandbox@workspace:^, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
   version: 0.0.0-use.local
   resolution: "@superego/app-sandbox@workspace:packages/apps/app-sandbox"
   dependencies:
@@ -5502,6 +5502,7 @@ __metadata:
   dependencies:
     "@cloudflare/vite-plugin": "npm:^1.13.13"
     "@cloudflare/workers-types": "npm:^4.20251014.0"
+    "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/browser-app": "workspace:^"
     "@superego/connectors": "workspace:*"
@@ -5545,6 +5546,7 @@ __metadata:
     "@electron-forge/plugin-fuses": "npm:^7.10.2"
     "@electron-forge/publisher-github": "npm:^7.10.2"
     "@electron/fuses": "npm:^2.0.0"
+    "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/browser-app": "workspace:*"
     "@superego/connectors": "workspace:*"

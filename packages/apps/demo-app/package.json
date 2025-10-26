@@ -21,6 +21,7 @@
     "wrangler": "^4.43.0"
   },
   "dependencies": {
+    "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:^",
     "@superego/connectors": "workspace:*",
