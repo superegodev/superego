@@ -35,8 +35,10 @@ export declare function Echart(props: {
    *   - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%] (rounded)
    * - In datasets and series, round all numeric values to 2 decimals. Use
    *   `Math.round(value * 100)/100)`
-   * - Don't specify colors, use the default theme.
-   * - If you must specify colors, prefer using these series colors:
+   * - For heatmaps, prefer \`visualMap.type = piecewise\`.
+   * - Prefer column charts over line charts for discrete time series data.
+   * - Don't specify colors unless needed to disambiguate. In which case, prefer
+   *   using these series colors:
    *   - #228be6
    *   - #40c057
    *   - #fab005
@@ -54,17 +56,17 @@ export declare function Echart(props: {
 }): JSX.Element;
 
 /**
- * A simple 12-column responsive grid container.
+ * A simple 12-column responsive grid container with good default visual
+ * separation between inner `Gird.Col`s.
  *
  * Use this as a wrapper around one or more `Grid.Col` children. The container
  * establishes the grid context; each column decides how many of the 12 tracks
  * it spans at different breakpoints.
  *
- * Grids should usually be the outermost components of the app.
+ * All components in the App should be placed inside a single top-level `Grid`.
  *
  * @example
  * ```ts
- * // Two columns on desktop, stacked on small screens
  * <Grid>
  *   <Grid.Col span={{ sm: 12, md: 6, lg: 6 }}>Left</Grid.Col>
  *   <Grid.Col span={{ sm: 12, md: 6, lg: 6 }}>Right</Grid.Col>
@@ -104,34 +106,31 @@ export declare function PlainDatePicker(props: {
     newValue: string | null,
   ) => void;
   label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
   description?: ReactNode;
   isDisabled?: boolean;
 }): JSX.Element;
 
 export declare function Select(props: {
-  /**
-   * Controlled value for the select. Use `null` for no selection, or a string
-   * that matches an option's `value`.
-   */
-  value: string | null;
+  /** Controlled value for the select. Must match an option's `value`. */
+  value: string;
   onChange: (
-    /**
-     * New value selected by the user, or `null` if the selection was cleared.
-     */
-    newValue: string | null,
+    /** New value selected by the user. */
+    newValue: string,
   ) => void;
   /** Available choices. Each `value` must be unique. */
   options: {
     /** Unique option identifier. Returned from `onChange`. */
     value: string;
-    label?: ReactNode;
+    label: ReactNode;
     description?: ReactNode;
   }[];
   label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
   description?: ReactNode;
   isDisabled?: boolean;
-  /** Placeholder for when value is `null`. */
-  placeholder?: ReactNode;
 }): JSX.Element;
 
 /**
@@ -139,7 +138,6 @@ export declare function Select(props: {
  *
  * @example
  * ```ts
- * // Non-empty table
  * <Table ariaLabel="People">
  *   <Table.Header>
  *     <Table.Column isRowHeader>Name</Table.Column>
@@ -199,4 +197,7 @@ export declare function Text(props: {
  * it when you need lightweight chrome (padding, background, border) without
  * imposing structure (no header/body/footer) or layout semantics.
  */
-export declare function Tile(props: { children: ReactNode }): JSX.Element;
+export declare function Tile(props: {
+  style?: CSSProperties;
+  children: ReactNode;
+}): JSX.Element;

@@ -35,10 +35,5 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
         defaultMessage: "This app has access to the following collections:",
       }),
     },
-    Select: {
-      nullOptionLabel: intl.formatMessage({
-        defaultMessage: "Clear selection",
-      }),
-    },
   };
 }

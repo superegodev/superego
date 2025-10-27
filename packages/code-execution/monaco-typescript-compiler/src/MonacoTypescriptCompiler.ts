@@ -11,7 +11,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import type * as monaco from "monaco-editor";
-import flattenDiagnosticMessageText from "./flattenDiagnosticMessageText.js";
+import stringifyDiagnostic from "./stringifyDiagnostic.js";
 
 export default class MonacoTypescriptCompiler implements TypescriptCompiler {
   constructor(private getMonaco: () => Promise<typeof monaco>) {}
@@ -68,18 +68,11 @@ export default class MonacoTypescriptCompiler implements TypescriptCompiler {
           name: "TypescriptCompilationFailed",
           details: {
             reason: "TypeErrors",
-            errors: diagnostics.map((diagnostic) => {
-              const message = flattenDiagnosticMessageText(
-                diagnostic.messageText,
-              );
-              if (diagnostic.start !== undefined && mainModel) {
-                const { lineNumber, column } = mainModel.getPositionAt(
-                  diagnostic.start,
-                );
-                return { message, line: lineNumber, character: column };
-              }
-              return { message };
-            }),
+            errors: diagnostics
+              .map((diagnostic) =>
+                stringifyDiagnostic(diagnostic, mainModel, basePath),
+              )
+              .join("\n\n"),
           },
         });
       }

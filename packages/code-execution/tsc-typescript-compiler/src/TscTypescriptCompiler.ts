@@ -12,6 +12,7 @@ import {
 } from "@superego/shared-utils";
 import * as tsvfs from "@typescript/vfs";
 import ts from "typescript";
+import stringifyDiagnostic from "./stringifyDiagnostic.js";
 
 export default class TscTypescriptCompiler implements TypescriptCompiler {
   async compile(
@@ -90,20 +91,7 @@ export default class TscTypescriptCompiler implements TypescriptCompiler {
           name: "TypescriptCompilationFailed",
           details: {
             reason: "TypeErrors",
-            errors: diagnostics.map((diagnostic) => {
-              const message = ts.flattenDiagnosticMessageText(
-                diagnostic.messageText,
-                "\n",
-              );
-              if (diagnostic.file && diagnostic.start !== undefined) {
-                const { line, character } =
-                  diagnostic.file.getLineAndCharacterOfPosition(
-                    diagnostic.start,
-                  );
-                return { message, line: line + 1, character: character + 1 };
-              }
-              return { message };
-            }),
+            errors: diagnostics.map(stringifyDiagnostic).join("\n\n"),
           },
         });
       }

@@ -2,6 +2,7 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
 const buttonRootBase = style({
+  height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
   paddingBlock: vars.spacing._2,
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,

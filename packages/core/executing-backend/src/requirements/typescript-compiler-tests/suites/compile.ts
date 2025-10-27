@@ -28,13 +28,7 @@ export default rd<GetDependencies>("compile", (deps) => {
           if (true {}
         }
       `,
-      expectedTypeErrors: [
-        {
-          message: "')' expected.",
-          line: 2,
-          character: 12,
-        },
-      ],
+      expectedTypeErrors: "/main.ts:2:12 error TS1005: ')' expected.",
     },
     {
       name: "error: type errors (case: w/o libs)",
@@ -43,13 +37,8 @@ export default rd<GetDependencies>("compile", (deps) => {
           return null;
         }
       `,
-      expectedTypeErrors: [
-        {
-          message: "Type 'null' is not assignable to type 'string'.",
-          line: 2,
-          character: 3,
-        },
-      ],
+      expectedTypeErrors:
+        "/main.ts:2:3 error TS2322: Type 'null' is not assignable to type 'string'.",
     },
     {
       name: "error: type errors (case: w/ libs)",
@@ -68,13 +57,20 @@ export default rd<GetDependencies>("compile", (deps) => {
           `,
         },
       ],
-      expectedTypeErrors: [
-        {
-          message: "Type 'null' is not assignable to type 'string'.",
-          line: 4,
-          character: 3,
-        },
-      ],
+      expectedTypeErrors:
+        "/main.ts:4:3 error TS2322: Type 'null' is not assignable to type 'string'.",
+    },
+    {
+      name: "error: complex type errors",
+      source: `
+        export default function a(): () => string {
+          return () => Math.random() > 0.5 ? "string" : undefined;
+        }
+      `,
+      expectedTypeErrors: `
+        /main.ts:2:16 error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+            Type 'undefined' is not assignable to type 'string'.
+      `,
     },
     {
       name: "success (case: w/o libs)",
@@ -133,7 +129,7 @@ export default rd<GetDependencies>("compile", (deps) => {
           name: "TypescriptCompilationFailed",
           details: {
             reason: "TypeErrors",
-            errors: testCase.expectedTypeErrors,
+            errors: stripIndent(testCase.expectedTypeErrors),
           },
         },
       });

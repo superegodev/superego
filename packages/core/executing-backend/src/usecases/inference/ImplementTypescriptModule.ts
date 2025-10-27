@@ -73,7 +73,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     | TooManyFailedImplementationAttempts
     | UnexpectedError
   > {
-    const shouldReattempt = attemptNumber <= MAX_ATTEMPTS;
+    const shouldReattempt = attemptNumber < MAX_ATTEMPTS;
 
     const message = await inferenceService.generateNextMessage(
       [
@@ -194,8 +194,8 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         {
           type: MessageContentPartType.Text,
           text: `
-Starting from the user-supplied starting point TypeScript snippet, complete
-the implementation of the TypeScript module according to the user request.
+Starting from the user-supplied TypeScript starting point, implement the
+**entire** module to satisfy the user request.
 
 ## Module description
 
@@ -205,12 +205,12 @@ ${description}
 
 - The module’s default export **must match exactly** the type specified in the
   template below.
-- The module can import and use the TypeScript files provided below. For some
-  well-known libraries, their full type definitions have been omitted for
-  brevity. Rely on your internal knowledge of their APIs when generating code.
-- The module has no access to any other library.
-- The implemented module MUST compile without errors.
-- Only make the changes necessary to satisfy the user request.
+- The module can import and use the TypeScript files provided below.
+- The implemented module MUST compile without errors and have no type errors.
+  When you receive compiler diagnostics, correct them and call the tool again.
+- Only make the changes necessary to satisfy the user request - preserve
+  existing working code in the starting point.
+- Use clear, descriptive variable names and add comments for complex logic.
 ${rules ?? ""}
 
 ${additionalInstructions ? "## Additional instructions" : ""}
@@ -281,7 +281,7 @@ const WriteTypescriptModuleTool = {
         properties: {
           source: {
             description:
-              "Source code of the entire TypeScript module that was implemented.",
+              "Source code of the entire TypeScript module that was implemented. Source only. No fences.",
             type: "string",
           },
         },
@@ -304,11 +304,17 @@ function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
     // Add shim definitions for well-known libraries.
     {
       path: "/node_modules/react/index.d.ts",
-      source: 'declare module "react";',
+      source: [
+        "// Full type definitions omitted. Use standard APIs",
+        'declare module "react";',
+      ].join("\n"),
     },
     {
       path: "/node_modules/echarts/index.d.ts",
-      source: 'declare module "echarts";',
+      source: [
+        "// Full type definitions omitted. Use standard APIs",
+        'declare module "echarts";',
+      ].join("\n"),
     },
   ];
 }

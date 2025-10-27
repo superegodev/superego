@@ -13,7 +13,4 @@ export default interface IntlMessages {
     infoLine3: string;
     collectionInfo: string;
   };
-  Select: {
-    nullOptionLabel: string;
-  };
 }

@@ -46,7 +46,7 @@ export default function ImplementingSpinner() {
           ? sentenceIndex + 1
           : (sentences.length - 1) * resetDotsTickCount,
       );
-    }, 800);
+    }, 1_000);
     return () => clearInterval(intervalId);
   }, [sentences]);
 

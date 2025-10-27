@@ -5,12 +5,6 @@ export const Select = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
-  }),
-
-  nullOptionLabel: style({
-    color: vars.colors.text.secondary,
-    fontStyle: "italic",
   }),
 };
 
@@ -120,7 +114,6 @@ export const DatePicker = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
   }),
 };
 

@@ -82,17 +82,13 @@ visualizing the documents in the following collections:
 
 ${targetCollectionsSnippet}
       `.trim(),
-      rules: null,
+      rules: `
+- Break the implementation into focused components, each handling a distinct
+  part of the UI or a specific piece of logic.
+      `.trim(),
       additionalInstructions: `
-The "USER REQUEST HISTORY" comment at the top of the file records all previous
-user requests that shaped the current implementation. Review it to understand
-the context and intent behind the existing code before addressing the new
-request.
-
-After completing the implementation:
-  - Add a bullet point with a concise summary of the current user request to the
-    history comment.
-  - If this change supersedes one or more older requests, remove them.
+- Don't include a top-level title for the App.
+- Don't use top-level padding/margin.
       `.trim(),
       template:
         forms.defaults.collectionViewAppFiles(targetCollections)[

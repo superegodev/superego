@@ -1,16 +1,11 @@
-import type { ReactNode } from "react";
 import { ListBox, ListBoxItem } from "react-aria-components";
 import { PiCheck } from "react-icons/pi";
 import Popover from "../Popover/Popover.js";
 import * as cs from "./forms.css.js";
+import type SelectOption from "./SelectOption.js";
 
-export interface Option {
-  value: string;
-  label?: ReactNode | undefined;
-  description?: ReactNode | undefined;
-}
 interface Props {
-  options: Option[];
+  options: SelectOption[];
 }
 export default function SelectOptions({ options }: Props) {
   return (

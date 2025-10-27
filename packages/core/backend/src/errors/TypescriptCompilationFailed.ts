@@ -4,11 +4,7 @@ type TypescriptCompilationFailed = ResultError<
   "TypescriptCompilationFailed",
   | {
       reason: "TypeErrors";
-      errors: {
-        message: string;
-        line?: number;
-        character?: number;
-      }[];
+      errors: string;
     }
   | {
       reason: "MissingOutput";
