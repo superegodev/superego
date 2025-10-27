@@ -36,7 +36,10 @@ export default function Sandbox({
     return hostIpcRef.current.registerHandlers({
       [MessageType.SandboxReady]: () => setSandboxReady(true),
       [MessageType.HeightChanged]: (message) => {
-        const height = `${message.payload.height}px`;
+        // Sometimes "odd things" happening inside the iframe make it so the
+        // height we get is not sufficient and the iframe html element starts
+        // scrolling. Adding a single pixel of height seems to solve the issue.
+        const height = `${message.payload.height + 1}px`;
         if (iframeRef.current && iframeRef.current.style.height !== height) {
           iframeRef.current.style.height = height;
         }
