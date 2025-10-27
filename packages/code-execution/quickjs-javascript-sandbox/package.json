@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.4"
   },
   "dependencies": {
     "@jitl/quickjs-wasmfile-debug-sync": "^0.31.0",

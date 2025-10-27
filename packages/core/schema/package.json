@@ -23,7 +23,7 @@
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.4"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
