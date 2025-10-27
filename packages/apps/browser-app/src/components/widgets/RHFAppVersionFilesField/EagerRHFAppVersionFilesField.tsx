@@ -11,7 +11,7 @@ import EditingToolbar from "./EditingToolbar.js";
 import ImplementingSpinner from "./ImplementingSpinner.js";
 import Preview from "./Preview.js";
 import type Props from "./Props.js";
-import ResolveIncompatibilityModal from "./ResolveIncompatibilityModal.jsx";
+import ResolveIncompatibilityModal from "./ResolveIncompatibilityModal.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
 import useSttAndImplement from "./useSttAndImplement.js";
 import useTypescriptLibs from "./useTypescriptLibs.js";

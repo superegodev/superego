@@ -59,7 +59,6 @@ export default function Sandbox({
       src={iframeSrc}
       sandbox="allow-scripts allow-same-origin"
       title={appName}
-      style={{ height: 0 }}
       className={className}
     />
   );

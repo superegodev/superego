@@ -39,12 +39,8 @@ export default function Echart({ option, width, height }: Props) {
   return renderingError === null ? (
     <div ref={chartElementRef} style={{ width, height }} />
   ) : (
-    <Alert
-      title={intlMessages.renderingErrorAlertTitle}
-      variant="error"
-      style={{ width, height }}
-    >
-      <pre>
+    <Alert title={intlMessages.renderingErrorAlertTitle} variant="error">
+      <pre style={{ whiteSpace: "pre-wrap" }}>
         <code>
           {JSON.stringify(extractErrorDetails(renderingError), null, 2)}
         </code>

@@ -35,6 +35,7 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/themes": "workspace:*",
     "@vanilla-extract/css": "^1.17.4",
+    "clsx": "^2.1.1",
     "echarts": "^6.0.0",
     "playwright": "^1.56.1",
     "react": "^19.2.0",

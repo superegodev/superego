@@ -21,7 +21,9 @@ export const EagerRHFAppVersionFilesField = {
   }),
 
   preview: styleVariants({
-    visible: {},
+    visible: {
+      display: "flex",
+    },
     hidden: {
       position: "absolute",
       visibility: "hidden",

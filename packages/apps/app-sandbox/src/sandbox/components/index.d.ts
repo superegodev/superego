@@ -9,15 +9,12 @@ export declare function Alert(props: {
   children: ReactNode;
 }): JSX.Element;
 
-export declare function Button(
-  /**
-   * `variant` defines the visual style. All other props are the ones accepted
-   * by a react-aria-components Button.
-   */
-  props: {
-    variant?: "default" | "primary" | "invisible" | "danger";
-  } & ReactAriaComponentsButtonProps,
-): JSX.Element;
+export declare function Button(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible" | "danger";
+  onPress?: () => void;
+  children: ReactNode;
+}): JSX.Element;
 
 /** Default app used as placeholder. Do not use. */
 export declare function DefaultApp(props: { collections: any }): JSX.Element;
@@ -65,6 +62,8 @@ export declare function Echart(props: {
  * establishes the grid context; each column decides how many of the 12 tracks
  * it spans at different breakpoints.
  *
+ * Grids should usually be the outermost components of the app.
+ *
  * @example
  * // Two columns on desktop, stacked on small screens
  * <Grid>
@@ -88,6 +87,57 @@ export declare namespace Grid {
       md?: SpanValue;
       lg?: SpanValue;
     };
+    children: ReactNode;
+  }) => JSX.Element;
+}
+
+export declare function PlainDatePicker(props: {
+  /**
+   * A calendar date in the ISO8601 format, with no time and no time offset.
+   * @example
+   * "2025-10-27"
+   */
+  value: string | null;
+  onChange: (newValue: string | null) => void;
+  label?: ReactNode | undefined;
+  description?: ReactNode | undefined;
+  isDisabled?: boolean | undefined;
+}): JSX.Element;
+
+/**
+ * A table.
+ *
+ * @example
+ * // Non-empty table
+ * <Table ariaLabel="People">
+ *   <Table.Header>
+ *     <Table.Column isRowHeader>Name</Table.Column>
+ *     <Table.Column>Age</Table.Column>
+ *   </Table.Header>
+ *   <Table.Body>
+ *     <Table.Cell>John</Table.Column>
+ *     <Table.Cell>35</Table.Column>
+ *   </Table.Body>
+ * </Table>
+ */
+export declare function Table(props: {
+  ariaLabel: string;
+  children: ReactNode;
+}): JSX.Element;
+export declare namespace Table {
+  var Header: (props: { children: ReactNode }) => JSX.Element;
+  var Column: (props: {
+    /** Whether a column is a row header (for a11y). */
+    isRowHeader?: boolean;
+    /** Defaults to left. */
+    align?: "left" | "center" | "right";
+    children: ReactNode;
+  }) => JSX.Element;
+  var Body: (props: { children: ReactNode }) => JSX.Element;
+  var Row: (props: { children: ReactNode }) => JSX.Element;
+  var Cell: (props: {
+    /** Defaults to left. */
+    align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
 }

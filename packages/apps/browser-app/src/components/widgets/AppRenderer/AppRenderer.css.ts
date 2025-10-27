@@ -5,6 +5,7 @@ export const AppRenderer = {
   sandbox: style({
     border: 0,
     width: "100%",
+    flexGrow: 1,
     overflowX: "scroll",
   }),
 };

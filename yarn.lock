@@ -5347,6 +5347,7 @@ __metadata:
     "@vanilla-extract/css": "npm:^1.17.4"
     "@vitest/browser": "npm:^4.0.3"
     "@vitest/browser-playwright": "npm:^4.0.3"
+    clsx: "npm:^2.1.1"
     echarts: "npm:^6.0.0"
     playwright: "npm:^1.56.1"
     react: "npm:^19.2.0"

@@ -3,7 +3,7 @@ import { dark, vars } from "../../themes.css.js";
 
 const alertRootBase = style({
   width: "100%",
-  overflow: "scroll",
+  overflowX: "scroll",
   marginBlock: vars.spacing._4,
   padding: vars.spacing._4,
   borderRadius: vars.borders.radius.md,

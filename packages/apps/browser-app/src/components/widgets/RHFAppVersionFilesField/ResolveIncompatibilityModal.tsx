@@ -6,7 +6,7 @@ import {
 } from "@superego/backend";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import findIncompatibilities, {
