@@ -19,7 +19,7 @@ export default interface SqliteConversation {
   status: ConversationStatus;
   /** JSON */
   error: string | null;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
 }
 

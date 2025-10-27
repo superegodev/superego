@@ -10,7 +10,7 @@ export default interface SqliteAppVersion {
   target_collections: Buffer;
   /** MessagePack */
   files: Buffer;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
 }

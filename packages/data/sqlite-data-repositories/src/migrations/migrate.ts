@@ -14,7 +14,7 @@ const table = "migrations";
 
 interface SqliteMigration {
   file_name: string;
-  /** ISO8601 */
+  /** ISO 8601 */
   applied_at: string;
 }
 

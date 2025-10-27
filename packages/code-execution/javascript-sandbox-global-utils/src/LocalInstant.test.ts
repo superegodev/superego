@@ -9,7 +9,7 @@ describe("creating LocalInstants from strings", () => {
 
       // Verify
       expect(troublemaker).toThrowError(
-        '"not an instant" is not a valid ISO8601 string',
+        '"not an instant" is not a valid ISO 8601 string',
       );
     });
 

@@ -23,7 +23,7 @@ type SqliteDocumentVersion = {
    */
   content_delta: string | null;
   created_by: DocumentVersionCreator;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
 } & (

@@ -8,7 +8,7 @@ import * as cs from "./forms.css.js";
 import Label from "./Label.js";
 
 interface Props {
-  /** ISO8601 */
+  /** ISO 8601 */
   value: string | null;
   onChange: (newValue: string | null) => void;
   label?: ReactNode | undefined;

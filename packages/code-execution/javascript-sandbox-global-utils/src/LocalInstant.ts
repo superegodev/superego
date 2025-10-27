@@ -69,7 +69,7 @@ class LocalInstant {
   }
 
   /**
-   * Returns the ISO8601 representation of the instant, with the time offset of
+   * Returns the ISO 8601 representation of the instant, with the time offset of
    * the user's timezone. (I.e., a string in `dev.superego:String.Instant`
    * format.)
    */
@@ -104,9 +104,9 @@ class LocalInstant {
   }
 
   /**
-   * Creates a LocalInstant from any valid ISO8601 string. If the string doesn't
-   * have a time offset, the offset of the user's timezone will be used. Throws
-   * if the string is not a valid ISO string.
+   * Creates a LocalInstant from any valid ISO 8601 string. If the string
+   * doesn't have a time offset, the offset of the user's timezone will be used.
+   * Throws if the string is not a valid ISO string.
    */
   static fromISO(iso: string) {
     return new LocalInstant(LocalInstant.parse(iso));
@@ -124,8 +124,8 @@ class LocalInstant {
   static fromInstant(
     /**
      * String in `dev.superego:String.Instant` format: an exact point in time in
-     * the ISO8601 format, with mandatory millisecond precision, with a specific
-     * time offset.
+     * the ISO 8601 format, with mandatory millisecond precision, with a
+     * specific time offset.
      */
     instant: string,
   ) {
@@ -143,7 +143,7 @@ class LocalInstant {
   static fromPlainDate(
     /**
      * String in `dev.superego:String.PlainDate` format: a calendar date in the
-     * ISO8601 format, with no time and no time offset.
+     * ISO 8601 format, with no time and no time offset.
      */
     plainDate: string,
   ) {
@@ -166,7 +166,7 @@ class LocalInstant {
   private static parse(iso: string): DateTime<true> {
     const dateTime = DateTime.fromISO(iso, { zone: "local" });
     if (!dateTime.isValid) {
-      throw new Error(`"${iso}" is not a valid ISO8601 string`);
+      throw new Error(`"${iso}" is not a valid ISO 8601 string`);
     }
     return dateTime;
   }

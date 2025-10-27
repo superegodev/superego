@@ -11,11 +11,11 @@ export default interface SqliteBackgroundJob {
   /** JSON */
   input: string;
   status: BackgroundJobStatus;
-  /** ISO8601 */
+  /** ISO 8601 */
   enqueued_at: string;
-  /** ISO8601 */
+  /** ISO 8601 */
   started_processing_at: string | null;
-  /** ISO8601 */
+  /** ISO 8601 */
   finished_processing_at: string | null;
   /** JSON */
   error: string | null;

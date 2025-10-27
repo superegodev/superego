@@ -93,7 +93,7 @@ export declare namespace Grid {
 
 export declare function PlainDatePicker(props: {
   /**
-   * Controlled value for the picker: an ISO8601 date (YYYY-MM-DD). Set to
+   * Controlled value for the picker: an ISO 8601 date (YYYY-MM-DD). Set to
    * `null` when no date is selected.
    */
   value: string | null;

@@ -6,7 +6,7 @@ export default interface SqliteCollectionCategory {
   name: string;
   icon: string | null;
   parent_id: CollectionCategoryId | null;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
 }
 

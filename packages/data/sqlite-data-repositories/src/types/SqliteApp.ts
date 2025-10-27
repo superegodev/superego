@@ -5,7 +5,7 @@ export default interface SqliteApp {
   id: AppId;
   type: AppType;
   name: string;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
 }
 
