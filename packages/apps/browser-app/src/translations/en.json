@@ -665,9 +665,6 @@
   "InferenceSettings.tsx_RPpwVn": {
     "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p> <p> Providers known to work: </p>"
   },
-  "InferenceSettings.tsx_WKES9e": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code> and <code>moonshotai/kimi-k2-0905</code> currently seems to be the best-performing models for Superego."
-  },
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
   },
@@ -679,6 +676,9 @@
   },
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voice"
+  },
+  "InferenceSettings.tsx_pKfsc3": {
+    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code>, <code>qwen/qwen3-coder</code>, <code>z-ai/glm-4.6</code>, and <code>moonshotai/kimi-k2-0905</code> have all been tested to perform very well."
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"

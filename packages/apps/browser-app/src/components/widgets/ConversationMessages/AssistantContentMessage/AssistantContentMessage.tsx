@@ -30,7 +30,14 @@ export default function AssistantContentMessage({
 }: Props) {
   const [textPart] = message.content;
   const overrides = useOverrides(conversation);
-  const options = useMemo(() => ({ overrides }), [overrides]);
+  const options = useMemo<MarkdownToJSX.Options>(
+    () => ({
+      wrapper: "div",
+      forceWrapper: true,
+      overrides,
+    }),
+    [overrides],
+  );
   return (
     <div className={cs.AssistantContentMessage.root}>
       <Markdown
