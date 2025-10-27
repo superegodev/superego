@@ -29,27 +29,47 @@ import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker.js?work
 };
 monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+  // Emit
   noEmit: false,
   sourceMap: false,
   declaration: false,
   declarationMap: false,
-  target: monaco.languages.typescript.ScriptTarget.ESNext,
+
+  // Modules
   module: monaco.languages.typescript.ModuleKind.ESNext,
   moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-  strict: true,
-  allowUnusedLabels: false,
-  allowUnreachableCode: false,
+
+  // Interop constraints
   allowSyntheticDefaultImports: true,
-  exactOptionalPropertyTypes: true,
-  noFallthroughCasesInSwitch: true,
-  noImplicitOverride: true,
-  noImplicitReturns: true,
-  noPropertyAccessFromIndexSignature: true,
-  noUncheckedIndexedAccess: true,
-  noUnusedLocals: true,
-  noUnusedParameters: true,
-  skipLibCheck: true,
+
+  // Language and environment
+  target: monaco.languages.typescript.ScriptTarget.ESNext,
   jsx: monaco.languages.typescript.JsxEmit.React,
+
+  // Completeness
+  skipLibCheck: true,
+
+  // Type checking options
+  allowUnreachableCode: false,
+  allowUnusedLabels: false,
+  alwaysStrict: true,
+  exactOptionalPropertyTypes: false,
+  noFallthroughCasesInSwitch: true,
+  noImplicitAny: true,
+  noImplicitOverride: false,
+  noImplicitReturns: true,
+  noImplicitThis: true,
+  noPropertyAccessFromIndexSignature: false,
+  noUncheckedIndexedAccess: false,
+  noUnusedLocals: false,
+  noUnusedParameters: false,
+  strict: true,
+  strictBindCallApply: true,
+  strictBuiltinIteratorReturn: true,
+  strictFunctionTypes: true,
+  strictNullChecks: true,
+  strictPropertyInitialization: true,
+  useUnknownInCatchVariables: true,
 });
 monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
   schemas: [

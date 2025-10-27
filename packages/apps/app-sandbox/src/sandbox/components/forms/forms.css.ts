@@ -7,6 +7,11 @@ export const Select = {
     flexDirection: "column",
     marginBlockEnd: vars.spacing._6,
   }),
+
+  nullOptionLabel: style({
+    color: vars.colors.text.secondary,
+    fontStyle: "italic",
+  }),
 };
 
 export const SelectButton = {
@@ -34,8 +39,8 @@ export const SelectButton = {
 
 export const SelectOptions = {
   root: style({
-    width: "calc(var(--trigger-width) * var(--zoom-level))",
-    overflow: "scroll",
+    width: "var(--trigger-width)",
+    overflowY: "scroll",
   }),
 
   option: style({

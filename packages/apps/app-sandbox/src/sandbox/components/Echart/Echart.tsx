@@ -15,7 +15,7 @@ export default function Echart({ option, width, height }: Props) {
   const [renderingError, setRenderingError] = useState<any>(null);
   const chartElementRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const intlMessages = useIntlMessages("Echart");
+  const { renderingErrorAlertTitle } = useIntlMessages("Echart");
 
   useEffect(() => {
     if (!chartElementRef.current) {
@@ -39,7 +39,7 @@ export default function Echart({ option, width, height }: Props) {
   return renderingError === null ? (
     <div ref={chartElementRef} style={{ width, height }} />
   ) : (
-    <Alert title={intlMessages.renderingErrorAlertTitle} variant="error">
+    <Alert title={renderingErrorAlertTitle} variant="error">
       <pre style={{ whiteSpace: "pre-wrap" }}>
         <code>
           {JSON.stringify(extractErrorDetails(renderingError), null, 2)}

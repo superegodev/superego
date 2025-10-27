@@ -36,18 +36,16 @@ export declare function Echart(props: {
    * - In datasets and series, round all numeric values to 2 decimals. Use
    *   `Math.round(value * 100)/100)`
    * - Don't specify colors, use the default theme.
-   * - If you must specify colors, prefer using this palette:
-   *    - Background color: #fdfdfd
-   *   - Series colors:
-   *     - #228be6
-   *     - #40c057
-   *     - #fab005
-   *     - #fa5252
-   *     - #15aabf
-   *     - #12b886
-   *     - #fd7e14
-   *     - #7950f2
-   *     - #e64980
+   * - If you must specify colors, prefer using these series colors:
+   *   - #228be6
+   *   - #40c057
+   *   - #fab005
+   *   - #fa5252
+   *   - #15aabf
+   *   - #12b886
+   *   - #fd7e14
+   *   - #7950f2
+   *   - #e64980
    */
   option: EChartsOption;
   /** You should usually set this to 100%. */
@@ -65,11 +63,13 @@ export declare function Echart(props: {
  * Grids should usually be the outermost components of the app.
  *
  * @example
+ * ```ts
  * // Two columns on desktop, stacked on small screens
  * <Grid>
  *   <Grid.Col span={{ sm: 12, md: 6, lg: 6 }}>Left</Grid.Col>
  *   <Grid.Col span={{ sm: 12, md: 6, lg: 6 }}>Right</Grid.Col>
  * </Grid>
+ * ```
  */
 export declare function Grid(props: { children: ReactNode }): JSX.Element;
 export declare namespace Grid {
@@ -93,21 +93,52 @@ export declare namespace Grid {
 
 export declare function PlainDatePicker(props: {
   /**
-   * A calendar date in the ISO8601 format, with no time and no time offset.
-   * @example
-   * "2025-10-27"
+   * Controlled value for the picker: an ISO8601 date (YYYY-MM-DD). Set to
+   * `null` when no date is selected.
    */
   value: string | null;
-  onChange: (newValue: string | null) => void;
-  label?: ReactNode | undefined;
-  description?: ReactNode | undefined;
-  isDisabled?: boolean | undefined;
+  onChange: (
+    /**
+     * New value selected by the user, or `null` if the selection was cleared.
+     */
+    newValue: string | null,
+  ) => void;
+  label?: ReactNode;
+  description?: ReactNode;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+export declare function Select(props: {
+  /**
+   * Controlled value for the select. Use `null` for no selection, or a string
+   * that matches an option's `value`.
+   */
+  value: string | null;
+  onChange: (
+    /**
+     * New value selected by the user, or `null` if the selection was cleared.
+     */
+    newValue: string | null,
+  ) => void;
+  /** Available choices. Each `value` must be unique. */
+  options: {
+    /** Unique option identifier. Returned from `onChange`. */
+    value: string;
+    label?: ReactNode;
+    description?: ReactNode;
+  }[];
+  label?: ReactNode;
+  description?: ReactNode;
+  isDisabled?: boolean;
+  /** Placeholder for when value is `null`. */
+  placeholder?: ReactNode;
 }): JSX.Element;
 
 /**
  * A table.
  *
  * @example
+ * ```ts
  * // Non-empty table
  * <Table ariaLabel="People">
  *   <Table.Header>
@@ -119,6 +150,7 @@ export declare function PlainDatePicker(props: {
  *     <Table.Cell>35</Table.Column>
  *   </Table.Body>
  * </Table>
+ * ```
  */
 export declare function Table(props: {
   ariaLabel: string;
@@ -129,14 +161,14 @@ export declare namespace Table {
   var Column: (props: {
     /** Whether a column is a row header (for a11y). */
     isRowHeader?: boolean;
-    /** Defaults to left. */
+    /** Defaults to `left`. */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
   var Body: (props: { children: ReactNode }) => JSX.Element;
   var Row: (props: { children: ReactNode }) => JSX.Element;
   var Cell: (props: {
-    /** Defaults to left. */
+    /** Defaults to `left`. */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
@@ -144,15 +176,15 @@ export declare namespace Table {
 
 /** Typography component for consistent text styling. */
 export declare function Text(props: {
-  /** Defaults to span. */
+  /** Defaults to `span`. */
   element?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  /** Defaults to primary. */
+  /** Defaults to `primary`. */
   color?: "primary" | "secondary";
-  /** Defaults to sm. */
+  /** Defaults to `sm`. */
   size?: "xs2" | "xs" | "sm" | "md" | "lg" | "xl" | "xl2" | "xl3" | "xl4";
-  /** Defaults to regular. */
+  /** Defaults to `regular`. */
   weight?: "light" | "regular" | "medium" | "semibold" | "bold";
-  /** Defaults to sans-serif. */
+  /** Defaults to `sansSerif`. */
   font?: "sansSerif" | "serif" | "monospace";
   /**
    * Prefer to use specific properties. Use when you need more control over

@@ -28,27 +28,47 @@ export default class TscTypescriptCompiler implements TypescriptCompiler {
       }
 
       const compilerOptions: ts.CompilerOptions = {
+        // Emit
         noEmit: false,
         sourceMap: false,
         declaration: false,
         declarationMap: false,
-        target: ts.ScriptTarget.ESNext,
+
+        // Modules
         module: ts.ModuleKind.ESNext,
         moduleResolution: ts.ModuleResolutionKind.NodeJs,
-        strict: true,
-        allowUnusedLabels: false,
-        allowUnreachableCode: false,
+
+        // Interop constraints
         allowSyntheticDefaultImports: true,
-        exactOptionalPropertyTypes: true,
-        noFallthroughCasesInSwitch: true,
-        noImplicitOverride: true,
-        noImplicitReturns: true,
-        noPropertyAccessFromIndexSignature: true,
-        noUncheckedIndexedAccess: true,
-        noUnusedLocals: true,
-        noUnusedParameters: true,
-        skipLibCheck: true,
+
+        // Language and environment
+        target: ts.ScriptTarget.ESNext,
         jsx: ts.JsxEmit.React,
+
+        // Completeness
+        skipLibCheck: true,
+
+        // Type checking options
+        allowUnreachableCode: false,
+        allowUnusedLabels: false,
+        alwaysStrict: true,
+        exactOptionalPropertyTypes: false,
+        noFallthroughCasesInSwitch: true,
+        noImplicitAny: true,
+        noImplicitOverride: false,
+        noImplicitReturns: true,
+        noImplicitThis: true,
+        noPropertyAccessFromIndexSignature: false,
+        noUncheckedIndexedAccess: false,
+        noUnusedLocals: false,
+        noUnusedParameters: false,
+        strict: true,
+        strictBindCallApply: true,
+        strictBuiltinIteratorReturn: true,
+        strictFunctionTypes: true,
+        strictNullChecks: true,
+        strictPropertyInitialization: true,
+        useUnknownInCatchVariables: true,
       };
       const program = ts.createProgram({
         rootNames: [...fs.keys()],

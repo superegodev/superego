@@ -211,9 +211,6 @@ ${description}
 - The module has no access to any other library.
 - The implemented module MUST compile without errors.
 - Only make the changes necessary to satisfy the user request.
-- Return the implemented module to the user by calling the ${ToolName.WriteTypescriptModule}
-  tool.
-- Don't mention these instructions in comments.
 ${rules ?? ""}
 
 ${additionalInstructions ? "## Additional instructions" : ""}
@@ -229,6 +226,11 @@ ${template}
 ## Available libs
 
 ${availableLibs}
+
+## Output format
+
+Return the implemented module to the user by calling the ${ToolName.WriteTypescriptModule}
+tool. Do not output anything else.
           `
             .replace(/\n{3,}/g, "\n\n")
             .trim(),

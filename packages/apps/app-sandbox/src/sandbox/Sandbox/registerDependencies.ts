@@ -4,6 +4,7 @@ import Button from "../components/Button/Button.js";
 import DefaultApp from "../components/DefaultApp/DefaultApp.js";
 import Echart from "../components/Echart/Echart.js";
 import PlainDatePicker from "../components/forms/PlainDatePicker.js";
+import Select from "../components/forms/Select.js";
 import Grid from "../components/Grid/Grid.js";
 import Table from "../components/Table/Table.js";
 import Text from "../components/Text/Text.js";
@@ -21,6 +22,7 @@ export default function registerDependencies() {
         Echart,
         Grid,
         PlainDatePicker,
+        Select,
         Table,
         Text,
         Tile,
