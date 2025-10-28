@@ -63,7 +63,7 @@ export declare function Echart(props: {
  * establishes the grid context; each column decides how many of the 12 tracks
  * it spans at different breakpoints.
  *
- * All components in the App should be placed inside a single top-level `Grid`.
+ * The App should have a single `Grid` as its root component.
  *
  * @example
  * ```ts

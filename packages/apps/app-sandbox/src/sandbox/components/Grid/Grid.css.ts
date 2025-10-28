@@ -22,7 +22,6 @@ export const Grid = {
     gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
     columnGap: vars.spacing._2,
     rowGap: vars.spacing._2,
-    marginBlockEnd: vars.spacing._2,
     width: "100%",
   }),
 };

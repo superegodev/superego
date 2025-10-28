@@ -1,16 +1,19 @@
 export default function onHeightChanged(callback: (height: number) => void) {
+  let rafId: number | null = null;
+
   const resizeObserver = new ResizeObserver(() => {
-    callback(
-      Math.max(
-        document.documentElement?.scrollHeight ?? 0,
-        document.body?.scrollHeight ?? 0,
-        document.documentElement?.offsetHeight ?? 0,
-        document.body?.offsetHeight ?? 0,
-        document.documentElement?.clientHeight ?? 0,
-        document.body?.clientHeight ?? 0,
-      ),
-    );
+    // Debounce with RAF to ensure layout is complete
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+    }
+
+    rafId = requestAnimationFrame(() => {
+      const bodyRect = document.body.getBoundingClientRect();
+      const height = Math.ceil(bodyRect.height);
+      callback(height);
+      rafId = null;
+    });
   });
+
   resizeObserver.observe(document.body);
-  resizeObserver.observe(document.documentElement);
 }

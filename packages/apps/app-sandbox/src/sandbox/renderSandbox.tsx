@@ -9,6 +9,13 @@ import Sandbox from "./Sandbox/Sandbox.js";
 export default function renderSandbox() {
   const sandboxIpc = new SandboxIpc(window.parent, window);
 
+  onHeightChanged((height) => {
+    sandboxIpc.send({
+      type: MessageType.HeightChanged,
+      payload: { height },
+    });
+  });
+
   const rootElement = document.createElement("div");
   rootElement.id = "root";
   document.body.appendChild(rootElement);
@@ -23,12 +30,5 @@ export default function renderSandbox() {
   sandboxIpc.send({
     type: MessageType.SandboxReady,
     payload: null,
-  });
-
-  onHeightChanged((height) => {
-    sandboxIpc.send({
-      type: MessageType.HeightChanged,
-      payload: { height },
-    });
   });
 }

@@ -25,9 +25,8 @@ type AppRenderingParams =
 export default function useAppRenderingParams(
   sandboxIpc: SandboxIpc,
 ): AppRenderingParams | null {
-  const [latestStuff, setLatestStuff] = useState<AppRenderingParams | null>(
-    null,
-  );
+  const [latestAppRenderingParams, setLatestAppRenderingParams] =
+    useState<AppRenderingParams | null>(null);
 
   const latestImportIdRef = useRef<string>(null);
 
@@ -42,7 +41,7 @@ export default function useAppRenderingParams(
           try {
             const App = await importApp(appCode);
             if (latestImportIdRef.current === importId) {
-              setLatestStuff({
+              setLatestAppRenderingParams({
                 appProps,
                 settings,
                 intlMessages,
@@ -52,7 +51,7 @@ export default function useAppRenderingParams(
             }
           } catch (appImportingError) {
             if (latestImportIdRef.current === importId) {
-              setLatestStuff({
+              setLatestAppRenderingParams({
                 appProps,
                 settings,
                 intlMessages,
@@ -66,5 +65,5 @@ export default function useAppRenderingParams(
     [sandboxIpc],
   );
 
-  return latestStuff;
+  return latestAppRenderingParams;
 }
