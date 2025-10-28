@@ -1,6 +1,6 @@
 {
   "name": "@superego/themes",
-  "version": "2025.10.0",
+  "version": "2025.10.1",
   "type": "module",
   "exports": {
     ".": {
