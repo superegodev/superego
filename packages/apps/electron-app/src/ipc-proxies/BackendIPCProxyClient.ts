@@ -8,6 +8,8 @@ export default class BackendIPCProxyClient implements Backend {
   documents: Backend["documents"];
   files: Backend["files"];
   assistants: Backend["assistants"];
+  inference: Backend["inference"];
+  apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
@@ -67,10 +69,22 @@ export default class BackendIPCProxyClient implements Backend {
       getDeveloperPrompts: this.makeMainIpcCall(
         "assistants.getDeveloperPrompts",
       ),
-      tts: this.makeMainIpcCall("assistants.tts"),
-      implementTypescriptFunction: this.makeMainIpcCall(
-        "assistants.implementTypescriptFunction",
+    };
+
+    this.inference = {
+      stt: this.makeMainIpcCall("inference.stt"),
+      tts: this.makeMainIpcCall("inference.tts"),
+      implementTypescriptModule: this.makeMainIpcCall(
+        "inference.implementTypescriptModule",
       ),
+    };
+
+    this.apps = {
+      create: this.makeMainIpcCall("apps.create"),
+      updateName: this.makeMainIpcCall("apps.updateName"),
+      createNewVersion: this.makeMainIpcCall("apps.createNewVersion"),
+      delete: this.makeMainIpcCall("apps.delete"),
+      list: this.makeMainIpcCall("apps.list"),
     };
 
     this.backgroundJobs = {

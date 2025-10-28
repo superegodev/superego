@@ -13,7 +13,7 @@ import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../../business-logic/toasts/toasts.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
@@ -79,15 +79,12 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       values.remoteConverters,
     );
     if (success) {
-      toastQueue.add(
-        {
-          type: ToastType.Success,
-          title: intl.formatMessage({
-            defaultMessage: "New collection version created",
-          }),
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Success,
+        title: intl.formatMessage({
+          defaultMessage: "New collection version created",
+        }),
+      });
       navigateTo({ name: RouteName.Collection, collectionId: collection.id });
     }
   };

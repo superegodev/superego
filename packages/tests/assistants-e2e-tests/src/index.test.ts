@@ -6,6 +6,7 @@ import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
+import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { afterAll, assert, beforeAll, describe } from "vitest";
 import registerTests from "./registerTests.js";
 import Evaluator from "./utils/Evaluator.js";
@@ -29,6 +30,9 @@ afterAll(() => {
 
 // Javascript sandbox
 const javascriptSandbox = new QuickjsJavascriptSandbox();
+
+// Typescript compiler
+const typescriptCompiler = new TscTypescriptCompiler();
 
 // Inference service
 const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
@@ -127,6 +131,7 @@ describe.concurrent.each(assistantsModels)(
       const backend = new ExecutingBackend(
         dataRepositoriesManager,
         javascriptSandbox,
+        typescriptCompiler,
         inferenceServiceFactory,
         [],
       );

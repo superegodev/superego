@@ -30,7 +30,11 @@ export default {
     const { settings, schema, tableColumns, exampleDocument } = toolCall.input;
 
     const createResult = await collectionsCreate.exec(
-      { ...settings, assistantInstructions: null },
+      {
+        ...settings,
+        defaultCollectionViewAppId: null,
+        assistantInstructions: null,
+      },
       schema,
       { contentSummaryGetter: stubContentSummaryGetter },
       // Dry run
@@ -41,6 +45,7 @@ export default {
       createResult.error &&
       (createResult.error.name === "UnexpectedError" ||
         createResult.error.name === "CollectionCategoryNotFound" ||
+        createResult.error.name === "AppNotFound" ||
         createResult.error.name === "ContentSummaryGetterNotValid")
     ) {
       throw new UnexpectedAssistantError(
@@ -120,7 +125,7 @@ Generates the definition for a collection.
               },
               icon: {
                 description:
-                  "An emoji for the collection. Should be meaningful and representative.",
+                  "A single emoji for the collection (can be a ZWJ sequence). Should be meaningful and representative.",
                 type: ["string", "null"],
               },
               description: {

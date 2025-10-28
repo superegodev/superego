@@ -16,6 +16,7 @@ const collection: CollectionEntity = {
     name: "Fuel Logs",
     icon: "⛽",
     collectionCategoryId: Car.id,
+    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions: [
       '- Use reasonable values for liters and total cost. E.g., if I say I put "5304" liters, or "5,3,0,4 liters", I probably mean 53.04, even if I didn\'t specify the decimal or just gave a list of numbers.',

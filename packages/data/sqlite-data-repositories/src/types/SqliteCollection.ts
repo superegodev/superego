@@ -11,7 +11,7 @@ export default interface SqliteCollection {
   settings: string;
   /** MessagePack */
   remote: Buffer | null;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
 }
 

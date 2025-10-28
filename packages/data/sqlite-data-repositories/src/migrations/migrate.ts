@@ -2,17 +2,19 @@ import type { DatabaseSync } from "node:sqlite";
 import m0000 from "./0000.sql?raw";
 import m0001 from "./0001.sql?raw";
 import m0002 from "./0002.sql?raw";
+import m0003 from "./0003.sql?raw";
 
 const migrationFiles = {
   "0000.sql": m0000,
   "0001.sql": m0001,
   "0002.sql": m0002,
+  "0003.sql": m0003,
 };
 const table = "migrations";
 
 interface SqliteMigration {
   file_name: string;
-  /** ISO8601 */
+  /** ISO 8601 */
   applied_at: string;
 }
 

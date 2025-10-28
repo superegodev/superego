@@ -260,7 +260,7 @@ export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
         .startOf("week")
         .set({ hour: 1 });
       expect(result.data).toEqual({
-        invalidISO: '"not-a-valid-iso" is not a valid ISO8601 string',
+        invalidISO: '"not-a-valid-iso" is not a valid ISO 8601 string',
         invalidInstant:
           '"not-a-valid-instant" is not a valid dev.superego:String.Instant',
         invalidPlainDate:

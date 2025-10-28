@@ -1,4 +1,6 @@
 import type {
+  AppId,
+  AppVersionId,
   BackgroundJobId,
   CollectionCategoryId,
   CollectionId,
@@ -10,6 +12,8 @@ import type {
   GlobalSettings,
 } from "@superego/backend";
 import type {
+  AppEntity,
+  AppVersionEntity,
   BackgroundJobEntity,
   CollectionCategoryEntity,
   CollectionEntity,
@@ -22,6 +26,8 @@ import type {
 
 export default interface Data {
   version: string;
+  apps: Record<AppId, AppEntity>;
+  appVersions: Record<AppVersionId, AppVersionEntity>;
   backgroundJobs: Record<BackgroundJobId, BackgroundJobEntity>;
   collectionCategories: Record<CollectionCategoryId, CollectionCategoryEntity>;
   collections: Record<CollectionId, CollectionEntity>;

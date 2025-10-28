@@ -1,0 +1,29 @@
+{
+  "name": "@superego/monaco-typescript-compiler",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/shared-utils": "workspace:*",
+    "monaco-editor": "0.54.0"
+  },
+  "devDependencies": {
+    "@vitest/browser": "^4.0.4",
+    "@vitest/browser-playwright": "^4.0.4",
+    "playwright": "^1.56.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.4"
+  }
+}

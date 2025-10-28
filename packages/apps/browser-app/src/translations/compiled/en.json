@@ -101,6 +101,24 @@
       "value": "Error sending message to assistant"
     }
   ],
+  "Collection.tsx_59cQpf": [
+    {
+      "type": 0,
+      "value": "Edit app"
+    }
+  ],
+  "Collection.tsx_5WK7jL": [
+    {
+      "type": 0,
+      "value": "Create new"
+    }
+  ],
+  "Collection.tsx_B+R508": [
+    {
+      "type": 0,
+      "value": "Set as default view"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -113,10 +131,28 @@
       "value": "Show timestamps"
     }
   ],
+  "Collection.tsx_LQONHO": [
+    {
+      "type": 0,
+      "value": "Error setting the default collection view"
+    }
+  ],
+  "Collection.tsx_gRiKLf": [
+    {
+      "type": 0,
+      "value": "Apps"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
       "value": "Create document"
+    }
+  ],
+  "Collection.tsx_ufzv1A": [
+    {
+      "type": 0,
+      "value": "Table view"
     }
   ],
   "Collection.tsx_zYomDH": [
@@ -409,6 +445,18 @@
       "value": "Copied"
     }
   ],
+  "CreateApp.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "CreateApp.tsx_dtELK2": [
+    {
+      "type": 0,
+      "value": "Create App"
+    }
+  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -526,6 +574,12 @@
       "value": " created"
     }
   ],
+  "CreateNewAppVersionForm.tsx_6GRvO0": [
+    {
+      "type": 0,
+      "value": "Error creating a new app version"
+    }
+  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -586,6 +640,58 @@
     {
       "type": 0,
       "value": "Not a valid JSON string"
+    }
+  ],
+  "DeleteAppModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "DeleteAppModalForm.tsx_U+RSUu": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the app is permanent. If you're sure, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "DeleteAppModalForm.tsx_bJAAvK": [
+    {
+      "type": 0,
+      "value": "Delete app \""
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteAppModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -898,6 +1004,18 @@
       "value": "Sync"
     }
   ],
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
+    {
+      "type": 0,
+      "value": "What do you want to build?"
+    }
+  ],
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
+    {
+      "type": 0,
+      "value": "An error occurred generating the app"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -908,6 +1026,62 @@
     {
       "type": 0,
       "value": "An error occurred rendering the chart."
+    }
+  ],
+  "EditApp.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "EditApp.tsx_LDlHu6": [
+    {
+      "type": 0,
+      "value": "🧩 "
+    },
+    {
+      "type": 1,
+      "value": "app"
+    },
+    {
+      "type": 0,
+      "value": " » Edit"
+    }
+  ],
+  "EditApp.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Create new version"
+    }
+  ],
+  "EditApp.tsx_Vva+Yr": [
+    {
+      "type": 0,
+      "value": "Edit name"
+    }
+  ],
+  "EditingToolbar.tsx_1hhuuF": [
+    {
+      "type": 0,
+      "value": "App preview"
+    }
+  ],
+  "EditingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Redo"
+    }
+  ],
+  "EditingToolbar.tsx_EwYOYc": [
+    {
+      "type": 0,
+      "value": "View code"
+    }
+  ],
+  "EditingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Undo"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [
@@ -1292,6 +1466,122 @@
       "value": "Implementation failed"
     }
   ],
+  "ImplementingSpinner.tsx_93mRKW": [
+    {
+      "type": 0,
+      "value": "Let me work on that"
+    }
+  ],
+  "ImplementingSpinner.tsx_BZWtmi": [
+    {
+      "type": 0,
+      "value": "Making changes"
+    }
+  ],
+  "ImplementingSpinner.tsx_Bk6B6r": [
+    {
+      "type": 0,
+      "value": "Almost there"
+    }
+  ],
+  "ImplementingSpinner.tsx_Fhu9fI": [
+    {
+      "type": 0,
+      "value": "Just one last refactor"
+    }
+  ],
+  "ImplementingSpinner.tsx_Hy/tAh": [
+    {
+      "type": 0,
+      "value": "It’s more complex than I estimated"
+    }
+  ],
+  "ImplementingSpinner.tsx_MQVNHz": [
+    {
+      "type": 0,
+      "value": "Right away"
+    }
+  ],
+  "ImplementingSpinner.tsx_Mdz/x3": [
+    {
+      "type": 0,
+      "value": "It'll be done in no time"
+    }
+  ],
+  "ImplementingSpinner.tsx_ZRWqDd": [
+    {
+      "type": 0,
+      "value": "Please don't fire me"
+    }
+  ],
+  "ImplementingSpinner.tsx_m0Hh22": [
+    {
+      "type": 0,
+      "value": "One more fix"
+    }
+  ],
+  "ImplementingSpinner.tsx_mLuQZP": [
+    {
+      "type": 0,
+      "value": "Getting to work"
+    }
+  ],
+  "ImplementingSpinner.tsx_pJh6Bf": [
+    {
+      "type": 0,
+      "value": "Compiling code"
+    }
+  ],
+  "ImplementingSpinner.tsx_q462mT": [
+    {
+      "type": 0,
+      "value": "It’s a hard problem"
+    }
+  ],
+  "IncompatibilityWarning.tsx_8OtepV": [
+    {
+      "type": 0,
+      "value": "Update the app"
+    }
+  ],
+  "IncompatibilityWarning.tsx_QL2z4z": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " This app might not work correctly, as it uses collections that were either changed or deleted since the app was made. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Update the app to avoid this warning. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "IncompatibilityWarning.tsx_q9XsfI": [
+    {
+      "type": 0,
+      "value": "Display anyway"
+    }
+  ],
+  "IncompatibilityWarning.tsx_s36xxK": [
+    {
+      "type": 0,
+      "value": "Incompatibility warning"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -1370,40 +1660,6 @@
       "value": "p"
     }
   ],
-  "InferenceSettings.tsx_WKES9e": [
-    {
-      "type": 0,
-      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " and "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "moonshotai/kimi-k2-0905"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " currently seems to be the best-performing models for Superego."
-    }
-  ],
   "InferenceSettings.tsx_YctX0J": [
     {
       "type": 0,
@@ -1426,6 +1682,68 @@
     {
       "type": 0,
       "value": "Voice"
+    }
+  ],
+  "InferenceSettings.tsx_pKfsc3": [
+    {
+      "type": 0,
+      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "qwen/qwen3-coder"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "z-ai/glm-4.6"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "moonshotai/kimi-k2-0905"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " have all been tested to perform very well."
     }
   ],
   "InferenceSettings.tsx_rhSI1/": [
@@ -1598,6 +1916,12 @@
     {
       "type": 0,
       "value": "Close sidebar"
+    }
+  ],
+  "Preview.tsx_Dd6cIb": [
+    {
+      "type": 0,
+      "value": "App compilation failed."
     }
   ],
   "PrimarySidebarPanel.tsx_D3idYv": [
@@ -2078,6 +2402,94 @@
       "value": "Icon"
     }
   ],
+  "ResolveIncompatibilityModal.tsx_3DyFfU": [
+    {
+      "type": 0,
+      "value": "I'll do it myself"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5HfPcg": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " The collections used by this app have changed since the app was created. Update the app to ensure that it works correctly. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Collection changes:"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5daczq": [
+    {
+      "type": 0,
+      "value": "Resolve incompatibility"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_EaZlsM": [
+    {
+      "type": 0,
+      "value": "Ask the assistant"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": [
+    {
+      "options": {
+        "WasDeleted": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " was deleted."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " has a new version."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "type"
+    }
+  ],
   "ResultErrors.tsx_Lv0zJu": [
     {
       "type": 0,
@@ -2286,6 +2698,30 @@
       "value": "Set remote"
     }
   ],
+  "SetNameAndSaveModal.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_r+ksJu": [
+    {
+      "type": 0,
+      "value": "Create app"
+    }
+  ],
   "SpeakButton.tsx_FUvUuG": [
     {
       "type": 0,
@@ -2408,6 +2844,12 @@
       "value": "collection"
     }
   ],
+  "Toast.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Details"
+    }
+  ],
   "Toast.tsx_rbrahO": [
     {
       "type": 0,
@@ -2484,6 +2926,30 @@
     {
       "type": 0,
       "value": "Error saving global settings"
+    }
+  ],
+  "UpdateNameModalForm.tsx_BWpuKl": [
+    {
+      "type": 0,
+      "value": "Update"
+    }
+  ],
+  "UpdateNameModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "UpdateNameModalForm.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "UpdateNameModalForm.tsx_btR6aV": [
+    {
+      "type": 0,
+      "value": "Update app name"
     }
   ],
   "UserMessage.tsx_J3ca41": [
@@ -2633,6 +3099,54 @@
     {
       "type": 0,
       "value": "Last sync failed"
+    }
+  ],
+  "getIntlMessages.ts_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the chart."
+    }
+  ],
+  "getIntlMessages.ts_J1XXSx": [
+    {
+      "type": 0,
+      "value": "My Awesome App"
+    }
+  ],
+  "getIntlMessages.ts_PyA0WU": [
+    {
+      "type": 0,
+      "value": "You can vibe-code the app by asking the assistant."
+    }
+  ],
+  "getIntlMessages.ts_UfI09W": [
+    {
+      "type": 0,
+      "value": "An error occurred importing the app."
+    }
+  ],
+  "getIntlMessages.ts_XBQLkj": [
+    {
+      "type": 0,
+      "value": "Or, you can write the code yourself by switching to the code view."
+    }
+  ],
+  "getIntlMessages.ts_bzhBew": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the app."
+    }
+  ],
+  "getIntlMessages.ts_eIxrAW": [
+    {
+      "type": 0,
+      "value": "This app has access to the following collections:"
+    }
+  ],
+  "getIntlMessages.ts_hPMG1H": [
+    {
+      "type": 0,
+      "value": "In this section you can see the live preview of your app."
     }
   ],
   "typescriptModule.ts_MZNYNj": [

@@ -31,19 +31,43 @@ export default function InferenceSettings({ control }: Props) {
         />
         <ul>
           <li>
-            <a href="https://groq.com/">{"Groq"}</a>
+            <a
+              href="https://groq.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"Groq"}
+            </a>
             <FormattedMessage defaultMessage=": fast, cheap, supports all APIs." />
           </li>
           <li>
-            <a href="https://openai.com/">{"OpenAI"}</a>
+            <a
+              href="https://openai.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"OpenAI"}
+            </a>
             <FormattedMessage defaultMessage=": supports all APIs." />
           </li>
           <li>
-            <a href="https://openrouter.ai/">{"OpenRouter"}</a>
+            <a
+              href="https://openrouter.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"OpenRouter"}
+            </a>
             <FormattedMessage defaultMessage=": only supports the Chat Completions API." />
           </li>
           <li>
-            <a href="https://lmstudio.ai/">{"LM Studio"}</a>
+            <a
+              href="https://lmstudio.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"LM Studio"}
+            </a>
             <FormattedMessage defaultMessage=": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API." />
           </li>
         </ul>
@@ -73,9 +97,11 @@ export default function InferenceSettings({ control }: Props) {
                 defaultMessage={`
                   The name of a model supported by the provider you've chosen.
                   You can usually find this in your provider's docs.
-                  <code>openai/gpt-oss-120b</code> and
-                  <code>moonshotai/kimi-k2-0905</code> currently seems to be the
-                  best-performing models for Superego.
+                  <code>openai/gpt-oss-120b</code>,
+                  <code>qwen/qwen3-coder</code>,
+                  <code>z-ai/glm-4.6</code>, and
+                  <code>moonshotai/kimi-k2-0905</code> have all been tested to
+                  perform very well.
                 `}
                 values={formattedMessageHtmlTags}
               />

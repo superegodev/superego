@@ -1,4 +1,5 @@
 import type {
+  AppId,
   CollectionId,
   ConversationId,
   DocumentId,
@@ -9,13 +10,20 @@ export enum RouteName {
   Conversations = "Conversations",
   Conversation = "Conversation",
   CreateCollectionManual = "CreateCollection",
-  CreateCollectionAssisted = "StartCollectionCreatorConversation",
+  CreateCollectionAssisted = "CreateCollectionAssisted",
   CreateNewCollectionVersion = "CreateNewCollectionVersion",
   Collection = "Collection",
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
   Document = "Document",
+  CreateApp = "CreateApp",
+  EditApp = "EditApp",
   GlobalSettings = "Settings",
+}
+
+export enum CollectionRouteView {
+  Table = "Table",
+  App = "App",
 }
 
 type Route =
@@ -40,10 +48,20 @@ type Route =
       name: RouteName.CreateNewCollectionVersion;
       collectionId: CollectionId;
     }
-  | {
-      name: RouteName.Collection;
-      collectionId: CollectionId;
-    }
+  | (
+      | { name: RouteName.Collection; collectionId: CollectionId }
+      | {
+          name: RouteName.Collection;
+          collectionId: CollectionId;
+          view: CollectionRouteView.Table;
+        }
+      | {
+          name: RouteName.Collection;
+          collectionId: CollectionId;
+          view: CollectionRouteView.App;
+          appId: AppId;
+        }
+    )
   | {
       name: RouteName.CollectionSettings;
       collectionId: CollectionId;
@@ -56,6 +74,14 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
+    }
+  | {
+      name: RouteName.CreateApp;
+      collectionIds: CollectionId[];
+    }
+  | {
+      name: RouteName.EditApp;
+      appId: AppId;
     }
   | {
       name: RouteName.GlobalSettings;

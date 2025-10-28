@@ -101,6 +101,24 @@
       "value": "Errore durante l'invio del messaggio all'assistente"
     }
   ],
+  "Collection.tsx_59cQpf": [
+    {
+      "type": 0,
+      "value": "Modifica app"
+    }
+  ],
+  "Collection.tsx_5WK7jL": [
+    {
+      "type": 0,
+      "value": "Crea nuova app"
+    }
+  ],
+  "Collection.tsx_B+R508": [
+    {
+      "type": 0,
+      "value": "Imposta come vista predefinita"
+    }
+  ],
   "Collection.tsx_D3idYv": [
     {
       "type": 0,
@@ -113,10 +131,28 @@
       "value": "Mostra timestamp"
     }
   ],
+  "Collection.tsx_LQONHO": [
+    {
+      "type": 0,
+      "value": "Errore durante l'impostazione della vista predefinita della collezione"
+    }
+  ],
+  "Collection.tsx_gRiKLf": [
+    {
+      "type": 0,
+      "value": "App"
+    }
+  ],
   "Collection.tsx_r0FgVC": [
     {
       "type": 0,
       "value": "Crea documento"
+    }
+  ],
+  "Collection.tsx_ufzv1A": [
+    {
+      "type": 0,
+      "value": "Vista tabella"
     }
   ],
   "Collection.tsx_zYomDH": [
@@ -405,6 +441,18 @@
       "value": "Copiato"
     }
   ],
+  "CreateApp.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "CreateApp.tsx_dtELK2": [
+    {
+      "type": 0,
+      "value": "Crea app"
+    }
+  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -518,6 +566,12 @@
       "value": "documentsCount"
     }
   ],
+  "CreateNewAppVersionForm.tsx_6GRvO0": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione di una nuova versione dell'app"
+    }
+  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -578,6 +632,58 @@
     {
       "type": 0,
       "value": "Stringa JSON non valida"
+    }
+  ],
+  "DeleteAppModalForm.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "DeleteAppModalForm.tsx_U+RSUu": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminare l'app è definitivo. Se sei sicuro, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "DeleteAppModalForm.tsx_bJAAvK": [
+    {
+      "type": 0,
+      "value": "Elimina app \""
+    },
+    {
+      "type": 1,
+      "value": "appName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "DeleteAppModalForm.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -871,7 +977,7 @@
   "DocumentsTable.tsx_xIoGG9": [
     {
       "type": 0,
-      "value": "Vai"
+      "value": "Vai a"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -890,6 +996,18 @@
       "value": "Sincronizza"
     }
   ],
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
+    {
+      "type": 0,
+      "value": "Cosa vuoi creare?"
+    }
+  ],
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante la generazione dell'app"
+    }
+  ],
   "EagerTiptapInput.tsx_0he+1r": [
     {
       "type": 0,
@@ -900,6 +1018,62 @@
     {
       "type": 0,
       "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
+  "EditApp.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "EditApp.tsx_LDlHu6": [
+    {
+      "type": 0,
+      "value": "🧩 "
+    },
+    {
+      "type": 1,
+      "value": "app"
+    },
+    {
+      "type": 0,
+      "value": " » Modifica"
+    }
+  ],
+  "EditApp.tsx_Vl13tq": [
+    {
+      "type": 0,
+      "value": "Crea nuova versione"
+    }
+  ],
+  "EditApp.tsx_Vva+Yr": [
+    {
+      "type": 0,
+      "value": "Modifica nome"
+    }
+  ],
+  "EditingToolbar.tsx_1hhuuF": [
+    {
+      "type": 0,
+      "value": "Anteprima app"
+    }
+  ],
+  "EditingToolbar.tsx_3XyF4d": [
+    {
+      "type": 0,
+      "value": "Ripeti"
+    }
+  ],
+  "EditingToolbar.tsx_EwYOYc": [
+    {
+      "type": 0,
+      "value": "Visualizza codice"
+    }
+  ],
+  "EditingToolbar.tsx_JkS37H": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [
@@ -1284,6 +1458,122 @@
       "value": "Implementazione fallita"
     }
   ],
+  "ImplementingSpinner.tsx_93mRKW": [
+    {
+      "type": 0,
+      "value": "Lascia che me ne occupi"
+    }
+  ],
+  "ImplementingSpinner.tsx_BZWtmi": [
+    {
+      "type": 0,
+      "value": "Sto apportando modifiche"
+    }
+  ],
+  "ImplementingSpinner.tsx_Bk6B6r": [
+    {
+      "type": 0,
+      "value": "Ci siamo quasi"
+    }
+  ],
+  "ImplementingSpinner.tsx_Fhu9fI": [
+    {
+      "type": 0,
+      "value": "Solo un ultimo refactor"
+    }
+  ],
+  "ImplementingSpinner.tsx_Hy/tAh": [
+    {
+      "type": 0,
+      "value": "È più complesso di quanto avessi previsto"
+    }
+  ],
+  "ImplementingSpinner.tsx_MQVNHz": [
+    {
+      "type": 0,
+      "value": "Subito"
+    }
+  ],
+  "ImplementingSpinner.tsx_Mdz/x3": [
+    {
+      "type": 0,
+      "value": "Sarà pronto in un attimo"
+    }
+  ],
+  "ImplementingSpinner.tsx_ZRWqDd": [
+    {
+      "type": 0,
+      "value": "Per favore non licenziarmi"
+    }
+  ],
+  "ImplementingSpinner.tsx_m0Hh22": [
+    {
+      "type": 0,
+      "value": "Ancora una correzione"
+    }
+  ],
+  "ImplementingSpinner.tsx_mLuQZP": [
+    {
+      "type": 0,
+      "value": "Mi metto al lavoro"
+    }
+  ],
+  "ImplementingSpinner.tsx_pJh6Bf": [
+    {
+      "type": 0,
+      "value": "Sto compilando il codice"
+    }
+  ],
+  "ImplementingSpinner.tsx_q462mT": [
+    {
+      "type": 0,
+      "value": "È un problema difficile"
+    }
+  ],
+  "IncompatibilityWarning.tsx_8OtepV": [
+    {
+      "type": 0,
+      "value": "Aggiorna l'app"
+    }
+  ],
+  "IncompatibilityWarning.tsx_QL2z4z": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Questa app potrebbe non funzionare correttamente, perché utilizza collezioni che sono state modificate o eliminate da quando è stata creata. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Aggiorna l'app per evitare questo avviso. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "IncompatibilityWarning.tsx_q9XsfI": [
+    {
+      "type": 0,
+      "value": "Mostra comunque"
+    }
+  ],
+  "IncompatibilityWarning.tsx_s36xxK": [
+    {
+      "type": 0,
+      "value": "Avviso di incompatibilità"
+    }
+  ],
   "InferenceSettings.tsx_25pjeS": [
     {
       "type": 0,
@@ -1362,40 +1652,6 @@
       "value": "p"
     }
   ],
-  "InferenceSettings.tsx_WKES9e": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " e "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "moonshotai/kimi-k2-0905"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " al momento sembrano essere i modelli con le migliori prestazioni per Superego."
-    }
-  ],
   "InferenceSettings.tsx_YctX0J": [
     {
       "type": 0,
@@ -1418,6 +1674,68 @@
     {
       "type": 0,
       "value": "Voce"
+    }
+  ],
+  "InferenceSettings.tsx_pKfsc3": [
+    {
+      "type": 0,
+      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "qwen/qwen3-coder"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "z-ai/glm-4.6"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", e "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "moonshotai/kimi-k2-0905"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " sono stati tutti testati per garantire prestazioni eccellenti."
     }
   ],
   "InferenceSettings.tsx_rhSI1/": [
@@ -1590,6 +1908,12 @@
     {
       "type": 0,
       "value": "Chiudi barra laterale"
+    }
+  ],
+  "Preview.tsx_Dd6cIb": [
+    {
+      "type": 0,
+      "value": "Compilazione dell'app non riuscita."
     }
   ],
   "PrimarySidebarPanel.tsx_D3idYv": [
@@ -2070,6 +2394,94 @@
       "value": "Icona"
     }
   ],
+  "ResolveIncompatibilityModal.tsx_3DyFfU": [
+    {
+      "type": 0,
+      "value": "Lo faccio io"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5HfPcg": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Le collezioni utilizzate da questa app sono cambiate da quando è stata creata. Aggiorna l'app per assicurarti che funzioni correttamente. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Modifiche alle collezioni:"
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_5daczq": [
+    {
+      "type": 0,
+      "value": "Risolvi incompatibilità"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_EaZlsM": [
+    {
+      "type": 0,
+      "value": "Chiedi all'assistente"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": [
+    {
+      "options": {
+        "WasDeleted": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " è stata eliminata."
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "children": [
+                {
+                  "type": 1,
+                  "value": "collectionId"
+                }
+              ],
+              "type": 8,
+              "value": "code"
+            },
+            {
+              "type": 0,
+              "value": " ha una nuova versione."
+            }
+          ]
+        }
+      },
+      "type": 5,
+      "value": "type"
+    }
+  ],
   "ResultErrors.tsx_Lv0zJu": [
     {
       "type": 0,
@@ -2278,6 +2690,30 @@
       "value": "Imposta remoto"
     }
   ],
+  "SetNameAndSaveModal.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
+  "SetNameAndSaveModal.tsx_r+ksJu": [
+    {
+      "type": 0,
+      "value": "Crea app"
+    }
+  ],
   "SpeakButton.tsx_FUvUuG": [
     {
       "type": 0,
@@ -2400,6 +2836,12 @@
       "value": "collection"
     }
   ],
+  "Toast.tsx_Lv0zJu": [
+    {
+      "type": 0,
+      "value": "Dettagli"
+    }
+  ],
   "Toast.tsx_rbrahO": [
     {
       "type": 0,
@@ -2476,6 +2918,30 @@
     {
       "type": 0,
       "value": "Errore durante il salvataggio delle impostazioni globali"
+    }
+  ],
+  "UpdateNameModalForm.tsx_BWpuKl": [
+    {
+      "type": 0,
+      "value": "Aggiorna"
+    }
+  ],
+  "UpdateNameModalForm.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "UpdateNameModalForm.tsx_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "UpdateNameModalForm.tsx_btR6aV": [
+    {
+      "type": 0,
+      "value": "Aggiorna il nome dell'app"
     }
   ],
   "UserMessage.tsx_J3ca41": [
@@ -2625,6 +3091,54 @@
     {
       "type": 0,
       "value": "Ultima sincronizzazione non riuscita"
+    }
+  ],
+  "getIntlMessages.ts_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
+  "getIntlMessages.ts_J1XXSx": [
+    {
+      "type": 0,
+      "value": "La mia fantastica app"
+    }
+  ],
+  "getIntlMessages.ts_PyA0WU": [
+    {
+      "type": 0,
+      "value": "Puoi vibe-codare l'app chiedendo all'assistente."
+    }
+  ],
+  "getIntlMessages.ts_UfI09W": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante l'importazione dell'app."
+    }
+  ],
+  "getIntlMessages.ts_XBQLkj": [
+    {
+      "type": 0,
+      "value": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
+    }
+  ],
+  "getIntlMessages.ts_bzhBew": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering dell'app."
+    }
+  ],
+  "getIntlMessages.ts_eIxrAW": [
+    {
+      "type": 0,
+      "value": "Questa app ha accesso alle seguenti collezioni:"
+    }
+  ],
+  "getIntlMessages.ts_hPMG1H": [
+    {
+      "type": 0,
+      "value": "In questa sezione puoi vedere l'anteprima live della tua app."
     }
   ],
   "typescriptModule.ts_MZNYNj": [

@@ -20,6 +20,8 @@ export default class BackendIPCProxyServer {
     this.registerIPCHandler(this.backend, "documents");
     this.registerIPCHandler(this.backend, "files");
     this.registerIPCHandler(this.backend, "assistants");
+    this.registerIPCHandler(this.backend, "inference");
+    this.registerIPCHandler(this.backend, "apps");
     this.registerIPCHandler(this.backend, "backgroundJobs");
     this.registerIPCHandler(this.backend, "globalSettings");
   }

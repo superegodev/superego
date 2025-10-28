@@ -2,6 +2,7 @@
 import optimizeLocales from "@react-aria/optimize-locales-plugin";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
+import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 import { analyzer } from "vite-bundle-analyzer";
 
@@ -41,7 +42,7 @@ export default defineConfig({
   test: {
     setupFiles: ["./src/vitest-setup.ts"],
     browser: {
-      provider: "playwright",
+      provider: playwright(),
       enabled: true,
       headless: true,
       screenshotFailures: false,

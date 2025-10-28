@@ -5,7 +5,6 @@ export const DeleteDocumentModalForm = {
   submitButtonContainer: style({
     display: "flex",
     justifyContent: "flex-end",
-    marginBlockEnd: vars.spacing._4,
   }),
 };
 

@@ -180,7 +180,8 @@ describe("String type definition with format", () => {
     expectedIssues: [
       {
         kind: "validation",
-        message: 'Invalid plain date: Received "malformed"',
+        message:
+          'Invalid plain date: Received "malformed". Expected format: YYYY-MM-DD (no time, no offset; Gregorian-valid).',
         path: [{ key: "value" }],
       },
     ],

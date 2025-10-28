@@ -2,6 +2,7 @@ import { Theme } from "@superego/backend";
 import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import monaco from "../../../monaco.js";
+import classnames from "../../../utils/classnames.js";
 import * as cs from "./CodeBlock.css.js";
 import CopyButton from "./CopyButton.js";
 import formatJson from "./formatJson.js";
@@ -14,11 +15,13 @@ export default function EagerCodeBlock({
   maxHeight,
   showCopyButton,
   mirrorCodeInput,
+  className,
 }: Props) {
   const [isColorized, setIsColorized] = useState(false);
   const theme = useTheme();
   const codeElement = useRef<HTMLElement>(null);
-  // Rule-ignore explanation: we want the effect to re-run when code changes.
+  const formattedCode = language === "json" ? formatJson(code) : code;
+  // We want the effect to re-run when code changes.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (codeElement.current) {
@@ -29,18 +32,18 @@ export default function EagerCodeBlock({
         })
         .then(() => setIsColorized(true));
     }
-  }, [theme, code]);
+  }, [theme, formattedCode]);
   return (
     <div
       onMouseDown={onMouseDown}
-      className={cs.EagerCodeBlock.root}
+      className={classnames(cs.EagerCodeBlock.root, className)}
       style={{
         maxHeight,
         visibility: isColorized ? undefined : "hidden",
       }}
     >
       <div className={cs.EagerCodeBlock.lineNumbers}>
-        {code.split("\n").map((_, index) => (
+        {formattedCode.split("\n").map((_, index) => (
           <div
             // Rule-ignore explanation: the index is the correct identifier
             // for a line number.
@@ -54,11 +57,15 @@ export default function EagerCodeBlock({
         ))}
       </div>
       <pre className={cs.EagerCodeBlock.pre}>
-        <code key={theme + code} data-lang={language} ref={codeElement}>
-          {language === "json" ? formatJson(code) : code}
+        <code
+          key={theme + formattedCode}
+          data-lang={language}
+          ref={codeElement}
+        >
+          {formattedCode}
         </code>
       </pre>
-      {showCopyButton ? <CopyButton code={code} /> : null}
+      {showCopyButton ? <CopyButton code={formattedCode} /> : null}
     </div>
   );
 }

@@ -34,7 +34,7 @@ export default function ErrorMessage({ conversation }: Props) {
       >
         <CodeBlock
           language="json"
-          code={JSON.stringify(cause, null, 2)}
+          code={JSON.stringify(cause)}
           showCopyButton={true}
         />
       </Disclosure>

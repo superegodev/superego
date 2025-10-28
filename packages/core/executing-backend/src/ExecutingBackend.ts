@@ -10,16 +10,20 @@ import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
+import AppsCreate from "./usecases/apps/Create.js";
+import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
+import AppsDelete from "./usecases/apps/Delete.js";
+import AppsList from "./usecases/apps/List.js";
+import AppsUpdateName from "./usecases/apps/UpdateName.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
 import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
-import AssistantsImplementTypescriptFunction from "./usecases/assistants/ImplementTypescriptFunction.js";
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
 import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
 import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse.js";
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
-import AssistantsTts from "./usecases/assistants/Tts.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -45,6 +49,9 @@ import DocumentsList from "./usecases/documents/List.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
+import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
+import InferenceStt from "./usecases/inference/Stt.js";
+import InferenceTts from "./usecases/inference/Tts.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -52,6 +59,8 @@ export default class ExecutingBackend implements Backend {
   documents: Backend["documents"];
   files: Backend["files"];
   assistants: Backend["assistants"];
+  inference: Backend["inference"];
+  apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
@@ -60,6 +69,7 @@ export default class ExecutingBackend implements Backend {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
+    private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector<any, any>[],
   ) {
@@ -124,11 +134,23 @@ export default class ExecutingBackend implements Backend {
         AssistantsGetDeveloperPrompts,
         false,
       ),
-      tts: this.makeUsecase(AssistantsTts, false),
-      implementTypescriptFunction: this.makeUsecase(
-        AssistantsImplementTypescriptFunction,
+    };
+
+    this.inference = {
+      stt: this.makeUsecase(InferenceStt, false),
+      tts: this.makeUsecase(InferenceTts, false),
+      implementTypescriptModule: this.makeUsecase(
+        InferenceImplementTypescriptModule,
         false,
       ),
+    };
+
+    this.apps = {
+      create: this.makeUsecase(AppsCreate, true),
+      updateName: this.makeUsecase(AppsUpdateName, true),
+      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
+      delete: this.makeUsecase(AppsDelete, true),
+      list: this.makeUsecase(AppsList, false),
     };
 
     this.backgroundJobs = {
@@ -143,6 +165,7 @@ export default class ExecutingBackend implements Backend {
     this.backgroundJobExecutor = new BackgroundJobExecutor(
       dataRepositoriesManager,
       javascriptSandbox,
+      typescriptCompiler,
       inferenceServiceFactory,
       connectors,
     );
@@ -152,6 +175,7 @@ export default class ExecutingBackend implements Backend {
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
+      typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
     ) => { exec: Exec },
@@ -163,6 +187,7 @@ export default class ExecutingBackend implements Backend {
           const usecase = new UsecaseClass(
             repos,
             this.javascriptSandbox,
+            this.typescriptCompiler,
             this.inferenceServiceFactory,
             this.connectors,
           );

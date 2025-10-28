@@ -14,14 +14,14 @@
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.3.7",
+    "@astrojs/check": "^0.9.5",
+    "@astrojs/mdx": "^4.3.8",
     "@astrojs/starlight": "^0.36.1",
     "@fontsource-variable/petrona": "^5.2.8",
     "@playwright/test": "^1.56.1",
-    "astro": "^5.14.6",
+    "astro": "^5.15.1",
     "starlight-theme-nova": "^0.9.5",
     "typescript": "^5.9.3",
-    "wrangler": "^4.43.0"
+    "wrangler": "^4.45.0"
   }
 }

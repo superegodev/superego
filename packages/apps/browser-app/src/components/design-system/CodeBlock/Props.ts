@@ -8,4 +8,5 @@ export default interface Props {
   maxHeight?: Property.MaxHeight | undefined;
   showCopyButton?: boolean | undefined;
   mirrorCodeInput?: boolean | undefined;
+  className?: string | undefined;
 }

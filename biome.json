@@ -49,12 +49,6 @@
       },
       "correctness": {
         "noUnusedImports": "error",
-        "useImportExtensions": {
-          "level": "error",
-          "options": {
-            "forceJsExtensions": true
-          }
-        },
         "noUnusedVariables": {
           "level": "error",
           "options": {

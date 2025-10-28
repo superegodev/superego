@@ -1,7 +1,10 @@
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
+import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
 import type ConversationFormat from "./enums/ConversationFormat.js";
+import type AppNameNotValid from "./errors/AppNameNotValid.js";
+import type AppNotFound from "./errors/AppNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
@@ -37,8 +40,10 @@ import type FilesNotFound from "./errors/FilesNotFound.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
+import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
-import type WriteTypescriptFunctionToolNotCalled from "./errors/WriteTypescriptFunctionToolNotCalled.js";
+import type WriteTypescriptModuleToolNotCalled from "./errors/WriteTypescriptModuleToolNotCalled.js";
+import type AppId from "./ids/AppId.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -46,6 +51,8 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type App from "./types/App.js";
+import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
@@ -62,7 +69,7 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
-import type TypescriptLib from "./types/TypescriptLib.js";
+import type TypescriptFile from "./types/TypescriptFile.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
 export default interface Backend {
@@ -111,6 +118,7 @@ export default interface Backend {
       Collection,
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | AppNotFound
       | CollectionSchemaNotValid
       | ContentSummaryGetterNotValid
       | UnexpectedError
@@ -124,6 +132,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
+      | AppNotFound
       | UnexpectedError
     >;
 
@@ -283,6 +292,17 @@ export default interface Backend {
     list(
       collectionId: CollectionId,
     ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;
+    list(
+      collectionId: CollectionId,
+      lite: false,
+    ): ResultPromise<Document[], CollectionNotFound | UnexpectedError>;
+    list(
+      collectionId: CollectionId,
+      lite?: false,
+    ): ResultPromise<
+      (LiteDocument | Document)[],
+      CollectionNotFound | UnexpectedError
+    >;
 
     get(
       collectionId: CollectionId,
@@ -354,18 +374,60 @@ export default interface Backend {
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
+  };
+
+  inference: {
+    stt(audio: AudioContent): ResultPromise<string, UnexpectedError>;
 
     tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
 
-    implementTypescriptFunction(
-      instructions: string,
-      template: string,
-      libs: TypescriptLib[],
-      startingPoint: string,
-    ): ResultPromise<
-      string,
-      WriteTypescriptFunctionToolNotCalled | UnexpectedError
+    implementTypescriptModule(spec: {
+      description: string;
+      rules: string | null;
+      additionalInstructions: string | null;
+      template: string;
+      libs: TypescriptFile[];
+      startingPoint: TypescriptFile;
+      userRequest: string;
+    }): ResultPromise<
+      TypescriptModule,
+      | WriteTypescriptModuleToolNotCalled
+      | TooManyFailedImplementationAttempts
+      | UnexpectedError
     >;
+  };
+
+  apps: {
+    create(
+      type: AppType,
+      name: string,
+      targetCollectionIds: CollectionId[],
+      files: AppVersion["files"],
+    ): ResultPromise<
+      App,
+      AppNameNotValid | CollectionNotFound | UnexpectedError
+    >;
+
+    updateName(
+      id: AppId,
+      name: string,
+    ): ResultPromise<App, AppNotFound | AppNameNotValid | UnexpectedError>;
+
+    createNewVersion(
+      id: AppId,
+      targetCollectionIds: CollectionId[],
+      files: AppVersion["files"],
+    ): ResultPromise<App, AppNotFound | CollectionNotFound | UnexpectedError>;
+
+    delete(
+      id: AppId,
+      commandConfirmation: string,
+    ): ResultPromise<
+      null,
+      AppNotFound | CommandConfirmationNotValid | UnexpectedError
+    >;
+
+    list(): ResultPromise<App[], UnexpectedError>;
   };
 
   backgroundJobs: {

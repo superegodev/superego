@@ -1,4 +1,6 @@
 import type {
+  AppNameNotValid,
+  AppNotFound,
   CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
@@ -39,11 +41,15 @@ import type {
   ParentCollectionCategoryNotFound,
   RemoteConvertersNotValid,
   SyncingChangesFailed,
+  TooManyFailedImplementationAttempts,
+  TypescriptCompilationFailed,
   UnexpectedError,
-  WriteTypescriptFunctionToolNotCalled,
+  WriteTypescriptModuleToolNotCalled,
 } from "@superego/backend";
 
 type KnownResultError =
+  | AppNameNotValid
+  | AppNotFound
   | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation
@@ -84,8 +90,10 @@ type KnownResultError =
   | ParentCollectionCategoryNotFound
   | RemoteConvertersNotValid
   | SyncingChangesFailed
+  | TooManyFailedImplementationAttempts
+  | TypescriptCompilationFailed
   | UnexpectedError
-  | WriteTypescriptFunctionToolNotCalled;
+  | WriteTypescriptModuleToolNotCalled;
 
 export default function makeResultError<Name extends string, Details>(
   name: Name,

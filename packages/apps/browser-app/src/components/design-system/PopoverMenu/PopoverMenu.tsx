@@ -4,16 +4,18 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { Menu, MenuTrigger } from "react-aria-components";
+import { MenuTrigger, type PopoverProps } from "react-aria-components";
 import Popover from "../Popover/Popover.js";
+import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import Trigger from "./Trigger.js";
 
 interface Props {
-  children: ReactNode;
+  placement?: PopoverProps["placement"];
   className?: string | undefined;
+  children: ReactNode;
 }
-export default function PopoverMenu({ className, children }: Props) {
+export default function PopoverMenu({ placement, className, children }: Props) {
   let menu: ReactElement | null = null;
   let trigger: ReactElement | null = null;
   Children.forEach(children, (child) => {
@@ -29,7 +31,9 @@ export default function PopoverMenu({ className, children }: Props) {
   return (
     <MenuTrigger>
       {trigger}
-      <Popover className={className}>{menu}</Popover>
+      <Popover placement={placement} className={className}>
+        {menu}
+      </Popover>
     </MenuTrigger>
   );
 }

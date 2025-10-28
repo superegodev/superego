@@ -11,7 +11,7 @@ export default interface SqliteFile {
   collection_id: CollectionId;
   document_id: DocumentId;
   created_with_document_version_id: DocumentVersionId;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
   content: Buffer;
 }

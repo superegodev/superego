@@ -166,7 +166,7 @@ export const Label = {
   }),
 };
 
-export const inputComponentRootBase: ComplexStyleRule = {
+const inputComponentRootBase: ComplexStyleRule = {
   width: "100%",
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.sm,

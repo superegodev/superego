@@ -1,7 +1,15 @@
+import type { ResultError } from "@superego/global-types";
 import type ToastType from "./ToastType.js";
 
-export default interface ToastContent {
-  type: ToastType;
-  title: string;
-  description?: string;
-}
+type ToastContent =
+  | {
+      type: ToastType.Success;
+      title: string;
+    }
+  | {
+      type: ToastType.Error;
+      title: string;
+      error: ResultError<string, any>;
+    };
+
+export default ToastContent;

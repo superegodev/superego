@@ -12,7 +12,7 @@ import {
 } from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
-import Link from "../../../design-system/Link/Link.jsx";
+import Link from "../../../design-system/Link/Link.js";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTable from "../ToolResult/CreateDocumentsTable.js";
@@ -30,7 +30,14 @@ export default function AssistantContentMessage({
 }: Props) {
   const [textPart] = message.content;
   const overrides = useOverrides(conversation);
-  const options = useMemo(() => ({ overrides }), [overrides]);
+  const options = useMemo<MarkdownToJSX.Options>(
+    () => ({
+      wrapper: "div",
+      forceWrapper: true,
+      overrides,
+    }),
+    [overrides],
+  );
   return (
     <div className={cs.AssistantContentMessage.root}>
       <Markdown

@@ -1,5 +1,4 @@
 ---
-import { Icon } from "@astrojs/starlight/components";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import "@fontsource-variable/petrona";
 import "@fontsource-variable/petrona/wght-italic.css";
@@ -9,63 +8,11 @@ import logo from "../assets/logo.svg";
 ---
 
 <script>
-  function getVisibleHeightInViewport(element: HTMLElement): number {
-    const elementRectangle = element.getBoundingClientRect();
-    const viewportTop = 0;
-    const viewportBottom =
-      window.innerHeight || document.documentElement.clientHeight;
-    const intersectionTop = Math.max(elementRectangle.top, viewportTop);
-    const intersectionBottom = Math.min(
-      elementRectangle.bottom,
-      viewportBottom,
-    );
-    return Math.max(0, intersectionBottom - intersectionTop);
-  }
-
-  function getMostVisibleStepIndex(): number {
-    let mostVisibleIndex = -1;
-    let mostVisibleHeight = -1;
-    for (let index = 0; index < steps.length; index++) {
-      const visibleHeight = getVisibleHeightInViewport(steps[index]!);
-      if (visibleHeight > mostVisibleHeight) {
-        mostVisibleHeight = visibleHeight;
-        mostVisibleIndex = index;
-      }
-    }
-    return mostVisibleIndex;
-  }
-
-  function scrollToElement(element: HTMLElement): void {
-    const targetTop = window.pageYOffset + element.getBoundingClientRect().top;
-    window.scrollTo({ top: targetTop, behavior: "smooth" });
-  }
-
-  function scrollToNextStep(): void {
-    const mostVisibleIndex = getMostVisibleStepIndex();
-    if (mostVisibleIndex === -1) {
-      const firstBelow = steps.find(
-        (step) => step.getBoundingClientRect().top > 0,
-      );
-      if (firstBelow) scrollToElement(firstBelow);
-      return;
-    }
-    const nextStep = steps[mostVisibleIndex + 1];
-    if (nextStep) {
-      scrollToElement(nextStep);
-    }
-  }
-
-  const steps = Array.from(document.querySelectorAll<HTMLElement>(".step"));
-  const scrollDownButton = document.getElementById(
-    "scroll-down-button",
-  ) as HTMLButtonElement;
   const tosPpLink = document.getElementById("tos-pp")!;
   const hero = document.querySelector(".hero")!;
   const header = document.querySelector(
     ".nova-page-frame-header",
   ) as HTMLElement;
-
-  scrollDownButton.addEventListener("click", scrollToNextStep);
 
   new IntersectionObserver(
     (entries) => {
@@ -73,11 +20,20 @@ import logo from "../assets/logo.svg";
         (a, b) => a.time - b.time,
       )[0]!;
       header.style.display = isLastStep ? "block" : "none";
-      scrollDownButton.style.display = isLastStep ? "none" : "inline-block";
       tosPpLink.style.display = isLastStep ? "inline-block" : "none";
     },
     { threshold: 0.01 },
   ).observe(hero);
+
+  const isMacos = (() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return (
+      userAgent.includes("mac os") &&
+      !userAgent.includes("iphone") &&
+      !userAgent.includes("ipad")
+    );
+  })();
+  document.documentElement.classList.toggle("is-macos", isMacos);
 </script>
 <style is:global>
   body {
@@ -117,6 +73,17 @@ import logo from "../assets/logo.svg";
     width: 100%;
   }
 
+  /* Make steps "scroll-snappable". */
+  .main-frame
+    .main-pane
+    main
+    > .content-panel:nth-child(2)
+    .sl-markdown-content {
+    height: 100svh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+  }
+
   /* Hide the footer */
   .main-frame footer {
     display: none;
@@ -139,13 +106,27 @@ import logo from "../assets/logo.svg";
       color-mix(in srgb, var(--highlight-color) 60%, transparent)
     );
     box-decoration-break: clone;
-    font-weight: 600;
+    font-weight: 700;
+  }
+
+  .balanced {
+    text-wrap: balance;
+  }
+
+  html.is-macos .not-macos-only {
+    display: none !important;
+  }
+  html:not(.is-macos) .macos-only {
+    display: none !important;
   }
 
   .step {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     min-height: 100svh;
     margin: 0;
     padding-block-start: 2rem;
@@ -198,7 +179,7 @@ import logo from "../assets/logo.svg";
   @media (max-width: 800px) {
     .step.step.big h2 {
       font-size: 4rem;
-      font-weight: bold;
+      font-weight: 600;
     }
     .step h2 {
       font-size: 3rem;
@@ -210,7 +191,7 @@ import logo from "../assets/logo.svg";
   @media (max-width: 600px) {
     .step.step.big h2 {
       font-size: 3rem;
-      font-weight: bold;
+      font-weight: 600;
     }
     .step h2 {
       font-size: 2.5rem;
@@ -218,6 +199,19 @@ import logo from "../assets/logo.svg";
     .step p {
       font-size: 2rem;
     }
+  }
+
+  .step .scroll-hint {
+    position: absolute;
+    bottom: 0;
+    margin-inline: auto;
+    width: calc(100% - max(calc(100% - 1200px), 2rem));
+    text-align: center;
+  }
+  .step .scroll-hint span {
+    display: inline-block;
+    transform: rotate(90deg);
+    font-size: 3rem;
   }
 
   .hero {
@@ -262,7 +256,7 @@ import logo from "../assets/logo.svg";
   }
   .hero .actions a {
     display: inline-block;
-    width: 128px;
+    width: 134px;
     margin: 0;
     box-sizing: content-box;
     display: flex;
@@ -270,113 +264,72 @@ import logo from "../assets/logo.svg";
     align-items: center;
   }
 
-  #scroll-down-button {
-    width: 3rem;
-    height: 3rem;
-    position: fixed;
-    bottom: 1rem;
-    left: calc(50% - 1rem);
-    background-color: transparent;
-    color: var(--sl-color-text);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    cursor: pointer;
-    border: 0;
-    border-radius: 100%;
-    transition:
-      background-color 150ms ease,
-      color 150ms ease;
-    outline: none;
-  }
-  #scroll-down-button:hover {
-    background-color: color-mix(in srgb, var(--sl-color-text) 10%, transparent);
-  }
-  #scroll-down-button:focus-visible {
-    box-shadow: 0 0 0 2px var(--sl-color-orange);
-    outline-offset: 2px;
-  }
-  #scroll-down-button[disabled] {
-    cursor: auto;
-  }
-
   #tos-pp {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    width: 100%;
+    padding-inline: 1rem;
+    text-align: right;
+  }
+  #tos-pp a {
+    color: var(--sl-color-text);
     font-size: 0.6rem;
-    /* Start with the link being hidden. */
-    display: none;
   }
 </style>
 
 <StarlightPage frontmatter={{ title: "Superego", template: "splash" }}>
   <div class="step big">
-    <h2>
+    <h2 class="balanced">
       Imagine this:
       <div style={{ display: "block", height: "2rem", width: "100%" }}></div>
-      <em class="highlighted">all</em> your personal data,
-      <br />
-      in <em class="highlighted">one</em> private space.
+      <em class="highlighted">all</em> your personal data, in one
+      <em class="highlighted">private</em> space.
     </h2>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step">
     <h2>A local, encrypted, open-source database.</h2>
     <p>
-      A vault you can <em class="highlighted">trust</em> with your most private records.
+      A vault <em class="highlighted">you can trust</em> with your most private records.
     </p>
-  </div>
-
-  <div class="step">
-    <h2>Pulling data from your other apps,</h2>
-    <p>
-      giving you back what's
-      <em class="highlighted">rightfully yours</em>.
-    </p>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step big">
-    <h2>Then: connect it to an <span class="highlighted">AI</span>.</h2>
+    <h2 class="balanced">
+      Then: connect it<br />to an <span class="highlighted">AI</span>.
+    </h2>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step">
-    <h2>
-      Finally! An assistant that <em class="highlighted">actually</em>
-      <br />
-      knows you.
+    <h2 class="balanced">
+      Finally! An assistant that
+      <em class="highlighted">actually knows you</em>.
     </h2>
     <p>
       Did you know you run faster <em>on Thursdays</em>? Or that last year you
       spent <em>632 euros</em> on shoes?
     </p>
-  </div>
-
-  <div class="step">
-    <h2>Share your day with it.</h2>
-    <p>
-      It'll update its “memory” and get to know you
-      <em class="highlighted">even better</em>.
-    </p>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step big">
     <h2>Top it off: make it <em class="highlighted">hackable</em>.</h2>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step">
-    <h2>Um, sorry, <em>“vibe-able”</em>.</h2>
-    <p>Need to extend it? <em class="highlighted">Just ask</em> the LLM.</p>
-  </div>
-
-  <div class="step">
-    <h2>Or, do it yourself,</h2>
-    <p>with snippets of TypeScript.</p>
+    <h2>Sorry, <em>“vibe-able”</em>.</h2>
+    <p>
+      Want to extend it with <em class="highlighted">custom apps</em>? Ask the
+      AI!
+    </p>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step big">
     <h2>But why <em class="highlighted">just</em> imagine?</h2>
+    <div class="scroll-hint"><span>»</span></div>
   </div>
 
   <div class="step">
@@ -394,8 +347,16 @@ import logo from "../assets/logo.svg";
           Try the demo
         </LinkButton>
         <LinkButton
+          href="https://github.com/superegodev/superego"
+          icon="github"
+          class="not-macos-only"
+        >
+          Star on GitHub
+        </LinkButton>
+        <LinkButton
           href="https://github.com/superegodev/superego/releases/latest"
           icon="download"
+          class="macos-only"
         >
           Get the alpha
         </LinkButton>
@@ -418,9 +379,7 @@ import logo from "../assets/logo.svg";
     </iframe>
   </div>
 
-  <button id="scroll-down-button" type="button" aria-label="Scroll down">
-    <Icon name="down-caret" aria-hidden="true" />
-  </button>
-
-  <a id="tos-pp" href="/tos-pp">Demo TOS and Privacy Policy</a>
+  <div id="tos-pp">
+    <a href="/tos-pp">Demo TOS and Privacy Policy</a>
+  </div>
 </StarlightPage>

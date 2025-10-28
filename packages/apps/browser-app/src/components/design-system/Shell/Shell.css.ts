@@ -97,10 +97,33 @@ export const PanelHeader = {
 
   actionsToolbar: style({
     flexShrink: 0,
+    display: "flex",
+    alignItems: "center",
   }),
 
   action: style({
+    width: vars.spacing._7,
+    height: vars.spacing._7,
     fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  activeActionMenuItem: style({
+    background: vars.colors.background.inverse,
+    color: `${vars.colors.text.inverse} !important`,
+    selectors: {
+      "&:hover": {
+        background: `${vars.colors.background.inverse} !important`,
+        color: `${vars.colors.text.inverse} !important`,
+      },
+    },
+  }),
+
+  actionsSeparator: style({
+    display: "inline-block",
+    background: vars.colors.border.default,
+    height: vars.spacing._4,
+    width: vars.borders.width.thin,
+    marginInline: vars.spacing._2,
   }),
 
   primarySidebarToggleButton: style({

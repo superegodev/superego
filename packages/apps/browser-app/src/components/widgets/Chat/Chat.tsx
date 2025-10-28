@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import classnames from "../../../utils/classnames.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../ConversationMessages/ConversationMessages.js";
@@ -64,16 +64,13 @@ export default function Chat({
     const { error } = await mutate(conversation.id, messageContent);
     if (error) {
       console.error(error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error sending message to assistant",
-          }),
-          description: error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error sending message to assistant",
+        }),
+        error: error,
+      });
     }
   };
 

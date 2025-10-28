@@ -50,14 +50,32 @@
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Error sending message to assistant"
   },
+  "Collection.tsx_59cQpf": {
+    "defaultMessage": "Edit app"
+  },
+  "Collection.tsx_5WK7jL": {
+    "defaultMessage": "Create new"
+  },
+  "Collection.tsx_B+R508": {
+    "defaultMessage": "Set as default view"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Show timestamps"
   },
+  "Collection.tsx_LQONHO": {
+    "defaultMessage": "Error setting the default collection view"
+  },
+  "Collection.tsx_gRiKLf": {
+    "defaultMessage": "Apps"
+  },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Create document"
+  },
+  "Collection.tsx_ufzv1A": {
+    "defaultMessage": "Table view"
   },
   "Collection.tsx_zYomDH": {
     "defaultMessage": "Collection actions"
@@ -185,6 +203,12 @@
   "CopyButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
+  "CreateApp.tsx_VzzYJk": {
+    "defaultMessage": "Create"
+  },
+  "CreateApp.tsx_dtELK2": {
+    "defaultMessage": "Create App"
+  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -224,6 +248,9 @@
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
   },
+  "CreateNewAppVersionForm.tsx_6GRvO0": {
+    "defaultMessage": "Error creating a new app version"
+  },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
@@ -250,6 +277,18 @@
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
+  },
+  "DeleteAppModalForm.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "DeleteAppModalForm.tsx_U+RSUu": {
+    "defaultMessage": "<p> Deleting the app is permanent. If you're sure, write <i>delete</i> in the input below. </p>"
+  },
+  "DeleteAppModalForm.tsx_bJAAvK": {
+    "defaultMessage": "Delete app \"{appName}\""
+  },
+  "DeleteAppModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Command confirmation"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Deleting the collection will permanently delete all of its documents and files. </p> <p> If you're sure you want to delete the collection, write <i>delete</i> in the input below. </p>"
@@ -338,11 +377,41 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sync"
   },
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "What do you want to build?"
+  },
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+    "defaultMessage": "An error occurred generating the app"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
+  },
+  "EditApp.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "EditApp.tsx_LDlHu6": {
+    "defaultMessage": "🧩 {app} » Edit"
+  },
+  "EditApp.tsx_Vl13tq": {
+    "defaultMessage": "Create new version"
+  },
+  "EditApp.tsx_Vva+Yr": {
+    "defaultMessage": "Edit name"
+  },
+  "EditingToolbar.tsx_1hhuuF": {
+    "defaultMessage": "App preview"
+  },
+  "EditingToolbar.tsx_3XyF4d": {
+    "defaultMessage": "Redo"
+  },
+  "EditingToolbar.tsx_EwYOYc": {
+    "defaultMessage": "View code"
+  },
+  "EditingToolbar.tsx_JkS37H": {
+    "defaultMessage": "Undo"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"
@@ -533,6 +602,54 @@
   "ImplementWithAssistantButton.tsx_80aEjO": {
     "defaultMessage": "Implementation failed"
   },
+  "ImplementingSpinner.tsx_93mRKW": {
+    "defaultMessage": "Let me work on that"
+  },
+  "ImplementingSpinner.tsx_BZWtmi": {
+    "defaultMessage": "Making changes"
+  },
+  "ImplementingSpinner.tsx_Bk6B6r": {
+    "defaultMessage": "Almost there"
+  },
+  "ImplementingSpinner.tsx_Fhu9fI": {
+    "defaultMessage": "Just one last refactor"
+  },
+  "ImplementingSpinner.tsx_Hy/tAh": {
+    "defaultMessage": "It’s more complex than I estimated"
+  },
+  "ImplementingSpinner.tsx_MQVNHz": {
+    "defaultMessage": "Right away"
+  },
+  "ImplementingSpinner.tsx_Mdz/x3": {
+    "defaultMessage": "It'll be done in no time"
+  },
+  "ImplementingSpinner.tsx_ZRWqDd": {
+    "defaultMessage": "Please don't fire me"
+  },
+  "ImplementingSpinner.tsx_m0Hh22": {
+    "defaultMessage": "One more fix"
+  },
+  "ImplementingSpinner.tsx_mLuQZP": {
+    "defaultMessage": "Getting to work"
+  },
+  "ImplementingSpinner.tsx_pJh6Bf": {
+    "defaultMessage": "Compiling code"
+  },
+  "ImplementingSpinner.tsx_q462mT": {
+    "defaultMessage": "It’s a hard problem"
+  },
+  "IncompatibilityWarning.tsx_8OtepV": {
+    "defaultMessage": "Update the app"
+  },
+  "IncompatibilityWarning.tsx_QL2z4z": {
+    "defaultMessage": "<p> This app might not work correctly, as it uses collections that were either changed or deleted since the app was made. </p> <p> Update the app to avoid this warning. </p>"
+  },
+  "IncompatibilityWarning.tsx_q9XsfI": {
+    "defaultMessage": "Display anyway"
+  },
+  "IncompatibilityWarning.tsx_s36xxK": {
+    "defaultMessage": "Incompatibility warning"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -548,9 +665,6 @@
   "InferenceSettings.tsx_RPpwVn": {
     "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p> <p> Providers known to work: </p>"
   },
-  "InferenceSettings.tsx_WKES9e": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code> and <code>moonshotai/kimi-k2-0905</code> currently seems to be the best-performing models for Superego."
-  },
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
   },
@@ -562,6 +676,9 @@
   },
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voice"
+  },
+  "InferenceSettings.tsx_pKfsc3": {
+    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code>, <code>qwen/qwen3-coder</code>, <code>z-ai/glm-4.6</code>, and <code>moonshotai/kimi-k2-0905</code> have all been tested to perform very well."
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
@@ -637,6 +754,9 @@
   },
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
+  },
+  "Preview.tsx_Dd6cIb": {
+    "defaultMessage": "App compilation failed."
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
@@ -716,6 +836,21 @@
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
+  "ResolveIncompatibilityModal.tsx_3DyFfU": {
+    "defaultMessage": "I'll do it myself"
+  },
+  "ResolveIncompatibilityModal.tsx_5HfPcg": {
+    "defaultMessage": "<p> The collections used by this app have changed since the app was created. Update the app to ensure that it works correctly. </p> <p>Collection changes:</p>"
+  },
+  "ResolveIncompatibilityModal.tsx_5daczq": {
+    "defaultMessage": "Resolve incompatibility"
+  },
+  "ResolveIncompatibilityModal.tsx_EaZlsM": {
+    "defaultMessage": "Ask the assistant"
+  },
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": {
+    "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
+  },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Details"
   },
@@ -757,6 +892,18 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Set remote"
+  },
+  "SetNameAndSaveModal.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "SetNameAndSaveModal.tsx_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "SetNameAndSaveModal.tsx_VzzYJk": {
+    "defaultMessage": "Create"
+  },
+  "SetNameAndSaveModal.tsx_r+ksJu": {
+    "defaultMessage": "Create app"
   },
   "SpeakButton.tsx_FUvUuG": {
     "defaultMessage": "Configure speech to play assistant messages"
@@ -809,6 +956,9 @@
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Create new document version in {collection}"
   },
+  "Toast.tsx_Lv0zJu": {
+    "defaultMessage": "Details"
+  },
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Close"
   },
@@ -848,6 +998,18 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
   },
+  "UpdateNameModalForm.tsx_BWpuKl": {
+    "defaultMessage": "Update"
+  },
+  "UpdateNameModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "UpdateNameModalForm.tsx_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "UpdateNameModalForm.tsx_btR6aV": {
+    "defaultMessage": "Update app name"
+  },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"
   },
@@ -886,6 +1048,30 @@
   },
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Last sync failed"
+  },
+  "getIntlMessages.ts_1nnRAQ": {
+    "defaultMessage": "An error occurred rendering the chart."
+  },
+  "getIntlMessages.ts_J1XXSx": {
+    "defaultMessage": "My Awesome App"
+  },
+  "getIntlMessages.ts_PyA0WU": {
+    "defaultMessage": "You can vibe-code the app by asking the assistant."
+  },
+  "getIntlMessages.ts_UfI09W": {
+    "defaultMessage": "An error occurred importing the app."
+  },
+  "getIntlMessages.ts_XBQLkj": {
+    "defaultMessage": "Or, you can write the code yourself by switching to the code view."
+  },
+  "getIntlMessages.ts_bzhBew": {
+    "defaultMessage": "An error occurred rendering the app."
+  },
+  "getIntlMessages.ts_eIxrAW": {
+    "defaultMessage": "This app has access to the following collections:"
+  },
+  "getIntlMessages.ts_hPMG1H": {
+    "defaultMessage": "In this section you can see the live preview of your app."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

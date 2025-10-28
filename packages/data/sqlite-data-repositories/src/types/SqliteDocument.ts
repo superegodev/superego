@@ -9,7 +9,7 @@ export default interface SqliteDocument {
   /** MessagePack */
   latest_remote_document: Buffer | null;
   collection_id: CollectionId;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
 }
 

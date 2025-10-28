@@ -1,7 +1,6 @@
 import type { ToolCall, ToolResult } from "@superego/backend";
 import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedMessage } from "react-intl";
-import { vars } from "../../../../themes.css.js";
 import Title from "./Title.js";
 import ToolCallInput from "./ToolCallInput.js";
 import * as cs from "./ToolCallResult.css.js";
@@ -13,13 +12,13 @@ interface Props {
   toolResult: ToolResult | null;
 }
 export default function ToolCallResult({ toolCall, toolResult }: Props) {
-  const background = toolResult
+  const rootVariant = toolResult
     ? toolResult.output.success
-      ? vars.colors.greens._1
-      : vars.colors.reds._1
-    : vars.colors.yellows._1;
+      ? "succeeded"
+      : "failed"
+    : "noResult";
   return (
-    <div className={cs.ToolCallResult.root} style={{ background }}>
+    <div className={cs.ToolCallResult.root[rootVariant]}>
       <Disclosure>
         <Button slot="trigger" className={cs.ToolCallResult.triggerButton}>
           <Title toolCall={toolCall} toolResult={toolResult} />

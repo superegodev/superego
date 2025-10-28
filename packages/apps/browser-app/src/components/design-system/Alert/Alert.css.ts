@@ -43,6 +43,14 @@ export const Alert = {
         borderColor: vars.colors.semantic.info.border,
       },
     ],
+    warning: [
+      alertRootBase,
+      {
+        color: vars.colors.semantic.warning.text,
+        background: vars.colors.semantic.warning.background,
+        borderColor: vars.colors.semantic.warning.border,
+      },
+    ],
     error: [
       alertRootBase,
       {
@@ -56,6 +64,7 @@ export const Alert = {
   title: styleVariants({
     neutral: [alertTitleBase, { color: vars.colors.text.primary }],
     info: [alertTitleBase, { color: vars.colors.semantic.info.text }],
+    warning: [alertTitleBase, { color: vars.colors.semantic.warning.text }],
     error: [alertTitleBase, { color: vars.colors.semantic.error.text }],
   }),
 };

@@ -19,8 +19,8 @@
   "devDependencies": {
     "@types/luxon": "^3.7.1",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4",
-    "zx": "8.8.4-lite"
+    "vitest": "^4.0.4",
+    "zx": "8.8.5-lite"
   },
   "dependencies": {
     "@superego/schema": "workspace:*",

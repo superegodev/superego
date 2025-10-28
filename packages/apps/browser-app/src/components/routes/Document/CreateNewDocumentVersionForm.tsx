@@ -6,10 +6,10 @@ import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
+import forms from "../../../business-logic/forms/forms.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
-import toastQueue from "../../../business-logic/toasts/toastQueue.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
-import RhfContent from "../../../utils/RhfContent.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 
 interface Props {
@@ -32,7 +32,7 @@ export default function CreateNewDocumentVersionForm({
   const { mutate } = useCreateNewDocumentVersion();
 
   const { control, handleSubmit, reset, formState } = useForm<any>({
-    defaultValues: RhfContent.toRhfContent(
+    defaultValues: forms.utils.RHFContent.toRHFContent(
       document.latestVersion.content,
       schema,
     ),
@@ -55,7 +55,12 @@ export default function CreateNewDocumentVersionForm({
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (document.latestVersion.id !== latestVersionIdRef.current) {
-      reset(RhfContent.toRhfContent(document.latestVersion.content, schema));
+      reset(
+        forms.utils.RHFContent.toRHFContent(
+          document.latestVersion.content,
+          schema,
+        ),
+      );
       latestVersionIdRef.current = document.latestVersion.id;
     }
   }, [document.latestVersion.id]);
@@ -65,25 +70,23 @@ export default function CreateNewDocumentVersionForm({
       collection.id,
       document.id,
       document.latestVersion.id,
-      RhfContent.fromRhfContent(content, schema),
+      forms.utils.RHFContent.fromRHFContent(content, schema),
     );
     if (success) {
-      reset(RhfContent.toRhfContent(data.latestVersion.content, schema), {
-        keepValues: true,
-      });
+      reset(
+        forms.utils.RHFContent.toRHFContent(data.latestVersion.content, schema),
+        {
+          keepValues: true,
+        },
+      );
       latestVersionIdRef.current = data.latestVersion.id;
     } else {
       console.error(error);
-      toastQueue.add(
-        {
-          type: ToastType.Error,
-          title: intl.formatMessage({
-            defaultMessage: "Error saving document",
-          }),
-          description: error.name,
-        },
-        { timeout: 5_000 },
-      );
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({ defaultMessage: "Error saving document" }),
+        error: error,
+      });
     }
   };
 

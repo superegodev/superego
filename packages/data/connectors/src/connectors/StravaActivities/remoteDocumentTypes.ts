@@ -165,7 +165,7 @@ export type SummaryActivity = MetaActivity & {
   elev_high?: number;
   /** The activity's lowest elevation, in meters. */
   elev_low?: number;
-  /** Deprecated. Prefer to use sport_type. */
+  /** DEPRECATED. Use sport_type instead. */
   type?: ActivityType;
   sport_type?: SportType;
   /** The time at which the activity was started. */

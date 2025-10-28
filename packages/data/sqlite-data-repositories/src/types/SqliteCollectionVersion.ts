@@ -18,7 +18,7 @@ export default interface SqliteCollectionVersion {
   migration: string | null;
   /** MessagePack */
   remote_converters: Buffer | null;
-  /** ISO8601 */
+  /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
 }

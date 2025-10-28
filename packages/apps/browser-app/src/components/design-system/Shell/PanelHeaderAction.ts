@@ -9,6 +9,16 @@ type PanelHeaderAction = {
 } & (
   | { to: Route }
   | { href: string }
+  | {
+      menuItems: {
+        key: string;
+        label: ReactNode;
+        onAction?: () => void;
+        to?: Route;
+        isActive?: boolean;
+        isDisabled?: boolean;
+      }[];
+    }
   | { onPress: () => void }
   | { submit: string }
 );

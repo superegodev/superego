@@ -14,19 +14,21 @@
     "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.13.13",
-    "@cloudflare/workers-types": "^4.20251011.0",
+    "@cloudflare/vite-plugin": "^1.13.15",
+    "@cloudflare/workers-types": "^4.20251014.0",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10",
-    "wrangler": "^4.43.0"
+    "vite": "^7.1.12",
+    "wrangler": "^4.45.0"
   },
   "dependencies": {
+    "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:^",
     "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:^",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
+    "@superego/monaco-typescript-compiler": "workspace:^",
     "@superego/openai-compat-inference-service": "workspace:^",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",

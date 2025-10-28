@@ -12,7 +12,9 @@ export function isValidPlainDate(value: any): boolean {
 export function isValidPlainTime(value: any): boolean {
   return (
     typeof value === "string" &&
-    /^T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d{1,3})?$/.test(value)
+    /^T?(?:([01]\d|2[0-3])(?::([0-5]\d)(?::([0-5]\d)(?:\.\d{1,3})?)?)?)$/.test(
+      value,
+    )
   );
 }
 
@@ -33,6 +35,7 @@ export function isValidInstant(value: any): boolean {
   const plainTime = value.slice(indexOfT, indexOfOffsetChar);
   const offset = value.slice(indexOfOffsetChar);
   return (
+    indexOfT !== -1 &&
     isValidPlainDate(plainDate) &&
     isValidPlainTime(plainTime) &&
     plainTime.length === "T00:00:00.000".length &&

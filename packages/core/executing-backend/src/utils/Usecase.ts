@@ -7,6 +7,7 @@ import type Connector from "../requirements/Connector.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
 import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "../requirements/TypescriptCompiler.js";
 
 export default abstract class Usecase<
   Exec extends (...args: any[]) => ResultPromise<any, any> = (
@@ -16,6 +17,7 @@ export default abstract class Usecase<
   constructor(
     protected repos: DataRepositories,
     protected javascriptSandbox: JavascriptSandbox,
+    protected typescriptCompiler: TypescriptCompiler,
     protected inferenceServiceFactory: InferenceServiceFactory,
     protected connectors: Connector[],
   ) {}
@@ -26,6 +28,7 @@ export default abstract class Usecase<
     SubUsecase extends new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
+      typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
     ) => Usecase,
@@ -33,6 +36,7 @@ export default abstract class Usecase<
     return new UsecaseClass(
       this.repos,
       this.javascriptSandbox,
+      this.typescriptCompiler,
       this.inferenceServiceFactory,
       this.connectors,
     ) as InstanceType<SubUsecase>;

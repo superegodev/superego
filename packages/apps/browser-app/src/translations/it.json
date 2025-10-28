@@ -50,14 +50,38 @@
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
   },
+  "CreateApp.tsx_dtELK2": {
+    "defaultMessage": "Crea app"
+  },
+  "CreateApp.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
+  "Collection.tsx_59cQpf": {
+    "defaultMessage": "Modifica app"
+  },
+  "Collection.tsx_5WK7jL": {
+    "defaultMessage": "Crea nuova app"
+  },
+  "Collection.tsx_B+R508": {
+    "defaultMessage": "Imposta come vista predefinita"
+  },
   "Collection.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
   },
   "Collection.tsx_K+mLdW": {
     "defaultMessage": "Mostra timestamp"
   },
+  "Collection.tsx_LQONHO": {
+    "defaultMessage": "Errore durante l'impostazione della vista predefinita della collezione"
+  },
+  "Collection.tsx_gRiKLf": {
+    "defaultMessage": "App"
+  },
   "Collection.tsx_r0FgVC": {
     "defaultMessage": "Crea documento"
+  },
+  "Collection.tsx_ufzv1A": {
+    "defaultMessage": "Vista tabella"
   },
   "Collection.tsx_zYomDH": {
     "defaultMessage": "Azioni della collezione"
@@ -224,6 +248,9 @@
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Documento creato} other {# documenti creati}}"
   },
+  "CreateNewAppVersionForm.tsx_6GRvO0": {
+    "defaultMessage": "Errore durante la creazione di una nuova versione dell'app"
+  },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Crea nuova versione"
   },
@@ -250,6 +277,18 @@
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
+  },
+  "DeleteAppModalForm.tsx_K3r6DQ": {
+    "defaultMessage": "Elimina"
+  },
+  "DeleteAppModalForm.tsx_U+RSUu": {
+    "defaultMessage": "<p> Eliminare l'app è definitivo. Se sei sicuro, scrivi <i>delete</i> nel campo sottostante. </p>"
+  },
+  "DeleteAppModalForm.tsx_bJAAvK": {
+    "defaultMessage": "Elimina app \"{appName}\""
+  },
+  "DeleteAppModalForm.tsx_lml5ZH": {
+    "defaultMessage": "Conferma comando"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. </p> <p> Se sei sicuro di voler eliminare la collezione, scrivi <i>delete</i> nel campo sottostante. </p>"
@@ -330,7 +369,7 @@
     "defaultMessage": "Sommario dei contenuti non valido"
   },
   "DocumentsTable.tsx_xIoGG9": {
-    "defaultMessage": "Vai"
+    "defaultMessage": "Vai a"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Sincronizzazione con {remote}"
@@ -338,11 +377,41 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sincronizza"
   },
+  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+    "defaultMessage": "Cosa vuoi creare?"
+  },
+  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+    "defaultMessage": "Si è verificato un errore durante la generazione dell'app"
+  },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
   },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
+  "EditApp.tsx_K3r6DQ": {
+    "defaultMessage": "Elimina"
+  },
+  "EditApp.tsx_LDlHu6": {
+    "defaultMessage": "🧩 {app} » Modifica"
+  },
+  "EditApp.tsx_Vl13tq": {
+    "defaultMessage": "Crea nuova versione"
+  },
+  "EditApp.tsx_Vva+Yr": {
+    "defaultMessage": "Modifica nome"
+  },
+  "EditingToolbar.tsx_1hhuuF": {
+    "defaultMessage": "Anteprima app"
+  },
+  "EditingToolbar.tsx_3XyF4d": {
+    "defaultMessage": "Ripeti"
+  },
+  "EditingToolbar.tsx_EwYOYc": {
+    "defaultMessage": "Visualizza codice"
+  },
+  "EditingToolbar.tsx_JkS37H": {
+    "defaultMessage": "Annulla"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Seleziona emoji"
@@ -533,6 +602,54 @@
   "ImplementWithAssistantButton.tsx_80aEjO": {
     "defaultMessage": "Implementazione fallita"
   },
+  "ImplementingSpinner.tsx_93mRKW": {
+    "defaultMessage": "Lascia che me ne occupi"
+  },
+  "ImplementingSpinner.tsx_BZWtmi": {
+    "defaultMessage": "Sto apportando modifiche"
+  },
+  "ImplementingSpinner.tsx_Bk6B6r": {
+    "defaultMessage": "Ci siamo quasi"
+  },
+  "ImplementingSpinner.tsx_Fhu9fI": {
+    "defaultMessage": "Solo un ultimo refactor"
+  },
+  "ImplementingSpinner.tsx_Hy/tAh": {
+    "defaultMessage": "È più complesso di quanto avessi previsto"
+  },
+  "ImplementingSpinner.tsx_MQVNHz": {
+    "defaultMessage": "Subito"
+  },
+  "ImplementingSpinner.tsx_Mdz/x3": {
+    "defaultMessage": "Sarà pronto in un attimo"
+  },
+  "ImplementingSpinner.tsx_ZRWqDd": {
+    "defaultMessage": "Per favore non licenziarmi"
+  },
+  "ImplementingSpinner.tsx_m0Hh22": {
+    "defaultMessage": "Ancora una correzione"
+  },
+  "ImplementingSpinner.tsx_mLuQZP": {
+    "defaultMessage": "Mi metto al lavoro"
+  },
+  "ImplementingSpinner.tsx_pJh6Bf": {
+    "defaultMessage": "Sto compilando il codice"
+  },
+  "ImplementingSpinner.tsx_q462mT": {
+    "defaultMessage": "È un problema difficile"
+  },
+  "IncompatibilityWarning.tsx_8OtepV": {
+    "defaultMessage": "Aggiorna l'app"
+  },
+  "IncompatibilityWarning.tsx_QL2z4z": {
+    "defaultMessage": "<p> Questa app potrebbe non funzionare correttamente, perché utilizza collezioni che sono state modificate o eliminate da quando è stata creata. </p> <p> Aggiorna l'app per evitare questo avviso. </p>"
+  },
+  "IncompatibilityWarning.tsx_q9XsfI": {
+    "defaultMessage": "Mostra comunque"
+  },
+  "IncompatibilityWarning.tsx_s36xxK": {
+    "defaultMessage": "Avviso di incompatibilità"
+  },
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
@@ -548,9 +665,6 @@
   "InferenceSettings.tsx_RPpwVn": {
     "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b> — un servizio che offre API per LLM, trascrizione vocale e sintesi vocale. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p> <p> Provider che funzionano: </p>"
   },
-  "InferenceSettings.tsx_WKES9e": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code> e <code>moonshotai/kimi-k2-0905</code> al momento sembrano essere i modelli con le migliori prestazioni per Superego."
-  },
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Chiave API del provider"
   },
@@ -562,6 +676,9 @@
   },
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voce"
+  },
+  "InferenceSettings.tsx_pKfsc3": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code>, <code>qwen/qwen3-coder</code>, <code>z-ai/glm-4.6</code>, e <code>moonshotai/kimi-k2-0905</code> sono stati tutti testati per garantire prestazioni eccellenti."
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"
@@ -616,6 +733,9 @@
   },
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Chiudi barra laterale"
+  },
+  "Preview.tsx_Dd6cIb": {
+    "defaultMessage": "Compilazione dell'app non riuscita."
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
@@ -695,6 +815,21 @@
   "RenameCollectionCategoryModalForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
   },
+  "ResolveIncompatibilityModal.tsx_3DyFfU": {
+    "defaultMessage": "Lo faccio io"
+  },
+  "ResolveIncompatibilityModal.tsx_5HfPcg": {
+    "defaultMessage": "<p> Le collezioni utilizzate da questa app sono cambiate da quando è stata creata. Aggiorna l'app per assicurarti che funzioni correttamente. </p> <p>Modifiche alle collezioni:</p>"
+  },
+  "ResolveIncompatibilityModal.tsx_5daczq": {
+    "defaultMessage": "Risolvi incompatibilità"
+  },
+  "ResolveIncompatibilityModal.tsx_EaZlsM": {
+    "defaultMessage": "Chiedi all'assistente"
+  },
+  "ResolveIncompatibilityModal.tsx_Gf4r/F": {
+    "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> è stata eliminata.} other {<code>{collectionId}</code> ha una nuova versione.} }"
+  },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Dettagli"
   },
@@ -730,6 +865,18 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Imposta remoto"
+  },
+  "SetNameAndSaveModal.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "SetNameAndSaveModal.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "SetNameAndSaveModal.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
+  "SetNameAndSaveModal.tsx_r+ksJu": {
+    "defaultMessage": "Crea app"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
@@ -770,6 +917,9 @@
   "Title.tsx_vlxsWA": {
     "defaultMessage": "Crea una nuova versione del documento in {collection}"
   },
+  "Toast.tsx_Lv0zJu": {
+    "defaultMessage": "Dettagli"
+  },
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Chiudi"
   },
@@ -809,6 +959,18 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
   },
+  "UpdateNameModalForm.tsx_BWpuKl": {
+    "defaultMessage": "Aggiorna"
+  },
+  "UpdateNameModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateNameModalForm.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "UpdateNameModalForm.tsx_btR6aV": {
+    "defaultMessage": "Aggiorna il nome dell'app"
+  },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Riproduci"
   },
@@ -847,6 +1009,30 @@
   },
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Ultima sincronizzazione non riuscita"
+  },
+  "getIntlMessages.ts_1nnRAQ": {
+    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
+  "getIntlMessages.ts_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "getIntlMessages.ts_PyA0WU": {
+    "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
+  },
+  "getIntlMessages.ts_UfI09W": {
+    "defaultMessage": "Si è verificato un errore durante l'importazione dell'app."
+  },
+  "getIntlMessages.ts_XBQLkj": {
+    "defaultMessage": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
+  },
+  "getIntlMessages.ts_bzhBew": {
+    "defaultMessage": "Si è verificato un errore durante il rendering dell'app."
+  },
+  "getIntlMessages.ts_eIxrAW": {
+    "defaultMessage": "Questa app ha accesso alle seguenti collezioni:"
+  },
+  "getIntlMessages.ts_hPMG1H": {
+    "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { ListBox, ListBoxItem } from "react-aria-components";
+import { PiCheck } from "react-icons/pi";
 import Popover from "../Popover/Popover.js";
 import * as cs from "./forms.css.js";
 
@@ -30,7 +31,7 @@ export default function SelectOptions({ options, zoomLevel = 1 }: Props) {
                     {description}
                   </div>
                 ) : null}
-                {isSelected ? "✓" : null}
+                {isSelected ? <PiCheck /> : null}
               </>
             )}
           </ListBoxItem>

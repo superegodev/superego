@@ -5,6 +5,7 @@
 export type { default as Backend } from "./Backend.js";
 
 // Enums
+export { default as AppType } from "./enums/AppType.js";
 export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
@@ -21,6 +22,8 @@ export { default as ToolName } from "./enums/ToolName.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 
 // Errors
+export type { default as AppNameNotValid } from "./errors/AppNameNotValid.js";
+export type { default as AppNotFound } from "./errors/AppNotFound.js";
 export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
@@ -61,10 +64,14 @@ export type { default as ParentCollectionCategoryIsDescendant } from "./errors/P
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
 export type { default as RemoteConvertersNotValid } from "./errors/RemoteConvertersNotValid.js";
 export type { default as SyncingChangesFailed } from "./errors/SyncingChangesFailed.js";
+export type { default as TooManyFailedImplementationAttempts } from "./errors/TooManyFailedImplementationAttempts.js";
+export type { default as TypescriptCompilationFailed } from "./errors/TypescriptCompilationFailed.js";
 export type { default as UnexpectedError } from "./errors/UnexpectedError.js";
-export type { default as WriteTypescriptFunctionToolNotCalled } from "./errors/WriteTypescriptFunctionToolNotCalled.js";
+export type { default as WriteTypescriptModuleToolNotCalled } from "./errors/WriteTypescriptModuleToolNotCalled.js";
 
 // Ids
+export type { default as AppId } from "./ids/AppId.js";
+export type { default as AppVersionId } from "./ids/AppVersionId.js";
 export type { default as BackgroundJobId } from "./ids/BackgroundJobId.js";
 export type { default as CollectionCategoryId } from "./ids/CollectionCategoryId.js";
 export type { default as CollectionId } from "./ids/CollectionId.js";
@@ -75,7 +82,9 @@ export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
 
 // Types
+export type { default as App } from "./types/App.js";
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as AppVersion } from "./types/AppVersion.js";
 export type { default as AssistantsSettings } from "./types/AssistantsSettings.js";
 export type { default as AudioContent } from "./types/AudioContent.js";
 export type { default as BackgroundJob } from "./types/BackgroundJob.js";
@@ -103,6 +112,6 @@ export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
-export type { default as TypescriptLib } from "./types/TypescriptLib.js";
+export type { default as TypescriptFile } from "./types/TypescriptFile.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";

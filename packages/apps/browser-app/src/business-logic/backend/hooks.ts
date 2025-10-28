@@ -113,7 +113,7 @@ export const useDeleteCollection = makeUseBackendMutation(
 export const listDocumentsQuery = makeBackendQueryGetter(
   "documents",
   "list",
-  (collectionId) => ["listDocuments", collectionId],
+  (collectionId, lite) => ["listDocuments", collectionId, String(lite ?? true)],
 );
 
 export const getDocumentQuery = makeBackendQueryGetter(
@@ -222,13 +222,47 @@ export const useDeleteConversation = makeUseBackendMutation(
   ],
 );
 
-export const useTts = makeUseBackendMutation("assistants", "tts", () => []);
+/*
+ * Assistants
+ */
 
-export const useImplementTypescriptFunction = makeUseBackendMutation(
-  "assistants",
-  "implementTypescriptFunction",
+export const useStt = makeUseBackendMutation("inference", "stt", () => []);
+
+export const useTts = makeUseBackendMutation("inference", "tts", () => []);
+
+export const useImplementTypescriptModule = makeUseBackendMutation(
+  "inference",
+  "implementTypescriptModule",
   () => [],
 );
+
+/*
+ * Apps
+ */
+
+export const listAppsQuery = makeBackendQueryGetter("apps", "list", () => [
+  "listApps",
+]);
+
+export const useCreateApp = makeUseBackendMutation("apps", "create", () => [
+  ["listApps"],
+]);
+
+export const useUpdateAppName = makeUseBackendMutation(
+  "apps",
+  "updateName",
+  () => [["listApps"]],
+);
+
+export const useCreateNewAppVersion = makeUseBackendMutation(
+  "apps",
+  "createNewVersion",
+  () => [["listApps"]],
+);
+
+export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
+  ["listApps"],
+]);
 
 /*
  * Background jobs

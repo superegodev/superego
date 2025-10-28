@@ -2,6 +2,7 @@ import { AssistantName, Theme } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
+import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import registerTests from "./registerTests.js";
 
@@ -31,26 +32,12 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests((connector) => {
-  // Javascript sandbox
-  const javascriptSandbox = new FakeJavascriptSandbox();
-
-  // Inference service
-  const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
-
-  // Data repositories
-  const dataRepositoriesManager = new DemoDataRepositoriesManager(
-    defaultGlobalSettings,
-    crypto.randomUUID(),
-  );
-
-  // Backend
-  const backend = new ExecutingBackend(
-    dataRepositoriesManager,
-    javascriptSandbox,
-    inferenceServiceFactory,
+registerTests((connector) => ({
+  backend: new ExecutingBackend(
+    new DemoDataRepositoriesManager(defaultGlobalSettings, crypto.randomUUID()),
+    new FakeJavascriptSandbox(),
+    new MonacoTypescriptCompiler(() => import("monaco-editor")),
+    new OpenAICompatInferenceServiceFactory(),
     connector ? [connector] : [],
-  );
-
-  return { backend };
-});
+  ),
+}));
