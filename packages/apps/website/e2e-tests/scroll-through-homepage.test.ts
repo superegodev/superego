@@ -5,8 +5,11 @@ test("Scroll through homepage", async ({ page }) => {
 
   const stepsCount = await page.locator(".step").count();
 
-  for (let i = 0; i < stepsCount - 1; i++) {
-    await page.click("#scroll-down-button");
+  for (let i = 0; i < stepsCount; i++) {
+    const nextStep = page.locator(".step").nth(i);
+    await nextStep.evaluate((element) =>
+      element.scrollIntoView({ block: "start", behavior: "auto" }),
+    );
     await expect(page).toHaveScreenshot();
   }
 });
