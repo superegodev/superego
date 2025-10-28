@@ -78,6 +78,17 @@ import logo from "../assets/logo.svg";
     },
     { threshold: 0.01 },
   ).observe(hero);
+
+  const isMacos = (() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform.toLowerCase();
+    return (
+      (platform.includes("mac") || userAgent.includes("mac os")) &&
+      !userAgent.includes("iphone") &&
+      !userAgent.includes("ipad")
+    );
+  })();
+  document.documentElement.classList.toggle("is-macos", isMacos);
 </script>
 <style is:global>
   body {
@@ -139,11 +150,18 @@ import logo from "../assets/logo.svg";
       color-mix(in srgb, var(--highlight-color) 60%, transparent)
     );
     box-decoration-break: clone;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .balanced {
     text-wrap: balance;
+  }
+
+  html.is-macos .not-macos-only {
+    display: none !important;
+  }
+  html:not(.is-macos) .macos-only {
+    display: none !important;
   }
 
   .step {
@@ -202,7 +220,7 @@ import logo from "../assets/logo.svg";
   @media (max-width: 800px) {
     .step.step.big h2 {
       font-size: 4rem;
-      font-weight: bold;
+      font-weight: 600;
     }
     .step h2 {
       font-size: 3rem;
@@ -214,7 +232,7 @@ import logo from "../assets/logo.svg";
   @media (max-width: 600px) {
     .step.step.big h2 {
       font-size: 3rem;
-      font-weight: bold;
+      font-weight: 600;
     }
     .step h2 {
       font-size: 2.5rem;
@@ -266,7 +284,7 @@ import logo from "../assets/logo.svg";
   }
   .hero .actions a {
     display: inline-block;
-    width: 128px;
+    width: 134px;
     margin: 0;
     box-sizing: content-box;
     display: flex;
@@ -318,51 +336,35 @@ import logo from "../assets/logo.svg";
 
 <StarlightPage frontmatter={{ title: "Superego", template: "splash" }}>
   <div class="step big">
-    <h2>
+    <h2 class="balanced">
       Imagine this:
       <div style={{ display: "block", height: "2rem", width: "100%" }}></div>
-      <em class="highlighted">all</em> your personal data,
-      <br />
-      in <em class="highlighted">one</em> private space.
+      <em class="highlighted">all</em> your personal data, in one
+      <em class="highlighted">private</em> space.
     </h2>
   </div>
 
   <div class="step">
     <h2>A local, encrypted, open-source database.</h2>
     <p>
-      A vault you can <em class="highlighted">trust</em> with your most private records.
-    </p>
-  </div>
-
-  <div class="step">
-    <h2>Pulling data from your other apps,</h2>
-    <p class="balanced">
-      giving you back what's
-      <em class="highlighted">rightfully yours</em>.
+      A vault <em class="highlighted">you can trust</em> with your most private records.
     </p>
   </div>
 
   <div class="step big">
     <h2 class="balanced">
-      Then: connect it to an <span class="highlighted">AI</span>.
+      Then: connect it<br />to an <span class="highlighted">AI</span>.
     </h2>
   </div>
 
   <div class="step">
     <h2 class="balanced">
-      Finally! An assistant that <em class="highlighted">actually</em> knows you.
+      Finally! An assistant that
+      <em class="highlighted">actually knows you</em>.
     </h2>
     <p>
       Did you know you run faster <em>on Thursdays</em>? Or that last year you
       spent <em>632 euros</em> on shoes?
-    </p>
-  </div>
-
-  <div class="step">
-    <h2>Share your day with it.</h2>
-    <p>
-      It'll update its “memory” and get to know you
-      <em class="highlighted">even better</em>.
     </p>
   </div>
 
@@ -373,9 +375,8 @@ import logo from "../assets/logo.svg";
   <div class="step">
     <h2>Sorry, <em>“vibe-able”</em>.</h2>
     <p>
-      That niche app idea no one would ever make?
-      <br />
-      <em class="highlighted">Just ask</em> the AI!
+      Want to extend it with <em class="highlighted">custom apps</em>? Ask the
+      AI!
     </p>
   </div>
 
@@ -398,8 +399,16 @@ import logo from "../assets/logo.svg";
           Try the demo
         </LinkButton>
         <LinkButton
+          href="https://github.com/superegodev/superego"
+          icon="github"
+          class="not-macos-only"
+        >
+          Star on GitHub
+        </LinkButton>
+        <LinkButton
           href="https://github.com/superegodev/superego/releases/latest"
           icon="download"
+          class="macos-only"
         >
           Get the alpha
         </LinkButton>
