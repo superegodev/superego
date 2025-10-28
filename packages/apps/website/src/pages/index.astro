@@ -27,9 +27,8 @@ import logo from "../assets/logo.svg";
 
   const isMacos = (() => {
     const userAgent = navigator.userAgent.toLowerCase();
-    const platform = navigator.platform.toLowerCase();
     return (
-      (platform.includes("mac") || userAgent.includes("mac os")) &&
+      userAgent.includes("mac os") &&
       !userAgent.includes("iphone") &&
       !userAgent.includes("ipad")
     );

@@ -15,7 +15,7 @@ export default [
     id: FormatId.String.PlainDate,
     name: "Plain Date",
     description:
-      "A calendar date in the ISO 8601 format, with no time and no time offset.",
+      "A calendar date in the ISO 8601 format, with no time and no UTC offset.",
     validExamples: [
       "2006-08-24",
       "2024-02-29",
@@ -35,7 +35,9 @@ export default [
     valibotSchema: v.pipe(
       v.string(),
       v.check(isValidPlainDate, ({ received, lang }) =>
-        translate(lang, { en: `Invalid plain date: Received ${received}` }),
+        translate(lang, {
+          en: `Invalid plain date: Received ${received}. Expected format: YYYY-MM-DD (no time, no offset; Gregorian-valid).`,
+        }),
       ),
     ),
   },
@@ -45,10 +47,20 @@ export default [
     id: FormatId.String.PlainTime,
     name: "Plain Time",
     description:
-      "A wall-clock time in the ISO 8601 format, with at most millisecond precision, with no date and no time offset.",
-    validExamples: ["T19:39:09", "T19:39:09.068", "T19:39:09.000"],
-    invalidExamples: [
+      "A wall-clock time with no date and no UTC offset. Format: [T]HH[:mm[:ss[.sss]]], where hours are 00–23; minutes and seconds are optional; fractional seconds are optional up to 3 digits.",
+    validExamples: [
+      "T19:39:09.068",
+      "19:39:09.068",
+      "T19:39:09",
       "19:39:09",
+      "T19:39",
+      "19:39",
+      "T19",
+      "19",
+      "T19:39:09.000",
+      "19:39:09.000",
+    ],
+    invalidExamples: [
       "T19:39:09.068346205",
       "T25:00:00",
       "T19:39:09.068346205Z",
@@ -59,7 +71,9 @@ export default [
     valibotSchema: v.pipe(
       v.string(),
       v.check(isValidPlainTime, ({ received, lang }) =>
-        translate(lang, { en: `Invalid plain time: Received ${received}` }),
+        translate(lang, {
+          en: `Invalid plain time: Received ${received}. Expected format: [T]HH[:mm[:ss[.sss]]] (no date, no offset; up to 3 fractional digits).`,
+        }),
       ),
     ),
   },
@@ -91,7 +105,7 @@ export default [
     valibotSchema: v.pipe(
       v.string(),
       v.check(isValidInstant, ({ received, lang }) =>
-        translate(lang, { en: `Invalid instant: Received ${received}` }),
+        translate(lang, { en: `Invalid instant: Received ${received}.` }),
       ),
     ),
   },
