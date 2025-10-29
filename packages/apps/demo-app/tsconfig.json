@@ -4,6 +4,10 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
-  "exclude": ["src/worker"],
+  "exclude": [
+    "src/worker",
+    "src/demoData/*.appSource.tsx",
+    "src/demoData/*.appCompiled.js"
+  ],
   "references": [{ "path": "./tsconfig.worker.json" }]
 }

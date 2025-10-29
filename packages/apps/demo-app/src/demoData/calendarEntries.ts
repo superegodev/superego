@@ -90,4 +90,11 @@ for (const calendarEntry of calendarEntries) {
   documentVersions.push(documentVersion);
 }
 
-export default { collection, collectionVersion, documents, documentVersions };
+export default {
+  collection,
+  collectionVersion,
+  documents,
+  documentVersions,
+  app: null,
+  appVersion: null,
+};

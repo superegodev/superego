@@ -1,5 +1,7 @@
-import { DocumentVersionCreator } from "@superego/backend";
+import { AppType, DocumentVersionCreator } from "@superego/backend";
 import type {
+  AppEntity,
+  AppVersionEntity,
   CollectionEntity,
   CollectionVersionEntity,
   DocumentEntity,
@@ -7,8 +9,12 @@ import type {
 } from "@superego/executing-backend";
 import { Id } from "@superego/shared-utils";
 import { Finance } from "./collectionCategories.js";
+import expensesAppCompiled from "./expenses.appCompiled.js?raw";
+import expensesAppSource from "./expenses.appSource.js?raw";
 import expenses from "./expensesData.js";
 import expensesSchema from "./expensesSchema.js";
+
+const appId = Id.generate.app();
 
 const collection: CollectionEntity = {
   id: Id.generate.collection(),
@@ -16,7 +22,7 @@ const collection: CollectionEntity = {
     name: "Expenses",
     icon: "💸",
     collectionCategoryId: Finance.id,
-    defaultCollectionViewAppId: null,
+    defaultCollectionViewAppId: appId,
     description: null,
     assistantInstructions: [
       "- Defaults for things I don't specify:",
@@ -96,4 +102,36 @@ for (const expense of expenses) {
   documentVersions.push(documentVersion);
 }
 
-export default { collection, collectionVersion, documents, documentVersions };
+const app: AppEntity = {
+  id: appId,
+  type: AppType.CollectionView,
+  name: "Expense Stats",
+  createdAt: new Date(),
+};
+
+const appVersion: AppVersionEntity = {
+  id: Id.generate.appVersion(),
+  previousVersionId: null,
+  appId: app.id,
+  targetCollections: [{ id: collection.id, versionId: collectionVersion.id }],
+  files: {
+    "/main.tsx": {
+      source: expensesAppSource
+        .replaceAll("$COLLECTION_ID", collection.id)
+        .replaceAll("$COLLECTION_VERSION_ID", collectionVersion.id),
+      compiled: expensesAppCompiled
+        .replaceAll("$COLLECTION_ID", collection.id)
+        .replaceAll("$COLLECTION_VERSION_ID", collectionVersion.id),
+    },
+  },
+  createdAt: new Date(),
+};
+
+export default {
+  collection,
+  collectionVersion,
+  documents,
+  documentVersions,
+  app,
+  appVersion,
+};

@@ -78,9 +78,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
-  new MonacoTypescriptCompiler(
-    async () => (await import("monaco-editor")).default,
-  ),
+  new MonacoTypescriptCompiler(async () => await import("monaco-editor")),
   new OpenAICompatInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, base64Url, sessionStorage),

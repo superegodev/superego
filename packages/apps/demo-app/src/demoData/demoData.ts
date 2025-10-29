@@ -13,6 +13,8 @@ const demoData: Pick<
   | "collectionVersions"
   | "documents"
   | "documentVersions"
+  | "apps"
+  | "appVersions"
 > = {
   collectionCategories: {
     [Car.id]: Car,
@@ -23,15 +25,18 @@ const demoData: Pick<
   collectionVersions: {},
   documents: {},
   documentVersions: {},
+  apps: {},
+  appVersions: {},
 };
 
-for (const { collection, collectionVersion, documents, documentVersions } of [
-  calendarEntries,
-  contacts,
-  expenses,
-  fuelLogs,
-  weighIns,
-]) {
+for (const {
+  collection,
+  collectionVersion,
+  documents,
+  documentVersions,
+  app,
+  appVersion,
+} of [calendarEntries, contacts, expenses, fuelLogs, weighIns]) {
   demoData.collections[collection.id] = collection;
   demoData.collectionVersions[collectionVersion.id] = collectionVersion;
   for (const document of documents) {
@@ -39,6 +44,12 @@ for (const { collection, collectionVersion, documents, documentVersions } of [
   }
   for (const documentVersion of documentVersions) {
     demoData.documentVersions[documentVersion.id] = documentVersion;
+  }
+  if (app) {
+    demoData.apps[app.id] = app;
+  }
+  if (appVersion) {
+    demoData.appVersions[appVersion.id] = appVersion;
   }
 }
 
