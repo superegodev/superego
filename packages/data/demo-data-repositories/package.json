@@ -1,6 +1,6 @@
 {
   "name": "@superego/demo-data-repositories",
-  "version": "2025.10.1",
+  "version": "2025.10.2",
   "type": "module",
   "exports": {
     ".": {
