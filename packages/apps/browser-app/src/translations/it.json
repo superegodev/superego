@@ -677,8 +677,8 @@
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voce"
   },
-  "InferenceSettings.tsx_pKfsc3": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code>, <code>qwen/qwen3-coder</code>, <code>z-ai/glm-4.6</code>, e <code>moonshotai/kimi-k2-0905</code> sono stati tutti testati per garantire prestazioni eccellenti."
+  "InferenceSettings.tsx_pdxaYA": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code>, <code>z-ai/glm-4.6</code>, e <code>qwen/qwen3-coder</code> hanno generalmente prestazioni molto buone."
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"

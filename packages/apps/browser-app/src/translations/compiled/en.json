@@ -1684,7 +1684,7 @@
       "value": "Voice"
     }
   ],
-  "InferenceSettings.tsx_pKfsc3": [
+  "InferenceSettings.tsx_pdxaYA": [
     {
       "type": 0,
       "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
@@ -1694,20 +1694,6 @@
         {
           "type": 0,
           "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
         }
       ],
       "type": 8,
@@ -1735,7 +1721,7 @@
       "children": [
         {
           "type": 0,
-          "value": "moonshotai/kimi-k2-0905"
+          "value": "qwen/qwen3-coder"
         }
       ],
       "type": 8,
@@ -1743,7 +1729,7 @@
     },
     {
       "type": 0,
-      "value": " have all been tested to perform very well."
+      "value": " generally perform quite well."
     }
   ],
   "InferenceSettings.tsx_rhSI1/": [

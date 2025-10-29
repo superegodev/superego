@@ -230,6 +230,7 @@ export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
                 .startOf("week")
                 .set({ hour: 1 });
               return {
+                isSetOnGlobalThis: globalThis.LocalInstant === LocalInstant,
                 invalidISO: invalidISO,
                 invalidInstant: invalidInstant,
                 invalidPlainDate: invalidPlainDate,
@@ -260,6 +261,7 @@ export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
         .startOf("week")
         .set({ hour: 1 });
       expect(result.data).toEqual({
+        isSetOnGlobalThis: true,
         invalidISO: '"not-a-valid-iso" is not a valid ISO 8601 string',
         invalidInstant:
           '"not-a-valid-instant" is not a valid dev.superego:String.Instant',
@@ -276,5 +278,27 @@ export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
         coercionToString: expectedLocalInstant.toISO(),
       });
     });
+  });
+
+  it("gives access to globalThis", async () => {
+    // Setup SUT
+    const { javascriptSandbox } = deps();
+
+    // Exercise
+    const result = await javascriptSandbox.executeSyncFunction(
+      {
+        source: "",
+        compiled: `
+          export default function canAccessGlobalThis() {
+            return globalThis.Object === Object;
+          }
+        `,
+      },
+      [],
+    );
+
+    // Verify
+    assert(result.success);
+    expect(result.data).toEqual(true);
   });
 });
