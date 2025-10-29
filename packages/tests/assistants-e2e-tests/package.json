@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.9.1",
+    "@types/node": "^24.9.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -23,6 +23,6 @@
     "@superego/vitest-registered": "workspace:*",
     "luxon": "^3.7.2",
     "p-map": "^7.0.3",
-    "vitest": "^4.0.4"
+    "vitest": "^4.0.5"
   }
 }
