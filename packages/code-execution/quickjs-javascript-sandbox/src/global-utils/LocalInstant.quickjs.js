@@ -91,3 +91,5 @@ LocalInstant.fromPlainDate = (plainDate) =>
   new LocalInstant(HostLocalInstant.fromPlainDate(plainDate), []);
 
 LocalInstant.now = () => new LocalInstant(new Date().toISOString(), []);
+
+globalThis.LocalInstant = LocalInstant;

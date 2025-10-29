@@ -194,6 +194,10 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         {
           type: MessageContentPartType.Text,
           text: `
+You are a TypeScript code generator. When asked to implement code, you MUST call
+${ToolName.WriteTypescriptModule}. Do not write any response text - only return
+the tool call.
+
 Starting from the user-supplied TypeScript starting point, implement the
 **entire** module to satisfy the user request.
 
@@ -208,6 +212,7 @@ ${description}
 - The module can import and use the TypeScript files provided below.
 - The implemented module MUST compile without errors and have no type errors.
   When you receive compiler diagnostics, correct them and call the tool again.
+- Solve all pending TODOs.
 - Only make the changes necessary to satisfy the user request - preserve
   existing working code in the starting point.
 - Use clear, descriptive variable names and add comments for complex logic.
@@ -226,11 +231,6 @@ ${template}
 ## Available libs
 
 ${availableLibs}
-
-## Output format
-
-Return the implemented module to the user by calling the ${ToolName.WriteTypescriptModule}
-tool. Do not output anything else.
           `
             .replace(/\n{3,}/g, "\n\n")
             .trim(),

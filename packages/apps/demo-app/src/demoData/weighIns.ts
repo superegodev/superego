@@ -91,4 +91,11 @@ for (const weighIn of weighIns) {
   documentVersions.push(documentVersion);
 }
 
-export default { collection, collectionVersion, documents, documentVersions };
+export default {
+  collection,
+  collectionVersion,
+  documents,
+  documentVersions,
+  app: null,
+  appVersion: null,
+};
