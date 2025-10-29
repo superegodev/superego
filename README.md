@@ -6,12 +6,20 @@
 
 # Superego: Your Life's Database
 
-Superego is a general-purpose database for your life. Store notes, tasks, meals,
-expenses, health logs... Whatever you want, really; you define what goes in it.
+Superego is a personal database app where you can store anything you want about
+your life. Notes, tasks, meals, expenses, health logs... Whatever you want,
+really; you define what goes in it.
 
 Your data is stored locally, in a SQLite file you own and that you can backup
 and sync with Dropbox, Google Drive, or whichever service you already use. No
 accounts, no middlemen.
+
+On top of this, Superego gives you two main functionalities:
+
+1. An AI assistant that you can use to collect and explore your data.
+2. A platform to build small personal applications that use that data.
+
+![Demo Screenshots](./docs/images/demo-screenshots.png)
 
 ## License
 
