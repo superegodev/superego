@@ -19,6 +19,8 @@ On top of this, Superego gives you two main functionalities:
 1. An AI assistant that you can use to collect and explore your data.
 2. A platform to build small personal applications that use that data.
 
+[Try the demo @ demo.superego.dev](https://demo.superego.dev).
+
 ![Demo Screenshots](./docs/images/demo-screenshots.png)
 
 ## License
