@@ -8,6 +8,7 @@ import {
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
 import type DocumentsCreate from "../../usecases/documents/Create.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
@@ -18,7 +19,7 @@ import CreateChart from "./tools/CreateChart.js";
 import CreateDocuments from "./tools/CreateDocuments.js";
 import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
-import ExecuteJavascriptFunction from "./tools/ExecuteJavascriptFunction.js";
+import ExecuteTypescriptFunction from "./tools/ExecuteTypescriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
 
 export default class FactotumAssistant extends Assistant {
@@ -34,6 +35,7 @@ export default class FactotumAssistant extends Assistant {
       documentsList: DocumentsList;
     },
     private javascriptSandbox: JavascriptSandbox,
+    private typescriptCompiler: TypescriptCompiler,
   ) {
     super();
   }
@@ -65,7 +67,7 @@ export default class FactotumAssistant extends Assistant {
       )
       .replaceAll(
         "$TOOL_NAME_EXECUTE_JAVASCRIPT_FUNCTION",
-        ToolName.ExecuteJavascriptFunction,
+        ToolName.ExecuteTypescriptFunction,
       )
       .replaceAll(
         "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
@@ -106,7 +108,7 @@ export default class FactotumAssistant extends Assistant {
   protected getTools(): InferenceService.Tool[] {
     return [
       GetCollectionTypescriptSchema.get(),
-      ExecuteJavascriptFunction.get(),
+      ExecuteTypescriptFunction.get(),
       CreateDocuments.get(),
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
@@ -118,12 +120,13 @@ export default class FactotumAssistant extends Assistant {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
     }
-    if (ExecuteJavascriptFunction.is(toolCall)) {
-      return ExecuteJavascriptFunction.exec(
+    if (ExecuteTypescriptFunction.is(toolCall)) {
+      return ExecuteTypescriptFunction.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
+        this.typescriptCompiler,
       );
     }
     if (CreateDocuments.is(toolCall)) {
@@ -148,6 +151,7 @@ export default class FactotumAssistant extends Assistant {
         this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
+        this.typescriptCompiler,
       );
     }
     if (CreateDocumentsTable.is(toolCall)) {
@@ -156,6 +160,7 @@ export default class FactotumAssistant extends Assistant {
         this.collections,
         this.usecases.documentsList,
         this.javascriptSandbox,
+        this.typescriptCompiler,
       );
     }
     return Unknown.exec(toolCall);

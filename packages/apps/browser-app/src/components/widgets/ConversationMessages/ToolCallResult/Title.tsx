@@ -25,10 +25,10 @@ export default function Title({ toolCall, toolResult }: Props) {
   if (ConversationUtils.isCreateDocumentsToolCall(toolCall)) {
     title = <FormattedMessage defaultMessage="Create documents" />;
   }
-  if (ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall)) {
+  if (ConversationUtils.isExecuteTypescriptFunctionToolCall(toolCall)) {
     title = (
       <FormattedMessage
-        defaultMessage="Execute JavaScript function on {collection}"
+        defaultMessage="Execute TypeScript function on {collection}"
         values={{ collection: getCollection(collections, toolCall) }}
       />
     );
@@ -46,6 +46,24 @@ export default function Title({ toolCall, toolResult }: Props) {
       <FormattedMessage
         defaultMessage="Get TypeScript schema for {collection}"
         values={{ collection: getCollection(collections, toolCall) }}
+      />
+    );
+  }
+  if (ConversationUtils.isCreateChartToolCall(toolCall)) {
+    title = (
+      <FormattedMessage
+        defaultMessage="Create chart from {collection}"
+        values={{ collection: getCollection(collections, toolCall) }}
+      />
+    );
+  }
+  if (ConversationUtils.isCreateDocumentsTableToolCall(toolCall)) {
+    title = (
+      <FormattedMessage
+        defaultMessage="Create documents table from {collection}"
+        values={{
+          collection: getCollection(collections, toolCall),
+        }}
       />
     );
   }
@@ -73,5 +91,5 @@ function getCollection(
 ): string {
   const { collectionId } = toolCall.input;
   const collection = CollectionUtils.findCollection(collections, collectionId);
-  return collection ? CollectionUtils.getDisplayName(collection) : collectionId;
+  return collection ? collection.settings.name : collectionId;
 }

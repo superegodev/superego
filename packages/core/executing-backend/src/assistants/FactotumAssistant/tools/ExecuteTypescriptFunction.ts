@@ -6,10 +6,7 @@ import {
 } from "@superego/backend";
 import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { codegen } from "@superego/schema";
-import {
-  makeSuccessfulResult,
-  makeUnsuccessfulResult,
-} from "@superego/shared-utils";
+import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
@@ -17,23 +14,21 @@ import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
-import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
-  is(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
-    return toolCall.tool === ToolName.CreateChart;
+  is(toolCall: ToolCall): toolCall is ToolCall.ExecuteTypescriptFunction {
+    return toolCall.tool === ToolName.ExecuteTypescriptFunction;
   },
 
   async exec(
-    toolCall: ToolCall.CreateChart,
+    toolCall: ToolCall.ExecuteTypescriptFunction,
     collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
     typescriptCompiler: TypescriptCompiler,
-  ): Promise<ToolResult.CreateChart> {
-    const { collectionId, getEChartsOption: getEChartsOptionTs } =
-      toolCall.input;
+  ): Promise<ToolResult.ExecuteTypescriptFunction> {
+    const { collectionId, typescriptFunction } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -46,9 +41,9 @@ export default {
       };
     }
 
-    const { data: getEChartsOptionJs, error: compileError } =
+    const { data: javascriptFunction, error: compileError } =
       await typescriptCompiler.compile(
-        { path: "/getEChartsOption.ts", source: getEChartsOptionTs },
+        { path: "/main.ts", source: typescriptFunction },
         [
           {
             path: `/${collection.id}.ts`,
@@ -58,21 +53,13 @@ export default {
             path: "/LocalInstant.d.ts",
             source: LocalInstantTypeDeclaration,
           },
-          {
-            path: "/node_modules/echarts/index.d.ts",
-            source: `
-              declare module "echarts" {
-                export type EChartsOption = any;
-              }
-            `,
-          },
         ],
       );
     if (compileError) {
       if (compileError.name === "UnexpectedError") {
         throw new UnexpectedAssistantError(
           [
-            `Compiling getEChartsOption failed with ${compileError.name}.`,
+            `Compiling typescriptFunction failed with ${compileError.name}.`,
             ` Cause: ${compileError.details.cause}`,
           ].join(""),
         );
@@ -104,79 +91,36 @@ export default {
         DateTime.local().zoneName,
       ),
     );
+
     const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getEChartsOptionJs },
+      { source: "", compiled: javascriptFunction },
       [assistantDocuments],
     );
 
-    if (!result.success) {
-      return {
-        tool: toolCall.tool,
-        toolCallId: toolCall.id,
-        output: result,
-      };
-    }
-
-    const title = result.data?.title?.text ?? result.data?.title?.[0]?.text;
-    if (typeof title !== "string") {
-      return {
-        tool: toolCall.tool,
-        toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(
-          makeResultError("EChartsOptionNotValid", {
-            issues: [
-              { message: "Missing chart title.", path: [{ key: "title" }] },
-            ],
-          }),
-        ),
-      };
-    }
-
-    const chartId = createMarkdownElementId();
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
-      output: makeSuccessfulResult({
-        markdownSnippet: `<Chart id="${chartId}" />`,
-        chartInfo: {
-          seriesColorOrder: [
-            "blue",
-            "green",
-            "yellow",
-            "red",
-            "cyan",
-            "teal",
-            "orange",
-            "violet",
-            "pink",
-          ],
-        },
-      }),
-      artifacts: { chartId, echartsOption: result.data },
-    };
+      output: result,
+    } as ToolResult.ExecuteTypescriptFunction;
   },
 
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
-      name: ToolName.CreateChart,
+      name: ToolName.ExecuteTypescriptFunction,
       description: `
-Creates a chart that you can use in your textual responses by including verbatim
-the \`markdownSnippet\` returned by the tool call.
+Runs a **synchronous**, **read-only** TypeScript function over **all documents**
+in one specific collection; returns a JSON-safe result. Use this to **search**
+for a document (e.g., by weighed criteria), **fetch** a specific item by \`id\`,
+or compute aggregates.
 
-This tool is a variant of ${ToolName.ExecuteTypescriptFunction}. The \`getEChartsOption\`
-function takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
-(all the documents in the collection), executes in the same environment, and
-**must** abide by ALL its rules.
-
-### \`getEChartsOption\` template
+### \`typescriptFunction\` template
 
 \`\`\`ts
 // This imports the types returned from the ${ToolName.GetCollectionTypescriptSchema} tool call.
 // Replace $collectionId with the full id (Collection_xyz...) of the collection
 // you're running the function on.
 import type * as $collectionId from "./$collectionId.ts";
-import type * as echarts from "echarts";
 
 interface Document {
   // Document ID
@@ -188,43 +132,48 @@ interface Document {
   content: $collectionId.$rootType;
 }
 
-export default function getEChartsOption(documents: Document[]): echarts.EChartsOption {
+export default function main(documents: Document[]) {
   // Implementation goes here.
 }
 \`\`\`
 
+### Rules
 
-### Additional MANDATORY rules
+- The function **must match exactly** the template above.
+- The function **must compile without errors**. When you receive compiler
+  errors, correct them and call the tool again.
+- No \`async\`, timers, or network.
+- No \`import\` or \`require\` other than type imports.
+- Return **JSON-safe** values only (convert Dates to ISO strings if returning
+  them).
+- Comment at least 40% of lines with brief explanations of intent,
+  plus a one-sentence docstring per function.
 
-- Always set a title for the chart.
-- Always set:
-  - \`tooltip:{trigger:"axis",axisPointer:{type:"cross"}}\`
-  - \`xAxis.type = "time"\` if there are timestamps on the x axis.
-  - \`grid = {left:0,right:0,top:0,bottom:0}\`
-  - \`xAxis.name = undefined\`
-  - \`yAxis.name = undefined\`
-  - \`legend = undefined\`
-- For numeric axes, narrow them to:
-  - if minValue < 0 -> [minValue - 5%, maxValue + 5%] (rounded)
-  - if minValue >= 0 -> [Math.max(0, minValue - 5%), maxValue + 5%] (rounded)
-- In datasets and series, round all numeric values to 2 decimals. Use
-  \`Math.round(value * 100)/100)\`
-- For heatmaps, prefer \`visualMap.type = piecewise\`.
-- Prefer column charts over line charts for discrete time series data.
+### Working with dates and times
+
+Always use the \`globalThis.LocalInstant\` helper for **all** date/time parsing,
+math, and formatting. It runs in the user's timezone and correctly handles DST
+shifts, leap years, end-of-month rollovers, and locale formatting. Prefer
+\`LocalInstant\` over native \`Date\` arithmetic.
+
+\`\`\`ts
+${LocalInstantTypeDeclaration}
+\`\`\`
       `.trim(),
       inputSchema: {
         type: "object",
         properties: {
           collectionId: {
+            description: "Full id of the target collection",
+            examples: ["Collection_xyz"],
             type: "string",
           },
-          getEChartsOption: {
-            description:
-              "TypeScript function returning an **echarts option object**.",
+          typescriptFunction: {
+            description: "TypeScript source string.",
             type: "string",
           },
         },
-        required: ["collectionId", "getEChartsOption"],
+        required: ["collectionId", "typescriptFunction"],
         additionalProperties: false,
       },
     };

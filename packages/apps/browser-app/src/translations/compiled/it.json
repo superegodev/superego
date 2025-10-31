@@ -2758,20 +2758,20 @@
       "value": "time"
     }
   ],
-  "Title.tsx_1af260": [
-    {
-      "type": 0,
-      "value": "Esegui la funzione JavaScript su "
-    },
-    {
-      "type": 1,
-      "value": "collection"
-    }
-  ],
   "Title.tsx_8yzKPa": [
     {
       "type": 0,
       "value": "Crea documenti"
+    }
+  ],
+  "Title.tsx_CKsNgt": [
+    {
+      "type": 0,
+      "value": "Esegui la funzione TypeScript su "
+    },
+    {
+      "type": 1,
+      "value": "collection"
     }
   ],
   "Title.tsx_LOghU6": [

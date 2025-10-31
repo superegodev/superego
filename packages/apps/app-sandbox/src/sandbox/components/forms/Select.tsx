@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { Select as SelectRAC } from "react-aria-components";
-import Description from "./Description.jsx";
+import Description from "./Description.js";
 import * as cs from "./forms.css.js";
-import Label from "./Label.jsx";
-import SelectButton from "./SelectButton.jsx";
+import Label from "./Label.js";
+import SelectButton from "./SelectButton.js";
 import type SelectOption from "./SelectOption.js";
 import SelectOptions from "./SelectOptions.js";
 

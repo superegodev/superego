@@ -91,9 +91,14 @@ namespace ToolResult {
     >,
     { document: LiteDocument }
   >;
-  export type ExecuteJavascriptFunction = BaseToolResult<
-    ToolName.ExecuteJavascriptFunction,
-    Result<any, CollectionNotFound | ExecutingJavascriptFunctionFailed>
+  export type ExecuteTypescriptFunction = BaseToolResult<
+    ToolName.ExecuteTypescriptFunction,
+    Result<
+      any,
+      | CollectionNotFound
+      | TypescriptCompilationFailed
+      | ExecutingJavascriptFunctionFailed
+    >
   >;
   export type CreateChart = BaseToolResult<
     ToolName.CreateChart,
@@ -105,8 +110,9 @@ namespace ToolResult {
         };
       },
       | CollectionNotFound
+      | TypescriptCompilationFailed
       | ExecutingJavascriptFunctionFailed
-      | ResultError<"EchartsOptionNotValid", { issues: ValidationIssue[] }>
+      | ResultError<"EChartsOptionNotValid", { issues: ValidationIssue[] }>
     >,
     {
       chartId: string;
@@ -126,6 +132,7 @@ namespace ToolResult {
         };
       },
       | CollectionNotFound
+      | TypescriptCompilationFailed
       | ExecutingJavascriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
@@ -164,7 +171,7 @@ namespace ToolResult {
 type ToolResult =
   | ToolResult.CreateDocuments
   | ToolResult.CreateNewDocumentVersion
-  | ToolResult.ExecuteJavascriptFunction
+  | ToolResult.ExecuteTypescriptFunction
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.CreateChart
   | ToolResult.CreateDocumentsTable

@@ -158,6 +158,7 @@ export default class AssistantsProcessConversation extends Usecase {
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
           },
           this.javascriptSandbox,
+          this.typescriptCompiler,
         )
       : new CollectionCreatorAssistant(
           globalSettings.assistants.developerPrompts[

@@ -932,11 +932,17 @@
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
   },
-  "Title.tsx_1af260": {
-    "defaultMessage": "Execute JavaScript function on {collection}"
+  "Title.tsx_/f6lRt": {
+    "defaultMessage": "Create chart from {collection}"
   },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Create documents"
+  },
+  "Title.tsx_BJ7yn4": {
+    "defaultMessage": "Create documents table from {collection}"
+  },
+  "Title.tsx_CKsNgt": {
+    "defaultMessage": "Execute TypeScript function on {collection}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Succeeded"
