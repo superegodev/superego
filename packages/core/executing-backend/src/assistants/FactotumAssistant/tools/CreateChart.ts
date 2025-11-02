@@ -164,9 +164,12 @@ export default {
 Creates a chart that you can use in your textual responses by including verbatim
 the \`markdownSnippet\` returned by the tool call.
 
-This tool is a variant of ${ToolName.ExecuteTypescriptFunction}. \`getEChartsOption\`:
+This tool is a variant of ${ToolName.ExecuteTypescriptFunction}.
 
-- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction} (all documents).
+\`getEChartsOption\`:
+
+- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
+  (all documents).
 - Executes in the same environment.
 - **Must** abide by ALL its rules.
 - **Must** return an \`import("echarts").EChartsOption\` object.
@@ -200,7 +203,7 @@ tool call.
           },
           getEChartsOption: {
             description:
-              "TypeScript function returning an **echarts option object**.",
+              'TypeScript function returning an **echarts option object**. `export default function getDocumentIds(documents: Document[]): import("echarts").EChartsOption {}`',
             type: "string",
           },
         },

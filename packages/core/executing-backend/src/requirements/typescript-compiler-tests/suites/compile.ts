@@ -108,6 +108,56 @@ export default rd<GetDependencies>("compile", (deps) => {
         }
       `,
     },
+    {
+      name: "success (case: accessing globally-declared properties)",
+      source: `
+        export default function a(): string {
+          return globalProperty;
+        }
+      `,
+      libs: [
+        {
+          path: "/globalLib.d.ts",
+          source: `
+            export {};
+
+            declare global {
+              var globalProperty: string;
+            }
+          `,
+        },
+      ],
+      expectedCompiled: `
+        export default function a() {
+            return globalProperty;
+        }
+      `,
+    },
+    {
+      name: "success (case: accessing globally-declared properties via globalThis)",
+      source: `
+        export default function a(): string {
+          return globalThis.globalProperty;
+        }
+      `,
+      libs: [
+        {
+          path: "/globalLib.d.ts",
+          source: `
+            export {};
+
+            declare global {
+              var globalProperty: string;
+            }
+          `,
+        },
+      ],
+      expectedCompiled: `
+        export default function a() {
+            return globalThis.globalProperty;
+        }
+      `,
+    },
   ];
 
   it.each(testCases)("$name", async (testCase) => {
@@ -134,6 +184,9 @@ export default rd<GetDependencies>("compile", (deps) => {
         },
       });
     } else {
+      if (!result.success) {
+        console.log(result.error);
+      }
       assert(result.success);
       expect(result.data.trim()).toEqual(
         stripIndent(testCase.expectedCompiled),

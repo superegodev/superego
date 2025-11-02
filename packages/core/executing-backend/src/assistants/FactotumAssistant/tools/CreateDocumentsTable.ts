@@ -168,9 +168,12 @@ by including verbatim the \`markdownSnippet\` returned by the tool call. Use
 this tool every time you want to show a set of documents to the user. For
 showing documents, always use this tool instead of markdown tables.
 
-This tool is a variant of ${ToolName.ExecuteTypescriptFunction}. \`getDocumentIds\`:
+This tool is a variant of ${ToolName.ExecuteTypescriptFunction}.
 
-- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction} (all documents).
+\`getDocumentIds\`:
+
+- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
+  (all documents).
 - Executes in the same environment.
 - **Must** abide by ALL its rules.
 - **Must** return an array of document IDs.
@@ -190,7 +193,7 @@ tool call.
           },
           getDocumentIds: {
             description:
-              "TypeScript function returning an array of ids of the documents to render in the table.",
+              "TypeScript function returning an array of ids of the documents to render in the table. `export default function getDocumentIds(documents: Document[]): string[] {}`",
             type: "string",
           },
         },

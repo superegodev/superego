@@ -114,10 +114,13 @@ in one specific collection; returns a JSON-safe result. Use this to **search**
 for a document (e.g., by weighed criteria), **fetch** a specific item by \`id\`,
 or compute aggregates.
 
+**MANDATORY**: You **must** call \`${ToolName.GetCollectionTypescriptSchema}\`
+for the target collection before using this tool.
+
 ### \`typescriptFunction\` template
 
 \`\`\`ts
-// This imports the types returned from the ${ToolName.GetCollectionTypescriptSchema} tool call.
+// This imports the types returned from the \`${ToolName.GetCollectionTypescriptSchema}\` tool call.
 // Replace $collectionId with the full id (Collection_xyz...) of the collection
 // you're running the function on.
 import type * as $collectionId from "./$collectionId.ts";
@@ -132,7 +135,7 @@ interface Document {
   content: $collectionId.$rootType;
 }
 
-export default function main(documents: Document[]) {
+export default function main(documents: Document[]): any {
   // Implementation goes here.
 }
 \`\`\`
