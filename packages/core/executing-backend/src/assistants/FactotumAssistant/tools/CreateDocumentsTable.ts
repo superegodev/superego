@@ -168,34 +168,15 @@ by including verbatim the \`markdownSnippet\` returned by the tool call. Use
 this tool every time you want to show a set of documents to the user. For
 showing documents, always use this tool instead of markdown tables.
 
-This tool is a variant of ${ToolName.ExecuteTypescriptFunction}. The \`getDocumentIds\`
-function takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
-(all the documents in the collection), executes in the same environment, and
-**must** abide by ALL its rules.
+This tool is a variant of ${ToolName.ExecuteTypescriptFunction}. \`getDocumentIds\`:
 
-### \`getDocumentIds\` template
+- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction} (all documents).
+- Executes in the same environment.
+- **Must** abide by ALL its rules.
+- **Must** return an array of document IDs.
 
-\`\`\`ts
-// This imports the types returned from the ${ToolName.GetCollectionTypescriptSchema} tool call.
-// Replace $collectionId with the full id (Collection_xyz...) of the collection
-// you're running the function on.
-import type * as $collectionId from "./$collectionId.ts";
-
-interface Document {
-  // Document ID
-  id: string;
-  // Current document version ID
-  versionId: string;
-  // The root type from the collection types. The content is guaranteed to abide
-  // by the TypeScript schema.
-  content: $collectionId.$rootType;
-}
-
-export default function getDocumentIds(documents: Document[]): string[] {
-  // Implementation goes here.
-}
-\`\`\`
-
+Call this tool directly. DO NOT chain it to an ${ToolName.ExecuteTypescriptFunction}
+tool call.
       `.trim(),
       inputSchema: {
         type: "object",
