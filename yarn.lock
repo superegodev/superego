@@ -5480,7 +5480,7 @@ __metadata:
     react-aria: "npm:^3.44.0"
     react-aria-components: "npm:^1.13.0"
     react-dom: "npm:^19.2.0"
-    react-hook-form: "npm:^7.66.0"
+    react-hook-form: "patch:react-hook-form@npm%3A7.66.0#~/.yarn/patches/react-hook-form-npm-7.66.0-8b9aef5ac8.patch"
     react-icons: "npm:^5.5.0"
     react-intl: "npm:^7.1.14"
     react-stately: "npm:^3.42.0"
@@ -13608,12 +13608,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.66.0":
+"react-hook-form@npm:7.66.0":
   version: 7.66.0
   resolution: "react-hook-form@npm:7.66.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 10c0/9faeafdaedfabfcbf5f8bb1aeefb81863b8e158eef4b089e2a32180fe474aec47d05fe3ed7d4faea085ca9f689118fb1135b94cdeed2022bd7d3fa3a56530c63
+  languageName: node
+  linkType: hard
+
+"react-hook-form@patch:react-hook-form@npm%3A7.66.0#~/.yarn/patches/react-hook-form-npm-7.66.0-8b9aef5ac8.patch":
+  version: 7.66.0
+  resolution: "react-hook-form@patch:react-hook-form@npm%3A7.66.0#~/.yarn/patches/react-hook-form-npm-7.66.0-8b9aef5ac8.patch::version=7.66.0&hash=0708d0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/c29fbdaf429fec79483d8e6f469c6a5cb05b7c085b441c5287232a9b82aac5f9e21eca392670711d2707b95e83c4b5a6668c8b83168bd3bb064774dc816ae388
   languageName: node
   linkType: hard
 
