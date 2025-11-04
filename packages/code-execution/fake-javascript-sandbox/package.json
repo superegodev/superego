@@ -16,11 +16,11 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.0.5",
-    "@vitest/browser-playwright": "^4.0.5",
+    "@vitest/browser": "^4.0.6",
+    "@vitest/browser-playwright": "^4.0.6",
     "playwright": "^1.56.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.5"
+    "vitest": "^4.0.6"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

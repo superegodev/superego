@@ -16,14 +16,14 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.2",
+    "@fast-check/vitest": "^0.2.3",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.9.2",
+    "@types/node": "^24.10.0",
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
-    "vitest": "^4.0.5"
+    "vitest": "^4.0.6"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
