@@ -184,9 +184,6 @@ export default rd<GetDependencies>("compile", (deps) => {
         },
       });
     } else {
-      if (!result.success) {
-        console.log(result.error);
-      }
       assert(result.success);
       expect(result.data.trim()).toEqual(
         stripIndent(testCase.expectedCompiled),
