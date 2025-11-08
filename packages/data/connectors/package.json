@@ -21,7 +21,7 @@
   "devDependencies": {
     "@fast-check/vitest": "^0.2.3",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.8"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

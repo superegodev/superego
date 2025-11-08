@@ -23,6 +23,6 @@
     "@superego/vitest-registered": "workspace:*",
     "luxon": "^3.7.2",
     "p-map": "^7.0.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.8"
   }
 }
