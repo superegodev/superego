@@ -21,7 +21,8 @@ On top of this, Superego gives you two main functionalities:
 
 [Try the demo @ demo.superego.dev](https://demo.superego.dev).
 
-![Demo Screenshots](./docs/images/demo-screenshots.png)
+![Demo Screenshots](./docs/images/demo-screenshots-light.png#gh-light-mode-only)
+![Demo Screenshots](./docs/images/demo-screenshots-dark.png#gh-dark-mode-only)
 
 ## License
 
