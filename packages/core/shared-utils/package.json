@@ -1,6 +1,6 @@
 {
   "name": "@superego/shared-utils",
-  "version": "2025.10.2",
+  "version": "2025.11.0",
   "type": "module",
   "exports": {
     ".": {
