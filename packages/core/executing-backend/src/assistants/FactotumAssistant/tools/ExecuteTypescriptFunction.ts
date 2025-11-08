@@ -111,11 +111,10 @@ export default {
       description: `
 Runs a **synchronous**, **read-only** TypeScript function over **all documents**
 in one specific collection; returns a JSON-safe result. Use this to **search**
-for a document (e.g., by weighed criteria), **fetch** a specific item by \`id\`,
-or compute aggregates.
+for a document, **fetch** a specific item by \`id\`, or compute aggregates.
 
-**MANDATORY**: You **must** call \`${ToolName.GetCollectionTypescriptSchema}\`
-for the target collection before using this tool.
+**MANDATORY**: You **must** call \`${ToolName.GetCollectionTypescriptSchema}\` for
+the target collection before using this tool.
 
 ### \`typescriptFunction\` template
 
