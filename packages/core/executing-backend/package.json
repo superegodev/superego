@@ -16,7 +16,7 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.2",
+    "@fast-check/vitest": "^0.2.3",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
     "typescript": "^5.9.3"
@@ -32,6 +32,6 @@
     "luxon": "^3.7.2",
     "p-map": "^7.0.3",
     "valibot": "^1.1.0",
-    "vitest": "^4.0.5"
+    "vitest": "^4.0.8"
   }
 }

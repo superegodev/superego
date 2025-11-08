@@ -4,6 +4,8 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import { codegen } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
@@ -13,6 +15,7 @@ import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.j
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
@@ -27,8 +30,10 @@ export default {
     collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
+    typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.CreateChart> {
-    const { collectionId, getEchartsOption } = toolCall.input;
+    const { collectionId, getEChartsOption: getEChartsOptionTs } =
+      toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -38,6 +43,44 @@ export default {
         output: makeUnsuccessfulResult(
           makeResultError("CollectionNotFound", { collectionId }),
         ),
+      };
+    }
+
+    const { data: getEChartsOptionJs, error: compileError } =
+      await typescriptCompiler.compile(
+        { path: "/getEChartsOption.ts", source: getEChartsOptionTs },
+        [
+          {
+            path: `/${collection.id}.ts`,
+            source: codegen(collection.latestVersion.schema),
+          },
+          {
+            path: "/LocalInstant.d.ts",
+            source: LocalInstantTypeDeclaration,
+          },
+          {
+            path: "/node_modules/echarts/index.d.ts",
+            source: `
+              declare module "echarts" {
+                export type EChartsOption = any;
+              }
+            `,
+          },
+        ],
+      );
+    if (compileError) {
+      if (compileError.name === "UnexpectedError") {
+        throw new UnexpectedAssistantError(
+          [
+            `Compiling getEChartsOption failed with ${compileError.name}.`,
+            ` Cause: ${compileError.details.cause}`,
+          ].join(""),
+        );
+      }
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(compileError),
       };
     }
 
@@ -62,7 +105,7 @@ export default {
       ),
     );
     const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getEchartsOption },
+      { source: "", compiled: getEChartsOptionJs },
       [assistantDocuments],
     );
 
@@ -80,7 +123,7 @@ export default {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
-          makeResultError("EchartsOptionNotValid", {
+          makeResultError("EChartsOptionNotValid", {
             issues: [
               { message: "Missing chart title.", path: [{ key: "title" }] },
             ],
@@ -121,9 +164,18 @@ export default {
 Creates a chart that you can use in your textual responses by including verbatim
 the \`markdownSnippet\` returned by the tool call.
 
-The getEchartsOption function takes the same parameters as the function in
-${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
-executes in the same environment, and **must** abide by ALL its rules.
+This tool is a variant of ${ToolName.ExecuteTypescriptFunction}.
+
+\`getEChartsOption\`:
+
+- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
+  (all documents).
+- Executes in the same environment.
+- **Must** abide by ALL its rules.
+- **Must** return an \`import("echarts").EChartsOption\` object.
+
+Call this tool directly. DO NOT chain it to an ${ToolName.ExecuteTypescriptFunction}
+tool call.
 
 ### Additional MANDATORY rules
 
@@ -149,13 +201,13 @@ executes in the same environment, and **must** abide by ALL its rules.
           collectionId: {
             type: "string",
           },
-          getEchartsOption: {
+          getEChartsOption: {
             description:
-              "JavaScript function returning an **echarts option object**. `export default function getEchartsOption(documents) { … }`",
+              'TypeScript function returning an **echarts option object**. `export default function getDocumentIds(documents: Document[]): import("echarts").EChartsOption {}`',
             type: "string",
           },
         },
-        required: ["collectionId", "getEchartsOption"],
+        required: ["collectionId", "getEChartsOption"],
         additionalProperties: false,
       },
     };

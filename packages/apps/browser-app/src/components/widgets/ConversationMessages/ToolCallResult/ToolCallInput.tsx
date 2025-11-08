@@ -6,14 +6,17 @@ interface Props {
   toolCall: ToolCall;
 }
 export default function ToolCallInput({ toolCall }: Props) {
-  return ConversationUtils.isExecuteJavascriptFunctionToolCall(toolCall) ||
-    ConversationUtils.isCreateChartToolCall(toolCall) ? (
+  return ConversationUtils.isExecuteTypescriptFunctionToolCall(toolCall) ||
+    ConversationUtils.isCreateChartToolCall(toolCall) ||
+    ConversationUtils.isCreateDocumentsTableToolCall(toolCall) ? (
     <CodeBlock
-      language="javascript"
+      language="typescript"
       code={
-        "javascriptFunction" in toolCall.input
-          ? toolCall.input.javascriptFunction
-          : toolCall.input.getEchartsOption
+        "typescriptFunction" in toolCall.input
+          ? toolCall.input.typescriptFunction
+          : "getEChartsOption" in toolCall.input
+            ? toolCall.input.getEChartsOption
+            : toolCall.input.getDocumentIds
       }
       showCopyButton={true}
     />

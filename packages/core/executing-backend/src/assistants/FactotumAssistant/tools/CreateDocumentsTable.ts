@@ -4,6 +4,8 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import { codegen } from "@superego/schema";
 import {
   ContentSummaryUtils,
   Id,
@@ -18,6 +20,7 @@ import makeResultError from "../../../makers/makeResultError.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
+import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
@@ -32,8 +35,9 @@ export default {
     collections: Collection[],
     documentsList: DocumentsList,
     javascriptSandbox: JavascriptSandbox,
+    typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.CreateDocumentsTable> {
-    const { collectionId, getDocumentIds } = toolCall.input;
+    const { collectionId, getDocumentIds: getDocumentIdsTs } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -43,6 +47,36 @@ export default {
         output: makeUnsuccessfulResult(
           makeResultError("CollectionNotFound", { collectionId }),
         ),
+      };
+    }
+
+    const { data: getDocumentIdsJs, error: compileError } =
+      await typescriptCompiler.compile(
+        { path: "/getDocumentIds.ts", source: getDocumentIdsTs },
+        [
+          {
+            path: `/${collection.id}.ts`,
+            source: codegen(collection.latestVersion.schema),
+          },
+          {
+            path: "/LocalInstant.d.ts",
+            source: LocalInstantTypeDeclaration,
+          },
+        ],
+      );
+    if (compileError) {
+      if (compileError.name === "UnexpectedError") {
+        throw new UnexpectedAssistantError(
+          [
+            `Compiling getDocumentIds failed with ${compileError.name}.`,
+            ` Cause: ${compileError.details.cause}`,
+          ].join(""),
+        );
+      }
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(compileError),
       };
     }
 
@@ -67,7 +101,7 @@ export default {
       ),
     );
     const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getDocumentIds },
+      { source: "", compiled: getDocumentIdsJs },
       [assistantDocuments],
     );
 
@@ -134,9 +168,18 @@ by including verbatim the \`markdownSnippet\` returned by the tool call. Use
 this tool every time you want to show a set of documents to the user. For
 showing documents, always use this tool instead of markdown tables.
 
-The getDocumentIds function takes the same parameters as the function in
-${ToolName.ExecuteJavascriptFunction} (all the documents in the collection),
-executes in the same environment, and **must** abide by ALL its rules.
+This tool is a variant of ${ToolName.ExecuteTypescriptFunction}.
+
+\`getDocumentIds\`:
+
+- Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
+  (all documents).
+- Executes in the same environment.
+- **Must** abide by ALL its rules.
+- **Must** return an array of document IDs.
+
+Call this tool directly. DO NOT chain it to an ${ToolName.ExecuteTypescriptFunction}
+tool call.
       `.trim(),
       inputSchema: {
         type: "object",
@@ -150,7 +193,7 @@ executes in the same environment, and **must** abide by ALL its rules.
           },
           getDocumentIds: {
             description:
-              "JavaScript function returning an array of ids of the documents to render in the table. `export default function getDocumentIds(documents) { … }`",
+              "TypeScript function returning an array of ids of the documents to render in the table. `export default function getDocumentIds(documents: Document[]): string[] {}`",
             type: "string",
           },
         },

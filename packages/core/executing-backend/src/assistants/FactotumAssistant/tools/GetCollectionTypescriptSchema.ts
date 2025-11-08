@@ -38,7 +38,7 @@ export default {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: makeSuccessfulResult({
-        typescriptSchema: makeTypescriptSchema(collection),
+        typescriptSchema: codegen(collection.latestVersion.schema),
       }),
     };
   },
@@ -70,23 +70,3 @@ Fetches the TypeScript type declarations for a collection.
     };
   },
 };
-
-function makeTypescriptSchema(collection: Collection): string {
-  const { schema } = collection.latestVersion;
-  return [
-    codegen(schema),
-    "////////////////////////////////",
-    "// Collection document schema //",
-    "////////////////////////////////",
-    "",
-    `/** This is the schema for a document in ${collection.id}. */`,
-    `interface ${collection.id}_Document {`,
-    // biome-ignore lint/suspicious/noTemplateCurlyInString: intended usage.
-    "  id: `Document_${string}`;",
-    // biome-ignore lint/suspicious/noTemplateCurlyInString: intended usage.
-    "  versionId: `DocumentVersion_${string}`;",
-    `  content: ${schema.rootType};`,
-    "}",
-    "",
-  ].join("\n");
-}

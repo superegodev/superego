@@ -132,14 +132,20 @@ export default {
     return toolCall.tool === ToolName.CreateNewDocumentVersion;
   },
 
-  isExecuteJavascriptFunctionToolCall(
+  isExecuteTypescriptFunctionToolCall(
     toolCall: ToolCall,
-  ): toolCall is ToolCall.ExecuteJavascriptFunction {
-    return toolCall.tool === ToolName.ExecuteJavascriptFunction;
+  ): toolCall is ToolCall.ExecuteTypescriptFunction {
+    return toolCall.tool === ToolName.ExecuteTypescriptFunction;
   },
 
   isCreateChartToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
     return toolCall.tool === ToolName.CreateChart;
+  },
+
+  isCreateDocumentsTableToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.CreateDocumentsTable {
+    return toolCall.tool === ToolName.CreateDocumentsTable;
   },
 
   isGetCollectionTypescriptSchemaToolCall(

@@ -37,18 +37,18 @@ namespace ToolCall {
       content: any;
     }
   >;
-  export type ExecuteJavascriptFunction = ToolCall<
-    ToolName.ExecuteJavascriptFunction,
+  export type ExecuteTypescriptFunction = ToolCall<
+    ToolName.ExecuteTypescriptFunction,
     {
       collectionId: CollectionId;
-      javascriptFunction: string;
+      typescriptFunction: string;
     }
   >;
   export type CreateChart = ToolCall<
     ToolName.CreateChart,
     {
       collectionId: CollectionId;
-      getEchartsOption: string;
+      getEChartsOption: string;
     }
   >;
   export type CreateDocumentsTable = ToolCall<

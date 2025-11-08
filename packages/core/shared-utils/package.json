@@ -14,9 +14,9 @@
     "bench": "vitest bench"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.2",
+    "@fast-check/vitest": "^0.2.3",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.5"
+    "vitest": "^4.0.8"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

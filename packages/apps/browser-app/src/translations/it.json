@@ -893,11 +893,17 @@
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Riflessione per {time}"
   },
-  "Title.tsx_1af260": {
-    "defaultMessage": "Esegui la funzione JavaScript su {collection}"
-  },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Crea documenti"
+  },
+  "Title.tsx_/f6lRt": {
+    "defaultMessage": "Crea grafico da {collection}"
+  },
+  "Title.tsx_BJ7yn4": {
+    "defaultMessage": "Crea tabella dei documenti da {collection}"
+  },
+  "Title.tsx_CKsNgt": {
+    "defaultMessage": "Esegui la funzione TypeScript su {collection}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Riuscito"

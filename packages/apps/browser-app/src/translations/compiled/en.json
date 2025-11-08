@@ -2766,10 +2766,10 @@
       "value": "time"
     }
   ],
-  "Title.tsx_1af260": [
+  "Title.tsx_/f6lRt": [
     {
       "type": 0,
-      "value": "Execute JavaScript function on "
+      "value": "Create chart from "
     },
     {
       "type": 1,
@@ -2780,6 +2780,26 @@
     {
       "type": 0,
       "value": "Create documents"
+    }
+  ],
+  "Title.tsx_BJ7yn4": [
+    {
+      "type": 0,
+      "value": "Create documents table from "
+    },
+    {
+      "type": 1,
+      "value": "collection"
+    }
+  ],
+  "Title.tsx_CKsNgt": [
+    {
+      "type": 0,
+      "value": "Execute TypeScript function on "
+    },
+    {
+      "type": 1,
+      "value": "collection"
     }
   ],
   "Title.tsx_LOghU6": [
