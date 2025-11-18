@@ -158,17 +158,16 @@ describe("parsePropertyName", () => {
         },
       },
     ];
-    it.each(testCases)(
-      "case: $propertyName",
-      ({ propertyName, expectedResult }) => {
-        // Exercise
-        const actualResult =
-          ContentSummaryUtils.parsePropertyName(propertyName);
+    it.each(testCases)("case: $propertyName", ({
+      propertyName,
+      expectedResult,
+    }) => {
+      // Exercise
+      const actualResult = ContentSummaryUtils.parsePropertyName(propertyName);
 
-        // Verify
-        expect(actualResult).toEqual(expectedResult);
-      },
-    );
+      // Verify
+      expect(actualResult).toEqual(expectedResult);
+    });
   });
 });
 

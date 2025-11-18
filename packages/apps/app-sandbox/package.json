@@ -22,12 +22,12 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitest/browser": "^4.0.8",
-    "@vitest/browser-playwright": "^4.0.8",
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/browser": "^4.0.10",
+    "@vitest/browser-playwright": "^4.0.10",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.10"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

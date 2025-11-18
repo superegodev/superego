@@ -163,6 +163,7 @@ class LocalInstant {
   }
 
   /** @internal */
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: https://github.com/biomejs/biome/issues/8138
   private static parse(iso: string): DateTime<true> {
     const dateTime = DateTime.fromISO(iso, { zone: "local" });
     if (!dateTime.isValid) {

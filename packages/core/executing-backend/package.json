@@ -28,10 +28,10 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "es-toolkit": "^1.41.0",
+    "es-toolkit": "^1.42.0",
     "luxon": "^3.7.2",
-    "p-map": "^7.0.3",
+    "p-map": "^7.0.4",
     "valibot": "^1.1.0",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.10"
   }
 }
