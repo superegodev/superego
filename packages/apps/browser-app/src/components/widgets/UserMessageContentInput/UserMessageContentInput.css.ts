@@ -6,11 +6,11 @@ export const UserMessageContentInput = {
     position: "relative",
     width: "100%",
     display: "flex",
-    alignItems: "center",
-    paddingInlineStart: vars.spacing._5,
-    paddingInlineEnd: vars.spacing._5,
-    paddingBlock: vars.spacing._3,
-    borderRadius: vars.borders.radius.xl4,
+    flexDirection: "column",
+    paddingInline: vars.spacing._2,
+    paddingBlockStart: vars.spacing._2,
+    paddingBlockEnd: vars.spacing._2,
+    borderRadius: vars.borders.radius.xl,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
     boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
     selectors: {
@@ -22,8 +22,7 @@ export const UserMessageContentInput = {
   }),
 
   textField: style({
-    flexGrow: 1,
-    padding: 0,
+    padding: vars.spacing._2,
   }),
 
   textArea: style({
@@ -60,28 +59,99 @@ export const UserMessageContentInput = {
     width: vars.spacing._10,
     height: vars.spacing._4,
   }),
+
+  actionsToolbar: style({
+    display: "flex",
+    justifyContent: "space-between",
+  }),
 };
 
-const sendRecordToolbarButtonBase = style({
-  padding: 0,
-  marginInlineStart: `calc(-1 * ${vars.spacing._2})`,
-  height: vars.spacing._10,
-  width: vars.spacing._10,
-  borderRadius: vars.borders.radius.full,
-  fontSize: vars.typography.fontSizes.xl,
-});
-export const SendRecordToolbar = {
+export const FilesTray = {
   root: style({
-    marginBlock: `calc(-1 * ${vars.spacing._3})`,
-    alignSelf: "end",
-    position: "relative",
-    bottom: vars.spacing._1,
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: vars.spacing._1,
+    marginBlockEnd: vars.spacing._2,
+  }),
+};
+
+export const TrayFile = {
+  root: style({
+    display: "flex",
+    gap: vars.spacing._2,
+    padding: vars.spacing._1,
+    background: vars.colors.background.surfaceHighlight,
+    borderRadius: vars.borders.radius.md,
+    minWidth: 0,
   }),
 
-  button: sendRecordToolbarButtonBase,
+  iconOrImageContainer: style({
+    flexShrink: 0,
+    height: vars.spacing._10,
+    width: vars.spacing._10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: vars.typography.fontSizes.xl2,
+  }),
+
+  image: style({
+    height: "100%",
+    width: "100%",
+    borderRadius: vars.borders.radius.md,
+    objectFit: "cover",
+  }),
+
+  nameContainer: style({
+    display: "flex",
+    alignItems: "center",
+    fontSize: vars.typography.fontSizes.sm,
+    flexGrow: 1,
+    minWidth: 0,
+  }),
+
+  nameTruncator: style({
+    overflow: "hidden",
+    textWrap: "nowrap",
+    textOverflow: "ellipsis",
+  }),
+
+  removeButtonContainer: style({
+    flexShrink: 0,
+    display: "flex",
+    alignItems: "center",
+    marginInlineEnd: vars.spacing._1,
+  }),
+
+  removeButton: style({
+    borderRadius: vars.borders.radius.full,
+    fontSize: vars.typography.fontSizes.xs3,
+    padding: 0,
+  }),
+};
+
+const actionsToolbarButtonBase = style({
+  padding: 0,
+  height: vars.spacing._8,
+  width: vars.spacing._8,
+  borderRadius: vars.borders.radius.full,
+  fontSize: vars.typography.fontSizes.lg,
+});
+
+export const AddFilesButton = {
+  root: actionsToolbarButtonBase,
+};
+
+export const SendRecordButtons = {
+  root: style({
+    justifySelf: "end",
+  }),
+
+  button: actionsToolbarButtonBase,
 
   disabledLookingButton: style([
-    sendRecordToolbarButtonBase,
+    actionsToolbarButtonBase,
     {
       color: vars.colors.button.invisible.disabled.text,
     },

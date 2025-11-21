@@ -5,15 +5,17 @@ import {
   MessageContentPartType,
 } from "@superego/backend";
 import { type RefObject, useRef, useState } from "react";
-import { TextArea, TextField } from "react-aria-components";
+import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
 import classnames from "../../../utils/classnames.js";
-import ThreeDotSpinner from "../../design-system/ThreeDotSpinner/ThreeDotSpinner.js";
-import SendRecordToolbar from "./SendRecordToolbar.js";
+import AddFilesButton from "./AddFilesButton.js";
+import FilesTray from "./FilesTray.js";
+import SendRecordButtons from "./SendRecordButtons.js";
 import * as cs from "./UserMessageContentInput.css.js";
 import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
+import useFiles from "./useFiles.js";
 
 interface Props {
   conversation: Conversation | null;
@@ -42,37 +44,64 @@ export default function UserMessageContentInput({
   const actualTextAreaRef = textAreaRef ?? internalTextAreaRef;
 
   const isInferenceConfigured = useIsInferenceConfigured();
+  const isDisabled =
+    (conversation !== null &&
+      (conversation.hasOutdatedContext ||
+        conversation?.status !== ConversationStatus.Idle)) ||
+    isSending ||
+    !isInferenceConfigured.chatCompletions;
+
+  const {
+    files,
+    onDrop,
+    onPaste,
+    onFilesAdded,
+    onRemoveFile,
+    removeAllFiles,
+    getContentParts,
+  } = useFiles();
 
   const [text, setText] = useState(initialMessage ?? "");
-  const sendText = () => {
-    onSend([{ type: MessageContentPartType.Text, text: text }]);
+  const sendText = async () => {
+    onSend([
+      { type: MessageContentPartType.Text, text: text },
+      ...(await getContentParts()),
+    ]);
     setText("");
+    removeAllFiles();
   };
 
   const { isRecording, startRecording, finishRecording, cancelRecording } =
-    useRecordAudio((audio) => {
-      onSend([{ type: MessageContentPartType.Audio, audio: audio }]);
+    useRecordAudio(async (audio) => {
+      onSend([
+        { type: MessageContentPartType.Audio, audio: audio },
+        ...(await getContentParts()),
+      ]);
+      removeAllFiles();
     });
 
   // Auto-resize textarea.
   useAutoResizeTextArea(actualTextAreaRef, text);
 
   return (
-    <div className={classnames(cs.UserMessageContentInput.root, className)}>
+    <DropZone
+      className={classnames(cs.UserMessageContentInput.root, className)}
+      onDrop={onDrop}
+      isDisabled={isDisabled || isRecording}
+    >
+      <FilesTray
+        files={files}
+        onRemoveFile={onRemoveFile}
+        isRemoveDisabled={isDisabled || isRecording}
+      />
       <TextField
         className={cs.UserMessageContentInput.textField}
         onChange={setText}
         value={text}
         aria-label={intl.formatMessage({ defaultMessage: "Message assistant" })}
         autoFocus={autoFocus}
-        isDisabled={
-          (conversation !== null &&
-            (conversation.hasOutdatedContext ||
-              conversation?.status !== ConversationStatus.Idle)) ||
-          isSending ||
-          isRecording ||
-          !isInferenceConfigured.chatCompletions
-        }
+        isDisabled={isDisabled || isRecording}
+        onPaste={onPaste}
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
@@ -100,26 +129,25 @@ export default function UserMessageContentInput({
           ref={actualTextAreaRef}
         />
       </TextField>
-      {isSending || conversation?.status === ConversationStatus.Processing ? (
-        <ThreeDotSpinner className={cs.UserMessageContentInput.spinner} />
-      ) : (
-        <SendRecordToolbar
+      <div className={cs.UserMessageContentInput.actionsToolbar}>
+        <div>
+          <AddFilesButton
+            onFilesAdded={onFilesAdded}
+            isDisabled={isDisabled || isRecording}
+          />
+        </div>
+        <SendRecordButtons
           areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
           areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
-          isDisabled={
-            (conversation !== null &&
-              (conversation.hasOutdatedContext ||
-                conversation?.status !== ConversationStatus.Idle)) ||
-            isSending
-          }
+          isDisabled={isDisabled}
           onSend={sendText}
           onStartRecording={startRecording}
           onCancelRecording={cancelRecording}
           onFinishRecording={finishRecording}
         />
-      )}
-    </div>
+      </div>
+    </DropZone>
   );
 }

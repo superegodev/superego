@@ -11,6 +11,7 @@ const commonVars = {
   },
   typography: {
     fontSizes: {
+      xs3: "0.60rem",
       xs2: "0.70rem",
       xs: "0.80rem",
       sm: "0.875rem",

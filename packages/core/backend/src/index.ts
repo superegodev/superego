@@ -101,6 +101,7 @@ export type { default as Conversation } from "./types/Conversation.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
+export type { default as FileContent } from "./types/FileContent.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
 export type { default as LiteDocument } from "./types/LiteDocument.js";

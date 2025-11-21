@@ -5663,6 +5663,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     markdown-to-jsx: "npm:^8.0.0"
     monaco-editor: "npm:0.54.0"
+    p-map: "npm:^7.0.4"
     p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.56.1"
     react: "npm:^19.2.0"

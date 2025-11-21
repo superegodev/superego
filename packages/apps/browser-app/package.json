@@ -80,6 +80,7 @@
     "lowlight": "^3.3.0",
     "markdown-to-jsx": "^8.0.0",
     "monaco-editor": "0.54.0",
+    "p-map": "^7.0.4",
     "p-timeout": "^7.0.1",
     "react": "^19.2.0",
     "react-aria": "^3.44.0",

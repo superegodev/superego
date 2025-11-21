@@ -1,4 +1,7 @@
 {
+  "AddFilesButton.tsx_sXiGbo": {
+    "defaultMessage": "Add file"
+  },
   "AnyFieldLabel.tsx_Seanpx": {
     "defaultMessage": "Required"
   },
@@ -455,6 +458,9 @@
   "FileField.tsx_xxtls6": {
     "defaultMessage": "Mime Type"
   },
+  "FilePart.tsx_5q3qC0": {
+    "defaultMessage": "Download"
+  },
   "FormattingToolbar.tsx_+im1ZA": {
     "defaultMessage": "Blocks"
   },
@@ -869,22 +875,22 @@
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
   },
-  "SendRecordToolbar.tsx_/8QiK8": {
+  "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
   },
-  "SendRecordToolbar.tsx_3LSnIf": {
+  "SendRecordButtons.tsx_3LSnIf": {
     "defaultMessage": "Finish and send"
   },
-  "SendRecordToolbar.tsx_47FYwb": {
+  "SendRecordButtons.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "SendRecordToolbar.tsx_7Y6Yvq": {
+  "SendRecordButtons.tsx_7Y6Yvq": {
     "defaultMessage": "Record"
   },
-  "SendRecordToolbar.tsx_9WRlF4": {
+  "SendRecordButtons.tsx_9WRlF4": {
     "defaultMessage": "Send"
   },
-  "SendRecordToolbar.tsx_kNl1RN": {
+  "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
   },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
@@ -970,6 +976,9 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
+  },
+  "TrayFile.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"

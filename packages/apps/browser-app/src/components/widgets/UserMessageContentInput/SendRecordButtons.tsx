@@ -23,7 +23,7 @@ interface Props {
   onFinishRecording: () => void;
   onCancelRecording: () => void;
 }
-export default function SendRecordToolbar({
+export default function SendRecordButtons({
   areChatCompletionsConfigured,
   areTranscriptionsConfigured,
   isWriting,
@@ -36,14 +36,14 @@ export default function SendRecordToolbar({
 }: Props) {
   const intl = useIntl();
   return (
-    <Toolbar className={cs.SendRecordToolbar.root}>
+    <Toolbar className={cs.SendRecordButtons.root}>
       {isRecording ? (
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Cancel" })}
           onPress={onCancelRecording}
           isDisabled={isDisabled}
-          className={cs.SendRecordToolbar.button}
+          className={cs.SendRecordButtons.button}
         >
           <PiX />
         </IconButton>
@@ -56,7 +56,7 @@ export default function SendRecordToolbar({
           })}
           to={{ name: RouteName.GlobalSettings }}
           isDisabled={isDisabled}
-          className={cs.SendRecordToolbar.disabledLookingButton}
+          className={cs.SendRecordButtons.disabledLookingButton}
           tooltipDelay={0}
         >
           <PiMicrophoneFill />
@@ -74,7 +74,7 @@ export default function SendRecordToolbar({
           }
           onPress={isRecording ? onFinishRecording : onStartRecording}
           isDisabled={isDisabled}
-          className={cs.SendRecordToolbar.button}
+          className={cs.SendRecordButtons.button}
         >
           {isRecording ? <PiStopFill /> : <PiMicrophoneFill />}
         </IconButton>
@@ -84,8 +84,7 @@ export default function SendRecordToolbar({
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Configure assistant" })}
           to={{ name: RouteName.GlobalSettings }}
-          isDisabled={isDisabled}
-          className={cs.SendRecordToolbar.button}
+          className={cs.SendRecordButtons.button}
           tooltipDelay={0}
         >
           <PiGear />
@@ -98,7 +97,7 @@ export default function SendRecordToolbar({
           label={intl.formatMessage({ defaultMessage: "Send" })}
           onPress={onSend}
           isDisabled={!isWriting || isDisabled}
-          className={cs.SendRecordToolbar.button}
+          className={cs.SendRecordButtons.button}
         >
           <PiPaperPlaneRightFill />
         </IconButton>

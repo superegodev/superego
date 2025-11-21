@@ -1,4 +1,10 @@
 {
+  "AddFilesButton.tsx_sXiGbo": [
+    {
+      "type": 0,
+      "value": "Add file"
+    }
+  ],
   "AnyFieldLabel.tsx_Seanpx": [
     {
       "type": 0,
@@ -1170,6 +1176,12 @@
     {
       "type": 0,
       "value": "Mime Type"
+    }
+  ],
+  "FilePart.tsx_5q3qC0": [
+    {
+      "type": 0,
+      "value": "Download"
     }
   ],
   "FormattingToolbar.tsx_+im1ZA": [
@@ -2636,37 +2648,37 @@
       "value": "ol"
     }
   ],
-  "SendRecordToolbar.tsx_/8QiK8": [
+  "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
       "value": "Configure assistant for transcription"
     }
   ],
-  "SendRecordToolbar.tsx_3LSnIf": [
+  "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
       "value": "Finish and send"
     }
   ],
-  "SendRecordToolbar.tsx_47FYwb": [
+  "SendRecordButtons.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Cancel"
     }
   ],
-  "SendRecordToolbar.tsx_7Y6Yvq": [
+  "SendRecordButtons.tsx_7Y6Yvq": [
     {
       "type": 0,
       "value": "Record"
     }
   ],
-  "SendRecordToolbar.tsx_9WRlF4": [
+  "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Send"
     }
   ],
-  "SendRecordToolbar.tsx_kNl1RN": [
+  "SendRecordButtons.tsx_kNl1RN": [
     {
       "type": 0,
       "value": "Configure assistant"
@@ -2866,6 +2878,12 @@
     {
       "type": 0,
       "value": "This call has no result."
+    }
+  ],
+  "TrayFile.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [
