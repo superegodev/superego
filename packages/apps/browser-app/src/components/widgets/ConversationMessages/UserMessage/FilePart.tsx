@@ -1,7 +1,6 @@
 import type { MessageContentPart } from "@superego/backend";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import Button from "../../../design-system/Button/Button.js";
 import FileIcon from "../../../design-system/FileIcon/FileIcon.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
 import * as cs from "./UserMessage.css.js";
