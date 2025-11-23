@@ -238,11 +238,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         data: null,
         error: {
           name: "FilesNotFound",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            documentId: null,
-            fileIds: [fileId],
-          },
+          details: { fileIds: [fileId] },
         },
       });
     });
@@ -706,11 +702,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         data: null,
         error: {
           name: "FilesNotFound",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            documentId: createDocumentResult.data.id,
-            fileIds: [fileId],
-          },
+          details: { fileIds: [fileId] },
         },
       });
     });

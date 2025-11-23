@@ -23,6 +23,10 @@ export default rd<GetDependencies>("Global settings", (deps) => {
           model: null,
           voice: null,
         },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
       },
       assistants: {
         userName: null,
@@ -55,6 +59,10 @@ export default rd<GetDependencies>("Global settings", (deps) => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
           voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
       },
       assistants: {
@@ -100,6 +108,10 @@ export default rd<GetDependencies>("Global settings", (deps) => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
           voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
       },
       assistants: {

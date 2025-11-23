@@ -1,4 +1,4 @@
-import type { Schema } from "@superego/schema";
+import type { FileRef, Schema } from "@superego/schema";
 import type ToolName from "../enums/ToolName.js";
 import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
 import type CollectionId from "../ids/CollectionId.js";
@@ -76,10 +76,21 @@ namespace ToolCall {
     }
   >;
 
+  // Shared
+  export type InspectFile = ToolCall<
+    ToolName.InspectFile,
+    {
+      file: FileRef;
+      prompt: string;
+    }
+  >;
+
   // Other tools, not used by an assistant
   export type WriteTypescriptModule = ToolCall<
     ToolName.WriteTypescriptModule,
-    { source: string }
+    {
+      source: string;
+    }
   >;
 }
 

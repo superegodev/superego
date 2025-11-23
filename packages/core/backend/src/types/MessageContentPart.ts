@@ -1,6 +1,6 @@
+import type { FileRef, ProtoFile } from "@superego/schema";
 import type MessageContentPartType from "../enums/MessageContentPartType.js";
 import type AudioContent from "./AudioContent.js";
-import type FileContent from "./FileContent.js";
 
 namespace MessageContentPart {
   export interface Text {
@@ -14,7 +14,7 @@ namespace MessageContentPart {
   }
   export interface File {
     type: MessageContentPartType.File;
-    file: FileContent;
+    file: ProtoFile | FileRef;
   }
 }
 type MessageContentPart =

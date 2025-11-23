@@ -36,6 +36,7 @@ import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
+import FilesGetContent from "../files/GetContent.js";
 
 export default class AssistantsProcessConversation extends Usecase {
   async exec({
@@ -156,6 +157,7 @@ export default class AssistantsProcessConversation extends Usecase {
             documentsCreate: this.sub(DocumentsCreate),
             documentsList: this.sub(DocumentsList),
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
+            filesGetContent: this.sub(FilesGetContent),
           },
           this.javascriptSandbox,
           this.typescriptCompiler,
@@ -169,6 +171,7 @@ export default class AssistantsProcessConversation extends Usecase {
           collections,
           {
             collectionsCreate: this.sub(CollectionsCreate),
+            filesGetContent: this.sub(FilesGetContent),
           },
         );
   }

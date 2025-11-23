@@ -8,6 +8,8 @@ enum ToolName {
   CreateDocumentsTable = "createDocumentsTable",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
+  // Shared
+  InspectFile = "InspectFile",
   // Other tools, not used by an assistant
   WriteTypescriptModule = "writeTypescriptModule",
 }

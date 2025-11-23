@@ -51,6 +51,11 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
           model: "gpt-4o-mini-tts",
           voice: "nova",
         },
+        // TODO: add demo API endpoint and configuration
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
       }
     : {
         chatCompletions: {
@@ -65,6 +70,10 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
           provider: { baseUrl: null, apiKey: null },
           model: null,
           voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
       },
   assistants: {

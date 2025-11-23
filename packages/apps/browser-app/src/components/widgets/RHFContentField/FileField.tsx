@@ -18,7 +18,6 @@ import FieldError from "../../design-system/forms/FieldError.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
-import { useDocument } from "./document.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
 
@@ -144,7 +143,6 @@ function NonNullFileFields({
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
-  const document = useDocument();
   return (
     <div className={cs.FileField.nonNullFileFieldsRoot}>
       <div className={cs.FileField.nonNullFileIcon}>
@@ -181,9 +179,7 @@ function NonNullFileFields({
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}
-          onPress={() =>
-            downloadFile(backend, file, document?.collectionId, document?.id)
-          }
+          onPress={() => downloadFile(backend, file)}
         >
           <PiDownloadSimple />
         </IconButton>

@@ -1600,6 +1600,60 @@
       "value": "Chat Completions"
     }
   ],
+  "InferenceSettings.tsx_AJlr3w": [
+    {
+      "type": 0,
+      "value": "File Inspection"
+    }
+  ],
+  "InferenceSettings.tsx_BmFMKI": [
+    {
+      "type": 0,
+      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "z-ai/glm-4.6"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "qwen/qwen3-coder"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " generally perform quite well."
+    }
+  ],
   "InferenceSettings.tsx_FJPyVh": [
     {
       "type": 0,
@@ -1696,54 +1750,6 @@
       "value": "Voice"
     }
   ],
-  "InferenceSettings.tsx_pdxaYA": [
-    {
-      "type": 0,
-      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "z-ai/glm-4.6"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", and "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " generally perform quite well."
-    }
-  ],
   "InferenceSettings.tsx_rhSI1/": [
     {
       "type": 0,
@@ -1754,6 +1760,12 @@
     {
       "type": 0,
       "value": ": supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_uTE4Se": [
+    {
+      "type": 0,
+      "value": "The name of a multimodal model supporting images, videos, and pdfs."
     }
   ],
   "InferenceSettings.tsx_vuJYgx": [

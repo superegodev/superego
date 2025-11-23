@@ -97,8 +97,8 @@ export default function InferenceSettings({ control }: Props) {
                 defaultMessage={`
                   The name of a model supported by the provider you've chosen.
                   You can usually find this in your provider's docs.
-                  <code>openai/gpt-oss-120b</code>,
-                  <code>z-ai/glm-4.6</code>, and
+                  <code>z-ai/glm-4.6</code>,
+                  <code>openai/gpt-oss-120b</code>, and
                   <code>qwen/qwen3-coder</code> generally perform quite well.
                 `}
                 values={formattedMessageHtmlTags}
@@ -112,7 +112,7 @@ export default function InferenceSettings({ control }: Props) {
             label={intl.formatMessage({
               defaultMessage: "Provider base URL",
             })}
-            placeholder="https://api.groq.com/openai/v1/chat/completions"
+            placeholder="https://openrouter.ai/api/v1/chat/completions"
           />
           <RHFTextField
             control={control}
@@ -186,6 +186,46 @@ export default function InferenceSettings({ control }: Props) {
           <RHFTextField
             control={control}
             name="inference.speech.provider.apiKey"
+            password={true}
+            emptyInputValue={null}
+            label={intl.formatMessage({ defaultMessage: "Provider API key" })}
+            placeholder="gsk_XyZ..."
+          />
+        </Fieldset.Fields>
+      </Fieldset>
+      <Fieldset isDisclosureDisabled={true}>
+        <Fieldset.Legend>
+          <FormattedMessage defaultMessage="File Inspection" />
+        </Fieldset.Legend>
+        <Fieldset.Fields>
+          <RHFTextField
+            control={control}
+            name="inference.fileInspection.model"
+            emptyInputValue={null}
+            label={intl.formatMessage({ defaultMessage: "Model" })}
+            placeholder="z-ai/glm-4.5v"
+            description={
+              <FormattedMessage
+                defaultMessage={`
+                  The name of a multimodal model supporting images, videos, and
+                  pdfs.
+                `}
+                values={formattedMessageHtmlTags}
+              />
+            }
+          />
+          <RHFTextField
+            control={control}
+            name="inference.fileInspection.provider.baseUrl"
+            emptyInputValue={null}
+            label={intl.formatMessage({
+              defaultMessage: "Provider base URL",
+            })}
+            placeholder="https://openrouter.ai/api/v1/chat/completions"
+          />
+          <RHFTextField
+            control={control}
+            name="inference.fileInspection.provider.apiKey"
             password={true}
             emptyInputValue={null}
             label={intl.formatMessage({ defaultMessage: "Provider API key" })}

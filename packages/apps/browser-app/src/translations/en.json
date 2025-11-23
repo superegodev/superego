@@ -659,6 +659,12 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
+  "InferenceSettings.tsx_AJlr3w": {
+    "defaultMessage": "File Inspection"
+  },
+  "InferenceSettings.tsx_BmFMKI": {
+    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
+  },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": fast, cheap, supports all APIs."
   },
@@ -683,14 +689,14 @@
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voice"
   },
-  "InferenceSettings.tsx_pdxaYA": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code>, <code>z-ai/glm-4.6</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
-  },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
   },
   "InferenceSettings.tsx_u2jTeg": {
     "defaultMessage": ": supports all APIs."
+  },
+  "InferenceSettings.tsx_uTE4Se": {
+    "defaultMessage": "The name of a multimodal model supporting images, videos, and pdfs."
   },
   "InferenceSettings.tsx_vuJYgx": {
     "defaultMessage": "<p> Create an account with your chosen provider, get an API key, and enter the details below. </p>"

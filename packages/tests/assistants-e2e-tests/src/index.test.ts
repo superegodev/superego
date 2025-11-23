@@ -57,6 +57,10 @@ const evaluator = new Evaluator(
       model: null,
       voice: null,
     },
+    fileInspection: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
+    },
   }),
 );
 
@@ -109,6 +113,10 @@ describe.concurrent.each(
           provider: { baseUrl: null, apiKey: null },
           model: null,
           voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
       },
       assistants: {

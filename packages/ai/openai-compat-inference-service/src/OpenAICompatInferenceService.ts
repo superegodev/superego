@@ -10,6 +10,11 @@ import {
   fromChatCompletionsResponse,
   toChatCompletionsRequest,
 } from "./ChatCompletions.js";
+import {
+  type FileInspection,
+  fromFileInspectionResponse,
+  toFileInspectionRequest,
+} from "./FileInspection.js";
 import { fromSpeechResponse, toSpeechRequest } from "./Speech.js";
 import {
   fromTranscriptionsResponse,
@@ -108,6 +113,40 @@ export default class OpenAICompatInferenceService implements InferenceService {
 
     const json = (await response.json()) as Transcriptions.Response;
     return fromTranscriptionsResponse(json);
+  }
+
+  async inspectFile(
+    file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
+    prompt: string,
+  ): Promise<string> {
+    const { fileInspection } = this.settings;
+    if (!fileInspection.provider.baseUrl) {
+      throw new Error("Missing file inspection provider base URL.");
+    }
+    if (!fileInspection.model) {
+      throw new Error("Missing file inspection model.");
+    }
+
+    const requestBody = toFileInspectionRequest(
+      fileInspection.model,
+      file,
+      prompt,
+    );
+    const response = await fetch(fileInspection.provider.baseUrl, {
+      method: "POST",
+      headers: {
+        ...(fileInspection.provider.apiKey
+          ? { Authorization: `Bearer ${fileInspection.provider.apiKey}` }
+          : null),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    await this.handleError("inspectFile", requestBody, response);
+
+    const json = (await response.json()) as FileInspection.Response;
+    return fromFileInspectionResponse(json);
   }
 
   private async handleError(

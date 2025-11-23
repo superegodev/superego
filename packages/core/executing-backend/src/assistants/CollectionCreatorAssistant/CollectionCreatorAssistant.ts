@@ -10,7 +10,9 @@ import SchemaTypescriptSchema from "@superego/schema/SchemaTypescriptSchema";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreate from "../../usecases/collections/Create.js";
+import type FilesGetContent from "../../usecases/files/GetContent.js";
 import Assistant from "../Assistant.js";
+import InspectFile from "../shared-tools/InspectFile.js";
 import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import SuggestCollectionDefinition from "./tools/SuggestCollectionDefinition.js";
@@ -23,6 +25,7 @@ export default class CollectionCreatorAssistant extends Assistant {
     private collections: Collection[],
     private usecases: {
       collectionsCreate: CollectionsCreate;
+      filesGetContent: FilesGetContent;
     },
   ) {
     super();
@@ -40,6 +43,7 @@ export default class CollectionCreatorAssistant extends Assistant {
         "$TOOL_NAME_SUGGEST_COLLECTION_DEFINITION",
         ToolName.SuggestCollectionDefinition,
       )
+      .replaceAll("$TOOL_NAME_INSPECT_FILE", ToolName.InspectFile)
       .replaceAll("$SUPEREGO_SCHEMA_TYPESCRIPT_SCHEMA", SchemaTypescriptSchema)
       .replaceAll(
         "$WELL_KNOWN_FORMATS_STRINGS",
@@ -99,6 +103,13 @@ export default class CollectionCreatorAssistant extends Assistant {
       return SuggestCollectionDefinition.exec(
         toolCall,
         this.usecases.collectionsCreate,
+      );
+    }
+    if (InspectFile.is(toolCall)) {
+      return InspectFile.exec(
+        toolCall,
+        this.inferenceService,
+        this.usecases.filesGetContent,
       );
     }
     return Unknown.exec(toolCall);

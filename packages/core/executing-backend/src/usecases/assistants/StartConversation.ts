@@ -5,16 +5,28 @@ import {
   type Conversation,
   type ConversationFormat,
   ConversationStatus,
+  type FilesNotFound,
   type Message,
+  type MessageContentPart,
   MessageRole,
+  type NonEmptyArray,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { Id, makeSuccessfulResult } from "@superego/shared-utils";
+import {
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
+import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
+import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
+import difference from "../../utils/difference.js";
+import isEmpty from "../../utils/isEmpty.js";
+import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
@@ -25,7 +37,21 @@ export default class AssistantsStartConversation extends Usecase<
     assistant: AssistantName,
     format: ConversationFormat,
     userMessageContent: Message.User["content"],
-  ): ResultPromise<Conversation, UnexpectedError> {
+  ): ResultPromise<Conversation, FilesNotFound | UnexpectedError> {
+    const referencedFileIds =
+      MessageContentFileUtils.extractReferencedFileIds(userMessageContent);
+    const referencedFiles =
+      await this.repos.file.findAllWhereIdIn(referencedFileIds);
+    const missingFileIds = difference(
+      referencedFileIds,
+      referencedFiles.map(({ id }) => id),
+    );
+    if (!isEmpty(missingFileIds)) {
+      return makeUnsuccessfulResult(
+        makeResultError("FilesNotFound", { fileIds: missingFileIds }),
+      );
+    }
+
     const { data: collections } = await this.sub(CollectionsList).exec();
     if (!collections) {
       throw new UnexpectedAssistantError("Getting collections failed.");
@@ -34,9 +60,11 @@ export default class AssistantsStartConversation extends Usecase<
       await ConversationUtils.getContextFingerprint(collections);
 
     const now = new Date();
+    const { protoFilesWithIds, convertedMessageContent } =
+      MessageContentFileUtils.extractAndConvertProtoFiles(userMessageContent);
     const userMessage: Message.User = {
       role: MessageRole.User,
-      content: userMessageContent,
+      content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,
     };
     const conversation: ConversationEntity = {
@@ -50,7 +78,24 @@ export default class AssistantsStartConversation extends Usecase<
       error: null,
       createdAt: now,
     };
+    const conversationReference: FileEntity.ConversationReference = {
+      conversationId: conversation.id,
+    };
+    const filesWithContent: (FileEntity & {
+      content: Uint8Array<ArrayBuffer>;
+    })[] = protoFilesWithIds.map((protoFileWithId) => ({
+      id: protoFileWithId.id,
+      referencedBy: [conversationReference],
+      createdAt: now,
+      content: protoFileWithId.content,
+    }));
+
     await this.repos.conversation.upsert(conversation);
+    await this.repos.file.insertAll(filesWithContent);
+    await this.repos.file.addReferenceToAll(
+      referencedFileIds,
+      conversationReference,
+    );
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,

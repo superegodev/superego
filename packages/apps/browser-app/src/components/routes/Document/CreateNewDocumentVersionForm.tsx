@@ -108,7 +108,7 @@ export default function CreateNewDocumentVersionForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
-      <RHFContentField schema={schema} control={control} document={document} />
+      <RHFContentField schema={schema} control={control} />
     </Form>
   );
 }

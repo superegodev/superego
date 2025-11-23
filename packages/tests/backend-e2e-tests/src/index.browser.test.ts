@@ -22,6 +22,10 @@ const defaultGlobalSettings = {
       model: null,
       voice: null,
     },
+    fileInspection: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
+    },
   },
   assistants: {
     userName: null,

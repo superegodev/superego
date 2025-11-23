@@ -41,6 +41,7 @@ export default class AssistantsDeleteConversation extends Usecase<
     }
 
     await this.repos.conversation.delete(id);
+    await this.repos.file.deleteReferenceFromAll({ conversationId: id });
 
     return makeSuccessfulResult(null);
   }

@@ -27,6 +27,15 @@ interface InferenceService {
   tts(text: string): Promise<AudioContent>;
 
   stt(audio: AudioContent): Promise<string>;
+
+  inspectFile(
+    file: {
+      name: string;
+      mimeType: string;
+      content: Uint8Array<ArrayBuffer>;
+    },
+    prompt: string,
+  ): Promise<string>;
 }
 
 export default InferenceService;

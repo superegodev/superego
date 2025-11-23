@@ -1,12 +1,15 @@
 import {
   type Message,
+  type MessageContentPart,
   MessageContentPartType,
   MessageRole,
   type ToolCall,
   type ToolResult,
 } from "@superego/backend";
+import type { FileRef } from "@superego/schema";
 import pMap from "p-map";
 import type InferenceService from "../requirements/InferenceService.js";
+import isEmpty from "../utils/isEmpty.js";
 
 export default abstract class Assistant {
   protected abstract inferenceService: InferenceService;
@@ -39,7 +42,11 @@ export default abstract class Assistant {
               },
             ],
           },
-          ...messages,
+          ...messages.map((message) =>
+            message.role === MessageRole.User
+              ? Assistant.convertFileParts(message)
+              : message,
+          ),
         ],
         this.getTools(),
       );
@@ -69,5 +76,32 @@ export default abstract class Assistant {
       console.error(error);
       throw error;
     }
+  }
+
+  private static convertFileParts(message: Message.User): Message.User {
+    const fileRefParts: (MessageContentPart.File & { file: FileRef })[] = [];
+    const otherParts: MessageContentPart[] = [];
+    for (const part of message.content) {
+      if (part.type === MessageContentPartType.File && "id" in part.file) {
+        fileRefParts.push(part as MessageContentPart.File & { file: FileRef });
+      } else {
+        otherParts.push(part);
+      }
+    }
+
+    if (isEmpty(fileRefParts)) {
+      return message;
+    }
+
+    const referencedFilesTextPart: MessageContentPart.Text = {
+      type: MessageContentPartType.Text,
+      text: `
+<referenced-files>
+${JSON.stringify(fileRefParts.map((part) => part.file))}
+</referenced-files>
+      `.trim(),
+    };
+
+    return { ...message, content: [referencedFilesTextPart, ...otherParts] };
   }
 }

@@ -52,7 +52,7 @@ export default function useFiles(): UseFiles {
         file: {
           name: file.name,
           content: new Uint8Array(await file.arrayBuffer()),
-          contentType: file.type,
+          mimeType: file.type,
         },
       })),
     removeAllFiles: () => setFiles([]),

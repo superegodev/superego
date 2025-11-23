@@ -32,6 +32,13 @@ export default function globalSettings(): v.GenericSchema<
           apiKey: v.nullable(v.string()),
         }),
       }),
+      fileInspection: v.strictObject({
+        model: v.nullable(v.string()),
+        provider: v.strictObject({
+          baseUrl: v.nullable(v.string()),
+          apiKey: v.nullable(v.string()),
+        }),
+      }),
     }),
     assistants: v.strictObject({
       userName: v.nullable(v.string()),
