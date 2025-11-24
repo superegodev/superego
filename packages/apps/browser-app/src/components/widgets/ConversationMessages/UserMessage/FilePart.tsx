@@ -1,4 +1,5 @@
-import type { MessageContentPart } from "@superego/backend";
+import type { FileId, MessageContentPart } from "@superego/backend";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import useBackend from "../../../../business-logic/backend/useBackend.jsx";
 import downloadFile from "../../../../utils/downloadFile.js";
@@ -14,6 +15,34 @@ export default function FilePart({ filePart }: Props) {
   const backend = useBackend();
 
   const { file } = filePart;
+  const isImage = file.mimeType.startsWith("image/");
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isImage) {
+      return;
+    }
+    (async () => {
+      const content =
+        "id" in file
+          ? (await backend.files.getContent(file.id as FileId)).data
+          : file.content;
+      if (!content) {
+        return;
+      }
+      const url = URL.createObjectURL(
+        new Blob([content], { type: file.mimeType }),
+      );
+      setImgSrc(url);
+    })();
+  }, [backend, file, isImage]);
+
+  useEffect(() => {
+    if (imgSrc) {
+      return () => URL.revokeObjectURL(imgSrc);
+    }
+    return;
+  }, [imgSrc]);
 
   return (
     <IconButton
@@ -22,18 +51,20 @@ export default function FilePart({ filePart }: Props) {
       label={intl.formatMessage({ defaultMessage: "Download" })}
       className={cs.FilePart.root}
     >
-      {/*
-      TODO: point to src for image
-      {imageUrl ? (
-        <img src={imageUrl} alt={file.name} className={cs.FilePart.image} />
-      ) : ( */}
-      <div className={cs.FilePart.file}>
-        <div className={cs.FilePart.iconContainer}>
-          <FileIcon mimeType={file.mimeType} />
+      {isImage ? (
+        imgSrc ? (
+          <img src={imgSrc} alt={file.name} className={cs.FilePart.image} />
+        ) : (
+          <div className={cs.FilePart.image} />
+        )
+      ) : (
+        <div className={cs.FilePart.file}>
+          <div className={cs.FilePart.iconContainer}>
+            <FileIcon mimeType={file.mimeType} />
+          </div>
+          <div className={cs.FilePart.nameContainer}>{filePart.file.name}</div>
         </div>
-        <div className={cs.FilePart.nameContainer}>{filePart.file.name}</div>
-      </div>
-      {/* )} */}
+      )}
     </IconButton>
   );
 }

@@ -222,10 +222,6 @@ export const useDeleteConversation = makeUseBackendMutation(
   ],
 );
 
-/*
- * Assistants
- */
-
 export const useStt = makeUseBackendMutation("inference", "stt", () => []);
 
 export const useTts = makeUseBackendMutation("inference", "tts", () => []);
