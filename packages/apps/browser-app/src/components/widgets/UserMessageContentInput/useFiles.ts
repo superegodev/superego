@@ -15,7 +15,7 @@ interface UseFiles {
   getContentParts: () => Promise<MessageContentPart.File[]>;
   removeAllFiles: () => void;
 }
-export default function useFiles(): UseFiles {
+export default function useFiles(isEnabled: boolean): UseFiles {
   const [files, setFiles] = useState<File[]>([]);
   const addFiles = async (addedFiles: File[]) => {
     setFiles((currentFiles) => [...currentFiles, ...addedFiles]);
@@ -23,6 +23,9 @@ export default function useFiles(): UseFiles {
   return {
     files: files,
     onDrop: async ({ items }) => {
+      if (!isEnabled) {
+        return;
+      }
       const droppedFiles: File[] = [];
       for (const item of items) {
         if (item.kind === "file") {
@@ -32,6 +35,9 @@ export default function useFiles(): UseFiles {
       addFiles(droppedFiles);
     },
     onPaste: (evt) => {
+      if (!isEnabled) {
+        return;
+      }
       const pastedFiles: File[] = [];
       for (const item of evt.clipboardData?.items ?? []) {
         if (item.kind === "file") {
@@ -43,7 +49,12 @@ export default function useFiles(): UseFiles {
       }
       addFiles(pastedFiles);
     },
-    onFilesAdded: (files) => addFiles([...files]),
+    onFilesAdded: (files) => {
+      if (!isEnabled) {
+        return;
+      }
+      addFiles([...files]);
+    },
     onRemoveFile: (index) =>
       setFiles((currentFiles) => currentFiles.toSpliced(index, 1)),
     getContentParts: () =>

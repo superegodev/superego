@@ -1,4 +1,9 @@
-import type { Message, TypescriptModule } from "@superego/backend";
+import type {
+  Message,
+  MessageContentPart,
+  NonEmptyArray,
+  TypescriptModule,
+} from "@superego/backend";
 import { useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -39,7 +44,12 @@ export default function EagerRHFAppVersionFilesField({
   );
 
   const onSend = async (messageContent: Message.User["content"]) => {
-    const { success, data, error } = await mutate(messageContent);
+    const { success, data, error } = await mutate(
+      // There aren't File parts since allowFileParts is set to false.
+      messageContent as NonEmptyArray<
+        MessageContentPart.Text | MessageContentPart.Audio
+      >,
+    );
     if (success) {
       field.onChange(data);
     } else {
@@ -113,6 +123,7 @@ export default function EagerRHFAppVersionFilesField({
           defaultMessage: "What do you want to build?",
         })}
         autoFocus={true}
+        allowFileParts={false}
         className={cs.EagerRHFAppVersionFilesField.userMessageContentInput}
       />
     </div>

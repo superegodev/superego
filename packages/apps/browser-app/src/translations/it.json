@@ -1,4 +1,7 @@
 {
+  "AddFilesButton.tsx_DYNOvl": {
+    "defaultMessage": "Configura l'assistente per l'ispezione dei file"
+  },
   "AddFilesButton.tsx_sXiGbo": {
     "defaultMessage": "Aggiungi file"
   },
@@ -659,6 +662,12 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
+  "InferenceSettings.tsx_AJlr3w": {
+    "defaultMessage": "Ispezione dei file"
+  },
+  "InferenceSettings.tsx_BmFMKI": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
+  },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": veloce, economico, supporta tutte le API."
   },
@@ -683,14 +692,14 @@
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voce"
   },
-  "InferenceSettings.tsx_pdxaYA": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code>, <code>z-ai/glm-4.6</code>, e <code>qwen/qwen3-coder</code> hanno generalmente prestazioni molto buone."
-  },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"
   },
   "InferenceSettings.tsx_u2jTeg": {
     "defaultMessage": ": supporta tutte le API."
+  },
+  "InferenceSettings.tsx_uTE4Se": {
+    "defaultMessage": "Il nome di un modello multimodale che supporta immagini, video e PDF."
   },
   "InferenceSettings.tsx_vuJYgx": {
     "defaultMessage": "<p> Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. </p>"

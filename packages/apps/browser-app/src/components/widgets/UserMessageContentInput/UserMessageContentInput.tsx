@@ -24,6 +24,7 @@ interface Props {
   initialMessage?: string | undefined;
   placeholder: string;
   autoFocus: boolean;
+  allowFileParts?: boolean;
   textAreaRef?: RefObject<HTMLTextAreaElement | null> | undefined;
   className?: string | undefined;
 }
@@ -34,6 +35,7 @@ export default function UserMessageContentInput({
   initialMessage,
   placeholder,
   autoFocus,
+  allowFileParts = true,
   textAreaRef,
   className,
 }: Props) {
@@ -59,7 +61,7 @@ export default function UserMessageContentInput({
     onRemoveFile,
     removeAllFiles,
     getContentParts,
-  } = useFiles();
+  } = useFiles(allowFileParts && isInferenceConfigured.fileInspection);
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
@@ -131,10 +133,13 @@ export default function UserMessageContentInput({
       </TextField>
       <div className={cs.UserMessageContentInput.actionsToolbar}>
         <div>
-          <AddFilesButton
-            onFilesAdded={onFilesAdded}
-            isDisabled={isDisabled || isRecording}
-          />
+          {allowFileParts ? (
+            <AddFilesButton
+              onFilesAdded={onFilesAdded}
+              isDisabled={isDisabled || isRecording}
+              isFileInspectionConfigured={isInferenceConfigured.fileInspection}
+            />
+          ) : null}
         </div>
         <SendRecordButtons
           areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}

@@ -1,7 +1,8 @@
 import {
   type Collection,
-  type Message,
+  type MessageContentPart,
   MessageContentPartType,
+  type NonEmptyArray,
   type TooManyFailedImplementationAttempts,
   type TypescriptFile,
   type TypescriptModule,
@@ -18,7 +19,9 @@ import forms from "../../../business-logic/forms/forms.js";
 interface UseSttAndImplement {
   isPending: boolean;
   mutate: (
-    messageContent: Message.User["content"],
+    messageContent: NonEmptyArray<
+      MessageContentPart.Text | MessageContentPart.Audio
+    >,
   ) => ResultPromise<
     TypescriptModule,
     | WriteTypescriptModuleToolNotCalled
@@ -40,7 +43,9 @@ export default function useSttAndImplement(
   const isPending = isSttPending || isImplementTypescriptModulePending;
 
   const mutate = async (
-    messageContent: Message.User["content"],
+    messageContent: NonEmptyArray<
+      MessageContentPart.Text | MessageContentPart.Audio
+    >,
   ): ResultPromise<
     TypescriptModule,
     | WriteTypescriptModuleToolNotCalled
