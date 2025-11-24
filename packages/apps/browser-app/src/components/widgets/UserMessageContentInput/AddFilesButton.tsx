@@ -3,7 +3,7 @@ import { PiPaperclip } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
-import IconLink from "../../design-system/IconLink/IconLink.jsx";
+import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {

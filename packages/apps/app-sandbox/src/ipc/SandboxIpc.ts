@@ -3,8 +3,12 @@ import MessageSender from "./MessageSender.js";
 import MessageType from "./MessageType.js";
 import {
   type HeightChangedMessage,
+  type InvokeBackendMethodMessage,
   isRenderAppMessage,
+  isRespondToBackendMethodInvocationMessage,
+  type NavigateHostToMessage,
   type RenderAppMessage,
+  type RespondToBackendMethodInvocationMessage,
   type SandboxReadyMessage,
 } from "./messages.js";
 
@@ -17,7 +21,10 @@ export default class SandboxIpc {
   /** Send a Sandbox message to the Host. */
   send(
     message: DistributiveOmit<
-      SandboxReadyMessage | HeightChangedMessage,
+      | SandboxReadyMessage
+      | HeightChangedMessage
+      | InvokeBackendMethodMessage
+      | NavigateHostToMessage,
       "sender"
     >,
   ) {
@@ -25,12 +32,23 @@ export default class SandboxIpc {
   }
 
   /** Register handlers for messages coming from the Host. */
-  registerHandlers(handlers: {
-    [MessageType.RenderApp]: (message: RenderAppMessage) => void;
-  }) {
+  registerHandlers(
+    handlers: Partial<{
+      [MessageType.RenderApp]: (message: RenderAppMessage) => void;
+      [MessageType.RespondToBackendMethodInvocation]: (
+        message: RespondToBackendMethodInvocationMessage,
+      ) => void;
+    }>,
+  ) {
     const handleMessage = ({ data: message }: MessageEvent) => {
-      if (isRenderAppMessage(message)) {
+      if (isRenderAppMessage(message) && handlers[MessageType.RenderApp]) {
         handlers[MessageType.RenderApp](message);
+      }
+      if (
+        isRespondToBackendMethodInvocationMessage(message) &&
+        handlers[MessageType.RespondToBackendMethodInvocation]
+      ) {
+        handlers[MessageType.RespondToBackendMethodInvocation](message);
       }
       // Ignore other messages.
     };

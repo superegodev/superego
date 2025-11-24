@@ -16,6 +16,15 @@ export declare function Button(props: {
   children: ReactNode;
 }): JSX.Element;
 
+/** Link (anchor element) styled as a Button. */
+export declare function ButtonLink(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible";
+  href: string;
+  target?: string;
+  children: ReactNode;
+}): JSX.Element;
+
 /** Default app used as placeholder. Do not use. */
 export declare function DefaultApp(props: { collections: any }): JSX.Element;
 
@@ -92,6 +101,12 @@ export declare namespace Grid {
     children: ReactNode;
   }) => JSX.Element;
 }
+
+/** Renders an image FileRef. */
+export declare function Image(props: {
+  image: FileRef & { mimeType: `image/${string}` };
+  style?: CSSProperties;
+}): JSX.Element;
 
 export declare function PlainDatePicker(props: {
   /**
@@ -174,7 +189,7 @@ export declare namespace Table {
 
 /** Typography component for consistent text styling. */
 export declare function Text(props: {
-  /** Defaults to `span`. */
+  /** Defaults to `span` (inline text). */
   element?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   /** Defaults to `primary`. */
   color?: "primary" | "secondary";
