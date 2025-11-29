@@ -25,6 +25,7 @@ interface Props {
   placeholder: string;
   autoFocus: boolean;
   allowFileParts?: boolean;
+  ref?: RefObject<HTMLDivElement | null> | undefined;
   textAreaRef?: RefObject<HTMLTextAreaElement | null> | undefined;
   className?: string | undefined;
 }
@@ -36,6 +37,7 @@ export default function UserMessageContentInput({
   placeholder,
   autoFocus,
   allowFileParts = true,
+  ref,
   textAreaRef,
   className,
 }: Props) {
@@ -87,9 +89,10 @@ export default function UserMessageContentInput({
 
   return (
     <DropZone
-      className={classnames(cs.UserMessageContentInput.root, className)}
+      ref={ref}
       onDrop={onDrop}
       isDisabled={isDisabled || isRecording}
+      className={classnames(cs.UserMessageContentInput.root, className)}
     >
       <FilesTray
         files={files}
