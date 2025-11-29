@@ -64,6 +64,11 @@ export default function Sandbox({
             queryKey: ["getDocument", payload.args[0], payload.args[1]],
           });
         }
+        if (payload.entity === "documents" && payload.method === "create") {
+          queryClient.invalidateQueries({
+            queryKey: ["listDocuments", payload.args[0]],
+          });
+        }
         hostIpc.send({
           type: MessageType.RespondToBackendMethodInvocation,
           payload: { invocationId: payload.invocationId, result },

@@ -34,6 +34,20 @@ export default class Backend {
   }
   private invocations = new Map<string, (result: Result<any, any>) => void>();
 
+  createDocument(
+    collectionId: CollectionId,
+    content: any,
+  ): ResultPromise<
+    Document,
+    | CollectionNotFound
+    | ConnectorDoesNotSupportUpSyncing
+    | DocumentContentNotValid
+    | FilesNotFound
+    | UnexpectedError
+  > {
+    return this.invokeMethod("documents", "create", [collectionId, content]);
+  }
+
   createNewDocumentVersion(
     collectionId: CollectionId,
     id: DocumentId,

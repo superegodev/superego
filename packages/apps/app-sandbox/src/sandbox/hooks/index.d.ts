@@ -1,3 +1,26 @@
+export declare function useCreateDocument(): {
+  /** Create a **new document**. */
+  mutate: (
+    collectionId: CollectionId,
+    /** Full content of the document. */
+    content: any,
+  ) => void;
+  isIdle: boolean;
+  isPending: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  error: {
+    name:
+      | "CollectionNotFound"
+      | "ConnectorDoesNotSupportUpSyncing"
+      | "DocumentContentNotValid"
+      | "FilesNotFound"
+      | "UnexpectedError";
+    details: any;
+  } | null;
+  data: null;
+};
+
 export declare function useCreateNewDocumentVersion(): {
   /** Create a **new immutable version** of an existing document. */
   mutate: (

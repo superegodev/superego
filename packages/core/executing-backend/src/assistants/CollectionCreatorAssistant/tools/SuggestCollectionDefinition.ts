@@ -108,7 +108,9 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.SuggestCollectionDefinition,
       description: `
-Generates the definition for a collection.
+Suggests the user a collection definition. This is ONLY suggestion. The user
+will review it and decide whether to create it or not. This tool DOES NOT create
+the collection.
       `.trim(),
       inputSchema: {
         type: "object",
@@ -151,8 +153,8 @@ Generates the definition for a collection.
             description: `
 Columns to display in the UI table used to show the documents in the collection.
 There should be a column for all the most important properties of the
-collection, but define 5 columns at most. Only primitive properties can be
-selected (no Files, JsonObjects, Lists, or Structs).
+collection, but define 5 columns at most. Important: only primitive properties
+can be selected; Files, JsonObjects, Lists, and Structs are **NOT ALLOWED**.
             `.trim(),
             type: "array",
             items: {

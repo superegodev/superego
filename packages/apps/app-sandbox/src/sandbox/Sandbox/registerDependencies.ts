@@ -11,6 +11,7 @@ import Image from "../components/Image/Image.js";
 import Table from "../components/Table/Table.js";
 import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
+import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
 import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
@@ -33,6 +34,7 @@ export default function registerDependencies() {
         Tile,
       },
       "@superego/app-sandbox/hooks": {
+        useCreateDocument,
         useCreateNewDocumentVersion,
       },
     };
