@@ -27,8 +27,8 @@ import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker.js?work
     return new editorWorker();
   },
 };
-monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
-monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+monaco.typescript.typescriptDefaults.setEagerModelSync(true);
+monaco.typescript.typescriptDefaults.setCompilerOptions({
   // Emit
   noEmit: false,
   sourceMap: false,
@@ -36,15 +36,15 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   declarationMap: false,
 
   // Modules
-  module: monaco.languages.typescript.ModuleKind.ESNext,
-  moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+  module: monaco.typescript.ModuleKind.ESNext,
+  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
 
   // Interop constraints
   allowSyntheticDefaultImports: true,
 
   // Language and environment
-  target: monaco.languages.typescript.ScriptTarget.ESNext,
-  jsx: monaco.languages.typescript.JsxEmit.React,
+  target: monaco.typescript.ScriptTarget.ESNext,
+  jsx: monaco.typescript.JsxEmit.React,
 
   // Completeness
   skipLibCheck: true,
@@ -71,7 +71,7 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   strictPropertyInitialization: true,
   useUnknownInCatchVariables: true,
 });
-monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+monaco.json.jsonDefaults.setDiagnosticsOptions({
   schemas: [
     {
       uri: "https://superego.dev/json-schemas/schema.json",

@@ -26,8 +26,8 @@ export default function useSyncTypescriptLibsModels(
       // the lib), but the TypeScript worker doesn't (so you get compilation
       // errors). Making a trivial change to compiler options seems to be enough
       // to bust the cache.
-      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-        ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+      monaco.typescript.typescriptDefaults.setCompilerOptions({
+        ...monaco.typescript.typescriptDefaults.getCompilerOptions(),
         // Thankfully we can pass in arbitrary options, so we don't have to
         // touch a "real" option.
         cacheBuster: crypto.randomUUID(),

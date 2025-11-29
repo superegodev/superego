@@ -12,8 +12,8 @@ import MonacoTypescriptCompiler from "./MonacoTypescriptCompiler.js";
     return new editorWorker();
   },
 };
-monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
-monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+monaco.typescript.typescriptDefaults.setEagerModelSync(true);
+monaco.typescript.typescriptDefaults.setCompilerOptions({
   // Emit
   noEmit: false,
   sourceMap: false,
@@ -21,12 +21,12 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
   declarationMap: false,
 
   // Modules
-  module: monaco.languages.typescript.ModuleKind.ESNext,
-  moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+  module: monaco.typescript.ModuleKind.ESNext,
+  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
 
   // Language and environment
-  target: monaco.languages.typescript.ScriptTarget.ESNext,
-  jsx: monaco.languages.typescript.JsxEmit.React,
+  target: monaco.typescript.ScriptTarget.ESNext,
+  jsx: monaco.typescript.JsxEmit.React,
 
   // Completeness
   skipLibCheck: true,

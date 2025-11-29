@@ -14,14 +14,14 @@
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.5",
-    "@astrojs/mdx": "^4.3.11",
-    "@astrojs/starlight": "^0.36.2",
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/mdx": "^4.3.12",
+    "@astrojs/starlight": "^0.37.0",
     "@fontsource-variable/petrona": "^5.2.8",
-    "@playwright/test": "^1.56.1",
-    "astro": "^5.15.9",
+    "@playwright/test": "^1.57.0",
+    "astro": "^5.16.3",
     "starlight-theme-nova": "^0.10.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.49.0"
+    "wrangler": "^4.51.0"
   }
 }

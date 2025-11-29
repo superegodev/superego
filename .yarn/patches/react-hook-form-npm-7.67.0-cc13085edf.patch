@@ -1,5 +1,5 @@
 diff --git a/dist/index.esm.mjs b/dist/index.esm.mjs
-index d537735d72f260b5a0184f8f9fc844263d3bf119..6edd00925504ebbcb362d3693cfccc239c9fae4b 100644
+index 5a6118a887ad595e1f42ceae3427da6f8a278227..45277c20c70bc2a7d091b2bef95395c2f14b792b 100644
 --- a/dist/index.esm.mjs
 +++ b/dist/index.esm.mjs
 @@ -294,6 +294,8 @@ var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) =>

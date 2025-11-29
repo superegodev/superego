@@ -23,11 +23,11 @@
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "vitest": "^4.0.10"
+    "vitest": "^4.0.14"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
     "luxon": "^3.7.2",
-    "valibot": "^1.1.0"
+    "valibot": "^1.2.0"
   }
 }

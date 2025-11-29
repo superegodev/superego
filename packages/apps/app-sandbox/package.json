@@ -22,12 +22,12 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitest/browser": "^4.0.10",
-    "@vitest/browser-playwright": "^4.0.10",
+    "@vitest/browser": "^4.0.14",
+    "@vitest/browser-playwright": "^4.0.14",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.10"
+    "vitest": "^4.0.14"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -35,11 +35,11 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/themes": "workspace:*",
-    "@tanstack/react-query": "^5.90.10",
-    "@vanilla-extract/css": "^1.17.4",
+    "@tanstack/react-query": "^5.90.11",
+    "@vanilla-extract/css": "^1.17.5",
     "clsx": "^2.1.1",
     "echarts": "^6.0.0",
-    "playwright": "^1.56.1",
+    "playwright": "^1.57.0",
     "react": "^19.2.0",
     "react-aria": "^3.44.0",
     "react-aria-components": "^1.13.0",

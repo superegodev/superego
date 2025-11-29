@@ -1,7 +1,7 @@
 import type * as monaco from "monaco-editor";
 
 export default function stringifyDiagnostic(
-  diagnostic: monaco.languages.typescript.Diagnostic,
+  diagnostic: monaco.typescript.Diagnostic,
   model: monaco.editor.ITextModel,
   basePath: string,
 ): string {
@@ -34,7 +34,7 @@ export default function stringifyDiagnostic(
 }
 
 function flattenDiagnosticMessageText(
-  diag: string | monaco.languages.typescript.DiagnosticMessageChain | undefined,
+  diag: monaco.typescript.Diagnostic["messageText"] | undefined,
   indent = 0,
 ): string {
   // Handle case: diag is nullish.

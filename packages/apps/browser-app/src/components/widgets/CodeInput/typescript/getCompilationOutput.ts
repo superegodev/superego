@@ -7,14 +7,14 @@ export default async function getCompilationOutput(
   failedCompilationOutput: string,
 ): Promise<string> {
   try {
-    const worker = await monaco.languages.typescript
+    const worker = await monaco.typescript
       .getTypeScriptWorker()
       .catch((error) => {
         // Sometimes the first call to `getTypeScriptWorker` fails with the
         // error below (actually string, not an Error object). It's not clear
         // why. The second attempt seems to work, so here we retry once.
         if (error === "TypeScript not registered!") {
-          return monaco.languages.typescript.getTypeScriptWorker();
+          return monaco.typescript.getTypeScriptWorker();
         }
         throw error;
       })
