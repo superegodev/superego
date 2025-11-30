@@ -9,8 +9,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
-import useBackend from "../../../business-logic/backend/useBackend.js";
+import {
+  listDocumentsQuery,
+  useCreateDocument,
+  useCreateNewDocumentVersion,
+} from "../../../business-logic/backend/hooks.js";
+import useBackend from "../../../business-logic/backend/useBackend.jsx";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import {
   fromHref,
@@ -29,10 +33,20 @@ interface Props {
 export default function AppRenderer({ app }: Props) {
   const intl = useIntl();
   const theme = useTheme();
-  const backend = useBackend();
   const { navigateTo } = useNavigationState();
   const { collections } = useGlobalData();
   const collectionsById = CollectionUtils.makeByIdMap(collections);
+
+  const backend = {
+    // Pass these as mutation so the query cache is automatically invalidated.
+    documents: {
+      create: useCreateDocument().mutate,
+      createNewVersion: useCreateNewDocumentVersion().mutate,
+    },
+    files: {
+      getContent: useBackend().files.getContent,
+    },
+  };
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
