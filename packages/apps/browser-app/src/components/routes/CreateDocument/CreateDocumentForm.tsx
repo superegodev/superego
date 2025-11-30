@@ -31,7 +31,7 @@ export default function CreateDocumentForm({ collection }: Props) {
   const onSubmit = async (content: any) => {
     const { success, data } = await mutate(
       collection.id,
-      forms.utils.RHFContent.fromRHFContent(content, schema),
+      await forms.utils.RHFContent.fromRHFContent(content, schema),
     );
     if (success) {
       navigateTo({

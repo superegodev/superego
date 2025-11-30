@@ -70,7 +70,7 @@ export default function CreateNewDocumentVersionForm({
       collection.id,
       document.id,
       document.latestVersion.id,
-      forms.utils.RHFContent.fromRHFContent(content, schema),
+      await forms.utils.RHFContent.fromRHFContent(content, schema),
     );
     if (success) {
       reset(
@@ -94,9 +94,11 @@ export default function CreateNewDocumentVersionForm({
   // - Enable or disable the submit button.
   // - If the form is dirty, schedule an autosave.
   const formRef = useRef<HTMLFormElement>(null);
+  // Temporary workaround for https://github.com/react-hook-form/react-hook-form/issues/13141
+  const isDirty = Object.values(formState.dirtyFields).length !== 0;
   useEffect(() => {
-    setSubmitDisabled(!formState.isDirty);
-    if (isReadOnly || !formState.isDirty || !formState.isValid) {
+    setSubmitDisabled(!isDirty);
+    if (isReadOnly || !isDirty || !formState.isValid) {
       return;
     }
     const timeoutId = setTimeout(
@@ -104,7 +106,7 @@ export default function CreateNewDocumentVersionForm({
       DOCUMENT_AUTOSAVE_INTERVAL,
     );
     return () => clearTimeout(timeoutId);
-  }, [isReadOnly, formState.isDirty, formState.isValid, setSubmitDisabled]);
+  }, [isReadOnly, isDirty, formState.isValid, setSubmitDisabled]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>

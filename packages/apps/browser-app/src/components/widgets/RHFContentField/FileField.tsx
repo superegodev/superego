@@ -39,11 +39,7 @@ export default function FileField({
 }: Props) {
   const { field, fieldState } = useController({ control, name });
   const setFile = async (file: File) =>
-    field.onChange({
-      name: file.name,
-      mimeType: file.type,
-      content: new Uint8Array(await file.arrayBuffer()),
-    });
+    field.onChange({ name: file.name, mimeType: file.type, content: file });
   return (
     <Fieldset
       aria-label={isListItem ? label : undefined}
@@ -84,6 +80,7 @@ export default function FileField({
         >
           {field.value !== null ? (
             <NonNullFileFields
+              key={field.value.name + field.value.mimeType}
               control={control}
               name={name}
               file={field.value}
