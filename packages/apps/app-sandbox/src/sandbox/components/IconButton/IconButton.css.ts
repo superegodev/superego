@@ -1,12 +1,13 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
-const buttonRootBase = style({
-  display: "flex",
-  alignItems: "center",
+const iconButtonRootBase = style({
+  display: "inline-flex",
   justifyContent: "center",
-  paddingInline: vars.spacing._3,
+  alignItems: "center",
+  padding: vars.spacing._1,
   borderRadius: vars.borders.radius.md,
+  color: vars.colors.text.primary,
   cursor: "pointer",
   selectors: {
     "&[disabled]": {
@@ -15,11 +16,11 @@ const buttonRootBase = style({
   },
 });
 
-export const Button = {
+export const IconButton = {
   root: styleVariants({
     // Base visual style
     default: [
-      buttonRootBase,
+      iconButtonRootBase,
       {
         background: vars.colors.button.default.base.background,
         color: vars.colors.button.default.base.text,
@@ -41,7 +42,7 @@ export const Button = {
       },
     ],
     primary: [
-      buttonRootBase,
+      iconButtonRootBase,
       {
         background: vars.colors.button.primary.base.background,
         color: vars.colors.button.primary.base.text,
@@ -63,11 +64,13 @@ export const Button = {
       },
     ],
     invisible: [
-      buttonRootBase,
+      iconButtonRootBase,
       {
         background: vars.colors.button.invisible.base.background,
         color: vars.colors.button.invisible.base.text,
-        border: 0,
+        borderColor: vars.colors.button.invisible.base.border,
+        borderWidth: vars.borders.width.thin,
+        borderStyle: "solid",
         selectors: {
           "&:hover": {
             background: vars.colors.button.invisible.hover.background,
@@ -80,40 +83,20 @@ export const Button = {
         },
       },
     ],
-    danger: [
-      buttonRootBase,
-      {
-        background: vars.colors.button.danger.base.background,
-        color: vars.colors.button.danger.base.text,
-        borderColor: vars.colors.button.danger.base.border,
-        borderWidth: vars.borders.width.thin,
-        borderStyle: "solid",
-        selectors: {
-          "&:hover": {
-            background: vars.colors.button.danger.hover.background,
-            color: vars.colors.button.danger.hover.text,
-            borderColor: vars.colors.button.danger.hover.border,
-            fontWeight: vars.typography.fontWeights.medium,
-          },
-          "&[disabled]": {
-            background: vars.colors.button.danger.disabled.background,
-            color: vars.colors.button.danger.disabled.text,
-            borderColor: vars.colors.button.danger.disabled.border,
-          },
-        },
-      },
-    ],
     // Sizes
     sm: {
       height: `calc(${vars.spacing._6} + 2 * ${vars.borders.width.thin})`,
+      width: `calc(${vars.spacing._6} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.xs,
     },
     md: {
       height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+      width: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.sm,
     },
     lg: {
       height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+      width: `calc(${vars.spacing._10} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.md,
     },
   }),

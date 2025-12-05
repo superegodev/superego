@@ -12,6 +12,10 @@ export declare function Alert(props: {
 export declare function Button(props: {
   /** Defines the visual style. */
   variant?: "default" | "primary" | "invisible" | "danger";
+  /** Defaults to `md`. */
+  size?: "sm" | "md" | "lg";
+  /** Defaults to `false`. */
+  fullWidth?: boolean;
   onPress?: () => void;
   children: ReactNode;
 }): JSX.Element;
@@ -101,6 +105,25 @@ export declare namespace Grid {
     children: ReactNode;
   }) => JSX.Element;
 }
+
+export declare function IconButton(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible" | undefined;
+  shape?: "square" | "round" | undefined;
+  /** Defaults to `md`. */
+  size?: "sm" | "md" | "lg";
+  icon:
+    | "caret-up"
+    | "caret-down"
+    | "caret-left"
+    | "caret-right"
+    | "check"
+    | "plus"
+    | "minus";
+  /** Label for the button, shown in a tooltip. */
+  label: string;
+  onPress?: () => void;
+}): JSX.Element;
 
 /** Renders an image FileRef. */
 export declare function Image(props: {

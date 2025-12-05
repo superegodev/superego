@@ -14,7 +14,7 @@ import {
   useCreateDocument,
   useCreateNewDocumentVersion,
 } from "../../../business-logic/backend/hooks.js";
-import useBackend from "../../../business-logic/backend/useBackend.jsx";
+import useBackend from "../../../business-logic/backend/useBackend.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import {
   fromHref,

@@ -5,6 +5,8 @@ import * as cs from "./Button.css.js";
 
 interface Props {
   variant?: "default" | "primary" | "invisible" | "danger" | undefined;
+  size?: "sm" | "md" | "lg" | undefined;
+  fullWidth?: boolean | undefined;
   onPress?: (() => void) | undefined;
   /** @internal */
   slot?: string | undefined;
@@ -14,6 +16,8 @@ interface Props {
 }
 export default function Button({
   variant = "default",
+  size = "md",
+  fullWidth = false,
   onPress,
   slot,
   className,
@@ -23,7 +27,8 @@ export default function Button({
     <ButtonRAC
       onPress={onPress}
       slot={slot}
-      className={clsx(cs.Button.root[variant], className)}
+      className={clsx(cs.Button.root[variant], cs.Button.root[size], className)}
+      style={{ width: fullWidth ? "100%" : undefined }}
     >
       {children}
     </ButtonRAC>

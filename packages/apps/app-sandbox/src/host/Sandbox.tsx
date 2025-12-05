@@ -52,8 +52,8 @@ export default function Sandbox({
       [MessageType.SandboxReady]: () => setSandboxReady(true),
       [MessageType.HeightChanged]: (message) => {
         const height = `${message.payload.height}px`;
-        if (iframeRef.current && iframeRef.current.style.height !== height) {
-          iframeRef.current.style.height = height;
+        if (iframeRef.current && iframeRef.current.style.minHeight !== height) {
+          iframeRef.current.style.minHeight = height;
         }
       },
       [MessageType.InvokeBackendMethod]: async ({ payload }) => {
