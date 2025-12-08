@@ -12,6 +12,7 @@ import echarts_renderers_dts from "../../../../../node_modules/echarts/types/dis
 import echarts_shared_dts from "../../../../../node_modules/echarts/types/dist/shared.d.ts?raw";
 import superegoAppSandboxComponents_index_dts from "../sandbox/components/index.d.ts?raw";
 import superegoAppSandboxHooks_index_dts from "../sandbox/hooks/index.d.ts?raw";
+import superegoAppSandboxTheme_index_dts from "../sandbox/theme/index.d.ts?raw";
 
 export default [
   // React
@@ -70,5 +71,10 @@ export default [
   {
     path: "/node_modules/@superego/app-sandbox/hooks/index.d.ts",
     source: superegoAppSandboxHooks_index_dts,
+  },
+  // @superego/app-sandbox/theme
+  {
+    path: "/node_modules/@superego/app-sandbox/theme/index.d.ts",
+    source: superegoAppSandboxTheme_index_dts,
   },
 ] satisfies TypescriptFile[];

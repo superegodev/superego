@@ -10,6 +10,10 @@ globalStyle("html, body", {
   background: vars.colors.background.surface,
 });
 
+globalStyle("html, body, #root", {
+  minHeight: "100vh",
+});
+
 globalStyle("*", {
   boxSizing: "border-box",
 });

@@ -3149,10 +3149,22 @@
       "value": "An error occurred rendering the chart."
     }
   ],
+  "getIntlMessages.ts_8mRNBD": [
+    {
+      "type": 0,
+      "value": "Previous month"
+    }
+  ],
   "getIntlMessages.ts_J1XXSx": [
     {
       "type": 0,
       "value": "My Awesome App"
+    }
+  ],
+  "getIntlMessages.ts_PqmLVn": [
+    {
+      "type": 0,
+      "value": "Next month"
     }
   ],
   "getIntlMessages.ts_PyA0WU": [
@@ -3189,6 +3201,18 @@
     {
       "type": 0,
       "value": "In this section you can see the live preview of your app."
+    }
+  ],
+  "getIntlMessages.ts_rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "getIntlMessages.ts_zWgbGg": [
+    {
+      "type": 0,
+      "value": "Today"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

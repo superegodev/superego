@@ -9,11 +9,14 @@ import Select from "../components/forms/Select.js";
 import Grid from "../components/Grid/Grid.js";
 import IconButton from "../components/IconButton/IconButton.js";
 import Image from "../components/Image/Image.js";
+import Link from "../components/Link/Link.js";
+import SimpleMonthCalendar from "../components/SimpleMonthCalendar/SimpleMonthCalendar.js";
 import Table from "../components/Table/Table.js";
 import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
 import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
+import theme from "../theme/theme.js";
 import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
 export default function registerDependencies() {
@@ -24,11 +27,13 @@ export default function registerDependencies() {
         Alert,
         Button,
         ButtonLink,
+        SimpleMonthCalendar,
         DefaultApp,
         Echart,
         Grid,
         IconButton,
         Image,
+        Link,
         PlainDatePicker,
         Select,
         Table,
@@ -39,6 +44,7 @@ export default function registerDependencies() {
         useCreateDocument,
         useCreateNewDocumentVersion,
       },
+      "@superego/app-sandbox/theme": theme,
     };
   }
 }

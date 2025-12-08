@@ -9,7 +9,7 @@ interface Props {
   fullWidth?: boolean | undefined;
   onPress?: (() => void) | undefined;
   /** @internal */
-  slot?: string | undefined;
+  slot?: string | null | undefined;
   /** @internal */
   className?: string | undefined;
   children: ReactNode;

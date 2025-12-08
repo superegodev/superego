@@ -22,6 +22,7 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
+    "@types/luxon": "^3.7.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitest/browser": "^4.0.14",
@@ -30,6 +31,7 @@
     "vitest": "^4.0.14"
   },
   "dependencies": {
+    "@internationalized/date": "^3.10.0",
     "@superego/backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
@@ -39,6 +41,7 @@
     "@vanilla-extract/css": "^1.17.5",
     "clsx": "^2.1.1",
     "echarts": "^6.0.0",
+    "luxon": "^3.7.2",
     "playwright": "^1.57.0",
     "react": "^19.2.0",
     "react-aria": "^3.44.0",

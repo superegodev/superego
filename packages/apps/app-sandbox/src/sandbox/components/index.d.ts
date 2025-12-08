@@ -52,15 +52,15 @@ export declare function Echart(props: {
    * - Prefer column charts over line charts for discrete time series data.
    * - Don't specify colors unless needed to disambiguate. In which case, prefer
    *   using these series colors:
-   *   - #228be6
-   *   - #40c057
-   *   - #fab005
-   *   - #fa5252
-   *   - #15aabf
-   *   - #12b886
-   *   - #fd7e14
-   *   - #7950f2
-   *   - #e64980
+   *   - `theme.colors.blues._4`
+   *   - `theme.colors.greens._4`
+   *   - `theme.colors.yellows._4`
+   *   - `theme.colors.reds._4`
+   *   - `theme.colors.cyans._4`
+   *   - `theme.colors.teals._4`
+   *   - `theme.colors.oranges._4`
+   *   - `theme.colors.violets._4`
+   *   - `theme.colors.pinks._4`
    */
   option: EChartsOption;
   /** You should usually set this to 100%. */
@@ -109,7 +109,7 @@ export declare namespace Grid {
 export declare function IconButton(props: {
   /** Defines the visual style. */
   variant?: "default" | "primary" | "invisible" | undefined;
-  shape?: "square" | "round" | undefined;
+  shape?: "square" | "circle" | undefined;
   /** Defaults to `md`. */
   size?: "sm" | "md" | "lg";
   icon:
@@ -119,7 +119,8 @@ export declare function IconButton(props: {
     | "caret-right"
     | "check"
     | "plus"
-    | "minus";
+    | "minus"
+    | "x";
   /** Label for the button, shown in a tooltip. */
   label: string;
   onPress?: () => void;
@@ -129,6 +130,14 @@ export declare function IconButton(props: {
 export declare function Image(props: {
   image: FileRef & { mimeType: `image/${string}` };
   style?: CSSProperties;
+}): JSX.Element;
+
+/** Link (anchor element). Always use Link instead of <a>. */
+export declare function Link(props: {
+  href: string;
+  target?: string;
+  style?: CSSProperties;
+  children: ReactNode;
 }): JSX.Element;
 
 export declare function PlainDatePicker(props: {
@@ -170,6 +179,43 @@ export declare function Select(props: {
   description?: ReactNode;
   isDisabled?: boolean;
 }): JSX.Element;
+
+/** Full-page calendar. NEVER put inside Tile or Grid. */
+export declare function SimpleMonthCalendar(props: {
+  /**
+   * Renders the cell for the given day. Must return a
+   * `<SimpleMonthCalendar.DayCell />`. When `renderDayPopover` is set,
+   * `DayCell` should not contain interactive elements (e.g., buttons).
+   */
+  renderDayCell(day: string): JSX.Element;
+  /**
+   * Renders a popover that opens when the user clicks on a day cell. Must
+   * return a `<SimpleMonthCalendar.DayPopover />`.
+   */
+  renderDayPopover?: (day: string) => JSX.Element;
+  firstDayOfWeek?: "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
+}): JSX.Element;
+export declare namespace SimpleMonthCalendar {
+  var DayCell: (props: {
+    /** Leaving undefined results in an acceptable default. */
+    style?: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+    };
+    /** NEVER include the day number. It's already rendered. */
+    children: ReactNode;
+  }) => JSX.Element;
+  var DayPopover: (props: {
+    /**
+     * Defaults to true. Set to false to avoid accidental closures. For example,
+     * it should be set to false if there's a dirty form inside the popover.
+     */
+    shouldCloseOnInteractOutside?: boolean;
+    /** NEVER include a header with the day or a close/cancel button. It's already rendered. */
+    children: ReactNode;
+  }) => JSX.Element;
+}
 
 /**
  * A table.

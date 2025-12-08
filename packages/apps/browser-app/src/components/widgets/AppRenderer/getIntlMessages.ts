@@ -35,5 +35,13 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
         defaultMessage: "This app has access to the following collections:",
       }),
     },
+    SimpleMonthCalendar: {
+      todayButton: intl.formatMessage({ defaultMessage: "Today" }),
+      previousMonthButton: intl.formatMessage({
+        defaultMessage: "Previous month",
+      }),
+      nextMonthButton: intl.formatMessage({ defaultMessage: "Next month" }),
+      closeDayPopoverButton: intl.formatMessage({ defaultMessage: "Close" }),
+    },
   };
 }

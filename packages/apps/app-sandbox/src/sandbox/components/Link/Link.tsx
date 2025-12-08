@@ -1,29 +1,23 @@
-import type { ReactNode } from "react";
-import { Link } from "react-aria-components";
+import type { CSSProperties, ReactNode } from "react";
+import { Link as LinkRAC } from "react-aria-components";
 import useNavigateHostTo from "../../business-logic/host-navigation/useNavigateHostTo.js";
-import * as cs from "./ButtonLink.css.js";
 
 interface Props {
-  variant?: "default" | "primary" | "invisible" | undefined;
   href: string;
   target?: string | undefined;
+  style?: CSSProperties | undefined;
   children: ReactNode;
 }
-export default function ButtonLink({
-  variant = "default",
-  href,
-  target,
-  children,
-}: Props) {
+export default function Link({ href, target, style, children }: Props) {
   const navigateHostTo = useNavigateHostTo();
   return (
-    <Link
+    <LinkRAC
       target={target}
       href={target === "_top" ? undefined : href}
       onPress={target === "_top" ? () => navigateHostTo(href) : undefined}
-      className={cs.ButtonLink.root[variant]}
+      style={style}
     >
       {children}
-    </Link>
+    </LinkRAC>
   );
 }
