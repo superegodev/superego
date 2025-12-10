@@ -1,30 +1,21 @@
-import type { CalendarDate } from "@internationalized/date";
-import { cloneElement, type JSX, type ReactNode, useRef } from "react";
+import type { ReactNode } from "react";
 import { CalendarCell } from "react-aria-components";
+import { useDay } from "./DayContext.js";
 import * as cs from "./SimpleMonthCalendar.css.js";
 
 interface Props {
-  /** @internal */
-  date: CalendarDate;
-  /** @internal */
-  onUnselectDate: () => void;
-  /** @internal */
-  renderDayPopover?: ((day: string) => JSX.Element) | undefined;
-  style?: {
-    backgroundColor?: string;
-    borderColor?: string;
-    color?: string;
-  };
+  style?:
+    | {
+        backgroundColor?: string | undefined;
+        borderColor?: string | undefined;
+        borderStyle?: string | undefined;
+        color?: string | undefined;
+      }
+    | undefined;
   children: ReactNode;
 }
-export default function DayCell({
-  date,
-  onUnselectDate,
-  renderDayPopover,
-  style,
-  children,
-}: Props) {
-  const calendarCellRef = useRef<HTMLTableCellElement>(null);
+export default function DayCell({ style, children }: Props) {
+  const { date, calendarCellRef, renderDayPopover } = useDay();
   return (
     <CalendarCell
       ref={calendarCellRef}
@@ -32,6 +23,7 @@ export default function DayCell({
       style={{
         backgroundColor: style?.backgroundColor,
         borderColor: style?.borderColor,
+        borderStyle: style?.borderStyle,
         color: style?.color,
       }}
       className={cs.DayCell.root}
@@ -43,11 +35,7 @@ export default function DayCell({
           </div>
           <div className={cs.DayCell.content}>{children}</div>
           {isSelected && renderDayPopover
-            ? cloneElement(renderDayPopover(date.toString().split("T")[0]!), {
-                date: date,
-                calendarCellRef: calendarCellRef,
-                onClose: onUnselectDate,
-              })
+            ? renderDayPopover(date.toString().split("T")[0]!)
             : null}
         </>
       )}

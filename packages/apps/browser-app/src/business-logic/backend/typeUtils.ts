@@ -16,3 +16,8 @@ export type ResultOf<
   Entity extends keyof Backend,
   Method extends keyof Backend[Entity],
 > = Awaited<ReturnType<BackendMethod<Entity, Method>>>;
+
+export type SuccessfulResultOf<
+  Entity extends keyof Backend,
+  Method extends keyof Backend[Entity],
+> = Awaited<ReturnType<BackendMethod<Entity, Method>>> & { success: true };

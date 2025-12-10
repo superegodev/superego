@@ -1,6 +1,10 @@
 import type { Backend } from "@superego/backend";
 import type { Result } from "@superego/global-types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  type MutationFunctionContext,
+  type QueryClient,
+  useMutation,
+} from "@tanstack/react-query";
 import { useRef } from "react";
 import type { ArgsOf, BackendMethod, ResultOf } from "./typeUtils.js";
 import useBackend from "./useBackend.js";
@@ -35,24 +39,38 @@ export function makeUseBackendMutation<
 >(
   entity: Entity,
   method: Method,
-  invalidateQueryKeys: (
+  invalidateQueryKeys?: (
     args: ArgsOf<Entity, Method>,
     result: NonNullable<ResultOf<Entity, Method>["data"]>,
   ) => string[][],
+  updateCache?: (
+    queryClient: QueryClient,
+    args: ArgsOf<Entity, Method>,
+    result: NonNullable<ResultOf<Entity, Method>["data"]>,
+  ) => void,
 ): () => UseBackendMutation<Entity, Method> {
   return function useBackendMutation() {
     const backend = useBackend();
-    const queryClient = useQueryClient();
     const isMutatingRef = useRef(false);
     const { isIdle, isPending, data, mutateAsync } = useMutation({
       mutationFn: (args: ArgsOf<Entity, Method>) =>
         (backend[entity][method] as any)(...args),
       throwOnError: true,
-      onSuccess(result: Result<any, any>, args: ArgsOf<Entity, Method>) {
+      onSuccess(
+        result: Result<any, any>,
+        args: ArgsOf<Entity, Method>,
+        _,
+        context: MutationFunctionContext,
+      ) {
         if (result.success) {
-          const queryKeys = invalidateQueryKeys(args, result.data);
-          for (const queryKey of queryKeys) {
-            queryClient.invalidateQueries({ queryKey });
+          if (invalidateQueryKeys) {
+            const queryKeys = invalidateQueryKeys(args, result.data);
+            for (const queryKey of queryKeys) {
+              context.client.invalidateQueries({ queryKey });
+            }
+          }
+          if (updateCache) {
+            updateCache(context.client, args, result.data);
           }
         }
       },

@@ -3,7 +3,7 @@ import {
   getWeeksInMonth,
   today,
 } from "@internationalized/date";
-import { cloneElement, type JSX, useState } from "react";
+import { type JSX, useState } from "react";
 import {
   Calendar,
   CalendarGrid,
@@ -14,13 +14,14 @@ import {
   useLocale,
 } from "react-aria-components";
 import DayCell from "./DayCell.js";
+import { DayProvider } from "./DayContext.js";
 import DayPopover from "./DayPopover.js";
 import Header from "./Header.js";
 import * as cs from "./SimpleMonthCalendar.css.js";
 
 interface Props {
   renderDayCell(day: string): JSX.Element;
-  renderDayPopover?: (() => JSX.Element) | undefined;
+  renderDayPopover?: ((day: string) => JSX.Element) | undefined;
   firstDayOfWeek?:
     | "sun"
     | "mon"
@@ -79,13 +80,18 @@ export default function SimpleMonthCalendar({
                 ),
               }}
             >
-              {(date) =>
-                cloneElement(renderDayCell(date.toString().split("T")[0]!), {
-                  date: date,
-                  onUnselectDate: () => setSelectedDate(null),
-                  renderDayPopover: renderDayPopover,
-                })
-              }
+              {(date) => {
+                const dayString = date.toString().split("T")[0]!;
+                return (
+                  <DayProvider
+                    date={date}
+                    onUnselectDate={() => setSelectedDate(null)}
+                    renderDayPopover={renderDayPopover}
+                  >
+                    {renderDayCell(dayString)}
+                  </DayProvider>
+                );
+              }}
             </CalendarGridBody>
           </CalendarGrid>
         </>

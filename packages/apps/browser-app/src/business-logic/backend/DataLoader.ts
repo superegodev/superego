@@ -3,6 +3,7 @@ import { type UseQueryResult, useQueries } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import isEmpty from "../../utils/isEmpty.js";
 import type BackendQuery from "./BackendQuery.js";
+import type { ResultErrorWrapper } from "./BackendQuery.js";
 import useBackend from "./useBackend.js";
 
 type ExtractBackendQueryData<
@@ -27,9 +28,10 @@ export default function DataLoader<
   Queries extends readonly BackendQuery<any>[],
 >({ queries, renderErrors, renderLoading, children }: Props<Queries>) {
   const backend = useBackend();
-  const results: UseQueryResult<Result<any, any>>[] = useQueries({
-    queries: queries.map((query) => query(backend)),
-  });
+  const results: UseQueryResult<Result<any, any>, ResultErrorWrapper>[] =
+    useQueries({
+      queries: queries.map((query) => query(backend)),
+    });
 
   const anyPending = results.some(({ isPending }) => isPending);
   if (anyPending) {
@@ -37,8 +39,9 @@ export default function DataLoader<
   }
 
   const errors = results
-    .map(({ data }) => data?.error)
-    .filter((error) => !!error);
+    .map(({ error }) => error)
+    .filter((error) => !!error)
+    .map((error) => error.result.error);
   if (!isEmpty(errors)) {
     return renderErrors ? renderErrors(errors) : null;
   }

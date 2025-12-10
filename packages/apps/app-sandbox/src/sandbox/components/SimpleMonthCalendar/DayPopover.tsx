@@ -1,30 +1,22 @@
-import type { CalendarDate } from "@internationalized/date";
 import { getLocalTimeZone } from "@internationalized/date";
-import type { ReactNode, RefObject } from "react";
+import type { ReactNode } from "react";
 import { useDateFormatter } from "react-aria";
 import { Dialog, Heading, OverlayArrow } from "react-aria-components";
 import useIntlMessages from "../../business-logic/intl-messages/useIntlMessages.js";
 import IconButton from "../IconButton/IconButton.js";
 import Popover from "../Popover/Popover.js";
+import { useDay } from "./DayContext.js";
 import * as cs from "./SimpleMonthCalendar.css.js";
 
 interface Props {
-  /** @internal */
-  date: CalendarDate;
-  /** @internal */
-  calendarCellRef: RefObject<HTMLTableCellElement | null>;
-  /** @internal */
-  onClose: () => void;
   shouldCloseOnInteractOutside?: boolean;
   children: ReactNode;
 }
 export default function DayPopover({
-  date,
-  calendarCellRef,
-  onClose,
   shouldCloseOnInteractOutside,
   children,
 }: Props) {
+  const { date, calendarCellRef, onUnselectDate } = useDay();
   const dateFormatter = useDateFormatter({
     month: "long",
     day: "numeric",
@@ -36,7 +28,7 @@ export default function DayPopover({
       triggerRef={calendarCellRef}
       placement="right"
       isOpen={true}
-      onOpenChange={onClose}
+      onOpenChange={onUnselectDate}
       shouldCloseOnInteractOutside={() => shouldCloseOnInteractOutside ?? true}
       className={cs.DayPopover.root}
     >
@@ -60,7 +52,7 @@ export default function DayPopover({
             variant="invisible"
             size="sm"
             label={closeDayPopoverButton}
-            onPress={onClose}
+            onPress={onUnselectDate}
             className={cs.DayPopover.closeButton}
           />
         </header>

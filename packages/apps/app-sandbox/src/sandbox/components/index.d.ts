@@ -199,9 +199,10 @@ export declare namespace SimpleMonthCalendar {
   var DayCell: (props: {
     /** Leaving undefined results in an acceptable default. */
     style?: {
-      backgroundColor: string;
-      borderColor: string;
-      color: string;
+      backgroundColor?: string;
+      borderColor?: string;
+      borderStyle?: string;
+      color?: string;
     };
     /** NEVER include the day number. It's already rendered. */
     children: ReactNode;

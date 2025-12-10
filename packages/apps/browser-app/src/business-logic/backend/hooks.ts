@@ -1,4 +1,5 @@
 import { makeBackendQueryGetter } from "./BackendQuery.js";
+import type { SuccessfulResultOf } from "./typeUtils.js";
 import { makeUseBackendMutation } from "./UseBackendMutation.js";
 
 /*
@@ -136,26 +137,69 @@ export const getDocumentVersionQuery = makeBackendQueryGetter(
 export const useCreateDocument = makeUseBackendMutation(
   "documents",
   "create",
-  ([collectionId]) => [["listDocuments", collectionId]],
+  ([collectionId]) => [["listDocuments", collectionId, "true"]],
+  // Manually update the non-lite listDocuments cache to improve performance of
+  // apps.
+  (queryClient, [collectionId], data) => {
+    const listDocumentsKey = ["listDocuments", collectionId, "false"];
+    const listDocuments: SuccessfulResultOf<"documents", "list"> | undefined =
+      queryClient.getQueryData(listDocumentsKey);
+    if (listDocuments) {
+      queryClient.setQueryData(listDocumentsKey, {
+        ...listDocuments,
+        data: [...listDocuments.data, data],
+      });
+    }
+  },
 );
 
 export const useCreateNewDocumentVersion = makeUseBackendMutation(
   "documents",
   "createNewVersion",
   ([collectionId, documentId]) => [
-    ["listDocuments", collectionId],
+    ["listDocuments", collectionId, "true"],
     ["getDocument", collectionId, documentId],
   ],
+  // Manually update the non-lite listDocuments cache to improve performance of
+  // apps.
+  (queryClient, [collectionId], data) => {
+    const listDocumentsKey = ["listDocuments", collectionId, "false"];
+    const listDocuments: SuccessfulResultOf<"documents", "list"> | undefined =
+      queryClient.getQueryData(listDocumentsKey);
+    if (listDocuments) {
+      queryClient.setQueryData(listDocumentsKey, {
+        ...listDocuments,
+        data: listDocuments.data.map((document) =>
+          document.id === data.id ? data : document,
+        ),
+      });
+    }
+  },
 );
 
 export const useDeleteDocument = makeUseBackendMutation(
   "documents",
   "delete",
   ([collectionId, documentId]) => [
-    ["listDocuments", collectionId],
+    ["listDocuments", collectionId, "true"],
     ["getDocument", collectionId, documentId],
     ["getDocumentVersion", collectionId, documentId],
   ],
+  // Manually update the non-lite listDocuments cache to improve performance of
+  // apps.
+  (queryClient, [collectionId, documentId]) => {
+    const listDocumentsKey = ["listDocuments", collectionId, "false"];
+    const listDocuments: SuccessfulResultOf<"documents", "list"> | undefined =
+      queryClient.getQueryData(listDocumentsKey);
+    if (listDocuments) {
+      queryClient.setQueryData(listDocumentsKey, {
+        ...listDocuments,
+        data: listDocuments.data.filter(
+          (document) => document.id !== documentId,
+        ),
+      });
+    }
+  },
 );
 
 /*

@@ -1,5 +1,5 @@
 import type { Backend } from "@superego/backend";
-import type { Milliseconds, Result } from "@superego/global-types";
+import type { Milliseconds, Result, ResultError } from "@superego/global-types";
 import type { UseQueryOptions } from "@tanstack/react-query";
 import type { ArgsOf, ResultOf } from "./typeUtils.js";
 
@@ -11,6 +11,14 @@ export default BackendQuery;
 export interface BackendQueryOptions<QueryResult extends Result<any, any>> {
   pollingInterval?: Milliseconds;
   pollWhile?: (result: QueryResult | undefined) => boolean;
+}
+
+export class ResultErrorWrapper extends Error {
+  constructor(
+    public result: Result<any, ResultError<any, any>> & { success: false },
+  ) {
+    super();
+  }
 }
 
 export function makeBackendQueryGetter<
@@ -27,8 +35,15 @@ export function makeBackendQueryGetter<
   return function getBackendQuery(args, options = {}) {
     return (backend) => ({
       queryKey: queryKey(...args),
-      queryFn: () => (backend[entity][method] as any)(...args),
-      throwOnError: true,
+      queryFn: async () => {
+        const result: ResultOf<Entity, Method> = await (
+          backend[entity][method] as any
+        )(...args);
+        if (!result.success) {
+          throw new ResultErrorWrapper(result);
+        }
+        return result;
+      },
       refetchInterval: options.pollingInterval
         ? ({ state }) =>
             !options.pollWhile || options.pollWhile(state.data)
