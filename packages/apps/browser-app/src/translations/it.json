@@ -1037,8 +1037,14 @@
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
+  "getIntlMessages.ts_8mRNBD": {
+    "defaultMessage": "Mese precedente"
+  },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "La mia fantastica app"
+  },
+  "getIntlMessages.ts_PqmLVn": {
+    "defaultMessage": "Mese successivo"
   },
   "getIntlMessages.ts_PyA0WU": {
     "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
@@ -1057,6 +1063,12 @@
   },
   "getIntlMessages.ts_hPMG1H": {
     "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
+  },
+  "getIntlMessages.ts_rbrahO": {
+    "defaultMessage": "Chiudi"
+  },
+  "getIntlMessages.ts_zWgbGg": {
+    "defaultMessage": "Oggi"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

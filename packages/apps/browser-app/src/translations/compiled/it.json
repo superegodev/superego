@@ -3141,10 +3141,22 @@
       "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
+  "getIntlMessages.ts_8mRNBD": [
+    {
+      "type": 0,
+      "value": "Mese precedente"
+    }
+  ],
   "getIntlMessages.ts_J1XXSx": [
     {
       "type": 0,
       "value": "La mia fantastica app"
+    }
+  ],
+  "getIntlMessages.ts_PqmLVn": [
+    {
+      "type": 0,
+      "value": "Mese successivo"
     }
   ],
   "getIntlMessages.ts_PyA0WU": [
@@ -3181,6 +3193,18 @@
     {
       "type": 0,
       "value": "In questa sezione puoi vedere l'anteprima live della tua app."
+    }
+  ],
+  "getIntlMessages.ts_rbrahO": [
+    {
+      "type": 0,
+      "value": "Chiudi"
+    }
+  ],
+  "getIntlMessages.ts_zWgbGg": [
+    {
+      "type": 0,
+      "value": "Oggi"
     }
   ],
   "typescriptModule.ts_MZNYNj": [
