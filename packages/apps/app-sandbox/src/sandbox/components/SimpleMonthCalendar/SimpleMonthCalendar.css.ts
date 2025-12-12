@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { vars } from "../../themes.css.js";
+import { breakpoints, vars } from "../../themes.css.js";
 
 const headerHeight = vars.spacing._12;
 
@@ -14,8 +14,14 @@ export const SimpleMonthCalendar = {
     height: `calc(100% - ${headerHeight})`,
     width: "100%",
     tableLayout: "fixed",
-    borderCollapse: "separate",
-    borderSpacing: vars.spacing._2,
+    borderCollapse: "collapse",
+    borderSpacing: 0,
+    "@media": {
+      [`(min-width: ${breakpoints.small})`]: {
+        borderCollapse: "separate",
+        borderSpacing: vars.spacing._1,
+      },
+    },
   }),
 
   gridHeader: style({
@@ -36,6 +42,21 @@ globalStyle(`${SimpleMonthCalendar.gridBody} tr`, {
   width: "100%",
   height: "calc(100% / var(--rows))",
 });
+globalStyle(`${SimpleMonthCalendar.gridBody} td`, {
+  padding: 0,
+  border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+  "@media": {
+    [`(min-width: ${breakpoints.small})`]: {
+      border: 0,
+    },
+  },
+});
+globalStyle(
+  `${SimpleMonthCalendar.gridBody} td:has([data-outside-month="true"])`,
+  {
+    border: 0,
+  },
+);
 
 export const Header = {
   root: style({
@@ -71,8 +92,8 @@ export const DayCell = {
   root: style({
     height: "100%",
     width: "100%",
-    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    borderRadius: vars.borders.radius.md,
+    border: 0,
+    borderRadius: 0,
     background: vars.colors.background.subtleSurface,
     display: "flex",
     flexDirection: "column",
@@ -89,6 +110,12 @@ export const DayCell = {
       },
       '&[data-selected="true"]': {
         opacity: "1 !important",
+      },
+    },
+    "@media": {
+      [`(min-width: ${breakpoints.small})`]: {
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+        borderRadius: vars.borders.radius.md,
       },
     },
   }),
