@@ -5721,6 +5721,7 @@ __metadata:
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
     "@vanilla-extract/css": "npm:^1.17.5"
+    "@vanilla-extract/dynamic": "npm:^2.1.5"
     "@vitest/browser": "npm:^4.0.14"
     "@vitest/browser-playwright": "npm:^4.0.14"
     clsx: "npm:^2.1.1"
@@ -7127,6 +7128,15 @@ __metadata:
     modern-ahocorasick: "npm:^1.0.0"
     picocolors: "npm:^1.0.0"
   checksum: 10c0/842f2e436861069119e8f2c8044c6efab6594c5037fb87bd820841333cb3bb427e304a0d368a05bc876af24d505f75c4a0c3c42c8da4fff63b238b9592df6271
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/dynamic@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "@vanilla-extract/dynamic@npm:2.1.5"
+  dependencies:
+    "@vanilla-extract/private": "npm:^1.0.9"
+  checksum: 10c0/6b7f445918972579d8f988ccca54f3c9c0fdaf5f2bdff641e5e87eae3952e523acb3ac7243162317941d7cf71ba2383a2a4eeaa32eb5a1b661e098b27e02961d
   languageName: node
   linkType: hard
 

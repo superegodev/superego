@@ -103,7 +103,7 @@ export const DayCell = {
     lineHeight: vars.spacing._5,
     height: vars.spacing._5,
     width: vars.spacing._5,
-    borderRadius: "100%",
+    borderRadius: vars.borders.radius.md,
     selectors: {
       '[data-today="true"] &': {
         background: vars.colors.background.inverse,

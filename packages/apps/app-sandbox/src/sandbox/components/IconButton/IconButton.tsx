@@ -36,7 +36,7 @@ interface Props {
   /** @internal */
   className?: string | undefined;
 }
-export default function Icon({
+export default function IconButton({
   variant = "default",
   shape = "square",
   size = "md",

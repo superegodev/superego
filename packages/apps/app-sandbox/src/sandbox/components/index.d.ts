@@ -12,11 +12,56 @@ export declare function Alert(props: {
 export declare function Button(props: {
   /** Defines the visual style. */
   variant?: "default" | "primary" | "invisible" | "danger";
-  /** Defaults to `md`. */
+  /** @defaultValue "md" */
   size?: "sm" | "md" | "lg";
-  /** Defaults to `false`. */
+  /** @defaultValue false */
   fullWidth?: boolean;
   onPress?: () => void;
+  children: ReactNode;
+}): JSX.Element;
+
+export declare function IconButton(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible" | undefined;
+  shape?: "square" | "circle" | undefined;
+  /** @defaultValue "md" */
+  size?: "sm" | "md" | "lg";
+  icon:
+    | "caret-up"
+    | "caret-down"
+    | "caret-left"
+    | "caret-right"
+    | "check"
+    | "plus"
+    | "minus"
+    | "x";
+  /** Label for the button, shown in a tooltip. */
+  label: string;
+  onPress?: () => void;
+}): JSX.Element;
+
+/** Checkbox-style toggle. */
+export declare function ToggleButton(props: {
+  /**
+   * Base hex color used to derive the component’s state palette (e.g.,
+   * unselected/selected backgrounds, hover, focus).
+   */
+  color?: `#${string}`;
+  /** @defaultValue "md */
+  size?: "sm" | "md" | "lg";
+  /** @defaultValue false */
+  fullWidth?: boolean;
+  /** Controlled value. */
+  value: boolean;
+  onChange: (newValue: boolean) => void;
+  children: ReactNode;
+}): JSX.Element;
+
+/** Link (anchor element). Always use Link instead of <a>. */
+export declare function Link(props: {
+  href: string;
+  target?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }): JSX.Element;
 
@@ -106,38 +151,10 @@ export declare namespace Grid {
   }) => JSX.Element;
 }
 
-export declare function IconButton(props: {
-  /** Defines the visual style. */
-  variant?: "default" | "primary" | "invisible" | undefined;
-  shape?: "square" | "circle" | undefined;
-  /** Defaults to `md`. */
-  size?: "sm" | "md" | "lg";
-  icon:
-    | "caret-up"
-    | "caret-down"
-    | "caret-left"
-    | "caret-right"
-    | "check"
-    | "plus"
-    | "minus"
-    | "x";
-  /** Label for the button, shown in a tooltip. */
-  label: string;
-  onPress?: () => void;
-}): JSX.Element;
-
 /** Renders an image FileRef. */
 export declare function Image(props: {
   image: FileRef & { mimeType: `image/${string}` };
   style?: CSSProperties;
-}): JSX.Element;
-
-/** Link (anchor element). Always use Link instead of <a>. */
-export declare function Link(props: {
-  href: string;
-  target?: string;
-  style?: CSSProperties;
-  children: ReactNode;
 }): JSX.Element;
 
 export declare function PlainDatePicker(props: {
@@ -209,8 +226,9 @@ export declare namespace SimpleMonthCalendar {
   }) => JSX.Element;
   var DayPopover: (props: {
     /**
-     * Defaults to true. Set to false to avoid accidental closures. For example,
-     * it should be set to false if there's a dirty form inside the popover.
+     * Set to `false` to avoid accidental closures. For example, it should be
+     * set to `false` if there's a dirty form inside the popover.
+     * @defaultValue true
      */
     shouldCloseOnInteractOutside?: boolean;
     /** NEVER include a header with the day or a close/cancel button. It's already rendered. */
@@ -244,14 +262,14 @@ export declare namespace Table {
   var Column: (props: {
     /** Whether a column is a row header (for a11y). */
     isRowHeader?: boolean;
-    /** Defaults to `left`. */
+    /** @defaultValue "left" */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
   var Body: (props: { children: ReactNode }) => JSX.Element;
   var Row: (props: { children: ReactNode }) => JSX.Element;
   var Cell: (props: {
-    /** Defaults to `left`. */
+    /** @defaultValue "left" */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
@@ -259,15 +277,18 @@ export declare namespace Table {
 
 /** Typography component for consistent text styling. */
 export declare function Text(props: {
-  /** Defaults to `span` (inline text). */
+  /**
+   * Note: `span` is inline text without line breaks.
+   * @defaultValue "span"
+   */
   element?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  /** Defaults to `primary`. */
+  /** @defaultValue "primary" */
   color?: "primary" | "secondary";
-  /** Defaults to `sm`. */
+  /** @defaultValue "sm" */
   size?: "xs2" | "xs" | "sm" | "md" | "lg" | "xl" | "xl2" | "xl3" | "xl4";
-  /** Defaults to `regular`. */
+  /** @defaultValue "regular" */
   weight?: "light" | "regular" | "medium" | "semibold" | "bold";
-  /** Defaults to `sansSerif`. */
+  /** @defaultValue "sansSerif" */
   font?: "sansSerif" | "serif" | "monospace";
   /**
    * Prefer to use specific properties. Use when you need more control over

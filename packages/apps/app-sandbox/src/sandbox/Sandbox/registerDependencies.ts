@@ -14,6 +14,7 @@ import SimpleMonthCalendar from "../components/SimpleMonthCalendar/SimpleMonthCa
 import Table from "../components/Table/Table.js";
 import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
+import ToggleButton from "../components/ToggleButton/ToggleButton.js";
 import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
 import theme from "../theme/theme.js";
@@ -39,6 +40,7 @@ export default function registerDependencies() {
         Table,
         Text,
         Tile,
+        ToggleButton,
       },
       "@superego/app-sandbox/hooks": {
         useCreateDocument,
