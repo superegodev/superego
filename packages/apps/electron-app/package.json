@@ -23,9 +23,9 @@
     "@electron-forge/publisher-github": "^7.10.2",
     "@electron/fuses": "^2.0.0",
     "@types/electron-squirrel-startup": "^1.0.2",
-    "electron": "39.2.4",
+    "electron": "39.2.5",
     "electron-vite": "^4.0.1",
-    "vite": "^7.2.4"
+    "vite": "^7.2.6"
   },
   "dependencies": {
     "@superego/app-sandbox": "workspace:*",

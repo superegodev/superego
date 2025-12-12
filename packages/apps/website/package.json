@@ -19,9 +19,9 @@
     "@astrojs/starlight": "^0.37.0",
     "@fontsource-variable/petrona": "^5.2.8",
     "@playwright/test": "^1.57.0",
-    "astro": "^5.16.3",
+    "astro": "^5.16.4",
     "starlight-theme-nova": "^0.10.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.51.0"
+    "wrangler": "^4.53.0"
   }
 }

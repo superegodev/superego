@@ -20,10 +20,10 @@
     "monaco-editor": "0.55.1"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.0.14",
-    "@vitest/browser-playwright": "^4.0.14",
+    "@vitest/browser": "^4.0.15",
+    "@vitest/browser-playwright": "^4.0.15",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "vitest": "^4.0.15"
   }
 }

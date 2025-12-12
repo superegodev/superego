@@ -22,8 +22,8 @@
     "@types/node": "^24.10.1",
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4",
-    "vitest": "^4.0.14"
+    "vite": "^7.2.6",
+    "vitest": "^4.0.15"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",

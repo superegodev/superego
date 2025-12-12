@@ -24,11 +24,11 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "@vitest/browser": "^4.0.14",
-    "@vitest/browser-playwright": "^4.0.14",
+    "@vitest/browser": "^4.0.15",
+    "@vitest/browser-playwright": "^4.0.15",
     "es-toolkit": "^1.42.0",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.57.0",
-    "vitest": "^4.0.14"
+    "vitest": "^4.0.15"
   }
 }
