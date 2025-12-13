@@ -71,7 +71,7 @@ function toValibotSchema(
     case DataType.JsonObject:
       return findFormat(typeDefinition, formats)?.valibotSchema ?? jsonObject();
     case DataType.File:
-      return file(typeDefinition.accept);
+      return file(typeDefinition.accept, variant);
     case DataType.Struct:
       return v.strictObject(
         Object.fromEntries(

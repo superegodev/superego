@@ -5,12 +5,13 @@ export const breakpoints = {
   medium: "65rem",
 };
 
-const commonVars = {
+export const commonVars = {
   shell: {
     panelHeaderHeight: "3rem",
   },
   typography: {
     fontSizes: {
+      xs3: "0.60rem",
       xs2: "0.70rem",
       xs: "0.80rem",
       sm: "0.875rem",

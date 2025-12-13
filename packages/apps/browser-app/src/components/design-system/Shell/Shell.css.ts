@@ -21,7 +21,7 @@ export const Shell = {
       },
     },
     "@media": {
-      [`screen and (max-width: ${breakpoints.medium})`]: {
+      [`(max-width: ${breakpoints.medium})`]: {
         width: `calc(100dvw + ${primarySidebarWidth})`,
         gridTemplateColumns: `${primarySidebarWidth} 100dvw`,
         marginInlineStart: `calc(-1 * ${primarySidebarWidth})`,
@@ -131,7 +131,7 @@ export const PanelHeader = {
     padding: 0,
     display: "none !important",
     "@media": {
-      [`screen and (max-width: ${breakpoints.medium})`]: {
+      [`(max-width: ${breakpoints.medium})`]: {
         display: "inline-flex !important",
       },
     },
@@ -153,7 +153,7 @@ export const PanelContent = {
         padding: vars.spacing._8,
       },
       '[data-slot="Main"] [data-full-width="false"]&': {
-        paddingInline: `max(calc(50% - ${vars.spacing._100}), ${vars.spacing._8})`,
+        paddingInline: `max(calc(50% - ${vars.spacing._90}), ${vars.spacing._8})`,
       },
       '[data-slot="Main"] [data-full-width="true"]&': {
         paddingInline: vars.spacing._8,

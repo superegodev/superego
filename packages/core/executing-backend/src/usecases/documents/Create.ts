@@ -26,6 +26,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
+import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
@@ -116,19 +117,19 @@ export default class DocumentsCreate extends Usecase<
       );
     }
 
-    // Files are always associated to a specific Document, so it's
-    // impossible to reference existing Files when creating an Document.
     const referencedFileIds = ContentFileUtils.extractReferencedFileIds(
       latestCollectionVersion.schema,
       contentValidationResult.output,
     );
-    if (!isEmpty(referencedFileIds)) {
+    const referencedFiles =
+      await this.repos.file.findAllWhereIdIn(referencedFileIds);
+    const missingFileIds = difference(
+      referencedFileIds,
+      referencedFiles.map(({ id }) => id),
+    );
+    if (!isEmpty(missingFileIds)) {
       return makeUnsuccessfulResult(
-        makeResultError("FilesNotFound", {
-          collectionId,
-          documentId: null,
-          fileIds: referencedFileIds,
-        }),
+        makeResultError("FilesNotFound", { fileIds: missingFileIds }),
       );
     }
 
@@ -161,18 +162,26 @@ export default class DocumentsCreate extends Usecase<
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     };
+    const documentVersionReference: FileEntity.DocumentVersionReference = {
+      collectionId: collectionId,
+      documentId: document.id,
+      documentVersionId: documentVersion.id,
+    };
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({
       id: protoFileWithId.id,
-      collectionId: collectionId,
-      documentId: document.id,
-      createdWithDocumentVersionId: documentVersion.id,
+      referencedBy: [documentVersionReference],
       createdAt: now,
       content: protoFileWithId.content,
     }));
+
     await this.repos.document.insert(document);
     await this.repos.documentVersion.insert(documentVersion);
+    await this.repos.file.addReferenceToAll(
+      referencedFileIds,
+      documentVersionReference,
+    );
     await this.repos.file.insertAll(filesWithContent);
 
     return makeSuccessfulResult(

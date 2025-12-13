@@ -20,7 +20,6 @@ export default function ConnectorSettings({ control, schema }: Props) {
           control={control}
           name="connectorSettings"
           schema={schema}
-          document={null}
           showTypes={false}
         />
       </Fieldset.Fields>

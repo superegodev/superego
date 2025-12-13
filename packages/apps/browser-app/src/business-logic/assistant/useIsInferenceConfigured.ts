@@ -4,6 +4,7 @@ interface UseIsInferenceConfigured {
   chatCompletions: boolean;
   transcriptions: boolean;
   speech: boolean;
+  fileInspection: boolean;
 }
 export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
   const { inference } = useGlobalData().globalSettings;
@@ -20,6 +21,10 @@ export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
       inference.speech.model &&
         inference.speech.voice &&
         inference.speech.provider.baseUrl,
+    ),
+    fileInspection: Boolean(
+      inference.fileInspection.model &&
+        inference.fileInspection.provider.baseUrl,
     ),
   };
 }

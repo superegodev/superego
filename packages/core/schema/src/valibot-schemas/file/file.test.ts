@@ -19,7 +19,7 @@ interface TestCase {
 const test = (name: string, testCase: TestCase, only?: boolean) => {
   it(name, { only: only ?? false }, () => {
     // Exercise
-    const result = v.safeParse(file(testCase.accept), testCase.file);
+    const result = v.safeParse(file(testCase.accept, "normal"), testCase.file);
     // Verify
     expect(result.issues ?? []).toMatchObject(testCase.expectedIssues);
   });

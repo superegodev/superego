@@ -57,6 +57,10 @@ const evaluator = new Evaluator(
       model: null,
       voice: null,
     },
+    fileInspection: {
+      provider: { baseUrl: null, apiKey: null },
+      model: null,
+    },
   }),
 );
 
@@ -87,56 +91,59 @@ const assistantsModels = [
   // "x-ai/grok-4-fast",
 ];
 
-describe.concurrent.each(assistantsModels)(
-  `Assistants model: %s; Evaluator model: ${evaluatorModel}`,
-  (model) => {
-    registerTests(() => {
-      const defaultGlobalSettings = {
-        appearance: { theme: Theme.Auto },
-        inference: {
-          chatCompletions: {
-            provider: {
-              baseUrl: chatCompletionsBaseUrl,
-              apiKey: chatCompletionsApiKey,
-            },
-            model: model,
+describe.concurrent.each(
+  assistantsModels,
+)(`Assistants model: %s; Evaluator model: ${evaluatorModel}`, (model) => {
+  registerTests(() => {
+    const defaultGlobalSettings = {
+      appearance: { theme: Theme.Auto },
+      inference: {
+        chatCompletions: {
+          provider: {
+            baseUrl: chatCompletionsBaseUrl,
+            apiKey: chatCompletionsApiKey,
           },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          speech: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-            voice: null,
-          },
+          model: model,
         },
-        assistants: {
-          userName: null,
-          developerPrompts: {
-            [AssistantName.Factotum]: null,
-            [AssistantName.CollectionCreator]: null,
-          },
+        transcriptions: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
-      };
+        speech: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+          voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
+      },
+      assistants: {
+        userName: null,
+        developerPrompts: {
+          [AssistantName.Factotum]: null,
+          [AssistantName.CollectionCreator]: null,
+        },
+      },
+    };
 
-      // Data repositories
-      const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-        fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-        defaultGlobalSettings: defaultGlobalSettings,
-      });
-      dataRepositoriesManager.runMigrations();
-
-      // Backend
-      const backend = new ExecutingBackend(
-        dataRepositoriesManager,
-        javascriptSandbox,
-        typescriptCompiler,
-        inferenceServiceFactory,
-        [],
-      );
-
-      return { backend, booleanOracle: evaluator };
+    // Data repositories
+    const dataRepositoriesManager = new SqliteDataRepositoriesManager({
+      fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
+      defaultGlobalSettings: defaultGlobalSettings,
     });
-  },
-);
+    dataRepositoriesManager.runMigrations();
+
+    // Backend
+    const backend = new ExecutingBackend(
+      dataRepositoriesManager,
+      javascriptSandbox,
+      typescriptCompiler,
+      inferenceServiceFactory,
+      [],
+    );
+
+    return { backend, booleanOracle: evaluator };
+  });
+});

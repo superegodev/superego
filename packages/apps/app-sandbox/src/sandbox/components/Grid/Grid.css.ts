@@ -35,14 +35,14 @@ export const Col = {
   })),
   spanMd: styleVariants(spanValues, (span) => ({
     "@media": {
-      [`screen and (min-width: ${breakpoints.small})`]: {
+      [`(min-width: ${breakpoints.small})`]: {
         gridColumn: `span ${span}`,
       },
     },
   })),
   spanLg: styleVariants(spanValues, (span) => ({
     "@media": {
-      [`screen and (min-width: ${breakpoints.medium})`]: {
+      [`(min-width: ${breakpoints.medium})`]: {
         gridColumn: `span ${span}`,
       },
     },

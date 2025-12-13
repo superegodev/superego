@@ -91,6 +91,21 @@ export default class SqliteGlobalSettingsRepository
               this.defaultGlobalSettings.inference.speech.provider.baseUrl,
           },
         },
+        fileInspection: {
+          model:
+            settings.inference?.fileInspection?.model ??
+            this.defaultGlobalSettings.inference.fileInspection.model,
+          provider: {
+            apiKey:
+              settings.inference?.fileInspection?.provider?.apiKey ??
+              this.defaultGlobalSettings.inference.fileInspection.provider
+                .apiKey,
+            baseUrl:
+              settings.inference?.fileInspection?.provider?.baseUrl ??
+              this.defaultGlobalSettings.inference.fileInspection.provider
+                .baseUrl,
+          },
+        },
       },
       assistants: {
         userName:

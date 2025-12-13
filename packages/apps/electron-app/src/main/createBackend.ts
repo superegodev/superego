@@ -38,6 +38,10 @@ export default function createBackend(port: number) {
           model: null,
           voice: null,
         },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
+        },
       },
       assistants: {
         userName: null,

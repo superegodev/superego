@@ -88,7 +88,6 @@ export default function SuggestCollectionDefinition({
           <RHFContentField
             schema={schema}
             control={control}
-            document={null}
             showNullability={true}
             zoomLevel={0.9}
           />

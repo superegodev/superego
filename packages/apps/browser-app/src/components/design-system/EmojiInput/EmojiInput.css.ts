@@ -22,6 +22,7 @@ export const EmojiPicker = {
     height: vars.spacing._80,
     backgroundColor: vars.colors.background.surface,
   }),
+
   search: style({
     position: "relative",
     zIndex: 10,
@@ -33,6 +34,7 @@ export const EmojiPicker = {
     borderRadius: vars.borders.radius.md,
     fontSize: vars.typography.fontSizes.sm,
   }),
+
   selectedEmoji: style({
     display: "flex",
     justifyContent: "space-between",
@@ -43,19 +45,23 @@ export const EmojiPicker = {
     fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
   }),
+
   viewport: style({
     position: "relative",
     flex: 1,
     outline: "none",
   }),
+
   list: style({
     paddingBlockEnd: vars.spacing._2,
     userSelect: "none",
   }),
+
   row: style({
     paddingInline: vars.spacing._2,
     scrollMarginBlock: vars.spacing._2,
   }),
+
   categoryHeader: style({
     padding: vars.spacing._2,
     paddingBlockEnd: vars.spacing._3,
@@ -64,6 +70,7 @@ export const EmojiPicker = {
     fontSize: vars.typography.fontSizes.xs,
     fontWeight: vars.typography.fontWeights.medium,
   }),
+
   emoji: style({
     display: "flex",
     alignItems: "center",
@@ -80,6 +87,7 @@ export const EmojiPicker = {
       },
     },
   }),
+
   empty: style({
     position: "absolute",
     inset: 0,
@@ -89,6 +97,7 @@ export const EmojiPicker = {
     color: vars.colors.text.secondary,
     fontSize: vars.typography.fontSizes.sm,
   }),
+
   loading: style({
     position: "absolute",
     inset: 0,

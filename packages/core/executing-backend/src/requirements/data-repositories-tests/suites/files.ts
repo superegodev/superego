@@ -12,16 +12,12 @@ export default rd<GetDependencies>("Files", (deps) => {
     // Exercise
     const file1: FileEntity = {
       id: Id.generate.file(),
-      collectionId: Id.generate.collection(),
-      documentId: Id.generate.document(),
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
+      referencedBy: [],
       createdAt: new Date(),
     };
     const file2: FileEntity = {
       id: Id.generate.file(),
-      collectionId: Id.generate.collection(),
-      documentId: Id.generate.document(),
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
+      referencedBy: [],
       createdAt: new Date(),
     };
     const content1 = new Uint8Array([1, 2, 3, 4]);
@@ -69,76 +65,240 @@ export default rd<GetDependencies>("Files", (deps) => {
     expect(foundContent2).toEqual(content2);
   });
 
-  it("deleting all by document id", async () => {
-    // Setup SUT
-    const { dataRepositoriesManager } = deps();
-    const document1Id = Id.generate.document();
-    const document2Id = Id.generate.document();
-    const file1: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: Id.generate.collection(),
-      documentId: document1Id,
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const file2: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: Id.generate.collection(),
-      documentId: document1Id,
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const file3: FileEntity = {
-      id: Id.generate.file(),
-      collectionId: Id.generate.collection(),
-      documentId: document2Id,
-      createdWithDocumentVersionId: Id.generate.documentVersion(),
-      createdAt: new Date(),
-    };
-    const content = new Uint8Array([1, 2, 3, 4]);
-    await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => {
-        await repos.file.insertAll([
-          { ...file1, content },
-          { ...file2, content },
-          { ...file3, content },
-        ]);
-        return { action: "commit", returnValue: null };
-      },
-    );
+  describe("adding reference to all", () => {
+    it("case: reference doesn't exist", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const file: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [],
+        createdAt: new Date(),
+      };
+      const content = new Uint8Array([1, 2, 3, 4]);
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.file.insertAll([{ ...file, content }]);
+          return { action: "commit", returnValue: null };
+        },
+      );
 
-    // Exercise
-    const deletedIds =
+      // Exercise
+      const reference: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
-          returnValue: await repos.file.deleteAllWhereDocumentIdEq(document1Id),
+          returnValue: await repos.file.addReferenceToAll([file.id], reference),
         }),
       );
 
-    // Verify
-    expect(deletedIds).toEqual([file1.id, file2.id]);
-    const found1 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file1.id),
-      }),
-    );
-    expect(found1).toEqual(null);
-    const found2 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file2.id),
-      }),
-    );
-    expect(found2).toEqual(null);
-    const found3 = await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => ({
-        action: "commit",
-        returnValue: await repos.file.find(file3.id),
-      }),
-    );
-    expect(found3).toEqual(file3);
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.find(file.id),
+        }),
+      );
+      expect(found?.referencedBy).toEqual([reference]);
+    });
+
+    it("case: reference exists", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const reference: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const file: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference],
+        createdAt: new Date(),
+      };
+      const content = new Uint8Array([1, 2, 3, 4]);
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.file.insertAll([{ ...file, content }]);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.addReferenceToAll([file.id], reference),
+        }),
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.find(file.id),
+        }),
+      );
+      expect(found?.referencedBy).toEqual([reference]);
+    });
+  });
+
+  describe("deleting reference from all", () => {
+    it("case: no other reference exists => file deleted", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const reference: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const file: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference],
+        createdAt: new Date(),
+      };
+      const content = new Uint8Array([1, 2, 3, 4]);
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.file.insertAll([{ ...file, content }]);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.deleteReferenceFromAll({
+            collectionId: reference.collectionId,
+            documentId: reference.documentId,
+          }),
+        }),
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.find(file.id),
+        }),
+      );
+      expect(found).toEqual(null);
+    });
+
+    it("case: other references exist => reference deleted, file NOT deleted", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const reference1: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const reference2: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const file: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference1, reference2],
+        createdAt: new Date(),
+      };
+      const content = new Uint8Array([1, 2, 3, 4]);
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.file.insertAll([{ ...file, content }]);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.deleteReferenceFromAll({
+            collectionId: reference2.collectionId,
+            documentId: reference2.documentId,
+          }),
+        }),
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.find(file.id),
+        }),
+      );
+      expect(found?.referencedBy).toEqual([reference1]);
+    });
+
+    it("case: test with multiple files", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const reference1: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const reference2: FileEntity.DocumentVersionReference = {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        documentVersionId: Id.generate.documentVersion(),
+      };
+      const file1: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference1, reference2],
+        createdAt: new Date(),
+      };
+      const file2: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference1],
+        createdAt: new Date(),
+      };
+      const file3: FileEntity = {
+        id: Id.generate.file(),
+        referencedBy: [reference2],
+        createdAt: new Date(),
+      };
+      const content = new Uint8Array([1, 2, 3, 4]);
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.file.insertAll([
+            { ...file1, content },
+            { ...file2, content },
+            { ...file3, content },
+          ]);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.deleteReferenceFromAll({
+            collectionId: reference2.collectionId,
+            documentId: reference2.documentId,
+          }),
+        }),
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.file.findAllWhereIdIn([
+            file1.id,
+            file2.id,
+            file3.id,
+          ]),
+        }),
+      );
+      expect(found).toEqual([{ ...file1, referencedBy: [reference1] }, file2]);
+    });
   });
 
   describe("finding one", () => {
@@ -147,9 +307,7 @@ export default rd<GetDependencies>("Files", (deps) => {
       const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
-        collectionId: Id.generate.collection(),
-        documentId: Id.generate.document(),
-        createdWithDocumentVersionId: Id.generate.documentVersion(),
+        referencedBy: [],
         createdAt: new Date(),
       };
       const content = new Uint8Array([1, 2, 3, 4]);
@@ -214,23 +372,17 @@ export default rd<GetDependencies>("Files", (deps) => {
       const { dataRepositoriesManager } = deps();
       const file1: FileEntity = {
         id: Id.generate.file(),
-        collectionId: Id.generate.collection(),
-        documentId: Id.generate.document(),
-        createdWithDocumentVersionId: Id.generate.documentVersion(),
+        referencedBy: [],
         createdAt: new Date(),
       };
       const file2: FileEntity = {
         id: Id.generate.file(),
-        collectionId: Id.generate.collection(),
-        documentId: Id.generate.document(),
-        createdWithDocumentVersionId: Id.generate.documentVersion(),
+        referencedBy: [],
         createdAt: new Date(),
       };
       const file3: FileEntity = {
         id: Id.generate.file(),
-        collectionId: Id.generate.collection(),
-        documentId: Id.generate.document(),
-        createdWithDocumentVersionId: Id.generate.documentVersion(),
+        referencedBy: [],
         createdAt: new Date(),
       };
       const content = new Uint8Array([1, 2, 3, 4]);
@@ -264,9 +416,7 @@ export default rd<GetDependencies>("Files", (deps) => {
       const { dataRepositoriesManager } = deps();
       const file: FileEntity = {
         id: Id.generate.file(),
-        collectionId: Id.generate.collection(),
-        documentId: Id.generate.document(),
-        createdWithDocumentVersionId: Id.generate.documentVersion(),
+        referencedBy: [],
         createdAt: new Date(),
       };
       const content = new Uint8Array([1, 2, 3, 4, 5]);

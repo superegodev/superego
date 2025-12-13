@@ -1,7 +1,5 @@
 import type {
   Backend,
-  CollectionId,
-  DocumentId,
   FileId,
   FileNotFound,
   UnexpectedError,
@@ -18,18 +16,10 @@ export default class FilesGetContent extends Usecase<
   Backend["files"]["getContent"]
 > {
   async exec(
-    collectionId: CollectionId,
-    documentId: DocumentId,
     id: FileId,
   ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {
-    const file = await this.repos.file.find(id);
     const content = await this.repos.file.getContent(id);
-    if (
-      !file ||
-      file.collectionId !== collectionId ||
-      file.documentId !== documentId ||
-      !content
-    ) {
+    if (!content) {
       return makeUnsuccessfulResult(
         makeResultError("FileNotFound", { fileId: id }),
       );

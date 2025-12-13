@@ -2,8 +2,9 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
 const buttonRootBase = style({
-  height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
-  paddingBlock: vars.spacing._2,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,
   cursor: "pointer",
@@ -16,6 +17,7 @@ const buttonRootBase = style({
 
 export const Button = {
   root: styleVariants({
+    // Base visual style
     default: [
       buttonRootBase,
       {
@@ -101,5 +103,18 @@ export const Button = {
         },
       },
     ],
+    // Sizes
+    sm: {
+      height: `calc(${vars.spacing._6} + 2 * ${vars.borders.width.thin})`,
+      fontSize: vars.typography.fontSizes.xs,
+    },
+    md: {
+      height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+      fontSize: vars.typography.fontSizes.sm,
+    },
+    lg: {
+      height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+      fontSize: vars.typography.fontSizes.md,
+    },
   }),
 };

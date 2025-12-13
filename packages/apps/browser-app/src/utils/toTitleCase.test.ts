@@ -28,14 +28,14 @@ describe("formats a string into title case", () => {
       expected: "With Fake Acronyms A Bravo",
     },
   ];
-  it.each(testCases)(
-    "case: $identifier -> $expected",
-    ({ identifier, expected }) => {
-      // Exercise
-      const formatted = toTitleCase(identifier);
+  it.each(testCases)("case: $identifier -> $expected", ({
+    identifier,
+    expected,
+  }) => {
+    // Exercise
+    const formatted = toTitleCase(identifier);
 
-      // Verify
-      expect(formatted).toEqual(expected);
-    },
-  );
+    // Verify
+    expect(formatted).toEqual(expected);
+  });
 });

@@ -31,7 +31,7 @@ export default function CreateDocumentForm({ collection }: Props) {
   const onSubmit = async (content: any) => {
     const { success, data } = await mutate(
       collection.id,
-      forms.utils.RHFContent.fromRHFContent(content, schema),
+      await forms.utils.RHFContent.fromRHFContent(content, schema),
     );
     if (success) {
       navigateTo({
@@ -44,7 +44,7 @@ export default function CreateDocumentForm({ collection }: Props) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <RHFContentField schema={schema} control={control} document={null} />
+      <RHFContentField schema={schema} control={control} />
       <div className={cs.CreateDocumentForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Create" />

@@ -7,7 +7,7 @@ import ConversationUtils from "../../../utils/ConversationUtils.js";
 import AssistantContentMessage from "./AssistantContentMessage/AssistantContentMessage.js";
 import ToolCallResult from "./ToolCallResult/ToolCallResult.js";
 import ToolMessage from "./ToolMessage.js";
-import UserMessage from "./UserMessage.js";
+import UserMessage from "./UserMessage/UserMessage.js";
 
 interface Props {
   message: Message;

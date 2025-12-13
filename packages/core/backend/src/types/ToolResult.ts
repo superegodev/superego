@@ -9,6 +9,7 @@ import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
+import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
 import type TypescriptCompilationFailed from "../errors/TypescriptCompilationFailed.js";
 import type CollectionId from "../ids/CollectionId.js";
@@ -155,16 +156,20 @@ namespace ToolResult {
     >
   >;
 
+  // Shared
+  export type InspectFile = BaseToolResult<
+    ToolName.InspectFile,
+    Result<{ fileInfo: string }, FileNotFound>
+  >;
+  export type Unknown = BaseToolResult<
+    string,
+    Result<null, ResultError<"ToolNotFound", null>>
+  >;
+
   // Other tools, not used by an assistant
   export type WriteTypescriptModule = BaseToolResult<
     ToolName.WriteTypescriptModule,
     Result<null, TypescriptCompilationFailed>
-  >;
-
-  // Shared
-  export type Unknown = BaseToolResult<
-    string,
-    Result<null, ResultError<"ToolNotFound", null>>
   >;
 }
 
@@ -176,7 +181,8 @@ type ToolResult =
   | ToolResult.CreateChart
   | ToolResult.CreateDocumentsTable
   | ToolResult.SuggestCollectionDefinition
-  | ToolResult.WriteTypescriptModule
-  | ToolResult.Unknown;
+  | ToolResult.InspectFile
+  | ToolResult.Unknown
+  | ToolResult.WriteTypescriptModule;
 
 export default ToolResult;

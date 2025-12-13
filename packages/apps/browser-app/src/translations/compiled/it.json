@@ -1,4 +1,16 @@
 {
+  "AddFilesButton.tsx_DYNOvl": [
+    {
+      "type": 0,
+      "value": "Configura l'assistente per l'ispezione dei file"
+    }
+  ],
+  "AddFilesButton.tsx_sXiGbo": [
+    {
+      "type": 0,
+      "value": "Aggiungi file"
+    }
+  ],
   "AnyFieldLabel.tsx_Seanpx": [
     {
       "type": 0,
@@ -1164,6 +1176,12 @@
       "value": "Tipo MIME"
     }
   ],
+  "FilePart.tsx_5q3qC0": [
+    {
+      "type": 0,
+      "value": "Scarica"
+    }
+  ],
   "FormattingToolbar.tsx_+im1ZA": [
     {
       "type": 0,
@@ -1580,6 +1598,60 @@
       "value": "Chat Completions"
     }
   ],
+  "InferenceSettings.tsx_AJlr3w": [
+    {
+      "type": 0,
+      "value": "Ispezione dei file"
+    }
+  ],
+  "InferenceSettings.tsx_BmFMKI": [
+    {
+      "type": 0,
+      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "z-ai/glm-4.6"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " e "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "qwen/qwen3-coder"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " funzionano generalmente molto bene."
+    }
+  ],
   "InferenceSettings.tsx_FJPyVh": [
     {
       "type": 0,
@@ -1676,54 +1748,6 @@
       "value": "Voce"
     }
   ],
-  "InferenceSettings.tsx_pdxaYA": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "z-ai/glm-4.6"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", e "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " hanno generalmente prestazioni molto buone."
-    }
-  ],
   "InferenceSettings.tsx_rhSI1/": [
     {
       "type": 0,
@@ -1734,6 +1758,12 @@
     {
       "type": 0,
       "value": ": supporta tutte le API."
+    }
+  ],
+  "InferenceSettings.tsx_uTE4Se": [
+    {
+      "type": 0,
+      "value": "Il nome di un modello multimodale che supporta immagini, video e PDF."
     }
   ],
   "InferenceSettings.tsx_vuJYgx": [
@@ -2628,37 +2658,37 @@
       "value": "ol"
     }
   ],
-  "SendRecordToolbar.tsx_/8QiK8": [
+  "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
       "value": "Configura l'assistente per la trascrizione"
     }
   ],
-  "SendRecordToolbar.tsx_3LSnIf": [
+  "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
       "value": "Termina e invia"
     }
   ],
-  "SendRecordToolbar.tsx_47FYwb": [
+  "SendRecordButtons.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Annulla"
     }
   ],
-  "SendRecordToolbar.tsx_7Y6Yvq": [
+  "SendRecordButtons.tsx_7Y6Yvq": [
     {
       "type": 0,
-      "value": "Record"
+      "value": "Registra"
     }
   ],
-  "SendRecordToolbar.tsx_9WRlF4": [
+  "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Invia"
     }
   ],
-  "SendRecordToolbar.tsx_kNl1RN": [
+  "SendRecordButtons.tsx_kNl1RN": [
     {
       "type": 0,
       "value": "Configura assistente"
@@ -2858,6 +2888,12 @@
     {
       "type": 0,
       "value": "Questa chiamata non ha alcun risultato."
+    }
+  ],
+  "TrayFile.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [
@@ -3105,10 +3141,22 @@
       "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
+  "getIntlMessages.ts_8mRNBD": [
+    {
+      "type": 0,
+      "value": "Mese precedente"
+    }
+  ],
   "getIntlMessages.ts_J1XXSx": [
     {
       "type": 0,
       "value": "La mia fantastica app"
+    }
+  ],
+  "getIntlMessages.ts_PqmLVn": [
+    {
+      "type": 0,
+      "value": "Mese successivo"
     }
   ],
   "getIntlMessages.ts_PyA0WU": [
@@ -3145,6 +3193,18 @@
     {
       "type": 0,
       "value": "In questa sezione puoi vedere l'anteprima live della tua app."
+    }
+  ],
+  "getIntlMessages.ts_rbrahO": [
+    {
+      "type": 0,
+      "value": "Chiudi"
+    }
+  ],
+  "getIntlMessages.ts_zWgbGg": [
+    {
+      "type": 0,
+      "value": "Oggi"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

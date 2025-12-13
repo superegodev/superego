@@ -21,4 +21,11 @@ export default interface InferenceSettings {
     model: string | null;
     voice: string | null;
   };
+  fileInspection: {
+    provider: {
+      baseUrl: string | null;
+      apiKey: string | null;
+    };
+    model: string | null;
+  };
 }

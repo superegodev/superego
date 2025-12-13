@@ -18,7 +18,6 @@ import FieldError from "../../design-system/forms/FieldError.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
-import { useDocument } from "./document.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
 
@@ -40,11 +39,7 @@ export default function FileField({
 }: Props) {
   const { field, fieldState } = useController({ control, name });
   const setFile = async (file: File) =>
-    field.onChange({
-      name: file.name,
-      mimeType: file.type,
-      content: new Uint8Array(await file.arrayBuffer()),
-    });
+    field.onChange({ name: file.name, mimeType: file.type, content: file });
   return (
     <Fieldset
       aria-label={isListItem ? label : undefined}
@@ -85,6 +80,7 @@ export default function FileField({
         >
           {field.value !== null ? (
             <NonNullFileFields
+              key={field.value.name + field.value.mimeType}
               control={control}
               name={name}
               file={field.value}
@@ -144,7 +140,6 @@ function NonNullFileFields({
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
-  const document = useDocument();
   return (
     <div className={cs.FileField.nonNullFileFieldsRoot}>
       <div className={cs.FileField.nonNullFileIcon}>
@@ -181,9 +176,7 @@ function NonNullFileFields({
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}
-          onPress={() =>
-            downloadFile(backend, file, document?.collectionId, document?.id)
-          }
+          onPress={() => downloadFile(backend, file)}
         >
           <PiDownloadSimple />
         </IconButton>

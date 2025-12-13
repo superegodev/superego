@@ -31,12 +31,16 @@ export const EagerRHFAppVersionFilesField = {
   }),
 
   typescriptModule: styleVariants({
-    visible: {},
+    visible: {
+      height: "100%",
+      margin: 0,
+    },
     hidden: { display: "none" },
   }),
 
   typescriptModuleCodeInput: style({
     height: "100%",
+    margin: 0,
   }),
 
   userMessageContentInput: style({

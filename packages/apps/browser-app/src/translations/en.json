@@ -1,4 +1,10 @@
 {
+  "AddFilesButton.tsx_DYNOvl": {
+    "defaultMessage": "Configure assistant for file inspection"
+  },
+  "AddFilesButton.tsx_sXiGbo": {
+    "defaultMessage": "Add file"
+  },
   "AnyFieldLabel.tsx_Seanpx": {
     "defaultMessage": "Required"
   },
@@ -455,6 +461,9 @@
   "FileField.tsx_xxtls6": {
     "defaultMessage": "Mime Type"
   },
+  "FilePart.tsx_5q3qC0": {
+    "defaultMessage": "Download"
+  },
   "FormattingToolbar.tsx_+im1ZA": {
     "defaultMessage": "Blocks"
   },
@@ -653,6 +662,12 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
+  "InferenceSettings.tsx_AJlr3w": {
+    "defaultMessage": "File Inspection"
+  },
+  "InferenceSettings.tsx_BmFMKI": {
+    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
+  },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": fast, cheap, supports all APIs."
   },
@@ -677,14 +692,14 @@
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voice"
   },
-  "InferenceSettings.tsx_pdxaYA": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>openai/gpt-oss-120b</code>, <code>z-ai/glm-4.6</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
-  },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
   },
   "InferenceSettings.tsx_u2jTeg": {
     "defaultMessage": ": supports all APIs."
+  },
+  "InferenceSettings.tsx_uTE4Se": {
+    "defaultMessage": "The name of a multimodal model supporting images, videos, and pdfs."
   },
   "InferenceSettings.tsx_vuJYgx": {
     "defaultMessage": "<p> Create an account with your chosen provider, get an API key, and enter the details below. </p>"
@@ -869,22 +884,22 @@
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
   },
-  "SendRecordToolbar.tsx_/8QiK8": {
+  "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
   },
-  "SendRecordToolbar.tsx_3LSnIf": {
+  "SendRecordButtons.tsx_3LSnIf": {
     "defaultMessage": "Finish and send"
   },
-  "SendRecordToolbar.tsx_47FYwb": {
+  "SendRecordButtons.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "SendRecordToolbar.tsx_7Y6Yvq": {
+  "SendRecordButtons.tsx_7Y6Yvq": {
     "defaultMessage": "Record"
   },
-  "SendRecordToolbar.tsx_9WRlF4": {
+  "SendRecordButtons.tsx_9WRlF4": {
     "defaultMessage": "Send"
   },
-  "SendRecordToolbar.tsx_kNl1RN": {
+  "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
   },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
@@ -970,6 +985,9 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
+  },
+  "TrayFile.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Assistant instructions"
@@ -1058,8 +1076,14 @@
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
   },
+  "getIntlMessages.ts_8mRNBD": {
+    "defaultMessage": "Previous month"
+  },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "My Awesome App"
+  },
+  "getIntlMessages.ts_PqmLVn": {
+    "defaultMessage": "Next month"
   },
   "getIntlMessages.ts_PyA0WU": {
     "defaultMessage": "You can vibe-code the app by asking the assistant."
@@ -1078,6 +1102,12 @@
   },
   "getIntlMessages.ts_hPMG1H": {
     "defaultMessage": "In this section you can see the live preview of your app."
+  },
+  "getIntlMessages.ts_rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "getIntlMessages.ts_zWgbGg": {
+    "defaultMessage": "Today"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

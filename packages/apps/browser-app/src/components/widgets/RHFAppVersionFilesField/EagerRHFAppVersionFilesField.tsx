@@ -1,4 +1,9 @@
-import type { Message, TypescriptModule } from "@superego/backend";
+import type {
+  Message,
+  MessageContentPart,
+  NonEmptyArray,
+  TypescriptModule,
+} from "@superego/backend";
 import { useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -13,6 +18,7 @@ import Preview from "./Preview.js";
 import type Props from "./Props.js";
 import ResolveIncompatibilityModal from "./ResolveIncompatibilityModal.js";
 import * as cs from "./RHFAppVersionFilesField.css.js";
+import useElementHeight from "./useElementHeight.js";
 import useSttAndImplement from "./useSttAndImplement.js";
 import useTypescriptLibs from "./useTypescriptLibs.js";
 import View from "./View.js";
@@ -39,7 +45,12 @@ export default function EagerRHFAppVersionFilesField({
   );
 
   const onSend = async (messageContent: Message.User["content"]) => {
-    const { success, data, error } = await mutate(messageContent);
+    const { success, data, error } = await mutate(
+      // There aren't File parts since allowFileParts is set to false.
+      messageContent as NonEmptyArray<
+        MessageContentPart.Text | MessageContentPart.Audio
+      >,
+    );
     if (success) {
       field.onChange(data);
     } else {
@@ -53,6 +64,11 @@ export default function EagerRHFAppVersionFilesField({
       });
     }
   };
+
+  const {
+    height: userMessageContentInputHeight,
+    ref: userMessageContentInputRef,
+  } = useElementHeight<HTMLDivElement>();
 
   const undoRedo = useUndoRedo();
 
@@ -94,7 +110,7 @@ export default function EagerRHFAppVersionFilesField({
           // There doesn't seem to be a better way to do this, as the monaco
           // editor manages its own width and makes controlling its height
           // externally difficult. Hence the manual pixel value.
-          maxHeight="calc(100svh - 230px)"
+          maxHeight={`calc(100svh - ${156 + userMessageContentInputHeight}px)`}
           className={
             cs.EagerRHFAppVersionFilesField.typescriptModule[
               activeView === View.Code ? "visible" : "hidden"
@@ -106,6 +122,7 @@ export default function EagerRHFAppVersionFilesField({
         />
       </div>
       <UserMessageContentInput
+        ref={userMessageContentInputRef}
         conversation={null}
         onSend={onSend}
         isSending={isPending}
@@ -113,6 +130,7 @@ export default function EagerRHFAppVersionFilesField({
           defaultMessage: "What do you want to build?",
         })}
         autoFocus={true}
+        allowFileParts={false}
         className={cs.EagerRHFAppVersionFilesField.userMessageContentInput}
       />
     </div>

@@ -12,7 +12,65 @@ export declare function Alert(props: {
 export declare function Button(props: {
   /** Defines the visual style. */
   variant?: "default" | "primary" | "invisible" | "danger";
+  /** @defaultValue "md" */
+  size?: "sm" | "md" | "lg";
+  /** @defaultValue false */
+  fullWidth?: boolean;
   onPress?: () => void;
+  children: ReactNode;
+}): JSX.Element;
+
+export declare function IconButton(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible" | undefined;
+  shape?: "square" | "circle" | undefined;
+  /** @defaultValue "md" */
+  size?: "sm" | "md" | "lg";
+  icon:
+    | "caret-up"
+    | "caret-down"
+    | "caret-left"
+    | "caret-right"
+    | "check"
+    | "plus"
+    | "minus"
+    | "x";
+  /** Label for the button, shown in a tooltip. */
+  label: string;
+  onPress?: () => void;
+}): JSX.Element;
+
+/** Checkbox-style toggle. */
+export declare function ToggleButton(props: {
+  /**
+   * Base hex color used to derive the component’s state palette (e.g.,
+   * unselected/selected backgrounds, hover, focus).
+   */
+  color?: `#${string}`;
+  /** @defaultValue "md */
+  size?: "sm" | "md" | "lg";
+  /** @defaultValue false */
+  fullWidth?: boolean;
+  /** Controlled value. */
+  value: boolean;
+  onChange: (newValue: boolean) => void;
+  children: ReactNode;
+}): JSX.Element;
+
+/** Link (anchor element). Always use Link instead of <a>. */
+export declare function Link(props: {
+  href: string;
+  target?: string;
+  style?: CSSProperties;
+  children: ReactNode;
+}): JSX.Element;
+
+/** Link (anchor element) styled as a Button. */
+export declare function ButtonLink(props: {
+  /** Defines the visual style. */
+  variant?: "default" | "primary" | "invisible";
+  href: string;
+  target?: string;
   children: ReactNode;
 }): JSX.Element;
 
@@ -39,15 +97,15 @@ export declare function Echart(props: {
    * - Prefer column charts over line charts for discrete time series data.
    * - Don't specify colors unless needed to disambiguate. In which case, prefer
    *   using these series colors:
-   *   - #228be6
-   *   - #40c057
-   *   - #fab005
-   *   - #fa5252
-   *   - #15aabf
-   *   - #12b886
-   *   - #fd7e14
-   *   - #7950f2
-   *   - #e64980
+   *   - `theme.colors.blues._4`
+   *   - `theme.colors.greens._4`
+   *   - `theme.colors.yellows._4`
+   *   - `theme.colors.reds._4`
+   *   - `theme.colors.cyans._4`
+   *   - `theme.colors.teals._4`
+   *   - `theme.colors.oranges._4`
+   *   - `theme.colors.violets._4`
+   *   - `theme.colors.pinks._4`
    */
   option: EChartsOption;
   /** You should usually set this to 100%. */
@@ -93,6 +151,12 @@ export declare namespace Grid {
   }) => JSX.Element;
 }
 
+/** Renders an image FileRef. */
+export declare function Image(props: {
+  image: FileRef & { mimeType: `image/${string}` };
+  style?: CSSProperties;
+}): JSX.Element;
+
 export declare function PlainDatePicker(props: {
   /**
    * Controlled value for the picker: an ISO 8601 date (YYYY-MM-DD). Set to
@@ -133,6 +197,99 @@ export declare function Select(props: {
   isDisabled?: boolean;
 }): JSX.Element;
 
+export declare function TextField(props: {
+  /** Controlled value for the input. Use `null` to represent empty. */
+  value: string | null;
+  onChange: (
+    /** New value typed by the user, or `null` if the field is empty. */
+    newValue: string | null,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+export declare function NumberField(props: {
+  /** Controlled value for the input. Use `null` to represent empty. */
+  value: number | null;
+  onChange: (
+    /** New value typed by the user, or `null` if the field is empty. */
+    newValue: number | null,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  minValue?: number;
+  maxValue?: number;
+  step?: number;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+export declare function RadioGroup(props: {
+  /** Controlled value for the selected option. Must match an option's `value`. */
+  value: string;
+  onChange: (
+    /** New value selected by the user. */
+    newValue: string,
+  ) => void;
+  /** Available choices. Each `value` must be unique. */
+  options: {
+    /** Unique option identifier. Returned from `onChange`. */
+    value: string;
+    label: ReactNode;
+    description?: ReactNode;
+  }[];
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+/** Full-page calendar. NEVER put inside Tile or Grid. */
+export declare function SimpleMonthCalendar(props: {
+  /**
+   * Renders the cell for the given day. Must return a
+   * `<SimpleMonthCalendar.DayCell />`. When `renderDayPopover` is set,
+   * `DayCell` should not contain interactive elements (e.g., buttons).
+   */
+  renderDayCell(day: string): JSX.Element;
+  /**
+   * Renders a popover that opens when the user clicks on a day cell. Must
+   * return a `<SimpleMonthCalendar.DayPopover />`.
+   */
+  renderDayPopover?: (day: string) => JSX.Element;
+  firstDayOfWeek?: "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
+}): JSX.Element;
+export declare namespace SimpleMonthCalendar {
+  var DayCell: (props: {
+    /** Leaving undefined results in an acceptable default. */
+    style?: {
+      backgroundColor?: string;
+      borderColor?: string;
+      borderStyle?: string;
+      color?: string;
+    };
+    /** NEVER include the day number. It's already rendered. */
+    children: ReactNode;
+  }) => JSX.Element;
+  var DayPopover: (props: {
+    /**
+     * Set to `false` to avoid accidental closures. For example, it should be
+     * set to `false` if there's a dirty form inside the popover.
+     * @defaultValue true
+     */
+    shouldCloseOnInteractOutside?: boolean;
+    /** NEVER include a header with the day or a close/cancel button. It's already rendered. */
+    children: ReactNode;
+  }) => JSX.Element;
+}
+
 /**
  * A table.
  *
@@ -159,14 +316,14 @@ export declare namespace Table {
   var Column: (props: {
     /** Whether a column is a row header (for a11y). */
     isRowHeader?: boolean;
-    /** Defaults to `left`. */
+    /** @defaultValue "left" */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
   var Body: (props: { children: ReactNode }) => JSX.Element;
   var Row: (props: { children: ReactNode }) => JSX.Element;
   var Cell: (props: {
-    /** Defaults to `left`. */
+    /** @defaultValue "left" */
     align?: "left" | "center" | "right";
     children: ReactNode;
   }) => JSX.Element;
@@ -174,15 +331,18 @@ export declare namespace Table {
 
 /** Typography component for consistent text styling. */
 export declare function Text(props: {
-  /** Defaults to `span`. */
+  /**
+   * Note: `span` is inline text without line breaks.
+   * @defaultValue "span"
+   */
   element?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  /** Defaults to `primary`. */
+  /** @defaultValue "primary" */
   color?: "primary" | "secondary";
-  /** Defaults to `sm`. */
+  /** @defaultValue "sm" */
   size?: "xs2" | "xs" | "sm" | "md" | "lg" | "xl" | "xl2" | "xl3" | "xl4";
-  /** Defaults to `regular`. */
+  /** @defaultValue "regular" */
   weight?: "light" | "regular" | "medium" | "semibold" | "bold";
-  /** Defaults to `sansSerif`. */
+  /** @defaultValue "sansSerif" */
   font?: "sansSerif" | "serif" | "monospace";
   /**
    * Prefer to use specific properties. Use when you need more control over

@@ -321,8 +321,6 @@ export default interface Backend {
 
   files: {
     getContent(
-      collectionId: CollectionId,
-      documentId: DocumentId,
       id: FileId,
     ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError>;
   };
@@ -332,14 +330,17 @@ export default interface Backend {
       assistant: AssistantName,
       format: ConversationFormat,
       userMessageContent: Message.User["content"],
-    ): ResultPromise<Conversation, UnexpectedError>;
+    ): ResultPromise<Conversation, FilesNotFound | UnexpectedError>;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
     ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotContinueConversation | UnexpectedError
+      | ConversationNotFound
+      | CannotContinueConversation
+      | FilesNotFound
+      | UnexpectedError
     >;
 
     retryLastResponse(

@@ -12,7 +12,9 @@ import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
 import type DocumentsCreate from "../../usecases/documents/Create.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
+import type FilesGetContent from "../../usecases/files/GetContent.js";
 import Assistant from "../Assistant.js";
+import InspectFile from "../shared-tools/InspectFile.js";
 import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateChart from "./tools/CreateChart.js";
@@ -33,6 +35,7 @@ export default class FactotumAssistant extends Assistant {
       documentsCreate: DocumentsCreate;
       documentsCreateNewVersion: DocumentsCreateNewVersion;
       documentsList: DocumentsList;
+      filesGetContent: FilesGetContent;
     },
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
@@ -77,7 +80,8 @@ export default class FactotumAssistant extends Assistant {
       .replaceAll(
         "$TOOL_NAME_RENDER_DOCUMENTS_TABLE",
         ToolName.CreateDocumentsTable,
-      );
+      )
+      .replaceAll("$TOOL_NAME_INSPECT_FILE", ToolName.InspectFile);
   }
 
   protected getUserContextPrompt(): string {
@@ -113,6 +117,7 @@ export default class FactotumAssistant extends Assistant {
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
       CreateDocumentsTable.get(),
+      InspectFile.get(),
     ];
   }
 
@@ -161,6 +166,13 @@ export default class FactotumAssistant extends Assistant {
         this.usecases.documentsList,
         this.javascriptSandbox,
         this.typescriptCompiler,
+      );
+    }
+    if (InspectFile.is(toolCall)) {
+      return InspectFile.exec(
+        toolCall,
+        this.inferenceService,
+        this.usecases.filesGetContent,
       );
     }
     return Unknown.exec(toolCall);

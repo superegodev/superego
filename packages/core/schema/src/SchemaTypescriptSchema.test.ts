@@ -90,6 +90,13 @@ it("exports the Schema type definition", () => {
       value: boolean;
     }
 
+    /**
+     * Defines a JavaScript object value matching these requirements:
+     * - Must be a plain JavaScript object. No functions, symbols, Dates, Maps,
+     *   Sets, etc.
+     * - Must include the top-level branding property:
+     *   \`{ __dataType: "JsonObject", ... }\`.
+     */
     interface JsonObjectTypeDefinition extends Described {
       dataType: DataType.JsonObject;
       /** Id of the format the JsonObject value must abide by. */
@@ -106,25 +113,26 @@ it("exports the Schema type definition", () => {
        * The object's keys are _mime type matchers_: glob-like strings matching one
        * or more mime types. Examples:
        *
+       * - \`*\\/*\` matches all mime types.
        * - \`image/png\` matches only the mime type \`image/png\`.
        * - \`image/*\` matches all mime types like \`image/png\`, \`image/jpg\`, etc.
        *
        * The object values are _accepted file extensions_, which are either:
        *
-       * - The \`*\` string, which accepts all extensions.
+       * - The \`*\` string (NOT wrapped in an array), which accepts all extensions.
        * - An array of extensions, which accepts only the exact extensions listed.
        *
        * @example
        * {
-       *   "image/*": [".png", ".jpg"],
-       *   "text/plain": "*"
+       *   "text/plain": "*",
+       *   "image/*": [".png", ".jpg"]
        * }
        */
       accept?: { [mimeTypeMatcher: string]: AcceptedFileExtensions } | undefined;
     }
 
     /**
-     * Schema for a structured object with a fixed set of named properties.
+     * Defines a structured object with a fixed set of named properties.
      *
      * @remarks
      * - **All properties are required.** Every key defined in {@link properties}

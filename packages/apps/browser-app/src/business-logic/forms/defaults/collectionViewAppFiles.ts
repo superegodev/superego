@@ -43,6 +43,12 @@ ${collection.id}: {
   displayName: string;
   documents: {
     id: \`Document_\${string}\`;
+    versionId: \`DocumentVersion_\${string}\`;
+    /**
+     * Href to the document details page. The anchor element setting this as
+     * \`href\` must also set \`target=_top\`.
+     */
+    href: string;
     content: ${collection.id}.${collection.latestVersion.schema.rootType};
   }[];
 };

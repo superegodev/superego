@@ -1,7 +1,4 @@
-import type {
-  TypescriptCompilationFailed,
-  TypescriptFile,
-} from "@superego/backend";
+import type { TypescriptFile } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
@@ -11,15 +8,7 @@ export default rd<GetDependencies>("compile", (deps) => {
     name: string;
     source: string;
     libs?: TypescriptFile[];
-  } & (
-    | {
-        expectedTypeErrors: Exclude<
-          TypescriptCompilationFailed["details"],
-          { reason: "MissingOutput" }
-        >["errors"];
-      }
-    | { expectedCompiled: string }
-  );
+  } & ({ expectedTypeErrors: string } | { expectedCompiled: string });
   const testCases: TestCase[] = [
     {
       name: "error: syntax errors",

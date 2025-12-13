@@ -6,14 +6,24 @@ import translate from "../../utils/translate.js";
 import mimeType from "../mimeType/mimeType.js";
 import satisfiesAccept from "./checks/satisfiesAccept.js";
 
+interface RHFProtoFile {
+  name: string;
+  mimeType: string;
+  content: File;
+}
+
 export default function file(
-  accept?: FileTypeDefinition["accept"],
-): v.GenericSchema<FileRef | ProtoFile, FileRef | ProtoFile> {
+  accept: FileTypeDefinition["accept"] | undefined,
+  variant: "normal" | "rhf",
+): v.GenericSchema<
+  FileRef | ProtoFile | RHFProtoFile,
+  FileRef | ProtoFile | RHFProtoFile
+> {
   return v.pipe(
     // Added any type check to make the pipeline types work.
     v.any(),
     v.looseObject({ name: v.string(), mimeType: mimeType() }),
-    v.union([fileRef(), protoFile()], ({ lang }) =>
+    v.union([fileRef(), protoFile(variant)], ({ lang }) =>
       translate(lang, {
         en: "Invalid file: neither a FileRef nor a ProtoFile",
       }),
@@ -30,10 +40,18 @@ function fileRef(): v.GenericSchema<FileRef, FileRef> {
   });
 }
 
-function protoFile(): v.GenericSchema<ProtoFile, ProtoFile> {
-  return v.strictObject({
-    name: v.string(),
-    mimeType: v.string(),
-    content: v.instance(Uint8Array),
-  });
+function protoFile(
+  variant: "normal" | "rhf",
+): v.GenericSchema<ProtoFile | RHFProtoFile, ProtoFile | RHFProtoFile> {
+  return variant === "normal"
+    ? v.strictObject({
+        name: v.string(),
+        mimeType: v.string(),
+        content: v.instance(Uint8Array),
+      })
+    : v.strictObject({
+        name: v.string(),
+        mimeType: v.string(),
+        content: v.instance(File),
+      });
 }

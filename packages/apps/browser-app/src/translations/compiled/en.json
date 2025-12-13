@@ -1,4 +1,16 @@
 {
+  "AddFilesButton.tsx_DYNOvl": [
+    {
+      "type": 0,
+      "value": "Configure assistant for file inspection"
+    }
+  ],
+  "AddFilesButton.tsx_sXiGbo": [
+    {
+      "type": 0,
+      "value": "Add file"
+    }
+  ],
   "AnyFieldLabel.tsx_Seanpx": [
     {
       "type": 0,
@@ -1172,6 +1184,12 @@
       "value": "Mime Type"
     }
   ],
+  "FilePart.tsx_5q3qC0": [
+    {
+      "type": 0,
+      "value": "Download"
+    }
+  ],
   "FormattingToolbar.tsx_+im1ZA": [
     {
       "type": 0,
@@ -1588,6 +1606,60 @@
       "value": "Chat Completions"
     }
   ],
+  "InferenceSettings.tsx_AJlr3w": [
+    {
+      "type": 0,
+      "value": "File Inspection"
+    }
+  ],
+  "InferenceSettings.tsx_BmFMKI": [
+    {
+      "type": 0,
+      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "z-ai/glm-4.6"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "openai/gpt-oss-120b"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": ", and "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "qwen/qwen3-coder"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " generally perform quite well."
+    }
+  ],
   "InferenceSettings.tsx_FJPyVh": [
     {
       "type": 0,
@@ -1684,54 +1756,6 @@
       "value": "Voice"
     }
   ],
-  "InferenceSettings.tsx_pdxaYA": [
-    {
-      "type": 0,
-      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "z-ai/glm-4.6"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", and "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " generally perform quite well."
-    }
-  ],
   "InferenceSettings.tsx_rhSI1/": [
     {
       "type": 0,
@@ -1742,6 +1766,12 @@
     {
       "type": 0,
       "value": ": supports all APIs."
+    }
+  ],
+  "InferenceSettings.tsx_uTE4Se": [
+    {
+      "type": 0,
+      "value": "The name of a multimodal model supporting images, videos, and pdfs."
     }
   ],
   "InferenceSettings.tsx_vuJYgx": [
@@ -2636,37 +2666,37 @@
       "value": "ol"
     }
   ],
-  "SendRecordToolbar.tsx_/8QiK8": [
+  "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
       "value": "Configure assistant for transcription"
     }
   ],
-  "SendRecordToolbar.tsx_3LSnIf": [
+  "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
       "value": "Finish and send"
     }
   ],
-  "SendRecordToolbar.tsx_47FYwb": [
+  "SendRecordButtons.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Cancel"
     }
   ],
-  "SendRecordToolbar.tsx_7Y6Yvq": [
+  "SendRecordButtons.tsx_7Y6Yvq": [
     {
       "type": 0,
       "value": "Record"
     }
   ],
-  "SendRecordToolbar.tsx_9WRlF4": [
+  "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Send"
     }
   ],
-  "SendRecordToolbar.tsx_kNl1RN": [
+  "SendRecordButtons.tsx_kNl1RN": [
     {
       "type": 0,
       "value": "Configure assistant"
@@ -2866,6 +2896,12 @@
     {
       "type": 0,
       "value": "This call has no result."
+    }
+  ],
+  "TrayFile.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_1W2oHf": [
@@ -3113,10 +3149,22 @@
       "value": "An error occurred rendering the chart."
     }
   ],
+  "getIntlMessages.ts_8mRNBD": [
+    {
+      "type": 0,
+      "value": "Previous month"
+    }
+  ],
   "getIntlMessages.ts_J1XXSx": [
     {
       "type": 0,
       "value": "My Awesome App"
+    }
+  ],
+  "getIntlMessages.ts_PqmLVn": [
+    {
+      "type": 0,
+      "value": "Next month"
     }
   ],
   "getIntlMessages.ts_PyA0WU": [
@@ -3153,6 +3201,18 @@
     {
       "type": 0,
       "value": "In this section you can see the live preview of your app."
+    }
+  ],
+  "getIntlMessages.ts_rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "getIntlMessages.ts_zWgbGg": [
+    {
+      "type": 0,
+      "value": "Today"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

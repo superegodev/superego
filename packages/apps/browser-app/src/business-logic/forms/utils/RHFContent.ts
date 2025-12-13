@@ -4,9 +4,10 @@ import {
   type Schema,
   utils,
 } from "@superego/schema";
+import pMap from "p-map";
 
 export default {
-  fromRHFContent(rhfContent: any, schema: Schema): any {
+  async fromRHFContent(rhfContent: any, schema: Schema): Promise<any> {
     return fromRhfValue(rhfContent, utils.getRootType(schema), schema);
   },
 
@@ -15,11 +16,11 @@ export default {
   },
 };
 
-function fromRhfValue(
+async function fromRhfValue(
   rhfValue: any,
   typeDefinition: AnyTypeDefinition,
   schema: Schema,
-): any {
+): Promise<any> {
   if (rhfValue === null) {
     return rhfValue;
   }
@@ -29,17 +30,22 @@ function fromRhfValue(
     case DataType.Number:
     case DataType.Boolean:
     case DataType.JsonObject:
-    case DataType.File:
     case DataType.StringLiteral:
     case DataType.NumberLiteral:
     case DataType.BooleanLiteral:
       return rhfValue;
+    case DataType.File:
+      return {
+        ...rhfValue,
+        content: new Uint8Array(await rhfValue.content.arrayBuffer()),
+      };
     case DataType.Struct:
       return Object.fromEntries(
-        Object.entries(typeDefinition.properties).map(
-          ([propertyName, propertyTypeDefinition]) => [
+        await pMap(
+          Object.entries(typeDefinition.properties),
+          async ([propertyName, propertyTypeDefinition]) => [
             propertyName,
-            fromRhfValue(
+            await fromRhfValue(
               rhfValue[propertyName],
               propertyTypeDefinition,
               schema,

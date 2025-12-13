@@ -1,11 +1,118 @@
-import { style } from "@vanilla-extract/css";
+import { type ComplexStyleRule, style } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
+
+const inputRootBase: ComplexStyleRule = {
+  width: "100%",
+  fontFamily: vars.typography.fontFamilies.sansSerif,
+  fontSize: vars.typography.fontSizes.sm,
+  padding: vars.spacing._2,
+  marginBlockEnd: vars.spacing._2,
+  borderWidth: vars.borders.width.thin,
+  borderRadius: vars.borders.radius.md,
+  borderStyle: "solid",
+  borderColor: vars.colors.border.default,
+  background: vars.colors.background.surface,
+  color: vars.colors.text.primary,
+  selectors: {
+    '[data-invalid="true"] &': {
+      borderColor: vars.colors.semantic.error.border,
+    },
+    '&[data-disabled="true"]': {
+      color: vars.colors.text.secondary,
+    },
+    "&::placeholder": {
+      fontStyle: "italic",
+    },
+  },
+};
+
+export const TextField = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+};
+
+export const NumberField = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+};
+
+export const RadioGroup = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    color: vars.colors.text.primary,
+  }),
+};
+
+export const Radio = {
+  root: style({
+    display: "flex",
+    alignItems: "flex-start",
+    gap: vars.spacing._2,
+    color: vars.colors.text.primary,
+    fontSize: vars.typography.fontSizes.sm,
+    selectors: {
+      "&:not(:last-child)": {
+        marginBlockEnd: vars.spacing._2,
+      },
+      "&::before": {
+        content: "''",
+        display: "block",
+        width: vars.spacing._4,
+        height: vars.spacing._4,
+        boxSizing: "border-box",
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+        background: vars.colors.background.surface,
+        borderRadius: vars.borders.radius.full,
+        transition: "border-width 200ms",
+      },
+      '&[data-pressed="true"]::before': {
+        borderColor: vars.colors.text.primary,
+      },
+      '&[data-selected="true"]::before': {
+        borderColor: vars.colors.text.primary,
+        borderWidth: `calc(2 * ${vars.borders.width.thick})`,
+      },
+      '&[data-selected="true"][data-pressed="true"]::before': {
+        borderColor: vars.colors.text.primary,
+      },
+      '&[data-focus-visible="true"]::before': {
+        borderColor: vars.colors.accent,
+        outline: `2px solid ${vars.colors.accent}`,
+        outlineOffset: "-2px",
+      },
+      '&[data-disabled="true"]': {
+        color: vars.colors.text.secondary,
+      },
+      '&[data-disabled="true"]::before': {
+        borderColor: vars.colors.border.default,
+      },
+    },
+  }),
+
+  label: style({
+    lineHeight: 1.4,
+  }),
+
+  description: style({
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.xs,
+  }),
+};
 
 export const Select = {
   root: style({
     display: "flex",
     flexDirection: "column",
   }),
+};
+
+export const Input = {
+  root: style(inputRootBase),
 };
 
 export const SelectButton = {
@@ -118,31 +225,12 @@ export const DatePicker = {
 };
 
 export const DatePickerInput = {
-  root: style({
-    display: "flex",
-    width: "100%",
-    fontFamily: vars.typography.fontFamilies.sansSerif,
-    fontSize: vars.typography.fontSizes.sm,
-    padding: vars.spacing._2,
-    marginBlockEnd: vars.spacing._2,
-    borderWidth: vars.borders.width.thin,
-    borderRadius: vars.borders.radius.md,
-    borderStyle: "solid",
-    borderColor: vars.colors.border.default,
-    background: vars.colors.background.surface,
-    color: vars.colors.text.primary,
-    selectors: {
-      '[data-invalid="true"] &': {
-        borderColor: vars.colors.semantic.error.border,
-      },
-      '&[data-disabled="true"]': {
-        color: vars.colors.text.secondary,
-      },
-      "&::placeholder": {
-        fontStyle: "italic",
-      },
+  root: style([
+    inputRootBase,
+    {
+      display: "flex",
     },
-  }),
+  ]),
 
   dateInput: style({
     border: 0,

@@ -1,4 +1,10 @@
 {
+  "AddFilesButton.tsx_DYNOvl": {
+    "defaultMessage": "Configura l'assistente per l'ispezione dei file"
+  },
+  "AddFilesButton.tsx_sXiGbo": {
+    "defaultMessage": "Aggiungi file"
+  },
   "AnyFieldLabel.tsx_Seanpx": {
     "defaultMessage": "Obbligatorio"
   },
@@ -455,6 +461,9 @@
   "FileField.tsx_xxtls6": {
     "defaultMessage": "Tipo MIME"
   },
+  "FilePart.tsx_5q3qC0": {
+    "defaultMessage": "Scarica"
+  },
   "FormattingToolbar.tsx_+im1ZA": {
     "defaultMessage": "Blocchi"
   },
@@ -653,6 +662,12 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
+  "InferenceSettings.tsx_AJlr3w": {
+    "defaultMessage": "Ispezione dei file"
+  },
+  "InferenceSettings.tsx_BmFMKI": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
+  },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": veloce, economico, supporta tutte le API."
   },
@@ -677,14 +692,14 @@
   "InferenceSettings.tsx_mnJYBQ": {
     "defaultMessage": "Voce"
   },
-  "InferenceSettings.tsx_pdxaYA": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>openai/gpt-oss-120b</code>, <code>z-ai/glm-4.6</code>, e <code>qwen/qwen3-coder</code> hanno generalmente prestazioni molto buone."
-  },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"
   },
   "InferenceSettings.tsx_u2jTeg": {
     "defaultMessage": ": supporta tutte le API."
+  },
+  "InferenceSettings.tsx_uTE4Se": {
+    "defaultMessage": "Il nome di un modello multimodale che supporta immagini, video e PDF."
   },
   "InferenceSettings.tsx_vuJYgx": {
     "defaultMessage": "<p> Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. </p>"
@@ -842,22 +857,22 @@
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
   },
-  "SendRecordToolbar.tsx_/8QiK8": {
+  "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },
-  "SendRecordToolbar.tsx_3LSnIf": {
+  "SendRecordButtons.tsx_3LSnIf": {
     "defaultMessage": "Termina e invia"
   },
-  "SendRecordToolbar.tsx_47FYwb": {
+  "SendRecordButtons.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "SendRecordToolbar.tsx_7Y6Yvq": {
-    "defaultMessage": "Record"
+  "SendRecordButtons.tsx_7Y6Yvq": {
+    "defaultMessage": "Registra"
   },
-  "SendRecordToolbar.tsx_9WRlF4": {
+  "SendRecordButtons.tsx_9WRlF4": {
     "defaultMessage": "Invia"
   },
-  "SendRecordToolbar.tsx_kNl1RN": {
+  "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configura assistente"
   },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
@@ -931,6 +946,9 @@
   },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
+  },
+  "TrayFile.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
   },
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Istruzioni dell'assistente"
@@ -1019,8 +1037,14 @@
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
+  "getIntlMessages.ts_8mRNBD": {
+    "defaultMessage": "Mese precedente"
+  },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "La mia fantastica app"
+  },
+  "getIntlMessages.ts_PqmLVn": {
+    "defaultMessage": "Mese successivo"
   },
   "getIntlMessages.ts_PyA0WU": {
     "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
@@ -1039,6 +1063,12 @@
   },
   "getIntlMessages.ts_hPMG1H": {
     "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
+  },
+  "getIntlMessages.ts_rbrahO": {
+    "defaultMessage": "Chiudi"
+  },
+  "getIntlMessages.ts_zWgbGg": {
+    "defaultMessage": "Oggi"
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "È necessaria la compilazione TypeScript"

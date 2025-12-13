@@ -166,7 +166,7 @@ export const Label = {
   }),
 };
 
-const inputComponentRootBase: ComplexStyleRule = {
+const inputRootBase: ComplexStyleRule = {
   width: "100%",
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.sm,
@@ -192,12 +192,12 @@ const inputComponentRootBase: ComplexStyleRule = {
 };
 
 export const Input = {
-  root: style(inputComponentRootBase),
+  root: style(inputRootBase),
 };
 
 export const TextArea = {
   root: style([
-    inputComponentRootBase,
+    inputRootBase,
     {
       // Experimental property:
       // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
@@ -242,7 +242,7 @@ export const DatePicker = {
 
 export const DatePickerInput = {
   root: style([
-    inputComponentRootBase,
+    inputRootBase,
     {
       display: "flex",
     },

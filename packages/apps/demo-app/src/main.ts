@@ -51,6 +51,13 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
           model: "gpt-4o-mini-tts",
           voice: "nova",
         },
+        fileInspection: {
+          provider: {
+            baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+            apiKey: null,
+          },
+          model: "google/gemini-2.0-flash-001",
+        },
       }
     : {
         chatCompletions: {
@@ -65,6 +72,10 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
           provider: { baseUrl: null, apiKey: null },
           model: null,
           voice: null,
+        },
+        fileInspection: {
+          provider: { baseUrl: null, apiKey: null },
+          model: null,
         },
       },
   assistants: {

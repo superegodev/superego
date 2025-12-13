@@ -13,4 +13,10 @@ export default interface IntlMessages {
     infoLine3: string;
     collectionInfo: string;
   };
+  SimpleMonthCalendar: {
+    todayButton: string;
+    previousMonthButton: string;
+    nextMonthButton: string;
+    closeDayPopoverButton: string;
+  };
 }

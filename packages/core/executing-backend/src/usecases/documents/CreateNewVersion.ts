@@ -167,22 +167,13 @@ export default class DocumentsCreateNewVersion extends Usecase<
     );
     const referencedFiles =
       await this.repos.file.findAllWhereIdIn(referencedFileIds);
-    // Extraneous files are files that exist, but they were not created for this
-    // document.
-    const extraneousFileIds = referencedFiles
-      .filter(({ documentId }) => documentId !== id)
-      .map(({ id }) => id);
     const missingFileIds = difference(
       referencedFileIds,
       referencedFiles.map(({ id }) => id),
     );
-    if (!isEmpty(extraneousFileIds) || !isEmpty(missingFileIds)) {
+    if (!isEmpty(missingFileIds)) {
       return makeUnsuccessfulResult(
-        makeResultError("FilesNotFound", {
-          collectionId: document.collectionId,
-          documentId: id,
-          fileIds: [...extraneousFileIds, ...missingFileIds],
-        }),
+        makeResultError("FilesNotFound", { fileIds: missingFileIds }),
       );
     }
 
@@ -208,9 +199,13 @@ export default class DocumentsCreateNewVersion extends Usecase<
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({
       id: protoFileWithId.id,
-      collectionId: document.collectionId,
-      documentId: id,
-      createdWithDocumentVersionId: documentVersion.id,
+      referencedBy: [
+        {
+          collectionId: collectionId,
+          documentId: id,
+          documentVersionId: documentVersion.id,
+        },
+      ],
       createdAt: now,
       content: protoFileWithId.content,
     }));
@@ -226,6 +221,11 @@ export default class DocumentsCreateNewVersion extends Usecase<
       await this.repos.document.replace(updatedDocument);
     }
     await this.repos.documentVersion.insert(documentVersion);
+    await this.repos.file.addReferenceToAll(referencedFileIds, {
+      collectionId: collectionId,
+      documentId: id,
+      documentVersionId: documentVersion.id,
+    });
     await this.repos.file.insertAll(filesWithContent);
 
     return makeSuccessfulResult(

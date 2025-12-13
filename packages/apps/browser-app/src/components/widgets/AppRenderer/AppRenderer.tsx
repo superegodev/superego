@@ -5,11 +5,22 @@ import type {
   Settings,
 } from "@superego/app-sandbox/types";
 import type { App, Document } from "@superego/backend";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import { listDocumentsQuery } from "../../../business-logic/backend/hooks.js";
+import {
+  listDocumentsQuery,
+  useCreateDocument,
+  useCreateNewDocumentVersion,
+} from "../../../business-logic/backend/hooks.js";
+import useBackend from "../../../business-logic/backend/useBackend.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import {
+  fromHref,
+  toHref,
+} from "../../../business-logic/navigation/RouteUtils.js";
+import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import * as cs from "./AppRenderer.css.js";
@@ -22,8 +33,20 @@ interface Props {
 export default function AppRenderer({ app }: Props) {
   const intl = useIntl();
   const theme = useTheme();
+  const { navigateTo } = useNavigationState();
   const { collections } = useGlobalData();
   const collectionsById = CollectionUtils.makeByIdMap(collections);
+
+  const backend = {
+    // Pass these as mutation so the query cache is automatically invalidated.
+    documents: {
+      create: useCreateDocument().mutate,
+      createNewVersion: useCreateNewDocumentVersion().mutate,
+    },
+    files: {
+      getContent: useBackend().files.getContent,
+    },
+  };
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
@@ -37,6 +60,13 @@ export default function AppRenderer({ app }: Props) {
   const intlMessages: IntlMessages = useMemo(
     () => getIntlMessages(intl),
     [intl],
+  );
+
+  const sandboxNavigateTo = useCallback(
+    (href: string) => {
+      navigateTo(fromHref(new URL(href).pathname));
+    },
+    [navigateTo],
   );
 
   const isCompatible = app.latestVersion.targetCollections.every(
@@ -64,6 +94,8 @@ export default function AppRenderer({ app }: Props) {
     >
       {(...documentsLists) => (
         <Sandbox
+          backend={backend}
+          navigateTo={sandboxNavigateTo}
           iframeSrc={
             import.meta.env["VITE_SANDBOX_URL"] ??
             "http://app-sandbox.localhost:5173/app-sandbox.html"
@@ -80,6 +112,12 @@ export default function AppRenderer({ app }: Props) {
                   displayName: CollectionUtils.getDisplayName(collection),
                   documents: documentsLists[index]!.map((document) => ({
                     id: document.id,
+                    versionId: document.latestVersion.id,
+                    href: `${window.location.origin}${toHref({
+                      name: RouteName.Document,
+                      collectionId: collection.id,
+                      documentId: document.id,
+                    })}`,
                     content: (document as Document).latestVersion.content,
                   })),
                 },
