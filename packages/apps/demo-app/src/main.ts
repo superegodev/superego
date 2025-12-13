@@ -51,10 +51,12 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager({
           model: "gpt-4o-mini-tts",
           voice: "nova",
         },
-        // TODO: add demo API endpoint and configuration
         fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
+          provider: {
+            baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+            apiKey: null,
+          },
+          model: "google/gemini-2.0-flash-001",
         },
       }
     : {

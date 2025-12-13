@@ -11,7 +11,6 @@ interface Env {
 }
 
 export default {
-  // TODO: support file inspection
   async fetch(request, env) {
     const url = new URL(request.url);
     const isChatCompletionsRequest =
