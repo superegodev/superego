@@ -4,8 +4,11 @@ import Button from "../components/Button/Button.js";
 import ButtonLink from "../components/ButtonLink/ButtonLink.js";
 import DefaultApp from "../components/DefaultApp/DefaultApp.js";
 import Echart from "../components/Echart/Echart.js";
+import NumberField from "../components/forms/NumberField.js";
 import PlainDatePicker from "../components/forms/PlainDatePicker.js";
+import RadioGroup from "../components/forms/RadioGroup.js";
 import Select from "../components/forms/Select.js";
+import TextField from "../components/forms/TextField.js";
 import Grid from "../components/Grid/Grid.js";
 import IconButton from "../components/IconButton/IconButton.js";
 import Image from "../components/Image/Image.js";
@@ -35,10 +38,13 @@ export default function registerDependencies() {
         IconButton,
         Image,
         Link,
+        NumberField,
         PlainDatePicker,
+        RadioGroup,
         Select,
         Table,
         Text,
+        TextField,
         Tile,
         ToggleButton,
       },

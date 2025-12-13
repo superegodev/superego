@@ -197,6 +197,60 @@ export declare function Select(props: {
   isDisabled?: boolean;
 }): JSX.Element;
 
+export declare function TextField(props: {
+  /** Controlled value for the input. Use `null` to represent empty. */
+  value: string | null;
+  onChange: (
+    /** New value typed by the user, or `null` if the field is empty. */
+    newValue: string | null,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+export declare function NumberField(props: {
+  /** Controlled value for the input. Use `null` to represent empty. */
+  value: number | null;
+  onChange: (
+    /** New value typed by the user, or `null` if the field is empty. */
+    newValue: number | null,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  minValue?: number;
+  maxValue?: number;
+  step?: number;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+export declare function RadioGroup(props: {
+  /** Controlled value for the selected option. Must match an option's `value`. */
+  value: string;
+  onChange: (
+    /** New value selected by the user. */
+    newValue: string,
+  ) => void;
+  /** Available choices. Each `value` must be unique. */
+  options: {
+    /** Unique option identifier. Returned from `onChange`. */
+    value: string;
+    label: ReactNode;
+    description?: ReactNode;
+  }[];
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  isDisabled?: boolean;
+}): JSX.Element;
+
 /** Full-page calendar. NEVER put inside Tile or Grid. */
 export declare function SimpleMonthCalendar(props: {
   /**
