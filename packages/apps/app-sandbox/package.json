@@ -44,10 +44,10 @@
     "echarts": "^6.0.0",
     "luxon": "^3.7.2",
     "playwright": "^1.57.0",
-    "react": "^19.2.1",
+    "react": "^19.2.3",
     "react-aria": "^3.44.0",
     "react-aria-components": "^1.13.0",
-    "react-dom": "^19.2.1",
+    "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "react-intl": "^7.1.14",
     "react-stately": "^3.42.0"

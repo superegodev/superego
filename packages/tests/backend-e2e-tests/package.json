@@ -8,7 +8,7 @@
     "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.0.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -26,7 +26,7 @@
     "@superego/vitest-registered": "workspace:*",
     "@vitest/browser": "^4.0.15",
     "@vitest/browser-playwright": "^4.0.15",
-    "es-toolkit": "^1.42.0",
+    "es-toolkit": "^1.43.0",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.57.0",
     "vitest": "^4.0.15"

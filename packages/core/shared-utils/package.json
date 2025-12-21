@@ -14,7 +14,7 @@
     "bench": "vitest bench"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.3",
+    "@fast-check/vitest": "^0.2.4",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
   },
@@ -23,7 +23,7 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
-    "es-toolkit": "^1.42.0",
+    "es-toolkit": "^1.43.0",
     "uuid": "^13.0.0",
     "valibot": "^1.2.0"
   }

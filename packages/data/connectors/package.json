@@ -19,7 +19,7 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.3",
+    "@fast-check/vitest": "^0.2.4",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
   },
@@ -29,7 +29,7 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
-    "es-toolkit": "^1.42.0",
-    "p-retry": "^7.1.0"
+    "es-toolkit": "^1.43.0",
+    "p-retry": "^7.1.1"
   }
 }
