@@ -21,6 +21,7 @@
     "@msgpack/msgpack": "^3.1.2",
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
+    "flexsearch": "^0.8.212",
     "jsondiffpatch": "^0.7.3"
   }
 }

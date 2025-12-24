@@ -5857,6 +5857,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@vitest/browser": "npm:^4.0.15"
     "@vitest/browser-playwright": "npm:^4.0.15"
+    flexsearch: "npm:^0.8.212"
     playwright: "npm:^1.57.0"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.15"
@@ -6018,6 +6019,9 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/global-types": "workspace:*"
+    "@tiptap/core": "npm:^3.13.0"
+    "@tiptap/pm": "npm:^3.13.0"
+    "@tiptap/starter-kit": "npm:^3.13.0"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:^25.0.2"
@@ -6055,6 +6059,7 @@ __metadata:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@types/node": "npm:^25.0.2"
+    flexsearch: "npm:^0.8.212"
     jsondiffpatch: "npm:^0.7.3"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.15"
@@ -6544,7 +6549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/starter-kit@npm:3.13.0":
+"@tiptap/starter-kit@npm:3.13.0, @tiptap/starter-kit@npm:^3.13.0":
   version: 3.13.0
   resolution: "@tiptap/starter-kit@npm:3.13.0"
   dependencies:
@@ -10035,6 +10040,13 @@ __metadata:
   version: 1.1.1
   resolution: "flattie@npm:1.1.1"
   checksum: 10c0/a8f8242c7af126cb2f1aa4a067af338fce609fc4c4df183c626fcc70a46c1878ce4aa88cd0dc8ef8f583ad4e7088a3b11ebeb6a62c9c97d75c0b1b0f08182ee3
+  languageName: node
+  linkType: hard
+
+"flexsearch@npm:^0.8.212":
+  version: 0.8.212
+  resolution: "flexsearch@npm:0.8.212"
+  checksum: 10c0/557a320fe028e694579d9f3f4cacd6acab6bcfa9101a63dbacf23ddbc872310a3370586a12007cf080ed2dfe3c99e6b21dd1e83697f2b4734722fbd43285d782
   languageName: node
   linkType: hard
 

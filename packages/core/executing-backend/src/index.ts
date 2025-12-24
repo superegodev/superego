@@ -32,6 +32,7 @@ export type { default as ConversationRepository } from "./requirements/Conversat
 export type { default as DataRepositories } from "./requirements/DataRepositories.js";
 export type { default as DataRepositoriesManager } from "./requirements/DataRepositoriesManager.js";
 export type { default as DocumentRepository } from "./requirements/DocumentRepository.js";
+export type { default as DocumentTextSearchIndex } from "./requirements/DocumentTextSearchIndex.js";
 export type { default as DocumentVersionRepository } from "./requirements/DocumentVersionRepository.js";
 export type { default as FileRepository } from "./requirements/FileRepository.js";
 export type { default as GlobalSettingsRepository } from "./requirements/GlobalSettingsRepository.js";

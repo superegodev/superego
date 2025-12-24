@@ -1,6 +1,7 @@
 import type { AppId, AppType } from "@superego/backend";
 import type { AppEntity } from "@superego/executing-backend";
 
+// TODO: convert to type, remove as any from .all()
 export default interface SqliteApp {
   id: AppId;
   type: AppType;

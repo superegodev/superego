@@ -38,6 +38,7 @@ export default class DemoDataRepositoriesManager
         documents: {},
         documentVersions: {},
         files: {},
+        flexsearchIndexes: [],
         globalSettings: currentData?.globalSettings ?? {
           value: this.defaultGlobalSettings,
         },
@@ -66,6 +67,7 @@ export default class DemoDataRepositoriesManager
       documents: {},
       documentVersions: {},
       files: {},
+      flexsearchIndexes: [],
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;
@@ -97,6 +99,7 @@ export default class DemoDataRepositoriesManager
           "documents",
           "documentVersions",
           "files",
+          "flexsearchIndexes",
           "globalSettings",
         ] as const
       ).forEach((property) => {

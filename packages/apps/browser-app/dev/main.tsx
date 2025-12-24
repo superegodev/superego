@@ -97,3 +97,5 @@ window.addEventListener("message", (evt) => {
     queryClient.invalidateQueries({ queryKey: ["listCollections"] });
   }
 });
+
+(window as any).backend = backend;

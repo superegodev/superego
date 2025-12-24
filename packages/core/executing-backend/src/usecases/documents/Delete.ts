@@ -73,6 +73,7 @@ export default class DocumentsDelete extends Usecase<
       collectionId: collectionId,
       documentId: id,
     });
+    await this.repos.documentTextSearchIndex.remove(collectionId, id);
     await this.repos.documentVersion.deleteAllWhereDocumentIdEq(id);
     await this.repos.document.delete(id);
 

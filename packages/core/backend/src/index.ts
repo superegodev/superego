@@ -110,6 +110,7 @@ export type { default as MessageContentPart } from "./types/MessageContentPart.j
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";
+export type { default as TextSearchResult } from "./types/TextSearchResult.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
 export type { default as TypescriptFile } from "./types/TypescriptFile.js";

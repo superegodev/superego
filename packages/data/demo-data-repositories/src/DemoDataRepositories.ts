@@ -8,6 +8,7 @@ import DemoCollectionRepository from "./repositories/DemoCollectionRepository.js
 import DemoCollectionVersionRepository from "./repositories/DemoCollectionVersionRepository.js";
 import DemoConversationRepository from "./repositories/DemoConversationRepository.js";
 import DemoDocumentRepository from "./repositories/DemoDocumentRepository.js";
+import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
 import DemoDocumentVersionRepository from "./repositories/DemoDocumentVersionRepository.js";
 import DemoFileRepository from "./repositories/DemoFileRepository.js";
 import DemoGlobalSettingsRepository from "./repositories/DemoGlobalSettingsRepository.js";
@@ -21,6 +22,7 @@ export default class DemoDataRepositories implements DataRepositories {
   collectionVersion: DemoCollectionVersionRepository;
   conversation: DemoConversationRepository;
   document: DemoDocumentRepository;
+  documentTextSearchIndex: DemoDocumentTextSearchIndex;
   documentVersion: DemoDocumentVersionRepository;
   file: DemoFileRepository;
   globalSettings: DemoGlobalSettingsRepository;
@@ -47,6 +49,10 @@ export default class DemoDataRepositories implements DataRepositories {
       onWrite,
     );
     this.document = new DemoDocumentRepository(data.documents, onWrite);
+    this.documentTextSearchIndex = new DemoDocumentTextSearchIndex(
+      data.flexsearchIndexes,
+      onWrite,
+    );
     this.documentVersion = new DemoDocumentVersionRepository(
       data.documentVersions,
       onWrite,
@@ -71,6 +77,7 @@ export default class DemoDataRepositories implements DataRepositories {
     this.collectionVersion.dispose();
     this.conversation.dispose();
     this.document.dispose();
+    this.documentTextSearchIndex.dispose();
     this.documentVersion.dispose();
     this.file.dispose();
     this.globalSettings.dispose();

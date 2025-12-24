@@ -69,6 +69,7 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
+import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
 
@@ -316,6 +317,16 @@ export default interface Backend {
     ): ResultPromise<
       DocumentVersion,
       DocumentVersionNotFound | UnexpectedError
+    >;
+
+    search(
+      /** Null searches all collections. */
+      collectionId: CollectionId | null,
+      /** Full-text query. */
+      query: string,
+    ): ResultPromise<
+      TextSearchResult<LiteDocument>[],
+      CollectionNotFound | UnexpectedError
     >;
   };
 
