@@ -1,6 +1,7 @@
 import type { DatabaseSync } from "node:sqlite";
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type { DocumentTextSearchIndex } from "@superego/executing-backend";
+import type { TextChunks } from "@superego/schema";
 import { Document as FlexsearchDocument } from "flexsearch";
 import type SqliteFlexsearchIndex from "../types/SqliteFlexsearchIndex.js";
 
@@ -34,7 +35,7 @@ export default class SqliteDocumentTextSearchIndex
   async upsert(
     collectionId: CollectionId,
     documentId: DocumentId,
-    textChunks: { [path: string]: string[] },
+    textChunks: TextChunks,
   ): Promise<void> {
     this.importIndex();
     this.index.remove(documentId);
@@ -74,7 +75,7 @@ export default class SqliteDocumentTextSearchIndex
       merge: true,
       enrich: true,
       highlight: {
-        template: '<b class="matched-text">$1</b>',
+        template: "«$1»",
         boundary: 128,
       },
     });

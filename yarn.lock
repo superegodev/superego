@@ -5855,6 +5855,7 @@ __metadata:
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
+    "@superego/schema": "workspace:*"
     "@vitest/browser": "npm:^4.0.15"
     "@vitest/browser-playwright": "npm:^4.0.15"
     flexsearch: "npm:^0.8.212"
@@ -6058,6 +6059,7 @@ __metadata:
     "@msgpack/msgpack": "npm:^3.1.2"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
+    "@superego/schema": "workspace:*"
     "@types/node": "npm:^25.0.2"
     flexsearch: "npm:^0.8.212"
     jsondiffpatch: "npm:^0.7.3"

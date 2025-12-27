@@ -1,5 +1,6 @@
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type { DocumentTextSearchIndex } from "@superego/executing-backend";
+import type { TextChunks } from "@superego/schema";
 import { Document as FlexsearchDocument } from "flexsearch";
 import type { FlexsearchIndexData } from "../Data.js";
 import Disposable from "../utils/Disposable.js";
@@ -39,7 +40,7 @@ export default class DemoDocumentTextSearchIndex
   async upsert(
     collectionId: CollectionId,
     documentId: DocumentId,
-    textChunks: { [path: string]: string[] },
+    textChunks: TextChunks,
   ): Promise<void> {
     this.ensureNotDisposed();
     this.importIndex();
@@ -82,7 +83,7 @@ export default class DemoDocumentTextSearchIndex
       merge: true,
       enrich: true,
       highlight: {
-        template: '<b class="matched-text">$1</b>',
+        template: "«$1»",
         boundary: 128,
       },
     });

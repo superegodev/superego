@@ -329,3 +329,13 @@ export const useUpdateGlobalSettings = makeUseBackendMutation(
   "update",
   () => [["getGlobalSettings"]],
 );
+
+/*
+ * Search
+ */
+
+export const useSearchDocuments = makeUseBackendMutation(
+  "documents",
+  "search",
+  () => [],
+);

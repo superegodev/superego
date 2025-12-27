@@ -22,6 +22,7 @@
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
+    "@superego/schema": "workspace:*",
     "flexsearch": "^0.8.212"
   }
 }

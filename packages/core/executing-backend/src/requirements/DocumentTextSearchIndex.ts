@@ -1,12 +1,11 @@
 import type { CollectionId, DocumentId } from "@superego/backend";
+import type { TextChunks } from "@superego/schema";
 
 export default interface DocumentTextSearchIndex {
   upsert(
     collectionId: CollectionId,
     documentId: DocumentId,
-    textChunks: {
-      [path: string]: string[];
-    },
+    textChunks: TextChunks,
   ): Promise<void>;
   remove(collectionId: CollectionId, documentId: DocumentId): Promise<void>;
   search(

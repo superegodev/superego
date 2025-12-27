@@ -1,12 +1,15 @@
 import { PiGear, PiMagnifyingGlass, PiRobot } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CollectionsTree from "../../widgets/CollectionsTree/CollectionsTree.js";
 import PrimarySidebarPanelAction from "./PrimarySidebarPanelAction.js";
 import * as cs from "./Root.css.js";
 
 export default function PrimarySidebarPanel() {
+  const { open: openSearch } = useSearchModalState();
+
   return (
     <Shell.Panel slot="PrimarySidebar">
       <Shell.Panel.Content
@@ -18,11 +21,7 @@ export default function PrimarySidebarPanel() {
             <PiRobot />
             <FormattedMessage defaultMessage="Ask" />
           </PrimarySidebarPanelAction>
-          <PrimarySidebarPanelAction
-            type="button"
-            isDisabled={true}
-            onPress={() => {}}
-          >
+          <PrimarySidebarPanelAction type="button" onPress={openSearch}>
             <PiMagnifyingGlass />
             <FormattedMessage defaultMessage="Search" />
           </PrimarySidebarPanelAction>
