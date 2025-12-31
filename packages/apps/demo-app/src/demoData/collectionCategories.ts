@@ -1,26 +1,7 @@
-import type { CollectionCategoryEntity } from "@superego/executing-backend";
-import { Id } from "@superego/shared-utils";
+import type { DemoCollectionCategory } from "./types.js";
 
-export const Finance: CollectionCategoryEntity = {
-  id: Id.generate.collectionCategory(),
-  name: "Finance",
-  icon: "💰️",
-  parentId: null,
-  createdAt: new Date(),
-};
-
-export const Health: CollectionCategoryEntity = {
-  id: Id.generate.collectionCategory(),
-  name: "Health",
-  icon: "❤️",
-  parentId: null,
-  createdAt: new Date(),
-};
-
-export const Car: CollectionCategoryEntity = {
-  id: Id.generate.collectionCategory(),
-  name: "Car",
-  icon: "🚙",
-  parentId: null,
-  createdAt: new Date(),
-};
+export default [
+  { name: "Finance", icon: "💰️", parentId: null },
+  { name: "Health", icon: "❤️", parentId: null },
+  { name: "Car", icon: "🚙", parentId: null },
+] satisfies DemoCollectionCategory[];

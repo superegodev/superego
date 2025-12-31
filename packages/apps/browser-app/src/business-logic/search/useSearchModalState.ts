@@ -2,13 +2,17 @@ import { create } from "zustand";
 
 interface SearchModalState {
   isOpen: boolean;
-  setIsOpen(isOpen: boolean): void;
+  open(): void;
+  close(): void;
 }
 
 const useSearchModalStateStore = create<SearchModalState>((set) => ({
   isOpen: false,
-  setIsOpen(isOpen: boolean) {
-    set({ isOpen });
+  open() {
+    set({ isOpen: true });
+  },
+  close() {
+    set({ isOpen: false });
   },
 }));
 

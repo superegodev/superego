@@ -1,34 +1,17 @@
-import { DocumentVersionCreator } from "@superego/backend";
-import type {
-  CollectionEntity,
-  CollectionVersionEntity,
-  DocumentEntity,
-  DocumentVersionEntity,
-} from "@superego/executing-backend";
-import { Id } from "@superego/shared-utils";
-import contacts from "./contactsData.js";
+import contactsData from "./contactsData.js";
 import contactsSchema from "./contactsSchema.js";
+import type { DemoCollection } from "./types.js";
 
-const collection: CollectionEntity = {
-  id: Id.generate.collection(),
+export default {
+  categoryName: null,
   settings: {
     name: "Contacts",
-    icon: "️📞️",
-    collectionCategoryId: null,
-    defaultCollectionViewAppId: null,
+    icon: "☎️",
     description: null,
     assistantInstructions: null,
   },
-  remote: null,
-  createdAt: new Date(),
-};
-
-const collectionVersion: CollectionVersionEntity = {
-  id: Id.generate.collectionVersion(),
-  previousVersionId: null,
-  collectionId: collection.id,
   schema: contactsSchema,
-  settings: {
+  versionSettings: {
     contentSummaryGetter: {
       source: `
 import type { Contact } from "./CollectionSchema.js";
@@ -58,44 +41,5 @@ export default function getContentSummary(contact) {
       `.trim(),
     },
   },
-  migration: null,
-  remoteConverters: null,
-  createdAt: new Date(),
-};
-
-const documents: DocumentEntity[] = [];
-const documentVersions: DocumentVersionEntity[] = [];
-
-for (const contact of contacts) {
-  const document: DocumentEntity = {
-    id: Id.generate.document(),
-    remoteId: null,
-    remoteUrl: null,
-    latestRemoteDocument: null,
-    collectionId: collection.id,
-    createdAt: new Date(),
-  };
-  const documentVersion: DocumentVersionEntity = {
-    id: Id.generate.documentVersion(),
-    remoteId: null,
-    previousVersionId: null,
-    collectionId: collection.id,
-    documentId: document.id,
-    collectionVersionId: collectionVersion.id,
-    conversationId: null,
-    content: contact,
-    createdBy: DocumentVersionCreator.User,
-    createdAt: new Date(),
-  };
-  documents.push(document);
-  documentVersions.push(documentVersion);
-}
-
-export default {
-  collection,
-  collectionVersion,
-  documents,
-  documentVersions,
-  app: null,
-  appVersion: null,
-};
+  documents: contactsData,
+} satisfies DemoCollection;

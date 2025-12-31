@@ -1842,22 +1842,16 @@
       "value": "There are no items in the list"
     }
   ],
-  "LoadDemoDataButton.tsx_2xPIse": [
+  "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
-      "value": "Yes, load"
+      "value": "Load"
     }
   ],
-  "LoadDemoDataButton.tsx_A84v/o": [
+  "LoadDemoDataButton.tsx_GCRF0i": [
     {
       "type": 0,
-      "value": "Attention: loading demo data erases all the data you've saved so far. Continue?"
-    }
-  ],
-  "LoadDemoDataButton.tsx_J1xAjB": [
-    {
-      "type": 0,
-      "value": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+      "value": "Loading demo data"
     }
   ],
   "LoadDemoDataButton.tsx_VXuroA": [
@@ -1870,18 +1864,6 @@
     {
       "type": 0,
       "value": "Loads some demo collections and documents for you to play around with."
-    }
-  ],
-  "LoadDemoDataButton.tsx_cEUBT2": [
-    {
-      "type": 0,
-      "value": "Reset demo data"
-    }
-  ],
-  "LoadDemoDataButton.tsx_fxtYtB": [
-    {
-      "type": 0,
-      "value": "Yes, reset"
     }
   ],
   "Logo.tsx_FbFgI4": [

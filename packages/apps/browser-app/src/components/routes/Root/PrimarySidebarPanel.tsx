@@ -8,7 +8,7 @@ import PrimarySidebarPanelAction from "./PrimarySidebarPanelAction.js";
 import * as cs from "./Root.css.js";
 
 export default function PrimarySidebarPanel() {
-  const { setIsOpen } = useSearchModalState();
+  const { open: openSearchModal } = useSearchModalState();
 
   return (
     <Shell.Panel slot="PrimarySidebar">
@@ -23,7 +23,7 @@ export default function PrimarySidebarPanel() {
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="button"
-            onPress={() => setIsOpen(true)}
+            onPress={() => openSearchModal()}
           >
             <PiMagnifyingGlass />
             <FormattedMessage defaultMessage="Search" />

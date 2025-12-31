@@ -127,6 +127,7 @@ export const SearchResults = {
     minHeight: 0,
     overflowY: "auto",
     overscrollBehavior: "contain",
+    borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   }),
 
   emptyState: style({
@@ -146,6 +147,9 @@ export const SearchResult = {
     cursor: "pointer",
     borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     selectors: {
+      "&:first-child": {
+        borderBlockStart: 0,
+      },
       "&:hover": {
         background: vars.colors.background.surfaceHighlight,
       },

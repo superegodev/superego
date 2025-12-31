@@ -2,20 +2,30 @@ import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
 import * as cs from "./SearchModal.css.js";
-import SearchParamsInput from "./SearchParamsInput.jsx";
+import SearchParamsInput from "./SearchParamsInput.js";
 import SearchResults from "./SearchResults.js";
 import useSearch from "./useSearch.js";
 
 export default function SearchModal() {
   const intl = useIntl();
-  const { isOpen, setIsOpen } = useSearchModalState();
+  const { isOpen, close } = useSearchModalState();
   const { searchParams, setSearchParams, resetSearchParams, searchState } =
     useSearch();
+
+  const handleClose = () => {
+    close();
+    resetSearchParams();
+  };
+
   return (
     <ModalOverlay
       isDismissable={true}
       isOpen={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          handleClose();
+        }
+      }}
       className={cs.SearchModal.overlay}
     >
       <Modal className={cs.SearchModal.modal}>
@@ -26,10 +36,7 @@ export default function SearchModal() {
           <SearchParamsInput value={searchParams} onChange={setSearchParams} />
           <SearchResults
             searchState={searchState}
-            onNavigateToSearchResult={() => {
-              setIsOpen(false);
-              resetSearchParams();
-            }}
+            onNavigateToSearchResult={handleClose}
           />
         </Dialog>
       </Modal>
