@@ -60,39 +60,28 @@ export const SearchModal = {
     },
   }),
 
-  keyboard: style({
+  dialog: style({
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: vars.spacing._1,
-    padding: vars.spacing._2,
-    borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    fontSize: vars.typography.fontSizes.xs,
-    color: vars.colors.text.secondary,
-  }),
-
-  kbd: style({
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: vars.spacing._5,
-    height: vars.spacing._5,
-    padding: `0 ${vars.spacing._1}`,
-    background: vars.colors.background.surfaceHighlight,
-    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    borderRadius: vars.borders.radius.sm,
-    fontFamily: vars.typography.fontFamilies.sansSerif,
-    fontSize: vars.typography.fontSizes.xs,
+    flexDirection: "column",
+    flex: 1,
+    minHeight: 0,
+    outline: "none",
   }),
 };
 
-export const SearchHeader = {
+export const SearchParamsInput = {
   root: style({
     display: "flex",
     alignItems: "center",
     gap: vars.spacing._2,
     padding: vars.spacing._3,
-    borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+  }),
+
+  searchField: style({
+    flexGrow: 1,
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
   }),
 
   searchIcon: style({
@@ -104,7 +93,7 @@ export const SearchHeader = {
   input: style({
     flex: 1,
     border: 0,
-    outline: "none",
+    outline: "none !important",
     background: "transparent",
     fontSize: vars.typography.fontSizes.md,
     fontFamily: vars.typography.fontFamilies.sansSerif,
@@ -116,20 +105,26 @@ export const SearchHeader = {
 
   collectionSelect: style({
     flexShrink: 0,
-    marginBlockEnd: 0,
+    marginBlockEnd: "0 !important",
   }),
 
   collectionSelectButton: style({
-    height: vars.spacing._7,
+    height: `${vars.spacing._7} !important`,
     fontSize: vars.typography.fontSizes.xs,
     paddingInline: vars.spacing._2,
-    marginBlockEnd: 0,
+    marginBlockEnd: "0 !important",
+  }),
+
+  collectionSelectOptions: style({
+    width: "auto !important",
+    minWidth: "var(--trigger-width)",
   }),
 };
 
 export const SearchResults = {
   root: style({
     flex: 1,
+    minHeight: 0,
     overflowY: "auto",
     overscrollBehavior: "contain",
   }),
@@ -142,13 +137,14 @@ export const SearchResults = {
   }),
 };
 
-export const SearchResultItem = {
+export const SearchResult = {
   root: style({
     display: "block",
-    padding: vars.spacing._3,
+    padding: vars.spacing._4,
     textDecoration: "none",
     color: vars.colors.text.primary,
     cursor: "pointer",
+    borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     selectors: {
       "&:hover": {
         background: vars.colors.background.surfaceHighlight,
@@ -157,20 +153,16 @@ export const SearchResultItem = {
         outline: "none",
         background: vars.colors.background.surfaceHighlight,
       },
-      "&:not(:last-child)": {
-        borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-      },
     },
   }),
 
   line1: style({
     display: "flex",
     alignItems: "center",
-    gap: vars.spacing._2,
-    marginBlockEnd: vars.spacing._1,
+    marginBlockEnd: vars.spacing._4,
   }),
 
-  title: style({
+  documentDisplayName: style({
     flex: 1,
     fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.medium,
@@ -183,19 +175,19 @@ export const SearchResultItem = {
     flexShrink: 0,
     padding: `${vars.spacing._0_5} ${vars.spacing._2}`,
     fontSize: vars.typography.fontSizes.xs,
-    borderRadius: vars.borders.radius.sm,
-    background: vars.colors.background.surfaceHighlight,
-    color: vars.colors.text.secondary,
+    borderRadius: vars.borders.radius.md,
+    background: vars.colors.background.inverse,
+    color: vars.colors.text.inverse,
     whiteSpace: "nowrap",
   }),
 
   line2: style({
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    marginBlockEnd: vars.spacing._1,
+    marginBlockEnd: vars.spacing._2,
   }),
 
   line3: style({

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { ListBox, ListBoxItem } from "react-aria-components";
 import { PiCheck } from "react-icons/pi";
+import classnames from "../../../utils/classnames.js";
 import Popover from "../Popover/Popover.js";
 import * as cs from "./forms.css.js";
 
@@ -12,11 +13,16 @@ export interface Option {
 interface Props {
   options: Option[];
   zoomLevel?: number | undefined;
+  className?: string | undefined;
 }
-export default function SelectOptions({ options, zoomLevel = 1 }: Props) {
+export default function SelectOptions({
+  options,
+  zoomLevel = 1,
+  className,
+}: Props) {
   return (
     <Popover
-      className={cs.SelectOptions.root}
+      className={classnames(cs.SelectOptions.root, className)}
       style={{ "--zoom-level": zoomLevel } as CSSProperties}
     >
       <ListBox items={options}>

@@ -1,65 +1,63 @@
-import type { Collection, LiteDocument, TextSearchResult } from "@superego/backend";
-import { FormattedMessage } from "react-intl";
+import { ListBox } from "react-aria-components";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import * as cs from "./SearchModal.css.js";
-import SearchResultItem from "./SearchResultItem.js";
+import SearchResult from "./SearchResult.js";
+import type SearchState from "./SearchState.js";
 
 interface Props {
-  results: TextSearchResult<LiteDocument>[];
-  collectionsById: Record<string, Collection>;
-  hasSearched: boolean;
-  isPending: boolean;
-  query: string;
-  onResultClick: (result: TextSearchResult<LiteDocument>) => void;
+  searchState: SearchState;
+  onNavigateToSearchResult: () => void;
 }
-
 export default function SearchResults({
-  results,
-  collectionsById,
-  hasSearched,
-  isPending,
-  query,
-  onResultClick,
+  searchState,
+  onNavigateToSearchResult,
 }: Props) {
-  if (!hasSearched && query.trim().length === 0) {
-    return (
-      <div className={cs.SearchResults.root}>
-        <div className={cs.SearchResults.emptyState}>
-          <FormattedMessage defaultMessage="Start typing to search" />
-        </div>
-      </div>
-    );
-  }
+  const intl = useIntl();
+  const { collections } = useGlobalData();
+  const collectionsById = CollectionUtils.makeByIdMap(collections);
 
-  if (isPending) {
-    return (
+  if (searchState.results === null) {
+    return searchState.isSearching ? (
       <div className={cs.SearchResults.root}>
         <div className={cs.SearchResults.emptyState}>
           <FormattedMessage defaultMessage="Searching..." />
         </div>
       </div>
-    );
+    ) : null;
   }
 
-  if (results.length === 0 && hasSearched) {
+  if (searchState.results.length === 0) {
     return (
       <div className={cs.SearchResults.root}>
         <div className={cs.SearchResults.emptyState}>
-          <FormattedMessage defaultMessage="No results found" />
+          {searchState.isSearching ? (
+            <FormattedMessage defaultMessage="Searching..." />
+          ) : (
+            <FormattedMessage defaultMessage="No results found" />
+          )}
         </div>
       </div>
     );
   }
 
   return (
-    <div className={cs.SearchResults.root}>
-      {results.map((result) => (
-        <SearchResultItem
-          key={`${result.match.collectionId}-${result.match.id}`}
+    <ListBox
+      aria-label={intl.formatMessage({ defaultMessage: "Search results" })}
+      selectionMode="none"
+      className={cs.SearchResults.root}
+      onAction={() => {
+        onNavigateToSearchResult();
+      }}
+    >
+      {searchState.results.map((result) => (
+        <SearchResult
+          key={result.match.id}
           result={result}
           collection={collectionsById[result.match.collectionId] ?? null}
-          onClick={() => onResultClick(result)}
         />
       ))}
-    </div>
+    </ListBox>
   );
 }

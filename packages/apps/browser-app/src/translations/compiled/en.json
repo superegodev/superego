@@ -2666,52 +2666,46 @@
       "value": "ol"
     }
   ],
-  "SearchHeader.tsx_+cFFD6": [
-    {
-      "type": 0,
-      "value": "Filter by collection"
-    }
-  ],
-  "SearchHeader.tsx_IVgAw4": [
-    {
-      "type": 0,
-      "value": "All collections"
-    }
-  ],
-  "SearchHeader.tsx_OT41Mz": [
-    {
-      "type": 0,
-      "value": "Search documents..."
-    }
-  ],
-  "SearchModal.tsx_IVgAw4": [
-    {
-      "type": 0,
-      "value": "All collections"
-    }
-  ],
-  "SearchModal.tsx_cP4XVq": [
-    {
-      "type": 0,
-      "value": "to close"
-    }
-  ],
   "SearchModal.tsx_xmcVZ0": [
     {
       "type": 0,
       "value": "Search"
     }
   ],
+  "SearchParamsInput.tsx_+cFFD6": [
+    {
+      "type": 0,
+      "value": "Filter by collection"
+    }
+  ],
+  "SearchParamsInput.tsx_IVgAw4": [
+    {
+      "type": 0,
+      "value": "All collections"
+    }
+  ],
+  "SearchParamsInput.tsx_OT41Mz": [
+    {
+      "type": 0,
+      "value": "Search documents..."
+    }
+  ],
+  "SearchParamsInput.tsx_a00gRI": [
+    {
+      "type": 0,
+      "value": "Search documents"
+    }
+  ],
+  "SearchResults.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Search results"
+    }
+  ],
   "SearchResults.tsx_NNQzoi": [
     {
       "type": 0,
       "value": "Searching..."
-    }
-  ],
-  "SearchResults.tsx_RKRuF7": [
-    {
-      "type": 0,
-      "value": "Start typing to search"
     }
   ],
   "SearchResults.tsx_hX5PAb": [

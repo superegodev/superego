@@ -884,29 +884,26 @@
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
   },
-  "SearchHeader.tsx_+cFFD6": {
-    "defaultMessage": "Filter by collection"
-  },
-  "SearchHeader.tsx_IVgAw4": {
-    "defaultMessage": "All collections"
-  },
-  "SearchHeader.tsx_OT41Mz": {
-    "defaultMessage": "Search documents..."
-  },
-  "SearchModal.tsx_IVgAw4": {
-    "defaultMessage": "All collections"
-  },
-  "SearchModal.tsx_cP4XVq": {
-    "defaultMessage": "to close"
-  },
   "SearchModal.tsx_xmcVZ0": {
     "defaultMessage": "Search"
   },
+  "SearchParamsInput.tsx_+cFFD6": {
+    "defaultMessage": "Filter by collection"
+  },
+  "SearchParamsInput.tsx_IVgAw4": {
+    "defaultMessage": "All collections"
+  },
+  "SearchParamsInput.tsx_OT41Mz": {
+    "defaultMessage": "Search documents..."
+  },
+  "SearchParamsInput.tsx_a00gRI": {
+    "defaultMessage": "Search documents"
+  },
+  "SearchResults.tsx_79lKyO": {
+    "defaultMessage": "Search results"
+  },
   "SearchResults.tsx_NNQzoi": {
     "defaultMessage": "Searching..."
-  },
-  "SearchResults.tsx_RKRuF7": {
-    "defaultMessage": "Start typing to search"
   },
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"

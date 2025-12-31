@@ -423,5 +423,37 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
         expect.objectContaining({ collectionId, documentId }),
       ]);
     });
+
+    it("case: search matches partial words", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentTextSearchIndex.upsert(collectionId, documentId, {
+            title: ["Document about programming"],
+          });
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise: search with typos (missing letter, swapped letters)
+      const results =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: await repos.documentTextSearchIndex.search(
+              collectionId,
+              "program",
+            ),
+          }),
+        );
+
+      // Verify: typos should still find the document
+      expect(results).toEqual([
+        expect.objectContaining({ collectionId, documentId }),
+      ]);
+    });
   });
 });

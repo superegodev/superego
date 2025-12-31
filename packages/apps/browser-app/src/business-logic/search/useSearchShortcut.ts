@@ -2,24 +2,28 @@ import { useEffect } from "react";
 import useSearchModalState from "./useSearchModalState.js";
 
 export default function useSearchShortcut(): void {
-  const { open } = useSearchModalState();
+  const { setIsOpen } = useSearchModalState();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
-      const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-      const modifierKey = isMac ? event.metaKey : event.ctrlKey;
-
-      if (modifierKey && event.key === "k") {
+      const isModifierKeyPressed = isMacos() ? event.metaKey : event.ctrlKey;
+      if (isModifierKeyPressed && event.key === "k") {
         event.preventDefault();
-        open();
+        setIsOpen(true);
       }
     }
-
     document.addEventListener("keydown", handleKeyDown);
-
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open]);
+  }, [setIsOpen]);
+}
+
+function isMacos() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return (
+    userAgent.includes("mac os") &&
+    !userAgent.includes("iphone") &&
+    !userAgent.includes("ipad")
+  );
 }
