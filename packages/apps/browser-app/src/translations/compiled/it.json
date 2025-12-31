@@ -1834,22 +1834,16 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
-  "LoadDemoDataButton.tsx_2xPIse": [
+  "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
-      "value": "Sì, carica"
+      "value": "Carica"
     }
   ],
-  "LoadDemoDataButton.tsx_A84v/o": [
+  "LoadDemoDataButton.tsx_GCRF0i": [
     {
       "type": 0,
-      "value": "Attenzione: caricando i dati demo cancellerai tutti i dati che hai salvato finora. Vuoi continuare?"
-    }
-  ],
-  "LoadDemoDataButton.tsx_J1xAjB": [
-    {
-      "type": 0,
-      "value": "Attenzione: resettare i dati demo cancellerà tutti i dati che hai salvato finora. Vuoi continuare?"
+      "value": "Caricamento dati demo"
     }
   ],
   "LoadDemoDataButton.tsx_VXuroA": [
@@ -1862,18 +1856,6 @@
     {
       "type": 0,
       "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
-    }
-  ],
-  "LoadDemoDataButton.tsx_cEUBT2": [
-    {
-      "type": 0,
-      "value": "Resetta i dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_fxtYtB": [
-    {
-      "type": 0,
-      "value": "Sì, resetta"
     }
   ],
   "Logo.tsx_FbFgI4": [
