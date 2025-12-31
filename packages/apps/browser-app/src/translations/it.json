@@ -857,6 +857,30 @@
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
   },
+  "SearchModal.tsx_xmcVZ0": {
+    "defaultMessage": "Cerca"
+  },
+  "SearchParamsInput.tsx_+cFFD6": {
+    "defaultMessage": "Filtra per collezione"
+  },
+  "SearchParamsInput.tsx_IVgAw4": {
+    "defaultMessage": "Tutte le collezioni"
+  },
+  "SearchParamsInput.tsx_OT41Mz": {
+    "defaultMessage": "Cerca documenti..."
+  },
+  "SearchParamsInput.tsx_a00gRI": {
+    "defaultMessage": "Cerca documenti"
+  },
+  "SearchResults.tsx_79lKyO": {
+    "defaultMessage": "Risultati della ricerca"
+  },
+  "SearchResults.tsx_NNQzoi": {
+    "defaultMessage": "Ricerca in corso..."
+  },
+  "SearchResults.tsx_hX5PAb": {
+    "defaultMessage": "Nessun risultato trovato"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },

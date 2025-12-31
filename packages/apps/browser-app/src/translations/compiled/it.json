@@ -2658,6 +2658,54 @@
       "value": "ol"
     }
   ],
+  "SearchModal.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Cerca"
+    }
+  ],
+  "SearchParamsInput.tsx_+cFFD6": [
+    {
+      "type": 0,
+      "value": "Filtra per collezione"
+    }
+  ],
+  "SearchParamsInput.tsx_IVgAw4": [
+    {
+      "type": 0,
+      "value": "Tutte le collezioni"
+    }
+  ],
+  "SearchParamsInput.tsx_OT41Mz": [
+    {
+      "type": 0,
+      "value": "Cerca documenti..."
+    }
+  ],
+  "SearchParamsInput.tsx_a00gRI": [
+    {
+      "type": 0,
+      "value": "Cerca documenti"
+    }
+  ],
+  "SearchResults.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Risultati della ricerca"
+    }
+  ],
+  "SearchResults.tsx_NNQzoi": [
+    {
+      "type": 0,
+      "value": "Ricerca in corso..."
+    }
+  ],
+  "SearchResults.tsx_hX5PAb": [
+    {
+      "type": 0,
+      "value": "Nessun risultato trovato"
+    }
+  ],
   "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
