@@ -1,14 +1,15 @@
 import type { CollectionCategoryId } from "@superego/backend";
 import type { CollectionCategoryEntity } from "@superego/executing-backend";
 
-export default interface SqliteCollectionCategory {
+type SqliteCollectionCategory = {
   id: CollectionCategoryId;
   name: string;
   icon: string | null;
   parent_id: CollectionCategoryId | null;
   /** ISO 8601 */
   created_at: string;
-}
+};
+export default SqliteCollectionCategory;
 
 export function toEntity(
   collectionCategory: SqliteCollectionCategory,

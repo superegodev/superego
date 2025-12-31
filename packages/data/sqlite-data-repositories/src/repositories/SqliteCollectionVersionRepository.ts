@@ -119,7 +119,7 @@ export default class SqliteCollectionVersionRepository
   async findAllLatests(): Promise<CollectionVersionEntity[]> {
     const collectionVersions = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "is_latest" = 1`)
-      .all() as any as SqliteCollectionVersion[];
+      .all() as SqliteCollectionVersion[];
     return collectionVersions.map(toEntity);
   }
 }

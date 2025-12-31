@@ -159,7 +159,7 @@ export const SearchResult = {
   line1: style({
     display: "flex",
     alignItems: "center",
-    marginBlockEnd: vars.spacing._4,
+    marginBlockEnd: vars.spacing._1,
   }),
 
   documentDisplayName: style({
@@ -174,7 +174,7 @@ export const SearchResult = {
   collectionChip: style({
     flexShrink: 0,
     padding: `${vars.spacing._0_5} ${vars.spacing._2}`,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.xs2,
     borderRadius: vars.borders.radius.md,
     background: vars.colors.background.inverse,
     color: vars.colors.text.inverse,
@@ -187,7 +187,7 @@ export const SearchResult = {
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    marginBlockEnd: vars.spacing._2,
+    marginBlockEnd: vars.spacing._1,
   }),
 
   line3: style({

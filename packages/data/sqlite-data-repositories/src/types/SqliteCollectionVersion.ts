@@ -6,7 +6,7 @@ import type {
 } from "@superego/backend";
 import type { CollectionVersionEntity } from "@superego/executing-backend";
 
-export default interface SqliteCollectionVersion {
+type SqliteCollectionVersion = {
   id: CollectionVersionId;
   previous_version_id: CollectionVersionId | null;
   collection_id: CollectionId;
@@ -21,7 +21,8 @@ export default interface SqliteCollectionVersion {
   /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
-}
+};
+export default SqliteCollectionVersion;
 
 export function toEntity(
   collectionVersion: SqliteCollectionVersion,

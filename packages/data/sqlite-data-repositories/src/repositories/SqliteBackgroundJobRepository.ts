@@ -109,7 +109,7 @@ export default class SqliteBackgroundJobRepository
   async findAll(): Promise<BackgroundJobEntity[]> {
     const backgroundJobs = this.db
       .prepare(`SELECT * FROM "${table}" ORDER BY "enqueued_at" DESC`)
-      .all() as any as SqliteBackgroundJob[];
+      .all() as SqliteBackgroundJob[];
     return backgroundJobs.map(toEntity);
   }
 }

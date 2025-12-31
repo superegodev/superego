@@ -128,7 +128,7 @@ export default class SqliteDocumentVersionRepository
       .prepare(
         `SELECT * FROM "${table}" WHERE "collection_id" = ? AND "is_latest" = 1`,
       )
-      .all(collectionId) as any as (SqliteDocumentVersion & { is_latest: 1 })[];
+      .all(collectionId) as (SqliteDocumentVersion & { is_latest: 1 })[];
     return documentVersions.map(toEntity);
   }
 }

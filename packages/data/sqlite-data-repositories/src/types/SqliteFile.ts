@@ -1,14 +1,15 @@
 import type { FileId } from "@superego/backend";
 import type { FileEntity } from "@superego/executing-backend";
 
-export default interface SqliteFile {
+type SqliteFile = {
   id: FileId;
   /** JSON */
   referenced_by: string;
   /** ISO 8601 */
   created_at: string;
   content: Buffer;
-}
+};
+export default SqliteFile;
 
 export function toEntity(file: Omit<SqliteFile, "content">): FileEntity {
   return {

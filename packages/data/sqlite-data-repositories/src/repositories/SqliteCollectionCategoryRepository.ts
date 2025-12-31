@@ -84,7 +84,7 @@ export default class SqliteCollectionCategoryRepository
   async findAll(): Promise<CollectionCategoryEntity[]> {
     const collectionCategories = this.db
       .prepare(`SELECT * FROM "${table}" ORDER BY "name" ASC`)
-      .all() as any as SqliteCollectionCategory[];
+      .all() as SqliteCollectionCategory[];
     return collectionCategories.map(toEntity);
   }
 }

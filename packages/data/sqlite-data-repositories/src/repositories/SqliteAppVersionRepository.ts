@@ -68,7 +68,7 @@ export default class SqliteAppVersionRepository
   async findAllLatests(): Promise<AppVersionEntity[]> {
     const appVersions = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "is_latest" = 1`)
-      .all() as any as SqliteAppVersion[];
+      .all() as SqliteAppVersion[];
     return appVersions.map(toEntity);
   }
 }

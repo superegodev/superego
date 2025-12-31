@@ -5,7 +5,7 @@ import type {
 } from "@superego/backend";
 import type { BackgroundJobEntity } from "@superego/executing-backend";
 
-export default interface SqliteBackgroundJob {
+type SqliteBackgroundJob = {
   id: BackgroundJobId;
   name: BackgroundJobName;
   /** JSON */
@@ -19,7 +19,8 @@ export default interface SqliteBackgroundJob {
   finished_processing_at: string | null;
   /** JSON */
   error: string | null;
-}
+};
+export default SqliteBackgroundJob;
 
 export function toEntity(
   backgroundJob: SqliteBackgroundJob,
