@@ -2,6 +2,7 @@ import type {
   Backend,
   CollectionId,
   CollectionNotFound,
+  Document,
   DocumentId,
   LiteDocument,
   TextSearchResult,
@@ -32,6 +33,22 @@ export default class DocumentsSearch extends Usecase<
     query: string,
   ): ResultPromise<
     TextSearchResult<LiteDocument>[],
+    CollectionNotFound | UnexpectedError
+  >;
+  async exec(
+    collectionId: CollectionId | null,
+    query: string,
+    lite: false,
+  ): ResultPromise<
+    TextSearchResult<Document>[],
+    CollectionNotFound | UnexpectedError
+  >;
+  async exec(
+    collectionId: CollectionId | null,
+    query: string,
+    lite = true,
+  ): ResultPromise<
+    TextSearchResult<LiteDocument | Document>[],
     CollectionNotFound | UnexpectedError
   > {
     if (collectionId && !(await this.repos.collection.exists(collectionId))) {
@@ -71,6 +88,7 @@ export default class DocumentsSearch extends Usecase<
           colId,
           results,
           collectionVersionByCollectionId,
+          lite,
         ),
     );
 
@@ -81,7 +99,8 @@ export default class DocumentsSearch extends Usecase<
     collectionId: CollectionId,
     results: { documentId: DocumentId; matchedText: string }[],
     collectionVersionByCollectionId: Map<CollectionId, CollectionVersionEntity>,
-  ): Promise<TextSearchResult<LiteDocument>[]> {
+    lite: boolean,
+  ): Promise<TextSearchResult<LiteDocument | Document>[]> {
     const collectionVersion = collectionVersionByCollectionId.get(collectionId);
     assertCollectionVersionExists(collectionId, collectionVersion);
 
@@ -113,15 +132,16 @@ export default class DocumentsSearch extends Usecase<
       documentsWithVersions.map(({ latestVersion }) => latestVersion),
     );
 
-    return documentsWithVersions.map((item, i) => ({
-      match: makeLiteDocument(
-        makeDocumentGivenSummary(
-          item.document,
-          item.latestVersion,
-          contentSummaries[i]!,
-        ),
-      ),
-      matchedText: item.matchedText,
-    }));
+    return documentsWithVersions.map((item, i) => {
+      const document = makeDocumentGivenSummary(
+        item.document,
+        item.latestVersion,
+        contentSummaries[i]!,
+      );
+      return {
+        match: lite ? makeLiteDocument(document) : document,
+        matchedText: item.matchedText,
+      };
+    });
   }
 }

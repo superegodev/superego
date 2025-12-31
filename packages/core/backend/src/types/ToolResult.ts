@@ -142,6 +142,20 @@ namespace ToolResult {
       documents: LiteDocument[];
     }
   >;
+  export type SearchDocuments = BaseToolResult<
+    ToolName.SearchDocuments,
+    Result<
+      {
+        documents: {
+          collectionId: CollectionId;
+          id: DocumentId;
+          versionId: DocumentVersionId;
+          content: any;
+        }[];
+      },
+      CollectionNotFound
+    >
+  >;
 
   // CollectionCreator
   export type SuggestCollectionDefinition = BaseToolResult<
@@ -180,6 +194,7 @@ type ToolResult =
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.CreateChart
   | ToolResult.CreateDocumentsTable
+  | ToolResult.SearchDocuments
   | ToolResult.SuggestCollectionDefinition
   | ToolResult.InspectFile
   | ToolResult.Unknown

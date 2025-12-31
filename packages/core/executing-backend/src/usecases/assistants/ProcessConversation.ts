@@ -36,6 +36,7 @@ import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
+import DocumentsSearch from "../documents/Search.js";
 import FilesGetContent from "../files/GetContent.js";
 
 export default class AssistantsProcessConversation extends Usecase {
@@ -157,6 +158,7 @@ export default class AssistantsProcessConversation extends Usecase {
             documentsCreate: this.sub(DocumentsCreate),
             documentsList: this.sub(DocumentsList),
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
+            documentsSearch: this.sub(DocumentsSearch),
             filesGetContent: this.sub(FilesGetContent),
           },
           this.javascriptSandbox,
