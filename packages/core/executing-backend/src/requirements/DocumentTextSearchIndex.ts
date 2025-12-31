@@ -11,6 +11,7 @@ export default interface DocumentTextSearchIndex {
   search(
     collectionId: CollectionId | null,
     query: string,
+    options: { limit: number },
   ): Promise<
     {
       collectionId: CollectionId;

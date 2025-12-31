@@ -33,6 +33,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
         returnValue: await repos.documentTextSearchIndex.search(
           collectionId,
           "Hello",
+          { limit: 20 },
         ),
       }),
     );
@@ -83,6 +84,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
           returnValue: await repos.documentTextSearchIndex.search(
             collectionId,
             "Original",
+            { limit: 20 },
           ),
         }),
       );
@@ -96,6 +98,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
           returnValue: await repos.documentTextSearchIndex.search(
             collectionId,
             "Updated",
+            { limit: 20 },
           ),
         }),
       );
@@ -136,6 +139,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
         returnValue: await repos.documentTextSearchIndex.search(
           collectionId,
           "Title",
+          { limit: 20 },
         ),
       }),
     );
@@ -155,6 +159,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
             returnValue: await repos.documentTextSearchIndex.search(
               null,
               "nonexistent",
+              { limit: 20 },
             ),
           }),
         );
@@ -205,6 +210,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
             returnValue: await repos.documentTextSearchIndex.search(
               collectionId,
               "common",
+              { limit: 20 },
             ),
           }),
         );
@@ -254,6 +260,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
             returnValue: await repos.documentTextSearchIndex.search(
               null,
               "Shared",
+              { limit: 20 },
             ),
           }),
         );
@@ -309,6 +316,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
             returnValue: await repos.documentTextSearchIndex.search(
               collectionId1,
               "Filtered",
+              { limit: 20 },
             ),
           }),
         );
@@ -347,14 +355,17 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
               titleResults: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "Title",
+                { limit: 20 },
               ),
               bodyResults: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "Body",
+                { limit: 20 },
               ),
               metadataResults: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "Metadata",
+                { limit: 20 },
               ),
             },
           }),
@@ -399,14 +410,17 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
               results1: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "unique1",
+                { limit: 20 },
               ),
               results2: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "unique2",
+                { limit: 20 },
               ),
               results3: await repos.documentTextSearchIndex.search(
                 collectionId,
                 "unique3",
+                { limit: 20 },
               ),
             },
           }),
@@ -446,6 +460,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
             returnValue: await repos.documentTextSearchIndex.search(
               collectionId,
               "program",
+              { limit: 20 },
             ),
           }),
         );

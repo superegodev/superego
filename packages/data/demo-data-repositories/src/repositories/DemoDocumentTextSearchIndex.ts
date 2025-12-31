@@ -67,6 +67,7 @@ export default class DemoDocumentTextSearchIndex
   async search(
     collectionId: CollectionId | null,
     query: string,
+    options: { limit: number },
   ): Promise<
     {
       collectionId: CollectionId;
@@ -79,7 +80,7 @@ export default class DemoDocumentTextSearchIndex
 
     const results = this.index.search(query, {
       tag: collectionId ? { collectionId } : undefined,
-      limit: 20,
+      limit: options.limit,
       merge: true,
       enrich: true,
       highlight: {

@@ -1400,7 +1400,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Exercise
       const collectionId = Id.generate.collection();
-      const result = await backend.documents.search(collectionId, "query");
+      const result = await backend.documents.search(collectionId, "query", {
+        limit: 20,
+      });
 
       // Verify
       expect(result).toEqual({
@@ -1453,6 +1455,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const searchResult = await backend.documents.search(
         createCollectionResult.data.id,
         "nonexistent",
+        { limit: 20 },
       );
 
       // Verify
@@ -1503,6 +1506,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const searchResult = await backend.documents.search(
         createCollectionResult.data.id,
         "hello",
+        { limit: 20 },
       );
 
       // Verify
@@ -1589,7 +1593,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       assert.isTrue(createDocumentResult2.success);
 
       // Exercise
-      const searchResult = await backend.documents.search(null, "unique");
+      const searchResult = await backend.documents.search(null, "unique", {
+        limit: 20,
+      });
 
       // Verify
       assert.isTrue(searchResult.success);
@@ -1671,6 +1677,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const searchResult = await backend.documents.search(
         createCollectionResult1.data.id,
         "searchterm",
+        { limit: 20 },
       );
 
       // Verify

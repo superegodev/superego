@@ -34,6 +34,7 @@ export default function useSearch(): UseSearch {
       const searchResult = await backend.documents.search(
         searchParams.collectionId,
         searchParams.query,
+        { limit: 20 },
       );
       if (searchId === latestSearchIdRef.current) {
         setSearchState({

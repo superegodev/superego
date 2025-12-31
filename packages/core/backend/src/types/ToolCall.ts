@@ -64,6 +64,7 @@ namespace ToolCall {
     {
       collectionId: CollectionId | null;
       query: string;
+      limit?: number;
     }
   >;
 

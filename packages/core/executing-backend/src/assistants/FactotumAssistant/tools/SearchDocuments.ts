@@ -16,11 +16,12 @@ export default {
     toolCall: ToolCall.SearchDocuments,
     documentsSearch: DocumentsSearch,
   ): Promise<ToolResult.SearchDocuments> {
-    const { collectionId, query } = toolCall.input;
+    const { collectionId, query, limit = 3 } = toolCall.input;
 
     const { success, data, error } = await documentsSearch.exec(
       collectionId,
       query,
+      { limit },
       false,
     );
 
@@ -60,11 +61,8 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.SearchDocuments,
       description: `
-Performs a lexical search for documents matching a text query.
-
-**Use it:**
-
-- To find documents containing specific text or keywords.
+Performs a lexical search for documents matching a text query. **Use it** to
+find documents containing specific text or keywords.
       `.trim(),
       inputSchema: {
         type: "object",
@@ -77,6 +75,10 @@ Performs a lexical search for documents matching a text query.
           query: {
             type: "string",
             description: "The search query text.",
+          },
+          limit: {
+            type: "number",
+            description: "Maximum number of results to return. Defaults to 3.",
           },
         },
         required: ["collectionId", "query"],

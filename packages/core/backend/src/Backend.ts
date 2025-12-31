@@ -324,6 +324,9 @@ export default interface Backend {
       collectionId: CollectionId | null,
       /** Full-text query. */
       query: string,
+      options: {
+        limit: number;
+      },
     ): ResultPromise<
       TextSearchResult<LiteDocument>[],
       CollectionNotFound | UnexpectedError

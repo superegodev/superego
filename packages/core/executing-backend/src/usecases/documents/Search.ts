@@ -31,6 +31,7 @@ export default class DocumentsSearch extends Usecase<
   async exec(
     collectionId: CollectionId | null,
     query: string,
+    options: { limit: number },
   ): ResultPromise<
     TextSearchResult<LiteDocument>[],
     CollectionNotFound | UnexpectedError
@@ -38,6 +39,7 @@ export default class DocumentsSearch extends Usecase<
   async exec(
     collectionId: CollectionId | null,
     query: string,
+    options: { limit: number },
     lite: false,
   ): ResultPromise<
     TextSearchResult<Document>[],
@@ -46,6 +48,7 @@ export default class DocumentsSearch extends Usecase<
   async exec(
     collectionId: CollectionId | null,
     query: string,
+    options: { limit: number },
     lite = true,
   ): ResultPromise<
     TextSearchResult<LiteDocument | Document>[],
@@ -60,6 +63,7 @@ export default class DocumentsSearch extends Usecase<
     const searchResults = await this.repos.documentTextSearchIndex.search(
       collectionId,
       query,
+      options,
     );
 
     if (searchResults.length === 0) {
