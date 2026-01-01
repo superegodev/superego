@@ -66,8 +66,6 @@ export default function DeleteDocumentModalForm({
           values={{
             documentName: (
               <ContentSummaryPropertyValue
-                // Key necessary due to react-intl bug #5032.
-                key={document.id}
                 value={DocumentUtils.getDisplayName(document)}
               />
             ),

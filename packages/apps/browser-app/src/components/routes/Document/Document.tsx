@@ -68,8 +68,6 @@ export default function Document({ collectionId, documentId }: Props) {
                 collection: CollectionUtils.getDisplayName(collection),
                 document: (
                   <ContentSummaryPropertyValue
-                    // Key necessary due to react-intl bug #5032.
-                    key={document.id}
                     value={DocumentUtils.getDisplayName(document)}
                   />
                 ),
