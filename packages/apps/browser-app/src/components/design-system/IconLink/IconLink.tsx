@@ -1,3 +1,4 @@
+import type { DistributiveOmit } from "@superego/global-types";
 import type { RefAttributes } from "react";
 import type { Placement } from "react-aria";
 import { TooltipTrigger } from "react-aria-components";
@@ -5,7 +6,6 @@ import classnames from "../../../utils/classnames.js";
 import Link from "../Link/Link.js";
 import Tooltip from "../Tooltip/Tooltip.js";
 import * as cs from "./IconLink.css.js";
-import { DistributiveOmit } from "@superego/global-types";
 
 type LinkProps = DistributiveOmit<Parameters<typeof Link>[0], "aria-label">;
 
