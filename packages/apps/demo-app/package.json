@@ -14,10 +14,10 @@
     "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.17.1",
-    "@cloudflare/workers-types": "^4.20251213.0",
+    "@cloudflare/vite-plugin": "1.17.1",
+    "@cloudflare/workers-types": "^4.20251224.0",
     "typescript": "^5.9.3",
-    "vite": "^7.2.7",
+    "vite": "^7.3.0",
     "wrangler": "^4.54.0"
   },
   "dependencies": {
