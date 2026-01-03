@@ -120,7 +120,7 @@ export default class SqliteDocumentRepository implements DocumentRepository {
   ): Promise<DocumentEntity[]> {
     const documents = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "collection_id" = ?`)
-      .all(collectionId) as any as SqliteDocument[];
+      .all(collectionId) as SqliteDocument[];
     return documents.map(toEntity);
   }
 }

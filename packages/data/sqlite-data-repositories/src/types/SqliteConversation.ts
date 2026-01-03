@@ -8,7 +8,7 @@ import type {
 } from "@superego/backend";
 import type { ConversationEntity } from "@superego/executing-backend";
 
-export default interface SqliteConversation {
+type SqliteConversation = {
   id: ConversationId;
   assistant: AssistantName;
   format: ConversationFormat;
@@ -21,7 +21,8 @@ export default interface SqliteConversation {
   error: string | null;
   /** ISO 8601 */
   created_at: string;
-}
+};
+export default SqliteConversation;
 
 export function toEntity(conversation: SqliteConversation): ConversationEntity {
   return {

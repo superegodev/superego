@@ -2,7 +2,7 @@ import { decode } from "@msgpack/msgpack";
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type { DocumentEntity } from "@superego/executing-backend";
 
-export default interface SqliteDocument {
+type SqliteDocument = {
   id: DocumentId;
   remote_id: string | null;
   remote_url: string | null;
@@ -11,7 +11,8 @@ export default interface SqliteDocument {
   collection_id: CollectionId;
   /** ISO 8601 */
   created_at: string;
-}
+};
+export default SqliteDocument;
 
 export function toEntity(document: SqliteDocument): DocumentEntity {
   return {

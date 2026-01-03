@@ -12,6 +12,7 @@ import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
 import type DocumentsCreate from "../../usecases/documents/Create.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
+import type DocumentsSearch from "../../usecases/documents/Search.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
 import Assistant from "../Assistant.js";
 import InspectFile from "../shared-tools/InspectFile.js";
@@ -23,6 +24,7 @@ import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteTypescriptFunction from "./tools/ExecuteTypescriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
+import SearchDocuments from "./tools/SearchDocuments.js";
 
 export default class FactotumAssistant extends Assistant {
   constructor(
@@ -35,6 +37,7 @@ export default class FactotumAssistant extends Assistant {
       documentsCreate: DocumentsCreate;
       documentsCreateNewVersion: DocumentsCreateNewVersion;
       documentsList: DocumentsList;
+      documentsSearch: DocumentsSearch;
       filesGetContent: FilesGetContent;
     },
     private javascriptSandbox: JavascriptSandbox,
@@ -69,18 +72,19 @@ export default class FactotumAssistant extends Assistant {
         ToolName.CreateNewDocumentVersion,
       )
       .replaceAll(
-        "$TOOL_NAME_EXECUTE_JAVASCRIPT_FUNCTION",
+        "$TOOL_NAME_EXECUTE_TYPESCRIPT_FUNCTION",
         ToolName.ExecuteTypescriptFunction,
       )
       .replaceAll(
         "$TOOL_NAME_GET_COLLECTION_TYPESCRIPT_SCHEMA",
         ToolName.GetCollectionTypescriptSchema,
       )
-      .replaceAll("$TOOL_NAME_RENDER_CHART", ToolName.CreateChart)
+      .replaceAll("$TOOL_NAME_CREATE_CHART", ToolName.CreateChart)
       .replaceAll(
-        "$TOOL_NAME_RENDER_DOCUMENTS_TABLE",
+        "$TOOL_NAME_CREATE_DOCUMENTS_TABLE",
         ToolName.CreateDocumentsTable,
       )
+      .replaceAll("$TOOL_NAME_SEARCH_DOCUMENTS", ToolName.SearchDocuments)
       .replaceAll("$TOOL_NAME_INSPECT_FILE", ToolName.InspectFile);
   }
 
@@ -117,6 +121,7 @@ export default class FactotumAssistant extends Assistant {
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
       CreateDocumentsTable.get(),
+      SearchDocuments.get(),
       InspectFile.get(),
     ];
   }
@@ -167,6 +172,9 @@ export default class FactotumAssistant extends Assistant {
         this.javascriptSandbox,
         this.typescriptCompiler,
       );
+    }
+    if (SearchDocuments.is(toolCall)) {
+      return SearchDocuments.exec(toolCall, this.usecases.documentsSearch);
     }
     if (InspectFile.is(toolCall)) {
       return InspectFile.exec(

@@ -13,14 +13,16 @@
     "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.0.15",
-    "@vitest/browser-playwright": "^4.0.15",
+    "@vitest/browser": "^4.0.16",
+    "@vitest/browser-playwright": "^4.0.16",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
-    "@superego/executing-backend": "workspace:*"
+    "@superego/executing-backend": "workspace:*",
+    "@superego/schema": "workspace:*",
+    "flexsearch": "^0.8.212"
   }
 }

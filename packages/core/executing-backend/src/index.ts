@@ -29,9 +29,11 @@ export type { default as CollectionRepository } from "./requirements/CollectionR
 export type { default as CollectionVersionRepository } from "./requirements/CollectionVersionRepository.js";
 export type { default as Connector } from "./requirements/Connector.js";
 export type { default as ConversationRepository } from "./requirements/ConversationRepository.js";
+export type { default as ConversationTextSearchIndex } from "./requirements/ConversationTextSearchIndex.js";
 export type { default as DataRepositories } from "./requirements/DataRepositories.js";
 export type { default as DataRepositoriesManager } from "./requirements/DataRepositoriesManager.js";
 export type { default as DocumentRepository } from "./requirements/DocumentRepository.js";
+export type { default as DocumentTextSearchIndex } from "./requirements/DocumentTextSearchIndex.js";
 export type { default as DocumentVersionRepository } from "./requirements/DocumentVersionRepository.js";
 export type { default as FileRepository } from "./requirements/FileRepository.js";
 export type { default as GlobalSettingsRepository } from "./requirements/GlobalSettingsRepository.js";

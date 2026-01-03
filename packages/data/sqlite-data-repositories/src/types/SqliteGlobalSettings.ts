@@ -1,11 +1,12 @@
 import type { GlobalSettings } from "@superego/backend";
 import type DeepPartial from "../utils/DeepPartial.js";
 
-export default interface SqliteGlobalSettings {
+type SqliteGlobalSettings = {
   id: "singleton";
   /** JSON */
   value: string;
-}
+};
+export default SqliteGlobalSettings;
 
 export function toEntity(
   settings: SqliteGlobalSettings,

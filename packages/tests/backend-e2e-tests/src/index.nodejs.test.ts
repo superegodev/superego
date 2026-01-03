@@ -3,12 +3,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { afterAll, beforeAll } from "vitest";
 import registerTests from "./registerTests.js";
+import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js";
 
 const databasesTmpDir = join(tmpdir(), "superego-backend-e2e-tests");
 
@@ -61,7 +61,7 @@ registerTests((connector) => {
       dataRepositoriesManager,
       new QuickjsJavascriptSandbox(),
       new TscTypescriptCompiler(),
-      new OpenAICompatInferenceServiceFactory(),
+      new MockInferenceServiceFactory(),
       connector ? [connector] : [],
     ),
   };

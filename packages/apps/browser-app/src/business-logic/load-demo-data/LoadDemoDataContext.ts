@@ -1,3 +1,4 @@
 import { createContext } from "react";
+import type LoadDemoDataFn from "./LoadDemoDataFn.js";
 
-export default createContext<(() => Promise<void>) | undefined>(undefined);
+export default createContext<LoadDemoDataFn | undefined>(undefined);

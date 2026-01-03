@@ -1392,4 +1392,300 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
   });
+
+  describe("search", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.documents.search(collectionId, "query", {
+        limit: 20,
+      });
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("success: returns empty array when no matches", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "hello world" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const searchResult = await backend.documents.search(
+        createCollectionResult.data.id,
+        "nonexistent",
+        { limit: 20 },
+      );
+
+      // Verify
+      expect(searchResult).toEqual({
+        success: true,
+        data: [],
+        error: null,
+      });
+    });
+
+    it("success: searches within a specific collection", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "hello world" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const searchResult = await backend.documents.search(
+        createCollectionResult.data.id,
+        "hello",
+        { limit: 20 },
+      );
+
+      // Verify
+      assert.isTrue(searchResult.success);
+      expect(searchResult.data).toHaveLength(1);
+      expect(searchResult.data[0]).toEqual({
+        match: expect.objectContaining({
+          id: createDocumentResult.data.id,
+          collectionId: createCollectionResult.data.id,
+        }),
+        matchedText: expect.any(String),
+      });
+      expect(searchResult.data[0]!.match.latestVersion).not.toHaveProperty(
+        "content",
+      );
+    });
+
+    it("success: searches across all collections when collectionId is null", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult1 = await backend.collections.create(
+        {
+          name: "collection1",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult1.success);
+      const createCollectionResult2 = await backend.collections.create(
+        {
+          name: "collection2",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult2.success);
+      const createDocumentResult1 = await backend.documents.create(
+        createCollectionResult1.data.id,
+        { title: "unique keyword alpha" },
+      );
+      assert.isTrue(createDocumentResult1.success);
+      const createDocumentResult2 = await backend.documents.create(
+        createCollectionResult2.data.id,
+        { title: "unique keyword beta" },
+      );
+      assert.isTrue(createDocumentResult2.success);
+
+      // Exercise
+      const searchResult = await backend.documents.search(null, "unique", {
+        limit: 20,
+      });
+
+      // Verify
+      assert.isTrue(searchResult.success);
+      expect(searchResult.data).toHaveLength(2);
+      const resultIds = searchResult.data.map((result) => result.match.id);
+      expect(resultIds).toContain(createDocumentResult1.data.id);
+      expect(resultIds).toContain(createDocumentResult2.data.id);
+    });
+
+    it("success: does not return documents from other collections when collectionId is specified", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult1 = await backend.collections.create(
+        {
+          name: "collection1",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult1.success);
+      const createCollectionResult2 = await backend.collections.create(
+        {
+          name: "collection2",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult2.success);
+      const createDocumentResult1 = await backend.documents.create(
+        createCollectionResult1.data.id,
+        { title: "searchterm in collection1" },
+      );
+      assert.isTrue(createDocumentResult1.success);
+      const createDocumentResult2 = await backend.documents.create(
+        createCollectionResult2.data.id,
+        { title: "searchterm in collection2" },
+      );
+      assert.isTrue(createDocumentResult2.success);
+
+      // Exercise
+      const searchResult = await backend.documents.search(
+        createCollectionResult1.data.id,
+        "searchterm",
+        { limit: 20 },
+      );
+
+      // Verify
+      assert.isTrue(searchResult.success);
+      expect(searchResult.data).toHaveLength(1);
+      expect(searchResult.data[0]!.match.id).toEqual(
+        createDocumentResult1.data.id,
+      );
+    });
+  });
 });

@@ -170,6 +170,9 @@
   "Conversation.tsx_yYmfIl": {
     "defaultMessage": "🤖 Conversations"
   },
+  "ConversationSearchResult.tsx_KHJ2sI": {
+    "defaultMessage": "Untitled conversation"
+  },
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "New conversation"
   },
@@ -728,26 +731,17 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "There are no items in the list"
   },
-  "LoadDemoDataButton.tsx_2xPIse": {
-    "defaultMessage": "Yes, load"
+  "LoadDemoDataButton.tsx_8EGRF9": {
+    "defaultMessage": "Load"
   },
-  "LoadDemoDataButton.tsx_A84v/o": {
-    "defaultMessage": "Attention: loading demo data erases all the data you've saved so far. Continue?"
-  },
-  "LoadDemoDataButton.tsx_J1xAjB": {
-    "defaultMessage": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+  "LoadDemoDataButton.tsx_GCRF0i": {
+    "defaultMessage": "Loading demo data"
   },
   "LoadDemoDataButton.tsx_VXuroA": {
     "defaultMessage": "Load demo data"
   },
   "LoadDemoDataButton.tsx_ZBdI8u": {
     "defaultMessage": "Loads some demo collections and documents for you to play around with."
-  },
-  "LoadDemoDataButton.tsx_cEUBT2": {
-    "defaultMessage": "Reset demo data"
-  },
-  "LoadDemoDataButton.tsx_fxtYtB": {
-    "defaultMessage": "Yes, reset"
   },
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"
@@ -883,6 +877,33 @@
   },
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
+  },
+  "SearchModal.tsx_xmcVZ0": {
+    "defaultMessage": "Search"
+  },
+  "SearchParamsInput.tsx_+cFFD6": {
+    "defaultMessage": "Filter by collection"
+  },
+  "SearchParamsInput.tsx_1udzha": {
+    "defaultMessage": "Conversations"
+  },
+  "SearchParamsInput.tsx_IVgAw4": {
+    "defaultMessage": "All collections"
+  },
+  "SearchParamsInput.tsx_vBlT6y": {
+    "defaultMessage": "Documents"
+  },
+  "SearchParamsInput.tsx_xmcVZ0": {
+    "defaultMessage": "Search"
+  },
+  "SearchResults.tsx_79lKyO": {
+    "defaultMessage": "Search results"
+  },
+  "SearchResults.tsx_NNQzoi": {
+    "defaultMessage": "Searching..."
+  },
+  "SearchResults.tsx_hX5PAb": {
+    "defaultMessage": "No results found"
   },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"

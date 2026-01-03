@@ -379,6 +379,12 @@
       "value": "🤖 Conversations"
     }
   ],
+  "ConversationSearchResult.tsx_KHJ2sI": [
+    {
+      "type": 0,
+      "value": "Untitled conversation"
+    }
+  ],
   "ConversationUtils.ts_PQ8A3I": [
     {
       "type": 0,
@@ -1842,22 +1848,16 @@
       "value": "There are no items in the list"
     }
   ],
-  "LoadDemoDataButton.tsx_2xPIse": [
+  "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
-      "value": "Yes, load"
+      "value": "Load"
     }
   ],
-  "LoadDemoDataButton.tsx_A84v/o": [
+  "LoadDemoDataButton.tsx_GCRF0i": [
     {
       "type": 0,
-      "value": "Attention: loading demo data erases all the data you've saved so far. Continue?"
-    }
-  ],
-  "LoadDemoDataButton.tsx_J1xAjB": [
-    {
-      "type": 0,
-      "value": "Attention: resetting demo data erases all the data you've saved so far. Continue?"
+      "value": "Loading demo data"
     }
   ],
   "LoadDemoDataButton.tsx_VXuroA": [
@@ -1870,18 +1870,6 @@
     {
       "type": 0,
       "value": "Loads some demo collections and documents for you to play around with."
-    }
-  ],
-  "LoadDemoDataButton.tsx_cEUBT2": [
-    {
-      "type": 0,
-      "value": "Reset demo data"
-    }
-  ],
-  "LoadDemoDataButton.tsx_fxtYtB": [
-    {
-      "type": 0,
-      "value": "Yes, reset"
     }
   ],
   "Logo.tsx_FbFgI4": [
@@ -2664,6 +2652,60 @@
       ],
       "type": 8,
       "value": "ol"
+    }
+  ],
+  "SearchModal.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
+  "SearchParamsInput.tsx_+cFFD6": [
+    {
+      "type": 0,
+      "value": "Filter by collection"
+    }
+  ],
+  "SearchParamsInput.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversations"
+    }
+  ],
+  "SearchParamsInput.tsx_IVgAw4": [
+    {
+      "type": 0,
+      "value": "All collections"
+    }
+  ],
+  "SearchParamsInput.tsx_vBlT6y": [
+    {
+      "type": 0,
+      "value": "Documents"
+    }
+  ],
+  "SearchParamsInput.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Search"
+    }
+  ],
+  "SearchResults.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Search results"
+    }
+  ],
+  "SearchResults.tsx_NNQzoi": [
+    {
+      "type": 0,
+      "value": "Searching..."
+    }
+  ],
+  "SearchResults.tsx_hX5PAb": [
+    {
+      "type": 0,
+      "value": "No results found"
     }
   ],
   "SendRecordButtons.tsx_/8QiK8": [

@@ -125,11 +125,12 @@ if (window.location.href.startsWith(redirectUri)) {
     window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
   }
 } else {
-  renderBrowserApp(backend, queryClient, async () =>
-    dataRepositoriesManager.loadData(
-      (await import("./demoData/demoData.js")).default,
-    ),
-  );
+  renderBrowserApp(backend, queryClient, async (onProgress) => {
+    const { default: loadDemoData } = await import(
+      "./demoData/loadDemoData.js"
+    );
+    await loadDemoData(backend, onProgress);
+  });
 }
 
 window.addEventListener("message", (evt) => {

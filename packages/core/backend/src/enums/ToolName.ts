@@ -6,6 +6,7 @@ enum ToolName {
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
   CreateChart = "createChart",
   CreateDocumentsTable = "createDocumentsTable",
+  SearchDocuments = "searchDocuments",
   // CollectionCreator
   SuggestCollectionDefinition = "suggestCollectionDefinition",
   // Shared

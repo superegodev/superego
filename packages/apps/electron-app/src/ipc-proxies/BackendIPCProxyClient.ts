@@ -45,9 +45,10 @@ export default class BackendIPCProxyClient implements Backend {
       create: this.makeMainIpcCall("documents.create"),
       createNewVersion: this.makeMainIpcCall("documents.createNewVersion"),
       delete: this.makeMainIpcCall("documents.delete"),
+      list: this.makeMainIpcCall("documents.list"),
       get: this.makeMainIpcCall("documents.get"),
       getVersion: this.makeMainIpcCall("documents.getVersion"),
-      list: this.makeMainIpcCall("documents.list"),
+      search: this.makeMainIpcCall("documents.search"),
     };
 
     this.files = {
@@ -66,6 +67,9 @@ export default class BackendIPCProxyClient implements Backend {
       deleteConversation: this.makeMainIpcCall("assistants.deleteConversation"),
       getConversation: this.makeMainIpcCall("assistants.getConversation"),
       listConversations: this.makeMainIpcCall("assistants.listConversations"),
+      searchConversations: this.makeMainIpcCall(
+        "assistants.searchConversations",
+      ),
       getDeveloperPrompts: this.makeMainIpcCall(
         "assistants.getDeveloperPrompts",
       ),

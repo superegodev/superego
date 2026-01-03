@@ -26,11 +26,11 @@
     "playwright": "playwright"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.8",
+    "@biomejs/biome": "2.3.10",
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-sql-cst": "^0.16.0",
+    "prettier-plugin-sql-cst": "^0.17.3",
     "typescript": "^5.9.3",
     "zx": "8.8.5-lite"
   },

@@ -1,35 +1,18 @@
-import { DocumentVersionCreator } from "@superego/backend";
-import type {
-  CollectionEntity,
-  CollectionVersionEntity,
-  DocumentEntity,
-  DocumentVersionEntity,
-} from "@superego/executing-backend";
-import { Id } from "@superego/shared-utils";
-import calendarEntries from "./calendarEntriesData.js";
+import calendarEntriesData from "./calendarEntriesData.js";
 import calendarEntriesSchema from "./calendarEntriesSchema.js";
+import type { DemoCollection } from "./types.js";
 
-const collection: CollectionEntity = {
-  id: Id.generate.collection(),
+export default {
+  categoryName: null,
   settings: {
     name: "Calendar",
     icon: "📅",
-    collectionCategoryId: null,
-    defaultCollectionViewAppId: null,
     description: null,
     assistantInstructions:
       "- If the duration is not supplied for events, default to them being 1 hour long.",
   },
-  remote: null,
-  createdAt: new Date(),
-};
-
-const collectionVersion: CollectionVersionEntity = {
-  id: Id.generate.collectionVersion(),
-  previousVersionId: null,
-  collectionId: collection.id,
   schema: calendarEntriesSchema,
-  settings: {
+  versionSettings: {
     contentSummaryGetter: {
       source: `
 import type { CalendarEntry } from "./CollectionSchema.js";
@@ -57,44 +40,5 @@ export default function getContentSummary(calendarEntry) {
       `.trim(),
     },
   },
-  migration: null,
-  remoteConverters: null,
-  createdAt: new Date(),
-};
-
-const documents: DocumentEntity[] = [];
-const documentVersions: DocumentVersionEntity[] = [];
-
-for (const calendarEntry of calendarEntries) {
-  const document: DocumentEntity = {
-    id: Id.generate.document(),
-    remoteId: null,
-    remoteUrl: null,
-    latestRemoteDocument: null,
-    collectionId: collection.id,
-    createdAt: new Date(),
-  };
-  const documentVersion: DocumentVersionEntity = {
-    id: Id.generate.documentVersion(),
-    remoteId: null,
-    previousVersionId: null,
-    collectionId: collection.id,
-    documentId: document.id,
-    collectionVersionId: collectionVersion.id,
-    conversationId: null,
-    content: calendarEntry,
-    createdBy: DocumentVersionCreator.User,
-    createdAt: new Date(),
-  };
-  documents.push(document);
-  documentVersions.push(documentVersion);
-}
-
-export default {
-  collection,
-  collectionVersion,
-  documents,
-  documentVersions,
-  app: null,
-  appVersion: null,
-};
+  documents: calendarEntriesData,
+} satisfies DemoCollection;

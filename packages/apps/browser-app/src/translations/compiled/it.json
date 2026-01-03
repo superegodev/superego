@@ -375,6 +375,12 @@
       "value": "🤖 Conversazioni"
     }
   ],
+  "ConversationSearchResult.tsx_KHJ2sI": [
+    {
+      "type": 0,
+      "value": "Conversazione senza titolo"
+    }
+  ],
   "ConversationUtils.ts_PQ8A3I": [
     {
       "type": 0,
@@ -1834,22 +1840,16 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
-  "LoadDemoDataButton.tsx_2xPIse": [
+  "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
-      "value": "Sì, carica"
+      "value": "Carica"
     }
   ],
-  "LoadDemoDataButton.tsx_A84v/o": [
+  "LoadDemoDataButton.tsx_GCRF0i": [
     {
       "type": 0,
-      "value": "Attenzione: caricando i dati demo cancellerai tutti i dati che hai salvato finora. Vuoi continuare?"
-    }
-  ],
-  "LoadDemoDataButton.tsx_J1xAjB": [
-    {
-      "type": 0,
-      "value": "Attenzione: resettare i dati demo cancellerà tutti i dati che hai salvato finora. Vuoi continuare?"
+      "value": "Caricamento dati demo"
     }
   ],
   "LoadDemoDataButton.tsx_VXuroA": [
@@ -1862,18 +1862,6 @@
     {
       "type": 0,
       "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
-    }
-  ],
-  "LoadDemoDataButton.tsx_cEUBT2": [
-    {
-      "type": 0,
-      "value": "Resetta i dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_fxtYtB": [
-    {
-      "type": 0,
-      "value": "Sì, resetta"
     }
   ],
   "Logo.tsx_FbFgI4": [
@@ -2521,7 +2509,7 @@
       "children": [
         {
           "type": 0,
-          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+          "value": " Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: "
         }
       ],
       "type": 8,
@@ -2555,7 +2543,7 @@
           "children": [
             {
               "type": 0,
-              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+              "value": " Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. "
             }
           ],
           "type": 8,
@@ -2595,7 +2583,7 @@
       "children": [
         {
           "type": 0,
-          "value": " Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: "
+          "value": " Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: "
         }
       ],
       "type": 8,
@@ -2629,7 +2617,7 @@
           "children": [
             {
               "type": 0,
-              "value": " Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. "
+              "value": " Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. "
             }
           ],
           "type": 8,
@@ -2643,7 +2631,7 @@
           "children": [
             {
               "type": 0,
-              "value": " Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. "
+              "value": " Poiché si tratta di una collezione remota, aggiorna anche i relativi convertitori remoti. "
             }
           ],
           "type": 8,
@@ -2656,6 +2644,60 @@
       ],
       "type": 8,
       "value": "ol"
+    }
+  ],
+  "SearchModal.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Cerca"
+    }
+  ],
+  "SearchParamsInput.tsx_+cFFD6": [
+    {
+      "type": 0,
+      "value": "Filtra per collezione"
+    }
+  ],
+  "SearchParamsInput.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversazioni"
+    }
+  ],
+  "SearchParamsInput.tsx_IVgAw4": [
+    {
+      "type": 0,
+      "value": "Tutte le collezioni"
+    }
+  ],
+  "SearchParamsInput.tsx_vBlT6y": [
+    {
+      "type": 0,
+      "value": "Documenti"
+    }
+  ],
+  "SearchParamsInput.tsx_xmcVZ0": [
+    {
+      "type": 0,
+      "value": "Cerca"
+    }
+  ],
+  "SearchResults.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Risultati della ricerca"
+    }
+  ],
+  "SearchResults.tsx_NNQzoi": [
+    {
+      "type": 0,
+      "value": "Ricerca in corso..."
+    }
+  ],
+  "SearchResults.tsx_hX5PAb": [
+    {
+      "type": 0,
+      "value": "Nessun risultato trovato"
     }
   ],
   "SendRecordButtons.tsx_/8QiK8": [

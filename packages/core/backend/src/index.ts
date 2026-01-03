@@ -103,6 +103,7 @@ export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
+export type { default as LiteConversation } from "./types/LiteConversation.js";
 export type { default as LiteDocument } from "./types/LiteDocument.js";
 export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";
 export type { default as Message } from "./types/Message.js";
@@ -110,6 +111,7 @@ export type { default as MessageContentPart } from "./types/MessageContentPart.j
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";
+export type { default as TextSearchResult } from "./types/TextSearchResult.js";
 export type { default as ToolCall } from "./types/ToolCall.js";
 export type { default as ToolResult } from "./types/ToolResult.js";
 export type { default as TypescriptFile } from "./types/TypescriptFile.js";

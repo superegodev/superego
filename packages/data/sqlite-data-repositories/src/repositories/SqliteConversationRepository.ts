@@ -77,7 +77,7 @@ export default class SqliteConversationRepository
   async findAll(): Promise<ConversationEntity[]> {
     const conversations = this.db
       .prepare(`SELECT * FROM "${table}" ORDER BY "created_at" DESC`)
-      .all() as any as SqliteConversation[];
+      .all() as SqliteConversation[];
     return conversations.map(toEntity);
   }
 }

@@ -55,7 +55,7 @@ export default class SqliteAppRepository implements AppRepository {
   async findAll(): Promise<AppEntity[]> {
     const apps = this.db
       .prepare(`SELECT * FROM "${table}" ORDER BY "name" ASC`)
-      .all() as any as SqliteApp[];
+      .all() as SqliteApp[];
     return apps.map(toEntity);
   }
 }

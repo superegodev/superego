@@ -2,7 +2,7 @@ import { decode } from "@msgpack/msgpack";
 import type { AppId, AppVersionId } from "@superego/backend";
 import type { AppVersionEntity } from "@superego/executing-backend";
 
-export default interface SqliteAppVersion {
+type SqliteAppVersion = {
   id: AppVersionId;
   previous_version_id: AppVersionId | null;
   app_id: AppId;
@@ -13,7 +13,8 @@ export default interface SqliteAppVersion {
   /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
-}
+};
+export default SqliteAppVersion;
 
 export function toEntity(appVersion: SqliteAppVersion): AppVersionEntity {
   return {

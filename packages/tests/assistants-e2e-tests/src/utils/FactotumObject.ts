@@ -116,6 +116,7 @@ class FactotumObject {
         );
         return getDocumentResult.data;
       },
+      { concurrency: 1 },
     );
 
     expect(

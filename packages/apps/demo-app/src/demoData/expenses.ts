@@ -1,28 +1,15 @@
-import { AppType, DocumentVersionCreator } from "@superego/backend";
-import type {
-  AppEntity,
-  AppVersionEntity,
-  CollectionEntity,
-  CollectionVersionEntity,
-  DocumentEntity,
-  DocumentVersionEntity,
-} from "@superego/executing-backend";
-import { Id } from "@superego/shared-utils";
-import { Finance } from "./collectionCategories.js";
+import { AppType } from "@superego/backend";
 import expensesAppCompiled from "./expenses.appCompiled.js?raw";
-import expensesAppSource from "./expenses.appSource.js?raw";
-import expenses from "./expensesData.js";
+import expensesAppSource from "./expenses.appSource.tsx?raw";
+import expensesData from "./expensesData.js";
 import expensesSchema from "./expensesSchema.js";
+import type { DemoCollection } from "./types.js";
 
-const appId = Id.generate.app();
-
-const collection: CollectionEntity = {
-  id: Id.generate.collection(),
+export default {
+  categoryName: "Finance",
   settings: {
     name: "Expenses",
     icon: "💸",
-    collectionCategoryId: Finance.id,
-    defaultCollectionViewAppId: appId,
     description: null,
     assistantInstructions: [
       "- Defaults for things I don't specify:",
@@ -30,16 +17,8 @@ const collection: CollectionEntity = {
       "  - Payment method -> Credit Card.",
     ].join("\n"),
   },
-  remote: null,
-  createdAt: new Date(),
-};
-
-const collectionVersion: CollectionVersionEntity = {
-  id: Id.generate.collectionVersion(),
-  previousVersionId: null,
-  collectionId: collection.id,
   schema: expensesSchema,
-  settings: {
+  versionSettings: {
     contentSummaryGetter: {
       source: `
 import type { Expense } from "./CollectionSchema.js";
@@ -69,69 +48,15 @@ export default function getContentSummary(expense) {
       `.trim(),
     },
   },
-  migration: null,
-  remoteConverters: null,
-  createdAt: new Date(),
-};
-
-const documents: DocumentEntity[] = [];
-const documentVersions: DocumentVersionEntity[] = [];
-
-for (const expense of expenses) {
-  const document: DocumentEntity = {
-    id: Id.generate.document(),
-    remoteId: null,
-    remoteUrl: null,
-    latestRemoteDocument: null,
-    collectionId: collection.id,
-    createdAt: new Date(),
-  };
-  const documentVersion: DocumentVersionEntity = {
-    id: Id.generate.documentVersion(),
-    remoteId: null,
-    previousVersionId: null,
-    collectionId: collection.id,
-    documentId: document.id,
-    collectionVersionId: collectionVersion.id,
-    conversationId: null,
-    content: expense,
-    createdBy: DocumentVersionCreator.User,
-    createdAt: new Date(),
-  };
-  documents.push(document);
-  documentVersions.push(documentVersion);
-}
-
-const app: AppEntity = {
-  id: appId,
-  type: AppType.CollectionView,
-  name: "Expense Stats",
-  createdAt: new Date(),
-};
-
-const appVersion: AppVersionEntity = {
-  id: Id.generate.appVersion(),
-  previousVersionId: null,
-  appId: app.id,
-  targetCollections: [{ id: collection.id, versionId: collectionVersion.id }],
-  files: {
-    "/main.tsx": {
-      source: expensesAppSource
-        .replaceAll("$COLLECTION_ID", collection.id)
-        .replaceAll("$COLLECTION_VERSION_ID", collectionVersion.id),
-      compiled: expensesAppCompiled
-        .replaceAll("$COLLECTION_ID", collection.id)
-        .replaceAll("$COLLECTION_VERSION_ID", collectionVersion.id),
+  documents: expensesData,
+  app: {
+    type: AppType.CollectionView,
+    name: "Expense Stats",
+    files: {
+      "/main.tsx": {
+        source: expensesAppSource,
+        compiled: expensesAppCompiled,
+      },
     },
   },
-  createdAt: new Date(),
-};
-
-export default {
-  collection,
-  collectionVersion,
-  documents,
-  documentVersions,
-  app,
-  appVersion,
-};
+} satisfies DemoCollection;

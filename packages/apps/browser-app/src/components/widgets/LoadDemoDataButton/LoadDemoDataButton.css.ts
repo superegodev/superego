@@ -7,4 +7,8 @@ export const LoadDemoDataButton = {
     padding: vars.spacing._0_5,
     marginBlockEnd: vars.spacing._3,
   }),
+
+  modal: style({
+    width: vars.spacing._120,
+  }),
 };

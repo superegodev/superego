@@ -23,30 +23,6 @@ export default class DemoDataRepositoriesManager
     private databaseName = "superego",
   ) {}
 
-  async loadData(data: Partial<Data>): Promise<void> {
-    const currentData = await this.readData();
-    await this.writeData(
-      {
-        version: crypto.randomUUID(),
-        apps: {},
-        appVersions: {},
-        backgroundJobs: {},
-        collectionCategories: {},
-        collections: {},
-        collectionVersions: {},
-        conversations: {},
-        documents: {},
-        documentVersions: {},
-        files: {},
-        globalSettings: currentData?.globalSettings ?? {
-          value: this.defaultGlobalSettings,
-        },
-        ...data,
-      },
-      OVERWRITE,
-    );
-  }
-
   async runInSerializableTransaction<ReturnValue>(
     fn: (
       repos: DataRepositories,
@@ -66,6 +42,7 @@ export default class DemoDataRepositoriesManager
       documents: {},
       documentVersions: {},
       files: {},
+      flexsearchIndexes: [],
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;
@@ -97,6 +74,7 @@ export default class DemoDataRepositoriesManager
           "documents",
           "documentVersions",
           "files",
+          "flexsearchIndexes",
           "globalSettings",
         ] as const
       ).forEach((property) => {

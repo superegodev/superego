@@ -5,7 +5,7 @@ import type {
   RemoteEntity,
 } from "@superego/executing-backend";
 
-export default interface SqliteCollection {
+type SqliteCollection = {
   id: CollectionId;
   /** JSON */
   settings: string;
@@ -13,7 +13,8 @@ export default interface SqliteCollection {
   remote: Buffer | null;
   /** ISO 8601 */
   created_at: string;
-}
+};
+export default SqliteCollection;
 
 export function toEntity(collection: SqliteCollection): CollectionEntity {
   return {

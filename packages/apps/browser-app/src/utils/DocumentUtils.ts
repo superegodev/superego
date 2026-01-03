@@ -1,9 +1,9 @@
-import type { Document } from "@superego/backend";
+import type { LiteDocument } from "@superego/backend";
 import { ContentSummaryUtils } from "@superego/shared-utils";
 import { head } from "es-toolkit";
 
 export default {
-  getDisplayName(document: Document): string {
+  getDisplayName(document: LiteDocument): string {
     const { contentSummary } = document.latestVersion;
     if (!contentSummary.success) {
       return document.id;

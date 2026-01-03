@@ -82,7 +82,7 @@ export default class SqliteCollectionRepository
   async findAll(): Promise<CollectionEntity[]> {
     const collections = this.db
       .prepare(`SELECT * FROM "${table}" ORDER BY "settings" ->> '$.name' ASC`)
-      .all() as any as SqliteCollection[];
+      .all() as SqliteCollection[];
     return collections.map(toEntity);
   }
 }

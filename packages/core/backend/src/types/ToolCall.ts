@@ -59,6 +59,14 @@ namespace ToolCall {
       getDocumentIds: string;
     }
   >;
+  export type SearchDocuments = ToolCall<
+    ToolName.SearchDocuments,
+    {
+      collectionId: CollectionId | null;
+      query: string;
+      limit?: number;
+    }
+  >;
 
   // CollectionCreator
   export type SuggestCollectionDefinition = ToolCall<

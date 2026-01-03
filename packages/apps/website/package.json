@@ -15,13 +15,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
-    "@astrojs/mdx": "^4.3.12",
-    "@astrojs/starlight": "^0.37.0",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/starlight": "^0.37.1",
     "@fontsource-variable/petrona": "^5.2.8",
     "@playwright/test": "^1.57.0",
-    "astro": "^5.16.4",
+    "astro": "^5.16.6",
     "starlight-theme-nova": "^0.10.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.53.0"
+    "wrangler": "^4.54.0"
   }
 }

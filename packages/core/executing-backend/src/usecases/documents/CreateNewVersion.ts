@@ -15,7 +15,7 @@ import {
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { valibotSchemas } from "@superego/schema";
+import { utils, valibotSchemas } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
@@ -195,6 +195,10 @@ export default class DocumentsCreateNewVersion extends Usecase<
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     } as DocumentVersionEntity;
+    const textChunks = utils.extractTextChunks(
+      latestCollectionVersion.schema,
+      convertedContent,
+    );
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
     })[] = protoFilesWithIds.map((protoFileWithId) => ({
@@ -221,6 +225,11 @@ export default class DocumentsCreateNewVersion extends Usecase<
       await this.repos.document.replace(updatedDocument);
     }
     await this.repos.documentVersion.insert(documentVersion);
+    await this.repos.documentTextSearchIndex.upsert(
+      collectionId,
+      id,
+      textChunks,
+    );
     await this.repos.file.addReferenceToAll(referencedFileIds, {
       collectionId: collectionId,
       documentId: id,
