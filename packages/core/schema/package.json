@@ -28,7 +28,6 @@
   "dependencies": {
     "@superego/global-types": "workspace:*",
     "@tiptap/core": "^3.14.0",
-    "@tiptap/pm": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
     "luxon": "^3.7.2",
     "valibot": "^1.2.0"

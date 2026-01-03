@@ -43,15 +43,23 @@ export default async function loadDemoData(
       total: totalOperations,
       message: "Creating collection categories",
     });
-    const result = await backend.collectionCategories.create({
-      name: category.name,
-      icon: category.icon,
-      parentId: category.parentId,
-    });
-    if (result.success) {
-      categoryIdsByName.set(category.name, result.data.id);
+    const createCollectionCategoryResult =
+      await backend.collectionCategories.create({
+        name: category.name,
+        icon: category.icon,
+        parentId: category.parentId,
+      });
+    if (createCollectionCategoryResult.success) {
+      categoryIdsByName.set(
+        category.name,
+        createCollectionCategoryResult.data.id,
+      );
     } else {
-      console.error("Failed to create category", category.name, result.error);
+      console.error(
+        "Failed to create category",
+        category.name,
+        createCollectionCategoryResult.error,
+      );
     }
   }
 
@@ -68,7 +76,7 @@ export default async function loadDemoData(
       message: "Creating collections",
     });
 
-    const result = await backend.collections.create(
+    const createCollectionResult = await backend.collections.create(
       {
         ...collection.settings,
         collectionCategoryId: collection.categoryName
@@ -80,16 +88,16 @@ export default async function loadDemoData(
       collection.versionSettings,
     );
 
-    if (result.success) {
+    if (createCollectionResult.success) {
       createdCollectionIds.set(collection, {
-        collectionId: result.data.id,
-        collectionVersionId: result.data.latestVersion.id,
+        collectionId: createCollectionResult.data.id,
+        collectionVersionId: createCollectionResult.data.latestVersion.id,
       });
     } else {
       console.error(
         "Failed to create collection",
         collection.settings.name,
-        result.error,
+        createCollectionResult.error,
       );
     }
   }
@@ -110,12 +118,16 @@ export default async function loadDemoData(
         total: totalOperations,
         message: `Creating document ${documentIndex} of ${totalDocumentCount}`,
       });
-      const result = await backend.documents.create(
+      const createDocumentResult = await backend.documents.create(
         collectionIds.collectionId,
         documentContent,
       );
-      if (!result.success) {
-        console.error("Failed to create document", documentIndex, result.error);
+      if (!createDocumentResult.success) {
+        console.error(
+          "Failed to create document",
+          documentIndex,
+          createDocumentResult.error,
+        );
       }
     }
   }
@@ -155,7 +167,7 @@ export default async function loadDemoData(
       ]),
     ) as AppVersion["files"];
 
-    const appResult = await backend.apps.create(
+    const createAppResult = await backend.apps.create(
       collection.app.type,
       collection.app.name,
       [collectionIds.collectionId],
@@ -163,15 +175,23 @@ export default async function loadDemoData(
     );
 
     // Set as default collection view app
-    if (appResult.success) {
-      await backend.collections.updateSettings(collectionIds.collectionId, {
-        defaultCollectionViewAppId: appResult.data.id,
-      });
+    if (createAppResult.success) {
+      const updateCollectionResult = await backend.collections.updateSettings(
+        collectionIds.collectionId,
+        { defaultCollectionViewAppId: createAppResult.data.id },
+      );
+      if (!updateCollectionResult.success) {
+        console.error(
+          "Failed to set default app for collection",
+          collection.settings.name,
+          updateCollectionResult.error,
+        );
+      }
     } else {
       console.error(
         "Failed to create app",
         collection.app.name,
-        appResult.error,
+        createAppResult.error,
       );
     }
   }

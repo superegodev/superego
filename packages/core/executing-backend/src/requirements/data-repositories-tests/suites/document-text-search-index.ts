@@ -452,7 +452,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
         },
       );
 
-      // Exercise: search with typos (missing letter, swapped letters)
+      // Exercise
       const results =
         await dataRepositoriesManager.runInSerializableTransaction(
           async (repos) => ({
@@ -465,7 +465,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
           }),
         );
 
-      // Verify: typos should still find the document
+      // Verify
       expect(results).toEqual([
         expect.objectContaining({ collectionId, documentId }),
       ]);

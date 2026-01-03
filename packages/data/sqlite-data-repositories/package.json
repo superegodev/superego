@@ -18,7 +18,7 @@
     "vitest": "^4.0.16"
   },
   "dependencies": {
-    "@msgpack/msgpack": "^3.1.2",
+    "@msgpack/msgpack": "^3.1.3",
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/schema": "workspace:*",

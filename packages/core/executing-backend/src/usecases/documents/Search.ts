@@ -94,6 +94,7 @@ export default class DocumentsSearch extends Usecase<
           collectionVersionByCollectionId,
           lite,
         ),
+      { concurrency: 1 },
     );
 
     return makeSuccessfulResult(textSearchResults.flat());
@@ -108,27 +109,31 @@ export default class DocumentsSearch extends Usecase<
     const collectionVersion = collectionVersionByCollectionId.get(collectionId);
     assertCollectionVersionExists(collectionId, collectionVersion);
 
-    const documentsWithVersions = await pMap(results, async (result) => {
-      const [document, latestVersion] = await Promise.all([
-        this.repos.document.find(result.documentId),
-        this.repos.documentVersion.findLatestWhereDocumentIdEq(
+    const documentsWithVersions = await pMap(
+      results,
+      async (result) => {
+        const [document, latestVersion] = await Promise.all([
+          this.repos.document.find(result.documentId),
+          this.repos.documentVersion.findLatestWhereDocumentIdEq(
+            result.documentId,
+          ),
+        ]);
+        assertDocumentExists(collectionId, result.documentId, document);
+        assertDocumentVersionExists(
+          collectionId,
           result.documentId,
-        ),
-      ]);
-      assertDocumentExists(collectionId, result.documentId, document);
-      assertDocumentVersionExists(
-        collectionId,
-        result.documentId,
-        latestVersion,
-      );
-      assertDocumentVersionMatchesCollectionVersion(
-        collectionId,
-        collectionVersion,
-        result.documentId,
-        latestVersion,
-      );
-      return { document, latestVersion, matchedText: result.matchedText };
-    });
+          latestVersion,
+        );
+        assertDocumentVersionMatchesCollectionVersion(
+          collectionId,
+          collectionVersion,
+          result.documentId,
+          latestVersion,
+        );
+        return { document, latestVersion, matchedText: result.matchedText };
+      },
+      { concurrency: 1 },
+    );
 
     const contentSummaries = await makeContentSummaries(
       this.javascriptSandbox,

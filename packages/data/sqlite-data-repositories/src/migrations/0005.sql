@@ -6,3 +6,7 @@ CREATE TABLE "flexsearch_indexes" (
   "data" TEXT NOT NULL,
   CHECK ("target" IN ('document', 'conversation'))
 );
+
+CREATE INDEX "idx_flexsearch_indexes__on__target" ON "flexsearch_indexes" (
+  "target"
+);

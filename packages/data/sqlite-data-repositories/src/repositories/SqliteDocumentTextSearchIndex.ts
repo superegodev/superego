@@ -94,7 +94,7 @@ export default class SqliteDocumentTextSearchIndex
     }
 
     const flexsearchIndexes = this.db
-      .prepare(`SELECT * FROM "${table}" WHERE "target" is 'document'`)
+      .prepare(`SELECT * FROM "${table}" WHERE "target" = 'document'`)
       .all() as SqliteFlexsearchIndex[];
 
     for (const { key, data } of flexsearchIndexes) {

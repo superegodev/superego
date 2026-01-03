@@ -34,7 +34,7 @@ export const ProgressBar = {
 
   fill: style({
     height: "100%",
-    width: "var(--progress-bar-percentage)",
+    width: "var(--percentage)",
     borderRadius: vars.borders.radius.full,
     background: vars.colors.button.primary.base.background,
     transition: "width 0.2s ease-out",

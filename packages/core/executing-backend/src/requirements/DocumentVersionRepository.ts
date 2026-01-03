@@ -6,7 +6,6 @@ import type {
 import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 
 export default interface DocumentVersionRepository {
-  // TODO: consider passing textChunks here, removing the need for the index
   insert(documentVersion: DocumentVersionEntity): Promise<void>;
   deleteAllWhereCollectionIdEq(
     collectionId: CollectionId,

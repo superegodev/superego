@@ -45,7 +45,7 @@ export default function useSearch(): UseSearch {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [backend, searchParams]);
+  }, [backend, searchParams.collectionId, searchParams.query]);
 
   return {
     searchParams: searchParams,

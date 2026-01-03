@@ -93,6 +93,31 @@ describe("extracts text chunks for the supplied document content", () => {
     });
   });
 
+  it("case: empty List of Strings", () => {
+    // Exercise
+    const content = { listOfStrings: [] };
+    const schema: Schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            listOfStrings: {
+              dataType: DataType.List,
+              items: {
+                dataType: DataType.String,
+              },
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    };
+    const textChunks = extractTextChunks(schema, content);
+
+    // Verify
+    expect(textChunks).toEqual({});
+  });
+
   it("case: List of Structs with a String property", () => {
     // Exercise
     const content = {

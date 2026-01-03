@@ -5,6 +5,5 @@ export const MatchedText = {
   mark: style({
     background: "transparent",
     fontWeight: vars.typography.fontWeights.bold,
-    borderRadius: vars.borders.radius.sm,
   }),
 };

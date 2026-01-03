@@ -945,10 +945,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:^4.20251224.0":
-  version: 4.20251224.0
-  resolution: "@cloudflare/workers-types@npm:4.20251224.0"
-  checksum: 10c0/fec0deb6701bc4ab5cf6d55fc49f85443711d09137ef39e1e6aeb929b082d0d38314cacf83820dc2cc54d56155d5780281c0359623c51febe83882fac12ca6e1
+"@cloudflare/workers-types@npm:^4.20260103.0":
+  version: 4.20260103.0
+  resolution: "@cloudflare/workers-types@npm:4.20260103.0"
+  checksum: 10c0/b5a7f4deb8eb85270da8b97ae417f6b2bfbd03078af3294181fde99ad228e8580524ecc865f2fc6c43ce7fb088fc4c5e4e2fb6b6a016dc9154b358b1594e3445
   languageName: node
   linkType: hard
 
@@ -2344,13 +2344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.8.6":
-  version: 6.8.6
-  resolution: "@formatjs/cli@npm:6.8.6"
+"@formatjs/cli@npm:^6.9.0":
+  version: 6.9.0
+  resolution: "@formatjs/cli@npm:6.9.0"
   peerDependencies:
     "@glimmer/syntax": ^0.95.0
     "@vue/compiler-core": ^3.5.12
-    content-tag: ^3.0.0
+    content-tag: 4
     ember-template-recast: ^6.1.5
     vue: ^3.5.12
   peerDependenciesMeta:
@@ -2372,7 +2372,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: 10c0/9eba2b28542c9f386e92c401cdf8c4cf77608bdbecfdf8caed95078148ddc75f2fbed42bd345e8632ade57945f182e90be752544b3d5d18b01b567d788e5cc2b
+  checksum: 10c0/50334df4d04e3921825bb3f7da9af570c5ba0e93db92272e58648f5b0a402d2d445a0200923ae108e258e1553ef7b06c80341718bd9990b065031c82485b48ff
   languageName: node
   linkType: hard
 
@@ -2388,15 +2388,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:3.0.5":
-  version: 3.0.5
-  resolution: "@formatjs/ecma402-abstract@npm:3.0.5"
+"@formatjs/ecma402-abstract@npm:3.0.7":
+  version: 3.0.7
+  resolution: "@formatjs/ecma402-abstract@npm:3.0.7"
   dependencies:
-    "@formatjs/fast-memoize": "npm:3.0.1"
-    "@formatjs/intl-localematcher": "npm:0.7.3"
+    "@formatjs/fast-memoize": "npm:3.0.2"
+    "@formatjs/intl-localematcher": "npm:0.7.4"
     decimal.js: "npm:^10.4.3"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/8519253994c788a2d8e9107a26c20d823e8b25e5c4ba65688d0a9707bbcfcedc01c4b36eead6f111056cf72f3ccd76c9cfdb0071b6c2c707dd66b030278b7058
+  checksum: 10c0/0fdc25ef72dcd5bbe1deeb190be2f0a2e2770a2135904d16ddfb424305a1efed14b026fba6c48121bc32f693abf1fe08c0ee12cb7d888cb2ba92963236d82c77
   languageName: node
   linkType: hard
 
@@ -2409,12 +2409,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/fast-memoize@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@formatjs/fast-memoize@npm:3.0.1"
+"@formatjs/fast-memoize@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@formatjs/fast-memoize@npm:3.0.2"
   dependencies:
     tslib: "npm:^2.8.0"
-  checksum: 10c0/f78bd29d2419a0fe168eab7f8a48a150cc49b23f3d4372846aaf5ad4a58b4b7cf3f637b1575bfe342aa6c35c08158c88a5913b02b0b8dd28bd1ca90409b4809f
+  checksum: 10c0/f7d1074090df309d37322979fe5fc96451531317b42bd927102a3a86dee537b1cb0e378158c74e00efd9714a0aa0f1e5a673c749535df200e13167112676ce88
   languageName: node
   linkType: hard
 
@@ -2429,14 +2429,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-messageformat-parser@npm:3.1.1":
-  version: 3.1.1
-  resolution: "@formatjs/icu-messageformat-parser@npm:3.1.1"
+"@formatjs/icu-messageformat-parser@npm:3.2.1":
+  version: 3.2.1
+  resolution: "@formatjs/icu-messageformat-parser@npm:3.2.1"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:3.0.5"
-    "@formatjs/icu-skeleton-parser": "npm:2.0.5"
+    "@formatjs/ecma402-abstract": "npm:3.0.7"
+    "@formatjs/icu-skeleton-parser": "npm:2.0.7"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/fe83ccac94cfa1090814f7d317d592a454e2372e037a081afd227e716d8499feeb266426b60229a25409bfb828f3e2d6c1576be376a4017c25033b406b8c4427
+  checksum: 10c0/e11057cbc04cd419d6f46e84420fe2c6b66d7b85ef2d05023a39cd9c7a93199cbfd5837825e2c3effb07ff2f4cf0ae1209c4830989c7462c133eeb8a98aaf096
   languageName: node
   linkType: hard
 
@@ -2450,13 +2450,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:2.0.5":
-  version: 2.0.5
-  resolution: "@formatjs/icu-skeleton-parser@npm:2.0.5"
+"@formatjs/icu-skeleton-parser@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@formatjs/icu-skeleton-parser@npm:2.0.7"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:3.0.5"
+    "@formatjs/ecma402-abstract": "npm:3.0.7"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/99f354cff22baf6732035080bb220e51b772bb0496a2a0c9befcefd5e05009d49358f14cec09340dc090ce152f2b7523bf10dc8df098c34093a88079b7581a66
+  checksum: 10c0/f6fba57778ada42cece824bcb1f372002bdd26f1ffac13344be46eaa5b75e0d85c150085cf356e14ab938758d56c0e303f4fd57ce6e33c9202f3d78cefe13020
   languageName: node
   linkType: hard
 
@@ -2469,39 +2469,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-localematcher@npm:0.7.3":
-  version: 0.7.3
-  resolution: "@formatjs/intl-localematcher@npm:0.7.3"
+"@formatjs/intl-localematcher@npm:0.7.4":
+  version: 0.7.4
+  resolution: "@formatjs/intl-localematcher@npm:0.7.4"
   dependencies:
-    "@formatjs/fast-memoize": "npm:3.0.1"
+    "@formatjs/fast-memoize": "npm:3.0.2"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/7de4c783723a334f19f5a443bd7a526df7eaf3fa5bac622c19788a0929470aaac4ca63af9c44493cb6308487bf70901611106515a00764f07f6939b823d608c5
+  checksum: 10c0/7fc31e13397317faadee033dcf668cda49f031b28542c634c920339f374f483235543e08be2077152cfe5dd41e651d8d2d37b6ece8aa044c0998c48f5472fb1a
   languageName: node
   linkType: hard
 
-"@formatjs/intl@npm:4.0.6":
-  version: 4.0.6
-  resolution: "@formatjs/intl@npm:4.0.6"
+"@formatjs/intl@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@formatjs/intl@npm:4.0.8"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:3.0.5"
-    "@formatjs/fast-memoize": "npm:3.0.1"
-    "@formatjs/icu-messageformat-parser": "npm:3.1.1"
-    intl-messageformat: "npm:11.0.6"
+    "@formatjs/ecma402-abstract": "npm:3.0.7"
+    "@formatjs/fast-memoize": "npm:3.0.2"
+    "@formatjs/icu-messageformat-parser": "npm:3.2.1"
+    intl-messageformat: "npm:11.0.8"
     tslib: "npm:^2.8.0"
   peerDependencies:
     typescript: ^5.6.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/176e32cfcadd7afec0ec9117a22389c6f0ab06ee6e4176bc547f5d0536ea7a829cbaf3e5cb72af3eec57b980091011706a6e724c676b05bbf284c1d1fc67c091
+  checksum: 10c0/a4a6fd181d479c988d5569a74edcc6a3a0ad5072a627785caf342c1f3410b7dc901432a2b9f47e63168b9c073cc1e49aacc6b8c978b07438ba655d7c79783dbd
   languageName: node
   linkType: hard
 
-"@formatjs/ts-transformer@npm:4.0.6":
-  version: 4.0.6
-  resolution: "@formatjs/ts-transformer@npm:4.0.6"
+"@formatjs/ts-transformer@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@formatjs/ts-transformer@npm:4.1.0"
   dependencies:
-    "@formatjs/icu-messageformat-parser": "npm:3.1.1"
+    "@formatjs/icu-messageformat-parser": "npm:3.2.1"
     "@types/node": "npm:^22.0.0"
     chalk: "npm:^4.1.2"
     json-stable-stringify: "npm:^1.3.0"
@@ -2512,7 +2512,7 @@ __metadata:
   peerDependenciesMeta:
     ts-jest:
       optional: true
-  checksum: 10c0/876e1109774b1de86790b3c333cd19fa0e18a90667d8ef8975b76e41ffd45c096ed3936bc39007158631b32ebbfb6f060ac9cf27331b2c06a8f77f92adefe7fb
+  checksum: 10c0/70f6ac4176f86318ef3768cbecf799aeadef8f6b01f5f96e3fa47bd2379bd44a5b495e47dd7a7033ecf72800c76ae2407c9fbe604a3da400f9994b6753176b13
   languageName: node
   linkType: hard
 
@@ -3328,10 +3328,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@msgpack/msgpack@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "@msgpack/msgpack@npm:3.1.2"
-  checksum: 10c0/4fee6dbea70a485d3a787ac76dd43687f489d662f22919237db1f2abbc3c88070c1d3ad78417ce6e764bcd041051680284654021f52068e0aff82d570cb942d5
+"@msgpack/msgpack@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "@msgpack/msgpack@npm:3.1.3"
+  checksum: 10c0/1fa9a760a58e64e121561d17977b680198ff24d83e951df3896f8639d06824f2cba20af92a19940461e0d5d6dc696bd01222bd901164759432eadd0f482d0816
   languageName: node
   linkType: hard
 
@@ -5837,7 +5837,7 @@ __metadata:
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/themes": "workspace:*"
-    "@tanstack/react-query": "npm:^5.90.12"
+    "@tanstack/react-query": "npm:^5.90.16"
     "@types/luxon": "npm:^3.7.1"
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
@@ -5854,7 +5854,7 @@ __metadata:
     react-aria-components: "npm:^1.14.0"
     react-dom: "npm:^19.2.3"
     react-icons: "npm:^5.5.0"
-    react-intl: "npm:^8.0.8"
+    react-intl: "npm:^8.0.10"
     react-stately: "npm:^3.43.0"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.16"
@@ -5925,7 +5925,7 @@ __metadata:
   resolution: "@superego/browser-app@workspace:packages/apps/browser-app"
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
-    "@formatjs/cli": "npm:^6.8.6"
+    "@formatjs/cli": "npm:^6.9.0"
     "@hookform/resolvers": "npm:^5.2.2"
     "@react-aria/optimize-locales-plugin": "npm:^1.1.5"
     "@standard-schema/spec": "npm:^1.1.0"
@@ -5942,21 +5942,21 @@ __metadata:
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:^"
     "@superego/themes": "workspace:^"
-    "@tanstack/react-query": "npm:^5.90.12"
+    "@tanstack/react-query": "npm:^5.90.16"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"
     "@testing-library/react": "npm:^16.3.1"
-    "@tiptap/extension-code-block-lowlight": "npm:3.14.0"
-    "@tiptap/extension-list": "npm:3.14.0"
-    "@tiptap/extension-subscript": "npm:3.14.0"
-    "@tiptap/extension-superscript": "npm:3.14.0"
-    "@tiptap/extension-text-align": "npm:3.14.0"
-    "@tiptap/extension-text-style": "npm:3.14.0"
-    "@tiptap/extension-typography": "npm:3.14.0"
-    "@tiptap/extensions": "npm:3.14.0"
-    "@tiptap/pm": "npm:3.14.0"
-    "@tiptap/react": "npm:3.14.0"
-    "@tiptap/starter-kit": "npm:3.14.0"
+    "@tiptap/extension-code-block-lowlight": "npm:^3.14.0"
+    "@tiptap/extension-list": "npm:^3.14.0"
+    "@tiptap/extension-subscript": "npm:^3.14.0"
+    "@tiptap/extension-superscript": "npm:^3.14.0"
+    "@tiptap/extension-text-align": "npm:^3.14.0"
+    "@tiptap/extension-text-style": "npm:^3.14.0"
+    "@tiptap/extension-typography": "npm:^3.14.0"
+    "@tiptap/extensions": "npm:^3.14.0"
+    "@tiptap/pm": "npm:^3.14.0"
+    "@tiptap/react": "npm:^3.14.0"
+    "@tiptap/starter-kit": "npm:^3.14.0"
     "@types/luxon": "npm:^3.7.1"
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
@@ -5965,7 +5965,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^5.1.2"
     "@vitest/browser": "npm:^4.0.16"
     "@vitest/browser-playwright": "npm:^4.0.16"
-    babel-plugin-formatjs: "npm:^11.0.6"
+    babel-plugin-formatjs: "npm:^11.1.0"
     debounce: "npm:^3.0.0"
     echarts: "npm:^6.0.0"
     es-toolkit: "npm:^1.43.0"
@@ -5982,7 +5982,7 @@ __metadata:
     react-dom: "npm:^19.2.3"
     react-hook-form: "npm:^7.69.0"
     react-icons: "npm:^5.5.0"
-    react-intl: "npm:^8.0.8"
+    react-intl: "npm:^8.0.10"
     react-stately: "npm:^3.43.0"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.2.0"
@@ -6028,7 +6028,7 @@ __metadata:
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
     "@cloudflare/vite-plugin": "npm:1.17.1"
-    "@cloudflare/workers-types": "npm:^4.20251224.0"
+    "@cloudflare/workers-types": "npm:^4.20260103.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/browser-app": "workspace:^"
@@ -6040,7 +6040,7 @@ __metadata:
     "@superego/openai-compat-inference-service": "workspace:^"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
-    "@tanstack/react-query": "npm:^5.90.12"
+    "@tanstack/react-query": "npm:^5.90.16"
     typescript: "npm:^5.9.3"
     urlpattern-polyfill: "npm:^10.1.0"
     vite: "npm:^7.3.0"
@@ -6220,7 +6220,6 @@ __metadata:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/global-types": "workspace:*"
     "@tiptap/core": "npm:^3.14.0"
-    "@tiptap/pm": "npm:^3.14.0"
     "@tiptap/starter-kit": "npm:^3.14.0"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
@@ -6255,7 +6254,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/sqlite-data-repositories@workspace:packages/data/sqlite-data-repositories"
   dependencies:
-    "@msgpack/msgpack": "npm:^3.1.2"
+    "@msgpack/msgpack": "npm:^3.1.3"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/schema": "workspace:*"
@@ -6334,21 +6333,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.90.12":
-  version: 5.90.12
-  resolution: "@tanstack/query-core@npm:5.90.12"
-  checksum: 10c0/60d5dd23d7801118d6ef84a3d76e798aaf6eb851ee5227629a1dc798fa01ac9560580553413208fcc8a003fb12a89e83d6dd1f38ebc3bd9b6e8838cfaaa45fef
+"@tanstack/query-core@npm:5.90.16":
+  version: 5.90.16
+  resolution: "@tanstack/query-core@npm:5.90.16"
+  checksum: 10c0/f6a4827feeed2b4118323056bbda8d5099823202d1f29b538204ae2591be4e80f2946f3311eed30fefe866643f431c04b560457f03415d40caf2f353ba1efac0
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.90.12":
-  version: 5.90.12
-  resolution: "@tanstack/react-query@npm:5.90.12"
+"@tanstack/react-query@npm:^5.90.16":
+  version: 5.90.16
+  resolution: "@tanstack/react-query@npm:5.90.16"
   dependencies:
-    "@tanstack/query-core": "npm:5.90.12"
+    "@tanstack/query-core": "npm:5.90.16"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/da01ec2819d301e4be89731e82d3f091fa4f1ab2745be324e5166f9df77e2aaf1c362b0fa61aab226bb01634873f1a00562f7d7f405867fe23bdd47fe4d00fda
+  checksum: 10c0/03bd2aa23187003b45dc3d4b465a68f19806369283487a004acd6dd2ad8ba1fa0ec343da616cb1c43c342609202d0776fee68867246caa5ad6915f090539c168
   languageName: node
   linkType: hard
 
@@ -6450,7 +6449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code-block-lowlight@npm:3.14.0":
+"@tiptap/extension-code-block-lowlight@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-code-block-lowlight@npm:3.14.0"
   peerDependencies:
@@ -6587,7 +6586,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-list@npm:3.14.0, @tiptap/extension-list@npm:^3.14.0":
+"@tiptap/extension-list@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-list@npm:3.14.0"
   peerDependencies:
@@ -6624,7 +6623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-subscript@npm:3.14.0":
+"@tiptap/extension-subscript@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-subscript@npm:3.14.0"
   peerDependencies:
@@ -6634,7 +6633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-superscript@npm:3.14.0":
+"@tiptap/extension-superscript@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-superscript@npm:3.14.0"
   peerDependencies:
@@ -6644,7 +6643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-align@npm:3.14.0":
+"@tiptap/extension-text-align@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-text-align@npm:3.14.0"
   peerDependencies:
@@ -6653,7 +6652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-style@npm:3.14.0":
+"@tiptap/extension-text-style@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-text-style@npm:3.14.0"
   peerDependencies:
@@ -6671,7 +6670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-typography@npm:3.14.0":
+"@tiptap/extension-typography@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-typography@npm:3.14.0"
   peerDependencies:
@@ -6689,7 +6688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extensions@npm:3.14.0, @tiptap/extensions@npm:^3.14.0":
+"@tiptap/extensions@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extensions@npm:3.14.0"
   peerDependencies:
@@ -6699,7 +6698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:3.14.0, @tiptap/pm@npm:^3.14.0":
+"@tiptap/pm@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/pm@npm:3.14.0"
   dependencies:
@@ -6725,7 +6724,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/react@npm:3.14.0":
+"@tiptap/react@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/react@npm:3.14.0"
   dependencies:
@@ -6750,7 +6749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/starter-kit@npm:3.14.0, @tiptap/starter-kit@npm:^3.14.0":
+"@tiptap/starter-kit@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/starter-kit@npm:3.14.0"
   dependencies:
@@ -8092,22 +8091,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-formatjs@npm:^11.0.6":
-  version: 11.0.6
-  resolution: "babel-plugin-formatjs@npm:11.0.6"
+"babel-plugin-formatjs@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "babel-plugin-formatjs@npm:11.1.0"
   dependencies:
     "@babel/core": "npm:^7.26.10"
     "@babel/helper-plugin-utils": "npm:^7.26.5"
     "@babel/plugin-syntax-jsx": "npm:^7.25.9"
     "@babel/traverse": "npm:^7.26.10"
     "@babel/types": "npm:^7.26.10"
-    "@formatjs/icu-messageformat-parser": "npm:3.1.1"
-    "@formatjs/ts-transformer": "npm:4.0.6"
+    "@formatjs/icu-messageformat-parser": "npm:3.2.1"
+    "@formatjs/ts-transformer": "npm:4.1.0"
     "@types/babel__core": "npm:^7.20.5"
     "@types/babel__helper-plugin-utils": "npm:^7.10.3"
     "@types/babel__traverse": "npm:^7.20.6"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/1b326a03d69538bcda298782e2f8615f300631af5b7ce63e02c447681c1f23cfdb5e8b08baa7bcbd7e2e1932bebda03d54c231de7a0955d238986e05b6ce3064
+  checksum: 10c0/618a9708614573749ceb49cdfbabe6514371cd5fdfe833994cae11b9d37dba80e749f8bfad9aae010eef9265f63e63220e3d94eb8adcd72e71f38c6a9b2a5024
   languageName: node
   linkType: hard
 
@@ -11310,15 +11309,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:11.0.6":
-  version: 11.0.6
-  resolution: "intl-messageformat@npm:11.0.6"
+"intl-messageformat@npm:11.0.8":
+  version: 11.0.8
+  resolution: "intl-messageformat@npm:11.0.8"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:3.0.5"
-    "@formatjs/fast-memoize": "npm:3.0.1"
-    "@formatjs/icu-messageformat-parser": "npm:3.1.1"
+    "@formatjs/ecma402-abstract": "npm:3.0.7"
+    "@formatjs/fast-memoize": "npm:3.0.2"
+    "@formatjs/icu-messageformat-parser": "npm:3.2.1"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/7c46e0d8d93c91e34a468b50cd8a665748a6467cb8f91fea512ac3aece36e54d4567f94c7da2af99668aa1ff8d7707e97f06bce1cdbcddabeeb5ae1a5617e8c1
+  checksum: 10c0/5bbc8a864d01a5a1f6925b09313e0a29e2c3ac4823e5e949314268222135e73f1964ebc21585e73e266e205a8a3e8ada8ad880a1718e692c33b094e460675870
   languageName: node
   linkType: hard
 
@@ -14508,16 +14507,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-intl@npm:^8.0.8":
-  version: 8.0.8
-  resolution: "react-intl@npm:8.0.8"
+"react-intl@npm:^8.0.10":
+  version: 8.0.10
+  resolution: "react-intl@npm:8.0.10"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:3.0.5"
-    "@formatjs/icu-messageformat-parser": "npm:3.1.1"
-    "@formatjs/intl": "npm:4.0.6"
+    "@formatjs/ecma402-abstract": "npm:3.0.7"
+    "@formatjs/icu-messageformat-parser": "npm:3.2.1"
+    "@formatjs/intl": "npm:4.0.8"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     hoist-non-react-statics: "npm:^3.3.2"
-    intl-messageformat: "npm:11.0.6"
+    intl-messageformat: "npm:11.0.8"
     tslib: "npm:^2.8.0"
   peerDependencies:
     "@types/react": 19
@@ -14526,7 +14525,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/9b09e3176e842e3620344380c7a0c7bbda0868013ef87425777e9ecc15ac414d4aa2ded70819571238dddcae4fc9f5d7c9222df5a6c3f327e068d7a03c2d721a
+  checksum: 10c0/b374535edf10da01ef903603a24e7cccff4a755241b0fa5dd31533c929b3044f4c67f6ab1674d6004a10a2482332d029774a8852a3f4edc9ba8eafab98d56445
   languageName: node
   linkType: hard
 
