@@ -3,8 +3,8 @@ import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import registerTests from "./registerTests.js";
+import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js";
 
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
@@ -41,7 +41,7 @@ registerTests((connector) => ({
     new DemoDataRepositoriesManager(defaultGlobalSettings, crypto.randomUUID()),
     new FakeJavascriptSandbox(),
     new MonacoTypescriptCompiler(() => import("monaco-editor")),
-    new OpenAICompatInferenceServiceFactory(),
+    new MockInferenceServiceFactory(),
     connector ? [connector] : [],
   ),
 }));

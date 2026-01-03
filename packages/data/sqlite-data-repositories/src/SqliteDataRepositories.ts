@@ -11,6 +11,7 @@ import SqliteCollectionCategoryRepository from "./repositories/SqliteCollectionC
 import SqliteCollectionRepository from "./repositories/SqliteCollectionRepository.js";
 import SqliteCollectionVersionRepository from "./repositories/SqliteCollectionVersionRepository.js";
 import SqliteConversationRepository from "./repositories/SqliteConversationRepository.js";
+import SqliteConversationTextSearchIndex from "./repositories/SqliteConversationTextSearchIndex.js";
 import SqliteDocumentRepository from "./repositories/SqliteDocumentRepository.js";
 import SqliteDocumentTextSearchIndex from "./repositories/SqliteDocumentTextSearchIndex.js";
 import SqliteDocumentVersionRepository from "./repositories/SqliteDocumentVersionRepository.js";
@@ -25,6 +26,7 @@ export default class SqliteDataRepositories implements DataRepositories {
   collection: SqliteCollectionRepository;
   collectionVersion: SqliteCollectionVersionRepository;
   conversation: SqliteConversationRepository;
+  conversationTextSearchIndex: SqliteConversationTextSearchIndex;
   document: SqliteDocumentRepository;
   documentVersion: SqliteDocumentVersionRepository;
   file: SqliteFileRepository;
@@ -42,6 +44,9 @@ export default class SqliteDataRepositories implements DataRepositories {
     this.collection = new SqliteCollectionRepository(db);
     this.collectionVersion = new SqliteCollectionVersionRepository(db);
     this.conversation = new SqliteConversationRepository(db);
+    this.conversationTextSearchIndex = new SqliteConversationTextSearchIndex(
+      db,
+    );
     this.document = new SqliteDocumentRepository(db);
     this.documentVersion = new SqliteDocumentVersionRepository(db);
     this.file = new SqliteFileRepository(db);

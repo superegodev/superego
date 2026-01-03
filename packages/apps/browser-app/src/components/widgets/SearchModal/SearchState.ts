@@ -1,16 +1,29 @@
-import type { LiteDocument, TextSearchResult } from "@superego/backend";
+import type {
+  LiteConversation,
+  LiteDocument,
+  TextSearchResult,
+} from "@superego/backend";
+import type SearchType from "./SearchType.js";
 
-type SearchState =
+type BaseSearchState<Match> =
   | {
       isSearching: false;
       results: null;
     }
   | {
       isSearching: true;
-      results: TextSearchResult<LiteDocument>[] | null;
+      results: TextSearchResult<Match>[] | null;
     }
   | {
       isSearching: false;
-      results: TextSearchResult<LiteDocument>[];
+      results: TextSearchResult<Match>[];
     };
+
+type SearchState =
+  | ({
+      searchType: SearchType.Documents;
+    } & BaseSearchState<LiteDocument>)
+  | ({
+      searchType: SearchType.Conversations;
+    } & BaseSearchState<LiteConversation>);
 export default SearchState;

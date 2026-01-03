@@ -379,6 +379,12 @@
       "value": "🤖 Conversations"
     }
   ],
+  "ConversationSearchResult.tsx_KHJ2sI": [
+    {
+      "type": 0,
+      "value": "Untitled conversation"
+    }
+  ],
   "ConversationUtils.ts_PQ8A3I": [
     {
       "type": 0,
@@ -2660,22 +2666,28 @@
       "value": "Filter by collection"
     }
   ],
+  "SearchParamsInput.tsx_1udzha": [
+    {
+      "type": 0,
+      "value": "Conversations"
+    }
+  ],
   "SearchParamsInput.tsx_IVgAw4": [
     {
       "type": 0,
       "value": "All collections"
     }
   ],
-  "SearchParamsInput.tsx_OT41Mz": [
+  "SearchParamsInput.tsx_vBlT6y": [
     {
       "type": 0,
-      "value": "Search documents..."
+      "value": "Documents"
     }
   ],
-  "SearchParamsInput.tsx_a00gRI": [
+  "SearchParamsInput.tsx_xmcVZ0": [
     {
       "type": 0,
-      "value": "Search documents"
+      "value": "Search"
     }
   ],
   "SearchResults.tsx_79lKyO": [

@@ -1,4 +1,4 @@
-import type { Conversation } from "@superego/backend";
+import type { LiteConversation } from "@superego/backend";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
@@ -12,7 +12,7 @@ import Table from "../../design-system/Table/Table.js";
 import * as cs from "./ConversationsTable.css.js";
 
 interface Props {
-  conversations: Omit<Conversation, "messages">[];
+  conversations: LiteConversation[];
 }
 export default function ConversationsTable({ conversations }: Props) {
   const intl = useIntl();

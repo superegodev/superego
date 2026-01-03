@@ -5,6 +5,7 @@ import type CollectionCategoryRepository from "./CollectionCategoryRepository.js
 import type CollectionRepository from "./CollectionRepository.js";
 import type CollectionVersionRepository from "./CollectionVersionRepository.js";
 import type ConversationRepository from "./ConversationRepository.js";
+import type ConversationTextSearchIndex from "./ConversationTextSearchIndex.js";
 import type DocumentRepository from "./DocumentRepository.js";
 import type DocumentTextSearchIndex from "./DocumentTextSearchIndex.js";
 import type DocumentVersionRepository from "./DocumentVersionRepository.js";
@@ -20,6 +21,7 @@ export default interface DataRepositories {
   document: DocumentRepository;
   documentVersion: DocumentVersionRepository;
   documentTextSearchIndex: DocumentTextSearchIndex;
+  conversationTextSearchIndex: ConversationTextSearchIndex;
   file: FileRepository;
   conversation: ConversationRepository;
   backgroundJob: BackgroundJobRepository;

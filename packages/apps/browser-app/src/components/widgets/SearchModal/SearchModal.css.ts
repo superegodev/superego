@@ -72,9 +72,14 @@ export const SearchModal = {
 export const SearchParamsInput = {
   root: style({
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
     gap: vars.spacing._2,
-    padding: vars.spacing._3,
+    padding: vars.spacing._4,
+  }),
+
+  searchFieldRow: style({
+    display: "flex",
+    marginBlockEnd: vars.spacing._2,
   }),
 
   searchField: style({
@@ -103,6 +108,38 @@ export const SearchParamsInput = {
     },
   }),
 
+  filtersRow: style({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  }),
+
+  toggleButtonGroup: style({
+    display: "flex",
+    gap: vars.spacing._1,
+  }),
+
+  toggleButton: style({
+    paddingBlock: vars.spacing._1,
+    paddingInline: vars.spacing._3,
+    fontSize: vars.typography.fontSizes.xs,
+    height: vars.spacing._7,
+    borderRadius: vars.borders.radius.full,
+    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+    background: "transparent",
+    cursor: "pointer",
+    selectors: {
+      "&:hover": {
+        borderColor: vars.colors.border.strong,
+      },
+      '&[data-selected="true"]': {
+        background: vars.colors.background.inverse,
+        borderColor: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+      },
+    },
+  }),
+
   collectionSelect: style({
     flexShrink: 0,
     marginBlockEnd: "0 !important",
@@ -110,8 +147,9 @@ export const SearchParamsInput = {
 
   collectionSelectButton: style({
     height: `${vars.spacing._7} !important`,
+    borderRadius: vars.borders.radius.full,
+    padding: `${vars.spacing._1} ${vars.spacing._3} !important`,
     fontSize: vars.typography.fontSizes.xs,
-    paddingInline: vars.spacing._2,
     marginBlockEnd: "0 !important",
   }),
 
@@ -138,6 +176,7 @@ export const SearchResults = {
   }),
 };
 
+// Used for both DocumentSearchResult and ConversationSearchResult.
 export const SearchResult = {
   root: style({
     display: "block",
@@ -166,7 +205,7 @@ export const SearchResult = {
     marginBlockEnd: vars.spacing._1,
   }),
 
-  documentDisplayName: style({
+  displayNameTitle: style({
     flex: 1,
     fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.medium,

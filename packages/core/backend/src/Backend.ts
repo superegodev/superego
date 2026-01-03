@@ -66,6 +66,7 @@ import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
@@ -379,14 +380,16 @@ export default interface Backend {
       ConversationNotFound | CommandConfirmationNotValid | UnexpectedError
     >;
 
-    listConversations(): ResultPromise<
-      Omit<Conversation, "messages">[],
-      UnexpectedError
-    >;
+    listConversations(): ResultPromise<LiteConversation[], UnexpectedError>;
 
     getConversation(
       id: ConversationId,
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
+
+    searchConversations(
+      query: string,
+      options: { limit: number },
+    ): ResultPromise<TextSearchResult<LiteConversation>[], UnexpectedError>;
 
     getDeveloperPrompts(): ResultPromise<DeveloperPrompts, UnexpectedError>;
   };

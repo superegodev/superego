@@ -76,7 +76,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
       },
     );
 
-    // Verify: original content should not be found
+    // Verify
     const originalResults =
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
@@ -90,7 +90,7 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
       );
     expect(originalResults).toEqual([]);
 
-    // Verify: updated content should be found
+    // Verify
     const updatedResults =
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({

@@ -4,9 +4,11 @@ import { ListBox } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import ConversationSearchResult from "./ConversationSearchResult.js";
+import DocumentSearchResult from "./DocumentSearchResult.jsx";
 import * as cs from "./SearchModal.css.js";
-import SearchResult from "./SearchResult.js";
 import type SearchState from "./SearchState.js";
+import SearchType from "./SearchType.js";
 
 const searchingIndicatorDelay: Milliseconds = 500;
 
@@ -68,13 +70,17 @@ export default function SearchResults({
         onNavigateToSearchResult();
       }}
     >
-      {searchState.results.map((result) => (
-        <SearchResult
-          key={result.match.id}
-          result={result}
-          collection={collectionsById[result.match.collectionId] ?? null}
-        />
-      ))}
+      {searchState.searchType === SearchType.Documents
+        ? searchState.results.map((result) => (
+            <DocumentSearchResult
+              key={result.match.id}
+              result={result}
+              collection={collectionsById[result.match.collectionId] ?? null}
+            />
+          ))
+        : searchState.results.map((result) => (
+            <ConversationSearchResult key={result.match.id} result={result} />
+          ))}
     </ListBox>
   );
 }

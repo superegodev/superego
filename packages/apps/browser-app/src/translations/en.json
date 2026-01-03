@@ -170,6 +170,9 @@
   "Conversation.tsx_yYmfIl": {
     "defaultMessage": "🤖 Conversations"
   },
+  "ConversationSearchResult.tsx_KHJ2sI": {
+    "defaultMessage": "Untitled conversation"
+  },
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "New conversation"
   },
@@ -881,14 +884,17 @@
   "SearchParamsInput.tsx_+cFFD6": {
     "defaultMessage": "Filter by collection"
   },
+  "SearchParamsInput.tsx_1udzha": {
+    "defaultMessage": "Conversations"
+  },
   "SearchParamsInput.tsx_IVgAw4": {
     "defaultMessage": "All collections"
   },
-  "SearchParamsInput.tsx_OT41Mz": {
-    "defaultMessage": "Search documents..."
+  "SearchParamsInput.tsx_vBlT6y": {
+    "defaultMessage": "Documents"
   },
-  "SearchParamsInput.tsx_a00gRI": {
-    "defaultMessage": "Search documents"
+  "SearchParamsInput.tsx_xmcVZ0": {
+    "defaultMessage": "Search"
   },
   "SearchResults.tsx_79lKyO": {
     "defaultMessage": "Search results"

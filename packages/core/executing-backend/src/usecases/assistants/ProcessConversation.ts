@@ -27,6 +27,7 @@ import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssist
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
 import type InferenceService from "../../requirements/InferenceService.js";
+import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
 import Usecase from "../../utils/Usecase.js";
@@ -135,6 +136,18 @@ export default class AssistantsProcessConversation extends Usecase {
     }
 
     await this.repos.conversation.upsert(updatedConversation);
+
+    // Index Factotum conversations for search.
+    if (updatedConversation.assistant === AssistantName.Factotum) {
+      const textChunks = ConversationTextUtils.extractTextChunks(
+        updatedConversation.title,
+        updatedConversation.messages,
+      );
+      await this.repos.conversationTextSearchIndex.upsert(
+        updatedConversation.id,
+        textChunks,
+      );
+    }
 
     return makeSuccessfulResult(null);
   }

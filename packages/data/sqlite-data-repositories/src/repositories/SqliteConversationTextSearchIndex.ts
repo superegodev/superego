@@ -1,20 +1,18 @@
 import type { DatabaseSync } from "node:sqlite";
-import type { CollectionId, DocumentId } from "@superego/backend";
-import type { DocumentTextSearchIndex } from "@superego/executing-backend";
-import type { TextChunks } from "@superego/schema";
+import type { ConversationId } from "@superego/backend";
+import type { ConversationTextSearchIndex } from "@superego/executing-backend";
 import { Document as FlexsearchDocument } from "flexsearch";
 import type SqliteFlexsearchIndex from "../types/SqliteFlexsearchIndex.js";
 
 const table = "flexsearch_indexes";
 
 type FlexsearchDocumentData = {
-  id: DocumentId;
-  collectionId: CollectionId;
+  id: ConversationId;
   text: string;
 };
 
-export default class SqliteDocumentTextSearchIndex
-  implements DocumentTextSearchIndex
+export default class SqliteConversationTextSearchIndex
+  implements ConversationTextSearchIndex
 {
   private index: FlexsearchDocument<FlexsearchDocumentData>;
   private indexLoaded = false;
@@ -24,8 +22,7 @@ export default class SqliteDocumentTextSearchIndex
       document: {
         id: "id",
         index: ["text"],
-        tag: ["collectionId"],
-        store: ["collectionId", "text"],
+        store: ["text"],
       },
       tokenize: "forward",
       context: true,
@@ -33,45 +30,36 @@ export default class SqliteDocumentTextSearchIndex
   }
 
   async upsert(
-    collectionId: CollectionId,
-    documentId: DocumentId,
-    textChunks: TextChunks,
+    conversationId: ConversationId,
+    textChunks: { title: string[]; messages: string[] },
   ): Promise<void> {
     this.importIndex();
-    this.index.remove(documentId);
+    this.index.remove(conversationId);
     this.index.add({
-      id: documentId,
-      collectionId,
-      // Combine all text chunks into a single searchable text.
-      text: Object.values(textChunks).flat().join(" | "),
+      id: conversationId,
+      text: [...textChunks.title, ...textChunks.messages].join(" | "),
     });
     this.exportIndex();
   }
 
-  async remove(
-    _collectionId: CollectionId,
-    documentId: DocumentId,
-  ): Promise<void> {
+  async remove(conversationId: ConversationId): Promise<void> {
     this.importIndex();
-    this.index.remove(documentId);
+    this.index.remove(conversationId);
     this.exportIndex();
   }
 
   async search(
-    collectionId: CollectionId | null,
     query: string,
     options: { limit: number },
   ): Promise<
     {
-      collectionId: CollectionId;
-      documentId: DocumentId;
+      conversationId: ConversationId;
       matchedText: string;
     }[]
   > {
     this.importIndex();
 
     const results = this.index.search(query, {
-      tag: collectionId ? { collectionId } : undefined,
       limit: options.limit,
       merge: true,
       enrich: true,
@@ -81,9 +69,8 @@ export default class SqliteDocumentTextSearchIndex
       },
     });
 
-    return results.map(({ id, doc, highlight }) => ({
-      collectionId: doc!.collectionId,
-      documentId: id as DocumentId,
+    return results.map(({ id, highlight }) => ({
+      conversationId: id as ConversationId,
       matchedText: highlight!.text,
     }));
   }
@@ -94,7 +81,7 @@ export default class SqliteDocumentTextSearchIndex
     }
 
     const flexsearchIndexes = this.db
-      .prepare(`SELECT * FROM "${table}" WHERE "target" = 'document'`)
+      .prepare(`SELECT * FROM "${table}" WHERE "target" = 'conversation'`)
       .all() as SqliteFlexsearchIndex[];
 
     for (const { key, data } of flexsearchIndexes) {
@@ -108,13 +95,15 @@ export default class SqliteDocumentTextSearchIndex
     // Delete all existing conversation index data first, then re-export. This
     // is necessary because Flexsearch's export after removing documents doesn't
     // include empty index keys, leaving stale data in SQLite.
-    this.db.prepare(`DELETE FROM "${table}" WHERE "target" = 'document'`).run();
+    this.db
+      .prepare(`DELETE FROM "${table}" WHERE "target" = 'conversation'`)
+      .run();
     const insert = this.db.prepare(`
       INSERT INTO "${table}"
         ("key", "target", "data")
       VALUES
         (?, ?, ?)
     `);
-    this.index.export((key, data) => insert.run(key, "document", data));
+    this.index.export((key, data) => insert.run(key, "conversation", data));
   }
 }

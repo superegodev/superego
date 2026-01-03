@@ -10,14 +10,14 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
-import MatchedText from "../../design-system/MatchedText/MatchedText.js";
+import MatchedText from "../../design-system/MatchedText/MatchedText.jsx";
 import * as cs from "./SearchModal.css.js";
 
 interface Props {
   result: TextSearchResult<LiteDocument>;
   collection: Collection | null;
 }
-export default function SearchResult({ result, collection }: Props) {
+export default function DocumentSearchResult({ result, collection }: Props) {
   const { match, matchedText } = result;
   const { contentSummary } = match.latestVersion;
 
@@ -59,9 +59,7 @@ export default function SearchResult({ result, collection }: Props) {
       className={cs.SearchResult.root}
     >
       <div className={cs.SearchResult.line1}>
-        <span className={cs.SearchResult.documentDisplayName}>
-          {displayName}
-        </span>
+        <span className={cs.SearchResult.displayNameTitle}>{displayName}</span>
         <span className={cs.SearchResult.collectionChip}>
           {collectionDisplayName}
         </span>
