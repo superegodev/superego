@@ -105,8 +105,8 @@ export default class SqliteDocumentTextSearchIndex
   }
 
   private exportIndex(): void {
-    // Delete all existing conversation index data first, then re-export. This
-    // is necessary because Flexsearch's export after removing documents doesn't
+    // Delete all existing document index data first, then re-export. This is
+    // necessary because Flexsearch's export after removing documents doesn't
     // include empty index keys, leaving stale data in SQLite.
     this.db.prepare(`DELETE FROM "${table}" WHERE "target" = 'document'`).run();
     const insert = this.db.prepare(`

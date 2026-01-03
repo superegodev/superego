@@ -176,6 +176,9 @@
   "Conversation.tsx_yYmfIl": {
     "defaultMessage": "🤖 Conversazioni"
   },
+  "ConversationSearchResult.tsx_KHJ2sI": {
+    "defaultMessage": "Conversazione senza titolo"
+  },
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "Nuova conversazione"
   },
@@ -852,10 +855,10 @@
     "defaultMessage": "Schema"
   },
   "SchemaTab.tsx_/WLKzQ": {
-    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. </li> </ol>"
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. </li> <li> Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. </li> </ol>"
   },
   "SchemaTab.tsx_Vi4BUn": {
-    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una raccolta (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della raccolta. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della raccolta per riflettere tali modifiche. </li> <li> Poiché si tratta di una raccolta remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
+    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. </li> <li> Poiché si tratta di una collezione remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
   },
   "SearchModal.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
@@ -863,14 +866,17 @@
   "SearchParamsInput.tsx_+cFFD6": {
     "defaultMessage": "Filtra per collezione"
   },
+  "SearchParamsInput.tsx_1udzha": {
+    "defaultMessage": "Conversazioni"
+  },
   "SearchParamsInput.tsx_IVgAw4": {
     "defaultMessage": "Tutte le collezioni"
   },
-  "SearchParamsInput.tsx_OT41Mz": {
-    "defaultMessage": "Cerca documenti..."
+  "SearchParamsInput.tsx_vBlT6y": {
+    "defaultMessage": "Documenti"
   },
-  "SearchParamsInput.tsx_a00gRI": {
-    "defaultMessage": "Cerca documenti"
+  "SearchParamsInput.tsx_xmcVZ0": {
+    "defaultMessage": "Cerca"
   },
   "SearchResults.tsx_79lKyO": {
     "defaultMessage": "Risultati della ricerca"
