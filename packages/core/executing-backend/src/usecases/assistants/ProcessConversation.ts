@@ -176,6 +176,10 @@ export default class AssistantsProcessConversation extends Usecase {
           },
           this.javascriptSandbox,
           this.typescriptCompiler,
+          {
+            create: () => this.repos.createSavepoint(),
+            rollback: (name: string) => this.repos.rollbackToSavepoint(name),
+          },
         )
       : new CollectionCreatorAssistant(
           globalSettings.assistants.developerPrompts[

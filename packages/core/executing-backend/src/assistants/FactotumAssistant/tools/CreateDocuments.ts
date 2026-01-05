@@ -27,11 +27,18 @@ export default {
     conversationId: ConversationId,
     collections: Collection[],
     documentsCreate: DocumentsCreate,
+    savepoint: {
+      create: () => Promise<string>;
+      rollback: (name: string) => Promise<void>;
+    },
   ): Promise<ToolResult.CreateDocuments> {
+    const savepointName = await savepoint.create();
+
     const createdDocuments: Document[] = [];
     for (const { collectionId, content } of toolCall.input.documents) {
       const collection = collections.find(({ id }) => id === collectionId);
       if (!collection) {
+        await savepoint.rollback(savepointName);
         return {
           tool: toolCall.tool,
           toolCallId: toolCall.id,
@@ -57,6 +64,7 @@ export default {
       }
 
       if (!success) {
+        await savepoint.rollback(savepointName);
         return {
           tool: toolCall.tool,
           toolCallId: toolCall.id,
@@ -88,7 +96,7 @@ export default {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateDocuments,
       description:
-        "Creates one or more **new** documents in one or more collections.",
+        "Atomically creates one or more documents in one or more collections.",
       inputSchema: {
         type: "object",
         properties: {
