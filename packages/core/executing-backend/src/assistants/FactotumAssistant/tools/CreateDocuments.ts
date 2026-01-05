@@ -32,13 +32,9 @@ export default {
       rollback: (name: string) => Promise<void>;
     },
   ): Promise<ToolResult.CreateDocuments> {
-    const savepointName = await savepoint.create();
-
-    const createdDocuments: Document[] = [];
-    for (const { collectionId, content } of toolCall.input.documents) {
+    for (const { collectionId } of toolCall.input.documents) {
       const collection = collections.find(({ id }) => id === collectionId);
       if (!collection) {
-        await savepoint.rollback(savepointName);
         return {
           tool: toolCall.tool,
           toolCallId: toolCall.id,
@@ -47,7 +43,11 @@ export default {
           ),
         };
       }
+    }
 
+    const savepointName = await savepoint.create();
+    const createdDocuments: Document[] = [];
+    for (const { collectionId, content } of toolCall.input.documents) {
       const {
         success,
         data: document,
