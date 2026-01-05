@@ -77,7 +77,7 @@ export type SleepSession = {
    */
   qualityScore: number | null;
   sleepStages: SleepStageSummary | null;
-  interruptions: SleepInterruption[] | null;
+  interruptions: Array<SleepInterruption> | null;
   /** Whether a dream was recorded for this session. */
   dreamRecorded: false;
   /** Notes about any dreams. */

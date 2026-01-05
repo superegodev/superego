@@ -14,7 +14,7 @@ export default function SelectButton({ placeholder, className }: Props) {
     <Button className={classnames(cs.SelectButton.root, className)}>
       <SelectValue className={cs.SelectButton.selectValue}>
         {({ defaultChildren, isPlaceholder }) =>
-          isPlaceholder ? (
+          isPlaceholder && placeholder !== undefined ? (
             <span className={cs.SelectButton.placeholder}>{placeholder}</span>
           ) : (
             defaultChildren

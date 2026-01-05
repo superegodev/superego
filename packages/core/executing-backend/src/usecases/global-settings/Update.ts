@@ -18,7 +18,7 @@ export default class GlobalSettingsUpdate extends Usecase<
       ...globalSettings,
       ...globalSettingsPatch,
     };
-    this.repos.globalSettings.replace(updatedGlobalSettings);
+    await this.repos.globalSettings.replace(updatedGlobalSettings);
     return makeSuccessfulResult(updatedGlobalSettings);
   }
 }

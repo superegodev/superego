@@ -42,6 +42,10 @@ export default class FactotumAssistant extends Assistant {
     },
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
+    private savepoint: {
+      create: () => Promise<string>;
+      rollback: (name: string) => Promise<void>;
+    },
   ) {
     super();
   }
@@ -145,6 +149,7 @@ export default class FactotumAssistant extends Assistant {
         this.conversationId,
         this.collections,
         this.usecases.documentsCreate,
+        this.savepoint,
       );
     }
     if (CreateNewDocumentVersion.is(toolCall)) {

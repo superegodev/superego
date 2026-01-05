@@ -26,7 +26,7 @@ export default function startOAuth2PKCECallbackServer(
         : "Superego Authentication Failed";
       const content = result.success
         ? "<p>You can close this browser tab.</p>"
-        : ` <pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
+        : ` <pre><code>${escapeHtml(JSON.stringify(result.error, null, 2))}</code></pre>`;
       res.writeHead(statusCode);
       res.end(`
         <!DOCTYPE html>
@@ -45,4 +45,14 @@ export default function startOAuth2PKCECallbackServer(
       }
     })
     .listen(port);
+}
+
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;")
+    .replace(/\//g, "&#x2F;");
 }

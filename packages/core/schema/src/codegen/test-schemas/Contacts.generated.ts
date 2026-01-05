@@ -44,9 +44,9 @@ export type Contact = {
   /** Who they are to me. */
   relation: string | null;
   /** Their phone numbers */
-  phones: Phone[];
+  phones: Array<Phone>;
   /** Their email addresses */
-  emails: Email[];
+  emails: Array<Email>;
   /**
    * Misc notes about the contact
    *

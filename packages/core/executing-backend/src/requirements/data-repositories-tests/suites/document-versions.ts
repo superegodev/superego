@@ -512,4 +512,75 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       expect(found).toEqual([documentVersion2, documentVersion3]);
     });
   });
+
+  describe("misc", () => {
+    it("inserting versions with identical contents and retrieving them", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion3: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        previousVersionId: documentVersion2.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          await repos.documentVersion.insert(documentVersion3);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const { found1, found2, found3 } =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: {
+              found1: await repos.documentVersion.find(documentVersion1.id),
+              found2: await repos.documentVersion.find(documentVersion2.id),
+              found3: await repos.documentVersion.find(documentVersion3.id),
+            },
+          }),
+        );
+      expect(found1).toEqual(documentVersion1);
+      expect(found2).toEqual(documentVersion2);
+      expect(found3).toEqual(documentVersion3);
+    });
+  });
 });

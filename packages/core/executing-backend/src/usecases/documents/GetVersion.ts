@@ -32,6 +32,7 @@ export default class DocumentsGetVersion extends Usecase<
       !documentVersion ||
       !document ||
       documentVersion.documentId !== documentId ||
+      documentVersion.collectionId !== collectionId ||
       document.collectionId !== collectionId
     ) {
       return makeUnsuccessfulResult(

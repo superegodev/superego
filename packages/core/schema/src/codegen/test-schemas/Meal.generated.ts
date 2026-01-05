@@ -33,8 +33,8 @@ export type Meal = {
    */
   date: string;
   /** Foods consumed during the meal. */
-  consumedFoods: {
+  consumedFoods: Array<{
     foodId: string;
     quantity: MassQuantity;
-  }[];
+  }>;
 };
