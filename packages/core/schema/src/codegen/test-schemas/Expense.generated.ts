@@ -79,4 +79,12 @@ export type Expense = {
    * - {"__dataType":"JsonObject","type":"doc","content":[{"type":"paragraph","attrs":{"textAlign":null},"content":[{"type":"text","text":"Hello, World!"}]}]}
    */
   notes: JsonObject | null;
+  /** Tags for categorizing and filtering expenses. */
+  tags: Array<
+    /** Can be deducted from taxable income. */
+    | "TaxDeductible"
+    /** Eligible for reimbursement from employer. */
+    | "Reimbursable"
+    /** A recurring expense (subscription, bill, etc.). */
+    | "Recurring"> | null;
 };

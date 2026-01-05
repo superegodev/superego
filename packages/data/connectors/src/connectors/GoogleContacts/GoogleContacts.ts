@@ -120,7 +120,7 @@ export default class GoogleContacts
         pageToken,
       );
 
-      for (const person of response.connections) {
+      for (const person of response.connections ?? []) {
         const id = person.resourceName;
         const versionId = person.etag;
         const url = GoogleContacts.personUrl(person);

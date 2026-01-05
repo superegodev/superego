@@ -84,7 +84,9 @@ function makeContent(
   const deltas: any[] = [];
   let currentDocumentVersion = documentVersionsById[id]!;
   for (;;) {
-    deltas.push(JSON.parse(currentDocumentVersion.content_delta!));
+    if (currentDocumentVersion.content_delta !== null) {
+      deltas.push(JSON.parse(currentDocumentVersion.content_delta));
+    }
     if (currentDocumentVersion.previous_version_id) {
       currentDocumentVersion =
         documentVersionsById[currentDocumentVersion.previous_version_id]!;

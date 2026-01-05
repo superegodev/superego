@@ -1,5 +1,5 @@
 import type { Person } from "./remoteDocumentTypes.js";
 
 export type ListConnectionsResponseBody =
-  | { connections: Person[]; nextPageToken: string }
-  | { connections: Person[]; nextSyncToken: string };
+  | { connections?: Person[] | undefined; nextPageToken: string }
+  | { connections?: Person[] | undefined; nextSyncToken: string };

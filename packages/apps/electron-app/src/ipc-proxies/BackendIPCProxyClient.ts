@@ -1,5 +1,9 @@
 import type { Backend } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import {
+  extractErrorDetails,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import { ipcRenderer } from "electron";
 
 export default class BackendIPCProxyClient implements Backend {
@@ -108,7 +112,13 @@ export default class BackendIPCProxyClient implements Backend {
       try {
         return await ipcRenderer.invoke(channel, ...args);
       } catch (error) {
-        throw new Error(`IPC call to ${channel} failed`, { cause: error });
+        return makeUnsuccessfulResult({
+          name: "UnexpectedError",
+          details: {
+            message: `IPC call to ${channel} failed`,
+            cause: extractErrorDetails(error),
+          },
+        });
       }
     };
   }

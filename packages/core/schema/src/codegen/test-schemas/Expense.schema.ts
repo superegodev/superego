@@ -90,8 +90,29 @@ export default {
           dataType: DataType.JsonObject,
           format: FormatId.JsonObject.TiptapRichText,
         },
+        tags: {
+          description: "Tags for categorizing and filtering expenses.",
+          dataType: DataType.List,
+          items: {
+            dataType: DataType.Enum,
+            members: {
+              TaxDeductible: {
+                value: "TaxDeductible",
+                description: "Can be deducted from taxable income.",
+              },
+              Reimbursable: {
+                value: "Reimbursable",
+                description: "Eligible for reimbursement from employer.",
+              },
+              Recurring: {
+                value: "Recurring",
+                description: "A recurring expense (subscription, bill, etc.).",
+              },
+            },
+          },
+        },
       },
-      nullableProperties: ["paymentMethod", "notes"],
+      nullableProperties: ["paymentMethod", "notes", "tags"],
     },
   },
   rootType: "Expense",

@@ -105,7 +105,7 @@ function generateType(
         schema,
         referencedBuiltInTypes,
       );
-      return `${itemsType}[]`;
+      return `Array<${itemsType}>`;
     }
     case null:
       return typeDefinition.ref;

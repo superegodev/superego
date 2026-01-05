@@ -59,9 +59,9 @@ export default class AssistantsRecoverConversation extends Usecase<
           reason:
             conversation.status === ConversationStatus.Idle
               ? "ConversationIsIdle"
-              : conversation.status === ConversationStatus.Processing
-                ? "ConversationIsProcessing"
-                : "ConversationHasOutdatedContext",
+              : conversation.contextFingerprint !== contextFingerprint
+                ? "ConversationHasOutdatedContext"
+                : "ConversationIsProcessing",
         }),
       );
     }

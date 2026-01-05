@@ -76,9 +76,8 @@ interface MemoizedConversationProps {
 }
 // We want to memoize the conversation in order to avoid everything re-rendering
 // continuously when DataLoader is polling for an update. Currently if the
-// conversation has the same status and the same number of messages, it's
-// guaranteed to be the same, so we can use those two properties as memoization
-// key.
+// conversation has the same id, status, and number of messages, it's guaranteed
+// to be the same, so we can use those properties as memoization key.
 const MemoizedConversation = memo(
   function MemoizedConversation({
     conversation,
@@ -157,6 +156,7 @@ const MemoizedConversation = memo(
   },
   (prev, next) =>
     prev.screenSize === next.screenSize &&
+    prev.conversation.id === next.conversation.id &&
     prev.conversation.status === next.conversation.status &&
     prev.conversation.messages.length === next.conversation.messages.length &&
     prev.conversation.hasOutdatedContext ===
