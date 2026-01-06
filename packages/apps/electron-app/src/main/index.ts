@@ -1,5 +1,4 @@
 import { app, BrowserWindow } from "electron";
-import started from "electron-squirrel-startup";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
 import { OAUTH2_PKCE_CALLBACK_SERVER_PORT } from "./config.js";
@@ -7,11 +6,6 @@ import createBackend from "./createBackend.js";
 import createWindow from "./createWindow.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
 import startOAuth2PKCECallbackServer from "./startOAuth2PKCECallbackServer.js";
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) {
-  app.quit();
-}
 
 registerAppSandboxProtocol();
 

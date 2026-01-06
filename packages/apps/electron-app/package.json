@@ -3,6 +3,12 @@
   "productName": "superego",
   "description": "Your Life's Database",
   "version": "2025.11.0",
+  "author": {
+    "name": "Paolo Scanferla",
+    "email": "paolo.scanferla@gmail.com",
+    "url": "https://pscanf.com/"
+  },
+  "license": "AGPL-3.0-or-later",
   "main": "./dist/main/index.mjs",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
@@ -17,12 +23,10 @@
     "@electron-forge/cli": "^7.10.2",
     "@electron-forge/maker-deb": "^7.10.2",
     "@electron-forge/maker-rpm": "^7.10.2",
-    "@electron-forge/maker-squirrel": "^7.10.2",
     "@electron-forge/maker-zip": "^7.10.2",
     "@electron-forge/plugin-fuses": "^7.10.2",
     "@electron-forge/publisher-github": "^7.10.2",
     "@electron/fuses": "^2.0.0",
-    "@types/electron-squirrel-startup": "^1.0.2",
     "electron": "39.2.7",
     "electron-vite": "^5.0.0",
     "vite": "^7.3.0"
@@ -39,7 +43,6 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "electron-squirrel-startup": "^1.0.1",
     "typescript": "^5.9.3"
   }
 }
