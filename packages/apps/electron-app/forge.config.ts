@@ -49,6 +49,7 @@ export default {
     new MakerRpm({
       options: {
         name: "superego",
+        bin: "superego",
         icon: "./assets/icon.png",
         categories: ["Office"],
       },
@@ -56,6 +57,7 @@ export default {
     new MakerDeb({
       options: {
         name: "superego",
+        bin: "superego",
         icon: "./assets/icon.png",
         categories: ["Office"],
       },
