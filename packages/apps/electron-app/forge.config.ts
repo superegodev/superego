@@ -18,7 +18,7 @@ export default {
       const repoNodeModules = resolve(dirname, "../../../node_modules");
       const localNodeModules = resolve(dirname, "node_modules");
 
-      const externalizedPackages = ["typescript"];
+      const externalizedPackages = ["typescript", "@typescript/vfs"];
       for (const pkg of externalizedPackages) {
         const src = join(repoNodeModules, pkg);
         const dest = join(localNodeModules, pkg);

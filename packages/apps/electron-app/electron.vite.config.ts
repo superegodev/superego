@@ -9,7 +9,7 @@ export default defineConfig({
       externalizeDeps: false,
       rollupOptions: {
         output: { format: "es" },
-        external: ["typescript"],
+        external: ["typescript", "@typescript/vfs"],
       },
     },
   },
