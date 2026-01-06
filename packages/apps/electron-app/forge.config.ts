@@ -30,6 +30,7 @@ export default {
   },
   packagerConfig: {
     appBundleId: "dev.superego.superego",
+    executableName: "superego",
     asar: true,
     ignore: [
       "src",
