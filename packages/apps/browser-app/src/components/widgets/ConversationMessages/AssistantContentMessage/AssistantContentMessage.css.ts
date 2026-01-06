@@ -17,7 +17,7 @@ export const AssistantContentMessage = {
   markdownTableScroller: style({
     width: "100%",
     maxHeight: vars.spacing._80,
-    overflowY: "auto",
+    overflow: "auto",
     position: "relative",
     marginBlock: vars.spacing._4,
   }),

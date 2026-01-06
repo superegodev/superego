@@ -163,7 +163,7 @@ export const SearchResults = {
   root: style({
     flex: 1,
     minHeight: 0,
-    overflowY: "auto",
+    overflow: "auto",
     overscrollBehavior: "contain",
     borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   }),

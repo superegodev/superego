@@ -6,7 +6,7 @@ export const AppRenderer = {
     border: 0,
     width: "100%",
     flexGrow: 1,
-    overflowX: "scroll",
+    overflow: "auto",
   }),
 };
 

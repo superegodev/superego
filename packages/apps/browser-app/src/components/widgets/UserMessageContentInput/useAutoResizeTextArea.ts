@@ -10,9 +10,8 @@ export default function useAutoResizeTextArea(
     if (textAreaRef.current) {
       textAreaRef.current.style.overflowY = "hidden";
       textAreaRef.current.style.height = "auto";
-      const lineCount = Math.round(textAreaRef.current.scrollHeight / 16.5);
-      textAreaRef.current.style.height = `${lineCount * 16.5}px`;
-      textAreaRef.current.style.overflowY = "scroll";
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      textAreaRef.current.style.overflow = "auto";
     }
   }, [textAreaRef, content]);
 }

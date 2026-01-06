@@ -36,7 +36,7 @@ export const Panel = {
     flexDirection: "column",
     position: "relative",
     height: "100dvh",
-    overflowY: "scroll",
+    overflow: "auto",
     selectors: {
       "&:not(:last-child)": {
         borderInlineEnd: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,

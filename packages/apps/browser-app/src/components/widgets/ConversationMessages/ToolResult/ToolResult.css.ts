@@ -55,7 +55,7 @@ export const SuggestCollectionDefinition = {
   scrollContainer: style({
     paddingInlineEnd: vars.spacing._8,
     maxHeight: vars.spacing._120,
-    overflow: "scroll",
+    overflow: "auto",
   }),
 
   createButton: style({
