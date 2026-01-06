@@ -43,6 +43,7 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
+    "@typescript/vfs": "^1.6.2",
     "typescript": "^5.9.3"
   }
 }

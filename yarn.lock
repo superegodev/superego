@@ -6071,6 +6071,7 @@ __metadata:
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/tsc-typescript-compiler": "workspace:*"
+    "@typescript/vfs": "npm:^1.6.2"
     electron: "npm:39.2.7"
     electron-vite: "npm:^5.0.0"
     typescript: "npm:^5.9.3"
