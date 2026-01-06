@@ -76,7 +76,7 @@ jobs:
             artifact-path: |
               packages/apps/electron-app/out/make/deb/x64/*.deb
               packages/apps/electron-app/out/make/rpm/x64/*.rpm
-          - os: ubuntu-latest
+          - os: ubuntu-24.04-arm
             arch: arm64
             artifact-path: |
               packages/apps/electron-app/out/make/deb/arm64/*.deb
