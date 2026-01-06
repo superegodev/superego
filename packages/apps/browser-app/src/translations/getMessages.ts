@@ -10,6 +10,6 @@ const messagesByLocale: Record<string, Messages> = {
 };
 
 export default function getMessages(locale: string): Messages {
-  const languageCode = locale.split("-")[0];
-  return messagesByLocale[languageCode ?? "en"] ?? messagesEn;
+  const languageCode = locale.split("-")[0]!;
+  return messagesByLocale[languageCode] ?? messagesEn;
 }

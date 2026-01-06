@@ -1,9 +1,8 @@
 import { create } from "zustand";
 import type Route from "./Route.js";
-import { RouteName } from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
 
-const initialRoute = fromHref(window.location.href) ?? { name: RouteName.Ask };
+const initialRoute = fromHref(window.location.href);
 
 const useNavigationStateStore = create<UseNavigationState>((set, get) => ({
   activeRoute: initialRoute,
