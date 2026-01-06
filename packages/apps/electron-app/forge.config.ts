@@ -48,14 +48,16 @@ export default {
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({
       options: {
-        bin: "superego",
+        name: "superego",
         icon: "./assets/icon.png",
+        categories: ["Office"],
       },
     }),
     new MakerDeb({
       options: {
-        bin: "superego",
+        name: "superego",
         icon: "./assets/icon.png",
+        categories: ["Office"],
       },
     }),
   ],
