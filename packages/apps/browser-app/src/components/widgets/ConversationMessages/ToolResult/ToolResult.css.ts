@@ -6,7 +6,7 @@ export const Title = {
   root: style({
     color: vars.colors.text.primary,
     marginBlockEnd: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 };
 
@@ -60,7 +60,7 @@ export const SuggestCollectionDefinition = {
 
   createButton: style({
     alignSelf: "end",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     paddingBlock: `${vars.spacing._1} !important`,
   }),
 };

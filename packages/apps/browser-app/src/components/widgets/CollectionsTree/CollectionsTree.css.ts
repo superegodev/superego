@@ -7,7 +7,7 @@ export const CollectionsTree = {
     display: "flex",
     flexDirection: "column",
     marginInline: `calc(-1 * ${vars.spacing._2})`,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 
   tree: style({
@@ -22,7 +22,7 @@ export const CollectionsTree = {
     gap: vars.spacing._2,
     alignItems: "center",
     width: "100%",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
   }),
 
@@ -33,7 +33,7 @@ export const CollectionsTree = {
   }),
 
   emptyTreeIcon: style({
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     marginBlockEnd: vars.spacing._2,
   }),
 };
@@ -44,7 +44,7 @@ export const Header = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
     marginInline: vars.spacing._2,
     marginBlockEnd: vars.spacing._2,
@@ -123,7 +123,7 @@ export const CollectionCategoryActionsMenu = {
     top: "50%",
     transform: "translateY(-50%)",
     right: 0,
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     opacity: 0,
     selectors: {
       [`

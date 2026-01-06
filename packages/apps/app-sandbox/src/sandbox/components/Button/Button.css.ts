@@ -105,16 +105,16 @@ export const Button = {
     ],
     // Sizes
     sm: {
-      height: `calc(${vars.spacing._6} + 2 * ${vars.borders.width.thin})`,
-      fontSize: vars.typography.fontSizes.xs,
-    },
-    md: {
-      height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+      height: `calc(${vars.spacing._7} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.sm,
     },
-    lg: {
+    md: {
       height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.md,
+    },
+    lg: {
+      height: `calc(${vars.spacing._10} + 2 * ${vars.borders.width.thin})`,
+      fontSize: vars.typography.fontSizes.lg,
     },
   }),
 };

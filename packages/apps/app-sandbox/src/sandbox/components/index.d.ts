@@ -338,7 +338,7 @@ export declare function Text(props: {
   element?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   /** @defaultValue "primary" */
   color?: "primary" | "secondary";
-  /** @defaultValue "sm" */
+  /** @defaultValue "md" */
   size?: "xs2" | "xs" | "sm" | "md" | "lg" | "xl" | "xl2" | "xl3" | "xl4";
   /** @defaultValue "regular" */
   weight?: "light" | "regular" | "medium" | "semibold" | "bold";

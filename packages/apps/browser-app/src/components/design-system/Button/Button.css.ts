@@ -2,6 +2,10 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 const buttonRootBase = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
   paddingBlock: vars.spacing._2,
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,

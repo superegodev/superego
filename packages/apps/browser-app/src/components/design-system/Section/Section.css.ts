@@ -21,13 +21,13 @@ export const Section = {
     3: [
       sectionTitleBase,
       {
-        fontSize: vars.typography.fontSizes.md,
+        fontSize: vars.typography.fontSizes.lg,
       },
     ],
     4: [
       sectionTitleBase,
       {
-        fontSize: vars.typography.fontSizes.sm,
+        fontSize: vars.typography.fontSizes.md,
       },
     ],
   }),

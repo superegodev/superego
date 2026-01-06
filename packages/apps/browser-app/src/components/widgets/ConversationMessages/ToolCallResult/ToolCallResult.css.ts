@@ -87,7 +87,7 @@ export const ToolCallResult = {
 
 export const Title = {
   root: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.semibold,
     padding: vars.spacing._3,
     margin: 0,

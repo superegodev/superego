@@ -41,7 +41,7 @@ const primarySidebarPanelActionRootBase = style({
   paddingBlock: vars.spacing._1,
   paddingInline: vars.spacing._2,
   marginBlock: vars.spacing._0_5,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   color: vars.colors.text.primary,
 });
 
@@ -59,6 +59,18 @@ export const PrimarySidebarPanelAction = {
         },
       }),
     ],
-    button: [primarySidebarPanelActionRootBase],
+    button: [
+      primarySidebarPanelActionRootBase,
+      style({
+        height: "auto",
+        justifyContent: "flex-start",
+        borderRadius: vars.borders.radius.md,
+        selectors: {
+          "&:hover": {
+            background: vars.colors.background.surfaceHighlight,
+          },
+        },
+      }),
+    ],
   }),
 };

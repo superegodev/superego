@@ -9,7 +9,7 @@ export const RHFTextListField = {
   emptyItemsAddButton: style({
     width: "100%",
     // Pixel adjustment to make it the same height as the text field.
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
     marginBlockEnd: vars.spacing._2,
   }),
 
@@ -24,8 +24,8 @@ export const RHFTextListField = {
   itemRemoveButton: style({
     position: "absolute",
     top: `calc(${vars.spacing._1} + ${vars.borders.width.thin})`,
-    left: `calc(-1 * ${vars.spacing._8})`,
-    fontSize: vars.typography.fontSizes.md,
+    left: `calc(-1 * ${vars.spacing._9})`,
+    fontSize: vars.typography.fontSizes.xl,
     color: vars.colors.text.secondary,
     opacity: 0,
     selectors: {

@@ -4,12 +4,13 @@ import type {
   TextSearchResult,
 } from "@superego/backend";
 import { ContentSummaryUtils } from "@superego/shared-utils";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { ListBoxItem } from "react-aria-components";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
+import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import MatchedText from "../../design-system/MatchedText/MatchedText.jsx";
 import * as cs from "./SearchModal.css.js";
 
@@ -30,15 +31,20 @@ export default function DocumentSearchResult({ result, collection }: Props) {
     if (!contentSummary.success || sortedProperties.length <= 1) {
       return null;
     }
-    const segments = sortedProperties
+    const properties = sortedProperties
       .slice(1)
-      .map((prop) =>
-        contentSummary.data[prop.name]
-          ? `${prop.label}: ${contentSummary.data[prop.name]}`
-          : null,
-      )
-      .filter(Boolean);
-    return segments.length > 0 ? segments.join(" • ") : null;
+      .filter((prop) => contentSummary.data[prop.name] != null);
+    if (properties.length === 0) {
+      return null;
+    }
+    return properties.map((prop, index) => (
+      <Fragment key={prop.name}>
+        {index > 0 ? " • " : null}
+        {prop.label}
+        {": "}
+        <ContentSummaryPropertyValue value={contentSummary.data[prop.name]} />
+      </Fragment>
+    ));
   }, [contentSummary]);
 
   const collectionDisplayName = collection

@@ -13,7 +13,7 @@ export const RemoteDocumentInfoModal = {
     display: "flex",
     flexDirection: "column",
     gap: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 
   infoProperty: style({
@@ -25,7 +25,7 @@ export const RemoteDocumentInfoModal = {
   infoPropertyName: style({
     verticalAlign: "middle",
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     whiteSpace: "nowrap",
   }),
 
@@ -34,7 +34,7 @@ export const RemoteDocumentInfoModal = {
     verticalAlign: "middle",
     marginInlineStart: 0,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     textWrap: "nowrap",
     textOverflow: "ellipsis",
     overflow: "hidden",

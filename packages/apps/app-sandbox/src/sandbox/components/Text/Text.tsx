@@ -43,8 +43,8 @@ export default function Text({
         : element === "h4"
           ? "lg"
           : element === "h5"
-            ? "md"
-            : "sm",
+            ? "lg"
+            : "md",
   weight = elementsByWeight.regular.has(element)
     ? "regular"
     : elementsByWeight.semibold.has(element)

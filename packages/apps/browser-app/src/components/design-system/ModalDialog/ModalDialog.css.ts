@@ -46,7 +46,7 @@ export const ModalDialog = {
     borderRadius: vars.borders.radius.md,
     border: 0,
     outline: "none",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
     boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.neutral._12} r g b / 0.1)`,
     selectors: {
@@ -65,7 +65,7 @@ export const Heading = {
     marginBlockEnd: vars.spacing._4,
     paddingInline: vars.spacing._4,
     paddingBlockEnd: vars.spacing._4,
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     fontWeight: vars.typography.fontWeights.medium,
     borderBlockEndWidth: vars.borders.width.thin,
     borderBlockEndColor: vars.colors.border.default,

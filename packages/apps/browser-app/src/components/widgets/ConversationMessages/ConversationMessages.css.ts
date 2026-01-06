@@ -32,14 +32,14 @@ export const ErrorMessage = {
   message: style({
     display: "flex",
     alignItems: "center",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     color: vars.colors.semantic.error.text,
     gap: vars.spacing._2,
   }),
 
   retryButton: style({
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     color: vars.colors.semantic.error.text,
     selectors: {
       "&:hover": {
@@ -64,7 +64,7 @@ export const UserMessage = {
     borderRadius: vars.borders.radius.xl,
     padding: vars.spacing._4,
     marginBlock: vars.spacing._4,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     position: "relative",
     "@container": {
       [`(min-width: ${narrowContainerWidth})`]: {

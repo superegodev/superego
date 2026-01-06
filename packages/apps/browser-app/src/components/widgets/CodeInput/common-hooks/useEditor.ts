@@ -65,9 +65,9 @@ export default function useEditor(
       lineNumbersMinChars: 3,
       overviewRulerLanes: 0,
       fontFamily: vars.typography.fontFamilies.monospace,
-      // vars.typography.fontSizes.md = 14px. We need to set it as a number
+      // vars.typography.fontSizes.md = 16px. We need to set it as a number
       // since that's what the monaco-editor accepts.
-      fontSize: 14,
+      fontSize: 16,
       renderWhitespace: "boundary",
       renderLineHighlightOnlyWhenFocus: true,
       renderFinalNewline: "on",

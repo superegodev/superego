@@ -9,7 +9,7 @@ const conversationAssistantRootBase = style({
   paddingBlock: vars.spacing._0_5,
   paddingInline: vars.spacing._4,
   textTransform: "uppercase",
-  fontSize: vars.typography.fontSizes.xs2,
+  fontSize: vars.typography.fontSizes.xs,
   selectors: {
     [`${dark} &`]: {
       borderColor: "transparent",
