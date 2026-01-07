@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, webFrame } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 import BackendIPCProxyClient from "../ipc-proxies/BackendIPCProxyClient.js";
 import OpenInNativeBrowserIPCProxyClient from "../ipc-proxies/OpenInNativeBrowserIPCProxyClient.js";
 
@@ -10,5 +10,3 @@ contextBridge.exposeInMainWorld(
 ipcRenderer.on("OAuth2PKCEFlowSucceeded", (_evt, data) => {
   window.postMessage(data, "*");
 });
-
-webFrame.setZoomFactor(1.1);
