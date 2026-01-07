@@ -59,9 +59,14 @@ export const useNavigationStateStore = create<UseNavigationState>(
 
 window.addEventListener("beforeunload", (event) => {
   const { exitWarningMessage } = useNavigationStateStore.getState();
-  if (exitWarningMessage && !window.confirm(exitWarningMessage)) {
-    event.preventDefault();
+  if (!exitWarningMessage) {
+    return;
   }
+  // Preventing default makes the browser show a generic message to confirm
+  // exiting the page. Unfortunately, it's not possible to show a custom message
+  // (browsers don't allow it).
+  event.preventDefault();
+  event.returnValue = "";
 });
 
 window.addEventListener("popstate", () => {
