@@ -19,6 +19,7 @@ import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
+import type CollectionVersionNotFound from "./errors/CollectionVersionNotFound.js";
 import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
@@ -58,6 +59,7 @@ import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
+import type CollectionVersion from "./types/CollectionVersion.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Connector from "./types/Connector.js";
 import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticationSettings.js";
@@ -68,6 +70,7 @@ import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
+import type LiteDocumentVersion from "./types/LiteDocumentVersion.js";
 import type Message from "./types/Message.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
@@ -240,6 +243,14 @@ export default interface Backend {
     list(): ResultPromise<Collection[], UnexpectedError>;
 
     listConnectors(): ResultPromise<Connector[], UnexpectedError>;
+
+    getVersion(
+      collectionId: CollectionId,
+      collectionVersionId: CollectionVersionId,
+    ): ResultPromise<
+      CollectionVersion,
+      CollectionVersionNotFound | UnexpectedError
+    >;
   };
 
   documents: {
@@ -332,6 +343,11 @@ export default interface Backend {
       TextSearchResult<LiteDocument>[],
       CollectionNotFound | UnexpectedError
     >;
+
+    listVersions(
+      collectionId: CollectionId,
+      documentId: DocumentId,
+    ): ResultPromise<LiteDocumentVersion[], DocumentNotFound | UnexpectedError>;
   };
 
   files: {

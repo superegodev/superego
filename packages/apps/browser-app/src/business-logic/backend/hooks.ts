@@ -46,6 +46,16 @@ export const listConnectorsQuery = makeBackendQueryGetter(
   () => ["listConnectors"],
 );
 
+export const getCollectionVersionQuery = makeBackendQueryGetter(
+  "collections",
+  "getVersion",
+  (collectionId, collectionVersionId) => [
+    "getCollectionVersion",
+    collectionId,
+    collectionVersionId,
+  ],
+);
+
 export const useCreateCollection = makeUseBackendMutation(
   "collections",
   "create",
@@ -134,6 +144,16 @@ export const getDocumentVersionQuery = makeBackendQueryGetter(
   ],
 );
 
+export const listDocumentVersionsQuery = makeBackendQueryGetter(
+  "documents",
+  "listVersions",
+  (collectionId, documentId) => [
+    "listDocumentVersions",
+    collectionId,
+    documentId,
+  ],
+);
+
 export const useCreateDocument = makeUseBackendMutation(
   "documents",
   "create",
@@ -159,6 +179,7 @@ export const useCreateNewDocumentVersion = makeUseBackendMutation(
   ([collectionId, documentId]) => [
     ["listDocuments", collectionId, "true"],
     ["getDocument", collectionId, documentId],
+    ["listDocumentVersions", collectionId, documentId],
   ],
   // Manually update the non-lite listDocuments cache to improve performance of
   // apps.

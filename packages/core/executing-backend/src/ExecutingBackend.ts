@@ -36,6 +36,7 @@ import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion
 import CollectionsDelete from "./usecases/collections/Delete.js";
 import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
 import CollectionsList from "./usecases/collections/List.js";
+import CollectionsGetVersion from "./usecases/collections/GetVersion.js";
 import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
 import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
 import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
@@ -47,6 +48,7 @@ import DocumentsDelete from "./usecases/documents/Delete.js";
 import DocumentsGet from "./usecases/documents/Get.js";
 import DocumentsGetVersion from "./usecases/documents/GetVersion.js";
 import DocumentsList from "./usecases/documents/List.js";
+import DocumentsListVersions from "./usecases/documents/ListVersions.js";
 import DocumentsSearch from "./usecases/documents/Search.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
@@ -103,6 +105,7 @@ export default class ExecutingBackend implements Backend {
       list: this.makeUsecase(CollectionsList, false),
       triggerDownSync: this.makeUsecase(CollectionsTriggerDownSync, true),
       listConnectors: this.makeUsecase(CollectionsListConnectors, false),
+      getVersion: this.makeUsecase(CollectionsGetVersion, false),
     };
 
     this.documents = {
@@ -113,6 +116,7 @@ export default class ExecutingBackend implements Backend {
       search: this.makeUsecase(DocumentsSearch, false),
       get: this.makeUsecase(DocumentsGet, false),
       getVersion: this.makeUsecase(DocumentsGetVersion, false),
+      listVersions: this.makeUsecase(DocumentsListVersions, false),
     };
 
     this.files = {

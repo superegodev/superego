@@ -20,4 +20,7 @@ export default interface DocumentVersionRepository {
   findAllLatestsWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentVersionEntity[]>;
+  findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]>;
 }

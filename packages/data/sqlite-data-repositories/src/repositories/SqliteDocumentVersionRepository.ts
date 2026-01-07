@@ -131,4 +131,19 @@ export default class SqliteDocumentVersionRepository
       .all(collectionId) as (SqliteDocumentVersion & { is_latest: 1 })[];
     return documentVersions.map(toEntity);
   }
+
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]> {
+    const allDocumentVersions = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "document_id" = ? ORDER BY "created_at" DESC`,
+      )
+      .all(documentId) as SqliteDocumentVersion[];
+    return allDocumentVersions.map((dv) =>
+      dv.is_latest === 1
+        ? toEntity(dv)
+        : toEntity(dv, allDocumentVersions, jdp),
+    );
+  }
 }

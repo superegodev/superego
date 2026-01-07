@@ -1,6 +1,30 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
+export const Document = {
+  contentWithSidebar: style({
+    display: "flex",
+    height: "100%",
+    overflow: "hidden",
+  }),
+
+  mainContent: style({
+    flexGrow: 1,
+    overflow: "auto",
+  }),
+
+  historyToggleSelected: style({
+    background: vars.colors.background.inverse,
+    color: vars.colors.text.inverse,
+    selectors: {
+      "&:hover": {
+        background: vars.colors.background.inverseHighlight,
+        color: vars.colors.text.inverse,
+      },
+    },
+  }),
+};
+
 export const DeleteDocumentModalForm = {
   submitButtonContainer: style({
     display: "flex",

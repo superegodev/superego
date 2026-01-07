@@ -92,4 +92,18 @@ export default class DemoDocumentVersionRepository
       });
     return clone(Object.values(latestDocumentVersions));
   }
+
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions)
+        .filter((documentVersion) => documentVersion.documentId === documentId)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        ),
+    );
+  }
 }

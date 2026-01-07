@@ -2,6 +2,7 @@ import type { CollectionId, DocumentId } from "@superego/backend";
 import { useState } from "react";
 import {
   PiArrowSquareOut,
+  PiClockCounterClockwise,
   PiCloudCheck,
   PiFloppyDisk,
   PiTrash,
@@ -15,15 +16,36 @@ import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
+import * as cs from "./Document.css.js";
+import DocumentContent from "./DocumentContent.js";
+import {
+  DocumentHistoryProvider,
+  useDocumentHistory,
+} from "./DocumentHistoryContext.js";
 import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
 
 interface Props {
   collectionId: CollectionId;
   documentId: DocumentId;
 }
+
 export default function Document({ collectionId, documentId }: Props) {
+  const { collections } = useGlobalData();
+  const collection = CollectionUtils.findCollection(collections, collectionId);
+
+  if (!collection) {
+    return null;
+  }
+
+  return (
+    <DocumentHistoryProvider>
+      <DocumentInner collectionId={collectionId} documentId={documentId} />
+    </DocumentHistoryProvider>
+  );
+}
+
+function DocumentInner({ collectionId, documentId }: Props) {
   const intl = useIntl();
   const createFormId = `CreateNewDocumentVersionForm_${documentId}`;
   const [isCreateFormSubmitDisabled, setIsCreateFormSubmitDisabled] =
@@ -32,8 +54,19 @@ export default function Document({ collectionId, documentId }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
+  const { isHistorySidebarOpen, toggleHistorySidebar, selectedVersionId } =
+    useDocumentHistory();
   const collection = CollectionUtils.findCollection(collections, collectionId);
-  return collection ? (
+
+  if (!collection) {
+    return null;
+  }
+
+  // When viewing a historical version, the form should be read-only
+  // and the save button should be disabled
+  const isViewingHistoricalVersion = selectedVersionId !== null;
+
+  return (
     <DataLoader
       queries={[getDocumentQuery([collection.id, documentId])]}
       renderLoading={() => (
@@ -77,7 +110,16 @@ export default function Document({ collectionId, documentId }: Props) {
               defaultMessage: "Document actions",
             })}
             actions={[
-              document.remoteId === null
+              // History toggle - always shown (before Save/Delete per user preference)
+              {
+                label: intl.formatMessage({ defaultMessage: "History" }),
+                icon: <PiClockCounterClockwise />,
+                onPress: toggleHistorySidebar,
+                className: isHistorySidebarOpen
+                  ? cs.Document.historyToggleSelected
+                  : undefined,
+              },
+              document.remoteId === null && !isViewingHistoricalVersion
                 ? {
                     label: intl.formatMessage({ defaultMessage: "Save" }),
                     icon: <PiFloppyDisk />,
@@ -115,13 +157,14 @@ export default function Document({ collectionId, documentId }: Props) {
             ]}
           />
           <Shell.Panel.Content>
-            <CreateNewDocumentVersionForm
-              key={createFormId}
+            <DocumentContent
               collection={collection}
               document={document}
               formId={createFormId}
               setSubmitDisabled={setIsCreateFormSubmitDisabled}
-              isReadOnly={document.remoteId !== null}
+              isReadOnly={
+                document.remoteId !== null || isViewingHistoricalVersion
+              }
             />
             <DeleteDocumentModalForm
               key={`DeleteDocumentModalForm_${documentId}`}
@@ -139,5 +182,5 @@ export default function Document({ collectionId, documentId }: Props) {
         </Shell.Panel>
       )}
     </DataLoader>
-  ) : null;
+  );
 }
