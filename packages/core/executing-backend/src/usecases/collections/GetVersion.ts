@@ -28,10 +28,7 @@ export default class CollectionsGetVersion extends Usecase<
     const collectionVersion =
       await this.repos.collectionVersion.find(collectionVersionId);
 
-    if (
-      !collectionVersion ||
-      collectionVersion.collectionId !== collectionId
-    ) {
+    if (!collectionVersion || collectionVersion.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionVersionNotFound", {
           collectionId,

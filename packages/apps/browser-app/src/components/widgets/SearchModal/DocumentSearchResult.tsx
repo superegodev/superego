@@ -11,7 +11,7 @@ import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
-import MatchedText from "../../design-system/MatchedText/MatchedText.jsx";
+import MatchedText from "../../design-system/MatchedText/MatchedText.js";
 import * as cs from "./SearchModal.css.js";
 
 interface Props {

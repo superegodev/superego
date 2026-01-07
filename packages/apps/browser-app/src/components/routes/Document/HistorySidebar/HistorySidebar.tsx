@@ -22,8 +22,12 @@ export default function HistorySidebar({
   document,
   viewingVersion,
 }: Props) {
-  const { isHistorySidebarOpen, toggleHistorySidebar, selectedVersionId, selectVersion } =
-    useDocumentHistory();
+  const {
+    isHistorySidebarOpen,
+    toggleHistorySidebar,
+    selectedVersionId,
+    selectVersion,
+  } = useDocumentHistory();
 
   if (!isHistorySidebarOpen) {
     return null;
@@ -52,9 +56,7 @@ export default function HistorySidebar({
       </header>
 
       <DataLoader
-        queries={[
-          listDocumentVersionsQuery([collection.id, document.id]),
-        ]}
+        queries={[listDocumentVersionsQuery([collection.id, document.id])]}
         renderLoading={() => (
           <div className={cs.HistorySidebar.content}>
             <div className={cs.HistorySidebar.loading}>

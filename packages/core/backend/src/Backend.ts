@@ -19,10 +19,10 @@ import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
-import type CollectionVersionNotFound from "./errors/CollectionVersionNotFound.js";
 import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
+import type CollectionVersionNotFound from "./errors/CollectionVersionNotFound.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
 import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
 import type ConnectorDoesNotSupportUpSyncing from "./errors/ConnectorDoesNotSupportUpSyncing.js";
@@ -317,6 +317,11 @@ export default interface Backend {
       CollectionNotFound | UnexpectedError
     >;
 
+    listVersions(
+      collectionId: CollectionId,
+      id: DocumentId,
+    ): ResultPromise<LiteDocumentVersion[], DocumentNotFound | UnexpectedError>;
+
     get(
       collectionId: CollectionId,
       id: DocumentId,
@@ -343,11 +348,6 @@ export default interface Backend {
       TextSearchResult<LiteDocument>[],
       CollectionNotFound | UnexpectedError
     >;
-
-    listVersions(
-      collectionId: CollectionId,
-      documentId: DocumentId,
-    ): ResultPromise<LiteDocumentVersion[], DocumentNotFound | UnexpectedError>;
   };
 
   files: {

@@ -3,10 +3,7 @@ import { describe, expect, it } from "vitest";
 import { bucketVersions } from "./versionBucketing.js";
 
 // Helper to create a mock LiteDocumentVersion
-function mockVersion(
-  id: string,
-  createdAt: Date,
-): LiteDocumentVersion {
+function mockVersion(id: string, createdAt: Date): LiteDocumentVersion {
   return {
     id: `DocumentVersion_${id}`,
     remoteId: null,

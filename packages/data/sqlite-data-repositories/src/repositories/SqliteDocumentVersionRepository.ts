@@ -99,12 +99,12 @@ export default class SqliteDocumentVersionRepository
     if (!documentVersion) {
       return null;
     }
-    if (documentVersion?.is_latest === 1) {
+    if (documentVersion.is_latest === 1) {
       return toEntity(documentVersion);
     }
     const allDocumentVersions = this.db
-      .prepare(`SELECT * FROM "${table}"`)
-      .all() as SqliteDocumentVersion[];
+      .prepare(`SELECT * FROM "${table}" WHERE "document_id" = ?`)
+      .all(documentVersion.document_id) as SqliteDocumentVersion[];
     return toEntity(documentVersion, allDocumentVersions, jdp);
   }
 
@@ -140,10 +140,10 @@ export default class SqliteDocumentVersionRepository
         `SELECT * FROM "${table}" WHERE "document_id" = ? ORDER BY "created_at" DESC`,
       )
       .all(documentId) as SqliteDocumentVersion[];
-    return allDocumentVersions.map((dv) =>
-      dv.is_latest === 1
-        ? toEntity(dv)
-        : toEntity(dv, allDocumentVersions, jdp),
+    return allDocumentVersions.map((documentVersion) =>
+      documentVersion.is_latest === 1
+        ? toEntity(documentVersion)
+        : toEntity(documentVersion, allDocumentVersions, jdp),
     );
   }
 }

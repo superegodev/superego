@@ -35,8 +35,8 @@ import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
 import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
-import CollectionsList from "./usecases/collections/List.js";
 import CollectionsGetVersion from "./usecases/collections/GetVersion.js";
+import CollectionsList from "./usecases/collections/List.js";
 import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
 import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
 import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
@@ -113,10 +113,10 @@ export default class ExecutingBackend implements Backend {
       createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
       delete: this.makeUsecase(DocumentsDelete, true),
       list: this.makeUsecase(DocumentsList, false),
+      listVersions: this.makeUsecase(DocumentsListVersions, false),
       search: this.makeUsecase(DocumentsSearch, false),
       get: this.makeUsecase(DocumentsGet, false),
       getVersion: this.makeUsecase(DocumentsGetVersion, false),
-      listVersions: this.makeUsecase(DocumentsListVersions, false),
     };
 
     this.files = {

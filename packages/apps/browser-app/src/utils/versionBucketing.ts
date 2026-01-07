@@ -138,7 +138,10 @@ function getBucketKey(date: Date, granularity: Granularity): string {
   }
 }
 
-function createBucket(versions: LiteDocumentVersion[], now: Date): VersionBucket {
+function createBucket(
+  versions: LiteDocumentVersion[],
+  now: Date,
+): VersionBucket {
   // Versions within bucket are newest first, so first is newest (end), last is oldest (start)
   const newestDate = new Date(versions[0]!.createdAt);
   const oldestDate = new Date(versions[versions.length - 1]!.createdAt);

@@ -57,7 +57,8 @@ export default function CreateNewDocumentVersionForm({
   const content = isViewingHistoricalVersion
     ? viewingVersion.content
     : document.latestVersion.content;
-  const schema = viewingCollectionVersion?.schema ?? collection.latestVersion.schema;
+  const schema =
+    viewingCollectionVersion?.schema ?? collection.latestVersion.schema;
 
   const { mutate } = useCreateNewDocumentVersion();
 
@@ -168,7 +169,9 @@ export default function CreateNewDocumentVersionForm({
   // Show loading state when fetching historical version
   if (isLoadingVersion) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "2rem" }}
+      >
         <ThreeDotSpinner />
       </div>
     );

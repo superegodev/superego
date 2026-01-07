@@ -38,10 +38,10 @@ export type { default as CollectionIsSyncing } from "./errors/CollectionIsSyncin
 export type { default as CollectionMigrationFailed } from "./errors/CollectionMigrationFailed.js";
 export type { default as CollectionMigrationNotValid } from "./errors/CollectionMigrationNotValid.js";
 export type { default as CollectionNotFound } from "./errors/CollectionNotFound.js";
-export type { default as CollectionVersionNotFound } from "./errors/CollectionVersionNotFound.js";
 export type { default as CollectionSchemaNotValid } from "./errors/CollectionSchemaNotValid.js";
 export type { default as CollectionSettingsNotValid } from "./errors/CollectionSettingsNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
+export type { default as CollectionVersionNotFound } from "./errors/CollectionVersionNotFound.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
 export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";

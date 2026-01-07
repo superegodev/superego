@@ -1393,6 +1393,263 @@ export default rd<GetDependencies>("Documents", (deps) => {
     });
   });
 
+  describe("listVersions", () => {
+    it("error: DocumentNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const documentId = Id.generate.document();
+      const listVersionsResult = await backend.documents.listVersions(
+        createCollectionResult.data.id,
+        documentId,
+      );
+
+      // Verify
+      expect(listVersionsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentNotFound",
+          details: { documentId },
+        },
+      });
+    });
+
+    it("success: lists lite versions (case: document with single version)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const listVersionsResult = await backend.documents.listVersions(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(listVersionsResult.success);
+      expect(listVersionsResult.data).toHaveLength(1);
+      expect(listVersionsResult.data[0]).toEqual(
+        expect.objectContaining({
+          id: createDocumentResult.data.latestVersion.id,
+          previousVersionId: null,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          createdBy: DocumentVersionCreator.User,
+        }),
+      );
+      // Should be lite version (no content)
+      expect(listVersionsResult.data[0]).not.toHaveProperty("content");
+    });
+
+    it("success: lists lite versions (case: document with multiple versions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "version 1" },
+      );
+      assert.isTrue(createDocumentResult.success);
+      const createNewVersionResult1 = await backend.documents.createNewVersion(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        createDocumentResult.data.latestVersion.id,
+        { title: "version 2" },
+      );
+      assert.isTrue(createNewVersionResult1.success);
+      const createNewVersionResult2 = await backend.documents.createNewVersion(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        createNewVersionResult1.data.latestVersion.id,
+        { title: "version 3" },
+      );
+      assert.isTrue(createNewVersionResult2.success);
+
+      // Exercise
+      const listVersionsResult = await backend.documents.listVersions(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(listVersionsResult.success);
+      expect(listVersionsResult.data).toHaveLength(3);
+      // Should contain all version IDs
+      const versionIds = listVersionsResult.data.map((v) => v.id);
+      expect(versionIds).toContain(createDocumentResult.data.latestVersion.id);
+      expect(versionIds).toContain(
+        createNewVersionResult1.data.latestVersion.id,
+      );
+      expect(versionIds).toContain(
+        createNewVersionResult2.data.latestVersion.id,
+      );
+      // Verify the previousVersionId chain is correct
+      const documentVersion1 = listVersionsResult.data.find(
+        ({ id }) => id === createDocumentResult.data.latestVersion.id,
+      );
+      const documentVersion2 = listVersionsResult.data.find(
+        ({ id }) => id === createNewVersionResult1.data.latestVersion.id,
+      );
+      const documentVersion3 = listVersionsResult.data.find(
+        ({ id }) => id === createNewVersionResult2.data.latestVersion.id,
+      );
+      expect(documentVersion1!.previousVersionId).toEqual(null);
+      expect(documentVersion2!.previousVersionId).toEqual(
+        createDocumentResult.data.latestVersion.id,
+      );
+      expect(documentVersion3!.previousVersionId).toEqual(
+        createNewVersionResult1.data.latestVersion.id,
+      );
+    });
+
+    it("success: does not return versions from other documents", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocument1Result = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "document 1" },
+      );
+      assert.isTrue(createDocument1Result.success);
+      const createDocument2Result = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "document 2" },
+      );
+      assert.isTrue(createDocument2Result.success);
+      const createNewVersionResult = await backend.documents.createNewVersion(
+        createCollectionResult.data.id,
+        createDocument2Result.data.id,
+        createDocument2Result.data.latestVersion.id,
+        { title: "document 2 updated" },
+      );
+      assert.isTrue(createNewVersionResult.success);
+
+      // Exercise
+      const listVersionsResult = await backend.documents.listVersions(
+        createCollectionResult.data.id,
+        createDocument1Result.data.id,
+      );
+
+      // Verify
+      assert.isTrue(listVersionsResult.success);
+      expect(listVersionsResult.data).toHaveLength(1);
+      expect(listVersionsResult.data[0]!.id).toEqual(
+        createDocument1Result.data.latestVersion.id,
+      );
+    });
+  });
+
   describe("search", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
