@@ -5,7 +5,7 @@ globalStyle("html, body", {
   margin: 0,
   padding: 0,
   fontFamily: vars.typography.fontFamilies.sansSerif,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   color: vars.colors.text.primary,
   background: vars.colors.background.surface,
 });

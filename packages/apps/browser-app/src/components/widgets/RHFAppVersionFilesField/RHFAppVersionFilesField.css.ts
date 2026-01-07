@@ -67,7 +67,7 @@ export const Preview = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: vars.typography.fontSizes.lg,
+        fontSize: vars.typography.fontSizes.xl,
         color: vars.colors.semantic.error.text,
         borderColor: vars.colors.semantic.error.border,
       },
@@ -84,7 +84,7 @@ export const EditingToolbar = {
   }),
 
   button: style({
-    fontSize: vars.typography.fontSizes.lg,
+    fontSize: vars.typography.fontSizes.xl,
   }),
 };
 

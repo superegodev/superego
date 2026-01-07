@@ -16,7 +16,7 @@ export const MenuItem = {
     cursor: "default",
     borderRadius: vars.borders.radius.md,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     textDecoration: "none",
     selectors: {
       '&:hover:not([data-disabled="true"])': {

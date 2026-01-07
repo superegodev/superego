@@ -56,13 +56,13 @@ export const Toast = {
 
   title: style({
     display: "block",
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     marginBlockEnd: vars.spacing._2,
   }),
 
   errorDetails: style({
     display: "block",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 
   errorDetailsTitle: style({

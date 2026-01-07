@@ -46,7 +46,7 @@ export const FileField = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
     paddingInline: 0,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -75,8 +75,8 @@ export const FileField = {
     justifyContent: "center",
     alignItems: "center",
     width: vars.spacing._6,
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
-    fontSize: vars.typography.fontSizes.xl3,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    fontSize: vars.typography.fontSizes.xl4,
     marginBlockEnd: vars.spacing._2,
   }),
 
@@ -92,7 +92,7 @@ export const FileField = {
 
   nonNullFileButton: style({
     aspectRatio: "1 / 1",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
   }),
 };
 
@@ -105,7 +105,7 @@ export const StructAndListField = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
     paddingInline: 0,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -124,8 +124,8 @@ export const ListField = {
   emptyItemsPlaceholder: style({
     display: "flex",
     justifyContent: "center",
-    lineHeight: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
-    fontSize: vars.typography.fontSizes.sm,
+    lineHeight: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    fontSize: vars.typography.fontSizes.md,
     fontStyle: "italic",
     color: vars.colors.text.secondary,
     marginBlockEnd: vars.spacing._8,
@@ -157,7 +157,7 @@ export const ListField = {
     },
   }),
   itemAction: style({
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.xl,
     color: vars.colors.text.secondary,
     selectors: {
       "&:hover": {
@@ -183,6 +183,7 @@ export const ListItemField = {
 export const NullifyFieldAction = {
   root: style({
     zIndex: 9999,
+    fontSize: vars.typography.fontSizes.lg,
     selectors: {
       "&:hover": {
         background: vars.colors.background.surface,
@@ -226,7 +227,7 @@ export const Field = {
 export const AnyFieldLabel = {
   dataType: style({
     fontFamily: vars.typography.fontFamilies.monospace,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     marginInlineStart: vars.spacing._2,
     color: vars.colors.text.secondary,
     borderRadius: vars.borders.radius.full,
@@ -239,6 +240,7 @@ export const AnyFieldLabel = {
     margin: 0,
     position: "relative",
     fontFamily: "serif",
+    fontSize: vars.typography.fontSizes.md,
     marginInlineStart: vars.spacing._1,
   }),
 

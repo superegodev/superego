@@ -8,14 +8,6 @@ export const Table = {
   }),
 };
 
-export const Header = {
-  root: style({}),
-};
-
-export const Body = {
-  root: style({}),
-};
-
 const columnTitleBase = style({
   width: "100%",
   textWrap: "nowrap",
@@ -27,7 +19,7 @@ export const Column = {
     height: 41,
     paddingInline: vars.spacing._2,
     fontWeight: vars.typography.fontWeights.medium,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     background: vars.colors.background.surface,
     borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     display: "flex",
@@ -69,9 +61,10 @@ export const Row = {
 
 const cellRootBase = style({
   height: "100%",
-  padding: vars.spacing._2,
+  padding: vars.spacing._2_5,
+  lineHeight: "normal",
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -91,6 +84,6 @@ export const Empty = {
     textAlign: "center",
     paddingInline: vars.spacing._2,
     paddingBlock: vars.spacing._8,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 };

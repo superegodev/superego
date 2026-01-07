@@ -16,12 +16,12 @@ export const ProgressBar = {
   }),
 
   label: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.secondary,
   }),
 
   percentage: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.secondary,
   }),
 

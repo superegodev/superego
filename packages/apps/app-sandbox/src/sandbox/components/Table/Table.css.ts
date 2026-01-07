@@ -11,7 +11,7 @@ export const Table = {
 const columnRootBase = style({
   padding: vars.spacing._2,
   fontWeight: vars.typography.fontWeights.medium,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   background: vars.colors.background.surface,
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
 });
@@ -37,7 +37,7 @@ const cellRootBase = style({
   height: "100%",
   padding: vars.spacing._2,
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
 });
 export const Cell = {
   root: styleVariants({

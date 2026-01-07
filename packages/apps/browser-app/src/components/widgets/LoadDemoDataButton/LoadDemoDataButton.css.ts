@@ -3,7 +3,7 @@ import { vars } from "../../../themes.css.js";
 
 export const LoadDemoDataButton = {
   button: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     padding: vars.spacing._0_5,
     marginBlockEnd: vars.spacing._3,
   }),

@@ -25,7 +25,7 @@ export default function Table({
     <Virtualizer
       layout={TableLayout}
       layoutOptions={{
-        rowHeight: 33.5,
+        rowHeight: 40,
         headingHeight: 41,
         padding: 0,
         gap: 0,

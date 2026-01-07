@@ -4,7 +4,7 @@ import { vars } from "../../themes.css.js";
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
   fontFamily: vars.typography.fontFamilies.sansSerif,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
   marginBlockEnd: vars.spacing._2,
   borderWidth: vars.borders.width.thin,
@@ -54,7 +54,7 @@ export const Radio = {
     alignItems: "flex-start",
     gap: vars.spacing._2,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     selectors: {
       "&:not(:last-child)": {
         marginBlockEnd: vars.spacing._2,
@@ -100,7 +100,7 @@ export const Radio = {
 
   description: style({
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };
 
@@ -120,7 +120,7 @@ export const SelectButton = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
     marginBlockEnd: vars.spacing._2,
   }),
 
@@ -153,7 +153,7 @@ export const SelectOptions = {
     cursor: "default",
     borderRadius: vars.borders.radius.md,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     selectors: {
       "&:not(:last-child)": {
         marginBlockEnd: vars.spacing._1,
@@ -182,7 +182,7 @@ export const SelectOptions = {
   optionDescription: style({
     flexGrow: 1,
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     textAlign: "left",
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -194,7 +194,7 @@ export const Label = {
   root: style({
     display: "block",
     marginBlockEnd: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     color: vars.colors.text.primary,
     selectors: {
@@ -207,7 +207,7 @@ export const Label = {
 
 export const Description = {
   root: style({
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     fontStyle: "italic",
     selectors: {
       '[data-disabled="true"] > &': {
@@ -258,7 +258,7 @@ export const DatePickerInput = {
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    height: vars.spacing._8,
+    height: vars.spacing._9,
     flexGrow: 1,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
@@ -272,7 +272,7 @@ export const DatePickerCalendar = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
     marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",
@@ -288,22 +288,22 @@ export const DatePickerCalendar = {
     flexGrow: 1,
     margin: 0,
     textAlign: "center",
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
   }),
 
   headerCell: style({
     paddingBlock: vars.spacing._3,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 
   cell: style({
-    width: vars.spacing._8,
-    height: vars.spacing._8,
+    width: vars.spacing._9,
+    height: vars.spacing._9,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     margin: vars.spacing._0_5,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",

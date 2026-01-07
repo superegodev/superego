@@ -8,7 +8,7 @@ export const EagerCodeBlock = {
     display: "grid",
     gridTemplateAreas: `"LineNumbers Code"`,
     gridTemplateColumns: "51px 1fr",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     background: vars.colors.background.surface,
     paddingBlockStart: 10,
     paddingBlockEnd: 8,
@@ -68,7 +68,7 @@ export const CopyButton = {
     justifySelf: "end",
     zIndex: 1,
     backdropFilter: "blur(9999px)",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     selectors: {
       "&:hover": {
         background: "transparent",

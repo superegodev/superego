@@ -88,9 +88,12 @@ export const commonVars = {
   },
   spacing: {
     _0: "0",
+    _0_25: "0.0625rem",
     _0_5: "0.125rem",
     _1: "0.25rem",
+    _1_5: "0.375rem",
     _2: "0.5rem",
+    _2_5: "0.625rem",
     _3: "0.75rem",
     _4: "1rem",
     _4_5: "1.125rem",
@@ -113,10 +116,12 @@ export const commonVars = {
     _80: "20rem",
     _90: "22.5rem",
     _100: "25rem",
+    _110: "27.5rem",
     _120: "30rem",
     _160: "40rem",
     _180: "45rem",
     _200: "50rem",
+    _220: "55rem",
   },
   borders: {
     radius: {

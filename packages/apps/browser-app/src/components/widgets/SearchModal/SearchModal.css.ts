@@ -41,7 +41,7 @@ export const SearchModal = {
   }),
 
   modal: style({
-    width: `min(${vars.spacing._160}, calc(100dvw - ${vars.spacing._8}))`,
+    width: `min(${vars.spacing._220}, calc(100dvw - ${vars.spacing._8}))`,
     maxHeight: `calc(var(--visual-viewport-height) - ${vars.spacing._40})`,
     display: "flex",
     flexDirection: "column",
@@ -49,7 +49,7 @@ export const SearchModal = {
     borderRadius: vars.borders.radius.lg,
     border: 0,
     outline: "none",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
     boxShadow: `0 ${vars.spacing._4} ${vars.spacing._8} rgba(from ${vars.colors.neutral._12} r g b / 0.15)`,
     overflow: "hidden",
@@ -100,7 +100,7 @@ export const SearchParamsInput = {
     border: 0,
     outline: "none !important",
     background: "transparent",
-    fontSize: vars.typography.fontSizes.md,
+    fontSize: vars.typography.fontSizes.lg,
     fontFamily: vars.typography.fontFamilies.sansSerif,
     color: vars.colors.text.primary,
     "::placeholder": {
@@ -122,7 +122,7 @@ export const SearchParamsInput = {
   toggleButton: style({
     paddingBlock: vars.spacing._1,
     paddingInline: vars.spacing._3,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     height: vars.spacing._7,
     borderRadius: vars.borders.radius.full,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
@@ -149,7 +149,7 @@ export const SearchParamsInput = {
     height: `${vars.spacing._7} !important`,
     borderRadius: vars.borders.radius.full,
     padding: `${vars.spacing._1} ${vars.spacing._3} !important`,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     marginBlockEnd: "0 !important",
   }),
 
@@ -172,7 +172,7 @@ export const SearchResults = {
     padding: vars.spacing._8,
     textAlign: "center",
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 };
 
@@ -202,12 +202,12 @@ export const SearchResult = {
   line1: style({
     display: "flex",
     alignItems: "center",
-    marginBlockEnd: vars.spacing._1,
+    marginBlockEnd: vars.spacing._2,
   }),
 
   displayNameTitle: style({
     flex: 1,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -216,8 +216,8 @@ export const SearchResult = {
 
   collectionChip: style({
     flexShrink: 0,
-    padding: `${vars.spacing._0_5} ${vars.spacing._2}`,
-    fontSize: vars.typography.fontSizes.xs2,
+    padding: `${vars.spacing._0_25} ${vars.spacing._2}`,
+    fontSize: vars.typography.fontSizes.xs,
     borderRadius: vars.borders.radius.md,
     background: vars.colors.background.inverse,
     color: vars.colors.text.inverse,
@@ -225,7 +225,7 @@ export const SearchResult = {
   }),
 
   line2: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.secondary,
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -234,7 +234,7 @@ export const SearchResult = {
   }),
 
   line3: style({
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
     overflow: "hidden",

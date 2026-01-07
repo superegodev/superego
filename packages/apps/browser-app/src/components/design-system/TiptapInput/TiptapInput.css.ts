@@ -21,7 +21,7 @@ export const TiptapInput = {
   editor: style({
     width: "100%",
     whiteSpace: "pre-wrap",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     padding: vars.spacing._4,
     selectors: {
       "&:focus-visible": {
@@ -65,7 +65,7 @@ export const FormattingToolbar = {
     ],
   }),
   button: style({
-    fontSize: vars.typography.fontSizes.lg,
+    fontSize: vars.typography.fontSizes.xl,
   }),
 };
 
@@ -129,7 +129,7 @@ globalStyle(`${TiptapInput.editor} p code`, {
   border: `${vars.borders.width.thin} solid ${vars.colors.oranges._3}`,
   borderRadius: vars.borders.radius.md,
   color: vars.colors.text.primary,
-  fontSize: vars.typography.fontSizes.xs,
+  fontSize: vars.typography.fontSizes.sm,
   paddingInline: vars.spacing._1,
   paddingBlock: vars.spacing._0_5,
 });
@@ -148,7 +148,7 @@ globalStyle(`${TiptapInput.editor} pre`, {
 globalStyle(`${TiptapInput.editor} pre code`, {
   background: "none",
   color: "inherit",
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   padding: 0,
 });
 globalStyle(`${TiptapInput.editor} .hljs`, {

@@ -88,7 +88,7 @@ export const PanelHeader = {
   }),
 
   title: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     textWrap: "nowrap",
     overflow: "hidden",
@@ -102,8 +102,8 @@ export const PanelHeader = {
   }),
 
   action: style({
-    width: vars.spacing._7,
-    height: vars.spacing._7,
+    width: vars.spacing._8,
+    height: vars.spacing._8,
     fontSize: vars.typography.fontSizes.xl,
   }),
 
@@ -127,7 +127,7 @@ export const PanelHeader = {
   }),
 
   primarySidebarToggleButton: style({
-    fontSize: vars.typography.fontSizes.xl2,
+    fontSize: vars.typography.fontSizes.xl3,
     padding: 0,
     display: "none !important",
     "@media": {
@@ -153,7 +153,7 @@ export const PanelContent = {
         padding: vars.spacing._8,
       },
       '[data-slot="Main"] [data-full-width="false"]&': {
-        paddingInline: `max(calc(50% - ${vars.spacing._90}), ${vars.spacing._8})`,
+        paddingInline: `max(calc(50% - ${vars.spacing._110}), ${vars.spacing._8})`,
       },
       '[data-slot="Main"] [data-full-width="true"]&': {
         paddingInline: vars.spacing._8,

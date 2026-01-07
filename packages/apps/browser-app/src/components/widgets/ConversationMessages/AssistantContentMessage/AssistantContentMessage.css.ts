@@ -10,7 +10,7 @@ export const AssistantContentMessage = {
 
   markdown: style({
     width: "100%",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     lineHeight: vars.spacing._6,
   }),
 
@@ -26,7 +26,7 @@ export const AssistantContentMessage = {
     display: "flex",
     alignItems: "center",
     marginBlockStart: vars.spacing._4,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.text.secondary,
     opacity: 0,
     transition: "opacity 500ms",
@@ -76,7 +76,7 @@ globalStyle(`${AssistantContentMessage.markdown} thead th`, {
   paddingBlock: vars.spacing._3,
   textAlign: "left",
   fontWeight: vars.typography.fontWeights.medium,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   background: vars.colors.background.surface,
   position: "sticky",
   top: 0,
@@ -90,6 +90,6 @@ globalStyle(`${AssistantContentMessage.markdown} tbody tr:hover`, {
 });
 globalStyle(`${AssistantContentMessage.markdown} tbody td`, {
   padding: vars.spacing._2,
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   verticalAlign: "middle",
 });

@@ -29,7 +29,7 @@ export const SimpleMonthCalendar = {
   }),
 
   gridHeaderCell: style({
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.regular,
     textTransform: "uppercase",
   }),
@@ -83,7 +83,7 @@ export const Header = {
   }),
 
   heading: style({
-    fontSize: vars.typography.fontSizes.lg,
+    fontSize: vars.typography.fontSizes.xl,
     margin: 0,
   }),
 };
@@ -197,7 +197,7 @@ export const DayPopover = {
   }),
 
   heading: style({
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     margin: 0,
   }),

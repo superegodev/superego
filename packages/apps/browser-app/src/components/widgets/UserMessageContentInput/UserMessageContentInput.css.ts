@@ -29,7 +29,7 @@ export const UserMessageContentInput = {
     width: "100%",
     maxHeight: vars.spacing._80,
     fontFamily: vars.typography.fontFamilies.sansSerif,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     border: 0,
     background: vars.colors.background.surface,
     color: vars.colors.text.primary,
@@ -93,7 +93,7 @@ export const TrayFile = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: vars.typography.fontSizes.xl2,
+    fontSize: vars.typography.fontSizes.xl3,
   }),
 
   image: style({
@@ -106,7 +106,7 @@ export const TrayFile = {
   nameContainer: style({
     display: "flex",
     alignItems: "center",
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     flexGrow: 1,
     minWidth: 0,
   }),
@@ -126,17 +126,17 @@ export const TrayFile = {
 
   removeButton: style({
     borderRadius: vars.borders.radius.full,
-    fontSize: vars.typography.fontSizes.xs3,
+    fontSize: vars.typography.fontSizes.sm,
     padding: 0,
   }),
 };
 
 const actionsToolbarButtonBase = style({
   padding: 0,
-  height: vars.spacing._8,
-  width: vars.spacing._8,
+  height: vars.spacing._9,
+  width: vars.spacing._9,
   borderRadius: vars.borders.radius.full,
-  fontSize: vars.typography.fontSizes.lg,
+  fontSize: vars.typography.fontSizes.xl,
 });
 
 export const AddFilesButton = {

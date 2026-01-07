@@ -9,7 +9,7 @@ const alertRootBase = style({
   borderRadius: vars.borders.radius.md,
   borderWidth: vars.borders.width.thin,
   borderStyle: "solid",
-  fontSize: vars.typography.fontSizes.sm,
+  fontSize: vars.typography.fontSizes.md,
   selectors: {
     "&:first-child": {
       marginBlockStart: 0,
@@ -21,7 +21,7 @@ const alertRootBase = style({
 });
 
 const alertTitleBase = style({
-  fontSize: vars.typography.fontSizes.md,
+  fontSize: vars.typography.fontSizes.lg,
   fontWeight: vars.typography.fontWeights.medium,
 });
 

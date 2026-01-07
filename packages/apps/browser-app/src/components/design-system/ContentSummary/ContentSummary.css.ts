@@ -8,7 +8,7 @@ export const ContentSummary = {
     padding: vars.spacing._4,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     margin: 0,
   }),
 
@@ -23,7 +23,7 @@ export const ContentSummary = {
     paddingBlock: vars.spacing._1,
     paddingInlineEnd: vars.spacing._8,
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     whiteSpace: "nowrap",
   }),
 
@@ -33,6 +33,6 @@ export const ContentSummary = {
     verticalAlign: "middle",
     paddingInlineEnd: vars.spacing._8,
     color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 };

@@ -50,7 +50,7 @@ export default function DayPopover({
           <IconButton
             icon="x"
             variant="invisible"
-            size="sm"
+            size="md"
             label={closeDayPopoverButton}
             onPress={onUnselectDate}
             className={cs.DayPopover.closeButton}

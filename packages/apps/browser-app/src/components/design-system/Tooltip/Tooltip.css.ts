@@ -6,7 +6,7 @@ export const Tooltip = {
     paddingBlock: vars.spacing._1,
     paddingInline: vars.spacing._2,
     maxWidth: vars.spacing._64,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     textAlign: "center",
     borderRadius: vars.borders.radius.sm,
     boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.background.inverseHighlight} r g b / 0.1)`,

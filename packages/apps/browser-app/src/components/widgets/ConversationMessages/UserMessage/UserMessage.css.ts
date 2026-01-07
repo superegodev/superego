@@ -53,6 +53,6 @@ export const FilePart = {
     paddingInline: vars.spacing._4,
     overflowWrap: "anywhere",
     width: "100%",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
   }),
 };

@@ -18,6 +18,6 @@ export const RHFSchemaField = {
   inlineCode: style({
     background: vars.colors.semantic.error.background,
     color: vars.colors.semantic.error.text,
-    fontSize: vars.typography.fontSizes.xs2,
+    fontSize: vars.typography.fontSizes.xs,
   }),
 };

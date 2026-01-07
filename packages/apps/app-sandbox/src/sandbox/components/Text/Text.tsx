@@ -14,6 +14,7 @@ interface Props {
   color?: "primary" | "secondary" | undefined;
   /** Default varies according to element. */
   size?:
+    | "xs3"
     | "xs2"
     | "xs"
     | "sm"
@@ -44,7 +45,7 @@ export default function Text({
           ? "lg"
           : element === "h5"
             ? "md"
-            : "sm",
+            : "md",
   weight = elementsByWeight.regular.has(element)
     ? "regular"
     : elementsByWeight.semibold.has(element)

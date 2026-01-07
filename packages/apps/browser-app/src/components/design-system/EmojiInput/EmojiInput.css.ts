@@ -7,8 +7,8 @@ export const EmojiInput = {
   }),
 
   popoverTrigger: style({
-    width: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
-    height: `calc(${vars.spacing._8} + 2 * ${vars.borders.width.thin})`,
+    width: `calc(${vars.spacing._9} + ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + ${vars.borders.width.thin})`,
     marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.xl,
   }),
@@ -32,7 +32,7 @@ export const EmojiPicker = {
     padding: vars.spacing._2,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 
   selectedEmoji: style({
@@ -42,7 +42,7 @@ export const EmojiPicker = {
     gap: vars.spacing._2,
     marginBlockStart: vars.spacing._2,
     marginInline: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.secondary,
   }),
 
@@ -67,7 +67,7 @@ export const EmojiPicker = {
     paddingBlockEnd: vars.spacing._3,
     backgroundColor: vars.colors.background.surface,
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.medium,
   }),
 
@@ -95,7 +95,7 @@ export const EmojiPicker = {
     alignItems: "center",
     justifyContent: "center",
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 
   loading: style({
@@ -105,6 +105,6 @@ export const EmojiPicker = {
     alignItems: "center",
     justifyContent: "center",
     color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
   }),
 };

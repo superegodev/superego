@@ -6,7 +6,7 @@ const compilationInProgressIndicatorRootBase = style({
   bottom: vars.spacing._2,
   right: vars.spacing._2,
   color: vars.colors.semantic.pending.text,
-  fontSize: vars.typography.fontSizes.xs2,
+  fontSize: vars.typography.fontSizes.xs,
   fontWeight: vars.typography.fontWeights.medium,
   fontStyle: "italic",
   transition: "opacity 0ms",

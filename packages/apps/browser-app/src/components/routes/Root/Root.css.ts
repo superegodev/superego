@@ -5,6 +5,8 @@ export const PrimarySidebarPanel = {
   root: style({
     display: "flex",
     flexDirection: "column",
+    height: "100%",
+    minHeight: 0,
   }),
 
   topActions: style({
@@ -38,10 +40,11 @@ const primarySidebarPanelActionRootBase = style({
   alignItems: "center",
   gap: vars.spacing._2,
   width: "100%",
-  paddingBlock: vars.spacing._1,
+  paddingBlock: vars.spacing._1_5,
   paddingInline: vars.spacing._2,
   marginBlock: vars.spacing._0_5,
-  fontSize: vars.typography.fontSizes.sm,
+  lineHeight: vars.typography.lineHeights.tight,
+  fontSize: vars.typography.fontSizes.md,
   color: vars.colors.text.primary,
 });
 
@@ -59,6 +62,18 @@ export const PrimarySidebarPanelAction = {
         },
       }),
     ],
-    button: [primarySidebarPanelActionRootBase],
+    button: [
+      primarySidebarPanelActionRootBase,
+      style({
+        height: "auto",
+        justifyContent: "flex-start",
+        borderRadius: vars.borders.radius.md,
+        selectors: {
+          "&:hover": {
+            background: vars.colors.background.surfaceHighlight,
+          },
+        },
+      }),
+    ],
   }),
 };

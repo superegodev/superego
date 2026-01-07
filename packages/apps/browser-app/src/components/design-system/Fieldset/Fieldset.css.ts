@@ -26,7 +26,7 @@ export const Legend = {
     marginBlockEnd: vars.spacing._4,
     paddingBlockEnd: vars.spacing._2,
     borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    fontSize: vars.typography.fontSizes.sm,
+    fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
   }),
 };
@@ -44,7 +44,7 @@ export const DisclosureTrigger = {
   }),
   indicator: style({
     position: "relative",
-    fontSize: vars.typography.fontSizes.xs,
+    fontSize: vars.typography.fontSizes.sm,
     // Pixel correction to align the icon with the legend text.
     top: 1,
     marginInlineEnd: vars.spacing._1,
