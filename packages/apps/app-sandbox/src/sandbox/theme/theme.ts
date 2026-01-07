@@ -2,19 +2,8 @@ import { themes } from "@superego/themes";
 
 export default {
   typography: {
-    // TODO: as demonstrated by this mapping, font sizes need a refactor.
-    fontSizes: {
-      xs: themes.commonVars.typography.fontSizes.xs2,
-      sm: themes.commonVars.typography.fontSizes.xs,
-      md: themes.commonVars.typography.fontSizes.sm,
-      lg: themes.commonVars.typography.fontSizes.md,
-      xl: themes.commonVars.typography.fontSizes.lg,
-    },
-    fontFamilies: {
-      sansSerif: themes.commonVars.typography.fontFamilies.sansSerif,
-      serif: themes.commonVars.typography.fontFamilies.serif,
-      monospace: themes.commonVars.typography.fontFamilies.monospace,
-    },
+    fontSizes: themes.commonVars.typography.fontSizes,
+    fontFamilies: themes.commonVars.typography.fontFamilies,
   },
 
   spacing: {

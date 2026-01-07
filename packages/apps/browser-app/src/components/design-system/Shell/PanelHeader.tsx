@@ -92,11 +92,7 @@ function renderPanelHeaderAction(
           ? { to: action.to }
           : { href: action.href, target: "_blank" })}
         variant="invisible"
-        className={classnames(
-          cs.PanelHeader.action,
-
-          action.className,
-        )}
+        className={classnames(cs.PanelHeader.action, action.className)}
       >
         {action.icon}
       </IconLink>

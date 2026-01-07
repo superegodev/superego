@@ -101,8 +101,8 @@ export const TreeItem = {
 export const CollectionCategoryTreeItem = {
   contentContainer: style({
     position: "relative",
-    paddingBlock: vars.spacing._1,
-    lineHeight: vars.typography.lineHeights.normal,
+    paddingBlock: vars.spacing._1_5,
+    lineHeight: vars.typography.lineHeights.tight,
   }),
   expandButton: style({
     background: "none",
@@ -153,8 +153,8 @@ export const RenameCollectionCategoryModalForm = {
 
 export const CollectionTreeItem = {
   contentContainer: style({
-    paddingBlock: vars.spacing._1,
-    lineHeight: vars.typography.lineHeights.normal,
+    paddingBlock: vars.spacing._1_5,
+    lineHeight: vars.typography.lineHeights.tight,
   }),
 };
 

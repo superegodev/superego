@@ -14,6 +14,7 @@ interface Props {
   color?: "primary" | "secondary" | undefined;
   /** Default varies according to element. */
   size?:
+    | "xs3"
     | "xs2"
     | "xs"
     | "sm"
@@ -43,7 +44,7 @@ export default function Text({
         : element === "h4"
           ? "lg"
           : element === "h5"
-            ? "lg"
+            ? "md"
             : "md",
   weight = elementsByWeight.regular.has(element)
     ? "regular"

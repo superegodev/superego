@@ -9,11 +9,16 @@ interface ColorScale {
 export default interface Theme {
   typography: {
     fontSizes: {
+      xs3: string;
+      xs2: string;
       xs: string;
       sm: string;
       md: string;
       lg: string;
       xl: string;
+      xl2: string;
+      xl3: string;
+      xl4: string;
     };
     fontFamilies: {
       sansSerif: string;

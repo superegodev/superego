@@ -38,9 +38,10 @@ const primarySidebarPanelActionRootBase = style({
   alignItems: "center",
   gap: vars.spacing._2,
   width: "100%",
-  paddingBlock: vars.spacing._1,
+  paddingBlock: vars.spacing._1_5,
   paddingInline: vars.spacing._2,
   marginBlock: vars.spacing._0_5,
+  lineHeight: vars.typography.lineHeights.tight,
   fontSize: vars.typography.fontSizes.md,
   color: vars.colors.text.primary,
 });

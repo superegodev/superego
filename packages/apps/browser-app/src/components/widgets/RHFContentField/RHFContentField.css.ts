@@ -125,7 +125,7 @@ export const ListField = {
     display: "flex",
     justifyContent: "center",
     lineHeight: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
-    fontSize: vars.typography.fontSizes.lg,
+    fontSize: vars.typography.fontSizes.md,
     fontStyle: "italic",
     color: vars.colors.text.secondary,
     marginBlockEnd: vars.spacing._8,
@@ -240,6 +240,7 @@ export const AnyFieldLabel = {
     margin: 0,
     position: "relative",
     fontFamily: "serif",
+    fontSize: vars.typography.fontSizes.md,
     marginInlineStart: vars.spacing._1,
   }),
 

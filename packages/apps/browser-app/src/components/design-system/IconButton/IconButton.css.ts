@@ -8,6 +8,7 @@ const iconButtonRootBase = style({
   padding: vars.spacing._1,
   borderRadius: vars.borders.radius.md,
   color: vars.colors.text.primary,
+  fontSize: vars.typography.fontSizes.md,
   cursor: "pointer",
   selectors: {
     "&[disabled]": {
