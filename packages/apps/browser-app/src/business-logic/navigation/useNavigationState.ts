@@ -18,12 +18,12 @@ const useNavigationStateStore = create<UseNavigationState>((set, get) => ({
       ...historyStack.slice(0, currentHistoryPosition + 1),
       route,
     ];
-    const newIndex = newStack.length - 1;
+    const newPosition = newStack.length - 1;
     set({
       activeRoute: route,
       historyStack: newStack,
-      currentHistoryPosition: newIndex,
-      canGoBack: newIndex > 0,
+      currentHistoryPosition: newPosition,
+      canGoBack: newPosition > 0,
     });
     if (updateUrl) {
       window.history.pushState({}, "", toHref(route));
@@ -39,29 +39,27 @@ const useNavigationStateStore = create<UseNavigationState>((set, get) => ({
 
 window.addEventListener("popstate", () => {
   const route = fromHref(window.location.href);
-  if (route) {
-    const { historyStack, currentHistoryPosition } =
-      useNavigationStateStore.getState();
-    const prevRoute = historyStack[currentHistoryPosition - 1];
-    const nextRoute = historyStack[currentHistoryPosition + 1];
+  const { historyStack, currentHistoryPosition } =
+    useNavigationStateStore.getState();
+  const previousRoute = historyStack[currentHistoryPosition - 1];
+  const nextRoute = historyStack[currentHistoryPosition + 1];
 
-    if (prevRoute && toHref(prevRoute) === toHref(route)) {
-      const newIndex = currentHistoryPosition - 1;
-      useNavigationStateStore.setState({
-        activeRoute: route,
-        currentHistoryPosition: newIndex,
-        canGoBack: newIndex > 0,
-      });
-    } else if (nextRoute && toHref(nextRoute) === toHref(route)) {
-      const newIndex = currentHistoryPosition + 1;
-      useNavigationStateStore.setState({
-        activeRoute: route,
-        currentHistoryPosition: newIndex,
-        canGoBack: true,
-      });
-    } else {
-      useNavigationStateStore.setState({ activeRoute: route });
-    }
+  if (previousRoute && toHref(previousRoute) === toHref(route)) {
+    const newPosition = currentHistoryPosition - 1;
+    useNavigationStateStore.setState({
+      activeRoute: route,
+      currentHistoryPosition: newPosition,
+      canGoBack: newPosition > 0,
+    });
+  } else if (nextRoute && toHref(nextRoute) === toHref(route)) {
+    const newPosition = currentHistoryPosition + 1;
+    useNavigationStateStore.setState({
+      activeRoute: route,
+      currentHistoryPosition: newPosition,
+      canGoBack: true,
+    });
+  } else {
+    useNavigationStateStore.setState({ activeRoute: route });
   }
 });
 
