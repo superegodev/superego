@@ -92,6 +92,7 @@ export const commonVars = {
     _0_5: "0.125rem",
     _1: "0.25rem",
     _2: "0.5rem",
+    _2_5: "0.625rem",
     _3: "0.75rem",
     _4: "1rem",
     _4_5: "1.125rem",

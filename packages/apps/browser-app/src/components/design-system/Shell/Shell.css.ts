@@ -104,7 +104,7 @@ export const PanelHeader = {
   action: style({
     width: vars.spacing._8,
     height: vars.spacing._8,
-    fontSize: vars.typography.fontSizes.xl2,
+    fontSize: vars.typography.fontSizes.xl,
   }),
 
   activeActionMenuItem: style({

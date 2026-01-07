@@ -96,7 +96,7 @@ export const IconButton = {
     },
     lg: {
       height: `calc(${vars.spacing._10} + 2 * ${vars.borders.width.thin})`,
-      width: `calc(${vars.spacing._12} + 2 * ${vars.borders.width.thin})`,
+      width: `calc(${vars.spacing._10} + 2 * ${vars.borders.width.thin})`,
       fontSize: vars.typography.fontSizes.lg,
     },
   }),

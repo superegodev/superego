@@ -8,14 +8,6 @@ export const Table = {
   }),
 };
 
-export const Header = {
-  root: style({}),
-};
-
-export const Body = {
-  root: style({}),
-};
-
 const columnTitleBase = style({
   width: "100%",
   textWrap: "nowrap",
@@ -69,7 +61,8 @@ export const Row = {
 
 const cellRootBase = style({
   height: "100%",
-  padding: vars.spacing._2,
+  padding: vars.spacing._2_5,
+  lineHeight: "normal",
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   fontSize: vars.typography.fontSizes.md,
   overflow: "hidden",
