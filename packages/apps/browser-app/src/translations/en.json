@@ -218,6 +218,9 @@
   "CreateApp.tsx_dtELK2": {
     "defaultMessage": "Create App"
   },
+  "CreateAppForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -239,6 +242,9 @@
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
   },
+  "CreateCollectionForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "CreateCollectionManual.tsx_9/rVBT": {
     "defaultMessage": "Create collection actions"
   },
@@ -254,11 +260,17 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
+  "CreateDocumentForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Document} other {# documents}} created"
   },
   "CreateNewAppVersionForm.tsx_6GRvO0": {
     "defaultMessage": "Error creating a new app version"
+  },
+  "CreateNewAppVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
@@ -268,6 +280,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Content summary"
+  },
+  "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
@@ -280,6 +295,9 @@
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
+  },
+  "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"
@@ -926,6 +944,9 @@
   "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
   },
+  "SetCollectionRemoteForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
     "defaultMessage": "Update remote"
   },
@@ -1022,6 +1043,9 @@
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Description"
   },
+  "UpdateCollectionSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
@@ -1031,11 +1055,17 @@
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Specific instructions for this collection to pass to the assistant."
   },
+  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Save collection version settings"
   },
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Appearance"
+  },
+  "UpdateGlobalSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "UpdateGlobalSettingsForm.tsx_jvrMfo": {
     "defaultMessage": "Assistants"

@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateLatestCollectionVersionSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
@@ -28,7 +29,7 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { result, mutate } = useUpdateLatestCollectionVersionSettings();
 
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     defaultValues: {
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
@@ -52,6 +53,15 @@ export default function UpdateCollectionVersionSettingsForm({
       reset({ contentSummaryGetter });
     }
   };
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
+
   const schemaTypescriptLib = useMemo(
     () => ({
       path: wellKnownLibPaths.collectionSchema,

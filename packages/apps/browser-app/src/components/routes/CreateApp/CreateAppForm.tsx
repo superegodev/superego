@@ -14,6 +14,7 @@ import {
   CollectionRouteView,
   RouteName,
 } from "../../../business-logic/navigation/Route.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
@@ -41,7 +42,7 @@ export default function CreateAppForm({
   const { result, mutate } = useCreateApp();
 
   const formId = useId();
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, formState } = useForm<FormValues>({
     defaultValues: {
       files: forms.defaults.collectionViewAppFiles(targetCollections),
     },
@@ -73,9 +74,19 @@ export default function CreateAppForm({
               appId: data.id,
             }
           : { name: RouteName.Ask },
+        { ignoreExitWarning: true },
       );
     }
   };
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form

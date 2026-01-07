@@ -38,6 +38,11 @@ export default function createWindow() {
     menu.popup();
   });
 
+  mainWindow.on("close", (event) => {
+    event.preventDefault();
+    mainWindow.webContents.send("window-close-requested");
+  });
+
   mainWindow.maximize();
   mainWindow.show();
 

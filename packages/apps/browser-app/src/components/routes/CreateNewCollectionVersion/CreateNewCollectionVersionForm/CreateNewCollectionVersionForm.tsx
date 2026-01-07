@@ -11,6 +11,7 @@ import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js"
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
+import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
@@ -85,7 +86,10 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           defaultMessage: "New collection version created",
         }),
       });
-      navigateTo({ name: RouteName.Collection, collectionId: collection.id });
+      navigateTo(
+        { name: RouteName.Collection, collectionId: collection.id },
+        { ignoreExitWarning: true },
+      );
     }
   };
 
@@ -146,6 +150,15 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   const { connectors } = useGlobalData();
   const connectorName = collection.remote?.connector.name;
   const connector = connectors.find(({ name }) => name === connectorName);
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
