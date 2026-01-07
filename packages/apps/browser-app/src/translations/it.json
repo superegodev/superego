@@ -62,6 +62,9 @@
   "CreateApp.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
+  "CreateAppForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "Collection.tsx_59cQpf": {
     "defaultMessage": "Modifica app"
   },
@@ -239,6 +242,9 @@
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. Impostazioni generali"
   },
+  "CreateCollectionForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "CreateCollectionManual.tsx_9/rVBT": {
     "defaultMessage": "Azioni per creare la collezione"
   },
@@ -254,11 +260,17 @@
   "CreateDocumentForm.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
+  "CreateDocumentForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "CreateDocuments.tsx_98xj7V": {
     "defaultMessage": "{collection} » {documentsCount, plural, one {Documento creato} other {# documenti creati}}"
   },
   "CreateNewAppVersionForm.tsx_6GRvO0": {
     "defaultMessage": "Errore durante la creazione di una nuova versione dell'app"
+  },
+  "CreateNewAppVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Crea nuova versione"
@@ -268,6 +280,9 @@
   },
   "CreateNewCollectionVersionForm.tsx_PfbGui": {
     "defaultMessage": "2. Sommario dei contenuti"
+  },
+  "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
@@ -280,6 +295,9 @@
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
+  },
+  "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Errore durante il salvataggio del documento"
@@ -908,6 +926,9 @@
   "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configura assistente"
   },
+  "SetCollectionRemoteForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
     "defaultMessage": "Aggiorna remoto"
   },
@@ -992,6 +1013,9 @@
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Descrizione"
   },
+  "UpdateCollectionSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
   },
@@ -1001,11 +1025,17 @@
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Istruzioni specifiche per questa collezione da passare all'assistente."
   },
+  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Salva le impostazioni della versione della collezione"
   },
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Aspetto"
+  },
+  "UpdateGlobalSettingsForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "UpdateGlobalSettingsForm.tsx_jvrMfo": {
     "defaultMessage": "Assistenti"

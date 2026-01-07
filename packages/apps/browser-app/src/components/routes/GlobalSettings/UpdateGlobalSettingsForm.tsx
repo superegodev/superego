@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
@@ -66,6 +67,15 @@ export default function UpdateGlobalSettingsForm({
     );
     return () => clearTimeout(timeoutId);
   }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   const theme = watch("appearance.theme");
   usePreviewTheme(globalSettings.appearance.theme, theme);

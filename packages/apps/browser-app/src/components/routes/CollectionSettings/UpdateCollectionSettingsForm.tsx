@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionSettings } from "../../../business-logic/backend/hooks.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -27,7 +28,7 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
 
   const { result, mutate } = useUpdateCollectionSettings();
 
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     defaultValues: {
       name: collection.settings.name,
       icon: collection.settings.icon,
@@ -52,6 +53,15 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
       reset({ name, icon, description, assistantInstructions });
     }
   };
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -12,6 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useSetCollectionRemote } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
+import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CollectionSettings.css.js";
@@ -34,7 +35,7 @@ export default function SetCollectionRemoteForm({
 
   const { result, mutate, isPending } = useSetCollectionRemote();
 
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     defaultValues: collection.remote
       ? {
           connectorAuthenticationSettings:
@@ -99,6 +100,15 @@ export default function SetCollectionRemoteForm({
       });
     }
   });
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form onSubmit={onSubmit} className={cs.SetCollectionRemoteForm.root}>

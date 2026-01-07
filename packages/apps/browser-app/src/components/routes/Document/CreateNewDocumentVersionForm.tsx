@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
@@ -107,6 +108,16 @@ export default function CreateNewDocumentVersionForm({
     );
     return () => clearTimeout(timeoutId);
   }, [isReadOnly, isDirty, formState.isValid, setSubmitDisabled]);
+
+  const shouldWarn = isDirty && !isReadOnly;
+  useExitWarning(
+    shouldWarn
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>

@@ -9,6 +9,7 @@ import * as v from "valibot";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
+import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
@@ -80,7 +81,10 @@ export default function CreateCollectionForm() {
       { contentSummaryGetter },
     );
     if (success) {
-      navigateTo({ name: RouteName.Collection, collectionId: data.id });
+      navigateTo(
+        { name: RouteName.Collection, collectionId: data.id },
+        { ignoreExitWarning: true },
+      );
     }
   };
 
@@ -122,6 +126,15 @@ export default function CreateCollectionForm() {
     isSchemaValid,
     formState.defaultValues?.contentSummaryGetter?.source,
   ]);
+
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -13,6 +13,7 @@ import {
   CollectionRouteView,
   RouteName,
 } from "../../../business-logic/navigation/Route.js";
+import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
@@ -60,6 +61,15 @@ export default function CreateNewAppVersionForm({
     setSubmitDisabled(!formState.isDirty);
   }, [formState.isDirty, setSubmitDisabled]);
 
+  useExitWarning(
+    formState.isDirty
+      ? intl.formatMessage({
+          defaultMessage:
+            "You have unsaved changes. Are you sure you want to leave?",
+        })
+      : null,
+  );
+
   const onSubmit = async ({ files }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
@@ -78,6 +88,7 @@ export default function CreateNewAppVersionForm({
               appId: data.id,
             }
           : { name: RouteName.Ask },
+        { ignoreExitWarning: true },
       );
     } else {
       console.error(error);

@@ -1,4 +1,5 @@
 import { useLocale } from "react-aria";
+import useElectronCloseHandler from "../../../business-logic/navigation/useElectronCloseHandler.js";
 import useSearchShortcut from "../../../business-logic/search/useSearchShortcut.js";
 import useApplyTheme from "../../../business-logic/theme/useApplyTheme.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -11,6 +12,7 @@ export default function Root() {
   const { locale, direction } = useLocale();
   useApplyTheme();
   useSearchShortcut();
+  useElectronCloseHandler();
   return (
     <>
       <Shell locale={locale} direction={direction}>

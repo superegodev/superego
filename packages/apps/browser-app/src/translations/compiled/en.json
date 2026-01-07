@@ -475,6 +475,12 @@
       "value": "Create App"
     }
   ],
+  "CreateAppForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -517,6 +523,12 @@
       "value": "1. General settings"
     }
   ],
+  "CreateCollectionForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "CreateCollectionManual.tsx_9/rVBT": [
     {
       "type": 0,
@@ -549,6 +561,12 @@
     {
       "type": 0,
       "value": "Create"
+    }
+  ],
+  "CreateDocumentForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateDocuments.tsx_98xj7V": [
@@ -598,6 +616,12 @@
       "value": "Error creating a new app version"
     }
   ],
+  "CreateNewAppVersionForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -618,6 +642,12 @@
     {
       "type": 0,
       "value": "2. Content summary"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
@@ -646,6 +676,12 @@
     {
       "type": 0,
       "value": " » Created new document version"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
@@ -2750,6 +2786,12 @@
       "value": "Configure assistant"
     }
   ],
+  "SetCollectionRemoteForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "SetCollectionRemoteForm.tsx_fsGyC4": [
     {
       "type": 0,
@@ -2970,6 +3012,12 @@
       "value": "Description"
     }
   ],
+  "UpdateCollectionSettingsForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
     {
       "type": 0,
@@ -2988,6 +3036,12 @@
       "value": "Specific instructions for this collection to pass to the assistant."
     }
   ],
+  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [
     {
       "type": 0,
@@ -2998,6 +3052,12 @@
     {
       "type": 0,
       "value": "Appearance"
+    }
+  ],
+  "UpdateGlobalSettingsForm.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [
