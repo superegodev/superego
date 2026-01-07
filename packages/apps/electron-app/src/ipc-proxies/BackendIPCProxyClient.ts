@@ -51,10 +51,10 @@ export default class BackendIPCProxyClient implements Backend {
       createNewVersion: this.makeMainIpcCall("documents.createNewVersion"),
       delete: this.makeMainIpcCall("documents.delete"),
       list: this.makeMainIpcCall("documents.list"),
+      listVersions: this.makeMainIpcCall("documents.listVersions"),
       get: this.makeMainIpcCall("documents.get"),
       getVersion: this.makeMainIpcCall("documents.getVersion"),
       search: this.makeMainIpcCall("documents.search"),
-      listVersions: this.makeMainIpcCall("documents.listVersions"),
     };
 
     this.files = {
