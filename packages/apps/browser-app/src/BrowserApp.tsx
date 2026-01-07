@@ -20,7 +20,7 @@ import useNavigationState from "./business-logic/navigation/useNavigationState.j
 import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.js";
 import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";
 import Root from "./components/routes/Root/Root.js";
-import messages from "./translations/compiled/en.json" with { type: "json" };
+import getMessages from "./translations/getMessages.js";
 import "./BrowserApp.css.js";
 
 interface Props {
@@ -35,6 +35,7 @@ export default function BrowserApp({
 }: Props) {
   const { locale } = useLocale();
   const { navigateTo } = useNavigationState();
+  const messages = getMessages(locale);
   return (
     <IntlProvider messages={messages} locale={locale} defaultLocale="en">
       <BackendProvider backend={backend}>

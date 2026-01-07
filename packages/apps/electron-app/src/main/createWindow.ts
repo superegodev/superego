@@ -7,7 +7,10 @@ export default function createWindow() {
     webPreferences: {
       preload: join(import.meta.dirname, "../preload/index.js"),
     },
-    icon: process.platform === "linux" ? "../../assets/icon.png" : undefined,
+    icon:
+      process.platform === "linux"
+        ? join(import.meta.dirname, "../../assets/icon.png")
+        : undefined,
   });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
