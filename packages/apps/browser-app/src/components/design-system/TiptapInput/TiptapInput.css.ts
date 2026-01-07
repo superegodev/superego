@@ -40,7 +40,7 @@ const formattingMenuItemBase = style({
 export const FormattingToolbar = {
   root: style({
     width: "100%",
-    overflow: "scroll",
+    overflow: "auto",
     display: "flex",
     gap: vars.spacing._2,
     paddingInline: vars.spacing._4,

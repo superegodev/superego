@@ -4,7 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const Table = {
   root: style({
     width: "100%",
-    overflow: "scroll",
+    overflow: "auto",
   }),
 };
 

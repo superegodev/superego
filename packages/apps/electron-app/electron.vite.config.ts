@@ -6,13 +6,18 @@ import { mergeConfig, type UserConfig } from "vite";
 export default defineConfig({
   main: {
     build: {
+      externalizeDeps: false,
       rollupOptions: {
         output: { format: "es" },
-        external: ["typescript"],
+        external: ["typescript", "@typescript/vfs"],
       },
     },
   },
-  preload: {},
+  preload: {
+    build: {
+      externalizeDeps: false,
+    },
+  },
   renderer: mergeConfig(browserAppViteConfig as UserConfig, {
     build: {
       sourcemap: false,

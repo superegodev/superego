@@ -3,7 +3,6 @@ import { join, resolve } from "node:path";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
@@ -19,7 +18,7 @@ export default {
       const repoNodeModules = resolve(dirname, "../../../node_modules");
       const localNodeModules = resolve(dirname, "node_modules");
 
-      const externalizedPackages = ["typescript"];
+      const externalizedPackages = ["typescript", "@typescript/vfs"];
       for (const pkg of externalizedPackages) {
         const src = join(repoNodeModules, pkg);
         const dest = join(localNodeModules, pkg);
@@ -31,6 +30,7 @@ export default {
   },
   packagerConfig: {
     appBundleId: "dev.superego.superego",
+    executableName: "superego",
     asar: true,
     ignore: [
       "src",
@@ -45,10 +45,23 @@ export default {
     },
   },
   makers: [
-    new MakerSquirrel({}),
     new MakerZIP({}, ["darwin"]),
-    new MakerRpm({}),
-    new MakerDeb({}),
+    new MakerRpm({
+      options: {
+        name: "superego",
+        bin: "superego",
+        icon: "./assets/icon.png",
+        categories: ["Office"],
+      },
+    }),
+    new MakerDeb({
+      options: {
+        name: "superego",
+        bin: "superego",
+        icon: "./assets/icon.png",
+        categories: ["Office"],
+      },
+    }),
   ],
   plugins: [
     new FusesPlugin({

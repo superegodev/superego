@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import optimizeLocales from "@react-aria/optimize-locales-plugin";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
@@ -14,6 +15,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    process.env["USE_HTTPS"] === "true" ? basicSsl() : undefined,
     {
       ...optimizeLocales.vite({ locales: ["en-US"] }),
       enforce: "pre",

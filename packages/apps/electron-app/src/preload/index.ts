@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld(
   "openInNativeBrowser",
   OpenInNativeBrowserIPCProxyClient(),
 );
+contextBridge.exposeInMainWorld("isElectron", true);
 ipcRenderer.on("OAuth2PKCEFlowSucceeded", (_evt, data) => {
   window.postMessage(data, "*");
 });

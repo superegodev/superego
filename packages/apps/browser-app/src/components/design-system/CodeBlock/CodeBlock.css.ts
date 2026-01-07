@@ -15,7 +15,7 @@ export const EagerCodeBlock = {
     paddingInlineEnd: vars.spacing._4,
     maxHeight: vars.spacing._64,
     width: "100%",
-    overflowY: "scroll",
+    overflow: "auto",
   }),
 
   lineNumbers: style({
@@ -36,7 +36,7 @@ export const EagerCodeBlock = {
   pre: style({
     margin: 0,
     gridArea: "Code",
-    overflowX: "scroll",
+    overflow: "auto",
   }),
 };
 

@@ -175,7 +175,7 @@ export const DayPopover = {
 
   dialog: style({
     maxHeight: "inherit",
-    overflow: "scroll",
+    overflow: "auto",
   }),
 
   header: style({

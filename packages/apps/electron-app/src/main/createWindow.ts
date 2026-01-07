@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
 
 export default function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -7,6 +7,10 @@ export default function createWindow() {
     webPreferences: {
       preload: join(import.meta.dirname, "../preload/index.js"),
     },
+    icon:
+      process.platform === "linux"
+        ? join(import.meta.dirname, "../../assets/icon.png")
+        : undefined,
   });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -22,6 +26,16 @@ export default function createWindow() {
       console.warn(`Blocked attempt to open invalid URL: ${url}`);
     }
     return { action: "deny" };
+  });
+
+  mainWindow.webContents.on("context-menu", (_event, params) => {
+    const menu = Menu.buildFromTemplate([
+      { role: "cut", enabled: params.editFlags.canCut },
+      { role: "copy", enabled: params.editFlags.canCopy },
+      { role: "paste", enabled: params.editFlags.canPaste },
+      { role: "selectAll", enabled: params.editFlags.canSelectAll },
+    ]);
+    menu.popup();
   });
 
   mainWindow.maximize();

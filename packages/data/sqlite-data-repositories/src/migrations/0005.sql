@@ -1,12 +1,9 @@
 -- Flexsearch indexes
 
 CREATE TABLE "flexsearch_indexes" (
-  "key" TEXT PRIMARY KEY NOT NULL,
+  "key" TEXT NOT NULL,
   "target" TEXT NOT NULL,
   "data" TEXT NOT NULL,
+  PRIMARY KEY ("key", "target"),
   CHECK ("target" IN ('document', 'conversation'))
-);
-
-CREATE INDEX "idx_flexsearch_indexes__on__target" ON "flexsearch_indexes" (
-  "target"
 );

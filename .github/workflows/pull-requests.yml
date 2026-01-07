@@ -67,8 +67,20 @@ jobs:
         include:
           - os: macos-15-intel
             arch: x64
+            artifact-path: packages/apps/electron-app/out/make/zip/darwin/x64/*.zip
           - os: macos-latest
             arch: arm64
+            artifact-path: packages/apps/electron-app/out/make/zip/darwin/arm64/*.zip
+          - os: ubuntu-latest
+            arch: x64
+            artifact-path: |
+              packages/apps/electron-app/out/make/deb/x64/*.deb
+              packages/apps/electron-app/out/make/rpm/x64/*.rpm
+          - os: ubuntu-24.04-arm
+            arch: arm64
+            artifact-path: |
+              packages/apps/electron-app/out/make/deb/arm64/*.deb
+              packages/apps/electron-app/out/make/rpm/arm64/*.rpm
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -96,11 +108,11 @@ jobs:
       - name: Get OS friendly name
         id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v4
-        id: upload-artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.get-os.outputs.name }}-${{ matrix.arch }}-app
-          path: packages/apps/electron-app/out/make/zip/darwin/${{ matrix.arch }}/*.zip
+          path: ${{ matrix.artifact-path }}
           compression-level: 0
 
   add-pr-comment:

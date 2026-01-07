@@ -3,7 +3,7 @@ import { vars } from "../../../themes.css.js";
 
 export const EmojiInput = {
   popover: style({
-    overflow: "scroll",
+    overflow: "auto",
   }),
 
   popoverTrigger: style({

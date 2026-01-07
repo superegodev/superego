@@ -17,7 +17,7 @@ export const EagerRHFAppVersionFilesField = {
     position: "relative",
     flexGrow: 1,
     minHeight: 0,
-    overflow: "scroll",
+    overflow: "auto",
   }),
 
   preview: styleVariants({
@@ -56,7 +56,7 @@ const previewRootBase = style({
   padding: vars.spacing._2,
   width: "100%",
   height: "100%",
-  overflow: "scroll",
+  overflow: "auto",
 });
 export const Preview = {
   root: styleVariants({
