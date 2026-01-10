@@ -33,6 +33,9 @@ export default defineConfig({
   preload: {
     build: {
       externalizeDeps: false,
+      rollupOptions: {
+        output: { format: "cjs" },
+      },
     },
   },
   renderer: mergeConfig(browserAppViteConfig as UserConfig, {

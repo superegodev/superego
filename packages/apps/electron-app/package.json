@@ -3,13 +3,15 @@
   "productName": "superego",
   "description": "Your Life's Database",
   "version": "2025.11.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/main/index.js",
   "author": {
     "name": "Paolo Scanferla",
     "email": "paolo.scanferla@gmail.com",
     "url": "https://pscanf.com/"
   },
   "license": "AGPL-3.0-or-later",
-  "main": "./dist/main/index.mjs",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
