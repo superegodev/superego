@@ -15,7 +15,7 @@ interface Props {
   documentVersion: MinimalDocumentVersion;
   onRestore: (documentVersion: MinimalDocumentVersion) => void;
   canRestore: boolean;
-  timelinePosition?: "first" | "middle" | "last";
+  timelinePosition?: "first" | "middle" | "last" | "only";
 }
 export default function DocumentVersionTimelineNode({
   document,

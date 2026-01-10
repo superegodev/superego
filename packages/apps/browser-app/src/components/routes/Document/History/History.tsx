@@ -44,11 +44,13 @@ export default function History({
       ) : (
         timelineNodes.map((timelineNode, index) => {
           const timelinePosition =
-            index === 0
-              ? "first"
-              : index === timelineNodes.length - 1
-                ? "last"
-                : "middle";
+            timelineNodes.length === 1
+              ? "only"
+              : index === 0
+                ? "first"
+                : index === timelineNodes.length - 1
+                  ? "last"
+                  : "middle";
           return "documentVersions" in timelineNode ? (
             <BucketTimelineNode
               key={timelineNode.id}

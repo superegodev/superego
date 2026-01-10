@@ -15,7 +15,7 @@ interface Props {
   bucket: Bucket;
   onRestore: (documentVersion: MinimalDocumentVersion) => void;
   canRestore: (documentVersion: MinimalDocumentVersion) => boolean;
-  timelinePosition?: "first" | "middle" | "last";
+  timelinePosition?: "first" | "middle" | "last" | "only";
 }
 export default function BucketTimelineNode({
   document,

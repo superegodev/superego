@@ -67,6 +67,9 @@ export const TimelineDot = {
         top: "25%",
         height: `calc(${vars.spacing._14} / 2)`,
       },
+      '&[data-position="only"]': {
+        display: "none",
+      },
     },
   }),
 
