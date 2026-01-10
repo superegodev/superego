@@ -7,10 +7,11 @@ import type {
 import type {
   DocumentVersionEntity,
   DocumentVersionRepository,
+  MinimalDocumentVersionEntity,
 } from "@superego/executing-backend";
 import { create } from "jsondiffpatch";
 import type SqliteDocumentVersion from "../types/SqliteDocumentVersion.js";
-import { toEntity } from "../types/SqliteDocumentVersion.js";
+import { toEntity, toMinimalEntity } from "../types/SqliteDocumentVersion.js";
 
 const table = "document_versions";
 
@@ -134,16 +135,12 @@ export default class SqliteDocumentVersionRepository
 
   async findAllWhereDocumentIdEq(
     documentId: DocumentId,
-  ): Promise<DocumentVersionEntity[]> {
+  ): Promise<MinimalDocumentVersionEntity[]> {
     const allDocumentVersions = this.db
       .prepare(
         `SELECT * FROM "${table}" WHERE "document_id" = ? ORDER BY "created_at" DESC`,
       )
       .all(documentId) as SqliteDocumentVersion[];
-    return allDocumentVersions.map((documentVersion) =>
-      documentVersion.is_latest === 1
-        ? toEntity(documentVersion)
-        : toEntity(documentVersion, allDocumentVersions, jdp),
-    );
+    return allDocumentVersions.map(toMinimalEntity);
   }
 }

@@ -109,6 +109,7 @@ export type { default as LiteDocument } from "./types/LiteDocument.js";
 export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
+export type { default as MinimalDocumentVersion } from "./types/MinimalDocumentVersion.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";

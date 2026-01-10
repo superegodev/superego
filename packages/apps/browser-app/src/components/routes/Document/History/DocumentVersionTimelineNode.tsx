@@ -1,4 +1,4 @@
-import type { Document, LiteDocumentVersion } from "@superego/backend";
+import type { Document, MinimalDocumentVersion } from "@superego/backend";
 import { PiChatCircle, PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedDate, useIntl } from "react-intl";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
@@ -12,8 +12,8 @@ import TimelineDot from "./TimelineDot.js";
 
 interface Props {
   document: Document;
-  documentVersion: LiteDocumentVersion;
-  onRestore: (documentVersion: LiteDocumentVersion) => void;
+  documentVersion: MinimalDocumentVersion;
+  onRestore: (documentVersion: MinimalDocumentVersion) => void;
   canRestore: boolean;
   timelinePosition?: "first" | "middle" | "last";
 }

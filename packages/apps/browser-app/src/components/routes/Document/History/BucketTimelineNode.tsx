@@ -1,4 +1,4 @@
-import type { Document, LiteDocumentVersion } from "@superego/backend";
+import type { Document, MinimalDocumentVersion } from "@superego/backend";
 import { DateTime } from "luxon";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedDate, FormattedMessage } from "react-intl";
@@ -13,8 +13,8 @@ import TimelineDot from "./TimelineDot.js";
 interface Props {
   document: Document;
   bucket: Bucket;
-  onRestore: (documentVersion: LiteDocumentVersion) => void;
-  canRestore: (documentVersion: LiteDocumentVersion) => boolean;
+  onRestore: (documentVersion: MinimalDocumentVersion) => void;
+  canRestore: (documentVersion: MinimalDocumentVersion) => boolean;
   timelinePosition?: "first" | "middle" | "last";
 }
 export default function BucketTimelineNode({

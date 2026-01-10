@@ -70,8 +70,8 @@ import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
-import type LiteDocumentVersion from "./types/LiteDocumentVersion.js";
 import type Message from "./types/Message.js";
+import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
@@ -317,11 +317,13 @@ export default interface Backend {
       CollectionNotFound | UnexpectedError
     >;
 
-    // TODO: return MinimalDocumentVersion
     listVersions(
       collectionId: CollectionId,
       id: DocumentId,
-    ): ResultPromise<LiteDocumentVersion[], DocumentNotFound | UnexpectedError>;
+    ): ResultPromise<
+      MinimalDocumentVersion[],
+      DocumentNotFound | UnexpectedError
+    >;
 
     get(
       collectionId: CollectionId,

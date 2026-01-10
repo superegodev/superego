@@ -4,6 +4,7 @@ import type {
   DocumentVersionId,
 } from "@superego/backend";
 import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
+import type MinimalDocumentVersionEntity from "../entities/MinimalDocumentVersionEntity.js";
 
 export default interface DocumentVersionRepository {
   insert(documentVersion: DocumentVersionEntity): Promise<void>;
@@ -22,5 +23,5 @@ export default interface DocumentVersionRepository {
   ): Promise<DocumentVersionEntity[]>;
   findAllWhereDocumentIdEq(
     documentId: DocumentId,
-  ): Promise<DocumentVersionEntity[]>;
+  ): Promise<MinimalDocumentVersionEntity[]>;
 }

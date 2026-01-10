@@ -6,6 +6,7 @@ import type {
 import type {
   DocumentVersionEntity,
   DocumentVersionRepository,
+  MinimalDocumentVersionEntity,
 } from "@superego/executing-backend";
 import type Data from "../Data.js";
 import clone from "../utils/clone.js";
@@ -95,7 +96,7 @@ export default class DemoDocumentVersionRepository
 
   async findAllWhereDocumentIdEq(
     documentId: DocumentId,
-  ): Promise<DocumentVersionEntity[]> {
+  ): Promise<MinimalDocumentVersionEntity[]> {
     this.ensureNotDisposed();
     return clone(
       Object.values(this.documentVersions)
@@ -103,7 +104,8 @@ export default class DemoDocumentVersionRepository
         .sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        ),
+        )
+        .map(({ content, ...rest }) => rest),
     );
   }
 }

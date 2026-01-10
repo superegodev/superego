@@ -1,7 +1,7 @@
 import type {
   Collection,
   Document,
-  LiteDocumentVersion,
+  MinimalDocumentVersion,
 } from "@superego/backend";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -15,7 +15,7 @@ import RestoreVersionModal from "./RestoreVersionModal.js";
 interface Props {
   collection: Collection;
   document: Document;
-  documentVersions: LiteDocumentVersion[];
+  documentVersions: MinimalDocumentVersion[];
 }
 export default function History({
   collection,
@@ -25,11 +25,11 @@ export default function History({
   const timelineNodes = makeTimelineNodes(documentVersions);
 
   const [versionToRestore, setVersionToRestore] =
-    useState<LiteDocumentVersion | null>(null);
-  const handleRestore = (documentVersion: LiteDocumentVersion) => {
+    useState<MinimalDocumentVersion | null>(null);
+  const handleRestore = (documentVersion: MinimalDocumentVersion) => {
     setVersionToRestore(documentVersion);
   };
-  const canRestore = (documentVersion: LiteDocumentVersion) =>
+  const canRestore = (documentVersion: MinimalDocumentVersion) =>
     documentVersion.collectionVersionId === collection.latestVersion.id;
 
   return (

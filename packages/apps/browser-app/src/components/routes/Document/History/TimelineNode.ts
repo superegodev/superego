@@ -1,5 +1,5 @@
-import type { LiteDocumentVersion } from "@superego/backend";
+import type { MinimalDocumentVersion } from "@superego/backend";
 import type Bucket from "./Bucket.js";
 
-type TimelineNode = LiteDocumentVersion | Bucket;
+type TimelineNode = MinimalDocumentVersion | Bucket;
 export default TimelineNode;

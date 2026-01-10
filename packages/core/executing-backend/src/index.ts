@@ -15,6 +15,7 @@ export type { default as ConversationEntity } from "./entities/ConversationEntit
 export type { default as DocumentEntity } from "./entities/DocumentEntity.js";
 export type { default as DocumentVersionEntity } from "./entities/DocumentVersionEntity.js";
 export type { default as FileEntity } from "./entities/FileEntity.js";
+export type { default as MinimalDocumentVersionEntity } from "./entities/MinimalDocumentVersionEntity.js";
 export type { default as RemoteEntity } from "./entities/RemoteEntity.js";
 
 //////////////////

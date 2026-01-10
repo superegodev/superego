@@ -1,4 +1,4 @@
-import type { LiteDocumentVersion } from "@superego/backend";
+import type { MinimalDocumentVersion } from "@superego/backend";
 import { orderBy } from "es-toolkit";
 import { DateTime, Duration } from "luxon";
 import type Bucket from "./Bucket.js";
@@ -13,7 +13,7 @@ import type TimelineNode from "./TimelineNode.js";
  * - Multi-version buckets become expandable bucket nodes.
  */
 export default function makeTimelineNodes(
-  documentVersions: LiteDocumentVersion[],
+  documentVersions: MinimalDocumentVersion[],
 ): TimelineNode[] {
   if (documentVersions.length === 0) {
     return [];
@@ -70,7 +70,7 @@ const ONE_MONTH = Duration.fromObject({ months: 1 });
  *    - Otherwise: bucket by month.
  * 3. Large gaps (> 4 hours with no versions) force a new bucket.
  */
-function makeBuckets(documentVersions: LiteDocumentVersion[]): Bucket[] {
+function makeBuckets(documentVersions: MinimalDocumentVersion[]): Bucket[] {
   if (documentVersions.length === 0) {
     return [];
   }
@@ -99,7 +99,7 @@ function makeBuckets(documentVersions: LiteDocumentVersion[]): Bucket[] {
 
   // Group versions into buckets.
   const buckets: Bucket[] = [];
-  let currentBucket: LiteDocumentVersion[] = [];
+  let currentBucket: MinimalDocumentVersion[] = [];
   let currentBucketKey: string | null = null;
   let previousVersionDateTime: DateTime | null = null;
 
@@ -170,7 +170,7 @@ function getBucketKey(dateTime: DateTime, granularity: Granularity): string {
 
 function makeBucket(
   bucketKey: string,
-  documentVersions: LiteDocumentVersion[],
+  documentVersions: MinimalDocumentVersion[],
 ): Bucket {
   // Versions within bucket are sorted.
   return {

@@ -1224,7 +1224,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("success: lists lite versions (case: document with single version)", async () => {
+    it("success: lists minimal versions (case: document with single version)", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create(
@@ -1277,11 +1277,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createdBy: DocumentVersionCreator.User,
         }),
       );
-      // Should be lite version (no content)
+      // Should be minimal version (no content or contentSummary)
       expect(listVersionsResult.data[0]).not.toHaveProperty("content");
+      expect(listVersionsResult.data[0]).not.toHaveProperty("contentSummary");
     });
 
-    it("success: lists lite versions (case: document with multiple versions)", async () => {
+    it("success: lists minimal versions (case: document with multiple versions)", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create(

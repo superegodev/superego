@@ -1,7 +1,7 @@
 import type {
   Collection,
   Document,
-  LiteDocumentVersion,
+  MinimalDocumentVersion,
 } from "@superego/backend";
 import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
@@ -19,7 +19,7 @@ import * as cs from "./History.css.js";
 interface Props {
   collection: Collection;
   document: Document;
-  versionToRestore: LiteDocumentVersion;
+  versionToRestore: MinimalDocumentVersion;
   isOpen: boolean;
   onClose: () => void;
 }

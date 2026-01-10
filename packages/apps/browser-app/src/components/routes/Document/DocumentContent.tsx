@@ -2,7 +2,7 @@ import type {
   Collection,
   Document as DocumentType,
   DocumentVersionId,
-  LiteDocumentVersion,
+  MinimalDocumentVersion,
 } from "@superego/backend";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import {
@@ -16,7 +16,7 @@ interface Props {
   collection: Collection;
   document: DocumentType;
   documentVersionId: DocumentVersionId;
-  documentVersions: LiteDocumentVersion[];
+  documentVersions: MinimalDocumentVersion[];
   formId: string;
   setSubmitDisabled: (disabled: boolean) => void;
   isReadOnly: boolean;

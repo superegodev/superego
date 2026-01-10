@@ -1,8 +1,8 @@
-import type { LiteDocumentVersion } from "@superego/backend";
+import type { MinimalDocumentVersion } from "@superego/backend";
 
 export default interface Bucket {
   id: string;
-  documentVersions: LiteDocumentVersion[];
+  documentVersions: MinimalDocumentVersion[];
   startDate: Date;
   endDate: Date;
 }

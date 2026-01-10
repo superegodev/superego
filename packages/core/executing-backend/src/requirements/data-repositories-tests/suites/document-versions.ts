@@ -3,6 +3,7 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
+import type MinimalDocumentVersionEntity from "../../../entities/MinimalDocumentVersionEntity.js";
 import type GetDependencies from "../GetDependencies.js";
 
 const content = {
@@ -412,7 +413,12 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     });
   });
 
-  describe("finding all by document id", () => {
+  describe("finding all (minimal) by document id", () => {
+    const toMinimal = ({
+      content,
+      ...rest
+    }: DocumentVersionEntity): MinimalDocumentVersionEntity => rest;
+
     it("case: no document versions => returns empty array", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
@@ -508,9 +514,9 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       // Verify
       expect(found).toEqual([
-        documentVersion3,
-        documentVersion2,
-        documentVersion1,
+        toMinimal(documentVersion3),
+        toMinimal(documentVersion2),
+        toMinimal(documentVersion1),
       ]);
     });
 
@@ -548,7 +554,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       );
 
       // Verify
-      expect(found).toEqual([documentVersion]);
+      expect(found).toEqual([toMinimal(documentVersion)]);
     });
   });
 
