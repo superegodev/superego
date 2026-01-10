@@ -8,7 +8,7 @@
     "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/node": "^25.0.3",
+    "@types/node": "^25.0.6",
     "typescript": "^5.9.3"
   },
   "dependencies": {

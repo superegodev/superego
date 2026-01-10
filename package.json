@@ -30,7 +30,7 @@
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-sql-cst": "^0.17.3",
+    "prettier-plugin-sql-cst": "^0.17.4",
     "typescript": "^5.9.3",
     "zx": "8.8.5-lite"
   },
