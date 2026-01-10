@@ -9,19 +9,21 @@ import Button from "../Button/Button.js";
 import * as cs from "./Disclosure.css.js";
 
 interface Props {
-  title: string;
+  title: ReactNode;
+  className?: string | undefined;
   titleClassName?: string | undefined;
   panelClassName?: string | undefined;
   children: ReactNode;
 }
 export default function Disclosure({
   title,
+  className,
   titleClassName,
   panelClassName,
   children,
 }: Props) {
   return (
-    <DisclosureRAC>
+    <DisclosureRAC className={className}>
       {({ isExpanded }) => (
         <>
           <Button

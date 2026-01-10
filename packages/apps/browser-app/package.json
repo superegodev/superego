@@ -80,6 +80,7 @@
     "es-toolkit": "^1.43.0",
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
+    "luxon": "^3.7.2",
     "markdown-to-jsx": "^9.5.0",
     "monaco-editor": "0.55.1",
     "p-map": "^7.0.4",

@@ -62,6 +62,38 @@ const testRoutes: Route[] = [
     documentId: Id.generate.document(),
   },
   {
+    name: RouteName.Document,
+    collectionId: Id.generate.collection(),
+    documentId: Id.generate.document(),
+    showHistory: true,
+  },
+  {
+    name: RouteName.Document,
+    collectionId: Id.generate.collection(),
+    documentId: Id.generate.document(),
+    showHistory: false,
+  },
+  {
+    name: RouteName.Document,
+    collectionId: Id.generate.collection(),
+    documentId: Id.generate.document(),
+    documentVersionId: Id.generate.documentVersion(),
+  },
+  {
+    name: RouteName.Document,
+    collectionId: Id.generate.collection(),
+    documentId: Id.generate.document(),
+    documentVersionId: Id.generate.documentVersion(),
+    showHistory: true,
+  },
+  {
+    name: RouteName.Document,
+    collectionId: Id.generate.collection(),
+    documentId: Id.generate.document(),
+    documentVersionId: Id.generate.documentVersion(),
+    showHistory: false,
+  },
+  {
     name: RouteName.CreateApp,
     collectionIds: [],
   },

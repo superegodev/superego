@@ -33,11 +33,11 @@ export default function CreateNewDocumentVersion({ toolResult }: Props) {
         />
       </Title>
       <Link
-        // TODO: link to the version id once we have the view for it.
         to={{
           name: RouteName.Document,
           collectionId: document.collectionId,
           documentId: document.id,
+          documentVersionId: document.latestVersion.id,
         }}
         className={cs.CreateNewDocumentVersion.root}
       >

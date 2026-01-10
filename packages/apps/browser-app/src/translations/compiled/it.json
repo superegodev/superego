@@ -107,6 +107,36 @@
       "value": "Errore durante il caricamento dell'app"
     }
   ],
+  "BucketTimelineNode.tsx_6dIxDP": [
+    {
+      "type": 0,
+      "value": "Ieri"
+    }
+  ],
+  "BucketTimelineNode.tsx_IvzBhq": [
+    {
+      "type": 0,
+      "value": "Oggi (in precedenza)"
+    }
+  ],
+  "BucketTimelineNode.tsx_eF7IVx": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " ("
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " versioni)"
+    }
+  ],
   "Chat.tsx_zhku3H": [
     {
       "type": 0,
@@ -670,38 +700,40 @@
       "value": " » Nuova versione del documento creata"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_4LsyPN": [
-    {
-      "type": 0,
-      "value": "Stai visualizzando la versione del "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_HC/mY8": [
-    {
-      "type": 0,
-      "value": "Caricamento della versione non riuscito"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
     {
       "type": 0,
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_j7Gi7M": [
-    {
-      "type": 0,
-      "value": "Visualizza versione corrente"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
       "value": "Errore durante il salvataggio del documento"
+    }
+  ],
+  "CreatedByLine.tsx_WEhuQZ": [
+    {
+      "type": 0,
+      "value": "Creato da te"
+    }
+  ],
+  "CreatedByLine.tsx_gLCFrt": [
+    {
+      "type": 0,
+      "value": "Creato dalla migrazione della collezione"
+    }
+  ],
+  "CreatedByLine.tsx_qTzfr9": [
+    {
+      "type": 0,
+      "value": "Creato nella conversazione"
+    }
+  ],
+  "CreatedByLine.tsx_ufqNmd": [
+    {
+      "type": 0,
+      "value": "Creato dalla sincronizzazione"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1014,6 +1046,18 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Ripristina versione"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_ySYtQB": [
+    {
+      "type": 0,
+      "value": "Vai alla conversazione"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1534,22 +1578,16 @@
       "value": "Sono il Collection Creator"
     }
   ],
-  "HistorySidebar.tsx_QWxyjH": [
+  "History.tsx_QWxyjH": [
     {
       "type": 0,
       "value": "Nessuna cronologia delle versioni disponibile"
     }
   ],
-  "HistorySidebar.tsx_djJp6c": [
+  "History.tsx_nT6w+N": [
     {
       "type": 0,
-      "value": "Cronologia"
-    }
-  ],
-  "HistorySidebar.tsx_fNhaJa": [
-    {
-      "type": 0,
-      "value": "Impossibile caricare la cronologia delle versioni"
+      "value": "Cronologia delle versioni"
     }
   ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
@@ -2574,31 +2612,13 @@
       "value": "type"
     }
   ],
-  "RestoreVersionButton.tsx_FeM+9/": [
-    {
-      "type": 0,
-      "value": "Ripristina questa versione"
-    }
-  ],
-  "RestoreVersionButton.tsx_hfbeEJ": [
-    {
-      "type": 0,
-      "value": "Impossibile ripristinare: lo schema della collezione è cambiato da quando è stata creata questa versione"
-    }
-  ],
-  "RestoreVersionModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "RestoreVersionModalForm.tsx_X3XZvD": [
+  "RestoreVersionModal.tsx_X3XZvD": [
     {
       "type": 0,
       "value": "Ripristina versione"
     }
   ],
-  "RestoreVersionModalForm.tsx_r46T/1": [
+  "RestoreVersionModal.tsx_ca7Zl6": [
     {
       "type": 0,
       "value": "Ripristinare la versione del "
@@ -2609,10 +2629,16 @@
     },
     {
       "type": 0,
-      "value": "? Verrà creata una nuova versione con il contenuto di quel momento. L'attuale versione verrà preservata nella cronologia."
+      "value": "? Verrà creata una nuova versione con il contenuto di quel momento."
     }
   ],
-  "RestoreVersionModalForm.tsx_zz6ObK": [
+  "RestoreVersionModal.tsx_gjBiyj": [
+    {
+      "type": 0,
+      "value": "Caricamento in corso..."
+    }
+  ],
+  "RestoreVersionModal.tsx_zz6ObK": [
     {
       "type": 0,
       "value": "Ripristina"
@@ -3218,12 +3244,6 @@
     {
       "type": 0,
       "value": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
-    }
-  ],
-  "VersionItem.tsx_fF376U": [
-    {
-      "type": 0,
-      "value": "Corrente"
     }
   ],
   "formatDuration.ts_26OSN4": [

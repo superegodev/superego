@@ -107,6 +107,36 @@
       "value": "Error loading app"
     }
   ],
+  "BucketTimelineNode.tsx_6dIxDP": [
+    {
+      "type": 0,
+      "value": "Yesterday"
+    }
+  ],
+  "BucketTimelineNode.tsx_IvzBhq": [
+    {
+      "type": 0,
+      "value": "Earlier today"
+    }
+  ],
+  "BucketTimelineNode.tsx_eF7IVx": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " ("
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " versions)"
+    }
+  ],
   "Chat.tsx_zhku3H": [
     {
       "type": 0,
@@ -678,38 +708,40 @@
       "value": " » Created new document version"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_4LsyPN": [
-    {
-      "type": 0,
-      "value": "Viewing version from "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_HC/mY8": [
-    {
-      "type": 0,
-      "value": "Failed to load version"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
     {
       "type": 0,
       "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_j7Gi7M": [
-    {
-      "type": 0,
-      "value": "View current version"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
       "value": "Error saving document"
+    }
+  ],
+  "CreatedByLine.tsx_WEhuQZ": [
+    {
+      "type": 0,
+      "value": "Created by you"
+    }
+  ],
+  "CreatedByLine.tsx_gLCFrt": [
+    {
+      "type": 0,
+      "value": "Created by collection migration"
+    }
+  ],
+  "CreatedByLine.tsx_qTzfr9": [
+    {
+      "type": 0,
+      "value": "Created in conversation"
+    }
+  ],
+  "CreatedByLine.tsx_ufqNmd": [
+    {
+      "type": 0,
+      "value": "Created by sync"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -1022,6 +1054,18 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Restore version"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_ySYtQB": [
+    {
+      "type": 0,
+      "value": "Go to conversation"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1542,22 +1586,16 @@
       "value": "I'm the Collection Creator"
     }
   ],
-  "HistorySidebar.tsx_QWxyjH": [
+  "History.tsx_QWxyjH": [
     {
       "type": 0,
       "value": "No version history available"
     }
   ],
-  "HistorySidebar.tsx_djJp6c": [
+  "History.tsx_nT6w+N": [
     {
       "type": 0,
-      "value": "History"
-    }
-  ],
-  "HistorySidebar.tsx_fNhaJa": [
-    {
-      "type": 0,
-      "value": "Failed to load version history"
+      "value": "Versions history"
     }
   ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
@@ -2582,31 +2620,13 @@
       "value": "type"
     }
   ],
-  "RestoreVersionButton.tsx_FeM+9/": [
-    {
-      "type": 0,
-      "value": "Restore this version"
-    }
-  ],
-  "RestoreVersionButton.tsx_hfbeEJ": [
-    {
-      "type": 0,
-      "value": "Cannot restore: the collection schema has changed since this version was created"
-    }
-  ],
-  "RestoreVersionModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "RestoreVersionModalForm.tsx_X3XZvD": [
+  "RestoreVersionModal.tsx_X3XZvD": [
     {
       "type": 0,
       "value": "Restore version"
     }
   ],
-  "RestoreVersionModalForm.tsx_r46T/1": [
+  "RestoreVersionModal.tsx_ca7Zl6": [
     {
       "type": 0,
       "value": "Restore version from "
@@ -2617,10 +2637,16 @@
     },
     {
       "type": 0,
-      "value": "? This will create a new version with the content from that point in time. The current version will be preserved in history."
+      "value": "? This will create a new version with the content from that point in time."
     }
   ],
-  "RestoreVersionModalForm.tsx_zz6ObK": [
+  "RestoreVersionModal.tsx_gjBiyj": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
+  "RestoreVersionModal.tsx_zz6ObK": [
     {
       "type": 0,
       "value": "Restore"
@@ -3226,12 +3252,6 @@
     {
       "type": 0,
       "value": "Your collections changed since having this conversation. It cannot be continued."
-    }
-  ],
-  "VersionItem.tsx_fF376U": [
-    {
-      "type": 0,
-      "value": "Current"
     }
   ],
   "formatDuration.ts_26OSN4": [

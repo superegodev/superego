@@ -5956,6 +5956,7 @@ __metadata:
     es-toolkit: "npm:^1.43.0"
     frimousse: "npm:^0.3.0"
     lowlight: "npm:^3.3.0"
+    luxon: "npm:^3.7.2"
     markdown-to-jsx: "npm:^9.5.0"
     monaco-editor: "npm:0.55.1"
     p-map: "npm:^7.0.4"

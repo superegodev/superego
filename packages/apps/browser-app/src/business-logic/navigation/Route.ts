@@ -3,6 +3,7 @@ import type {
   CollectionId,
   ConversationId,
   DocumentId,
+  DocumentVersionId,
 } from "@superego/backend";
 
 export enum RouteName {
@@ -74,6 +75,8 @@ type Route =
       name: RouteName.Document;
       collectionId: CollectionId;
       documentId: DocumentId;
+      documentVersionId?: DocumentVersionId;
+      showHistory?: boolean;
     }
   | {
       name: RouteName.CreateApp;

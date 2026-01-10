@@ -2,26 +2,16 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const Document = {
-  contentWithSidebar: style({
+  historyLayout: style({
     display: "flex",
-    height: "100%",
-    overflow: "hidden",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: vars.spacing._4,
   }),
 
-  mainContent: style({
+  contentWrapper: style({
     flexGrow: 1,
-    overflow: "auto",
-  }),
-
-  historyToggleSelected: style({
-    background: vars.colors.background.inverse,
-    color: vars.colors.text.inverse,
-    selectors: {
-      "&:hover": {
-        background: vars.colors.background.inverseHighlight,
-        color: vars.colors.text.inverse,
-      },
-    },
+    maxWidth: `calc(2 * ${vars.spacing._110})`,
   }),
 };
 

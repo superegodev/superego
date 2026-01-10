@@ -317,6 +317,7 @@ export default interface Backend {
       CollectionNotFound | UnexpectedError
     >;
 
+    // TODO: return MinimalDocumentVersion
     listVersions(
       collectionId: CollectionId,
       id: DocumentId,

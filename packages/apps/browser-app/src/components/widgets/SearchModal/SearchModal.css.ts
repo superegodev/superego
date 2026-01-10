@@ -134,7 +134,7 @@ export const SearchParamsInput = {
       },
       '&[data-selected="true"]': {
         background: vars.colors.background.inverse,
-        borderColor: vars.colors.background.inverse,
+        borderColor: vars.colors.border.inverse,
         color: vars.colors.text.inverse,
       },
     },
