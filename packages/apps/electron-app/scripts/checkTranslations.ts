@@ -4,15 +4,15 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { $ } from "zx";
 
-const translationsDir = join(import.meta.dirname, "../src/translations");
+const translationsDir = join(import.meta.dirname, "../src/main/translations");
 const compiledDir = join(translationsDir, "compiled");
 const tmpTranslationsDir = join(
   tmpdir(),
-  "superego-browser-app-translations-check/translations",
+  "superego-electron-app-translations-check/translations",
 );
 const tmpCompiledDir = join(
   tmpdir(),
-  "superego-browser-app-translations-check/compiled",
+  "superego-electron-app-translations-check/compiled",
 );
 const sourceLocale = "en.json";
 
@@ -22,7 +22,7 @@ const sourceLocale = "en.json";
   try {
     const actualSourceLocalePath = join(translationsDir, sourceLocale);
     const expectedSourceLocalePath = join(tmpTranslationsDir, sourceLocale);
-    $.sync`yarn formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file ${expectedSourceLocalePath}`;
+    $.sync`yarn formatjs extract 'src/main/**/*.ts' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file ${expectedSourceLocalePath}`;
     const actualSourceLocale = readFileSync(actualSourceLocalePath);
     const expectedSourceLocale = readFileSync(expectedSourceLocalePath);
     if (!actualSourceLocale.equals(expectedSourceLocale)) {
