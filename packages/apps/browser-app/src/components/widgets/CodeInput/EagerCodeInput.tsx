@@ -14,6 +14,7 @@ export default function EagerCodeInput({
   autoFocus,
   isInvalid = false,
   isDisabled = false,
+  isReadOnly = false,
   ariaLabel,
   typescriptLibs,
   includedGlobalUtils,
@@ -45,6 +46,7 @@ export default function EagerCodeInput({
       onBlur={onBlur}
       aria-invalid={isInvalid}
       aria-disabled={isDisabled}
+      data-read-only={isReadOnly}
       inert={isDisabled}
       className={classnames(cs.EagerCodeInput.root, className)}
     >
@@ -56,6 +58,7 @@ export default function EagerCodeInput({
           ariaLabel={ariaLabel}
           filePath={filePath}
           maxHeight={maxHeight}
+          isReadOnly={isReadOnly}
         />
       ) : (
         <TypescriptEditor
@@ -69,6 +72,7 @@ export default function EagerCodeInput({
           filePath={filePath}
           assistantImplementation={assistantImplementation}
           maxHeight={maxHeight}
+          isReadOnly={isReadOnly}
         />
       )}
     </div>

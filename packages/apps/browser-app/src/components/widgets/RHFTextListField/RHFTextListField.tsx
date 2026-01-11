@@ -16,6 +16,7 @@ interface Props {
   label: ReactNode;
   description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
+  isReadOnly?: boolean | undefined;
   placeholder?: string | undefined;
   className?: string | undefined;
 }
@@ -25,6 +26,7 @@ export default function RHFTextListField({
   label,
   description,
   isDisabled,
+  isReadOnly,
   placeholder,
   className,
 }: Props) {
@@ -32,11 +34,12 @@ export default function RHFTextListField({
   const { field } = useController({ control, name });
   const currentValue = useWatch({ control, name });
   const value: string[] = Array.isArray(currentValue) ? currentValue : [];
+  const hideActions = isDisabled || isReadOnly;
   return (
     <div className={classnames(cs.RHFTextListField.root, className)}>
       <FieldLabel
         actions={
-          !isDisabled ? (
+          !hideActions ? (
             <FieldLabel.Action
               label={intl.formatMessage({ defaultMessage: "Add" })}
               onPress={() => field.onChange([...value, ""])}
@@ -49,12 +52,18 @@ export default function RHFTextListField({
         {label}
       </FieldLabel>
       {field.value.length === 0 ? (
-        <Button
-          className={cs.RHFTextListField.emptyItemsAddButton}
-          onPress={() => field.onChange([...value, ""])}
-        >
-          <FormattedMessage defaultMessage="Add" />
-        </Button>
+        isReadOnly ? (
+          <span className={cs.RHFTextListField.emptyItemsAddButton}>
+            <FormattedMessage defaultMessage="No items" />
+          </span>
+        ) : (
+          <Button
+            className={cs.RHFTextListField.emptyItemsAddButton}
+            onPress={() => field.onChange([...value, ""])}
+          >
+            <FormattedMessage defaultMessage="Add" />
+          </Button>
+        )
       ) : (
         value.map((_, index) => (
           <div
@@ -65,23 +74,26 @@ export default function RHFTextListField({
               control={control}
               name={`${name}.${index}`}
               isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
               ariaLabel={intl.formatMessage(
                 { defaultMessage: "Item {number}" },
                 { number: index + 1 },
               )}
-              autoFocus={true}
+              autoFocus={!isReadOnly}
               placeholder={placeholder}
               className={cs.RHFTextListField.itemTextField}
             />
-            <IconButton
-              variant="invisible"
-              onPress={() => field.onChange(value.toSpliced(index, 1))}
-              label={intl.formatMessage({ defaultMessage: "Remove" })}
-              isDisabled={isDisabled}
-              className={cs.RHFTextListField.itemRemoveButton}
-            >
-              <PiBackspace />
-            </IconButton>
+            {!hideActions && (
+              <IconButton
+                variant="invisible"
+                onPress={() => field.onChange(value.toSpliced(index, 1))}
+                label={intl.formatMessage({ defaultMessage: "Remove" })}
+                isDisabled={isDisabled}
+                className={cs.RHFTextListField.itemRemoveButton}
+              >
+                <PiBackspace />
+              </IconButton>
+            )}
           </div>
         ))
       )}

@@ -1,20 +1,11 @@
 import { style } from "@vanilla-extract/css";
-import { breakpoints, vars } from "../../../../themes.css.js";
+import { vars } from "../../../../themes.css.js";
 
 export const History = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    minWidth: vars.spacing._110,
-    overflowY: "auto",
-    "@media": {
-      [`(max-width: ${breakpoints.small})`]: {
-        width: "100%",
-        minWidth: "100%",
-        margin: 0,
-        borderRadius: 0,
-      },
-    },
+    overflow: "auto",
   }),
 
   header: style({

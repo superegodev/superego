@@ -21,8 +21,6 @@ import {
 } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
-import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
@@ -48,7 +46,6 @@ export default function Document({
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
-  const screenSize = useScreenSize();
   const createFormId = `CreateNewDocumentVersionForm_${documentId}`;
   const [isCreateFormSubmitDisabled, setIsCreateFormSubmitDisabled] =
     useState(true);
@@ -93,6 +90,10 @@ export default function Document({
           typeof documentVersionId === "string" &&
           documentVersionId !== document.latestVersion.id
         );
+        // The showHistory route option forces history to be shown, but history
+        // is shown also for non-latest versions, regardless of the value of
+        // showHistory.
+        const isShowingHistory = showHistory || !isLatestVersion;
         return (
           <Shell.Panel slot="Main">
             <Shell.Panel.Header
@@ -113,7 +114,7 @@ export default function Document({
               actions={[
                 {
                   label: intl.formatMessage({ defaultMessage: "History" }),
-                  icon: showHistory ? (
+                  icon: isShowingHistory ? (
                     <PiClockCountdownFill />
                   ) : (
                     <PiClockCountdown />
@@ -126,7 +127,7 @@ export default function Document({
                       showHistory: !showHistory,
                     }),
                 },
-                !isRemote && isLatestVersion
+                !isRemote && !isShowingHistory
                   ? {
                       label: intl.formatMessage({ defaultMessage: "Save" }),
                       icon: <PiFloppyDisk />,
@@ -164,40 +165,40 @@ export default function Document({
               ]}
             />
             <Shell.Panel.Content
-              fullWidth={showHistory || !isLatestVersion}
+              fullWidth={isShowingHistory}
               className={
-                showHistory || !isLatestVersion
-                  ? cs.Document.historyLayout
-                  : undefined
+                isShowingHistory ? cs.Document.historyLayout : undefined
               }
             >
-              {screenSize > ScreenSize.Small ||
-              (!showHistory && isLatestVersion) ? (
-                <div
-                  className={
-                    showHistory || !isLatestVersion
-                      ? cs.Document.contentWrapper
-                      : undefined
+              <div
+                className={
+                  isShowingHistory ? cs.Document.contentWrapper : undefined
+                }
+              >
+                <DocumentContent
+                  collection={collection}
+                  document={document}
+                  documentVersions={documentVersions}
+                  documentVersionId={
+                    documentVersionId ?? document.latestVersion.id
                   }
-                >
-                  <DocumentContent
-                    collection={collection}
-                    document={document}
-                    documentVersions={documentVersions}
-                    documentVersionId={
-                      documentVersionId ?? document.latestVersion.id
-                    }
-                    formId={createFormId}
-                    setSubmitDisabled={setIsCreateFormSubmitDisabled}
-                    isReadOnly={isRemote || !isLatestVersion}
-                  />
-                </div>
-              ) : null}
-              {showHistory || !isLatestVersion ? (
+                  formId={createFormId}
+                  setSubmitDisabled={setIsCreateFormSubmitDisabled}
+                  readOnlyReason={
+                    isRemote
+                      ? "remote"
+                      : isShowingHistory
+                        ? "history-version"
+                        : null
+                  }
+                />
+              </div>
+              {isShowingHistory ? (
                 <History
                   collection={collection}
                   document={document}
                   documentVersions={documentVersions}
+                  className={cs.Document.history}
                 />
               ) : null}
               <DeleteDocumentModalForm

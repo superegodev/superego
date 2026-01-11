@@ -308,8 +308,14 @@
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
+    "defaultMessage": "This document is synced from a remote source and cannot be edited."
+  },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"
+  },
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
+    "defaultMessage": "Document editing is disabled when viewing historical versions."
   },
   "CreatedByLine.tsx_WEhuQZ": {
     "defaultMessage": "Created by you"
@@ -499,6 +505,9 @@
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"
+  },
+  "FileField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "FileField.tsx_HAlOn1": {
     "defaultMessage": "Name"
@@ -767,6 +776,9 @@
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
   },
+  "ListField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
+  },
   "ListField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
@@ -856,6 +868,9 @@
   },
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Item {number}"
+  },
+  "RHFTextListField.tsx_l95YvM": {
+    "defaultMessage": "No items"
   },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
@@ -1024,6 +1039,9 @@
   },
   "SpeakButton.tsx_tFFMkF": {
     "defaultMessage": "Pause"
+  },
+  "StructField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"

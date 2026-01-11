@@ -706,10 +706,22 @@
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
+    {
+      "type": 0,
+      "value": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
+    }
+  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
       "value": "Errore durante il salvataggio del documento"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": [
+    {
+      "type": 0,
+      "value": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
     }
   ],
   "CreatedByLine.tsx_WEhuQZ": [
@@ -1264,6 +1276,12 @@
     {
       "type": 0,
       "value": "Scarica"
+    }
+  ],
+  "FileField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "FileField.tsx_HAlOn1": [
@@ -1916,6 +1934,12 @@
       "value": "Sposta elemento in alto"
     }
   ],
+  "ListField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
+    }
+  ],
   "ListField.tsx_Dp51E2": [
     {
       "type": 0,
@@ -2218,6 +2242,12 @@
     {
       "type": 1,
       "value": "number"
+    }
+  ],
+  "RHFTextListField.tsx_l95YvM": [
+    {
+      "type": 0,
+      "value": "Nessun elemento"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -2958,6 +2988,12 @@
     {
       "type": 0,
       "value": "Pausa"
+    }
+  ],
+  "StructField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "StructField.tsx_Dp51E2": [

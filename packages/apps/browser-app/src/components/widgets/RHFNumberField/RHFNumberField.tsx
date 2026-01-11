@@ -23,6 +23,7 @@ interface Props<
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
+  isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
   textArea?: boolean | undefined;
   placeholder?: string | undefined;
@@ -37,6 +38,7 @@ export default function RHFNumberField<
   ariaLabel,
   description,
   isDisabled,
+  isReadOnly,
   autoFocus,
   textArea = false,
   placeholder,
@@ -52,6 +54,7 @@ export default function RHFNumberField<
           name={field.name}
           value={field.value}
           isDisabled={isDisabled}
+          isReadOnly={isReadOnly}
           onChange={field.onChange}
           onBlur={field.onBlur}
           validationBehavior="aria"

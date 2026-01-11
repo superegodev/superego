@@ -12,6 +12,7 @@ interface Props {
   ariaLabel?: string | undefined;
   filePath?: `/${string}.json`;
   maxHeight: Property.MaxHeight | undefined;
+  isReadOnly?: boolean | undefined;
 }
 export default function JsonEditor({
   value,
@@ -20,6 +21,7 @@ export default function JsonEditor({
   ariaLabel,
   filePath = "/main.json",
   maxHeight,
+  isReadOnly,
 }: Props) {
   const editorBasePath = useEditorBasePath();
   const valueModelRef = useRef<monaco.editor.ITextModel>(null);
@@ -32,6 +34,7 @@ export default function JsonEditor({
     valueModelRef,
     ariaLabel,
     filePath,
+    isReadOnly,
   );
   return <div style={{ maxHeight }} ref={editorElementRef} />;
 }

@@ -19,6 +19,7 @@ interface Props {
   name: string;
   label?: string | undefined;
   isDisabled?: boolean | undefined;
+  isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   className?: string | undefined;
@@ -28,6 +29,7 @@ export default function RHFSchemaField({
   name,
   label,
   isDisabled,
+  isReadOnly,
   autoFocus,
   className,
 }: Props) {
@@ -65,6 +67,7 @@ export default function RHFSchemaField({
         autoFocus={autoFocus}
         isInvalid={fieldState.invalid}
         isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
         maxHeight={vars.spacing._160}
         ref={field.ref}
       />

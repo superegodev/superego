@@ -1,17 +1,30 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../../themes.css.js";
+import { breakpoints, vars } from "../../../themes.css.js";
 
 export const Document = {
   historyLayout: style({
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: vars.spacing._4,
+    gap: vars.spacing._8,
   }),
 
   contentWrapper: style({
+    flexGrow: 2,
+    "@media": {
+      [`(max-width: ${breakpoints.small})`]: {
+        flexGrow: 1,
+      },
+    },
+  }),
+
+  history: style({
+    flexShrink: 0,
     flexGrow: 1,
-    maxWidth: `calc(2 * ${vars.spacing._110})`,
+  }),
+};
+
+export const CreateNewDocumentVersionForm = {
+  readOnlyAlert: style({
+    marginBlockEnd: vars.spacing._8,
   }),
 };
 

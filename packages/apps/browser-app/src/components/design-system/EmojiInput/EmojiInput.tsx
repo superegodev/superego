@@ -10,10 +10,20 @@ interface Props {
   value: string | null | undefined;
   onChange: (newValue: string | null) => void;
   id?: string | undefined;
+  isReadOnly?: boolean | undefined;
 }
-export default function EmojiInput({ value, onChange, id }: Props) {
+export default function EmojiInput({ value, onChange, id, isReadOnly }: Props) {
   const intl = useIntl();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  if (isReadOnly) {
+    return (
+      <span id={id} className={cs.EmojiInput.popoverTrigger}>
+        {value}
+      </span>
+    );
+  }
+
   return (
     <DialogTrigger>
       <IconButton

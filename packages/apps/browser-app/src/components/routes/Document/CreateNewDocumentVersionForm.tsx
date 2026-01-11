@@ -11,14 +11,18 @@ import useExitWarning from "../../../business-logic/navigation/useExitWarning.js
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
+import Alert from "../../design-system/Alert/Alert.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
+import * as cs from "./Document.css.js";
+
+export type ReadOnlyReason = "remote" | "history-version";
 
 interface Props {
   collection: Collection;
   document: Document;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
-  isReadOnly: boolean;
+  readOnlyReason: ReadOnlyReason | null;
   collectionSchema: Schema;
   documentContent: any;
 }
@@ -27,11 +31,13 @@ export default function CreateNewDocumentVersionForm({
   document,
   formId,
   setSubmitDisabled,
-  isReadOnly,
+  readOnlyReason,
   collectionSchema,
   documentContent,
 }: Props) {
   const intl = useIntl();
+
+  const isReadOnly = readOnlyReason !== null;
 
   const { mutate } = useCreateNewDocumentVersion();
 
@@ -126,7 +132,27 @@ export default function CreateNewDocumentVersionForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
-      <RHFContentField schema={collectionSchema} control={control} />
+      {readOnlyReason !== null ? (
+        <Alert
+          variant="info"
+          className={cs.CreateNewDocumentVersionForm.readOnlyAlert}
+        >
+          {readOnlyReason === "remote"
+            ? intl.formatMessage({
+                defaultMessage:
+                  "This document is synced from a remote source and cannot be edited.",
+              })
+            : intl.formatMessage({
+                defaultMessage:
+                  "Document editing is disabled when viewing historical versions.",
+              })}
+        </Alert>
+      ) : null}
+      <RHFContentField
+        schema={collectionSchema}
+        control={control}
+        isReadOnly={isReadOnly}
+      />
     </Form>
   );
 }

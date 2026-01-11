@@ -11,6 +11,7 @@ import {
 } from "../../design-system/forms/forms.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import * as cs from "./RHFContentField.css.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   typeDefinition: NumberTypeDefinition | NumberLiteralTypeDefinition;
@@ -28,6 +29,7 @@ export default function NumberField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   return (
     <NumberFieldDS
@@ -38,6 +40,7 @@ export default function NumberField({
       onBlur={field.onBlur}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
+      isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}

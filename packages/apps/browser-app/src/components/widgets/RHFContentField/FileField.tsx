@@ -20,6 +20,7 @@ import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   typeDefinition: FileTypeDefinition;
@@ -37,6 +38,7 @@ export default function FileField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   const setFile = async (file: File) =>
     field.onChange({ name: file.name, mimeType: file.type, content: file });
@@ -60,23 +62,29 @@ export default function FileField({
           isNullable={isNullable}
           label={label}
           actions={
-            <NullifyFieldAction
-              isNullable={isNullable}
-              field={field}
-              fieldLabel={label}
-            />
+            !isReadOnly ? (
+              <NullifyFieldAction
+                isNullable={isNullable}
+                field={field}
+                fieldLabel={label}
+              />
+            ) : undefined
           }
         />
       ) : null}
       <Fieldset.Fields className={cs.FileField.fields}>
         <DropZone
+          onDrop={
+            isReadOnly
+              ? undefined
+              : async ({ items }) => {
+                  const [item] = items;
+                  if (item && item.kind === "file") {
+                    setFile(await item.getFile());
+                  }
+                }
+          }
           className={cs.FileField.dropZone}
-          onDrop={async ({ items }) => {
-            const [item] = items;
-            if (item && item.kind === "file") {
-              setFile(await item.getFile());
-            }
-          }}
         >
           {field.value !== null ? (
             <NonNullFileFields
@@ -85,9 +93,10 @@ export default function FileField({
               name={name}
               file={field.value}
               setFile={setFile}
+              isReadOnly={isReadOnly}
             />
           ) : (
-            <NullFileFields setFile={setFile} />
+            <NullFileFields setFile={setFile} isReadOnly={isReadOnly} />
           )}
         </DropZone>
         <FieldErrorContext
@@ -108,8 +117,16 @@ export default function FileField({
 
 interface NullFileFieldsProps {
   setFile: (file: File) => void;
+  isReadOnly: boolean;
 }
-function NullFileFields({ setFile }: NullFileFieldsProps) {
+function NullFileFields({ setFile, isReadOnly }: NullFileFieldsProps) {
+  if (isReadOnly) {
+    return (
+      <span className={cs.FileField.nullFileFieldsFileTrigger}>
+        <FormattedMessage defaultMessage="null" />
+      </span>
+    );
+  }
   return (
     <FileTrigger
       onSelect={(files) => {
@@ -131,12 +148,14 @@ interface NonNullFileFieldsProps {
   name: string;
   file: ProtoFile | FileRef;
   setFile: (file: File) => void;
+  isReadOnly: boolean;
 }
 function NonNullFileFields({
   control,
   name,
   file,
   setFile,
+  isReadOnly,
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
@@ -149,30 +168,34 @@ function NonNullFileFields({
         control={control}
         name={`${name}.name`}
         ariaLabel={intl.formatMessage({ defaultMessage: "Name" })}
+        isReadOnly={isReadOnly}
         className={cs.FileField.nonNullFileTextField}
       />
       <RHFTextField
         control={control}
         name={`${name}.mimeType`}
         ariaLabel={intl.formatMessage({ defaultMessage: "Mime Type" })}
+        isReadOnly={isReadOnly}
         className={cs.FileField.nonNullFileTextField}
       />
       <Toolbar className={cs.FileField.nonNullFileButtons}>
-        <FileTrigger
-          onSelect={(files) => {
-            const file = files?.item(0);
-            if (file) {
-              setFile(file);
-            }
-          }}
-        >
-          <IconButton
-            label={intl.formatMessage({ defaultMessage: "Upload new" })}
-            className={cs.FileField.nonNullFileButton}
+        {!isReadOnly && (
+          <FileTrigger
+            onSelect={(files) => {
+              const file = files?.item(0);
+              if (file) {
+                setFile(file);
+              }
+            }}
           >
-            <PiUploadSimple />
-          </IconButton>
-        </FileTrigger>
+            <IconButton
+              label={intl.formatMessage({ defaultMessage: "Upload new" })}
+              className={cs.FileField.nonNullFileButton}
+            >
+              <PiUploadSimple />
+            </IconButton>
+          </FileTrigger>
+        )}
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}

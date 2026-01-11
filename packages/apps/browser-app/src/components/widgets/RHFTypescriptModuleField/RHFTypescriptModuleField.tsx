@@ -21,6 +21,7 @@ interface Props {
   label?: ReactNode | undefined;
   description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
+  isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
   placeholder?: string | undefined;
   language: "typescript" | "typescript-jsx";
@@ -46,6 +47,7 @@ export default function RHFTypescriptModuleField({
   label,
   description,
   isDisabled,
+  isReadOnly,
   autoFocus,
   language,
   undoRedo,
@@ -79,6 +81,7 @@ export default function RHFTypescriptModuleField({
         autoFocus={autoFocus}
         isInvalid={isInvalid}
         isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
         typescriptLibs={typescriptLibs}
         includedGlobalUtils={includedGlobalUtils}
         assistantImplementation={assistantImplementation}

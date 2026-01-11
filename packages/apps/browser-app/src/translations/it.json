@@ -308,6 +308,12 @@
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
+    "defaultMessage": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
+  },
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
+    "defaultMessage": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
+  },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Errore durante il salvataggio del documento"
   },
@@ -499,6 +505,9 @@
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Scarica"
+  },
+  "FileField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "FileField.tsx_HAlOn1": {
     "defaultMessage": "Nome"
@@ -767,6 +776,9 @@
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Sposta elemento in alto"
   },
+  "ListField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
+  },
   "ListField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
@@ -844,6 +856,9 @@
   },
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Elemento {number}"
+  },
+  "RHFTextListField.tsx_l95YvM": {
+    "defaultMessage": "Nessun elemento"
   },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
@@ -994,6 +1009,9 @@
   },
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
+  },
+  "StructField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"

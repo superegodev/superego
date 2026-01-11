@@ -24,6 +24,7 @@ export default function EagerTiptapInput({
   onBlur,
   autoFocus,
   isInvalid = false,
+  isReadOnly = false,
   ref,
 }: Props) {
   const intl = useIntl();
@@ -64,6 +65,7 @@ export default function EagerTiptapInput({
     },
     content: value ?? forms.defaults.tiptapRichTextJsonObject(),
     autofocus: autoFocus ?? false,
+    editable: !isReadOnly,
     onUpdate: debounce(({ editor }) => {
       onChange(editor.getJSON());
     }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE),
@@ -110,9 +112,12 @@ export default function EagerTiptapInput({
       }}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
+      data-read-only={isReadOnly}
       className={cs.TiptapInput.root}
     >
-      <FormattingToolbar editor={editor} tiptapInputId={id} />
+      {!isReadOnly ? (
+        <FormattingToolbar editor={editor} tiptapInputId={id} />
+      ) : null}
       <EditorContent editor={editor} />
     </div>
   );

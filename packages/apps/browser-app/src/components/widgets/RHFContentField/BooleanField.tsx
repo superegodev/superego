@@ -13,6 +13,7 @@ import {
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   typeDefinition: BooleanTypeDefinition | BooleanLiteralTypeDefinition;
@@ -30,6 +31,7 @@ export default function BooleanField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   return (
     <RadioGroup
@@ -40,6 +42,7 @@ export default function BooleanField({
       onBlur={field.onBlur}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
+      isReadOnly={isReadOnly}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       className={classnames(cs.Field.root, isListItem && cs.ListItemField.root)}

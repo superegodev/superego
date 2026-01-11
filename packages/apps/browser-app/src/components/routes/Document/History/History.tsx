@@ -5,6 +5,7 @@ import type {
 } from "@superego/backend";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import classnames from "../../../../utils/classnames.js";
 import isEmpty from "../../../../utils/isEmpty.js";
 import BucketTimelineNode from "./BucketTimelineNode.js";
 import DocumentVersionTimelineNode from "./DocumentVersionTimelineNode.js";
@@ -16,11 +17,13 @@ interface Props {
   collection: Collection;
   document: Document;
   documentVersions: MinimalDocumentVersion[];
+  className: string;
 }
 export default function History({
   collection,
   document,
   documentVersions,
+  className,
 }: Props) {
   const timelineNodes = makeTimelineNodes(documentVersions);
 
@@ -33,7 +36,7 @@ export default function History({
     documentVersion.collectionVersionId === collection.latestVersion.id;
 
   return (
-    <aside className={cs.History.root}>
+    <aside className={classnames(cs.History.root, className)}>
       <header className={cs.History.header}>
         <FormattedMessage defaultMessage="Versions history" />
       </header>

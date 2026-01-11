@@ -17,6 +17,7 @@ import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   schema: Schema;
@@ -42,6 +43,7 @@ function NullListField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
   return (
     <Fieldset
@@ -56,16 +58,22 @@ function NullListField({
         label={label}
       />
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
-        <Button
-          onPress={() =>
-            field.onChange(
-              forms.defaults.typeDefinitionValue(typeDefinition, schema),
-            )
-          }
-          className={cs.StructAndListField.nullValueSetValueButton}
-        >
-          <FormattedMessage defaultMessage="null - click to set a value" />
-        </Button>
+        {isReadOnly ? (
+          <span className={cs.StructAndListField.nullValueSetValueButton}>
+            <FormattedMessage defaultMessage="null" />
+          </span>
+        ) : (
+          <Button
+            onPress={() =>
+              field.onChange(
+                forms.defaults.typeDefinitionValue(typeDefinition, schema),
+              )
+            }
+            className={cs.StructAndListField.nullValueSetValueButton}
+          >
+            <FormattedMessage defaultMessage="null - click to set a value" />
+          </Button>
+        )}
       </Fieldset.Fields>
     </Fieldset>
   );
@@ -80,6 +88,7 @@ function NonNullListField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const intl = useIntl();
   const { field } = useController({ control, name });
   const { fields, append, remove, move } = useFieldArray({ control, name });
@@ -95,26 +104,28 @@ function NonNullListField({
         isNullable={isNullable}
         label={label}
         actions={
-          <>
-            <NullifyFieldAction
-              isNullable={isNullable}
-              field={field}
-              fieldLabel={label}
-            />
-            <FieldLabel.Action
-              label={intl.formatMessage({ defaultMessage: "Add item" })}
-              onPress={() =>
-                append({
-                  value: forms.defaults.typeDefinitionValue(
-                    typeDefinition.items,
-                    schema,
-                  ),
-                })
-              }
-            >
-              <PiPlus />
-            </FieldLabel.Action>
-          </>
+          !isReadOnly ? (
+            <>
+              <NullifyFieldAction
+                isNullable={isNullable}
+                field={field}
+                fieldLabel={label}
+              />
+              <FieldLabel.Action
+                label={intl.formatMessage({ defaultMessage: "Add item" })}
+                onPress={() =>
+                  append({
+                    value: forms.defaults.typeDefinitionValue(
+                      typeDefinition.items,
+                      schema,
+                    ),
+                  })
+                }
+              >
+                <PiPlus />
+              </FieldLabel.Action>
+            </>
+          ) : undefined
         }
       />
       <Fieldset.Fields>
@@ -133,6 +144,7 @@ function NonNullListField({
             itemIndex={index}
             isFirstItem={index === 0}
             isLastItem={index === fields.length - 1}
+            isReadOnly={isReadOnly}
             onRemoveItem={() => remove(index)}
             onMoveItemUp={() => move(index, index - 1)}
             onMoveItemDown={() => move(index, index + 1)}
@@ -151,6 +163,7 @@ interface ItemFieldProps {
   itemIndex: number;
   isFirstItem: boolean;
   isLastItem: boolean;
+  isReadOnly: boolean;
   onRemoveItem: () => void;
   onMoveItemUp: () => void;
   onMoveItemDown: () => void;
@@ -163,6 +176,7 @@ function ItemField({
   itemIndex,
   isFirstItem,
   isLastItem,
+  isReadOnly,
   onRemoveItem,
   onMoveItemUp,
   onMoveItemDown,
@@ -170,42 +184,44 @@ function ItemField({
   const intl = useIntl();
   return (
     <div className={cs.ListField.item}>
-      <div className={cs.ListField.itemActions}>
-        <IconButton
-          onPress={onRemoveItem}
-          variant="invisible"
-          label={intl.formatMessage({ defaultMessage: "Delete" })}
-          tooltipPlacement="left"
-          tooltipCloseDelay={0}
-          className={cs.ListField.itemAction}
-        >
-          <PiBackspace />
-        </IconButton>
-        {!isLastItem ? (
+      {!isReadOnly && (
+        <div className={cs.ListField.itemActions}>
           <IconButton
-            onPress={onMoveItemDown}
+            onPress={onRemoveItem}
             variant="invisible"
-            label={intl.formatMessage({ defaultMessage: "Move item down" })}
+            label={intl.formatMessage({ defaultMessage: "Delete" })}
             tooltipPlacement="left"
             tooltipCloseDelay={0}
             className={cs.ListField.itemAction}
           >
-            <PiCaretDown />
+            <PiBackspace />
           </IconButton>
-        ) : null}
-        {!isFirstItem ? (
-          <IconButton
-            onPress={onMoveItemUp}
-            variant="invisible"
-            label={intl.formatMessage({ defaultMessage: "Move item up" })}
-            tooltipPlacement="right"
-            tooltipCloseDelay={0}
-            className={cs.ListField.itemAction}
-          >
-            <PiCaretUp />
-          </IconButton>
-        ) : null}
-      </div>
+          {!isLastItem ? (
+            <IconButton
+              onPress={onMoveItemDown}
+              variant="invisible"
+              label={intl.formatMessage({ defaultMessage: "Move item down" })}
+              tooltipPlacement="left"
+              tooltipCloseDelay={0}
+              className={cs.ListField.itemAction}
+            >
+              <PiCaretDown />
+            </IconButton>
+          ) : null}
+          {!isFirstItem ? (
+            <IconButton
+              onPress={onMoveItemUp}
+              variant="invisible"
+              label={intl.formatMessage({ defaultMessage: "Move item up" })}
+              tooltipPlacement="right"
+              tooltipCloseDelay={0}
+              className={cs.ListField.itemAction}
+            >
+              <PiCaretUp />
+            </IconButton>
+          ) : null}
+        </div>
+      )}
       <AnyField
         schema={schema}
         typeDefinition={typeDefinition.items}

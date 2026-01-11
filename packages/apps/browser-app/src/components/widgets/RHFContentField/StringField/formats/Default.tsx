@@ -7,6 +7,7 @@ import {
 } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
+import { useUiOptions } from "../../uiOptions.js";
 import type Props from "../Props.js";
 
 export default function Default({
@@ -17,6 +18,7 @@ export default function Default({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   return (
     <TextField
@@ -27,6 +29,7 @@ export default function Default({
       onBlur={field.onBlur}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
+      isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}

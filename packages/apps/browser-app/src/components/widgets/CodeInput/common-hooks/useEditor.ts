@@ -18,6 +18,7 @@ export default function useEditor(
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   ariaLabel: string | undefined,
   filePath: `/${string}.ts` | `/${string}.tsx` | `/${string}.json`,
+  isReadOnly?: boolean,
 ) {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(null);
@@ -81,6 +82,7 @@ export default function useEditor(
         alwaysConsumeMouseWheel: false,
       },
       automaticLayout: true,
+      readOnly: isReadOnly,
       // Accessibility
       ariaLabel: ariaLabel,
     });
@@ -130,6 +132,7 @@ export default function useEditor(
     valueModelRef,
     ariaLabel,
     filePath,
+    isReadOnly,
   ]);
 
   // Keep editor theme in sync
