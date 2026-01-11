@@ -37,15 +37,15 @@ export function toHref(route: Route): string {
       return `/collections/${route.collectionId}/documents/new`;
     case RouteName.Document: {
       const basePath = `/collections/${route.collectionId}/documents/${route.documentId}`;
-      if (!route.documentVersionId && route.showHistory === undefined) {
+      if (!route.documentVersionId && route.redirectIfLatest === undefined) {
         return basePath;
       }
       const versionPath = route.documentVersionId
         ? `/documentVersions/${route.documentVersionId}`
         : "";
       const search =
-        route.showHistory !== undefined
-          ? `?showHistory=${route.showHistory}`
+        route.redirectIfLatest !== undefined
+          ? `?redirectIfLatest=${route.redirectIfLatest}`
           : "";
       return `${basePath}${versionPath}${search}`;
     }
@@ -103,8 +103,8 @@ const routeMatchers: RouteMatcher[] = [
         "/collections/:collectionId/documents/:documentId/documentVersions/:documentVersionId{/}?",
     }),
     toRoute: (match) => {
-      const showHistory = new URLSearchParams(match.search.input).get(
-        "showHistory",
+      const redirectIfLatest = new URLSearchParams(match.search.input).get(
+        "redirectIfLatest",
       );
       return {
         name: RouteName.Document,
@@ -117,7 +117,8 @@ const routeMatchers: RouteMatcher[] = [
         documentVersionId: decodePathSegment<DocumentVersionId>(
           match.pathname.groups["documentVersionId"],
         ),
-        showHistory: showHistory === null ? undefined : showHistory === "true",
+        redirectIfLatest:
+          redirectIfLatest === null ? undefined : redirectIfLatest === "true",
       };
     },
   },
@@ -126,8 +127,8 @@ const routeMatchers: RouteMatcher[] = [
       pathname: "/collections/:collectionId/documents/:documentId{/}?",
     }),
     toRoute: (match) => {
-      const showHistory = new URLSearchParams(match.search.input).get(
-        "showHistory",
+      const redirectIfLatest = new URLSearchParams(match.search.input).get(
+        "redirectIfLatest",
       );
       return {
         name: RouteName.Document,
@@ -137,7 +138,8 @@ const routeMatchers: RouteMatcher[] = [
         documentId: decodePathSegment<DocumentId>(
           match.pathname.groups["documentId"],
         ),
-        showHistory: showHistory === null ? undefined : showHistory === "true",
+        redirectIfLatest:
+          redirectIfLatest === null ? undefined : redirectIfLatest === "true",
       };
     },
   },

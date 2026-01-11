@@ -30,18 +30,17 @@ import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
 import * as cs from "./Document.css.js";
 import DocumentContent from "./DocumentContent.js";
 import History from "./History/History.js";
+import RedirectIfLatest from "./RedirectIfLatest.js";
 import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
 
 interface Props {
   collectionId: CollectionId;
   documentId: DocumentId;
-  showHistory?: boolean;
   documentVersionId?: DocumentVersionId;
 }
 export default function Document({
   collectionId,
   documentId,
-  showHistory = false,
   documentVersionId,
 }: Props) {
   const intl = useIntl();
@@ -86,16 +85,11 @@ export default function Document({
     >
       {(document, documentVersions) => {
         const isRemote = document.remoteId !== null;
-        const isLatestVersion = !(
-          typeof documentVersionId === "string" &&
-          documentVersionId !== document.latestVersion.id
-        );
-        // The showHistory route option forces history to be shown, but history
-        // is shown also for non-latest versions, regardless of the value of
-        // showHistory.
-        const isShowingHistory = showHistory || !isLatestVersion;
+        // History is shown when documentVersionId is specified.
+        const isShowingHistory = typeof documentVersionId === "string";
         return (
           <Shell.Panel slot="Main">
+            <RedirectIfLatest document={document} />
             <Shell.Panel.Header
               title={intl.formatMessage(
                 { defaultMessage: "{collection} » {document}" },
@@ -124,7 +118,9 @@ export default function Document({
                       name: RouteName.Document,
                       collectionId,
                       documentId,
-                      showHistory: !showHistory,
+                      documentVersionId: isShowingHistory
+                        ? undefined
+                        : document.latestVersion.id,
                     }),
                 },
                 !isRemote && !isShowingHistory

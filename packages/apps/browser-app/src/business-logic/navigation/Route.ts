@@ -76,7 +76,7 @@ type Route =
       collectionId: CollectionId;
       documentId: DocumentId;
       documentVersionId?: DocumentVersionId;
-      showHistory?: boolean;
+      redirectIfLatest?: boolean;
     }
   | {
       name: RouteName.CreateApp;

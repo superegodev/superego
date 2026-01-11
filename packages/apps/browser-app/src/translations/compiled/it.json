@@ -700,6 +700,26 @@
       "value": " » Nuova versione del documento creata"
     }
   ],
+  "CreateNewDocumentVersionForm.tsx_KtoryI": [
+    {
+      "type": 0,
+      "value": "Si sta visualizzando la versione del documento del "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "date"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": ". La modifica del documento è disabilitata."
+    }
+  ],
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
     {
       "type": 0,
@@ -716,12 +736,6 @@
     {
       "type": 0,
       "value": "Errore durante il salvataggio del documento"
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_xZxbWN": [
-    {
-      "type": 0,
-      "value": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
     }
   ],
   "CreatedByLine.tsx_WEhuQZ": [

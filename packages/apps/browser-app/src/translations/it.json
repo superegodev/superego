@@ -305,14 +305,14 @@
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
   },
+  "CreateNewDocumentVersionForm.tsx_KtoryI": {
+    "defaultMessage": "Si sta visualizzando la versione del documento del <b>{date}</b>. La modifica del documento è disabilitata."
+  },
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
     "defaultMessage": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
-  },
-  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
-    "defaultMessage": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Errore durante il salvataggio del documento"

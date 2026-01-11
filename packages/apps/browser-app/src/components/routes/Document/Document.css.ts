@@ -8,17 +8,16 @@ export const Document = {
   }),
 
   contentWrapper: style({
-    flexGrow: 2,
+    flex: "2 1 0",
     "@media": {
-      [`(max-width: ${breakpoints.small})`]: {
-        flexGrow: 1,
+      [`(max-width: ${breakpoints.medium})`]: {
+        flex: "1 1 0",
       },
     },
   }),
 
   history: style({
-    flexShrink: 0,
-    flexGrow: 1,
+    flex: "1 1 0",
   }),
 };
 
