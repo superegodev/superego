@@ -1,6 +1,7 @@
 import { FormatId } from "@superego/schema";
 import Default from "./formats/Default.js";
 import PlainDate from "./formats/PlainDate.js";
+import PlainTime from "./formats/PlainTime.js";
 import type Props from "./Props.js";
 
 export default function StringField({
@@ -11,12 +12,7 @@ export default function StringField({
   name,
   label,
 }: Props) {
-  const Component =
-    "format" in typeDefinition
-      ? typeDefinition.format === FormatId.String.PlainDate
-        ? PlainDate
-        : Default
-      : Default;
+  const Component = getComponent(typeDefinition);
   return (
     <Component
       typeDefinition={typeDefinition}
@@ -27,4 +23,15 @@ export default function StringField({
       label={label}
     />
   );
+}
+
+function getComponent(typeDefinition: Props["typeDefinition"]) {
+  switch ("format" in typeDefinition && typeDefinition.format) {
+    case FormatId.String.PlainDate:
+      return PlainDate;
+    case FormatId.String.PlainTime:
+      return PlainTime;
+    default:
+      return Default;
+  }
 }

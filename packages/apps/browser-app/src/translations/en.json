@@ -1058,6 +1058,9 @@
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
   },
+  "TimeInputWithMilliseconds.tsx_/w7Rru": {
+    "defaultMessage": "Milliseconds"
+  },
   "Title.tsx_/f6lRt": {
     "defaultMessage": "Create chart from {collection}"
   },

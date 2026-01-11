@@ -1028,6 +1028,9 @@
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Riflessione per {time}"
   },
+  "TimeInputWithMilliseconds.tsx_/w7Rru": {
+    "defaultMessage": "Millisecondi"
+  },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Crea documenti"
   },
