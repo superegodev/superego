@@ -46,7 +46,6 @@ export default function MainPanel() {
         <Document
           collectionId={activeRoute.collectionId}
           documentId={activeRoute.documentId}
-          showHistory={activeRoute.showHistory}
           documentVersionId={activeRoute.documentVersionId}
         />
       );

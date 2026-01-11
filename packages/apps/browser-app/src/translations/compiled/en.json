@@ -708,6 +708,26 @@
       "value": " » Created new document version"
     }
   ],
+  "CreateNewDocumentVersionForm.tsx_KtoryI": [
+    {
+      "type": 0,
+      "value": "Viewing document version from "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "date"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": ". Document editing is disabled."
+    }
+  ],
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
     {
       "type": 0,
@@ -724,12 +744,6 @@
     {
       "type": 0,
       "value": "Error saving document"
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_xZxbWN": [
-    {
-      "type": 0,
-      "value": "Document editing is disabled when viewing historical versions."
     }
   ],
   "CreatedByLine.tsx_WEhuQZ": [

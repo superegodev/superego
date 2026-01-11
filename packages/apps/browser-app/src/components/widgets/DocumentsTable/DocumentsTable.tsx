@@ -121,6 +121,7 @@ export default function DocumentsTable({
               collectionId: collectionId,
               documentId: document.id,
               documentVersionId: document.latestVersion.id,
+              redirectIfLatest: true,
             })}
           >
             {isEmpty(sortedProperties) ? (

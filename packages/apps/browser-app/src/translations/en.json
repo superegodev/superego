@@ -305,6 +305,9 @@
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
   },
+  "CreateNewDocumentVersionForm.tsx_KtoryI": {
+    "defaultMessage": "Viewing document version from <b>{date}</b>. Document editing is disabled."
+  },
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
@@ -313,9 +316,6 @@
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"
-  },
-  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
-    "defaultMessage": "Document editing is disabled when viewing historical versions."
   },
   "CreatedByLine.tsx_WEhuQZ": {
     "defaultMessage": "Created by you"

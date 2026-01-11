@@ -41,8 +41,6 @@ export default function DocumentContent({
         formId={formId}
         setSubmitDisabled={setSubmitDisabled}
         readOnlyReason={readOnlyReason}
-        collectionSchema={collection.latestVersion.schema}
-        documentContent={document.latestVersion.content}
       />
     );
   }
@@ -69,12 +67,12 @@ export default function DocumentContent({
         <CreateNewDocumentVersionForm
           key={`${formId}_${documentVersion.id}`}
           collection={collection}
+          collectionSchema={collectionVersion.schema}
           document={document}
+          documentVersion={documentVersion}
           formId={formId}
           setSubmitDisabled={setSubmitDisabled}
           readOnlyReason="history-version"
-          collectionSchema={collectionVersion.schema}
-          documentContent={documentVersion.content}
         />
       )}
     </DataLoader>

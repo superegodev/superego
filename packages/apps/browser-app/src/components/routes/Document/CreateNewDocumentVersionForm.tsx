@@ -1,16 +1,17 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { Collection, Document } from "@superego/backend";
+import type { Collection, Document, DocumentVersion } from "@superego/backend";
 import { type Schema, valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
 import Alert from "../../design-system/Alert/Alert.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
@@ -19,21 +20,21 @@ export type ReadOnlyReason = "remote" | "history-version";
 
 interface Props {
   collection: Collection;
+  collectionSchema?: Schema;
   document: Document;
+  documentVersion?: DocumentVersion;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
   readOnlyReason: ReadOnlyReason | null;
-  collectionSchema: Schema;
-  documentContent: any;
 }
 export default function CreateNewDocumentVersionForm({
   collection,
+  collectionSchema = collection.latestVersion.schema,
   document,
+  documentVersion = document.latestVersion,
   formId,
   setSubmitDisabled,
   readOnlyReason,
-  collectionSchema,
-  documentContent,
 }: Props) {
   const intl = useIntl();
 
@@ -43,7 +44,7 @@ export default function CreateNewDocumentVersionForm({
 
   const { control, handleSubmit, reset, formState } = useForm<any>({
     defaultValues: forms.utils.RHFContent.toRHFContent(
-      documentContent,
+      documentVersion.content,
       collectionSchema,
     ),
     mode: "all",
@@ -68,7 +69,10 @@ export default function CreateNewDocumentVersionForm({
   useEffect(() => {
     if (document.latestVersion.id !== latestVersionIdRef.current) {
       reset(
-        forms.utils.RHFContent.toRHFContent(documentContent, collectionSchema),
+        forms.utils.RHFContent.toRHFContent(
+          documentVersion.content,
+          collectionSchema,
+        ),
       );
       latestVersionIdRef.current = document.latestVersion.id;
     }
@@ -137,15 +141,23 @@ export default function CreateNewDocumentVersionForm({
           variant="info"
           className={cs.CreateNewDocumentVersionForm.readOnlyAlert}
         >
-          {readOnlyReason === "remote"
-            ? intl.formatMessage({
-                defaultMessage:
-                  "This document is synced from a remote source and cannot be edited.",
-              })
-            : intl.formatMessage({
-                defaultMessage:
-                  "Document editing is disabled when viewing historical versions.",
-              })}
+          {readOnlyReason === "remote" ? (
+            <FormattedMessage defaultMessage="This document is synced from a remote source and cannot be edited." />
+          ) : (
+            <FormattedMessage
+              defaultMessage="Viewing document version from <b>{date}</b>. Document editing is disabled."
+              values={{
+                date: (
+                  <FormattedDate
+                    value={documentVersion.createdAt}
+                    dateStyle="medium"
+                    timeStyle="medium"
+                  />
+                ),
+                ...formattedMessageHtmlTags,
+              }}
+            />
+          )}
         </Alert>
       ) : null}
       <RHFContentField

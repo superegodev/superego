@@ -38,6 +38,7 @@ export default function CreateNewDocumentVersion({ toolResult }: Props) {
           collectionId: document.collectionId,
           documentId: document.id,
           documentVersionId: document.latestVersion.id,
+          redirectIfLatest: true,
         }}
         className={cs.CreateNewDocumentVersion.root}
       >

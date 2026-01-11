@@ -48,6 +48,7 @@ export default function CreateDocuments({ toolResult }: Props) {
               collectionId,
               documentId: documents[0]!.id,
               documentVersionId: documents[0]!.latestVersion.id,
+              redirectIfLatest: true,
             }}
             className={cs.CreateDocuments.root}
           >

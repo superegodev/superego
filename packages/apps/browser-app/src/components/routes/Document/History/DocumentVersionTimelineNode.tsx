@@ -44,7 +44,6 @@ export default function DocumentVersionTimelineNode({
           collectionId: document.collectionId,
           documentId: document.id,
           documentVersionId: documentVersion.id,
-          showHistory: true,
         }}
         className={cs.DocumentVersionTimelineNode.link}
       >

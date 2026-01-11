@@ -113,6 +113,9 @@ export const DocumentVersionTimelineNode = {
   createdAt: style({
     fontSize: vars.typography.fontSizes.sm,
     fontWeight: vars.typography.fontWeights.medium,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
     selectors: {
       '[data-active="true"] &': {
         fontWeight: vars.typography.fontWeights.bold,
@@ -143,6 +146,9 @@ export const CreatedByLine = {
   root: style({
     fontSize: vars.typography.fontSizes.xs,
     color: vars.colors.text.secondary,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
     selectors: {
       "[data-active='true'] &": {
         fontWeight: vars.typography.fontWeights.medium,
