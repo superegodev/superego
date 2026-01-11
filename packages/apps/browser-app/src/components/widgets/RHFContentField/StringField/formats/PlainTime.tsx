@@ -22,14 +22,16 @@ export default function PlainTime({
 
   const { time, milliseconds } = field.value
     ? parseTimeWithMilliseconds(field.value)
-    : { time: "", milliseconds: 0 };
+    : { time: "", milliseconds: null };
 
   const handleTimeChange = (value: { toString(): string } | null) => {
     if (!value) {
       field.onChange(null);
       return;
     }
-    field.onChange(formatTimeWithMilliseconds(value.toString(), milliseconds));
+    field.onChange(
+      formatTimeWithMilliseconds(value.toString(), milliseconds ?? 0),
+    );
   };
 
   const handleMillisecondsChange = (milliseconds: number) => {

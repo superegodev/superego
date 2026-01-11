@@ -12,7 +12,7 @@ import * as cs from "./forms.css.js";
 
 interface Props {
   ref: RefCallBack;
-  milliseconds: number;
+  milliseconds: number | null;
   onMillisecondsChange: (ms: number) => void;
   isReadOnly?: boolean;
 }
@@ -32,8 +32,9 @@ export default function TimeInputWithMilliseconds({
   ) => {
     const data = evt.data;
     if (data && /^\d$/.test(data)) {
-      // Shift digits left and append the new digit
-      const newValue = ((milliseconds * 10) % 1000) + Number.parseInt(data, 10);
+      // Shift digits left and append the new digit.
+      const currentValue = milliseconds ?? 0;
+      const newValue = ((currentValue * 10) % 1000) + Number.parseInt(data, 10);
       onMillisecondsChange(newValue);
     }
   };
@@ -41,10 +42,10 @@ export default function TimeInputWithMilliseconds({
   const handleMillisecondsKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
     if (evt.key === "ArrowUp") {
       evt.preventDefault();
-      onMillisecondsChange(Math.min(999, milliseconds + 1));
+      onMillisecondsChange(Math.min(999, (milliseconds ?? 0) + 1));
     } else if (evt.key === "ArrowDown") {
       evt.preventDefault();
-      onMillisecondsChange(Math.max(0, milliseconds - 1));
+      onMillisecondsChange(Math.max(0, (milliseconds ?? 0) - 1));
     }
   };
 
@@ -66,7 +67,11 @@ export default function TimeInputWithMilliseconds({
         ref={millisecondsInputRef}
         type="text"
         inputMode="numeric"
-        value={milliseconds.toString().padStart(3, "0")}
+        value={
+          milliseconds === null
+            ? "–––"
+            : milliseconds.toString().padStart(3, "0")
+        }
         // Avoids React complaining that we haven't registered an onChange
         // handler. (We do with onBeforeInput.)
         onChange={noop}
