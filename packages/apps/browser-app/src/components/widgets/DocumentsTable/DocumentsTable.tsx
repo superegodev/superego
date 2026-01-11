@@ -120,6 +120,7 @@ export default function DocumentsTable({
               name: RouteName.Document,
               collectionId: collectionId,
               documentId: document.id,
+              documentVersionId: document.latestVersion.id,
             })}
           >
             {isEmpty(sortedProperties) ? (

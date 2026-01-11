@@ -134,7 +134,7 @@ export default function Document({
                       isDisabled: isCreateFormSubmitDisabled,
                     }
                   : null,
-                !isRemote === null
+                !isRemote
                   ? {
                       label: intl.formatMessage({
                         defaultMessage: "Delete document",

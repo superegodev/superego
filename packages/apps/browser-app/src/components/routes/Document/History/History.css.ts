@@ -152,6 +152,11 @@ export const CreatedByLine = {
   root: style({
     fontSize: vars.typography.fontSizes.xs,
     color: vars.colors.text.secondary,
+    selectors: {
+      "[data-active='true'] &": {
+        fontWeight: vars.typography.fontWeights.medium,
+      },
+    },
   }),
 };
 
