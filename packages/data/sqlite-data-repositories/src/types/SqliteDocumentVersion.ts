@@ -6,7 +6,10 @@ import type {
   DocumentVersionCreator,
   DocumentVersionId,
 } from "@superego/backend";
-import type { DocumentVersionEntity } from "@superego/executing-backend";
+import type {
+  DocumentVersionEntity,
+  MinimalDocumentVersionEntity,
+} from "@superego/executing-backend";
 import type { DiffPatcher } from "jsondiffpatch";
 
 type SqliteDocumentVersion = {
@@ -96,4 +99,20 @@ function makeContent(
   }
 
   return deltas.reduceRight((content, delta) => jdp.patch(content, delta), {});
+}
+
+export function toMinimalEntity(
+  documentVersion: SqliteDocumentVersion,
+): MinimalDocumentVersionEntity {
+  return {
+    id: documentVersion.id,
+    remoteId: documentVersion.remote_id,
+    previousVersionId: documentVersion.previous_version_id,
+    collectionId: documentVersion.collection_id,
+    documentId: documentVersion.document_id,
+    collectionVersionId: documentVersion.collection_version_id,
+    conversationId: documentVersion.conversation_id,
+    createdBy: documentVersion.created_by,
+    createdAt: new Date(documentVersion.created_at),
+  };
 }

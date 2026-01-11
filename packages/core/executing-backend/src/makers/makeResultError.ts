@@ -18,6 +18,7 @@ import type {
   CollectionSchemaNotValid,
   CollectionSettingsNotValid,
   CollectionVersionIdNotMatching,
+  CollectionVersionNotFound,
   CommandConfirmationNotValid,
   ConnectorAuthenticationFailed,
   ConnectorAuthenticationSettingsNotValid,
@@ -67,6 +68,7 @@ type KnownResultError =
   | CollectionSchemaNotValid
   | CollectionSettingsNotValid
   | CollectionVersionIdNotMatching
+  | CollectionVersionNotFound
   | CommandConfirmationNotValid
   | ConnectorAuthenticationFailed
   | ConnectorAuthenticationSettingsNotValid

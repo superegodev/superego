@@ -5,7 +5,7 @@ export default function createWindow() {
   const mainWindow = new BrowserWindow({
     show: false,
     webPreferences: {
-      preload: join(import.meta.dirname, "../preload/index.js"),
+      preload: join(import.meta.dirname, "../preload/index.cjs"),
     },
     icon:
       process.platform === "linux"

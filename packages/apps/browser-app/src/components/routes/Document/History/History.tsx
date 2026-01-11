@@ -1,0 +1,89 @@
+import type {
+  Collection,
+  Document,
+  MinimalDocumentVersion,
+} from "@superego/backend";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import classnames from "../../../../utils/classnames.js";
+import isEmpty from "../../../../utils/isEmpty.js";
+import BucketTimelineNode from "./BucketTimelineNode.js";
+import DocumentVersionTimelineNode from "./DocumentVersionTimelineNode.js";
+import * as cs from "./History.css.js";
+import makeTimelineNodes from "./makeTimelineNodes.js";
+import RestoreVersionModal from "./RestoreVersionModal.js";
+
+interface Props {
+  collection: Collection;
+  document: Document;
+  documentVersions: MinimalDocumentVersion[];
+  className: string;
+}
+export default function History({
+  collection,
+  document,
+  documentVersions,
+  className,
+}: Props) {
+  const timelineNodes = makeTimelineNodes(documentVersions);
+
+  const [versionToRestore, setVersionToRestore] =
+    useState<MinimalDocumentVersion | null>(null);
+  const handleRestore = (documentVersion: MinimalDocumentVersion) => {
+    setVersionToRestore(documentVersion);
+  };
+  const canRestore = (documentVersion: MinimalDocumentVersion) =>
+    documentVersion.collectionVersionId === collection.latestVersion.id;
+
+  return (
+    <aside className={classnames(cs.History.root, className)}>
+      <header className={cs.History.header}>
+        <FormattedMessage defaultMessage="Versions history" />
+      </header>
+      {isEmpty(timelineNodes) ? (
+        <div className={cs.History.empty}>
+          <FormattedMessage defaultMessage="No version history available" />
+        </div>
+      ) : (
+        timelineNodes.map((timelineNode, index) => {
+          const timelinePosition =
+            timelineNodes.length === 1
+              ? "only"
+              : index === 0
+                ? "first"
+                : index === timelineNodes.length - 1
+                  ? "last"
+                  : "middle";
+          return "documentVersions" in timelineNode ? (
+            <BucketTimelineNode
+              key={timelineNode.id}
+              document={document}
+              bucket={timelineNode}
+              onRestore={handleRestore}
+              canRestore={canRestore}
+              timelinePosition={timelinePosition}
+            />
+          ) : (
+            <DocumentVersionTimelineNode
+              key={timelineNode.id}
+              document={document}
+              documentVersion={timelineNode}
+              onRestore={handleRestore}
+              canRestore={canRestore(timelineNode)}
+              timelinePosition={timelinePosition}
+            />
+          );
+        })
+      )}
+      {versionToRestore ? (
+        <RestoreVersionModal
+          collection={collection}
+          document={document}
+          versionToRestore={versionToRestore}
+          isOpen={true}
+          onClose={() => setVersionToRestore(null)}
+        />
+      ) : null}
+    </aside>
+  );
+}

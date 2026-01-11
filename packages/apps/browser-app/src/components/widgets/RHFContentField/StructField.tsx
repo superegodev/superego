@@ -14,6 +14,7 @@ import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
   schema: Schema;
@@ -33,6 +34,7 @@ export default function StructField({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
   if (utils.getRootType(schema) === typeDefinition) {
     return (
@@ -57,11 +59,13 @@ export default function StructField({
         isNullable={isNullable}
         label={label}
         actions={
-          <NullifyFieldAction
-            isNullable={isNullable}
-            field={field}
-            fieldLabel={label}
-          />
+          !isReadOnly ? (
+            <NullifyFieldAction
+              isNullable={isNullable}
+              field={field}
+              fieldLabel={label}
+            />
+          ) : undefined
         }
       />
       <Fieldset.Fields
@@ -70,16 +74,22 @@ export default function StructField({
         )}
       >
         {isValueNull ? (
-          <Button
-            onPress={() =>
-              field.onChange(
-                forms.defaults.typeDefinitionValue(typeDefinition, schema),
-              )
-            }
-            className={cs.StructAndListField.nullValueSetValueButton}
-          >
-            <FormattedMessage defaultMessage="null - click to set a value" />
-          </Button>
+          isReadOnly ? (
+            <span className={cs.StructAndListField.nullValueSetValueButton}>
+              <FormattedMessage defaultMessage="null" />
+            </span>
+          ) : (
+            <Button
+              onPress={() =>
+                field.onChange(
+                  forms.defaults.typeDefinitionValue(typeDefinition, schema),
+                )
+              }
+              className={cs.StructAndListField.nullValueSetValueButton}
+            >
+              <FormattedMessage defaultMessage="null - click to set a value" />
+            </Button>
+          )
         ) : (
           <Fields
             schema={schema}

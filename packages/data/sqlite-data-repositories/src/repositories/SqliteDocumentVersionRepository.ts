@@ -7,10 +7,11 @@ import type {
 import type {
   DocumentVersionEntity,
   DocumentVersionRepository,
+  MinimalDocumentVersionEntity,
 } from "@superego/executing-backend";
 import { create } from "jsondiffpatch";
 import type SqliteDocumentVersion from "../types/SqliteDocumentVersion.js";
-import { toEntity } from "../types/SqliteDocumentVersion.js";
+import { toEntity, toMinimalEntity } from "../types/SqliteDocumentVersion.js";
 
 const table = "document_versions";
 
@@ -99,12 +100,12 @@ export default class SqliteDocumentVersionRepository
     if (!documentVersion) {
       return null;
     }
-    if (documentVersion?.is_latest === 1) {
+    if (documentVersion.is_latest === 1) {
       return toEntity(documentVersion);
     }
     const allDocumentVersions = this.db
-      .prepare(`SELECT * FROM "${table}"`)
-      .all() as SqliteDocumentVersion[];
+      .prepare(`SELECT * FROM "${table}" WHERE "document_id" = ?`)
+      .all(documentVersion.document_id) as SqliteDocumentVersion[];
     return toEntity(documentVersion, allDocumentVersions, jdp);
   }
 
@@ -130,5 +131,16 @@ export default class SqliteDocumentVersionRepository
       )
       .all(collectionId) as (SqliteDocumentVersion & { is_latest: 1 })[];
     return documentVersions.map(toEntity);
+  }
+
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<MinimalDocumentVersionEntity[]> {
+    const allDocumentVersions = this.db
+      .prepare(
+        `SELECT * FROM "${table}" WHERE "document_id" = ? ORDER BY "created_at" DESC`,
+      )
+      .all(documentId) as SqliteDocumentVersion[];
+    return allDocumentVersions.map(toMinimalEntity);
   }
 }

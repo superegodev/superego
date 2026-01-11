@@ -34,6 +34,7 @@ interface Props {
         userRequest: string;
       }
     | undefined;
+  isReadOnly?: boolean | undefined;
 }
 export default function TypescriptEditor({
   language,
@@ -46,6 +47,7 @@ export default function TypescriptEditor({
   filePath = language === "typescript" ? "/main.ts" : "/main.tsx",
   maxHeight,
   assistantImplementation,
+  isReadOnly,
 }: Props) {
   const editorBasePath = useEditorBasePath();
 
@@ -115,6 +117,7 @@ export default function TypescriptEditor({
     valueModelRef,
     ariaLabel,
     filePath,
+    isReadOnly,
   );
 
   // Recompile on mount if compilation is required.

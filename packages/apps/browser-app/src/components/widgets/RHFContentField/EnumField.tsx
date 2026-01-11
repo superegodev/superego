@@ -4,9 +4,11 @@ import { FormattedMessage } from "react-intl";
 import classnames from "../../../utils/classnames.js";
 import {
   FieldError,
+  Input,
   Select,
   SelectButton,
   SelectOptions,
+  TextField,
 } from "../../design-system/forms/forms.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
@@ -29,10 +31,39 @@ export default function EnumField({
   name,
   label,
 }: Props) {
-  const { zoomLevel } = useUiOptions();
+  const { zoomLevel, isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   const sortedMemberNames =
     typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
+
+  if (isReadOnly) {
+    return (
+      <TextField
+        id={field.name}
+        name={field.name}
+        value={field.value ?? ""}
+        isReadOnly={true}
+        aria-label={isListItem ? label : undefined}
+        data-data-type={typeDefinition.dataType}
+        data-is-list-item={isListItem}
+        className={classnames(
+          cs.Field.root,
+          isListItem && cs.ListItemField.root,
+        )}
+      >
+        {!isListItem ? (
+          <AnyFieldLabel
+            typeDefinition={typeDefinition}
+            isNullable={isNullable}
+            label={label}
+          />
+        ) : null}
+        <Input ref={field.ref} placeholder="null" />
+        <FieldError>{fieldState.error?.message}</FieldError>
+      </TextField>
+    );
+  }
+
   return (
     <Select
       id={field.name}

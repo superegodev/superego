@@ -107,6 +107,36 @@
       "value": "Error loading app"
     }
   ],
+  "BucketTimelineNode.tsx_6dIxDP": [
+    {
+      "type": 0,
+      "value": "Yesterday"
+    }
+  ],
+  "BucketTimelineNode.tsx_IvzBhq": [
+    {
+      "type": 0,
+      "value": "Earlier today"
+    }
+  ],
+  "BucketTimelineNode.tsx_eF7IVx": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " ("
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " versions)"
+    }
+  ],
   "Chat.tsx_zhku3H": [
     {
       "type": 0,
@@ -684,10 +714,46 @@
       "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
+    {
+      "type": 0,
+      "value": "This document is synced from a remote source and cannot be edited."
+    }
+  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
       "value": "Error saving document"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": [
+    {
+      "type": 0,
+      "value": "Document editing is disabled when viewing historical versions."
+    }
+  ],
+  "CreatedByLine.tsx_WEhuQZ": [
+    {
+      "type": 0,
+      "value": "Created by you"
+    }
+  ],
+  "CreatedByLine.tsx_gLCFrt": [
+    {
+      "type": 0,
+      "value": "Created by collection migration"
+    }
+  ],
+  "CreatedByLine.tsx_qTzfr9": [
+    {
+      "type": 0,
+      "value": "Created in conversation"
+    }
+  ],
+  "CreatedByLine.tsx_ufqNmd": [
+    {
+      "type": 0,
+      "value": "Created by sync"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -964,6 +1030,12 @@
       "value": "Document actions"
     }
   ],
+  "Document.tsx_djJp6c": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
   "Document.tsx_eoWkGI": [
     {
       "type": 0,
@@ -994,6 +1066,18 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Restore version"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_ySYtQB": [
+    {
+      "type": 0,
+      "value": "Go to conversation"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1200,6 +1284,12 @@
     {
       "type": 0,
       "value": "Download"
+    }
+  ],
+  "FileField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "FileField.tsx_HAlOn1": [
@@ -1512,6 +1602,18 @@
     {
       "type": 0,
       "value": "I'm the Collection Creator"
+    }
+  ],
+  "History.tsx_QWxyjH": [
+    {
+      "type": 0,
+      "value": "No version history available"
+    }
+  ],
+  "History.tsx_nT6w+N": [
+    {
+      "type": 0,
+      "value": "Versions history"
     }
   ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
@@ -1840,6 +1942,12 @@
       "value": "Move item up"
     }
   ],
+  "ListField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
+    }
+  ],
   "ListField.tsx_Dp51E2": [
     {
       "type": 0,
@@ -2142,6 +2250,12 @@
     {
       "type": 1,
       "value": "number"
+    }
+  ],
+  "RHFTextListField.tsx_l95YvM": [
+    {
+      "type": 0,
+      "value": "No items"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -2536,6 +2650,38 @@
       "value": "type"
     }
   ],
+  "RestoreVersionModal.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Restore version"
+    }
+  ],
+  "RestoreVersionModal.tsx_ca7Zl6": [
+    {
+      "type": 0,
+      "value": "Restore version from "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": "? This will create a new version with the content from that point in time."
+    }
+  ],
+  "RestoreVersionModal.tsx_gjBiyj": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
+  "RestoreVersionModal.tsx_zz6ObK": [
+    {
+      "type": 0,
+      "value": "Restore"
+    }
+  ],
   "ResultErrors.tsx_Lv0zJu": [
     {
       "type": 0,
@@ -2850,6 +2996,12 @@
     {
       "type": 0,
       "value": "Pause"
+    }
+  ],
+  "StructField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "StructField.tsx_Dp51E2": [

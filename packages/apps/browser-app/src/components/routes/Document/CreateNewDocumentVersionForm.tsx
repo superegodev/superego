@@ -1,6 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection, Document } from "@superego/backend";
-import { valibotSchemas } from "@superego/schema";
+import { type Schema, valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
@@ -11,34 +11,45 @@ import useExitWarning from "../../../business-logic/navigation/useExitWarning.js
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
+import Alert from "../../design-system/Alert/Alert.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
+import * as cs from "./Document.css.js";
+
+export type ReadOnlyReason = "remote" | "history-version";
 
 interface Props {
   collection: Collection;
   document: Document;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
-  isReadOnly: boolean;
+  readOnlyReason: ReadOnlyReason | null;
+  collectionSchema: Schema;
+  documentContent: any;
 }
 export default function CreateNewDocumentVersionForm({
   collection,
   document,
   formId,
   setSubmitDisabled,
-  isReadOnly,
+  readOnlyReason,
+  collectionSchema,
+  documentContent,
 }: Props) {
   const intl = useIntl();
-  const { schema } = collection.latestVersion;
+
+  const isReadOnly = readOnlyReason !== null;
 
   const { mutate } = useCreateNewDocumentVersion();
 
   const { control, handleSubmit, reset, formState } = useForm<any>({
     defaultValues: forms.utils.RHFContent.toRHFContent(
-      document.latestVersion.content,
-      schema,
+      documentContent,
+      collectionSchema,
     ),
     mode: "all",
-    resolver: standardSchemaResolver(valibotSchemas.content(schema, "rhf")),
+    resolver: standardSchemaResolver(
+      valibotSchemas.content(collectionSchema, "rhf"),
+    ),
   });
 
   // Update the form when the document content changed. Uses a ref to keep track
@@ -47,38 +58,39 @@ export default function CreateNewDocumentVersionForm({
   // updating the form, and we don't want to unnecessarily reset the form to
   // prevent ill-effects such as the cursor jumping around for the user.
   //
-  // Not on the hook dependencies: the actual value of the
-  // document.latestVersion.content object only changes when
-  // document.latestVersion.id changes. The object reference though might
-  // change, for example if the query for the document is invalidated and
-  // re-fetched. In that case we don't care to update the form though.
+  // Note on the hook dependencies: the actual value of the documentContent
+  // object only changes when document.latestVersion.id changes. The object
+  // reference though might change, for example if the query for the document is
+  // invalidated and re-fetched. In that case we don't care to update the form
+  // though.
   const latestVersionIdRef = useRef(document.latestVersion.id);
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (document.latestVersion.id !== latestVersionIdRef.current) {
       reset(
-        forms.utils.RHFContent.toRHFContent(
-          document.latestVersion.content,
-          schema,
-        ),
+        forms.utils.RHFContent.toRHFContent(documentContent, collectionSchema),
       );
       latestVersionIdRef.current = document.latestVersion.id;
     }
   }, [document.latestVersion.id]);
 
-  const onSubmit = async (content: any) => {
+  const onSubmit = async (contentData: any) => {
     const { success, data, error } = await mutate(
       collection.id,
       document.id,
       document.latestVersion.id,
-      await forms.utils.RHFContent.fromRHFContent(content, schema),
+      await forms.utils.RHFContent.fromRHFContent(
+        contentData,
+        collectionSchema,
+      ),
     );
     if (success) {
       reset(
-        forms.utils.RHFContent.toRHFContent(data.latestVersion.content, schema),
-        {
-          keepValues: true,
-        },
+        forms.utils.RHFContent.toRHFContent(
+          data.latestVersion.content,
+          collectionSchema,
+        ),
+        { keepValues: true },
       );
       latestVersionIdRef.current = data.latestVersion.id;
     } else {
@@ -109,9 +121,8 @@ export default function CreateNewDocumentVersionForm({
     return () => clearTimeout(timeoutId);
   }, [isReadOnly, isDirty, formState.isValid, setSubmitDisabled]);
 
-  const shouldWarn = isDirty && !isReadOnly;
   useExitWarning(
-    shouldWarn
+    isDirty && !isReadOnly
       ? intl.formatMessage({
           defaultMessage:
             "You have unsaved changes. Are you sure you want to leave?",
@@ -121,7 +132,27 @@ export default function CreateNewDocumentVersionForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
-      <RHFContentField schema={schema} control={control} />
+      {readOnlyReason !== null ? (
+        <Alert
+          variant="info"
+          className={cs.CreateNewDocumentVersionForm.readOnlyAlert}
+        >
+          {readOnlyReason === "remote"
+            ? intl.formatMessage({
+                defaultMessage:
+                  "This document is synced from a remote source and cannot be edited.",
+              })
+            : intl.formatMessage({
+                defaultMessage:
+                  "Document editing is disabled when viewing historical versions.",
+              })}
+        </Alert>
+      ) : null}
+      <RHFContentField
+        schema={collectionSchema}
+        control={control}
+        isReadOnly={isReadOnly}
+      />
     </Form>
   );
 }

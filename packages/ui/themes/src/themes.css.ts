@@ -104,6 +104,7 @@ export const commonVars = {
     _9: "2.25rem",
     _10: "2.5rem",
     _12: "3rem",
+    _14: "3.5rem",
     _16: "4rem",
     _20: "5rem",
     _24: "6rem",
@@ -369,6 +370,7 @@ export const [light, vars] = createTheme({
       subtle: colors.greys._3_5,
       focus: colors.greys._7,
       disabled: colors.greys._2,
+      inverse: colors.greys._10,
     },
   },
 });
@@ -523,6 +525,7 @@ export const dark = createTheme(vars, {
       subtle: colors.greys._9,
       focus: colors.greys._5,
       disabled: colors.greys._10,
+      inverse: colors.greys._0,
     },
   },
 });

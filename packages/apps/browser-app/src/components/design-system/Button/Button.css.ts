@@ -9,6 +9,8 @@ const buttonRootBase = style({
   paddingBlock: vars.spacing._2,
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,
+  fontSize: vars.typography.fontSizes.md,
+  fontFamily: vars.typography.fontFamilies.sansSerif,
   cursor: "pointer",
   selectors: {
     "&[disabled]": {

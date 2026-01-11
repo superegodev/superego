@@ -43,11 +43,11 @@ export default function CreateDocuments({ toolResult }: Props) {
         </Title>
         {documents.length === 1 ? (
           <Link
-            // TODO: link to the version id once we have the view for it.
             to={{
               name: RouteName.Document,
               collectionId,
               documentId: documents[0]!.id,
+              documentVersionId: documents[0]!.latestVersion.id,
             }}
             className={cs.CreateDocuments.root}
           >

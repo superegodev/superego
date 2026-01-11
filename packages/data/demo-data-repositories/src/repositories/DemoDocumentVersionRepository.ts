@@ -6,6 +6,7 @@ import type {
 import type {
   DocumentVersionEntity,
   DocumentVersionRepository,
+  MinimalDocumentVersionEntity,
 } from "@superego/executing-backend";
 import type Data from "../Data.js";
 import clone from "../utils/clone.js";
@@ -91,5 +92,20 @@ export default class DemoDocumentVersionRepository
         }
       });
     return clone(Object.values(latestDocumentVersions));
+  }
+
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<MinimalDocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions)
+        .filter((documentVersion) => documentVersion.documentId === documentId)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )
+        .map(({ content, ...rest }) => rest),
+    );
   }
 }

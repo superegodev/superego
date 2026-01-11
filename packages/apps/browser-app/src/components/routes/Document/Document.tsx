@@ -1,7 +1,13 @@
-import type { CollectionId, DocumentId } from "@superego/backend";
+import type {
+  CollectionId,
+  DocumentId,
+  DocumentVersionId,
+} from "@superego/backend";
 import { useState } from "react";
 import {
   PiArrowSquareOut,
+  PiClockCountdown,
+  PiClockCountdownFill,
   PiCloudCheck,
   PiFloppyDisk,
   PiTrash,
@@ -9,22 +15,37 @@ import {
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
+import {
+  getDocumentQuery,
+  listDocumentVersionsQuery,
+} from "../../../business-logic/backend/hooks.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
+import * as cs from "./Document.css.js";
+import DocumentContent from "./DocumentContent.js";
+import History from "./History/History.js";
 import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
 
 interface Props {
   collectionId: CollectionId;
   documentId: DocumentId;
+  showHistory?: boolean;
+  documentVersionId?: DocumentVersionId;
 }
-export default function Document({ collectionId, documentId }: Props) {
+export default function Document({
+  collectionId,
+  documentId,
+  showHistory = false,
+  documentVersionId,
+}: Props) {
   const intl = useIntl();
+  const { navigateTo } = useNavigationState();
   const createFormId = `CreateNewDocumentVersionForm_${documentId}`;
   const [isCreateFormSubmitDisabled, setIsCreateFormSubmitDisabled] =
     useState(true);
@@ -33,9 +54,13 @@ export default function Document({ collectionId, documentId }: Props) {
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
+
   return collection ? (
     <DataLoader
-      queries={[getDocumentQuery([collection.id, documentId])]}
+      queries={[
+        getDocumentQuery([collection.id, documentId]),
+        listDocumentVersionsQuery([collection.id, documentId]),
+      ]}
       renderLoading={() => (
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
@@ -59,85 +84,139 @@ export default function Document({ collectionId, documentId }: Props) {
         />
       )}
     >
-      {(document) => (
-        <Shell.Panel slot="Main">
-          <Shell.Panel.Header
-            title={intl.formatMessage(
-              { defaultMessage: "{collection} » {document}" },
-              {
-                collection: CollectionUtils.getDisplayName(collection),
-                document: (
-                  <ContentSummaryPropertyValue
-                    value={DocumentUtils.getDisplayName(document)}
-                  />
-                ),
-              },
-            )}
-            actionsAriaLabel={intl.formatMessage({
-              defaultMessage: "Document actions",
-            })}
-            actions={[
-              document.remoteId === null
-                ? {
-                    label: intl.formatMessage({ defaultMessage: "Save" }),
-                    icon: <PiFloppyDisk />,
-                    submit: createFormId,
-                    isDisabled: isCreateFormSubmitDisabled,
-                  }
-                : null,
-              document.remoteId === null
-                ? {
-                    label: intl.formatMessage({
-                      defaultMessage: "Delete document",
+      {(document, documentVersions) => {
+        const isRemote = document.remoteId !== null;
+        const isLatestVersion = !(
+          typeof documentVersionId === "string" &&
+          documentVersionId !== document.latestVersion.id
+        );
+        // The showHistory route option forces history to be shown, but history
+        // is shown also for non-latest versions, regardless of the value of
+        // showHistory.
+        const isShowingHistory = showHistory || !isLatestVersion;
+        return (
+          <Shell.Panel slot="Main">
+            <Shell.Panel.Header
+              title={intl.formatMessage(
+                { defaultMessage: "{collection} » {document}" },
+                {
+                  collection: CollectionUtils.getDisplayName(collection),
+                  document: (
+                    <ContentSummaryPropertyValue
+                      value={DocumentUtils.getDisplayName(document)}
+                    />
+                  ),
+                },
+              )}
+              actionsAriaLabel={intl.formatMessage({
+                defaultMessage: "Document actions",
+              })}
+              actions={[
+                {
+                  label: intl.formatMessage({ defaultMessage: "History" }),
+                  icon: isShowingHistory ? (
+                    <PiClockCountdownFill />
+                  ) : (
+                    <PiClockCountdown />
+                  ),
+                  onPress: () =>
+                    navigateTo({
+                      name: RouteName.Document,
+                      collectionId,
+                      documentId,
+                      showHistory: !showHistory,
                     }),
-                    icon: <PiTrash />,
-                    onPress: () => setIsDeleteModalOpen(true),
-                  }
-                : null,
-              document.remoteId !== null
-                ? {
-                    label: intl.formatMessage({
-                      defaultMessage: "Remote document info",
-                    }),
-                    icon: <PiCloudCheck />,
-                    onPress: () => setIsRemoteDocumentInfoModalOpen(true),
-                  }
-                : null,
-              document.remoteUrl
-                ? {
-                    label: intl.formatMessage({
-                      defaultMessage: "Go to remote document",
-                    }),
-                    icon: <PiArrowSquareOut />,
-                    href: document.remoteUrl,
-                  }
-                : null,
-            ]}
-          />
-          <Shell.Panel.Content>
-            <CreateNewDocumentVersionForm
-              key={createFormId}
-              collection={collection}
-              document={document}
-              formId={createFormId}
-              setSubmitDisabled={setIsCreateFormSubmitDisabled}
-              isReadOnly={document.remoteId !== null}
+                },
+                !isRemote && !isShowingHistory
+                  ? {
+                      label: intl.formatMessage({ defaultMessage: "Save" }),
+                      icon: <PiFloppyDisk />,
+                      submit: createFormId,
+                      isDisabled: isCreateFormSubmitDisabled,
+                    }
+                  : null,
+                !isRemote
+                  ? {
+                      label: intl.formatMessage({
+                        defaultMessage: "Delete document",
+                      }),
+                      icon: <PiTrash />,
+                      onPress: () => setIsDeleteModalOpen(true),
+                    }
+                  : null,
+                isRemote
+                  ? {
+                      label: intl.formatMessage({
+                        defaultMessage: "Remote document info",
+                      }),
+                      icon: <PiCloudCheck />,
+                      onPress: () => setIsRemoteDocumentInfoModalOpen(true),
+                    }
+                  : null,
+                document.remoteUrl
+                  ? {
+                      label: intl.formatMessage({
+                        defaultMessage: "Go to remote document",
+                      }),
+                      icon: <PiArrowSquareOut />,
+                      href: document.remoteUrl,
+                    }
+                  : null,
+              ]}
             />
-            <DeleteDocumentModalForm
-              key={`DeleteDocumentModalForm_${documentId}`}
-              document={document}
-              isOpen={isDeleteModalOpen}
-              onClose={() => setIsDeleteModalOpen(false)}
-            />
-            <RemoteDocumentInfoModal
-              collection={collection}
-              document={document}
-              isOpen={isRemoteDocumentInfoModalOpen}
-              onClose={() => setIsRemoteDocumentInfoModalOpen(false)}
-            />
-          </Shell.Panel.Content>
-        </Shell.Panel>
-      )}
+            <Shell.Panel.Content
+              fullWidth={isShowingHistory}
+              className={
+                isShowingHistory ? cs.Document.historyLayout : undefined
+              }
+            >
+              <div
+                className={
+                  isShowingHistory ? cs.Document.contentWrapper : undefined
+                }
+              >
+                <DocumentContent
+                  collection={collection}
+                  document={document}
+                  documentVersions={documentVersions}
+                  documentVersionId={
+                    documentVersionId ?? document.latestVersion.id
+                  }
+                  formId={createFormId}
+                  setSubmitDisabled={setIsCreateFormSubmitDisabled}
+                  readOnlyReason={
+                    isRemote
+                      ? "remote"
+                      : isShowingHistory
+                        ? "history-version"
+                        : null
+                  }
+                />
+              </div>
+              {isShowingHistory ? (
+                <History
+                  collection={collection}
+                  document={document}
+                  documentVersions={documentVersions}
+                  className={cs.Document.history}
+                />
+              ) : null}
+              <DeleteDocumentModalForm
+                key={`DeleteDocumentModalForm_${documentId}`}
+                document={document}
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+              />
+              <RemoteDocumentInfoModal
+                collection={collection}
+                document={document}
+                isOpen={isRemoteDocumentInfoModalOpen}
+                onClose={() => setIsRemoteDocumentInfoModalOpen(false)}
+              />
+            </Shell.Panel.Content>
+          </Shell.Panel>
+        );
+      }}
     </DataLoader>
   ) : null;
 }

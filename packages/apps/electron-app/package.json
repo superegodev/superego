@@ -3,17 +3,24 @@
   "productName": "superego",
   "description": "Your Life's Database",
   "version": "2025.11.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/main/index.js",
   "author": {
     "name": "Paolo Scanferla",
     "email": "paolo.scanferla@gmail.com",
     "url": "https://pscanf.com/"
   },
   "license": "AGPL-3.0-or-later",
-  "main": "./dist/main/index.mjs",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
+    "check-translations": "node scripts/checkTranslations.ts",
+    "translations:extract": "formatjs extract 'src/main/**/*.ts' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file src/main/translations/en.json",
+    "translations:compile": "formatjs compile-folder --ast src/main/translations/ src/main/translations/compiled",
+    "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/main/translations/*.json'",
+    "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile",
     "build:vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
     "build": "yarn build:vite && yarn build:forge",
@@ -27,11 +34,15 @@
     "@electron-forge/plugin-fuses": "^7.10.2",
     "@electron-forge/publisher-github": "^7.10.2",
     "@electron/fuses": "^2.0.0",
+    "@formatjs/cli": "^6.10.0",
+    "@rollup/plugin-babel": "^6.1.0",
+    "babel-plugin-formatjs": "^11.1.1",
     "electron": "39.2.7",
     "electron-vite": "^5.0.0",
-    "vite": "^7.3.0"
+    "vite": "^7.3.1"
   },
   "dependencies": {
+    "@formatjs/intl": "^4.0.9",
     "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",

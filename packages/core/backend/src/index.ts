@@ -41,6 +41,7 @@ export type { default as CollectionNotFound } from "./errors/CollectionNotFound.
 export type { default as CollectionSchemaNotValid } from "./errors/CollectionSchemaNotValid.js";
 export type { default as CollectionSettingsNotValid } from "./errors/CollectionSettingsNotValid.js";
 export type { default as CollectionVersionIdNotMatching } from "./errors/CollectionVersionIdNotMatching.js";
+export type { default as CollectionVersionNotFound } from "./errors/CollectionVersionNotFound.js";
 export type { default as CommandConfirmationNotValid } from "./errors/CommandConfirmationNotValid.js";
 export type { default as ConnectorAuthenticationFailed } from "./errors/ConnectorAuthenticationFailed.js";
 export type { default as ConnectorAuthenticationSettingsNotValid } from "./errors/ConnectorAuthenticationSettingsNotValid.js";
@@ -108,6 +109,7 @@ export type { default as LiteDocument } from "./types/LiteDocument.js";
 export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
+export type { default as MinimalDocumentVersion } from "./types/MinimalDocumentVersion.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";

@@ -53,6 +53,15 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
+  "BucketTimelineNode.tsx_6dIxDP": {
+    "defaultMessage": "Yesterday"
+  },
+  "BucketTimelineNode.tsx_IvzBhq": {
+    "defaultMessage": "Earlier today"
+  },
+  "BucketTimelineNode.tsx_eF7IVx": {
+    "defaultMessage": "{label} ({count} versions)"
+  },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Error sending message to assistant"
   },
@@ -299,8 +308,26 @@
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
+    "defaultMessage": "This document is synced from a remote source and cannot be edited."
+  },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"
+  },
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
+    "defaultMessage": "Document editing is disabled when viewing historical versions."
+  },
+  "CreatedByLine.tsx_WEhuQZ": {
+    "defaultMessage": "Created by you"
+  },
+  "CreatedByLine.tsx_gLCFrt": {
+    "defaultMessage": "Created by collection migration"
+  },
+  "CreatedByLine.tsx_qTzfr9": {
+    "defaultMessage": "Created in conversation"
+  },
+  "CreatedByLine.tsx_ufqNmd": {
+    "defaultMessage": "Created by sync"
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
@@ -365,6 +392,9 @@
   "Document.tsx_SNguYK": {
     "defaultMessage": "Document actions"
   },
+  "Document.tsx_djJp6c": {
+    "defaultMessage": "History"
+  },
   "Document.tsx_eoWkGI": {
     "defaultMessage": "Delete document"
   },
@@ -376,6 +406,12 @@
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
+  },
+  "DocumentVersionTimelineNode.tsx_X3XZvD": {
+    "defaultMessage": "Restore version"
+  },
+  "DocumentVersionTimelineNode.tsx_ySYtQB": {
+    "defaultMessage": "Go to conversation"
   },
   "DocumentsTable.tsx_AbXVP4": {
     "defaultMessage": "Created at"
@@ -469,6 +505,9 @@
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"
+  },
+  "FileField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "FileField.tsx_HAlOn1": {
     "defaultMessage": "Name"
@@ -626,6 +665,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "I'm the Collection Creator"
   },
+  "History.tsx_QWxyjH": {
+    "defaultMessage": "No version history available"
+  },
+  "History.tsx_nT6w+N": {
+    "defaultMessage": "Versions history"
+  },
   "ImplementWithAssistantButton.tsx_40hUOu": {
     "defaultMessage": "Implement with assistant"
   },
@@ -731,6 +776,9 @@
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
   },
+  "ListField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
+  },
   "ListField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
@@ -821,6 +869,9 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Item {number}"
   },
+  "RHFTextListField.tsx_l95YvM": {
+    "defaultMessage": "No items"
+  },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
   },
@@ -880,6 +931,18 @@
   },
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
+  },
+  "RestoreVersionModal.tsx_X3XZvD": {
+    "defaultMessage": "Restore version"
+  },
+  "RestoreVersionModal.tsx_ca7Zl6": {
+    "defaultMessage": "Restore version from {date}? This will create a new version with the content from that point in time."
+  },
+  "RestoreVersionModal.tsx_gjBiyj": {
+    "defaultMessage": "Loading..."
+  },
+  "RestoreVersionModal.tsx_zz6ObK": {
+    "defaultMessage": "Restore"
   },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Details"
@@ -976,6 +1039,9 @@
   },
   "SpeakButton.tsx_tFFMkF": {
     "defaultMessage": "Pause"
+  },
+  "StructField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"

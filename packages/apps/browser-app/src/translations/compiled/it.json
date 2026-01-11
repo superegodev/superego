@@ -107,6 +107,36 @@
       "value": "Errore durante il caricamento dell'app"
     }
   ],
+  "BucketTimelineNode.tsx_6dIxDP": [
+    {
+      "type": 0,
+      "value": "Ieri"
+    }
+  ],
+  "BucketTimelineNode.tsx_IvzBhq": [
+    {
+      "type": 0,
+      "value": "Oggi (in precedenza)"
+    }
+  ],
+  "BucketTimelineNode.tsx_eF7IVx": [
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": " ("
+    },
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " versioni)"
+    }
+  ],
   "Chat.tsx_zhku3H": [
     {
       "type": 0,
@@ -676,10 +706,46 @@
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
+    {
+      "type": 0,
+      "value": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
+    }
+  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
       "value": "Errore durante il salvataggio del documento"
+    }
+  ],
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": [
+    {
+      "type": 0,
+      "value": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
+    }
+  ],
+  "CreatedByLine.tsx_WEhuQZ": [
+    {
+      "type": 0,
+      "value": "Creato da te"
+    }
+  ],
+  "CreatedByLine.tsx_gLCFrt": [
+    {
+      "type": 0,
+      "value": "Creato dalla migrazione della collezione"
+    }
+  ],
+  "CreatedByLine.tsx_qTzfr9": [
+    {
+      "type": 0,
+      "value": "Creato nella conversazione"
+    }
+  ],
+  "CreatedByLine.tsx_ufqNmd": [
+    {
+      "type": 0,
+      "value": "Creato dalla sincronizzazione"
     }
   ],
   "Default.tsx_9CnsYv": [
@@ -956,6 +1022,12 @@
       "value": "Azioni del documento"
     }
   ],
+  "Document.tsx_djJp6c": [
+    {
+      "type": 0,
+      "value": "Cronologia"
+    }
+  ],
   "Document.tsx_eoWkGI": [
     {
       "type": 0,
@@ -986,6 +1058,18 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Ripristina versione"
+    }
+  ],
+  "DocumentVersionTimelineNode.tsx_ySYtQB": [
+    {
+      "type": 0,
+      "value": "Vai alla conversazione"
     }
   ],
   "DocumentsTable.tsx_AbXVP4": [
@@ -1192,6 +1276,12 @@
     {
       "type": 0,
       "value": "Scarica"
+    }
+  ],
+  "FileField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "FileField.tsx_HAlOn1": [
@@ -1504,6 +1594,18 @@
     {
       "type": 0,
       "value": "Sono il Collection Creator"
+    }
+  ],
+  "History.tsx_QWxyjH": [
+    {
+      "type": 0,
+      "value": "Nessuna cronologia delle versioni disponibile"
+    }
+  ],
+  "History.tsx_nT6w+N": [
+    {
+      "type": 0,
+      "value": "Cronologia delle versioni"
     }
   ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
@@ -1832,6 +1934,12 @@
       "value": "Sposta elemento in alto"
     }
   ],
+  "ListField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
+    }
+  ],
   "ListField.tsx_Dp51E2": [
     {
       "type": 0,
@@ -2134,6 +2242,12 @@
     {
       "type": 1,
       "value": "number"
+    }
+  ],
+  "RHFTextListField.tsx_l95YvM": [
+    {
+      "type": 0,
+      "value": "Nessun elemento"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -2528,6 +2642,38 @@
       "value": "type"
     }
   ],
+  "RestoreVersionModal.tsx_X3XZvD": [
+    {
+      "type": 0,
+      "value": "Ripristina versione"
+    }
+  ],
+  "RestoreVersionModal.tsx_ca7Zl6": [
+    {
+      "type": 0,
+      "value": "Ripristinare la versione del "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    },
+    {
+      "type": 0,
+      "value": "? Verrà creata una nuova versione con il contenuto di quel momento."
+    }
+  ],
+  "RestoreVersionModal.tsx_gjBiyj": [
+    {
+      "type": 0,
+      "value": "Caricamento in corso..."
+    }
+  ],
+  "RestoreVersionModal.tsx_zz6ObK": [
+    {
+      "type": 0,
+      "value": "Ripristina"
+    }
+  ],
   "ResultErrors.tsx_Lv0zJu": [
     {
       "type": 0,
@@ -2842,6 +2988,12 @@
     {
       "type": 0,
       "value": "Pausa"
+    }
+  ],
+  "StructField.tsx_BPj/Jo": [
+    {
+      "type": 0,
+      "value": "null"
     }
   ],
   "StructField.tsx_Dp51E2": [

@@ -8,6 +8,7 @@ import { FieldError } from "../../../../design-system/forms/forms.js";
 import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
+import { useUiOptions } from "../../uiOptions.js";
 import type Props from "../Props.js";
 
 export default function TiptapRichText({
@@ -18,6 +19,7 @@ export default function TiptapRichText({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.tiptapRichTextJsonObject();
@@ -40,6 +42,7 @@ export default function TiptapRichText({
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
+        isReadOnly={isReadOnly}
         ref={field.ref}
       />
       <FieldErrorContext

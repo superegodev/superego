@@ -3,6 +3,7 @@ import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
+import type MinimalDocumentVersionEntity from "../../../entities/MinimalDocumentVersionEntity.js";
 import type GetDependencies from "../GetDependencies.js";
 
 const content = {
@@ -409,6 +410,151 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       // Verify
       expect(found).toEqual(null);
+    });
+  });
+
+  describe("finding all (minimal) by document id", () => {
+    const toMinimal = ({
+      content,
+      ...rest
+    }: DocumentVersionEntity): MinimalDocumentVersionEntity => rest;
+
+    it("case: no document versions => returns empty array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.findAllWhereDocumentIdEq(
+            Id.generate.document(),
+          ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([]);
+    });
+
+    it("case: some document versions => returns all versions ordered by created_at desc", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const document1Id = Id.generate.document();
+      const document2Id = Id.generate.document();
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: document1Id,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: { ...content, number: 1 },
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(1),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: document1Id,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: { ...content, number: 2 },
+        previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(2),
+      };
+      const documentVersion3: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: document1Id,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: { ...content, number: 3 },
+        previousVersionId: documentVersion2.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(3),
+      };
+      // Different document - should not be included
+      const documentVersion4: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: document2Id,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(4),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          await repos.documentVersion.insert(documentVersion3);
+          await repos.documentVersion.insert(documentVersion4);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAllWhereDocumentIdEq(document1Id),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([
+        toMinimal(documentVersion3),
+        toMinimal(documentVersion2),
+        toMinimal(documentVersion1),
+      ]);
+    });
+
+    it("case: single version => returns array with one element", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentId = Id.generate.document();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAllWhereDocumentIdEq(documentId),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([toMinimal(documentVersion)]);
     });
   });
 

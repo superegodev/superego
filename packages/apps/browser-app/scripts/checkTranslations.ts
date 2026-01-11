@@ -8,9 +8,12 @@ const translationsDir = join(import.meta.dirname, "../src/translations");
 const compiledDir = join(translationsDir, "compiled");
 const tmpTranslationsDir = join(
   tmpdir(),
-  "superego-translations-check/translations",
+  "superego-browser-app-translations-check/translations",
 );
-const tmpCompiledDir = join(tmpdir(), "superego-translations-check/compiled");
+const tmpCompiledDir = join(
+  tmpdir(),
+  "superego-browser-app-translations-check/compiled",
+);
 const sourceLocale = "en.json";
 
 // Verify that all messages have been extracted.

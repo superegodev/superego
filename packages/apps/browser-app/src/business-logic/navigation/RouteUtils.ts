@@ -3,6 +3,7 @@ import type {
   CollectionId,
   ConversationId,
   DocumentId,
+  DocumentVersionId,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import type Route from "./Route.js";
@@ -34,8 +35,20 @@ export function toHref(route: Route): string {
       return `/collections/${route.collectionId}/settings`;
     case RouteName.CreateDocument:
       return `/collections/${route.collectionId}/documents/new`;
-    case RouteName.Document:
-      return `/collections/${route.collectionId}/documents/${route.documentId}`;
+    case RouteName.Document: {
+      const basePath = `/collections/${route.collectionId}/documents/${route.documentId}`;
+      if (!route.documentVersionId && route.showHistory === undefined) {
+        return basePath;
+      }
+      const versionPath = route.documentVersionId
+        ? `/documentVersions/${route.documentVersionId}`
+        : "";
+      const search =
+        route.showHistory !== undefined
+          ? `?showHistory=${route.showHistory}`
+          : "";
+      return `${basePath}${versionPath}${search}`;
+    }
     case RouteName.CreateApp: {
       const search = new URLSearchParams(
         route.collectionIds.map((id) => ["collectionId", id]),
@@ -86,17 +99,47 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({
+      pathname:
+        "/collections/:collectionId/documents/:documentId/documentVersions/:documentVersionId{/}?",
+    }),
+    toRoute: (match) => {
+      const showHistory = new URLSearchParams(match.search.input).get(
+        "showHistory",
+      );
+      return {
+        name: RouteName.Document,
+        collectionId: decodePathSegment<CollectionId>(
+          match.pathname.groups["collectionId"],
+        ),
+        documentId: decodePathSegment<DocumentId>(
+          match.pathname.groups["documentId"],
+        ),
+        documentVersionId: decodePathSegment<DocumentVersionId>(
+          match.pathname.groups["documentVersionId"],
+        ),
+        showHistory: showHistory === null ? undefined : showHistory === "true",
+      };
+    },
+  },
+  {
+    pattern: new URLPattern({
       pathname: "/collections/:collectionId/documents/:documentId{/}?",
     }),
-    toRoute: (match) => ({
-      name: RouteName.Document,
-      collectionId: decodePathSegment<CollectionId>(
-        match.pathname.groups["collectionId"],
-      ),
-      documentId: decodePathSegment<DocumentId>(
-        match.pathname.groups["documentId"],
-      ),
-    }),
+    toRoute: (match) => {
+      const showHistory = new URLSearchParams(match.search.input).get(
+        "showHistory",
+      );
+      return {
+        name: RouteName.Document,
+        collectionId: decodePathSegment<CollectionId>(
+          match.pathname.groups["collectionId"],
+        ),
+        documentId: decodePathSegment<DocumentId>(
+          match.pathname.groups["documentId"],
+        ),
+        showHistory: showHistory === null ? undefined : showHistory === "true",
+      };
+    },
   },
   {
     pattern: new URLPattern({

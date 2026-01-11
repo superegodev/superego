@@ -53,6 +53,15 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Errore durante il caricamento dell'app"
   },
+  "BucketTimelineNode.tsx_6dIxDP": {
+    "defaultMessage": "Ieri"
+  },
+  "BucketTimelineNode.tsx_IvzBhq": {
+    "defaultMessage": "Oggi (in precedenza)"
+  },
+  "BucketTimelineNode.tsx_eF7IVx": {
+    "defaultMessage": "{label} ({count} versioni)"
+  },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
   },
@@ -299,8 +308,26 @@
   "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
+  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
+    "defaultMessage": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
+  },
+  "CreateNewDocumentVersionForm.tsx_xZxbWN": {
+    "defaultMessage": "La modifica del documento è disabilitata quando si visualizzano versioni storiche."
+  },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Errore durante il salvataggio del documento"
+  },
+  "CreatedByLine.tsx_WEhuQZ": {
+    "defaultMessage": "Creato da te"
+  },
+  "CreatedByLine.tsx_gLCFrt": {
+    "defaultMessage": "Creato dalla migrazione della collezione"
+  },
+  "CreatedByLine.tsx_qTzfr9": {
+    "defaultMessage": "Creato nella conversazione"
+  },
+  "CreatedByLine.tsx_ufqNmd": {
+    "defaultMessage": "Creato dalla sincronizzazione"
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
@@ -365,6 +392,9 @@
   "Document.tsx_SNguYK": {
     "defaultMessage": "Azioni del documento"
   },
+  "Document.tsx_djJp6c": {
+    "defaultMessage": "Cronologia"
+  },
   "Document.tsx_eoWkGI": {
     "defaultMessage": "Elimina documento"
   },
@@ -376,6 +406,12 @@
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
+  },
+  "DocumentVersionTimelineNode.tsx_X3XZvD": {
+    "defaultMessage": "Ripristina versione"
+  },
+  "DocumentVersionTimelineNode.tsx_ySYtQB": {
+    "defaultMessage": "Vai alla conversazione"
   },
   "DocumentsTable.tsx_AbXVP4": {
     "defaultMessage": "Creato il"
@@ -469,6 +505,9 @@
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Scarica"
+  },
+  "FileField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "FileField.tsx_HAlOn1": {
     "defaultMessage": "Nome"
@@ -626,6 +665,12 @@
   "Hero.tsx_rI2Xm3": {
     "defaultMessage": "Sono il Collection Creator"
   },
+  "History.tsx_QWxyjH": {
+    "defaultMessage": "Nessuna cronologia delle versioni disponibile"
+  },
+  "History.tsx_nT6w+N": {
+    "defaultMessage": "Cronologia delle versioni"
+  },
   "ImplementWithAssistantButton.tsx_40hUOu": {
     "defaultMessage": "Implementa con l'assistente"
   },
@@ -731,6 +776,9 @@
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Sposta elemento in alto"
   },
+  "ListField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
+  },
   "ListField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
@@ -809,6 +857,9 @@
   "RHFTextListField.tsx_OT7vQx": {
     "defaultMessage": "Elemento {number}"
   },
+  "RHFTextListField.tsx_l95YvM": {
+    "defaultMessage": "Nessun elemento"
+  },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
   },
@@ -868,6 +919,18 @@
   },
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> è stata eliminata.} other {<code>{collectionId}</code> ha una nuova versione.} }"
+  },
+  "RestoreVersionModal.tsx_X3XZvD": {
+    "defaultMessage": "Ripristina versione"
+  },
+  "RestoreVersionModal.tsx_ca7Zl6": {
+    "defaultMessage": "Ripristinare la versione del {date}? Verrà creata una nuova versione con il contenuto di quel momento."
+  },
+  "RestoreVersionModal.tsx_gjBiyj": {
+    "defaultMessage": "Caricamento in corso..."
+  },
+  "RestoreVersionModal.tsx_zz6ObK": {
+    "defaultMessage": "Ripristina"
   },
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Dettagli"
@@ -946,6 +1009,9 @@
   },
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
+  },
+  "StructField.tsx_BPj/Jo": {
+    "defaultMessage": "null"
   },
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"

@@ -39,6 +39,7 @@ export default function RHFEmojiField<
   label,
   description,
   isDisabled,
+  isReadOnly,
   className,
 }: Props<TFieldValues, TName, TTransformedValues>) {
   const { field, fieldState } = useController({ control, name });
@@ -52,6 +53,7 @@ export default function RHFEmojiField<
         value={field.value}
         onChange={field.onChange}
         id={field.name}
+        isReadOnly={isReadOnly}
       />
       <FieldErrorContext
         value={{

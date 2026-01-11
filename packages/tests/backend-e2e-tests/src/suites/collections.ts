@@ -5321,4 +5321,197 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
   });
+
+  describe("getVersion", () => {
+    it("error: CollectionVersionNotFound (case: collection does not exist)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const collectionVersionId = Id.generate.collectionVersion();
+      const result = await backend.collections.getVersion(
+        collectionId,
+        collectionVersionId,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionVersionNotFound",
+          details: { collectionId, collectionVersionId },
+        },
+      });
+    });
+
+    it("error: CollectionVersionNotFound (case: collection version does not exist)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const collectionVersionId = Id.generate.collectionVersion();
+      const result = await backend.collections.getVersion(
+        createResult.data.id,
+        collectionVersionId,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionVersionNotFound",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId,
+          },
+        },
+      });
+    });
+
+    it("success: gets (case: latest version)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.getVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: createResult.data.latestVersion,
+        error: null,
+      });
+    });
+
+    it("success: gets (case: non-latest version)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+      const migration = {
+        source: "",
+        compiled: `
+          export default function migrate(content) {
+            return { updatedTitle: content.title };
+          }
+        `,
+      };
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { updatedTitle: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        migration,
+        null,
+      );
+      assert.isTrue(createNewVersionResult.success);
+
+      // Exercise - get the original version (now a previous version)
+      const result = await backend.collections.getVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: createResult.data.latestVersion,
+        error: null,
+      });
+    });
+  });
 });

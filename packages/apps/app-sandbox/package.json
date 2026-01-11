@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@vitest/browser": "^4.0.16",
     "@vitest/browser-playwright": "^4.0.16",
@@ -49,7 +49,7 @@
     "react-aria-components": "^1.14.0",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
-    "react-intl": "^8.0.10",
+    "react-intl": "^8.0.11",
     "react-stately": "^3.43.0"
   }
 }

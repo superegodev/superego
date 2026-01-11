@@ -22,6 +22,7 @@ import type CollectionNotFound from "./errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "./errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid.js";
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
+import type CollectionVersionNotFound from "./errors/CollectionVersionNotFound.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
 import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
 import type ConnectorDoesNotSupportUpSyncing from "./errors/ConnectorDoesNotSupportUpSyncing.js";
@@ -58,6 +59,7 @@ import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
+import type CollectionVersion from "./types/CollectionVersion.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
 import type Connector from "./types/Connector.js";
 import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticationSettings.js";
@@ -69,6 +71,7 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
+import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
@@ -240,6 +243,14 @@ export default interface Backend {
     list(): ResultPromise<Collection[], UnexpectedError>;
 
     listConnectors(): ResultPromise<Connector[], UnexpectedError>;
+
+    getVersion(
+      collectionId: CollectionId,
+      collectionVersionId: CollectionVersionId,
+    ): ResultPromise<
+      CollectionVersion,
+      CollectionVersionNotFound | UnexpectedError
+    >;
   };
 
   documents: {
@@ -304,6 +315,14 @@ export default interface Backend {
     ): ResultPromise<
       (LiteDocument | Document)[],
       CollectionNotFound | UnexpectedError
+    >;
+
+    listVersions(
+      collectionId: CollectionId,
+      id: DocumentId,
+    ): ResultPromise<
+      MinimalDocumentVersion[],
+      DocumentNotFound | UnexpectedError
     >;
 
     get(

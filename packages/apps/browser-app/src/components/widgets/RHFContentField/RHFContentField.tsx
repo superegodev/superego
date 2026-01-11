@@ -10,6 +10,7 @@ interface Props {
   showTypes?: boolean;
   showNullability?: boolean;
   zoomLevel?: number;
+  isReadOnly?: boolean;
 }
 export default function RHFContentField({
   schema,
@@ -18,9 +19,12 @@ export default function RHFContentField({
   showTypes = true,
   showNullability = false,
   zoomLevel = 1,
+  isReadOnly = false,
 }: Props) {
   return (
-    <UiOptionsProvider value={{ showTypes, showNullability, zoomLevel }}>
+    <UiOptionsProvider
+      value={{ showTypes, showNullability, zoomLevel, isReadOnly }}
+    >
       <AnyField
         schema={schema}
         typeDefinition={utils.getRootType(schema)}

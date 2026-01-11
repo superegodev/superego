@@ -9,6 +9,7 @@ type Props = {
   autoFocus?: boolean | undefined;
   isInvalid?: boolean | undefined;
   isDisabled?: boolean | undefined;
+  isReadOnly?: boolean | undefined;
   maxHeight?: Property.MaxHeight;
   ariaLabel?: string | undefined;
   className?: string | undefined;

@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import ConversationSearchResult from "./ConversationSearchResult.js";
-import DocumentSearchResult from "./DocumentSearchResult.jsx";
+import DocumentSearchResult from "./DocumentSearchResult.js";
 import * as cs from "./SearchModal.css.js";
 import type SearchState from "./SearchState.js";
 import SearchType from "./SearchType.js";

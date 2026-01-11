@@ -7,6 +7,7 @@ import DatePickerInput from "../../../../design-system/forms/DatePickerInput.js"
 import FieldError from "../../../../design-system/forms/FieldError.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
+import { useUiOptions } from "../../uiOptions.js";
 import type Props from "../Props.js";
 
 export default function PlainDate({
@@ -17,6 +18,7 @@ export default function PlainDate({
   name,
   label,
 }: Props) {
+  const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
   return (
     <DatePicker
@@ -29,6 +31,7 @@ export default function PlainDate({
       onBlur={field.onBlur}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
+      isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
