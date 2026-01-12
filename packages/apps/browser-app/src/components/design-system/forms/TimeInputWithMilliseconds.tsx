@@ -31,7 +31,7 @@ export default function TimeInputWithMilliseconds({
     evt: FormEvent<HTMLInputElement> & { data?: string | null },
   ) => {
     const data = evt.data;
-    if (data && /^\d$/.test(data)) {
+    if (!isReadOnly && data && /^\d$/.test(data)) {
       // Shift digits left and append the new digit.
       const currentValue = milliseconds ?? 0;
       const newValue = ((currentValue * 10) % 1000) + Number.parseInt(data, 10);
@@ -40,12 +40,14 @@ export default function TimeInputWithMilliseconds({
   };
 
   const handleMillisecondsKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
-    if (evt.key === "ArrowUp") {
-      evt.preventDefault();
-      onMillisecondsChange(Math.min(999, (milliseconds ?? 0) + 1));
-    } else if (evt.key === "ArrowDown") {
-      evt.preventDefault();
-      onMillisecondsChange(Math.max(0, (milliseconds ?? 0) - 1));
+    if (!isReadOnly) {
+      if (evt.key === "ArrowUp") {
+        evt.preventDefault();
+        onMillisecondsChange(Math.min(999, (milliseconds ?? 0) + 1));
+      } else if (evt.key === "ArrowDown") {
+        evt.preventDefault();
+        onMillisecondsChange(Math.max(0, (milliseconds ?? 0) - 1));
+      }
     }
   };
 
