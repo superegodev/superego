@@ -7,8 +7,8 @@ export const EmojiInput = {
   }),
 
   popoverTrigger: style({
-    width: `calc(${vars.spacing._9} + ${vars.borders.width.thin})`,
-    height: `calc(${vars.spacing._9} + ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
+    width: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.xl,
   }),

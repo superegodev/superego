@@ -120,7 +120,7 @@ export const SelectButton = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: vars.spacing._2,
   }),
 
@@ -272,7 +272,7 @@ export const DatePickerCalendar = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",

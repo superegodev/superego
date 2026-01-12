@@ -79,7 +79,8 @@ function parseTimeWithMilliseconds(value: string): {
   time: string;
   milliseconds: number;
 } {
-  const match = value.match(/^(.+?)(?:\.(\d{1,3}))?$/);
+  const normalizedValue = value.startsWith("T") ? value.slice(1) : value;
+  const match = normalizedValue.match(/^(.+?)(?:\.(\d{1,3}))?$/);
   if (!match?.[1]) {
     return { time: value, milliseconds: 0 };
   }

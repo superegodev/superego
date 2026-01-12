@@ -8,8 +8,7 @@ export const RHFTextListField = {
 
   emptyItemsAddButton: style({
     width: "100%",
-    // Pixel adjustment to make it the same height as the text field.
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: vars.spacing._2,
   }),
 

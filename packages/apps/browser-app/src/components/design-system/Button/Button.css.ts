@@ -5,7 +5,7 @@ const buttonRootBase = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: `calc(${vars.spacing._9} + ${vars.borders.width.thin})`,
+  height: `calc(${vars.spacing._9} + 1px)`,
   paddingBlock: vars.spacing._2,
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,
