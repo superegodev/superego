@@ -1,6 +1,6 @@
 {
   "name": "@superego/assistants-e2e-tests",
-  "version": "2025.11.0",
+  "version": "2026.1.0",
   "type": "module",
   "private": true,
   "scripts": {
