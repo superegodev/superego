@@ -53,11 +53,11 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
-  "BucketTimelineNode.tsx_6dIxDP": {
-    "defaultMessage": "Yesterday"
+  "BucketTimelineNode.tsx_1KzJm9": {
+    "defaultMessage": "Earlier today at {time}"
   },
-  "BucketTimelineNode.tsx_IvzBhq": {
-    "defaultMessage": "Earlier today"
+  "BucketTimelineNode.tsx_Fvfijn": {
+    "defaultMessage": "Yesterday at {time}"
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versions)"
@@ -773,6 +773,24 @@
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
   },
+  "Instant.tsx_AnIOVe": {
+    "defaultMessage": "{label} time"
+  },
+  "Instant.tsx_HuT5OQ": {
+    "defaultMessage": "{label} time offset"
+  },
+  "Instant.tsx_P7PLVj": {
+    "defaultMessage": "Date"
+  },
+  "Instant.tsx_fnf5NZ": {
+    "defaultMessage": "Time offset"
+  },
+  "Instant.tsx_ug01Mk": {
+    "defaultMessage": "Time"
+  },
+  "Instant.tsx_yAfrcK": {
+    "defaultMessage": "{label} date"
+  },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Move item up"
   },
@@ -1057,6 +1075,9 @@
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
+  },
+  "TimeInputWithMilliseconds.tsx_/w7Rru": {
+    "defaultMessage": "Milliseconds"
   },
   "Title.tsx_/f6lRt": {
     "defaultMessage": "Create chart from {collection}"

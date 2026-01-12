@@ -16,6 +16,40 @@ export const JsonObjectField = {
   },
 };
 
+export const StringField = {
+  Instant: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+
+    fields: style({
+      display: "flex",
+      gap: vars.spacing._2,
+    }),
+
+    datePicker: style({
+      flex: "3 0 0",
+      marginBlockEnd: 0,
+    }),
+
+    timeField: style({
+      flex: "3 0 0",
+      marginBlockEnd: 0,
+    }),
+
+    offsetInput: style({
+      flex: "1 0 0",
+      selectors: {
+        '&[data-invalid="true"]': {
+          borderColor: vars.colors.semantic.error.border,
+        },
+      },
+    }),
+  },
+};
+
 export const FileField = {
   root: style({
     display: "flex",

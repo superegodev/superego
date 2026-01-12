@@ -13,3 +13,6 @@ export { default as SelectButton } from "./SelectButton.js";
 export { default as SelectOptions, type Option } from "./SelectOptions.js";
 export { default as TextArea } from "./TextArea.js";
 export { default as TextField } from "./TextField.js";
+export { default as TimeField } from "./TimeField.js";
+export { default as TimeInput } from "./TimeInput.js";
+export { default as TimeInputWithMilliseconds } from "./TimeInputWithMilliseconds.js";

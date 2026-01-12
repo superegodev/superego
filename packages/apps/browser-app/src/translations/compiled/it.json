@@ -107,16 +107,24 @@
       "value": "Errore durante il caricamento dell'app"
     }
   ],
-  "BucketTimelineNode.tsx_6dIxDP": [
+  "BucketTimelineNode.tsx_1KzJm9": [
     {
       "type": 0,
-      "value": "Ieri"
+      "value": "Oggi alle "
+    },
+    {
+      "type": 1,
+      "value": "time"
     }
   ],
-  "BucketTimelineNode.tsx_IvzBhq": [
+  "BucketTimelineNode.tsx_Fvfijn": [
     {
       "type": 0,
-      "value": "Oggi (in precedenza)"
+      "value": "Ieri alle "
+    },
+    {
+      "type": 1,
+      "value": "time"
     }
   ],
   "BucketTimelineNode.tsx_eF7IVx": [
@@ -1942,6 +1950,54 @@
       "value": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
     }
   ],
+  "Instant.tsx_AnIOVe": [
+    {
+      "type": 0,
+      "value": "Orario "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    }
+  ],
+  "Instant.tsx_HuT5OQ": [
+    {
+      "type": 0,
+      "value": "Offset orario "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    }
+  ],
+  "Instant.tsx_P7PLVj": [
+    {
+      "type": 0,
+      "value": "Data"
+    }
+  ],
+  "Instant.tsx_fnf5NZ": [
+    {
+      "type": 0,
+      "value": "Offset orario"
+    }
+  ],
+  "Instant.tsx_ug01Mk": [
+    {
+      "type": 0,
+      "value": "Ora"
+    }
+  ],
+  "Instant.tsx_yAfrcK": [
+    {
+      "type": 0,
+      "value": "Data "
+    },
+    {
+      "type": 1,
+      "value": "label"
+    }
+  ],
   "ListField.tsx_6ibWnb": [
     {
       "type": 0,
@@ -3042,6 +3098,12 @@
     {
       "type": 1,
       "value": "time"
+    }
+  ],
+  "TimeInputWithMilliseconds.tsx_/w7Rru": [
+    {
+      "type": 0,
+      "value": "Millisecondi"
     }
   ],
   "Title.tsx_/f6lRt": [

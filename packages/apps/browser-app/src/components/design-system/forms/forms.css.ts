@@ -248,6 +248,8 @@ export const DatePickerInput = {
     inputRootBase,
     {
       display: "flex",
+      // Pixel adjustment to make it match other inputs' heights.
+      height: `calc(${vars.spacing._9} + 1px)`,
     },
   ]),
 
@@ -283,6 +285,102 @@ export const DatePickerInput = {
     border: 0,
     cursor: "pointer",
     background: "transparent",
+  }),
+};
+
+export const TimeField = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    marginBlockEnd: vars.spacing._6,
+  }),
+};
+
+export const TimeInput = {
+  root: style([
+    inputRootBase,
+    {
+      display: "flex",
+      alignItems: "center",
+      whiteSpace: "nowrap",
+    },
+  ]),
+
+  segment: style({
+    paddingInline: vars.spacing._0_5,
+    selectors: {
+      "&:focus": {
+        borderRadius: vars.borders.radius.sm,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+        outlineOffset: 0,
+      },
+    },
+  }),
+};
+
+export const TimeInputWithMilliseconds = {
+  root: style([
+    inputRootBase,
+    {
+      display: "flex",
+      alignItems: "center",
+      whiteSpace: "nowrap",
+    },
+  ]),
+
+  dateInput: style({
+    border: 0,
+    marginBlockEnd: 0,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "fit-content",
+    whiteSpace: "nowrap",
+    forcedColorAdjust: "none",
+  }),
+
+  segment: style({
+    paddingInline: vars.spacing._0_5,
+    selectors: {
+      "&:focus": {
+        borderRadius: vars.borders.radius.sm,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+        outlineOffset: 0,
+      },
+      '&[data-type="literal"]': {
+        padding: 0,
+      },
+    },
+  }),
+
+  separator: style({
+    flexShrink: 0,
+    color: vars.colors.text.primary,
+  }),
+
+  millisecondsInput: style({
+    width: `calc(3ch + 2 * ${vars.spacing._0_5})`,
+    boxSizing: "content-box",
+    border: 0,
+    padding: 0,
+    fontFamily: "inherit",
+    fontSize: "inherit",
+    background: "transparent",
+    color: "inherit",
+    caretColor: "transparent",
+    textAlign: "center",
+    selectors: {
+      "&:focus": {
+        borderRadius: vars.borders.radius.sm,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+        outline: "none",
+      },
+      "&::selection": {
+        background: "transparent",
+      },
+    },
   }),
 };
 
