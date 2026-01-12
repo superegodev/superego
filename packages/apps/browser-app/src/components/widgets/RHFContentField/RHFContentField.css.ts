@@ -80,7 +80,7 @@ export const FileField = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     paddingInline: 0,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -109,7 +109,7 @@ export const FileField = {
     justifyContent: "center",
     alignItems: "center",
     width: vars.spacing._6,
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     fontSize: vars.typography.fontSizes.xl4,
     marginBlockEnd: vars.spacing._2,
   }),
@@ -126,7 +126,7 @@ export const FileField = {
 
   nonNullFileButton: style({
     aspectRatio: "1 / 1",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin} + 0.5px)`,
+    height: `calc(${vars.spacing._9} + 1px)`,
   }),
 };
 
@@ -139,7 +139,7 @@ export const StructAndListField = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     paddingInline: 0,
     color: vars.colors.text.secondary,
     fontStyle: "italic",
@@ -158,7 +158,7 @@ export const ListField = {
   emptyItemsPlaceholder: style({
     display: "flex",
     justifyContent: "center",
-    lineHeight: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     fontSize: vars.typography.fontSizes.md,
     fontStyle: "italic",
     color: vars.colors.text.secondary,

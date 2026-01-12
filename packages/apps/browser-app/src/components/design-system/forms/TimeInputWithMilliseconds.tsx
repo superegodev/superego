@@ -54,36 +54,44 @@ export default function TimeInputWithMilliseconds({
     <Group className={cs.TimeInputWithMilliseconds.root}>
       <DateInput className={cs.TimeInputWithMilliseconds.dateInput}>
         {(segment) => (
-          <DateSegment
-            ref={segment.type === "hour" ? ref : undefined}
-            segment={segment}
-            className={cs.TimeInputWithMilliseconds.segment}
-          />
+          <>
+            <DateSegment
+              ref={segment.type === "hour" ? ref : undefined}
+              segment={segment}
+              className={cs.TimeInputWithMilliseconds.segment}
+            />
+            {segment.type === "second" ? (
+              <>
+                <span className={cs.TimeInputWithMilliseconds.separator}>
+                  {decimalSeparator}
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={
+                    milliseconds === null
+                      ? "–––"
+                      : milliseconds.toString().padStart(3, "0")
+                  }
+                  // Avoids React complaining that we haven't registered an onChange
+                  // handler. (We do with onBeforeInput.)
+                  onChange={noop}
+                  onBeforeInput={handleMillisecondsBeforeInput}
+                  onKeyDown={handleMillisecondsKeyDown}
+                  onMouseDown={(evt) => {
+                    evt.stopPropagation();
+                  }}
+                  className={cs.TimeInputWithMilliseconds.millisecondsInput}
+                  aria-label={intl.formatMessage({
+                    defaultMessage: "Milliseconds",
+                  })}
+                  readOnly={isReadOnly}
+                />
+              </>
+            ) : null}
+          </>
         )}
       </DateInput>
-      <span className={cs.TimeInputWithMilliseconds.separator}>
-        {decimalSeparator}
-      </span>
-      <input
-        type="text"
-        inputMode="numeric"
-        value={
-          milliseconds === null
-            ? "–––"
-            : milliseconds.toString().padStart(3, "0")
-        }
-        // Avoids React complaining that we haven't registered an onChange
-        // handler. (We do with onBeforeInput.)
-        onChange={noop}
-        onBeforeInput={handleMillisecondsBeforeInput}
-        onKeyDown={handleMillisecondsKeyDown}
-        onMouseDown={(evt) => {
-          evt.stopPropagation();
-        }}
-        className={cs.TimeInputWithMilliseconds.millisecondsInput}
-        aria-label={intl.formatMessage({ defaultMessage: "Milliseconds" })}
-        readOnly={isReadOnly}
-      />
     </Group>
   );
 }

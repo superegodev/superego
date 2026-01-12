@@ -82,7 +82,8 @@ export const SelectButton = {
     justifyContent: "space-between",
     alignItems: "center",
     gap: vars.spacing._2,
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    // Pixel adjustment to all inputs' heights match.
+    height: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
   }),
@@ -171,6 +172,8 @@ export const Label = {
 
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
+  // Pixel adjustment to all inputs' heights match.
+  height: `calc(${vars.spacing._9} + 1px)`,
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
@@ -248,8 +251,6 @@ export const DatePickerInput = {
     inputRootBase,
     {
       display: "flex",
-      // Pixel adjustment to make it match other inputs' heights.
-      height: `calc(${vars.spacing._9} + 1px)`,
     },
   ]),
 
@@ -360,7 +361,7 @@ export const TimeInputWithMilliseconds = {
   }),
 
   millisecondsInput: style({
-    width: `calc(3ch + 2 * ${vars.spacing._0_5})`,
+    width: "3ch",
     boxSizing: "content-box",
     border: 0,
     padding: 0,
@@ -389,7 +390,7 @@ export const DatePickerCalendar = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: `calc(${vars.spacing._9} + 2 * ${vars.borders.width.thin})`,
+    height: `calc(${vars.spacing._9} + 1px)`,
     marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",
