@@ -22,7 +22,6 @@ export default function TimeInputWithMilliseconds({
   onMillisecondsChange,
   isReadOnly,
 }: Props) {
-  const millisecondsInputRef = useRef<HTMLInputElement>(null);
   const { locale } = useLocale();
   const intl = useIntl();
   const decimalSeparator = useMemo(() => getDecimalSeparator(locale), [locale]);
@@ -66,7 +65,6 @@ export default function TimeInputWithMilliseconds({
         {decimalSeparator}
       </span>
       <input
-        ref={millisecondsInputRef}
         type="text"
         inputMode="numeric"
         value={
