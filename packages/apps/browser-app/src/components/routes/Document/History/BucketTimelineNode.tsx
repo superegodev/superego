@@ -1,7 +1,7 @@
 import type { Document, MinimalDocumentVersion } from "@superego/backend";
 import { DateTime } from "luxon";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
-import { FormattedDate, FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import Button from "../../../design-system/Button/Button.js";
@@ -83,12 +83,26 @@ function BucketLabel({ endDate }: { endDate: Date }) {
 
   // Today.
   if (endDateTime.hasSame(DateTime.now(), "day")) {
-    return <FormattedMessage defaultMessage="Earlier today" />;
+    return (
+      <FormattedMessage
+        defaultMessage="Earlier today at {time}"
+        values={{
+          time: <FormattedTime value={endDate} />,
+        }}
+      />
+    );
   }
 
   // Yesterday.
   if (endDateTime.hasSame(DateTime.now().minus({ days: 1 }), "day")) {
-    return <FormattedMessage defaultMessage="Yesterday" />;
+    return (
+      <FormattedMessage
+        defaultMessage="Yesterday at {time}"
+        values={{
+          time: <FormattedTime value={endDate} />,
+        }}
+      />
+    );
   }
 
   // Within 7 days.

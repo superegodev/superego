@@ -53,11 +53,11 @@
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Errore durante il caricamento dell'app"
   },
-  "BucketTimelineNode.tsx_6dIxDP": {
-    "defaultMessage": "Ieri"
+  "BucketTimelineNode.tsx_1KzJm9": {
+    "defaultMessage": "Oggi alle {time}"
   },
-  "BucketTimelineNode.tsx_IvzBhq": {
-    "defaultMessage": "Oggi (in precedenza)"
+  "BucketTimelineNode.tsx_Fvfijn": {
+    "defaultMessage": "Ieri alle {time}"
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versioni)"
@@ -772,6 +772,24 @@
   },
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
+  },
+  "Instant.tsx_AnIOVe": {
+    "defaultMessage": "Orario {label}"
+  },
+  "Instant.tsx_HuT5OQ": {
+    "defaultMessage": "Offset orario {label}"
+  },
+  "Instant.tsx_P7PLVj": {
+    "defaultMessage": "Data"
+  },
+  "Instant.tsx_fnf5NZ": {
+    "defaultMessage": "Offset orario"
+  },
+  "Instant.tsx_ug01Mk": {
+    "defaultMessage": "Ora"
+  },
+  "Instant.tsx_yAfrcK": {
+    "defaultMessage": "Data {label}"
   },
   "ListField.tsx_6ibWnb": {
     "defaultMessage": "Sposta elemento in alto"

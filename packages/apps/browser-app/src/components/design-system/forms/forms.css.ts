@@ -248,6 +248,8 @@ export const DatePickerInput = {
     inputRootBase,
     {
       display: "flex",
+      // Pixel adjustment to make it match other inputs' heights.
+      height: `calc(${vars.spacing._9} + 1px)`,
     },
   ]),
 

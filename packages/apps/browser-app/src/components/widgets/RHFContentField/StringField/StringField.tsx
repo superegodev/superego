@@ -1,5 +1,6 @@
 import { FormatId } from "@superego/schema";
 import Default from "./formats/Default.js";
+import Instant from "./formats/Instant.js";
 import PlainDate from "./formats/PlainDate.js";
 import PlainTime from "./formats/PlainTime.js";
 import type Props from "./Props.js";
@@ -31,6 +32,8 @@ function getComponent(typeDefinition: Props["typeDefinition"]) {
       return PlainDate;
     case FormatId.String.PlainTime:
       return PlainTime;
+    case FormatId.String.Instant:
+      return Instant;
     default:
       return Default;
   }

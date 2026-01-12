@@ -11,7 +11,7 @@ import getDecimalSeparator from "../../../utils/getDecimalSeparator.js";
 import * as cs from "./forms.css.js";
 
 interface Props {
-  ref: RefCallBack;
+  ref?: RefCallBack;
   milliseconds: number | null;
   onMillisecondsChange: (ms: number) => void;
   isReadOnly?: boolean;
