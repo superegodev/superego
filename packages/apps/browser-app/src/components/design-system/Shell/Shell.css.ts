@@ -127,7 +127,7 @@ export const PanelHeader = {
   }),
 
   primarySidebarToggleButton: style({
-    fontSize: vars.typography.fontSizes.xl3,
+    fontSize: `${vars.typography.fontSizes.xl2} !important`,
     padding: 0,
     display: "none !important",
     "@media": {
