@@ -1,4 +1,4 @@
-import { type FormEvent, type KeyboardEvent, useMemo, useRef } from "react";
+import { type FormEvent, type KeyboardEvent, useMemo } from "react";
 import {
   DateInput,
   DateSegment,
