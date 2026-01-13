@@ -11,6 +11,8 @@ import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMat
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
+import type ReferencedCollectionsNotFound from "../errors/ReferencedCollectionsNotFound.js";
+import type ReferencedDocumentsNotFound from "../errors/ReferencedDocumentsNotFound.js";
 import type TypescriptCompilationFailed from "../errors/TypescriptCompilationFailed.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
@@ -72,6 +74,7 @@ namespace ToolResult {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
     >,
     { documents: LiteDocument[] }
   >;
@@ -89,6 +92,7 @@ namespace ToolResult {
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
     >,
     { document: LiteDocument }
   >;
@@ -164,6 +168,7 @@ namespace ToolResult {
       null,
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | CollectionSettingsNotValid
       | ResultError<"TableColumnsNotValid", { issues: ValidationIssue[] }>
       | ResultError<"ExampleDocumentNotValid", { issues: ValidationIssue[] }>

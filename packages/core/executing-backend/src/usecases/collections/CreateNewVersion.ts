@@ -11,13 +11,18 @@ import {
   type CollectionVersionSettings,
   type ContentSummaryGetterNotValid,
   DocumentVersionCreator,
+  type ReferencedCollectionsNotFound,
   type RemoteConverters,
   type RemoteConvertersNotValid,
   type TypescriptModule,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { type Schema, valibotSchemas } from "@superego/schema";
+import {
+  type Schema,
+  utils as schemaUtils,
+  valibotSchemas,
+} from "@superego/schema";
 import {
   extractErrorDetails,
   Id,
@@ -53,6 +58,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionNotFound
     | CollectionVersionIdNotMatching
     | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
@@ -88,6 +94,28 @@ export default class CollectionsCreateNewVersion extends Usecase<
         makeResultError("CollectionSchemaNotValid", {
           collectionId: id,
           issues: makeValidationIssues(schemaValidationResult.issues),
+        }),
+      );
+    }
+
+    // Validate that all collections referenced in DocumentRef type definitions exist
+    const referencedCollectionIds = schemaUtils.extractReferencedCollectionIds(
+      schemaValidationResult.output,
+    );
+    const notFoundCollectionIds: string[] = [];
+    for (const referencedCollectionId of referencedCollectionIds) {
+      const exists = await this.repos.collection.exists(
+        referencedCollectionId as CollectionId,
+      );
+      if (!exists) {
+        notFoundCollectionIds.push(referencedCollectionId);
+      }
+    }
+    if (!isEmpty(notFoundCollectionIds)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedCollectionsNotFound", {
+          collectionId: id,
+          notFoundCollectionIds,
         }),
       );
     }

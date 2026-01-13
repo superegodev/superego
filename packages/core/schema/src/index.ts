@@ -4,6 +4,7 @@ import {
   isValidPlainDate,
   isValidPlainTime,
 } from "./utils/dateTimeValidators.js";
+import extractReferencedCollectionIds from "./utils/extractReferencedCollectionIds.js";
 import extractTextChunks from "./utils/extractTextChunks.js";
 import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
@@ -35,5 +36,6 @@ export const utils = {
   isValidInstant,
   isValidPlainDate,
   isValidPlainTime,
+  extractReferencedCollectionIds,
   extractTextChunks,
 };

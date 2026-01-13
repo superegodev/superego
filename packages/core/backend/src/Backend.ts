@@ -15,6 +15,7 @@ import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryName
 import type CollectionCategoryNotFound from "./errors/CollectionCategoryNotFound.js";
 import type CollectionHasDocuments from "./errors/CollectionHasDocuments.js";
 import type CollectionHasNoRemote from "./errors/CollectionHasNoRemote.js";
+import type CollectionIsReferenced from "./errors/CollectionIsReferenced.js";
 import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
@@ -33,6 +34,7 @@ import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.j
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
+import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
@@ -40,6 +42,8 @@ import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
+import type ReferencedDocumentsNotFound from "./errors/ReferencedDocumentsNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
@@ -125,6 +129,7 @@ export default interface Backend {
       | CollectionCategoryNotFound
       | AppNotFound
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
       | UnexpectedError
     >;
@@ -206,6 +211,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
@@ -237,7 +243,11 @@ export default interface Backend {
       commandConfirmation: string,
     ): ResultPromise<
       null,
-      CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
+      | CollectionNotFound
+      | CommandConfirmationNotValid
+      | CollectionIsReferenced
+      | DocumentIsReferenced
+      | UnexpectedError
     >;
 
     list(): ResultPromise<Collection[], UnexpectedError>;
@@ -263,6 +273,7 @@ export default interface Backend {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
       | UnexpectedError
     >;
 
@@ -279,6 +290,7 @@ export default interface Backend {
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
       | UnexpectedError
     >;
 
@@ -299,6 +311,7 @@ export default interface Backend {
       | DocumentNotFound
       | CommandConfirmationNotValid
       | ConnectorDoesNotSupportUpSyncing
+      | DocumentIsReferenced
       | UnexpectedError
     >;
 

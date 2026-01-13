@@ -126,6 +126,9 @@ export default function AnyField({
           label={label}
         />
       );
+    case DataType.DocumentRef:
+      // TODO: DocumentRefField
+      return null;
     case null:
       return (
         <AnyField

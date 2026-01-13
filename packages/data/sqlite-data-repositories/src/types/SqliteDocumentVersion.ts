@@ -25,6 +25,8 @@ type SqliteDocumentVersion = {
    * previous version.
    */
   content_delta: string | null;
+  /** JSON. Array of DocumentRef objects. */
+  referenced_documents: string;
   created_by: DocumentVersionCreator;
   /** ISO 8601 */
   created_at: string;
@@ -67,6 +69,7 @@ export function toEntity(
       documentVersion.is_latest === 1
         ? JSON.parse(documentVersion.content_snapshot)
         : makeContent(documentVersion.id, allDocumentVersions!, jdp!),
+    referencedDocuments: JSON.parse(documentVersion.referenced_documents),
     createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),
   } as DocumentVersionEntity;
@@ -112,6 +115,7 @@ export function toMinimalEntity(
     documentId: documentVersion.document_id,
     collectionVersionId: documentVersion.collection_version_id,
     conversationId: documentVersion.conversation_id,
+    referencedDocuments: JSON.parse(documentVersion.referenced_documents),
     createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),
   };

@@ -6,6 +6,7 @@ import type {
   DocumentVersionCreator,
   DocumentVersionId,
 } from "@superego/backend";
+import type { DocumentRef } from "@superego/schema";
 
 export default interface DocumentVersionEntity {
   id: DocumentVersionId;
@@ -16,6 +17,7 @@ export default interface DocumentVersionEntity {
   collectionVersionId: CollectionVersionId;
   conversationId: ConversationId | null;
   content: any;
+  referencedDocuments: DocumentRef[];
   createdBy: DocumentVersionCreator;
   createdAt: Date;
 }

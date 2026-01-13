@@ -3,16 +3,19 @@ import type {
   Backend,
   Collection,
   CollectionCategoryNotFound,
+  CollectionId,
   CollectionSchemaNotValid,
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
   ContentSummaryGetterNotValid,
+  ReferencedCollectionsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
   type Schema,
+  utils as schemaUtils,
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
 import {
@@ -27,6 +30,7 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsCreate extends Usecase<
@@ -43,6 +47,7 @@ export default class CollectionsCreate extends Usecase<
     | CollectionCategoryNotFound
     | AppNotFound
     | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
@@ -103,6 +108,27 @@ export default class CollectionsCreate extends Usecase<
         makeResultError("CollectionSchemaNotValid", {
           collectionId: null,
           issues: makeValidationIssues(schemaValidationResult.issues),
+        }),
+      );
+    }
+
+    const referencedCollectionIds = schemaUtils.extractReferencedCollectionIds(
+      schemaValidationResult.output,
+    );
+    const notFoundCollectionIds: string[] = [];
+    for (const referencedCollectionId of referencedCollectionIds) {
+      const exists = await this.repos.collection.exists(
+        referencedCollectionId as CollectionId,
+      );
+      if (!exists) {
+        notFoundCollectionIds.push(referencedCollectionId);
+      }
+    }
+    if (!isEmpty(notFoundCollectionIds)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedCollectionsNotFound", {
+          collectionId: null,
+          notFoundCollectionIds,
         }),
       );
     }

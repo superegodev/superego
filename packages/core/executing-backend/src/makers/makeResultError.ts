@@ -11,6 +11,7 @@ import type {
   CollectionCategoryNotFound,
   CollectionHasDocuments,
   CollectionHasNoRemote,
+  CollectionIsReferenced,
   CollectionIsSyncing,
   CollectionMigrationFailed,
   CollectionMigrationNotValid,
@@ -32,6 +33,7 @@ import type {
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
+  DocumentIsReferenced,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
@@ -40,6 +42,8 @@ import type {
   FilesNotFound,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
+  ReferencedCollectionsNotFound,
+  ReferencedDocumentsNotFound,
   RemoteConvertersNotValid,
   SyncingChangesFailed,
   TooManyFailedImplementationAttempts,
@@ -61,6 +65,7 @@ type KnownResultError =
   | CollectionCategoryNotFound
   | CollectionHasDocuments
   | CollectionHasNoRemote
+  | CollectionIsReferenced
   | CollectionIsSyncing
   | CollectionMigrationFailed
   | CollectionMigrationNotValid
@@ -82,6 +87,7 @@ type KnownResultError =
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
+  | DocumentIsReferenced
   | DocumentNotFound
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
@@ -90,6 +96,8 @@ type KnownResultError =
   | FilesNotFound
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
+  | ReferencedCollectionsNotFound
+  | ReferencedDocumentsNotFound
   | RemoteConvertersNotValid
   | SyncingChangesFailed
   | TooManyFailedImplementationAttempts

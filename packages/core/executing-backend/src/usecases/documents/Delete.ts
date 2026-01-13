@@ -5,10 +5,12 @@ import type {
   CommandConfirmationNotValid,
   ConnectorDoesNotSupportUpSyncing,
   DocumentId,
+  DocumentIsReferenced,
   DocumentNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import type { DocumentRef } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
@@ -24,12 +26,14 @@ export default class DocumentsDelete extends Usecase<
     id: DocumentId,
     commandConfirmation: string,
     allowDeletingRemoteDocument = false,
+    ignoreIntraCollectionRefs = false,
   ): ResultPromise<
     null,
     | CollectionNotFound
     | DocumentNotFound
     | ConnectorDoesNotSupportUpSyncing
     | CommandConfirmationNotValid
+    | DocumentIsReferenced
     | UnexpectedError
   > {
     if (commandConfirmation !== "delete") {
@@ -65,6 +69,35 @@ export default class DocumentsDelete extends Usecase<
           connectorName: collection.remote.connector.name,
           message:
             "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+        }),
+      );
+    }
+
+    // Check if any documents reference this document.
+    const referencingVersions =
+      await this.repos.documentVersion.findAllLatestWhereReferencedDocumentsContains(
+        collectionId,
+        id,
+      );
+    const referencingDocuments: DocumentRef[] = referencingVersions
+      .filter(
+        (documentVersion) =>
+          // Self-references.
+          documentVersion.documentId !== id &&
+          // Intra-collection references, if ignored.
+          (!ignoreIntraCollectionRefs ||
+            documentVersion.collectionId !== collectionId),
+      )
+      .map((documentVersion) => ({
+        collectionId: documentVersion.collectionId,
+        documentId: documentVersion.documentId,
+      }));
+    if (referencingDocuments.length > 0) {
+      return makeUnsuccessfulResult(
+        makeResultError("DocumentIsReferenced", {
+          collectionId,
+          documentId: id,
+          referencingDocuments,
         }),
       );
     }

@@ -229,6 +229,58 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ReferencedCollectionsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const result = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: nonExistentCollectionId,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [nonExistentCollectionId],
+          },
+        },
+      });
+    });
+
     it("success: creates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -3457,6 +3509,79 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ReferencedCollectionsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: nonExistentCollectionId,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled: "export default function migrate(c) { return c; }",
+        },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: createResult.data.id,
+            notFoundCollectionIds: [nonExistentCollectionId],
+          },
+        },
+      });
+    });
+
     it("error: ContentSummaryGetterNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -5099,6 +5224,191 @@ export default rd<GetDependencies>("Collections", (deps) => {
           details: {
             requiredCommandConfirmation: "delete",
             suppliedCommandConfirmation: commandConfirmation,
+          },
+        },
+      });
+    });
+
+    it("error: CollectionIsReferenced", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Create collection A (will be referenced)
+      const createCollectionAResult = await backend.collections.create(
+        {
+          name: "Collection A",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionAResult.success);
+      // Create collection B with schema that references collection A
+      const createCollectionBResult = await backend.collections.create(
+        {
+          name: "Collection B",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: createCollectionAResult.data.id,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionBResult.success);
+
+      // Exercise - try to delete collection A which is referenced by collection B's schema
+      const deleteResult = await backend.collections.delete(
+        createCollectionAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionIsReferenced",
+          details: {
+            collectionId: createCollectionAResult.data.id,
+            referencingCollectionIds: [createCollectionBResult.data.id],
+          },
+        },
+      });
+    });
+
+    it("error: DocumentIsReferenced (cross-collection)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Create collection A with a simple schema
+      const createCollectionAResult = await backend.collections.create(
+        {
+          name: "Collection A",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionAResult.success);
+      // Create collection B with DocumentRef field (no collectionId constraint to avoid CollectionIsReferenced)
+      const createCollectionBResult = await backend.collections.create(
+        {
+          name: "Collection B",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionBResult.success);
+      // Create document in collection A
+      const createDocumentAResult = await backend.documents.create(
+        createCollectionAResult.data.id,
+        { title: "Document A" },
+      );
+      assert.isTrue(createDocumentAResult.success);
+      // Create document in collection B that references document in A
+      const createDocumentBResult = await backend.documents.create(
+        createCollectionBResult.data.id,
+        {
+          documentRef: {
+            collectionId: createCollectionAResult.data.id,
+            documentId: createDocumentAResult.data.id,
+          },
+        },
+      );
+      assert.isTrue(createDocumentBResult.success);
+
+      // Exercise - try to delete collection A which has a document referenced by collection B
+      const deleteResult = await backend.collections.delete(
+        createCollectionAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentIsReferenced",
+          details: {
+            collectionId: createCollectionAResult.data.id,
+            documentId: createDocumentAResult.data.id,
+            referencingDocuments: [
+              {
+                collectionId: createCollectionBResult.data.id,
+                documentId: createDocumentBResult.data.id,
+              },
+            ],
           },
         },
       });
