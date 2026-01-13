@@ -3,6 +3,7 @@ import type {
   AnyTypeDefinition,
   BooleanLiteralTypeDefinition,
   BooleanTypeDefinition,
+  DocumentRefTypeDefinition,
   EnumTypeDefinition,
   FileTypeDefinition,
   JsonObjectTypeDefinition,
@@ -14,6 +15,7 @@ import type {
   StructTypeDefinition,
   TypeDefinitionRef,
 } from "./typeDefinitions.js";
+import type DocumentRef from "./types/DocumentRef.js";
 import type FileRef from "./types/FileRef.js";
 import type JsonObject from "./types/JsonObject.js";
 import type ProtoFile from "./types/ProtoFile.js";
@@ -86,21 +88,23 @@ type TypeOfTypeDefinition<
                           >[],
                           IsNullable
                         >
-                      : TypeDefinition extends TypeDefinitionRef
-                        ? ApplyIsNullable<
-                            ResolveRef<
-                              TypeDefinition["ref"],
-                              TypeDefinitions
-                            > extends infer Resolved extends AnyTypeDefinition
-                              ? TypeOfTypeDefinition<
-                                  Resolved,
-                                  TypeDefinitions,
-                                  false
-                                >
-                              : never,
-                            IsNullable
-                          >
-                        : never;
+                      : TypeDefinition extends DocumentRefTypeDefinition
+                        ? ApplyIsNullable<DocumentRef, IsNullable>
+                        : TypeDefinition extends TypeDefinitionRef
+                          ? ApplyIsNullable<
+                              ResolveRef<
+                                TypeDefinition["ref"],
+                                TypeDefinitions
+                              > extends infer Resolved extends AnyTypeDefinition
+                                ? TypeOfTypeDefinition<
+                                    Resolved,
+                                    TypeDefinitions,
+                                    false
+                                  >
+                                : never,
+                              IsNullable
+                            >
+                          : never;
 
 type SchemaRootType<TSchema extends Schema> =
   TSchema["rootType"] extends keyof TSchema["types"]

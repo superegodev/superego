@@ -1,3 +1,12 @@
+/////////////////////////////
+// Superego built-in types //
+/////////////////////////////
+
+export type DocumentRef = {
+  collectionId: string;
+  documentId: string;
+};
+
 //////////////////
 // Schema types //
 //////////////////
@@ -34,7 +43,8 @@ export type Meal = {
   date: string;
   /** Foods consumed during the meal. */
   consumedFoods: Array<{
-    foodId: string;
+    /** The Food that was consumed. */
+    food: DocumentRef;
     quantity: MassQuantity;
   }>;
 };

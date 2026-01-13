@@ -21,6 +21,7 @@ export type { default as Schema } from "./Schema.js";
 export { default as SchemaJsonSchema } from "./SchemaJsonSchema.js";
 export type { default as TypeOf } from "./TypeOf.js";
 export type * from "./typeDefinitions.js";
+export type { default as DocumentRef } from "./types/DocumentRef.js";
 export type { default as FileRef } from "./types/FileRef.js";
 export type { default as JsonObject } from "./types/JsonObject.js";
 export type { default as ProtoFile } from "./types/ProtoFile.js";
