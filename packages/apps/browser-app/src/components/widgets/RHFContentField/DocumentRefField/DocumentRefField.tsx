@@ -52,7 +52,12 @@ export default function DocumentRefField({
 
   const { collections } = useGlobalData();
   const collectionsById = CollectionUtils.makeByIdMap(collections);
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const closePopover = () => {
+    setIsPopoverOpen(false);
+    resetSearchParams();
+  };
 
   const { searchParams, setSearchParams, resetSearchParams, searchState } =
     useSearch();
@@ -66,7 +71,6 @@ export default function DocumentRefField({
         field.onChange(
           selectedId ? getDocumentRefFromId(selectedId as string) : null,
         );
-        setIsPopoverOpen(false);
       }}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
@@ -103,8 +107,7 @@ export default function DocumentRefField({
         isOpen={isPopoverOpen}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            setIsPopoverOpen(false);
-            resetSearchParams();
+            closePopover();
           }
         }}
       >
@@ -167,6 +170,7 @@ export default function DocumentRefField({
                 collection={
                   collectionsById[item.result.match.collectionId] ?? null
                 }
+                onPress={closePopover}
               />
             )}
           </ListBox>
