@@ -1090,6 +1090,36 @@
       "value": "documentId"
     }
   ],
+  "DocumentRefField.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Search results"
+    }
+  ],
+  "DocumentRefField.tsx_BnlWCE": [
+    {
+      "type": 0,
+      "value": "Type to search"
+    }
+  ],
+  "DocumentRefField.tsx_NNQzoi": [
+    {
+      "type": 0,
+      "value": "Searching..."
+    }
+  ],
+  "DocumentRefField.tsx_a00gRI": [
+    {
+      "type": 0,
+      "value": "Search documents"
+    }
+  ],
+  "DocumentRefField.tsx_hX5PAb": [
+    {
+      "type": 0,
+      "value": "No results found"
+    }
+  ],
   "DocumentVersionTimelineNode.tsx_X3XZvD": [
     {
       "type": 0,
@@ -2964,6 +2994,26 @@
     {
       "type": 0,
       "value": "No results found"
+    }
+  ],
+  "SelectButton.tsx_EPTOBf": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "document"
+    }
+  ],
+  "SelectButton.tsx_paNPed": [
+    {
+      "type": 0,
+      "value": "null - click to select a document"
     }
   ],
   "SendRecordButtons.tsx_/8QiK8": [

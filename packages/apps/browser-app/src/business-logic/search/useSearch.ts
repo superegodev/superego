@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useBackend from "../../../business-logic/backend/useBackend.js";
+import useBackend from "../backend/useBackend.js";
 import type SearchParams from "./SearchParams.js";
 import type SearchState from "./SearchState.js";
 import SearchType from "./SearchType.js";

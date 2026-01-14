@@ -8,13 +8,13 @@ import {
 import { PiMagnifyingGlass } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import type SearchParams from "../../../business-logic/search/SearchParams.js";
+import SearchType from "../../../business-logic/search/SearchType.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Select from "../../design-system/forms/Select.js";
 import SelectButton from "../../design-system/forms/SelectButton.js";
 import SelectOptions from "../../design-system/forms/SelectOptions.js";
 import * as cs from "./SearchModal.css.js";
-import type SearchParams from "./SearchParams.js";
-import SearchType from "./SearchType.js";
 
 const nullOptionId = "null";
 

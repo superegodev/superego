@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { ListBox } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
+import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
+import type SearchState from "../../../business-logic/search/SearchState.js";
+import SearchType from "../../../business-logic/search/SearchType.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
-import ConversationSearchResult from "./ConversationSearchResult.js";
-import DocumentSearchResult from "./DocumentSearchResult.js";
+import {
+  ConversationSearchResult,
+  DocumentSearchResult,
+} from "../../design-system/SearchResult/SearchResult.js";
 import * as cs from "./SearchModal.css.js";
-import type SearchState from "./SearchState.js";
-import SearchType from "./SearchType.js";
 
 const searchingIndicatorDelay: Milliseconds = 500;
 
@@ -76,6 +80,11 @@ export default function SearchResults({
               key={result.match.id}
               result={result}
               collection={collectionsById[result.match.collectionId] ?? null}
+              href={toHref({
+                name: RouteName.Document,
+                collectionId: result.match.collectionId,
+                documentId: result.match.id,
+              })}
             />
           ))
         : searchState.results.map((result) => (

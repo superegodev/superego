@@ -407,6 +407,21 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Risultati della ricerca"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Digita per cercare"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Ricerca in corso..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Cerca documenti"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "Nessun risultato trovato"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Ripristina versione"
   },
@@ -988,6 +1003,12 @@
   },
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
+  },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - fai clic per selezionare un documento"
   },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"

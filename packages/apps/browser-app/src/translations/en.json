@@ -407,6 +407,21 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Search results"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Type to search"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Searching..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Search documents"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "No results found"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
   },
@@ -1006,6 +1021,12 @@
   },
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"
+  },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - click to select a document"
   },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
