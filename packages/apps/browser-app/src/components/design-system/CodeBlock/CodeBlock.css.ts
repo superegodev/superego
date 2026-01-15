@@ -38,23 +38,8 @@ export const EagerCodeBlock = {
     gridArea: "Code",
     overflow: "auto",
   }),
-};
 
-globalStyle(`${EagerCodeBlock.pre} > code > br`, {
-  display: "none",
-});
-
-globalStyle(`${EagerCodeBlock.pre} > code > span`, {
-  display: "block",
-  height: codeLineHeight,
-});
-
-globalStyle(`[aria-disabled="true"] > ${EagerCodeBlock.root} *`, {
-  color: `${vars.colors.text.secondary}`,
-});
-
-export const CopyButton = {
-  root: style({
+  copyButton: style({
     display: "flex",
     alignItems: "center",
     gap: vars.spacing._1,
@@ -76,3 +61,16 @@ export const CopyButton = {
     },
   }),
 };
+
+globalStyle(`${EagerCodeBlock.pre} > code > br`, {
+  display: "none",
+});
+
+globalStyle(`${EagerCodeBlock.pre} > code > span`, {
+  display: "block",
+  height: codeLineHeight,
+});
+
+globalStyle(`[aria-disabled="true"] > ${EagerCodeBlock.root} *`, {
+  color: `${vars.colors.text.secondary}`,
+});

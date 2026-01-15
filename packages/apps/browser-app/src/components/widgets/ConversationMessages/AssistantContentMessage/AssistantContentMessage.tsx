@@ -5,15 +5,11 @@ import {
   type Message,
   MessageRole,
 } from "@superego/backend";
-import Markdown, { type MarkdownToJSX } from "markdown-to-jsx";
-import {
-  type AnchorHTMLAttributes,
-  type TableHTMLAttributes,
-  useMemo,
-} from "react";
+import type { MarkdownToJSX } from "markdown-to-jsx";
+import { useMemo } from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
-import Link from "../../../design-system/Link/Link.js";
+import Markdown from "../../../design-system/Markdown/Markdown.jsx";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
@@ -31,23 +27,9 @@ export default function AssistantContentMessage({
 }: Props) {
   const [textPart] = message.content;
   const overrides = useOverrides(conversation);
-  const options = useMemo<MarkdownToJSX.Options>(
-    () => ({
-      wrapper: "div",
-      forceWrapper: true,
-      overrides,
-    }),
-    [overrides],
-  );
   return (
     <div className={cs.AssistantContentMessage.root}>
-      <Markdown
-        key={textPart.text}
-        className={cs.AssistantContentMessage.markdown}
-        options={options}
-      >
-        {textPart.text}
-      </Markdown>
+      <Markdown text={textPart.text} overrides={overrides} />
       <div className={cs.AssistantContentMessage.infoAndActions}>
         <ThinkingTime message={message} conversation={conversation} />
         <Separator
@@ -70,23 +52,6 @@ export default function AssistantContentMessage({
 
 function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
   return useMemo(() => {
-    const iframe = () => null;
-
-    const a = ({ href, children }: AnchorHTMLAttributes<HTMLAnchorElement>) =>
-      href?.startsWith("/") && href ? (
-        <Link href={href}>{children}</Link>
-      ) : (
-        <a href={href} target="_blank" rel="noopener noreferrer">
-          {children}
-        </a>
-      );
-
-    const table = (props: TableHTMLAttributes<HTMLTableElement>) => (
-      <div className={cs.AssistantContentMessage.markdownTableScroller}>
-        <table {...props} />
-      </div>
-    );
-
     const Chart = ({ id }: { id: string }) => {
       const toolResult = conversation.messages
         .filter((message) => message.role === MessageRole.Tool)
@@ -128,6 +93,6 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
       );
     };
 
-    return { iframe, a, table, Chart, DocumentsTable };
+    return { Chart, DocumentsTable };
   }, [conversation]);
 }
