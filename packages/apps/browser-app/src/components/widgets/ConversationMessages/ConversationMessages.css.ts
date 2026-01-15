@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
+export const narrowContainerWidth = "45rem";
+
 export const ConversationMessages = {
   root: style({
     width: "100%",
