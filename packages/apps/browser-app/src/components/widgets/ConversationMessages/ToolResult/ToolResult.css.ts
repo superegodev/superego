@@ -75,7 +75,7 @@ export const CreateChart = {
   }),
 };
 
-export const CreateDocumentsTable = {
+export const CreateDocumentsTables = {
   table: style({
     maxHeight: vars.spacing._80,
     marginBlockStart: vars.spacing._2,

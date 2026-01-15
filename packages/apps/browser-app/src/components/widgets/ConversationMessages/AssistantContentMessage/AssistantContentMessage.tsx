@@ -1,8 +1,9 @@
 import {
+  type CollectionId,
   type Conversation,
+  type LiteDocument,
   type Message,
   MessageRole,
-  type ToolCall,
 } from "@superego/backend";
 import Markdown, { type MarkdownToJSX } from "markdown-to-jsx";
 import {
@@ -15,7 +16,7 @@ import ConversationUtils from "../../../../utils/ConversationUtils.js";
 import Link from "../../../design-system/Link/Link.js";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
-import CreateDocumentsTable from "../ToolResult/CreateDocumentsTable.js";
+import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
 import * as cs from "./AssistantContentMessage.css.js";
 import RetryButton from "./RetryButton.js";
 import SpeakButton from "./SpeakButton.js";
@@ -93,28 +94,34 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
         .filter(ConversationUtils.isSuccessfulCreateChartToolResult)
         .find((toolResult) => toolResult.artifacts?.chartId === id);
       return toolResult ? (
-        <CreateChart toolResult={toolResult} />
+        <CreateChart key={id} toolResult={toolResult} />
       ) : (
         `<ChartNotFound id="${id}">`
       );
     };
 
     const DocumentsTable = ({ id }: { id: string }) => {
-      const toolResult = conversation.messages
+      let collectionId: CollectionId | null = null;
+      let documents: LiteDocument[] | null = null;
+      conversation.messages
         .filter((message) => message.role === MessageRole.Tool)
         .flatMap((message) => message.toolResults)
-        .filter(ConversationUtils.isSuccessfulCreateDocumentsTableToolResult)
-        .find((toolResult) => toolResult.artifacts?.documentsTableId === id);
-      return toolResult ? (
-        <CreateDocumentsTable
-          key={toolResult.toolCallId}
-          toolCall={
-            ConversationUtils.findToolCall(
-              conversation,
-              toolResult,
-            ) as ToolCall.CreateDocumentsTable
-          }
-          toolResult={toolResult}
+        .filter(ConversationUtils.isSuccessfulCreateDocumentsTablesToolResult)
+        .forEach((toolResult) => {
+          Object.entries(toolResult.artifacts?.tables ?? {}).forEach(
+            (entry) => {
+              if (entry[1].documentsTableId === id) {
+                documents = entry[1].documents;
+                collectionId = entry[0] as CollectionId;
+              }
+            },
+          );
+        });
+      return collectionId && documents ? (
+        <CreateDocumentsTables
+          key={id}
+          collectionId={collectionId}
+          documents={documents}
         />
       ) : (
         `<DocumentsTableNotFound id="${id}">`

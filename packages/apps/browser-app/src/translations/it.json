@@ -1073,14 +1073,8 @@
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Crea documenti"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Crea grafico da {collection}"
-  },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Crea tabella dei documenti da {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Esegui la funzione TypeScript su {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Crea grafico da {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Riuscito"
@@ -1088,11 +1082,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Ottieni lo schema TypeScript per {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Esegui la funzione TypeScript su {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "Nessuna risposta"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Chiama strumento: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Crea tabella dei documenti da {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Fallito"

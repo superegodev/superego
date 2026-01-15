@@ -28,8 +28,8 @@ export default function Title({ toolCall, toolResult }: Props) {
   if (ConversationUtils.isExecuteTypescriptFunctionToolCall(toolCall)) {
     title = (
       <FormattedMessage
-        defaultMessage="Execute TypeScript function on {collection}"
-        values={{ collection: getCollection(collections, toolCall) }}
+        defaultMessage="Execute TypeScript function on {collections}"
+        values={{ collections: getCollections(collections, toolCall) }}
       />
     );
   }
@@ -52,17 +52,17 @@ export default function Title({ toolCall, toolResult }: Props) {
   if (ConversationUtils.isCreateChartToolCall(toolCall)) {
     title = (
       <FormattedMessage
-        defaultMessage="Create chart from {collection}"
-        values={{ collection: getCollection(collections, toolCall) }}
+        defaultMessage="Create chart from {collections}"
+        values={{ collections: getCollections(collections, toolCall) }}
       />
     );
   }
-  if (ConversationUtils.isCreateDocumentsTableToolCall(toolCall)) {
+  if (ConversationUtils.isCreateDocumentsTablesToolCall(toolCall)) {
     title = (
       <FormattedMessage
-        defaultMessage="Create documents table from {collection}"
+        defaultMessage="Create documents table from {collections}"
         values={{
-          collection: getCollection(collections, toolCall),
+          collections: getCollections(collections, toolCall),
         }}
       />
     );
@@ -90,6 +90,21 @@ function getCollection(
   toolCall: ToolCall & { input: { collectionId: CollectionId } },
 ): string {
   const { collectionId } = toolCall.input;
-  const collection = CollectionUtils.findCollection(collections, collectionId);
-  return collection ? collection.settings.name : collectionId;
+  return (
+    CollectionUtils.findCollection(collections, collectionId)?.settings.name ??
+    collectionId
+  );
+}
+
+function getCollections(
+  collections: Collection[],
+  toolCall: ToolCall & { input: { collectionIds: CollectionId[] } },
+): string {
+  return toolCall.input.collectionIds
+    .map(
+      (collectionId: CollectionId) =>
+        CollectionUtils.findCollection(collections, collectionId)?.settings
+          .name ?? collectionId,
+    )
+    .join(", ");
 }

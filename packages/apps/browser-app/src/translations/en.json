@@ -1100,17 +1100,11 @@
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Milliseconds"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Create chart from {collection}"
-  },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Create documents"
   },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Create documents table from {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Execute TypeScript function on {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Create chart from {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Succeeded"
@@ -1118,11 +1112,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Get TypeScript schema for {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Execute TypeScript function on {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "No response"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Create documents table from {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Failed"

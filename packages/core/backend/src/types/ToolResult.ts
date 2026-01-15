@@ -126,24 +126,32 @@ namespace ToolResult {
       };
     }
   >;
-  export type CreateDocumentsTable = BaseToolResult<
-    ToolName.CreateDocumentsTable,
+  export type CreateDocumentsTables = BaseToolResult<
+    ToolName.CreateDocumentsTables,
     Result<
-      {
-        markdownSnippet: string;
-        tableInfo: {
-          columns: string[];
-          rowCount: number;
-        };
-      },
+      Record<
+        CollectionId,
+        {
+          markdownSnippet: string;
+          tableInfo: {
+            columns: string[];
+            rowCount: number;
+          };
+        }
+      >,
       | CollectionNotFound
       | TypescriptCompilationFailed
       | ExecutingJavascriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
     {
-      documentsTableId: string;
-      documents: LiteDocument[];
+      tables: Record<
+        CollectionId,
+        {
+          documentsTableId: string;
+          documents: LiteDocument[];
+        }
+      >;
     }
   >;
   export type SearchDocuments = BaseToolResult<
@@ -198,7 +206,7 @@ type ToolResult =
   | ToolResult.ExecuteTypescriptFunction
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.CreateChart
-  | ToolResult.CreateDocumentsTable
+  | ToolResult.CreateDocumentsTables
   | ToolResult.SearchDocuments
   | ToolResult.SuggestCollectionDefinition
   | ToolResult.InspectFile

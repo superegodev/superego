@@ -3156,40 +3156,20 @@
       "value": "Millisecondi"
     }
   ],
-  "Title.tsx_/f6lRt": [
-    {
-      "type": 0,
-      "value": "Crea grafico da "
-    },
-    {
-      "type": 1,
-      "value": "collection"
-    }
-  ],
   "Title.tsx_8yzKPa": [
     {
       "type": 0,
       "value": "Crea documenti"
     }
   ],
-  "Title.tsx_BJ7yn4": [
+  "Title.tsx_9Hs+7t": [
     {
       "type": 0,
-      "value": "Crea tabella dei documenti da "
+      "value": "Crea grafico da "
     },
     {
       "type": 1,
-      "value": "collection"
-    }
-  ],
-  "Title.tsx_CKsNgt": [
-    {
-      "type": 0,
-      "value": "Esegui la funzione TypeScript su "
-    },
-    {
-      "type": 1,
-      "value": "collection"
+      "value": "collections"
     }
   ],
   "Title.tsx_LOghU6": [
@@ -3208,6 +3188,16 @@
       "value": "collection"
     }
   ],
+  "Title.tsx_T0B1v2": [
+    {
+      "type": 0,
+      "value": "Esegui la funzione TypeScript su "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_XnBm2q": [
     {
       "type": 0,
@@ -3222,6 +3212,16 @@
     {
       "type": 1,
       "value": "tool"
+    }
+  ],
+  "Title.tsx_oHtaJ1": [
+    {
+      "type": 0,
+      "value": "Crea tabella dei documenti da "
+    },
+    {
+      "type": 1,
+      "value": "collections"
     }
   ],
   "Title.tsx_vXCeIi": [

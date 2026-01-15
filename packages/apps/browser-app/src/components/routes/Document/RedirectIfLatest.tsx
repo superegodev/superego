@@ -14,11 +14,14 @@ export default function RedirectIfLatest({ document }: Props) {
       activeRoute.redirectIfLatest &&
       activeRoute.documentVersionId === document.latestVersion.id
     ) {
-      navigateTo({
-        name: RouteName.Document,
-        collectionId: activeRoute.collectionId,
-        documentId: activeRoute.documentId,
-      });
+      navigateTo(
+        {
+          name: RouteName.Document,
+          collectionId: activeRoute.collectionId,
+          documentId: activeRoute.documentId,
+        },
+        { stateChangeType: "replace" },
+      );
     }
   }, [document, activeRoute, navigateTo]);
   return null;

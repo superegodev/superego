@@ -40,22 +40,21 @@ namespace ToolCall {
   export type ExecuteTypescriptFunction = ToolCall<
     ToolName.ExecuteTypescriptFunction,
     {
-      collectionId: CollectionId;
+      collectionIds: CollectionId[];
       typescriptFunction: string;
     }
   >;
   export type CreateChart = ToolCall<
     ToolName.CreateChart,
     {
-      collectionId: CollectionId;
+      collectionIds: CollectionId[];
       getEChartsOption: string;
     }
   >;
-  export type CreateDocumentsTable = ToolCall<
-    ToolName.CreateDocumentsTable,
+  export type CreateDocumentsTables = ToolCall<
+    ToolName.CreateDocumentsTables,
     {
-      collectionId: CollectionId;
-      title: string;
+      collectionIds: CollectionId[];
       getDocumentIds: string;
     }
   >;

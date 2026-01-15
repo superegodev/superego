@@ -3164,40 +3164,20 @@
       "value": "Milliseconds"
     }
   ],
-  "Title.tsx_/f6lRt": [
-    {
-      "type": 0,
-      "value": "Create chart from "
-    },
-    {
-      "type": 1,
-      "value": "collection"
-    }
-  ],
   "Title.tsx_8yzKPa": [
     {
       "type": 0,
       "value": "Create documents"
     }
   ],
-  "Title.tsx_BJ7yn4": [
+  "Title.tsx_9Hs+7t": [
     {
       "type": 0,
-      "value": "Create documents table from "
+      "value": "Create chart from "
     },
     {
       "type": 1,
-      "value": "collection"
-    }
-  ],
-  "Title.tsx_CKsNgt": [
-    {
-      "type": 0,
-      "value": "Execute TypeScript function on "
-    },
-    {
-      "type": 1,
-      "value": "collection"
+      "value": "collections"
     }
   ],
   "Title.tsx_LOghU6": [
@@ -3216,6 +3196,16 @@
       "value": "collection"
     }
   ],
+  "Title.tsx_T0B1v2": [
+    {
+      "type": 0,
+      "value": "Execute TypeScript function on "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_XnBm2q": [
     {
       "type": 0,
@@ -3230,6 +3220,16 @@
     {
       "type": 1,
       "value": "tool"
+    }
+  ],
+  "Title.tsx_oHtaJ1": [
+    {
+      "type": 0,
+      "value": "Create documents table from "
+    },
+    {
+      "type": 1,
+      "value": "collections"
     }
   ],
   "Title.tsx_vXCeIi": [

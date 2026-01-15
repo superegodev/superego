@@ -15,7 +15,7 @@ export const useNavigationStateStore = create<UseNavigationState>(
       set({ exitWarningMessage: message });
     },
     navigateTo(route, options = {}) {
-      const { updateUrl = true, ignoreExitWarning = false } = options;
+      const { ignoreExitWarning = false, stateChangeType = "push" } = options;
       const {
         historyStack,
         currentHistoryPosition,
@@ -44,9 +44,11 @@ export const useNavigationStateStore = create<UseNavigationState>(
         canGoBack: newPosition > 0,
         exitWarningMessage: null,
       });
-      if (updateUrl) {
-        window.history.pushState({}, "", toHref(route));
-      }
+      window.history[stateChangeType === "push" ? "pushState" : "replaceState"](
+        {},
+        "",
+        toHref(route),
+      );
     },
     goBack() {
       const { currentHistoryPosition } = get();
@@ -121,8 +123,8 @@ interface UseNavigationState {
   navigateTo(
     route: Route,
     options?: {
-      updateUrl?: boolean;
       ignoreExitWarning?: boolean;
+      stateChangeType?: "push" | "replace";
     },
   ): void;
   goBack(): void;

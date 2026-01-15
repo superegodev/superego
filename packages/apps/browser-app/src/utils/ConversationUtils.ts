@@ -109,13 +109,13 @@ export default {
     );
   },
 
-  isSuccessfulCreateDocumentsTableToolResult(
+  isSuccessfulCreateDocumentsTablesToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.CreateDocumentsTable & {
+  ): toolResult is ToolResult.CreateDocumentsTables & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.CreateDocumentsTable &&
+      toolResult.tool === ToolName.CreateDocumentsTables &&
       toolResult.output.success
     );
   },
@@ -142,10 +142,10 @@ export default {
     return toolCall.tool === ToolName.CreateChart;
   },
 
-  isCreateDocumentsTableToolCall(
+  isCreateDocumentsTablesToolCall(
     toolCall: ToolCall,
-  ): toolCall is ToolCall.CreateDocumentsTable {
-    return toolCall.tool === ToolName.CreateDocumentsTable;
+  ): toolCall is ToolCall.CreateDocumentsTables {
+    return toolCall.tool === ToolName.CreateDocumentsTables;
   },
 
   isGetCollectionTypescriptSchemaToolCall(
