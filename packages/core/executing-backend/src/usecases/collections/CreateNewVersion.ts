@@ -98,10 +98,16 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
-    // Validate that all collections referenced in DocumentRef type definitions exist
-    const referencedCollectionIds = schemaUtils.extractReferencedCollectionIds(
+    // Replace "self" references.
+    const resolvedSchema = schemaUtils.replaceSelfCollectionId(
       schemaValidationResult.output,
+      id,
     );
+
+    // Validate that all collections referenced in DocumentRef type definitions
+    // exist.
+    const referencedCollectionIds =
+      schemaUtils.extractReferencedCollectionIds(resolvedSchema);
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       const exists = await this.repos.collection.exists(
@@ -232,7 +238,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       id: Id.generate.collectionVersion(),
       previousVersionId: latestVersionId,
       collectionId: id,
-      schema: schemaValidationResult.output,
+      schema: resolvedSchema,
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
       },

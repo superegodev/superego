@@ -99,6 +99,9 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    // Generated upfront to resolve "self" references.
+    const collectionId = Id.generate.collection();
+
     const schemaValidationResult = v.safeParse(
       schemaValibotSchemas.schema(),
       schema,
@@ -112,9 +115,13 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
-    const referencedCollectionIds = schemaUtils.extractReferencedCollectionIds(
+    const resolvedSchema = schemaUtils.replaceSelfCollectionId(
       schemaValidationResult.output,
+      collectionId,
     );
+
+    const referencedCollectionIds =
+      schemaUtils.extractReferencedCollectionIds(resolvedSchema);
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       const exists = await this.repos.collection.exists(
@@ -154,7 +161,7 @@ export default class CollectionsCreate extends Usecase<
 
     const now = new Date();
     const collection: CollectionEntity = {
-      id: Id.generate.collection(),
+      id: collectionId,
       settings: {
         name: settingsValidationResult.output.name,
         icon: settingsValidationResult.output.icon,
@@ -172,8 +179,8 @@ export default class CollectionsCreate extends Usecase<
     const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
-      collectionId: collection.id,
-      schema: schemaValidationResult.output,
+      collectionId: collectionId,
+      schema: resolvedSchema,
       settings: {
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
