@@ -16,16 +16,21 @@ export default function registerAppSandboxProtocol() {
   ]);
   app.whenReady().then(() => {
     protocol.handle("dev.superego.app-sandbox", (request) => {
-      const filePath = request.url.slice(
-        "dev.superego.app-sandbox://localhost/".length,
-      );
-      return net.fetch(
-        url
-          .pathToFileURL(
-            path.join(import.meta.dirname, "../renderer", filePath),
-          )
-          .toString(),
-      );
+      const { pathname } = new URL(request.url);
+      const baseDir = path.resolve(import.meta.dirname, "../renderer");
+      const pathToServe = path.resolve(baseDir, pathname);
+      const relativePath = path.relative(baseDir, pathToServe);
+      const isSafe =
+        !relativePath.startsWith("..") && !path.isAbsolute(relativePath);
+
+      if (!isSafe) {
+        return new Response("Access denied", {
+          status: 403,
+          headers: { "content-type": "text/plain" },
+        });
+      }
+
+      return net.fetch(url.pathToFileURL(pathToServe).toString());
     });
   });
 }

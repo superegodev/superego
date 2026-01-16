@@ -11,7 +11,7 @@ const variant = newVariant(RELEASE_SYNC, {
   wasmBinary: readFileSync(
     import.meta.env.DEV
       ? wasmLocation.replace("/@fs", "").replace("?no-inline", "")
-      : join(import.meta.dirname + wasmLocation),
+      : join(import.meta.dirname, wasmLocation),
   ).buffer,
 });
 export default function getQuickJS() {
