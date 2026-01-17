@@ -32,6 +32,7 @@ import CollectionCategoriesList from "./usecases/collection-categories/List.js";
 import CollectionCategoriesUpdate from "./usecases/collection-categories/Update.js";
 import CollectionsAuthenticateOAuth2PKCEConnector from "./usecases/collections/CollectionsAuthenticateOAuth2PKCEConnector.js";
 import CollectionsCreate from "./usecases/collections/Create.js";
+import CollectionsCreateMany from "./usecases/collections/CreateMany.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
 import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
@@ -86,6 +87,7 @@ export default class ExecutingBackend implements Backend {
 
     this.collections = {
       create: this.makeUsecase(CollectionsCreate, true),
+      createMany: this.makeUsecase(CollectionsCreateMany, true),
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
       setRemote: this.makeUsecase(CollectionsSetRemote, true),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(

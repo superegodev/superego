@@ -1,4 +1,5 @@
 import type {
+  Collection,
   CollectionId,
   DocumentId,
   LiteDocument,
@@ -47,11 +48,14 @@ export default function DocumentRefField({
   label,
 }: Props) {
   const intl = useIntl();
-  const { isReadOnly } = useUiOptions();
+  const { isReadOnly, suggestedCollections } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
 
   const { collections } = useGlobalData();
-  const collectionsById = CollectionUtils.makeByIdMap(collections);
+  const collectionsById = CollectionUtils.makeByIdMap([
+    ...collections,
+    ...(suggestedCollections as Collection[]),
+  ]);
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const closePopover = () => {

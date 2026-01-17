@@ -1004,6 +1004,9 @@
   "SelectButton.tsx_paNPed": {
     "defaultMessage": "null - fai clic per selezionare un documento"
   },
+  "SelectButton.tsx_uCylWN": {
+    "defaultMessage": "{collection} » Documento d'esempio"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },
@@ -1049,14 +1052,17 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
-  "SuggestCollectionDefinition.tsx_S2ZL0P": {
-    "defaultMessage": "Collezione suggerita"
+  "SuggestCollectionsDefinitions.tsx_65g2mb": {
+    "defaultMessage": "Collezioni suggerite"
   },
-  "SuggestCollectionDefinition.tsx_syZYsy": {
-    "defaultMessage": "Errore durante la creazione della collezione"
-  },
-  "SuggestCollectionDefinition.tsx_VzzYJk": {
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": {
     "defaultMessage": "Crea"
+  },
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": {
+    "defaultMessage": "Crea tutto"
+  },
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": {
+    "defaultMessage": "Errore durante la creazione delle collezioni"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Riflessione per {time}"

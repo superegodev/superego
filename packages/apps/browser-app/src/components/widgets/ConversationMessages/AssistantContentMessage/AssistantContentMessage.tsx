@@ -9,7 +9,7 @@ import type { MarkdownToJSX } from "markdown-to-jsx";
 import { useMemo } from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
-import Markdown from "../../../design-system/Markdown/Markdown.jsx";
+import Markdown from "../../../design-system/Markdown/Markdown.js";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";

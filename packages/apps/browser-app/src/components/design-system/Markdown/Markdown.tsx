@@ -5,7 +5,7 @@ import {
   useMemo,
 } from "react";
 import classnames from "../../../utils/classnames.js";
-import Link from "../Link/Link.jsx";
+import Link from "../Link/Link.js";
 import * as cs from "./Markdown.css.js";
 
 interface Props {

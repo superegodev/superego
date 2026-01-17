@@ -4,8 +4,7 @@ import type { AnyTypeDefinition } from "../typeDefinitions.js";
 
 /**
  * Extracts all unique collection IDs referenced by DocumentRef type definitions
- * in the given schema. Only includes collectionIds that are explicitly
- * constrained (i.e., where DocumentRefTypeDefinition.collectionId is defined).
+ * in the given schema.
  */
 export default function extractReferencedCollectionIds(
   schema: Schema,

@@ -88,13 +88,13 @@ export default {
     );
   },
 
-  isSuccessfulSuggestCollectionDefinitionToolResult(
+  isSuccessfulSuggestCollectionsDefinitionsToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.SuggestCollectionDefinition & {
+  ): toolResult is ToolResult.SuggestCollectionsDefinitions & {
     output: { success: true };
   } {
     return (
-      toolResult.tool === ToolName.SuggestCollectionDefinition &&
+      toolResult.tool === ToolName.SuggestCollectionsDefinitions &&
       toolResult.output.success
     );
   },

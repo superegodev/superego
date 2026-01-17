@@ -134,6 +134,23 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    createMany(
+      protos: {
+        settings: CollectionSettings;
+        schema: Schema;
+        versionSettings: CollectionVersionSettings;
+      }[],
+    ): ResultPromise<
+      Collection[],
+      | CollectionSettingsNotValid
+      | CollectionCategoryNotFound
+      | AppNotFound
+      | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
+      | ContentSummaryGetterNotValid
+      | UnexpectedError
+    >;
+
     updateSettings(
       id: CollectionId,
       settingsPatch: Partial<CollectionSettings>,

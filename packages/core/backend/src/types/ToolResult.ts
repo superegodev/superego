@@ -170,8 +170,8 @@ namespace ToolResult {
   >;
 
   // CollectionCreator
-  export type SuggestCollectionDefinition = BaseToolResult<
-    ToolName.SuggestCollectionDefinition,
+  export type SuggestCollectionsDefinitions = BaseToolResult<
+    ToolName.SuggestCollectionsDefinitions,
     Result<
       null,
       | CollectionCategoryNotFound
@@ -208,7 +208,7 @@ type ToolResult =
   | ToolResult.CreateChart
   | ToolResult.CreateDocumentsTables
   | ToolResult.SearchDocuments
-  | ToolResult.SuggestCollectionDefinition
+  | ToolResult.SuggestCollectionsDefinitions
   | ToolResult.InspectFile
   | ToolResult.Unknown
   | ToolResult.WriteTypescriptModule;

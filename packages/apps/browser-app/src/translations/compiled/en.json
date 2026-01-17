@@ -3004,6 +3004,16 @@
       "value": "null - click to select a document"
     }
   ],
+  "SelectButton.tsx_uCylWN": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Example document"
+    }
+  ],
   "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
@@ -3118,22 +3128,28 @@
       "value": "null - click to set a value"
     }
   ],
-  "SuggestCollectionDefinition.tsx_S2ZL0P": [
+  "SuggestCollectionsDefinitions.tsx_65g2mb": [
     {
       "type": 0,
-      "value": "Suggested collection"
+      "value": "Suggested collections"
     }
   ],
-  "SuggestCollectionDefinition.tsx_VzzYJk": [
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Create"
     }
   ],
-  "SuggestCollectionDefinition.tsx_syZYsy": [
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": [
     {
       "type": 0,
-      "value": "Error creating the collection"
+      "value": "Create All"
+    }
+  ],
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": [
+    {
+      "type": 0,
+      "value": "Error creating the collections"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [

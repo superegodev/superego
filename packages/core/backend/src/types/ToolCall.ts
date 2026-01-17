@@ -68,18 +68,20 @@ namespace ToolCall {
   >;
 
   // CollectionCreator
-  export type SuggestCollectionDefinition = ToolCall<
-    ToolName.SuggestCollectionDefinition,
+  export type SuggestCollectionsDefinitions = ToolCall<
+    ToolName.SuggestCollectionsDefinitions,
     {
-      settings: {
-        name: string;
-        icon: string | null;
-        description: string | null;
-        collectionCategoryId: CollectionCategoryId | null;
-      };
-      schema: Schema;
-      tableColumns: { header: string; path: string }[];
-      exampleDocument: any;
+      collections: {
+        settings: {
+          name: string;
+          icon: string | null;
+          description: string | null;
+          collectionCategoryId: CollectionCategoryId | null;
+        };
+        schema: Schema;
+        tableColumns: { header: string; path: string }[];
+        exampleDocument: any;
+      }[];
     }
   >;
 

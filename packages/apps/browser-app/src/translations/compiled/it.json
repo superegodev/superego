@@ -2996,6 +2996,16 @@
       "value": "null - fai clic per selezionare un documento"
     }
   ],
+  "SelectButton.tsx_uCylWN": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Documento d'esempio"
+    }
+  ],
   "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
@@ -3110,22 +3120,28 @@
       "value": "null - fai clic per impostare un valore"
     }
   ],
-  "SuggestCollectionDefinition.tsx_S2ZL0P": [
+  "SuggestCollectionsDefinitions.tsx_65g2mb": [
     {
       "type": 0,
-      "value": "Collezione suggerita"
+      "value": "Collezioni suggerite"
     }
   ],
-  "SuggestCollectionDefinition.tsx_VzzYJk": [
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Crea"
     }
   ],
-  "SuggestCollectionDefinition.tsx_syZYsy": [
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": [
     {
       "type": 0,
-      "value": "Errore durante la creazione della collezione"
+      "value": "Crea tutto"
+    }
+  ],
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione delle collezioni"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [

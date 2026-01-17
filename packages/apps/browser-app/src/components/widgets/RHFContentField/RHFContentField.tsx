@@ -1,7 +1,7 @@
 import { type Schema, utils } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import AnyField from "./AnyField.js";
-import { UiOptionsProvider } from "./uiOptions.js";
+import { type UiOptions, UiOptionsProvider } from "./uiOptions.js";
 
 interface Props {
   schema: Schema;
@@ -11,6 +11,7 @@ interface Props {
   showNullability?: boolean;
   zoomLevel?: number;
   isReadOnly?: boolean;
+  suggestedCollections?: UiOptions["suggestedCollections"];
 }
 export default function RHFContentField({
   schema,
@@ -20,10 +21,17 @@ export default function RHFContentField({
   showNullability = false,
   zoomLevel = 1,
   isReadOnly = false,
+  suggestedCollections = [],
 }: Props) {
   return (
     <UiOptionsProvider
-      value={{ showTypes, showNullability, zoomLevel, isReadOnly }}
+      value={{
+        showTypes,
+        showNullability,
+        zoomLevel,
+        isReadOnly,
+        suggestedCollections,
+      }}
     >
       <AnyField
         schema={schema}

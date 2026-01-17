@@ -187,6 +187,7 @@ it("exports the Schema type definition", () => {
     }
 
     interface TypeDefinitionRef extends Described {
+      /** Must be set to null. */
       dataType: null;
       ref: string;
     }

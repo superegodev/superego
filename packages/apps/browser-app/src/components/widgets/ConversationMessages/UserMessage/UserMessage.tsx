@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import usePlayAudio from "../../../../business-logic/audio/usePlayAudio.js";
 import CopyButton from "../../../design-system/CopyButton/CopyButton.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
-import Markdown from "../../../design-system/Markdown/Markdown.jsx";
+import Markdown from "../../../design-system/Markdown/Markdown.js";
 import FileParts from "./FileParts.js";
 import * as cs from "./UserMessage.css.js";
 

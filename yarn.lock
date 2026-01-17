@@ -5853,7 +5853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superego/app-sandbox@workspace:*, @superego/app-sandbox@workspace:^, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
+"@superego/app-sandbox@workspace:*, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
   version: 0.0.0-use.local
   resolution: "@superego/app-sandbox@workspace:packages/apps/app-sandbox"
   dependencies:
@@ -5945,7 +5945,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/browser-app@workspace:*, @superego/browser-app@workspace:^, @superego/browser-app@workspace:packages/apps/browser-app":
+"@superego/browser-app@workspace:*, @superego/browser-app@workspace:packages/apps/browser-app":
   version: 0.0.0-use.local
   resolution: "@superego/browser-app@workspace:packages/apps/browser-app"
   dependencies:
@@ -5954,19 +5954,19 @@ __metadata:
     "@hookform/resolvers": "npm:^5.2.2"
     "@react-aria/optimize-locales-plugin": "npm:^1.1.5"
     "@standard-schema/spec": "npm:^1.1.0"
-    "@superego/app-sandbox": "workspace:^"
+    "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/connectors": "workspace:*"
-    "@superego/demo-data-repositories": "workspace:^"
+    "@superego/demo-data-repositories": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/monaco-typescript-compiler": "workspace:*"
-    "@superego/openai-compat-inference-service": "workspace:^"
+    "@superego/openai-compat-inference-service": "workspace:*"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
-    "@superego/shared-utils": "workspace:^"
-    "@superego/themes": "workspace:^"
+    "@superego/shared-utils": "workspace:*"
+    "@superego/themes": "workspace:*"
     "@tanstack/react-query": "npm:^5.90.16"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"
@@ -6058,13 +6058,13 @@ __metadata:
     "@cloudflare/workers-types": "npm:^4.20260109.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
-    "@superego/browser-app": "workspace:^"
+    "@superego/browser-app": "workspace:*"
     "@superego/connectors": "workspace:*"
-    "@superego/demo-data-repositories": "workspace:^"
+    "@superego/demo-data-repositories": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
-    "@superego/monaco-typescript-compiler": "workspace:^"
-    "@superego/openai-compat-inference-service": "workspace:^"
+    "@superego/monaco-typescript-compiler": "workspace:*"
+    "@superego/openai-compat-inference-service": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@tanstack/react-query": "npm:^5.90.16"
@@ -6075,7 +6075,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/demo-data-repositories@workspace:^, @superego/demo-data-repositories@workspace:packages/data/demo-data-repositories":
+"@superego/demo-data-repositories@workspace:*, @superego/demo-data-repositories@workspace:packages/data/demo-data-repositories":
   version: 0.0.0-use.local
   resolution: "@superego/demo-data-repositories@workspace:packages/data/demo-data-repositories"
   dependencies:
@@ -6111,7 +6111,7 @@ __metadata:
     "@superego/connectors": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
-    "@superego/openai-compat-inference-service": "workspace:^"
+    "@superego/openai-compat-inference-service": "workspace:*"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
@@ -6184,7 +6184,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/monaco-typescript-compiler@workspace:*, @superego/monaco-typescript-compiler@workspace:^, @superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler":
+"@superego/monaco-typescript-compiler@workspace:*, @superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler":
   version: 0.0.0-use.local
   resolution: "@superego/monaco-typescript-compiler@workspace:packages/code-execution/monaco-typescript-compiler"
   dependencies:
@@ -6201,7 +6201,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/openai-compat-inference-service@workspace:*, @superego/openai-compat-inference-service@workspace:^, @superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service":
+"@superego/openai-compat-inference-service@workspace:*, @superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service":
   version: 0.0.0-use.local
   resolution: "@superego/openai-compat-inference-service@workspace:packages/ai/openai-compat-inference-service"
   dependencies:
@@ -6263,7 +6263,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/shared-utils@workspace:*, @superego/shared-utils@workspace:^, @superego/shared-utils@workspace:packages/core/shared-utils":
+"@superego/shared-utils@workspace:*, @superego/shared-utils@workspace:packages/core/shared-utils":
   version: 0.0.0-use.local
   resolution: "@superego/shared-utils@workspace:packages/core/shared-utils"
   dependencies:
@@ -6296,7 +6296,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/themes@workspace:*, @superego/themes@workspace:^, @superego/themes@workspace:packages/ui/themes":
+"@superego/themes@workspace:*, @superego/themes@workspace:packages/ui/themes":
   version: 0.0.0-use.local
   resolution: "@superego/themes@workspace:packages/ui/themes"
   dependencies:

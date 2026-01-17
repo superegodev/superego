@@ -6,6 +6,7 @@ import replaceSelfCollectionId, {
 } from "./replaceSelfCollectionId.js";
 
 it("returns unchanged schema with no DocumentRef types", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -17,8 +18,6 @@ it("returns unchanged schema with no DocumentRef types", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -26,6 +25,7 @@ it("returns unchanged schema with no DocumentRef types", () => {
 });
 
 it("returns unchanged schema when DocumentRef has no collectionId", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -37,8 +37,6 @@ it("returns unchanged schema when DocumentRef has no collectionId", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -46,6 +44,7 @@ it("returns unchanged schema when DocumentRef has no collectionId", () => {
 });
 
 it("returns unchanged schema when DocumentRef has a regular collectionId", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -60,8 +59,6 @@ it("returns unchanged schema when DocumentRef has a regular collectionId", () =>
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -69,6 +66,7 @@ it("returns unchanged schema when DocumentRef has a regular collectionId", () =>
 });
 
 it("replaces 'self' with actual collectionId", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -83,8 +81,6 @@ it("replaces 'self' with actual collectionId", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -105,6 +101,7 @@ it("replaces 'self' with actual collectionId", () => {
 });
 
 it("replaces multiple 'self' references", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -123,8 +120,6 @@ it("replaces multiple 'self' references", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -144,6 +139,7 @@ it("replaces multiple 'self' references", () => {
 });
 
 it("replaces 'self' but keeps other collectionIds", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -162,8 +158,6 @@ it("replaces 'self' but keeps other collectionIds", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -183,6 +177,7 @@ it("replaces 'self' but keeps other collectionIds", () => {
 });
 
 it("replaces 'self' in nested Structs", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -202,8 +197,6 @@ it("replaces 'self' in nested Structs", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -224,6 +217,7 @@ it("replaces 'self' in nested Structs", () => {
 });
 
 it("replaces 'self' in List items", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -241,8 +235,6 @@ it("replaces 'self' in List items", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
@@ -261,6 +253,7 @@ it("replaces 'self' in List items", () => {
 });
 
 it("handles TypeRef (does not recurse into referenced types)", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -279,12 +272,10 @@ it("handles TypeRef (does not recurse into referenced types)", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify
-  // TypeRef itself is unchanged, but the referenced type is also processed
+  // TypeRef itself is unchanged, but the referenced type is also processed.
   expect(result.types["Root"]).toEqual({
     dataType: DataType.Struct,
     properties: {
@@ -294,7 +285,7 @@ it("handles TypeRef (does not recurse into referenced types)", () => {
       },
     },
   });
-  // The referenced type should be replaced
+  // The referenced type should be replaced.
   expect(result.types["SelfRef"]).toEqual({
     dataType: DataType.DocumentRef,
     collectionId: "Collection_123",
@@ -302,6 +293,7 @@ it("handles TypeRef (does not recurse into referenced types)", () => {
 });
 
 it("preserves other type definition properties", () => {
+  // Exercise
   const schema: Schema = {
     types: {
       Root: {
@@ -320,8 +312,6 @@ it("preserves other type definition properties", () => {
     },
     rootType: "Root",
   };
-
-  // Exercise
   const result = replaceSelfCollectionId(schema, "Collection_123");
 
   // Verify

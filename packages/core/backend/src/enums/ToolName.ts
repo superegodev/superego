@@ -8,7 +8,7 @@ enum ToolName {
   CreateDocumentsTables = "createDocumentsTables",
   SearchDocuments = "searchDocuments",
   // CollectionCreator
-  SuggestCollectionDefinition = "suggestCollectionDefinition",
+  SuggestCollectionsDefinitions = "suggestCollectionsDefinitions",
   // Shared
   InspectFile = "InspectFile",
   // Other tools, not used by an assistant

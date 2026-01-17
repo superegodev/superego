@@ -150,6 +150,7 @@ export interface DocumentRefTypeDefinition extends Described {
 }
 
 export interface TypeDefinitionRef extends Described {
+  /** Must be set to null. */
   dataType: null;
   ref: string;
 }

@@ -33,6 +33,12 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
+interface CollectionsCreateOptions {
+  dryRun?: boolean;
+  collectionId?: CollectionId;
+  allowedUnverifiedCollectionIds?: CollectionId[];
+}
+
 export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
 > {
@@ -40,7 +46,7 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-    dryRun = false,
+    options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
     | CollectionSettingsNotValid
@@ -99,8 +105,9 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
-    // Generated upfront to resolve "self" references.
-    const collectionId = Id.generate.collection();
+    // Use provided collectionId or generate one upfront to resolve "self"
+    // references.
+    const collectionId = options.collectionId ?? Id.generate.collection();
 
     const schemaValidationResult = v.safeParse(
       schemaValibotSchemas.schema(),
@@ -122,12 +129,19 @@ export default class CollectionsCreate extends Usecase<
 
     const referencedCollectionIds =
       schemaUtils.extractReferencedCollectionIds(resolvedSchema);
+    const allowedUnverifiedCollectionIds = new Set(
+      options.allowedUnverifiedCollectionIds ?? [],
+    );
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
-      const exists = await this.repos.collection.exists(
-        referencedCollectionId as CollectionId,
-      );
-      if (!exists) {
+      if (
+        !allowedUnverifiedCollectionIds.has(
+          referencedCollectionId as CollectionId,
+        ) &&
+        !(await this.repos.collection.exists(
+          referencedCollectionId as CollectionId,
+        ))
+      ) {
         notFoundCollectionIds.push(referencedCollectionId);
       }
     }
@@ -188,7 +202,7 @@ export default class CollectionsCreate extends Usecase<
       remoteConverters: null,
       createdAt: now,
     };
-    if (!dryRun) {
+    if (!options.dryRun) {
       await this.repos.collection.insert(collection);
       await this.repos.collectionVersion.insert(collectionVersion);
     }

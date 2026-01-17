@@ -1,5 +1,5 @@
 import type { Collection, CollectionId, DocumentId } from "@superego/backend";
-import type { DocumentRef } from "@superego/schema";
+import { type DocumentRef, utils } from "@superego/schema";
 import { FormattedMessage } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import { getDocumentQuery } from "../../../../business-logic/backend/hooks.js";
@@ -12,7 +12,7 @@ import * as cs from "../RHFContentField.css.js";
 interface Props {
   onPress: () => void;
   value: DocumentRef | null | undefined;
-  collectionsById: Record<CollectionId, Collection>;
+  collectionsById: Record<string, Collection>;
   isReadOnly: boolean;
 }
 export default function SelectButton({
@@ -38,8 +38,26 @@ export default function SelectButton({
     );
   }
 
-  const collection =
-    collectionsById[value.collectionId as CollectionId] ?? null;
+  const collection = collectionsById[value.collectionId] ?? null;
+
+  if (utils.isSuggestedCollectionId(value.collectionId)) {
+    return (
+      <Button
+        onPress={!isReadOnly ? onPress : undefined}
+        className={cs.DocumentRefField.SelectButton.root}
+      >
+        <FormattedMessage
+          defaultMessage="{collection} » Example document"
+          values={{
+            collection: collection
+              ? CollectionUtils.getDisplayName(collection)
+              : value.collectionId,
+          }}
+        />
+      </Button>
+    );
+  }
+
   return (
     <Button
       onPress={!isReadOnly ? onPress : undefined}
