@@ -353,6 +353,664 @@ export default rd<GetDependencies>("Collections", (deps) => {
     });
   });
 
+  describe("createMany", () => {
+    it("error: CollectionSettingsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionSettingsNotValid",
+          details: {
+            collectionId: null,
+            issues: [
+              {
+                message: "Invalid length: Expected >=1 but received 0",
+                path: [{ key: "name" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionCategoryNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionCategoryId = Id.generate.collectionCategory();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: collectionCategoryId,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionCategoryNotFound",
+          details: { collectionCategoryId },
+        },
+      });
+    });
+
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const defaultCollectionViewAppId = Id.generate.app();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "AppNotFound",
+          details: { appId: defaultCollectionViewAppId },
+        },
+      });
+    });
+
+    it("error: CollectionSchemaNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.String } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionSchemaNotValid",
+          details: {
+            collectionId: null,
+            issues: [
+              {
+                message: "Root type must be a Struct",
+                path: [{ key: "rootType" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentSummaryGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export function getContentSummary() {}",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentSummaryGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound (non-existent collection)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  documentRef: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: nonExistentCollectionId,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [nonExistentCollectionId],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound (invalid suggested collection id)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const { utils: schemaUtils } = await import("@superego/schema");
+
+      // Exercise
+      // Reference a suggested collection that doesn't exist in the batch
+      const invalidSuggestedId = schemaUtils.makeSuggestedCollectionId(99);
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  documentRef: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: invalidSuggestedId,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [invalidSuggestedId],
+          },
+        },
+      });
+    });
+
+    it("success: creates single collection", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "name",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+        ],
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: result.data,
+        error: null,
+      });
+    });
+
+    it("success: creates multiple independent collections", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "collection-1",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+        {
+          settings: {
+            name: "collection-2",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "collection-1",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "collection-2",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+        ],
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: result.data,
+        error: null,
+      });
+    });
+
+    it("success: creates collections with cross-references using suggested collection ids", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const { utils: schemaUtils } = await import("@superego/schema");
+
+      // Exercise
+      // Collection 0 references Collection 1, and Collection 1 references Collection 0
+      const suggestedCollection0 = schemaUtils.makeSuggestedCollectionId(0);
+      const suggestedCollection1 = schemaUtils.makeSuggestedCollectionId(1);
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "authors",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  name: { dataType: DataType.String },
+                  books: {
+                    dataType: DataType.List,
+                    items: {
+                      dataType: DataType.DocumentRef,
+                      collectionId: suggestedCollection1,
+                    },
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+        {
+          settings: {
+            name: "books",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  title: { dataType: DataType.String },
+                  author: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: suggestedCollection0,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      assert.isTrue(result.success);
+      assert.isNotNull(result.data);
+      expect(result.data).toHaveLength(2);
+
+      const authorsCollection = result.data[0];
+      const booksCollection = result.data[1];
+      assert.isDefined(authorsCollection);
+      assert.isDefined(booksCollection);
+
+      // Verify the suggested collection IDs were replaced with actual IDs
+      // Authors collection should reference books collection
+      const authorsSchema = authorsCollection.latestVersion.schema;
+      const authorsRootType = authorsSchema.types["Root"];
+      assert.isDefined(authorsRootType);
+      assert.equal(authorsRootType.dataType, DataType.Struct);
+      if (authorsRootType.dataType === DataType.Struct) {
+        expect(authorsRootType.properties["books"]).toEqual({
+          dataType: DataType.List,
+          items: {
+            dataType: DataType.DocumentRef,
+            collectionId: booksCollection.id,
+          },
+        });
+      }
+
+      // Books collection should reference authors collection
+      const booksSchema = booksCollection.latestVersion.schema;
+      const booksRootType = booksSchema.types["Root"];
+      assert.isDefined(booksRootType);
+      assert.equal(booksRootType.dataType, DataType.Struct);
+      if (booksRootType.dataType === DataType.Struct) {
+        expect(booksRootType.properties["author"]).toEqual({
+          dataType: DataType.DocumentRef,
+          collectionId: authorsCollection.id,
+        });
+      }
+    });
+  });
+
   describe("updateSettings", () => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
