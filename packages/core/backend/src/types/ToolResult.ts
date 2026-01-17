@@ -5,9 +5,11 @@ import type CollectionNotFound from "../errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "../errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "../errors/CollectionSettingsNotValid.js";
 import type ConnectorDoesNotSupportUpSyncing from "../errors/ConnectorDoesNotSupportUpSyncing.js";
+import type ContentFingerprintNotValid from "../errors/ContentFingerprintNotValid.js";
 import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
+import type DuplicateDocumentDetected from "../errors/DuplicateDocumentDetected.js";
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
@@ -75,6 +77,10 @@ namespace ToolResult {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
+      | ContentFingerprintNotValid
+      // TODO_FINGERPRINT: use ContentFingerprintNotValid or a variation instead
+      | ExecutingJavascriptFunctionFailed
+      | DuplicateDocumentDetected
     >,
     { documents: LiteDocument[] }
   >;
@@ -93,6 +99,9 @@ namespace ToolResult {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
+      | ContentFingerprintNotValid
+      // TODO_FINGERPRINT: use ContentFingerprintNotValid or a variation instead
+      | ExecutingJavascriptFunctionFailed
     >,
     { document: LiteDocument }
   >;

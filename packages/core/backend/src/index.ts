@@ -51,6 +51,8 @@ export type { default as ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy } f
 export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNotAuthenticated.js";
 export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
 export type { default as ConnectorSettingsNotValid } from "./errors/ConnectorSettingsNotValid.js";
+export type { default as ContentFingerprintGetterNotValid } from "./errors/ContentFingerprintGetterNotValid.js";
+export type { default as ContentFingerprintNotValid } from "./errors/ContentFingerprintNotValid.js";
 export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
 export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
@@ -60,6 +62,7 @@ export type { default as DocumentIsReferenced } from "./errors/DocumentIsReferen
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";
+export type { default as DuplicateDocumentDetected } from "./errors/DuplicateDocumentDetected.js";
 export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";

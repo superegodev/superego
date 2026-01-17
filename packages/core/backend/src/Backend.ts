@@ -31,6 +31,8 @@ import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/C
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
+import type ContentFingerprintGetterNotValid from "./errors/ContentFingerprintGetterNotValid.js";
+import type ContentFingerprintNotValid from "./errors/ContentFingerprintNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
@@ -38,6 +40,8 @@ import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
+import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
+import type ExecutingJavascriptFunctionFailed from "./errors/ExecutingJavascriptFunctionFailed.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
@@ -131,6 +135,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
+      | ContentFingerprintGetterNotValid
       | UnexpectedError
     >;
 
@@ -148,6 +153,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
+      | ContentFingerprintGetterNotValid
       | UnexpectedError
     >;
 
@@ -230,6 +236,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
+      | ContentFingerprintGetterNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
       | CollectionMigrationFailed
@@ -245,6 +252,7 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | ContentSummaryGetterNotValid
+      | ContentFingerprintGetterNotValid
       | UnexpectedError
     >;
 
@@ -291,6 +299,10 @@ export default interface Backend {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
+      | ContentFingerprintNotValid
+      // TODO_FINGERPRINT: use ContentFingerprintNotValid or a variation instead
+      | ExecutingJavascriptFunctionFailed
+      | DuplicateDocumentDetected
       | UnexpectedError
     >;
 
@@ -306,6 +318,9 @@ export default interface Backend {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
+      | ContentFingerprintNotValid
+      // TODO_FINGERPRINT: use ContentFingerprintNotValid or a variation instead
+      | ExecutingJavascriptFunctionFailed
       | FilesNotFound
       | ReferencedDocumentsNotFound
       | UnexpectedError
