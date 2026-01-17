@@ -489,18 +489,6 @@
       "value": "Format"
     }
   ],
-  "CopyButton.tsx_4l6vz1": [
-    {
-      "type": 0,
-      "value": "Copy"
-    }
-  ],
-  "CopyButton.tsx_p556q3": [
-    {
-      "type": 0,
-      "value": "Copied"
-    }
-  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -1088,6 +1076,36 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentRefField.tsx_79lKyO": [
+    {
+      "type": 0,
+      "value": "Search results"
+    }
+  ],
+  "DocumentRefField.tsx_BnlWCE": [
+    {
+      "type": 0,
+      "value": "Type to search"
+    }
+  ],
+  "DocumentRefField.tsx_NNQzoi": [
+    {
+      "type": 0,
+      "value": "Searching..."
+    }
+  ],
+  "DocumentRefField.tsx_a00gRI": [
+    {
+      "type": 0,
+      "value": "Search documents"
+    }
+  ],
+  "DocumentRefField.tsx_hX5PAb": [
+    {
+      "type": 0,
+      "value": "No results found"
     }
   ],
   "DocumentVersionTimelineNode.tsx_X3XZvD": [
@@ -2966,6 +2984,36 @@
       "value": "No results found"
     }
   ],
+  "SelectButton.tsx_EPTOBf": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » "
+    },
+    {
+      "type": 1,
+      "value": "document"
+    }
+  ],
+  "SelectButton.tsx_paNPed": [
+    {
+      "type": 0,
+      "value": "null - click to select a document"
+    }
+  ],
+  "SelectButton.tsx_uCylWN": [
+    {
+      "type": 1,
+      "value": "collection"
+    },
+    {
+      "type": 0,
+      "value": " » Example document"
+    }
+  ],
   "SendRecordButtons.tsx_/8QiK8": [
     {
       "type": 0,
@@ -3080,22 +3128,28 @@
       "value": "null - click to set a value"
     }
   ],
-  "SuggestCollectionDefinition.tsx_S2ZL0P": [
+  "SuggestCollectionsDefinitions.tsx_65g2mb": [
     {
       "type": 0,
-      "value": "Suggested collection"
+      "value": "Suggested collections"
     }
   ],
-  "SuggestCollectionDefinition.tsx_VzzYJk": [
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Create"
     }
   ],
-  "SuggestCollectionDefinition.tsx_syZYsy": [
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": [
     {
       "type": 0,
-      "value": "Error creating the collection"
+      "value": "Create All"
+    }
+  ],
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": [
+    {
+      "type": 0,
+      "value": "Error creating the collections"
     }
   ],
   "ThinkingTime.tsx_uKcW4C": [
@@ -3114,40 +3168,20 @@
       "value": "Milliseconds"
     }
   ],
-  "Title.tsx_/f6lRt": [
-    {
-      "type": 0,
-      "value": "Create chart from "
-    },
-    {
-      "type": 1,
-      "value": "collection"
-    }
-  ],
   "Title.tsx_8yzKPa": [
     {
       "type": 0,
       "value": "Create documents"
     }
   ],
-  "Title.tsx_BJ7yn4": [
+  "Title.tsx_9Hs+7t": [
     {
       "type": 0,
-      "value": "Create documents table from "
+      "value": "Create chart from "
     },
     {
       "type": 1,
-      "value": "collection"
-    }
-  ],
-  "Title.tsx_CKsNgt": [
-    {
-      "type": 0,
-      "value": "Execute TypeScript function on "
-    },
-    {
-      "type": 1,
-      "value": "collection"
+      "value": "collections"
     }
   ],
   "Title.tsx_LOghU6": [
@@ -3166,6 +3200,16 @@
       "value": "collection"
     }
   ],
+  "Title.tsx_T0B1v2": [
+    {
+      "type": 0,
+      "value": "Execute TypeScript function on "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_XnBm2q": [
     {
       "type": 0,
@@ -3180,6 +3224,16 @@
     {
       "type": 1,
       "value": "tool"
+    }
+  ],
+  "Title.tsx_oHtaJ1": [
+    {
+      "type": 0,
+      "value": "Create documents table from "
+    },
+    {
+      "type": 1,
+      "value": "collections"
     }
   ],
   "Title.tsx_vXCeIi": [

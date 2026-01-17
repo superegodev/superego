@@ -2,7 +2,7 @@ import type { Conversation, Message, ToolCall } from "@superego/backend";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import CreateDocuments from "./ToolResult/CreateDocuments.js";
 import CreateNewDocumentVersion from "./ToolResult/CreateNewDocumentVersion.js";
-import SuggestCollectionDefinition from "./ToolResult/SuggestCollectionDefinition.js";
+import SuggestCollectionsDefinitions from "./ToolResult/SuggestCollectionsDefinitions/SuggestCollectionsDefinitions.js";
 
 interface Props {
   conversation: Conversation;
@@ -30,19 +30,19 @@ export default function ToolMessage({ conversation, message }: Props) {
     }
 
     if (
-      ConversationUtils.isSuccessfulSuggestCollectionDefinitionToolResult(
+      ConversationUtils.isSuccessfulSuggestCollectionsDefinitionsToolResult(
         toolResult,
       )
     ) {
       return (
-        <SuggestCollectionDefinition
+        <SuggestCollectionsDefinitions
           key={toolResult.toolCallId}
           conversation={conversation}
           toolCall={
             ConversationUtils.findToolCall(
               conversation,
               toolResult,
-            ) as ToolCall.SuggestCollectionDefinition
+            ) as ToolCall.SuggestCollectionsDefinitions
           }
           toolResult={toolResult}
         />

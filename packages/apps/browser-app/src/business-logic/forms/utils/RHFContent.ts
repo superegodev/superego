@@ -33,6 +33,7 @@ async function fromRHFValue(
     case DataType.StringLiteral:
     case DataType.NumberLiteral:
     case DataType.BooleanLiteral:
+    case DataType.DocumentRef:
       return rhfValue;
     case DataType.File:
       // FileRefs are kept as is. Files are converted to ProtoFiles.
@@ -89,6 +90,7 @@ function toRHFValue(
     case DataType.StringLiteral:
     case DataType.NumberLiteral:
     case DataType.BooleanLiteral:
+    case DataType.DocumentRef:
       return value;
     case DataType.File:
       // ProtoFiles are converted to Files. FileRefs are kept as is.

@@ -1,5 +1,6 @@
 import {
   type Collection,
+  type CollectionId,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -14,6 +15,7 @@ import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
+import type AssistantDocument from "../utils/AssistantDocument.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
@@ -28,27 +30,39 @@ export default {
     javascriptSandbox: JavascriptSandbox,
     typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.ExecuteTypescriptFunction> {
-    const { collectionId, typescriptFunction } = toolCall.input;
-
-    const collection = collections.find(({ id }) => id === collectionId);
-    if (!collection) {
+    const { collectionIds, typescriptFunction } = toolCall.input;
+    const uniqueCollectionIds = [...new Set(collectionIds)];
+    const collectionsById = new Map(
+      collections.map((collection) => [collection.id, collection]),
+    );
+    const missingCollectionId = uniqueCollectionIds.find(
+      (collectionId) => !collectionsById.has(collectionId),
+    );
+    if (missingCollectionId) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
-          makeResultError("CollectionNotFound", { collectionId }),
+          makeResultError("CollectionNotFound", {
+            collectionId: missingCollectionId,
+          }),
         ),
       };
     }
+
+    const typeDeclarations = uniqueCollectionIds.map((collectionId) => {
+      const collection = collectionsById.get(collectionId)!;
+      return {
+        path: `/${collectionId}.ts` as `/${string}.ts`,
+        source: codegen(collection.latestVersion.schema),
+      };
+    });
 
     const { data: javascriptFunction, error: compileError } =
       await typescriptCompiler.compile(
         { path: "/main.ts", source: typescriptFunction },
         [
-          {
-            path: `/${collection.id}.ts`,
-            source: codegen(collection.latestVersion.schema),
-          },
+          ...typeDeclarations,
           {
             path: "/LocalInstant.d.ts",
             source: LocalInstantTypeDeclaration,
@@ -71,30 +85,34 @@ export default {
       };
     }
 
-    const { data: documents, error: documentsListError } =
-      await documentsList.exec(collectionId, false);
-    if (documentsListError) {
-      throw new UnexpectedAssistantError(
-        [
-          `Listing documents failed with ${documentsListError.name}.`,
-          documentsListError.name === "UnexpectedError"
-            ? ` Cause: ${documentsListError.details.cause}`
-            : "",
-        ].join(""),
+    const documentsByCollection: Record<CollectionId, AssistantDocument[]> = {};
+
+    for (const collectionId of uniqueCollectionIds) {
+      const { data: documents, error: documentsListError } =
+        await documentsList.exec(collectionId, false);
+      if (documentsListError) {
+        throw new UnexpectedAssistantError(
+          [
+            `Listing documents failed with ${documentsListError.name}.`,
+            documentsListError.name === "UnexpectedError"
+              ? ` Cause: ${documentsListError.details.cause}`
+              : "",
+          ].join(""),
+        );
+      }
+      const collection = collectionsById.get(collectionId)!;
+      documentsByCollection[collectionId] = documents.map((document) =>
+        toAssistantDocument(
+          collection.latestVersion.schema,
+          document,
+          DateTime.local().zoneName,
+        ),
       );
     }
 
-    const assistantDocuments = documents.map((document) =>
-      toAssistantDocument(
-        collection.latestVersion.schema,
-        document,
-        DateTime.local().zoneName,
-      ),
-    );
-
     const result = await javascriptSandbox.executeSyncFunction(
       { source: "", compiled: javascriptFunction },
-      [assistantDocuments],
+      [documentsByCollection],
     );
 
     return {
@@ -110,31 +128,39 @@ export default {
       name: ToolName.ExecuteTypescriptFunction,
       description: `
 Runs a **synchronous**, **read-only** TypeScript function over **all documents**
-in one specific collection; returns a JSON-safe result. Use this to **search**
+in one or more collections; returns a JSON-safe result. Use this to **search**
 for a document, **fetch** a specific item by \`id\`, or compute aggregates.
 
 **MANDATORY**: You **must** call \`${ToolName.GetCollectionTypescriptSchema}\` for
-the target collection before using this tool.
+each target collection before using this tool.
 
 ### \`typescriptFunction\` template
 
 \`\`\`ts
 // This imports the types returned from the \`${ToolName.GetCollectionTypescriptSchema}\` tool call.
-// Replace $collectionId with the full id (Collection_xyz...) of the collection
+// Replace Collection_abc with the full id (Collection_abc...) of each collection
 // you're running the function on.
-import type * as $collectionId from "./$collectionId.ts";
+import type * as Collection_abc from "./Collection_abc.ts";
+import type * as Collection_def from "./Collection_def.ts";
+// ...other collections
 
-interface Document {
+interface Document<Content> {
   // Document ID
   id: string;
   // Current document version ID
   versionId: string;
   // The root type from the collection types. The content is guaranteed to abide
   // by the TypeScript schema.
-  content: $collectionId.$rootType;
+  content: Content;
 }
 
-export default function main(documents: Document[]): any {
+type DocumentsByCollection = {
+  Collection_abc: Document<Collection_abc.$rootTypeName>[];
+  Collection_def: Document<Collection_def.$rootTypeName>[];
+  // ...other collections
+};
+
+export default function main(documentsByCollection: DocumentsByCollection): any {
   // Implementation goes here.
 }
 \`\`\`
@@ -165,17 +191,18 @@ ${LocalInstantTypeDeclaration}
       inputSchema: {
         type: "object",
         properties: {
-          collectionId: {
-            description: "Full id of the target collection",
-            examples: ["Collection_xyz"],
-            type: "string",
+          collectionIds: {
+            description: "Full ids of the target collections",
+            examples: [["Collection_abc", "Collection_def"]],
+            type: "array",
+            items: { type: "string" },
           },
           typescriptFunction: {
             description: "TypeScript source string.",
             type: "string",
           },
         },
-        required: ["collectionId", "typescriptFunction"],
+        required: ["collectionIds", "typescriptFunction"],
         additionalProperties: false,
       },
     };

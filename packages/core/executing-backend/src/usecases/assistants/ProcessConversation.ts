@@ -32,7 +32,7 @@ import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
-import CollectionsCreate from "../collections/Create.js";
+import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
@@ -189,7 +189,7 @@ export default class AssistantsProcessConversation extends Usecase {
           collectionCategories,
           collections,
           {
-            collectionsCreate: this.sub(CollectionsCreate),
+            collectionsCreateMany: this.sub(CollectionsCreateMany),
             filesGetContent: this.sub(FilesGetContent),
           },
         );

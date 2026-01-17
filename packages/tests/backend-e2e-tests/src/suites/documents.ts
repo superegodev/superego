@@ -243,6 +243,71 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: ReferencedDocumentsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const nonExistentDocumentId = Id.generate.document();
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: nonExistentDocumentId,
+          },
+        },
+      );
+
+      // Verify
+      expect(createDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: null,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: nonExistentDocumentId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("success: creates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -707,6 +772,79 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: ReferencedDocumentsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+              nullableProperties: ["documentRef"],
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { documentRef: null },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const nonExistentDocumentId = Id.generate.document();
+      const createNewVersionResult = await backend.documents.createNewVersion(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        createDocumentResult.data.latestVersion.id,
+        {
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: nonExistentDocumentId,
+          },
+        },
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: nonExistentDocumentId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1034,6 +1172,86 @@ export default rd<GetDependencies>("Documents", (deps) => {
             connectorName: mockConnector.name,
             message:
               "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
+          },
+        },
+      });
+    });
+
+    it("error: DocumentIsReferenced", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+              nullableProperties: ["documentRef"],
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      // Create document A (will be referenced)
+      const createDocumentAResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "Document A", documentRef: null },
+      );
+      assert.isTrue(createDocumentAResult.success);
+      // Create document B that references document A
+      const createDocumentBResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {
+          title: "Document B",
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentAResult.data.id,
+          },
+        },
+      );
+      assert.isTrue(createDocumentBResult.success);
+
+      // Exercise - try to delete document A which is referenced by B
+      const deleteResult = await backend.documents.delete(
+        createCollectionResult.data.id,
+        createDocumentAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentIsReferenced",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentAResult.data.id,
+            referencingDocuments: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: createDocumentBResult.data.id,
+              },
+            ],
           },
         },
       });

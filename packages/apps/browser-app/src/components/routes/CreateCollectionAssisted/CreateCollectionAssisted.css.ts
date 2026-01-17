@@ -19,17 +19,17 @@ export const Hero = {
 
   logo: style({
     marginBlockEnd: vars.spacing._6,
-    height: vars.spacing._40,
+    height: vars.spacing._48,
   }),
 
   title: style({
-    fontSize: vars.typography.fontSizes.xl2,
+    fontSize: vars.typography.fontSizes.xl3,
     fontWeight: vars.typography.fontWeights.regular,
     marginBlockEnd: vars.spacing._0,
   }),
 
   tagLine: style({
-    fontSize: vars.typography.fontSizes.xl,
+    fontSize: vars.typography.fontSizes.xl2,
     fontWeight: vars.typography.fontWeights.regular,
     marginBlockEnd: vars.spacing._24,
   }),

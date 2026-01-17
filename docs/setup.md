@@ -9,7 +9,7 @@
 
 ## System requirements
 
-- [nodejs >= 22](https://nodejs.org/en/).
+- [nodejs >= 24](https://nodejs.org/en/).
 - [corepack](https://github.com/nodejs/corepack) (to install yarn, the package
   manager).
 

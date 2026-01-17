@@ -39,7 +39,11 @@ export default class HostIpc {
     ) => void;
     [MessageType.NavigateHostTo]: (message: NavigateHostToMessage) => void;
   }): () => void {
-    const handleMessage = ({ data: message }: MessageEvent) => {
+    const handleMessage = ({ data: message, source }: MessageEvent) => {
+      // Ignore messages from other windows.
+      if (source !== this.sandbox) {
+        return;
+      }
       if (isSandboxReadyMessage(message)) {
         handlers[MessageType.SandboxReady](message);
       } else if (isHeightChangedMessage(message)) {

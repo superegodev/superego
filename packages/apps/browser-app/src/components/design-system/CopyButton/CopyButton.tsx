@@ -1,38 +1,27 @@
 import type { Milliseconds } from "@superego/global-types";
 import { useState } from "react";
 import { PiCheck, PiCopy } from "react-icons/pi";
-import { FormattedMessage } from "react-intl";
 import Button from "../Button/Button.js";
-import * as cs from "./CodeBlock.css.js";
 
 const WAS_COPIED_TIMEOUT: Milliseconds = 3_000;
 
 interface Props {
-  code: string;
+  text: string;
+  className?: string | undefined;
 }
-export default function CopyButton({ code }: Props) {
+export default function CopyButton({ text, className }: Props) {
   const [wasCopied, setWasCopied] = useState(false);
   return (
     <Button
       variant="invisible"
       onPress={async () => {
-        await navigator.clipboard.writeText(code);
+        await navigator.clipboard.writeText(text);
         setWasCopied(true);
         setTimeout(() => setWasCopied(false), WAS_COPIED_TIMEOUT);
       }}
-      className={cs.CopyButton.root}
+      className={className}
     >
-      {wasCopied ? (
-        <>
-          <PiCheck />
-          <FormattedMessage defaultMessage="Copied" />
-        </>
-      ) : (
-        <>
-          <PiCopy />
-          <FormattedMessage defaultMessage="Copy" />
-        </>
-      )}
+      {wasCopied ? <PiCheck /> : <PiCopy />}
     </Button>
   );
 }

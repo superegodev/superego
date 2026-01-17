@@ -4,12 +4,14 @@ import {
   type MessageContentPart,
   MessageContentPartType,
 } from "@superego/backend";
-import { PiPauseFill, PiSpeakerSimpleHighFill } from "react-icons/pi";
+import { PiPause, PiSpeakerSimpleHigh } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import usePlayAudio from "../../../../business-logic/audio/usePlayAudio.js";
+import CopyButton from "../../../design-system/CopyButton/CopyButton.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
-import * as cs from "../ConversationMessages.css.js";
+import Markdown from "../../../design-system/Markdown/Markdown.js";
 import FileParts from "./FileParts.js";
+import * as cs from "./UserMessage.css.js";
 
 interface Props {
   message: Message.User;
@@ -27,30 +29,36 @@ export default function UserMessage({ message }: Props) {
   const fileParts = message.content.filter(
     (part) => part.type === MessageContentPartType.File,
   );
+
   const { isPlaying, togglePlayback } = usePlayAudio(partWithAudio?.audio);
   return (
     <>
       <FileParts fileParts={fileParts} />
       <div className={cs.UserMessage.root}>
         {text !== "" ? (
-          text
+          <Markdown text={text} className={cs.UserMessage.markdown} />
         ) : (
           <FormattedMessage defaultMessage="Transcribing audio..." />
         )}
-        {partWithAudio ? (
-          <IconButton
-            label={
-              isPlaying
-                ? intl.formatMessage({ defaultMessage: "Pause" })
-                : intl.formatMessage({ defaultMessage: "Play" })
-            }
-            variant="primary"
-            className={cs.UserMessage.playPauseButton}
-            onPress={togglePlayback}
-          >
-            {isPlaying ? <PiPauseFill /> : <PiSpeakerSimpleHighFill />}
-          </IconButton>
-        ) : null}
+        <div className={cs.UserMessage.actions}>
+          {text !== "" ? (
+            <CopyButton text={text} className={cs.UserMessage.action} />
+          ) : null}
+          {partWithAudio ? (
+            <IconButton
+              label={
+                isPlaying
+                  ? intl.formatMessage({ defaultMessage: "Pause" })
+                  : intl.formatMessage({ defaultMessage: "Play" })
+              }
+              variant="invisible"
+              className={cs.UserMessage.action}
+              onPress={togglePlayback}
+            >
+              {isPlaying ? <PiPause /> : <PiSpeakerSimpleHigh />}
+            </IconButton>
+          ) : null}
+        </div>
       </div>
     </>
   );

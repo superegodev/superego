@@ -1,6 +1,16 @@
 import type { ValidationIssue } from "@superego/backend";
 import { DataType, type Schema, utils } from "@superego/schema";
 
+const primitiveDataTypes = new Set([
+  DataType.String,
+  DataType.Enum,
+  DataType.Number,
+  DataType.Boolean,
+  DataType.StringLiteral,
+  DataType.NumberLiteral,
+  DataType.BooleanLiteral,
+]);
+
 export default function validateTableColumns(
   schema: Schema,
   tableColumns: { header: string; path: string }[],
@@ -17,12 +27,7 @@ export default function validateTableColumns(
           path: [{ key: index }],
         };
       }
-      if (
-        typeDefinition.dataType === DataType.File ||
-        typeDefinition.dataType === DataType.JsonObject ||
-        typeDefinition.dataType === DataType.List ||
-        typeDefinition.dataType === DataType.Struct
-      ) {
+      if (!primitiveDataTypes.has(typeDefinition.dataType)) {
         return {
           message: "Invalid path: path must point to a primitive value.",
           path: [{ key: index }],

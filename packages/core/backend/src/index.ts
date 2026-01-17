@@ -34,6 +34,7 @@ export type { default as CollectionCategoryNameNotValid } from "./errors/Collect
 export type { default as CollectionCategoryNotFound } from "./errors/CollectionCategoryNotFound.js";
 export type { default as CollectionHasDocuments } from "./errors/CollectionHasDocuments.js";
 export type { default as CollectionHasNoRemote } from "./errors/CollectionHasNoRemote.js";
+export type { default as CollectionIsReferenced } from "./errors/CollectionIsReferenced.js";
 export type { default as CollectionIsSyncing } from "./errors/CollectionIsSyncing.js";
 export type { default as CollectionMigrationFailed } from "./errors/CollectionMigrationFailed.js";
 export type { default as CollectionMigrationNotValid } from "./errors/CollectionMigrationNotValid.js";
@@ -55,6 +56,7 @@ export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryN
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
+export type { default as DocumentIsReferenced } from "./errors/DocumentIsReferenced.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";
@@ -63,6 +65,8 @@ export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
+export type { default as ReferencedCollectionsNotFound } from "./errors/ReferencedCollectionsNotFound.js";
+export type { default as ReferencedDocumentsNotFound } from "./errors/ReferencedDocumentsNotFound.js";
 export type { default as RemoteConvertersNotValid } from "./errors/RemoteConvertersNotValid.js";
 export type { default as SyncingChangesFailed } from "./errors/SyncingChangesFailed.js";
 export type { default as TooManyFailedImplementationAttempts } from "./errors/TooManyFailedImplementationAttempts.js";

@@ -301,6 +301,11 @@ describe("finds all file nodes in the given value", () => {
           name: "name",
           mimeType: "mimeType",
         },
+        {
+          id: "file_1",
+          name: "name",
+          mimeType: "mimeType",
+        },
       ],
     },
     expectedFileNodes: [
@@ -308,6 +313,14 @@ describe("finds all file nodes in the given value", () => {
         path: ["listWithFileItems", "0"],
         value: {
           id: "file_0",
+          name: "name",
+          mimeType: "mimeType",
+        },
+      },
+      {
+        path: ["listWithFileItems", "1"],
+        value: {
+          id: "file_1",
           name: "name",
           mimeType: "mimeType",
         },

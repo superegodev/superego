@@ -1,17 +1,25 @@
 import { createContext, useContext } from "react";
 
-interface UiOptions {
+export interface UiOptions {
   showTypes: boolean;
   showNullability: boolean;
   zoomLevel: number;
   isReadOnly: boolean;
+  suggestedCollections: {
+    id: string;
+    settings: {
+      name: string;
+      icon: string | null;
+    };
+  }[];
 }
 
-const UiOptionsContext = createContext({
+const UiOptionsContext = createContext<UiOptions>({
   showTypes: true,
   showNullability: false,
   zoomLevel: 1,
   isReadOnly: false,
+  suggestedCollections: [],
 });
 
 export const UiOptionsProvider = UiOptionsContext.Provider;

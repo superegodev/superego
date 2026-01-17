@@ -30,6 +30,12 @@ const file = removeIndent(`
     content: Uint8Array<ArrayBuffer>;
   };
 `);
+const documentRef = removeIndent(`
+  export type DocumentRef = {
+    collectionId: string;
+    documentId: string;
+  };
+`);
 
 export default function generateBuiltInTypes(
   referencedBuiltInTypes: ReferencedBuiltInTypes,
@@ -37,5 +43,6 @@ export default function generateBuiltInTypes(
   return joinLines([
     referencedBuiltInTypes.has("JsonObject") ? jsonObject : null,
     referencedBuiltInTypes.has("File") ? file : null,
+    referencedBuiltInTypes.has("DocumentRef") ? documentRef : null,
   ]);
 }

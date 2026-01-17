@@ -12,10 +12,11 @@ import {
   type DocumentVersionId,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
+  type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { utils, valibotSchemas } from "@superego/schema";
+import { type DocumentRef, utils, valibotSchemas } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
@@ -30,6 +31,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
@@ -43,6 +45,7 @@ type ExecReturnValue = ResultPromise<
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
   | FilesNotFound
+  | ReferencedDocumentsNotFound
   | UnexpectedError
 >;
 export default class DocumentsCreateNewVersion extends Usecase<
@@ -161,6 +164,29 @@ export default class DocumentsCreateNewVersion extends Usecase<
       );
     }
 
+    const referencedDocuments = ContentDocumentRefUtils.extractDocumentRefs(
+      latestCollectionVersion.schema,
+      contentValidationResult.output,
+    );
+    const notFoundDocumentRefs: DocumentRef[] = [];
+    for (const referencedDocument of referencedDocuments) {
+      const exists = await this.repos.document.exists(
+        referencedDocument.documentId as DocumentId,
+      );
+      if (!exists) {
+        notFoundDocumentRefs.push(referencedDocument);
+      }
+    }
+    if (!isEmpty(notFoundDocumentRefs)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedDocumentsNotFound", {
+          collectionId: document.collectionId,
+          documentId: id,
+          notFoundDocumentRefs,
+        }),
+      );
+    }
+
     const referencedFileIds = ContentFileUtils.extractReferencedFileIds(
       latestCollectionVersion.schema,
       contentValidationResult.output,
@@ -192,6 +218,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       collectionVersionId: latestCollectionVersion.id,
       conversationId: options?.conversationId ?? null,
       content: convertedContent,
+      referencedDocuments: referencedDocuments,
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     } as DocumentVersionEntity;

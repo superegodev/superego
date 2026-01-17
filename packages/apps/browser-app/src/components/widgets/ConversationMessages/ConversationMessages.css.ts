@@ -57,26 +57,3 @@ export const ErrorMessage = {
     },
   }),
 };
-
-export const UserMessage = {
-  root: style({
-    background: vars.colors.background.surfaceHighlight,
-    borderRadius: vars.borders.radius.xl,
-    padding: vars.spacing._4,
-    marginBlock: vars.spacing._4,
-    fontSize: vars.typography.fontSizes.md,
-    position: "relative",
-    "@container": {
-      [`(min-width: ${narrowContainerWidth})`]: {
-        marginInlineStart: "40%",
-      },
-    },
-  }),
-
-  playPauseButton: style({
-    position: "absolute",
-    right: vars.spacing._2,
-    bottom: `calc(-1 * ${vars.spacing._2})`,
-    borderRadius: "50%",
-  }),
-};

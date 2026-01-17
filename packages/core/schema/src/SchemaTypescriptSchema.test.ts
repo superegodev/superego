@@ -22,10 +22,9 @@ it("exports the Schema type definition", () => {
       /** One specific Boolean. */
       BooleanLiteral = "BooleanLiteral",
 
-      /** A JsonObject. */
       JsonObject = "JsonObject",
 
-      /** A FileRef or a ProtoFile, depending on the context. */
+      /** FileRef or ProtoFile, depending on the context. */
       File = "File",
 
       /** Object containing only known properties. */
@@ -33,6 +32,9 @@ it("exports the Schema type definition", () => {
 
       /** List of items of another type. */
       List = "List",
+
+      /** Reference to a Document. */
+      DocumentRef = "DocumentRef",
     }
 
     interface Described {
@@ -178,7 +180,14 @@ it("exports the Schema type definition", () => {
       items: AnyTypeDefinition;
     }
 
+    interface DocumentRefTypeDefinition extends Described {
+      dataType: DataType.DocumentRef;
+      /** Id of the collection the document must belong to. */
+      collectionId?: string | undefined;
+    }
+
     interface TypeDefinitionRef extends Described {
+      /** Must be set to null. */
       dataType: null;
       ref: string;
     }
@@ -195,6 +204,7 @@ it("exports the Schema type definition", () => {
       | FileTypeDefinition
       | StructTypeDefinition
       | ListTypeDefinition
+      | DocumentRefTypeDefinition
       | TypeDefinitionRef;
 
     interface Schema {

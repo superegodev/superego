@@ -224,12 +224,6 @@
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Formato"
   },
-  "CopyButton.tsx_4l6vz1": {
-    "defaultMessage": "Copia"
-  },
-  "CopyButton.tsx_p556q3": {
-    "defaultMessage": "Copiato"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Vai alla modalità manuale"
   },
@@ -406,6 +400,21 @@
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
+  },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Risultati della ricerca"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Digita per cercare"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Ricerca in corso..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Cerca documenti"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "Nessun risultato trovato"
   },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Ripristina versione"
@@ -989,6 +998,15 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
   },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - fai clic per selezionare un documento"
+  },
+  "SelectButton.tsx_uCylWN": {
+    "defaultMessage": "{collection} » Documento d'esempio"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },
@@ -1034,14 +1052,17 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
-  "SuggestCollectionDefinition.tsx_S2ZL0P": {
-    "defaultMessage": "Collezione suggerita"
+  "SuggestCollectionsDefinitions.tsx_65g2mb": {
+    "defaultMessage": "Collezioni suggerite"
   },
-  "SuggestCollectionDefinition.tsx_syZYsy": {
-    "defaultMessage": "Errore durante la creazione della collezione"
-  },
-  "SuggestCollectionDefinition.tsx_VzzYJk": {
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": {
     "defaultMessage": "Crea"
+  },
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": {
+    "defaultMessage": "Crea tutto"
+  },
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": {
+    "defaultMessage": "Errore durante la creazione delle collezioni"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Riflessione per {time}"
@@ -1052,14 +1073,8 @@
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Crea documenti"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Crea grafico da {collection}"
-  },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Crea tabella dei documenti da {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Esegui la funzione TypeScript su {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Crea grafico da {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Riuscito"
@@ -1067,11 +1082,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Ottieni lo schema TypeScript per {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Esegui la funzione TypeScript su {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "Nessuna risposta"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Chiama strumento: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Crea tabella dei documenti da {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Fallito"

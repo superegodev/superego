@@ -5,6 +5,7 @@ import type Schema from "../../Schema.js";
 import type { AnyTypeDefinition } from "../../typeDefinitions.js";
 import findFormat from "../../utils/findFormat.js";
 import getRootType from "../../utils/getRootType.js";
+import documentRef from "../documentRef/documentRef.js";
 import file from "../file/file.js";
 import jsonObject from "../jsonObject/jsonObject.js";
 
@@ -102,5 +103,7 @@ function toValibotSchema(
         variant === "normal" ? item : v.strictObject({ value: item }),
       );
     }
+    case DataType.DocumentRef:
+      return documentRef(typeDefinition.collectionId);
   }
 }

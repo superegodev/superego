@@ -93,6 +93,12 @@ const ListTypeDefinitionValibotSchema = v.strictObject({
   items: v.lazy(() => AnyTypeDefinitionValibotSchema),
 });
 
+const DocumentRefTypeDefinitionValibotSchema = v.strictObject({
+  ...described().entries,
+  dataType: v.literal(DataType.DocumentRef),
+  collectionId: v.optional(v.string()),
+});
+
 const TypeDefinitionRefValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.null(),
@@ -114,6 +120,7 @@ const AnyTypeDefinitionValibotSchema: v.GenericSchema<
   FileTypeDefinitionValibotSchema,
   StructTypeDefinitionValibotSchema,
   ListTypeDefinitionValibotSchema,
+  DocumentRefTypeDefinitionValibotSchema,
   TypeDefinitionRefValibotSchema,
 ]);
 

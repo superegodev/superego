@@ -119,6 +119,7 @@ export const commonVars = {
     _100: "25rem",
     _110: "27.5rem",
     _120: "30rem",
+    _140: "35rem",
     _160: "40rem",
     _180: "45rem",
     _200: "50rem",

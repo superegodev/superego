@@ -258,6 +258,76 @@ export const Field = {
   }),
 };
 
+export const DocumentRefField = {
+  DocumentRefField: {
+    popover: style({
+      width: "var(--trigger-width)",
+      overflow: "auto",
+      maxHeight: vars.spacing._80,
+      display: "flex",
+      flexDirection: "column",
+      padding: 0,
+    }),
+
+    searchField: style({
+      display: "flex",
+      alignItems: "center",
+      gap: vars.spacing._2,
+      padding: vars.spacing._3,
+      borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+    }),
+
+    searchFieldIcon: style({
+      flexShrink: 0,
+      color: vars.colors.text.secondary,
+      fontSize: vars.typography.fontSizes.lg,
+    }),
+
+    searchFieldInput: style({
+      flex: 1,
+      border: 0,
+      outline: "none !important",
+      background: "transparent",
+      fontSize: vars.typography.fontSizes.md,
+      fontFamily: vars.typography.fontFamilies.sansSerif,
+      color: vars.colors.text.primary,
+      "::placeholder": {
+        color: vars.colors.text.secondary,
+      },
+    }),
+
+    listBox: style({
+      flex: 1,
+      overflow: "auto",
+      overscrollBehavior: "contain",
+    }),
+
+    emptyState: style({
+      padding: vars.spacing._6,
+      textAlign: "center",
+      color: vars.colors.text.secondary,
+      fontSize: vars.typography.fontSizes.md,
+    }),
+  },
+
+  SelectButton: {
+    root: style({
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      width: "100%",
+      height: `calc(${vars.spacing._9} + 1px)`,
+      marginBlockEnd: vars.spacing._2,
+      fontSize: vars.typography.fontSizes.md,
+    }),
+
+    placeholder: style({
+      color: vars.colors.text.secondary,
+      fontStyle: "italic",
+    }),
+  },
+};
+
 export const AnyFieldLabel = {
   dataType: style({
     fontFamily: vars.typography.fontFamilies.monospace,

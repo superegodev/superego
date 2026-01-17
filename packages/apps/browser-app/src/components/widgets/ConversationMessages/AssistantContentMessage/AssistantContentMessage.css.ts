@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../themes.css.js";
 
 export const AssistantContentMessage = {
@@ -6,20 +6,6 @@ export const AssistantContentMessage = {
     width: "100%",
     marginBlockStart: vars.spacing._8,
     marginBlockEnd: 0,
-  }),
-
-  markdown: style({
-    width: "100%",
-    fontSize: vars.typography.fontSizes.md,
-    lineHeight: vars.spacing._6,
-  }),
-
-  markdownTableScroller: style({
-    width: "100%",
-    maxHeight: vars.spacing._80,
-    overflow: "auto",
-    position: "relative",
-    marginBlock: vars.spacing._4,
   }),
 
   infoAndActions: style({
@@ -49,47 +35,9 @@ export const AssistantContentMessage = {
   }),
 
   infoAndActionsAction: style({
+    padding: 0,
+    width: vars.spacing._6,
+    height: vars.spacing._6,
     color: vars.colors.text.secondary,
   }),
 };
-
-// Styles for markdown elements
-globalStyle(
-  `${AssistantContentMessage.markdown} ol, ${AssistantContentMessage.markdown} ul`,
-  {
-    paddingInlineStart: vars.spacing._8,
-    lineHeight: vars.spacing._4_5,
-  },
-);
-globalStyle(`${AssistantContentMessage.markdown} li`, {
-  marginBlockEnd: vars.spacing._2,
-});
-globalStyle(`${AssistantContentMessage.markdown} table`, {
-  width: "100%",
-  borderCollapse: "collapse",
-  borderSpacing: 0,
-  marginBlock: 0,
-  lineHeight: vars.spacing._4_5,
-});
-globalStyle(`${AssistantContentMessage.markdown} thead th`, {
-  paddingInline: vars.spacing._2,
-  paddingBlock: vars.spacing._3,
-  textAlign: "left",
-  fontWeight: vars.typography.fontWeights.medium,
-  fontSize: vars.typography.fontSizes.md,
-  background: vars.colors.background.surface,
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-});
-globalStyle(`${AssistantContentMessage.markdown} tbody tr`, {
-  borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-});
-globalStyle(`${AssistantContentMessage.markdown} tbody tr:hover`, {
-  background: vars.colors.background.surfaceHighlight,
-});
-globalStyle(`${AssistantContentMessage.markdown} tbody td`, {
-  padding: vars.spacing._2,
-  fontSize: vars.typography.fontSizes.md,
-  verticalAlign: "middle",
-});

@@ -78,6 +78,9 @@ function generateType(
     case DataType.File:
       referencedBuiltInTypes.add("File");
       return "ProtoFile | FileRef";
+    case DataType.DocumentRef:
+      referencedBuiltInTypes.add("DocumentRef");
+      return "DocumentRef";
     case DataType.Struct: {
       const properties = joinLines(
         Object.entries(typeDefinition.properties).map(

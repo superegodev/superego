@@ -11,6 +11,8 @@ import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMat
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
+import type ReferencedCollectionsNotFound from "../errors/ReferencedCollectionsNotFound.js";
+import type ReferencedDocumentsNotFound from "../errors/ReferencedDocumentsNotFound.js";
 import type TypescriptCompilationFailed from "../errors/TypescriptCompilationFailed.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
@@ -72,6 +74,7 @@ namespace ToolResult {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
     >,
     { documents: LiteDocument[] }
   >;
@@ -89,6 +92,7 @@ namespace ToolResult {
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
     >,
     { document: LiteDocument }
   >;
@@ -122,24 +126,32 @@ namespace ToolResult {
       };
     }
   >;
-  export type CreateDocumentsTable = BaseToolResult<
-    ToolName.CreateDocumentsTable,
+  export type CreateDocumentsTables = BaseToolResult<
+    ToolName.CreateDocumentsTables,
     Result<
-      {
-        markdownSnippet: string;
-        tableInfo: {
-          columns: string[];
-          rowCount: number;
-        };
-      },
+      Record<
+        CollectionId,
+        {
+          markdownSnippet: string;
+          tableInfo: {
+            columns: string[];
+            rowCount: number;
+          };
+        }
+      >,
       | CollectionNotFound
       | TypescriptCompilationFailed
       | ExecutingJavascriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
     {
-      documentsTableId: string;
-      documents: LiteDocument[];
+      tables: Record<
+        CollectionId,
+        {
+          documentsTableId: string;
+          documents: LiteDocument[];
+        }
+      >;
     }
   >;
   export type SearchDocuments = BaseToolResult<
@@ -158,12 +170,13 @@ namespace ToolResult {
   >;
 
   // CollectionCreator
-  export type SuggestCollectionDefinition = BaseToolResult<
-    ToolName.SuggestCollectionDefinition,
+  export type SuggestCollectionsDefinitions = BaseToolResult<
+    ToolName.SuggestCollectionsDefinitions,
     Result<
       null,
       | CollectionCategoryNotFound
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | CollectionSettingsNotValid
       | ResultError<"TableColumnsNotValid", { issues: ValidationIssue[] }>
       | ResultError<"ExampleDocumentNotValid", { issues: ValidationIssue[] }>
@@ -193,9 +206,9 @@ type ToolResult =
   | ToolResult.ExecuteTypescriptFunction
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.CreateChart
-  | ToolResult.CreateDocumentsTable
+  | ToolResult.CreateDocumentsTables
   | ToolResult.SearchDocuments
-  | ToolResult.SuggestCollectionDefinition
+  | ToolResult.SuggestCollectionsDefinitions
   | ToolResult.InspectFile
   | ToolResult.Unknown
   | ToolResult.WriteTypescriptModule;

@@ -6,6 +6,7 @@ import {
 } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import BooleanField from "./BooleanField.js";
+import DocumentRefField from "./DocumentRefField/DocumentRefField.js";
 import EnumField from "./EnumField.js";
 import FileField from "./FileField.js";
 import JsonObjectField from "./JsonObjectField/JsonObjectField.js";
@@ -118,6 +119,17 @@ export default function AnyField({
       return (
         <ListField
           schema={schema}
+          typeDefinition={typeDefinition}
+          isNullable={isNullable}
+          isListItem={isListItem}
+          control={control}
+          name={name}
+          label={label}
+        />
+      );
+    case DataType.DocumentRef:
+      return (
+        <DocumentRefField
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           isListItem={isListItem}

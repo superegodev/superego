@@ -62,6 +62,12 @@ export const useCreateCollection = makeUseBackendMutation(
   () => [["listCollections"], ["listConversations"], ["getConversation"]],
 );
 
+export const useCreateManyCollections = makeUseBackendMutation(
+  "collections",
+  "createMany",
+  () => [["listCollections"], ["listConversations"], ["getConversation"]],
+);
+
 export const useUpdateCollectionSettings = makeUseBackendMutation(
   "collections",
   "updateSettings",

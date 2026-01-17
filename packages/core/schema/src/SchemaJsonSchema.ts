@@ -269,6 +269,20 @@ Preferred order for displaying properties in UIs. If specified:
       additionalProperties: false,
     },
 
+    DocumentRefTypeDefinition: {
+      type: "object",
+      properties: {
+        description: { type: "string" },
+        dataType: { const: "DocumentRef" },
+        collectionId: {
+          description: "Id of the collection the document must belong to.",
+          type: "string",
+        },
+      },
+      required: ["dataType"],
+      additionalProperties: false,
+    },
+
     TypeDefinitionRef: {
       type: "object",
       properties: {
@@ -293,6 +307,7 @@ Preferred order for displaying properties in UIs. If specified:
         { $ref: "#/$defs/FileTypeDefinition" },
         { $ref: "#/$defs/StructTypeDefinition" },
         { $ref: "#/$defs/ListTypeDefinition" },
+        { $ref: "#/$defs/DocumentRefTypeDefinition" },
         { $ref: "#/$defs/TypeDefinitionRef" },
       ],
     },

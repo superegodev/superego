@@ -108,4 +108,28 @@ export default class DemoDocumentVersionRepository
         .map(({ content, ...rest }) => rest),
     );
   }
+
+  async findAllLatestWhereReferencedDocumentsContains(
+    collectionId: CollectionId,
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    const latestDocumentVersions: Record<DocumentId, DocumentVersionEntity> =
+      {};
+    Object.values(this.documentVersions).forEach((documentVersion) => {
+      const currentLatest = latestDocumentVersions[documentVersion.documentId];
+      if (!currentLatest || documentVersion.id > currentLatest.id) {
+        latestDocumentVersions[documentVersion.documentId] = documentVersion;
+      }
+    });
+    return clone(
+      Object.values(latestDocumentVersions).filter((documentVersion) =>
+        documentVersion.referencedDocuments.some(
+          (documentRef) =>
+            documentRef.collectionId === collectionId &&
+            documentRef.documentId === documentId,
+        ),
+      ),
+    );
+  }
 }

@@ -1,0 +1,101 @@
+import type {
+  AppNotFound,
+  Backend,
+  Collection,
+  CollectionCategoryNotFound,
+  CollectionSchemaNotValid,
+  CollectionSettings,
+  CollectionSettingsNotValid,
+  CollectionVersionSettings,
+  ContentSummaryGetterNotValid,
+  ReferencedCollectionsNotFound,
+  UnexpectedError,
+} from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
+import { type Schema, utils as schemaUtils } from "@superego/schema";
+import {
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
+import makeResultError from "../../makers/makeResultError.js";
+import Usecase from "../../utils/Usecase.js";
+import CollectionsCreate from "./Create.js";
+
+interface CollectionsCreateManyOptions {
+  dryRun?: boolean;
+}
+
+export default class CollectionsCreateMany extends Usecase<
+  Backend["collections"]["createMany"]
+> {
+  async exec(
+    collections: {
+      settings: CollectionSettings;
+      schema: Schema;
+      versionSettings: CollectionVersionSettings;
+    }[],
+    options: CollectionsCreateManyOptions = {},
+  ): ResultPromise<
+    Collection[],
+    | CollectionSettingsNotValid
+    | CollectionCategoryNotFound
+    | AppNotFound
+    | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
+    | ContentSummaryGetterNotValid
+    | UnexpectedError
+  > {
+    const collectionIds = collections.map(() => Id.generate.collection());
+    const idMapping =
+      schemaUtils.makeSuggestedCollectionIdMapping(collectionIds);
+
+    const collectionsCreate = this.sub(CollectionsCreate);
+    const createdCollections: Collection[] = [];
+
+    for (const [index, collection] of collections.entries()) {
+      const { settings, schema, versionSettings } = collection;
+      const collectionId = collectionIds[index];
+
+      const suggestedCollectionIds =
+        schemaUtils.extractSuggestedCollectionIds(schema);
+
+      // Validate references to suggested collections.
+      const notFoundSuggestedCollectionIds = suggestedCollectionIds.filter(
+        (id) => !idMapping.has(id),
+      );
+      if (notFoundSuggestedCollectionIds.length > 0) {
+        return makeUnsuccessfulResult(
+          makeResultError("ReferencedCollectionsNotFound", {
+            collectionId: null,
+            notFoundCollectionIds: notFoundSuggestedCollectionIds,
+          }),
+        );
+      }
+
+      const resolvedSchema = schemaUtils.replaceSuggestedCollectionIds(
+        schema,
+        idMapping,
+      );
+
+      const createResult = await collectionsCreate.exec(
+        settings,
+        resolvedSchema,
+        versionSettings,
+        {
+          dryRun: options.dryRun,
+          collectionId: collectionId,
+          allowedUnverifiedCollectionIds: collectionIds,
+        },
+      );
+
+      if (createResult.error) {
+        return makeUnsuccessfulResult(createResult.error);
+      }
+
+      createdCollections.push(createResult.data);
+    }
+
+    return makeSuccessfulResult(createdCollections);
+  }
+}

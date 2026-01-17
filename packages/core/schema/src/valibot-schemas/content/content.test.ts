@@ -1282,6 +1282,150 @@ describe("List type definition", () => {
   });
 });
 
+describe("DocumentRef type definition", () => {
+  test("valid DocumentRef is valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: {
+      value: { collectionId: "collectionId", documentId: "documentId" },
+    },
+    expectedIssues: [],
+  });
+
+  test("null is NOT valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: { value: null },
+    expectedIssues: [
+      {
+        kind: "schema",
+        message: "Invalid type: Expected Object but received null",
+        path: [{ key: "value" }],
+      },
+    ],
+  });
+
+  test("missing documentId is NOT valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: { value: { collectionId: "collectionId" } },
+    expectedIssues: [
+      {
+        kind: "schema",
+        message: 'Invalid key: Expected "documentId" but received undefined',
+        path: [{ key: "value" }, { key: "documentId" }],
+      },
+    ],
+  });
+
+  test("missing collectionId is NOT valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: { value: { documentId: "documentId" } },
+    expectedIssues: [
+      {
+        kind: "schema",
+        message: 'Invalid key: Expected "collectionId" but received undefined',
+        path: [{ key: "value" }, { key: "collectionId" }],
+      },
+    ],
+  });
+});
+
+describe("DocumentRef type definition with collectionId constraint", () => {
+  test("matching collectionId is valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+              collectionId: "collectionId",
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: {
+      value: { collectionId: "collectionId", documentId: "documentId" },
+    },
+    expectedIssues: [],
+  });
+
+  test("non-matching collectionId is NOT valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            value: {
+              dataType: DataType.DocumentRef,
+              collectionId: "collectionId",
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    content: {
+      value: { collectionId: "otherCollectionId", documentId: "documentId" },
+    },
+    expectedIssues: [
+      {
+        kind: "validation",
+        message: 'Invalid DocumentRef: collectionId must be "collectionId"',
+        path: [{ key: "value" }],
+      },
+    ],
+  });
+});
+
 describe("Type definition ref", () => {
   test("valid value according to ref is valid", {
     schema: {

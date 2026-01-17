@@ -48,12 +48,13 @@ export default class SqliteDocumentVersionRepository
             "conversation_id",
             "content_delta",
             "content_snapshot",
+            "referenced_documents",
             "created_by",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         documentVersion.id,
@@ -67,6 +68,7 @@ export default class SqliteDocumentVersionRepository
           jdp.diff(previousDocumentVersion?.content, documentVersion.content),
         ) ?? null,
         JSON.stringify(documentVersion.content),
+        JSON.stringify(documentVersion.referencedDocuments),
         documentVersion.createdBy,
         documentVersion.createdAt.toISOString(),
         1,
@@ -142,5 +144,25 @@ export default class SqliteDocumentVersionRepository
       )
       .all(documentId) as SqliteDocumentVersion[];
     return allDocumentVersions.map(toMinimalEntity);
+  }
+
+  async findAllLatestWhereReferencedDocumentsContains(
+    collectionId: CollectionId,
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]> {
+    const documentVersions = this.db
+      .prepare(`
+        SELECT * FROM "${table}"
+        WHERE "is_latest" = 1
+        AND EXISTS (
+          SELECT 1 FROM json_each("referenced_documents")
+          WHERE json_extract(value, '$.collectionId') = ?
+          AND json_extract(value, '$.documentId') = ?
+        )
+      `)
+      .all(collectionId, documentId) as (SqliteDocumentVersion & {
+      is_latest: 1;
+    })[];
+    return documentVersions.map(toEntity);
   }
 }

@@ -4,6 +4,7 @@ import { describe, it } from "vitest";
 import DataType from "./DataType.js";
 import type Schema from "./Schema.js";
 import type TypeOf from "./TypeOf.js";
+import type DocumentRef from "./types/DocumentRef.js";
 import type FileRef from "./types/FileRef.js";
 import type JsonObject from "./types/JsonObject.js";
 import type ProtoFile from "./types/ProtoFile.js";
@@ -428,6 +429,61 @@ describe("TypeOf", () => {
     assert<Equals<Actual, Expected>>();
   });
 
+  it("non-nullable Struct", () => {
+    const schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            nested: {
+              dataType: DataType.Struct,
+              properties: {
+                string: {
+                  dataType: DataType.String,
+                },
+              },
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    } as const satisfies Schema;
+
+    type Actual = TypeOf<typeof schema>;
+    type Expected = {
+      nested: { string: string };
+    };
+    assert<Equals<Actual, Expected>>();
+  });
+
+  it("nullable Struct", () => {
+    const schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            nested: {
+              dataType: DataType.Struct,
+              properties: {
+                string: {
+                  dataType: DataType.String,
+                },
+              },
+            },
+          },
+          nullableProperties: ["nested"],
+        },
+      },
+      rootType: "Root",
+    } as const satisfies Schema;
+
+    type Actual = TypeOf<typeof schema>;
+    type Expected = {
+      nested: { string: string } | null;
+    };
+    assert<Equals<Actual, Expected>>();
+  });
+
   it("non-nullable List", () => {
     const schema = {
       types: {
@@ -475,6 +531,51 @@ describe("TypeOf", () => {
     type Actual = TypeOf<typeof schema>;
     type Expected = {
       list: string[] | null;
+    };
+    assert<Equals<Actual, Expected>>();
+  });
+
+  it("non-nullable DocumentRef", () => {
+    const schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            documentRef: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    } as const satisfies Schema;
+
+    type Actual = TypeOf<typeof schema>;
+    type Expected = {
+      documentRef: DocumentRef;
+    };
+    assert<Equals<Actual, Expected>>();
+  });
+
+  it("nullable DocumentRef", () => {
+    const schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            documentRef: {
+              dataType: DataType.DocumentRef,
+            },
+          },
+          nullableProperties: ["documentRef"],
+        },
+      },
+      rootType: "Root",
+    } as const satisfies Schema;
+
+    type Actual = TypeOf<typeof schema>;
+    type Expected = {
+      documentRef: DocumentRef | null;
     };
     assert<Equals<Actual, Expected>>();
   });
@@ -540,61 +641,6 @@ describe("TypeOf", () => {
     assert<Equals<Actual, Expected>>();
   });
 
-  it("non-nullable Struct", () => {
-    const schema = {
-      types: {
-        Root: {
-          dataType: DataType.Struct,
-          properties: {
-            nested: {
-              dataType: DataType.Struct,
-              properties: {
-                string: {
-                  dataType: DataType.String,
-                },
-              },
-            },
-          },
-        },
-      },
-      rootType: "Root",
-    } as const satisfies Schema;
-
-    type Actual = TypeOf<typeof schema>;
-    type Expected = {
-      nested: { string: string };
-    };
-    assert<Equals<Actual, Expected>>();
-  });
-
-  it("nullable Struct", () => {
-    const schema = {
-      types: {
-        Root: {
-          dataType: DataType.Struct,
-          properties: {
-            nested: {
-              dataType: DataType.Struct,
-              properties: {
-                string: {
-                  dataType: DataType.String,
-                },
-              },
-            },
-          },
-          nullableProperties: ["nested"],
-        },
-      },
-      rootType: "Root",
-    } as const satisfies Schema;
-
-    type Actual = TypeOf<typeof schema>;
-    type Expected = {
-      nested: { string: string } | null;
-    };
-    assert<Equals<Actual, Expected>>();
-  });
-
   it("case: kitchen sink", () => {
     const schema = {
       types: {
@@ -647,6 +693,7 @@ describe("TypeOf", () => {
                 },
               },
             },
+            nonNullableDocumentRef: { dataType: DataType.DocumentRef },
             nonNullableRefEnum: { dataType: null, ref: "Enum" },
             nonNullableRefStruct: { dataType: null, ref: "ReferencedStruct" },
             nullableString: { dataType: DataType.String },
@@ -687,6 +734,7 @@ describe("TypeOf", () => {
                 },
               },
             },
+            nullableDocumentRef: { dataType: DataType.DocumentRef },
             nullableRefEnum: { dataType: null, ref: "Enum" },
             nullableRefStruct: { dataType: null, ref: "ReferencedStruct" },
             deepNesting: {
@@ -727,6 +775,7 @@ describe("TypeOf", () => {
             "nullableStruct",
             "nullableStringList",
             "nullableStructList",
+            "nullableDocumentRef",
             "nullableRefEnum",
             "nullableRefStruct",
           ],
@@ -749,6 +798,7 @@ describe("TypeOf", () => {
       nonNullableStruct: { nonNullableString: string };
       nonNullableStringList: string[];
       nonNullableStructList: { nonNullableString: string }[];
+      nonNullableDocumentRef: DocumentRef;
       nonNullableRefEnum: "A" | "B";
       nonNullableRefStruct: { nonNullableString: string };
       nullableString: string | null;
@@ -763,6 +813,7 @@ describe("TypeOf", () => {
       nullableStruct: { nonNullableString: string } | null;
       nullableStringList: string[] | null;
       nullableStructList: { nonNullableString: string }[] | null;
+      nullableDocumentRef: DocumentRef | null;
       nullableRefEnum: ("A" | "B") | null;
       nullableRefStruct: { nonNullableString: string } | null;
       deepNesting: {

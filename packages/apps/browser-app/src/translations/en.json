@@ -215,12 +215,6 @@
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Format"
   },
-  "CopyButton.tsx_4l6vz1": {
-    "defaultMessage": "Copy"
-  },
-  "CopyButton.tsx_p556q3": {
-    "defaultMessage": "Copied"
-  },
   "CreateApp.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -406,6 +400,21 @@
   },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
+  },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Search results"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Type to search"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Searching..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Search documents"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "No results found"
   },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
@@ -1007,6 +1016,15 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - click to select a document"
+  },
+  "SelectButton.tsx_uCylWN": {
+    "defaultMessage": "{collection} » Example document"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
   },
@@ -1064,14 +1082,17 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
-  "SuggestCollectionDefinition.tsx_S2ZL0P": {
-    "defaultMessage": "Suggested collection"
+  "SuggestCollectionsDefinitions.tsx_65g2mb": {
+    "defaultMessage": "Suggested collections"
   },
-  "SuggestCollectionDefinition.tsx_VzzYJk": {
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "SuggestCollectionDefinition.tsx_syZYsy": {
-    "defaultMessage": "Error creating the collection"
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": {
+    "defaultMessage": "Create All"
+  },
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": {
+    "defaultMessage": "Error creating the collections"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
@@ -1079,17 +1100,11 @@
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Milliseconds"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Create chart from {collection}"
-  },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Create documents"
   },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Create documents table from {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Execute TypeScript function on {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Create chart from {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Succeeded"
@@ -1097,11 +1112,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Get TypeScript schema for {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Execute TypeScript function on {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "No response"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Create documents table from {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Failed"
