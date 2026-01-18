@@ -49,6 +49,20 @@ export default function getContentSummary(fuelLog) {
 }
       `.trim(),
     },
+    contentFingerprintGetter: {
+      source: `
+import type { FuelLog } from "./CollectionSchema.js";
+
+export default function getContentFingerprint(fuelLog: FuelLog): string {
+  return [fuelLog.liters, fuelLog.totalCost, fuelLog.odometer].join("");
+}
+      `.trim(),
+      compiled: `
+export default function getContentFingerprint(fuelLog) {
+  return [fuelLog.liters, fuelLog.totalCost, fuelLog.odometer].join("");
+}
+      `.trim(),
+    },
   },
   documents: fuelLogsData,
   app: {

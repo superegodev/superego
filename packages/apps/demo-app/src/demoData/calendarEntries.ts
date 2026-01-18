@@ -39,6 +39,7 @@ export default function getContentSummary(calendarEntry) {
 }
       `.trim(),
     },
+    contentFingerprintGetter: null,
   },
   documents: calendarEntriesData,
 } satisfies DemoCollection;

@@ -40,6 +40,20 @@ export default function getContentSummary(contact) {
 }
       `.trim(),
     },
+    contentFingerprintGetter: {
+      source: `
+import type { Contact } from "./CollectionSchema.js";
+
+export default function getContentFingerprint(contact: Contact): string {
+  return [contact.type, contact.name.toLowerCase()].join("");
+}
+      `.trim(),
+      compiled: `
+export default function getContentFingerprint(contact) {
+  return [contact.type, contact.name.toLowerCase()].join("");
+}
+      `.trim(),
+    },
   },
   documents: contactsData,
 } satisfies DemoCollection;

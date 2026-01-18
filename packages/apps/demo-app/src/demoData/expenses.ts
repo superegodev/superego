@@ -47,6 +47,7 @@ export default function getContentSummary(expense) {
 }
       `.trim(),
     },
+    contentFingerprintGetter: null,
   },
   documents: expensesData,
   app: {
