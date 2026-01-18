@@ -1,7 +1,7 @@
 import { DocumentVersionCreator } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
 import type MinimalDocumentVersionEntity from "../../../entities/MinimalDocumentVersionEntity.js";
 import type GetDependencies from "../GetDependencies.js";
@@ -1021,6 +1021,295 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       // Verify
       expect(found).toEqual([documentVersion1, documentVersion2]);
+    });
+  });
+
+  describe("finding any latest by collectionId and contentFingerprint", () => {
+    it("case: no document versions with matching fingerprint => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: "contentFingerprint",
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collectionId,
+              "non-existent-fingerprint",
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+
+    it("case: document version with matching fingerprint exists => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const contentFingerprint = "contentFingerprint";
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: contentFingerprint,
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collectionId,
+              contentFingerprint,
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(documentVersion);
+    });
+
+    it("case: matching fingerprint in different collection => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collection1Id = Id.generate.collection();
+      const collection2Id = Id.generate.collection();
+      const contentFingerprint = "contentFingerprint";
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collection1Id,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: contentFingerprint,
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collection2Id,
+              contentFingerprint,
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+
+    it("case: only returns latest versions", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: { ...content, number: 1 },
+        contentFingerprint: "contentFingerprint1",
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(1),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: { ...content, number: 2 },
+        contentFingerprint: "contentFingerprint2",
+        referencedDocuments: [],
+        previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(2),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collectionId,
+              "contentFingerprint1",
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+
+    it("case: multiple documents with same fingerprint => returns any one", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const contentFingerprint = "contentFingerprint";
+
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: contentFingerprint,
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: contentFingerprint,
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collectionId,
+              contentFingerprint,
+            ),
+        }),
+      );
+
+      // Verify
+      assert.isNotNull(found);
+      expect(found.contentFingerprint).toEqual(contentFingerprint);
+      expect(found.collectionId).toEqual(collectionId);
+      expect([documentVersion1.id, documentVersion2.id]).toContain(found.id);
+    });
+
+    it("case: document version with null fingerprint in database => never returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentFingerprint: null,
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+              collectionId,
+              "contentFingerprint",
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
     });
   });
 });

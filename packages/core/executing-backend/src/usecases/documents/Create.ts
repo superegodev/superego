@@ -188,7 +188,7 @@ export default class DocumentsCreate extends Usecase<
 
     if (contentFingerprint !== null && !options.skipDuplicateCheck) {
       const duplicateDocumentVersion =
-        await this.repos.documentVersion.findAnyLatestByContentFingerprint(
+        await this.repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
           collectionId,
           contentFingerprint,
         );

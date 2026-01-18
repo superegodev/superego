@@ -28,7 +28,7 @@ export default interface DocumentVersionRepository {
     collectionId: CollectionId,
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity[]>;
-  findAnyLatestByContentFingerprint(
+  findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
     collectionId: CollectionId,
     contentFingerprint: string,
   ): Promise<DocumentVersionEntity | null>;
