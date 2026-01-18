@@ -90,6 +90,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -157,6 +158,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -215,6 +217,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -272,6 +275,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -308,6 +312,205 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: MakingContentFingerprintFailed", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled:
+              "export default function getContentFingerprint() { return 123; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "MakingContentFingerprintFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: null,
+            cause: {
+              name: "ContentFingerprintNotAString",
+              details: { contentFingerprint: 123 },
+            },
+          },
+        },
+      });
+    });
+
+    it("error: DuplicateDocumentDetected", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled:
+              "export default function getContentFingerprint(content) { return content.title; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createDuplicateDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDuplicateDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DuplicateDocumentDetected",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            existingDocumentId: createDocumentResult.data.id,
+            contentFingerprint: "title",
+          },
+        },
+      });
+    });
+
+    it("success: creates when duplicate exists but skipDuplicateCheck is true", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled:
+              "export default function getContentFingerprint(content) { return content.title; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const content = { title: "title" };
+      const createDuplicateDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        content,
+        { skipDuplicateCheck: true },
+      );
+
+      // Verify
+      assert.isTrue(createDuplicateDocumentResult.success);
+      expect(createDuplicateDocumentResult.data).toEqual({
+        id: expect.id("Document"),
+        remoteId: null,
+        remoteUrl: null,
+        collectionId: createCollectionResult.data.id,
+        latestVersion: expect.objectContaining({
+          id: expect.id("DocumentVersion"),
+          remoteId: null,
+          previousVersionId: null,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          conversationId: null,
+          content,
+          createdBy: DocumentVersionCreator.User,
+          createdAt: expect.dateCloseToNow(),
+        }),
+        createdAt: expect.dateCloseToNow(),
+      });
+      // Verify both documents exist.
+      const listDocumentsResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(listDocumentsResult.success);
+      expect(listDocumentsResult.data).toHaveLength(2);
+    });
+
     it("success: creates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -335,6 +538,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -432,6 +636,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -525,6 +730,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -608,6 +814,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -669,6 +876,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -736,6 +944,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -802,6 +1011,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -845,6 +1055,79 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: MakingContentFingerprintFailed", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled: `
+              export default function getContentFingerprint(content) {
+                return content.title === "title" ? "title" : 123;
+              }
+            `,
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+        { skipDuplicateCheck: true },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          { title: "updated title" },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "MakingContentFingerprintFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: createDocumentResult.data.id,
+            cause: {
+              name: "ContentFingerprintNotAString",
+              details: { contentFingerprint: 123 },
+            },
+          },
+        },
+      });
+    });
+
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -874,6 +1157,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -972,6 +1256,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1024,6 +1309,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1123,6 +1409,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1208,6 +1495,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1286,6 +1574,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1362,6 +1651,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1420,6 +1710,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1469,6 +1760,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1527,6 +1819,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1614,6 +1907,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1678,6 +1972,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1729,6 +2024,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1781,6 +2077,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1836,6 +2133,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1918,6 +2216,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1969,6 +2268,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -2027,6 +2327,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult1.success);
@@ -2054,6 +2355,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult2.success);
@@ -2108,6 +2410,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult1.success);
@@ -2135,6 +2438,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult2.success);

@@ -89,6 +89,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -306,6 +307,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -464,6 +466,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);

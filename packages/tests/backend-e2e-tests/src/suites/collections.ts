@@ -37,6 +37,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -84,6 +85,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -123,6 +125,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -161,6 +164,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -206,6 +210,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -222,6 +227,57 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentFingerprintGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled: "export function getContentFingerprint() {}",
+          },
+        },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentFingerprintGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
               },
             ],
           },
@@ -264,6 +320,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -305,6 +362,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
 
@@ -326,6 +384,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              contentFingerprintGetter: null,
             },
             migration: null,
             remoteConverters: null,
@@ -348,6 +407,81 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(listResult).toEqual({
         success: true,
         data: [createResult.data],
+        error: null,
+      });
+    });
+
+    it("success: creates (case: with contentFingerprintGetter)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: {
+            source: "",
+            compiled:
+              "export default function getContentFingerprint() { return 'fingerprint'; }",
+          },
+        },
+      );
+
+      // Verify
+      expect(createResult).toEqual({
+        success: true,
+        data: {
+          id: expect.id("Collection"),
+          latestVersion: {
+            id: expect.id("CollectionVersion"),
+            previousVersionId: null,
+            schema: {
+              types: { Root: { dataType: "Struct", properties: {} } },
+              rootType: "Root",
+            },
+            settings: {
+              contentSummaryGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
+              },
+              contentFingerprintGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentFingerprint() { return 'fingerprint'; }",
+              },
+            },
+            migration: null,
+            remoteConverters: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          remote: null,
+          createdAt: expect.dateCloseToNow(),
+        },
         error: null,
       });
     });
@@ -379,6 +513,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -428,6 +563,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -469,6 +605,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -509,6 +646,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -556,6 +694,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               source: "",
               compiled: "export function getContentSummary() {}",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -573,6 +712,59 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentFingerprintGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            contentFingerprintGetter: {
+              source: "",
+              compiled: "export function getContentFingerprint() {}",
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentFingerprintGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
               },
             ],
           },
@@ -616,6 +808,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -672,6 +865,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -715,6 +909,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -738,6 +933,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                contentFingerprintGetter: null,
               },
               migration: null,
               remoteConverters: null,
@@ -790,6 +986,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
         {
@@ -811,6 +1008,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -834,6 +1032,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                contentFingerprintGetter: null,
               },
               migration: null,
               remoteConverters: null,
@@ -865,6 +1064,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                contentFingerprintGetter: null,
               },
               migration: null,
               remoteConverters: null,
@@ -935,6 +1135,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
         {
@@ -967,6 +1168,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         },
       ]);
@@ -1055,6 +1257,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1106,6 +1309,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1150,6 +1354,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1208,6 +1413,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1334,6 +1540,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1396,6 +1603,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1485,6 +1693,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1589,6 +1798,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1681,6 +1891,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1783,6 +1994,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1873,6 +2085,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -1965,6 +2178,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2065,6 +2279,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2189,6 +2404,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2291,6 +2507,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2362,6 +2579,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2468,6 +2686,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2546,6 +2765,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2618,6 +2838,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2724,6 +2945,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -2814,6 +3036,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -2894,6 +3117,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3000,6 +3224,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3097,6 +3322,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3199,6 +3425,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3314,6 +3541,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3442,6 +3670,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3589,6 +3818,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3728,6 +3958,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -3934,6 +4165,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -4038,7 +4270,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+          contentFingerprintGetter: null,
+        },
         { source: "", compiled: "" },
         null,
       );
@@ -4076,6 +4311,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4089,7 +4325,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+          contentFingerprintGetter: null,
+        },
         { source: "", compiled: "" },
         null,
       );
@@ -4131,6 +4370,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4143,7 +4383,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.String } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+          contentFingerprintGetter: null,
+        },
         { source: "", compiled: "" },
         null,
       );
@@ -4189,6 +4432,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4218,6 +4462,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         {
           source: "",
@@ -4262,6 +4507,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4279,6 +4525,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
+          contentFingerprintGetter: null,
         },
         { source: "", compiled: "" },
         null,
@@ -4359,6 +4606,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4391,6 +4639,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         { source: "", compiled: "export function migrate() {}" },
         {
@@ -4442,6 +4691,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4460,6 +4710,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         null,
         null,
@@ -4506,6 +4757,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4524,6 +4776,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         { source: "", compiled: "export function migrate() {}" },
         null,
@@ -4570,6 +4823,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4588,6 +4842,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         { source: "", compiled: "export default function migrate() {}" },
         {
@@ -4673,6 +4928,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4705,6 +4961,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         null,
         null,
@@ -4784,6 +5041,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -4816,6 +5074,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         null,
         {
@@ -4868,6 +5127,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -4892,6 +5152,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
           {
             source: "",
@@ -4949,6 +5210,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -4973,6 +5235,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
           {
             source: "",
@@ -5069,6 +5332,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -5109,6 +5373,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
 
           null,
@@ -5209,6 +5474,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -5254,6 +5520,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
 
           null,
@@ -5328,6 +5595,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -5365,6 +5633,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
           migration,
           null,
@@ -5393,6 +5662,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
                 source: "",
               },
+              contentFingerprintGetter: null,
             },
             migration: migration,
             remoteConverters: null,
@@ -5501,6 +5771,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -5565,6 +5836,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
           null,
           {
@@ -5663,6 +5935,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -5713,6 +5986,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -5750,6 +6024,66 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ContentFingerprintGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          contentFingerprintGetter: null,
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createResult.data.id,
+          createResult.data.latestVersion.id,
+          {
+            contentFingerprintGetter: {
+              source: "",
+              compiled: "export function getContentFingerprint() {}",
+            },
+          },
+        );
+
+      // Verify
+      expect(updateLatestVersionSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentFingerprintGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("success: updates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -5772,6 +6106,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -5787,6 +6122,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            contentFingerprintGetter: null,
           },
         );
 
@@ -5803,6 +6139,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              contentFingerprintGetter: null,
             },
           },
           settings: createResult.data.settings,
@@ -5862,6 +6199,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -5910,6 +6248,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionAResult.success);
@@ -5943,6 +6282,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionBResult.success);
@@ -5995,6 +6335,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionAResult.success);
@@ -6025,6 +6366,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionBResult.success);
@@ -6094,6 +6436,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -6150,6 +6493,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -6226,6 +6570,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(zetaCreateResult.success);
@@ -6248,6 +6593,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(alphaCreateResult.success);
@@ -6270,6 +6616,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(betaCreateResult.success);
@@ -6336,6 +6683,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -6388,6 +6736,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -6433,6 +6782,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createResult.success);
@@ -6462,6 +6812,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
         migration,
         null,

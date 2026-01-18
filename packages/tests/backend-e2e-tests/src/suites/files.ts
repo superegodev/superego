@@ -52,6 +52,7 @@ export default rd<GetDependencies>("Files", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);

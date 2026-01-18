@@ -87,6 +87,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createCollectionResult.success);

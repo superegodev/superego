@@ -467,6 +467,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          contentFingerprintGetter: null,
         },
       );
       assert.isTrue(createChildCollectionResult.success);
