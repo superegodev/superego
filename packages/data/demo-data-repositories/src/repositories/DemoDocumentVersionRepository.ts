@@ -132,4 +132,29 @@ export default class DemoDocumentVersionRepository
       ),
     );
   }
+
+  async findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+    collectionId: CollectionId,
+    contentFingerprint: string,
+  ): Promise<DocumentVersionEntity | null> {
+    this.ensureNotDisposed();
+    const latestDocumentVersions: Record<DocumentId, DocumentVersionEntity> =
+      {};
+    Object.values(this.documentVersions)
+      .filter(
+        (documentVersion) => documentVersion.collectionId === collectionId,
+      )
+      .forEach((documentVersion) => {
+        const currentLatest =
+          latestDocumentVersions[documentVersion.documentId];
+        if (!currentLatest || documentVersion.id > currentLatest.id) {
+          latestDocumentVersions[documentVersion.documentId] = documentVersion;
+        }
+      });
+    const found = Object.values(latestDocumentVersions).find(
+      (documentVersion) =>
+        documentVersion.contentFingerprint === contentFingerprint,
+    );
+    return clone(found ?? null);
+  }
 }

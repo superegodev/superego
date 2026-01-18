@@ -48,13 +48,14 @@ export default class SqliteDocumentVersionRepository
             "conversation_id",
             "content_delta",
             "content_snapshot",
+            "content_fingerprint",
             "referenced_documents",
             "created_by",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         documentVersion.id,
@@ -68,6 +69,7 @@ export default class SqliteDocumentVersionRepository
           jdp.diff(previousDocumentVersion?.content, documentVersion.content),
         ) ?? null,
         JSON.stringify(documentVersion.content),
+        documentVersion.contentFingerprint,
         JSON.stringify(documentVersion.referencedDocuments),
         documentVersion.createdBy,
         documentVersion.createdAt.toISOString(),
@@ -164,5 +166,22 @@ export default class SqliteDocumentVersionRepository
       is_latest: 1;
     })[];
     return documentVersions.map(toEntity);
+  }
+
+  async findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+    collectionId: CollectionId,
+    contentFingerprint: string,
+  ): Promise<DocumentVersionEntity | null> {
+    const documentVersion = this.db
+      .prepare(`
+        SELECT * FROM "${table}"
+        WHERE "collection_id" = ?
+        AND "content_fingerprint" = ?
+        AND "is_latest" = 1
+      `)
+      .get(collectionId, contentFingerprint) as
+      | (SqliteDocumentVersion & { is_latest: 1 })
+      | undefined;
+    return documentVersion ? toEntity(documentVersion) : null;
   }
 }
