@@ -52,7 +52,6 @@ export type { default as ConnectorNotAuthenticated } from "./errors/ConnectorNot
 export type { default as ConnectorNotFound } from "./errors/ConnectorNotFound.js";
 export type { default as ConnectorSettingsNotValid } from "./errors/ConnectorSettingsNotValid.js";
 export type { default as ContentFingerprintGetterNotValid } from "./errors/ContentFingerprintGetterNotValid.js";
-export type { default as ContentFingerprintNotValid } from "./errors/ContentFingerprintNotValid.js";
 export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSummaryGetterNotValid.js";
 export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
@@ -66,6 +65,7 @@ export type { default as DuplicateDocumentDetected } from "./errors/DuplicateDoc
 export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
+export type { default as MakingContentFingerprintFailed } from "./errors/MakingContentFingerprintFailed.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
 export type { default as ReferencedCollectionsNotFound } from "./errors/ReferencedCollectionsNotFound.js";

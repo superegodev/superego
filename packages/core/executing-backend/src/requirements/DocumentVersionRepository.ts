@@ -28,4 +28,8 @@ export default interface DocumentVersionRepository {
     collectionId: CollectionId,
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity[]>;
+  findAnyLatestByContentFingerprint(
+    collectionId: CollectionId,
+    contentFingerprint: string,
+  ): Promise<DocumentVersionEntity | null>;
 }

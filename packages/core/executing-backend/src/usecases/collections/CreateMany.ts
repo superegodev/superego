@@ -7,6 +7,7 @@ import type {
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
+  ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
@@ -44,6 +45,7 @@ export default class CollectionsCreateMany extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
+    | ContentFingerprintGetterNotValid
     | UnexpectedError
   > {
     const collectionIds = collections.map(() => Id.generate.collection());

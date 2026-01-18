@@ -6,6 +6,7 @@ import type {
   CollectionVersionId,
   CollectionVersionIdNotMatching,
   CollectionVersionSettings,
+  ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   UnexpectedError,
 } from "@superego/backend";
@@ -32,6 +33,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     | CollectionNotFound
     | CollectionVersionIdNotMatching
     | ContentSummaryGetterNotValid
+    | ContentFingerprintGetterNotValid
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -75,12 +77,40 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       }
     }
 
+    if (
+      settingsPatch.contentFingerprintGetter !== undefined &&
+      settingsPatch.contentFingerprintGetter !== null
+    ) {
+      const isContentFingerprintGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          settingsPatch.contentFingerprintGetter,
+        );
+      if (!isContentFingerprintGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentFingerprintGetterNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
+    }
+
     const updatedVersion: CollectionVersionEntity = {
       ...latestVersion,
       settings: {
         contentSummaryGetter:
           settingsPatch.contentSummaryGetter ??
           latestVersion.settings.contentSummaryGetter,
+        contentFingerprintGetter:
+          settingsPatch.contentFingerprintGetter !== undefined
+            ? settingsPatch.contentFingerprintGetter
+            : latestVersion.settings.contentFingerprintGetter,
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);

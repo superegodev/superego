@@ -8,6 +8,7 @@ import type {
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
+  ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
@@ -55,6 +56,7 @@ export default class CollectionsCreate extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
+    | ContentFingerprintGetterNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -173,6 +175,27 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    if (versionSettings.contentFingerprintGetter !== null) {
+      const isContentFingerprintGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          versionSettings.contentFingerprintGetter,
+        );
+      if (!isContentFingerprintGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentFingerprintGetterNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
+    }
+
     const now = new Date();
     const collection: CollectionEntity = {
       id: collectionId,
@@ -197,6 +220,7 @@ export default class CollectionsCreate extends Usecase<
       schema: resolvedSchema,
       settings: {
         contentSummaryGetter: versionSettings.contentSummaryGetter,
+        contentFingerprintGetter: versionSettings.contentFingerprintGetter,
       },
       migration: null,
       remoteConverters: null,

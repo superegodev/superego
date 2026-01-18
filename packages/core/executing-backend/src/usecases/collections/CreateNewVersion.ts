@@ -9,6 +9,7 @@ import {
   type CollectionVersionId,
   type CollectionVersionIdNotMatching,
   type CollectionVersionSettings,
+  type ContentFingerprintGetterNotValid,
   type ContentSummaryGetterNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
@@ -60,6 +61,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
+    | ContentFingerprintGetterNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -144,6 +146,28 @@ export default class CollectionsCreateNewVersion extends Usecase<
           ],
         }),
       );
+    }
+
+    // Validate settings.contentFingerprintGetter.
+    if (settings.contentFingerprintGetter !== null) {
+      const isContentFingerprintGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          settings.contentFingerprintGetter,
+        );
+      if (!isContentFingerprintGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentFingerprintGetterNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: [
+              {
+                message:
+                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
     }
 
     // Validate migration and remoteConverters.
@@ -241,6 +265,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       schema: resolvedSchema,
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
+        contentFingerprintGetter: settings.contentFingerprintGetter,
       },
       migration: migration,
       remoteConverters: remoteConverters,

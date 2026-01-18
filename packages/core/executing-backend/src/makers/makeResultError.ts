@@ -28,6 +28,7 @@ import type {
   ConnectorNotAuthenticated,
   ConnectorNotFound,
   ConnectorSettingsNotValid,
+  ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
   ConversationNotFound,
@@ -37,9 +38,11 @@ import type {
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
+  DuplicateDocumentDetected,
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
+  MakingContentFingerprintFailed,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
   ReferencedCollectionsNotFound,
@@ -82,6 +85,7 @@ type KnownResultError =
   | ConnectorNotAuthenticated
   | ConnectorNotFound
   | ConnectorSettingsNotValid
+  | ContentFingerprintGetterNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | ConversationNotFound
@@ -91,9 +95,11 @@ type KnownResultError =
   | DocumentNotFound
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
+  | DuplicateDocumentDetected
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
+  | MakingContentFingerprintFailed
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
   | ReferencedCollectionsNotFound

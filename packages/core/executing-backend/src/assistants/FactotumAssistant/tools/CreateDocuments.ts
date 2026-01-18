@@ -55,6 +55,8 @@ export default {
       } = await documentsCreate.exec(collectionId, content, {
         createdBy: DocumentVersionCreator.Assistant,
         conversationId: conversationId,
+        // TODO_FINGERPRINT: expose option to assistant
+        skipDuplicateCheck: false,
       });
 
       if (error && error.name === "UnexpectedError") {
@@ -109,9 +111,6 @@ export default {
                 collectionId: {
                   type: "string",
                 },
-                // EVOLUTION: figure out how to support file creation. We could
-                // pass a list of "temporary file refs" that are in the context
-                // of the conversation and that the assistant can use.
                 content: {
                   description: [
                     "Content for the new document.",

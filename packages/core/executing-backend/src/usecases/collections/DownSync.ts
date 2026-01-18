@@ -288,6 +288,7 @@ export default class CollectionsDownSync extends Usecase {
           remoteVersionId: addedOrModified.versionId,
           remoteUrl: addedOrModified.url,
           remoteDocument: addedOrModified.content,
+          skipDuplicateCheck: true,
         },
       );
       return documentsCreateResult.success

@@ -12,6 +12,7 @@ import {
   type DocumentVersionId,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
+  type MakingContentFingerprintFailed,
   type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
@@ -26,6 +27,7 @@ import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
+import makeContentFingerprint from "../../makers/makeContentFingerprint.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
@@ -44,6 +46,7 @@ type ExecReturnValue = ResultPromise<
   | ConnectorDoesNotSupportUpSyncing
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
+  | MakingContentFingerprintFailed
   | FilesNotFound
   | ReferencedDocumentsNotFound
   | UnexpectedError
@@ -195,12 +198,26 @@ export default class DocumentsCreateNewVersion extends Usecase<
       await this.repos.file.findAllWhereIdIn(referencedFileIds);
     const missingFileIds = difference(
       referencedFileIds,
-      referencedFiles.map(({ id }) => id),
+      referencedFiles.map(({ id: fileId }) => fileId),
     );
     if (!isEmpty(missingFileIds)) {
       return makeUnsuccessfulResult(
         makeResultError("FilesNotFound", { fileIds: missingFileIds }),
       );
+    }
+
+    let contentFingerprint: string | null = null;
+    if (latestCollectionVersion.settings.contentFingerprintGetter !== null) {
+      const makeContentFingerprintResult = await makeContentFingerprint(
+        this.javascriptSandbox,
+        latestCollectionVersion,
+        id,
+        contentValidationResult.output,
+      );
+      if (!makeContentFingerprintResult.success) {
+        return makeContentFingerprintResult;
+      }
+      contentFingerprint = makeContentFingerprintResult.data;
     }
 
     const now = new Date();
@@ -218,10 +235,11 @@ export default class DocumentsCreateNewVersion extends Usecase<
       collectionVersionId: latestCollectionVersion.id,
       conversationId: options?.conversationId ?? null,
       content: convertedContent,
+      contentFingerprint: contentFingerprint,
       referencedDocuments: referencedDocuments,
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
-    } as DocumentVersionEntity;
+    };
     const textChunks = utils.extractTextChunks(
       latestCollectionVersion.schema,
       convertedContent,

@@ -12,6 +12,7 @@ const schema: Schema = {
 };
 const settings: CollectionVersionSettings = {
   contentSummaryGetter: { source: "", compiled: "" },
+  contentFingerprintGetter: null,
 };
 
 export default rd<GetDependencies>("Collection versions", (deps) => {
@@ -78,6 +79,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
           source: "updatedSource",
           compiled: "updatedCompiled",
         },
+        contentFingerprintGetter: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

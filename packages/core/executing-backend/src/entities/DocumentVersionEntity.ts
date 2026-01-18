@@ -17,6 +17,7 @@ export default interface DocumentVersionEntity {
   collectionVersionId: CollectionVersionId;
   conversationId: ConversationId | null;
   content: any;
+  contentFingerprint: string | null;
   referencedDocuments: DocumentRef[];
   createdBy: DocumentVersionCreator;
   createdAt: Date;

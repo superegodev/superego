@@ -7,8 +7,7 @@ type DuplicateDocumentDetected = ResultError<
   {
     collectionId: CollectionId;
     existingDocumentId: DocumentId;
-    // TODO_FINGERPRINT: rename contentFingerprint
-    fingerprint: string;
+    contentFingerprint: string;
   }
 >;
 export default DuplicateDocumentDetected;

@@ -37,7 +37,11 @@ export default {
           assistantInstructions: null,
         },
         schema,
-        versionSettings: { contentSummaryGetter: stubContentSummaryGetter },
+        versionSettings: {
+          contentSummaryGetter: stubContentSummaryGetter,
+          // TODO_FINGERPRINT: ask the LLM to generate one
+          contentFingerprintGetter: null,
+        },
       })),
       { dryRun: true },
     );
@@ -47,6 +51,7 @@ export default {
       (createManyResult.error.name === "UnexpectedError" ||
         createManyResult.error.name === "CollectionCategoryNotFound" ||
         createManyResult.error.name === "AppNotFound" ||
+        createManyResult.error.name === "ContentFingerprintGetterNotValid" ||
         createManyResult.error.name === "ContentSummaryGetterNotValid")
     ) {
       throw new UnexpectedAssistantError(
