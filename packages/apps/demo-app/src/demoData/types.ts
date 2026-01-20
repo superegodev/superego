@@ -21,7 +21,7 @@ export type DemoCollection = {
   >;
   schema: Schema;
   versionSettings: CollectionVersionSettings;
-  contentFingerprintGetter: TypescriptModule | null;
+  contentBlockingKeysGetter: TypescriptModule | null;
   documents: unknown[];
   app?: {
     type: AppType;

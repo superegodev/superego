@@ -29,7 +29,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -67,7 +67,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -81,7 +81,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -95,7 +95,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -162,7 +162,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -176,7 +176,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: documentVersion1.id,
       createdBy: DocumentVersionCreator.User,
@@ -190,7 +190,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       collectionVersionId: Id.generate.collectionVersion(),
       conversationId: null,
       content: content,
-      contentFingerprint: null,
+      contentBlockingKeys: null,
       referencedDocuments: [],
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
@@ -242,7 +242,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -279,7 +279,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 1 },
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -293,7 +293,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 2 },
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
@@ -307,7 +307,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 3 },
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion2.id,
         createdBy: DocumentVersionCreator.User,
@@ -321,7 +321,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 4 },
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion3.id,
         createdBy: DocumentVersionCreator.User,
@@ -381,7 +381,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -395,7 +395,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
@@ -444,6 +444,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
   describe("finding all (minimal) by document id", () => {
     const toMinimal = ({
       content,
+      contentBlockingKeys,
       ...rest
     }: DocumentVersionEntity): MinimalDocumentVersionEntity => rest;
 
@@ -483,7 +484,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(1),
-        contentFingerprint: null,
+        contentBlockingKeys: null,
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
@@ -497,7 +498,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(2),
-        contentFingerprint: null,
+        contentBlockingKeys: null,
       };
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
@@ -511,7 +512,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         previousVersionId: documentVersion2.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(3),
-        contentFingerprint: null,
+        contentBlockingKeys: null,
       };
       // Different document - should not be included
       const documentVersion4: DocumentVersionEntity = {
@@ -522,7 +523,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -568,7 +569,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -630,7 +631,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -644,7 +645,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
@@ -658,7 +659,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -672,7 +673,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -721,7 +722,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -735,7 +736,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
@@ -749,7 +750,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: documentVersion2.id,
         createdBy: DocumentVersionCreator.User,
@@ -795,7 +796,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -841,7 +842,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
@@ -859,7 +860,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -906,7 +907,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
@@ -924,7 +925,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
@@ -972,7 +973,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
@@ -990,7 +991,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
@@ -1024,8 +1025,8 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     });
   });
 
-  describe("finding any latest by collectionId and contentFingerprint", () => {
-    it("case: no document versions with matching fingerprint => returns null", async () => {
+  describe("finding any latest by collectionId and contentBlockingKeys overlap", () => {
+    it("case: no document versions with overlapping blocking keys => returns null", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
@@ -1037,7 +1038,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: "contentFingerprint",
+        contentBlockingKeys: ["key:1", "key:2"],
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1055,9 +1056,9 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collectionId,
-              "non-existent-fingerprint",
+              ["key:3", "key:4"],
             ),
         }),
       );
@@ -1066,11 +1067,10 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       expect(found).toEqual(null);
     });
 
-    it("case: document version with matching fingerprint exists => returns it", async () => {
+    it("case: document version with overlapping blocking key exists => returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
-      const contentFingerprint = "contentFingerprint";
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         remoteId: null,
@@ -1079,7 +1079,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: contentFingerprint,
+        contentBlockingKeys: ["key:1", "key:2"],
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1097,9 +1097,9 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collectionId,
-              contentFingerprint,
+              ["key:1", "key:3"],
             ),
         }),
       );
@@ -1108,12 +1108,12 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       expect(found).toEqual(documentVersion);
     });
 
-    it("case: matching fingerprint in different collection => returns null", async () => {
+    it("case: overlapping blocking keys in different collection => returns null", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const collection1Id = Id.generate.collection();
       const collection2Id = Id.generate.collection();
-      const contentFingerprint = "contentFingerprint";
+      const contentBlockingKeys = ["key:1", "key:2"];
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
         remoteId: null,
@@ -1122,7 +1122,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: contentFingerprint,
+        contentBlockingKeys: contentBlockingKeys,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1140,9 +1140,9 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collection2Id,
-              contentFingerprint,
+              contentBlockingKeys,
             ),
         }),
       );
@@ -1164,7 +1164,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 1 },
-        contentFingerprint: "contentFingerprint1",
+        contentBlockingKeys: ["key:old"],
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1178,7 +1178,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: { ...content, number: 2 },
-        contentFingerprint: "contentFingerprint2",
+        contentBlockingKeys: ["key:new"],
         referencedDocuments: [],
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
@@ -1193,27 +1193,27 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         },
       );
 
-      // Exercise
+      // Exercise - search for old version's blocking key
       const found = await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collectionId,
-              "contentFingerprint1",
+              ["key:old"],
             ),
         }),
       );
 
-      // Verify
+      // Verify - should not find old version
       expect(found).toEqual(null);
     });
 
-    it("case: multiple documents with same fingerprint => returns any one", async () => {
+    it("case: multiple documents with same blocking key => returns any one", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
-      const contentFingerprint = "contentFingerprint";
+      const sharedKey = "key:shared";
 
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
@@ -1223,7 +1223,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: contentFingerprint,
+        contentBlockingKeys: [sharedKey, "key:unique1"],
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1237,7 +1237,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: contentFingerprint,
+        contentBlockingKeys: [sharedKey, "key:unique2"],
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1257,21 +1257,20 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collectionId,
-              contentFingerprint,
+              [sharedKey],
             ),
         }),
       );
 
       // Verify
       assert.isNotNull(found);
-      expect(found.contentFingerprint).toEqual(contentFingerprint);
       expect(found.collectionId).toEqual(collectionId);
       expect([documentVersion1.id, documentVersion2.id]).toContain(found.id);
     });
 
-    it("case: document version with null fingerprint in database => never returns it", async () => {
+    it("case: document version with null blocking keys => never returns it", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const collectionId = Id.generate.collection();
@@ -1283,7 +1282,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         collectionVersionId: Id.generate.collectionVersion(),
         conversationId: null,
         content: content,
-        contentFingerprint: null,
+        contentBlockingKeys: null,
         referencedDocuments: [],
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
@@ -1301,9 +1300,50 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         async (repos) => ({
           action: "commit",
           returnValue:
-            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
               collectionId,
-              "contentFingerprint",
+              ["key:1"],
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+
+    it("case: empty blocking keys array in query => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId = Id.generate.collection();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: ["key:1", "key:2"],
+        referencedDocuments: [],
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise - searching with empty array should return null
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
+              collectionId,
+              [],
             ),
         }),
       );

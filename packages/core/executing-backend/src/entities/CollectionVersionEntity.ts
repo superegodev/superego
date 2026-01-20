@@ -13,7 +13,7 @@ export default interface CollectionVersionEntity {
   collectionId: CollectionId;
   schema: Schema;
   settings: CollectionVersionSettings;
-  contentFingerprintGetter: TypescriptModule | null;
+  contentBlockingKeysGetter: TypescriptModule | null;
   migration: TypescriptModule | null;
   remoteConverters: RemoteConverters | null;
   createdAt: Date;

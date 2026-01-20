@@ -4,20 +4,20 @@ import type CollectionVersionId from "../ids/CollectionVersionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type ExecutingJavascriptFunctionFailed from "./ExecutingJavascriptFunctionFailed.js";
 
-type MakingContentFingerprintFailed = ResultError<
-  "MakingContentFingerprintFailed",
+type MakingContentBlockingKeysFailed = ResultError<
+  "MakingContentBlockingKeysFailed",
   {
     collectionId: CollectionId;
     collectionVersionId: CollectionVersionId;
     documentId: DocumentId | null;
     cause:
       | ResultError<
-          "ContentFingerprintNotAString",
+          "ContentBlockingKeysNotValid",
           {
-            contentFingerprint: any;
+            contentBlockingKeys: any;
           }
         >
       | ExecutingJavascriptFunctionFailed;
   }
 >;
-export default MakingContentFingerprintFailed;
+export default MakingContentBlockingKeysFailed;

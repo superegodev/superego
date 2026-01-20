@@ -40,8 +40,8 @@ export default {
         versionSettings: {
           contentSummaryGetter: stubContentSummaryGetter,
         },
-        // TODO_FINGERPRINT: ask the LLM to generate one
-        contentFingerprintGetter: null,
+        // TODO_DEDUPLICATION: ask the LLM to generate one
+        contentBlockingKeysGetter: null,
       })),
       { dryRun: true },
     );
@@ -51,7 +51,7 @@ export default {
       (createManyResult.error.name === "UnexpectedError" ||
         createManyResult.error.name === "CollectionCategoryNotFound" ||
         createManyResult.error.name === "AppNotFound" ||
-        createManyResult.error.name === "ContentFingerprintGetterNotValid" ||
+        createManyResult.error.name === "ContentBlockingKeysGetterNotValid" ||
         createManyResult.error.name === "ContentSummaryGetterNotValid")
     ) {
       throw new UnexpectedAssistantError(

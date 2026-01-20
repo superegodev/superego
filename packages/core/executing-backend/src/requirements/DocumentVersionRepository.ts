@@ -28,8 +28,8 @@ export default interface DocumentVersionRepository {
     collectionId: CollectionId,
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity[]>;
-  findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+  findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
     collectionId: CollectionId,
-    contentFingerprint: string,
+    contentBlockingKeys: string[],
   ): Promise<DocumentVersionEntity | null>;
 }

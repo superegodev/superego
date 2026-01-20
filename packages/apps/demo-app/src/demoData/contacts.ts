@@ -41,17 +41,23 @@ export default function getContentSummary(contact) {
       `.trim(),
     },
   },
-  contentFingerprintGetter: {
+  contentBlockingKeysGetter: {
     source: `
 import type { Contact } from "./CollectionSchema.js";
 
-export default function getContentFingerprint(contact: Contact): string {
-  return [contact.type, contact.name.toLowerCase()].join("");
+export default function getContentBlockingKeys(contact: Contact): string[] {
+  return [
+    \`type:\${contact.type}\`,
+    \`name:\${contact.name.toLowerCase()}\`
+  ];
 }
     `.trim(),
     compiled: `
-export default function getContentFingerprint(contact) {
-  return [contact.type, contact.name.toLowerCase()].join("");
+export default function getContentBlockingKeys(contact) {
+  return [
+    \`type:\${contact.type}\`,
+    \`name:\${contact.name.toLowerCase()}\`
+  ];
 }
     `.trim(),
   },

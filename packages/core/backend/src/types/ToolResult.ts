@@ -12,7 +12,7 @@ import type DuplicateDocumentDetected from "../errors/DuplicateDocumentDetected.
 import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
 import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
-import type MakingContentFingerprintFailed from "../errors/MakingContentFingerprintFailed.js";
+import type MakingContentBlockingKeysFailed from "../errors/MakingContentBlockingKeysFailed.js";
 import type ReferencedCollectionsNotFound from "../errors/ReferencedCollectionsNotFound.js";
 import type ReferencedDocumentsNotFound from "../errors/ReferencedDocumentsNotFound.js";
 import type TypescriptCompilationFailed from "../errors/TypescriptCompilationFailed.js";
@@ -77,7 +77,7 @@ namespace ToolResult {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
-      | MakingContentFingerprintFailed
+      | MakingContentBlockingKeysFailed
       | DuplicateDocumentDetected
     >,
     { documents: LiteDocument[] }
@@ -97,7 +97,7 @@ namespace ToolResult {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
-      | MakingContentFingerprintFailed
+      | MakingContentBlockingKeysFailed
     >,
     { document: LiteDocument }
   >;

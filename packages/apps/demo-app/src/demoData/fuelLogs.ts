@@ -50,17 +50,25 @@ export default function getContentSummary(fuelLog) {
       `.trim(),
     },
   },
-  contentFingerprintGetter: {
+  contentBlockingKeysGetter: {
     source: `
 import type { FuelLog } from "./CollectionSchema.js";
 
-export default function getContentFingerprint(fuelLog: FuelLog): string {
-  return [fuelLog.liters, fuelLog.totalCost, fuelLog.odometer].join("");
+export default function getContentBlockingKeys(fuelLog: FuelLog): string[] {
+  return [
+    \`odometer:\${fuelLog.odometer}\`,
+    \`liters:\${fuelLog.liters}\`,
+    \`cost:\${fuelLog.totalCost}\`
+  ];
 }
     `.trim(),
     compiled: `
-export default function getContentFingerprint(fuelLog) {
-  return [fuelLog.liters, fuelLog.totalCost, fuelLog.odometer].join("");
+export default function getContentBlockingKeys(fuelLog) {
+  return [
+    \`odometer:\${fuelLog.odometer}\`,
+    \`liters:\${fuelLog.liters}\`,
+    \`cost:\${fuelLog.totalCost}\`
+  ];
 }
     `.trim(),
   },

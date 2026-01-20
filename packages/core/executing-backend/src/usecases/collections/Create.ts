@@ -8,7 +8,7 @@ import type {
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
-  ContentFingerprintGetterNotValid,
+  ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
   TypescriptModule,
@@ -48,7 +48,7 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-    contentFingerprintGetter: TypescriptModule | null,
+    contentBlockingKeysGetter: TypescriptModule | null,
     options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
@@ -58,7 +58,7 @@ export default class CollectionsCreate extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
-    | ContentFingerprintGetterNotValid
+    | ContentBlockingKeysGetterNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -177,20 +177,20 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
-    if (contentFingerprintGetter !== null) {
-      const isContentFingerprintGetterValid =
+    if (contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
         await this.javascriptSandbox.moduleDefaultExportsFunction(
-          contentFingerprintGetter,
+          contentBlockingKeysGetter,
         );
-      if (!isContentFingerprintGetterValid) {
+      if (!isContentBlockingKeysGetterValid) {
         return makeUnsuccessfulResult(
-          makeResultError("ContentFingerprintGetterNotValid", {
+          makeResultError("ContentBlockingKeysGetterNotValid", {
             collectionId: null,
             collectionVersionId: null,
             issues: [
               {
                 message:
-                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
               },
             ],
           }),
@@ -223,7 +223,7 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
-      contentFingerprintGetter,
+      contentBlockingKeysGetter,
       migration: null,
       remoteConverters: null,
       createdAt: now,

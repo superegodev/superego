@@ -32,7 +32,7 @@ export default class SqliteCollectionVersionRepository
             "collection_id",
             "schema",
             "settings",
-            "content_fingerprint_getter",
+            "content_blocking_keys_getter",
             "migration",
             "remote_converters",
             "created_at",
@@ -47,8 +47,8 @@ export default class SqliteCollectionVersionRepository
         collectionVersion.collectionId,
         JSON.stringify(collectionVersion.schema),
         JSON.stringify(collectionVersion.settings),
-        collectionVersion.contentFingerprintGetter
-          ? JSON.stringify(collectionVersion.contentFingerprintGetter)
+        collectionVersion.contentBlockingKeysGetter
+          ? JSON.stringify(collectionVersion.contentBlockingKeysGetter)
           : null,
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)
@@ -70,7 +70,7 @@ export default class SqliteCollectionVersionRepository
           "collection_id" = ?,
           "schema" = ?,
           "settings" = ?,
-          "content_fingerprint_getter" = ?,
+          "content_blocking_keys_getter" = ?,
           "migration" = ?,
           "remote_converters" = ?,
           "created_at" = ?
@@ -81,8 +81,8 @@ export default class SqliteCollectionVersionRepository
         collectionVersion.collectionId,
         JSON.stringify(collectionVersion.schema),
         JSON.stringify(collectionVersion.settings),
-        collectionVersion.contentFingerprintGetter
-          ? JSON.stringify(collectionVersion.contentFingerprintGetter)
+        collectionVersion.contentBlockingKeysGetter
+          ? JSON.stringify(collectionVersion.contentBlockingKeysGetter)
           : null,
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)

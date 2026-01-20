@@ -48,7 +48,7 @@ export default function getContentSummary(expense) {
       `.trim(),
     },
   },
-  contentFingerprintGetter: null,
+  contentBlockingKeysGetter: null,
   documents: expensesData,
   app: {
     type: AppType.CollectionView,

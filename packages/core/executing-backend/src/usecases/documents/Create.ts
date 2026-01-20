@@ -10,7 +10,7 @@ import {
   DocumentVersionCreator,
   type DuplicateDocumentDetected,
   type FilesNotFound,
-  type MakingContentFingerprintFailed,
+  type MakingContentBlockingKeysFailed,
   type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
@@ -25,7 +25,7 @@ import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
-import makeContentFingerprint from "../../makers/makeContentFingerprint.js";
+import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
@@ -43,7 +43,7 @@ type ExecReturnValue = ResultPromise<
   | DocumentContentNotValid
   | FilesNotFound
   | ReferencedDocumentsNotFound
-  | MakingContentFingerprintFailed
+  | MakingContentBlockingKeysFailed
   | DuplicateDocumentDetected
   | UnexpectedError
 >;
@@ -172,32 +172,35 @@ export default class DocumentsCreate extends Usecase<
       );
     }
 
-    let contentFingerprint: string | null = null;
-    if (latestCollectionVersion.contentFingerprintGetter !== null) {
-      const makeContentFingerprintResult = await makeContentFingerprint(
+    let contentBlockingKeys: string[] | null = null;
+    if (latestCollectionVersion.contentBlockingKeysGetter !== null) {
+      const makeContentBlockingKeysResult = await makeContentBlockingKeys(
         this.javascriptSandbox,
         latestCollectionVersion,
         null,
         contentValidationResult.output,
       );
-      if (!makeContentFingerprintResult.success) {
-        return makeContentFingerprintResult;
+      if (!makeContentBlockingKeysResult.success) {
+        return makeContentBlockingKeysResult;
       }
-      contentFingerprint = makeContentFingerprintResult.data;
+      contentBlockingKeys = makeContentBlockingKeysResult.data;
     }
 
-    if (contentFingerprint !== null && !options.skipDuplicateCheck) {
+    if (
+      contentBlockingKeys !== null &&
+      !isEmpty(contentBlockingKeys) &&
+      !options.skipDuplicateCheck
+    ) {
       const duplicateDocumentVersion =
-        await this.repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+        await this.repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
           collectionId,
-          contentFingerprint,
+          contentBlockingKeys,
         );
       if (duplicateDocumentVersion) {
         return makeUnsuccessfulResult(
           makeResultError("DuplicateDocumentDetected", {
             collectionId,
             existingDocumentId: duplicateDocumentVersion.documentId,
-            contentFingerprint,
           }),
         );
       }
@@ -229,7 +232,7 @@ export default class DocumentsCreate extends Usecase<
       collectionVersionId: latestCollectionVersion.id,
       conversationId: options.conversationId ?? null,
       content: convertedContent,
-      contentFingerprint: contentFingerprint,
+      contentBlockingKeys: contentBlockingKeys,
       referencedDocuments: referencedDocuments,
       createdBy: options.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,

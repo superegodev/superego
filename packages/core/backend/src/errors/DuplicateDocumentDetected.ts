@@ -7,7 +7,7 @@ type DuplicateDocumentDetected = ResultError<
   {
     collectionId: CollectionId;
     existingDocumentId: DocumentId;
-    contentFingerprint: string;
+    // TODO_DEDUPLICATION: consider adding the whole document
   }
 >;
 export default DuplicateDocumentDetected;

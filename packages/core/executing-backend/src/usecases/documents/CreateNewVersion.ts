@@ -12,7 +12,7 @@ import {
   type DocumentVersionId,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
-  type MakingContentFingerprintFailed,
+  type MakingContentBlockingKeysFailed,
   type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
@@ -27,7 +27,7 @@ import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
-import makeContentFingerprint from "../../makers/makeContentFingerprint.js";
+import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
@@ -46,7 +46,7 @@ type ExecReturnValue = ResultPromise<
   | ConnectorDoesNotSupportUpSyncing
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
-  | MakingContentFingerprintFailed
+  | MakingContentBlockingKeysFailed
   | FilesNotFound
   | ReferencedDocumentsNotFound
   | UnexpectedError
@@ -206,18 +206,18 @@ export default class DocumentsCreateNewVersion extends Usecase<
       );
     }
 
-    let contentFingerprint: string | null = null;
-    if (latestCollectionVersion.contentFingerprintGetter !== null) {
-      const makeContentFingerprintResult = await makeContentFingerprint(
+    let contentBlockingKeys: string[] | null = null;
+    if (latestCollectionVersion.contentBlockingKeysGetter !== null) {
+      const makeContentBlockingKeysResult = await makeContentBlockingKeys(
         this.javascriptSandbox,
         latestCollectionVersion,
         id,
         contentValidationResult.output,
       );
-      if (!makeContentFingerprintResult.success) {
-        return makeContentFingerprintResult;
+      if (!makeContentBlockingKeysResult.success) {
+        return makeContentBlockingKeysResult;
       }
-      contentFingerprint = makeContentFingerprintResult.data;
+      contentBlockingKeys = makeContentBlockingKeysResult.data;
     }
 
     const now = new Date();
@@ -235,7 +235,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       collectionVersionId: latestCollectionVersion.id,
       conversationId: options?.conversationId ?? null,
       content: convertedContent,
-      contentFingerprint: contentFingerprint,
+      contentBlockingKeys: contentBlockingKeys,
       referencedDocuments: referencedDocuments,
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,

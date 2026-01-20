@@ -9,7 +9,7 @@ import {
   type CollectionVersionId,
   type CollectionVersionIdNotMatching,
   type CollectionVersionSettings,
-  type ContentFingerprintGetterNotValid,
+  type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
@@ -52,7 +52,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     latestVersionId: CollectionVersionId,
     schema: Schema,
     settings: CollectionVersionSettings,
-    contentFingerprintGetter: TypescriptModule | null,
+    contentBlockingKeysGetter: TypescriptModule | null,
     migration: TypescriptModule | null,
     remoteConverters: RemoteConverters | null,
   ): ResultPromise<
@@ -62,7 +62,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
-    | ContentFingerprintGetterNotValid
+    | ContentBlockingKeysGetterNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -149,21 +149,21 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
-    // Validate contentFingerprintGetter.
-    if (contentFingerprintGetter !== null) {
-      const isContentFingerprintGetterValid =
+    // Validate contentBlockingKeysGetter.
+    if (contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
         await this.javascriptSandbox.moduleDefaultExportsFunction(
-          contentFingerprintGetter,
+          contentBlockingKeysGetter,
         );
-      if (!isContentFingerprintGetterValid) {
+      if (!isContentBlockingKeysGetterValid) {
         return makeUnsuccessfulResult(
-          makeResultError("ContentFingerprintGetterNotValid", {
+          makeResultError("ContentBlockingKeysGetterNotValid", {
             collectionId: id,
             collectionVersionId: latestVersion.id,
             issues: [
               {
                 message:
-                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
               },
             ],
           }),
@@ -267,7 +267,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
       },
-      contentFingerprintGetter,
+      contentBlockingKeysGetter,
       migration: migration,
       remoteConverters: remoteConverters,
       createdAt: new Date(),

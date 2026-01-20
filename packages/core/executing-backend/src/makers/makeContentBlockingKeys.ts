@@ -1,6 +1,6 @@
 import type {
   DocumentId,
-  MakingContentFingerprintFailed,
+  MakingContentBlockingKeysFailed,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -11,22 +11,23 @@ import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import makeResultError from "./makeResultError.js";
 
-export default async function makeContentFingerprint(
+export default async function makeContentBlockingKeys(
   javascriptSandbox: JavascriptSandbox,
   collectionVersion: CollectionVersionEntity,
   documentId: DocumentId | null,
   content: any,
-): ResultPromise<string, MakingContentFingerprintFailed> {
-  const contentFingerprintGetter = collectionVersion.contentFingerprintGetter!;
+): ResultPromise<string[], MakingContentBlockingKeysFailed> {
+  const contentBlockingKeysGetter =
+    collectionVersion.contentBlockingKeysGetter!;
 
-  const { data: contentFingerprint, error } =
-    await javascriptSandbox.executeSyncFunction(contentFingerprintGetter, [
+  const { data: contentBlockingKeys, error } =
+    await javascriptSandbox.executeSyncFunction(contentBlockingKeysGetter, [
       content,
     ]);
 
   if (error) {
     return makeUnsuccessfulResult(
-      makeResultError("MakingContentFingerprintFailed", {
+      makeResultError("MakingContentBlockingKeysFailed", {
         collectionId: collectionVersion.collectionId,
         collectionVersionId: collectionVersion.id,
         documentId: documentId,
@@ -35,18 +36,21 @@ export default async function makeContentFingerprint(
     );
   }
 
-  if (typeof contentFingerprint !== "string") {
+  if (
+    !Array.isArray(contentBlockingKeys) ||
+    !contentBlockingKeys.every((key) => typeof key === "string")
+  ) {
     return makeUnsuccessfulResult(
-      makeResultError("MakingContentFingerprintFailed", {
+      makeResultError("MakingContentBlockingKeysFailed", {
         collectionId: collectionVersion.collectionId,
         collectionVersionId: collectionVersion.id,
         documentId: documentId,
-        cause: makeResultError("ContentFingerprintNotAString", {
-          contentFingerprint,
+        cause: makeResultError("ContentBlockingKeysNotValid", {
+          contentBlockingKeys,
         }),
       }),
     );
   }
 
-  return makeSuccessfulResult(contentFingerprint);
+  return makeSuccessfulResult(contentBlockingKeys);
 }

@@ -25,13 +25,14 @@ type SqliteDocumentVersion = {
    * previous version.
    */
   content_delta: string | null;
+  /** JSON. Array of contentBlockingKeys. */
+  content_blocking_keys: string | null;
   /** JSON. Array of DocumentRef objects. */
   referenced_documents: string;
   created_by: DocumentVersionCreator;
   /** ISO 8601 */
   created_at: string;
   is_latest: 0 | 1;
-  content_fingerprint: string | null;
 } & (
   | {
       is_latest: 0;
@@ -70,7 +71,9 @@ export function toEntity(
       documentVersion.is_latest === 1
         ? JSON.parse(documentVersion.content_snapshot)
         : makeContent(documentVersion.id, allDocumentVersions!, jdp!),
-    contentFingerprint: documentVersion.content_fingerprint,
+    contentBlockingKeys: documentVersion.content_blocking_keys
+      ? JSON.parse(documentVersion.content_blocking_keys)
+      : null,
     referencedDocuments: JSON.parse(documentVersion.referenced_documents),
     createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),
@@ -117,7 +120,6 @@ export function toMinimalEntity(
     documentId: documentVersion.document_id,
     collectionVersionId: documentVersion.collection_version_id,
     conversationId: documentVersion.conversation_id,
-    contentFingerprint: documentVersion.content_fingerprint,
     referencedDocuments: JSON.parse(documentVersion.referenced_documents),
     createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),

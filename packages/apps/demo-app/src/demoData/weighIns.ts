@@ -40,6 +40,6 @@ export default function getContentSummary(weighIn) {
       `.trim(),
     },
   },
-  contentFingerprintGetter: null,
+  contentBlockingKeysGetter: null,
   documents: weighInsData,
 } satisfies DemoCollection;

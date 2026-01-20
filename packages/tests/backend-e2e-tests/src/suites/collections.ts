@@ -234,7 +234,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ContentFingerprintGetterNotValid", async () => {
+    it("error: ContentBlockingKeysGetterNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
 
@@ -270,14 +270,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "ContentFingerprintGetterNotValid",
+          name: "ContentBlockingKeysGetterNotValid",
           details: {
             collectionId: null,
             collectionVersionId: null,
             issues: [
               {
                 message:
-                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
               },
             ],
           },
@@ -385,7 +385,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
               },
             },
-            contentFingerprintGetter: null,
+            contentBlockingKeysGetter: null,
             migration: null,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -411,7 +411,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: creates (case: with contentFingerprintGetter)", async () => {
+    it("success: creates (case: with contentBlockingKeysGetter)", async () => {
       // Setup SUT
       const { backend } = deps();
 
@@ -439,7 +439,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           source: "",
           compiled:
-            "export default function getContentFingerprint() { return 'fingerprint'; }",
+            "export default function getContentBlockingKeys() { return []; }",
         },
       );
 
@@ -462,10 +462,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
               },
             },
-            contentFingerprintGetter: {
+            contentBlockingKeysGetter: {
               source: "",
               compiled:
-                "export default function getContentFingerprint() { return 'fingerprint'; }",
+                "export default function getContentBlockingKeys() { return []; }",
             },
             migration: null,
             remoteConverters: null,
@@ -514,7 +514,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -564,7 +564,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -606,7 +606,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -647,7 +647,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -695,7 +695,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled: "export function getContentSummary() {}",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -719,7 +719,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ContentFingerprintGetterNotValid", async () => {
+    it("error: ContentBlockingKeysGetterNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
 
@@ -745,9 +745,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: {
+          contentBlockingKeysGetter: {
             source: "",
-            compiled: "export function getContentFingerprint() {}",
+            compiled: "export function getContentBlockingKeys() {}",
           },
         },
       ]);
@@ -757,14 +757,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "ContentFingerprintGetterNotValid",
+          name: "ContentBlockingKeysGetterNotValid",
           details: {
             collectionId: null,
             collectionVersionId: null,
             issues: [
               {
                 message:
-                  "The default export of the contentFingerprintGetter TypescriptModule is not a function",
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
               },
             ],
           },
@@ -809,7 +809,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -866,7 +866,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -910,7 +910,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -934,7 +934,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentFingerprintGetter: null,
+              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -987,7 +987,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
         {
           settings: {
@@ -1009,7 +1009,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -1033,7 +1033,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentFingerprintGetter: null,
+              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -1065,7 +1065,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentFingerprintGetter: null,
+              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -1136,7 +1136,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
         {
           settings: {
@@ -1169,7 +1169,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentFingerprintGetter: null,
+          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -5661,7 +5661,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 source: "",
               },
             },
-            contentFingerprintGetter: null,
+            contentBlockingKeysGetter: null,
             migration: migration,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -6022,51 +6022,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ContentFingerprintGetterNotValid", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createResult = await backend.collections.create(
-        {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-        },
-        {
-          types: { Root: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Root",
-        },
-        {
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-        },
-        null,
-      );
-      assert.isTrue(createResult.success);
-
-      // Exercise
-      const updateLatestVersionSettingsResult =
-        await backend.collections.updateLatestVersionSettings(
-          createResult.data.id,
-          createResult.data.latestVersion.id,
-          {},
-        );
-
-      // Verify
-      expect(updateLatestVersionSettingsResult).toEqual({
-        success: true,
-        data: expect.objectContaining({
-          id: createResult.data.id,
-        }),
-        error: null,
-      });
-    });
-
     it("success: updates", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -6122,7 +6077,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
               },
             },
-            contentFingerprintGetter: null,
+            contentBlockingKeysGetter: null,
           },
           settings: createResult.data.settings,
           remote: null,

@@ -105,7 +105,7 @@ export default class DemoDocumentVersionRepository
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .map(({ content, ...rest }) => rest),
+        .map(({ content, contentBlockingKeys, ...rest }) => rest),
     );
   }
 
@@ -133,9 +133,9 @@ export default class DemoDocumentVersionRepository
     );
   }
 
-  async findAnyLatestWhereCollectionIdEqAndContentFingerprintEq(
+  async findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
     collectionId: CollectionId,
-    contentFingerprint: string,
+    contentBlockingKeys: string[],
   ): Promise<DocumentVersionEntity | null> {
     this.ensureNotDisposed();
     const latestDocumentVersions: Record<DocumentId, DocumentVersionEntity> =
@@ -151,9 +151,12 @@ export default class DemoDocumentVersionRepository
           latestDocumentVersions[documentVersion.documentId] = documentVersion;
         }
       });
+    const blockingKeysSet = new Set(contentBlockingKeys);
     const found = Object.values(latestDocumentVersions).find(
       (documentVersion) =>
-        documentVersion.contentFingerprint === contentFingerprint,
+        documentVersion.contentBlockingKeys?.some((key) =>
+          blockingKeysSet.has(key),
+        ),
     );
     return clone(found ?? null);
   }

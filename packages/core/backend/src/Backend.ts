@@ -31,7 +31,7 @@ import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/C
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
-import type ContentFingerprintGetterNotValid from "./errors/ContentFingerprintGetterNotValid.js";
+import type ContentBlockingKeysGetterNotValid from "./errors/ContentBlockingKeysGetterNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
@@ -42,7 +42,7 @@ import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
-import type MakingContentFingerprintFailed from "./errors/MakingContentFingerprintFailed.js";
+import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
@@ -126,7 +126,7 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
-      contentFingerprintGetter: TypescriptModule | null,
+      contentBlockingKeysGetter: TypescriptModule | null,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
@@ -135,7 +135,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
-      | ContentFingerprintGetterNotValid
+      | ContentBlockingKeysGetterNotValid
       | UnexpectedError
     >;
 
@@ -144,7 +144,7 @@ export default interface Backend {
         settings: CollectionSettings;
         schema: Schema;
         versionSettings: CollectionVersionSettings;
-        contentFingerprintGetter: TypescriptModule | null;
+        contentBlockingKeysGetter: TypescriptModule | null;
       }[],
     ): ResultPromise<
       Collection[],
@@ -154,7 +154,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
-      | ContentFingerprintGetterNotValid
+      | ContentBlockingKeysGetterNotValid
       | UnexpectedError
     >;
 
@@ -226,7 +226,7 @@ export default interface Backend {
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
-      contentFingerprintGetter: TypescriptModule | null,
+      contentBlockingKeysGetter: TypescriptModule | null,
       /** Null for collections with a remote. */
       migration: TypescriptModule | null,
       /** Null for collections without a remote. */
@@ -238,7 +238,7 @@ export default interface Backend {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
-      | ContentFingerprintGetterNotValid
+      | ContentBlockingKeysGetterNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
       | CollectionMigrationFailed
@@ -301,7 +301,7 @@ export default interface Backend {
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
-      | MakingContentFingerprintFailed
+      | MakingContentBlockingKeysFailed
       | DuplicateDocumentDetected
       | UnexpectedError
     >;
@@ -318,7 +318,7 @@ export default interface Backend {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
-      | MakingContentFingerprintFailed
+      | MakingContentBlockingKeysFailed
       | FilesNotFound
       | ReferencedDocumentsNotFound
       | UnexpectedError

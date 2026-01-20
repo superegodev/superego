@@ -55,7 +55,7 @@ export default {
       } = await documentsCreate.exec(collectionId, content, {
         createdBy: DocumentVersionCreator.Assistant,
         conversationId: conversationId,
-        // TODO_FINGERPRINT: expose option to assistant
+        // TODO_DEDUPLICATION: expose option to assistant
         skipDuplicateCheck: false,
       });
 

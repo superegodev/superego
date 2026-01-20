@@ -40,6 +40,6 @@ export default function getContentSummary(calendarEntry) {
       `.trim(),
     },
   },
-  contentFingerprintGetter: null,
+  contentBlockingKeysGetter: null,
   documents: calendarEntriesData,
 } satisfies DemoCollection;

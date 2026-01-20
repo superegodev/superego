@@ -312,7 +312,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("error: MakingContentFingerprintFailed", async () => {
+    it("error: MakingContentBlockingKeysFailed", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create(
@@ -343,7 +343,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         {
           source: "",
           compiled:
-            "export default function getContentFingerprint() { return 123; }",
+            "export default function getContentBlockingKeys() { return 123; }",
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -359,14 +359,14 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "MakingContentFingerprintFailed",
+          name: "MakingContentBlockingKeysFailed",
           details: {
             collectionId: createCollectionResult.data.id,
             collectionVersionId: createCollectionResult.data.latestVersion.id,
             documentId: null,
             cause: {
-              name: "ContentFingerprintNotAString",
-              details: { contentFingerprint: 123 },
+              name: "ContentBlockingKeysNotValid",
+              details: { contentBlockingKeys: 123 },
             },
           },
         },
@@ -404,7 +404,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         {
           source: "",
           compiled:
-            "export default function getContentFingerprint(content) { return content.title; }",
+            // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+            "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -429,7 +430,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
           details: {
             collectionId: createCollectionResult.data.id,
             existingDocumentId: createDocumentResult.data.id,
-            contentFingerprint: "title",
           },
         },
       });
@@ -466,7 +466,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         {
           source: "",
           compiled:
-            "export default function getContentFingerprint(content) { return content.title; }",
+            // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+            "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
         },
       );
       assert.isTrue(createCollectionResult.success);
@@ -1055,7 +1056,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("error: MakingContentFingerprintFailed", async () => {
+    it("error: MakingContentBlockingKeysFailed", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create(
@@ -1086,8 +1087,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         {
           source: "",
           compiled: `
-            export default function getContentFingerprint(content) {
-              return content.title === "title" ? "title" : 123;
+            export default function getContentBlockingKeys(content) {
+              return content.title === "title" ? ["title:title"] : 123;
             }
           `,
         },
@@ -1114,14 +1115,14 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "MakingContentFingerprintFailed",
+          name: "MakingContentBlockingKeysFailed",
           details: {
             collectionId: createCollectionResult.data.id,
             collectionVersionId: createCollectionResult.data.latestVersion.id,
             documentId: createDocumentResult.data.id,
             cause: {
-              name: "ContentFingerprintNotAString",
-              details: { contentFingerprint: 123 },
+              name: "ContentBlockingKeysNotValid",
+              details: { contentBlockingKeys: 123 },
             },
           },
         },

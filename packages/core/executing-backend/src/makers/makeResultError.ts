@@ -28,7 +28,7 @@ import type {
   ConnectorNotAuthenticated,
   ConnectorNotFound,
   ConnectorSettingsNotValid,
-  ContentFingerprintGetterNotValid,
+  ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
   ConversationNotFound,
@@ -42,7 +42,7 @@ import type {
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
-  MakingContentFingerprintFailed,
+  MakingContentBlockingKeysFailed,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
   ReferencedCollectionsNotFound,
@@ -85,7 +85,7 @@ type KnownResultError =
   | ConnectorNotAuthenticated
   | ConnectorNotFound
   | ConnectorSettingsNotValid
-  | ContentFingerprintGetterNotValid
+  | ContentBlockingKeysGetterNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | ConversationNotFound
@@ -99,7 +99,7 @@ type KnownResultError =
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
-  | MakingContentFingerprintFailed
+  | MakingContentBlockingKeysFailed
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
   | ReferencedCollectionsNotFound

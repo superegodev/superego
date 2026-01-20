@@ -7,7 +7,7 @@ import type {
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
-  ContentFingerprintGetterNotValid,
+  ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
   TypescriptModule,
@@ -36,7 +36,7 @@ export default class CollectionsCreateMany extends Usecase<
       settings: CollectionSettings;
       schema: Schema;
       versionSettings: CollectionVersionSettings;
-      contentFingerprintGetter: TypescriptModule | null;
+      contentBlockingKeysGetter: TypescriptModule | null;
     }[],
     options: CollectionsCreateManyOptions = {},
   ): ResultPromise<
@@ -47,7 +47,7 @@ export default class CollectionsCreateMany extends Usecase<
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
-    | ContentFingerprintGetterNotValid
+    | ContentBlockingKeysGetterNotValid
     | UnexpectedError
   > {
     const collectionIds = collections.map(() => Id.generate.collection());
@@ -57,7 +57,7 @@ export default class CollectionsCreateMany extends Usecase<
     const createdCollections: Collection[] = [];
 
     for (const [index, collection] of collections.entries()) {
-      const { settings, schema, versionSettings, contentFingerprintGetter } =
+      const { settings, schema, versionSettings, contentBlockingKeysGetter } =
         collection;
       const collectionId = collectionIds[index];
 
@@ -85,7 +85,7 @@ export default class CollectionsCreateMany extends Usecase<
         settings,
         resolvedSchema,
         versionSettings,
-        contentFingerprintGetter,
+        contentBlockingKeysGetter,
         {
           dryRun: options.dryRun,
           collectionId: collectionId,
