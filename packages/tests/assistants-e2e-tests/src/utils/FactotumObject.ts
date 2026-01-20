@@ -63,8 +63,8 @@ class FactotumObject {
           compiled:
             'export default function getValue() { return { name: "name" }; }',
         },
-        contentFingerprintGetter: null,
       },
+      null,
     );
     assertSuccessfulResult(
       `Error creating collection ${definition.name}`,

@@ -76,6 +76,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       collection.latestVersion.id,
       values.schema,
       { contentSummaryGetter: values.contentSummaryGetter },
+      null,
       values.migration,
       values.remoteConverters,
     );

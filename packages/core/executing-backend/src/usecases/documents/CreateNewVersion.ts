@@ -207,7 +207,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
     }
 
     let contentFingerprint: string | null = null;
-    if (latestCollectionVersion.settings.contentFingerprintGetter !== null) {
+    if (latestCollectionVersion.contentFingerprintGetter !== null) {
       const makeContentFingerprintResult = await makeContentFingerprint(
         this.javascriptSandbox,
         latestCollectionVersion,

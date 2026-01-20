@@ -86,6 +86,7 @@ export default async function loadDemoData(
       },
       collection.schema,
       collection.versionSettings,
+      collection.contentFingerprintGetter,
     );
 
     if (createCollectionResult.success) {

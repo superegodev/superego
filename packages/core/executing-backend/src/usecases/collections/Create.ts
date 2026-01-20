@@ -11,6 +11,7 @@ import type {
   ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
+  TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -47,6 +48,7 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
+    contentFingerprintGetter: TypescriptModule | null,
     options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
@@ -175,10 +177,10 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
-    if (versionSettings.contentFingerprintGetter !== null) {
+    if (contentFingerprintGetter !== null) {
       const isContentFingerprintGetterValid =
         await this.javascriptSandbox.moduleDefaultExportsFunction(
-          versionSettings.contentFingerprintGetter,
+          contentFingerprintGetter,
         );
       if (!isContentFingerprintGetterValid) {
         return makeUnsuccessfulResult(
@@ -220,8 +222,8 @@ export default class CollectionsCreate extends Usecase<
       schema: resolvedSchema,
       settings: {
         contentSummaryGetter: versionSettings.contentSummaryGetter,
-        contentFingerprintGetter: versionSettings.contentFingerprintGetter,
       },
+      contentFingerprintGetter,
       migration: null,
       remoteConverters: null,
       createdAt: now,

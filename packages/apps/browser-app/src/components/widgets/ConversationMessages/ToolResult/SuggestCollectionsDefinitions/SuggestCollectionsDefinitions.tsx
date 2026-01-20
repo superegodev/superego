@@ -44,6 +44,7 @@ export default function SuggestCollectionsDefinitions({
         versionSettings: {
           contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns),
         },
+        contentFingerprintGetter: null,
       })),
     );
     if (!result.success) {

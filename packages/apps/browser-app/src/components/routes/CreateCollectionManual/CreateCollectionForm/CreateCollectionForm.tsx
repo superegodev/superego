@@ -79,6 +79,7 @@ export default function CreateCollectionForm() {
       },
       schema,
       { contentSummaryGetter },
+      null,
     );
     if (success) {
       navigateTo(

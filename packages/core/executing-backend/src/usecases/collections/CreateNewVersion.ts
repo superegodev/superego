@@ -52,6 +52,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     latestVersionId: CollectionVersionId,
     schema: Schema,
     settings: CollectionVersionSettings,
+    contentFingerprintGetter: TypescriptModule | null,
     migration: TypescriptModule | null,
     remoteConverters: RemoteConverters | null,
   ): ResultPromise<
@@ -148,11 +149,11 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
-    // Validate settings.contentFingerprintGetter.
-    if (settings.contentFingerprintGetter !== null) {
+    // Validate contentFingerprintGetter.
+    if (contentFingerprintGetter !== null) {
       const isContentFingerprintGetterValid =
         await this.javascriptSandbox.moduleDefaultExportsFunction(
-          settings.contentFingerprintGetter,
+          contentFingerprintGetter,
         );
       if (!isContentFingerprintGetterValid) {
         return makeUnsuccessfulResult(
@@ -265,8 +266,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
       schema: resolvedSchema,
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
-        contentFingerprintGetter: settings.contentFingerprintGetter,
       },
+      contentFingerprintGetter,
       migration: migration,
       remoteConverters: remoteConverters,
       createdAt: new Date(),

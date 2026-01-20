@@ -11,6 +11,11 @@ export default interface CollectionVersion {
   schema: Schema;
   settings: CollectionVersionSettings;
   /**
+   * A function that computes a fingerprint for a document's content. Used to
+   * detect duplicate documents. Null if duplicate detection is disabled.
+   */
+  contentFingerprintGetter: TypescriptModule | null;
+  /**
    * The function that was run to migrate documents from the previous
    * version to this version. Null if this is the first version.
    */

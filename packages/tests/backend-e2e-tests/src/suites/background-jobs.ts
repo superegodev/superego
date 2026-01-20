@@ -87,8 +87,8 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-          contentFingerprintGetter: null,
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(

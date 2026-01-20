@@ -12,7 +12,6 @@ const schema: Schema = {
 };
 const settings: CollectionVersionSettings = {
   contentSummaryGetter: { source: "", compiled: "" },
-  contentFingerprintGetter: null,
 };
 
 export default rd<GetDependencies>("Collection versions", (deps) => {
@@ -27,6 +26,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: Id.generate.collection(),
       schema: schema,
       settings: settings,
+      contentFingerprintGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -60,6 +60,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: Id.generate.collection(),
       schema: schema,
       settings: settings,
+      contentFingerprintGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -79,7 +80,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
           source: "updatedSource",
           compiled: "updatedCompiled",
         },
-        contentFingerprintGetter: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -113,6 +113,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection1Id,
       schema: schema,
       settings: settings,
+      contentFingerprintGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -123,6 +124,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection1Id,
       schema: schema,
       settings: settings,
+      contentFingerprintGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -133,6 +135,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection2Id,
       schema: schema,
       settings: settings,
+      contentFingerprintGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -179,6 +182,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: Id.generate.collection(),
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -232,6 +236,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collectionId,
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -242,6 +247,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collectionId,
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -317,6 +323,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection1Id,
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -327,6 +334,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection1Id,
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -337,6 +345,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection2Id,
         schema: schema,
         settings: settings,
+        contentFingerprintGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),

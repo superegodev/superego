@@ -39,7 +39,7 @@ export default function getContentSummary(weighIn) {
 }
       `.trim(),
     },
-    contentFingerprintGetter: null,
   },
+  contentFingerprintGetter: null,
   documents: weighInsData,
 } satisfies DemoCollection;

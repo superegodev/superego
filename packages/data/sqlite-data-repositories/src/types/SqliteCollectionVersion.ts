@@ -15,6 +15,8 @@ type SqliteCollectionVersion = {
   /** JSON */
   settings: string;
   /** JSON */
+  content_fingerprint_getter: string | null;
+  /** JSON */
   migration: string | null;
   /** MessagePack */
   remote_converters: Buffer | null;
@@ -33,6 +35,9 @@ export function toEntity(
     collectionId: collectionVersion.collection_id,
     schema: JSON.parse(collectionVersion.schema),
     settings: JSON.parse(collectionVersion.settings),
+    contentFingerprintGetter: collectionVersion.content_fingerprint_getter
+      ? JSON.parse(collectionVersion.content_fingerprint_getter)
+      : null,
     migration: collectionVersion.migration
       ? JSON.parse(collectionVersion.migration)
       : null,

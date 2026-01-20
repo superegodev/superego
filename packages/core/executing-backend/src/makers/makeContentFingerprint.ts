@@ -17,8 +17,7 @@ export default async function makeContentFingerprint(
   documentId: DocumentId | null,
   content: any,
 ): ResultPromise<string, MakingContentFingerprintFailed> {
-  const contentFingerprintGetter =
-    collectionVersion.settings.contentFingerprintGetter!;
+  const contentFingerprintGetter = collectionVersion.contentFingerprintGetter!;
 
   const { data: contentFingerprint, error } =
     await javascriptSandbox.executeSyncFunction(contentFingerprintGetter, [

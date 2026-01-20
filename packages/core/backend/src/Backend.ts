@@ -126,6 +126,7 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
+      contentFingerprintGetter: TypescriptModule | null,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
@@ -143,6 +144,7 @@ export default interface Backend {
         settings: CollectionSettings;
         schema: Schema;
         versionSettings: CollectionVersionSettings;
+        contentFingerprintGetter: TypescriptModule | null;
       }[],
     ): ResultPromise<
       Collection[],
@@ -224,6 +226,7 @@ export default interface Backend {
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
+      contentFingerprintGetter: TypescriptModule | null,
       /** Null for collections with a remote. */
       migration: TypescriptModule | null,
       /** Null for collections without a remote. */
@@ -251,7 +254,6 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | ContentSummaryGetterNotValid
-      | ContentFingerprintGetterNotValid
       | UnexpectedError
     >;
 

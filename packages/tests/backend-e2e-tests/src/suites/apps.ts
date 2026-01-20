@@ -89,8 +89,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-          contentFingerprintGetter: null,
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -307,8 +307,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-          contentFingerprintGetter: null,
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const initialFiles = {
@@ -466,8 +466,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-          contentFingerprintGetter: null,
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create(

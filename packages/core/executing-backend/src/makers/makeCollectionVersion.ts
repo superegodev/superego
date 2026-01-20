@@ -8,6 +8,7 @@ export default function makeCollectionVersion(
     id: collectionVersion.id,
     schema: collectionVersion.schema,
     settings: collectionVersion.settings,
+    contentFingerprintGetter: collectionVersion.contentFingerprintGetter,
     previousVersionId: collectionVersion.previousVersionId,
     migration: collectionVersion.migration,
     remoteConverters: collectionVersion.remoteConverters,

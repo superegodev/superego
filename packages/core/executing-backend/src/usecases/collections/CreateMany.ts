@@ -10,6 +10,7 @@ import type {
   ContentFingerprintGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
+  TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -35,6 +36,7 @@ export default class CollectionsCreateMany extends Usecase<
       settings: CollectionSettings;
       schema: Schema;
       versionSettings: CollectionVersionSettings;
+      contentFingerprintGetter: TypescriptModule | null;
     }[],
     options: CollectionsCreateManyOptions = {},
   ): ResultPromise<
@@ -56,7 +58,8 @@ export default class CollectionsCreateMany extends Usecase<
     const createdCollections: Collection[] = [];
 
     for (const [index, collection] of collections.entries()) {
-      const { settings, schema, versionSettings } = collection;
+      const { settings, schema, versionSettings, contentFingerprintGetter } =
+        collection;
       const collectionId = collectionIds[index];
 
       const suggestedCollectionIds =
@@ -84,6 +87,7 @@ export default class CollectionsCreateMany extends Usecase<
         settings,
         resolvedSchema,
         versionSettings,
+        contentFingerprintGetter,
         {
           dryRun: options.dryRun,
           collectionId: collectionId,

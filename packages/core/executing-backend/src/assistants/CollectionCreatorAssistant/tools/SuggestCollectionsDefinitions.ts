@@ -39,9 +39,9 @@ export default {
         schema,
         versionSettings: {
           contentSummaryGetter: stubContentSummaryGetter,
-          // TODO_FINGERPRINT: ask the LLM to generate one
-          contentFingerprintGetter: null,
         },
+        // TODO_FINGERPRINT: ask the LLM to generate one
+        contentFingerprintGetter: null,
       })),
       { dryRun: true },
     );
