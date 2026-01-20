@@ -7,11 +7,11 @@ import * as cs from "../ToolResult.css.js";
 
 interface Props {
   collection: ToolCall.SuggestCollectionsDefinitions["input"]["collections"][number];
-  suggestedCollections: UiOptions["suggestedCollections"];
+  protoCollections: UiOptions["protoCollections"];
 }
 export default function CollectionPreview({
   collection,
-  suggestedCollections,
+  protoCollections,
 }: Props) {
   const { schema, exampleDocument } = collection;
 
@@ -33,7 +33,7 @@ export default function CollectionPreview({
             control={control}
             showNullability={true}
             zoomLevel={0.9}
-            suggestedCollections={suggestedCollections}
+            protoCollections={protoCollections}
           />
         </div>
       </Form>

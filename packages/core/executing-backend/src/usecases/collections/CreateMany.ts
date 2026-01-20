@@ -51,8 +51,7 @@ export default class CollectionsCreateMany extends Usecase<
     | UnexpectedError
   > {
     const collectionIds = collections.map(() => Id.generate.collection());
-    const idMapping =
-      schemaUtils.makeSuggestedCollectionIdMapping(collectionIds);
+    const idMapping = schemaUtils.makeProtoCollectionIdMapping(collectionIds);
 
     const collectionsCreate = this.sub(CollectionsCreate);
     const createdCollections: Collection[] = [];
@@ -62,23 +61,22 @@ export default class CollectionsCreateMany extends Usecase<
         collection;
       const collectionId = collectionIds[index];
 
-      const suggestedCollectionIds =
-        schemaUtils.extractSuggestedCollectionIds(schema);
+      const protoCollectionIds = schemaUtils.extractProtoCollectionIds(schema);
 
-      // Validate references to suggested collections.
-      const notFoundSuggestedCollectionIds = suggestedCollectionIds.filter(
+      // Validate references to proto collections.
+      const notFoundProtoCollectionIds = protoCollectionIds.filter(
         (id) => !idMapping.has(id),
       );
-      if (notFoundSuggestedCollectionIds.length > 0) {
+      if (notFoundProtoCollectionIds.length > 0) {
         return makeUnsuccessfulResult(
           makeResultError("ReferencedCollectionsNotFound", {
             collectionId: null,
-            notFoundCollectionIds: notFoundSuggestedCollectionIds,
+            notFoundCollectionIds: notFoundProtoCollectionIds,
           }),
         );
       }
 
-      const resolvedSchema = schemaUtils.replaceSuggestedCollectionIds(
+      const resolvedSchema = schemaUtils.replaceProtoCollectionIds(
         schema,
         idMapping,
       );

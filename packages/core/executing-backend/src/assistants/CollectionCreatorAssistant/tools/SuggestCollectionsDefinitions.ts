@@ -124,8 +124,8 @@ suggestion. The user will review it and decide whether to create them or not.
 This tool DOES NOT create the collections.
 
 When suggesting multiple related collections, you can use
-"SuggestedCollection_<index>" as the collectionId in DocumentRef types to
-reference other collections being suggested in the same call.
+"ProtoCollection_<index>" as the collectionId in DocumentRef types to reference
+other collections being suggested in the same call.
       `.trim(),
       inputSchema: {
         type: "object",
@@ -207,7 +207,7 @@ ALLOWED**.
                 exampleDocument: {
                   description: `
 An example document in the collection. Make it as simple as possible. Must be
-valid. Valid DocumentRef = { collectionId: "SuggestedCollection_<index>", documentId: "Document_example" }.
+valid. Valid DocumentRef = { collectionId: "ProtoCollection_<index>", documentId: "Document_example" }.
                   `.trim(),
                   type: "object",
                   additionalProperties: true,

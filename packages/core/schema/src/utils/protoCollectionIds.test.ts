@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import DataType from "../DataType.js";
 import type Schema from "../Schema.js";
 import {
-  extractSuggestedCollectionIds,
-  makeSuggestedCollectionId,
-} from "./suggestedCollectionIds.js";
+  extractProtoCollectionIds,
+  makeProtoCollectionId,
+} from "./protoCollectionIds.js";
 
-describe("extractSuggestedCollectionIds", () => {
+describe("extractProtoCollectionIds", () => {
   it("returns empty array when schema has no DocumentRef types", () => {
     // Exercise
     const schema: Schema = {
@@ -20,7 +20,7 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
     expect(result).toEqual([]);
@@ -39,7 +39,7 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
     expect(result).toEqual([]);
@@ -61,15 +61,15 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
     expect(result).toEqual([]);
   });
 
-  it("extracts a single suggested collection ID", () => {
+  it("extracts a single proto collection ID", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -77,23 +77,23 @@ describe("extractSuggestedCollectionIds", () => {
           properties: {
             ref: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId,
+              collectionId: protoId,
             },
           },
         },
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 
-  it("extracts multiple different suggested collection IDs", () => {
+  it("extracts multiple different proto collection IDs", () => {
     // Exercise
-    const suggestedId0 = makeSuggestedCollectionId(0);
-    const suggestedId1 = makeSuggestedCollectionId(1);
+    const protoId0 = makeProtoCollectionId(0);
+    const protoId1 = makeProtoCollectionId(1);
     const schema: Schema = {
       types: {
         Root: {
@@ -101,28 +101,28 @@ describe("extractSuggestedCollectionIds", () => {
           properties: {
             ref0: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId0,
+              collectionId: protoId0,
             },
             ref1: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId1,
+              collectionId: protoId1,
             },
           },
         },
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
     expect(result).toHaveLength(2);
-    expect(result).toContain(suggestedId0);
-    expect(result).toContain(suggestedId1);
+    expect(result).toContain(protoId0);
+    expect(result).toContain(protoId1);
   });
 
-  it("deduplicates repeated suggested collection IDs", () => {
+  it("deduplicates repeated proto collection IDs", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -130,26 +130,26 @@ describe("extractSuggestedCollectionIds", () => {
           properties: {
             ref1: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId,
+              collectionId: protoId,
             },
             ref2: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId,
+              collectionId: protoId,
             },
           },
         },
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 
-  it("extracts suggested collection IDs from nested Structs", () => {
+  it("extracts proto collection IDs from nested Structs", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -160,7 +160,7 @@ describe("extractSuggestedCollectionIds", () => {
               properties: {
                 ref: {
                   dataType: DataType.DocumentRef,
-                  collectionId: suggestedId,
+                  collectionId: protoId,
                 },
               },
             },
@@ -169,15 +169,15 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 
-  it("extracts suggested collection IDs from List items", () => {
+  it("extracts proto collection IDs from List items", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -187,7 +187,7 @@ describe("extractSuggestedCollectionIds", () => {
               dataType: DataType.List,
               items: {
                 dataType: DataType.DocumentRef,
-                collectionId: suggestedId,
+                collectionId: protoId,
               },
             },
           },
@@ -195,15 +195,15 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 
-  it("extracts suggested collection IDs through TypeRef", () => {
+  it("extracts proto collection IDs through TypeRef", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -211,27 +211,27 @@ describe("extractSuggestedCollectionIds", () => {
           properties: {
             ref: {
               dataType: null,
-              ref: "SuggestedRef",
+              ref: "ProtoRef",
             },
           },
         },
-        SuggestedRef: {
+        ProtoRef: {
           dataType: DataType.DocumentRef,
-          collectionId: suggestedId,
+          collectionId: protoId,
         },
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 
   it("extracts from multiple types in schema", () => {
     // Exercise
-    const suggestedId0 = makeSuggestedCollectionId(0);
-    const suggestedId1 = makeSuggestedCollectionId(1);
+    const protoId0 = makeProtoCollectionId(0);
+    const protoId1 = makeProtoCollectionId(1);
     const schema: Schema = {
       types: {
         Root: {
@@ -242,34 +242,34 @@ describe("extractSuggestedCollectionIds", () => {
         },
         Type1: {
           dataType: DataType.DocumentRef,
-          collectionId: suggestedId0,
+          collectionId: protoId0,
         },
         Type2: {
           dataType: DataType.DocumentRef,
-          collectionId: suggestedId1,
+          collectionId: protoId1,
         },
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
     expect(result).toHaveLength(2);
-    expect(result).toContain(suggestedId0);
-    expect(result).toContain(suggestedId1);
+    expect(result).toContain(protoId0);
+    expect(result).toContain(protoId1);
   });
 
-  it("ignores regular collection IDs while extracting suggested ones", () => {
+  it("ignores regular collection IDs while extracting proto ones", () => {
     // Exercise
-    const suggestedId = makeSuggestedCollectionId(0);
+    const protoId = makeProtoCollectionId(0);
     const schema: Schema = {
       types: {
         Root: {
           dataType: DataType.Struct,
           properties: {
-            suggested: {
+            proto: {
               dataType: DataType.DocumentRef,
-              collectionId: suggestedId,
+              collectionId: protoId,
             },
             regular: {
               dataType: DataType.DocumentRef,
@@ -280,9 +280,9 @@ describe("extractSuggestedCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const result = extractSuggestedCollectionIds(schema);
+    const result = extractProtoCollectionIds(schema);
 
     // Verify
-    expect(result).toEqual([suggestedId]);
+    expect(result).toEqual([protoId]);
   });
 });

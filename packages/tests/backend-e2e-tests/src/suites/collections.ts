@@ -827,14 +827,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: ReferencedCollectionsNotFound (invalid suggested collection id)", async () => {
+    it("error: ReferencedCollectionsNotFound (invalid proto collection id)", async () => {
       // Setup SUT
       const { backend } = deps();
       const { utils: schemaUtils } = await import("@superego/schema");
 
       // Exercise
-      // Reference a suggested collection that doesn't exist in the batch
-      const invalidSuggestedId = schemaUtils.makeSuggestedCollectionId(99);
+      // Reference a proto collection that doesn't exist in the batch
+      const invalidProtoId = schemaUtils.makeProtoCollectionId(99);
       const result = await backend.collections.createMany([
         {
           settings: {
@@ -852,7 +852,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 properties: {
                   documentRef: {
                     dataType: DataType.DocumentRef,
-                    collectionId: invalidSuggestedId,
+                    collectionId: invalidProtoId,
                   },
                 },
               },
@@ -878,7 +878,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           name: "ReferencedCollectionsNotFound",
           details: {
             collectionId: null,
-            notFoundCollectionIds: [invalidSuggestedId],
+            notFoundCollectionIds: [invalidProtoId],
           },
         },
       });
@@ -1092,15 +1092,15 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success: creates collections with cross-references using suggested collection ids", async () => {
+    it("success: creates collections with cross-references using proto collection ids", async () => {
       // Setup SUT
       const { backend } = deps();
       const { utils: schemaUtils } = await import("@superego/schema");
 
       // Exercise
       // Collection 0 references Collection 1, and Collection 1 references Collection 0
-      const suggestedCollection0 = schemaUtils.makeSuggestedCollectionId(0);
-      const suggestedCollection1 = schemaUtils.makeSuggestedCollectionId(1);
+      const protoCollection0 = schemaUtils.makeProtoCollectionId(0);
+      const protoCollection1 = schemaUtils.makeProtoCollectionId(1);
       const result = await backend.collections.createMany([
         {
           settings: {
@@ -1121,7 +1121,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     dataType: DataType.List,
                     items: {
                       dataType: DataType.DocumentRef,
-                      collectionId: suggestedCollection1,
+                      collectionId: protoCollection1,
                     },
                   },
                 },
@@ -1155,7 +1155,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   title: { dataType: DataType.String },
                   author: {
                     dataType: DataType.DocumentRef,
-                    collectionId: suggestedCollection0,
+                    collectionId: protoCollection0,
                   },
                 },
               },
@@ -1183,7 +1183,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isDefined(authorsCollection);
       assert.isDefined(booksCollection);
 
-      // Verify the suggested collection IDs were replaced with actual IDs
+      // Verify the proto collection IDs were replaced with actual IDs
       // Authors collection should reference books collection
       const authorsSchema = authorsCollection.latestVersion.schema;
       const authorsRootType = authorsSchema.types["Root"];

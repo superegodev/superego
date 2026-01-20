@@ -1,7 +1,8 @@
 -- Document versions
 
 ALTER TABLE "document_versions"
-ADD COLUMN "referenced_documents" TEXT NOT NULL DEFAULT '[]',
+ADD COLUMN "referenced_documents" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "document_versions"
 ADD COLUMN "content_fingerprint" TEXT;
 
 CREATE INDEX "idx__document_versions__on__collection_id__content_fingerprint" ON "document_versions" (

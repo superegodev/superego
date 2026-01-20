@@ -19,7 +19,7 @@ share only the final answer unless asked for details.
 4. Call `$TOOL_NAME_SUGGEST_COLLECTIONS_DEFINITIONS` to suggest collection
    definitions for the user.
    - Always suggest all related collections in a single tool call.
-   - Use "SuggestedCollection\_<index>" to create cross-references between
+   - Use "ProtoCollection\_<index>" to create cross-references between
      collections.
 5. Give a concise reply to the user. Say something like "I suggest this
    collection..." or "I propose these collections...". Include a short summary

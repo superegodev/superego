@@ -5,7 +5,7 @@ export interface UiOptions {
   showNullability: boolean;
   zoomLevel: number;
   isReadOnly: boolean;
-  suggestedCollections: {
+  protoCollections: {
     id: string;
     settings: {
       name: string;
@@ -19,7 +19,7 @@ const UiOptionsContext = createContext<UiOptions>({
   showNullability: false,
   zoomLevel: 1,
   isReadOnly: false,
-  suggestedCollections: [],
+  protoCollections: [],
 });
 
 export const UiOptionsProvider = UiOptionsContext.Provider;

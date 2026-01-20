@@ -11,7 +11,7 @@ interface Props {
   showNullability?: boolean;
   zoomLevel?: number;
   isReadOnly?: boolean;
-  suggestedCollections?: UiOptions["suggestedCollections"];
+  protoCollections?: UiOptions["protoCollections"];
 }
 export default function RHFContentField({
   schema,
@@ -21,7 +21,7 @@ export default function RHFContentField({
   showNullability = false,
   zoomLevel = 1,
   isReadOnly = false,
-  suggestedCollections = [],
+  protoCollections = [],
 }: Props) {
   return (
     <UiOptionsProvider
@@ -30,7 +30,7 @@ export default function RHFContentField({
         showNullability,
         zoomLevel,
         isReadOnly,
-        suggestedCollections,
+        protoCollections,
       }}
     >
       <AnyField

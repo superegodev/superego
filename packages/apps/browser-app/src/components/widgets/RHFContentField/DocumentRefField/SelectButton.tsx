@@ -40,7 +40,7 @@ export default function SelectButton({
 
   const collection = collectionsById[value.collectionId] ?? null;
 
-  if (utils.isSuggestedCollectionId(value.collectionId)) {
+  if (utils.isProtoCollectionId(value.collectionId)) {
     return (
       <Button
         onPress={!isReadOnly ? onPress : undefined}

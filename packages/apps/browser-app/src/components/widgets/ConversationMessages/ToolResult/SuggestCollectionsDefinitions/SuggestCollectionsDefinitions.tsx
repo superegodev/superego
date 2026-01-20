@@ -60,8 +60,8 @@ export default function SuggestCollectionsDefinitions({
   };
 
   const tabsId = useId();
-  const suggestedCollections = collections.map((collection, index) => ({
-    id: utils.makeSuggestedCollectionId(index),
+  const protoCollections = collections.map((collection, index) => ({
+    id: utils.makeProtoCollectionId(index),
     settings: {
       name: collection.settings.name,
       icon: collection.settings.icon,
@@ -77,7 +77,7 @@ export default function SuggestCollectionsDefinitions({
         <TabList className={cs.SuggestCollectionsDefinitions.tabList}>
           {collections.map((collection, index) => (
             <Tab
-              key={utils.makeSuggestedCollectionId(index)}
+              key={utils.makeProtoCollectionId(index)}
               id={`${tabsId}-${index}`}
               className={cs.SuggestCollectionsDefinitions.tab}
             >
@@ -87,13 +87,13 @@ export default function SuggestCollectionsDefinitions({
         </TabList>
         {collections.map((collection, index) => (
           <TabPanel
-            key={utils.makeSuggestedCollectionId(index)}
+            key={utils.makeProtoCollectionId(index)}
             id={`${tabsId}-${index}`}
             className={cs.SuggestCollectionsDefinitions.tabPanel}
           >
             <CollectionPreview
               collection={collection}
-              suggestedCollections={suggestedCollections}
+              protoCollections={protoCollections}
             />
           </TabPanel>
         ))}

@@ -48,13 +48,13 @@ export default function DocumentRefField({
   label,
 }: Props) {
   const intl = useIntl();
-  const { isReadOnly, suggestedCollections } = useUiOptions();
+  const { isReadOnly, protoCollections } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
 
   const { collections } = useGlobalData();
   const collectionsById = CollectionUtils.makeByIdMap([
     ...collections,
-    ...(suggestedCollections as Collection[]),
+    ...(protoCollections as Collection[]),
   ]);
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);

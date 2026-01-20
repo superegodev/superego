@@ -10,15 +10,15 @@ import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
 import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
 import parsePath from "./utils/parsePath.js";
-import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
 import {
-  extractSuggestedCollectionIds,
-  isSuggestedCollectionId,
-  makeSuggestedCollectionId,
-  makeSuggestedCollectionIdMapping,
-  parseSuggestedCollectionIndex,
-  replaceSuggestedCollectionIds,
-} from "./utils/suggestedCollectionIds.js";
+  extractProtoCollectionIds,
+  isProtoCollectionId,
+  makeProtoCollectionId,
+  makeProtoCollectionIdMapping,
+  parseProtoCollectionIndex,
+  replaceProtoCollectionIds,
+} from "./utils/protoCollectionIds.js";
+import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
 import content from "./valibot-schemas/content/content.js";
 import schema from "./valibot-schemas/schema/schema.js";
 
@@ -48,10 +48,10 @@ export const utils = {
   extractReferencedCollectionIds,
   extractTextChunks,
   replaceSelfCollectionId,
-  makeSuggestedCollectionId,
-  makeSuggestedCollectionIdMapping,
-  isSuggestedCollectionId,
-  parseSuggestedCollectionIndex,
-  extractSuggestedCollectionIds,
-  replaceSuggestedCollectionIds,
+  makeProtoCollectionId,
+  makeProtoCollectionIdMapping,
+  isProtoCollectionId,
+  parseProtoCollectionIndex,
+  extractProtoCollectionIds,
+  replaceProtoCollectionIds,
 };
