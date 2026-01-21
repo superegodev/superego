@@ -9,7 +9,7 @@ export const CreateDocumentForm = {
 };
 
 export const DuplicateDocumentDetectedModal = {
-  existingDocument: style({
+  duplicateDocument: style({
     display: "flex",
     justifyContent: "center",
     marginBlock: vars.spacing._10,

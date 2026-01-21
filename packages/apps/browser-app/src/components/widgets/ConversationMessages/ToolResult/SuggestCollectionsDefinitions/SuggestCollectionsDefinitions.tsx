@@ -43,7 +43,7 @@ export default function SuggestCollectionsDefinitions({
         schema,
         versionSettings: {
           contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns),
-          // TODO_FINGERPRINT: take from toolCall.input when available
+          // TODO_DEDUPLICATION: take from toolCall.input when available
           contentBlockingKeysGetter: null,
         },
         contentBlockingKeysGetter: null,

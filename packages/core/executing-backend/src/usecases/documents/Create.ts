@@ -30,6 +30,7 @@ import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
@@ -197,10 +198,23 @@ export default class DocumentsCreate extends Usecase<
           contentBlockingKeys,
         );
       if (duplicateDocumentVersion) {
+        const duplicateDocument = await this.repos.document.find(
+          duplicateDocumentVersion.documentId,
+        );
+        assertDocumentExists(
+          collectionId,
+          duplicateDocumentVersion.documentId,
+          duplicateDocument,
+        );
         return makeUnsuccessfulResult(
           makeResultError("DuplicateDocumentDetected", {
             collectionId,
-            existingDocumentId: duplicateDocumentVersion.documentId,
+            duplicateDocument: await makeDocument(
+              this.javascriptSandbox,
+              latestCollectionVersion,
+              duplicateDocument,
+              duplicateDocumentVersion,
+            ),
           }),
         );
       }

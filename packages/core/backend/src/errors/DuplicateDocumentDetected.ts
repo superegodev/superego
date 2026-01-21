@@ -1,13 +1,12 @@
 import type { ResultError } from "@superego/global-types";
 import type CollectionId from "../ids/CollectionId.js";
-import type DocumentId from "../ids/DocumentId.js";
+import type Document from "../types/Document.js";
 
 type DuplicateDocumentDetected = ResultError<
   "DuplicateDocumentDetected",
   {
     collectionId: CollectionId;
-    existingDocumentId: DocumentId;
-    // TODO_DEDUPLICATION: consider adding the whole document
+    duplicateDocument: Document;
   }
 >;
 export default DuplicateDocumentDetected;

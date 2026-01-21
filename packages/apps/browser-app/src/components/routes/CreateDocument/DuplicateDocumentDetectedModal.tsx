@@ -1,11 +1,8 @@
 import type { DuplicateDocumentDetected } from "@superego/backend";
 import { FormattedMessage } from "react-intl";
-import DataLoader from "../../../business-logic/backend/DataLoader.js";
-import { getDocumentQuery } from "../../../business-logic/backend/hooks.js";
 import Button from "../../design-system/Button/Button.js";
 import ContentSummary from "../../design-system/ContentSummary/ContentSummary.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import * as cs from "./CreateDocument.css.js";
 
 interface Props {
@@ -34,23 +31,13 @@ export default function DuplicateDocumentDetectedModal({
       <p>
         <FormattedMessage defaultMessage="A document with similar content already exists in this collection:" />
       </p>
-      <DataLoader
-        queries={[
-          getDocumentQuery([
-            error.details.collectionId,
-            error.details.existingDocumentId,
-          ]),
-        ]}
-        renderErrors={(errors) => <ResultErrors errors={errors} />}
-      >
-        {(existingDocument) => (
-          <div className={cs.DuplicateDocumentDetectedModal.existingDocument}>
-            <ContentSummary
-              contentSummary={existingDocument.latestVersion.contentSummary}
-            />
-          </div>
-        )}
-      </DataLoader>
+      <div className={cs.DuplicateDocumentDetectedModal.duplicateDocument}>
+        <ContentSummary
+          contentSummary={
+            error.details.duplicateDocument.latestVersion.contentSummary
+          }
+        />
+      </div>
       <p>
         <FormattedMessage defaultMessage="Do you still want to create this document?" />
       </p>

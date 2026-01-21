@@ -429,7 +429,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           name: "DuplicateDocumentDetected",
           details: {
             collectionId: createCollectionResult.data.id,
-            existingDocumentId: createDocumentResult.data.id,
+            duplicateDocument: createDocumentResult.data,
           },
         },
       });
