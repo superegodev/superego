@@ -95,6 +95,16 @@ export default class SqliteDocumentVersionRepository
         );
       }
     }
+    // Delete content blocking keys of previous versions from the index table.
+    // We only need to keep blocking keys for the latest version of each
+    // document.
+    if (previousDocumentVersion) {
+      this.db
+        .prepare(
+          `DELETE FROM "${documentVersionContentBlockingKeysTable}" WHERE "document_version_id" = ?`,
+        )
+        .run(previousDocumentVersion.id);
+    }
   }
 
   async deleteAllWhereCollectionIdEq(
