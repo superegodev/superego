@@ -261,7 +261,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         {
           source: "",
-          compiled: "export function getContentFingerprint() {}",
+          compiled: "export function getContentBlockingKeys() {}",
         },
       );
 

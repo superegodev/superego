@@ -155,6 +155,9 @@
   "ConnectorSettings.tsx_1B+Bnl": {
     "defaultMessage": "Impostazioni del connettore"
   },
+  "ContentBlockingKeysTab.tsx_mzcj4a": {
+    "defaultMessage": "Aggiorna la funzione <code>getContentBlockingKeys</code> per riflettere le modifiche allo schema."
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
   },
@@ -236,11 +239,14 @@
   "CreateCollectionAssisted.tsx_yWDfdE": {
     "defaultMessage": "Che tipo di dati vuoi archiviare?"
   },
+  "CreateCollectionForm.tsx_+gaKsp": {
+    "defaultMessage": "4. Sommario dei contenuti"
+  },
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
-  "CreateCollectionForm.tsx_HxoW8w": {
-    "defaultMessage": "3. Sommario dei contenuti"
+  "CreateCollectionForm.tsx_Fhp4xL": {
+    "defaultMessage": "3. Deduplicazione"
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. Impostazioni generali"
@@ -281,8 +287,14 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "Creata nuova versione della collezione"
   },
-  "CreateNewCollectionVersionForm.tsx_PfbGui": {
-    "defaultMessage": "2. Sommario dei contenuti"
+  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
+    "defaultMessage": "4. Convertitori remoti"
+  },
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
+    "defaultMessage": "4. Migrazione"
+  },
+  "CreateNewCollectionVersionForm.tsx_HxoW8w": {
+    "defaultMessage": "3. Sommario dei contenuti"
   },
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
@@ -290,11 +302,8 @@
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
-  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
-    "defaultMessage": "3. Convertitori remoti"
-  },
-  "CreateNewCollectionVersionForm.tsx_rgWYrb": {
-    "defaultMessage": "3. Migrazione"
+  "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
+    "defaultMessage": "2. Deduplicazione"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
@@ -859,6 +868,18 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
+    "defaultMessage": "Getter delle content blocking keys"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_VP/mgq": {
+    "defaultMessage": "<p> La deduplicazione dei documenti ti aiuta a evitare la creazione di record duplicati, ad esempio impedendo che venga creato un secondo contatto con la stessa email. </p> <p> Quando è abilitata, ogni volta che crei un nuovo documento Superego verifica che non esista già un <i>documento simile</i> e ti avvisa se lo trova. </p> <p> Questo avviene associando a ogni documento un set di <b>\"blocking keys\"</b>: piccole impronte deterministiche ricavate dal contenuto del documento (ad esempio, un'email normalizzata, o una combinazione cognome + CAP) che identificano quasi univocamente il documento. Se due documenti condividono una blocking key, è probabile che siano duplicati. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": {
+    "defaultMessage": "<p> Le <b>content blocking keys</b> di un documento sono una lista di <code>string</code> — derivate dal contenuto — che identificano il documento in base ai suoi dati. I documenti che condividono una blocking key sono considerati duplicati. </p> <p> Il <b>blocking keys getter</b> è la funzione TypeScript che ricava queste chiavi dal contenuto del documento. </p> <p> Le chiavi devono essere deterministiche (lo stesso contenuto produce le stesse chiavi) e sensibili ai cambiamenti significativi, ignorando differenze non significative come gli spazi. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_sGF42J": {
+    "defaultMessage": "Abilita deduplicazione"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"

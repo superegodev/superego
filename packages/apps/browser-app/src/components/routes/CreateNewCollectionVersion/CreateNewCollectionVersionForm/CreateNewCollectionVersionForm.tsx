@@ -17,6 +17,7 @@ import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
+import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 import MigrationTab from "./MigrationTab.js";
@@ -52,6 +53,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   } = useForm<CreateNewCollectionVersionFormValues>({
     defaultValues: {
       schema: collection.latestVersion.schema,
+      contentBlockingKeysGetter:
+        collection.latestVersion.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
       migration: CollectionUtils.hasRemote(collection)
@@ -63,6 +66,9 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     resolver: standardSchemaResolver(
       v.strictObject({
         schema: valibotSchemas.schema(),
+        contentBlockingKeysGetter: v.nullable(
+          forms.schemas.typescriptModule(intl),
+        ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
         migration: v.nullable(forms.schemas.typescriptModule(intl)),
         remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
@@ -76,7 +82,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       collection.latestVersion.id,
       values.schema,
       { contentSummaryGetter: values.contentSummaryGetter },
-      null,
+      values.contentBlockingKeysGetter,
       values.migration,
       values.remoteConverters,
     );
@@ -103,9 +109,9 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   );
 
   // When schema changes, if it's valid:
-  // - Require recompilation of contentSummaryGetter and remoteConverters (for
-  //   collections with a remote). Don't update the sources, since they're what
-  //   the user set in the previous collection version.
+  // - Require recompilation of contentSummaryGetter, contentBlockingKeysGetter,
+  //   and remoteConverters (for collections with a remote). Don't update the
+  //   sources, since they're what the user set in the previous collection version.
   // - For collections with a remote: update migration, if still the default
   //   one, and in any case require recompilation.
   useEffect(() => {
@@ -117,6 +123,12 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       "contentSummaryGetter.compiled",
       forms.constants.COMPILATION_REQUIRED,
     );
+    if (getValues("contentBlockingKeysGetter") !== null) {
+      setValue(
+        "contentBlockingKeysGetter.compiled",
+        forms.constants.COMPILATION_REQUIRED,
+      );
+    }
     if (getValues("remoteConverters") !== null) {
       setValue(
         "remoteConverters.fromRemoteDocument.compiled",
@@ -175,8 +187,19 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           },
           {
             title: (
+              <TabTitle
+                hasErrors={!!formState.errors.contentBlockingKeysGetter}
+              >
+                <FormattedMessage defaultMessage="2. Deduplication" />
+              </TabTitle>
+            ),
+            panel: <ContentBlockingKeysTab control={control} schema={schema} />,
+            isDisabled: !(isSchemaDirty && isSchemaValid),
+          },
+          {
+            title: (
               <TabTitle hasErrors={!!formState.errors.contentSummaryGetter}>
-                <FormattedMessage defaultMessage="2. Content summary" />
+                <FormattedMessage defaultMessage="3. Content summary" />
               </TabTitle>
             ),
             panel: <ContentSummaryTab control={control} schema={schema} />,
@@ -185,8 +208,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           CollectionUtils.hasRemote(collection) && connector
             ? {
                 title: (
-                  <TabTitle hasErrors={!!formState.errors.contentSummaryGetter}>
-                    <FormattedMessage defaultMessage="3. Remote converters" />
+                  <TabTitle hasErrors={!!formState.errors.remoteConverters}>
+                    <FormattedMessage defaultMessage="4. Remote converters" />
                   </TabTitle>
                 ),
                 panel: (
@@ -205,7 +228,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.migration}>
-                    <FormattedMessage defaultMessage="3. Migration" />
+                    <FormattedMessage defaultMessage="4. Migration" />
                   </TabTitle>
                 ),
                 panel: (

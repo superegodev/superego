@@ -11,6 +11,7 @@ export { default as RadioGroup } from "./RadioGroup.js";
 export { default as Select } from "./Select.js";
 export { default as SelectButton } from "./SelectButton.js";
 export { default as SelectOptions, type Option } from "./SelectOptions.js";
+export { default as Switch } from "./Switch.js";
 export { default as TextArea } from "./TextArea.js";
 export { default as TextField } from "./TextField.js";
 export { default as TimeField } from "./TimeField.js";

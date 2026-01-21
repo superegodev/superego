@@ -15,7 +15,7 @@ import toasts from "../../../../../business-logic/toasts/toasts.js";
 import Button from "../../../../design-system/Button/Button.js";
 import Title from "../Title.js";
 import * as cs from "../ToolResult.css.js";
-import CollectionPreview from "./CollectionPreview.jsx";
+import CollectionPreview from "./CollectionPreview.js";
 
 interface Props {
   conversation: Conversation;
@@ -43,6 +43,8 @@ export default function SuggestCollectionsDefinitions({
         schema,
         versionSettings: {
           contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns),
+          // TODO_FINGERPRINT: take from toolCall.input when available
+          contentBlockingKeysGetter: null,
         },
         contentBlockingKeysGetter: null,
       })),

@@ -1,7 +1,7 @@
 import type { ToolCall } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import RHFContentField from "../../../RHFContentField/RHFContentField.jsx";
+import RHFContentField from "../../../RHFContentField/RHFContentField.js";
 import type { UiOptions } from "../../../RHFContentField/uiOptions.js";
 import * as cs from "../ToolResult.css.js";
 

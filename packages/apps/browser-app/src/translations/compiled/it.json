@@ -321,6 +321,26 @@
       "value": "Impostazioni del connettore"
     }
   ],
+  "ContentBlockingKeysTab.tsx_mzcj4a": [
+    {
+      "type": 0,
+      "value": "Aggiorna la funzione "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "getContentBlockingKeys"
+        }
+      ],
+      "type": 8,
+      "value": "code"
+    },
+    {
+      "type": 0,
+      "value": " per riflettere le modifiche allo schema."
+    }
+  ],
   "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
@@ -527,16 +547,22 @@
       "value": "Che tipo di dati vuoi archiviare?"
     }
   ],
+  "CreateCollectionForm.tsx_+gaKsp": [
+    {
+      "type": 0,
+      "value": "4. Sommario dei contenuti"
+    }
+  ],
   "CreateCollectionForm.tsx_45vDAJ": [
     {
       "type": 0,
       "value": "2. Schema"
     }
   ],
-  "CreateCollectionForm.tsx_HxoW8w": [
+  "CreateCollectionForm.tsx_Fhp4xL": [
     {
       "type": 0,
-      "value": "3. Sommario dei contenuti"
+      "value": "3. Deduplicazione"
     }
   ],
   "CreateCollectionForm.tsx_PgbTyn": [
@@ -656,10 +682,22 @@
       "value": "Creata nuova versione della collezione"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_PfbGui": [
+  "CreateNewCollectionVersionForm.tsx_3TjzSy": [
     {
       "type": 0,
-      "value": "2. Sommario dei contenuti"
+      "value": "4. Convertitori remoti"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
+    {
+      "type": 0,
+      "value": "4. Migrazione"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_HxoW8w": [
+    {
+      "type": 0,
+      "value": "3. Sommario dei contenuti"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
@@ -674,16 +712,10 @@
       "value": "1. Schema"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_oO54Ks": [
+  "CreateNewCollectionVersionForm.tsx_oL/+8Y": [
     {
       "type": 0,
-      "value": "3. Convertitori remoti"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_rgWYrb": [
-    {
-      "type": 0,
-      "value": "3. Migrazione"
+      "value": "2. Deduplicazione"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -2174,6 +2206,168 @@
     {
       "type": 0,
       "value": "Cerca"
+    }
+  ],
+  "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
+    {
+      "type": 0,
+      "value": "Getter delle content blocking keys"
+    }
+  ],
+  "RHFContentBlockingKeysGetterField.tsx_VP/mgq": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " La deduplicazione dei documenti ti aiuta a evitare la creazione di record duplicati, ad esempio impedendo che venga creato un secondo contatto con la stessa email. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Quando è abilitata, ogni volta che crei un nuovo documento Superego verifica che non esista già un "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "documento simile"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " e ti avvisa se lo trova. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Questo avviene associando a ogni documento un set di "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "\"blocking keys\""
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": ": piccole impronte deterministiche ricavate dal contenuto del documento (ad esempio, un'email normalizzata, o una combinazione cognome + CAP) che identificano quasi univocamente il documento. Se due documenti condividono una blocking key, è probabile che siano duplicati. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Le "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "content blocking keys"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " di un documento sono una lista di "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "string"
+            }
+          ],
+          "type": 8,
+          "value": "code"
+        },
+        {
+          "type": 0,
+          "value": " — derivate dal contenuto — che identificano il documento in base ai suoi dati. I documenti che condividono una blocking key sono considerati duplicati. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Il "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "blocking keys getter"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " è la funzione TypeScript che ricava queste chiavi dal contenuto del documento. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Le chiavi devono essere deterministiche (lo stesso contenuto produce le stesse chiavi) e sensibili ai cambiamenti significativi, ignorando differenze non significative come gli spazi. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RHFContentBlockingKeysGetterField.tsx_sGF42J": [
+    {
+      "type": 0,
+      "value": "Abilita deduplicazione"
     }
   ],
   "RHFContentSummaryGetterField.tsx_3X4zUZ": [

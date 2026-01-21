@@ -146,6 +146,9 @@
   "ConnectorSettings.tsx_1B+Bnl": {
     "defaultMessage": "Connector settings"
   },
+  "ContentBlockingKeysTab.tsx_mzcj4a": {
+    "defaultMessage": "Update the <code>getContentBlockingKeys</code> function to reflect schema changes."
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
   },
@@ -236,11 +239,14 @@
   "CreateCollectionAssisted.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"
   },
+  "CreateCollectionForm.tsx_+gaKsp": {
+    "defaultMessage": "4. Content summary"
+  },
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
-  "CreateCollectionForm.tsx_HxoW8w": {
-    "defaultMessage": "3. Content summary"
+  "CreateCollectionForm.tsx_Fhp4xL": {
+    "defaultMessage": "3. Deduplication"
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
@@ -281,8 +287,14 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "New collection version created"
   },
-  "CreateNewCollectionVersionForm.tsx_PfbGui": {
-    "defaultMessage": "2. Content summary"
+  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
+    "defaultMessage": "4. Remote converters"
+  },
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
+    "defaultMessage": "4. Migration"
+  },
+  "CreateNewCollectionVersionForm.tsx_HxoW8w": {
+    "defaultMessage": "3. Content summary"
   },
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
@@ -290,11 +302,8 @@
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
-  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
-    "defaultMessage": "3. Remote converters"
-  },
-  "CreateNewCollectionVersionForm.tsx_rgWYrb": {
-    "defaultMessage": "3. Migration"
+  "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
+    "defaultMessage": "2. Deduplication"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
@@ -871,6 +880,18 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
+    "defaultMessage": "Content blocking keys getter"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_VP/mgq": {
+    "defaultMessage": "<p> Document deduplication helps you avoid creating duplicate records. For example, preventing a second contact from being created with the same email address. </p> <p> When enabled, every time you create a new document, Superego checks that another <i>similar document</i> doesn't already exist, and warns you if it does. </p> <p> This is done by associating to each document a set of <b>\"blocking keys\"</b>: small, deterministic fingerprints derived from the document’s content (for example, a normalized email address, or a last-name + postal-code pair) that <i>almost uniquely</i> identify a document. If two documents share a blocking key, they’re likely duplicates. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": {
+    "defaultMessage": "<p> The <b>content blocking keys</b> of a document are a list of <code>strings</code>—derived from the document's content—that uniquely identify the document based on its data. Documents sharing a blocking key are considered duplicates. </p> <p> The <b>blocking keys getter</b> is the TypeScript function that derives these keys from the document content. </p> <p> The keys should be deterministic (same content produces same keys) and sensitive to meaningful changes while ignoring non-meaningful differences like whitespace. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_sGF42J": {
+    "defaultMessage": "Enable deduplication"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
