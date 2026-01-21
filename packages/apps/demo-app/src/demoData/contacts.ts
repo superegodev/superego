@@ -47,16 +47,18 @@ import type { Contact } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(contact: Contact): string[] {
   return [
-    \`type:\${contact.type}\`,
-    \`name:\${contact.name.toLowerCase()}\`
+    \`name:\${contact.name.toLowerCase().trim()}\`,
+    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
+    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
   ];
 }
     `.trim(),
     compiled: `
 export default function getContentBlockingKeys(contact) {
   return [
-    \`type:\${contact.type}\`,
-    \`name:\${contact.name.toLowerCase()}\`
+    \`name:\${contact.name.toLowerCase().trim()}\`,
+    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
+    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
   ];
 }
     `.trim(),

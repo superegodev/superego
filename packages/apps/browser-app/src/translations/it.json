@@ -458,6 +458,21 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sincronizza"
   },
+  "DuplicateDocumentDetectedModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "DuplicateDocumentDetectedModal.tsx_5rulyB": {
+    "defaultMessage": "Vuoi comunque creare questo documento?"
+  },
+  "DuplicateDocumentDetectedModal.tsx_ITHIBG": {
+    "defaultMessage": "Possibile duplicato rilevato"
+  },
+  "DuplicateDocumentDetectedModal.tsx_eG/A4i": {
+    "defaultMessage": "Un documento con contenuto simile esiste già in questa collezione:"
+  },
+  "DuplicateDocumentDetectedModal.tsx_i9essB": {
+    "defaultMessage": "Crea comunque"
+  },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
   },

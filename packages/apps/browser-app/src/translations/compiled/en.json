@@ -1214,6 +1214,36 @@
       "value": "Sync"
     }
   ],
+  "DuplicateDocumentDetectedModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "DuplicateDocumentDetectedModal.tsx_5rulyB": [
+    {
+      "type": 0,
+      "value": "Do you still want to create this document?"
+    }
+  ],
+  "DuplicateDocumentDetectedModal.tsx_ITHIBG": [
+    {
+      "type": 0,
+      "value": "Possible duplicate detected"
+    }
+  ],
+  "DuplicateDocumentDetectedModal.tsx_eG/A4i": [
+    {
+      "type": 0,
+      "value": "A document with similar content already exists in this collection:"
+    }
+  ],
+  "DuplicateDocumentDetectedModal.tsx_i9essB": [
+    {
+      "type": 0,
+      "value": "Create anyway"
+    }
+  ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
     {
       "type": 0,

@@ -205,6 +205,7 @@ export const TextArea = {
   root: style([
     inputRootBase,
     {
+      height: "auto",
       // Experimental property:
       // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
       //

@@ -458,6 +458,21 @@
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sync"
   },
+  "DuplicateDocumentDetectedModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "DuplicateDocumentDetectedModal.tsx_5rulyB": {
+    "defaultMessage": "Do you still want to create this document?"
+  },
+  "DuplicateDocumentDetectedModal.tsx_ITHIBG": {
+    "defaultMessage": "Possible duplicate detected"
+  },
+  "DuplicateDocumentDetectedModal.tsx_eG/A4i": {
+    "defaultMessage": "A document with similar content already exists in this collection:"
+  },
+  "DuplicateDocumentDetectedModal.tsx_i9essB": {
+    "defaultMessage": "Create anyway"
+  },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
