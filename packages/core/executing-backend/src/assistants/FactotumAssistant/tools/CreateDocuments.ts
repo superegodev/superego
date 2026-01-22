@@ -29,7 +29,7 @@ export default {
     documentsCreate: DocumentsCreate,
     savepoint: {
       create: () => Promise<string>;
-      rollback: (name: string) => Promise<void>;
+      rollbackTo: (name: string) => Promise<void>;
     },
   ): Promise<ToolResult.CreateDocuments> {
     for (const { collectionId } of toolCall.input.documents) {
@@ -66,7 +66,7 @@ export default {
       }
 
       if (!success) {
-        await savepoint.rollback(savepointName);
+        await savepoint.rollbackTo(savepointName);
         return {
           tool: toolCall.tool,
           toolCallId: toolCall.id,

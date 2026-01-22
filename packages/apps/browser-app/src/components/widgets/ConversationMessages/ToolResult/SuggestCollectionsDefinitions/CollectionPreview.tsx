@@ -1,6 +1,7 @@
 import type { ToolCall } from "@superego/backend";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
+import forms from "../../../../../business-logic/forms/forms.js";
 import RHFContentField from "../../../RHFContentField/RHFContentField.js";
 import type { UiOptions } from "../../../RHFContentField/uiOptions.js";
 import * as cs from "../ToolResult.css.js";
@@ -16,7 +17,7 @@ export default function CollectionPreview({
   const { schema, exampleDocument } = collection;
 
   const { control, handleSubmit } = useForm<any>({
-    defaultValues: exampleDocument,
+    defaultValues: forms.utils.RHFContent.toRHFContent(exampleDocument, schema),
     mode: "onSubmit",
     disabled: true,
   });

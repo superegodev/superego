@@ -44,7 +44,7 @@ export default class FactotumAssistant extends Assistant {
     private typescriptCompiler: TypescriptCompiler,
     private savepoint: {
       create: () => Promise<string>;
-      rollback: (name: string) => Promise<void>;
+      rollbackTo: (name: string) => Promise<void>;
     },
   ) {
     super();
