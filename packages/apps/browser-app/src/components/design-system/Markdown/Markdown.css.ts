@@ -43,7 +43,6 @@ globalStyle(`${Markdown.root} thead th`, {
   textAlign: "left",
   fontWeight: vars.typography.fontWeights.medium,
   fontSize: vars.typography.fontSizes.md,
-  background: vars.colors.background.surface,
   position: "sticky",
   top: 0,
   zIndex: 1,
@@ -58,4 +57,7 @@ globalStyle(`${Markdown.root} tbody td`, {
   padding: vars.spacing._2,
   fontSize: vars.typography.fontSizes.md,
   verticalAlign: "middle",
+});
+globalStyle(`${Markdown.root} code`, {
+  textWrap: "auto",
 });

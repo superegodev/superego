@@ -25,6 +25,7 @@ namespace ToolCall {
       documents: {
         collectionId: CollectionId;
         content: any;
+        skipDuplicateCheck?: boolean;
       }[];
     }
   >;

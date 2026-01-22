@@ -47,7 +47,8 @@ export default {
 
     const savepointName = await savepoint.create();
     const createdDocuments: Document[] = [];
-    for (const { collectionId, content } of toolCall.input.documents) {
+    for (const { collectionId, content, skipDuplicateCheck } of toolCall.input
+      .documents) {
       const {
         success,
         data: document,
@@ -55,8 +56,7 @@ export default {
       } = await documentsCreate.exec(collectionId, content, {
         createdBy: DocumentVersionCreator.Assistant,
         conversationId: conversationId,
-        // TODO_DEDUPLICATION: expose option to assistant
-        skipDuplicateCheck: false,
+        skipDuplicateCheck: skipDuplicateCheck ?? false,
       });
 
       if (error && error.name === "UnexpectedError") {
@@ -118,6 +118,11 @@ export default {
                     "Must match the collection's TypeScript schema.",
                   ].join(" "),
                   type: "object",
+                },
+                skipDuplicateCheck: {
+                  description:
+                    "Skip the duplicate document check. Defaults to false. Set to true only after DuplicateDocumentDetected error, if it's clear that the document to create is NOT a duplicate.",
+                  type: "boolean",
                 },
               },
               required: ["collectionId", "content"],

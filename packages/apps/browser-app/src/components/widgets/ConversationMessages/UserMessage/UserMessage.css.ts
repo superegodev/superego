@@ -8,7 +8,7 @@ export const UserMessage = {
     position: "relative",
     "@container": {
       [`(min-width: ${narrowContainerWidth})`]: {
-        marginInlineStart: "40%",
+        marginInlineStart: "25%",
       },
     },
   }),
