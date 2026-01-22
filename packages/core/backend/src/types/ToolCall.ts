@@ -62,9 +62,11 @@ namespace ToolCall {
   export type SearchDocuments = ToolCall<
     ToolName.SearchDocuments,
     {
-      collectionId: CollectionId | null;
-      query: string;
-      limit?: number;
+      searches: {
+        collectionId: CollectionId | null;
+        query: string;
+        limit?: number;
+      }[];
     }
   >;
 

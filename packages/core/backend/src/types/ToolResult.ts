@@ -164,11 +164,13 @@ namespace ToolResult {
     ToolName.SearchDocuments,
     Result<
       {
-        documents: {
-          collectionId: CollectionId;
-          id: DocumentId;
-          versionId: DocumentVersionId;
-          content: any;
+        results: {
+          documents: {
+            collectionId: CollectionId;
+            id: DocumentId;
+            versionId: DocumentVersionId;
+            content: any;
+          }[];
         }[];
       },
       CollectionNotFound
