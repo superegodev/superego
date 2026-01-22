@@ -11,6 +11,7 @@ import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreateMany from "../../usecases/collections/CreateMany.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
+import type InferenceImplementTypescriptModule from "../../usecases/inference/ImplementTypescriptModule.js";
 import Assistant from "../Assistant.js";
 import InspectFile from "../shared-tools/InspectFile.js";
 import Unknown from "../shared-tools/Unknown.js";
@@ -26,6 +27,7 @@ export default class CollectionCreatorAssistant extends Assistant {
     private usecases: {
       collectionsCreateMany: CollectionsCreateMany;
       filesGetContent: FilesGetContent;
+      inferenceImplementTypescriptModule: InferenceImplementTypescriptModule;
     },
   ) {
     super();
@@ -103,6 +105,7 @@ export default class CollectionCreatorAssistant extends Assistant {
       return SuggestCollectionsDefinitions.exec(
         toolCall,
         this.usecases.collectionsCreateMany,
+        this.usecases.inferenceImplementTypescriptModule,
       );
     }
     if (InspectFile.is(toolCall)) {

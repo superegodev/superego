@@ -79,7 +79,6 @@ namespace ToolCall {
           collectionCategoryId: CollectionCategoryId | null;
         };
         schema: Schema;
-        tableColumns: { header: string; path: string }[];
         exampleDocument: any;
       }[];
     }

@@ -20,6 +20,7 @@ import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 import type LiteDocument from "./LiteDocument.js";
+import type TypescriptModule from "./TypescriptModule.js";
 import type ValidationIssue from "./ValidationIssue.js";
 
 type BaseToolResult<
@@ -183,9 +184,14 @@ namespace ToolResult {
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
       | CollectionSettingsNotValid
-      | ResultError<"TableColumnsNotValid", { issues: ValidationIssue[] }>
       | ResultError<"ExampleDocumentNotValid", { issues: ValidationIssue[] }>
-    >
+    >,
+    {
+      collections: {
+        contentSummaryGetter: TypescriptModule;
+        contentBlockingKeysGetter: TypescriptModule | null;
+      }[];
+    }
   >;
 
   // Shared

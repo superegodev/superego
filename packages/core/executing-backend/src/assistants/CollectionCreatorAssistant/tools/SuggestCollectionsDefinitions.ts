@@ -4,14 +4,16 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import pMap from "p-map";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type CollectionsCreateMany from "../../../usecases/collections/CreateMany.js";
-import isEmpty from "../../../utils/isEmpty.js";
-import validateTableColumns from "../utils/validateTableColumns.js";
+import type InferenceImplementTypescriptModule from "../../../usecases/inference/ImplementTypescriptModule.js";
+import getImplementContentBlockingKeysGetterSpec from "../utils/getImplementContentBlockingKeysGetterSpec.js";
+import getImplementContentSummaryGetterSpec from "../utils/getImplementContentSummaryGetterSpec.js";
 
 const stubContentSummaryGetter = {
   source: "export default function stub() { return {}; }",
@@ -26,9 +28,11 @@ export default {
   async exec(
     toolCall: ToolCall.SuggestCollectionsDefinitions,
     collectionsCreateMany: CollectionsCreateMany,
+    inferenceImplementTypescriptModule: InferenceImplementTypescriptModule,
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
 
+    // Validate schema and settings with dry-run.
     const createManyResult = await collectionsCreateMany.exec(
       collections.map(({ settings, schema }) => ({
         settings: {
@@ -37,10 +41,7 @@ export default {
           assistantInstructions: null,
         },
         schema,
-        versionSettings: {
-          contentSummaryGetter: stubContentSummaryGetter,
-        },
-        // TODO_DEDUPLICATION: ask the LLM to generate one
+        versionSettings: { contentSummaryGetter: stubContentSummaryGetter },
         contentBlockingKeysGetter: null,
       })),
       { dryRun: true },
@@ -71,23 +72,9 @@ export default {
       };
     }
 
-    // Validate table columns and example documents.
+    // Validate example documents.
     for (const collection of collections) {
-      const { schema, tableColumns, exampleDocument } = collection;
-
-      const tableColumnIssues = validateTableColumns(schema, tableColumns);
-      if (!isEmpty(tableColumnIssues)) {
-        return {
-          tool: toolCall.tool,
-          toolCallId: toolCall.id,
-          output: makeUnsuccessfulResult(
-            makeResultError("TableColumnsNotValid", {
-              issues: tableColumnIssues,
-            }),
-          ),
-        };
-      }
-
+      const { schema, exampleDocument } = collection;
       const exampleDocumentValidationResult = v.safeParse(
         valibotSchemas.content(schema),
         exampleDocument,
@@ -107,10 +94,46 @@ export default {
       }
     }
 
+    // Generate contentSummaryGetter and contentBlockingKeysGetter.
+    const collectionArtifacts = await pMap(
+      collections,
+      async (collection) => {
+        const { schema } = collection;
+
+        const [contentSummaryGetterResult, contentBlockingKeysGetterResult] =
+          await Promise.all([
+            inferenceImplementTypescriptModule.exec(
+              getImplementContentSummaryGetterSpec(schema),
+            ),
+            inferenceImplementTypescriptModule.exec(
+              getImplementContentBlockingKeysGetterSpec(schema),
+            ),
+          ]);
+
+        if (!contentSummaryGetterResult.success) {
+          throw new UnexpectedAssistantError(
+            `Failed to generate contentSummaryGetter: ${contentSummaryGetterResult.error.name}`,
+          );
+        }
+        if (!contentBlockingKeysGetterResult.success) {
+          throw new UnexpectedAssistantError(
+            `Failed to generate contentBlockingKeysGetter: ${contentBlockingKeysGetterResult.error.name}`,
+          );
+        }
+
+        return {
+          contentSummaryGetter: contentSummaryGetterResult.data,
+          contentBlockingKeysGetter: contentBlockingKeysGetterResult.data,
+        };
+      },
+      { concurrency: 1 },
+    );
+
     return {
       tool: toolCall.tool,
       toolCallId: toolCall.id,
       output: makeSuccessfulResult(null),
+      artifacts: { collections: collectionArtifacts },
     };
   },
 
@@ -171,39 +194,6 @@ other collections being suggested in the same call.
                   type: "object",
                   additionalProperties: true,
                 },
-                tableColumns: {
-                  description: `
-Columns to display in the UI table used to show the documents in the collection.
-There should be a column for all the most important properties of the
-collection, but define 5 columns at most. Important: only primitive properties
-can be selected; Files, JsonObjects, Lists, Structs, and DocumentRefs are **NOT
-ALLOWED**.
-                  `.trim(),
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      header: {
-                        description: "Header of the column",
-                        type: "string",
-                      },
-                      path: {
-                        description:
-                          "Path of the primitive property to show in the column.",
-                        examples: [
-                          "primitiveProperty",
-                          "nested.primitiveProperty",
-                          "list.0.elementPrimitiveProperty",
-                        ],
-                        type: "string",
-                      },
-                    },
-                    required: ["header", "path"],
-                    additionalProperties: false,
-                    minItems: 1,
-                    maxItems: 5,
-                  },
-                },
                 exampleDocument: {
                   description: `
 An example document in the collection. Make it as simple as possible. Must be
@@ -213,12 +203,7 @@ valid. Valid DocumentRef = { collectionId: "ProtoCollection_<index>", documentId
                   additionalProperties: true,
                 },
               },
-              required: [
-                "settings",
-                "schema",
-                "tableColumns",
-                "exampleDocument",
-              ],
+              required: ["settings", "schema", "exampleDocument"],
               additionalProperties: false,
             },
             minItems: 1,

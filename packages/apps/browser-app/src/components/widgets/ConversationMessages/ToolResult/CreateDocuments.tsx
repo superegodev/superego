@@ -13,12 +13,13 @@ import * as cs from "./ToolResult.css.js";
 interface Props {
   toolResult: ToolResult.CreateDocuments & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateDocuments["artifacts"]>;
   };
 }
 export default function CreateDocuments({ toolResult }: Props) {
   const { collections } = useGlobalData();
   const documentsByCollectionId = groupBy(
-    toolResult.artifacts!.documents,
+    toolResult.artifacts.documents,
     ({ collectionId }) => collectionId,
   );
   const collectionIds = Object.keys(documentsByCollectionId) as CollectionId[];

@@ -11,11 +11,12 @@ import * as cs from "./ToolResult.css.js";
 interface Props {
   toolResult: ToolResult.CreateNewDocumentVersion & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateNewDocumentVersion["artifacts"]>;
   };
 }
 export default function CreateNewDocumentVersion({ toolResult }: Props) {
   const { collections } = useGlobalData();
-  const { document } = toolResult.artifacts!;
+  const { document } = toolResult.artifacts;
   const collection = CollectionUtils.findCollection(
     collections,
     document.collectionId,

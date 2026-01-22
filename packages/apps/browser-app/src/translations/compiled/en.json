@@ -1858,7 +1858,7 @@
       "value": "File Inspection"
     }
   ],
-  "InferenceSettings.tsx_BmFMKI": [
+  "InferenceSettings.tsx_BUf4e4": [
     {
       "type": 0,
       "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
@@ -1867,7 +1867,7 @@
       "children": [
         {
           "type": 0,
-          "value": "z-ai/glm-4.6"
+          "value": "z-ai/glm-4.7"
         }
       ],
       "type": 8,

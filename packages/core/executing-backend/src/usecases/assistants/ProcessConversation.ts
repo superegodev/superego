@@ -39,6 +39,7 @@ import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
 import DocumentsSearch from "../documents/Search.js";
 import FilesGetContent from "../files/GetContent.js";
+import InferenceImplementTypescriptModule from "../inference/ImplementTypescriptModule.js";
 
 export default class AssistantsProcessConversation extends Usecase {
   async exec({
@@ -191,6 +192,9 @@ export default class AssistantsProcessConversation extends Usecase {
           {
             collectionsCreateMany: this.sub(CollectionsCreateMany),
             filesGetContent: this.sub(FilesGetContent),
+            inferenceImplementTypescriptModule: this.sub(
+              InferenceImplementTypescriptModule,
+            ),
           },
         );
   }

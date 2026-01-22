@@ -8,7 +8,6 @@ import { utils } from "@superego/schema";
 import { useId } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
-import makeContentSummaryGetter from "../../../../../business-logic/assistant/makeContentSummaryGetter.js";
 import { useCreateManyCollections } from "../../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../../business-logic/toasts/toasts.js";
@@ -22,11 +21,15 @@ interface Props {
   toolCall: ToolCall.SuggestCollectionsDefinitions;
   toolResult: ToolResult.SuggestCollectionsDefinitions & {
     output: { success: true };
+    artifacts: NonNullable<
+      ToolResult.SuggestCollectionsDefinitions["artifacts"]
+    >;
   };
 }
 export default function SuggestCollectionsDefinitions({
   conversation,
   toolCall,
+  toolResult,
 }: Props) {
   const intl = useIntl();
   const { collections } = toolCall.input;
@@ -34,7 +37,7 @@ export default function SuggestCollectionsDefinitions({
   const { mutate, isPending } = useCreateManyCollections();
   const createAllCollections = async () => {
     const result = await mutate(
-      collections.map(({ settings, schema, tableColumns }) => ({
+      collections.map(({ settings, schema }, index) => ({
         settings: {
           ...settings,
           defaultCollectionViewAppId: null,
@@ -42,11 +45,13 @@ export default function SuggestCollectionsDefinitions({
         },
         schema,
         versionSettings: {
-          contentSummaryGetter: makeContentSummaryGetter(schema, tableColumns),
-          // TODO_DEDUPLICATION: take from toolCall.input when available
-          contentBlockingKeysGetter: null,
+          contentSummaryGetter:
+            toolResult.artifacts.collections[index]!.contentSummaryGetter,
+          contentBlockingKeysGetter:
+            toolResult.artifacts.collections[index]!.contentBlockingKeysGetter,
         },
-        contentBlockingKeysGetter: null,
+        contentBlockingKeysGetter:
+          toolResult.artifacts.collections[index]!.contentBlockingKeysGetter,
       })),
     );
     if (!result.success) {

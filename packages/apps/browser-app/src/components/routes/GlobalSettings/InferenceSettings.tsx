@@ -97,7 +97,7 @@ export default function InferenceSettings({ control }: Props) {
                 defaultMessage={`
                   The name of a model supported by the provider you've chosen.
                   You can usually find this in your provider's docs.
-                  <code>z-ai/glm-4.6</code>,
+                  <code>z-ai/glm-4.7</code>,
                   <code>openai/gpt-oss-120b</code>, and
                   <code>qwen/qwen3-coder</code> generally perform quite well.
                 `}

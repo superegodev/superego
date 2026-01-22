@@ -764,8 +764,8 @@
   "InferenceSettings.tsx_AJlr3w": {
     "defaultMessage": "Ispezione dei file"
   },
-  "InferenceSettings.tsx_BmFMKI": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
+  "InferenceSettings.tsx_BUf4e4": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
   },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": veloce, economico, supporta tutte le API."

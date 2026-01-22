@@ -60,6 +60,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocuments & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateDocuments["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateDocuments && toolResult.output.success
@@ -70,6 +71,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateNewDocumentVersion & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateNewDocumentVersion["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateNewDocumentVersion &&
@@ -92,6 +94,9 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.SuggestCollectionsDefinitions & {
     output: { success: true };
+    artifacts: NonNullable<
+      ToolResult.SuggestCollectionsDefinitions["artifacts"]
+    >;
   } {
     return (
       toolResult.tool === ToolName.SuggestCollectionsDefinitions &&
@@ -103,6 +108,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateChart & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateChart["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateChart && toolResult.output.success
@@ -113,6 +119,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocumentsTables & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateDocumentsTables["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateDocumentsTables &&

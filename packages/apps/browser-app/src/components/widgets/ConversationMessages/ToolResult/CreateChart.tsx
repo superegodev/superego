@@ -12,10 +12,11 @@ const Echart = lazy(() => import("../../../design-system/Echart/Echart.js"));
 interface Props {
   toolResult: ToolResult.CreateChart & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateChart["artifacts"]>;
   };
 }
 export default function CreateChart({ toolResult }: Props) {
-  const { echartsOption } = toolResult.artifacts!;
+  const { echartsOption } = toolResult.artifacts;
   const { title } = echartsOption;
 
   // echartsOption actual value (not ref) only changes when toolCallId changes.
