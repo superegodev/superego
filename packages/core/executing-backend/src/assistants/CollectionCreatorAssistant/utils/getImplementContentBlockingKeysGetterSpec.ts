@@ -55,6 +55,10 @@ Guidelines:
      matching implies key B matching, don't generate key A).
    - Think of keys as OR conditions: you want keys that catch different
      duplicate scenarios, not increasingly strict versions of the same scenario.
+   - CRITICAL: A key that adds fields to an existing key is USELESS. If key B
+     contains all the fields of key A plus more, then whenever B matches, A also
+     matches. Key B can never catch a duplicate that A wouldn't already catch.
+     It adds nothing and should not be generated.
 
 6. Prefer broader keys when in doubt
    - When uncertain whether to include a field, leave it out.
@@ -64,12 +68,6 @@ Guidelines:
 
 7. Deterministic output
    - The same content must always produce the exact same array of strings.
-
-Anti-pattern to avoid:
-  Do NOT generate hierarchical keys where each key adds more specificity to
-  the previous one. For example, if matching on "date + type" is sufficient
-  to flag a duplicate, do not also generate "date + type + item1" or
-  "date + type + allItems". The broader key already catches these.
     `.trim(),
     rules: null,
     additionalInstructions: null,
