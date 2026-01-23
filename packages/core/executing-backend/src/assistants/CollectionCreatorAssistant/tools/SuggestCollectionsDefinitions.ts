@@ -146,9 +146,10 @@ Suggests one or more collection definitions to the user. This is ONLY a
 suggestion. The user will review it and decide whether to create them or not.
 This tool DOES NOT create the collections.
 
-When suggesting multiple related collections, you can use
-"ProtoCollection_<index>" as the collectionId in DocumentRef types to reference
-other collections being suggested in the same call.
+Collections in the same batch can reference each other using
+ProtoCollection_<index> as the collectionId in DocumentRef properties, where
+<index> is the 0-based position of the referenced collection in the collections
+array.
       `.trim(),
       inputSchema: {
         type: "object",

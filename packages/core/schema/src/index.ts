@@ -18,6 +18,14 @@ import {
   parseProtoCollectionIndex,
   replaceProtoCollectionIds,
 } from "./utils/protoCollectionIds.js";
+import {
+  extractProtoDocumentIds,
+  isProtoDocumentId,
+  makeProtoDocumentId,
+  makeProtoDocumentIdMapping,
+  parseProtoDocumentIndex,
+  replaceProtoDocumentIds,
+} from "./utils/protoDocumentIds.js";
 import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
 import content from "./valibot-schemas/content/content.js";
 import schema from "./valibot-schemas/schema/schema.js";
@@ -54,4 +62,10 @@ export const utils = {
   parseProtoCollectionIndex,
   extractProtoCollectionIds,
   replaceProtoCollectionIds,
+  makeProtoDocumentId,
+  makeProtoDocumentIdMapping,
+  isProtoDocumentId,
+  parseProtoDocumentIndex,
+  extractProtoDocumentIds,
+  replaceProtoDocumentIds,
 };

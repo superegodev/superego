@@ -34,7 +34,7 @@ import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
-import DocumentsCreate from "../documents/Create.js";
+import DocumentsCreateMany from "../documents/CreateMany.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
 import DocumentsSearch from "../documents/Search.js";
@@ -169,7 +169,7 @@ export default class AssistantsProcessConversation extends Usecase {
           inferenceService,
           collections,
           {
-            documentsCreate: this.sub(DocumentsCreate),
+            documentsCreateMany: this.sub(DocumentsCreateMany),
             documentsList: this.sub(DocumentsList),
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
             documentsSearch: this.sub(DocumentsSearch),

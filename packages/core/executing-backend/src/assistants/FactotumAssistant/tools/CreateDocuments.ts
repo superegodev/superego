@@ -1,7 +1,6 @@
 import {
   type Collection,
   type ConversationId,
-  type Document,
   DocumentVersionCreator,
   type ToolCall,
   ToolName,
@@ -15,7 +14,7 @@ import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.j
 import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type DocumentsCreate from "../../../usecases/documents/Create.js";
+import type DocumentsCreateMany from "../../../usecases/documents/CreateMany.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateDocuments {
@@ -26,7 +25,7 @@ export default {
     toolCall: ToolCall.CreateDocuments,
     conversationId: ConversationId,
     collections: Collection[],
-    documentsCreate: DocumentsCreate,
+    documentsCreateMany: DocumentsCreateMany,
     savepoint: {
       create: () => Promise<string>;
       rollbackTo: (name: string) => Promise<void>;
@@ -45,36 +44,36 @@ export default {
       }
     }
 
-    const savepointName = await savepoint.create();
-    const createdDocuments: Document[] = [];
-    for (const { collectionId, content, skipDuplicateCheck } of toolCall.input
-      .documents) {
-      const {
-        success,
-        data: document,
-        error,
-      } = await documentsCreate.exec(collectionId, content, {
-        createdBy: DocumentVersionCreator.Assistant,
-        conversationId: conversationId,
-        skipDuplicateCheck: skipDuplicateCheck ?? false,
-      });
+    const beforeCreateSavepoint = await savepoint.create();
+    const documents = toolCall.input.documents.map(
+      ({ collectionId, content, skipDuplicateCheck }) => ({
+        collectionId,
+        content,
+        ...(skipDuplicateCheck ? { options: { skipDuplicateCheck } } : null),
+      }),
+    );
+    const {
+      success,
+      data: createdDocuments,
+      error,
+    } = await documentsCreateMany.exec(documents, {
+      createdBy: DocumentVersionCreator.Assistant,
+      conversationId: conversationId,
+    });
 
-      if (error && error.name === "UnexpectedError") {
-        throw new UnexpectedAssistantError(
-          `Creating document failed with UnexpectedError. Cause: ${error.details.cause}`,
-        );
-      }
+    if (error && error.name === "UnexpectedError") {
+      throw new UnexpectedAssistantError(
+        `Creating documents failed with UnexpectedError. Cause: ${error.details.cause}`,
+      );
+    }
 
-      if (!success) {
-        await savepoint.rollbackTo(savepointName);
-        return {
-          tool: toolCall.tool,
-          toolCallId: toolCall.id,
-          output: makeUnsuccessfulResult(error),
-        };
-      }
-
-      createdDocuments.push(document);
+    if (!success) {
+      await savepoint.rollbackTo(beforeCreateSavepoint);
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(error),
+      };
     }
 
     return {
@@ -97,8 +96,17 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateDocuments,
-      description:
-        "Atomically creates one or more documents in one or more collections.",
+      description: `
+Atomically creates one or more documents in one or more collections.
+
+Documents in the same batch can reference each other using ProtoDocument_<index>
+as the documentId in DocumentRef properties, where <index> is the 0-based
+position of the referenced document in the documents array.
+
+When creating documents that reference each other, always use
+ProtoDocument_<index> references in a single tool call instead of making
+multiple separate calls.
+      `.trim(),
       inputSchema: {
         type: "object",
         properties: {

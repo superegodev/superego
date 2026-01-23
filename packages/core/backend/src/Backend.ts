@@ -306,6 +306,24 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    createMany(
+      documents: {
+        collectionId: CollectionId;
+        content: any;
+        options?: { skipDuplicateCheck: boolean };
+      }[],
+    ): ResultPromise<
+      Document[],
+      | CollectionNotFound
+      | ConnectorDoesNotSupportUpSyncing
+      | DocumentContentNotValid
+      | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
+      | UnexpectedError
+    >;
+
     createNewVersion(
       collectionId: CollectionId,
       id: DocumentId,

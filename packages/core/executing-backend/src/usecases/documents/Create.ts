@@ -54,7 +54,11 @@ export default class DocumentsCreate extends Usecase<
   async exec(
     collectionId: CollectionId,
     content: any,
-    options?: { skipDuplicateCheck: boolean },
+    options?: {
+      skipDuplicateCheck: boolean;
+      documentId?: DocumentId;
+      allowedUnverifiedDocumentIds?: DocumentId[];
+    },
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
@@ -64,6 +68,8 @@ export default class DocumentsCreate extends Usecase<
           createdBy: DocumentVersionCreator.Assistant;
           conversationId: ConversationId;
           skipDuplicateCheck: boolean;
+          documentId?: DocumentId;
+          allowedUnverifiedDocumentIds?: DocumentId[];
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
@@ -87,6 +93,8 @@ export default class DocumentsCreate extends Usecase<
       remoteUrl?: string | null;
       remoteDocument?: any;
       skipDuplicateCheck: boolean;
+      documentId?: DocumentId;
+      allowedUnverifiedDocumentIds?: DocumentId[];
     } = { skipDuplicateCheck: false },
   ): ExecReturnValue {
     const collection = await this.repos.collection.find(collectionId);
@@ -138,12 +146,19 @@ export default class DocumentsCreate extends Usecase<
       latestCollectionVersion.schema,
       contentValidationResult.output,
     );
+    const allowedUnverifiedDocumentIds = new Set(
+      options.allowedUnverifiedDocumentIds ?? [],
+    );
     const notFoundDocumentRefs: DocumentRef[] = [];
     for (const referencedDocument of referencedDocuments) {
-      const exists = await this.repos.document.exists(
-        referencedDocument.documentId as DocumentId,
-      );
-      if (!exists) {
+      if (
+        !allowedUnverifiedDocumentIds.has(
+          referencedDocument.documentId as DocumentId,
+        ) &&
+        !(await this.repos.document.exists(
+          referencedDocument.documentId as DocumentId,
+        ))
+      ) {
         notFoundDocumentRefs.push(referencedDocument);
       }
     }
@@ -225,7 +240,7 @@ export default class DocumentsCreate extends Usecase<
     // remote* properties are not null.
     // @ts-expect-error
     const document: DocumentEntity = {
-      id: Id.generate.document(),
+      id: options.documentId ?? Id.generate.document(),
       remoteId: options.remoteId ?? null,
       remoteUrl: options.remoteUrl ?? null,
       latestRemoteDocument: options.remoteDocument ?? null,

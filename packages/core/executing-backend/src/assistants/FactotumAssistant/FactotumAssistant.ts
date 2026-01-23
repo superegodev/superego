@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
-import type DocumentsCreate from "../../usecases/documents/Create.js";
+import type DocumentsCreateMany from "../../usecases/documents/CreateMany.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
 import type DocumentsSearch from "../../usecases/documents/Search.js";
@@ -34,7 +34,7 @@ export default class FactotumAssistant extends Assistant {
     protected inferenceService: InferenceService,
     private collections: Collection[],
     private usecases: {
-      documentsCreate: DocumentsCreate;
+      documentsCreateMany: DocumentsCreateMany;
       documentsCreateNewVersion: DocumentsCreateNewVersion;
       documentsList: DocumentsList;
       documentsSearch: DocumentsSearch;
@@ -148,7 +148,7 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.conversationId,
         this.collections,
-        this.usecases.documentsCreate,
+        this.usecases.documentsCreateMany,
         this.savepoint,
       );
     }

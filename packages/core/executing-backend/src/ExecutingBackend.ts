@@ -44,6 +44,7 @@ import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.j
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
 import DocumentsCreate from "./usecases/documents/Create.js";
+import DocumentsCreateMany from "./usecases/documents/CreateMany.js";
 import DocumentsCreateNewVersion from "./usecases/documents/CreateNewVersion.js";
 import DocumentsDelete from "./usecases/documents/Delete.js";
 import DocumentsGet from "./usecases/documents/Get.js";
@@ -112,6 +113,7 @@ export default class ExecutingBackend implements Backend {
 
     this.documents = {
       create: this.makeUsecase(DocumentsCreate, true),
+      createMany: this.makeUsecase(DocumentsCreateMany, true),
       createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
       delete: this.makeUsecase(DocumentsDelete, true),
       list: this.makeUsecase(DocumentsList, false),
