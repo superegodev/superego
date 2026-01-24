@@ -8,7 +8,7 @@ interface Props {
 export default function ToolCallInput({ toolCall }: Props) {
   return ConversationUtils.isExecuteTypescriptFunctionToolCall(toolCall) ||
     ConversationUtils.isCreateChartToolCall(toolCall) ||
-    ConversationUtils.isCreateDocumentsTableToolCall(toolCall) ? (
+    ConversationUtils.isCreateDocumentsTablesToolCall(toolCall) ? (
     <CodeBlock
       language="typescript"
       code={

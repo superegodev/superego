@@ -3,6 +3,7 @@ import type {
   AppVersion,
   CollectionSettings,
   CollectionVersionSettings,
+  TypescriptModule,
 } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 
@@ -20,6 +21,7 @@ export type DemoCollection = {
   >;
   schema: Schema;
   versionSettings: CollectionVersionSettings;
+  contentBlockingKeysGetter: TypescriptModule | null;
   documents: unknown[];
   app?: {
     type: AppType;

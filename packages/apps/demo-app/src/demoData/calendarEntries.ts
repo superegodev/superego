@@ -40,5 +40,6 @@ export default function getContentSummary(calendarEntry) {
       `.trim(),
     },
   },
+  contentBlockingKeysGetter: null,
   documents: calendarEntriesData,
 } satisfies DemoCollection;

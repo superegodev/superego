@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import monaco from "../../../monaco.js";
 import classnames from "../../../utils/classnames.js";
+import CopyButton from "../CopyButton/CopyButton.js";
 import * as cs from "./CodeBlock.css.js";
-import CopyButton from "./CopyButton.js";
 import formatJson from "./formatJson.js";
 import type Props from "./Props.js";
 
@@ -65,7 +65,12 @@ export default function EagerCodeBlock({
           {formattedCode}
         </code>
       </pre>
-      {showCopyButton ? <CopyButton code={formattedCode} /> : null}
+      {showCopyButton ? (
+        <CopyButton
+          text={formattedCode}
+          className={cs.EagerCodeBlock.copyButton}
+        />
+      ) : null}
     </div>
   );
 }

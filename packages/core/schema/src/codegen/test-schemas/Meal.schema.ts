@@ -42,7 +42,10 @@ export default {
           items: {
             dataType: DataType.Struct,
             properties: {
-              foodId: { dataType: DataType.String },
+              food: {
+                description: "The Food that was consumed.",
+                dataType: DataType.DocumentRef,
+              },
               quantity: { dataType: null, ref: "MassQuantity" },
             },
           },

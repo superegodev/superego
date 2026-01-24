@@ -11,7 +11,7 @@ import useExitWarning from "../../../business-logic/navigation/useExitWarning.js
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
-import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.jsx";
+import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";

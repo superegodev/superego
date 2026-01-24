@@ -25,6 +25,7 @@ namespace ToolCall {
       documents: {
         collectionId: CollectionId;
         content: any;
+        skipDuplicateCheck?: boolean;
       }[];
     }
   >;
@@ -40,47 +41,49 @@ namespace ToolCall {
   export type ExecuteTypescriptFunction = ToolCall<
     ToolName.ExecuteTypescriptFunction,
     {
-      collectionId: CollectionId;
+      collectionIds: CollectionId[];
       typescriptFunction: string;
     }
   >;
   export type CreateChart = ToolCall<
     ToolName.CreateChart,
     {
-      collectionId: CollectionId;
+      collectionIds: CollectionId[];
       getEChartsOption: string;
     }
   >;
-  export type CreateDocumentsTable = ToolCall<
-    ToolName.CreateDocumentsTable,
+  export type CreateDocumentsTables = ToolCall<
+    ToolName.CreateDocumentsTables,
     {
-      collectionId: CollectionId;
-      title: string;
+      collectionIds: CollectionId[];
       getDocumentIds: string;
     }
   >;
   export type SearchDocuments = ToolCall<
     ToolName.SearchDocuments,
     {
-      collectionId: CollectionId | null;
-      query: string;
-      limit?: number;
+      searches: {
+        collectionId: CollectionId | null;
+        query: string;
+        limit?: number;
+      }[];
     }
   >;
 
   // CollectionCreator
-  export type SuggestCollectionDefinition = ToolCall<
-    ToolName.SuggestCollectionDefinition,
+  export type SuggestCollectionsDefinitions = ToolCall<
+    ToolName.SuggestCollectionsDefinitions,
     {
-      settings: {
-        name: string;
-        icon: string | null;
-        description: string | null;
-        collectionCategoryId: CollectionCategoryId | null;
-      };
-      schema: Schema;
-      tableColumns: { header: string; path: string }[];
-      exampleDocument: any;
+      collections: {
+        settings: {
+          name: string;
+          icon: string | null;
+          description: string | null;
+          collectionCategoryId: CollectionCategoryId | null;
+        };
+        schema: Schema;
+        exampleDocument: any;
+      }[];
     }
   >;
 

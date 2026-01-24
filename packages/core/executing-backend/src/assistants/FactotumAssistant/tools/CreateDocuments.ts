@@ -1,7 +1,6 @@
 import {
   type Collection,
   type ConversationId,
-  type Document,
   DocumentVersionCreator,
   type ToolCall,
   ToolName,
@@ -15,7 +14,7 @@ import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.j
 import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type DocumentsCreate from "../../../usecases/documents/Create.js";
+import type DocumentsCreateMany from "../../../usecases/documents/CreateMany.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.CreateDocuments {
@@ -26,10 +25,10 @@ export default {
     toolCall: ToolCall.CreateDocuments,
     conversationId: ConversationId,
     collections: Collection[],
-    documentsCreate: DocumentsCreate,
+    documentsCreateMany: DocumentsCreateMany,
     savepoint: {
       create: () => Promise<string>;
-      rollback: (name: string) => Promise<void>;
+      rollbackTo: (name: string) => Promise<void>;
     },
   ): Promise<ToolResult.CreateDocuments> {
     for (const { collectionId } of toolCall.input.documents) {
@@ -45,34 +44,36 @@ export default {
       }
     }
 
-    const savepointName = await savepoint.create();
-    const createdDocuments: Document[] = [];
-    for (const { collectionId, content } of toolCall.input.documents) {
-      const {
-        success,
-        data: document,
-        error,
-      } = await documentsCreate.exec(collectionId, content, {
-        createdBy: DocumentVersionCreator.Assistant,
-        conversationId: conversationId,
-      });
+    const beforeCreateSavepoint = await savepoint.create();
+    const documents = toolCall.input.documents.map(
+      ({ collectionId, content, skipDuplicateCheck }) => ({
+        collectionId,
+        content,
+        ...(skipDuplicateCheck ? { options: { skipDuplicateCheck } } : null),
+      }),
+    );
+    const {
+      success,
+      data: createdDocuments,
+      error,
+    } = await documentsCreateMany.exec(documents, {
+      createdBy: DocumentVersionCreator.Assistant,
+      conversationId: conversationId,
+    });
 
-      if (error && error.name === "UnexpectedError") {
-        throw new UnexpectedAssistantError(
-          `Creating document failed with UnexpectedError. Cause: ${error.details.cause}`,
-        );
-      }
+    if (error && error.name === "UnexpectedError") {
+      throw new UnexpectedAssistantError(
+        `Creating documents failed with UnexpectedError. Cause: ${error.details.cause}`,
+      );
+    }
 
-      if (!success) {
-        await savepoint.rollback(savepointName);
-        return {
-          tool: toolCall.tool,
-          toolCallId: toolCall.id,
-          output: makeUnsuccessfulResult(error),
-        };
-      }
-
-      createdDocuments.push(document);
+    if (!success) {
+      await savepoint.rollbackTo(beforeCreateSavepoint);
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: makeUnsuccessfulResult(error),
+      };
     }
 
     return {
@@ -95,8 +96,17 @@ export default {
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.CreateDocuments,
-      description:
-        "Atomically creates one or more documents in one or more collections.",
+      description: `
+Atomically creates one or more documents in one or more collections.
+
+Documents in the same batch can reference each other using ProtoDocument_<index>
+as the documentId in DocumentRef properties, where <index> is the 0-based
+position of the referenced document in the documents array.
+
+When creating documents that reference each other, always use
+ProtoDocument_<index> references in a single tool call instead of making
+multiple separate calls.
+      `.trim(),
       inputSchema: {
         type: "object",
         properties: {
@@ -109,9 +119,6 @@ export default {
                 collectionId: {
                   type: "string",
                 },
-                // EVOLUTION: figure out how to support file creation. We could
-                // pass a list of "temporary file refs" that are in the context
-                // of the conversation and that the assistant can use.
                 content: {
                   description: [
                     "Content for the new document.",
@@ -119,6 +126,11 @@ export default {
                     "Must match the collection's TypeScript schema.",
                   ].join(" "),
                   type: "object",
+                },
+                skipDuplicateCheck: {
+                  description:
+                    "Skip the duplicate document check. Defaults to false. Set to true only after DuplicateDocumentDetected error, if it's clear that the document to create is NOT a duplicate.",
+                  type: "boolean",
                 },
               },
               required: ["collectionId", "content"],

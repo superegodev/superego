@@ -9,15 +9,21 @@ import {
   type CollectionVersionId,
   type CollectionVersionIdNotMatching,
   type CollectionVersionSettings,
+  type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
   DocumentVersionCreator,
+  type ReferencedCollectionsNotFound,
   type RemoteConverters,
   type RemoteConvertersNotValid,
   type TypescriptModule,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { type Schema, valibotSchemas } from "@superego/schema";
+import {
+  type Schema,
+  utils as schemaUtils,
+  valibotSchemas,
+} from "@superego/schema";
 import {
   extractErrorDetails,
   Id,
@@ -46,6 +52,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     latestVersionId: CollectionVersionId,
     schema: Schema,
     settings: CollectionVersionSettings,
+    contentBlockingKeysGetter: TypescriptModule | null,
     migration: TypescriptModule | null,
     remoteConverters: RemoteConverters | null,
   ): ResultPromise<
@@ -53,7 +60,9 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionNotFound
     | CollectionVersionIdNotMatching
     | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
+    | ContentBlockingKeysGetterNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -92,6 +101,34 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
+    // Replace "self" references.
+    const resolvedSchema = schemaUtils.replaceSelfCollectionId(
+      schemaValidationResult.output,
+      id,
+    );
+
+    // Validate that all collections referenced in DocumentRef type definitions
+    // exist.
+    const referencedCollectionIds =
+      schemaUtils.extractReferencedCollectionIds(resolvedSchema);
+    const notFoundCollectionIds: string[] = [];
+    for (const referencedCollectionId of referencedCollectionIds) {
+      const exists = await this.repos.collection.exists(
+        referencedCollectionId as CollectionId,
+      );
+      if (!exists) {
+        notFoundCollectionIds.push(referencedCollectionId);
+      }
+    }
+    if (!isEmpty(notFoundCollectionIds)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedCollectionsNotFound", {
+          collectionId: id,
+          notFoundCollectionIds,
+        }),
+      );
+    }
+
     // Validate settings.contentSummaryGetter.
     const isContentSummaryGetterValid =
       await this.javascriptSandbox.moduleDefaultExportsFunction(
@@ -110,6 +147,28 @@ export default class CollectionsCreateNewVersion extends Usecase<
           ],
         }),
       );
+    }
+
+    // Validate contentBlockingKeysGetter.
+    if (contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          contentBlockingKeysGetter,
+        );
+      if (!isContentBlockingKeysGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentBlockingKeysGetterNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
     }
 
     // Validate migration and remoteConverters.
@@ -204,10 +263,11 @@ export default class CollectionsCreateNewVersion extends Usecase<
       id: Id.generate.collectionVersion(),
       previousVersionId: latestVersionId,
       collectionId: id,
-      schema: schemaValidationResult.output,
+      schema: resolvedSchema,
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
       },
+      contentBlockingKeysGetter,
       migration: migration,
       remoteConverters: remoteConverters,
       createdAt: new Date(),

@@ -72,6 +72,7 @@ export default function LoadDemoDataButton() {
               progress?.message ??
               intl.formatMessage({ defaultMessage: "Loading demo data" })
             }
+            className={cs.LoadDemoDataButton.progressBar}
           />
         ) : (
           <>

@@ -19,16 +19,16 @@
     "@fast-check/vitest": "^0.2.4",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^25.0.6",
+    "@types/node": "^25.0.10",
     "tsafe": "^1.8.12",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@superego/global-types": "workspace:*",
-    "@tiptap/core": "^3.15.3",
-    "@tiptap/starter-kit": "^3.15.3",
+    "@tiptap/core": "^3.16.0",
+    "@tiptap/starter-kit": "^3.16.0",
     "luxon": "^3.7.2",
     "valibot": "^1.2.0"
   }

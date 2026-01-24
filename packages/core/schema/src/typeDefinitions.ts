@@ -143,7 +143,14 @@ export interface ListTypeDefinition extends Described {
   items: AnyTypeDefinition;
 }
 
+export interface DocumentRefTypeDefinition extends Described {
+  dataType: DataType.DocumentRef;
+  /** Id of the collection the document must belong to. */
+  collectionId?: string | undefined;
+}
+
 export interface TypeDefinitionRef extends Described {
+  /** Must be set to null. */
   dataType: null;
   ref: string;
 }
@@ -160,4 +167,5 @@ export type AnyTypeDefinition =
   | FileTypeDefinition
   | StructTypeDefinition
   | ListTypeDefinition
+  | DocumentRefTypeDefinition
   | TypeDefinitionRef;

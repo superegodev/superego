@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
-import type DocumentsCreate from "../../usecases/documents/Create.js";
+import type DocumentsCreateMany from "../../usecases/documents/CreateMany.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
 import type DocumentsList from "../../usecases/documents/List.js";
 import type DocumentsSearch from "../../usecases/documents/Search.js";
@@ -20,7 +20,7 @@ import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateChart from "./tools/CreateChart.js";
 import CreateDocuments from "./tools/CreateDocuments.js";
-import CreateDocumentsTable from "./tools/CreateDocumentsTable.js";
+import CreateDocumentsTables from "./tools/CreateDocumentsTables.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteTypescriptFunction from "./tools/ExecuteTypescriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
@@ -34,7 +34,7 @@ export default class FactotumAssistant extends Assistant {
     protected inferenceService: InferenceService,
     private collections: Collection[],
     private usecases: {
-      documentsCreate: DocumentsCreate;
+      documentsCreateMany: DocumentsCreateMany;
       documentsCreateNewVersion: DocumentsCreateNewVersion;
       documentsList: DocumentsList;
       documentsSearch: DocumentsSearch;
@@ -44,7 +44,7 @@ export default class FactotumAssistant extends Assistant {
     private typescriptCompiler: TypescriptCompiler,
     private savepoint: {
       create: () => Promise<string>;
-      rollback: (name: string) => Promise<void>;
+      rollbackTo: (name: string) => Promise<void>;
     },
   ) {
     super();
@@ -86,7 +86,7 @@ export default class FactotumAssistant extends Assistant {
       .replaceAll("$TOOL_NAME_CREATE_CHART", ToolName.CreateChart)
       .replaceAll(
         "$TOOL_NAME_CREATE_DOCUMENTS_TABLE",
-        ToolName.CreateDocumentsTable,
+        ToolName.CreateDocumentsTables,
       )
       .replaceAll("$TOOL_NAME_SEARCH_DOCUMENTS", ToolName.SearchDocuments)
       .replaceAll("$TOOL_NAME_INSPECT_FILE", ToolName.InspectFile);
@@ -124,7 +124,7 @@ export default class FactotumAssistant extends Assistant {
       CreateDocuments.get(),
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
-      CreateDocumentsTable.get(),
+      CreateDocumentsTables.get(),
       SearchDocuments.get(),
       InspectFile.get(),
     ];
@@ -148,7 +148,7 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.conversationId,
         this.collections,
-        this.usecases.documentsCreate,
+        this.usecases.documentsCreateMany,
         this.savepoint,
       );
     }
@@ -169,8 +169,8 @@ export default class FactotumAssistant extends Assistant {
         this.typescriptCompiler,
       );
     }
-    if (CreateDocumentsTable.is(toolCall)) {
-      return CreateDocumentsTable.exec(
+    if (CreateDocumentsTables.is(toolCall)) {
+      return CreateDocumentsTables.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,

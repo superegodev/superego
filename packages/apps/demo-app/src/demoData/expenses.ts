@@ -48,6 +48,7 @@ export default function getContentSummary(expense) {
       `.trim(),
     },
   },
+  contentBlockingKeysGetter: null,
   documents: expensesData,
   app: {
     type: AppType.CollectionView,

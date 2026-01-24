@@ -146,6 +146,9 @@
   "ConnectorSettings.tsx_1B+Bnl": {
     "defaultMessage": "Connector settings"
   },
+  "ContentBlockingKeysTab.tsx_mzcj4a": {
+    "defaultMessage": "Update the <code>getContentBlockingKeys</code> function to reflect schema changes."
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Error deriving content summary: {error}"
   },
@@ -215,12 +218,6 @@
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Format"
   },
-  "CopyButton.tsx_4l6vz1": {
-    "defaultMessage": "Copy"
-  },
-  "CopyButton.tsx_p556q3": {
-    "defaultMessage": "Copied"
-  },
   "CreateApp.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -242,11 +239,14 @@
   "CreateCollectionAssisted.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"
   },
+  "CreateCollectionForm.tsx_+gaKsp": {
+    "defaultMessage": "4. Content summary"
+  },
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
-  "CreateCollectionForm.tsx_HxoW8w": {
-    "defaultMessage": "3. Content summary"
+  "CreateCollectionForm.tsx_Fhp4xL": {
+    "defaultMessage": "3. Deduplication"
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
@@ -287,8 +287,14 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "New collection version created"
   },
-  "CreateNewCollectionVersionForm.tsx_PfbGui": {
-    "defaultMessage": "2. Content summary"
+  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
+    "defaultMessage": "4. Remote converters"
+  },
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
+    "defaultMessage": "4. Migration"
+  },
+  "CreateNewCollectionVersionForm.tsx_HxoW8w": {
+    "defaultMessage": "3. Content summary"
   },
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
@@ -296,11 +302,8 @@
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
-  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
-    "defaultMessage": "3. Remote converters"
-  },
-  "CreateNewCollectionVersionForm.tsx_rgWYrb": {
-    "defaultMessage": "3. Migration"
+  "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
+    "defaultMessage": "2. Deduplication"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
@@ -407,6 +410,21 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Search results"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Type to search"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Searching..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Search documents"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "No results found"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
   },
@@ -439,6 +457,21 @@
   },
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sync"
+  },
+  "DuplicateDocumentDetectedModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "DuplicateDocumentDetectedModal.tsx_5rulyB": {
+    "defaultMessage": "Do you still want to create this document?"
+  },
+  "DuplicateDocumentDetectedModal.tsx_ITHIBG": {
+    "defaultMessage": "Possible duplicate detected"
+  },
+  "DuplicateDocumentDetectedModal.tsx_eG/A4i": {
+    "defaultMessage": "A document with similar content already exists in this collection:"
+  },
+  "DuplicateDocumentDetectedModal.tsx_i9essB": {
+    "defaultMessage": "Create anyway"
   },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
@@ -731,8 +764,8 @@
   "InferenceSettings.tsx_AJlr3w": {
     "defaultMessage": "File Inspection"
   },
-  "InferenceSettings.tsx_BmFMKI": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
+  "InferenceSettings.tsx_BUf4e4": {
+    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
   },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": fast, cheap, supports all APIs."
@@ -862,6 +895,18 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
+    "defaultMessage": "Content blocking keys getter"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_VP/mgq": {
+    "defaultMessage": "<p> Document deduplication helps you avoid creating duplicate records. For example, preventing a second contact from being created with the same email address. </p> <p> When enabled, every time you create a new document, Superego checks that another <i>similar document</i> doesn't already exist, and warns you if it does. </p> <p> This is done by associating to each document a set of <b>\"blocking keys\"</b>: small, deterministic fingerprints derived from the document’s content (for example, a normalized email address, or a last-name + postal-code pair) that <i>almost uniquely</i> identify a document. If two documents share a blocking key, they’re likely duplicates. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": {
+    "defaultMessage": "<p> The <b>content blocking keys</b> of a document are a list of <code>strings</code>—derived from the document's content—that uniquely identify the document based on its data. Documents sharing a blocking key are considered duplicates. </p> <p> The <b>blocking keys getter</b> is the TypeScript function that derives these keys from the document content. </p> <p> The keys should be deterministic (same content produces same keys) and sensitive to meaningful changes while ignoring non-meaningful differences like whitespace. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_sGF42J": {
+    "defaultMessage": "Enable deduplication"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Content summary getter"
@@ -1007,6 +1052,15 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - click to select a document"
+  },
+  "SelectButton.tsx_uCylWN": {
+    "defaultMessage": "{collection} » Example document"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configure assistant for transcription"
   },
@@ -1064,14 +1118,17 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
-  "SuggestCollectionDefinition.tsx_S2ZL0P": {
-    "defaultMessage": "Suggested collection"
+  "SuggestCollectionsDefinitions.tsx_65g2mb": {
+    "defaultMessage": "Suggested collections"
   },
-  "SuggestCollectionDefinition.tsx_VzzYJk": {
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "SuggestCollectionDefinition.tsx_syZYsy": {
-    "defaultMessage": "Error creating the collection"
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": {
+    "defaultMessage": "Create All"
+  },
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": {
+    "defaultMessage": "Error creating the collections"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Thought for {time}"
@@ -1079,17 +1136,11 @@
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Milliseconds"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Create chart from {collection}"
-  },
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Create documents"
   },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Create documents table from {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Execute TypeScript function on {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Create chart from {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Succeeded"
@@ -1097,11 +1148,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Get TypeScript schema for {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Execute TypeScript function on {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "No response"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Create documents table from {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Failed"

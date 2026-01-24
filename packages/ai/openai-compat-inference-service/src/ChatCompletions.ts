@@ -79,7 +79,7 @@ export function toChatCompletionsRequest(
     messages: messages.flatMap(toChatCompletionsMessage),
     tools: chatCompletionTools.length > 0 ? chatCompletionTools : undefined,
     // TODO: move this to configuration.
-    temperature: 0.7,
+    temperature: 0.8,
     stream: false,
   };
 }

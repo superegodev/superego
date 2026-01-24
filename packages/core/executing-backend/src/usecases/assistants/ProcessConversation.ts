@@ -32,13 +32,14 @@ import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
-import CollectionsCreate from "../collections/Create.js";
+import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
-import DocumentsCreate from "../documents/Create.js";
+import DocumentsCreateMany from "../documents/CreateMany.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsList from "../documents/List.js";
 import DocumentsSearch from "../documents/Search.js";
 import FilesGetContent from "../files/GetContent.js";
+import InferenceImplementTypescriptModule from "../inference/ImplementTypescriptModule.js";
 
 export default class AssistantsProcessConversation extends Usecase {
   async exec({
@@ -168,7 +169,7 @@ export default class AssistantsProcessConversation extends Usecase {
           inferenceService,
           collections,
           {
-            documentsCreate: this.sub(DocumentsCreate),
+            documentsCreateMany: this.sub(DocumentsCreateMany),
             documentsList: this.sub(DocumentsList),
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
             documentsSearch: this.sub(DocumentsSearch),
@@ -178,7 +179,7 @@ export default class AssistantsProcessConversation extends Usecase {
           this.typescriptCompiler,
           {
             create: () => this.repos.createSavepoint(),
-            rollback: (name: string) => this.repos.rollbackToSavepoint(name),
+            rollbackTo: (name: string) => this.repos.rollbackToSavepoint(name),
           },
         )
       : new CollectionCreatorAssistant(
@@ -189,8 +190,11 @@ export default class AssistantsProcessConversation extends Usecase {
           collectionCategories,
           collections,
           {
-            collectionsCreate: this.sub(CollectionsCreate),
+            collectionsCreateMany: this.sub(CollectionsCreateMany),
             filesGetContent: this.sub(FilesGetContent),
+            inferenceImplementTypescriptModule: this.sub(
+              InferenceImplementTypescriptModule,
+            ),
           },
         );
   }

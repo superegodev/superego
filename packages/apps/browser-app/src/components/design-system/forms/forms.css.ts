@@ -205,6 +205,7 @@ export const TextArea = {
   root: style([
     inputRootBase,
     {
+      height: "auto",
       // Experimental property:
       // https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing
       //
@@ -380,6 +381,62 @@ export const TimeInputWithMilliseconds = {
       },
       "&::selection": {
         background: "transparent",
+      },
+    },
+  }),
+};
+
+export const Switch = {
+  root: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._2,
+    marginBlockEnd: vars.spacing._6,
+    fontSize: vars.typography.fontSizes.md,
+    color: vars.colors.text.primary,
+    cursor: "pointer",
+    selectors: {
+      '&[data-disabled="true"]': {
+        color: vars.colors.text.secondary,
+        cursor: "not-allowed",
+      },
+      [`&:has(+ ${Description.root})`]: {
+        marginBlockEnd: vars.spacing._2,
+      },
+    },
+  }),
+
+  track: style({
+    width: vars.spacing._9,
+    height: vars.spacing._5,
+    borderRadius: vars.borders.radius.full,
+    background: vars.colors.border.default,
+    transition: "background 200ms",
+    selectors: {
+      '[data-selected="true"] > &': {
+        background: vars.colors.accent,
+      },
+      '[data-disabled="true"] > &': {
+        opacity: 0.5,
+      },
+      '[data-focus-visible="true"] > &': {
+        outline: `2px solid ${vars.colors.accent}`,
+        outlineOffset: "2px",
+      },
+    },
+  }),
+
+  thumb: style({
+    width: vars.spacing._4,
+    height: vars.spacing._4,
+    borderRadius: vars.borders.radius.full,
+    background: vars.colors.background.surface,
+    marginInlineStart: vars.spacing._0_5,
+    marginBlock: vars.spacing._0_5,
+    transition: "margin-inline-start 200ms",
+    selectors: {
+      '[data-selected="true"] > * > &': {
+        marginInlineStart: `calc(${vars.spacing._9} - ${vars.spacing._4} - ${vars.spacing._0_5})`,
       },
     },
   }),

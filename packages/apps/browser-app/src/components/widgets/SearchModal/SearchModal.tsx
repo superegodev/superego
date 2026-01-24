@@ -1,10 +1,10 @@
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { useIntl } from "react-intl";
+import useSearch from "../../../business-logic/search/useSearch.js";
 import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
 import * as cs from "./SearchModal.css.js";
 import SearchParamsInput from "./SearchParamsInput.js";
 import SearchResults from "./SearchResults.js";
-import useSearch from "./useSearch.js";
 
 export default function SearchModal() {
   const intl = useIntl();

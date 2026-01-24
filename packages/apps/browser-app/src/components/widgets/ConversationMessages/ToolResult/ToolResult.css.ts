@@ -28,15 +28,61 @@ export const CreateNewDocumentVersion = {
   }),
 };
 
-export const SuggestCollectionDefinition = {
+export const SuggestCollectionsDefinitions = {
   root: style({
     display: "flex",
     flexDirection: "column",
+    gap: vars.spacing._2,
     "@container": {
       [`(min-width: ${narrowContainerWidth})`]: {
         marginInlineEnd: "40%",
       },
     },
+  }),
+
+  tabList: style({
+    display: "flex",
+    borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+  }),
+
+  tab: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._1,
+    fontSize: vars.typography.fontSizes.sm,
+    color: vars.colors.text.secondary,
+    paddingInline: vars.spacing._3,
+    paddingBlock: vars.spacing._2,
+    border: "none",
+    borderBlockEnd: `${vars.borders.width.medium} solid transparent`,
+    cursor: "pointer",
+    background: "transparent",
+    selectors: {
+      '&[data-selected="true"]': {
+        color: vars.colors.text.primary,
+        borderBlockEndColor: vars.colors.border.focus,
+      },
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  tabPanel: style({
+    outline: "none",
+    paddingBlockStart: vars.spacing._3,
+  }),
+
+  createButton: style({
+    alignSelf: "end",
+    fontSize: vars.typography.fontSizes.sm,
+  }),
+};
+
+export const CollectionPreview = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
   }),
 
   form: style({
@@ -54,18 +100,12 @@ export const SuggestCollectionDefinition = {
 
   scrollContainer: style({
     paddingInlineEnd: vars.spacing._8,
-    maxHeight: vars.spacing._120,
+    maxHeight: vars.spacing._140,
     overflow: "auto",
-  }),
-
-  createButton: style({
-    alignSelf: "end",
-    fontSize: vars.typography.fontSizes.sm,
-    paddingBlock: `${vars.spacing._1} !important`,
   }),
 };
 
-globalStyle(`${SuggestCollectionDefinition.scrollContainer} > *`, {
+globalStyle(`${CollectionPreview.scrollContainer} > *`, {
   marginBlockEnd: vars.spacing._2,
 });
 
@@ -75,7 +115,7 @@ export const CreateChart = {
   }),
 };
 
-export const CreateDocumentsTable = {
+export const CreateDocumentsTables = {
   table: style({
     maxHeight: vars.spacing._80,
     marginBlockStart: vars.spacing._2,

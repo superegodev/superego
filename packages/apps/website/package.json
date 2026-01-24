@@ -18,10 +18,10 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/starlight": "^0.37.2",
     "@fontsource-variable/petrona": "^5.2.8",
-    "@playwright/test": "^1.57.0",
-    "astro": "^5.16.8",
+    "@playwright/test": "^1.58.0",
+    "astro": "^5.16.15",
     "starlight-theme-nova": "^0.10.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.58.0"
+    "wrangler": "^4.60.0"
   }
 }

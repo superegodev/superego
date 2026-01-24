@@ -53,6 +53,7 @@ export default rd<GetDependencies>("Files", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 

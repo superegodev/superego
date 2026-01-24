@@ -90,6 +90,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -307,6 +308,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const initialFiles = {
@@ -465,6 +467,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create(

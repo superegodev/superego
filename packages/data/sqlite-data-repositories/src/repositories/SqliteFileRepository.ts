@@ -188,12 +188,12 @@ export default class SqliteFileRepository implements FileRepository {
       | FileEntity.ConversationReference
       | Omit<FileEntity.DocumentVersionReference, "documentVersionId">,
   ): reference is FileEntity.ConversationReference {
-    return "conversationId" in reference;
+    return Object.hasOwn(reference, "conversationId");
   }
 
   private static isDocumentVersionReference(
     reference: FileEntity.Reference,
   ): reference is FileEntity.DocumentVersionReference {
-    return "collectionId" in reference;
+    return Object.hasOwn(reference, "collectionId");
   }
 }

@@ -1,2 +1,2 @@
-type ReferencedBuiltInTypes = Set<"JsonObject" | "File">;
+type ReferencedBuiltInTypes = Set<"JsonObject" | "File" | "DocumentRef">;
 export default ReferencedBuiltInTypes;

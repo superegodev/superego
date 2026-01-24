@@ -7,5 +7,6 @@ export default interface CreateCollectionFormValues {
   description: string | null;
   assistantInstructions: string | null;
   schema: Schema;
+  contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
 }

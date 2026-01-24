@@ -155,6 +155,9 @@
   "ConnectorSettings.tsx_1B+Bnl": {
     "defaultMessage": "Impostazioni del connettore"
   },
+  "ContentBlockingKeysTab.tsx_mzcj4a": {
+    "defaultMessage": "Aggiorna la funzione <code>getContentBlockingKeys</code> per riflettere le modifiche allo schema."
+  },
   "ContentSummary.tsx_kvPscx": {
     "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
   },
@@ -224,12 +227,6 @@
   "ConversationsTable.tsx_zQLEfz": {
     "defaultMessage": "Formato"
   },
-  "CopyButton.tsx_4l6vz1": {
-    "defaultMessage": "Copia"
-  },
-  "CopyButton.tsx_p556q3": {
-    "defaultMessage": "Copiato"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Vai alla modalità manuale"
   },
@@ -242,11 +239,14 @@
   "CreateCollectionAssisted.tsx_yWDfdE": {
     "defaultMessage": "Che tipo di dati vuoi archiviare?"
   },
+  "CreateCollectionForm.tsx_+gaKsp": {
+    "defaultMessage": "4. Sommario dei contenuti"
+  },
   "CreateCollectionForm.tsx_45vDAJ": {
     "defaultMessage": "2. Schema"
   },
-  "CreateCollectionForm.tsx_HxoW8w": {
-    "defaultMessage": "3. Sommario dei contenuti"
+  "CreateCollectionForm.tsx_Fhp4xL": {
+    "defaultMessage": "3. Deduplicazione"
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. Impostazioni generali"
@@ -287,8 +287,14 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "Creata nuova versione della collezione"
   },
-  "CreateNewCollectionVersionForm.tsx_PfbGui": {
-    "defaultMessage": "2. Sommario dei contenuti"
+  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
+    "defaultMessage": "4. Convertitori remoti"
+  },
+  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
+    "defaultMessage": "4. Migrazione"
+  },
+  "CreateNewCollectionVersionForm.tsx_HxoW8w": {
+    "defaultMessage": "3. Sommario dei contenuti"
   },
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
@@ -296,11 +302,8 @@
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
-  "CreateNewCollectionVersionForm.tsx_oO54Ks": {
-    "defaultMessage": "3. Convertitori remoti"
-  },
-  "CreateNewCollectionVersionForm.tsx_rgWYrb": {
-    "defaultMessage": "3. Migrazione"
+  "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
+    "defaultMessage": "2. Deduplicazione"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
@@ -407,6 +410,21 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
+  "DocumentRefField.tsx_79lKyO": {
+    "defaultMessage": "Risultati della ricerca"
+  },
+  "DocumentRefField.tsx_BnlWCE": {
+    "defaultMessage": "Digita per cercare"
+  },
+  "DocumentRefField.tsx_NNQzoi": {
+    "defaultMessage": "Ricerca in corso..."
+  },
+  "DocumentRefField.tsx_a00gRI": {
+    "defaultMessage": "Cerca documenti"
+  },
+  "DocumentRefField.tsx_hX5PAb": {
+    "defaultMessage": "Nessun risultato trovato"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Ripristina versione"
   },
@@ -439,6 +457,21 @@
   },
   "DownSyncInfoModal.tsx_dKtz/9": {
     "defaultMessage": "Sincronizza"
+  },
+  "DuplicateDocumentDetectedModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "DuplicateDocumentDetectedModal.tsx_5rulyB": {
+    "defaultMessage": "Vuoi comunque creare questo documento?"
+  },
+  "DuplicateDocumentDetectedModal.tsx_ITHIBG": {
+    "defaultMessage": "Possibile duplicato rilevato"
+  },
+  "DuplicateDocumentDetectedModal.tsx_eG/A4i": {
+    "defaultMessage": "Un documento con contenuto simile esiste già in questa collezione:"
+  },
+  "DuplicateDocumentDetectedModal.tsx_i9essB": {
+    "defaultMessage": "Crea comunque"
   },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
@@ -731,8 +764,8 @@
   "InferenceSettings.tsx_AJlr3w": {
     "defaultMessage": "Ispezione dei file"
   },
-  "InferenceSettings.tsx_BmFMKI": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.6</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
+  "InferenceSettings.tsx_BUf4e4": {
+    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
   },
   "InferenceSettings.tsx_FJPyVh": {
     "defaultMessage": ": veloce, economico, supporta tutte le API."
@@ -850,6 +883,18 @@
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
+    "defaultMessage": "Getter delle content blocking keys"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_VP/mgq": {
+    "defaultMessage": "<p> La deduplicazione dei documenti ti aiuta a evitare la creazione di record duplicati, ad esempio impedendo che venga creato un secondo contatto con la stessa email. </p> <p> Quando è abilitata, ogni volta che crei un nuovo documento Superego verifica che non esista già un <i>documento simile</i> e ti avvisa se lo trova. </p> <p> Questo avviene associando a ogni documento un set di <b>\"blocking keys\"</b>: piccole impronte deterministiche ricavate dal contenuto del documento (ad esempio, un'email normalizzata, o una combinazione cognome + CAP) che identificano quasi univocamente il documento. Se due documenti condividono una blocking key, è probabile che siano duplicati. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": {
+    "defaultMessage": "<p> Le <b>content blocking keys</b> di un documento sono una lista di <code>string</code> — derivate dal contenuto — che identificano il documento in base ai suoi dati. I documenti che condividono una blocking key sono considerati duplicati. </p> <p> Il <b>blocking keys getter</b> è la funzione TypeScript che ricava queste chiavi dal contenuto del documento. </p> <p> Le chiavi devono essere deterministiche (lo stesso contenuto produce le stesse chiavi) e sensibili ai cambiamenti significativi, ignorando differenze non significative come gli spazi. </p>"
+  },
+  "RHFContentBlockingKeysGetterField.tsx_sGF42J": {
+    "defaultMessage": "Abilita deduplicazione"
   },
   "RHFContentSummaryGetterField.tsx_3X4zUZ": {
     "defaultMessage": "Funzione di estrazione del sommario dei contenuti"
@@ -989,6 +1034,15 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
   },
+  "SelectButton.tsx_EPTOBf": {
+    "defaultMessage": "{collection} » {document}"
+  },
+  "SelectButton.tsx_paNPed": {
+    "defaultMessage": "null - fai clic per selezionare un documento"
+  },
+  "SelectButton.tsx_uCylWN": {
+    "defaultMessage": "{collection} » Documento d'esempio"
+  },
   "SendRecordButtons.tsx_/8QiK8": {
     "defaultMessage": "Configura l'assistente per la trascrizione"
   },
@@ -1034,14 +1088,17 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
-  "SuggestCollectionDefinition.tsx_S2ZL0P": {
-    "defaultMessage": "Collezione suggerita"
+  "SuggestCollectionsDefinitions.tsx_65g2mb": {
+    "defaultMessage": "Collezioni suggerite"
   },
-  "SuggestCollectionDefinition.tsx_syZYsy": {
-    "defaultMessage": "Errore durante la creazione della collezione"
-  },
-  "SuggestCollectionDefinition.tsx_VzzYJk": {
+  "SuggestCollectionsDefinitions.tsx_VzzYJk": {
     "defaultMessage": "Crea"
+  },
+  "SuggestCollectionsDefinitions.tsx_kJCMNE": {
+    "defaultMessage": "Crea tutto"
+  },
+  "SuggestCollectionsDefinitions.tsx_wNj/kt": {
+    "defaultMessage": "Errore durante la creazione delle collezioni"
   },
   "ThinkingTime.tsx_uKcW4C": {
     "defaultMessage": "Riflessione per {time}"
@@ -1052,14 +1109,8 @@
   "Title.tsx_8yzKPa": {
     "defaultMessage": "Crea documenti"
   },
-  "Title.tsx_/f6lRt": {
-    "defaultMessage": "Crea grafico da {collection}"
-  },
-  "Title.tsx_BJ7yn4": {
-    "defaultMessage": "Crea tabella dei documenti da {collection}"
-  },
-  "Title.tsx_CKsNgt": {
-    "defaultMessage": "Esegui la funzione TypeScript su {collection}"
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Crea grafico da {collections}"
   },
   "Title.tsx_LOghU6": {
     "defaultMessage": "Riuscito"
@@ -1067,11 +1118,17 @@
   "Title.tsx_RG9Nzq": {
     "defaultMessage": "Ottieni lo schema TypeScript per {collection}"
   },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Esegui la funzione TypeScript su {collections}"
+  },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "Nessuna risposta"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Chiama strumento: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Crea tabella dei documenti da {collections}"
   },
   "Title.tsx_vXCeIi": {
     "defaultMessage": "Fallito"

@@ -3,8 +3,8 @@ import { ListBoxItem } from "react-aria-components";
 import { FormattedDate, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
-import MatchedText from "../../design-system/MatchedText/MatchedText.js";
-import * as cs from "./SearchModal.css.js";
+import MatchedText from "../MatchedText/MatchedText.js";
+import * as cs from "./SearchResult.css.js";
 
 interface Props {
   result: TextSearchResult<LiteConversation>;

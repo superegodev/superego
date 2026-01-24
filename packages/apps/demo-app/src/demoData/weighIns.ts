@@ -3,7 +3,7 @@ import weighInsData from "./weighInsData.js";
 import weighInsSchema from "./weighInsSchema.js";
 
 export default {
-  categoryName: "Health",
+  categoryName: "Diet",
   settings: {
     name: "Weigh-ins",
     icon: "⚖️",
@@ -40,5 +40,6 @@ export default function getContentSummary(weighIn) {
       `.trim(),
     },
   },
+  contentBlockingKeysGetter: null,
   documents: weighInsData,
 } satisfies DemoCollection;

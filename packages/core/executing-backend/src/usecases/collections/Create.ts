@@ -3,16 +3,21 @@ import type {
   Backend,
   Collection,
   CollectionCategoryNotFound,
+  CollectionId,
   CollectionSchemaNotValid,
   CollectionSettings,
   CollectionSettingsNotValid,
   CollectionVersionSettings,
+  ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  ReferencedCollectionsNotFound,
+  TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
   type Schema,
+  utils as schemaUtils,
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
 import {
@@ -27,7 +32,14 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+
+interface CollectionsCreateOptions {
+  dryRun?: boolean;
+  collectionId?: CollectionId;
+  allowedUnverifiedCollectionIds?: CollectionId[];
+}
 
 export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
@@ -36,14 +48,17 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-    dryRun = false,
+    contentBlockingKeysGetter: TypescriptModule | null,
+    options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
     | CollectionSettingsNotValid
     | CollectionCategoryNotFound
     | AppNotFound
     | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
     | ContentSummaryGetterNotValid
+    | ContentBlockingKeysGetterNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -94,6 +109,10 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    // Use provided collectionId or generate one upfront to resolve "self"
+    // references.
+    const collectionId = options.collectionId ?? Id.generate.collection();
+
     const schemaValidationResult = v.safeParse(
       schemaValibotSchemas.schema(),
       schema,
@@ -103,6 +122,38 @@ export default class CollectionsCreate extends Usecase<
         makeResultError("CollectionSchemaNotValid", {
           collectionId: null,
           issues: makeValidationIssues(schemaValidationResult.issues),
+        }),
+      );
+    }
+
+    const resolvedSchema = schemaUtils.replaceSelfCollectionId(
+      schemaValidationResult.output,
+      collectionId,
+    );
+
+    const referencedCollectionIds =
+      schemaUtils.extractReferencedCollectionIds(resolvedSchema);
+    const allowedUnverifiedCollectionIds = new Set(
+      options.allowedUnverifiedCollectionIds ?? [],
+    );
+    const notFoundCollectionIds: string[] = [];
+    for (const referencedCollectionId of referencedCollectionIds) {
+      if (
+        !allowedUnverifiedCollectionIds.has(
+          referencedCollectionId as CollectionId,
+        ) &&
+        !(await this.repos.collection.exists(
+          referencedCollectionId as CollectionId,
+        ))
+      ) {
+        notFoundCollectionIds.push(referencedCollectionId);
+      }
+    }
+    if (!isEmpty(notFoundCollectionIds)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedCollectionsNotFound", {
+          collectionId: null,
+          notFoundCollectionIds,
         }),
       );
     }
@@ -126,9 +177,30 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    if (contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          contentBlockingKeysGetter,
+        );
+      if (!isContentBlockingKeysGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentBlockingKeysGetterNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
+    }
+
     const now = new Date();
     const collection: CollectionEntity = {
-      id: Id.generate.collection(),
+      id: collectionId,
       settings: {
         name: settingsValidationResult.output.name,
         icon: settingsValidationResult.output.icon,
@@ -146,16 +218,17 @@ export default class CollectionsCreate extends Usecase<
     const collectionVersion: CollectionVersionEntity = {
       id: Id.generate.collectionVersion(),
       previousVersionId: null,
-      collectionId: collection.id,
-      schema: schemaValidationResult.output,
+      collectionId: collectionId,
+      schema: resolvedSchema,
       settings: {
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
+      contentBlockingKeysGetter,
       migration: null,
       remoteConverters: null,
       createdAt: now,
     };
-    if (!dryRun) {
+    if (!options.dryRun) {
       await this.repos.collection.insert(collection);
       await this.repos.collectionVersion.insert(collectionVersion);
     }

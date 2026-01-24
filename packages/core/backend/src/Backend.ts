@@ -15,6 +15,7 @@ import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryName
 import type CollectionCategoryNotFound from "./errors/CollectionCategoryNotFound.js";
 import type CollectionHasDocuments from "./errors/CollectionHasDocuments.js";
 import type CollectionHasNoRemote from "./errors/CollectionHasNoRemote.js";
+import type CollectionIsReferenced from "./errors/CollectionIsReferenced.js";
 import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
@@ -30,16 +31,22 @@ import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/C
 import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
 import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
 import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
+import type ContentBlockingKeysGetterNotValid from "./errors/ContentBlockingKeysGetterNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
+import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
+import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
+import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
+import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
+import type ReferencedDocumentsNotFound from "./errors/ReferencedDocumentsNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
@@ -119,13 +126,35 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
+      contentBlockingKeysGetter: TypescriptModule | null,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
       | CollectionCategoryNotFound
       | AppNotFound
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
+      | ContentBlockingKeysGetterNotValid
+      | UnexpectedError
+    >;
+
+    createMany(
+      protos: {
+        settings: CollectionSettings;
+        schema: Schema;
+        versionSettings: CollectionVersionSettings;
+        contentBlockingKeysGetter: TypescriptModule | null;
+      }[],
+    ): ResultPromise<
+      Collection[],
+      | CollectionSettingsNotValid
+      | CollectionCategoryNotFound
+      | AppNotFound
+      | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
+      | ContentSummaryGetterNotValid
+      | ContentBlockingKeysGetterNotValid
       | UnexpectedError
     >;
 
@@ -197,6 +226,7 @@ export default interface Backend {
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
+      contentBlockingKeysGetter: TypescriptModule | null,
       /** Null for collections with a remote. */
       migration: TypescriptModule | null,
       /** Null for collections without a remote. */
@@ -206,7 +236,9 @@ export default interface Backend {
       | CollectionNotFound
       | CollectionVersionIdNotMatching
       | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
+      | ContentBlockingKeysGetterNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
       | CollectionMigrationFailed
@@ -237,7 +269,11 @@ export default interface Backend {
       commandConfirmation: string,
     ): ResultPromise<
       null,
-      CollectionNotFound | CommandConfirmationNotValid | UnexpectedError
+      | CollectionNotFound
+      | CommandConfirmationNotValid
+      | CollectionIsReferenced
+      | DocumentIsReferenced
+      | UnexpectedError
     >;
 
     list(): ResultPromise<Collection[], UnexpectedError>;
@@ -257,12 +293,34 @@ export default interface Backend {
     create(
       collectionId: CollectionId,
       content: any,
+      options?: { skipDuplicateCheck: boolean },
     ): ResultPromise<
       Document,
       | CollectionNotFound
       | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
+      | UnexpectedError
+    >;
+
+    createMany(
+      documents: {
+        collectionId: CollectionId;
+        content: any;
+        options?: { skipDuplicateCheck: boolean };
+      }[],
+    ): ResultPromise<
+      Document[],
+      | CollectionNotFound
+      | ConnectorDoesNotSupportUpSyncing
+      | DocumentContentNotValid
+      | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
       | UnexpectedError
     >;
 
@@ -278,7 +336,9 @@ export default interface Backend {
       | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
+      | MakingContentBlockingKeysFailed
       | FilesNotFound
+      | ReferencedDocumentsNotFound
       | UnexpectedError
     >;
 
@@ -299,6 +359,7 @@ export default interface Backend {
       | DocumentNotFound
       | CommandConfirmationNotValid
       | ConnectorDoesNotSupportUpSyncing
+      | DocumentIsReferenced
       | UnexpectedError
     >;
 

@@ -60,6 +60,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocuments & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateDocuments["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateDocuments && toolResult.output.success
@@ -70,6 +71,7 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateNewDocumentVersion & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateNewDocumentVersion["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateNewDocumentVersion &&
@@ -88,13 +90,16 @@ export default {
     );
   },
 
-  isSuccessfulSuggestCollectionDefinitionToolResult(
+  isSuccessfulSuggestCollectionsDefinitionsToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.SuggestCollectionDefinition & {
+  ): toolResult is ToolResult.SuggestCollectionsDefinitions & {
     output: { success: true };
+    artifacts: NonNullable<
+      ToolResult.SuggestCollectionsDefinitions["artifacts"]
+    >;
   } {
     return (
-      toolResult.tool === ToolName.SuggestCollectionDefinition &&
+      toolResult.tool === ToolName.SuggestCollectionsDefinitions &&
       toolResult.output.success
     );
   },
@@ -103,19 +108,21 @@ export default {
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateChart & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateChart["artifacts"]>;
   } {
     return (
       toolResult.tool === ToolName.CreateChart && toolResult.output.success
     );
   },
 
-  isSuccessfulCreateDocumentsTableToolResult(
+  isSuccessfulCreateDocumentsTablesToolResult(
     toolResult: ToolResult,
-  ): toolResult is ToolResult.CreateDocumentsTable & {
+  ): toolResult is ToolResult.CreateDocumentsTables & {
     output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateDocumentsTables["artifacts"]>;
   } {
     return (
-      toolResult.tool === ToolName.CreateDocumentsTable &&
+      toolResult.tool === ToolName.CreateDocumentsTables &&
       toolResult.output.success
     );
   },
@@ -142,10 +149,10 @@ export default {
     return toolCall.tool === ToolName.CreateChart;
   },
 
-  isCreateDocumentsTableToolCall(
+  isCreateDocumentsTablesToolCall(
     toolCall: ToolCall,
-  ): toolCall is ToolCall.CreateDocumentsTable {
-    return toolCall.tool === ToolName.CreateDocumentsTable;
+  ): toolCall is ToolCall.CreateDocumentsTables {
+    return toolCall.tool === ToolName.CreateDocumentsTables;
   },
 
   isGetCollectionTypescriptSchemaToolCall(

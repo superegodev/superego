@@ -9,13 +9,14 @@ import { DataType, formats } from "@superego/schema";
 import SchemaTypescriptSchema from "@superego/schema/SchemaTypescriptSchema";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
-import type CollectionsCreate from "../../usecases/collections/Create.js";
+import type CollectionsCreateMany from "../../usecases/collections/CreateMany.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
+import type InferenceImplementTypescriptModule from "../../usecases/inference/ImplementTypescriptModule.js";
 import Assistant from "../Assistant.js";
 import InspectFile from "../shared-tools/InspectFile.js";
 import Unknown from "../shared-tools/Unknown.js";
 import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
-import SuggestCollectionDefinition from "./tools/SuggestCollectionDefinition.js";
+import SuggestCollectionsDefinitions from "./tools/SuggestCollectionsDefinitions.js";
 
 export default class CollectionCreatorAssistant extends Assistant {
   constructor(
@@ -24,8 +25,9 @@ export default class CollectionCreatorAssistant extends Assistant {
     private collectionCategories: CollectionCategory[],
     private collections: Collection[],
     private usecases: {
-      collectionsCreate: CollectionsCreate;
+      collectionsCreateMany: CollectionsCreateMany;
       filesGetContent: FilesGetContent;
+      inferenceImplementTypescriptModule: InferenceImplementTypescriptModule;
     },
   ) {
     super();
@@ -40,8 +42,8 @@ export default class CollectionCreatorAssistant extends Assistant {
       .replaceAll("\n<!-- prettier-ignore-start -->", "")
       .replaceAll("\n<!-- prettier-ignore-end -->", "")
       .replaceAll(
-        "$TOOL_NAME_SUGGEST_COLLECTION_DEFINITION",
-        ToolName.SuggestCollectionDefinition,
+        "$TOOL_NAME_SUGGEST_COLLECTIONS_DEFINITIONS",
+        ToolName.SuggestCollectionsDefinitions,
       )
       .replaceAll("$TOOL_NAME_INSPECT_FILE", ToolName.InspectFile)
       .replaceAll("$SUPEREGO_SCHEMA_TYPESCRIPT_SCHEMA", SchemaTypescriptSchema)
@@ -95,14 +97,15 @@ export default class CollectionCreatorAssistant extends Assistant {
   }
 
   protected getTools(): InferenceService.Tool[] {
-    return [SuggestCollectionDefinition.get()];
+    return [SuggestCollectionsDefinitions.get()];
   }
 
   protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
-    if (SuggestCollectionDefinition.is(toolCall)) {
-      return SuggestCollectionDefinition.exec(
+    if (SuggestCollectionsDefinitions.is(toolCall)) {
+      return SuggestCollectionsDefinitions.exec(
         toolCall,
-        this.usecases.collectionsCreate,
+        this.usecases.collectionsCreateMany,
+        this.usecases.inferenceImplementTypescriptModule,
       );
     }
     if (InspectFile.is(toolCall)) {

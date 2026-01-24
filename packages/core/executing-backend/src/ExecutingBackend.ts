@@ -32,6 +32,7 @@ import CollectionCategoriesList from "./usecases/collection-categories/List.js";
 import CollectionCategoriesUpdate from "./usecases/collection-categories/Update.js";
 import CollectionsAuthenticateOAuth2PKCEConnector from "./usecases/collections/CollectionsAuthenticateOAuth2PKCEConnector.js";
 import CollectionsCreate from "./usecases/collections/Create.js";
+import CollectionsCreateMany from "./usecases/collections/CreateMany.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
 import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
@@ -43,6 +44,7 @@ import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.j
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
 import DocumentsCreate from "./usecases/documents/Create.js";
+import DocumentsCreateMany from "./usecases/documents/CreateMany.js";
 import DocumentsCreateNewVersion from "./usecases/documents/CreateNewVersion.js";
 import DocumentsDelete from "./usecases/documents/Delete.js";
 import DocumentsGet from "./usecases/documents/Get.js";
@@ -86,6 +88,7 @@ export default class ExecutingBackend implements Backend {
 
     this.collections = {
       create: this.makeUsecase(CollectionsCreate, true),
+      createMany: this.makeUsecase(CollectionsCreateMany, true),
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
       setRemote: this.makeUsecase(CollectionsSetRemote, true),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(
@@ -110,6 +113,7 @@ export default class ExecutingBackend implements Backend {
 
     this.documents = {
       create: this.makeUsecase(DocumentsCreate, true),
+      createMany: this.makeUsecase(DocumentsCreateMany, true),
       createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
       delete: this.makeUsecase(DocumentsDelete, true),
       list: this.makeUsecase(DocumentsList, false),

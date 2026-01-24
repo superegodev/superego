@@ -9,6 +9,7 @@ import getType from "./getType.js";
 import type { PathSegment } from "./parsePath.js";
 import parsePath from "./parsePath.js";
 
+// TODO: currently not used anywhere. Remove?
 export default function getTypeDefinitionAtPath(
   schema: Schema,
   path: string,

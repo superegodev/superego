@@ -78,6 +78,9 @@ export default class DemoDataRepositoriesManager
           "globalSettings",
         ] as const
       ).forEach((property) => {
+        for (const key of Object.keys(transactionData[property])) {
+          delete (transactionData[property] as Record<string, unknown>)[key];
+        }
         Object.assign(transactionData[property], savepoints[name]![property]);
       });
       delete savepoints[name];

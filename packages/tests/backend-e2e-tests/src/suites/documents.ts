@@ -3,7 +3,7 @@ import {
   DocumentVersionCreator,
 } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
-import { DataType, type Schema } from "@superego/schema";
+import { DataType, type Schema, utils as schemaUtils } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -91,6 +91,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -158,6 +159,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -216,6 +218,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -241,6 +244,272 @@ export default rd<GetDependencies>("Documents", (deps) => {
           details: { fileIds: [fileId] },
         },
       });
+    });
+
+    it("error: ReferencedDocumentsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const nonExistentDocumentId = Id.generate.document();
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: nonExistentDocumentId,
+          },
+        },
+      );
+
+      // Verify
+      expect(createDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: null,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: nonExistentDocumentId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: MakingContentBlockingKeysFailed", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled:
+            "export default function getContentBlockingKeys() { return 123; }",
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "MakingContentBlockingKeysFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: null,
+            cause: {
+              name: "ContentBlockingKeysNotValid",
+              details: { contentBlockingKeys: 123 },
+            },
+          },
+        },
+      });
+    });
+
+    it("error: DuplicateDocumentDetected", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled:
+            // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+            "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createDuplicateDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDuplicateDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DuplicateDocumentDetected",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            duplicateDocument: createDocumentResult.data,
+          },
+        },
+      });
+    });
+
+    it("success: creates when duplicate exists but skipDuplicateCheck is true", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled:
+            // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+            "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const content = { title: "title" };
+      const createDuplicateDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        content,
+        { skipDuplicateCheck: true },
+      );
+
+      // Verify
+      assert.isTrue(createDuplicateDocumentResult.success);
+      expect(createDuplicateDocumentResult.data).toEqual({
+        id: expect.id("Document"),
+        remoteId: null,
+        remoteUrl: null,
+        collectionId: createCollectionResult.data.id,
+        latestVersion: expect.objectContaining({
+          id: expect.id("DocumentVersion"),
+          remoteId: null,
+          previousVersionId: null,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          conversationId: null,
+          content,
+          createdBy: DocumentVersionCreator.User,
+          createdAt: expect.dateCloseToNow(),
+        }),
+        createdAt: expect.dateCloseToNow(),
+      });
+      // Verify both documents exist.
+      const listDocumentsResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(listDocumentsResult.success);
+      expect(listDocumentsResult.data).toHaveLength(2);
     });
 
     it("success: creates", async () => {
@@ -271,6 +540,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -309,6 +579,508 @@ export default rd<GetDependencies>("Documents", (deps) => {
         data: createDocumentResult.data,
         error: null,
       });
+    });
+  });
+
+  describe("createMany", () => {
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.documents.createMany([
+        { collectionId, content: { title: "title" } },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("error: DocumentContentNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: { title: 123 },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentContentNotValid",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: null,
+            issues: [
+              {
+                message: "Invalid type: Expected string but received 123",
+                path: [{ key: "title" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedDocumentsNotFound (non-existent document)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                relatedDoc: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const nonExistentDocumentId = Id.generate.document();
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: {
+            title: "title",
+            relatedDoc: {
+              collectionId: createCollectionResult.data.id,
+              documentId: nonExistentDocumentId,
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: null,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: nonExistentDocumentId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedDocumentsNotFound (invalid proto document id)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                relatedDoc: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      // Reference a proto document that doesn't exist in the batch
+      const invalidProtoId = schemaUtils.makeProtoDocumentId(99);
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: {
+            title: "title",
+            relatedDoc: {
+              collectionId: createCollectionResult.data.id,
+              documentId: invalidProtoId,
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: null,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: invalidProtoId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("success: creates single document", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const content = { title: "title" };
+      const result = await backend.documents.createMany([
+        { collectionId: createCollectionResult.data.id, content },
+      ]);
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data).toHaveLength(1);
+      expect(result.data[0]).toEqual({
+        id: expect.id("Document"),
+        remoteId: null,
+        remoteUrl: null,
+        collectionId: createCollectionResult.data.id,
+        latestVersion: expect.objectContaining({
+          id: expect.id("DocumentVersion"),
+          remoteId: null,
+          previousVersionId: null,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          conversationId: null,
+          content,
+          createdBy: DocumentVersionCreator.User,
+          createdAt: expect.dateCloseToNow(),
+        }),
+        createdAt: expect.dateCloseToNow(),
+      });
+      const listResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      expect(listResult).toEqual({
+        success: true,
+        data: expect.arrayContaining([
+          expect.objectContaining({ id: result.data![0]!.id }),
+        ]),
+        error: null,
+      });
+    });
+
+    it("success: creates multiple independent documents", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: { title: "document-1" },
+        },
+        {
+          collectionId: createCollectionResult.data.id,
+          content: { title: "document-2" },
+        },
+      ]);
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data).toHaveLength(2);
+      expect(result.data[0]!.latestVersion.content).toEqual({
+        title: "document-1",
+      });
+      expect(result.data[1]!.latestVersion.content).toEqual({
+        title: "document-2",
+      });
+      const listResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(listResult.success);
+      expect(listResult.data).toHaveLength(2);
+    });
+
+    it("success: creates documents with cross-references using proto document IDs", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                relatedDoc: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      // Document 0 references Document 1, and Document 1 references Document 0
+      const protoDocument0 = schemaUtils.makeProtoDocumentId(0);
+      const protoDocument1 = schemaUtils.makeProtoDocumentId(1);
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: {
+            title: "document-0",
+            relatedDoc: {
+              collectionId: createCollectionResult.data.id,
+              documentId: protoDocument1,
+            },
+          },
+        },
+        {
+          collectionId: createCollectionResult.data.id,
+          content: {
+            title: "document-1",
+            relatedDoc: {
+              collectionId: createCollectionResult.data.id,
+              documentId: protoDocument0,
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      assert.isTrue(result.success);
+      assert.isNotNull(result.data);
+      expect(result.data).toHaveLength(2);
+
+      const document0 = result.data[0];
+      const document1 = result.data[1];
+      assert.isDefined(document0);
+      assert.isDefined(document1);
+
+      // Verify the proto document IDs were replaced with actual IDs
+      // Document 0 should reference Document 1
+      expect(document0.latestVersion.content).toEqual({
+        title: "document-0",
+        relatedDoc: {
+          collectionId: createCollectionResult.data.id,
+          documentId: document1.id,
+        },
+      });
+
+      // Document 1 should reference Document 0
+      expect(document1.latestVersion.content).toEqual({
+        title: "document-1",
+        relatedDoc: {
+          collectionId: createCollectionResult.data.id,
+          documentId: document0.id,
+        },
+      });
+    });
+
+    it("atomicity: no documents created if one fails validation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Exercise
+      const result = await backend.documents.createMany([
+        {
+          collectionId: createCollectionResult.data.id,
+          content: { title: "valid-document" },
+        },
+        {
+          collectionId: createCollectionResult.data.id,
+          // Invalid: number instead of string.
+          content: { title: 123 },
+        },
+      ]);
+
+      // Verify: operation should fail, no documents should exist (atomicity)
+      expect(result.success).toBe(false);
+      expect(result.error?.name).toBe("DocumentContentNotValid");
+      const listResult = await backend.documents.list(
+        createCollectionResult.data.id,
+      );
+      assert.isTrue(listResult.success);
+      expect(listResult.data).toHaveLength(0);
     });
   });
 
@@ -368,6 +1140,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -461,6 +1234,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -544,6 +1318,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -605,6 +1380,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -672,6 +1448,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -707,6 +1484,153 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: ReferencedDocumentsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+              nullableProperties: ["documentRef"],
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { documentRef: null },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const nonExistentDocumentId = Id.generate.document();
+      const createNewVersionResult = await backend.documents.createNewVersion(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+        createDocumentResult.data.latestVersion.id,
+        {
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: nonExistentDocumentId,
+          },
+        },
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedDocumentsNotFound",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            notFoundDocumentRefs: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: nonExistentDocumentId,
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: MakingContentBlockingKeysFailed", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled: `
+            export default function getContentBlockingKeys(content) {
+              return content.title === "title" ? ["title:title"] : 123;
+            }
+          `,
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+        { skipDuplicateCheck: true },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          { title: "updated title" },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "MakingContentBlockingKeysFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: createDocumentResult.data.id,
+            cause: {
+              name: "ContentBlockingKeysNotValid",
+              details: { contentBlockingKeys: 123 },
+            },
+          },
+        },
+      });
+    });
+
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -737,6 +1661,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -835,6 +1760,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -887,6 +1813,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -986,6 +1913,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -1039,6 +1967,87 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: DocumentIsReferenced", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+              nullableProperties: ["documentRef"],
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionResult.success);
+      // Create document A (will be referenced)
+      const createDocumentAResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "Document A", documentRef: null },
+      );
+      assert.isTrue(createDocumentAResult.success);
+      // Create document B that references document A
+      const createDocumentBResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        {
+          title: "Document B",
+          documentRef: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentAResult.data.id,
+          },
+        },
+      );
+      assert.isTrue(createDocumentBResult.success);
+
+      // Exercise - try to delete document A which is referenced by B
+      const deleteResult = await backend.documents.delete(
+        createCollectionResult.data.id,
+        createDocumentAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentIsReferenced",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentAResult.data.id,
+            referencingDocuments: [
+              {
+                collectionId: createCollectionResult.data.id,
+                documentId: createDocumentBResult.data.id,
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("success: deletes", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1069,6 +2078,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1145,6 +2155,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1203,6 +2214,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -1252,6 +2264,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1310,6 +2323,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1397,6 +2411,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocument1Result = await backend.documents.create(
@@ -1461,6 +2476,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -1512,6 +2528,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1564,6 +2581,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -1619,6 +2637,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1701,6 +2720,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1752,6 +2772,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1810,6 +2831,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult1.success);
       const createCollectionResult2 = await backend.collections.create(
@@ -1837,6 +2859,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult2.success);
       const createDocumentResult1 = await backend.documents.create(
@@ -1891,6 +2914,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult1.success);
       const createCollectionResult2 = await backend.collections.create(
@@ -1918,6 +2942,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult2.success);
       const createDocumentResult1 = await backend.documents.create(

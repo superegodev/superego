@@ -17,10 +17,9 @@ enum DataType {
   /** One specific Boolean. */
   BooleanLiteral = "BooleanLiteral",
 
-  /** A JsonObject. */
   JsonObject = "JsonObject",
 
-  /** A FileRef or a ProtoFile, depending on the context. */
+  /** FileRef or ProtoFile, depending on the context. */
   File = "File",
 
   /** Object containing only known properties. */
@@ -28,5 +27,8 @@ enum DataType {
 
   /** List of items of another type. */
   List = "List",
+
+  /** Reference to a Document. */
+  DocumentRef = "DocumentRef",
 }
 export default DataType;

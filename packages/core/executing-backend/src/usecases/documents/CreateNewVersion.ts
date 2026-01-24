@@ -12,10 +12,12 @@ import {
   type DocumentVersionId,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
+  type MakingContentBlockingKeysFailed,
+  type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { utils, valibotSchemas } from "@superego/schema";
+import { type DocumentRef, utils, valibotSchemas } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
@@ -25,11 +27,13 @@ import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
+import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
@@ -42,7 +46,9 @@ type ExecReturnValue = ResultPromise<
   | ConnectorDoesNotSupportUpSyncing
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
+  | MakingContentBlockingKeysFailed
   | FilesNotFound
+  | ReferencedDocumentsNotFound
   | UnexpectedError
 >;
 export default class DocumentsCreateNewVersion extends Usecase<
@@ -161,6 +167,29 @@ export default class DocumentsCreateNewVersion extends Usecase<
       );
     }
 
+    const referencedDocuments = ContentDocumentRefUtils.extractDocumentRefs(
+      latestCollectionVersion.schema,
+      contentValidationResult.output,
+    );
+    const notFoundDocumentRefs: DocumentRef[] = [];
+    for (const referencedDocument of referencedDocuments) {
+      const exists = await this.repos.document.exists(
+        referencedDocument.documentId as DocumentId,
+      );
+      if (!exists) {
+        notFoundDocumentRefs.push(referencedDocument);
+      }
+    }
+    if (!isEmpty(notFoundDocumentRefs)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedDocumentsNotFound", {
+          collectionId: document.collectionId,
+          documentId: id,
+          notFoundDocumentRefs,
+        }),
+      );
+    }
+
     const referencedFileIds = ContentFileUtils.extractReferencedFileIds(
       latestCollectionVersion.schema,
       contentValidationResult.output,
@@ -169,12 +198,26 @@ export default class DocumentsCreateNewVersion extends Usecase<
       await this.repos.file.findAllWhereIdIn(referencedFileIds);
     const missingFileIds = difference(
       referencedFileIds,
-      referencedFiles.map(({ id }) => id),
+      referencedFiles.map(({ id: fileId }) => fileId),
     );
     if (!isEmpty(missingFileIds)) {
       return makeUnsuccessfulResult(
         makeResultError("FilesNotFound", { fileIds: missingFileIds }),
       );
+    }
+
+    let contentBlockingKeys: string[] | null = null;
+    if (latestCollectionVersion.contentBlockingKeysGetter !== null) {
+      const makeContentBlockingKeysResult = await makeContentBlockingKeys(
+        this.javascriptSandbox,
+        latestCollectionVersion,
+        id,
+        contentValidationResult.output,
+      );
+      if (!makeContentBlockingKeysResult.success) {
+        return makeContentBlockingKeysResult;
+      }
+      contentBlockingKeys = makeContentBlockingKeysResult.data;
     }
 
     const now = new Date();
@@ -192,9 +235,11 @@ export default class DocumentsCreateNewVersion extends Usecase<
       collectionVersionId: latestCollectionVersion.id,
       conversationId: options?.conversationId ?? null,
       content: convertedContent,
+      contentBlockingKeys: contentBlockingKeys,
+      referencedDocuments: referencedDocuments,
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
-    } as DocumentVersionEntity;
+    };
     const textChunks = utils.extractTextChunks(
       latestCollectionVersion.schema,
       convertedContent,

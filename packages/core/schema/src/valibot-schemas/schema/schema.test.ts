@@ -68,7 +68,7 @@ describe("Invalid schemas", () => {
         {
           kind: "schema",
           message:
-            'Invalid type: Expected ("String" | "Enum" | "Number" | "Boolean" | "StringLiteral" | "NumberLiteral" | "BooleanLiteral" | "JsonObject" | "File" | "Struct" | "List" | null) but received undefined',
+            'Invalid type: Expected ("String" | "Enum" | "Number" | "Boolean" | "StringLiteral" | "NumberLiteral" | "BooleanLiteral" | "JsonObject" | "File" | "Struct" | "List" | "DocumentRef" | null) but received undefined',
           path: [{ key: "types" }, { key: "Root" }, { key: "dataType" }],
         },
       ],
@@ -920,6 +920,25 @@ describe("Valid schemas", () => {
             "image/*": [".png", ".svg"],
             "application/vnd.ms-excel": [".xls", ".xlsx"],
             "application/tar+gzip": [".tar.gz"],
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    expectedIssues: [],
+  });
+
+  test("DocumentRef type definitions with or without collectionId are valid", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            documentRefWithoutCollectionId: { dataType: DataType.DocumentRef },
+            documentRefWithCollectionId: {
+              dataType: DataType.DocumentRef,
+              collectionId: "collectionId",
+            },
           },
         },
       },

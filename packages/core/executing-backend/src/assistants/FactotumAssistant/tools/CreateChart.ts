@@ -1,5 +1,6 @@
 import {
   type Collection,
+  type CollectionId,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -18,6 +19,7 @@ import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
+import type AssistantDocument from "../utils/AssistantDocument.js";
 import { toAssistantDocument } from "../utils/AssistantDocument.js";
 
 export default {
@@ -32,28 +34,40 @@ export default {
     javascriptSandbox: JavascriptSandbox,
     typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.CreateChart> {
-    const { collectionId, getEChartsOption: getEChartsOptionTs } =
+    const { collectionIds, getEChartsOption: getEChartsOptionTs } =
       toolCall.input;
-
-    const collection = collections.find(({ id }) => id === collectionId);
-    if (!collection) {
+    const uniqueCollectionIds = [...new Set(collectionIds)];
+    const collectionsById = new Map(
+      collections.map((collection) => [collection.id, collection]),
+    );
+    const missingCollectionId = uniqueCollectionIds.find(
+      (collectionId) => !collectionsById.has(collectionId),
+    );
+    if (missingCollectionId) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
-          makeResultError("CollectionNotFound", { collectionId }),
+          makeResultError("CollectionNotFound", {
+            collectionId: missingCollectionId,
+          }),
         ),
       };
     }
+
+    const typeDeclarations = uniqueCollectionIds.map((collectionId) => {
+      const collection = collectionsById.get(collectionId)!;
+      return {
+        path: `/${collectionId}.ts` as `/${string}.ts`,
+        source: codegen(collection.latestVersion.schema),
+      };
+    });
 
     const { data: getEChartsOptionJs, error: compileError } =
       await typescriptCompiler.compile(
         { path: "/getEChartsOption.ts", source: getEChartsOptionTs },
         [
-          {
-            path: `/${collection.id}.ts`,
-            source: codegen(collection.latestVersion.schema),
-          },
+          ...typeDeclarations,
           {
             path: "/LocalInstant.d.ts",
             source: LocalInstantTypeDeclaration,
@@ -84,29 +98,34 @@ export default {
       };
     }
 
-    const { data: documents, error: documentsListError } =
-      await documentsList.exec(collectionId, false);
-    if (documentsListError) {
-      throw new UnexpectedAssistantError(
-        [
-          `Listing documents failed with ${documentsListError.name}.`,
-          documentsListError.name === "UnexpectedError"
-            ? ` Cause: ${documentsListError.details.cause}`
-            : "",
-        ].join(""),
+    const documentsByCollection: Record<CollectionId, AssistantDocument[]> = {};
+
+    for (const collectionId of uniqueCollectionIds) {
+      const { data: documents, error: documentsListError } =
+        await documentsList.exec(collectionId, false);
+      if (documentsListError) {
+        throw new UnexpectedAssistantError(
+          [
+            `Listing documents failed with ${documentsListError.name}.`,
+            documentsListError.name === "UnexpectedError"
+              ? ` Cause: ${documentsListError.details.cause}`
+              : "",
+          ].join(""),
+        );
+      }
+      const collection = collectionsById.get(collectionId)!;
+      documentsByCollection[collectionId] = documents.map((document) =>
+        toAssistantDocument(
+          collection.latestVersion.schema,
+          document,
+          DateTime.local().zoneName,
+        ),
       );
     }
 
-    const assistantDocuments = documents.map((document) =>
-      toAssistantDocument(
-        collection.latestVersion.schema,
-        document,
-        DateTime.local().zoneName,
-      ),
-    );
     const result = await javascriptSandbox.executeSyncFunction(
       { source: "", compiled: getEChartsOptionJs },
-      [assistantDocuments],
+      [documentsByCollection],
     );
 
     if (!result.success) {
@@ -169,7 +188,7 @@ This tool is a variant of ${ToolName.ExecuteTypescriptFunction}.
 \`getEChartsOption\`:
 
 - Takes the same parameters as the function in ${ToolName.ExecuteTypescriptFunction}
-  (all documents).
+  (documents grouped by collection).
 - Executes in the same environment.
 - **Must** abide by ALL its rules.
 - **Must** return an \`import("echarts").EChartsOption\` object.
@@ -198,16 +217,17 @@ tool call.
       inputSchema: {
         type: "object",
         properties: {
-          collectionId: {
-            type: "string",
+          collectionIds: {
+            type: "array",
+            items: { type: "string" },
           },
           getEChartsOption: {
             description:
-              'TypeScript function returning an **echarts option object**. `export default function getDocumentIds(documents: Document[]): import("echarts").EChartsOption {}`',
+              'TypeScript function returning an **echarts option object**. `export default function getEChartsOption(documentsByCollection: DocumentsByCollection): import("echarts").EChartsOption {}`',
             type: "string",
           },
         },
-        required: ["collectionId", "getEChartsOption"],
+        required: ["collectionIds", "getEChartsOption"],
         additionalProperties: false,
       },
     };

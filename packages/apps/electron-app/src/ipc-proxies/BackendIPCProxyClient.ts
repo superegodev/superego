@@ -27,6 +27,7 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.collections = {
       create: this.makeMainIpcCall("collections.create"),
+      createMany: this.makeMainIpcCall("collections.createMany"),
       updateSettings: this.makeMainIpcCall("collections.updateSettings"),
       setRemote: this.makeMainIpcCall("collections.setRemote"),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeMainIpcCall(
@@ -48,6 +49,7 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.documents = {
       create: this.makeMainIpcCall("documents.create"),
+      createMany: this.makeMainIpcCall("documents.createMany"),
       createNewVersion: this.makeMainIpcCall("documents.createNewVersion"),
       delete: this.makeMainIpcCall("documents.delete"),
       list: this.makeMainIpcCall("documents.list"),

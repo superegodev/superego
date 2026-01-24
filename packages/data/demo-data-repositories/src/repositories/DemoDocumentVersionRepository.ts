@@ -105,7 +105,59 @@ export default class DemoDocumentVersionRepository
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .map(({ content, ...rest }) => rest),
+        .map(({ content, contentBlockingKeys, ...rest }) => rest),
     );
+  }
+
+  async findAllLatestWhereReferencedDocumentsContains(
+    collectionId: CollectionId,
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    const latestDocumentVersions: Record<DocumentId, DocumentVersionEntity> =
+      {};
+    Object.values(this.documentVersions).forEach((documentVersion) => {
+      const currentLatest = latestDocumentVersions[documentVersion.documentId];
+      if (!currentLatest || documentVersion.id > currentLatest.id) {
+        latestDocumentVersions[documentVersion.documentId] = documentVersion;
+      }
+    });
+    return clone(
+      Object.values(latestDocumentVersions).filter((documentVersion) =>
+        documentVersion.referencedDocuments.some(
+          (documentRef) =>
+            documentRef.collectionId === collectionId &&
+            documentRef.documentId === documentId,
+        ),
+      ),
+    );
+  }
+
+  async findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
+    collectionId: CollectionId,
+    contentBlockingKeys: string[],
+  ): Promise<DocumentVersionEntity | null> {
+    this.ensureNotDisposed();
+    const latestDocumentVersions: Record<DocumentId, DocumentVersionEntity> =
+      {};
+    Object.values(this.documentVersions)
+      .filter(
+        (documentVersion) => documentVersion.collectionId === collectionId,
+      )
+      .forEach((documentVersion) => {
+        const currentLatest =
+          latestDocumentVersions[documentVersion.documentId];
+        if (!currentLatest || documentVersion.id > currentLatest.id) {
+          latestDocumentVersions[documentVersion.documentId] = documentVersion;
+        }
+      });
+    const blockingKeysSet = new Set(contentBlockingKeys);
+    const found = Object.values(latestDocumentVersions).find(
+      (documentVersion) =>
+        documentVersion.contentBlockingKeys?.some((key) =>
+          blockingKeysSet.has(key),
+        ),
+    );
+    return clone(found ?? null);
   }
 }

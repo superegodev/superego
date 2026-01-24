@@ -6,12 +6,16 @@ import {
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
+  type DocumentId,
   DocumentVersionCreator,
+  type DuplicateDocumentDetected,
   type FilesNotFound,
+  type MakingContentBlockingKeysFailed,
+  type ReferencedDocumentsNotFound,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { utils, valibotSchemas } from "@superego/schema";
+import { type DocumentRef, utils, valibotSchemas } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
@@ -21,10 +25,13 @@ import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
+import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import assertDocumentExists from "../../utils/assertDocumentExists.js";
+import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
@@ -36,12 +43,23 @@ type ExecReturnValue = ResultPromise<
   | ConnectorDoesNotSupportUpSyncing
   | DocumentContentNotValid
   | FilesNotFound
+  | ReferencedDocumentsNotFound
+  | MakingContentBlockingKeysFailed
+  | DuplicateDocumentDetected
   | UnexpectedError
 >;
 export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
 > {
-  async exec(collectionId: CollectionId, content: any): ExecReturnValue;
+  async exec(
+    collectionId: CollectionId,
+    content: any,
+    options?: {
+      skipDuplicateCheck: boolean;
+      documentId?: DocumentId;
+      allowedUnverifiedDocumentIds?: DocumentId[];
+    },
+  ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     content: any,
@@ -49,6 +67,9 @@ export default class DocumentsCreate extends Usecase<
       | {
           createdBy: DocumentVersionCreator.Assistant;
           conversationId: ConversationId;
+          skipDuplicateCheck: boolean;
+          documentId?: DocumentId;
+          allowedUnverifiedDocumentIds?: DocumentId[];
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
@@ -56,13 +77,14 @@ export default class DocumentsCreate extends Usecase<
           remoteVersionId: string;
           remoteUrl: string | null;
           remoteDocument: any;
+          skipDuplicateCheck: true;
         },
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     content: any,
-    options?: {
-      createdBy:
+    options: {
+      createdBy?:
         | DocumentVersionCreator.Assistant
         | DocumentVersionCreator.Connector;
       conversationId?: ConversationId;
@@ -70,7 +92,10 @@ export default class DocumentsCreate extends Usecase<
       remoteVersionId?: string;
       remoteUrl?: string | null;
       remoteDocument?: any;
-    },
+      skipDuplicateCheck: boolean;
+      documentId?: DocumentId;
+      allowedUnverifiedDocumentIds?: DocumentId[];
+    } = { skipDuplicateCheck: false },
   ): ExecReturnValue {
     const collection = await this.repos.collection.find(collectionId);
     if (!collection) {
@@ -84,7 +109,7 @@ export default class DocumentsCreate extends Usecase<
       // collection has a remote is sufficient. TODO: update condition once
       // connectors support up-syncing.
       collection.remote !== null &&
-      options?.createdBy !== DocumentVersionCreator.Connector
+      options.createdBy !== DocumentVersionCreator.Connector
     ) {
       return makeUnsuccessfulResult(
         makeResultError("ConnectorDoesNotSupportUpSyncing", {
@@ -117,6 +142,36 @@ export default class DocumentsCreate extends Usecase<
       );
     }
 
+    const referencedDocuments = ContentDocumentRefUtils.extractDocumentRefs(
+      latestCollectionVersion.schema,
+      contentValidationResult.output,
+    );
+    const allowedUnverifiedDocumentIds = new Set(
+      options.allowedUnverifiedDocumentIds ?? [],
+    );
+    const notFoundDocumentRefs: DocumentRef[] = [];
+    for (const referencedDocument of referencedDocuments) {
+      if (
+        !allowedUnverifiedDocumentIds.has(
+          referencedDocument.documentId as DocumentId,
+        ) &&
+        !(await this.repos.document.exists(
+          referencedDocument.documentId as DocumentId,
+        ))
+      ) {
+        notFoundDocumentRefs.push(referencedDocument);
+      }
+    }
+    if (!isEmpty(notFoundDocumentRefs)) {
+      return makeUnsuccessfulResult(
+        makeResultError("ReferencedDocumentsNotFound", {
+          collectionId,
+          documentId: null,
+          notFoundDocumentRefs,
+        }),
+      );
+    }
+
     const referencedFileIds = ContentFileUtils.extractReferencedFileIds(
       latestCollectionVersion.schema,
       contentValidationResult.output,
@@ -133,15 +188,62 @@ export default class DocumentsCreate extends Usecase<
       );
     }
 
+    let contentBlockingKeys: string[] | null = null;
+    if (latestCollectionVersion.contentBlockingKeysGetter !== null) {
+      const makeContentBlockingKeysResult = await makeContentBlockingKeys(
+        this.javascriptSandbox,
+        latestCollectionVersion,
+        null,
+        contentValidationResult.output,
+      );
+      if (!makeContentBlockingKeysResult.success) {
+        return makeContentBlockingKeysResult;
+      }
+      contentBlockingKeys = makeContentBlockingKeysResult.data;
+    }
+
+    if (
+      contentBlockingKeys !== null &&
+      !isEmpty(contentBlockingKeys) &&
+      !options.skipDuplicateCheck
+    ) {
+      const duplicateDocumentVersion =
+        await this.repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
+          collectionId,
+          contentBlockingKeys,
+        );
+      if (duplicateDocumentVersion) {
+        const duplicateDocument = await this.repos.document.find(
+          duplicateDocumentVersion.documentId,
+        );
+        assertDocumentExists(
+          collectionId,
+          duplicateDocumentVersion.documentId,
+          duplicateDocument,
+        );
+        return makeUnsuccessfulResult(
+          makeResultError("DuplicateDocumentDetected", {
+            collectionId,
+            duplicateDocument: await makeDocument(
+              this.javascriptSandbox,
+              latestCollectionVersion,
+              duplicateDocument,
+              duplicateDocumentVersion,
+            ),
+          }),
+        );
+      }
+    }
+
     const now = new Date();
     // TypeScript doesn't understand that if remoteId is not null all other
     // remote* properties are not null.
     // @ts-expect-error
     const document: DocumentEntity = {
-      id: Id.generate.document(),
-      remoteId: options?.remoteId ?? null,
-      remoteUrl: options?.remoteUrl ?? null,
-      latestRemoteDocument: options?.remoteDocument ?? null,
+      id: options.documentId ?? Id.generate.document(),
+      remoteId: options.remoteId ?? null,
+      remoteUrl: options.remoteUrl ?? null,
+      latestRemoteDocument: options.remoteDocument ?? null,
       collectionId: collectionId,
       createdAt: now,
     };
@@ -152,14 +254,16 @@ export default class DocumentsCreate extends Usecase<
       );
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: options?.remoteVersionId ?? null,
+      remoteId: options.remoteVersionId ?? null,
       previousVersionId: null,
       documentId: document.id,
       collectionId: collectionId,
       collectionVersionId: latestCollectionVersion.id,
-      conversationId: options?.conversationId ?? null,
+      conversationId: options.conversationId ?? null,
       content: convertedContent,
-      createdBy: options?.createdBy ?? DocumentVersionCreator.User,
+      contentBlockingKeys: contentBlockingKeys,
+      referencedDocuments: referencedDocuments,
+      createdBy: options.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     };
     const textChunks = utils.extractTextChunks(

@@ -11,6 +11,7 @@ import type {
   CollectionCategoryNotFound,
   CollectionHasDocuments,
   CollectionHasNoRemote,
+  CollectionIsReferenced,
   CollectionIsSyncing,
   CollectionMigrationFailed,
   CollectionMigrationNotValid,
@@ -27,19 +28,25 @@ import type {
   ConnectorNotAuthenticated,
   ConnectorNotFound,
   ConnectorSettingsNotValid,
+  ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DocumentContentNotValid,
+  DocumentIsReferenced,
   DocumentNotFound,
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
+  DuplicateDocumentDetected,
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
+  MakingContentBlockingKeysFailed,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
+  ReferencedCollectionsNotFound,
+  ReferencedDocumentsNotFound,
   RemoteConvertersNotValid,
   SyncingChangesFailed,
   TooManyFailedImplementationAttempts,
@@ -61,6 +68,7 @@ type KnownResultError =
   | CollectionCategoryNotFound
   | CollectionHasDocuments
   | CollectionHasNoRemote
+  | CollectionIsReferenced
   | CollectionIsSyncing
   | CollectionMigrationFailed
   | CollectionMigrationNotValid
@@ -77,19 +85,25 @@ type KnownResultError =
   | ConnectorNotAuthenticated
   | ConnectorNotFound
   | ConnectorSettingsNotValid
+  | ContentBlockingKeysGetterNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid
+  | DocumentIsReferenced
   | DocumentNotFound
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
+  | DuplicateDocumentDetected
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
+  | MakingContentBlockingKeysFailed
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound
+  | ReferencedCollectionsNotFound
+  | ReferencedDocumentsNotFound
   | RemoteConvertersNotValid
   | SyncingChangesFailed
   | TooManyFailedImplementationAttempts

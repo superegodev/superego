@@ -12,6 +12,7 @@ import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
+import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
 import GeneralSettingsTab from "./GeneralSettingsTab.js";
@@ -26,6 +27,10 @@ export default function CreateCollectionForm() {
 
   const { result, mutate } = useCreateCollection();
 
+  const defaultContentBlockingKeysGetter = useMemo(
+    () => forms.defaults.contentBlockingKeysGetter(defaultSchema),
+    [],
+  );
   const defaultContentSummaryGetter = useMemo(
     () => forms.defaults.contentSummaryGetter(defaultSchema),
     [],
@@ -45,6 +50,7 @@ export default function CreateCollectionForm() {
       description: null,
       assistantInstructions: null,
       schema: defaultSchema,
+      contentBlockingKeysGetter: defaultContentBlockingKeysGetter,
       contentSummaryGetter: defaultContentSummaryGetter,
     },
     mode: "all",
@@ -55,6 +61,9 @@ export default function CreateCollectionForm() {
         description: v.nullable(v.string()),
         assistantInstructions: v.nullable(v.string()),
         schema: schemaValibotSchemas.schema(),
+        contentBlockingKeysGetter: v.nullable(
+          forms.schemas.typescriptModule(intl),
+        ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
       }),
     ),
@@ -66,6 +75,7 @@ export default function CreateCollectionForm() {
     icon,
     description,
     assistantInstructions,
+    contentBlockingKeysGetter,
     contentSummaryGetter,
   }: CreateCollectionFormValues) => {
     const { success, data } = await mutate(
@@ -79,6 +89,7 @@ export default function CreateCollectionForm() {
       },
       schema,
       { contentSummaryGetter },
+      contentBlockingKeysGetter,
     );
     if (success) {
       navigateTo(
@@ -94,11 +105,30 @@ export default function CreateCollectionForm() {
   );
 
   // When schema changes, if it's valid:
-  // - Update contentSummaryGetter, if still the default one, and in any case
-  //   require recompilation.
+  // - Update contentSummaryGetter and contentBlockingKeysGetter, if they are
+  //   still the default ones, and in any case require recompilation.
   useEffect(() => {
     if (!isSchemaValid) {
       return;
+    }
+
+    const defaultContentBlockingKeysGetterSource =
+      formState.defaultValues?.contentBlockingKeysGetter?.source;
+    const currentContentBlockingKeysGetterSource = getValues(
+      "contentBlockingKeysGetter.source",
+    );
+    if (
+      currentContentBlockingKeysGetterSource ===
+      defaultContentBlockingKeysGetterSource
+    ) {
+      resetField("contentBlockingKeysGetter", {
+        defaultValue: forms.defaults.contentBlockingKeysGetter(schema),
+      });
+    } else {
+      setValue(
+        "contentBlockingKeysGetter.compiled",
+        forms.constants.COMPILATION_REQUIRED,
+      );
     }
 
     const defaultContentSummaryGetterSource =
@@ -124,6 +154,7 @@ export default function CreateCollectionForm() {
     getValues,
     resetField,
     isSchemaValid,
+    formState.defaultValues?.contentBlockingKeysGetter?.source,
     formState.defaultValues?.contentSummaryGetter?.source,
   ]);
 
@@ -167,8 +198,19 @@ export default function CreateCollectionForm() {
           },
           {
             title: (
+              <TabTitle
+                hasErrors={!!formState.errors.contentBlockingKeysGetter}
+              >
+                <FormattedMessage defaultMessage="3. Deduplication" />
+              </TabTitle>
+            ),
+            panel: <ContentBlockingKeysTab control={control} schema={schema} />,
+            isDisabled: !isSchemaValid,
+          },
+          {
+            title: (
               <TabTitle hasErrors={!!formState.errors.contentSummaryGetter}>
-                <FormattedMessage defaultMessage="3. Content summary" />
+                <FormattedMessage defaultMessage="4. Content summary" />
               </TabTitle>
             ),
             panel: (

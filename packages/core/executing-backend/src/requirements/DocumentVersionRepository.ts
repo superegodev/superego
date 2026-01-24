@@ -24,4 +24,12 @@ export default interface DocumentVersionRepository {
   findAllWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<MinimalDocumentVersionEntity[]>;
+  findAllLatestWhereReferencedDocumentsContains(
+    collectionId: CollectionId,
+    documentId: DocumentId,
+  ): Promise<DocumentVersionEntity[]>;
+  findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(
+    collectionId: CollectionId,
+    contentBlockingKeys: string[],
+  ): Promise<DocumentVersionEntity | null>;
 }

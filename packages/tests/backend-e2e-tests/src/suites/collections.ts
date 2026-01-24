@@ -38,6 +38,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
 
       // Verify
@@ -85,6 +86,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
 
       // Verify
@@ -124,6 +126,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
 
       // Verify
@@ -162,6 +165,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
 
       // Verify
@@ -207,6 +211,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled: "export function getContentSummary() {}",
           },
         },
+        null,
       );
 
       // Verify
@@ -224,6 +229,110 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
               },
             ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentBlockingKeysGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled: "export function getContentBlockingKeys() {}",
+        },
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentBlockingKeysGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const result = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: nonExistentCollectionId,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [nonExistentCollectionId],
           },
         },
       });
@@ -254,6 +363,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
 
       // Verify
@@ -275,6 +385,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
               },
             },
+            contentBlockingKeysGetter: null,
             migration: null,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -298,6 +409,807 @@ export default rd<GetDependencies>("Collections", (deps) => {
         data: [createResult.data],
         error: null,
       });
+    });
+
+    it("success: creates (case: with contentBlockingKeysGetter)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        {
+          source: "",
+          compiled:
+            "export default function getContentBlockingKeys() { return []; }",
+        },
+      );
+
+      // Verify
+      expect(createResult).toEqual({
+        success: true,
+        data: {
+          id: expect.id("Collection"),
+          latestVersion: {
+            id: expect.id("CollectionVersion"),
+            previousVersionId: null,
+            schema: {
+              types: { Root: { dataType: "Struct", properties: {} } },
+              rootType: "Root",
+            },
+            settings: {
+              contentSummaryGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
+              },
+            },
+            contentBlockingKeysGetter: {
+              source: "",
+              compiled:
+                "export default function getContentBlockingKeys() { return []; }",
+            },
+            migration: null,
+            remoteConverters: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          remote: null,
+          createdAt: expect.dateCloseToNow(),
+        },
+        error: null,
+      });
+    });
+  });
+
+  describe("createMany", () => {
+    it("error: CollectionSettingsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionSettingsNotValid",
+          details: {
+            collectionId: null,
+            issues: [
+              {
+                message: "Invalid length: Expected >=1 but received 0",
+                path: [{ key: "name" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: CollectionCategoryNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionCategoryId = Id.generate.collectionCategory();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: collectionCategoryId,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionCategoryNotFound",
+          details: { collectionCategoryId },
+        },
+      });
+    });
+
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const defaultCollectionViewAppId = Id.generate.app();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "AppNotFound",
+          details: { appId: defaultCollectionViewAppId },
+        },
+      });
+    });
+
+    it("error: CollectionSchemaNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.String } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionSchemaNotValid",
+          details: {
+            collectionId: null,
+            issues: [
+              {
+                message: "Root type must be a Struct",
+                path: [{ key: "rootType" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentSummaryGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled: "export function getContentSummary() {}",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentSummaryGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ContentBlockingKeysGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: {
+            source: "",
+            compiled: "export function getContentBlockingKeys() {}",
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentBlockingKeysGetterNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound (non-existent collection)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  documentRef: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: nonExistentCollectionId,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [nonExistentCollectionId],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound (invalid proto collection id)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const { utils: schemaUtils } = await import("@superego/schema");
+
+      // Exercise
+      // Reference a proto collection that doesn't exist in the batch
+      const invalidProtoId = schemaUtils.makeProtoCollectionId(99);
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  documentRef: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: invalidProtoId,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: null,
+            notFoundCollectionIds: [invalidProtoId],
+          },
+        },
+      });
+    });
+
+    it("success: creates single collection", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              contentBlockingKeysGetter: null,
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "name",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+        ],
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: result.data,
+        error: null,
+      });
+    });
+
+    it("success: creates multiple independent collections", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "collection-1",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+        {
+          settings: {
+            name: "collection-2",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              contentBlockingKeysGetter: null,
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "collection-1",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+          {
+            id: expect.id("Collection"),
+            latestVersion: {
+              id: expect.id("CollectionVersion"),
+              previousVersionId: null,
+              schema: {
+                types: { Root: { dataType: "Struct", properties: {} } },
+                rootType: "Root",
+              },
+              settings: {
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+              },
+              contentBlockingKeysGetter: null,
+              migration: null,
+              remoteConverters: null,
+              createdAt: expect.dateCloseToNow(),
+            },
+            settings: {
+              name: "collection-2",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            remote: null,
+            createdAt: expect.dateCloseToNow(),
+          },
+        ],
+        error: null,
+      });
+      const listResult = await backend.collections.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: result.data,
+        error: null,
+      });
+    });
+
+    it("success: creates collections with cross-references using proto collection ids", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const { utils: schemaUtils } = await import("@superego/schema");
+
+      // Exercise
+      // Collection 0 references Collection 1, and Collection 1 references Collection 0
+      const protoCollection0 = schemaUtils.makeProtoCollectionId(0);
+      const protoCollection1 = schemaUtils.makeProtoCollectionId(1);
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "authors",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  name: { dataType: DataType.String },
+                  books: {
+                    dataType: DataType.List,
+                    items: {
+                      dataType: DataType.DocumentRef,
+                      collectionId: protoCollection1,
+                    },
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+        {
+          settings: {
+            name: "books",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  title: { dataType: DataType.String },
+                  author: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: protoCollection0,
+                  },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+          },
+          contentBlockingKeysGetter: null,
+        },
+      ]);
+
+      // Verify
+      assert.isTrue(result.success);
+      assert.isNotNull(result.data);
+      expect(result.data).toHaveLength(2);
+
+      const authorsCollection = result.data[0];
+      const booksCollection = result.data[1];
+      assert.isDefined(authorsCollection);
+      assert.isDefined(booksCollection);
+
+      // Verify the proto collection IDs were replaced with actual IDs
+      // Authors collection should reference books collection
+      const authorsSchema = authorsCollection.latestVersion.schema;
+      const authorsRootType = authorsSchema.types["Root"];
+      assert.isDefined(authorsRootType);
+      assert.equal(authorsRootType.dataType, DataType.Struct);
+      if (authorsRootType.dataType === DataType.Struct) {
+        expect(authorsRootType.properties["books"]).toEqual({
+          dataType: DataType.List,
+          items: {
+            dataType: DataType.DocumentRef,
+            collectionId: booksCollection.id,
+          },
+        });
+      }
+
+      // Books collection should reference authors collection
+      const booksSchema = booksCollection.latestVersion.schema;
+      const booksRootType = booksSchema.types["Root"];
+      assert.isDefined(booksRootType);
+      assert.equal(booksRootType.dataType, DataType.Struct);
+      if (booksRootType.dataType === DataType.Struct) {
+        expect(booksRootType.properties["author"]).toEqual({
+          dataType: DataType.DocumentRef,
+          collectionId: authorsCollection.id,
+        });
+      }
     });
   });
 
@@ -346,6 +1258,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -397,6 +1310,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -441,6 +1355,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -499,6 +1414,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -625,6 +1541,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -687,6 +1604,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -776,6 +1694,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const firstSetRemoteResult = await backend.collections.setRemote(
@@ -880,6 +1799,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -972,6 +1892,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1074,6 +1995,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1164,6 +2086,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1256,6 +2179,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1356,6 +2280,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1480,6 +2405,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const firstSetRemoteResult = await backend.collections.setRemote(
@@ -1582,6 +2508,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1653,6 +2580,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -1759,6 +2687,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -1837,6 +2766,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1909,6 +2839,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2015,6 +2946,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2105,6 +3037,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -2185,6 +3118,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2291,6 +3225,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2388,6 +3323,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2490,6 +3426,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2605,6 +3542,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2733,6 +3671,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2880,6 +3819,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3019,6 +3959,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3225,6 +4166,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3328,7 +4270,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+        },
+        null,
         { source: "", compiled: "" },
         null,
       );
@@ -3367,6 +4312,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3379,7 +4325,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+        },
+        null,
         { source: "", compiled: "" },
         null,
       );
@@ -3422,6 +4371,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3433,7 +4383,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
           types: { Root: { dataType: DataType.String } },
           rootType: "Root",
         },
-        { contentSummaryGetter: { source: "", compiled: "" } },
+        {
+          contentSummaryGetter: { source: "", compiled: "" },
+        },
+        null,
         { source: "", compiled: "" },
         null,
       );
@@ -3452,6 +4405,81 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 path: [{ key: "rootType" }],
               },
             ],
+          },
+        },
+      });
+    });
+
+    it("error: ReferencedCollectionsNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const nonExistentCollectionId = Id.generate.collection();
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: nonExistentCollectionId,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+        {
+          source: "",
+          compiled: "export default function migrate(c) { return c; }",
+        },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ReferencedCollectionsNotFound",
+          details: {
+            collectionId: createResult.data.id,
+            notFoundCollectionIds: [nonExistentCollectionId],
           },
         },
       });
@@ -3480,6 +4508,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3497,6 +4526,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled: "export function getContentSummary() {}",
           },
         },
+        null,
         { source: "", compiled: "" },
         null,
       );
@@ -3577,6 +4607,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3609,6 +4640,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         { source: "", compiled: "export function migrate() {}" },
         {
           fromRemoteDocument: {
@@ -3660,6 +4692,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3678,6 +4711,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         null,
         null,
       );
@@ -3724,6 +4758,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3742,6 +4777,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         { source: "", compiled: "export function migrate() {}" },
         null,
       );
@@ -3788,6 +4824,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -3806,6 +4843,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         { source: "", compiled: "export default function migrate() {}" },
         {
           fromRemoteDocument: {
@@ -3891,6 +4929,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3923,6 +4962,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         null,
         null,
       );
@@ -4002,6 +5042,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4034,6 +5075,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         null,
         {
           fromRemoteDocument: {
@@ -4086,6 +5128,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -4110,6 +5153,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
+          null,
           {
             source: "",
             compiled:
@@ -4167,6 +5211,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -4191,6 +5236,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
+          null,
           {
             source: "",
             compiled: "export default function migrate() { return { a: 0 }; }",
@@ -4287,6 +5333,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4327,7 +5374,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-
+          null,
           null,
           {
             fromRemoteDocument: {
@@ -4427,6 +5474,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4472,7 +5520,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
-
+          null,
           null,
           {
             fromRemoteDocument: {
@@ -4546,6 +5594,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -4583,6 +5632,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
+          null,
           migration,
           null,
         );
@@ -4611,6 +5661,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 source: "",
               },
             },
+            contentBlockingKeysGetter: null,
             migration: migration,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -4719,6 +5770,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4783,6 +5835,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 "export default function getContentSummary() { return {}; }",
             },
           },
+          null,
           null,
           {
             fromRemoteDocument: {
@@ -4881,6 +5934,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4931,6 +5985,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4990,6 +6045,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -5021,6 +6077,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
               },
             },
+            contentBlockingKeysGetter: null,
           },
           settings: createResult.data.settings,
           remote: null,
@@ -5080,6 +6137,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -5099,6 +6157,195 @@ export default rd<GetDependencies>("Collections", (deps) => {
           details: {
             requiredCommandConfirmation: "delete",
             suppliedCommandConfirmation: commandConfirmation,
+          },
+        },
+      });
+    });
+
+    it("error: CollectionIsReferenced", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Create collection A (will be referenced)
+      const createCollectionAResult = await backend.collections.create(
+        {
+          name: "Collection A",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionAResult.success);
+      // Create collection B with schema that references collection A
+      const createCollectionBResult = await backend.collections.create(
+        {
+          name: "Collection B",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: createCollectionAResult.data.id,
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionBResult.success);
+
+      // Exercise - try to delete collection A which is referenced by collection B's schema
+      const deleteResult = await backend.collections.delete(
+        createCollectionAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionIsReferenced",
+          details: {
+            collectionId: createCollectionAResult.data.id,
+            referencingCollectionIds: [createCollectionBResult.data.id],
+          },
+        },
+      });
+    });
+
+    it("error: DocumentIsReferenced (cross-collection)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Create collection A with a simple schema
+      const createCollectionAResult = await backend.collections.create(
+        {
+          name: "Collection A",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionAResult.success);
+      // Create collection B with DocumentRef field (no collectionId constraint to avoid CollectionIsReferenced)
+      const createCollectionBResult = await backend.collections.create(
+        {
+          name: "Collection B",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                documentRef: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+        null,
+      );
+      assert.isTrue(createCollectionBResult.success);
+      // Create document in collection A
+      const createDocumentAResult = await backend.documents.create(
+        createCollectionAResult.data.id,
+        { title: "Document A" },
+      );
+      assert.isTrue(createDocumentAResult.success);
+      // Create document in collection B that references document in A
+      const createDocumentBResult = await backend.documents.create(
+        createCollectionBResult.data.id,
+        {
+          documentRef: {
+            collectionId: createCollectionAResult.data.id,
+            documentId: createDocumentAResult.data.id,
+          },
+        },
+      );
+      assert.isTrue(createDocumentBResult.success);
+
+      // Exercise - try to delete collection A which has a document referenced by collection B
+      const deleteResult = await backend.collections.delete(
+        createCollectionAResult.data.id,
+        "delete",
+      );
+
+      // Verify
+      expect(deleteResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentIsReferenced",
+          details: {
+            collectionId: createCollectionAResult.data.id,
+            documentId: createDocumentAResult.data.id,
+            referencingDocuments: [
+              {
+                collectionId: createCollectionBResult.data.id,
+                documentId: createDocumentBResult.data.id,
+              },
+            ],
           },
         },
       });
@@ -5127,6 +6374,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -5183,6 +6431,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create(
@@ -5259,6 +6508,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(zetaCreateResult.success);
       const alphaCreateResult = await backend.collections.create(
@@ -5281,6 +6531,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(alphaCreateResult.success);
       const betaCreateResult = await backend.collections.create(
@@ -5303,6 +6554,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(betaCreateResult.success);
 
@@ -5369,6 +6621,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -5421,6 +6674,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
 
@@ -5466,6 +6720,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
       );
       assert.isTrue(createResult.success);
       const migration = {
@@ -5495,6 +6750,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
+        null,
         migration,
         null,
       );

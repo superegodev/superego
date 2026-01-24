@@ -64,6 +64,7 @@ class FactotumObject {
             'export default function getValue() { return { name: "name" }; }',
         },
       },
+      null,
     );
     assertSuccessfulResult(
       `Error creating collection ${definition.name}`,

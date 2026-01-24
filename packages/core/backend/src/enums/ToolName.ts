@@ -5,10 +5,10 @@ enum ToolName {
   ExecuteTypescriptFunction = "executeTypescriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
   CreateChart = "createChart",
-  CreateDocumentsTable = "createDocumentsTable",
+  CreateDocumentsTables = "createDocumentsTables",
   SearchDocuments = "searchDocuments",
   // CollectionCreator
-  SuggestCollectionDefinition = "suggestCollectionDefinition",
+  SuggestCollectionsDefinitions = "suggestCollectionsDefinitions",
   // Shared
   InspectFile = "InspectFile",
   // Other tools, not used by an assistant
