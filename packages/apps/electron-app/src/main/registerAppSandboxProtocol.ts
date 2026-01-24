@@ -18,7 +18,7 @@ export default function registerAppSandboxProtocol() {
     protocol.handle("dev.superego.app-sandbox", (request) => {
       const { pathname } = new URL(request.url);
       const baseDir = path.resolve(import.meta.dirname, "../renderer");
-      const pathToServe = path.resolve(baseDir, pathname);
+      const pathToServe = path.join(baseDir, pathname);
       const relativePath = path.relative(baseDir, pathToServe);
       const isSafe =
         !relativePath.startsWith("..") && !path.isAbsolute(relativePath);
