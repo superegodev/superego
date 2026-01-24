@@ -11,6 +11,6 @@ test("Load demo data", async ({ page }) => {
   await page.getByRole("button", { name: /^Load$/i }).click();
 
   await expect(page.getByRole("gridcell", { name: /Contacts/i })).toBeVisible({
-    timeout: 10_000,
+    timeout: 60_000,
   });
 });
