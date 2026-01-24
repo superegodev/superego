@@ -11,4 +11,8 @@ export const LoadDemoDataButton = {
   modal: style({
     width: vars.spacing._120,
   }),
+
+  progressBar: style({
+    marginBlockEnd: vars.spacing._2,
+  }),
 };

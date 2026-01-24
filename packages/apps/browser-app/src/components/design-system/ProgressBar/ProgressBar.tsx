@@ -1,20 +1,27 @@
 import type { CSSProperties } from "react";
 import { Label, ProgressBar as ProgressBarRAC } from "react-aria-components";
+import classnames from "../../../utils/classnames.js";
 import * as cs from "./ProgressBar.css.js";
 
 interface Props {
   value: number;
   maxValue: number;
   label: string;
+  className?: string | undefined;
 }
 
-export default function ProgressBar({ value, maxValue, label }: Props) {
+export default function ProgressBar({
+  value,
+  maxValue,
+  label,
+  className,
+}: Props) {
   const percentage = maxValue > 0 ? (value / maxValue) * 100 : 0;
   return (
     <ProgressBarRAC
       value={value}
       maxValue={maxValue}
-      className={cs.ProgressBar.root}
+      className={classnames(cs.ProgressBar.root, className)}
     >
       <div className={cs.ProgressBar.header}>
         <Label className={cs.ProgressBar.label}>{label}</Label>

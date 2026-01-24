@@ -1,10 +1,15 @@
+// TODO: With document references, this file got quite complex and has
+// vibe coded parts that are quite messy. Refactor for "marketing round 2", also
+// changing the demo data (add period collection + app, meals app, etc ).
 import type {
   AppVersion,
   Backend,
   CollectionCategoryId,
   CollectionId,
   CollectionVersionId,
+  DocumentId,
 } from "@superego/backend";
+import { utils as schemaUtils } from "@superego/schema";
 import demoData from "./demoData.js";
 import type { DemoCollection } from "./types.js";
 
@@ -29,7 +34,8 @@ export default async function loadDemoData(
   ).length;
   const totalOperations =
     collectionCategories.length +
-    collections.length +
+    // Collections are created in 1 batch via createMany, so it counts as one.
+    1 +
     totalDocumentCount +
     totalAppCount;
   let currentOperation = 0;
@@ -64,52 +70,71 @@ export default async function loadDemoData(
   }
 
   // Create collections.
-  const createdCollectionIds = new Map<
-    DemoCollection,
-    { collectionId: CollectionId; collectionVersionId: CollectionVersionId }
-  >();
-  for (const collection of collections) {
-    currentOperation++;
-    onProgress({
-      current: currentOperation,
-      total: totalOperations,
-      message: "Creating collections",
-    });
+  currentOperation++;
+  onProgress({
+    current: currentOperation,
+    total: totalOperations,
+    message: "Creating collections",
+  });
 
-    const createCollectionResult = await backend.collections.create(
-      {
+  const createCollectionsResult = await backend.collections.createMany(
+    collections.map((collection) => ({
+      settings: {
         ...collection.settings,
         collectionCategoryId: collection.categoryName
           ? (categoryIdsByName.get(collection.categoryName) ?? null)
           : null,
         defaultCollectionViewAppId: null,
       },
-      collection.schema,
-      collection.versionSettings,
-      collection.contentBlockingKeysGetter,
-    );
+      schema: collection.schema,
+      versionSettings: collection.versionSettings,
+      contentBlockingKeysGetter: collection.contentBlockingKeysGetter,
+    })),
+  );
 
-    if (createCollectionResult.success) {
+  if (!createCollectionsResult.success) {
+    console.error(
+      "Failed to create collections",
+      createCollectionsResult.error,
+    );
+    return;
+  }
+
+  const createdCollections = createCollectionsResult.data;
+  const createdCollectionIds = new Map<
+    DemoCollection,
+    { collectionId: CollectionId; collectionVersionId: CollectionVersionId }
+  >();
+
+  // Build a mapping from ProtoCollection_<index> to actual collection IDs.
+  // This is used to resolve collection references in document content.
+  const protoCollectionIdMapping = schemaUtils.makeProtoCollectionIdMapping(
+    createdCollections.map((c) => c.id),
+  );
+
+  for (const [index, collection] of collections.entries()) {
+    const createdCollection = createdCollections[index];
+    if (createdCollection) {
       createdCollectionIds.set(collection, {
-        collectionId: createCollectionResult.data.id,
-        collectionVersionId: createCollectionResult.data.latestVersion.id,
+        collectionId: createdCollection.id,
+        collectionVersionId: createdCollection.latestVersion.id,
       });
-    } else {
-      console.error(
-        "Failed to create collection",
-        collection.settings.name,
-        createCollectionResult.error,
-      );
     }
   }
 
-  // Create documents.
+  // Create documents and track document IDs by collection index for resolving
+  // ProtoDocument references.
+  const documentIdsByCollectionIndex = new Map<number, DocumentId[]>();
+
   let documentIndex = 0;
-  for (const collection of collections) {
+  for (const [collectionIndex, collection] of collections.entries()) {
     const collectionIds = createdCollectionIds.get(collection);
     if (!collectionIds) {
       continue;
     }
+
+    const collectionDocumentIds: DocumentId[] = [];
+    documentIdsByCollectionIndex.set(collectionIndex, collectionDocumentIds);
 
     for (const documentContent of collection.documents) {
       documentIndex++;
@@ -119,16 +144,64 @@ export default async function loadDemoData(
         total: totalOperations,
         message: `Creating document ${documentIndex} of ${totalDocumentCount}`,
       });
+
+      // Replace ProtoCollection and ProtoDocument references in document content.
+      let resolvedContent = documentContent;
+
+      // First, replace ProtoCollection_<index> with actual collection IDs.
+      resolvedContent = replaceProtoCollectionIdsInContent(
+        resolvedContent,
+        protoCollectionIdMapping,
+      );
+
+      // Then, replace ProtoDocument_<index> with actual document IDs.
+      const protoDocumentIds = schemaUtils.extractProtoDocumentIds(
+        collection.schema,
+        resolvedContent,
+      );
+
+      if (protoDocumentIds.length > 0) {
+        // Build a mapping from ProtoDocument_<index> to actual document IDs.
+        // The index refers to documents in the referenced collection (from
+        // ProtoCollection).
+        const docIdMapping = new Map<string, string>();
+        for (const protoId of protoDocumentIds) {
+          const docIndex = schemaUtils.parseProtoDocumentIndex(protoId);
+          if (docIndex !== null) {
+            // For each collection that has been created, check if it has the
+            // document.
+            for (const [, docIds] of documentIdsByCollectionIndex.entries()) {
+              const actualDocId = docIds[docIndex];
+              if (actualDocId !== undefined) {
+                docIdMapping.set(protoId, actualDocId);
+                break;
+              }
+            }
+          }
+        }
+
+        resolvedContent = schemaUtils.replaceProtoDocumentIds(
+          collection.schema,
+          resolvedContent,
+          docIdMapping,
+        );
+      }
+
       const createDocumentResult = await backend.documents.create(
         collectionIds.collectionId,
-        documentContent,
+        resolvedContent,
       );
-      if (!createDocumentResult.success) {
+
+      if (createDocumentResult.success) {
+        collectionDocumentIds.push(createDocumentResult.data.id);
+      } else {
         console.error(
           "Failed to create document",
           documentIndex,
           createDocumentResult.error,
         );
+        // Still push a placeholder to maintain index alignment.
+        collectionDocumentIds.push("" as DocumentId);
       }
     }
   }
@@ -196,4 +269,33 @@ export default async function loadDemoData(
       );
     }
   }
+}
+
+function replaceProtoCollectionIdsInContent(
+  content: unknown,
+  idMapping: Map<string, string>,
+): unknown {
+  if (content === null || content === undefined) {
+    return content;
+  }
+
+  if (typeof content === "string") {
+    return idMapping.get(content) ?? content;
+  }
+
+  if (Array.isArray(content)) {
+    return content.map((item) =>
+      replaceProtoCollectionIdsInContent(item, idMapping),
+    );
+  }
+
+  if (typeof content === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(content)) {
+      result[key] = replaceProtoCollectionIdsInContent(value, idMapping);
+    }
+    return result;
+  }
+
+  return content;
 }
