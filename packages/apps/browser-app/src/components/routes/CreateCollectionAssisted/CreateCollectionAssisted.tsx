@@ -1,8 +1,4 @@
-import {
-  AssistantName,
-  ConversationFormat,
-  type Message,
-} from "@superego/backend";
+import { AssistantName, type Message } from "@superego/backend";
 import { PiCode } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -25,7 +21,6 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const onSend = async (userMessageContent: Message.User["content"]) => {
     const { success, data } = await mutate(
       AssistantName.CollectionCreator,
-      ConversationFormat.Text,
       userMessageContent,
     );
     if (success) {

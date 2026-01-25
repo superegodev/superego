@@ -1,6 +1,5 @@
 import type {
   AssistantName,
-  ConversationFormat,
   ConversationId,
   ConversationStatus,
   Message,
@@ -9,7 +8,6 @@ import type {
 type ConversationEntity = {
   id: ConversationId;
   assistant: AssistantName;
-  format: ConversationFormat;
   title: string | null;
   contextFingerprint: string;
   // TODO: add model that was used, in case we want to ensure that a

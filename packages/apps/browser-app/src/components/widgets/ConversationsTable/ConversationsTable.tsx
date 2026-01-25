@@ -6,7 +6,6 @@ import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import ConversationAssistant from "../../design-system/ConversationAssistant/ConversationAssistant.js";
-import ConversationFormat from "../../design-system/ConversationFormat/ConversationFormat.js";
 import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.js";
 import Table from "../../design-system/Table/Table.js";
 import * as cs from "./ConversationsTable.css.js";
@@ -34,9 +33,6 @@ export default function ConversationsTable({ conversations }: Props) {
           <>
             <Table.Column defaultWidth="1fr">
               <FormattedMessage defaultMessage="Assistant" />
-            </Table.Column>
-            <Table.Column defaultWidth="1fr">
-              <FormattedMessage defaultMessage="Format" />
             </Table.Column>
             <Table.Column align="right" defaultWidth="1fr">
               <FormattedMessage defaultMessage="Created at" />
@@ -69,9 +65,6 @@ export default function ConversationsTable({ conversations }: Props) {
               <>
                 <Table.Cell>
                   <ConversationAssistant assistant={conversation.assistant} />
-                </Table.Cell>
-                <Table.Cell>
-                  <ConversationFormat format={conversation.format} />
                 </Table.Cell>
                 <Table.Cell align="right">
                   <FormattedDate value={conversation.createdAt} />

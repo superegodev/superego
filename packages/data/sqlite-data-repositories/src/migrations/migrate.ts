@@ -6,6 +6,7 @@ import m0003 from "./0003.sql?raw";
 import m0004 from "./0004.sql?raw";
 import m0005 from "./0005.sql?raw";
 import m0006 from "./0006.sql?raw";
+import m0007 from "./0007.sql?raw";
 
 const migrationFiles = {
   "0000.sql": m0000,
@@ -15,6 +16,7 @@ const migrationFiles = {
   "0004.sql": m0004,
   "0005.sql": m0005,
   "0006.sql": m0006,
+  "0007.sql": m0007,
 };
 const table = "migrations";
 

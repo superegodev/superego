@@ -1,7 +1,6 @@
 import {
   AssistantName,
   type AudioContent,
-  ConversationFormat,
   ConversationStatus,
   MessageContentPartType,
   MessageRole,
@@ -31,7 +30,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
-      format: ConversationFormat.Text,
       title: "title",
       contextFingerprint: "contextFingerprint",
       messages: [
@@ -71,7 +69,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
-      format: ConversationFormat.Text,
       title: "original title",
       contextFingerprint: "contextFingerprint",
       messages: [],
@@ -114,7 +111,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: AssistantName.Factotum,
-      format: ConversationFormat.Text,
       title: "title",
       contextFingerprint: "contextFingerprint",
       messages: [],
@@ -156,7 +152,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
-        format: ConversationFormat.Text,
         title: "title",
         contextFingerprint: "contextFingerprint",
         messages: [],
@@ -209,7 +204,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       const conversation: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
-        format: ConversationFormat.Text,
         title: "title",
         contextFingerprint: "contextFingerprint",
         messages: [],
@@ -278,7 +272,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       const conversation1: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
-        format: ConversationFormat.Text,
         title: "title 1",
         contextFingerprint: "contextFingerprint",
         messages: [],
@@ -289,7 +282,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       const conversation2: ConversationEntity = {
         id: Id.generate.conversation(),
         assistant: AssistantName.Factotum,
-        format: ConversationFormat.Text,
         title: "title 2",
         contextFingerprint: "contextFingerprint",
         messages: [],

@@ -2,7 +2,6 @@ import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
 import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
-import type ConversationFormat from "./enums/ConversationFormat.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
@@ -423,7 +422,6 @@ export default interface Backend {
   assistants: {
     startConversation(
       assistant: AssistantName,
-      format: ConversationFormat,
       userMessageContent: Message.User["content"],
     ): ResultPromise<Conversation, FilesNotFound | UnexpectedError>;
 

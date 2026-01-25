@@ -10,7 +10,6 @@ export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
 export { default as ConnectorAuthenticationStrategy } from "./enums/ConnectorAuthenticationStrategy.js";
-export { default as ConversationFormat } from "./enums/ConversationFormat.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
 export { default as DownSyncStatus } from "./enums/DownSyncStatus.js";

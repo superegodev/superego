@@ -1,7 +1,6 @@
 import { decode } from "@msgpack/msgpack";
 import type {
   AssistantName,
-  ConversationFormat,
   ConversationId,
   ConversationStatus,
   Message,
@@ -11,7 +10,6 @@ import type { ConversationEntity } from "@superego/executing-backend";
 type SqliteConversation = {
   id: ConversationId;
   assistant: AssistantName;
-  format: ConversationFormat;
   title: string | null;
   context_fingerprint: string;
   /** MessagePack */
@@ -28,7 +26,6 @@ export function toEntity(conversation: SqliteConversation): ConversationEntity {
   return {
     id: conversation.id,
     assistant: conversation.assistant,
-    format: conversation.format,
     title: conversation.title,
     contextFingerprint: conversation.context_fingerprint,
     messages: decode(conversation.messages) as Message[],
