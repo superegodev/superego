@@ -172,9 +172,12 @@ export default async function loadDemoData(
           const docIndex = schemaUtils.parseProtoDocumentIndex(ref.documentId);
           if (docIndex !== null) {
             // Use the collectionId to find the correct collection index.
-            const refCollectionIndex = collectionIndexById.get(ref.collectionId);
+            const refCollectionIndex = collectionIndexById.get(
+              ref.collectionId,
+            );
             if (refCollectionIndex !== undefined) {
-              const docIds = documentIdsByCollectionIndex.get(refCollectionIndex);
+              const docIds =
+                documentIdsByCollectionIndex.get(refCollectionIndex);
               const actualDocId = docIds?.[docIndex];
               if (actualDocId !== undefined) {
                 docIdMapping.set(ref.documentId, actualDocId);
