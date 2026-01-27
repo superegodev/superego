@@ -314,7 +314,7 @@ export const DocumentRefField = {
     wrapper: style({
       display: "flex",
       alignItems: "center",
-      gap: vars.spacing._1,
+      gap: vars.spacing._2,
       marginBlockEnd: vars.spacing._2,
     }),
 
