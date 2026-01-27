@@ -10,7 +10,7 @@ enum ToolName {
   // CollectionCreator
   SuggestCollectionsDefinitions = "suggestCollectionsDefinitions",
   // Shared
-  InspectFile = "InspectFile",
+  InspectFile = "inspectFile",
   // Other tools, not used by an assistant
   WriteTypescriptModule = "writeTypescriptModule",
 }

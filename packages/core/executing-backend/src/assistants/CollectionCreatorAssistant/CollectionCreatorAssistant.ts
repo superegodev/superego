@@ -97,7 +97,7 @@ export default class CollectionCreatorAssistant extends Assistant {
   }
 
   protected getTools(): InferenceService.Tool[] {
-    return [SuggestCollectionsDefinitions.get()];
+    return [SuggestCollectionsDefinitions.get(), InspectFile.get()];
   }
 
   protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
