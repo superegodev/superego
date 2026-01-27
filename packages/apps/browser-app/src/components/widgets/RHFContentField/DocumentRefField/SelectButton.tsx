@@ -1,12 +1,15 @@
 import type { Collection, CollectionId, DocumentId } from "@superego/backend";
 import { type DocumentRef, utils } from "@superego/schema";
-import { FormattedMessage } from "react-intl";
+import { PiArrowSquareOut } from "react-icons/pi";
+import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import { getDocumentQuery } from "../../../../business-logic/backend/hooks.js";
+import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../../utils/DocumentUtils.js";
 import Button from "../../../design-system/Button/Button.js";
 import ContentSummaryPropertyValue from "../../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
+import IconLink from "../../../design-system/IconLink/IconLink.js";
 import * as cs from "../RHFContentField.css.js";
 
 interface Props {
@@ -21,11 +24,12 @@ export default function SelectButton({
   collectionsById,
   isReadOnly,
 }: Props) {
+  const intl = useIntl();
   if (!value) {
     return (
       <Button
         onPress={onPress}
-        className={cs.DocumentRefField.SelectButton.root}
+        className={cs.DocumentRefField.SelectButton.button}
       >
         <span className={cs.DocumentRefField.SelectButton.placeholder}>
           {isReadOnly ? (
@@ -44,7 +48,7 @@ export default function SelectButton({
     return (
       <Button
         onPress={!isReadOnly ? onPress : undefined}
-        className={cs.DocumentRefField.SelectButton.root}
+        className={cs.DocumentRefField.SelectButton.button}
       >
         <FormattedMessage
           defaultMessage="{collection} » Example document"
@@ -59,34 +63,48 @@ export default function SelectButton({
   }
 
   return (
-    <Button
-      onPress={!isReadOnly ? onPress : undefined}
-      className={cs.DocumentRefField.SelectButton.root}
-    >
-      <DataLoader
-        queries={[
-          getDocumentQuery([
-            value.collectionId as CollectionId,
-            value.documentId as DocumentId,
-          ]),
-        ]}
+    <div className={cs.DocumentRefField.SelectButton.wrapper}>
+      <Button
+        onPress={!isReadOnly ? onPress : undefined}
+        className={cs.DocumentRefField.SelectButton.button}
       >
-        {(document) => (
-          <FormattedMessage
-            defaultMessage="{collection} » {document}"
-            values={{
-              collection: collection
-                ? CollectionUtils.getDisplayName(collection)
-                : value.collectionId,
-              document: (
-                <ContentSummaryPropertyValue
-                  value={DocumentUtils.getDisplayName(document)}
-                />
-              ),
-            }}
-          />
-        )}
-      </DataLoader>
-    </Button>
+        <DataLoader
+          queries={[
+            getDocumentQuery([
+              value.collectionId as CollectionId,
+              value.documentId as DocumentId,
+            ]),
+          ]}
+        >
+          {(document) => (
+            <FormattedMessage
+              defaultMessage="{collection} » {document}"
+              values={{
+                collection: collection
+                  ? CollectionUtils.getDisplayName(collection)
+                  : value.collectionId,
+                document: (
+                  <ContentSummaryPropertyValue
+                    value={DocumentUtils.getDisplayName(document)}
+                  />
+                ),
+              }}
+            />
+          )}
+        </DataLoader>
+      </Button>
+      <IconLink
+        variant="invisible"
+        label={intl.formatMessage({ defaultMessage: "Open document" })}
+        to={{
+          name: RouteName.Document,
+          collectionId: value.collectionId as CollectionId,
+          documentId: value.documentId as DocumentId,
+        }}
+        className={cs.DocumentRefField.SelectButton.iconLink}
+      >
+        <PiArrowSquareOut />
+      </IconLink>
+    </div>
   );
 }

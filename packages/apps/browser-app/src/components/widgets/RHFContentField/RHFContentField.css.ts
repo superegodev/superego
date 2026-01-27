@@ -311,19 +311,44 @@ export const DocumentRefField = {
   },
 
   SelectButton: {
-    root: style({
+    wrapper: style({
+      display: "flex",
+      alignItems: "center",
+      gap: vars.spacing._1,
+      marginBlockEnd: vars.spacing._2,
+    }),
+
+    button: style({
       display: "flex",
       justifyContent: "flex-start",
       alignItems: "center",
       width: "100%",
       height: `calc(${vars.spacing._9} + 1px)`,
-      marginBlockEnd: vars.spacing._2,
       fontSize: vars.typography.fontSizes.md,
     }),
 
     placeholder: style({
       color: vars.colors.text.secondary,
       fontStyle: "italic",
+    }),
+
+    iconLink: style({
+      flexShrink: 0,
+      height: `calc(${vars.spacing._9} + 1px)`,
+      aspectRatio: "1 / 1",
+      background: vars.colors.button.default.base.background,
+      color: vars.colors.button.default.base.text,
+      borderColor: vars.colors.button.default.base.border,
+      borderWidth: vars.borders.width.thin,
+      borderStyle: "solid",
+      borderRadius: vars.borders.radius.md,
+      selectors: {
+        "&:hover": {
+          background: vars.colors.button.default.hover.background,
+          color: vars.colors.button.default.hover.text,
+          borderColor: vars.colors.button.default.hover.border,
+        },
+      },
     }),
   },
 };
