@@ -1,4 +1,9 @@
-import type { FileRef, FileTypeDefinition, ProtoFile } from "@superego/schema";
+import {
+  type FileRef,
+  type FileTypeDefinition,
+  type RHFProtoFile,
+  utils as schemaUtils,
+} from "@superego/schema";
 import {
   DropZone,
   FieldErrorContext,
@@ -152,7 +157,7 @@ function NullFileFields({ setFile, isReadOnly }: NullFileFieldsProps) {
 interface NonNullFileFieldsProps {
   control: Control;
   name: string;
-  file: ProtoFile | FileRef;
+  file: RHFProtoFile | FileRef;
   setFile: (file: File) => void;
   isReadOnly: boolean;
 }
@@ -165,7 +170,7 @@ function NonNullFileFields({
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
-  const canOpenInNativeApp = electronMainWorld.isElectron && "id" in file;
+  const canOpenInNativeApp = electronMainWorld.isElectron;
   return (
     <div className={cs.FileField.nonNullFileFieldsRoot}>
       <div className={cs.FileField.nonNullFileIcon}>
@@ -206,7 +211,15 @@ function NonNullFileFields({
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}
-          onPress={() => downloadFile(intl, backend, file)}
+          onPress={async () =>
+            downloadFile(
+              intl,
+              backend,
+              "id" in file
+                ? file
+                : await schemaUtils.RHFProtoFile.fromRHFProtoFile(file),
+            )
+          }
         >
           <PiDownloadSimple />
         </IconButton>
@@ -214,7 +227,14 @@ function NonNullFileFields({
           <IconButton
             label={intl.formatMessage({ defaultMessage: "Open" })}
             className={cs.FileField.nonNullFileButton}
-            onPress={() => openFileWithNativeApp(intl, file)}
+            onPress={async () =>
+              openFileWithNativeApp(
+                intl,
+                "id" in file
+                  ? file
+                  : await schemaUtils.RHFProtoFile.fromRHFProtoFile(file),
+              )
+            }
           >
             <PiArrowSquareOut />
           </IconButton>

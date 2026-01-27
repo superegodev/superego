@@ -1,6 +1,6 @@
 import type { Backend, UnexpectedError } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import type { FileRef } from "@superego/schema";
+import type { FileRef, ProtoFile } from "@superego/schema";
 
 type ElectronMainWorld =
   | {
@@ -8,7 +8,7 @@ type ElectronMainWorld =
       backend: Backend;
       openInNativeBrowser: (url: string) => Promise<void>;
       openFileWithNativeApp: (
-        file: FileRef,
+        file: ProtoFile | FileRef,
       ) => ResultPromise<null, UnexpectedError>;
       windowClose: {
         confirmClose(): Promise<void>;

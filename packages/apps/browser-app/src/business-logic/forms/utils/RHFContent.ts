@@ -2,17 +2,17 @@ import {
   type AnyTypeDefinition,
   DataType,
   type Schema,
-  utils,
+  utils as schemaUtils,
 } from "@superego/schema";
 import pMap from "p-map";
 
 export default {
   async fromRHFContent(rhfContent: any, schema: Schema): Promise<any> {
-    return fromRHFValue(rhfContent, utils.getRootType(schema), schema);
+    return fromRHFValue(rhfContent, schemaUtils.getRootType(schema), schema);
   },
 
   toRHFContent(content: any, schema: Schema): any {
-    return toRHFValue(content, utils.getRootType(schema), schema);
+    return toRHFValue(content, schemaUtils.getRootType(schema), schema);
   },
 };
 
@@ -39,11 +39,7 @@ async function fromRHFValue(
       // FileRefs are kept as is. RHFProtoFiles are converted to ProtoFiles.
       return "id" in rhfValue
         ? rhfValue
-        : {
-            name: rhfValue.name,
-            mimeType: rhfValue.mimeType,
-            content: new Uint8Array(await rhfValue.content.arrayBuffer()),
-          };
+        : schemaUtils.RHFProtoFile.fromRHFProtoFile(rhfValue);
     case DataType.Struct:
       return Object.fromEntries(
         await pMap(
@@ -67,7 +63,7 @@ async function fromRHFValue(
     case null:
       return fromRHFValue(
         rhfValue,
-        utils.getType(schema, typeDefinition),
+        schemaUtils.getType(schema, typeDefinition),
         schema,
       );
   }
@@ -96,13 +92,7 @@ function toRHFValue(
       // ProtoFiles are converted to RHFProtoFiles. FileRefs are kept as is.
       return "id" in value
         ? value
-        : ({
-            name: value.name,
-            mimeType: value.mimeType,
-            content: new File([value.content], value.name, {
-              type: value.mimeType,
-            }),
-          } satisfies RHFProtoFile);
+        : schemaUtils.RHFProtoFile.toRHFProtoFile(value);
     case DataType.Struct:
       return Object.fromEntries(
         Object.entries(typeDefinition.properties).map(
@@ -117,15 +107,10 @@ function toRHFValue(
         value: toRHFValue(item, typeDefinition.items, schema),
       }));
     case null:
-      return toRHFValue(value, utils.getType(schema, typeDefinition), schema);
+      return toRHFValue(
+        value,
+        schemaUtils.getType(schema, typeDefinition),
+        schema,
+      );
   }
-}
-
-// RHF representation of a ProtoFile. ProtoFile cannot be used directly because
-// RHF doesn't play well with ArrayBuffers.
-// See https://github.com/react-hook-form/react-hook-form/pull/12809.
-interface RHFProtoFile {
-  name: string;
-  mimeType: string;
-  content: File;
 }
