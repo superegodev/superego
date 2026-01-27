@@ -36,13 +36,13 @@ async function fromRHFValue(
     case DataType.DocumentRef:
       return rhfValue;
     case DataType.File:
-      // FileRefs are kept as is. Files are converted to ProtoFiles.
+      // FileRefs are kept as is. RHFProtoFiles are converted to ProtoFiles.
       return "id" in rhfValue
         ? rhfValue
         : {
             name: rhfValue.name,
-            mimeType: rhfValue.type,
-            content: new Uint8Array(await rhfValue.arrayBuffer()),
+            mimeType: rhfValue.mimeType,
+            content: new Uint8Array(await rhfValue.content.arrayBuffer()),
           };
     case DataType.Struct:
       return Object.fromEntries(
@@ -93,10 +93,16 @@ function toRHFValue(
     case DataType.DocumentRef:
       return value;
     case DataType.File:
-      // ProtoFiles are converted to Files. FileRefs are kept as is.
+      // ProtoFiles are converted to RHFProtoFiles. FileRefs are kept as is.
       return "id" in value
         ? value
-        : new File([value.content], value.name, { type: value.mimeType });
+        : ({
+            name: value.name,
+            mimeType: value.mimeType,
+            content: new File([value.content], value.name, {
+              type: value.mimeType,
+            }),
+          } satisfies RHFProtoFile);
     case DataType.Struct:
       return Object.fromEntries(
         Object.entries(typeDefinition.properties).map(
@@ -113,4 +119,13 @@ function toRHFValue(
     case null:
       return toRHFValue(value, utils.getType(schema, typeDefinition), schema);
   }
+}
+
+// RHF representation of a ProtoFile. ProtoFile cannot be used directly because
+// RHF doesn't play well with ArrayBuffers.
+// See https://github.com/react-hook-form/react-hook-form/pull/12809.
+interface RHFProtoFile {
+  name: string;
+  mimeType: string;
+  content: File;
 }
