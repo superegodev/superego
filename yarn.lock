@@ -6135,6 +6135,7 @@ __metadata:
     "@superego/global-types": "workspace:*"
     "@superego/openai-compat-inference-service": "workspace:*"
     "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/tsc-typescript-compiler": "workspace:*"
@@ -6142,6 +6143,7 @@ __metadata:
     babel-plugin-formatjs: "npm:^11.2.1"
     electron: "npm:40.0.0"
     electron-vite: "npm:^5.0.0"
+    filenamify: "npm:^7.0.1"
     typescript: "npm:^5.9.3"
     vite: "npm:^7.3.1"
   languageName: unknown
@@ -10271,6 +10273,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filename-reserved-regex@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "filename-reserved-regex@npm:4.0.0"
+  checksum: 10c0/a598eb453e5b9b72a4de32102da19f4bbbed3c4ac279386b95704abfff5be946943074a762ea13cad6e244fa9e52d7254c0e1e63c642cd50b34f0ca1d7511143
+  languageName: node
+  linkType: hard
+
 "filenamify@npm:^4.1.0":
   version: 4.3.0
   resolution: "filenamify@npm:4.3.0"
@@ -10279,6 +10288,15 @@ __metadata:
     strip-outer: "npm:^1.0.1"
     trim-repeated: "npm:^1.0.0"
   checksum: 10c0/dcfd2f116d66f78c9dd58bb0f0d9b6529d89c801a9f37a4f86e7adc0acecb6881c7fb7c3231dc9e6754b767edcfdca89cba3a492a58afd2b48479b30d14ccf8f
+  languageName: node
+  linkType: hard
+
+"filenamify@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "filenamify@npm:7.0.1"
+  dependencies:
+    filename-reserved-regex: "npm:^4.0.0"
+  checksum: 10c0/5320cad5f8878983f514f32d4b5a67bdaba184c2cb43aaeb302511528f1f4c852cb5d8c49edb5a9cc748df67b857f72bf7781f1681d566b0917d3707e2920ea2
   languageName: node
   linkType: hard
 

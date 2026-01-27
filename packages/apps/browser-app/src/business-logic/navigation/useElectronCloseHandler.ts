@@ -1,27 +1,19 @@
 import { useEffect } from "react";
+import { electronMainWorld } from "../electron/electron.js";
 import { useNavigationStateStore } from "./useNavigationState.js";
-
-interface WindowCloseHandler {
-  confirmClose(): Promise<void>;
-  onCloseRequested(callback: () => void): () => void;
-}
-
-declare global {
-  interface Window {
-    windowClose?: WindowCloseHandler;
-  }
-}
 
 export default function useElectronCloseHandler(): void {
   useEffect(() => {
-    return window.windowClose
-      ? window.windowClose.onCloseRequested(() => {
-          const { exitWarningMessage } = useNavigationStateStore.getState();
-          if (exitWarningMessage && !window.confirm(exitWarningMessage)) {
-            return;
-          }
-          window.windowClose?.confirmClose();
-        })
-      : undefined;
+    if (!electronMainWorld.isElectron) {
+      return;
+    }
+    const { windowClose } = electronMainWorld;
+    return windowClose.onCloseRequested(() => {
+      const { exitWarningMessage } = useNavigationStateStore.getState();
+      if (exitWarningMessage && !window.confirm(exitWarningMessage)) {
+        return;
+      }
+      windowClose.confirmClose();
+    });
   }, []);
 }

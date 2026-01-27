@@ -2,7 +2,9 @@ import type { FileId, MessageContentPart } from "@superego/backend";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import useBackend from "../../../../business-logic/backend/useBackend.js";
+import { electronMainWorld } from "../../../../business-logic/electron/electron.js";
 import downloadFile from "../../../../utils/downloadFile.js";
+import openFileWithNativeApp from "../../../../utils/openFileWithNativeApp.js";
 import FileIcon from "../../../design-system/FileIcon/FileIcon.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
 import * as cs from "./UserMessage.css.js";
@@ -47,7 +49,11 @@ export default function FilePart({ filePart }: Props) {
   return (
     <IconButton
       variant="invisible"
-      onPress={() => downloadFile(backend, file)}
+      onPress={() =>
+        electronMainWorld.isElectron && "id" in file
+          ? openFileWithNativeApp(intl, file)
+          : downloadFile(intl, backend, file)
+      }
       label={intl.formatMessage({ defaultMessage: "Download" })}
       className={cs.FilePart.root}
     >

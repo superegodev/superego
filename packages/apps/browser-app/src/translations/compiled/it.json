@@ -1386,6 +1386,12 @@
       "value": "Nome"
     }
   ],
+  "FileField.tsx_JfG49w": [
+    {
+      "type": 0,
+      "value": "Apri"
+    }
+  ],
   "FileField.tsx_SHoeDt": [
     {
       "type": 0,
@@ -3630,6 +3636,12 @@
       "value": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
     }
   ],
+  "downloadFile.ts_sG8Krh": [
+    {
+      "type": 0,
+      "value": "Download del file non riuscito"
+    }
+  ],
   "formatDuration.ts_26OSN4": [
     {
       "offset": 0,
@@ -3813,6 +3825,12 @@
     {
       "type": 0,
       "value": "Oggi"
+    }
+  ],
+  "openFileWithNativeApp.ts_Blh3UZ": [
+    {
+      "type": 0,
+      "value": "Apertura del file non riuscita"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

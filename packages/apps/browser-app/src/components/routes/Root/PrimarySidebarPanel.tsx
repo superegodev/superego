@@ -5,6 +5,7 @@ import {
   PiRobot,
 } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
+import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
@@ -24,7 +25,7 @@ export default function PrimarySidebarPanel() {
         className={cs.PrimarySidebarPanel.root}
       >
         <div className={cs.PrimarySidebarPanel.topActions}>
-          {"isElectron" in window && window.isElectron ? (
+          {electronMainWorld.isElectron ? (
             <PrimarySidebarPanelAction
               type="button"
               onPress={goBack}

@@ -2,6 +2,7 @@ import {
   type Collection,
   ConnectorAuthenticationStrategy,
 } from "@superego/backend";
+import { electronMainWorld } from "../electron/electron.js";
 import { useGlobalData } from "./GlobalData.js";
 import useBackend from "./useBackend.js";
 
@@ -35,11 +36,8 @@ export default function useAuthenticateCollectionConnector(): UseAuthenticateCol
         if (!result.success) {
           throw result.error;
         }
-        if (
-          "openInNativeBrowser" in window &&
-          typeof window.openInNativeBrowser === "function"
-        ) {
-          window.openInNativeBrowser(result.data);
+        if (electronMainWorld.isElectron) {
+          electronMainWorld.openInNativeBrowser(result.data);
         } else {
           window.open(result.data, "_blank");
         }

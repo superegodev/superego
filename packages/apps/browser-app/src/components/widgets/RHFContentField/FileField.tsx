@@ -6,11 +6,17 @@ import {
   Toolbar,
 } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
-import { PiDownloadSimple, PiUploadSimple } from "react-icons/pi";
+import {
+  PiArrowSquareOut,
+  PiDownloadSimple,
+  PiUploadSimple,
+} from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import useBackend from "../../../business-logic/backend/useBackend.js";
+import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import classnames from "../../../utils/classnames.js";
 import downloadFile from "../../../utils/downloadFile.js";
+import openFileWithNativeApp from "../../../utils/openFileWithNativeApp.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
@@ -159,6 +165,7 @@ function NonNullFileFields({
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
+  const canOpenInNativeApp = electronMainWorld.isElectron && "id" in file;
   return (
     <div className={cs.FileField.nonNullFileFieldsRoot}>
       <div className={cs.FileField.nonNullFileIcon}>
@@ -199,10 +206,19 @@ function NonNullFileFields({
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}
-          onPress={() => downloadFile(backend, file)}
+          onPress={() => downloadFile(intl, backend, file)}
         >
           <PiDownloadSimple />
         </IconButton>
+        {canOpenInNativeApp && (
+          <IconButton
+            label={intl.formatMessage({ defaultMessage: "Open" })}
+            className={cs.FileField.nonNullFileButton}
+            onPress={() => openFileWithNativeApp(intl, file)}
+          >
+            <PiArrowSquareOut />
+          </IconButton>
+        )}
       </Toolbar>
     </div>
   );

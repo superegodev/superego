@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
+import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
 import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
 import WindowCloseIPCProxyServer from "../ipc-proxies/WindowCloseIPCProxyServer.js";
 import { OAUTH2_PKCE_CALLBACK_SERVER_PORT } from "./config.js";
@@ -16,6 +17,7 @@ app
     const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT);
     startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
     new BackendIPCProxyServer(backend).start();
+    new OpenFileWithNativeAppIPCProxyServer(backend).start();
     new OpenInNativeBrowserIPCProxyServer().start();
     new WindowCloseIPCProxyServer().start();
     createApplicationMenu({ onNewWindow: createWindow });
