@@ -2,17 +2,17 @@ import {
   type AnyTypeDefinition,
   DataType,
   type Schema,
-  utils,
+  utils as schemaUtils,
 } from "@superego/schema";
 import pMap from "p-map";
 
 export default {
   async fromRHFContent(rhfContent: any, schema: Schema): Promise<any> {
-    return fromRHFValue(rhfContent, utils.getRootType(schema), schema);
+    return fromRHFValue(rhfContent, schemaUtils.getRootType(schema), schema);
   },
 
   toRHFContent(content: any, schema: Schema): any {
-    return toRHFValue(content, utils.getRootType(schema), schema);
+    return toRHFValue(content, schemaUtils.getRootType(schema), schema);
   },
 };
 
@@ -36,14 +36,10 @@ async function fromRHFValue(
     case DataType.DocumentRef:
       return rhfValue;
     case DataType.File:
-      // FileRefs are kept as is. Files are converted to ProtoFiles.
+      // FileRefs are kept as is. RHFProtoFiles are converted to ProtoFiles.
       return "id" in rhfValue
         ? rhfValue
-        : {
-            name: rhfValue.name,
-            mimeType: rhfValue.type,
-            content: new Uint8Array(await rhfValue.arrayBuffer()),
-          };
+        : schemaUtils.RHFProtoFile.fromRHFProtoFile(rhfValue);
     case DataType.Struct:
       return Object.fromEntries(
         await pMap(
@@ -67,7 +63,7 @@ async function fromRHFValue(
     case null:
       return fromRHFValue(
         rhfValue,
-        utils.getType(schema, typeDefinition),
+        schemaUtils.getType(schema, typeDefinition),
         schema,
       );
   }
@@ -93,10 +89,10 @@ function toRHFValue(
     case DataType.DocumentRef:
       return value;
     case DataType.File:
-      // ProtoFiles are converted to Files. FileRefs are kept as is.
+      // ProtoFiles are converted to RHFProtoFiles. FileRefs are kept as is.
       return "id" in value
         ? value
-        : new File([value.content], value.name, { type: value.mimeType });
+        : schemaUtils.RHFProtoFile.toRHFProtoFile(value);
     case DataType.Struct:
       return Object.fromEntries(
         Object.entries(typeDefinition.properties).map(
@@ -111,6 +107,10 @@ function toRHFValue(
         value: toRHFValue(item, typeDefinition.items, schema),
       }));
     case null:
-      return toRHFValue(value, utils.getType(schema, typeDefinition), schema);
+      return toRHFValue(
+        value,
+        schemaUtils.getType(schema, typeDefinition),
+        schema,
+      );
   }
 }

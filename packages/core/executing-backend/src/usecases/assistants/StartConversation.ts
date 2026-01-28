@@ -3,7 +3,6 @@ import {
   type Backend,
   BackgroundJobName,
   type Conversation,
-  type ConversationFormat,
   ConversationStatus,
   type FilesNotFound,
   type Message,
@@ -35,7 +34,6 @@ export default class AssistantsStartConversation extends Usecase<
 > {
   async exec(
     assistant: AssistantName,
-    format: ConversationFormat,
     userMessageContent: Message.User["content"],
   ): ResultPromise<Conversation, FilesNotFound | UnexpectedError> {
     const referencedFileIds =
@@ -70,7 +68,6 @@ export default class AssistantsStartConversation extends Usecase<
     const conversation: ConversationEntity = {
       id: Id.generate.conversation(),
       assistant: assistant,
-      format: format,
       title: null,
       contextFingerprint: contextFingerprint,
       messages: [userMessage],

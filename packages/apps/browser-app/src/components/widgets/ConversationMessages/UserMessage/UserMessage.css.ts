@@ -13,7 +13,7 @@ export const UserMessage = {
     },
   }),
 
-  markdown: style({
+  text: style({
     background: vars.colors.background.surfaceHighlight,
     borderRadius: vars.borders.radius.xl,
     padding: vars.spacing._4,

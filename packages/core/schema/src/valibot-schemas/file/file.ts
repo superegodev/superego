@@ -2,15 +2,10 @@ import * as v from "valibot";
 import type { FileTypeDefinition } from "../../typeDefinitions.js";
 import type FileRef from "../../types/FileRef.js";
 import type ProtoFile from "../../types/ProtoFile.js";
+import type RHFProtoFile from "../../types/RHFProtoFile.js";
 import translate from "../../utils/translate.js";
 import mimeType from "../mimeType/mimeType.js";
 import satisfiesAccept from "./checks/satisfiesAccept.js";
-
-interface RHFProtoFile {
-  name: string;
-  mimeType: string;
-  content: File;
-}
 
 export default function file(
   accept: FileTypeDefinition["accept"] | undefined,

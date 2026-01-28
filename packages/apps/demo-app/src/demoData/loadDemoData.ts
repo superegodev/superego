@@ -112,6 +112,11 @@ export default async function loadDemoData(
     createdCollections.map((c) => c.id),
   );
 
+  // Build a reverse mapping from actual collection ID to collection index.
+  // This is used to resolve document references by looking up which collection
+  // a document ref points to.
+  const collectionIndexById = new Map<string, number>();
+
   for (const [index, collection] of collections.entries()) {
     const createdCollection = createdCollections[index];
     if (createdCollection) {
@@ -119,6 +124,7 @@ export default async function loadDemoData(
         collectionId: createdCollection.id,
         collectionVersionId: createdCollection.latestVersion.id,
       });
+      collectionIndexById.set(createdCollection.id, index);
     }
   }
 
@@ -155,26 +161,26 @@ export default async function loadDemoData(
       );
 
       // Then, replace ProtoDocument_<index> with actual document IDs.
-      const protoDocumentIds = schemaUtils.extractProtoDocumentIds(
-        collection.schema,
-        resolvedContent,
-      );
+      // Extract document refs with both collectionId and documentId so we can
+      // look up the correct collection for each reference.
+      const protoDocumentRefs = extractProtoDocumentRefs(resolvedContent);
 
-      if (protoDocumentIds.length > 0) {
+      if (protoDocumentRefs.length > 0) {
         // Build a mapping from ProtoDocument_<index> to actual document IDs.
-        // The index refers to documents in the referenced collection (from
-        // ProtoCollection).
         const docIdMapping = new Map<string, string>();
-        for (const protoId of protoDocumentIds) {
-          const docIndex = schemaUtils.parseProtoDocumentIndex(protoId);
+        for (const ref of protoDocumentRefs) {
+          const docIndex = schemaUtils.parseProtoDocumentIndex(ref.documentId);
           if (docIndex !== null) {
-            // For each collection that has been created, check if it has the
-            // document.
-            for (const [, docIds] of documentIdsByCollectionIndex.entries()) {
-              const actualDocId = docIds[docIndex];
+            // Use the collectionId to find the correct collection index.
+            const refCollectionIndex = collectionIndexById.get(
+              ref.collectionId,
+            );
+            if (refCollectionIndex !== undefined) {
+              const docIds =
+                documentIdsByCollectionIndex.get(refCollectionIndex);
+              const actualDocId = docIds?.[docIndex];
               if (actualDocId !== undefined) {
-                docIdMapping.set(protoId, actualDocId);
-                break;
+                docIdMapping.set(ref.documentId, actualDocId);
               }
             }
           }
@@ -298,4 +304,54 @@ function replaceProtoCollectionIdsInContent(
   }
 
   return content;
+}
+
+type ProtoDocumentRef = {
+  collectionId: string;
+  documentId: string;
+};
+
+/**
+ * Extracts all document refs where the documentId is a ProtoDocument placeholder.
+ * Returns both the collectionId and documentId so we can look up the correct
+ * collection when resolving the reference.
+ */
+function extractProtoDocumentRefs(content: unknown): ProtoDocumentRef[] {
+  const refs: ProtoDocumentRef[] = [];
+  _extractProtoDocumentRefs(content, refs);
+  return refs;
+}
+
+function _extractProtoDocumentRefs(
+  content: unknown,
+  refs: ProtoDocumentRef[],
+): void {
+  if (content === null || content === undefined) {
+    return;
+  }
+
+  if (Array.isArray(content)) {
+    for (const item of content) {
+      _extractProtoDocumentRefs(item, refs);
+    }
+    return;
+  }
+
+  if (typeof content === "object") {
+    const obj = content as Record<string, unknown>;
+    const collectionId = obj["collectionId"];
+    const documentId = obj["documentId"];
+    // Check if this is a document ref with a proto document ID.
+    if (
+      typeof collectionId === "string" &&
+      typeof documentId === "string" &&
+      schemaUtils.isProtoDocumentId(documentId)
+    ) {
+      refs.push({ collectionId, documentId });
+    }
+    // Recurse into all properties.
+    for (const value of Object.values(obj)) {
+      _extractProtoDocumentRefs(value, refs);
+    }
+  }
 }

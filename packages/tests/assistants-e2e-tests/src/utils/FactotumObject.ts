@@ -4,7 +4,6 @@ import {
   type Collection,
   type CollectionId,
   type Conversation,
-  ConversationFormat,
   ConversationStatus,
   type Document,
   type DocumentId,
@@ -193,11 +192,9 @@ class FactotumObject {
 
   private async startConversation(message: string) {
     const startConversationResult =
-      await this.backend.assistants.startConversation(
-        AssistantName.Factotum,
-        ConversationFormat.Text,
-        [{ type: MessageContentPartType.Text, text: message }],
-      );
+      await this.backend.assistants.startConversation(AssistantName.Factotum, [
+        { type: MessageContentPartType.Text, text: message },
+      ]);
     assertSuccessfulResult(
       "Failed to start conversation",
       startConversationResult,

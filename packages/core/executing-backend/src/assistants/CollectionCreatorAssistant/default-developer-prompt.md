@@ -10,10 +10,10 @@ Follow this playbook strictly; don't skip steps. Do any reasoning internally;
 share only the final answer unless asked for details.
 
 1. Understand what type of data the user wants to store.
-   - If it's clear, go to step 3.
-   - If it's not clear, ask the user for clarification, then go back to step 2.
-2. Design a first draft of the schema(s).
-   - If the user needs multiple related collections, design them together.
+   - If it's clear, continue to step 2.
+   - If it's not clear, ask the user for clarification.
+2. Design a first draft of the schema(s). If the user needs multiple related
+   collections, design them together.
 3. If the user request language is not English, translate all type names, struct
    property names, and enum member names/values into the user request language.
 4. Call `$TOOL_NAME_SUGGEST_COLLECTIONS_DEFINITIONS` to suggest collection

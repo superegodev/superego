@@ -36,9 +36,11 @@ export default function UserMessage({ message }: Props) {
       <FileParts fileParts={fileParts} />
       <div className={cs.UserMessage.root}>
         {text !== "" ? (
-          <Markdown text={text} className={cs.UserMessage.markdown} />
+          <Markdown text={text} className={cs.UserMessage.text} />
         ) : (
-          <FormattedMessage defaultMessage="Transcribing audio..." />
+          <span className={cs.UserMessage.text}>
+            <FormattedMessage defaultMessage="Transcribing audio..." />
+          </span>
         )}
         <div className={cs.UserMessage.actions}>
           {text !== "" ? (

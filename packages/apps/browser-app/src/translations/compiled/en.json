@@ -503,12 +503,6 @@
       "value": "Assistant"
     }
   ],
-  "ConversationsTable.tsx_zQLEfz": [
-    {
-      "type": 0,
-      "value": "Format"
-    }
-  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -1398,6 +1392,12 @@
     {
       "type": 0,
       "value": "Name"
+    }
+  ],
+  "FileField.tsx_JfG49w": [
+    {
+      "type": 0,
+      "value": "Open"
     }
   ],
   "FileField.tsx_SHoeDt": [
@@ -3236,6 +3236,12 @@
       "value": "document"
     }
   ],
+  "SelectButton.tsx_I6j6tF": [
+    {
+      "type": 0,
+      "value": "Open document"
+    }
+  ],
   "SelectButton.tsx_paNPed": [
     {
       "type": 0,
@@ -3658,6 +3664,12 @@
       "value": "Your collections changed since having this conversation. It cannot be continued."
     }
   ],
+  "downloadFile.ts_sG8Krh": [
+    {
+      "type": 0,
+      "value": "Downloading file failed"
+    }
+  ],
   "formatDuration.ts_26OSN4": [
     {
       "offset": 0,
@@ -3841,6 +3853,12 @@
     {
       "type": 0,
       "value": "Today"
+    }
+  ],
+  "openFileWithNativeApp.ts_Blh3UZ": [
+    {
+      "type": 0,
+      "value": "Opening file failed"
     }
   ],
   "typescriptModule.ts_MZNYNj": [

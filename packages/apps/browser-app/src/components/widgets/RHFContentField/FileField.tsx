@@ -1,4 +1,9 @@
-import type { FileRef, FileTypeDefinition, ProtoFile } from "@superego/schema";
+import {
+  type FileRef,
+  type FileTypeDefinition,
+  type RHFProtoFile,
+  utils as schemaUtils,
+} from "@superego/schema";
 import {
   DropZone,
   FieldErrorContext,
@@ -6,11 +11,17 @@ import {
   Toolbar,
 } from "react-aria-components";
 import { type Control, useController } from "react-hook-form";
-import { PiDownloadSimple, PiUploadSimple } from "react-icons/pi";
+import {
+  PiArrowSquareOut,
+  PiDownloadSimple,
+  PiUploadSimple,
+} from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import useBackend from "../../../business-logic/backend/useBackend.js";
+import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import classnames from "../../../utils/classnames.js";
 import downloadFile from "../../../utils/downloadFile.js";
+import openFileWithNativeApp from "../../../utils/openFileWithNativeApp.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
@@ -146,7 +157,7 @@ function NullFileFields({ setFile, isReadOnly }: NullFileFieldsProps) {
 interface NonNullFileFieldsProps {
   control: Control;
   name: string;
-  file: ProtoFile | FileRef;
+  file: RHFProtoFile | FileRef;
   setFile: (file: File) => void;
   isReadOnly: boolean;
 }
@@ -159,6 +170,7 @@ function NonNullFileFields({
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
+  const canOpenInNativeApp = electronMainWorld.isElectron;
   return (
     <div className={cs.FileField.nonNullFileFieldsRoot}>
       <div className={cs.FileField.nonNullFileIcon}>
@@ -199,10 +211,34 @@ function NonNullFileFields({
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Download" })}
           className={cs.FileField.nonNullFileButton}
-          onPress={() => downloadFile(backend, file)}
+          onPress={async () =>
+            downloadFile(
+              intl,
+              backend,
+              "id" in file
+                ? file
+                : await schemaUtils.RHFProtoFile.fromRHFProtoFile(file),
+            )
+          }
         >
           <PiDownloadSimple />
         </IconButton>
+        {canOpenInNativeApp && (
+          <IconButton
+            label={intl.formatMessage({ defaultMessage: "Open" })}
+            className={cs.FileField.nonNullFileButton}
+            onPress={async () =>
+              openFileWithNativeApp(
+                intl,
+                "id" in file
+                  ? file
+                  : await schemaUtils.RHFProtoFile.fromRHFProtoFile(file),
+              )
+            }
+          >
+            <PiArrowSquareOut />
+          </IconButton>
+        )}
       </Toolbar>
     </div>
   );

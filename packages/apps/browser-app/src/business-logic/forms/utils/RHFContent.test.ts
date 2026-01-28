@@ -192,7 +192,11 @@ describe("fromRHFContent", () => {
         rootType: "Root",
       };
       const rhfContent = {
-        file: new File(["content"], "file.txt", { type: "text/plain" }),
+        file: {
+          name: "file.txt",
+          mimeType: "text/plain",
+          content: new File(["content"], "file.txt", { type: "text/plain" }),
+        },
       };
       const result = await RHFContent.fromRHFContent(rhfContent, schema);
 
@@ -250,7 +254,13 @@ describe("fromRHFContent", () => {
       const rhfContent = {
         files: [
           {
-            value: new File(["content"], "file.txt", { type: "text/plain" }),
+            value: {
+              name: "file.txt",
+              mimeType: "text/plain",
+              content: new File(["content"], "file.txt", {
+                type: "text/plain",
+              }),
+            },
           },
         ],
       };
@@ -503,9 +513,13 @@ describe("toRHFContent", () => {
       const result = RHFContent.toRHFContent(content, schema);
 
       // Verify
-      expect(result.file).toBeInstanceOf(File);
-      expect(result.file.name).toEqual("file.txt");
-      expect(result.file.type).toEqual("text/plain");
+      expect(result.file).toEqual({
+        name: "file.txt",
+        mimeType: "text/plain",
+        content: expect.any(File),
+      });
+      expect(result.file.content.name).toEqual("file.txt");
+      expect(result.file.content.type).toEqual("text/plain");
     });
 
     it("case: FileRefs", () => {
@@ -568,8 +582,11 @@ describe("toRHFContent", () => {
       // Verify
       expect(Array.isArray(result.files)).toEqual(true);
       expect(result.files).toHaveLength(1);
-      expect(result.files[0].value).toBeInstanceOf(File);
-      expect(result.files[0].value).not.toBeInstanceOf(Uint8Array);
+      expect(result.files[0].value).toEqual({
+        name: "file.txt",
+        mimeType: "text/plain",
+        content: expect.any(File),
+      });
     });
 
     it("case: FileRefs", () => {
