@@ -22,6 +22,6 @@
     "astro": "^5.16.15",
     "starlight-theme-nova": "^0.10.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.60.0"
+    "wrangler": "^4.61.0"
   }
 }
