@@ -2,9 +2,9 @@ import type { DatabaseSync } from "node:sqlite";
 import type { ConversationId } from "@superego/backend";
 import type { ConversationTextSearchIndex } from "@superego/executing-backend";
 import { Document as FlexsearchDocument } from "flexsearch";
-import type SqliteFlexsearchIndex from "../types/SqliteFlexsearchIndex.js";
+import type SqliteConversationTextSearchText from "../types/SqliteConversationTextSearchText.js";
 
-const table = "flexsearch_indexes";
+const table = "conversation_text_search_texts";
 
 type FlexsearchDocumentData = {
   id: ConversationId;
@@ -33,19 +33,34 @@ export default class SqliteConversationTextSearchIndex
     conversationId: ConversationId,
     textChunks: { title: string[]; messages: string[] },
   ): Promise<void> {
-    this.importIndex();
+    this.loadIndexIfNeeded();
+
+    const text = [...textChunks.title, ...textChunks.messages].join(" | ");
+
+    this.db
+      .prepare(`
+        INSERT OR REPLACE INTO "${table}"
+          ("conversation_id", "text")
+        VALUES
+          (?, ?)
+      `)
+      .run(conversationId, text);
+
     this.index.remove(conversationId);
     this.index.add({
       id: conversationId,
-      text: [...textChunks.title, ...textChunks.messages].join(" | "),
+      text,
     });
-    this.exportIndex();
   }
 
   async remove(conversationId: ConversationId): Promise<void> {
-    this.importIndex();
+    this.loadIndexIfNeeded();
+
+    this.db
+      .prepare(`DELETE FROM "${table}" WHERE "conversation_id" = ?`)
+      .run(conversationId);
+
     this.index.remove(conversationId);
-    this.exportIndex();
   }
 
   async search(
@@ -57,7 +72,7 @@ export default class SqliteConversationTextSearchIndex
       matchedText: string;
     }[]
   > {
-    this.importIndex();
+    this.loadIndexIfNeeded();
 
     const results = this.index.search(query, {
       limit: options.limit,
@@ -75,35 +90,22 @@ export default class SqliteConversationTextSearchIndex
     }));
   }
 
-  private importIndex(): void {
+  private loadIndexIfNeeded(): void {
     if (this.indexLoaded) {
       return;
     }
 
-    const flexsearchIndexes = this.db
-      .prepare(`SELECT * FROM "${table}" WHERE "target" = 'conversation'`)
-      .all() as SqliteFlexsearchIndex[];
+    const conversationTextSearchTexts = this.db
+      .prepare(`SELECT * FROM "${table}"`)
+      .all() as SqliteConversationTextSearchText[];
 
-    for (const { key, data } of flexsearchIndexes) {
-      this.index.import(key, data);
+    for (const { conversation_id, text } of conversationTextSearchTexts) {
+      this.index.add({
+        id: conversation_id,
+        text: text,
+      });
     }
 
     this.indexLoaded = true;
-  }
-
-  private exportIndex(): void {
-    // Delete all existing conversation index data first, then re-export. This
-    // is necessary because Flexsearch's export after removing documents doesn't
-    // include empty index keys, leaving stale data in SQLite.
-    this.db
-      .prepare(`DELETE FROM "${table}" WHERE "target" = 'conversation'`)
-      .run();
-    const insert = this.db.prepare(`
-      INSERT INTO "${table}"
-        ("key", "target", "data")
-      VALUES
-        (?, ?, ?)
-    `);
-    this.index.export((key, data) => insert.run(key, "conversation", data));
   }
 }
