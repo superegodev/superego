@@ -1,4 +1,8 @@
-import type { DocumentVersion } from "@superego/backend";
+import type {
+  DocumentId,
+  DocumentVersion,
+  DocumentVersionId,
+} from "@superego/backend";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
@@ -6,13 +10,12 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
-import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import makeResultError from "./makeResultError.js";
 import makeValidationIssues from "./makeValidationIssues.js";
 
 export default function makeContentSummaryResult(
   collectionVersion: CollectionVersionEntity,
-  documentVersion: DocumentVersionEntity,
+  documentVersionInfo: { id: DocumentVersionId; documentId: DocumentId },
   contentSummary: unknown,
 ): DocumentVersion["contentSummary"] {
   const validationResult = v.safeParse(
@@ -25,8 +28,8 @@ export default function makeContentSummaryResult(
         makeResultError("ContentSummaryNotValid", {
           collectionId: collectionVersion.collectionId,
           collectionVersionId: collectionVersion.id,
-          documentId: documentVersion.documentId,
-          documentVersionId: documentVersion.id,
+          documentId: documentVersionInfo.documentId,
+          documentVersionId: documentVersionInfo.id,
           issues: makeValidationIssues(validationResult.issues),
         }),
       );

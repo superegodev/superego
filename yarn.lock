@@ -6313,6 +6313,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/schema": "workspace:*"
     "@types/node": "npm:^25.0.10"
+    es-toolkit: "npm:^1.44.0"
     flexsearch: "npm:^0.8.212"
     jsondiffpatch: "npm:^0.7.3"
     typescript: "npm:^5.9.3"

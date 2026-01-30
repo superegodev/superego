@@ -14,7 +14,6 @@ import {
 } from "@superego/shared-utils";
 import makeDocumentVersion from "../../makers/makeDocumentVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
-import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsGetVersion extends Usecase<
@@ -44,17 +43,6 @@ export default class DocumentsGetVersion extends Usecase<
       );
     }
 
-    const collectionVersion = await this.repos.collectionVersion.find(
-      documentVersion.collectionVersionId,
-    );
-    assertCollectionVersionExists(collectionId, collectionVersion);
-
-    return makeSuccessfulResult(
-      await makeDocumentVersion(
-        this.javascriptSandbox,
-        collectionVersion,
-        documentVersion,
-      ),
-    );
+    return makeSuccessfulResult(makeDocumentVersion(documentVersion));
   }
 }

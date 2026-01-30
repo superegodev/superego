@@ -1,5 +1,6 @@
 import type {
   CollectionId,
+  CollectionVersionId,
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
@@ -8,6 +9,10 @@ import type MinimalDocumentVersionEntity from "../entities/MinimalDocumentVersio
 
 export default interface DocumentVersionRepository {
   insert(documentVersion: DocumentVersionEntity): Promise<void>;
+  updateContentSummary(
+    id: DocumentVersionId,
+    contentSummary: DocumentVersionEntity["contentSummary"],
+  ): Promise<void>;
   deleteAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentVersionId[]>;
@@ -18,12 +23,15 @@ export default interface DocumentVersionRepository {
   findLatestWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<DocumentVersionEntity | null>;
-  findAllLatestsWhereCollectionIdEq(
-    collectionId: CollectionId,
-  ): Promise<DocumentVersionEntity[]>;
   findAllWhereDocumentIdEq(
     documentId: DocumentId,
   ): Promise<MinimalDocumentVersionEntity[]>;
+  findAllWhereCollectionVersionIdEq(
+    collectionVersionId: CollectionVersionId,
+  ): Promise<DocumentVersionEntity[]>;
+  findAllLatestsWhereCollectionIdEq(
+    collectionId: CollectionId,
+  ): Promise<DocumentVersionEntity[]>;
   findAllLatestWhereReferencedDocumentsContains(
     collectionId: CollectionId,
     documentId: DocumentId,

@@ -16,8 +16,10 @@ import {
 } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
+import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
@@ -84,6 +86,28 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);
+
+    // Recalculate content summaries for all document versions created under
+    // this collection version if contentSummaryGetter changed.
+    if (settingsPatch.contentSummaryGetter) {
+      const documentVersions =
+        await this.repos.documentVersion.findAllWhereCollectionVersionIdEq(
+          latestVersion.id,
+        );
+      if (!isEmpty(documentVersions)) {
+        const contentSummaries = await makeContentSummaries(
+          this.javascriptSandbox,
+          updatedVersion,
+          documentVersions,
+        );
+        for (let i = 0; i < documentVersions.length; i++) {
+          await this.repos.documentVersion.updateContentSummary(
+            documentVersions[i]!.id,
+            contentSummaries[i]!,
+          );
+        }
+      }
+    }
 
     return makeSuccessfulResult(
       makeCollection(collection, updatedVersion, this.getConnector(collection)),

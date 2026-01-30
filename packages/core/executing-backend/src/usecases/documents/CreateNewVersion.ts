@@ -28,6 +28,7 @@ import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
+import makeContentSummary from "../../makers/makeContentSummary.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
@@ -226,8 +227,14 @@ export default class DocumentsCreateNewVersion extends Usecase<
         latestCollectionVersion.schema,
         contentValidationResult.output,
       );
+    const documentVersionId = Id.generate.documentVersion();
+    const contentSummary = await makeContentSummary(
+      this.javascriptSandbox,
+      latestCollectionVersion,
+      { id: documentVersionId, documentId: id, content: convertedContent },
+    );
     const documentVersion: DocumentVersionEntity = {
-      id: Id.generate.documentVersion(),
+      id: documentVersionId,
       remoteId: options?.remoteVersionId ?? null,
       previousVersionId: latestVersionId,
       documentId: id,
@@ -237,6 +244,7 @@ export default class DocumentsCreateNewVersion extends Usecase<
       content: convertedContent,
       contentBlockingKeys: contentBlockingKeys,
       referencedDocuments: referencedDocuments,
+      contentSummary: contentSummary,
       createdBy: options?.createdBy ?? DocumentVersionCreator.User,
       createdAt: now,
     };
@@ -282,13 +290,6 @@ export default class DocumentsCreateNewVersion extends Usecase<
     });
     await this.repos.file.insertAll(filesWithContent);
 
-    return makeSuccessfulResult(
-      await makeDocument(
-        this.javascriptSandbox,
-        latestCollectionVersion,
-        document,
-        documentVersion,
-      ),
-    );
+    return makeSuccessfulResult(makeDocument(document, documentVersion));
   }
 }

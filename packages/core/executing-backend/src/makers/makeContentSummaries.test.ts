@@ -29,7 +29,7 @@ it("ExecutingJavascriptFunctionFailed result for all document versions on getter
       contentSummaryGetter: { source: "", compiled: "" },
     },
   };
-  const documentVersions = [
+  const documentVersionInfos = [
     {
       id: Id.generate.documentVersion(),
       documentId: Id.generate.document(),
@@ -46,7 +46,7 @@ it("ExecutingJavascriptFunctionFailed result for all document versions on getter
   const result = await makeContentSummaries(
     mockJavascriptSandbox as any,
     collectionVersion as any,
-    documentVersions as any,
+    documentVersionInfos as any,
   );
 
   // Verify
@@ -74,7 +74,7 @@ it("ContentSummaryNotValid result for non-valid content summaries, successful re
       contentSummaryGetter: { source: "", compiled: "" },
     },
   };
-  const documentVersions = [
+  const documentVersionInfos = [
     {
       id: Id.generate.documentVersion(),
       documentId: Id.generate.document(),
@@ -98,7 +98,7 @@ it("ContentSummaryNotValid result for non-valid content summaries, successful re
   const result = await makeContentSummaries(
     mockJavascriptSandbox as any,
     collectionVersion as any,
-    documentVersions as any,
+    documentVersionInfos as any,
   );
 
   // Verify
@@ -110,8 +110,8 @@ it("ContentSummaryNotValid result for non-valid content summaries, successful re
         details: {
           collectionId: collectionVersion.collectionId,
           collectionVersionId: collectionVersion.id,
-          documentId: documentVersions[0].documentId,
-          documentVersionId: documentVersions[0].id,
+          documentId: documentVersionInfos[0].documentId,
+          documentVersionId: documentVersionInfos[0].id,
           issues: [
             {
               message:

@@ -1,5 +1,6 @@
 import type {
   CollectionId,
+  CollectionVersionId,
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
@@ -27,6 +28,18 @@ export default class DemoDocumentVersionRepository
     this.ensureNotDisposed();
     this.onWrite();
     this.documentVersions[documentVersion.id] = clone(documentVersion);
+  }
+
+  async updateContentSummary(
+    id: DocumentVersionId,
+    contentSummary: DocumentVersionEntity["contentSummary"],
+  ): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    const documentVersion = this.documentVersions[id];
+    if (documentVersion) {
+      documentVersion.contentSummary = contentSummary;
+    }
   }
 
   async deleteAllWhereCollectionIdEq(
@@ -74,6 +87,33 @@ export default class DemoDocumentVersionRepository
     return clone(latestDocumentVersion ?? null);
   }
 
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<MinimalDocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions)
+        .filter((documentVersion) => documentVersion.documentId === documentId)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )
+        .map(({ content, contentBlockingKeys, ...rest }) => rest),
+    );
+  }
+
+  async findAllWhereCollectionVersionIdEq(
+    collectionVersionId: CollectionVersionId,
+  ): Promise<DocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions).filter(
+        (documentVersion) =>
+          documentVersion.collectionVersionId === collectionVersionId,
+      ),
+    );
+  }
+
   async findAllLatestsWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentVersionEntity[]> {
@@ -92,21 +132,6 @@ export default class DemoDocumentVersionRepository
         }
       });
     return clone(Object.values(latestDocumentVersions));
-  }
-
-  async findAllWhereDocumentIdEq(
-    documentId: DocumentId,
-  ): Promise<MinimalDocumentVersionEntity[]> {
-    this.ensureNotDisposed();
-    return clone(
-      Object.values(this.documentVersions)
-        .filter((documentVersion) => documentVersion.documentId === documentId)
-        .sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        )
-        .map(({ content, contentBlockingKeys, ...rest }) => rest),
-    );
   }
 
   async findAllLatestWhereReferencedDocumentsContains(

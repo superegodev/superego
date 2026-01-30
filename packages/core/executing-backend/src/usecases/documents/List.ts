@@ -13,13 +13,10 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
-import makeContentSummaries from "../../makers/makeContentSummaries.js";
-import makeDocumentGivenSummary from "../../makers/makeDocumentGivenSummary.js";
+import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
-import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import assertDocumentVersionMatchesCollectionVersion from "../../utils/assertDocumentVersionMatchesCollectionVersion.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsList extends Usecase<
@@ -45,12 +42,6 @@ export default class DocumentsList extends Usecase<
       );
     }
 
-    const latestCollectionVersion =
-      await this.repos.collectionVersion.findLatestWhereCollectionIdEq(
-        collectionId,
-      );
-    assertCollectionVersionExists(collectionId, latestCollectionVersion);
-
     const documents =
       await this.repos.document.findAllWhereCollectionIdEq(collectionId);
     const latestVersions =
@@ -64,35 +55,16 @@ export default class DocumentsList extends Usecase<
     latestVersions.forEach((latestVersion) => {
       latestVersionsByDocumentId.set(latestVersion.documentId, latestVersion);
     });
-    const contentSummaries = await makeContentSummaries(
-      this.javascriptSandbox,
-      latestCollectionVersion,
-      documents.map((document) => {
-        const latestVersion = latestVersionsByDocumentId.get(document.id);
-        assertDocumentVersionExists(
-          document.collectionId,
-          document.id,
-          latestVersion,
-        );
-        assertDocumentVersionMatchesCollectionVersion(
-          document.collectionId,
-          latestCollectionVersion,
-          document.id,
-          latestVersion,
-        );
-        return latestVersion;
-      }),
-    );
+
     return makeSuccessfulResult(
-      documents.map((documentEntity, index) => {
-        const document = makeDocumentGivenSummary(
-          documentEntity,
-          // latestVersion has been asserted to exist above.
-          latestVersionsByDocumentId.get(documentEntity.id)!,
-          // makeContentSummaries always returns an array with the same length
-          // as the input array, so we know the index exists.
-          contentSummaries[index]!,
+      documents.map((documentEntity) => {
+        const latestVersion = latestVersionsByDocumentId.get(documentEntity.id);
+        assertDocumentVersionExists(
+          documentEntity.collectionId,
+          documentEntity.id,
+          latestVersion,
         );
+        const document = makeDocument(documentEntity, latestVersion);
         return lite ? makeLiteDocument(document) : document;
       }),
     );
