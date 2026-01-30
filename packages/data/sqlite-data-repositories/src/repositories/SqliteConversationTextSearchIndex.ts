@@ -11,32 +11,25 @@ type FlexsearchDocumentData = {
   text: string;
 };
 
+export interface SearchTextIndexState {
+  index: FlexsearchDocument<FlexsearchDocumentData>;
+  isLoaded: boolean;
+}
+
 export default class SqliteConversationTextSearchIndex
   implements ConversationTextSearchIndex
 {
-  private index: FlexsearchDocument<FlexsearchDocumentData>;
-  private indexLoaded = false;
-
-  constructor(private db: DatabaseSync) {
-    this.index = new FlexsearchDocument<FlexsearchDocumentData>({
-      document: {
-        id: "id",
-        index: ["text"],
-        store: ["text"],
-      },
-      tokenize: "forward",
-      context: true,
-    });
-  }
+  constructor(
+    private db: DatabaseSync,
+    private searchTextIndexState: SearchTextIndexState,
+    private onTransactionSucceeded: (callback: () => void) => void,
+  ) {}
 
   async upsert(
     conversationId: ConversationId,
     textChunks: { title: string[]; messages: string[] },
   ): Promise<void> {
-    this.loadIndexIfNeeded();
-
     const text = [...textChunks.title, ...textChunks.messages].join(" | ");
-
     this.db
       .prepare(`
         INSERT OR REPLACE INTO "${table}"
@@ -46,21 +39,20 @@ export default class SqliteConversationTextSearchIndex
       `)
       .run(conversationId, text);
 
-    this.index.remove(conversationId);
-    this.index.add({
-      id: conversationId,
-      text,
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(conversationId);
+      this.searchTextIndexState.index.add({ id: conversationId, text });
     });
   }
 
   async remove(conversationId: ConversationId): Promise<void> {
-    this.loadIndexIfNeeded();
-
     this.db
       .prepare(`DELETE FROM "${table}" WHERE "conversation_id" = ?`)
       .run(conversationId);
 
-    this.index.remove(conversationId);
+    this.onTransactionSucceeded(() =>
+      this.searchTextIndexState.index.remove(conversationId),
+    );
   }
 
   async search(
@@ -72,9 +64,9 @@ export default class SqliteConversationTextSearchIndex
       matchedText: string;
     }[]
   > {
-    this.loadIndexIfNeeded();
+    this.loadIndex();
 
-    const results = this.index.search(query, {
+    const results = this.searchTextIndexState.index.search(query, {
       limit: options.limit,
       merge: true,
       enrich: true,
@@ -90,8 +82,8 @@ export default class SqliteConversationTextSearchIndex
     }));
   }
 
-  private loadIndexIfNeeded(): void {
-    if (this.indexLoaded) {
+  private loadIndex(): void {
+    if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
@@ -100,12 +92,24 @@ export default class SqliteConversationTextSearchIndex
       .all() as SqliteConversationTextSearchText[];
 
     for (const { conversation_id, text } of conversationTextSearchTexts) {
-      this.index.add({
-        id: conversation_id,
-        text: text,
-      });
+      this.searchTextIndexState.index.add({ id: conversation_id, text: text });
     }
 
-    this.indexLoaded = true;
+    this.searchTextIndexState.isLoaded = true;
+  }
+
+  static getSearchTextIndexState(): SearchTextIndexState {
+    return {
+      index: new FlexsearchDocument<FlexsearchDocumentData>({
+        document: {
+          id: "id",
+          index: ["text"],
+          store: ["text"],
+        },
+        tokenize: "forward",
+        context: true,
+      }),
+      isLoaded: false,
+    };
   }
 }

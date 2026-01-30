@@ -11,9 +11,13 @@ import SqliteCollectionCategoryRepository from "./repositories/SqliteCollectionC
 import SqliteCollectionRepository from "./repositories/SqliteCollectionRepository.js";
 import SqliteCollectionVersionRepository from "./repositories/SqliteCollectionVersionRepository.js";
 import SqliteConversationRepository from "./repositories/SqliteConversationRepository.js";
-import SqliteConversationTextSearchIndex from "./repositories/SqliteConversationTextSearchIndex.js";
+import SqliteConversationTextSearchIndex, {
+  type SearchTextIndexState as ConversationSearchTextIndexState,
+} from "./repositories/SqliteConversationTextSearchIndex.js";
 import SqliteDocumentRepository from "./repositories/SqliteDocumentRepository.js";
-import SqliteDocumentTextSearchIndex from "./repositories/SqliteDocumentTextSearchIndex.js";
+import SqliteDocumentTextSearchIndex, {
+  type SearchTextIndexState as DocumentSearchTextIndexState,
+} from "./repositories/SqliteDocumentTextSearchIndex.js";
 import SqliteDocumentVersionRepository from "./repositories/SqliteDocumentVersionRepository.js";
 import SqliteFileRepository from "./repositories/SqliteFileRepository.js";
 import SqliteGlobalSettingsRepository from "./repositories/SqliteGlobalSettingsRepository.js";
@@ -36,6 +40,11 @@ export default class SqliteDataRepositories implements DataRepositories {
   constructor(
     private db: DatabaseSync,
     defaultGlobalSettings: GlobalSettings,
+    searchTextIndexStates: {
+      conversation: ConversationSearchTextIndexState;
+      document: DocumentSearchTextIndexState;
+    },
+    onTransactionSucceeded: (callback: () => void) => void,
   ) {
     this.app = new SqliteAppRepository(db);
     this.appVersion = new SqliteAppVersionRepository(db);
@@ -46,11 +55,17 @@ export default class SqliteDataRepositories implements DataRepositories {
     this.conversation = new SqliteConversationRepository(db);
     this.conversationTextSearchIndex = new SqliteConversationTextSearchIndex(
       db,
+      searchTextIndexStates.conversation,
+      onTransactionSucceeded,
     );
     this.document = new SqliteDocumentRepository(db);
     this.documentVersion = new SqliteDocumentVersionRepository(db);
     this.file = new SqliteFileRepository(db);
-    this.documentTextSearchIndex = new SqliteDocumentTextSearchIndex(db);
+    this.documentTextSearchIndex = new SqliteDocumentTextSearchIndex(
+      db,
+      searchTextIndexStates.document,
+      onTransactionSucceeded,
+    );
     this.globalSettings = new SqliteGlobalSettingsRepository(
       db,
       defaultGlobalSettings,

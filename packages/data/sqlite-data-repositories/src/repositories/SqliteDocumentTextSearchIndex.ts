@@ -13,34 +13,26 @@ type FlexsearchDocumentData = {
   text: string;
 };
 
+export interface SearchTextIndexState {
+  index: FlexsearchDocument<FlexsearchDocumentData>;
+  isLoaded: boolean;
+}
+
 export default class SqliteDocumentTextSearchIndex
   implements DocumentTextSearchIndex
 {
-  private index: FlexsearchDocument<FlexsearchDocumentData>;
-  private indexLoaded = false;
-
-  constructor(private db: DatabaseSync) {
-    this.index = new FlexsearchDocument<FlexsearchDocumentData>({
-      document: {
-        id: "id",
-        index: ["text"],
-        tag: ["collectionId"],
-        store: ["collectionId", "text"],
-      },
-      tokenize: "forward",
-      context: true,
-    });
-  }
+  constructor(
+    private db: DatabaseSync,
+    private searchTextIndexState: SearchTextIndexState,
+    private onTransactionSucceeded: (callback: () => void) => void,
+  ) {}
 
   async upsert(
     collectionId: CollectionId,
     documentId: DocumentId,
     textChunks: TextChunks,
   ): Promise<void> {
-    this.loadIndexIfNeeded();
-
     const text = Object.values(textChunks).flat().join(" | ");
-
     this.db
       .prepare(`
         INSERT OR REPLACE INTO "${table}"
@@ -50,11 +42,13 @@ export default class SqliteDocumentTextSearchIndex
       `)
       .run(documentId, collectionId, text);
 
-    this.index.remove(documentId);
-    this.index.add({
-      id: documentId,
-      collectionId,
-      text,
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(documentId);
+      this.searchTextIndexState.index.add({
+        id: documentId,
+        collectionId,
+        text,
+      });
     });
   }
 
@@ -62,13 +56,13 @@ export default class SqliteDocumentTextSearchIndex
     _collectionId: CollectionId,
     documentId: DocumentId,
   ): Promise<void> {
-    this.loadIndexIfNeeded();
-
     this.db
       .prepare(`DELETE FROM "${table}" WHERE "document_id" = ?`)
       .run(documentId);
 
-    this.index.remove(documentId);
+    this.onTransactionSucceeded(() =>
+      this.searchTextIndexState.index.remove(documentId),
+    );
   }
 
   async search(
@@ -82,9 +76,9 @@ export default class SqliteDocumentTextSearchIndex
       matchedText: string;
     }[]
   > {
-    this.loadIndexIfNeeded();
+    this.loadIndex();
 
-    const results = this.index.search(query, {
+    const results = this.searchTextIndexState.index.search(query, {
       tag: collectionId ? { collectionId } : undefined,
       limit: options.limit,
       merge: true,
@@ -102,8 +96,8 @@ export default class SqliteDocumentTextSearchIndex
     }));
   }
 
-  private loadIndexIfNeeded(): void {
-    if (this.indexLoaded) {
+  private loadIndex(): void {
+    if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
@@ -116,13 +110,29 @@ export default class SqliteDocumentTextSearchIndex
       collection_id,
       text,
     } of documentTextSearchTexts) {
-      this.index.add({
+      this.searchTextIndexState.index.add({
         id: document_id,
         collectionId: collection_id,
         text: text,
       });
     }
 
-    this.indexLoaded = true;
+    this.searchTextIndexState.isLoaded = true;
+  }
+
+  static getSearchTextIndexState(): SearchTextIndexState {
+    return {
+      index: new FlexsearchDocument<FlexsearchDocumentData>({
+        document: {
+          id: "id",
+          index: ["text"],
+          tag: ["collectionId"],
+          store: ["collectionId", "text"],
+        },
+        tokenize: "forward",
+        context: true,
+      }),
+      isLoaded: false,
+    };
   }
 }
