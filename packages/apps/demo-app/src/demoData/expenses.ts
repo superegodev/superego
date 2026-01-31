@@ -19,6 +19,7 @@ export default {
   },
   schema: expensesSchema,
   versionSettings: {
+    contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `
 import type { Expense } from "./CollectionSchema.js";
@@ -48,7 +49,6 @@ export default function getContentSummary(expense) {
       `.trim(),
     },
   },
-  contentBlockingKeysGetter: null,
   documents: expensesData,
   app: {
     type: AppType.CollectionView,

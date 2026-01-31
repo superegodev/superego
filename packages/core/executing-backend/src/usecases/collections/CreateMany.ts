@@ -10,7 +10,6 @@ import type {
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
-  TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -36,7 +35,6 @@ export default class CollectionsCreateMany extends Usecase<
       settings: CollectionSettings;
       schema: Schema;
       versionSettings: CollectionVersionSettings;
-      contentBlockingKeysGetter: TypescriptModule | null;
     }[],
     options: CollectionsCreateManyOptions = {},
   ): ResultPromise<
@@ -46,8 +44,8 @@ export default class CollectionsCreateMany extends Usecase<
     | AppNotFound
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
-    | ContentSummaryGetterNotValid
     | ContentBlockingKeysGetterNotValid
+    | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
     const collectionIds = collections.map(() => Id.generate.collection());
@@ -57,8 +55,7 @@ export default class CollectionsCreateMany extends Usecase<
     const createdCollections: Collection[] = [];
 
     for (const [index, collection] of collections.entries()) {
-      const { settings, schema, versionSettings, contentBlockingKeysGetter } =
-        collection;
+      const { settings, schema, versionSettings } = collection;
       const collectionId = collectionIds[index];
 
       const protoCollectionIds = schemaUtils.extractProtoCollectionIds(schema);
@@ -85,7 +82,6 @@ export default class CollectionsCreateMany extends Usecase<
         settings,
         resolvedSchema,
         versionSettings,
-        contentBlockingKeysGetter,
         {
           dryRun: options.dryRun,
           collectionId: collectionId,

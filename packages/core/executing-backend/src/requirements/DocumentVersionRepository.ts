@@ -9,6 +9,10 @@ import type MinimalDocumentVersionEntity from "../entities/MinimalDocumentVersio
 
 export default interface DocumentVersionRepository {
   insert(documentVersion: DocumentVersionEntity): Promise<void>;
+  updateContentBlockingKeys(
+    id: DocumentVersionId,
+    contentBlockingKeys: DocumentVersionEntity["contentBlockingKeys"],
+  ): Promise<void>;
   updateContentSummary(
     id: DocumentVersionId,
     contentSummary: DocumentVersionEntity["contentSummary"],

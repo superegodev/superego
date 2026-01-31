@@ -3562,10 +3562,22 @@
       "value": "Specific instructions for this collection to pass to the assistant."
     }
   ],
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": [
+    {
+      "type": 0,
+      "value": "Content summary"
+    }
+  ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
     {
       "type": 0,
       "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
+    {
+      "type": 0,
+      "value": "Deduplication"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [

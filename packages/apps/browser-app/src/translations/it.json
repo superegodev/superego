@@ -1172,8 +1172,14 @@
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Istruzioni specifiche per questa collezione da passare all'assistente."
   },
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": {
+    "defaultMessage": "Sommario dei contenuti"
+  },
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": {
+    "defaultMessage": "Deduplicazione"
   },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Salva le impostazioni della versione della collezione"

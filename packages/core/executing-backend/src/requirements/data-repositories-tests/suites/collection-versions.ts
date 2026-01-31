@@ -11,6 +11,7 @@ const schema: Schema = {
   rootType: "Root",
 };
 const settings: CollectionVersionSettings = {
+  contentBlockingKeysGetter: null,
   contentSummaryGetter: { source: "", compiled: "" },
 };
 
@@ -26,7 +27,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: Id.generate.collection(),
       schema: schema,
       settings: settings,
-      contentBlockingKeysGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -60,7 +60,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: Id.generate.collection(),
       schema: schema,
       settings: settings,
-      contentBlockingKeysGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -76,6 +75,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
     const updatedCollectionVersion: CollectionVersionEntity = {
       ...collectionVersion,
       settings: {
+        contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "updatedSource",
           compiled: "updatedCompiled",
@@ -113,7 +113,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection1Id,
       schema: schema,
       settings: settings,
-      contentBlockingKeysGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -124,7 +123,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection1Id,
       schema: schema,
       settings: settings,
-      contentBlockingKeysGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -135,7 +133,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       collectionId: collection2Id,
       schema: schema,
       settings: settings,
-      contentBlockingKeysGetter: null,
       migration: null,
       remoteConverters: null,
       createdAt: new Date(),
@@ -182,7 +179,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: Id.generate.collection(),
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -236,7 +232,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collectionId,
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -247,7 +242,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collectionId,
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -323,7 +317,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection1Id,
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -334,7 +327,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection1Id,
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),
@@ -345,7 +337,6 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
         collectionId: collection2Id,
         schema: schema,
         settings: settings,
-        contentBlockingKeysGetter: null,
         migration: null,
         remoteConverters: null,
         createdAt: new Date(),

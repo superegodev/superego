@@ -190,7 +190,7 @@ export default class DocumentsCreate extends Usecase<
     }
 
     let contentBlockingKeys: string[] | null = null;
-    if (latestCollectionVersion.contentBlockingKeysGetter !== null) {
+    if (latestCollectionVersion.settings.contentBlockingKeysGetter !== null) {
       const makeContentBlockingKeysResult = await makeContentBlockingKeys(
         this.javascriptSandbox,
         latestCollectionVersion,

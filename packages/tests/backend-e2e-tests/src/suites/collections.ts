@@ -32,13 +32,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -80,13 +80,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -120,13 +120,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -159,13 +159,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -206,12 +206,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
         },
-        null,
       );
 
       // Verify
@@ -253,15 +253,15 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: {
+            source: "",
+            compiled: "export function getContentBlockingKeys() {}",
+          },
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-        },
-        {
-          source: "",
-          compiled: "export function getContentBlockingKeys() {}",
         },
       );
 
@@ -315,13 +315,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -357,13 +357,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
 
       // Verify
@@ -379,13 +379,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
             },
-            contentBlockingKeysGetter: null,
             migration: null,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -430,16 +430,16 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: {
+            source: "",
+            compiled:
+              "export default function getContentBlockingKeys() { return []; }",
+          },
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
-        },
-        {
-          source: "",
-          compiled:
-            "export default function getContentBlockingKeys() { return []; }",
         },
       );
 
@@ -456,16 +456,16 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              contentBlockingKeysGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentBlockingKeys() { return []; }",
+              },
               contentSummaryGetter: {
                 source: "",
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
-            },
-            contentBlockingKeysGetter: {
-              source: "",
-              compiled:
-                "export default function getContentBlockingKeys() { return []; }",
             },
             migration: null,
             remoteConverters: null,
@@ -508,13 +508,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -558,13 +558,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -600,13 +600,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -641,13 +641,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -690,12 +690,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled: "export function getContentSummary() {}",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -739,15 +739,15 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: {
+              source: "",
+              compiled: "export function getContentBlockingKeys() {}",
+            },
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
-          },
-          contentBlockingKeysGetter: {
-            source: "",
-            compiled: "export function getContentBlockingKeys() {}",
           },
         },
       ]);
@@ -803,13 +803,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -860,13 +860,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -904,13 +904,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -928,13 +928,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -981,13 +981,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
         {
           settings: {
@@ -1003,13 +1003,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -1027,13 +1027,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -1059,13 +1059,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
               },
-              contentBlockingKeysGetter: null,
               migration: null,
               remoteConverters: null,
               createdAt: expect.dateCloseToNow(),
@@ -1130,13 +1130,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
         {
           settings: {
@@ -1163,13 +1163,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          contentBlockingKeysGetter: null,
         },
       ]);
 
@@ -1252,13 +1252,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1304,13 +1304,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1349,13 +1349,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1408,13 +1408,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1535,13 +1535,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -1598,13 +1598,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1688,13 +1688,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const firstSetRemoteResult = await backend.collections.setRemote(
@@ -1793,13 +1793,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1886,13 +1886,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -1989,13 +1989,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2080,13 +2080,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2173,13 +2173,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2274,13 +2274,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2399,13 +2399,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const firstSetRemoteResult = await backend.collections.setRemote(
@@ -2502,13 +2502,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2574,13 +2574,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2681,13 +2681,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2760,13 +2760,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -2833,13 +2833,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -2940,13 +2940,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3031,13 +3031,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -3112,13 +3112,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3219,13 +3219,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3317,13 +3317,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3420,13 +3420,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3536,13 +3536,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3665,13 +3665,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3813,13 +3813,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -3953,13 +3953,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4160,13 +4160,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4271,9 +4271,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
-        null,
         { source: "", compiled: "" },
         null,
       );
@@ -4306,13 +4306,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4326,9 +4326,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
-        null,
         { source: "", compiled: "" },
         null,
       );
@@ -4365,13 +4365,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4384,9 +4384,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
-        null,
         { source: "", compiled: "" },
         null,
       );
@@ -4427,13 +4427,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4457,13 +4457,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         {
           source: "",
           compiled: "export default function migrate(c) { return c; }",
@@ -4502,13 +4502,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4521,12 +4521,12 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
         },
-        null,
         { source: "", compiled: "" },
         null,
       );
@@ -4601,13 +4601,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4634,13 +4634,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         { source: "", compiled: "export function migrate() {}" },
         {
           fromRemoteDocument: {
@@ -4686,13 +4686,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4705,13 +4705,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         null,
         null,
       );
@@ -4752,13 +4752,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4771,13 +4771,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         { source: "", compiled: "export function migrate() {}" },
         null,
       );
@@ -4818,13 +4818,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -4837,13 +4837,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         { source: "", compiled: "export default function migrate() {}" },
         {
           fromRemoteDocument: {
@@ -4923,13 +4923,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -4956,13 +4956,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         null,
         null,
       );
@@ -5036,13 +5036,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -5069,13 +5069,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         null,
         {
           fromRemoteDocument: {
@@ -5122,13 +5122,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -5147,13 +5147,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           {
             source: "",
             compiled:
@@ -5205,13 +5205,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -5230,13 +5230,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           {
             source: "",
             compiled: "export default function migrate() { return { a: 0 }; }",
@@ -5327,13 +5327,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -5368,13 +5368,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           null,
           {
             fromRemoteDocument: {
@@ -5468,13 +5468,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -5514,13 +5514,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           null,
           {
             fromRemoteDocument: {
@@ -5588,13 +5588,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -5626,13 +5626,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           migration,
           null,
         );
@@ -5655,13 +5655,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
                 source: "",
               },
             },
-            contentBlockingKeysGetter: null,
             migration: migration,
             remoteConverters: null,
             createdAt: expect.dateCloseToNow(),
@@ -5764,13 +5764,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
@@ -5829,13 +5829,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
           },
-          null,
           null,
           {
             fromRemoteDocument: {
@@ -5928,13 +5928,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -5962,6 +5962,136 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: ContentBlockingKeysGetterNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createResult.data.id,
+          createResult.data.latestVersion.id,
+          {
+            contentBlockingKeysGetter: {
+              source: "",
+              compiled: "export function getContentBlockingKeys() {}",
+            },
+          },
+        );
+
+      // Verify
+      expect(updateLatestVersionSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ContentBlockingKeysGetterNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: MakingContentBlockingKeysFailed", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            contentBlockingKeysGetter: {
+              source: "",
+              compiled:
+                "export default function getContentBlockingKeys() { return 123; }",
+            },
+          },
+        );
+
+      // Verify
+      expect(updateLatestVersionSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "MakingContentBlockingKeysFailed",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            collectionVersionId: createCollectionResult.data.latestVersion.id,
+            documentId: createDocumentResult.data.id,
+            cause: {
+              name: "ContentBlockingKeysNotValid",
+              details: { contentBlockingKeys: 123 },
+            },
+          },
+        },
+      });
+    });
+
     it("error: ContentSummaryGetterNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -5979,13 +6109,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -5995,6 +6125,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createResult.data.id,
           createResult.data.latestVersion.id,
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled: "export function getContentSummary() {}",
@@ -6039,13 +6170,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -6055,10 +6186,11 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createResult.data.id,
           createResult.data.latestVersion.id,
           {
+            contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
               compiled:
-                "export default function getContentSummary() { return {}; }",
+                'export default function getContentSummary() { return { "key": "value"}; }',
             },
           },
         );
@@ -6071,13 +6203,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           latestVersion: {
             ...createResult.data.latestVersion,
             settings: {
+              contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
                 compiled:
-                  "export default function getContentSummary() { return {}; }",
+                  'export default function getContentSummary() { return { "key": "value"}; }',
               },
             },
-            contentBlockingKeysGetter: null,
           },
           settings: createResult.data.settings,
           remote: null,
@@ -6091,6 +6223,146 @@ export default rd<GetDependencies>("Collections", (deps) => {
         data: [updateLatestVersionSettingsResult.data],
         error: null,
       });
+    });
+
+    it("success: updates and recalculates all blocking keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+
+      // Create a document before enabling duplicate detection.
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+
+      // Update settings to enable duplicate detection.
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            contentBlockingKeysGetter: {
+              source: "",
+              compiled:
+                // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+                "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
+            },
+          },
+        );
+      assert.isTrue(updateLatestVersionSettingsResult.success);
+
+      // Exercise
+      const createDuplicateDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+
+      // Verify
+      expect(createDuplicateDocumentResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DuplicateDocumentDetected",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            duplicateDocument: createDocumentResult.data,
+          },
+        },
+      });
+    });
+
+    it("success: updates and recalculates all content summaries", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create(
+        {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+        },
+      );
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create(
+        createCollectionResult.data.id,
+        { title: "title" },
+      );
+      assert.isTrue(createDocumentResult.success);
+      expect(
+        createDocumentResult.data.latestVersion.contentSummary.data,
+      ).toEqual({});
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createCollectionResult.data.id,
+          createCollectionResult.data.latestVersion.id,
+          {
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary(content) { return { title: content.title}; }",
+            },
+          },
+        );
+      assert.isTrue(updateLatestVersionSettingsResult.success);
+
+      // Verify
+      const getDocumentResult = await backend.documents.get(
+        createCollectionResult.data.id,
+        createDocumentResult.data.id,
+      );
+      expect(getDocumentResult.data?.latestVersion.contentSummary.data).toEqual(
+        { title: "title" },
+      );
     });
   });
 
@@ -6131,13 +6403,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
 
@@ -6180,13 +6452,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionAResult.success);
       // Create collection B with schema that references collection A
@@ -6214,13 +6486,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionBResult.success);
 
@@ -6267,13 +6539,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionAResult.success);
       // Create collection B with DocumentRef field (no collectionId constraint to avoid CollectionIsReferenced)
@@ -6298,13 +6570,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionBResult.success);
       // Create document in collection A
@@ -6368,13 +6640,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createDocumentResult = await backend.documents.create(
@@ -6425,13 +6697,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create(
@@ -6502,13 +6774,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(zetaCreateResult.success);
       const alphaCreateResult = await backend.collections.create(
@@ -6525,13 +6797,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(alphaCreateResult.success);
       const betaCreateResult = await backend.collections.create(
@@ -6548,13 +6820,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(betaCreateResult.success);
 
@@ -6615,13 +6887,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -6668,13 +6940,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
 
@@ -6714,13 +6986,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createResult.success);
       const migration = {
@@ -6744,13 +7016,13 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
         migration,
         null,
       );

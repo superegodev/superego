@@ -32,14 +32,13 @@ export default class SqliteCollectionVersionRepository
             "collection_id",
             "schema",
             "settings",
-            "content_blocking_keys_getter",
             "migration",
             "remote_converters",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         collectionVersion.id,
@@ -47,9 +46,6 @@ export default class SqliteCollectionVersionRepository
         collectionVersion.collectionId,
         JSON.stringify(collectionVersion.schema),
         JSON.stringify(collectionVersion.settings),
-        collectionVersion.contentBlockingKeysGetter
-          ? JSON.stringify(collectionVersion.contentBlockingKeysGetter)
-          : null,
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)
           : null,
@@ -70,7 +66,6 @@ export default class SqliteCollectionVersionRepository
           "collection_id" = ?,
           "schema" = ?,
           "settings" = ?,
-          "content_blocking_keys_getter" = ?,
           "migration" = ?,
           "remote_converters" = ?,
           "created_at" = ?
@@ -81,9 +76,6 @@ export default class SqliteCollectionVersionRepository
         collectionVersion.collectionId,
         JSON.stringify(collectionVersion.schema),
         JSON.stringify(collectionVersion.settings),
-        collectionVersion.contentBlockingKeysGetter
-          ? JSON.stringify(collectionVersion.contentBlockingKeysGetter)
-          : null,
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)
           : null,

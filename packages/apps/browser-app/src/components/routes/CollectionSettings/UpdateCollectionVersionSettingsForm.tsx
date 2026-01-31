@@ -11,11 +11,14 @@ import forms from "../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
+import Section from "../../design-system/Section/Section.js";
+import RHFContentBlockingKeysGetterField from "../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
 
 interface FormValues {
+  contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
 }
 
@@ -31,12 +34,17 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     defaultValues: {
+      contentBlockingKeysGetter:
+        collection.latestVersion.settings.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
     },
     mode: "onBlur",
     resolver: standardSchemaResolver(
       v.strictObject({
+        contentBlockingKeysGetter: v.nullable(
+          forms.schemas.typescriptModule(intl),
+        ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
       }),
     ),
@@ -49,8 +57,9 @@ export default function UpdateCollectionVersionSettingsForm({
       values,
     );
     if (success) {
-      const { contentSummaryGetter } = data.latestVersion.settings;
-      reset({ contentSummaryGetter });
+      const { contentBlockingKeysGetter, contentSummaryGetter } =
+        data.latestVersion.settings;
+      reset({ contentBlockingKeysGetter, contentSummaryGetter });
     }
   };
   useExitWarning(
@@ -72,13 +81,31 @@ export default function UpdateCollectionVersionSettingsForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <RHFContentSummaryGetterField
-        control={control}
-        name="contentSummaryGetter"
-        schema={collection.latestVersion.schema}
-        schemaTypescriptLib={schemaTypescriptLib}
-      />
-      <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
+      <Section
+        title={intl.formatMessage({ defaultMessage: "Deduplication" })}
+        level={3}
+      >
+        <RHFContentBlockingKeysGetterField
+          control={control}
+          name="contentBlockingKeysGetter"
+          schema={collection.latestVersion.schema}
+          schemaTypescriptLib={schemaTypescriptLib}
+        />
+      </Section>
+      <Section
+        title={intl.formatMessage({ defaultMessage: "Content summary" })}
+        level={3}
+      >
+        <RHFContentSummaryGetterField
+          control={control}
+          name="contentSummaryGetter"
+          schema={collection.latestVersion.schema}
+          schemaTypescriptLib={schemaTypescriptLib}
+        />
+      </Section>
+      <div
+        className={cs.UpdateCollectionVersionSettingsForm.submitButtonContainer}
+      >
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Save collection version settings" />
         </RHFSubmitButton>

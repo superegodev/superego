@@ -45,13 +45,11 @@ export default function SuggestCollectionsDefinitions({
         },
         schema,
         versionSettings: {
-          contentSummaryGetter:
-            toolResult.artifacts.collections[index]!.contentSummaryGetter,
           contentBlockingKeysGetter:
             toolResult.artifacts.collections[index]!.contentBlockingKeysGetter,
+          contentSummaryGetter:
+            toolResult.artifacts.collections[index]!.contentSummaryGetter,
         },
-        contentBlockingKeysGetter:
-          toolResult.artifacts.collections[index]!.contentBlockingKeysGetter,
       })),
     );
     if (!result.success) {

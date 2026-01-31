@@ -54,7 +54,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     defaultValues: {
       schema: collection.latestVersion.schema,
       contentBlockingKeysGetter:
-        collection.latestVersion.contentBlockingKeysGetter,
+        collection.latestVersion.settings.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
       migration: CollectionUtils.hasRemote(collection)
@@ -81,8 +81,10 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       collection.id,
       collection.latestVersion.id,
       values.schema,
-      { contentSummaryGetter: values.contentSummaryGetter },
-      values.contentBlockingKeysGetter,
+      {
+        contentBlockingKeysGetter: values.contentBlockingKeysGetter,
+        contentSummaryGetter: values.contentSummaryGetter,
+      },
       values.migration,
       values.remoteConverters,
     );

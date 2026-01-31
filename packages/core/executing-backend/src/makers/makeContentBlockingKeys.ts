@@ -18,7 +18,7 @@ export default async function makeContentBlockingKeys(
   content: any,
 ): ResultPromise<string[], MakingContentBlockingKeysFailed> {
   const contentBlockingKeysGetter =
-    collectionVersion.contentBlockingKeysGetter!;
+    collectionVersion.settings.contentBlockingKeysGetter!;
 
   const { data: contentBlockingKeys, error } =
     await javascriptSandbox.executeSyncFunction(contentBlockingKeysGetter, [

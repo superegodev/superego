@@ -4,6 +4,12 @@ import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 export default function makeDocumentVersion(
   documentVersion: DocumentVersionEntity,
 ): DocumentVersion {
-  const { documentId, collectionId, ...rest } = documentVersion;
+  const {
+    documentId,
+    collectionId,
+    contentBlockingKeys,
+    referencedDocuments,
+    ...rest
+  } = documentVersion;
   return rest;
 }

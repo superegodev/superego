@@ -14,6 +14,42 @@ Use 100g as serving size if not specified.
   },
   schema: foodsSchema,
   versionSettings: {
+    contentBlockingKeysGetter: {
+      source: `
+import type { Food } from "./CollectionSchema.js";
+
+function normalizeName(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\\u0300-\\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\\s+/g, " ")
+    .trim();
+}
+
+export default function getContentBlockingKeys(food: Food): string[] {
+  return [
+    \`name:\${normalizeName(food.name)}\`,
+  ];
+}
+      `.trim(),
+      compiled: `
+function normalizeName(name) {
+  return name
+    .normalize("NFD")
+    .replace(/[\\u0300-\\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\\s+/g, " ")
+    .trim();
+}
+
+export default function getContentBlockingKeys(food) {
+  return [
+    \`name:\${normalizeName(food.name)}\`,
+  ];
+}
+      `.trim(),
+    },
     contentSummaryGetter: {
       source: `
 import type { Food } from "./CollectionSchema.js";
@@ -54,42 +90,6 @@ export default function getContentSummary(food) {
 }
       `.trim(),
     },
-  },
-  contentBlockingKeysGetter: {
-    source: `
-import type { Food } from "./CollectionSchema.js";
-
-function normalizeName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[\\u0300-\\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\\s+/g, " ")
-    .trim();
-}
-
-export default function getContentBlockingKeys(food: Food): string[] {
-  return [
-    \`name:\${normalizeName(food.name)}\`,
-  ];
-}
-    `.trim(),
-    compiled: `
-function normalizeName(name) {
-  return name
-    .normalize("NFD")
-    .replace(/[\\u0300-\\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\\s+/g, " ")
-    .trim();
-}
-
-export default function getContentBlockingKeys(food) {
-  return [
-    \`name:\${normalizeName(food.name)}\`,
-  ];
-}
-    `.trim(),
   },
   documents: foodsData,
 } satisfies DemoCollection;

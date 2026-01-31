@@ -84,31 +84,47 @@ export default class SqliteDocumentVersionRepository
         1,
       );
     // Insert blocking keys into the "index" table.
-    if (documentVersion.contentBlockingKeys !== null) {
-      const insertBlockingKey = this.db.prepare(`
-        INSERT INTO "${documentVersionContentBlockingKeysTable}"
-          ("collection_id", "document_version_id", "blocking_key")
-        VALUES
-          (?, ?, ?)
-      `);
-      for (const blockingKey of documentVersion.contentBlockingKeys) {
-        insertBlockingKey.run(
-          documentVersion.collectionId,
-          documentVersion.id,
-          blockingKey,
-        );
-      }
-    }
+    this.insertContentBlockingKeys(
+      documentVersion.collectionId,
+      documentVersion.id,
+      documentVersion.contentBlockingKeys,
+    );
     // Delete content blocking keys of previous versions from the index table.
     // We only need to keep blocking keys for the latest version of each
     // document.
     if (previousDocumentVersion) {
-      this.db
-        .prepare(
-          `DELETE FROM "${documentVersionContentBlockingKeysTable}" WHERE "document_version_id" = ?`,
-        )
-        .run(previousDocumentVersion.id);
+      this.deleteContentBlockingKeys(previousDocumentVersion.id);
     }
+  }
+
+  async updateContentBlockingKeys(
+    id: DocumentVersionId,
+    contentBlockingKeys: DocumentVersionEntity["contentBlockingKeys"],
+  ): Promise<void> {
+    this.db
+      .prepare(
+        `UPDATE "${documentVersionsTable}" SET "content_blocking_keys" = ? WHERE "id" = ?`,
+      )
+      .run(
+        contentBlockingKeys ? JSON.stringify(contentBlockingKeys) : null,
+        id,
+      );
+
+    // Only update the index table for the latest version.
+    const documentVersion = this.db
+      .prepare(
+        `SELECT "collection_id" FROM "${documentVersionsTable}" WHERE "id" = ? AND "is_latest" = 1`,
+      )
+      .get(id) as { collection_id: CollectionId } | undefined;
+    if (!documentVersion) {
+      return;
+    }
+    this.deleteContentBlockingKeys(id);
+    this.insertContentBlockingKeys(
+      documentVersion.collection_id,
+      id,
+      contentBlockingKeys,
+    );
   }
 
   async updateContentSummary(
@@ -269,5 +285,34 @@ export default class SqliteDocumentVersionRepository
       | (SqliteDocumentVersion & { is_latest: 1 })
       | undefined;
     return documentVersion ? toEntity(documentVersion) : null;
+  }
+
+  private insertContentBlockingKeys(
+    collectionId: CollectionId,
+    documentVersionId: DocumentVersionId,
+    contentBlockingKeys: string[] | null,
+  ): void {
+    if (contentBlockingKeys === null) {
+      return;
+    }
+    const insertBlockingKey = this.db.prepare(`
+      INSERT INTO "${documentVersionContentBlockingKeysTable}"
+        ("collection_id", "document_version_id", "blocking_key")
+      VALUES
+        (?, ?, ?)
+    `);
+    for (const blockingKey of contentBlockingKeys) {
+      insertBlockingKey.run(collectionId, documentVersionId, blockingKey);
+    }
+  }
+
+  private deleteContentBlockingKeys(
+    documentVersionId: DocumentVersionId,
+  ): void {
+    this.db
+      .prepare(
+        `DELETE FROM "${documentVersionContentBlockingKeysTable}" WHERE "document_version_id" = ?`,
+      )
+      .run(documentVersionId);
   }
 }

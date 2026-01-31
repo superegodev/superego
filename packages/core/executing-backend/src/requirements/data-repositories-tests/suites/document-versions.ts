@@ -60,6 +60,148 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     expect(found).toEqual(documentVersion);
   });
 
+  describe("updating content blocking keys", () => {
+    it("updates contentBlockingKeys from null to an array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentBlockingKeys = ["key:1", "key:2"];
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            newContentBlockingKeys,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(newContentBlockingKeys);
+    });
+
+    it("updates contentBlockingKeys from an array to a different array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: ["key:old1", "key:old2"],
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentBlockingKeys = ["key:new1", "key:new2", "key:new3"];
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            newContentBlockingKeys,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(newContentBlockingKeys);
+    });
+
+    it("updates contentBlockingKeys from an array to null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: ["key:1", "key:2"],
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            null,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(null);
+    });
+  });
+
   describe("updating content summary", () => {
     it("updates contentSummary for an existing document version (case: successful result)", async () => {
       // Setup SUT

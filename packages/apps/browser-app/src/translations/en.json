@@ -1202,8 +1202,14 @@
   "UpdateCollectionSettingsForm.tsx_qmIyad": {
     "defaultMessage": "Specific instructions for this collection to pass to the assistant."
   },
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": {
+    "defaultMessage": "Content summary"
+  },
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": {
+    "defaultMessage": "Deduplication"
   },
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
     "defaultMessage": "Save collection version settings"

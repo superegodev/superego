@@ -3540,10 +3540,22 @@
       "value": "Istruzioni specifiche per questa collezione da passare all'assistente."
     }
   ],
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": [
+    {
+      "type": 0,
+      "value": "Sommario dei contenuti"
+    }
+  ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
     {
       "type": 0,
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
+    {
+      "type": 0,
+      "value": "Deduplicazione"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [

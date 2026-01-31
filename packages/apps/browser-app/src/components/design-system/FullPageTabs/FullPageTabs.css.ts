@@ -4,7 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const FullPageTabs = {
   tabList: style({
     display: "flex",
-    fontSize: vars.typography.fontSizes.lg,
+    fontSize: vars.typography.fontSizes.xl,
     borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   }),
 

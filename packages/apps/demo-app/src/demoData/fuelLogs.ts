@@ -19,6 +19,32 @@ export default {
   },
   schema: fuelLogsSchema,
   versionSettings: {
+    contentBlockingKeysGetter: {
+      source: `
+import type { FuelLog } from "./CollectionSchema.js";
+
+export default function getContentBlockingKeys(fuelLog: FuelLog): string[] {
+  return [
+    [
+      \`odometer:\${fuelLog.odometer}\`,
+      \`liters:\${fuelLog.liters}\`,
+      \`cost:\${fuelLog.totalCost}\`
+    ].join(",")
+  ];
+}
+      `.trim(),
+      compiled: `
+export default function getContentBlockingKeys(fuelLog) {
+  return [
+    [
+      \`odometer:\${fuelLog.odometer}\`,
+      \`liters:\${fuelLog.liters}\`,
+      \`cost:\${fuelLog.totalCost}\`
+    ].join(",")
+  ];
+}
+      `.trim(),
+    },
     contentSummaryGetter: {
       source: `
 import type { FuelLog } from "./CollectionSchema.js";
@@ -49,32 +75,6 @@ export default function getContentSummary(fuelLog) {
 }
       `.trim(),
     },
-  },
-  contentBlockingKeysGetter: {
-    source: `
-import type { FuelLog } from "./CollectionSchema.js";
-
-export default function getContentBlockingKeys(fuelLog: FuelLog): string[] {
-  return [
-    [
-      \`odometer:\${fuelLog.odometer}\`,
-      \`liters:\${fuelLog.liters}\`,
-      \`cost:\${fuelLog.totalCost}\`
-    ].join(",")
-  ];
-}
-    `.trim(),
-    compiled: `
-export default function getContentBlockingKeys(fuelLog) {
-  return [
-    [
-      \`odometer:\${fuelLog.odometer}\`,
-      \`liters:\${fuelLog.liters}\`,
-      \`cost:\${fuelLog.totalCost}\`
-    ].join(",")
-  ];
-}
-    `.trim(),
   },
   documents: fuelLogsData,
   app: {

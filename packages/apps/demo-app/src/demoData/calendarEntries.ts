@@ -13,6 +13,7 @@ export default {
   },
   schema: calendarEntriesSchema,
   versionSettings: {
+    contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `
 import type { CalendarEntry } from "./CollectionSchema.js";
@@ -40,6 +41,5 @@ export default function getContentSummary(calendarEntry) {
       `.trim(),
     },
   },
-  contentBlockingKeysGetter: null,
   documents: calendarEntriesData,
 } satisfies DemoCollection;

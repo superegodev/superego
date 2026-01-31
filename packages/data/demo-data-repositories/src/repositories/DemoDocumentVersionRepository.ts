@@ -30,6 +30,18 @@ export default class DemoDocumentVersionRepository
     this.documentVersions[documentVersion.id] = clone(documentVersion);
   }
 
+  async updateContentBlockingKeys(
+    id: DocumentVersionId,
+    contentBlockingKeys: DocumentVersionEntity["contentBlockingKeys"],
+  ): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    const documentVersion = this.documentVersions[id];
+    if (documentVersion) {
+      documentVersion.contentBlockingKeys = contentBlockingKeys;
+    }
+  }
+
   async updateContentSummary(
     id: DocumentVersionId,
     contentSummary: DocumentVersionEntity["contentSummary"],
@@ -98,7 +110,9 @@ export default class DemoDocumentVersionRepository
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .map(({ content, contentBlockingKeys, ...rest }) => rest),
+        .map(
+          ({ content, contentBlockingKeys, contentSummary, ...rest }) => rest,
+        ),
     );
   }
 
@@ -176,11 +190,11 @@ export default class DemoDocumentVersionRepository
           latestDocumentVersions[documentVersion.documentId] = documentVersion;
         }
       });
-    const blockingKeysSet = new Set(contentBlockingKeys);
+    const contentBlockingKeysSet = new Set(contentBlockingKeys);
     const found = Object.values(latestDocumentVersions).find(
       (documentVersion) =>
         documentVersion.contentBlockingKeys?.some((key) =>
-          blockingKeysSet.has(key),
+          contentBlockingKeysSet.has(key),
         ),
     );
     return clone(found ?? null);
