@@ -5,6 +5,8 @@ import type {
 } from "@superego/executing-backend";
 import type Data from "./Data.js";
 import DemoDataRepositories from "./DemoDataRepositories.js";
+import DemoConversationTextSearchIndex from "./repositories/DemoConversationTextSearchIndex.js";
+import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
 import clone from "./utils/clone.js";
 
 const OVERWRITE = "OVERWRITE";
@@ -17,6 +19,10 @@ export default class DemoDataRepositoriesManager
   private objectStoreDataKeyPath = "id";
   private objectStoreDataKeyValue = "data";
   private lock: string | null = null;
+  private searchTextIndexStates = {
+    conversation: DemoConversationTextSearchIndex.getSearchTextIndexState(),
+    document: DemoDocumentTextSearchIndex.getSearchTextIndexState(),
+  };
 
   constructor(
     private defaultGlobalSettings: GlobalSettings,
@@ -88,6 +94,7 @@ export default class DemoDataRepositoriesManager
     const repos = new DemoDataRepositories(
       transactionData,
       onWrite,
+      this.searchTextIndexStates,
       createSavepoint,
       rollbackToSavepoint,
     );

@@ -7,9 +7,13 @@ import DemoCollectionCategoryRepository from "./repositories/DemoCollectionCateg
 import DemoCollectionRepository from "./repositories/DemoCollectionRepository.js";
 import DemoCollectionVersionRepository from "./repositories/DemoCollectionVersionRepository.js";
 import DemoConversationRepository from "./repositories/DemoConversationRepository.js";
-import DemoConversationTextSearchIndex from "./repositories/DemoConversationTextSearchIndex.js";
+import DemoConversationTextSearchIndex, {
+  type SearchTextIndexState as ConversationSearchTextIndexState,
+} from "./repositories/DemoConversationTextSearchIndex.js";
 import DemoDocumentRepository from "./repositories/DemoDocumentRepository.js";
-import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
+import DemoDocumentTextSearchIndex, {
+  type SearchTextIndexState as DocumentSearchTextIndexState,
+} from "./repositories/DemoDocumentTextSearchIndex.js";
 import DemoDocumentVersionRepository from "./repositories/DemoDocumentVersionRepository.js";
 import DemoFileRepository from "./repositories/DemoFileRepository.js";
 import DemoGlobalSettingsRepository from "./repositories/DemoGlobalSettingsRepository.js";
@@ -32,6 +36,10 @@ export default class DemoDataRepositories implements DataRepositories {
   constructor(
     data: Data,
     onWrite: () => void,
+    searchTextIndexStates: {
+      conversation: ConversationSearchTextIndexState;
+      document: DocumentSearchTextIndexState;
+    },
     public createSavepoint: () => Promise<string>,
     public rollbackToSavepoint: (name: string) => Promise<void>,
   ) {
@@ -52,11 +60,13 @@ export default class DemoDataRepositories implements DataRepositories {
     );
     this.conversationTextSearchIndex = new DemoConversationTextSearchIndex(
       data.flexsearchIndexes,
+      searchTextIndexStates.conversation,
       onWrite,
     );
     this.document = new DemoDocumentRepository(data.documents, onWrite);
     this.documentTextSearchIndex = new DemoDocumentTextSearchIndex(
       data.flexsearchIndexes,
+      searchTextIndexStates.document,
       onWrite,
     );
     this.documentVersion = new DemoDocumentVersionRepository(

@@ -11,27 +11,21 @@ type FlexsearchDocumentData = {
 
 const target = "conversation";
 
+export interface SearchTextIndexState {
+  index: FlexsearchDocument<FlexsearchDocumentData>;
+  isLoaded: boolean;
+}
+
 export default class DemoConversationTextSearchIndex
   extends Disposable
   implements ConversationTextSearchIndex
 {
-  private index: FlexsearchDocument<FlexsearchDocumentData>;
-  private indexLoaded = false;
-
   constructor(
     private flexsearchIndexes: FlexsearchIndexData[],
+    private searchTextIndexState: SearchTextIndexState,
     private onWrite: () => void,
   ) {
     super();
-    this.index = new FlexsearchDocument<FlexsearchDocumentData>({
-      document: {
-        id: "id",
-        index: ["text"],
-        store: ["text"],
-      },
-      tokenize: "forward",
-      context: true,
-    });
   }
 
   async upsert(
@@ -40,8 +34,8 @@ export default class DemoConversationTextSearchIndex
   ): Promise<void> {
     this.ensureNotDisposed();
     this.importIndex();
-    this.index.remove(conversationId);
-    this.index.add({
+    this.searchTextIndexState.index.remove(conversationId);
+    this.searchTextIndexState.index.add({
       id: conversationId,
       text: [...textChunks.title, ...textChunks.messages].join(" | "),
     });
@@ -51,7 +45,7 @@ export default class DemoConversationTextSearchIndex
   async remove(conversationId: ConversationId): Promise<void> {
     this.ensureNotDisposed();
     this.importIndex();
-    this.index.remove(conversationId);
+    this.searchTextIndexState.index.remove(conversationId);
     this.exportIndex();
   }
 
@@ -67,7 +61,7 @@ export default class DemoConversationTextSearchIndex
     this.ensureNotDisposed();
     this.importIndex();
 
-    const results = this.index.search(query, {
+    const results = this.searchTextIndexState.index.search(query, {
       limit: options.limit,
       merge: true,
       enrich: true,
@@ -84,17 +78,17 @@ export default class DemoConversationTextSearchIndex
   }
 
   private importIndex(): void {
-    if (this.indexLoaded) {
+    if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
     for (const { key, data } of this.flexsearchIndexes.filter(
       (i) => i.target === target,
     )) {
-      this.index.import(key, data);
+      this.searchTextIndexState.index.import(key, data);
     }
 
-    this.indexLoaded = true;
+    this.searchTextIndexState.isLoaded = true;
   }
 
   private exportIndex(): void {
@@ -106,8 +100,23 @@ export default class DemoConversationTextSearchIndex
     this.flexsearchIndexes.length = 0;
     this.flexsearchIndexes.push(...otherIndexes);
 
-    this.index.export((key, data) => {
+    this.searchTextIndexState.index.export((key, data) => {
       this.flexsearchIndexes.push({ key, target, data });
     });
+  }
+
+  static getSearchTextIndexState(): SearchTextIndexState {
+    return {
+      index: new FlexsearchDocument<FlexsearchDocumentData>({
+        document: {
+          id: "id",
+          index: ["text"],
+          store: ["text"],
+        },
+        tokenize: "forward",
+        context: true,
+      }),
+      isLoaded: false,
+    };
   }
 }

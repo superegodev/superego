@@ -12,6 +12,11 @@ import SqliteDataRepositories from "./SqliteDataRepositories.js";
 export default class SqliteDataRepositoriesManager
   implements DataRepositoriesManager
 {
+  private searchTextIndexStates = {
+    conversation: SqliteConversationTextSearchIndex.getSearchTextIndexState(),
+    document: SqliteDocumentTextSearchIndex.getSearchTextIndexState(),
+  };
+
   constructor(
     private options: {
       fileName: string;
@@ -32,11 +37,7 @@ export default class SqliteDataRepositoriesManager
     const repos = new SqliteDataRepositories(
       db,
       this.options.defaultGlobalSettings,
-      {
-        conversation:
-          SqliteConversationTextSearchIndex.getSearchTextIndexState(),
-        document: SqliteDocumentTextSearchIndex.getSearchTextIndexState(),
-      },
+      this.searchTextIndexStates,
       (callback) => transactionSucceededCallbacks.push(callback),
     );
     try {
