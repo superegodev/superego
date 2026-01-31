@@ -36,6 +36,7 @@ export default class DemoDataRepositories implements DataRepositories {
   constructor(
     data: Data,
     onWrite: () => void,
+    onTransactionSucceeded: (callback: () => void) => void,
     searchTextIndexStates: {
       conversation: ConversationSearchTextIndexState;
       document: DocumentSearchTextIndexState;
@@ -59,14 +60,16 @@ export default class DemoDataRepositories implements DataRepositories {
       onWrite,
     );
     this.conversationTextSearchIndex = new DemoConversationTextSearchIndex(
-      data.flexsearchIndexes,
+      data.conversationTextSearchTexts,
       searchTextIndexStates.conversation,
+      onTransactionSucceeded,
       onWrite,
     );
     this.document = new DemoDocumentRepository(data.documents, onWrite);
     this.documentTextSearchIndex = new DemoDocumentTextSearchIndex(
-      data.flexsearchIndexes,
+      data.documentTextSearchTexts,
       searchTextIndexStates.document,
+      onTransactionSucceeded,
       onWrite,
     );
     this.documentVersion = new DemoDocumentVersionRepository(

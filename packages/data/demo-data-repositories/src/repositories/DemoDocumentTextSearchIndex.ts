@@ -2,7 +2,7 @@ import type { CollectionId, DocumentId } from "@superego/backend";
 import type { DocumentTextSearchIndex } from "@superego/executing-backend";
 import type { TextChunks } from "@superego/schema";
 import { Document as FlexsearchDocument } from "flexsearch";
-import type { FlexsearchIndexData } from "../Data.js";
+import type { DocumentTextSearchText } from "../Data.js";
 import Disposable from "../utils/Disposable.js";
 
 type FlexsearchDocumentData = {
@@ -10,8 +10,6 @@ type FlexsearchDocumentData = {
   collectionId: CollectionId;
   text: string;
 };
-
-const target = "document";
 
 export interface SearchTextIndexState {
   index: FlexsearchDocument<FlexsearchDocumentData>;
@@ -23,8 +21,9 @@ export default class DemoDocumentTextSearchIndex
   implements DocumentTextSearchIndex
 {
   constructor(
-    private flexsearchIndexes: FlexsearchIndexData[],
+    private documentTextSearchTexts: Record<DocumentId, DocumentTextSearchText>,
     private searchTextIndexState: SearchTextIndexState,
+    private onTransactionSucceeded: (callback: () => void) => void,
     private onWrite: () => void,
   ) {
     super();
@@ -36,15 +35,21 @@ export default class DemoDocumentTextSearchIndex
     textChunks: TextChunks,
   ): Promise<void> {
     this.ensureNotDisposed();
-    this.importIndex();
-    this.searchTextIndexState.index.remove(documentId);
-    this.searchTextIndexState.index.add({
-      id: documentId,
+    this.onWrite();
+    const text = Object.values(textChunks).flat().join(" | ");
+    this.documentTextSearchTexts[documentId] = {
+      documentId,
       collectionId,
-      // Combine all text chunks into a single searchable text.
-      text: Object.values(textChunks).flat().join(" | "),
+      text,
+    };
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(documentId);
+      this.searchTextIndexState.index.add({
+        id: documentId,
+        collectionId,
+        text,
+      });
     });
-    this.exportIndex();
   }
 
   async remove(
@@ -52,9 +57,11 @@ export default class DemoDocumentTextSearchIndex
     documentId: DocumentId,
   ): Promise<void> {
     this.ensureNotDisposed();
-    this.importIndex();
-    this.searchTextIndexState.index.remove(documentId);
-    this.exportIndex();
+    this.onWrite();
+    delete this.documentTextSearchTexts[documentId];
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(documentId);
+    });
   }
 
   async search(
@@ -69,7 +76,7 @@ export default class DemoDocumentTextSearchIndex
     }[]
   > {
     this.ensureNotDisposed();
-    this.importIndex();
+    this.loadIndex();
 
     const results = this.searchTextIndexState.index.search(query, {
       tag: collectionId ? { collectionId } : undefined,
@@ -89,32 +96,22 @@ export default class DemoDocumentTextSearchIndex
     }));
   }
 
-  private importIndex(): void {
+  private loadIndex(): void {
     if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
-    for (const { key, data } of this.flexsearchIndexes.filter(
-      (i) => i.target === target,
+    for (const { documentId, collectionId, text } of Object.values(
+      this.documentTextSearchTexts,
     )) {
-      this.searchTextIndexState.index.import(key, data);
+      this.searchTextIndexState.index.add({
+        id: documentId,
+        collectionId,
+        text,
+      });
     }
 
     this.searchTextIndexState.isLoaded = true;
-  }
-
-  private exportIndex(): void {
-    this.onWrite();
-
-    const otherIndexes = this.flexsearchIndexes.filter(
-      (index) => index.target !== target,
-    );
-    this.flexsearchIndexes.length = 0;
-    this.flexsearchIndexes.push(...otherIndexes);
-
-    this.searchTextIndexState.index.export((key, data) => {
-      this.flexsearchIndexes.push({ key, target, data });
-    });
   }
 
   static getSearchTextIndexState(): SearchTextIndexState {

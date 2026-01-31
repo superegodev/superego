@@ -36,6 +36,7 @@ export default class DemoDataRepositoriesManager
   ): Promise<ReturnValue> {
     const transactionId = crypto.randomUUID();
     let shouldAbort = false;
+    const transactionSucceededCallbacks: (() => void)[] = [];
     const transactionData = (await this.readData()) ?? {
       version: crypto.randomUUID(),
       apps: {},
@@ -48,7 +49,8 @@ export default class DemoDataRepositoriesManager
       documents: {},
       documentVersions: {},
       files: {},
-      flexsearchIndexes: [],
+      documentTextSearchTexts: {},
+      conversationTextSearchTexts: {},
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;
@@ -80,7 +82,8 @@ export default class DemoDataRepositoriesManager
           "documents",
           "documentVersions",
           "files",
-          "flexsearchIndexes",
+          "documentTextSearchTexts",
+          "conversationTextSearchTexts",
           "globalSettings",
         ] as const
       ).forEach((property) => {
@@ -94,6 +97,9 @@ export default class DemoDataRepositoriesManager
     const repos = new DemoDataRepositories(
       transactionData,
       onWrite,
+      (callback: () => void) => {
+        transactionSucceededCallbacks.push(callback);
+      },
       this.searchTextIndexStates,
       createSavepoint,
       rollbackToSavepoint,
@@ -106,6 +112,9 @@ export default class DemoDataRepositoriesManager
     if (action === "commit" && transactionData.version !== initialVersion) {
       this.lock = null;
       await this.writeData(clone(transactionData), initialVersion);
+      DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
+        transactionSucceededCallbacks,
+      );
     }
     return returnValue;
   }
@@ -267,5 +276,13 @@ export default class DemoDataRepositoriesManager
     console.group(message);
     console.error(error);
     console.groupEnd();
+  }
+
+  private static runTransactionSucceededCallbacks(callbacks: (() => void)[]) {
+    try {
+      callbacks.forEach((callback) => callback());
+    } catch {
+      // Ignore errors.
+    }
   }
 }
