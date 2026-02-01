@@ -422,6 +422,9 @@
   "DocumentRefField.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "DocumentTableRow.tsx_vT9jcW": {
+    "defaultMessage": "Invalid content summary"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
   },
@@ -442,9 +445,6 @@
   },
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "Id"
-  },
-  "DocumentsTable.tsx_vT9jcW": {
-    "defaultMessage": "Invalid content summary"
   },
   "DocumentsTable.tsx_xIoGG9": {
     "defaultMessage": "Go to"
@@ -874,6 +874,21 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
+  },
+  "Pagination.tsx_CDjQEk": {
+    "defaultMessage": "{startItem}-{endItem} of {totalItems}"
+  },
+  "Pagination.tsx_ZATT08": {
+    "defaultMessage": "Pagination"
+  },
+  "Pagination.tsx_ZIstZx": {
+    "defaultMessage": "Page {page}"
+  },
+  "Pagination.tsx_k9hDFZ": {
+    "defaultMessage": "Previous page"
+  },
+  "Pagination.tsx_rBj9Ib": {
+    "defaultMessage": "Next page"
   },
   "PanelHeader.tsx_+G35mR": {
     "defaultMessage": "Open sidebar"

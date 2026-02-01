@@ -1126,6 +1126,12 @@
       "value": "Nessun risultato trovato"
     }
   ],
+  "DocumentTableRow.tsx_vT9jcW": [
+    {
+      "type": 0,
+      "value": "Sommario dei contenuti non valido"
+    }
+  ],
   "DocumentVersionTimelineNode.tsx_X3XZvD": [
     {
       "type": 0,
@@ -1170,12 +1176,6 @@
     {
       "type": 0,
       "value": "ID"
-    }
-  ],
-  "DocumentsTable.tsx_vT9jcW": [
-    {
-      "type": 0,
-      "value": "Sommario dei contenuti non valido"
     }
   ],
   "DocumentsTable.tsx_xIoGG9": [
@@ -2194,6 +2194,56 @@
     {
       "type": 0,
       "value": " su null"
+    }
+  ],
+  "Pagination.tsx_CDjQEk": [
+    {
+      "type": 1,
+      "value": "startItem"
+    },
+    {
+      "type": 0,
+      "value": "-"
+    },
+    {
+      "type": 1,
+      "value": "endItem"
+    },
+    {
+      "type": 0,
+      "value": " di "
+    },
+    {
+      "type": 1,
+      "value": "totalItems"
+    }
+  ],
+  "Pagination.tsx_ZATT08": [
+    {
+      "type": 0,
+      "value": "Paginazione"
+    }
+  ],
+  "Pagination.tsx_ZIstZx": [
+    {
+      "type": 0,
+      "value": "Pagina "
+    },
+    {
+      "type": 1,
+      "value": "page"
+    }
+  ],
+  "Pagination.tsx_k9hDFZ": [
+    {
+      "type": 0,
+      "value": "Pagina precedente"
+    }
+  ],
+  "Pagination.tsx_rBj9Ib": [
+    {
+      "type": 0,
+      "value": "Pagina successiva"
     }
   ],
   "PanelHeader.tsx_+G35mR": [

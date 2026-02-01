@@ -422,6 +422,9 @@
   "DocumentRefField.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
   },
+  "DocumentTableRow.tsx_vT9jcW": {
+    "defaultMessage": "Sommario dei contenuti non valido"
+  },
   "DocumentVersionTimelineNode.tsx_X3XZvD": {
     "defaultMessage": "Ripristina versione"
   },
@@ -442,9 +445,6 @@
   },
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "ID"
-  },
-  "DocumentsTable.tsx_vT9jcW": {
-    "defaultMessage": "Sommario dei contenuti non valido"
   },
   "DocumentsTable.tsx_xIoGG9": {
     "defaultMessage": "Vai a"
@@ -862,6 +862,21 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
+  },
+  "Pagination.tsx_CDjQEk": {
+    "defaultMessage": "{startItem}-{endItem} di {totalItems}"
+  },
+  "Pagination.tsx_ZATT08": {
+    "defaultMessage": "Paginazione"
+  },
+  "Pagination.tsx_ZIstZx": {
+    "defaultMessage": "Pagina {page}"
+  },
+  "Pagination.tsx_k9hDFZ": {
+    "defaultMessage": "Pagina precedente"
+  },
+  "Pagination.tsx_rBj9Ib": {
+    "defaultMessage": "Pagina successiva"
   },
   "PanelHeader.tsx_+G35mR": {
     "defaultMessage": "Apri barra laterale"
