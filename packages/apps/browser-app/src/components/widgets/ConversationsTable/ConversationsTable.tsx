@@ -1,79 +1,96 @@
 import type { LiteConversation } from "@superego/backend";
-import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
+import { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
-import ConversationUtils from "../../../utils/ConversationUtils.js";
-import ConversationAssistant from "../../design-system/ConversationAssistant/ConversationAssistant.js";
-import ConversationStatus from "../../design-system/ConversationStatus/ConversationStatus.js";
+import Pagination from "../../design-system/Pagination/Pagination.js";
 import Table from "../../design-system/Table/Table.js";
+import usePageSize from "../../design-system/Table/usePageSize.js";
 import * as cs from "./ConversationsTable.css.js";
+import ConversationTableRow from "./ConversationTableRow.js";
+
+const PAGINATION_THRESHOLD = 500;
 
 interface Props {
   conversations: LiteConversation[];
+  pageSize: number | "max";
 }
-export default function ConversationsTable({ conversations }: Props) {
+export default function ConversationsTable({ conversations, pageSize }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
+
+  const shouldPaginate = conversations.length > PAGINATION_THRESHOLD;
+  const { calculatedPageSize, containerRef } = usePageSize<HTMLDivElement>({
+    pageSize: shouldPaginate ? pageSize : conversations.length,
+  });
+  const [activePage, setActivePage] = useState(1);
+  const totalPages = shouldPaginate
+    ? Math.ceil(conversations.length / calculatedPageSize)
+    : 1;
+  const displayedConversations = (() => {
+    if (!shouldPaginate) {
+      return conversations;
+    }
+    if (calculatedPageSize === 0) {
+      return [];
+    }
+    const startIndex = (activePage - 1) * calculatedPageSize;
+    return conversations.slice(startIndex, startIndex + calculatedPageSize);
+  })();
+
   return (
-    <Table
-      aria-label={intl.formatMessage({ defaultMessage: "Conversations" })}
-      selectionMode="none"
-      className={cs.ConversationsTable.root}
-    >
-      <Table.Header>
-        <Table.Column isRowHeader={true} defaultWidth="3fr">
-          <FormattedMessage defaultMessage="Title" />
-        </Table.Column>
-        <Table.Column align="center" defaultWidth="1fr">
-          <FormattedMessage defaultMessage="Status" />
-        </Table.Column>
-        {screenSize > ScreenSize.Medium ? (
-          <>
-            <Table.Column defaultWidth="1fr">
-              <FormattedMessage defaultMessage="Assistant" />
+    <div className={cs.ConversationsTable.root}>
+      <div ref={containerRef} className={cs.ConversationsTable.tableContainer}>
+        <Table
+          key={`${screenSize}`}
+          aria-label={intl.formatMessage({ defaultMessage: "Conversations" })}
+          selectionMode="none"
+        >
+          <Table.Header>
+            <Table.Column isRowHeader={true} defaultWidth="3fr">
+              <FormattedMessage defaultMessage="Title" />
             </Table.Column>
-            <Table.Column align="right" defaultWidth="1fr">
-              <FormattedMessage defaultMessage="Created at" />
+            <Table.Column align="center" defaultWidth="1fr">
+              <FormattedMessage defaultMessage="Status" />
             </Table.Column>
-          </>
-        ) : null}
-      </Table.Header>
-      <Table.Body
-        items={conversations}
-        renderEmptyState={() => (
-          <Table.Empty>
-            <FormattedMessage defaultMessage="You don't have any conversations yet." />
-          </Table.Empty>
-        )}
-      >
-        {(conversation) => (
-          <Table.Row
-            href={toHref({
-              name: RouteName.Conversation,
-              conversationId: conversation.id,
-            })}
-          >
-            <Table.Cell>
-              {ConversationUtils.getDisplayTitle(conversation, intl)}
-            </Table.Cell>
-            <Table.Cell align="center">
-              <ConversationStatus status={conversation.status} />
-            </Table.Cell>
             {screenSize > ScreenSize.Medium ? (
               <>
-                <Table.Cell>
-                  <ConversationAssistant assistant={conversation.assistant} />
-                </Table.Cell>
-                <Table.Cell align="right">
-                  <FormattedDate value={conversation.createdAt} />
-                </Table.Cell>
+                <Table.Column defaultWidth="1fr">
+                  <FormattedMessage defaultMessage="Assistant" />
+                </Table.Column>
+                <Table.Column align="right" defaultWidth="1fr">
+                  <FormattedMessage defaultMessage="Created at" />
+                </Table.Column>
               </>
             ) : null}
-          </Table.Row>
-        )}
-      </Table.Body>
-    </Table>
+          </Table.Header>
+          <Table.Body
+            items={displayedConversations}
+            renderEmptyState={() => (
+              <Table.Empty>
+                <FormattedMessage defaultMessage="You don't have any conversations yet." />
+              </Table.Empty>
+            )}
+          >
+            {(conversation) => (
+              <ConversationTableRow
+                conversation={conversation}
+                screenSize={screenSize}
+              />
+            )}
+          </Table.Body>
+        </Table>
+      </div>
+      {shouldPaginate && totalPages > 1 ? (
+        <Pagination
+          totalPages={totalPages}
+          activePage={activePage}
+          onActivePageChange={setActivePage}
+          pageSize={calculatedPageSize}
+          totalItems={conversations.length}
+          className={cs.ConversationsTable.pagination}
+        />
+      ) : null}
+    </div>
   );
 }
