@@ -116,7 +116,7 @@ export default function DocumentsTable({
             ) : null}
             {showCreatedAt && screenSize > ScreenSize.Medium ? (
               <Table.Column
-                maxWidth={160}
+                maxWidth={150}
                 allowsSorting={true}
                 id={sortableColumnIds.createdAt}
               >
@@ -125,7 +125,7 @@ export default function DocumentsTable({
             ) : null}
             {showLastModifiedAt && screenSize > ScreenSize.Medium ? (
               <Table.Column
-                maxWidth={160}
+                maxWidth={150}
                 allowsSorting={true}
                 id={sortableColumnIds.lastModifiedAt}
               >

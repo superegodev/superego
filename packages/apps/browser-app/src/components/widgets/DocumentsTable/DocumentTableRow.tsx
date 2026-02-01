@@ -75,7 +75,7 @@ export default function DocumentTableRow({
           <FormattedDate
             value={document.createdAt}
             dateStyle="short"
-            timeStyle="medium"
+            timeStyle="short"
           />
         </Table.Cell>
       ) : null}
@@ -84,7 +84,7 @@ export default function DocumentTableRow({
           <FormattedDate
             value={document.latestVersion.createdAt}
             dateStyle="short"
-            timeStyle="medium"
+            timeStyle="short"
           />
         </Table.Cell>
       ) : null}
