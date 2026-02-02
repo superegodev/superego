@@ -1,5 +1,6 @@
+import type { DocumentVersion } from "@superego/backend";
 import { DocumentVersionCreator } from "@superego/backend";
-import { Id } from "@superego/shared-utils";
+import { Id, makeSuccessfulResult } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type DocumentVersionEntity from "../../../entities/DocumentVersionEntity.js";
@@ -14,6 +15,10 @@ const content = {
   array: [],
   null: null,
 };
+
+const contentSummary: DocumentVersion["contentSummary"] = makeSuccessfulResult(
+  {},
+);
 
 export default rd<GetDependencies>("Document versions", (deps) => {
   it("inserting", async () => {
@@ -31,6 +36,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -54,6 +60,258 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     expect(found).toEqual(documentVersion);
   });
 
+  describe("updating content blocking keys", () => {
+    it("updates contentBlockingKeys from null to an array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentBlockingKeys = ["key:1", "key:2"];
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            newContentBlockingKeys,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(newContentBlockingKeys);
+    });
+
+    it("updates contentBlockingKeys from an array to a different array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: ["key:old1", "key:old2"],
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentBlockingKeys = ["key:new1", "key:new2", "key:new3"];
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            newContentBlockingKeys,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(newContentBlockingKeys);
+    });
+
+    it("updates contentBlockingKeys from an array to null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: ["key:1", "key:2"],
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentBlockingKeys(
+            documentVersion.id,
+            null,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentBlockingKeys).toEqual(null);
+    });
+  });
+
+  describe("updating content summary", () => {
+    it("updates contentSummary for an existing document version (case: successful result)", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentSummary: DocumentVersion["contentSummary"] =
+        makeSuccessfulResult({ title: "Updated Title" });
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentSummary(
+            documentVersion.id,
+            newContentSummary,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentSummary).toEqual(newContentSummary);
+    });
+
+    it("updates contentSummary for an existing document version (case: unsuccessful result)", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const documentVersion: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const newContentSummary: DocumentVersion["contentSummary"] = {
+        success: false,
+        data: null,
+        error: {
+          name: "ContentSummaryNotValid",
+          details: {
+            collectionId: documentVersion.collectionId,
+            collectionVersionId: documentVersion.collectionVersionId,
+            documentId: documentVersion.documentId,
+            documentVersionId: documentVersion.id,
+            issues: [{ message: "Invalid content summary" }],
+          },
+        },
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.updateContentSummary(
+            documentVersion.id,
+            newContentSummary,
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.documentVersion.find(documentVersion.id),
+        }),
+      );
+      expect(found?.contentSummary).toEqual(newContentSummary);
+    });
+  });
+
   it("deleting all by collection id", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
@@ -69,6 +327,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -83,6 +342,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -97,6 +357,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -164,6 +425,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -178,6 +440,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: documentVersion1.id,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -192,6 +455,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       content: content,
       contentBlockingKeys: null,
       referencedDocuments: [],
+      contentSummary: contentSummary,
       previousVersionId: null,
       createdBy: DocumentVersionCreator.User,
       createdAt: new Date(),
@@ -244,6 +508,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -281,6 +546,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 1 },
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -295,6 +561,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 2 },
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -309,6 +576,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 3 },
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion2.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -323,6 +591,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 4 },
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion3.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -383,6 +652,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -397,6 +667,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -445,6 +716,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     const toMinimal = ({
       content,
       contentBlockingKeys,
+      contentSummary,
       ...rest
     }: DocumentVersionEntity): MinimalDocumentVersionEntity => rest;
 
@@ -481,6 +753,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         conversationId: null,
         content: { ...content, number: 1 },
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(1),
@@ -495,6 +768,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         conversationId: null,
         content: { ...content, number: 2 },
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(2),
@@ -509,6 +783,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         conversationId: null,
         content: { ...content, number: 3 },
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion2.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(3),
@@ -525,6 +800,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(4),
@@ -571,6 +847,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -594,6 +871,170 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       // Verify
       expect(found).toEqual([toMinimal(documentVersion)]);
+    });
+  });
+
+  describe("finding all by collection version id", () => {
+    it("case: no document versions for collection version => returns empty array", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAllWhereCollectionVersionIdEq(
+              Id.generate.collectionVersion(),
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([]);
+    });
+
+    it("case: some document versions for collection version => returns all of them", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionVersionId = Id.generate.collectionVersion();
+      const otherCollectionVersionId = Id.generate.collectionVersion();
+      const collectionId = Id.generate.collection();
+
+      // Document versions under the target collection version.
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: collectionVersionId,
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: collectionVersionId,
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      // Document version under a different collection version - should not be
+      // included.
+      const documentVersion3: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: Id.generate.document(),
+        collectionVersionId: otherCollectionVersionId,
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          await repos.documentVersion.insert(documentVersion3);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAllWhereCollectionVersionIdEq(
+              collectionVersionId,
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([documentVersion1, documentVersion2]);
+    });
+
+    it("case: also includes non-latest versions", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionVersionId = Id.generate.collectionVersion();
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+
+      // First version (non latest).
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: collectionVersionId,
+        conversationId: null,
+        content: { ...content, number: 1 },
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(1),
+      };
+      // Second version (latest).
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: collectionVersionId,
+        conversationId: null,
+        content: { ...content, number: 2 },
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(2),
+      };
+
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue:
+            await repos.documentVersion.findAllWhereCollectionVersionIdEq(
+              collectionVersionId,
+            ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual([documentVersion1, documentVersion2]);
     });
   });
 
@@ -633,6 +1074,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -647,6 +1089,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -661,6 +1104,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -675,6 +1119,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -706,83 +1151,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     });
   });
 
-  describe("misc", () => {
-    it("inserting versions with identical contents and retrieving them", async () => {
-      // Setup SUT
-      const { dataRepositoriesManager } = deps();
-
-      // Exercise
-      const collectionId = Id.generate.collection();
-      const documentId = Id.generate.document();
-      const documentVersion1: DocumentVersionEntity = {
-        id: Id.generate.documentVersion(),
-        remoteId: null,
-        collectionId: collectionId,
-        documentId: documentId,
-        collectionVersionId: Id.generate.collectionVersion(),
-        conversationId: null,
-        content: content,
-        contentBlockingKeys: null,
-        referencedDocuments: [],
-        previousVersionId: null,
-        createdBy: DocumentVersionCreator.User,
-        createdAt: new Date(),
-      };
-      const documentVersion2: DocumentVersionEntity = {
-        id: Id.generate.documentVersion(),
-        remoteId: null,
-        collectionId: collectionId,
-        documentId: documentId,
-        collectionVersionId: Id.generate.collectionVersion(),
-        conversationId: null,
-        content: content,
-        contentBlockingKeys: null,
-        referencedDocuments: [],
-        previousVersionId: documentVersion1.id,
-        createdBy: DocumentVersionCreator.User,
-        createdAt: new Date(),
-      };
-      const documentVersion3: DocumentVersionEntity = {
-        id: Id.generate.documentVersion(),
-        remoteId: null,
-        collectionId: collectionId,
-        documentId: documentId,
-        collectionVersionId: Id.generate.collectionVersion(),
-        conversationId: null,
-        content: content,
-        contentBlockingKeys: null,
-        referencedDocuments: [],
-        previousVersionId: documentVersion2.id,
-        createdBy: DocumentVersionCreator.User,
-        createdAt: new Date(),
-      };
-      await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => {
-          await repos.documentVersion.insert(documentVersion1);
-          await repos.documentVersion.insert(documentVersion2);
-          await repos.documentVersion.insert(documentVersion3);
-          return { action: "commit", returnValue: null };
-        },
-      );
-
-      // Verify
-      const { found1, found2, found3 } =
-        await dataRepositoriesManager.runInSerializableTransaction(
-          async (repos) => ({
-            action: "commit",
-            returnValue: {
-              found1: await repos.documentVersion.find(documentVersion1.id),
-              found2: await repos.documentVersion.find(documentVersion2.id),
-              found3: await repos.documentVersion.find(documentVersion3.id),
-            },
-          }),
-        );
-      expect(found1).toEqual(documentVersion1);
-      expect(found2).toEqual(documentVersion2);
-      expect(found3).toEqual(documentVersion3);
-    });
-  });
-
   describe("finding all latest where referencedDocuments contains", () => {
     it("case: no documents reference the given document => returns empty array", async () => {
       // Setup SUT
@@ -798,6 +1166,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -846,6 +1215,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -862,6 +1232,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -911,6 +1282,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(1),
@@ -929,6 +1301,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(2),
@@ -977,6 +1350,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -995,6 +1369,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         referencedDocuments: [
           { collectionId: targetCollectionId, documentId: targetDocumentId },
         ],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1040,6 +1415,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: ["key:1", "key:2"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1081,6 +1457,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: ["key:1", "key:2"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1124,6 +1501,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: contentBlockingKeys,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1166,6 +1544,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 1 },
         contentBlockingKeys: ["key:old"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(1),
@@ -1180,6 +1559,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: { ...content, number: 2 },
         contentBlockingKeys: ["key:new"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: documentVersion1.id,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(2),
@@ -1225,6 +1605,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: [sharedKey, "key:unique1"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1239,6 +1620,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: [sharedKey, "key:unique2"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1284,6 +1666,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: null,
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1325,6 +1708,7 @@ export default rd<GetDependencies>("Document versions", (deps) => {
         content: content,
         contentBlockingKeys: ["key:1", "key:2"],
         referencedDocuments: [],
+        contentSummary: contentSummary,
         previousVersionId: null,
         createdBy: DocumentVersionCreator.User,
         createdAt: new Date(),
@@ -1350,6 +1734,86 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       // Verify
       expect(found).toEqual(null);
+    });
+  });
+
+  describe("misc", () => {
+    it("inserting versions with identical contents and retrieving them", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const documentId = Id.generate.document();
+      const documentVersion1: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: null,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion2: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: documentVersion1.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      const documentVersion3: DocumentVersionEntity = {
+        id: Id.generate.documentVersion(),
+        remoteId: null,
+        collectionId: collectionId,
+        documentId: documentId,
+        collectionVersionId: Id.generate.collectionVersion(),
+        conversationId: null,
+        content: content,
+        contentBlockingKeys: null,
+        referencedDocuments: [],
+        contentSummary: contentSummary,
+        previousVersionId: documentVersion2.id,
+        createdBy: DocumentVersionCreator.User,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentVersion.insert(documentVersion1);
+          await repos.documentVersion.insert(documentVersion2);
+          await repos.documentVersion.insert(documentVersion3);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      const { found1, found2, found3 } =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: {
+              found1: await repos.documentVersion.find(documentVersion1.id),
+              found2: await repos.documentVersion.find(documentVersion2.id),
+              found3: await repos.documentVersion.find(documentVersion3.id),
+            },
+          }),
+        );
+      expect(found1).toEqual(documentVersion1);
+      expect(found2).toEqual(documentVersion2);
+      expect(found3).toEqual(documentVersion3);
     });
   });
 });

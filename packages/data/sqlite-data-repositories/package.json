@@ -13,7 +13,7 @@
     "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.2.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
@@ -22,6 +22,7 @@
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/schema": "workspace:*",
+    "es-toolkit": "^1.44.0",
     "flexsearch": "^0.8.212",
     "jsondiffpatch": "^0.7.3"
   }

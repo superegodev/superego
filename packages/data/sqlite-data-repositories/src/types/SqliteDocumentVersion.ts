@@ -3,6 +3,7 @@ import type {
   CollectionVersionId,
   ConversationId,
   DocumentId,
+  DocumentVersion,
   DocumentVersionCreator,
   DocumentVersionId,
 } from "@superego/backend";
@@ -27,6 +28,8 @@ type SqliteDocumentVersion = {
   content_delta: string | null;
   /** JSON. Array of contentBlockingKeys. */
   content_blocking_keys: string | null;
+  /** JSON. Content summary result. */
+  content_summary: string;
   /** JSON. Array of DocumentRef objects. */
   referenced_documents: string;
   created_by: DocumentVersionCreator;
@@ -74,6 +77,9 @@ export function toEntity(
     contentBlockingKeys: documentVersion.content_blocking_keys
       ? JSON.parse(documentVersion.content_blocking_keys)
       : null,
+    contentSummary: JSON.parse(
+      documentVersion.content_summary,
+    ) as DocumentVersion["contentSummary"],
     referencedDocuments: JSON.parse(documentVersion.referenced_documents),
     createdBy: documentVersion.created_by,
     createdAt: new Date(documentVersion.created_at),

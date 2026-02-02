@@ -15,6 +15,7 @@ export default {
   },
   schema: weighInsSchema,
   versionSettings: {
+    contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `
 import type { WeighIn } from "./CollectionSchema.js";
@@ -40,6 +41,5 @@ export default function getContentSummary(weighIn) {
       `.trim(),
     },
   },
-  contentBlockingKeysGetter: null,
   documents: weighInsData,
 } satisfies DemoCollection;

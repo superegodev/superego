@@ -1,7 +1,7 @@
 import type { ConversationId } from "@superego/backend";
 import type { ConversationTextSearchIndex } from "@superego/executing-backend";
 import { Document as FlexsearchDocument } from "flexsearch";
-import type { FlexsearchIndexData } from "../Data.js";
+import type { ConversationTextSearchText } from "../Data.js";
 import Disposable from "../utils/Disposable.js";
 
 type FlexsearchDocumentData = {
@@ -9,29 +9,25 @@ type FlexsearchDocumentData = {
   text: string;
 };
 
-const target = "conversation";
+export interface SearchTextIndexState {
+  index: FlexsearchDocument<FlexsearchDocumentData>;
+  isLoaded: boolean;
+}
 
 export default class DemoConversationTextSearchIndex
   extends Disposable
   implements ConversationTextSearchIndex
 {
-  private index: FlexsearchDocument<FlexsearchDocumentData>;
-  private indexLoaded = false;
-
   constructor(
-    private flexsearchIndexes: FlexsearchIndexData[],
+    private conversationTextSearchTexts: Record<
+      ConversationId,
+      ConversationTextSearchText
+    >,
+    private searchTextIndexState: SearchTextIndexState,
+    private onTransactionSucceeded: (callback: () => void) => void,
     private onWrite: () => void,
   ) {
     super();
-    this.index = new FlexsearchDocument<FlexsearchDocumentData>({
-      document: {
-        id: "id",
-        index: ["text"],
-        store: ["text"],
-      },
-      tokenize: "forward",
-      context: true,
-    });
   }
 
   async upsert(
@@ -39,20 +35,22 @@ export default class DemoConversationTextSearchIndex
     textChunks: { title: string[]; messages: string[] },
   ): Promise<void> {
     this.ensureNotDisposed();
-    this.importIndex();
-    this.index.remove(conversationId);
-    this.index.add({
-      id: conversationId,
-      text: [...textChunks.title, ...textChunks.messages].join(" | "),
+    this.onWrite();
+    const text = [...textChunks.title, ...textChunks.messages].join(" | ");
+    this.conversationTextSearchTexts[conversationId] = { conversationId, text };
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(conversationId);
+      this.searchTextIndexState.index.add({ id: conversationId, text });
     });
-    this.exportIndex();
   }
 
   async remove(conversationId: ConversationId): Promise<void> {
     this.ensureNotDisposed();
-    this.importIndex();
-    this.index.remove(conversationId);
-    this.exportIndex();
+    this.onWrite();
+    delete this.conversationTextSearchTexts[conversationId];
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(conversationId);
+    });
   }
 
   async search(
@@ -65,9 +63,9 @@ export default class DemoConversationTextSearchIndex
     }[]
   > {
     this.ensureNotDisposed();
-    this.importIndex();
+    this.loadIndex();
 
-    const results = this.index.search(query, {
+    const results = this.searchTextIndexState.index.search(query, {
       limit: options.limit,
       merge: true,
       enrich: true,
@@ -83,31 +81,32 @@ export default class DemoConversationTextSearchIndex
     }));
   }
 
-  private importIndex(): void {
-    if (this.indexLoaded) {
+  private loadIndex(): void {
+    if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
-    for (const { key, data } of this.flexsearchIndexes.filter(
-      (i) => i.target === target,
+    for (const { conversationId, text } of Object.values(
+      this.conversationTextSearchTexts,
     )) {
-      this.index.import(key, data);
+      this.searchTextIndexState.index.add({ id: conversationId, text });
     }
 
-    this.indexLoaded = true;
+    this.searchTextIndexState.isLoaded = true;
   }
 
-  private exportIndex(): void {
-    this.onWrite();
-
-    const otherIndexes = this.flexsearchIndexes.filter(
-      (index) => index.target !== target,
-    );
-    this.flexsearchIndexes.length = 0;
-    this.flexsearchIndexes.push(...otherIndexes);
-
-    this.index.export((key, data) => {
-      this.flexsearchIndexes.push({ key, target, data });
-    });
+  static getSearchTextIndexState(): SearchTextIndexState {
+    return {
+      index: new FlexsearchDocument<FlexsearchDocumentData>({
+        document: {
+          id: "id",
+          index: ["text"],
+          store: ["text"],
+        },
+        tokenize: "forward",
+        context: true,
+      }),
+      isLoaded: false,
+    };
   }
 }

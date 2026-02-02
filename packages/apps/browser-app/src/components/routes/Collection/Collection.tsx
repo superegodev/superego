@@ -213,6 +213,7 @@ export default function Collection(props: Props) {
                 collectionId={collectionId}
                 collection={collection}
                 documents={documents}
+                pageSize="max"
                 showCreatedAt={showTimestamps}
                 showLastModifiedAt={showTimestamps}
                 className={cs.Collection.documentsTable}

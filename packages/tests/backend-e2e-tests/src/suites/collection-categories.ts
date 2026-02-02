@@ -462,13 +462,13 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createChildCollectionResult.success);
 

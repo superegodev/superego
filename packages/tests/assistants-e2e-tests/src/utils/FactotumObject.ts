@@ -56,6 +56,7 @@ class FactotumObject {
       },
       definition.schema,
       {
+        contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source:
             'export default function getValue() { return { name: "name" }; }',
@@ -63,7 +64,6 @@ class FactotumObject {
             'export default function getValue() { return { name: "name" }; }',
         },
       },
-      null,
     );
     assertSuccessfulResult(
       `Error creating collection ${definition.name}`,

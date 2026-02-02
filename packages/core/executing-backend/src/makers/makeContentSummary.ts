@@ -1,18 +1,23 @@
 import type {
   ContentSummary,
   ContentSummaryNotValid,
+  DocumentId,
+  DocumentVersionId,
   ExecutingJavascriptFunctionFailed,
 } from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
-import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import makeContentSummaryResult from "./makeContentSummaryResult.js";
 
 export default async function makeContentSummary(
   javascriptSandbox: JavascriptSandbox,
   collectionVersion: CollectionVersionEntity,
-  documentVersion: DocumentVersionEntity,
+  documentVersionInfo: {
+    id: DocumentVersionId;
+    documentId: DocumentId;
+    content: any;
+  },
 ): Promise<
   Result<
     ContentSummary,
@@ -21,9 +26,13 @@ export default async function makeContentSummary(
 > {
   const result = await javascriptSandbox.executeSyncFunction(
     collectionVersion.settings.contentSummaryGetter,
-    [documentVersion.content],
+    [documentVersionInfo.content],
   );
   return result.success
-    ? makeContentSummaryResult(collectionVersion, documentVersion, result.data)
+    ? makeContentSummaryResult(
+        collectionVersion,
+        documentVersionInfo,
+        result.data,
+      )
     : result;
 }

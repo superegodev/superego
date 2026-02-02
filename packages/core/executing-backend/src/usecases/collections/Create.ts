@@ -11,7 +11,6 @@ import type {
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
-  TypescriptModule,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -48,7 +47,6 @@ export default class CollectionsCreate extends Usecase<
     settings: CollectionSettings,
     schema: Schema,
     versionSettings: CollectionVersionSettings,
-    contentBlockingKeysGetter: TypescriptModule | null,
     options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
@@ -57,8 +55,8 @@ export default class CollectionsCreate extends Usecase<
     | AppNotFound
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
-    | ContentSummaryGetterNotValid
     | ContentBlockingKeysGetterNotValid
+    | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -158,6 +156,27 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    if (versionSettings.contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          versionSettings.contentBlockingKeysGetter,
+        );
+      if (!isContentBlockingKeysGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentBlockingKeysGetterNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
+    }
+
     const isContentSummaryGetterValid =
       await this.javascriptSandbox.moduleDefaultExportsFunction(
         versionSettings.contentSummaryGetter,
@@ -175,27 +194,6 @@ export default class CollectionsCreate extends Usecase<
           ],
         }),
       );
-    }
-
-    if (contentBlockingKeysGetter !== null) {
-      const isContentBlockingKeysGetterValid =
-        await this.javascriptSandbox.moduleDefaultExportsFunction(
-          contentBlockingKeysGetter,
-        );
-      if (!isContentBlockingKeysGetterValid) {
-        return makeUnsuccessfulResult(
-          makeResultError("ContentBlockingKeysGetterNotValid", {
-            collectionId: null,
-            collectionVersionId: null,
-            issues: [
-              {
-                message:
-                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
-              },
-            ],
-          }),
-        );
-      }
     }
 
     const now = new Date();
@@ -221,9 +219,9 @@ export default class CollectionsCreate extends Usecase<
       collectionId: collectionId,
       schema: resolvedSchema,
       settings: {
+        contentBlockingKeysGetter: versionSettings.contentBlockingKeysGetter,
         contentSummaryGetter: versionSettings.contentSummaryGetter,
       },
-      contentBlockingKeysGetter,
       migration: null,
       remoteConverters: null,
       createdAt: now,

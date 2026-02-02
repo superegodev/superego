@@ -47,13 +47,13 @@ export default rd<GetDependencies>("Files", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
 

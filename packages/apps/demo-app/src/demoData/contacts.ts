@@ -12,6 +12,28 @@ export default {
   },
   schema: contactsSchema,
   versionSettings: {
+    contentBlockingKeysGetter: {
+      source: `
+import type { Contact } from "./CollectionSchema.js";
+
+export default function getContentBlockingKeys(contact: Contact): string[] {
+  return [
+    \`name:\${contact.name.toLowerCase().trim()}\`,
+    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
+    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
+  ];
+}
+      `.trim(),
+      compiled: `
+export default function getContentBlockingKeys(contact) {
+  return [
+    \`name:\${contact.name.toLowerCase().trim()}\`,
+    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
+    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
+  ];
+}
+      `.trim(),
+    },
     contentSummaryGetter: {
       source: `
 import type { Contact } from "./CollectionSchema.js";
@@ -40,28 +62,6 @@ export default function getContentSummary(contact) {
 }
       `.trim(),
     },
-  },
-  contentBlockingKeysGetter: {
-    source: `
-import type { Contact } from "./CollectionSchema.js";
-
-export default function getContentBlockingKeys(contact: Contact): string[] {
-  return [
-    \`name:\${contact.name.toLowerCase().trim()}\`,
-    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
-    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
-  ];
-}
-    `.trim(),
-    compiled: `
-export default function getContentBlockingKeys(contact) {
-  return [
-    \`name:\${contact.name.toLowerCase().trim()}\`,
-    ...contact.emails.map((e) => \`email:\${e.address.toLowerCase().trim()}\`),
-    ...contact.phones.map((p) => \`phone:\${p.number.replace(/\\s/g, "")}\`),
-  ];
-}
-    `.trim(),
   },
   documents: contactsData,
 } satisfies DemoCollection;

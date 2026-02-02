@@ -5,6 +5,8 @@ import type {
 } from "@superego/executing-backend";
 import type Data from "./Data.js";
 import DemoDataRepositories from "./DemoDataRepositories.js";
+import DemoConversationTextSearchIndex from "./repositories/DemoConversationTextSearchIndex.js";
+import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
 import clone from "./utils/clone.js";
 
 const OVERWRITE = "OVERWRITE";
@@ -17,6 +19,10 @@ export default class DemoDataRepositoriesManager
   private objectStoreDataKeyPath = "id";
   private objectStoreDataKeyValue = "data";
   private lock: string | null = null;
+  private searchTextIndexStates = {
+    conversation: DemoConversationTextSearchIndex.getSearchTextIndexState(),
+    document: DemoDocumentTextSearchIndex.getSearchTextIndexState(),
+  };
 
   constructor(
     private defaultGlobalSettings: GlobalSettings,
@@ -30,6 +36,7 @@ export default class DemoDataRepositoriesManager
   ): Promise<ReturnValue> {
     const transactionId = crypto.randomUUID();
     let shouldAbort = false;
+    const transactionSucceededCallbacks: (() => void)[] = [];
     const transactionData = (await this.readData()) ?? {
       version: crypto.randomUUID(),
       apps: {},
@@ -42,7 +49,8 @@ export default class DemoDataRepositoriesManager
       documents: {},
       documentVersions: {},
       files: {},
-      flexsearchIndexes: [],
+      documentTextSearchTexts: {},
+      conversationTextSearchTexts: {},
       globalSettings: { value: this.defaultGlobalSettings },
     };
     const initialVersion = transactionData.version;
@@ -74,7 +82,8 @@ export default class DemoDataRepositoriesManager
           "documents",
           "documentVersions",
           "files",
-          "flexsearchIndexes",
+          "documentTextSearchTexts",
+          "conversationTextSearchTexts",
           "globalSettings",
         ] as const
       ).forEach((property) => {
@@ -88,6 +97,10 @@ export default class DemoDataRepositoriesManager
     const repos = new DemoDataRepositories(
       transactionData,
       onWrite,
+      (callback: () => void) => {
+        transactionSucceededCallbacks.push(callback);
+      },
+      this.searchTextIndexStates,
       createSavepoint,
       rollbackToSavepoint,
     );
@@ -99,6 +112,9 @@ export default class DemoDataRepositoriesManager
     if (action === "commit" && transactionData.version !== initialVersion) {
       this.lock = null;
       await this.writeData(clone(transactionData), initialVersion);
+      DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
+        transactionSucceededCallbacks,
+      );
     }
     return returnValue;
   }
@@ -260,5 +276,18 @@ export default class DemoDataRepositoriesManager
     console.group(message);
     console.error(error);
     console.groupEnd();
+  }
+
+  private static runTransactionSucceededCallbacks(callbacks: (() => void)[]) {
+    callbacks.forEach((callback) => {
+      try {
+        callback();
+      } catch (error) {
+        console.error(
+          "Uncaught error running transaction succeeded callback",
+          error,
+        );
+      }
+    });
   }
 }

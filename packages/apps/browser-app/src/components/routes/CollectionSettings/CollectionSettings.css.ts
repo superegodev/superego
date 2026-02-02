@@ -6,9 +6,18 @@ export const UpdateCollectionSettingsForm = {
     display: "flex",
     columnGap: vars.spacing._2,
   }),
+
   nameInput: style({
     flexGrow: 1,
   }),
+
+  submitButtonContainer: style({
+    display: "flex",
+    justifyContent: "flex-end",
+  }),
+};
+
+export const UpdateCollectionVersionSettingsForm = {
   submitButtonContainer: style({
     display: "flex",
     justifyContent: "flex-end",

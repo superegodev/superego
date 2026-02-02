@@ -125,7 +125,6 @@ export default interface Backend {
       settings: CollectionSettings,
       schema: Schema,
       versionSettings: CollectionVersionSettings,
-      contentBlockingKeysGetter: TypescriptModule | null,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
@@ -133,8 +132,8 @@ export default interface Backend {
       | AppNotFound
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
-      | ContentSummaryGetterNotValid
       | ContentBlockingKeysGetterNotValid
+      | ContentSummaryGetterNotValid
       | UnexpectedError
     >;
 
@@ -143,7 +142,6 @@ export default interface Backend {
         settings: CollectionSettings;
         schema: Schema;
         versionSettings: CollectionVersionSettings;
-        contentBlockingKeysGetter: TypescriptModule | null;
       }[],
     ): ResultPromise<
       Collection[],
@@ -152,8 +150,8 @@ export default interface Backend {
       | AppNotFound
       | CollectionSchemaNotValid
       | ReferencedCollectionsNotFound
-      | ContentSummaryGetterNotValid
       | ContentBlockingKeysGetterNotValid
+      | ContentSummaryGetterNotValid
       | UnexpectedError
     >;
 
@@ -225,7 +223,6 @@ export default interface Backend {
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
-      contentBlockingKeysGetter: TypescriptModule | null,
       /** Null for collections with a remote. */
       migration: TypescriptModule | null,
       /** Null for collections without a remote. */
@@ -252,6 +249,8 @@ export default interface Backend {
       Collection,
       | CollectionNotFound
       | CollectionVersionIdNotMatching
+      | ContentBlockingKeysGetterNotValid
+      | MakingContentBlockingKeysFailed
       | ContentSummaryGetterNotValid
       | UnexpectedError
     >;

@@ -88,8 +88,7 @@ export default function CreateCollectionForm() {
         assistantInstructions,
       },
       schema,
-      { contentSummaryGetter },
-      contentBlockingKeysGetter,
+      { contentBlockingKeysGetter, contentSummaryGetter },
     );
     if (success) {
       navigateTo(

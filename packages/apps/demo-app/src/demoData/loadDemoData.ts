@@ -88,7 +88,6 @@ export default async function loadDemoData(
       },
       schema: collection.schema,
       versionSettings: collection.versionSettings,
-      contentBlockingKeysGetter: collection.contentBlockingKeysGetter,
     })),
   );
 

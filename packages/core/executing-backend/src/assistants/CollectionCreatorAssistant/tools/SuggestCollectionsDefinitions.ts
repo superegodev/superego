@@ -41,8 +41,10 @@ export default {
           assistantInstructions: null,
         },
         schema,
-        versionSettings: { contentSummaryGetter: stubContentSummaryGetter },
-        contentBlockingKeysGetter: null,
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: stubContentSummaryGetter,
+        },
       })),
       { dryRun: true },
     );
@@ -94,36 +96,36 @@ export default {
       }
     }
 
-    // Generate contentSummaryGetter and contentBlockingKeysGetter.
+    // Generate contentBlockingKeysGetter and contentSummaryGetter.
     const collectionArtifacts = await pMap(
       collections,
       async (collection) => {
         const { schema } = collection;
 
-        const [contentSummaryGetterResult, contentBlockingKeysGetterResult] =
+        const [contentBlockingKeysGetterResult, contentSummaryGetterResult] =
           await Promise.all([
-            inferenceImplementTypescriptModule.exec(
-              getImplementContentSummaryGetterSpec(schema),
-            ),
             inferenceImplementTypescriptModule.exec(
               getImplementContentBlockingKeysGetterSpec(schema),
             ),
+            inferenceImplementTypescriptModule.exec(
+              getImplementContentSummaryGetterSpec(schema),
+            ),
           ]);
 
-        if (!contentSummaryGetterResult.success) {
-          throw new UnexpectedAssistantError(
-            `Failed to generate contentSummaryGetter: ${contentSummaryGetterResult.error.name}`,
-          );
-        }
         if (!contentBlockingKeysGetterResult.success) {
           throw new UnexpectedAssistantError(
             `Failed to generate contentBlockingKeysGetter: ${contentBlockingKeysGetterResult.error.name}`,
           );
         }
+        if (!contentSummaryGetterResult.success) {
+          throw new UnexpectedAssistantError(
+            `Failed to generate contentSummaryGetter: ${contentSummaryGetterResult.error.name}`,
+          );
+        }
 
         return {
-          contentSummaryGetter: contentSummaryGetterResult.data,
           contentBlockingKeysGetter: contentBlockingKeysGetterResult.data,
+          contentSummaryGetter: contentSummaryGetterResult.data,
         };
       },
       { concurrency: 1 },

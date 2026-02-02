@@ -190,8 +190,8 @@ namespace ToolResult {
     >,
     {
       collections: {
-        contentSummaryGetter: TypescriptModule;
         contentBlockingKeysGetter: TypescriptModule | null;
+        contentSummaryGetter: TypescriptModule;
       }[];
     }
   >;

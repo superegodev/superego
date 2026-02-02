@@ -3,6 +3,7 @@ import type {
   CollectionVersionId,
   ConversationId,
   DocumentId,
+  DocumentVersion,
   DocumentVersionCreator,
   DocumentVersionId,
 } from "@superego/backend";
@@ -18,6 +19,7 @@ export default interface DocumentVersionEntity {
   conversationId: ConversationId | null;
   content: any;
   contentBlockingKeys: string[] | null;
+  contentSummary: DocumentVersion["contentSummary"];
   referencedDocuments: DocumentRef[];
   createdBy: DocumentVersionCreator;
   createdAt: Date;

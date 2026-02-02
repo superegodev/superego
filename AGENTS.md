@@ -10,6 +10,14 @@
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
 
+## Testing
+
+- Always add unit or e2e tests for the changes you make.
+- Follow the existing patterns and styling conventions when writing tests. In
+  particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
+  (optional), `// Exercise`, and `// Verify` to visually separate the "phases"
+  of a test.
+
 ## NPM scripts
 
 ### Global

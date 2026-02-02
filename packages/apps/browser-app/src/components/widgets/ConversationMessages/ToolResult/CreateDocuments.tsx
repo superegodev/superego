@@ -62,6 +62,7 @@ export default function CreateDocuments({ toolResult }: Props) {
             collectionId={collectionId}
             collection={collection}
             documents={documents}
+            pageSize={6}
           />
         )}
       </div>

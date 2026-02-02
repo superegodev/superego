@@ -1,5 +1,6 @@
 import type {
   CollectionId,
+  CollectionVersionId,
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
@@ -27,6 +28,30 @@ export default class DemoDocumentVersionRepository
     this.ensureNotDisposed();
     this.onWrite();
     this.documentVersions[documentVersion.id] = clone(documentVersion);
+  }
+
+  async updateContentBlockingKeys(
+    id: DocumentVersionId,
+    contentBlockingKeys: DocumentVersionEntity["contentBlockingKeys"],
+  ): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    const documentVersion = this.documentVersions[id];
+    if (documentVersion) {
+      documentVersion.contentBlockingKeys = clone(contentBlockingKeys);
+    }
+  }
+
+  async updateContentSummary(
+    id: DocumentVersionId,
+    contentSummary: DocumentVersionEntity["contentSummary"],
+  ): Promise<void> {
+    this.ensureNotDisposed();
+    this.onWrite();
+    const documentVersion = this.documentVersions[id];
+    if (documentVersion) {
+      documentVersion.contentSummary = clone(contentSummary);
+    }
   }
 
   async deleteAllWhereCollectionIdEq(
@@ -74,6 +99,35 @@ export default class DemoDocumentVersionRepository
     return clone(latestDocumentVersion ?? null);
   }
 
+  async findAllWhereDocumentIdEq(
+    documentId: DocumentId,
+  ): Promise<MinimalDocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions)
+        .filter((documentVersion) => documentVersion.documentId === documentId)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )
+        .map(
+          ({ content, contentBlockingKeys, contentSummary, ...rest }) => rest,
+        ),
+    );
+  }
+
+  async findAllWhereCollectionVersionIdEq(
+    collectionVersionId: CollectionVersionId,
+  ): Promise<DocumentVersionEntity[]> {
+    this.ensureNotDisposed();
+    return clone(
+      Object.values(this.documentVersions).filter(
+        (documentVersion) =>
+          documentVersion.collectionVersionId === collectionVersionId,
+      ),
+    );
+  }
+
   async findAllLatestsWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentVersionEntity[]> {
@@ -92,21 +146,6 @@ export default class DemoDocumentVersionRepository
         }
       });
     return clone(Object.values(latestDocumentVersions));
-  }
-
-  async findAllWhereDocumentIdEq(
-    documentId: DocumentId,
-  ): Promise<MinimalDocumentVersionEntity[]> {
-    this.ensureNotDisposed();
-    return clone(
-      Object.values(this.documentVersions)
-        .filter((documentVersion) => documentVersion.documentId === documentId)
-        .sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        )
-        .map(({ content, contentBlockingKeys, ...rest }) => rest),
-    );
   }
 
   async findAllLatestWhereReferencedDocumentsContains(
@@ -151,11 +190,11 @@ export default class DemoDocumentVersionRepository
           latestDocumentVersions[documentVersion.documentId] = documentVersion;
         }
       });
-    const blockingKeysSet = new Set(contentBlockingKeys);
+    const contentBlockingKeysSet = new Set(contentBlockingKeys);
     const found = Object.values(latestDocumentVersions).find(
       (documentVersion) =>
         documentVersion.contentBlockingKeys?.some((key) =>
-          blockingKeysSet.has(key),
+          contentBlockingKeysSet.has(key),
         ),
     );
     return clone(found ?? null);

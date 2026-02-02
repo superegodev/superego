@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useMemo } from "react";
 
 export interface SortableColumnIds {
   propertyPrefix: string;
@@ -7,9 +7,11 @@ export interface SortableColumnIds {
 }
 
 export default function useSortableColumnIds(): SortableColumnIds {
-  return {
-    propertyPrefix: useId(),
-    createdAt: useId(),
-    lastModifiedAt: useId(),
-  };
+  const propertyPrefix = useId();
+  const createdAt = useId();
+  const lastModifiedAt = useId();
+  return useMemo(
+    () => ({ propertyPrefix, createdAt, lastModifiedAt }),
+    [propertyPrefix, createdAt, lastModifiedAt],
+  );
 }

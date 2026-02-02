@@ -3,9 +3,9 @@ import type { CollectionId, DocumentId } from "@superego/backend";
 import type { DocumentTextSearchIndex } from "@superego/executing-backend";
 import type { TextChunks } from "@superego/schema";
 import { Document as FlexsearchDocument } from "flexsearch";
-import type SqliteFlexsearchIndex from "../types/SqliteFlexsearchIndex.js";
+import type SqliteDocumentTextSearchText from "../types/SqliteDocumentTextSearchText.js";
 
-const table = "flexsearch_indexes";
+const table = "document_text_search_texts";
 
 type FlexsearchDocumentData = {
   id: DocumentId;
@@ -13,48 +13,56 @@ type FlexsearchDocumentData = {
   text: string;
 };
 
+export interface SearchTextIndexState {
+  index: FlexsearchDocument<FlexsearchDocumentData>;
+  isLoaded: boolean;
+}
+
 export default class SqliteDocumentTextSearchIndex
   implements DocumentTextSearchIndex
 {
-  private index: FlexsearchDocument<FlexsearchDocumentData>;
-  private indexLoaded = false;
-
-  constructor(private db: DatabaseSync) {
-    this.index = new FlexsearchDocument<FlexsearchDocumentData>({
-      document: {
-        id: "id",
-        index: ["text"],
-        tag: ["collectionId"],
-        store: ["collectionId", "text"],
-      },
-      tokenize: "forward",
-      context: true,
-    });
-  }
+  constructor(
+    private db: DatabaseSync,
+    private searchTextIndexState: SearchTextIndexState,
+    private onTransactionSucceeded: (callback: () => void) => void,
+  ) {}
 
   async upsert(
     collectionId: CollectionId,
     documentId: DocumentId,
     textChunks: TextChunks,
   ): Promise<void> {
-    this.importIndex();
-    this.index.remove(documentId);
-    this.index.add({
-      id: documentId,
-      collectionId,
-      // Combine all text chunks into a single searchable text.
-      text: Object.values(textChunks).flat().join(" | "),
+    const text = Object.values(textChunks).flat().join(" | ");
+    this.db
+      .prepare(`
+        INSERT OR REPLACE INTO "${table}"
+          ("document_id", "collection_id", "text")
+        VALUES
+          (?, ?, ?)
+      `)
+      .run(documentId, collectionId, text);
+
+    this.onTransactionSucceeded(() => {
+      this.searchTextIndexState.index.remove(documentId);
+      this.searchTextIndexState.index.add({
+        id: documentId,
+        collectionId,
+        text,
+      });
     });
-    this.exportIndex();
   }
 
   async remove(
     _collectionId: CollectionId,
     documentId: DocumentId,
   ): Promise<void> {
-    this.importIndex();
-    this.index.remove(documentId);
-    this.exportIndex();
+    this.db
+      .prepare(`DELETE FROM "${table}" WHERE "document_id" = ?`)
+      .run(documentId);
+
+    this.onTransactionSucceeded(() =>
+      this.searchTextIndexState.index.remove(documentId),
+    );
   }
 
   async search(
@@ -68,9 +76,9 @@ export default class SqliteDocumentTextSearchIndex
       matchedText: string;
     }[]
   > {
-    this.importIndex();
+    this.loadIndex();
 
-    const results = this.index.search(query, {
+    const results = this.searchTextIndexState.index.search(query, {
       tag: collectionId ? { collectionId } : undefined,
       limit: options.limit,
       merge: true,
@@ -88,33 +96,43 @@ export default class SqliteDocumentTextSearchIndex
     }));
   }
 
-  private importIndex(): void {
-    if (this.indexLoaded) {
+  private loadIndex(): void {
+    if (this.searchTextIndexState.isLoaded) {
       return;
     }
 
-    const flexsearchIndexes = this.db
-      .prepare(`SELECT * FROM "${table}" WHERE "target" = 'document'`)
-      .all() as SqliteFlexsearchIndex[];
+    const documentTextSearchTexts = this.db
+      .prepare(`SELECT * FROM "${table}"`)
+      .all() as SqliteDocumentTextSearchText[];
 
-    for (const { key, data } of flexsearchIndexes) {
-      this.index.import(key, data);
+    for (const {
+      document_id,
+      collection_id,
+      text,
+    } of documentTextSearchTexts) {
+      this.searchTextIndexState.index.add({
+        id: document_id,
+        collectionId: collection_id,
+        text: text,
+      });
     }
 
-    this.indexLoaded = true;
+    this.searchTextIndexState.isLoaded = true;
   }
 
-  private exportIndex(): void {
-    // Delete all existing document index data first, then re-export. This is
-    // necessary because Flexsearch's export after removing documents doesn't
-    // include empty index keys, leaving stale data in SQLite.
-    this.db.prepare(`DELETE FROM "${table}" WHERE "target" = 'document'`).run();
-    const insert = this.db.prepare(`
-      INSERT INTO "${table}"
-        ("key", "target", "data")
-      VALUES
-        (?, ?, ?)
-    `);
-    this.index.export((key, data) => insert.run(key, "document", data));
+  static getSearchTextIndexState(): SearchTextIndexState {
+    return {
+      index: new FlexsearchDocument<FlexsearchDocumentData>({
+        document: {
+          id: "id",
+          index: ["text"],
+          tag: ["collectionId"],
+          store: ["collectionId", "text"],
+        },
+        tokenize: "forward",
+        context: true,
+      }),
+      isLoaded: false,
+    };
   }
 }

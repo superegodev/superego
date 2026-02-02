@@ -29,7 +29,7 @@ it("ExecutingJavascriptFunctionFailed result on getter execution failed", async 
       contentSummaryGetter: { source: "", compiled: "" },
     },
   };
-  const documentVersion = {
+  const documentVersionInfo = {
     id: Id.generate.documentVersion(),
     documentId: Id.generate.document(),
     content: {},
@@ -39,7 +39,7 @@ it("ExecutingJavascriptFunctionFailed result on getter execution failed", async 
   const result = await makeContentSummary(
     mockJavascriptSandbox as any,
     collectionVersion as any,
-    documentVersion as any,
+    documentVersionInfo as any,
   );
 
   // Verify
@@ -68,7 +68,7 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
       contentSummaryGetter: { source: "", compiled: "" },
     },
   };
-  const documentVersion = {
+  const documentVersionInfo = {
     id: Id.generate.documentVersion(),
     documentId: Id.generate.document(),
     content: {},
@@ -78,7 +78,7 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
   const result = await makeContentSummary(
     mockJavascriptSandbox as any,
     collectionVersion as any,
-    documentVersion as any,
+    documentVersionInfo as any,
   );
 
   // Verify
@@ -89,8 +89,8 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
       details: {
         collectionId: collectionVersion.collectionId,
         collectionVersionId: collectionVersion.id,
-        documentId: documentVersion.documentId,
-        documentVersionId: documentVersion.id,
+        documentId: documentVersionInfo.documentId,
+        documentVersionId: documentVersionInfo.id,
         issues: [
           {
             message:
@@ -131,7 +131,7 @@ it("successful result on valid content summary", async () => {
       contentSummaryGetter: { source: "", compiled: "" },
     },
   };
-  const documentVersion = {
+  const documentVersionInfo = {
     id: Id.generate.documentVersion(),
     documentId: Id.generate.document(),
     content: {},
@@ -141,7 +141,7 @@ it("successful result on valid content summary", async () => {
   const result = await makeContentSummary(
     mockJavascriptSandbox as any,
     collectionVersion as any,
-    documentVersion as any,
+    documentVersionInfo as any,
   );
 
   // Verify

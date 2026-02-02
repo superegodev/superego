@@ -24,10 +24,15 @@ import type {
   FileEntity,
 } from "@superego/executing-backend";
 
-export type FlexsearchIndexData = {
-  key: string;
-  target: string;
-  data: string;
+export type DocumentTextSearchText = {
+  documentId: DocumentId;
+  collectionId: CollectionId;
+  text: string;
+};
+
+export type ConversationTextSearchText = {
+  conversationId: ConversationId;
+  text: string;
 };
 
 export default interface Data {
@@ -42,6 +47,10 @@ export default interface Data {
   documents: Record<DocumentId, DocumentEntity>;
   documentVersions: Record<DocumentVersionId, DocumentVersionEntity>;
   files: Record<FileId, FileEntity & { content: Uint8Array<ArrayBuffer> }>;
-  flexsearchIndexes: FlexsearchIndexData[];
+  documentTextSearchTexts: Record<DocumentId, DocumentTextSearchText>;
+  conversationTextSearchTexts: Record<
+    ConversationId,
+    ConversationTextSearchText
+  >;
   globalSettings: { value: GlobalSettings };
 }

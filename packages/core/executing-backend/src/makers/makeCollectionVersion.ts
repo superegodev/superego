@@ -8,7 +8,6 @@ export default function makeCollectionVersion(
     id: collectionVersion.id,
     schema: collectionVersion.schema,
     settings: collectionVersion.settings,
-    contentBlockingKeysGetter: collectionVersion.contentBlockingKeysGetter,
     previousVersionId: collectionVersion.previousVersionId,
     migration: collectionVersion.migration,
     remoteConverters: collectionVersion.remoteConverters,

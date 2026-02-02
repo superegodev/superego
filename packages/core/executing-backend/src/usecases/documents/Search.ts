@@ -3,7 +3,6 @@ import type {
   CollectionId,
   CollectionNotFound,
   Document,
-  DocumentId,
   LiteDocument,
   TextSearchResult,
   UnexpectedError,
@@ -14,15 +13,11 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import pMap from "p-map";
-import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
-import makeContentSummaries from "../../makers/makeContentSummaries.js";
-import makeDocumentGivenSummary from "../../makers/makeDocumentGivenSummary.js";
+import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
-import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import assertDocumentVersionMatchesCollectionVersion from "../../utils/assertDocumentVersionMatchesCollectionVersion.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsSearch extends Usecase<
@@ -70,87 +65,34 @@ export default class DocumentsSearch extends Usecase<
       return makeSuccessfulResult([]);
     }
 
-    const collectionVersions =
-      await this.repos.collectionVersion.findAllLatests();
-
-    const collectionVersionByCollectionId = new Map(
-      collectionVersions.map((collectionVersion) => [
-        collectionVersion.collectionId,
-        collectionVersion,
-      ]),
-    );
-
-    const resultsByCollectionId = Map.groupBy(
-      searchResults,
-      (result) => result.collectionId,
-    );
-
     const textSearchResults = await pMap(
-      [...resultsByCollectionId.entries()],
-      ([colId, results]) =>
-        this.makeTextSearchResults(
-          colId,
-          results,
-          collectionVersionByCollectionId,
-          lite,
-        ),
-      { concurrency: 1 },
-    );
-
-    return makeSuccessfulResult(textSearchResults.flat());
-  }
-
-  private async makeTextSearchResults(
-    collectionId: CollectionId,
-    results: { documentId: DocumentId; matchedText: string }[],
-    collectionVersionByCollectionId: Map<CollectionId, CollectionVersionEntity>,
-    lite: boolean,
-  ): Promise<TextSearchResult<LiteDocument | Document>[]> {
-    const collectionVersion = collectionVersionByCollectionId.get(collectionId);
-    assertCollectionVersionExists(collectionId, collectionVersion);
-
-    const documentsWithVersions = await pMap(
-      results,
+      searchResults,
       async (result) => {
-        const [document, latestVersion] = await Promise.all([
+        const [documentEntity, latestVersion] = await Promise.all([
           this.repos.document.find(result.documentId),
           this.repos.documentVersion.findLatestWhereDocumentIdEq(
             result.documentId,
           ),
         ]);
-        assertDocumentExists(collectionId, result.documentId, document);
+        assertDocumentExists(
+          result.collectionId,
+          result.documentId,
+          documentEntity,
+        );
         assertDocumentVersionExists(
-          collectionId,
+          result.collectionId,
           result.documentId,
           latestVersion,
         );
-        assertDocumentVersionMatchesCollectionVersion(
-          collectionId,
-          collectionVersion,
-          result.documentId,
-          latestVersion,
-        );
-        return { document, latestVersion, matchedText: result.matchedText };
+        const document = makeDocument(documentEntity, latestVersion);
+        return {
+          match: lite ? makeLiteDocument(document) : document,
+          matchedText: result.matchedText,
+        };
       },
       { concurrency: 1 },
     );
 
-    const contentSummaries = await makeContentSummaries(
-      this.javascriptSandbox,
-      collectionVersion,
-      documentsWithVersions.map(({ latestVersion }) => latestVersion),
-    );
-
-    return documentsWithVersions.map((item, i) => {
-      const document = makeDocumentGivenSummary(
-        item.document,
-        item.latestVersion,
-        contentSummaries[i]!,
-      );
-      return {
-        match: lite ? makeLiteDocument(document) : document,
-        matchedText: item.matchedText,
-      };
-    });
+    return makeSuccessfulResult(textSearchResults);
   }
 }

@@ -1134,6 +1134,18 @@
       "value": "No results found"
     }
   ],
+  "DocumentTableRow.tsx_aBBLZR": [
+    {
+      "type": 0,
+      "value": "Open remote document"
+    }
+  ],
+  "DocumentTableRow.tsx_vT9jcW": [
+    {
+      "type": 0,
+      "value": "Invalid content summary"
+    }
+  ],
   "DocumentVersionTimelineNode.tsx_X3XZvD": [
     {
       "type": 0,
@@ -1178,12 +1190,6 @@
     {
       "type": 0,
       "value": "Id"
-    }
-  ],
-  "DocumentsTable.tsx_vT9jcW": [
-    {
-      "type": 0,
-      "value": "Invalid content summary"
     }
   ],
   "DocumentsTable.tsx_xIoGG9": [
@@ -2202,6 +2208,56 @@
     {
       "type": 0,
       "value": " to null"
+    }
+  ],
+  "Pagination.tsx_CDjQEk": [
+    {
+      "type": 1,
+      "value": "startItem"
+    },
+    {
+      "type": 0,
+      "value": "-"
+    },
+    {
+      "type": 1,
+      "value": "endItem"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalItems"
+    }
+  ],
+  "Pagination.tsx_ZATT08": [
+    {
+      "type": 0,
+      "value": "Pagination"
+    }
+  ],
+  "Pagination.tsx_ZIstZx": [
+    {
+      "type": 0,
+      "value": "Page "
+    },
+    {
+      "type": 1,
+      "value": "page"
+    }
+  ],
+  "Pagination.tsx_k9hDFZ": [
+    {
+      "type": 0,
+      "value": "Previous page"
+    }
+  ],
+  "Pagination.tsx_rBj9Ib": [
+    {
+      "type": 0,
+      "value": "Next page"
     }
   ],
   "PanelHeader.tsx_+G35mR": [
@@ -3562,10 +3618,22 @@
       "value": "Specific instructions for this collection to pass to the assistant."
     }
   ],
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": [
+    {
+      "type": 0,
+      "value": "Content summary"
+    }
+  ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
     {
       "type": 0,
       "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
+    {
+      "type": 0,
+      "value": "Deduplication"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": [

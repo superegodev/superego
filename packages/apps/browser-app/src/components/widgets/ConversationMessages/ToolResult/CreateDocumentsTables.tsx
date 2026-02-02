@@ -18,6 +18,7 @@ export default function CreateDocumentsTables({
       collectionId={collectionId}
       collection={CollectionUtils.findCollection(collections, collectionId)}
       documents={documents}
+      pageSize={6}
       className={cs.CreateDocumentsTables.table}
     />
   );

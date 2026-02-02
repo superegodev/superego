@@ -1,22 +1,14 @@
 import type { Document } from "@superego/backend";
-import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
 import type DocumentEntity from "../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import makeDocumentVersion from "./makeDocumentVersion.js";
 
-export default async function makeDocument(
-  javascriptSandbox: JavascriptSandbox,
-  collectionVersion: CollectionVersionEntity,
+export default function makeDocument(
   { latestRemoteDocument, ...document }: DocumentEntity,
   latestVersion: DocumentVersionEntity,
-): Promise<Document> {
+): Document {
   return {
     ...document,
-    latestVersion: await makeDocumentVersion(
-      javascriptSandbox,
-      collectionVersion,
-      latestVersion,
-    ),
+    latestVersion: makeDocumentVersion(latestVersion),
   };
 }

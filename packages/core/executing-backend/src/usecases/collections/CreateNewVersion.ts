@@ -52,7 +52,6 @@ export default class CollectionsCreateNewVersion extends Usecase<
     latestVersionId: CollectionVersionId,
     schema: Schema,
     settings: CollectionVersionSettings,
-    contentBlockingKeysGetter: TypescriptModule | null,
     migration: TypescriptModule | null,
     remoteConverters: RemoteConverters | null,
   ): ResultPromise<
@@ -61,8 +60,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | CollectionVersionIdNotMatching
     | CollectionSchemaNotValid
     | ReferencedCollectionsNotFound
-    | ContentSummaryGetterNotValid
     | ContentBlockingKeysGetterNotValid
+    | ContentSummaryGetterNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -129,6 +128,28 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
+    // Validate settings.contentBlockingKeysGetter.
+    if (settings.contentBlockingKeysGetter !== null) {
+      const isContentBlockingKeysGetterValid =
+        await this.javascriptSandbox.moduleDefaultExportsFunction(
+          settings.contentBlockingKeysGetter,
+        );
+      if (!isContentBlockingKeysGetterValid) {
+        return makeUnsuccessfulResult(
+          makeResultError("ContentBlockingKeysGetterNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: [
+              {
+                message:
+                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
+      }
+    }
+
     // Validate settings.contentSummaryGetter.
     const isContentSummaryGetterValid =
       await this.javascriptSandbox.moduleDefaultExportsFunction(
@@ -147,28 +168,6 @@ export default class CollectionsCreateNewVersion extends Usecase<
           ],
         }),
       );
-    }
-
-    // Validate contentBlockingKeysGetter.
-    if (contentBlockingKeysGetter !== null) {
-      const isContentBlockingKeysGetterValid =
-        await this.javascriptSandbox.moduleDefaultExportsFunction(
-          contentBlockingKeysGetter,
-        );
-      if (!isContentBlockingKeysGetterValid) {
-        return makeUnsuccessfulResult(
-          makeResultError("ContentBlockingKeysGetterNotValid", {
-            collectionId: id,
-            collectionVersionId: latestVersion.id,
-            issues: [
-              {
-                message:
-                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
-              },
-            ],
-          }),
-        );
-      }
     }
 
     // Validate migration and remoteConverters.
@@ -266,8 +265,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
       schema: resolvedSchema,
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
+        contentBlockingKeysGetter: settings.contentBlockingKeysGetter,
       },
-      contentBlockingKeysGetter,
       migration: migration,
       remoteConverters: remoteConverters,
       createdAt: new Date(),

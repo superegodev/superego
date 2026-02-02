@@ -82,13 +82,13 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           rootType: "Root",
         },
         {
+          contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
         },
-        null,
       );
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
