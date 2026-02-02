@@ -17,12 +17,19 @@ import * as cs from "./Table.css.js";
 
 interface Props extends TableProps {
   className?: string | undefined;
+  isEmpty?: boolean | undefined;
 }
 export default function Table({
   className,
+  isEmpty,
   ...props
 }: Props & RefAttributes<HTMLTableElement>) {
-  return (
+  // Virtualization causes issues with empty tables (empty state doesn't
+  // render), so disable it when the table is empty.
+  const table = (
+    <TableRAC {...props} className={classnames(cs.Table.root, className)} />
+  );
+  return !isEmpty ? (
     <Virtualizer
       layout={TableLayout}
       layoutOptions={{
@@ -32,8 +39,10 @@ export default function Table({
         gap: 0,
       }}
     >
-      <TableRAC {...props} className={classnames(cs.Table.root, className)} />
+      {table}
     </Virtualizer>
+  ) : (
+    table
   );
 }
 

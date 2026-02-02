@@ -82,6 +82,7 @@ export default function DocumentsTable({
           sortDescriptor={sortDescriptor}
           onSortChange={setSortDescriptor}
           selectionMode="none"
+          isEmpty={displayedItems.length === 0}
         >
           <Table.Header>
             {isEmpty(sortedProperties) ? (

@@ -6,6 +6,7 @@ export const Table = {
   root: style({
     width: "100%",
     overflow: "auto",
+    borderCollapse: "collapse",
   }),
 };
 
@@ -23,10 +24,12 @@ export const Column = {
     fontSize: vars.typography.fontSizes.md,
     background: vars.colors.background.surface,
     borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    display: "flex",
-    alignItems: "center",
-    gap: vars.spacing._2,
     selectors: {
+      "&:is(div)": {
+        display: "flex",
+        alignItems: "center",
+        gap: vars.spacing._2,
+      },
       '&[data-allows-sorting="true"]': {
         cursor: "pointer",
       },

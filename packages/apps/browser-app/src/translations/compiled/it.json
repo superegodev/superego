@@ -183,6 +183,12 @@
       "value": "Nome"
     }
   ],
+  "BackgroundJobsTable.tsx_IBAQRm": [
+    {
+      "type": 0,
+      "value": "Non c'è ancora nessuno lavoro in background."
+    }
+  ],
   "BackgroundJobsTable.tsx_TDUfVk": [
     {
       "type": 0,
@@ -205,12 +211,6 @@
     {
       "type": 0,
       "value": "Stato"
-    }
-  ],
-  "BackgroundJobsTable.tsx_xG07EN": [
-    {
-      "type": 0,
-      "value": "Nessun lavoro in background."
     }
   ],
   "BooleanField.tsx_KKkUks": [

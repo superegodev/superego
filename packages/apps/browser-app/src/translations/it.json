@@ -89,6 +89,9 @@
   "BackgroundJobsTable.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
+  "BackgroundJobsTable.tsx_IBAQRm": {
+    "defaultMessage": "Non c'è ancora nessuno lavoro in background."
+  },
   "BackgroundJobsTable.tsx_TDUfVk": {
     "defaultMessage": "Avviato"
   },
@@ -100,9 +103,6 @@
   },
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
-  },
-  "BackgroundJobsTable.tsx_xG07EN": {
-    "defaultMessage": "Nessun lavoro in background."
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"

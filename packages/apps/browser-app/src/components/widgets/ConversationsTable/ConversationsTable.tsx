@@ -42,6 +42,7 @@ export default function ConversationsTable({ conversations, pageSize }: Props) {
           key={`${screenSize}`}
           aria-label={intl.formatMessage({ defaultMessage: "Conversations" })}
           selectionMode="none"
+          isEmpty={displayedItems.length === 0}
         >
           <Table.Header>
             <Table.Column isRowHeader={true} defaultWidth="3fr">
