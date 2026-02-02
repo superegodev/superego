@@ -62,17 +62,20 @@
   "BackgroundJob.tsx_SL+c5a": {
     "defaultMessage": "—"
   },
-  "BackgroundJob.tsx_hAm0Wi": {
-    "defaultMessage": "Background job"
-  },
   "BackgroundJob.tsx_it6Lig": {
     "defaultMessage": "Input"
+  },
+  "BackgroundJob.tsx_kJfB4j": {
+    "defaultMessage": "Error loading background job {backgroundJobId}"
   },
   "BackgroundJob.tsx_qlcuNQ": {
     "defaultMessage": "ID"
   },
   "BackgroundJob.tsx_tzMNF3": {
     "defaultMessage": "Status"
+  },
+  "BackgroundJob.tsx_x6bqrY": {
+    "defaultMessage": "Background job details"
   },
   "BackgroundJobTableRow.tsx_SL+c5a": {
     "defaultMessage": "—"

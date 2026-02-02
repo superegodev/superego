@@ -125,16 +125,20 @@
       "value": "—"
     }
   ],
-  "BackgroundJob.tsx_hAm0Wi": [
-    {
-      "type": 0,
-      "value": "Background job"
-    }
-  ],
   "BackgroundJob.tsx_it6Lig": [
     {
       "type": 0,
       "value": "Input"
+    }
+  ],
+  "BackgroundJob.tsx_kJfB4j": [
+    {
+      "type": 0,
+      "value": "Error loading background job "
+    },
+    {
+      "type": 1,
+      "value": "backgroundJobId"
     }
   ],
   "BackgroundJob.tsx_qlcuNQ": [
@@ -147,6 +151,12 @@
     {
       "type": 0,
       "value": "Status"
+    }
+  ],
+  "BackgroundJob.tsx_x6bqrY": [
+    {
+      "type": 0,
+      "value": "Background job details"
     }
   ],
   "BackgroundJobTableRow.tsx_SL+c5a": [
