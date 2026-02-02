@@ -279,10 +279,15 @@ export default class DemoDataRepositoriesManager
   }
 
   private static runTransactionSucceededCallbacks(callbacks: (() => void)[]) {
-    try {
-      callbacks.forEach((callback) => callback());
-    } catch (error) {
-      console.error("Uncaught TransactionSucceededCallback error", error);
-    }
+    callbacks.forEach((callback) => {
+      try {
+        callback();
+      } catch (error) {
+        console.error(
+          "Uncaught error running transaction succeeded callback",
+          error,
+        );
+      }
+    });
   }
 }
