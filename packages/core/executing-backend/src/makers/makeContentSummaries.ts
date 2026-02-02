@@ -46,10 +46,10 @@ export default async function makeContentSummaries(
   }
 
   const contentSummaries = result.data as any[];
-  return documentVersionInfos.map((documentVersion, index) =>
+  return documentVersionInfos.map((documentVersionInfo, index) =>
     makeContentSummaryResult(
       collectionVersion,
-      documentVersion,
+      documentVersionInfo,
       contentSummaries[index],
     ),
   );

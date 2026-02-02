@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCalculatedPageSize from "./useCalculatedPageSize.js";
 
 interface UseTablePaginationOptions<Item> {
@@ -29,6 +29,13 @@ export default function useTablePagination<Item>({
   const { calculatedPageSize, tableContainerRef } = useCalculatedPageSize({
     pageSize: isPaginating ? pageSize : items.length,
   });
+
+  // Reset activePage when items changes, since it causes displayedItems to
+  // change and renders the active page mostly meaningless to the user.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  useEffect(() => {
+    setActivePage(1);
+  }, [items]);
 
   const totalPages = isPaginating
     ? calculatedPageSize === 0

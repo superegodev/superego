@@ -14,7 +14,6 @@ export const DocumentsTable = {
 
   pagination: style({
     flexShrink: 0,
-    justifyContent: "center",
     marginBlockStart: vars.spacing._2,
   }),
 };

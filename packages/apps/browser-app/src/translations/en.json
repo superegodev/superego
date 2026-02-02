@@ -422,6 +422,9 @@
   "DocumentRefField.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "DocumentTableRow.tsx_aBBLZR": {
+    "defaultMessage": "Open remote document"
+  },
   "DocumentTableRow.tsx_vT9jcW": {
     "defaultMessage": "Invalid content summary"
   },

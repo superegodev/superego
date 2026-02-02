@@ -9,6 +9,7 @@ import classnames from "../../../utils/classnames.js";
 import Body from "./Body.js";
 import Cell from "./Cell.js";
 import Column from "./Column.js";
+import { HEADING_HEIGHT, ROW_HEIGHT } from "./constants.js";
 import Empty from "./Empty.js";
 import Header from "./Header.js";
 import Row from "./Row.js";
@@ -25,8 +26,8 @@ export default function Table({
     <Virtualizer
       layout={TableLayout}
       layoutOptions={{
-        rowHeight: 40,
-        headingHeight: 41,
+        headingHeight: HEADING_HEIGHT,
+        rowHeight: ROW_HEIGHT,
         padding: 0,
         gap: 0,
       }}

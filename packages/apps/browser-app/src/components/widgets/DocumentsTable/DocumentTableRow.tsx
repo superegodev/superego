@@ -1,7 +1,7 @@
 import type { Collection, CollectionId, LiteDocument } from "@superego/backend";
 import type { ContentSummaryUtils } from "@superego/shared-utils";
 import { PiArrowSquareOut } from "react-icons/pi";
-import { FormattedDate, FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
@@ -30,6 +30,7 @@ export default function DocumentTableRow({
   showLastModifiedAt,
   screenSize,
 }: Props) {
+  const intl = useIntl();
   return (
     <Table.Row
       href={toHref({
@@ -64,6 +65,9 @@ export default function DocumentTableRow({
               href={document.remoteUrl}
               target="_blank"
               className={cs.DocumentsTableRow.remoteUrlLink}
+              aria-label={intl.formatMessage({
+                defaultMessage: "Open remote document",
+              })}
             >
               <PiArrowSquareOut />
             </Link>

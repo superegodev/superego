@@ -28,7 +28,7 @@ type SqliteDocumentVersion = {
   content_delta: string | null;
   /** JSON. Array of contentBlockingKeys. */
   content_blocking_keys: string | null;
-  /** JSON. Result<ContentSummary, Error>. */
+  /** JSON. Content summary result. */
   content_summary: string;
   /** JSON. Array of DocumentRef objects. */
   referenced_documents: string;

@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-
-const HEADING_HEIGHT = 41;
-const ROW_HEIGHT = 40;
+import { HEADING_HEIGHT, ROW_HEIGHT } from "./constants.js";
 
 interface UseCalculatedPageSizeOptions {
   pageSize: number | "max";

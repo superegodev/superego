@@ -43,9 +43,11 @@ export default class SqliteDataRepositoriesManager
     try {
       const { action, returnValue } = await fn(repos);
       db.exec(action === "commit" ? "COMMIT" : "ROLLBACK");
-      SqliteDataRepositoriesManager.runTransactionSucceededCallbacks(
-        transactionSucceededCallbacks,
-      );
+      if (action === "commit") {
+        SqliteDataRepositoriesManager.runTransactionSucceededCallbacks(
+          transactionSucceededCallbacks,
+        );
+      }
       return returnValue;
     } catch (error) {
       if (db.isTransaction) {
@@ -74,8 +76,8 @@ export default class SqliteDataRepositoriesManager
   private static runTransactionSucceededCallbacks(callbacks: (() => void)[]) {
     try {
       callbacks.forEach((callback) => callback());
-    } catch {
-      // Ignore errors.
+    } catch (error) {
+      console.error("Uncaught TransactionSucceededCallback error", error);
     }
   }
 }

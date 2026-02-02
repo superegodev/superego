@@ -1,5 +1,6 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
+import { HEADING_HEIGHT, ROW_HEIGHT } from "./constants.js";
 
 export const Table = {
   root: style({
@@ -16,7 +17,7 @@ const columnTitleBase = style({
 });
 export const Column = {
   root: style({
-    height: 41,
+    height: HEADING_HEIGHT,
     paddingInline: vars.spacing._2,
     fontWeight: vars.typography.fontWeights.medium,
     fontSize: vars.typography.fontSizes.md,
@@ -60,7 +61,7 @@ export const Row = {
 };
 
 const cellRootBase = style({
-  height: "100%",
+  height: ROW_HEIGHT,
   padding: vars.spacing._2_5,
   lineHeight: "normal",
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,

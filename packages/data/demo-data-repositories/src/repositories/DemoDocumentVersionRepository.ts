@@ -38,7 +38,7 @@ export default class DemoDocumentVersionRepository
     this.onWrite();
     const documentVersion = this.documentVersions[id];
     if (documentVersion) {
-      documentVersion.contentBlockingKeys = contentBlockingKeys;
+      documentVersion.contentBlockingKeys = clone(contentBlockingKeys);
     }
   }
 
@@ -50,7 +50,7 @@ export default class DemoDocumentVersionRepository
     this.onWrite();
     const documentVersion = this.documentVersions[id];
     if (documentVersion) {
-      documentVersion.contentSummary = contentSummary;
+      documentVersion.contentSummary = clone(contentSummary);
     }
   }
 

@@ -14,7 +14,7 @@ export default function makePaginationItems(
     }
   }
 
-  // More than 7 pages: always show exactly 7 items (5 pages + 2 ellipses).
+  // More than 7 pages: always show exactly 7 items.
   else {
     // Active page is near the start: show first 5 pages, ellipsis, last page.
     if (activePage < 5) {
