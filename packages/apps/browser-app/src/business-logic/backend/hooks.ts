@@ -341,6 +341,12 @@ export const listBackgroundJobsQuery = makeBackendQueryGetter(
   () => ["listBackgroundJobs"],
 );
 
+export const getBackgroundJobQuery = makeBackendQueryGetter(
+  "backgroundJobs",
+  "get",
+  (backgroundJobId) => ["getBackgroundJob", backgroundJobId],
+);
+
 /*
  * Global settings
  */

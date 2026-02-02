@@ -1,5 +1,6 @@
 import type {
   AppId,
+  BackgroundJobId,
   CollectionId,
   ConversationId,
   DocumentId,
@@ -19,6 +20,8 @@ export enum RouteName {
   Document = "Document",
   CreateApp = "CreateApp",
   EditApp = "EditApp",
+  BackgroundJobs = "BackgroundJobs",
+  BackgroundJob = "BackgroundJob",
   GlobalSettings = "Settings",
 }
 
@@ -85,6 +88,13 @@ type Route =
   | {
       name: RouteName.EditApp;
       appId: AppId;
+    }
+  | {
+      name: RouteName.BackgroundJobs;
+    }
+  | {
+      name: RouteName.BackgroundJob;
+      backgroundJobId: BackgroundJobId;
     }
   | {
       name: RouteName.GlobalSettings;

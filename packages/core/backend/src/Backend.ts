@@ -4,6 +4,7 @@ import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
+import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
@@ -51,6 +52,7 @@ import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImpl
 import type UnexpectedError from "./errors/UnexpectedError.js";
 import type WriteTypescriptModuleToolNotCalled from "./errors/WriteTypescriptModuleToolNotCalled.js";
 import type AppId from "./ids/AppId.js";
+import type BackgroundJobId from "./ids/BackgroundJobId.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
 import type CollectionVersionId from "./ids/CollectionVersionId.js";
@@ -74,6 +76,7 @@ import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
@@ -526,7 +529,10 @@ export default interface Backend {
   };
 
   backgroundJobs: {
-    list(): ResultPromise<BackgroundJob[], UnexpectedError>;
+    list(): ResultPromise<LiteBackgroundJob[], UnexpectedError>;
+    get(
+      id: BackgroundJobId,
+    ): ResultPromise<BackgroundJob, BackgroundJobNotFound | UnexpectedError>;
   };
 
   globalSettings: {

@@ -4,11 +4,12 @@ import type DocumentVersionEntity from "../entities/DocumentVersionEntity.js";
 import makeDocumentVersion from "./makeDocumentVersion.js";
 
 export default function makeDocument(
-  { latestRemoteDocument, ...document }: DocumentEntity,
+  document: DocumentEntity,
   latestVersion: DocumentVersionEntity,
 ): Document {
+  const { latestRemoteDocument, ...rest } = document;
   return {
-    ...document,
+    ...rest,
     latestVersion: makeDocumentVersion(latestVersion),
   };
 }

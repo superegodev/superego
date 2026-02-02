@@ -44,6 +44,66 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "ID del client"
   },
+  "BackgroundJobTableRow.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJob.tsx_EiyxpM": {
+    "defaultMessage": "Terminato il"
+  },
+  "BackgroundJob.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "BackgroundJob.tsx_KN7zKn": {
+    "defaultMessage": "Errore"
+  },
+  "BackgroundJob.tsx_LaIqAi": {
+    "defaultMessage": "Avviato il"
+  },
+  "BackgroundJob.tsx_RhaLk3": {
+    "defaultMessage": "Messo in coda il"
+  },
+  "BackgroundJob.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJob.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "BackgroundJob.tsx_kJfB4j": {
+    "defaultMessage": "Errore nel caricamento del lavoro in background {backgroundJobId}"
+  },
+  "BackgroundJob.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "BackgroundJob.tsx_tzMNF3": {
+    "defaultMessage": "Stato"
+  },
+  "BackgroundJob.tsx_x6bqrY": {
+    "defaultMessage": "Dettagli del lavoro in background"
+  },
+  "BackgroundJobs.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
+  },
+  "BackgroundJobsTable.tsx_EQpfkS": {
+    "defaultMessage": "Terminato"
+  },
+  "BackgroundJobsTable.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "BackgroundJobsTable.tsx_TDUfVk": {
+    "defaultMessage": "Avviato"
+  },
+  "BackgroundJobsTable.tsx_bBt1ab": {
+    "defaultMessage": "In coda"
+  },
+  "BackgroundJobsTable.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
+  },
+  "BackgroundJobsTable.tsx_tzMNF3": {
+    "defaultMessage": "Stato"
+  },
+  "BackgroundJobsTable.tsx_xG07EN": {
+    "defaultMessage": "Nessun lavoro in background."
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
   },
@@ -898,6 +958,9 @@
   },
   "PrimarySidebarPanel.tsx_cyR7Kh": {
     "defaultMessage": "Indietro"
+  },
+  "PrimarySidebarPanel.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"

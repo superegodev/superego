@@ -101,6 +101,7 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.backgroundJobs = {
       list: this.makeMainIpcCall("backgroundJobs.list"),
+      get: this.makeMainIpcCall("backgroundJobs.get"),
     };
 
     this.globalSettings = {

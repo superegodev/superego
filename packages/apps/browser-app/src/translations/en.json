@@ -44,6 +44,66 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "Client ID"
   },
+  "BackgroundJob.tsx_EiyxpM": {
+    "defaultMessage": "Finished at"
+  },
+  "BackgroundJob.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "BackgroundJob.tsx_KN7zKn": {
+    "defaultMessage": "Error"
+  },
+  "BackgroundJob.tsx_LaIqAi": {
+    "defaultMessage": "Started at"
+  },
+  "BackgroundJob.tsx_RhaLk3": {
+    "defaultMessage": "Enqueued at"
+  },
+  "BackgroundJob.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJob.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "BackgroundJob.tsx_kJfB4j": {
+    "defaultMessage": "Error loading background job {backgroundJobId}"
+  },
+  "BackgroundJob.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "BackgroundJob.tsx_tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "BackgroundJob.tsx_x6bqrY": {
+    "defaultMessage": "Background job details"
+  },
+  "BackgroundJobTableRow.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJobs.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
+  },
+  "BackgroundJobsTable.tsx_EQpfkS": {
+    "defaultMessage": "Finished"
+  },
+  "BackgroundJobsTable.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "BackgroundJobsTable.tsx_TDUfVk": {
+    "defaultMessage": "Started"
+  },
+  "BackgroundJobsTable.tsx_bBt1ab": {
+    "defaultMessage": "Enqueued"
+  },
+  "BackgroundJobsTable.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
+  },
+  "BackgroundJobsTable.tsx_tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "BackgroundJobsTable.tsx_xG07EN": {
+    "defaultMessage": "No background jobs yet."
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -910,6 +970,9 @@
   },
   "PrimarySidebarPanel.tsx_cyR7Kh": {
     "defaultMessage": "Back"
+  },
+  "PrimarySidebarPanel.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"

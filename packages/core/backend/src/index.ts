@@ -23,6 +23,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 // Errors
 export type { default as AppNameNotValid } from "./errors/AppNameNotValid.js";
 export type { default as AppNotFound } from "./errors/AppNotFound.js";
+export type { default as BackgroundJobNotFound } from "./errors/BackgroundJobNotFound.js";
 export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
 export type { default as CannotRecoverConversation } from "./errors/CannotRecoverConversation.js";
@@ -110,6 +111,7 @@ export type { default as Document } from "./types/Document.js";
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
+export type { default as LiteBackgroundJob } from "./types/LiteBackgroundJob.js";
 export type { default as LiteConversation } from "./types/LiteConversation.js";
 export type { default as LiteDocument } from "./types/LiteDocument.js";
 export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";

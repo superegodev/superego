@@ -1,6 +1,7 @@
 import {
   PiArrowLeft,
   PiGear,
+  PiListChecks,
   PiMagnifyingGlass,
   PiRobot,
 } from "react-icons/pi";
@@ -49,6 +50,13 @@ export default function PrimarySidebarPanel() {
         </div>
         <CollectionsTree className={cs.PrimarySidebarPanel.collectionsTree} />
         <div className={cs.PrimarySidebarPanel.bottomActions}>
+          <PrimarySidebarPanelAction
+            type="link"
+            to={{ name: RouteName.BackgroundJobs }}
+          >
+            <PiListChecks />
+            <FormattedMessage defaultMessage="Background jobs" />
+          </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"
             to={{ name: RouteName.GlobalSettings }}

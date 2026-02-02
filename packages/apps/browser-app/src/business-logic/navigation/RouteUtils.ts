@@ -1,5 +1,6 @@
 import type {
   AppId,
+  BackgroundJobId,
   CollectionId,
   ConversationId,
   DocumentId,
@@ -57,6 +58,10 @@ export function toHref(route: Route): string {
     }
     case RouteName.EditApp:
       return `/apps/${route.appId}/edit`;
+    case RouteName.BackgroundJobs:
+      return "/background-jobs";
+    case RouteName.BackgroundJob:
+      return `/background-jobs/${route.backgroundJobId}`;
     case RouteName.GlobalSettings:
       return "/settings";
   }
@@ -213,6 +218,21 @@ const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({ pathname: "/conversations{/}?" }),
     toRoute: () => ({ name: RouteName.Conversations }),
+  },
+  {
+    pattern: new URLPattern({
+      pathname: "/background-jobs/:backgroundJobId{/}?",
+    }),
+    toRoute: (match) => ({
+      name: RouteName.BackgroundJob,
+      backgroundJobId: decodePathSegment<BackgroundJobId>(
+        match.pathname.groups["backgroundJobId"],
+      ),
+    }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/background-jobs{/}?" }),
+    toRoute: () => ({ name: RouteName.BackgroundJobs }),
   },
   {
     pattern: new URLPattern({ pathname: "/settings{/}?" }),
