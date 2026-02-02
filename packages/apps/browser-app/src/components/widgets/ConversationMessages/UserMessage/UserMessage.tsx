@@ -4,7 +4,7 @@ import {
   type MessageContentPart,
   MessageContentPartType,
 } from "@superego/backend";
-import { PiPause, PiSpeakerSimpleHigh } from "react-icons/pi";
+import { PiPause, PiSpeakerSimpleHighFill } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import usePlayAudio from "../../../../business-logic/audio/usePlayAudio.js";
 import CopyButton from "../../../design-system/CopyButton/CopyButton.js";
@@ -38,9 +38,9 @@ export default function UserMessage({ message }: Props) {
         {text !== "" ? (
           <Markdown text={text} className={cs.UserMessage.text} />
         ) : (
-          <span className={cs.UserMessage.text}>
+          <div className={cs.UserMessage.text}>
             <FormattedMessage defaultMessage="Transcribing audio..." />
-          </span>
+          </div>
         )}
         <div className={cs.UserMessage.actions}>
           {text !== "" ? (
@@ -57,7 +57,7 @@ export default function UserMessage({ message }: Props) {
               className={cs.UserMessage.action}
               onPress={togglePlayback}
             >
-              {isPlaying ? <PiPause /> : <PiSpeakerSimpleHigh />}
+              {isPlaying ? <PiPause /> : <PiSpeakerSimpleHighFill />}
             </IconButton>
           ) : null}
         </div>
