@@ -44,6 +44,75 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "Client ID"
   },
+  "BackgroundJobDetails.tsx_/RwR4v": {
+    "defaultMessage": "Back to background jobs"
+  },
+  "BackgroundJobDetails.tsx_450Fty": {
+    "defaultMessage": "None"
+  },
+  "BackgroundJobDetails.tsx_EiyxpM": {
+    "defaultMessage": "Finished at"
+  },
+  "BackgroundJobDetails.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "BackgroundJobDetails.tsx_KN7zKn": {
+    "defaultMessage": "Error"
+  },
+  "BackgroundJobDetails.tsx_LaIqAi": {
+    "defaultMessage": "Started at"
+  },
+  "BackgroundJobDetails.tsx_RhaLk3": {
+    "defaultMessage": "Enqueued at"
+  },
+  "BackgroundJobDetails.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJobDetails.tsx_d7Tzka": {
+    "defaultMessage": "Background job actions"
+  },
+  "BackgroundJobDetails.tsx_hAm0Wi": {
+    "defaultMessage": "Background job"
+  },
+  "BackgroundJobDetails.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "BackgroundJobDetails.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "BackgroundJobDetails.tsx_tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "BackgroundJobTableRow.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJobs.tsx_4wFjc9": {
+    "defaultMessage": "Background jobs actions"
+  },
+  "BackgroundJobs.tsx_Gf6hVW": {
+    "defaultMessage": "🧰 Background jobs"
+  },
+  "BackgroundJobsTable.tsx_EQpfkS": {
+    "defaultMessage": "Finished"
+  },
+  "BackgroundJobsTable.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "BackgroundJobsTable.tsx_TDUfVk": {
+    "defaultMessage": "Started"
+  },
+  "BackgroundJobsTable.tsx_bBt1ab": {
+    "defaultMessage": "Enqueued"
+  },
+  "BackgroundJobsTable.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
+  },
+  "BackgroundJobsTable.tsx_tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "BackgroundJobsTable.tsx_xG07EN": {
+    "defaultMessage": "No background jobs yet."
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -910,6 +979,9 @@
   },
   "PrimarySidebarPanel.tsx_cyR7Kh": {
     "defaultMessage": "Back"
+  },
+  "PrimarySidebarPanel.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Search"

@@ -14,10 +14,18 @@ export default async function waitForConversationProcessing(
     async () => {
       const listJobsResult = await backend.backgroundJobs.list();
       assert.isTrue(listJobsResult.success);
-      const conversationJob = listJobsResult.data.find(
-        ({ name, input }) =>
-          name === BackgroundJobName.ProcessConversation &&
-          (input as { id: ConversationId }).id === conversationId,
+      const matchingJobs = listJobsResult.data.filter(
+        ({ name }) => name === BackgroundJobName.ProcessConversation,
+      );
+      const resolvedJobs = await Promise.all(
+        matchingJobs.map(async (job) => {
+          const getJobResult = await backend.backgroundJobs.get(job.id);
+          assert.isTrue(getJobResult.success);
+          return getJobResult.data;
+        }),
+      );
+      const conversationJob = resolvedJobs.find(
+        ({ input }) => input.id === conversationId,
       );
       return (
         conversationJob?.status === BackgroundJobStatus.Succeeded ||

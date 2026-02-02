@@ -17,6 +17,9 @@
   particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
   (optional), `// Exercise`, and `// Verify` to visually separate the "phases"
   of a test.
+- When you change frontend files in `packages/apps/browser-app`, always run
+  `yarn workspace @superego/browser-app translations:extract-and-compile` and
+  update `packages/apps/browser-app/src/translations/it.json` accordingly.
 
 ## NPM scripts
 

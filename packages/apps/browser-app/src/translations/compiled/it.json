@@ -89,6 +89,144 @@
       "value": "ID del client"
     }
   ],
+  "BackgroundJobDetails.tsx_/RwR4v": [
+    {
+      "type": 0,
+      "value": "Torna ai lavori in background"
+    }
+  ],
+  "BackgroundJobDetails.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "Nessuno"
+    }
+  ],
+  "BackgroundJobDetails.tsx_EiyxpM": [
+    {
+      "type": 0,
+      "value": "Terminato il"
+    }
+  ],
+  "BackgroundJobDetails.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "BackgroundJobDetails.tsx_KN7zKn": [
+    {
+      "type": 0,
+      "value": "Errore"
+    }
+  ],
+  "BackgroundJobDetails.tsx_LaIqAi": [
+    {
+      "type": 0,
+      "value": "Avviato il"
+    }
+  ],
+  "BackgroundJobDetails.tsx_RhaLk3": [
+    {
+      "type": 0,
+      "value": "Messo in coda il"
+    }
+  ],
+  "BackgroundJobDetails.tsx_SL+c5a": [
+    {
+      "type": 0,
+      "value": "—"
+    }
+  ],
+  "BackgroundJobDetails.tsx_d7Tzka": [
+    {
+      "type": 0,
+      "value": "Azioni lavori in background"
+    }
+  ],
+  "BackgroundJobDetails.tsx_hAm0Wi": [
+    {
+      "type": 0,
+      "value": "Lavoro in background"
+    }
+  ],
+  "BackgroundJobDetails.tsx_it6Lig": [
+    {
+      "type": 0,
+      "value": "Input"
+    }
+  ],
+  "BackgroundJobDetails.tsx_qlcuNQ": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "BackgroundJobDetails.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Stato"
+    }
+  ],
+  "BackgroundJobTableRow.tsx_SL+c5a": [
+    {
+      "type": 0,
+      "value": "—"
+    }
+  ],
+  "BackgroundJobs.tsx_4wFjc9": [
+    {
+      "type": 0,
+      "value": "Azioni lavori in background"
+    }
+  ],
+  "BackgroundJobs.tsx_Gf6hVW": [
+    {
+      "type": 0,
+      "value": "🧰 Lavori in background"
+    }
+  ],
+  "BackgroundJobsTable.tsx_EQpfkS": [
+    {
+      "type": 0,
+      "value": "Terminato"
+    }
+  ],
+  "BackgroundJobsTable.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "BackgroundJobsTable.tsx_TDUfVk": [
+    {
+      "type": 0,
+      "value": "Avviato"
+    }
+  ],
+  "BackgroundJobsTable.tsx_bBt1ab": [
+    {
+      "type": 0,
+      "value": "In coda"
+    }
+  ],
+  "BackgroundJobsTable.tsx_lZrF3s": [
+    {
+      "type": 0,
+      "value": "Lavori in background"
+    }
+  ],
+  "BackgroundJobsTable.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Stato"
+    }
+  ],
+  "BackgroundJobsTable.tsx_xG07EN": [
+    {
+      "type": 0,
+      "value": "Nessun lavoro in background."
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,

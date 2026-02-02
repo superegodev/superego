@@ -1,6 +1,8 @@
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Ask from "../Ask/Ask.js";
+import BackgroundJobDetails from "../BackgroundJobs/BackgroundJobDetails.js";
+import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
@@ -53,6 +55,14 @@ export default function MainPanel() {
       return <CreateApp collectionIds={activeRoute.collectionIds} />;
     case RouteName.EditApp:
       return <EditApp appId={activeRoute.appId} />;
+    case RouteName.BackgroundJobs:
+      return <BackgroundJobs />;
+    case RouteName.BackgroundJob:
+      return (
+        <BackgroundJobDetails
+          backgroundJobId={activeRoute.backgroundJobId}
+        />
+      );
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
   }

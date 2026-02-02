@@ -110,6 +110,13 @@ const testRoutes: Route[] = [
     appId: Id.generate.app(),
   },
   {
+    name: RouteName.BackgroundJobs,
+  },
+  {
+    name: RouteName.BackgroundJob,
+    backgroundJobId: Id.generate.backgroundJob(),
+  },
+  {
     name: RouteName.GlobalSettings,
   },
 ];

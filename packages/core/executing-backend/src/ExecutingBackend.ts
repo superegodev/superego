@@ -26,6 +26,7 @@ import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse
 import AssistantsSearchConversations from "./usecases/assistants/SearchConversations.js";
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
+import BackgroundJobsGet from "./usecases/background-jobs/Get.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -170,6 +171,7 @@ export default class ExecutingBackend implements Backend {
 
     this.backgroundJobs = {
       list: this.makeUsecase(BackgroundJobsList, false),
+      get: this.makeUsecase(BackgroundJobsGet, false),
     };
 
     this.globalSettings = {

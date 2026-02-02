@@ -44,6 +44,75 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "ID del client"
   },
+  "BackgroundJobDetails.tsx_/RwR4v": {
+    "defaultMessage": "Torna ai lavori in background"
+  },
+  "BackgroundJobDetails.tsx_450Fty": {
+    "defaultMessage": "Nessuno"
+  },
+  "BackgroundJobDetails.tsx_EiyxpM": {
+    "defaultMessage": "Terminato il"
+  },
+  "BackgroundJobDetails.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "BackgroundJobDetails.tsx_KN7zKn": {
+    "defaultMessage": "Errore"
+  },
+  "BackgroundJobDetails.tsx_LaIqAi": {
+    "defaultMessage": "Avviato il"
+  },
+  "BackgroundJobDetails.tsx_RhaLk3": {
+    "defaultMessage": "Messo in coda il"
+  },
+  "BackgroundJobDetails.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJobDetails.tsx_d7Tzka": {
+    "defaultMessage": "Azioni lavori in background"
+  },
+  "BackgroundJobDetails.tsx_hAm0Wi": {
+    "defaultMessage": "Lavoro in background"
+  },
+  "BackgroundJobDetails.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "BackgroundJobDetails.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "BackgroundJobDetails.tsx_tzMNF3": {
+    "defaultMessage": "Stato"
+  },
+  "BackgroundJobTableRow.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJobs.tsx_4wFjc9": {
+    "defaultMessage": "Azioni lavori in background"
+  },
+  "BackgroundJobs.tsx_Gf6hVW": {
+    "defaultMessage": "🧰 Lavori in background"
+  },
+  "BackgroundJobsTable.tsx_EQpfkS": {
+    "defaultMessage": "Terminato"
+  },
+  "BackgroundJobsTable.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "BackgroundJobsTable.tsx_TDUfVk": {
+    "defaultMessage": "Avviato"
+  },
+  "BackgroundJobsTable.tsx_bBt1ab": {
+    "defaultMessage": "In coda"
+  },
+  "BackgroundJobsTable.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
+  },
+  "BackgroundJobsTable.tsx_tzMNF3": {
+    "defaultMessage": "Stato"
+  },
+  "BackgroundJobsTable.tsx_xG07EN": {
+    "defaultMessage": "Nessun lavoro in background."
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
   },

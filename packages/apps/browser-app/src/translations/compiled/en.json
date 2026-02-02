@@ -89,6 +89,144 @@
       "value": "Client ID"
     }
   ],
+  "BackgroundJobDetails.tsx_/RwR4v": [
+    {
+      "type": 0,
+      "value": "Back to background jobs"
+    }
+  ],
+  "BackgroundJobDetails.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "None"
+    }
+  ],
+  "BackgroundJobDetails.tsx_EiyxpM": [
+    {
+      "type": 0,
+      "value": "Finished at"
+    }
+  ],
+  "BackgroundJobDetails.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "BackgroundJobDetails.tsx_KN7zKn": [
+    {
+      "type": 0,
+      "value": "Error"
+    }
+  ],
+  "BackgroundJobDetails.tsx_LaIqAi": [
+    {
+      "type": 0,
+      "value": "Started at"
+    }
+  ],
+  "BackgroundJobDetails.tsx_RhaLk3": [
+    {
+      "type": 0,
+      "value": "Enqueued at"
+    }
+  ],
+  "BackgroundJobDetails.tsx_SL+c5a": [
+    {
+      "type": 0,
+      "value": "—"
+    }
+  ],
+  "BackgroundJobDetails.tsx_d7Tzka": [
+    {
+      "type": 0,
+      "value": "Background job actions"
+    }
+  ],
+  "BackgroundJobDetails.tsx_hAm0Wi": [
+    {
+      "type": 0,
+      "value": "Background job"
+    }
+  ],
+  "BackgroundJobDetails.tsx_it6Lig": [
+    {
+      "type": 0,
+      "value": "Input"
+    }
+  ],
+  "BackgroundJobDetails.tsx_qlcuNQ": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "BackgroundJobDetails.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "BackgroundJobTableRow.tsx_SL+c5a": [
+    {
+      "type": 0,
+      "value": "—"
+    }
+  ],
+  "BackgroundJobs.tsx_4wFjc9": [
+    {
+      "type": 0,
+      "value": "Background jobs actions"
+    }
+  ],
+  "BackgroundJobs.tsx_Gf6hVW": [
+    {
+      "type": 0,
+      "value": "🧰 Background jobs"
+    }
+  ],
+  "BackgroundJobsTable.tsx_EQpfkS": [
+    {
+      "type": 0,
+      "value": "Finished"
+    }
+  ],
+  "BackgroundJobsTable.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "BackgroundJobsTable.tsx_TDUfVk": [
+    {
+      "type": 0,
+      "value": "Started"
+    }
+  ],
+  "BackgroundJobsTable.tsx_bBt1ab": [
+    {
+      "type": 0,
+      "value": "Enqueued"
+    }
+  ],
+  "BackgroundJobsTable.tsx_lZrF3s": [
+    {
+      "type": 0,
+      "value": "Background jobs"
+    }
+  ],
+  "BackgroundJobsTable.tsx_tzMNF3": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "BackgroundJobsTable.tsx_xG07EN": [
+    {
+      "type": 0,
+      "value": "No background jobs yet."
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -2294,6 +2432,12 @@
     {
       "type": 0,
       "value": "Back"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_lZrF3s": [
+    {
+      "type": 0,
+      "value": "Background jobs"
     }
   ],
   "PrimarySidebarPanel.tsx_xmcVZ0": [
