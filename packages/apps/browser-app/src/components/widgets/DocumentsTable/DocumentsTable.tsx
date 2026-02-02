@@ -9,7 +9,7 @@ import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import Pagination from "../../design-system/Pagination/Pagination.js";
 import Table from "../../design-system/Table/Table.js";
-import usePageSize from "../../design-system/Table/usePageSize.js";
+import useTablePagination from "../../design-system/Table/useTablePagination.js";
 import * as cs from "./DocumentsTable.css.js";
 import DocumentTableRow from "./DocumentTableRow.js";
 import getSortDescriptor from "./getSortDescriptor.js";
@@ -54,28 +54,23 @@ export default function DocumentsTable({
     [documents, sortDescriptor, sortableColumnIds],
   );
 
-  const shouldPaginate = sortedDocuments.length > PAGINATION_THRESHOLD;
-  const { calculatedPageSize, containerRef } = usePageSize<HTMLDivElement>({
-    pageSize: shouldPaginate ? pageSize : sortedDocuments.length,
+  const {
+    isPaginating,
+    activePage,
+    setActivePage,
+    calculatedPageSize,
+    totalPages,
+    tableContainerRef,
+    displayedItems,
+  } = useTablePagination({
+    items: sortedDocuments,
+    pageSize,
+    paginationThreshold: PAGINATION_THRESHOLD,
   });
-  const [activePage, setActivePage] = useState(1);
-  const totalPages = shouldPaginate
-    ? Math.ceil(sortedDocuments.length / calculatedPageSize)
-    : 1;
-  const displayedDocuments = (() => {
-    if (!shouldPaginate) {
-      return sortedDocuments;
-    }
-    if (calculatedPageSize === 0) {
-      return [];
-    }
-    const startIndex = (activePage - 1) * calculatedPageSize;
-    return sortedDocuments.slice(startIndex, startIndex + calculatedPageSize);
-  })();
 
   return (
     <div className={classnames(cs.DocumentsTable.root, className)}>
-      <div ref={containerRef} className={cs.DocumentsTable.tableContainer}>
+      <div ref={tableContainerRef} className={cs.DocumentsTable.tableContainer}>
         <Table
           // Re-render when these props change, otherwise react-aria-components
           // crashes the table.
@@ -134,7 +129,7 @@ export default function DocumentsTable({
             ) : null}
           </Table.Header>
           <Table.Body
-            items={displayedDocuments}
+            items={displayedItems}
             renderEmptyState={() => (
               <Table.Empty>
                 <FormattedMessage defaultMessage="This collection doesn't have any documents yet." />
@@ -155,7 +150,7 @@ export default function DocumentsTable({
           </Table.Body>
         </Table>
       </div>
-      {shouldPaginate && totalPages > 1 ? (
+      {isPaginating && totalPages > 1 ? (
         <Pagination
           totalPages={totalPages}
           activePage={activePage}

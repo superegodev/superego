@@ -1,27 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
 
-const ROW_HEIGHT = 40;
 const HEADING_HEIGHT = 41;
+const ROW_HEIGHT = 40;
 
-interface UsePageSizeOptions {
+interface UseCalculatedPageSizeOptions {
   pageSize: number | "max";
 }
 
-interface UsePageSize<TElement extends Element> {
+interface UseCalculatedPageSize {
   calculatedPageSize: number;
-  containerRef: (element: TElement | null) => void;
+  tableContainerRef: (tableContainer: HTMLDivElement | null) => void;
 }
 
-export default function usePageSize<TElement extends Element>({
+export default function useCalculatedPageSize({
   pageSize,
-}: UsePageSizeOptions): UsePageSize<TElement> {
-  const [element, setElement] = useState<TElement | null>(null);
+}: UseCalculatedPageSizeOptions): UseCalculatedPageSize {
+  const [tableContainer, setTableContainer] = useState<HTMLDivElement | null>(
+    null,
+  );
   const [calculatedPageSize, setCalculatedPageSize] = useState(() =>
     pageSize === "max" ? 0 : pageSize,
   );
 
-  const containerRef = useCallback((node: TElement | null) => {
-    setElement(node);
+  const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
+    setTableContainer(node);
   }, []);
 
   useEffect(() => {
@@ -30,12 +32,12 @@ export default function usePageSize<TElement extends Element>({
       return;
     }
 
-    if (!element) {
+    if (!tableContainer) {
       return;
     }
 
     const calculatePageSize = () => {
-      const availableHeight = element.getBoundingClientRect().height;
+      const availableHeight = tableContainer.getBoundingClientRect().height;
       const rowsHeight = availableHeight - HEADING_HEIGHT;
       const newPageSize = Math.max(1, Math.floor(rowsHeight / ROW_HEIGHT));
       setCalculatedPageSize(newPageSize);
@@ -44,9 +46,9 @@ export default function usePageSize<TElement extends Element>({
     calculatePageSize();
 
     const resizeObserver = new ResizeObserver(calculatePageSize);
-    resizeObserver.observe(element);
+    resizeObserver.observe(tableContainer);
     return () => resizeObserver.disconnect();
-  }, [pageSize, element]);
+  }, [pageSize, tableContainer]);
 
-  return { calculatedPageSize, containerRef };
+  return { calculatedPageSize, tableContainerRef };
 }

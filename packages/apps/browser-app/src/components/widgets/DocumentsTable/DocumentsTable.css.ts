@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { vars } from "../../../themes.css.js";
 
 export const DocumentsTable = {
   root: style({
@@ -14,6 +15,7 @@ export const DocumentsTable = {
   pagination: style({
     flexShrink: 0,
     justifyContent: "center",
+    marginBlockStart: vars.spacing._2,
   }),
 };
 

@@ -1,11 +1,10 @@
 import type { LiteConversation } from "@superego/backend";
-import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import Pagination from "../../design-system/Pagination/Pagination.js";
 import Table from "../../design-system/Table/Table.js";
-import usePageSize from "../../design-system/Table/usePageSize.js";
+import useTablePagination from "../../design-system/Table/useTablePagination.js";
 import * as cs from "./ConversationsTable.css.js";
 import ConversationTableRow from "./ConversationTableRow.js";
 
@@ -19,28 +18,26 @@ export default function ConversationsTable({ conversations, pageSize }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
 
-  const shouldPaginate = conversations.length > PAGINATION_THRESHOLD;
-  const { calculatedPageSize, containerRef } = usePageSize<HTMLDivElement>({
-    pageSize: shouldPaginate ? pageSize : conversations.length,
+  const {
+    isPaginating,
+    activePage,
+    setActivePage,
+    calculatedPageSize,
+    totalPages,
+    tableContainerRef,
+    displayedItems,
+  } = useTablePagination({
+    items: conversations,
+    pageSize,
+    paginationThreshold: PAGINATION_THRESHOLD,
   });
-  const [activePage, setActivePage] = useState(1);
-  const totalPages = shouldPaginate
-    ? Math.ceil(conversations.length / calculatedPageSize)
-    : 1;
-  const displayedConversations = (() => {
-    if (!shouldPaginate) {
-      return conversations;
-    }
-    if (calculatedPageSize === 0) {
-      return [];
-    }
-    const startIndex = (activePage - 1) * calculatedPageSize;
-    return conversations.slice(startIndex, startIndex + calculatedPageSize);
-  })();
 
   return (
     <div className={cs.ConversationsTable.root}>
-      <div ref={containerRef} className={cs.ConversationsTable.tableContainer}>
+      <div
+        ref={tableContainerRef}
+        className={cs.ConversationsTable.tableContainer}
+      >
         <Table
           key={`${screenSize}`}
           aria-label={intl.formatMessage({ defaultMessage: "Conversations" })}
@@ -65,7 +62,7 @@ export default function ConversationsTable({ conversations, pageSize }: Props) {
             ) : null}
           </Table.Header>
           <Table.Body
-            items={displayedConversations}
+            items={displayedItems}
             renderEmptyState={() => (
               <Table.Empty>
                 <FormattedMessage defaultMessage="You don't have any conversations yet." />
@@ -81,7 +78,7 @@ export default function ConversationsTable({ conversations, pageSize }: Props) {
           </Table.Body>
         </Table>
       </div>
-      {shouldPaginate && totalPages > 1 ? (
+      {isPaginating && totalPages > 1 ? (
         <Pagination
           totalPages={totalPages}
           activePage={activePage}

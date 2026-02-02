@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { vars } from "../../../themes.css.js";
 
 export const ConversationsTable = {
   root: style({
@@ -14,5 +15,6 @@ export const ConversationsTable = {
   pagination: style({
     flexShrink: 0,
     justifyContent: "center",
+    marginBlockStart: vars.spacing._2,
   }),
 };
