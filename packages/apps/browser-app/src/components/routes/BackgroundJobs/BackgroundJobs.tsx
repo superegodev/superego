@@ -9,12 +9,7 @@ export default function BackgroundJobs() {
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
-        title={intl.formatMessage({
-          defaultMessage: "🧰\u2002Background jobs",
-        })}
-        actionsAriaLabel={intl.formatMessage({
-          defaultMessage: "Background jobs actions",
-        })}
+        title={intl.formatMessage({ defaultMessage: "Background jobs" })}
       />
       <Shell.Panel.Content fullWidth={true}>
         <DataLoader queries={[listBackgroundJobsQuery([])]}>

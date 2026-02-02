@@ -5,8 +5,8 @@ import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js"
 import Pagination from "../../design-system/Pagination/Pagination.js";
 import Table from "../../design-system/Table/Table.js";
 import useTablePagination from "../../design-system/Table/useTablePagination.js";
-import BackgroundJobTableRow from "./BackgroundJobTableRow.js";
 import * as cs from "./BackgroundJobsTable.css.js";
+import BackgroundJobTableRow from "./BackgroundJobTableRow.js";
 
 const PAGINATION_THRESHOLD = 500;
 

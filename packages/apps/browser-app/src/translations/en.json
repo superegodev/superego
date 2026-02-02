@@ -44,53 +44,41 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "Client ID"
   },
-  "BackgroundJobDetails.tsx_/RwR4v": {
-    "defaultMessage": "Back to background jobs"
-  },
-  "BackgroundJobDetails.tsx_450Fty": {
-    "defaultMessage": "None"
-  },
-  "BackgroundJobDetails.tsx_EiyxpM": {
+  "BackgroundJob.tsx_EiyxpM": {
     "defaultMessage": "Finished at"
   },
-  "BackgroundJobDetails.tsx_HAlOn1": {
+  "BackgroundJob.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "BackgroundJobDetails.tsx_KN7zKn": {
+  "BackgroundJob.tsx_KN7zKn": {
     "defaultMessage": "Error"
   },
-  "BackgroundJobDetails.tsx_LaIqAi": {
+  "BackgroundJob.tsx_LaIqAi": {
     "defaultMessage": "Started at"
   },
-  "BackgroundJobDetails.tsx_RhaLk3": {
+  "BackgroundJob.tsx_RhaLk3": {
     "defaultMessage": "Enqueued at"
   },
-  "BackgroundJobDetails.tsx_SL+c5a": {
+  "BackgroundJob.tsx_SL+c5a": {
     "defaultMessage": "—"
   },
-  "BackgroundJobDetails.tsx_d7Tzka": {
-    "defaultMessage": "Background job actions"
-  },
-  "BackgroundJobDetails.tsx_hAm0Wi": {
+  "BackgroundJob.tsx_hAm0Wi": {
     "defaultMessage": "Background job"
   },
-  "BackgroundJobDetails.tsx_it6Lig": {
+  "BackgroundJob.tsx_it6Lig": {
     "defaultMessage": "Input"
   },
-  "BackgroundJobDetails.tsx_qlcuNQ": {
+  "BackgroundJob.tsx_qlcuNQ": {
     "defaultMessage": "ID"
   },
-  "BackgroundJobDetails.tsx_tzMNF3": {
+  "BackgroundJob.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
   "BackgroundJobTableRow.tsx_SL+c5a": {
     "defaultMessage": "—"
   },
-  "BackgroundJobs.tsx_4wFjc9": {
-    "defaultMessage": "Background jobs actions"
-  },
-  "BackgroundJobs.tsx_Gf6hVW": {
-    "defaultMessage": "🧰 Background jobs"
+  "BackgroundJobs.tsx_lZrF3s": {
+    "defaultMessage": "Background jobs"
   },
   "BackgroundJobsTable.tsx_EQpfkS": {
     "defaultMessage": "Finished"

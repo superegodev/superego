@@ -226,9 +226,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       assert.isTrue(listBackgroundJobsResult.success);
       const jobId = listBackgroundJobsResult.data[0]?.id;
       assert.isDefined(jobId);
-      const getBackgroundJobResult = await backend.backgroundJobs.get(
-        jobId,
-      );
+      const getBackgroundJobResult = await backend.backgroundJobs.get(jobId);
 
       // Verify
       expect(getBackgroundJobResult).toEqual({

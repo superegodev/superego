@@ -44,53 +44,41 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "ID del client"
   },
-  "BackgroundJobDetails.tsx_/RwR4v": {
-    "defaultMessage": "Torna ai lavori in background"
-  },
-  "BackgroundJobDetails.tsx_450Fty": {
-    "defaultMessage": "Nessuno"
-  },
-  "BackgroundJobDetails.tsx_EiyxpM": {
-    "defaultMessage": "Terminato il"
-  },
-  "BackgroundJobDetails.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "BackgroundJobDetails.tsx_KN7zKn": {
-    "defaultMessage": "Errore"
-  },
-  "BackgroundJobDetails.tsx_LaIqAi": {
-    "defaultMessage": "Avviato il"
-  },
-  "BackgroundJobDetails.tsx_RhaLk3": {
-    "defaultMessage": "Messo in coda il"
-  },
-  "BackgroundJobDetails.tsx_SL+c5a": {
-    "defaultMessage": "—"
-  },
-  "BackgroundJobDetails.tsx_d7Tzka": {
-    "defaultMessage": "Azioni lavori in background"
-  },
-  "BackgroundJobDetails.tsx_hAm0Wi": {
-    "defaultMessage": "Lavoro in background"
-  },
-  "BackgroundJobDetails.tsx_it6Lig": {
-    "defaultMessage": "Input"
-  },
-  "BackgroundJobDetails.tsx_qlcuNQ": {
-    "defaultMessage": "ID"
-  },
-  "BackgroundJobDetails.tsx_tzMNF3": {
-    "defaultMessage": "Stato"
-  },
   "BackgroundJobTableRow.tsx_SL+c5a": {
     "defaultMessage": "—"
   },
-  "BackgroundJobs.tsx_4wFjc9": {
-    "defaultMessage": "Azioni lavori in background"
+  "BackgroundJob.tsx_EiyxpM": {
+    "defaultMessage": "Terminato il"
   },
-  "BackgroundJobs.tsx_Gf6hVW": {
-    "defaultMessage": "🧰 Lavori in background"
+  "BackgroundJob.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "BackgroundJob.tsx_KN7zKn": {
+    "defaultMessage": "Errore"
+  },
+  "BackgroundJob.tsx_LaIqAi": {
+    "defaultMessage": "Avviato il"
+  },
+  "BackgroundJob.tsx_RhaLk3": {
+    "defaultMessage": "Messo in coda il"
+  },
+  "BackgroundJob.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
+  "BackgroundJob.tsx_hAm0Wi": {
+    "defaultMessage": "Lavoro in background"
+  },
+  "BackgroundJob.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "BackgroundJob.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "BackgroundJob.tsx_tzMNF3": {
+    "defaultMessage": "Stato"
+  },
+  "BackgroundJobs.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
   },
   "BackgroundJobsTable.tsx_EQpfkS": {
     "defaultMessage": "Terminato"
@@ -967,6 +955,9 @@
   },
   "PrimarySidebarPanel.tsx_cyR7Kh": {
     "defaultMessage": "Indietro"
+  },
+  "PrimarySidebarPanel.tsx_lZrF3s": {
+    "defaultMessage": "Lavori in background"
   },
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"

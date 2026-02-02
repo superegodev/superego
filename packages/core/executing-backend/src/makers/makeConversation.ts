@@ -3,16 +3,17 @@ import type ConversationEntity from "../entities/ConversationEntity.js";
 import ConversationUtils from "../utils/ConversationUtils.js";
 
 export default function makeConversation(
-  { contextFingerprint, ...conversation }: ConversationEntity,
+  conversation: ConversationEntity,
   currentContextFingerprint: string,
 ): Conversation {
+  const { contextFingerprint, ...rest } = conversation;
   const hasOutdatedContext = contextFingerprint !== currentContextFingerprint;
   return {
-    ...conversation,
+    ...rest,
     hasOutdatedContext: hasOutdatedContext,
     canRetryLastResponse:
-      conversation.status === ConversationStatus.Idle &&
+      rest.status === ConversationStatus.Idle &&
       !hasOutdatedContext &&
-      !ConversationUtils.lastResponseHadSideEffects(conversation.messages),
+      !ConversationUtils.lastResponseHadSideEffects(rest.messages),
   };
 }

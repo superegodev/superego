@@ -17,23 +17,29 @@
   particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
   (optional), `// Exercise`, and `// Verify` to visually separate the "phases"
   of a test.
-- When you change frontend files in `packages/apps/browser-app`, always run
-  `yarn workspace @superego/browser-app translations:extract-and-compile` and
-  update `packages/apps/browser-app/src/translations/it.json` accordingly.
 
 ## NPM scripts
 
 ### Global
 
 - `yarn install`
-- `yarn test`
+- `yarn test`: runs tests for **all** packages
+- `yarn fix-formatting`
+- `yarn fix-linting`
 - `yarn check-linting`
-- `yarn check-types`: checks TypeScript compiles correctly
+- `yarn check-types`: checks that **all packages** compile correctly
 - `yarn check-translations`: checks translations are up-to-date and complete
 
 ### Workspace-specific
 
 Run with `yarn workspace <package-name> run <script-name>`. Available scripts:
 
-- `check-types` (all packages define it)
-- `test` (**not** all packages define it)
+- `check-types`: checks that a specific package compiles correctly
+- `test`: runs tests for a specific package (note: **not** all packages define
+  it)
+
+## Frontend-specific instructions
+
+- When you change frontend files in `packages/apps/browser-app`, always run
+  `yarn workspace @superego/browser-app translations:extract-and-compile` and
+  update `packages/apps/browser-app/src/translations/it.json` accordingly.

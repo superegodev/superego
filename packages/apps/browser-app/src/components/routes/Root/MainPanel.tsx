@@ -1,7 +1,7 @@
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Ask from "../Ask/Ask.js";
-import BackgroundJobDetails from "../BackgroundJobs/BackgroundJobDetails.js";
+import BackgroundJob from "../BackgroundJob/BackgroundJob.js";
 import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
@@ -58,11 +58,7 @@ export default function MainPanel() {
     case RouteName.BackgroundJobs:
       return <BackgroundJobs />;
     case RouteName.BackgroundJob:
-      return (
-        <BackgroundJobDetails
-          backgroundJobId={activeRoute.backgroundJobId}
-        />
-      );
+      return <BackgroundJob backgroundJobId={activeRoute.backgroundJobId} />;
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
   }

@@ -89,79 +89,61 @@
       "value": "Client ID"
     }
   ],
-  "BackgroundJobDetails.tsx_/RwR4v": [
-    {
-      "type": 0,
-      "value": "Back to background jobs"
-    }
-  ],
-  "BackgroundJobDetails.tsx_450Fty": [
-    {
-      "type": 0,
-      "value": "None"
-    }
-  ],
-  "BackgroundJobDetails.tsx_EiyxpM": [
+  "BackgroundJob.tsx_EiyxpM": [
     {
       "type": 0,
       "value": "Finished at"
     }
   ],
-  "BackgroundJobDetails.tsx_HAlOn1": [
+  "BackgroundJob.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Name"
     }
   ],
-  "BackgroundJobDetails.tsx_KN7zKn": [
+  "BackgroundJob.tsx_KN7zKn": [
     {
       "type": 0,
       "value": "Error"
     }
   ],
-  "BackgroundJobDetails.tsx_LaIqAi": [
+  "BackgroundJob.tsx_LaIqAi": [
     {
       "type": 0,
       "value": "Started at"
     }
   ],
-  "BackgroundJobDetails.tsx_RhaLk3": [
+  "BackgroundJob.tsx_RhaLk3": [
     {
       "type": 0,
       "value": "Enqueued at"
     }
   ],
-  "BackgroundJobDetails.tsx_SL+c5a": [
+  "BackgroundJob.tsx_SL+c5a": [
     {
       "type": 0,
       "value": "—"
     }
   ],
-  "BackgroundJobDetails.tsx_d7Tzka": [
-    {
-      "type": 0,
-      "value": "Background job actions"
-    }
-  ],
-  "BackgroundJobDetails.tsx_hAm0Wi": [
+  "BackgroundJob.tsx_hAm0Wi": [
     {
       "type": 0,
       "value": "Background job"
     }
   ],
-  "BackgroundJobDetails.tsx_it6Lig": [
+  "BackgroundJob.tsx_it6Lig": [
     {
       "type": 0,
       "value": "Input"
     }
   ],
-  "BackgroundJobDetails.tsx_qlcuNQ": [
+  "BackgroundJob.tsx_qlcuNQ": [
     {
       "type": 0,
       "value": "ID"
     }
   ],
-  "BackgroundJobDetails.tsx_tzMNF3": [
+  "BackgroundJob.tsx_tzMNF3": [
     {
       "type": 0,
       "value": "Status"
@@ -173,16 +155,10 @@
       "value": "—"
     }
   ],
-  "BackgroundJobs.tsx_4wFjc9": [
+  "BackgroundJobs.tsx_lZrF3s": [
     {
       "type": 0,
-      "value": "Background jobs actions"
-    }
-  ],
-  "BackgroundJobs.tsx_Gf6hVW": [
-    {
-      "type": 0,
-      "value": "🧰 Background jobs"
+      "value": "Background jobs"
     }
   ],
   "BackgroundJobsTable.tsx_EQpfkS": [
