@@ -183,6 +183,12 @@
       "value": "Name"
     }
   ],
+  "BackgroundJobsTable.tsx_IBAQRm": [
+    {
+      "type": 0,
+      "value": "There are no background jobs yet."
+    }
+  ],
   "BackgroundJobsTable.tsx_TDUfVk": [
     {
       "type": 0,
@@ -205,12 +211,6 @@
     {
       "type": 0,
       "value": "Status"
-    }
-  ],
-  "BackgroundJobsTable.tsx_xG07EN": [
-    {
-      "type": 0,
-      "value": "No background jobs yet."
     }
   ],
   "BooleanField.tsx_KKkUks": [

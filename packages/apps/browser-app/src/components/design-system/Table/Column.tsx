@@ -19,9 +19,9 @@ export default function Column({
     <ColumnRAC {...props} className={classnames(cs.Column.root, className)}>
       {({ sortDirection, allowsSorting }) => (
         <>
-          <span className={cs.Column.title[align]}>{children}</span>
+          <div className={cs.Column.title[align]}>{children}</div>
           {allowsSorting && sortDirection ? (
-            <span className={cs.Column.sortIndicator}>
+            <div className={cs.Column.sortIndicator}>
               {sortDirection === "ascending" ? (
                 // The phosphoricons are for some reason switched around:
                 // ascending points down, and descending points up. There might
@@ -31,7 +31,7 @@ export default function Column({
               ) : (
                 <PiSortAscending />
               )}
-            </span>
+            </div>
           ) : null}
         </>
       )}

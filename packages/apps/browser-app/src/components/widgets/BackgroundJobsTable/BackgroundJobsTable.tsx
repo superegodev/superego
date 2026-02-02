@@ -45,6 +45,7 @@ export default function BackgroundJobsTable({
           key={`${screenSize}`}
           aria-label={intl.formatMessage({ defaultMessage: "Background jobs" })}
           selectionMode="none"
+          isEmpty={displayedItems.length === 0}
         >
           <Table.Header>
             <Table.Column isRowHeader={true} defaultWidth="3fr">
@@ -71,7 +72,7 @@ export default function BackgroundJobsTable({
             items={displayedItems}
             renderEmptyState={() => (
               <Table.Empty>
-                <FormattedMessage defaultMessage="No background jobs yet." />
+                <FormattedMessage defaultMessage="There are no background jobs yet." />
               </Table.Empty>
             )}
           >
