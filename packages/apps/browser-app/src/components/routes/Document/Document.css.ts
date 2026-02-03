@@ -5,9 +5,11 @@ export const Document = {
   historyLayout: style({
     display: "flex",
     gap: vars.spacing._8,
+    paddingBlockStart: "0 !important",
   }),
 
   contentWrapper: style({
+    paddingBlockStart: vars.spacing._4,
     flex: "2 1 0",
     "@media": {
       [`(max-width: ${breakpoints.medium})`]: {
@@ -18,6 +20,11 @@ export const Document = {
 
   history: style({
     flex: "1 1 0",
+    position: "sticky",
+    top: vars.shell.panelHeaderHeight,
+    paddingBlockStart: vars.spacing._4,
+    alignSelf: "flex-start",
+    maxHeight: `calc(100dvh - ${vars.shell.panelHeaderHeight} - ${vars.spacing._8} - ${vars.spacing._4})`,
   }),
 };
 

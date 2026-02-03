@@ -5,12 +5,18 @@ export const History = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    overflow: "auto",
+    overflow: "hidden",
   }),
 
   header: style({
+    flexShrink: 0,
     marginBlockEnd: vars.spacing._4,
     fontWeight: vars.typography.fontWeights.medium,
+  }),
+
+  timeline: style({
+    flexGrow: 1,
+    overflow: "auto",
   }),
 
   loading: style({

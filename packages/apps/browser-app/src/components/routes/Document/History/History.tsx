@@ -40,41 +40,43 @@ export default function History({
       <header className={cs.History.header}>
         <FormattedMessage defaultMessage="Versions history" />
       </header>
-      {isEmpty(timelineNodes) ? (
-        <div className={cs.History.empty}>
-          <FormattedMessage defaultMessage="No version history available" />
-        </div>
-      ) : (
-        timelineNodes.map((timelineNode, index) => {
-          const timelinePosition =
-            timelineNodes.length === 1
-              ? "only"
-              : index === 0
-                ? "first"
-                : index === timelineNodes.length - 1
-                  ? "last"
-                  : "middle";
-          return "documentVersions" in timelineNode ? (
-            <BucketTimelineNode
-              key={timelineNode.id}
-              document={document}
-              bucket={timelineNode}
-              onRestore={handleRestore}
-              canRestore={canRestore}
-              timelinePosition={timelinePosition}
-            />
-          ) : (
-            <DocumentVersionTimelineNode
-              key={timelineNode.id}
-              document={document}
-              documentVersion={timelineNode}
-              onRestore={handleRestore}
-              canRestore={canRestore(timelineNode)}
-              timelinePosition={timelinePosition}
-            />
-          );
-        })
-      )}
+      <div className={cs.History.timeline}>
+        {isEmpty(timelineNodes) ? (
+          <div className={cs.History.empty}>
+            <FormattedMessage defaultMessage="No version history available" />
+          </div>
+        ) : (
+          timelineNodes.map((timelineNode, index) => {
+            const timelinePosition =
+              timelineNodes.length === 1
+                ? "only"
+                : index === 0
+                  ? "first"
+                  : index === timelineNodes.length - 1
+                    ? "last"
+                    : "middle";
+            return "documentVersions" in timelineNode ? (
+              <BucketTimelineNode
+                key={timelineNode.id}
+                document={document}
+                bucket={timelineNode}
+                onRestore={handleRestore}
+                canRestore={canRestore}
+                timelinePosition={timelinePosition}
+              />
+            ) : (
+              <DocumentVersionTimelineNode
+                key={timelineNode.id}
+                document={document}
+                documentVersion={timelineNode}
+                onRestore={handleRestore}
+                canRestore={canRestore(timelineNode)}
+                timelinePosition={timelinePosition}
+              />
+            );
+          })
+        )}
+      </div>
       {versionToRestore ? (
         <RestoreVersionModal
           collection={collection}
