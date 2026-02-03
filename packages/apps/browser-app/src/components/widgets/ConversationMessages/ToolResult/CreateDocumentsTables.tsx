@@ -19,7 +19,9 @@ export default function CreateDocumentsTables({
       collection={CollectionUtils.findCollection(collections, collectionId)}
       documents={documents}
       pageSize={6}
-      className={cs.CreateDocumentsTables.table}
+      alwaysPaginate={true}
+      className={cs.CreateDocumentsTables.root}
+      tableClassName={cs.CreateDocumentsTables.table}
     />
   );
 }

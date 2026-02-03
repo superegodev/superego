@@ -6,7 +6,8 @@ interface ColorScale {
   _5: string;
 }
 
-export default interface Theme {
+// Unless requested otherwise, use these values when applying custom styles.
+declare const theme: {
   typography: {
     fontSizes: {
       xs3: string;
@@ -28,8 +29,8 @@ export default interface Theme {
   };
 
   spacing: {
-    // Use multiples with calc for other spacing values
-    _4: "1rem";
+    // Equivalent to 1rem. Use multiples with calc for other spacing values
+    _4: string;
   };
 
   borders: {
@@ -45,6 +46,68 @@ export default interface Theme {
   };
 
   colors: {
+    semantic: {
+      info: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      success: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      pending: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      warning: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      error: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+    };
+
+    // UI elements colors
+    text: {
+      primary: string;
+      secondary: string;
+      inverse: string;
+    };
+    background: {
+      surface: string;
+      subtleSurface: string;
+      secondarySurface: string;
+      surfaceHighlight: string;
+      inverse: string;
+      inverseHighlight: string;
+    };
+    border: {
+      default: string;
+      strong: string;
+      subtle: string;
+      focus: string;
+      disabled: string;
+      inverse: string;
+    };
+
+    // Raw colors
     blues: ColorScale;
     greens: ColorScale;
     yellows: ColorScale;
@@ -55,4 +118,5 @@ export default interface Theme {
     violets: ColorScale;
     pinks: ColorScale;
   };
-}
+};
+export default theme;

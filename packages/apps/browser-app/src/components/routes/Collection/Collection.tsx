@@ -216,7 +216,6 @@ export default function Collection(props: Props) {
                 pageSize="max"
                 showCreatedAt={showTimestamps}
                 showLastModifiedAt={showTimestamps}
-                className={cs.Collection.documentsTable}
               />
             )}
           </DataLoader>

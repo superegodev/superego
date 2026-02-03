@@ -23,18 +23,22 @@ interface Props {
   collection: Collection | null;
   documents: LiteDocument[];
   pageSize: number | "max";
+  alwaysPaginate?: boolean | undefined;
   showCreatedAt?: boolean | undefined;
   showLastModifiedAt?: boolean | undefined;
   className?: string | undefined;
+  tableClassName?: string | undefined;
 }
 export default function DocumentsTable({
   collectionId,
   collection,
   documents,
   pageSize,
+  alwaysPaginate = false,
   showCreatedAt,
   showLastModifiedAt,
   className,
+  tableClassName,
 }: Props) {
   const intl = useIntl();
   const screenSize = useScreenSize();
@@ -65,6 +69,7 @@ export default function DocumentsTable({
   } = useTablePagination({
     items: sortedDocuments,
     pageSize,
+    alwaysPaginate,
     paginationThreshold: PAGINATION_THRESHOLD,
   });
 
@@ -83,6 +88,7 @@ export default function DocumentsTable({
           onSortChange={setSortDescriptor}
           selectionMode="none"
           isEmpty={displayedItems.length === 0}
+          className={classnames(cs.DocumentsTable.table, tableClassName)}
         >
           <Table.Header>
             {isEmpty(sortedProperties) ? (

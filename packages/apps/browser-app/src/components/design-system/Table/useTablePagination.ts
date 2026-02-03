@@ -4,6 +4,7 @@ import useCalculatedPageSize from "./useCalculatedPageSize.js";
 interface UseTablePaginationOptions<Item> {
   items: Item[];
   pageSize: number | "max";
+  alwaysPaginate: boolean;
   paginationThreshold: number;
 }
 
@@ -20,11 +21,12 @@ interface UseTablePagination<Item> {
 export default function useTablePagination<Item>({
   items,
   pageSize,
+  alwaysPaginate,
   paginationThreshold,
 }: UseTablePaginationOptions<Item>): UseTablePagination<Item> {
   const [activePage, setActivePage] = useState(1);
 
-  const isPaginating = items.length > paginationThreshold;
+  const isPaginating = items.length > paginationThreshold || alwaysPaginate;
 
   const { calculatedPageSize, tableContainerRef } = useCalculatedPageSize({
     pageSize: isPaginating ? pageSize : items.length,
