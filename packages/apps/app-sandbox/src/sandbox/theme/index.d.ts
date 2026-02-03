@@ -6,7 +6,7 @@ interface ColorScale {
   _5: string;
 }
 
-export default interface Theme {
+declare const theme: {
   typography: {
     fontSizes: {
       xs3: string;
@@ -55,4 +55,5 @@ export default interface Theme {
     violets: ColorScale;
     pinks: ColorScale;
   };
-}
+};
+export default theme;
