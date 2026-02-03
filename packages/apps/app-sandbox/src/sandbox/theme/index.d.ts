@@ -6,6 +6,7 @@ interface ColorScale {
   _5: string;
 }
 
+// Unless requested otherwise, use these values when applying custom styles.
 declare const theme: {
   typography: {
     fontSizes: {
@@ -28,8 +29,8 @@ declare const theme: {
   };
 
   spacing: {
-    // Use multiples with calc for other spacing values
-    _4: "1rem";
+    // Equivalent to 1rem. Use multiples with calc for other spacing values
+    _4: string;
   };
 
   borders: {
@@ -45,6 +46,68 @@ declare const theme: {
   };
 
   colors: {
+    semantic: {
+      info: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      success: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      pending: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      warning: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+      error: {
+        border: string;
+        background: string;
+        text: string;
+        backgroundFilled: string;
+        textFilled: string;
+      };
+    };
+
+    // UI elements colors
+    text: {
+      primary: string;
+      secondary: string;
+      inverse: string;
+    };
+    background: {
+      surface: string;
+      subtleSurface: string;
+      secondarySurface: string;
+      surfaceHighlight: string;
+      inverse: string;
+      inverseHighlight: string;
+    };
+    border: {
+      default: string;
+      strong: string;
+      subtle: string;
+      focus: string;
+      disabled: string;
+      inverse: string;
+    };
+
+    // Raw colors
     blues: ColorScale;
     greens: ColorScale;
     yellows: ColorScale;

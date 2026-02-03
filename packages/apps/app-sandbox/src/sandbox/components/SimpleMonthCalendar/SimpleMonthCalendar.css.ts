@@ -142,6 +142,7 @@ export const DayCell = {
 
   content: style({
     flexGrow: 1,
+    overflow: "hidden",
   }),
 };
 
