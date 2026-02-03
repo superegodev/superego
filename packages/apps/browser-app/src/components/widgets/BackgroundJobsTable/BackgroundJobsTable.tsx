@@ -32,6 +32,7 @@ export default function BackgroundJobsTable({
   } = useTablePagination({
     items: backgroundJobs,
     pageSize,
+    alwaysPaginate: false,
     paginationThreshold: PAGINATION_THRESHOLD,
   });
 

@@ -63,6 +63,9 @@ export default function CreateDocuments({ toolResult }: Props) {
             collection={collection}
             documents={documents}
             pageSize={6}
+            alwaysPaginate={true}
+            className={cs.CreateDocuments.tableContainer}
+            tableClassName={cs.CreateDocuments.table}
           />
         )}
       </div>

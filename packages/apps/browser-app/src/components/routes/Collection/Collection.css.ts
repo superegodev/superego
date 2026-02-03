@@ -14,9 +14,4 @@ export const Collection = {
       display: "flex",
     },
   }),
-
-  documentsTable: style({
-    flexGrow: 1,
-    height: "100%",
-  }),
 };

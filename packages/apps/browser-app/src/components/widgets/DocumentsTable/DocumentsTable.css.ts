@@ -3,6 +3,7 @@ import { vars } from "../../../themes.css.js";
 
 export const DocumentsTable = {
   root: style({
+    height: "100%",
     display: "flex",
     flexDirection: "column",
   }),
@@ -10,6 +11,10 @@ export const DocumentsTable = {
   tableContainer: style({
     flexGrow: 1,
     minHeight: 0,
+  }),
+
+  table: style({
+    height: "100%",
   }),
 
   pagination: style({

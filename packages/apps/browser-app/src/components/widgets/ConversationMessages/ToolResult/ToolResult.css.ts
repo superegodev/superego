@@ -17,6 +17,14 @@ export const CreateDocuments = {
     marginBlock: vars.spacing._2,
     color: vars.colors.text.primary,
   }),
+
+  tableContainer: style({
+    marginBlockEnd: vars.spacing._6,
+  }),
+
+  table: style({
+    maxHeight: vars.spacing._80,
+  }),
 };
 
 export const CreateNewDocumentVersion = {
@@ -116,8 +124,11 @@ export const CreateChart = {
 };
 
 export const CreateDocumentsTables = {
+  root: style({
+    marginBlockEnd: vars.spacing._6,
+  }),
+
   table: style({
     maxHeight: vars.spacing._80,
-    marginBlockStart: vars.spacing._2,
   }),
 };

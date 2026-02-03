@@ -29,6 +29,7 @@ export default function ConversationsTable({ conversations, pageSize }: Props) {
   } = useTablePagination({
     items: conversations,
     pageSize,
+    alwaysPaginate: false,
     paginationThreshold: PAGINATION_THRESHOLD,
   });
 
