@@ -31,7 +31,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "@internationalized/date": "^3.10.1",
+    "@internationalized/date": "^3.11.0",
     "@superego/backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
@@ -45,11 +45,11 @@
     "luxon": "^3.7.2",
     "playwright": "^1.58.1",
     "react": "^19.2.4",
-    "react-aria": "^3.45.0",
-    "react-aria-components": "^1.14.0",
+    "react-aria": "^3.46.0",
+    "react-aria-components": "^1.15.0",
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",
-    "react-intl": "^8.1.2",
-    "react-stately": "^3.43.0"
+    "react-intl": "^8.1.3",
+    "react-stately": "^3.44.0"
   }
 }

@@ -1,385 +1,281 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import "@fontsource-variable/petrona";
-import "@fontsource-variable/petrona/wght-italic.css";
 import { Image } from "astro:assets";
-import { LinkButton } from "starlight-theme-nova/components";
 import logo from "../assets/logo.svg";
 ---
 
-<script>
-  const tosPpLink = document.getElementById("tos-pp")!;
-  const hero = document.querySelector(".hero")!;
-  const header = document.querySelector(
-    ".nova-page-frame-header",
-  ) as HTMLElement;
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Superego</title>
+  </head>
+  <body>
+    <main>
+      <section class="fold">
+        <section class="tagline">
+          <p><u>Own</u> your data</p>
+          <p><u>Build</u> your own apps</p>
+          <p><u>Control</u> your AI</p>
+        </section>
 
-  new IntersectionObserver(
-    (entries) => {
-      const { isIntersecting: isLastStep } = entries.toSorted(
-        (a, b) => a.time - b.time,
-      )[0]!;
-      header.style.display = isLastStep ? "block" : "none";
-      tosPpLink.style.display = isLastStep ? "inline-block" : "none";
-    },
-    { threshold: 0.01 },
-  ).observe(hero);
+        <section class="hero">
+          <div class="logo-container">
+            <Image src={logo} alt="Superego logo" class="logo" height={180} />
+            <Image
+              src={logo}
+              alt=""
+              class="logo-glitch"
+              aria-hidden="true"
+              height={180}
+            />
+          </div>
+          <h1 class="title">Superego</h1>
+          <p class="subtitle">Your Digital Freedom</p>
+          <div class="actions">
+            <a href="https://demo.superego.dev" class="button">Try the demo</a>
+            <a
+              href="https://github.com/superegodev/superego/releases/latest"
+              class="button"
+            >
+              Get the alpha
+            </a>
+          </div>
+          <span class="scroll-hint">&raquo;</span>
+        </section>
+      </section>
 
-  const isMacos = (() => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return (
-      userAgent.includes("mac os") &&
-      !userAgent.includes("iphone") &&
-      !userAgent.includes("ipad")
-    );
-  })();
-  document.documentElement.classList.toggle("is-macos", isMacos);
-</script>
-<style is:global>
-  body {
-    background-color: var(--sl-color-bg);
-    color: var(--sl-color-text);
-    transition:
-      background-color 150ms ease,
-      color 150ms ease;
-  }
-
-  /* Start with the header being hidden. */
-  .nova-page-frame-header {
-    display: none;
-  }
-
-  /* The main-frame has a padding at the top which we want to remove. */
-  .main-frame {
-    padding: 0;
-  }
-
-  /* Remove width restriction set by the template. */
-  .main-frame .sl-container {
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Hide the title. */
-  .main-frame .main-pane main > .content-panel:first-child {
-    display: none;
-  }
-
-  /* Center the content. */
-  .main-frame .main-pane main > .content-panel {
-    border: 0;
-    padding: 0;
-    width: 100%;
-  }
-
-  /* Make steps "scroll-snappable". */
-  .main-frame
-    .main-pane
-    main
-    > .content-panel:nth-child(2)
-    .sl-markdown-content {
-    height: 100svh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-  }
-
-  /* Hide the footer */
-  .main-frame footer {
-    display: none;
-  }
-</style>
+      <section class="explainer">
+        <p>
+          Superego is an <b>open-source <i>personal</i> database</b> where you can
+          store anything you want about your life. Notes, tasks, meals, expenses,
+          health logs... Whatever you want–you define what goes in.
+        </p>
+        <p>
+          Your data is stored <b>locally</b>, in a SQLite file you own and that
+          you can back up and sync with Dropbox, Google Drive, or whichever
+          service you already use. <b>No accounts, no middlemen.</b>
+        </p>
+        <p>On top of this, Superego gives you:</p>
+        <ol>
+          <li>
+            A <b>platform for building your own personal apps</b>.
+          </li>
+          <li>
+            An <b>AI assistant</b> to help you work with your data.
+          </li>
+        </ol>
+        <p>See it in action in this short demo:</p>
+        <iframe
+          src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
+          title="Superego Demo Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </section>
+    </main>
+  </body>
+</html>
 
 <style>
-  .highlighted {
-    --highlight-color: #38d9a9;
-    margin-inline-start: -0.2em;
-    margin-inline-end: -0.2em;
-    padding-inline-start: 0.2em;
-    padding-inline-end: 0.2em;
-    border-radius: 0.8em 0.3em;
-    background: transparent;
-    background-image: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--highlight-color) 30%, transparent),
-      color-mix(in srgb, var(--highlight-color) 90%, transparent),
-      color-mix(in srgb, var(--highlight-color) 60%, transparent)
-    );
-    box-decoration-break: clone;
+  :root {
+    --bg: #fff;
+    --fg: #111;
+    --tagline: #333;
+    --subtitle: #666;
+    --btn-primary-bg: #111;
+    --btn-primary-fg: #fff;
+    --btn-secondary-bg: #eee;
+    --btn-secondary-fg: #111;
+    --btn-secondary-border: #ccc;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111;
+      --fg: #fff;
+      --tagline: #ccc;
+      --subtitle: #888;
+      --btn-primary-bg: #fff;
+      --btn-primary-fg: #111;
+      --btn-secondary-bg: #333;
+      --btn-secondary-fg: #fff;
+      --btn-secondary-border: #555;
+    }
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: monospace;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .fold {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  .tagline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(2rem, 1rem + 4vw, 4rem);
+    font-style: italic;
+    text-align: center;
+    color: var(--tagline);
+  }
+
+  .tagline p {
+    margin-block: 1rem;
+  }
+
+  .tagline u {
     font-weight: 700;
   }
 
-  .balanced {
-    text-wrap: balance;
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
   }
 
-  html.is-macos .not-macos-only {
-    display: none !important;
-  }
-  html:not(.is-macos) .macos-only {
-    display: none !important;
+  .scroll-hint {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    color: var(--subtitle);
+    transform: rotate(90deg);
   }
 
-  .step {
+  .logo-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100svh;
-    margin: 0;
-    padding-block-start: 2rem;
-    padding-inline: max(calc(50% - 600px), 1rem);
-    font-family: "Petrona Variable", serif;
+    width: clamp(140px, 120px + 5vw, 180px);
+    aspect-ratio: 1 / 1;
+    margin-bottom: 1.5rem;
   }
-  .step.big {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+  .logo {
+    width: 100%;
+    height: 100%;
   }
-  .step.step.big h2 {
-    font-size: 6.9rem;
-    font-weight: normal;
+
+  .logo-glitch {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    animation: glitch 10s infinite;
   }
-  .step h2 {
-    margin-block-end: 2rem;
-    font-size: 4rem;
-  }
-  .step h4 {
-    margin-block-end: 2rem;
-    font-size: 1.3rem;
-  }
-  .step p {
-    margin-block-end: 1rem;
-    font-size: 3rem;
-  }
-  @media (max-width: 1200px) {
-    .step.step.big h2 {
-      font-size: 6rem;
+
+  @keyframes glitch {
+    0%,
+    95% {
+      transform: translate(0);
+      filter: none;
     }
-    .step h2 {
-      font-size: 4rem;
+    96% {
+      transform: translate(-6px, 3px);
+      filter: drop-shadow(4px 0 #f00) drop-shadow(-4px 0 #0ff);
     }
-    .step p {
-      font-size: 3rem;
+    97% {
+      transform: translate(6px, -3px);
+      filter: drop-shadow(-4px 0 #f00) drop-shadow(4px 0 #0ff);
     }
-  }
-  @media (max-width: 1000px) {
-    .step.step.big h2 {
-      font-size: 5rem;
+    97.5% {
+      transform: translate(-3px, 6px);
+      filter: drop-shadow(3px 0 #f00) drop-shadow(-3px 0 #0ff);
     }
-    .step h2 {
-      font-size: 3.5rem;
+    98% {
+      transform: translate(3px, -6px);
+      filter: drop-shadow(-3px 0 #f00) drop-shadow(3px 0 #0ff);
     }
-    .step p {
-      font-size: 2.5rem;
+    98.5% {
+      transform: translate(-6px, -3px);
+      filter: drop-shadow(4px 0 #f00) drop-shadow(-4px 0 #0ff);
     }
-  }
-  @media (max-width: 800px) {
-    .step.step.big h2 {
-      font-size: 4rem;
-      font-weight: 600;
+    99% {
+      transform: translate(6px, 3px);
+      filter: drop-shadow(-4px 0 #f00) drop-shadow(4px 0 #0ff);
     }
-    .step h2 {
-      font-size: 3rem;
-    }
-    .step p {
-      font-size: 2.2rem;
-    }
-  }
-  @media (max-width: 600px) {
-    .step.step.big h2 {
-      font-size: 3rem;
-      font-weight: 600;
-    }
-    .step h2 {
-      font-size: 2.5rem;
-    }
-    .step p {
-      font-size: 2rem;
+    99%,
+    100% {
+      transform: translate(0);
+      filter: none;
     }
   }
 
-  .step .scroll-hint {
-    position: absolute;
-    bottom: 0;
-    margin-inline: auto;
-    width: calc(100% - max(calc(100% - 1200px), 2rem));
+  .title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-block-start: 1rem;
+    margin-block-end: 0;
     text-align: center;
   }
-  .step .scroll-hint span {
-    display: inline-block;
-    transform: rotate(90deg);
-    font-size: 3rem;
+
+  .subtitle {
+    font-size: 1.75rem;
+    margin-block-start: 1.5rem;
+    margin-block-end: 3.5rem;
+    text-align: center;
+    color: var(--subtitle);
   }
 
-  .hero {
-    justify-self: start;
-    padding-inline: max(calc(50% - 560px), 1rem);
-    margin-block: 3rem;
-    font-family: sans-serif;
-  }
-  .hero img {
-    width: 15rem;
-    margin-block-end: 2rem;
-  }
-  @media (max-width: 600px) {
-    .hero img {
-      width: 12rem;
-      margin-block-end: 2rem;
-    }
-  }
-  .hero .copy {
+  .actions {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    gap: 1rem;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    margin-block-end: 2rem;
+    margin-bottom: 2rem;
   }
-  .hero .copy h1 {
-    font-size: 4rem;
-    font-weight: normal;
-    margin: 0;
+
+  .button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: opacity 0.2s;
   }
-  .hero .copy p {
+
+  .button:hover {
+    opacity: 0.9;
+  }
+
+  .explainer {
+    margin-block: 10rem;
     font-size: 2rem;
-    font-weight: normal;
-  }
-  .hero .actions {
-    width: 100%;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-block-end: 4rem;
-  }
-  .hero .actions a {
-    display: inline-block;
-    width: 134px;
-    margin: 0;
-    box-sizing: content-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    line-height: 2.5;
   }
 
-  #tos-pp {
-    width: 100%;
-    padding-inline: 1rem;
-    text-align: right;
+  .explainer p {
+    margin-block: 4rem;
   }
-  #tos-pp a {
-    color: var(--sl-color-text);
-    font-size: 0.6rem;
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 720 / 405;
+    border: 0;
+    border-radius: 0.5rem;
   }
 </style>
-
-<StarlightPage frontmatter={{ title: "Superego", template: "splash" }}>
-  <div class="step big">
-    <h2 class="balanced">
-      Imagine this:
-      <div style={{ display: "block", height: "2rem", width: "100%" }}></div>
-      <em class="highlighted">all</em> your personal data, in one
-      <em class="highlighted">private</em> space.
-    </h2>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step">
-    <h2>A local, encrypted, open-source database.</h2>
-    <p>
-      A vault <em class="highlighted">you can trust</em> with your most private records.
-    </p>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step big">
-    <h2 class="balanced">
-      Then: connect it<br />to an <span class="highlighted">AI</span>.
-    </h2>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step">
-    <h2 class="balanced">
-      Finally! An assistant that
-      <em class="highlighted">actually knows you</em>.
-    </h2>
-    <p>
-      Did you know you run faster <em>on Thursdays</em>? Or that last year you
-      spent <em>632 euros</em> on shoes?
-    </p>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step big">
-    <h2>Top it off: make it <em class="highlighted">hackable</em>.</h2>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step">
-    <h2>Sorry, <em>“vibe-able”</em>.</h2>
-    <p>
-      Want to extend it with <em class="highlighted">custom apps</em>? Ask the
-      AI!
-    </p>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step big">
-    <h2>But why <em class="highlighted">just</em> imagine?</h2>
-    <div class="scroll-hint"><span>»</span></div>
-  </div>
-
-  <div class="step">
-    <div class="hero">
-      <div class="copy">
-        <Image
-          alt="Superego logo: a low-poly drawing of Freud's head"
-          src={logo}
-        />
-        <h1>Superego</h1>
-        <p>Your Life's Database</p>
-      </div>
-      <div class="actions">
-        <LinkButton href="https://demo.superego.dev" icon="rocket">
-          Try the demo
-        </LinkButton>
-        <LinkButton
-          href="https://github.com/superegodev/superego"
-          icon="github"
-          class="not-macos-only"
-        >
-          Star on GitHub
-        </LinkButton>
-        <LinkButton
-          href="https://github.com/superegodev/superego/releases/latest"
-          icon="download"
-          class="macos-only"
-        >
-          Get the alpha
-        </LinkButton>
-      </div>
-    </div>
-    <h4>Or, watch a short demo:</h4>
-    <iframe
-      src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
-      title="Superego Demo Video"
-      style={{
-        width: "100%",
-        aspectRatio: "720/405",
-        border: 0,
-        borderRadius: "0.5rem",
-      }}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-    >
-    </iframe>
-  </div>
-
-  <div id="tos-pp">
-    <a href="/tos-pp">Demo TOS and Privacy Policy</a>
-  </div>
-</StarlightPage>
