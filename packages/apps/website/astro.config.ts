@@ -19,7 +19,6 @@ export default defineConfig({
         { label: "Connectors", autogenerate: { directory: "connectors" } },
       ],
       plugins: [starlightThemeNova()],
-      customCss: ["./src/styles/overrides.css"],
     }),
   ],
 });

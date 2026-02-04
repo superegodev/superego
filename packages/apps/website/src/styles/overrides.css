@@ -1,4 +1,0 @@
-/* Remove the line (border) between the title and the content in a doc page. */
-.nova-page-frame .main-pane main .content-panel:nth-child(2) {
-  border-block-start: 0;
-}
