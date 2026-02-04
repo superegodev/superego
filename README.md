@@ -6,13 +6,13 @@
 
 # Superego: Your Digital Freedom
 
-Superego is an **open-source personal database** where you can store
-_anything_ you want about your life. Notes, tasks, meals, expenses, health
-logs... Whatever you want—you define what goes in.
+Superego is an **open-source personal database** where you can store _anything_
+you want about your life. Notes, tasks, meals, expenses, health logs... Whatever
+you want—you define what goes in.
 
-Your data is stored **locally**, in a SQLite file you own and that you can
-back up and sync with Dropbox, Google Drive, or whichever service you already
-use. **No accounts, no middlemen.**
+Your data is stored **locally**, in a SQLite file you own and that you can back
+up and sync with Dropbox, Google Drive, or whichever service you already use.
+**No accounts, no middlemen.**
 
 On top of this, Superego gives you:
 
