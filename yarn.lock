@@ -6530,7 +6530,6 @@ __metadata:
     "@astrojs/check": "npm:^0.9.6"
     "@astrojs/mdx": "npm:^4.3.13"
     "@astrojs/starlight": "npm:^0.37.6"
-    "@playwright/test": "npm:^1.58.1"
     astro: "npm:^5.17.1"
     starlight-theme-nova: "npm:^0.11.5"
     typescript: "npm:^5.9.3"
