@@ -107,7 +107,7 @@ import logo from "../assets/logo.svg";
   body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    min-height: 100svh;
     background: var(--bg);
     color: var(--fg);
     font-family: monospace;
@@ -125,7 +125,7 @@ import logo from "../assets/logo.svg";
   .fold {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100svh;
     width: 100%;
   }
 
@@ -135,7 +135,7 @@ import logo from "../assets/logo.svg";
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: clamp(2rem, 1rem + 4vw, 4rem);
+    font-size: clamp(2rem, 1rem + 4.3vw, 4rem);
     font-style: italic;
     text-align: center;
     color: var(--tagline);
@@ -153,22 +153,14 @@ import logo from "../assets/logo.svg";
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 2rem;
-  }
-
-  .scroll-hint {
-    display: block;
-    margin-top: 1.5rem;
-    font-size: 2rem;
-    color: var(--subtitle);
-    transform: rotate(90deg);
+    padding-block-end: 2rem;
   }
 
   .logo-container {
     position: relative;
     width: clamp(140px, 120px + 5vw, 180px);
     aspect-ratio: 1 / 1;
-    margin-bottom: 1.5rem;
+    margin-block-end: 1.5rem;
   }
 
   .logo {
@@ -188,35 +180,43 @@ import logo from "../assets/logo.svg";
   @keyframes glitch {
     0%,
     95% {
+      display: none;
       transform: translate(0);
       filter: none;
     }
     96% {
+      display: initial;
       transform: translate(-6px, 3px);
       filter: drop-shadow(4px 0 #f00) drop-shadow(-4px 0 #0ff);
     }
     97% {
+      display: initial;
       transform: translate(6px, -3px);
       filter: drop-shadow(-4px 0 #f00) drop-shadow(4px 0 #0ff);
     }
     97.5% {
+      display: initial;
       transform: translate(-3px, 6px);
       filter: drop-shadow(3px 0 #f00) drop-shadow(-3px 0 #0ff);
     }
     98% {
+      display: initial;
       transform: translate(3px, -6px);
       filter: drop-shadow(-3px 0 #f00) drop-shadow(3px 0 #0ff);
     }
     98.5% {
+      display: initial;
       transform: translate(-6px, -3px);
       filter: drop-shadow(4px 0 #f00) drop-shadow(-4px 0 #0ff);
     }
     99% {
+      display: initial;
       transform: translate(6px, 3px);
       filter: drop-shadow(-4px 0 #f00) drop-shadow(4px 0 #0ff);
     }
     99%,
     100% {
+      display: none;
       transform: translate(0);
       filter: none;
     }
@@ -243,7 +243,7 @@ import logo from "../assets/logo.svg";
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-block-end: 2rem;
   }
 
   .button {
@@ -260,6 +260,13 @@ import logo from "../assets/logo.svg";
 
   .button:hover {
     opacity: 0.9;
+  }
+
+  .scroll-hint {
+    display: block;
+    font-size: 2rem;
+    color: var(--subtitle);
+    transform: rotate(90deg);
   }
 
   .explainer {
