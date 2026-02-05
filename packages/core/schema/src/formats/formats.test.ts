@@ -14,12 +14,14 @@ Object.values(formats)
           });
         });
       });
-      describe("not valid", () => {
-        format.invalidExamples.forEach((value) => {
-          it(`${JSON.stringify(value)}`, () => {
-            expect(v.is(format.valibotSchema, value)).toBe(false);
+      if (format.invalidExamples.length > 0) {
+        describe("not valid", () => {
+          format.invalidExamples.forEach((value) => {
+            it(`${JSON.stringify(value)}`, () => {
+              expect(v.is(format.valibotSchema, value)).toBe(false);
+            });
           });
         });
-      });
+      }
     });
   });

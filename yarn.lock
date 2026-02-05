@@ -6191,6 +6191,7 @@ __metadata:
     luxon: "npm:^3.7.2"
     markdown-to-jsx: "npm:^9.6.1"
     monaco-editor: "npm:0.55.1"
+    overtype: "npm:^2.1.1"
     p-map: "npm:^7.0.4"
     p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.58.1"
@@ -12158,6 +12159,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-actions@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "markdown-actions@npm:1.1.2"
+  checksum: 10c0/67f9853c5fa748f34836f84be965a667fad13b96ebbc8cacb35fce873c669e3b473b1cb3da7694331fdf05e18ce6ef8b46426df4d6a25801df881cb3faf92ea6
+  languageName: node
+  linkType: hard
+
 "markdown-extensions@npm:^2.0.0":
   version: 2.0.0
   resolution: "markdown-extensions@npm:2.0.0"
@@ -13602,6 +13610,15 @@ __metadata:
   version: 1.0.2
   resolution: "os-tmpdir@npm:1.0.2"
   checksum: 10c0/f438450224f8e2687605a8dd318f0db694b6293c5d835ae509a69e97c8de38b6994645337e5577f5001115470414638978cc49da1cdcc25106dad8738dc69990
+  languageName: node
+  linkType: hard
+
+"overtype@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "overtype@npm:2.1.1"
+  dependencies:
+    markdown-actions: "npm:^1.1.2"
+  checksum: 10c0/4905faf60ec5721f80dc4abe5e65823e8c159e271db06bf53e7d0aa6648806e4dce114a86c4ff3386be72e803a58a7c256ab23eff3b712f46e6d2081d6384270
   languageName: node
   linkType: hard
 

@@ -17,6 +17,14 @@ export const JsonObjectField = {
 };
 
 export const StringField = {
+  Markdown: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+  },
+
   Instant: {
     root: style({
       display: "flex",
