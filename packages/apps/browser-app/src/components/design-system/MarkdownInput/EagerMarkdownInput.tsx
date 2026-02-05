@@ -4,6 +4,7 @@ import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
 import type OverTypeEditor from "./OverTypeEditor.js";
 import type Props from "./Props.js";
+import theme from "./theme.js";
 
 export default function EagerMarkdownInput({
   value,
@@ -32,6 +33,7 @@ export default function EagerMarkdownInput({
       toolbar: false,
       smartLists: true,
       placeholder: propsRef.current.placeholder ?? "",
+      theme,
     });
     const editorInstance = (instance ?? null) as OverTypeEditor | null;
     setEditor(editorInstance);
