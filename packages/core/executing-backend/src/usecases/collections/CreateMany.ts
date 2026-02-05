@@ -3,27 +3,33 @@ import type {
   Backend,
   Collection,
   CollectionCategoryNotFound,
+  CollectionDefinition,
   CollectionSchemaNotValid,
-  CollectionSettings,
   CollectionSettingsNotValid,
-  CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { type Schema, utils as schemaUtils } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
+import {
+  extractProtoCollectionIds,
+  makeProtoCollectionIdMapping,
+  replaceProtoCollectionIds,
+} from "../../utils/ProtoCollectionIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
+  // TODO: with Packs, we probably need to add options to
+  // - pass collectionIds
+  // - skip ref-checking
   dryRun?: boolean;
 }
 
@@ -31,11 +37,7 @@ export default class CollectionsCreateMany extends Usecase<
   Backend["collections"]["createMany"]
 > {
   async exec(
-    collections: {
-      settings: CollectionSettings;
-      schema: Schema;
-      versionSettings: CollectionVersionSettings;
-    }[],
+    definitions: CollectionDefinition[],
     options: CollectionsCreateManyOptions = {},
   ): ResultPromise<
     Collection[],
@@ -48,40 +50,32 @@ export default class CollectionsCreateMany extends Usecase<
     | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
-    const collectionIds = collections.map(() => Id.generate.collection());
-    const idMapping = schemaUtils.makeProtoCollectionIdMapping(collectionIds);
+    const collectionIds = definitions.map(() => Id.generate.collection());
+    const idMapping = makeProtoCollectionIdMapping(collectionIds);
 
     const collectionsCreate = this.sub(CollectionsCreate);
     const createdCollections: Collection[] = [];
 
-    for (const [index, collection] of collections.entries()) {
-      const { settings, schema, versionSettings } = collection;
+    for (const [index, definition] of definitions.entries()) {
+      const { settings, schema, versionSettings } = definition;
       const collectionId = collectionIds[index];
 
-      const protoCollectionIds = schemaUtils.extractProtoCollectionIds(schema);
-
       // Validate references to proto collections.
-      const notFoundProtoCollectionIds = protoCollectionIds.filter(
-        (id) => !idMapping.has(id),
-      );
-      if (notFoundProtoCollectionIds.length > 0) {
+      const notFoundProtoCollectionIds =
+        extractProtoCollectionIds(schema).difference(idMapping);
+      if (notFoundProtoCollectionIds.size > 0) {
         return makeUnsuccessfulResult(
           makeResultError("ReferencedCollectionsNotFound", {
             collectionId: null,
-            notFoundCollectionIds: notFoundProtoCollectionIds,
+            notFoundCollectionIds: [...notFoundProtoCollectionIds],
           }),
         );
       }
 
-      const resolvedSchema = schemaUtils.replaceProtoCollectionIds(
-        schema,
-        idMapping,
-      );
+      const resolvedSchema = replaceProtoCollectionIds(schema, idMapping);
 
       const createResult = await collectionsCreate.exec(
-        settings,
-        resolvedSchema,
-        versionSettings,
+        { settings, schema: resolvedSchema, versionSettings },
         {
           dryRun: options.dryRun,
           collectionId: collectionId,

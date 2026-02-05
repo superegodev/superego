@@ -1,62 +1,45 @@
-import DataType from "../DataType.js";
-import type Schema from "../Schema.js";
-import type { AnyTypeDefinition } from "../typeDefinitions.js";
-
-const PROTO_COLLECTION_ID_PREFIX = "ProtoCollection_";
-
-export function makeProtoCollectionId(index: number): string {
-  return `${PROTO_COLLECTION_ID_PREFIX}${index}`;
-}
+import type { CollectionId, ProtoCollectionId } from "@superego/backend";
+import {
+  type AnyTypeDefinition,
+  DataType,
+  type Schema,
+} from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 
 export function makeProtoCollectionIdMapping(
-  actualIds: string[],
-): Map<string, string> {
-  const mapping = new Map<string, string>();
-  for (let i = 0; i < actualIds.length; i++) {
-    const id = actualIds[i];
-    if (id !== undefined) {
-      mapping.set(makeProtoCollectionId(i), id);
-    }
-  }
-  return mapping;
-}
-
-export function isProtoCollectionId(id: string): boolean {
-  return id.startsWith(PROTO_COLLECTION_ID_PREFIX);
-}
-
-export function parseProtoCollectionIndex(id: string): number | null {
-  if (!isProtoCollectionId(id)) {
-    return null;
-  }
-  const indexStr = id.slice(PROTO_COLLECTION_ID_PREFIX.length);
-  const index = Number.parseInt(indexStr, 10);
-  return !Number.isNaN(index) && index >= 0 ? index : null;
+  collectionIds: CollectionId[],
+): Map<ProtoCollectionId, CollectionId> {
+  return new Map(
+    collectionIds.map((collectionId, index) => [
+      Id.generate.protoCollection(index),
+      collectionId,
+    ]),
+  );
 }
 
 /**
  * Extracts all proto collection ID placeholders from DocumentRef type
  * definitions in the given schema.
  */
-export function extractProtoCollectionIds(schema: Schema): string[] {
-  const protoIds = new Set<string>();
-
+export function extractProtoCollectionIds(
+  schema: Schema,
+): Set<ProtoCollectionId> {
+  const protoCollectionIds = new Set<ProtoCollectionId>();
   for (const typeDefinition of Object.values(schema.types)) {
-    _extractFromTypeDefinition(schema, typeDefinition, protoIds);
+    _extractFromTypeDefinition(schema, typeDefinition, protoCollectionIds);
   }
-
-  return Array.from(protoIds);
+  return protoCollectionIds;
 }
 
 function _extractFromTypeDefinition(
   schema: Schema,
   typeDefinition: AnyTypeDefinition,
-  protoIds: Set<string>,
+  protoCollectionIds: Set<ProtoCollectionId>,
 ): void {
   if ("ref" in typeDefinition) {
     const referencedType = schema.types[typeDefinition.ref];
     if (referencedType) {
-      _extractFromTypeDefinition(schema, referencedType, protoIds);
+      _extractFromTypeDefinition(schema, referencedType, protoCollectionIds);
     }
     return;
   }
@@ -64,9 +47,9 @@ function _extractFromTypeDefinition(
   if (typeDefinition.dataType === DataType.DocumentRef) {
     if (
       typeDefinition.collectionId !== undefined &&
-      isProtoCollectionId(typeDefinition.collectionId)
+      Id.is.protoCollection(typeDefinition.collectionId)
     ) {
-      protoIds.add(typeDefinition.collectionId);
+      protoCollectionIds.add(typeDefinition.collectionId);
     }
     return;
   }
@@ -75,23 +58,31 @@ function _extractFromTypeDefinition(
     for (const propertyTypeDefinition of Object.values(
       typeDefinition.properties,
     )) {
-      _extractFromTypeDefinition(schema, propertyTypeDefinition, protoIds);
+      _extractFromTypeDefinition(
+        schema,
+        propertyTypeDefinition,
+        protoCollectionIds,
+      );
     }
     return;
   }
 
   if (typeDefinition.dataType === DataType.List) {
-    _extractFromTypeDefinition(schema, typeDefinition.items, protoIds);
+    _extractFromTypeDefinition(
+      schema,
+      typeDefinition.items,
+      protoCollectionIds,
+    );
   }
 }
 
 /**
  * Returns a new schema with all proto collection ID placeholders replaced with
- * actual collection IDs from the provided mapping.
+ * collection IDs from the provided mapping.
  */
 export function replaceProtoCollectionIds(
   schema: Schema,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoCollectionId, CollectionId>,
 ): Schema {
   return {
     ...schema,
@@ -106,7 +97,7 @@ export function replaceProtoCollectionIds(
 
 function _replaceInTypeDefinition(
   typeDefinition: AnyTypeDefinition,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoCollectionId, CollectionId>,
 ): AnyTypeDefinition {
   if ("ref" in typeDefinition) {
     return typeDefinition;
@@ -115,11 +106,11 @@ function _replaceInTypeDefinition(
   if (typeDefinition.dataType === DataType.DocumentRef) {
     if (
       typeDefinition.collectionId !== undefined &&
-      isProtoCollectionId(typeDefinition.collectionId)
+      Id.is.protoCollection(typeDefinition.collectionId)
     ) {
-      const actualId = idMapping.get(typeDefinition.collectionId);
-      if (actualId) {
-        return { ...typeDefinition, collectionId: actualId };
+      const collectionId = idMapping.get(typeDefinition.collectionId);
+      if (collectionId) {
+        return { ...typeDefinition, collectionId };
       }
     }
     return typeDefinition;

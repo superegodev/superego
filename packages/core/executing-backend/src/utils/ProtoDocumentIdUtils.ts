@@ -1,39 +1,21 @@
-import DataType from "../DataType.js";
-import type Schema from "../Schema.js";
-import type { AnyTypeDefinition } from "../typeDefinitions.js";
-import getRootType from "./getRootType.js";
-import getType from "./getType.js";
-
-const PROTO_DOCUMENT_ID_PREFIX = "ProtoDocument_";
-
-export function makeProtoDocumentId(index: number): string {
-  return `${PROTO_DOCUMENT_ID_PREFIX}${index}`;
-}
+import type { DocumentId, ProtoDocumentId } from "@superego/backend";
+import {
+  type AnyTypeDefinition,
+  DataType,
+  type Schema,
+  utils,
+} from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 
 export function makeProtoDocumentIdMapping(
-  actualIds: string[],
-): Map<string, string> {
-  const mapping = new Map<string, string>();
-  for (let i = 0; i < actualIds.length; i++) {
-    const id = actualIds[i];
-    if (id !== undefined) {
-      mapping.set(makeProtoDocumentId(i), id);
-    }
-  }
-  return mapping;
-}
-
-export function isProtoDocumentId(id: string): boolean {
-  return id.startsWith(PROTO_DOCUMENT_ID_PREFIX);
-}
-
-export function parseProtoDocumentIndex(id: string): number | null {
-  if (!isProtoDocumentId(id)) {
-    return null;
-  }
-  const indexStr = id.slice(PROTO_DOCUMENT_ID_PREFIX.length);
-  const index = Number.parseInt(indexStr, 10);
-  return !Number.isNaN(index) && index >= 0 ? index : null;
+  documentIds: DocumentId[],
+): Map<ProtoDocumentId, DocumentId> {
+  return new Map(
+    documentIds.map((documentId, index) => [
+      Id.generate.protoDocument(index),
+      documentId,
+    ]),
+  );
 }
 
 /**
@@ -43,17 +25,22 @@ export function parseProtoDocumentIndex(id: string): number | null {
 export function extractProtoDocumentIds(
   schema: Schema,
   content: any,
-): string[] {
-  const protoIds = new Set<string>();
-  _extractFromContent(schema, content, getRootType(schema), protoIds);
-  return Array.from(protoIds);
+): Set<ProtoDocumentId> {
+  const protoDocumentIds = new Set<ProtoDocumentId>();
+  _extractFromContent(
+    schema,
+    content,
+    utils.getRootType(schema),
+    protoDocumentIds,
+  );
+  return protoDocumentIds;
 }
 
 function _extractFromContent(
   schema: Schema,
   value: any,
   typeDefinition: AnyTypeDefinition,
-  protoIds: Set<string>,
+  protoDocumentIds: Set<ProtoDocumentId>,
 ): void {
   if (value === null || value === undefined) {
     return;
@@ -63,8 +50,8 @@ function _extractFromContent(
     _extractFromContent(
       schema,
       value,
-      getType(schema, typeDefinition),
-      protoIds,
+      utils.getType(schema, typeDefinition),
+      protoDocumentIds,
     );
     return;
   }
@@ -73,9 +60,9 @@ function _extractFromContent(
     if (
       typeof value === "object" &&
       typeof value.documentId === "string" &&
-      isProtoDocumentId(value.documentId)
+      Id.is.protoDocument(value.documentId)
     ) {
-      protoIds.add(value.documentId);
+      protoDocumentIds.add(value.documentId);
     }
     return;
   }
@@ -88,7 +75,7 @@ function _extractFromContent(
         schema,
         value[propertyName],
         propertyTypeDefinition,
-        protoIds,
+        protoDocumentIds,
       );
     }
     return;
@@ -97,7 +84,12 @@ function _extractFromContent(
   if (typeDefinition.dataType === DataType.List) {
     if (Array.isArray(value)) {
       for (const item of value) {
-        _extractFromContent(schema, item, typeDefinition.items, protoIds);
+        _extractFromContent(
+          schema,
+          item,
+          typeDefinition.items,
+          protoDocumentIds,
+        );
       }
     }
   }
@@ -105,21 +97,26 @@ function _extractFromContent(
 
 /**
  * Returns new content with all proto document ID placeholders replaced with
- * actual document IDs from the provided mapping.
+ * document IDs from the provided mapping.
  */
 export function replaceProtoDocumentIds(
   schema: Schema,
   content: any,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoDocumentId, DocumentId>,
 ): any {
-  return _replaceInContent(schema, content, getRootType(schema), idMapping);
+  return _replaceInContent(
+    schema,
+    content,
+    utils.getRootType(schema),
+    idMapping,
+  );
 }
 
 function _replaceInContent(
   schema: Schema,
   value: any,
   typeDefinition: AnyTypeDefinition,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoDocumentId, DocumentId>,
 ): any {
   if (value === null || value === undefined) {
     return value;
@@ -129,7 +126,7 @@ function _replaceInContent(
     return _replaceInContent(
       schema,
       value,
-      getType(schema, typeDefinition),
+      utils.getType(schema, typeDefinition),
       idMapping,
     );
   }
@@ -138,11 +135,11 @@ function _replaceInContent(
     if (
       typeof value === "object" &&
       typeof value.documentId === "string" &&
-      isProtoDocumentId(value.documentId)
+      Id.is.protoDocument(value.documentId)
     ) {
-      const actualId = idMapping.get(value.documentId);
-      if (actualId) {
-        return { ...value, documentId: actualId };
+      const documentId = idMapping.get(value.documentId);
+      if (documentId) {
+        return { ...value, documentId };
       }
     }
     return value;

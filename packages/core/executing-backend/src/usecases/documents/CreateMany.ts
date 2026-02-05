@@ -1,11 +1,11 @@
 import type {
   Backend,
-  CollectionId,
   CollectionNotFound,
   ConnectorDoesNotSupportUpSyncing,
   ConversationId,
   Document,
   DocumentContentNotValid,
+  DocumentDefinition,
   DocumentId,
   DocumentVersionCreator,
   DuplicateDocumentDetected,
@@ -15,7 +15,6 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { utils as schemaUtils } from "@superego/schema";
 import {
   Id,
   makeSuccessfulResult,
@@ -23,6 +22,11 @@ import {
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import {
+  extractProtoDocumentIds,
+  makeProtoDocumentIdMapping,
+  replaceProtoDocumentIds,
+} from "../../utils/ProtoDocumentIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "./Create.js";
 
@@ -35,11 +39,7 @@ export default class DocumentsCreateMany extends Usecase<
   Backend["documents"]["createMany"]
 > {
   async exec(
-    documents: {
-      collectionId: CollectionId;
-      content: any;
-      options?: { skipDuplicateCheck: boolean };
-    }[],
+    definitions: DocumentDefinition[],
     options?: DocumentsCreateManyOptions,
   ): ResultPromise<
     Document[],
@@ -52,14 +52,14 @@ export default class DocumentsCreateMany extends Usecase<
     | DuplicateDocumentDetected
     | UnexpectedError
   > {
-    const documentIds = documents.map(() => Id.generate.document());
-    const idMapping = schemaUtils.makeProtoDocumentIdMapping(documentIds);
+    const documentIds = definitions.map(() => Id.generate.document());
+    const idMapping = makeProtoDocumentIdMapping(documentIds);
 
     const documentsCreate = this.sub(DocumentsCreate);
     const createdDocuments: Document[] = [];
 
-    for (const [index, document] of documents.entries()) {
-      const { collectionId, content, options: documentOptions } = document;
+    for (const [index, definition] of definitions.entries()) {
+      const { collectionId, content, options: definitionOptions } = definition;
       const documentId = documentIds[index];
 
       const collection = await this.repos.collection.find(collectionId);
@@ -75,39 +75,39 @@ export default class DocumentsCreateMany extends Usecase<
         );
       assertCollectionVersionExists(collectionId, latestCollectionVersion);
 
-      const protoDocumentIds = schemaUtils.extractProtoDocumentIds(
+      // Validate references to proto documents.
+      const notFoundProtoDocumentIds = extractProtoDocumentIds(
         latestCollectionVersion.schema,
         content,
-      );
-
-      // Validate references to proto documents.
-      const notFoundProtoDocumentIds = protoDocumentIds.filter(
-        (id) => !idMapping.has(id),
-      );
-      if (notFoundProtoDocumentIds.length > 0) {
+      ).difference(idMapping);
+      if (notFoundProtoDocumentIds.size > 0) {
         return makeUnsuccessfulResult(
           makeResultError("ReferencedDocumentsNotFound", {
             collectionId,
             documentId: null,
-            notFoundDocumentRefs: notFoundProtoDocumentIds.map((protoId) => ({
-              collectionId: collectionId,
-              documentId: protoId,
-            })),
+            notFoundDocumentRefs: [...notFoundProtoDocumentIds].map(
+              (protoDocumentId) => ({
+                collectionId: collectionId,
+                documentId: protoDocumentId,
+              }),
+            ),
           }),
         );
       }
 
-      const resolvedContent = schemaUtils.replaceProtoDocumentIds(
+      const resolvedContent = replaceProtoDocumentIds(
         latestCollectionVersion.schema,
         content,
         idMapping,
       );
 
       const createResult = await documentsCreate.exec(
-        collectionId,
-        resolvedContent,
         {
-          skipDuplicateCheck: documentOptions?.skipDuplicateCheck ?? false,
+          collectionId,
+          content: resolvedContent,
+          options: definitionOptions,
+        },
+        {
           documentId: documentId as DocumentId,
           allowedUnverifiedDocumentIds: documentIds as DocumentId[],
           ...(options?.createdBy && options?.conversationId

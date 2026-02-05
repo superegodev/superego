@@ -1,6 +1,5 @@
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
-import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
@@ -61,11 +60,14 @@ import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
 import type App from "./types/App.js";
+import type AppDefinition from "./types/AppDefinition.js";
 import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
+import type CollectionCategoryDefinition from "./types/CollectionCategoryDefinition.js";
+import type CollectionDefinition from "./types/CollectionDefinition.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersion from "./types/CollectionVersion.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
@@ -74,6 +76,7 @@ import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticatio
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
+import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
@@ -89,7 +92,7 @@ import type TypescriptModule from "./types/TypescriptModule.js";
 export default interface Backend {
   collectionCategories: {
     create(
-      proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
+      definition: CollectionCategoryDefinition,
     ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNameNotValid
@@ -125,9 +128,7 @@ export default interface Backend {
 
   collections: {
     create(
-      settings: CollectionSettings,
-      schema: Schema,
-      versionSettings: CollectionVersionSettings,
+      definition: CollectionDefinition,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
@@ -141,11 +142,7 @@ export default interface Backend {
     >;
 
     createMany(
-      protos: {
-        settings: CollectionSettings;
-        schema: Schema;
-        versionSettings: CollectionVersionSettings;
-      }[],
+      definitions: CollectionDefinition[],
     ): ResultPromise<
       Collection[],
       | CollectionSettingsNotValid
@@ -292,9 +289,7 @@ export default interface Backend {
 
   documents: {
     create(
-      collectionId: CollectionId,
-      content: any,
-      options?: { skipDuplicateCheck: boolean },
+      definition: DocumentDefinition,
     ): ResultPromise<
       Document,
       | CollectionNotFound
@@ -308,11 +303,7 @@ export default interface Backend {
     >;
 
     createMany(
-      documents: {
-        collectionId: CollectionId;
-        content: any;
-        options?: { skipDuplicateCheck: boolean };
-      }[],
+      definitions: DocumentDefinition[],
     ): ResultPromise<
       Document[],
       | CollectionNotFound
@@ -497,10 +488,7 @@ export default interface Backend {
 
   apps: {
     create(
-      type: AppType,
-      name: string,
-      targetCollectionIds: CollectionId[],
-      files: AppVersion["files"],
+      definition: AppDefinition,
     ): ResultPromise<
       App,
       AppNameNotValid | CollectionNotFound | UnexpectedError

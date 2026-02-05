@@ -1,48 +1,27 @@
+import type { DocumentId } from "@superego/backend";
+import { DataType, type Schema } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
-import DataType from "../DataType.js";
-import type Schema from "../Schema.js";
 import {
   extractProtoDocumentIds,
-  isProtoDocumentId,
-  makeProtoDocumentId,
   makeProtoDocumentIdMapping,
-  parseProtoDocumentIndex,
   replaceProtoDocumentIds,
-} from "./protoDocumentIds.js";
-
-describe("makeProtoDocumentId", () => {
-  it("returns correct format", () => {
-    // Exercise
-    const result0 = makeProtoDocumentId(0);
-    const result1 = makeProtoDocumentId(1);
-    const result42 = makeProtoDocumentId(42);
-
-    // Verify
-    expect(result0).toBe("ProtoDocument_0");
-    expect(result1).toBe("ProtoDocument_1");
-    expect(result42).toBe("ProtoDocument_42");
-  });
-
-  it.each([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  ])("roundtrips index %i correctly", (index) => {
-    // Exercise + Verify
-    const protoId = makeProtoDocumentId(index);
-    expect(isProtoDocumentId(protoId)).toBe(true);
-    expect(parseProtoDocumentIndex(protoId)).toBe(index);
-  });
-});
+} from "./ProtoDocumentIdUtils.js";
 
 describe("makeProtoDocumentIdMapping", () => {
-  it("creates correct mapping from array of actual IDs", () => {
+  it("creates correct mapping from array of document IDs", () => {
     // Exercise
-    const actualIds = ["Document_abc", "Document_def", "Document_ghi"];
-    const mapping = makeProtoDocumentIdMapping(actualIds);
+    const documentIds: DocumentId[] = [
+      Id.generate.document(),
+      Id.generate.document(),
+      Id.generate.document(),
+    ];
+    const mapping = makeProtoDocumentIdMapping(documentIds);
 
     // Verify
-    expect(mapping.get("ProtoDocument_0")).toBe("Document_abc");
-    expect(mapping.get("ProtoDocument_1")).toBe("Document_def");
-    expect(mapping.get("ProtoDocument_2")).toBe("Document_ghi");
+    expect(mapping.get("ProtoDocument_0")).toBe(documentIds[0]);
+    expect(mapping.get("ProtoDocument_1")).toBe(documentIds[1]);
+    expect(mapping.get("ProtoDocument_2")).toBe(documentIds[2]);
     expect(mapping.size).toBe(3);
   });
 
@@ -55,43 +34,8 @@ describe("makeProtoDocumentIdMapping", () => {
   });
 });
 
-describe("isProtoDocumentId", () => {
-  it("returns true for proto document IDs", () => {
-    // Exercise + Verify
-    expect(isProtoDocumentId("ProtoDocument_0")).toBe(true);
-    expect(isProtoDocumentId("ProtoDocument_42")).toBe(true);
-  });
-
-  it("returns false for regular document IDs", () => {
-    // Exercise + Verify
-    expect(isProtoDocumentId("Document_abc")).toBe(false);
-    expect(isProtoDocumentId("abc")).toBe(false);
-    expect(isProtoDocumentId("ProtoCollection_0")).toBe(false);
-  });
-});
-
-describe("parseProtoDocumentIndex", () => {
-  it("extracts index from proto document ID", () => {
-    // Exercise + Verify
-    expect(parseProtoDocumentIndex("ProtoDocument_0")).toBe(0);
-    expect(parseProtoDocumentIndex("ProtoDocument_42")).toBe(42);
-  });
-
-  it("returns null for non-proto document IDs", () => {
-    // Exercise + Verify
-    expect(parseProtoDocumentIndex("Document_abc")).toBe(null);
-    expect(parseProtoDocumentIndex("ProtoCollection_0")).toBe(null);
-  });
-
-  it("returns null for invalid index", () => {
-    // Exercise + Verify
-    expect(parseProtoDocumentIndex("ProtoDocument_-1")).toBe(null);
-    expect(parseProtoDocumentIndex("ProtoDocument_abc")).toBe(null);
-  });
-});
-
 describe("extractProtoDocumentIds", () => {
-  it("returns empty array when content has no DocumentRef", () => {
+  it("returns empty set when content has no DocumentRef", () => {
     // Exercise
     const schema: Schema = {
       types: {
@@ -108,10 +52,10 @@ describe("extractProtoDocumentIds", () => {
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([]);
+    expect(result.size).toBe(0);
   });
 
-  it("returns empty array when DocumentRef has regular document ID", () => {
+  it("returns empty set when DocumentRef has regular document ID", () => {
     // Exercise
     const schema: Schema = {
       types: {
@@ -125,17 +69,20 @@ describe("extractProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref: { collectionId: "Collection_123", documentId: "Document_456" },
+      ref: {
+        collectionId: Id.generate.collection(),
+        documentId: Id.generate.document(),
+      },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([]);
+    expect(result.size).toBe(0);
   });
 
   it("extracts a single proto document ID", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -148,18 +95,22 @@ describe("extractProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref: { collectionId: "Collection_123", documentId: protoId },
+      ref: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId,
+      },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([protoId]);
+    expect(result.size).toBe(1);
+    expect(result.has(protoDocumentId)).toBe(true);
   });
 
   it("extracts multiple different proto document IDs", () => {
     // Exercise
-    const protoId0 = makeProtoDocumentId(0);
-    const protoId1 = makeProtoDocumentId(1);
+    const protoDocumentId0 = Id.generate.protoDocument(0);
+    const protoDocumentId1 = Id.generate.protoDocument(1);
     const schema: Schema = {
       types: {
         Root: {
@@ -173,20 +124,26 @@ describe("extractProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref0: { collectionId: "Collection_123", documentId: protoId0 },
-      ref1: { collectionId: "Collection_123", documentId: protoId1 },
+      ref0: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId0,
+      },
+      ref1: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId1,
+      },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toHaveLength(2);
-    expect(result).toContain(protoId0);
-    expect(result).toContain(protoId1);
+    expect(result.size).toBe(2);
+    expect(result.has(protoDocumentId0)).toBe(true);
+    expect(result.has(protoDocumentId1)).toBe(true);
   });
 
   it("deduplicates repeated proto document IDs", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -200,18 +157,25 @@ describe("extractProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref1: { collectionId: "Collection_123", documentId: protoId },
-      ref2: { collectionId: "Collection_456", documentId: protoId },
+      ref1: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId,
+      },
+      ref2: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId,
+      },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([protoId]);
+    expect(result.size).toBe(1);
+    expect(result.has(protoDocumentId)).toBe(true);
   });
 
   it("extracts proto document IDs from nested Structs", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -230,18 +194,22 @@ describe("extractProtoDocumentIds", () => {
     };
     const content = {
       nested: {
-        ref: { collectionId: "Collection_123", documentId: protoId },
+        ref: {
+          collectionId: Id.generate.collection(),
+          documentId: protoDocumentId,
+        },
       },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([protoId]);
+    expect(result.size).toBe(1);
+    expect(result.has(protoDocumentId)).toBe(true);
   });
 
   it("extracts proto document IDs from List items", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
     const schema: Schema = {
       types: {
         Root: {
@@ -258,26 +226,30 @@ describe("extractProtoDocumentIds", () => {
     };
     const content = {
       items: [
-        { collectionId: "Collection_123", documentId: protoId },
-        { collectionId: "Collection_456", documentId: "Document_789" },
+        { collectionId: Id.generate.collection(), documentId: protoDocumentId },
+        {
+          collectionId: Id.generate.collection(),
+          documentId: Id.generate.document(),
+        },
       ],
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([protoId]);
+    expect(result.size).toBe(1);
+    expect(result.has(protoDocumentId)).toBe(true);
   });
 
   it("extracts proto document IDs through TypeRef", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
     const schema: Schema = {
       types: {
         Root: {
           dataType: DataType.Struct,
           properties: {
             ref: {
-              dataType: null,
+              dataType: null as any,
               ref: "MyRef",
             },
           },
@@ -289,12 +261,16 @@ describe("extractProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref: { collectionId: "Collection_123", documentId: protoId },
+      ref: {
+        collectionId: Id.generate.collection(),
+        documentId: protoDocumentId,
+      },
     };
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([protoId]);
+    expect(result.size).toBe(1);
+    expect(result.has(protoDocumentId)).toBe(true);
   });
 
   it("handles null values gracefully", () => {
@@ -315,15 +291,16 @@ describe("extractProtoDocumentIds", () => {
     const result = extractProtoDocumentIds(schema, content);
 
     // Verify
-    expect(result).toEqual([]);
+    expect(result.size).toBe(0);
   });
 });
 
 describe("replaceProtoDocumentIds", () => {
-  it("replaces proto document ID with actual ID", () => {
+  it("replaces proto document ID with document ID", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
-    const actualId = "Document_abc";
+    const protoDocumentId = Id.generate.protoDocument(0);
+    const documentId = Id.generate.document();
+    const collectionId = Id.generate.collection();
     const schema: Schema = {
       types: {
         Root: {
@@ -336,19 +313,21 @@ describe("replaceProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref: { collectionId: "Collection_123", documentId: protoId },
+      ref: { collectionId, documentId: protoDocumentId },
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map([[protoDocumentId, documentId]]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
     expect(result).toEqual({
-      ref: { collectionId: "Collection_123", documentId: actualId },
+      ref: { collectionId, documentId },
     });
   });
 
   it("preserves non-proto document IDs", () => {
     // Exercise
+    const collectionId = Id.generate.collection();
+    const documentId = Id.generate.document();
     const schema: Schema = {
       types: {
         Root: {
@@ -361,10 +340,10 @@ describe("replaceProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      ref: { collectionId: "Collection_123", documentId: "Document_456" },
+      ref: { collectionId, documentId },
     };
     const idMapping = new Map<string, string>();
-    const result = replaceProtoDocumentIds(schema, content, idMapping);
+    const result = replaceProtoDocumentIds(schema, content, idMapping as any);
 
     // Verify
     expect(result).toEqual(content);
@@ -372,8 +351,9 @@ describe("replaceProtoDocumentIds", () => {
 
   it("replaces proto IDs in nested structures", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
-    const actualId = "Document_abc";
+    const protoDocumentId = Id.generate.protoDocument(0);
+    const documentId = Id.generate.document();
+    const collectionId = Id.generate.collection();
     const schema: Schema = {
       types: {
         Root: {
@@ -392,24 +372,28 @@ describe("replaceProtoDocumentIds", () => {
     };
     const content = {
       nested: {
-        ref: { collectionId: "Collection_123", documentId: protoId },
+        ref: { collectionId, documentId: protoDocumentId },
       },
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map([[protoDocumentId, documentId]]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
     expect(result).toEqual({
       nested: {
-        ref: { collectionId: "Collection_123", documentId: actualId },
+        ref: { collectionId, documentId },
       },
     });
   });
 
   it("replaces proto IDs in List items", () => {
     // Exercise
-    const protoId0 = makeProtoDocumentId(0);
-    const protoId1 = makeProtoDocumentId(1);
+    const protoDocumentId0 = Id.generate.protoDocument(0);
+    const protoDocumentId1 = Id.generate.protoDocument(1);
+    const documentId0 = Id.generate.document();
+    const documentId1 = Id.generate.document();
+    const collectionId0 = Id.generate.collection();
+    const collectionId1 = Id.generate.collection();
     const schema: Schema = {
       types: {
         Root: {
@@ -426,28 +410,32 @@ describe("replaceProtoDocumentIds", () => {
     };
     const content = {
       items: [
-        { collectionId: "Collection_123", documentId: protoId0 },
-        { collectionId: "Collection_456", documentId: protoId1 },
+        { collectionId: collectionId0, documentId: protoDocumentId0 },
+        { collectionId: collectionId1, documentId: protoDocumentId1 },
       ],
     };
     const idMapping = new Map([
-      [protoId0, "Document_abc"],
-      [protoId1, "Document_def"],
+      [protoDocumentId0, documentId0],
+      [protoDocumentId1, documentId1],
     ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
     expect(result).toEqual({
       items: [
-        { collectionId: "Collection_123", documentId: "Document_abc" },
-        { collectionId: "Collection_456", documentId: "Document_def" },
+        { collectionId: collectionId0, documentId: documentId0 },
+        { collectionId: collectionId1, documentId: documentId1 },
       ],
     });
   });
 
   it("handles mixed proto and regular IDs", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
+    const documentId = Id.generate.document();
+    const regularDocumentId = Id.generate.document();
+    const collectionId0 = Id.generate.collection();
+    const collectionId1 = Id.generate.collection();
     const schema: Schema = {
       types: {
         Root: {
@@ -461,21 +449,21 @@ describe("replaceProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = {
-      protoRef: { collectionId: "Collection_123", documentId: protoId },
+      protoRef: { collectionId: collectionId0, documentId: protoDocumentId },
       regularRef: {
-        collectionId: "Collection_456",
-        documentId: "Document_789",
+        collectionId: collectionId1,
+        documentId: regularDocumentId,
       },
     };
-    const idMapping = new Map([[protoId, "Document_abc"]]);
+    const idMapping = new Map([[protoDocumentId, documentId]]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
     expect(result).toEqual({
-      protoRef: { collectionId: "Collection_123", documentId: "Document_abc" },
+      protoRef: { collectionId: collectionId0, documentId },
       regularRef: {
-        collectionId: "Collection_456",
-        documentId: "Document_789",
+        collectionId: collectionId1,
+        documentId: regularDocumentId,
       },
     });
   });
@@ -496,7 +484,7 @@ describe("replaceProtoDocumentIds", () => {
     };
     const content = { ref: null };
     const idMapping = new Map<string, string>();
-    const result = replaceProtoDocumentIds(schema, content, idMapping);
+    const result = replaceProtoDocumentIds(schema, content, idMapping as any);
 
     // Verify
     expect(result).toEqual({ ref: null });
@@ -504,7 +492,9 @@ describe("replaceProtoDocumentIds", () => {
 
   it("preserves other properties in content", () => {
     // Exercise
-    const protoId = makeProtoDocumentId(0);
+    const protoDocumentId = Id.generate.protoDocument(0);
+    const documentId = Id.generate.document();
+    const collectionId = Id.generate.collection();
     const schema: Schema = {
       types: {
         Root: {
@@ -519,15 +509,15 @@ describe("replaceProtoDocumentIds", () => {
     };
     const content = {
       name: "test",
-      ref: { collectionId: "Collection_123", documentId: protoId },
+      ref: { collectionId, documentId: protoDocumentId },
     };
-    const idMapping = new Map([[protoId, "Document_abc"]]);
+    const idMapping = new Map([[protoDocumentId, documentId]]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
     expect(result).toEqual({
       name: "test",
-      ref: { collectionId: "Collection_123", documentId: "Document_abc" },
+      ref: { collectionId, documentId },
     });
   });
 });

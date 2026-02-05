@@ -1,9 +1,8 @@
 import type {
   App,
+  AppDefinition,
   AppNameNotValid,
-  AppType,
   Backend,
-  CollectionId,
   CollectionNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -25,10 +24,10 @@ import Usecase from "../../utils/Usecase.js";
 
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
   async exec(
-    type: AppType,
-    name: string,
-    targetCollectionIds: CollectionId[],
-    files: AppVersionEntity["files"],
+    { type, name, targetCollectionIds, files }: AppDefinition,
+    // TODO: with Packs, add options to:
+    // - pass in appId
+    // - skip ref-checking
   ): ResultPromise<
     App,
     AppNameNotValid | CollectionNotFound | UnexpectedError

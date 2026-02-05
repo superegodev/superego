@@ -3,11 +3,10 @@ import type {
   Backend,
   Collection,
   CollectionCategoryNotFound,
+  CollectionDefinition,
   CollectionId,
   CollectionSchemaNotValid,
-  CollectionSettings,
   CollectionSettingsNotValid,
-  CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
@@ -15,7 +14,6 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
-  type Schema,
   utils as schemaUtils,
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
@@ -37,6 +35,7 @@ import Usecase from "../../utils/Usecase.js";
 interface CollectionsCreateOptions {
   dryRun?: boolean;
   collectionId?: CollectionId;
+  // TODO: with Packs, make into an option to skip ref-checking in general
   allowedUnverifiedCollectionIds?: CollectionId[];
 }
 
@@ -44,9 +43,7 @@ export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
 > {
   async exec(
-    settings: CollectionSettings,
-    schema: Schema,
-    versionSettings: CollectionVersionSettings,
+    { settings, schema, versionSettings }: CollectionDefinition,
     options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
