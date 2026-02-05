@@ -43,6 +43,7 @@ import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.j
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
+import type PackNotValid from "./errors/PackNotValid.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
@@ -81,6 +82,8 @@ import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type Message from "./types/Message.js";
 import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
+import type Pack from "./types/Pack.js";
+import type PackInstallationResult from "./types/PackInstallationResult.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
@@ -541,5 +544,30 @@ export default interface Backend {
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
     ): ResultPromise<GlobalSettings, UnexpectedError>;
+  };
+
+  bazaar: {
+    installPack(
+      pack: Pack,
+    ): ResultPromise<
+      PackInstallationResult,
+      | PackNotValid
+      | CollectionSettingsNotValid
+      | CollectionSchemaNotValid
+      | AppNameNotValid
+      | AppNotFound
+      | CollectionNotFound
+      | CollectionCategoryNotFound
+      | ContentBlockingKeysGetterNotValid
+      | ContentSummaryGetterNotValid
+      | ReferencedCollectionsNotFound
+      | ConnectorDoesNotSupportUpSyncing
+      | DocumentContentNotValid
+      | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
+      | UnexpectedError
+    >;
   };
 }

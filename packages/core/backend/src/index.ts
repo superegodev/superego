@@ -66,6 +66,7 @@ export type { default as ExecutingJavascriptFunctionFailed } from "./errors/Exec
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as MakingContentBlockingKeysFailed } from "./errors/MakingContentBlockingKeysFailed.js";
+export type { default as PackNotValid } from "./errors/PackNotValid.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";
 export type { default as ReferencedCollectionsNotFound } from "./errors/ReferencedCollectionsNotFound.js";
@@ -88,6 +89,10 @@ export type { default as ConversationId } from "./ids/ConversationId.js";
 export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
+export type { default as PackId } from "./ids/PackId.js";
+export type { default as ProtoAppId } from "./ids/ProtoAppId.js";
+export type { default as ProtoCollectionId } from "./ids/ProtoCollectionId.js";
+export type { default as ProtoDocumentId } from "./ids/ProtoDocumentId.js";
 
 // Types
 export type { default as App } from "./types/App.js";
@@ -119,6 +124,12 @@ export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
 export type { default as MinimalDocumentVersion } from "./types/MinimalDocumentVersion.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
+export type { default as Pack } from "./types/Pack.js";
+export type { default as PackAppDefinition } from "./types/PackAppDefinition.js";
+export type { default as PackCollectionDefinition } from "./types/PackCollectionDefinition.js";
+export type { default as PackDocumentDefinition } from "./types/PackDocumentDefinition.js";
+export type { default as PackInfo } from "./types/PackInfo.js";
+export type { default as PackInstallationResult } from "./types/PackInstallationResult.js";
 export type { default as Remote } from "./types/Remote.js";
 export type { default as RemoteConverters } from "./types/RemoteConverters.js";
 export type { default as TextSearchResult } from "./types/TextSearchResult.js";

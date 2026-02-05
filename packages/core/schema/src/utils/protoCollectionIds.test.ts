@@ -1,3 +1,4 @@
+import type { CollectionId, ProtoCollectionId } from "@superego/backend";
 import { describe, expect, it } from "vitest";
 import DataType from "../DataType.js";
 import type Schema from "../Schema.js";
@@ -36,7 +37,11 @@ describe("makeProtoCollectionId", () => {
 describe("makeProtoCollectionIdMapping", () => {
   it("creates correct mapping from array of actual IDs", () => {
     // Exercise
-    const actualIds = ["Collection_abc", "Collection_def", "Collection_ghi"];
+    const actualIds: CollectionId[] = [
+      "Collection_abc" as CollectionId,
+      "Collection_def" as CollectionId,
+      "Collection_ghi" as CollectionId,
+    ];
     const mapping = makeProtoCollectionIdMapping(actualIds);
 
     // Verify
@@ -385,7 +390,7 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map<string, string>();
+    const idMapping = new Map<ProtoCollectionId, CollectionId>();
     const result = replaceProtoCollectionIds(schema, idMapping);
 
     // Verify
@@ -395,7 +400,7 @@ describe("replaceProtoCollectionIds", () => {
   it("replaces a single proto collection ID", () => {
     // Exercise
     const protoId = makeProtoCollectionId(0);
-    const actualId = "Collection_abc123";
+    const actualId = "Collection_abc123" as CollectionId;
     const schema: Schema = {
       types: {
         Root: {
@@ -410,7 +415,9 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map<ProtoCollectionId, CollectionId>([
+      [protoId, actualId],
+    ]);
     const result = replaceProtoCollectionIds(schema, idMapping);
 
     // Verify
@@ -429,8 +436,8 @@ describe("replaceProtoCollectionIds", () => {
     // Exercise
     const protoId0 = makeProtoCollectionId(0);
     const protoId1 = makeProtoCollectionId(1);
-    const actualId0 = "Collection_first";
-    const actualId1 = "Collection_second";
+    const actualId0 = "Collection_first" as CollectionId;
+    const actualId1 = "Collection_second" as CollectionId;
     const schema: Schema = {
       types: {
         Root: {
@@ -449,7 +456,7 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map([
+    const idMapping = new Map<ProtoCollectionId, CollectionId>([
       [protoId0, actualId0],
       [protoId1, actualId1],
     ]);
@@ -474,7 +481,7 @@ describe("replaceProtoCollectionIds", () => {
   it("replaces proto collection IDs in nested Structs", () => {
     // Exercise
     const protoId = makeProtoCollectionId(0);
-    const actualId = "Collection_nested";
+    const actualId = "Collection_nested" as CollectionId;
     const schema: Schema = {
       types: {
         Root: {
@@ -494,7 +501,9 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map<ProtoCollectionId, CollectionId>([
+      [protoId, actualId],
+    ]);
     const result = replaceProtoCollectionIds(schema, idMapping);
 
     // Verify
@@ -517,7 +526,7 @@ describe("replaceProtoCollectionIds", () => {
   it("replaces proto collection IDs in List items", () => {
     // Exercise
     const protoId = makeProtoCollectionId(0);
-    const actualId = "Collection_list";
+    const actualId = "Collection_list" as CollectionId;
     const schema: Schema = {
       types: {
         Root: {
@@ -535,7 +544,9 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map<ProtoCollectionId, CollectionId>([
+      [protoId, actualId],
+    ]);
     const result = replaceProtoCollectionIds(schema, idMapping);
 
     // Verify
@@ -570,7 +581,7 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const emptyIdMapping = new Map<string, string>();
+    const emptyIdMapping = new Map<ProtoCollectionId, CollectionId>();
     const result = replaceProtoCollectionIds(schema, emptyIdMapping);
 
     // Verify
@@ -602,7 +613,7 @@ describe("replaceProtoCollectionIds", () => {
       },
       rootType: "Root",
     };
-    const idMapping = new Map<string, string>();
+    const idMapping = new Map<ProtoCollectionId, CollectionId>();
     const result = replaceProtoCollectionIds(schema, idMapping);
 
     // Verify

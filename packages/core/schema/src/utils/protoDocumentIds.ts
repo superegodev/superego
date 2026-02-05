@@ -1,3 +1,4 @@
+import type { DocumentId, ProtoDocumentId } from "@superego/backend";
 import DataType from "../DataType.js";
 import type Schema from "../Schema.js";
 import type { AnyTypeDefinition } from "../typeDefinitions.js";
@@ -6,14 +7,14 @@ import getType from "./getType.js";
 
 const PROTO_DOCUMENT_ID_PREFIX = "ProtoDocument_";
 
-export function makeProtoDocumentId(index: number): string {
-  return `${PROTO_DOCUMENT_ID_PREFIX}${index}`;
+export function makeProtoDocumentId(index: number): ProtoDocumentId {
+  return `${PROTO_DOCUMENT_ID_PREFIX}${index}` as ProtoDocumentId;
 }
 
 export function makeProtoDocumentIdMapping(
-  actualIds: string[],
-): Map<string, string> {
-  const mapping = new Map<string, string>();
+  actualIds: DocumentId[],
+): Map<ProtoDocumentId, DocumentId> {
+  const mapping = new Map<ProtoDocumentId, DocumentId>();
   for (let i = 0; i < actualIds.length; i++) {
     const id = actualIds[i];
     if (id !== undefined) {
@@ -23,8 +24,8 @@ export function makeProtoDocumentIdMapping(
   return mapping;
 }
 
-export function isProtoDocumentId(id: string): boolean {
-  return id.startsWith(PROTO_DOCUMENT_ID_PREFIX);
+export function isProtoDocumentId(id: string): id is ProtoDocumentId {
+  return new RegExp(`^${PROTO_DOCUMENT_ID_PREFIX}\\d+$`).test(id);
 }
 
 export function parseProtoDocumentIndex(id: string): number | null {
@@ -43,8 +44,8 @@ export function parseProtoDocumentIndex(id: string): number | null {
 export function extractProtoDocumentIds(
   schema: Schema,
   content: any,
-): string[] {
-  const protoIds = new Set<string>();
+): ProtoDocumentId[] {
+  const protoIds = new Set<ProtoDocumentId>();
   _extractFromContent(schema, content, getRootType(schema), protoIds);
   return Array.from(protoIds);
 }
@@ -53,7 +54,7 @@ function _extractFromContent(
   schema: Schema,
   value: any,
   typeDefinition: AnyTypeDefinition,
-  protoIds: Set<string>,
+  protoIds: Set<ProtoDocumentId>,
 ): void {
   if (value === null || value === undefined) {
     return;
@@ -110,7 +111,7 @@ function _extractFromContent(
 export function replaceProtoDocumentIds(
   schema: Schema,
   content: any,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoDocumentId, DocumentId>,
 ): any {
   return _replaceInContent(schema, content, getRootType(schema), idMapping);
 }
@@ -119,7 +120,7 @@ function _replaceInContent(
   schema: Schema,
   value: any,
   typeDefinition: AnyTypeDefinition,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoDocumentId, DocumentId>,
 ): any {
   if (value === null || value === undefined) {
     return value;

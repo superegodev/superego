@@ -8,6 +8,7 @@ import type {
   CollectionId,
   CollectionVersionId,
   DocumentId,
+  ProtoDocumentId,
 } from "@superego/backend";
 import { utils as schemaUtils } from "@superego/schema";
 import demoData from "./demoData.js";
@@ -166,7 +167,7 @@ export default async function loadDemoData(
 
       if (protoDocumentRefs.length > 0) {
         // Build a mapping from ProtoDocument_<index> to actual document IDs.
-        const docIdMapping = new Map<string, string>();
+        const docIdMapping = new Map<ProtoDocumentId, DocumentId>();
         for (const ref of protoDocumentRefs) {
           const docIndex = schemaUtils.parseProtoDocumentIndex(ref.documentId);
           if (docIndex !== null) {
@@ -179,7 +180,10 @@ export default async function loadDemoData(
                 documentIdsByCollectionIndex.get(refCollectionIndex);
               const actualDocId = docIds?.[docIndex];
               if (actualDocId !== undefined) {
-                docIdMapping.set(ref.documentId, actualDocId);
+                docIdMapping.set(
+                  ref.documentId as ProtoDocumentId,
+                  actualDocId,
+                );
               }
             }
           }

@@ -1,3 +1,4 @@
+import type { DocumentId, ProtoDocumentId } from "@superego/backend";
 import { describe, expect, it } from "vitest";
 import DataType from "../DataType.js";
 import type Schema from "../Schema.js";
@@ -36,7 +37,11 @@ describe("makeProtoDocumentId", () => {
 describe("makeProtoDocumentIdMapping", () => {
   it("creates correct mapping from array of actual IDs", () => {
     // Exercise
-    const actualIds = ["Document_abc", "Document_def", "Document_ghi"];
+    const actualIds: DocumentId[] = [
+      "Document_abc" as DocumentId,
+      "Document_def" as DocumentId,
+      "Document_ghi" as DocumentId,
+    ];
     const mapping = makeProtoDocumentIdMapping(actualIds);
 
     // Verify
@@ -323,7 +328,7 @@ describe("replaceProtoDocumentIds", () => {
   it("replaces proto document ID with actual ID", () => {
     // Exercise
     const protoId = makeProtoDocumentId(0);
-    const actualId = "Document_abc";
+    const actualId = "Document_abc" as DocumentId;
     const schema: Schema = {
       types: {
         Root: {
@@ -338,7 +343,9 @@ describe("replaceProtoDocumentIds", () => {
     const content = {
       ref: { collectionId: "Collection_123", documentId: protoId },
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map<ProtoDocumentId, DocumentId>([
+      [protoId, actualId],
+    ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
@@ -363,7 +370,7 @@ describe("replaceProtoDocumentIds", () => {
     const content = {
       ref: { collectionId: "Collection_123", documentId: "Document_456" },
     };
-    const idMapping = new Map<string, string>();
+    const idMapping = new Map<ProtoDocumentId, DocumentId>();
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
@@ -373,7 +380,7 @@ describe("replaceProtoDocumentIds", () => {
   it("replaces proto IDs in nested structures", () => {
     // Exercise
     const protoId = makeProtoDocumentId(0);
-    const actualId = "Document_abc";
+    const actualId = "Document_abc" as DocumentId;
     const schema: Schema = {
       types: {
         Root: {
@@ -395,7 +402,9 @@ describe("replaceProtoDocumentIds", () => {
         ref: { collectionId: "Collection_123", documentId: protoId },
       },
     };
-    const idMapping = new Map([[protoId, actualId]]);
+    const idMapping = new Map<ProtoDocumentId, DocumentId>([
+      [protoId, actualId],
+    ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
@@ -430,9 +439,9 @@ describe("replaceProtoDocumentIds", () => {
         { collectionId: "Collection_456", documentId: protoId1 },
       ],
     };
-    const idMapping = new Map([
-      [protoId0, "Document_abc"],
-      [protoId1, "Document_def"],
+    const idMapping = new Map<ProtoDocumentId, DocumentId>([
+      [protoId0, "Document_abc" as DocumentId],
+      [protoId1, "Document_def" as DocumentId],
     ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
@@ -467,7 +476,9 @@ describe("replaceProtoDocumentIds", () => {
         documentId: "Document_789",
       },
     };
-    const idMapping = new Map([[protoId, "Document_abc"]]);
+    const idMapping = new Map<ProtoDocumentId, DocumentId>([
+      [protoId, "Document_abc" as DocumentId],
+    ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
@@ -495,7 +506,7 @@ describe("replaceProtoDocumentIds", () => {
       rootType: "Root",
     };
     const content = { ref: null };
-    const idMapping = new Map<string, string>();
+    const idMapping = new Map<ProtoDocumentId, DocumentId>();
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify
@@ -521,7 +532,9 @@ describe("replaceProtoDocumentIds", () => {
       name: "test",
       ref: { collectionId: "Collection_123", documentId: protoId },
     };
-    const idMapping = new Map([[protoId, "Document_abc"]]);
+    const idMapping = new Map<ProtoDocumentId, DocumentId>([
+      [protoId, "Document_abc" as DocumentId],
+    ]);
     const result = replaceProtoDocumentIds(schema, content, idMapping);
 
     // Verify

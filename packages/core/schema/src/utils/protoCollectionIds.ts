@@ -1,17 +1,18 @@
+import type { CollectionId, ProtoCollectionId } from "@superego/backend";
 import DataType from "../DataType.js";
 import type Schema from "../Schema.js";
 import type { AnyTypeDefinition } from "../typeDefinitions.js";
 
 const PROTO_COLLECTION_ID_PREFIX = "ProtoCollection_";
 
-export function makeProtoCollectionId(index: number): string {
-  return `${PROTO_COLLECTION_ID_PREFIX}${index}`;
+export function makeProtoCollectionId(index: number): ProtoCollectionId {
+  return `${PROTO_COLLECTION_ID_PREFIX}${index}` as ProtoCollectionId;
 }
 
 export function makeProtoCollectionIdMapping(
-  actualIds: string[],
-): Map<string, string> {
-  const mapping = new Map<string, string>();
+  actualIds: CollectionId[],
+): Map<ProtoCollectionId, CollectionId> {
+  const mapping = new Map<ProtoCollectionId, CollectionId>();
   for (let i = 0; i < actualIds.length; i++) {
     const id = actualIds[i];
     if (id !== undefined) {
@@ -21,8 +22,8 @@ export function makeProtoCollectionIdMapping(
   return mapping;
 }
 
-export function isProtoCollectionId(id: string): boolean {
-  return id.startsWith(PROTO_COLLECTION_ID_PREFIX);
+export function isProtoCollectionId(id: string): id is ProtoCollectionId {
+  return new RegExp(`^${PROTO_COLLECTION_ID_PREFIX}\\d+$`).test(id);
 }
 
 export function parseProtoCollectionIndex(id: string): number | null {
@@ -38,8 +39,8 @@ export function parseProtoCollectionIndex(id: string): number | null {
  * Extracts all proto collection ID placeholders from DocumentRef type
  * definitions in the given schema.
  */
-export function extractProtoCollectionIds(schema: Schema): string[] {
-  const protoIds = new Set<string>();
+export function extractProtoCollectionIds(schema: Schema): ProtoCollectionId[] {
+  const protoIds = new Set<ProtoCollectionId>();
 
   for (const typeDefinition of Object.values(schema.types)) {
     _extractFromTypeDefinition(schema, typeDefinition, protoIds);
@@ -51,7 +52,7 @@ export function extractProtoCollectionIds(schema: Schema): string[] {
 function _extractFromTypeDefinition(
   schema: Schema,
   typeDefinition: AnyTypeDefinition,
-  protoIds: Set<string>,
+  protoIds: Set<ProtoCollectionId>,
 ): void {
   if ("ref" in typeDefinition) {
     const referencedType = schema.types[typeDefinition.ref];
@@ -91,7 +92,7 @@ function _extractFromTypeDefinition(
  */
 export function replaceProtoCollectionIds(
   schema: Schema,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoCollectionId, CollectionId>,
 ): Schema {
   return {
     ...schema,
@@ -106,7 +107,7 @@ export function replaceProtoCollectionIds(
 
 function _replaceInTypeDefinition(
   typeDefinition: AnyTypeDefinition,
-  idMapping: Map<string, string>,
+  idMapping: Map<ProtoCollectionId, CollectionId>,
 ): AnyTypeDefinition {
   if ("ref" in typeDefinition) {
     return typeDefinition;

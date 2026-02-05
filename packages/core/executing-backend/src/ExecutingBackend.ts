@@ -27,6 +27,7 @@ import AssistantsSearchConversations from "./usecases/assistants/SearchConversat
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import BackgroundJobsGet from "./usecases/background-jobs/Get.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
+import BazaarInstallPack from "./usecases/bazaar/InstallPack.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -70,6 +71,7 @@ export default class ExecutingBackend implements Backend {
   apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+  bazaar: Backend["bazaar"];
 
   private backgroundJobExecutor: BackgroundJobExecutor;
 
@@ -177,6 +179,10 @@ export default class ExecutingBackend implements Backend {
     this.globalSettings = {
       get: this.makeUsecase(GlobalSettingsGet, false),
       update: this.makeUsecase(GlobalSettingsUpdate, true),
+    };
+
+    this.bazaar = {
+      installPack: this.makeUsecase(BazaarInstallPack, true),
     };
 
     this.backgroundJobExecutor = new BackgroundJobExecutor(

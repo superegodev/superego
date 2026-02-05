@@ -16,6 +16,7 @@ export default class BackendIPCProxyClient implements Backend {
   apps: Backend["apps"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+  bazaar: Backend["bazaar"];
 
   constructor() {
     this.collectionCategories = {
@@ -107,6 +108,10 @@ export default class BackendIPCProxyClient implements Backend {
     this.globalSettings = {
       get: this.makeMainIpcCall("globalSettings.get"),
       update: this.makeMainIpcCall("globalSettings.update"),
+    };
+
+    this.bazaar = {
+      installPack: this.makeMainIpcCall("bazaar.installPack"),
     };
   }
 

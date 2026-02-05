@@ -16,6 +16,9 @@ export default {
     app: makeGenerateId("App"),
     appVersion: makeGenerateId("AppVersion"),
     backgroundJob: makeGenerateId("BackgroundJob"),
+    protoCollection: makeGenerateProtoId("ProtoCollection"),
+    protoDocument: makeGenerateProtoId("ProtoDocument"),
+    protoApp: makeGenerateProtoId("ProtoApp"),
   },
 
   is: {
@@ -29,6 +32,10 @@ export default {
     app: makeIsId("App"),
     appVersion: makeIsId("AppVersion"),
     backgroundJob: makeIsId("BackgroundJob"),
+    pack: makeIsPackId(),
+    protoCollection: makeIsProtoId("ProtoCollection"),
+    protoDocument: makeIsProtoId("ProtoDocument"),
+    protoApp: makeIsProtoId("ProtoApp"),
   },
 };
 
@@ -41,4 +48,21 @@ function makeIsId<Prefix extends string>(prefix: Prefix) {
   return (value: unknown): value is `${Prefix}_${string}` =>
     typeof value === "string" &&
     new RegExp(`^${prefix}_[${base58Alphabet}]{21}$`).test(value);
+}
+
+function makeGenerateProtoId<Prefix extends string>(prefix: Prefix) {
+  return (index: number): `${Prefix}_${number}` => `${prefix}_${index}`;
+}
+
+function makeIsProtoId<Prefix extends string>(prefix: Prefix) {
+  return (value: unknown): value is `${Prefix}_${number}` =>
+    typeof value === "string" && new RegExp(`^${prefix}_\\d+$`).test(value);
+}
+
+/**
+ * Pack IDs use reverse domain name notation: Pack_com.example.mypack
+ */
+function makeIsPackId() {
+  return (value: unknown): value is `Pack_${string}` =>
+    typeof value === "string" && /^Pack_[a-z0-9]+(\.[a-z0-9]+)+$/.test(value);
 }
