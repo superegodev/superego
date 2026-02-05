@@ -48,6 +48,20 @@ export const StringField = {
       },
     }),
   },
+
+  Markdown: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+
+    editor: style({
+      minHeight: "150px",
+      borderRadius: vars.borders.radius.md,
+      overflow: "hidden",
+    }),
+  },
 };
 
 export const FileField = {
