@@ -665,8 +665,14 @@
   "FormattingToolbar.tsx_Dkkmwm": {
     "defaultMessage": "Bold"
   },
+  "FormattingToolbar.tsx_HpWSb4": {
+    "defaultMessage": "Headings"
+  },
   "FormattingToolbar.tsx_Ig/eGK": {
     "defaultMessage": "Alignment"
+  },
+  "FormattingToolbar.tsx_JBWS0c": {
+    "defaultMessage": "Link"
   },
   "FormattingToolbar.tsx_JkS37H": {
     "defaultMessage": "Undo"
@@ -683,6 +689,9 @@
   "FormattingToolbar.tsx_SOtMvF": {
     "defaultMessage": "Underline"
   },
+  "FormattingToolbar.tsx_Up5U7K": {
+    "defaultMessage": "Block"
+  },
   "FormattingToolbar.tsx_Zqekct": {
     "defaultMessage": "Heading 2"
   },
@@ -698,11 +707,17 @@
   "FormattingToolbar.tsx_g2V+es": {
     "defaultMessage": "Italic"
   },
+  "FormattingToolbar.tsx_gl1NeW": {
+    "defaultMessage": "Lists"
+  },
   "FormattingToolbar.tsx_h2vipu": {
     "defaultMessage": "Code"
   },
   "FormattingToolbar.tsx_jWDuFc": {
     "defaultMessage": "Align left"
+  },
+  "FormattingToolbar.tsx_lbsCQS": {
+    "defaultMessage": "Numbered list"
   },
   "FormattingToolbar.tsx_rDSlqC": {
     "defaultMessage": "Subscript"

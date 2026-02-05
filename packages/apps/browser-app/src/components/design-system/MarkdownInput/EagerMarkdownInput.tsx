@@ -1,7 +1,8 @@
-import type { OverTypeInstance } from "overtype";
 import OverType from "overtype";
 import { useEffect, useRef, useState } from "react";
+import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
+import type OverTypeEditor from "./OverTypeEditor.js";
 import type Props from "./Props.js";
 
 export default function EagerMarkdownInput({
@@ -14,8 +15,8 @@ export default function EagerMarkdownInput({
   ref,
 }: Props) {
   const [hasFocus, setHasFocus] = useState(false);
+  const [editor, setEditor] = useState<OverTypeEditor | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const editorRef = useRef<OverTypeInstance | null>(null);
   const propsRef = useRef({ onChange, value, placeholder });
   propsRef.current = { onChange, value, placeholder };
 
@@ -28,32 +29,33 @@ export default function EagerMarkdownInput({
         propsRef.current.onChange(newValue);
       },
       autoResize: true,
-      toolbar: true,
+      toolbar: false,
       smartLists: true,
       placeholder: propsRef.current.placeholder ?? "",
     });
-    editorRef.current = instance ?? null;
+    const editorInstance = (instance ?? null) as OverTypeEditor | null;
+    setEditor(editorInstance);
 
     return () => {
-      editorRef.current?.destroy();
-      editorRef.current = null;
+      editorInstance?.destroy();
+      setEditor(null);
     };
   }, []);
 
   useEffect(() => {
-    if (editorRef.current && (value ?? "") !== editorRef.current.getValue()) {
-      editorRef.current.setValue(value ?? "");
+    if (editor && (value ?? "") !== editor.getValue()) {
+      editor.setValue(value ?? "");
     }
-  }, [value]);
+  }, [editor, value]);
 
   useEffect(() => {
-    if (!editorRef.current) return;
+    if (!editor) return;
     if (isReadOnly) {
-      editorRef.current.showPreviewMode();
+      editor.showPreviewMode();
     } else {
-      editorRef.current.showNormalEditMode();
+      editor.showNormalEditMode();
     }
-  }, [isReadOnly]);
+  }, [editor, isReadOnly]);
 
   const rootElementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -61,12 +63,12 @@ export default function EagerMarkdownInput({
       ref({
         focus: () => {
           if (!rootElementRef.current?.contains(document.activeElement)) {
-            editorRef.current?.focus();
+            editor?.focus();
           }
         },
       });
     }
-  }, [ref]);
+  }, [editor, ref]);
 
   return (
     <div
@@ -86,6 +88,7 @@ export default function EagerMarkdownInput({
       data-read-only={isReadOnly}
       className={cs.MarkdownInput.root}
     >
+      {!isReadOnly && editor ? <FormattingToolbar editor={editor} /> : null}
       <div ref={containerRef} />
     </div>
   );

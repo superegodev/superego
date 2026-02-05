@@ -1644,10 +1644,22 @@
       "value": "Bold"
     }
   ],
+  "FormattingToolbar.tsx_HpWSb4": [
+    {
+      "type": 0,
+      "value": "Headings"
+    }
+  ],
   "FormattingToolbar.tsx_Ig/eGK": [
     {
       "type": 0,
       "value": "Alignment"
+    }
+  ],
+  "FormattingToolbar.tsx_JBWS0c": [
+    {
+      "type": 0,
+      "value": "Link"
     }
   ],
   "FormattingToolbar.tsx_JkS37H": [
@@ -1680,6 +1692,12 @@
       "value": "Underline"
     }
   ],
+  "FormattingToolbar.tsx_Up5U7K": [
+    {
+      "type": 0,
+      "value": "Block"
+    }
+  ],
   "FormattingToolbar.tsx_Zqekct": [
     {
       "type": 0,
@@ -1710,6 +1728,12 @@
       "value": "Italic"
     }
   ],
+  "FormattingToolbar.tsx_gl1NeW": [
+    {
+      "type": 0,
+      "value": "Lists"
+    }
+  ],
   "FormattingToolbar.tsx_h2vipu": [
     {
       "type": 0,
@@ -1720,6 +1744,12 @@
     {
       "type": 0,
       "value": "Align left"
+    }
+  ],
+  "FormattingToolbar.tsx_lbsCQS": [
+    {
+      "type": 0,
+      "value": "Numbered list"
     }
   ],
   "FormattingToolbar.tsx_rDSlqC": [
