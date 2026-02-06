@@ -2,11 +2,11 @@ import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
 import type ProtoCollectionCategoryId from "../ids/ProtoCollectionCategoryId.js";
 
 export default interface CollectionCategoryDefinition<
-  IsPackDefinition extends boolean = false,
+  AllowProtoCollectionCategoryId extends boolean = false,
 > {
   name: string;
   icon: string | null;
-  parentId: IsPackDefinition extends true
+  parentId: AllowProtoCollectionCategoryId extends true
     ? ProtoCollectionCategoryId | CollectionCategoryId | null
     : CollectionCategoryId | null;
 }

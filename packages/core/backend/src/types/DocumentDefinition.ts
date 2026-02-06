@@ -2,9 +2,9 @@ import type CollectionId from "../ids/CollectionId.js";
 import type ProtoCollectionId from "../ids/ProtoCollectionId.js";
 
 export default interface DocumentDefinition<
-  IsPackDefinition extends boolean = false,
+  AllowProtoCollectionIds extends boolean = false,
 > {
-  collectionId: IsPackDefinition extends true
+  collectionId: AllowProtoCollectionIds extends true
     ? ProtoCollectionId | CollectionId
     : CollectionId;
   content: any;

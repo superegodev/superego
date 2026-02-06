@@ -56,8 +56,7 @@ export default class DocumentsCreate extends Usecase<
     definition: DocumentDefinition,
     options?: {
       documentId?: DocumentId;
-      // TODO: with Packs, make into an option to skip ref-checking in general
-      allowedUnverifiedDocumentIds?: DocumentId[];
+      skipReferenceCheckForDocumentIds?: DocumentId[];
     },
   ): ExecReturnValue;
   async exec(
@@ -67,7 +66,7 @@ export default class DocumentsCreate extends Usecase<
           createdBy: DocumentVersionCreator.Assistant;
           conversationId: ConversationId;
           documentId?: DocumentId;
-          allowedUnverifiedDocumentIds?: DocumentId[];
+          skipReferenceCheckForDocumentIds?: DocumentId[];
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
@@ -89,7 +88,7 @@ export default class DocumentsCreate extends Usecase<
       remoteUrl?: string | null;
       remoteDocument?: any;
       documentId?: DocumentId;
-      allowedUnverifiedDocumentIds?: DocumentId[];
+      skipReferenceCheckForDocumentIds?: DocumentId[];
     } = {},
   ): ExecReturnValue {
     const { collectionId, content } = definition;
@@ -145,13 +144,10 @@ export default class DocumentsCreate extends Usecase<
       latestCollectionVersion.schema,
       contentValidationResult.output,
     );
-    const allowedUnverifiedDocumentIds = new Set(
-      options.allowedUnverifiedDocumentIds ?? [],
-    );
     const notFoundDocumentRefs: DocumentRef[] = [];
     for (const referencedDocument of referencedDocuments) {
       if (
-        !allowedUnverifiedDocumentIds.has(
+        !options.skipReferenceCheckForDocumentIds?.includes(
           referencedDocument.documentId as DocumentId,
         ) &&
         !(await this.repos.document.exists(

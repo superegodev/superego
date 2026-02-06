@@ -3,6 +3,7 @@ import type {
   CollectionCategory,
   CollectionCategoryDefinition,
   CollectionCategoryIconNotValid,
+  CollectionCategoryId,
   CollectionCategoryNameNotValid,
   ParentCollectionCategoryNotFound,
   UnexpectedError,
@@ -21,14 +22,17 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
+interface CollectionCategoriesCreateOptions {
+  collectionCategoryId?: CollectionCategoryId;
+  skipReferenceCheckForCollectionCategoryIds?: CollectionCategoryId[];
+}
+
 export default class CollectionCategoriesCreate extends Usecase<
   Backend["collectionCategories"]["create"]
 > {
   async exec(
     definition: CollectionCategoryDefinition,
-    // TODO: with Packs, add options to:
-    // - pass in collectionCategoryId
-    // - skip ref-checking
+    options: CollectionCategoriesCreateOptions = {},
   ): ResultPromise<
     CollectionCategory,
     | CollectionCategoryNameNotValid
@@ -66,6 +70,9 @@ export default class CollectionCategoriesCreate extends Usecase<
 
     if (
       definition.parentId &&
+      !options.skipReferenceCheckForCollectionCategoryIds?.includes(
+        definition.parentId,
+      ) &&
       !(await this.repos.collectionCategory.exists(definition.parentId))
     ) {
       return makeUnsuccessfulResult(
@@ -76,7 +83,7 @@ export default class CollectionCategoriesCreate extends Usecase<
     }
 
     const collectionCategory: CollectionCategoryEntity = {
-      id: Id.generate.collectionCategory(),
+      id: options.collectionCategoryId ?? Id.generate.collectionCategory(),
       name: nameValidationResult.output,
       icon: iconValidationResult.output,
       parentId: definition.parentId,

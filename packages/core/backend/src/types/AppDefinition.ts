@@ -4,11 +4,11 @@ import type ProtoCollectionId from "../ids/ProtoCollectionId.js";
 import type AppVersion from "./AppVersion.js";
 
 export default interface AppDefinition<
-  IsPackDefinition extends boolean = false,
+  AllowProtoCollectionIds extends boolean = false,
 > {
   type: AppType;
   name: string;
-  targetCollectionIds: (IsPackDefinition extends true
+  targetCollectionIds: (AllowProtoCollectionIds extends true
     ? ProtoCollectionId | CollectionId
     : CollectionId)[];
   files: AppVersion["files"];

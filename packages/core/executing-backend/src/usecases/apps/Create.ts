@@ -1,6 +1,7 @@
 import type {
   App,
   AppDefinition,
+  AppId,
   AppNameNotValid,
   Backend,
   CollectionNotFound,
@@ -22,12 +23,14 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
+interface AppsCreateOptions {
+  appId?: AppId;
+}
+
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,
-    // TODO: with Packs, add options to:
-    // - pass in appId
-    // - skip ref-checking
+    options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
     AppNameNotValid | CollectionNotFound | UnexpectedError
@@ -64,7 +67,7 @@ export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
 
     const now = new Date();
     const app: AppEntity = {
-      id: Id.generate.app(),
+      id: options.appId ?? Id.generate.app(),
       type: type,
       name: nameValidationResult.output,
       createdAt: now,

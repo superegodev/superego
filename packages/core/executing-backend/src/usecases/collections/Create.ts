@@ -1,4 +1,5 @@
 import type {
+  AppId,
   AppNotFound,
   Backend,
   Collection,
@@ -35,8 +36,8 @@ import Usecase from "../../utils/Usecase.js";
 interface CollectionsCreateOptions {
   dryRun?: boolean;
   collectionId?: CollectionId;
-  // TODO: with Packs, make into an option to skip ref-checking in general
-  allowedUnverifiedCollectionIds?: CollectionId[];
+  skipReferenceCheckForCollectionIds?: CollectionId[];
+  skipReferenceCheckForAppIds?: AppId[];
 }
 
 export default class CollectionsCreate extends Usecase<
@@ -95,6 +96,9 @@ export default class CollectionsCreate extends Usecase<
 
     if (
       settings.defaultCollectionViewAppId &&
+      !options.skipReferenceCheckForAppIds?.includes(
+        settings.defaultCollectionViewAppId,
+      ) &&
       !(await this.repos.app.exists(settings.defaultCollectionViewAppId))
     ) {
       return makeUnsuccessfulResult(
@@ -128,13 +132,10 @@ export default class CollectionsCreate extends Usecase<
 
     const referencedCollectionIds =
       schemaUtils.extractReferencedCollectionIds(resolvedSchema);
-    const allowedUnverifiedCollectionIds = new Set(
-      options.allowedUnverifiedCollectionIds ?? [],
-    );
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       if (
-        !allowedUnverifiedCollectionIds.has(
+        !options.skipReferenceCheckForCollectionIds?.includes(
           referencedCollectionId as CollectionId,
         ) &&
         !(await this.repos.collection.exists(

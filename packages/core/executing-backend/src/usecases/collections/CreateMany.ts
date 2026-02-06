@@ -1,9 +1,11 @@
 import type {
+  AppId,
   AppNotFound,
   Backend,
   Collection,
   CollectionCategoryNotFound,
   CollectionDefinition,
+  CollectionId,
   CollectionSchemaNotValid,
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
@@ -22,15 +24,14 @@ import {
   extractProtoCollectionIds,
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
-} from "../../utils/ProtoCollectionIdUtils.js";
+} from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
-  // TODO: with Packs, we probably need to add options to
-  // - pass collectionIds
-  // - skip ref-checking
   dryRun?: boolean;
+  collectionIds?: CollectionId[];
+  skipReferenceCheckForAppIds?: AppId[];
 }
 
 export default class CollectionsCreateMany extends Usecase<
@@ -50,7 +51,8 @@ export default class CollectionsCreateMany extends Usecase<
     | ContentSummaryGetterNotValid
     | UnexpectedError
   > {
-    const collectionIds = definitions.map(() => Id.generate.collection());
+    const collectionIds =
+      options.collectionIds ?? definitions.map(() => Id.generate.collection());
     const idMapping = makeProtoCollectionIdMapping(collectionIds);
 
     const collectionsCreate = this.sub(CollectionsCreate);
@@ -79,7 +81,8 @@ export default class CollectionsCreateMany extends Usecase<
         {
           dryRun: options.dryRun,
           collectionId: collectionId,
-          allowedUnverifiedCollectionIds: collectionIds,
+          skipReferenceCheckForCollectionIds: collectionIds,
+          skipReferenceCheckForAppIds: options.skipReferenceCheckForAppIds,
         },
       );
 

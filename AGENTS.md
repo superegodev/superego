@@ -12,7 +12,13 @@
 
 ## Testing
 
-- Always add unit or e2e tests for the changes you make.
+- What to test and how:
+  - For focused utilities -> add unit tests.
+  - For frontend components -> don't add tests at all.
+  - For usecases -> add e2e tests to the relevant suite in
+    `packages/tests/backend-e2e-tests/src/suites`.
+  - For data repositories -> add unit tests to the relevant suite in
+    `packages/core/executing-backend/src/requirements/data-repositories-tests/suites`.
 - Follow the existing patterns and styling conventions when writing tests. In
   particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
   (optional), `// Exercise`, and `// Verify` to visually separate the "phases"

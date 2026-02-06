@@ -42,6 +42,7 @@ import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.j
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
+import type PackNotValid from "./errors/PackNotValid.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
@@ -59,6 +60,7 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
 import type AppVersion from "./types/AppVersion.js";
@@ -82,8 +84,10 @@ import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
+import type LitePack from "./types/LitePack.js";
 import type Message from "./types/Message.js";
 import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
+import type Pack from "./types/Pack.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
@@ -516,8 +520,44 @@ export default interface Backend {
     list(): ResultPromise<App[], UnexpectedError>;
   };
 
+  bazaar: {
+    listPacks(): ResultPromise<LitePack[], UnexpectedError>;
+
+    getPack(id: PackId): ResultPromise<Pack, UnexpectedError>;
+
+    installPack(pack: Pack): ResultPromise<
+      {
+        collectionCategories: CollectionCategory[];
+        collections: Collection[];
+        apps: App[];
+        documents: Document[];
+      },
+      | PackNotValid
+      | CollectionCategoryNameNotValid
+      | CollectionCategoryIconNotValid
+      | ParentCollectionCategoryNotFound
+      | CollectionSettingsNotValid
+      | CollectionCategoryNotFound
+      | AppNotFound
+      | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
+      | ContentBlockingKeysGetterNotValid
+      | ContentSummaryGetterNotValid
+      | AppNameNotValid
+      | CollectionNotFound
+      | DocumentContentNotValid
+      | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
+      | ConnectorDoesNotSupportUpSyncing
+      | UnexpectedError
+    >;
+  };
+
   backgroundJobs: {
     list(): ResultPromise<LiteBackgroundJob[], UnexpectedError>;
+
     get(
       id: BackgroundJobId,
     ): ResultPromise<BackgroundJob, BackgroundJobNotFound | UnexpectedError>;

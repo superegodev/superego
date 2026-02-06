@@ -6,15 +6,16 @@ import type ProtoCollectionCategoryId from "../ids/ProtoCollectionCategoryId.js"
 import type CollectionVersionSettings from "./CollectionVersionSettings.js";
 
 export default interface CollectionDefinition<
-  IsPackDefinition extends boolean = false,
+  AllowProtoCollectionCategoryIds extends boolean = false,
+  AllowProtoAppIds extends boolean = false,
 > {
   settings: {
     name: string;
     icon: string | null;
-    collectionCategoryId: IsPackDefinition extends true
+    collectionCategoryId: AllowProtoCollectionCategoryIds extends true
       ? ProtoCollectionCategoryId | CollectionCategoryId | null
       : CollectionCategoryId | null;
-    defaultCollectionViewAppId: IsPackDefinition extends true
+    defaultCollectionViewAppId: AllowProtoAppIds extends true
       ? ProtoAppId | AppId | null
       : AppId | null;
     description: string | null;

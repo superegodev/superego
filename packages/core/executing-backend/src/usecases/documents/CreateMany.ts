@@ -25,14 +25,15 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import {
   extractProtoDocumentIds,
   makeProtoDocumentIdMapping,
-  replaceProtoDocumentIds,
-} from "../../utils/ProtoDocumentIdUtils.js";
+  replaceProtoDocumentIdsAndProtoCollectionIds,
+} from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "./Create.js";
 
 interface DocumentsCreateManyOptions {
   createdBy?: DocumentVersionCreator.Assistant;
   conversationId?: ConversationId;
+  documentIds?: DocumentId[];
 }
 
 export default class DocumentsCreateMany extends Usecase<
@@ -52,7 +53,8 @@ export default class DocumentsCreateMany extends Usecase<
     | DuplicateDocumentDetected
     | UnexpectedError
   > {
-    const documentIds = definitions.map(() => Id.generate.document());
+    const documentIds =
+      options?.documentIds ?? definitions.map(() => Id.generate.document());
     const idMapping = makeProtoDocumentIdMapping(documentIds);
 
     const documentsCreate = this.sub(DocumentsCreate);
@@ -95,7 +97,7 @@ export default class DocumentsCreateMany extends Usecase<
         );
       }
 
-      const resolvedContent = replaceProtoDocumentIds(
+      const resolvedContent = replaceProtoDocumentIdsAndProtoCollectionIds(
         latestCollectionVersion.schema,
         content,
         idMapping,
@@ -109,7 +111,7 @@ export default class DocumentsCreateMany extends Usecase<
         },
         {
           documentId: documentId as DocumentId,
-          allowedUnverifiedDocumentIds: documentIds as DocumentId[],
+          skipReferenceCheckForDocumentIds: documentIds,
           ...(options?.createdBy && options?.conversationId
             ? {
                 createdBy: options.createdBy,
