@@ -90,7 +90,7 @@ export default class DocumentsCreate extends Usecase<
       remoteDocument?: any;
       documentId?: DocumentId;
       allowedUnverifiedDocumentIds?: DocumentId[];
-    },
+    } = {},
   ): ExecReturnValue {
     const { collectionId, content } = definition;
     const { skipDuplicateCheck } = definition.options ?? {
