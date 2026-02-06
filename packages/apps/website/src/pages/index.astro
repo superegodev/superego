@@ -1,22 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "@astrojs/starlight/components";
+import getStarCount from "../utils/getStarCount";
 import logo from "../assets/logo.svg";
 
-let starsCount = null;
-
-try {
-  const githubResponse = await fetch(
-    "https://api.github.com/repos/superegodev/superego",
-  );
-  const githubData = await githubResponse.json();
-  starsCount =
-    typeof githubData?.stargazers_count === "number"
-      ? githubData.stargazers_count
-      : null;
-} catch {
-  starsCount = null;
-}
+const starsCount = await getStarCount();
 const formattedStars =
   typeof starsCount === "number"
     ? new Intl.NumberFormat("en-US").format(starsCount)
@@ -92,13 +80,16 @@ const formattedStars =
               Get the alpha
             </a>
           </div>
-          <div class="stats" aria-label="Superego stats and positioning">
-            <span class="stat-item">
-              <Icon name="github" class="icon stat-icon" />
+          <div
+            class="highlights"
+            aria-label="Superego highlights and positioning"
+          >
+            <span class="highlight-item">
+              <Icon name="github" class="icon highlight-icon" />
               {formattedStars} stars
             </span>
-            <span class="stat-item">Local-first</span>
-            <span class="stat-item">Open Source (AGPL-3.0)</span>
+            <span class="highlight-item">Local-first</span>
+            <span class="highlight-item">AGPL-3.0</span>
           </div>
           <span class="scroll-hint">&raquo;</span>
         </section>
@@ -202,7 +193,7 @@ const formattedStars =
 
   .sticky-header {
     position: fixed;
-    top: 0;
+    inset-block-start: 0;
     inset-inline: 0;
     z-index: 20;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
@@ -407,7 +398,7 @@ const formattedStars =
     padding: 0.7rem 1.4rem;
   }
 
-  .stats {
+  .highlights {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
@@ -415,11 +406,12 @@ const formattedStars =
     flex-wrap: wrap;
     justify-content: center;
     margin-block-end: 1.5rem;
+    width: min(100%, 520px);
     color: var(--subtitle);
     font-size: 1rem;
   }
 
-  .stat-item {
+  .highlight-item {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -429,14 +421,14 @@ const formattedStars =
     padding-inline: 0.5rem;
   }
 
-  .stat-item:not(:last-child)::after {
+  .highlight-item:not(:last-child)::after {
     content: "|";
     position: absolute;
-    right: -0.5rem;
+    inset-inline-end: -0.5rem;
     color: var(--subtitle);
   }
 
-  .stat-icon {
+  .highlight-icon {
     width: 1rem;
     height: 1rem;
   }
@@ -461,10 +453,13 @@ const formattedStars =
   }
 
   .explainer-title {
-    margin-block: 0 3rem;
+    margin-block: 0 1.5rem;
     font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25rem;
   }
 
   .explainer p {
