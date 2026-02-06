@@ -6,23 +6,34 @@
 
 # Superego: Your Digital Freedom
 
-Superego is an **open-source personal database** where you can store _anything_
-you want about your life. Notes, tasks, meals, expenses, health logs... Whatever
-you want—you define what goes in.
+Superego is an **open-source _personal_ database** where you can store
+_anything_ you want about your life.
 
-Your data is stored **locally**, in a SQLite file you own and that you can back
-up and sync with Dropbox, Google Drive, or whichever service you already use.
-**No accounts, no middlemen.**
+Your data is stored **locally**, in files you can back up and sync with Dropbox,
+Google Drive, or any service you already use. **No accounts, no middlemen.**
 
-On top of this, Superego gives you:
+But that's not all! Superego is also:
 
-1. A **platform for building your own personal apps**.
-2. An **AI assistant** to help you work with your data.
+1. A **platform for** building your own personal **apps**.
+2. An **AI assistant** for your data.
 
 [Try the demo @ demo.superego.dev](https://demo.superego.dev).
 
 ![Demo Screenshots](./docs/images/demo-screenshots-light.png#gh-light-mode-only)
 ![Demo Screenshots](./docs/images/demo-screenshots-dark.png#gh-dark-mode-only)
+
+## Why
+
+I've had it with apps that hold my data hostage, make me jump through hoops to
+get it, and sell it to who knows who.
+
+I've had it with apps that remove features, pivot, and go on incredible
+journeys.
+
+I've had it with AIs giving me canned responses.
+
+I want my data **at my fingertips**, apps that **do what I need**, and an AI
+that **knows me**.
 
 ## License
 
