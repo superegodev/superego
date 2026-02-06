@@ -18,5 +18,6 @@ test("landing page copy and links are present", async () => {
   assert.match(contents, /# What/);
   assert.match(contents, /# Why/);
   assert.match(contents, /PUBLIC_DISCORD_INVITE_URL/);
-  assert.match(contents, /\$n stars/);
+  assert.match(contents, /stars/);
+  assert.doesNotMatch(contents, /\$n stars/);
 });

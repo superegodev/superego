@@ -2,6 +2,25 @@
 import { Image } from "astro:assets";
 import { Icon } from "@astrojs/starlight/components";
 import logo from "../assets/logo.svg";
+
+let starsCount = null;
+
+try {
+  const githubResponse = await fetch(
+    "https://api.github.com/repos/superegodev/superego",
+  );
+  const githubData = await githubResponse.json();
+  starsCount =
+    typeof githubData?.stargazers_count === "number"
+      ? githubData.stargazers_count
+      : null;
+} catch {
+  starsCount = null;
+}
+const formattedStars =
+  typeof starsCount === "number"
+    ? new Intl.NumberFormat("en-US").format(starsCount)
+    : "—";
 ---
 
 <html lang="en">
@@ -76,12 +95,10 @@ import logo from "../assets/logo.svg";
           <div class="stats" aria-label="Superego stats and positioning">
             <span class="stat-item">
               <Icon name="github" class="icon stat-icon" />
-              $n stars
+              {formattedStars} stars
             </span>
-            <span aria-hidden="true">|</span>
-            <span>Local-first</span>
-            <span aria-hidden="true">|</span>
-            <span>Open Source (AGPL-3.0)</span>
+            <span class="stat-item">Local-first</span>
+            <span class="stat-item">Open Source (AGPL-3.0)</span>
           </div>
           <span class="scroll-hint">&raquo;</span>
         </section>
@@ -388,7 +405,8 @@ import logo from "../assets/logo.svg";
   }
 
   .stats {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
@@ -402,6 +420,17 @@ import logo from "../assets/logo.svg";
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding-inline: 0.5rem;
+  }
+
+  .stat-item:not(:last-child)::after {
+    content: "|";
+    position: absolute;
+    right: -0.5rem;
+    color: var(--subtitle);
   }
 
   .stat-icon {
