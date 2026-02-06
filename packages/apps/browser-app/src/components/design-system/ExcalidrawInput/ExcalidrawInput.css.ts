@@ -9,7 +9,7 @@ export const ExcalidrawInput = {
     borderRadius: vars.borders.radius.md,
     overflow: "hidden",
     selectors: {
-      "&[data-invalid=\"true\"]": {
+      '&[data-invalid="true"]': {
         borderColor: vars.colors.semantic.error.border,
       },
       "& .excalidraw": {

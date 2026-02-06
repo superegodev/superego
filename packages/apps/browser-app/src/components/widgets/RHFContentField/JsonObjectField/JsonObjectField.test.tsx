@@ -1,6 +1,6 @@
 import { DataType, FormatId } from "@superego/schema";
-import { describe, expect, it, vi } from "vitest";
 import { useForm } from "react-hook-form";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "../../../../test-utils.js";
 import JsonObjectField from "./JsonObjectField.js";
 

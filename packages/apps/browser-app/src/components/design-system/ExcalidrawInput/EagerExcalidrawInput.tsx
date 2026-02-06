@@ -2,8 +2,8 @@ import "@excalidraw/excalidraw/index.css";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import { useCallback, useEffect, useRef } from "react";
 import forms from "../../../business-logic/forms/forms.js";
-import type Props from "./Props.js";
 import * as cs from "./ExcalidrawInput.css.js";
+import type Props from "./Props.js";
 
 export default function EagerExcalidrawInput({
   value,
