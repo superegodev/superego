@@ -63,6 +63,7 @@ jobs:
   build-deploy-website:
     needs: qa
     runs-on: ubuntu-latest
+    environment: preview
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -75,9 +76,9 @@ jobs:
       - name: Build website for preview environment
         env:
           PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+          PUBLIC_DISCORD_INVITE_URL: ${{ vars.PUBLIC_DISCORD_INVITE_URL }}
         run: yarn build-website
       - name: Deploy website to preview environment
-        environment: preview
         env:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
