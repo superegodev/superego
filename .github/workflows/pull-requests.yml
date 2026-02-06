@@ -73,6 +73,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Build website for preview environment
+        env:
+          PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
         run: yarn build-website
       - name: Deploy website to preview environment
         env:
