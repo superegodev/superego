@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "@astrojs/starlight/components";
 import logo from "../assets/logo.svg";
 ---
 
@@ -10,6 +11,38 @@ import logo from "../assets/logo.svg";
     <title>Superego</title>
   </head>
   <body>
+    <header class="sticky-header">
+      <div class="sticky-inner">
+        <div class="sticky-brand">
+          <Image
+            src={logo}
+            alt="Superego logo"
+            class="sticky-logo"
+            height={32}
+          />
+          <span>Superego</span>
+        </div>
+        <div class="sticky-actions">
+          <a
+            href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}
+            class="icon-link"
+            aria-label="Join the Superego Discord"
+          >
+            <Icon name="discord" class="icon" />
+          </a>
+          <a
+            href="https://github.com/superegodev/superego"
+            class="icon-link"
+            aria-label="Superego on GitHub"
+          >
+            <Icon name="github" class="icon" />
+          </a>
+          <a href="https://demo.superego.dev" class="button button-pill">
+            Try the demo
+          </a>
+        </div>
+      </div>
+    </header>
     <main>
       <section class="fold">
         <section class="tagline">
@@ -40,11 +73,22 @@ import logo from "../assets/logo.svg";
               Get the alpha
             </a>
           </div>
+          <div class="stats" aria-label="Superego stats and positioning">
+            <span class="stat-item">
+              <Icon name="github" class="icon stat-icon" />
+              $n stars
+            </span>
+            <span aria-hidden="true">|</span>
+            <span>Local-first</span>
+            <span aria-hidden="true">|</span>
+            <span>Open Source (AGPL-3.0)</span>
+          </div>
           <span class="scroll-hint">&raquo;</span>
         </section>
       </section>
 
       <section class="explainer">
+        <h2 class="explainer-title"># What</h2>
         <p>
           Superego is an <b>open-source <i>personal</i> database</b> where you can
           store anything you want about your life. Notes, tasks, meals, expenses,
@@ -64,6 +108,13 @@ import logo from "../assets/logo.svg";
             An <b>AI assistant</b> to help you work with your data.
           </li>
         </ol>
+        <h2 class="explainer-title"># Why</h2>
+        <p>
+          Today, most personal software keeps your life locked in cloud silos.
+          Superego flips that model: your data stays with you, in a format you
+          can inspect and move, so your tools remain portable, private, and
+          future-proof.
+        </p>
         <p>See it in action in this short demo:</p>
         <iframe
           src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
@@ -73,6 +124,14 @@ import logo from "../assets/logo.svg";
           allowfullscreen></iframe>
       </section>
     </main>
+    <script>
+      const header = document.querySelector(".sticky-header");
+      const toggleHeader = () => {
+        header?.classList.toggle("is-visible", window.scrollY > 24);
+      };
+      toggleHeader();
+      window.addEventListener("scroll", toggleHeader, { passive: true });
+    </script>
   </body>
 </html>
 
@@ -80,7 +139,7 @@ import logo from "../assets/logo.svg";
   :root {
     --bg: #fff;
     --fg: #111;
-    --tagline: #333;
+    --tagline: #111;
     --subtitle: #666;
     --btn-primary-bg: #111;
     --btn-primary-fg: #fff;
@@ -93,7 +152,7 @@ import logo from "../assets/logo.svg";
     :root {
       --bg: #111;
       --fg: #fff;
-      --tagline: #ccc;
+      --tagline: #fff;
       --subtitle: #888;
       --btn-primary-bg: #fff;
       --btn-primary-fg: #111;
@@ -122,6 +181,66 @@ import logo from "../assets/logo.svg";
     padding: 0 1.5rem;
   }
 
+  .sticky-header {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--btn-secondary-border);
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .sticky-header.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sticky-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .sticky-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+  }
+
+  .sticky-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .sticky-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .icon-link {
+    color: var(--fg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .fold {
     display: flex;
     flex-direction: column;
@@ -147,6 +266,7 @@ import logo from "../assets/logo.svg";
 
   .tagline u {
     font-weight: 700;
+    font-size: 1.1em;
   }
 
   .hero {
@@ -248,8 +368,8 @@ import logo from "../assets/logo.svg";
 
   .button {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
     text-decoration: none;
     background: var(--btn-primary-bg);
     color: var(--btn-primary-fg);
@@ -260,6 +380,33 @@ import logo from "../assets/logo.svg";
 
   .button:hover {
     opacity: 0.9;
+  }
+
+  .button-pill {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.4rem;
+  }
+
+  .stats {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block-end: 1.5rem;
+    color: var(--subtitle);
+    font-size: 1rem;
+  }
+
+  .stat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    width: 1rem;
+    height: 1rem;
   }
 
   .scroll-hint {
@@ -273,6 +420,13 @@ import logo from "../assets/logo.svg";
     margin-block: 10rem;
     font-size: 2rem;
     line-height: 2.5;
+  }
+
+  .explainer-title {
+    margin-block: 0 3rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   .explainer p {
