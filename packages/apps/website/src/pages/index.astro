@@ -387,10 +387,39 @@ const formattedStars =
 
   .actions {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
     margin-block-end: 2rem;
+  }
+
+  .actions .button {
+    width: 220px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 640px) {
+    .logo-container {
+      height: 80px;
+      margin-block-end: 1rem;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      margin-block-start: 1rem;
+      margin-block-end: 2rem;
+    }
+
+    .actions .button {
+      width: 160px;
+      padding: 1rem 1.25rem;
+      font-size: 1.2rem;
+    }
   }
 
   .button {
@@ -506,5 +535,30 @@ const formattedStars =
     aspect-ratio: 720 / 405;
     border: 0;
     border-radius: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .explainer {
+      font-size: 1.4rem;
+      line-height: 2;
+      margin-block: 4rem;
+    }
+
+    .explainer-title {
+      font-size: 1.4rem;
+    }
+
+    .explainer p,
+    .explainer ol {
+      margin-block-end: 2rem;
+    }
+
+    .explainer p:has(+ ol) {
+      margin-block-end: 1rem;
+    }
+
+    .explainer li {
+      margin-inline-start: 1rem;
+    }
   }
 </style>
