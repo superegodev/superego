@@ -10,7 +10,8 @@
     "clean": "rm -rf dist",
     "build": "yarn clean && astro build",
     "astro": "astro",
-    "deploy": "wrangler deploy"
+    "deploy:production": "wrangler deploy",
+    "deploy:preview": "wrangler pages deploy dist/ --project-name superegodev"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
