@@ -163,10 +163,10 @@ export const listDocumentVersionsQuery = makeBackendQueryGetter(
 export const useCreateDocument = makeUseBackendMutation(
   "documents",
   "create",
-  ([collectionId]) => [["listDocuments", collectionId, "true"]],
+  ([{ collectionId }]) => [["listDocuments", collectionId, "true"]],
   // Manually update the non-lite listDocuments cache to improve performance of
   // apps.
-  (queryClient, [collectionId], data) => {
+  (queryClient, [{ collectionId }], data) => {
     const listDocumentsKey = ["listDocuments", collectionId, "false"];
     const listDocuments: SuccessfulResultOf<"documents", "list"> | undefined =
       queryClient.getQueryData(listDocumentsKey);

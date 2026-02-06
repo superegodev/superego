@@ -48,8 +48,10 @@ export default function CreateDocumentForm({ collection }: Props) {
   );
 
   const createDocument = async (content: any, skipDuplicateCheck: boolean) => {
-    const { success, data, error } = await mutate(collection.id, content, {
-      skipDuplicateCheck,
+    const { success, data, error } = await mutate({
+      collectionId: collection.id,
+      content,
+      options: { skipDuplicateCheck },
     });
     if (success) {
       navigateTo(
