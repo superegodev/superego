@@ -31,8 +31,8 @@ export default function EagerExcalidrawInput({
     }
   }, [autoFocus]);
   const handleChange = useCallback<NonNullable<ExcalidrawProps["onChange"]>>(
-    (elements, appState, files) => {
-      onChange({ elements, appState, files });
+    (elements, _appState, files) => {
+      onChange({ elements, files });
     },
     [onChange],
   );

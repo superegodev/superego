@@ -12,9 +12,6 @@ export const ExcalidrawInput = {
       '&[data-invalid="true"]': {
         borderColor: vars.colors.semantic.error.border,
       },
-      "& .excalidraw": {
-        height: "100%",
-      },
     },
   }),
 };
