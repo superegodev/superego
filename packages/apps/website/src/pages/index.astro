@@ -143,8 +143,10 @@ const formattedStars =
     </main>
     <script>
       const header = document.querySelector(".sticky-header");
+      const scrollHint = document.querySelector(".scroll-hint");
       const toggleHeader = () => {
         header?.classList.toggle("is-visible", window.scrollY > 24);
+        scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
       };
       toggleHeader();
       window.addEventListener("scroll", toggleHeader, { passive: true });
@@ -203,8 +205,9 @@ const formattedStars =
     top: 0;
     inset-inline: 0;
     z-index: 20;
-    background: var(--bg);
-    border-bottom: 1px solid var(--btn-secondary-border);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     transform: translateY(-120%);
     opacity: 0;
     pointer-events: none;
@@ -221,9 +224,8 @@ const formattedStars =
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0.75rem 1.5rem;
+    width: 100%;
+    padding: 0.75rem 2.5rem;
     gap: 1rem;
   }
 
@@ -232,6 +234,7 @@ const formattedStars =
     align-items: center;
     gap: 0.75rem;
     font-weight: 700;
+    font-size: 1.25rem;
   }
 
   .sticky-logo {
@@ -254,8 +257,8 @@ const formattedStars =
   }
 
   .icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .fold {
@@ -443,6 +446,12 @@ const formattedStars =
     font-size: 2rem;
     color: var(--subtitle);
     transform: rotate(90deg);
+    transition: opacity 0.2s ease;
+  }
+
+  .scroll-hint.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .explainer {
