@@ -9,5 +9,6 @@ export default {
   },
   JsonObject: {
     TiptapRichText: "dev.superego:JsonObject.TiptapRichText",
+    ExcalidrawDrawing: "dev.superego:JsonObject.ExcalidrawDrawing",
   },
 } as const;
