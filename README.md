@@ -12,7 +12,7 @@ _anything_ you want about your life.
 Your data is stored **locally**, in files you can back up and sync with Dropbox,
 Google Drive, or any service you already use. **No accounts, no middlemen.**
 
-But that's not all! Superego is also:
+Superego is also:
 
 1. A **platform for** building your own personal **apps**.
 2. An **AI assistant** for your data.
