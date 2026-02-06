@@ -1,4 +1,5 @@
 import { DataType, FormatId } from "@superego/schema";
+import type { FieldValues } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "../../../../test-utils.js";
@@ -9,7 +10,7 @@ vi.mock("./formats/ExcalidrawDrawing.js", () => ({
 }));
 
 function TestHarness({ format }: { format?: string }) {
-  const { control } = useForm({
+  const { control } = useForm<FieldValues>({
     defaultValues: {
       drawing: {
         __dataType: DataType.JsonObject,

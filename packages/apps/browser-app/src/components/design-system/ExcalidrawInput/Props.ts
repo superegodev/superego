@@ -1,8 +1,6 @@
-export interface ExcalidrawDrawingValue {
-  elements: unknown[];
-  appState: Record<string, unknown>;
-  files: Record<string, unknown>;
-}
+import type { ExcalidrawDrawingValue } from "../../../business-logic/forms/defaults/excalidrawDrawingJsonObject.js";
+
+export type { ExcalidrawDrawingValue };
 
 export default interface Props {
   value: ExcalidrawDrawingValue | null | undefined;

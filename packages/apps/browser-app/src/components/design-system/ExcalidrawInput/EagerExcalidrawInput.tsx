@@ -1,5 +1,6 @@
 import "@excalidraw/excalidraw/index.css";
 import { Excalidraw } from "@excalidraw/excalidraw";
+import type { ExcalidrawProps } from "@excalidraw/excalidraw/types";
 import { useCallback, useEffect, useRef } from "react";
 import forms from "../../../business-logic/forms/forms.js";
 import * as cs from "./ExcalidrawInput.css.js";
@@ -29,12 +30,8 @@ export default function EagerExcalidrawInput({
       rootRef.current?.focus();
     }
   }, [autoFocus]);
-  const handleChange = useCallback(
-    (
-      elements: unknown[],
-      appState: Record<string, unknown>,
-      files: Record<string, unknown>,
-    ) => {
+  const handleChange = useCallback<NonNullable<ExcalidrawProps["onChange"]>>(
+    (elements, appState, files) => {
       onChange({ elements, appState, files });
     },
     [onChange],
