@@ -1,6 +1,8 @@
+import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-import type weighInsSchema from "./weighInsSchema.js";
+
+type WeighIn = TypeOf<(typeof packsAsConst)[1]["collections"][2]["schema"]>;
 
 export default [
   {
@@ -372,4 +374,4 @@ export default [
     scale: "Mi Scale 2",
     notes: null,
   },
-] satisfies TypeOf<typeof weighInsSchema>[];
+] satisfies WeighIn[];

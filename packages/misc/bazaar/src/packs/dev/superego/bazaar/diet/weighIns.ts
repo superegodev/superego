@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import weighInsSchema from "./weighInsSchema.js";
 
-const weighIns: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Weigh-ins",
     icon: "⚖️",
@@ -10,7 +10,7 @@ const weighIns: CollectionDefinition<true, true> = {
       "- Defaults for things I don't specify:",
       "  - Scale -> Garmin Index S2.",
     ].join("\n"),
-    collectionCategoryId: "ProtoCollectionCategory_2",
+    collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },
   schema: weighInsSchema,
@@ -41,6 +41,4 @@ export default function getContentSummary(weighIn) {
       `.trim(),
     },
   },
-};
-
-export default weighIns;
+} as const satisfies CollectionDefinition<true, true>;

@@ -1,11 +1,11 @@
 import type { Pack } from "@superego/backend";
-import { Base64Url } from "@superego/shared-utils";
+import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
 import cover from "./cover.avif?inline";
 import foods from "./foods.js";
 import meals from "./meals.js";
 import weighIns from "./weighIns.js";
 
-const pack: Pack = {
+export default {
   id: "Pack_dev.superego.diet",
   info: {
     name: "Diet",
@@ -16,7 +16,7 @@ const pack: Pack = {
       {
         path: "cover.avif",
         mimeType: "image/avif",
-        content: Base64Url.decodeToBytes(cover),
+        content: decodeInlineBase64Asset(cover),
       },
     ],
   },
@@ -24,5 +24,4 @@ const pack: Pack = {
   collections: [foods, meals, weighIns],
   apps: [],
   documents: [],
-};
-export default pack;
+} as const satisfies Pack;

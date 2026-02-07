@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const contactsSchema: Schema = {
+export default {
   types: {
     Type: {
       description: "Type of contact.",
@@ -89,5 +89,4 @@ const contactsSchema: Schema = {
     },
   },
   rootType: "Contact",
-};
-export default contactsSchema;
+} as const satisfies Schema;

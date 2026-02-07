@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const mealsSchema: Schema = {
+export default {
   types: {
     MealType: {
       description: "Type of meal",
@@ -78,7 +78,7 @@ const mealsSchema: Schema = {
         food: {
           description: "Reference to a food document",
           dataType: DataType.DocumentRef,
-          collectionId: "ProtoCollection_4",
+          collectionId: "ProtoCollection_0",
         },
         quantity: {
           description: "Amount of the food consumed",
@@ -128,5 +128,4 @@ const mealsSchema: Schema = {
     },
   },
   rootType: "Meal",
-};
-export default mealsSchema;
+} as const satisfies Schema;

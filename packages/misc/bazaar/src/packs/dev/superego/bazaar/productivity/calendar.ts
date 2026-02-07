@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import calendarEntriesSchema from "./calendarSchema.js";
 
-const calendar: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Calendar",
     icon: "📅",
@@ -40,5 +40,4 @@ export default function getContentSummary(calendarEntry) {
       `.trim(),
     },
   },
-};
-export default calendar;
+} as const satisfies CollectionDefinition<true, true>;

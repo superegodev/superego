@@ -39,6 +39,8 @@ export default function LoadDemoDataButton() {
       queryClient.invalidateQueries();
       setHasLoadedDemoData(true);
       setIsModalOpen(false);
+    } catch (error) {
+      console.error("Failed to load demo data", error);
     } finally {
       setIsLoading(false);
       setProgress(null);
@@ -69,8 +71,19 @@ export default function LoadDemoDataButton() {
             value={progress?.current ?? 0}
             maxValue={progress?.total ?? 1}
             label={
-              progress?.message ??
-              intl.formatMessage({ defaultMessage: "Loading demo data" })
+              progress
+                ? intl.formatMessage(
+                    {
+                      defaultMessage:
+                        "{message} ({current} packs installed out of {total})",
+                    },
+                    {
+                      message: progress.message,
+                      current: progress.current,
+                      total: progress.total,
+                    },
+                  )
+                : intl.formatMessage({ defaultMessage: "Loading demo data" })
             }
             className={cs.LoadDemoDataButton.progressBar}
           />

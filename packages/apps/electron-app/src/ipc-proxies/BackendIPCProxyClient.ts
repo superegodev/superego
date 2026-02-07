@@ -14,6 +14,7 @@ export default class BackendIPCProxyClient implements Backend {
   assistants: Backend["assistants"];
   inference: Backend["inference"];
   apps: Backend["apps"];
+  bazaar: Backend["bazaar"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
@@ -97,6 +98,12 @@ export default class BackendIPCProxyClient implements Backend {
       createNewVersion: this.makeMainIpcCall("apps.createNewVersion"),
       delete: this.makeMainIpcCall("apps.delete"),
       list: this.makeMainIpcCall("apps.list"),
+    };
+
+    this.bazaar = {
+      installPack: this.makeMainIpcCall("bazaar.installPack"),
+      listPacks: this.makeMainIpcCall("bazaar.listPacks"),
+      getPack: this.makeMainIpcCall("bazaar.getPack"),
     };
 
     this.backgroundJobs = {

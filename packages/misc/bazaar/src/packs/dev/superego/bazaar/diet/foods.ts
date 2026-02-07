@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import foodsSchema from "./foodsSchema.js";
 
-const foods: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Foods",
     icon: "🍎",
@@ -9,7 +9,7 @@ const foods: CollectionDefinition<true, true> = {
     assistantInstructions: `
 Use 100g as serving size if not specified.
     `.trim(),
-    collectionCategoryId: "ProtoCollectionCategory_2",
+    collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },
   schema: foodsSchema,
@@ -91,6 +91,4 @@ export default function getContentSummary(food) {
       `.trim(),
     },
   },
-};
-
-export default foods;
+} as const satisfies CollectionDefinition<true, true>;

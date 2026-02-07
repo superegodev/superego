@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import contactsSchema from "./contactsSchema.js";
 
-const contacts: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Contacts",
     icon: "☎️",
@@ -63,5 +63,4 @@ export default function getContentSummary(contact) {
       `.trim(),
     },
   },
-};
-export default contacts;
+} as const satisfies CollectionDefinition<true, true>;

@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import fuelLogsSchema from "./fuelLogsSchema.js";
 
-const fuelLogs: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Fuel Logs",
     icon: "⛽",
@@ -11,8 +11,8 @@ const fuelLogs: CollectionDefinition<true, true> = {
       "- Default to full tank if I don't specify it.",
       "- Always ask for the odometer reading.",
     ].join("\n"),
-    collectionCategoryId: "ProtoCollectionCategory_3",
-    defaultCollectionViewAppId: "ProtoApp_1",
+    collectionCategoryId: "ProtoCollectionCategory_0",
+    defaultCollectionViewAppId: "ProtoApp_0",
   },
   schema: fuelLogsSchema,
   versionSettings: {
@@ -73,6 +73,4 @@ export default function getContentSummary(fuelLog) {
       `.trim(),
     },
   },
-};
-
-export default fuelLogs;
+} as const satisfies CollectionDefinition<true, true>;

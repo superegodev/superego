@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const calendarSchema: Schema = {
+export default {
   types: {
     Type: {
       description: "Type of a calendar entry.",
@@ -50,5 +50,4 @@ const calendarSchema: Schema = {
     },
   },
   rootType: "CalendarEntry",
-};
-export default calendarSchema;
+} as const satisfies Schema;

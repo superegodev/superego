@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const weighInsSchema: Schema = {
+export default {
   types: {
     WeighIn: {
       description: " A single weigh-in.",
@@ -27,5 +27,4 @@ const weighInsSchema: Schema = {
     },
   },
   rootType: "WeighIn",
-};
-export default weighInsSchema;
+} as const satisfies Schema;

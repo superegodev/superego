@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const expensesSchema: Schema = {
+export default {
   types: {
     Category: {
       description: "Category of the expense.",
@@ -109,5 +109,4 @@ const expensesSchema: Schema = {
     },
   },
   rootType: "Expense",
-};
-export default expensesSchema;
+} as const satisfies Schema;

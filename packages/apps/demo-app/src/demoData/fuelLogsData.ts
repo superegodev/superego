@@ -1,6 +1,8 @@
+import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-import type fuelLogsSchema from "./fuelLogsSchema.js";
+
+type FuelLog = TypeOf<(typeof packsAsConst)[0]["collections"][0]["schema"]>;
 
 export default [
   {
@@ -315,4 +317,4 @@ export default [
     fuelType: "G95E5",
     notes: null,
   },
-] satisfies TypeOf<typeof fuelLogsSchema>[];
+] satisfies FuelLog[];

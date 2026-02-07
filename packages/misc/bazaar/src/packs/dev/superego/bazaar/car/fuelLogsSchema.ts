@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const fuelLogsSchema: Schema = {
+export default {
   types: {
     FuelType: {
       description: "Type of fuel that can be used for refuelling.",
@@ -62,5 +62,4 @@ const fuelLogsSchema: Schema = {
     },
   },
   rootType: "FuelLog",
-};
-export default fuelLogsSchema;
+} as const satisfies Schema;

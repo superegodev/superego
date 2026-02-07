@@ -1,6 +1,6 @@
 import { DataType, type Schema } from "@superego/schema";
 
-const foodsSchema: Schema = {
+export default {
   types: {
     KcalsQuantity: {
       description: "A quantity of energy in kilocalories",
@@ -373,5 +373,4 @@ const foodsSchema: Schema = {
     },
   },
   rootType: "Food",
-};
-export default foodsSchema;
+} as const satisfies Schema;

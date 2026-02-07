@@ -1,7 +1,7 @@
 import type { CollectionDefinition } from "@superego/backend";
 import expensesSchema from "./expensesSchema.js";
 
-const expenses: CollectionDefinition<true, true> = {
+export default {
   settings: {
     name: "Expenses",
     icon: "💸",
@@ -11,7 +11,7 @@ const expenses: CollectionDefinition<true, true> = {
       "  - Currency -> EUR.",
       "  - Payment method -> Credit Card.",
     ].join("\n"),
-    collectionCategoryId: "ProtoCollectionCategory_1",
+    collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_0",
   },
   schema: expensesSchema,
@@ -46,5 +46,4 @@ export default function getContentSummary(expense) {
       `.trim(),
     },
   },
-};
-export default expenses;
+} as const satisfies CollectionDefinition<true, true>;

@@ -1,19 +1,19 @@
+import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-import type mealsSchema from "./mealsSchema.js";
 
-type Meal = TypeOf<typeof mealsSchema>;
+type Meal = TypeOf<(typeof packsAsConst)[1]["collections"][1]["schema"]>;
 
 const g = (amount: number) => ({ unit: "g" as const, amount });
 
 // Helper to create a meal item with a ProtoDocument reference. The collectionId
-// uses ProtoCollection_4 which will be resolved to the actual foods collection
+// uses ProtoCollection_0 which will be resolved to the actual foods collection
 // ID when collections are created with createMany. The documentId uses
 // ProtoDocument_<index> which will be resolved to the actual food document ID
 // when meals documents are created.
 const mealItem = (foodDocumentIndex: number, grams: number) => ({
   food: {
-    collectionId: "ProtoCollection_4",
+    collectionId: "ProtoCollection_0",
     documentId: `ProtoDocument_${foodDocumentIndex}`,
   },
   quantity: g(grams),

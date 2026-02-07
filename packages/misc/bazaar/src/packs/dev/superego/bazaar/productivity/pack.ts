@@ -1,10 +1,10 @@
 import type { Pack } from "@superego/backend";
-import { Base64Url } from "@superego/shared-utils";
+import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
 import calendar from "./calendar.js";
 import contacts from "./contacts.js";
-import cover from "./cover.png?inline";
+import cover from "./cover.avif?inline";
 
-const pack: Pack = {
+export default {
   id: "Pack_dev.superego.productivity",
   info: {
     name: "Productivity",
@@ -16,7 +16,7 @@ const pack: Pack = {
       {
         path: "cover.avif",
         mimeType: "image/avif",
-        content: Base64Url.decodeToBytes(cover),
+        content: decodeInlineBase64Asset(cover),
       },
     ],
   },
@@ -24,5 +24,4 @@ const pack: Pack = {
   collections: [contacts, calendar],
   apps: [],
   documents: [],
-};
-export default pack;
+} as const satisfies Pack;

@@ -6136,7 +6136,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/bazaar@workspace:packages/misc/bazaar":
+"@superego/bazaar@workspace:*, @superego/bazaar@workspace:packages/misc/bazaar":
   version: 0.0.0-use.local
   resolution: "@superego/bazaar@workspace:packages/misc/bazaar"
   dependencies:
@@ -6259,6 +6259,7 @@ __metadata:
     "@cloudflare/workers-types": "npm:^4.20260203.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
+    "@superego/bazaar": "workspace:*"
     "@superego/browser-app": "workspace:*"
     "@superego/connectors": "workspace:*"
     "@superego/demo-data-repositories": "workspace:*"

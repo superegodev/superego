@@ -923,6 +923,9 @@
   "LoadDemoDataButton.tsx_ZBdI8u": {
     "defaultMessage": "Loads some demo collections and documents for you to play around with."
   },
+  "LoadDemoDataButton.tsx_bEC91W": {
+    "defaultMessage": "{message} ({current} packs installed out of {total})"
+  },
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"
   },
