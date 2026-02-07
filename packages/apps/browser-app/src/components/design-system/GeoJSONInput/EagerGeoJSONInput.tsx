@@ -4,14 +4,25 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useMemo, useRef } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import classnames from "../../../utils/classnames.js";
-import type Props from "./Props.js";
 import * as cs from "./GeoJSONInput.css.js";
+import type Props from "./Props.js";
 
-const LIGHT_STYLE =
-  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
-const DARK_STYLE =
-  "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 const SOURCE_ID = "geojson-input-source";
+
+const LIGHT_COLORS = {
+  background: "#f8fafc",
+  fill: "#cbd5f5",
+  line: "#64748b",
+  point: "#475569",
+  pointStroke: "#f8fafc",
+};
+const DARK_COLORS = {
+  background: "#0f172a",
+  fill: "#475569",
+  line: "#94a3b8",
+  point: "#e2e8f0",
+  pointStroke: "#0f172a",
+};
 
 export default function EagerGeoJSONInput({
   value,
@@ -22,9 +33,13 @@ export default function EagerGeoJSONInput({
   const theme = useTheme();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const styleUrl = useMemo(
-    () => (theme === Theme.Dark ? DARK_STYLE : LIGHT_STYLE),
+  const colors = useMemo(
+    () => (theme === Theme.Dark ? DARK_COLORS : LIGHT_COLORS),
     [theme],
+  );
+  const styleDefinition = useMemo(
+    () => createStyleDefinition(colors.background),
+    [colors.background],
   );
 
   useEffect(() => {
@@ -33,7 +48,7 @@ export default function EagerGeoJSONInput({
     }
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
-      style: styleUrl,
+      style: styleDefinition,
       center: [0, 0],
       zoom: 1,
       attributionControl: false,
@@ -57,14 +72,14 @@ export default function EagerGeoJSONInput({
       map.remove();
       mapRef.current = null;
     };
-  }, [styleUrl, isReadOnly]);
+  }, [styleDefinition, isReadOnly]);
 
   useEffect(() => {
     if (!mapRef.current) {
       return;
     }
-    mapRef.current.setStyle(styleUrl);
-  }, [styleUrl]);
+    mapRef.current.setStyle(styleDefinition);
+  }, [styleDefinition]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -73,7 +88,7 @@ export default function EagerGeoJSONInput({
     }
     const data = normalizeGeoJson(value);
     const applyData = () => {
-      ensureGeoJsonLayers(map, data);
+      ensureGeoJsonLayers(map, data, colors);
       fitToGeoJson(map, data);
     };
     if (map.isStyleLoaded()) {
@@ -81,7 +96,7 @@ export default function EagerGeoJSONInput({
       return;
     }
     map.once("styledata", applyData);
-  }, [value, styleUrl]);
+  }, [colors, value]);
 
   return (
     <div
@@ -102,7 +117,7 @@ function normalizeGeoJson(
   }
   const { __dataType, ...rest } = value as Record<string, unknown>;
   if ("type" in rest) {
-    return rest as maplibregl.GeoJSONSourceSpecification["data"];
+    return rest as unknown as maplibregl.GeoJSONSourceSpecification["data"];
   }
   return { type: "FeatureCollection", features: [] };
 }
@@ -110,47 +125,89 @@ function normalizeGeoJson(
 function ensureGeoJsonLayers(
   map: maplibregl.Map,
   data: maplibregl.GeoJSONSourceSpecification["data"],
+  colors: typeof LIGHT_COLORS,
 ) {
   const existingSource = map.getSource(SOURCE_ID);
-  if (existingSource && "setData" in existingSource) {
+  if (!existingSource) {
+    map.addSource(SOURCE_ID, {
+      type: "geojson",
+      data,
+    });
+  } else if ("setData" in existingSource) {
     (existingSource as maplibregl.GeoJSONSource).setData(data);
-    return;
   }
-  map.addSource(SOURCE_ID, {
-    type: "geojson",
-    data,
-  });
-  map.addLayer({
-    id: `${SOURCE_ID}-fill`,
-    type: "fill",
-    source: SOURCE_ID,
-    filter: ["==", "$type", "Polygon"],
-    paint: {
-      "fill-color": "#9ca3af",
-      "fill-opacity": 0.35,
-    },
-  });
-  map.addLayer({
-    id: `${SOURCE_ID}-line`,
-    type: "line",
-    source: SOURCE_ID,
-    paint: {
-      "line-color": "#6b7280",
-      "line-width": 2,
-    },
-  });
-  map.addLayer({
-    id: `${SOURCE_ID}-circle`,
-    type: "circle",
-    source: SOURCE_ID,
-    filter: ["==", "$type", "Point"],
-    paint: {
-      "circle-color": "#4b5563",
-      "circle-radius": 5,
-      "circle-stroke-color": "#f3f4f6",
-      "circle-stroke-width": 1,
-    },
-  });
+
+  const fillLayerId = `${SOURCE_ID}-fill`;
+  if (!map.getLayer(fillLayerId)) {
+    map.addLayer({
+      id: fillLayerId,
+      type: "fill",
+      source: SOURCE_ID,
+      filter: ["==", "$type", "Polygon"],
+      paint: {
+        "fill-color": colors.fill,
+        "fill-opacity": 0.35,
+      },
+    });
+  } else {
+    map.setPaintProperty(fillLayerId, "fill-color", colors.fill);
+  }
+
+  const lineLayerId = `${SOURCE_ID}-line`;
+  if (!map.getLayer(lineLayerId)) {
+    map.addLayer({
+      id: lineLayerId,
+      type: "line",
+      source: SOURCE_ID,
+      paint: {
+        "line-color": colors.line,
+        "line-width": 2,
+      },
+    });
+  } else {
+    map.setPaintProperty(lineLayerId, "line-color", colors.line);
+  }
+
+  const circleLayerId = `${SOURCE_ID}-circle`;
+  if (!map.getLayer(circleLayerId)) {
+    map.addLayer({
+      id: circleLayerId,
+      type: "circle",
+      source: SOURCE_ID,
+      filter: ["==", "$type", "Point"],
+      paint: {
+        "circle-color": colors.point,
+        "circle-radius": 5,
+        "circle-stroke-color": colors.pointStroke,
+        "circle-stroke-width": 1,
+      },
+    });
+  } else {
+    map.setPaintProperty(circleLayerId, "circle-color", colors.point);
+    map.setPaintProperty(
+      circleLayerId,
+      "circle-stroke-color",
+      colors.pointStroke,
+    );
+  }
+}
+
+function createStyleDefinition(
+  backgroundColor: string,
+): maplibregl.StyleSpecification {
+  return {
+    version: 8,
+    sources: {},
+    layers: [
+      {
+        id: "background",
+        type: "background",
+        paint: {
+          "background-color": backgroundColor,
+        },
+      },
+    ],
+  };
 }
 
 function fitToGeoJson(
@@ -177,41 +234,39 @@ function fitToGeoJson(
   map.fitBounds(bounds, { padding: 32, maxZoom: 12, duration: 0 });
 }
 
-function collectCoordinates(
-  data: maplibregl.GeoJSONSourceSpecification["data"],
-): [number, number][] {
+function collectCoordinates(data: unknown): [number, number][] {
   if (!data || typeof data !== "object") {
     return [];
   }
-  const normalized = data as Record<string, unknown>;
-  if (normalized.type === "FeatureCollection") {
-    const features = normalized.features;
+  const normalized = data as unknown as Record<string, unknown>;
+  if (normalized["type"] === "FeatureCollection") {
+    const features = normalized["features"];
     if (!Array.isArray(features)) {
       return [];
     }
     return features.flatMap((feature) =>
-      collectCoordinates((feature as Record<string, unknown>).geometry),
+      collectCoordinates(
+        (feature as Record<string, unknown>)["geometry"] as unknown,
+      ),
     );
   }
-  if (normalized.type === "Feature") {
-    return collectCoordinates(normalized.geometry);
+  if (normalized["type"] === "Feature") {
+    return collectCoordinates(normalized["geometry"] as unknown);
   }
-  if (normalized.type === "GeometryCollection") {
-    const geometries = normalized.geometries;
+  if (normalized["type"] === "GeometryCollection") {
+    const geometries = normalized["geometries"];
     if (!Array.isArray(geometries)) {
       return [];
     }
     return geometries.flatMap((geometry) => collectCoordinates(geometry));
   }
   if ("coordinates" in normalized) {
-    return collectCoordinatesFromArray(normalized.coordinates);
+    return collectCoordinatesFromArray(normalized["coordinates"]);
   }
   return [];
 }
 
-function collectCoordinatesFromArray(
-  coordinates: unknown,
-): [number, number][] {
+function collectCoordinatesFromArray(coordinates: unknown): [number, number][] {
   if (!Array.isArray(coordinates)) {
     return [];
   }

@@ -1,7 +1,8 @@
 import { DataType, FormatId } from "@superego/schema";
-import { fireEvent, render, screen } from "../../../../../test-utils.js";
+import type { Control } from "react-hook-form";
 import { useForm, useWatch } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "../../../../../test-utils.js";
 import GeoJSON from "./GeoJSON.js";
 
 vi.mock("../../../../design-system/GeoJSONInput/GeoJSONInput.js", () => ({
@@ -24,7 +25,7 @@ function TestForm({ defaultValue }: { defaultValue: unknown }) {
         typeDefinition={geoJsonTypeDefinition}
         isNullable={false}
         isListItem={false}
-        control={control}
+        control={control as unknown as Control}
         name="geojson"
         label="GeoJSON"
       />
@@ -48,9 +49,7 @@ describe("GeoJSON JsonObject format", () => {
     fireEvent.change(input, { target: { value: geoJsonValue } });
 
     // Verify
-    expect(screen.getByTestId("current-value")).toHaveTextContent(
-      "__dataType",
-    );
+    expect(screen.getByTestId("current-value")).toHaveTextContent("__dataType");
   });
 
   it("preserves invalid JSON input as a string", () => {
