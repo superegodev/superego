@@ -1,3 +1,4 @@
 {
-  "extends": ["../../../tsconfig.common.json"]
+  "extends": ["../../../tsconfig.common.json"],
+  "exclude": ["src/**/*.appSource.tsx", "src/**/*.appCompiled.js"]
 }
