@@ -728,6 +728,9 @@
   "GeneralSettingsTab.tsx_qmIyad": {
     "defaultMessage": "Istruzioni specifiche per questa collezione da passare all'assistente."
   },
+  "GeoJSON.tsx_JBD8Rn": {
+    "defaultMessage": "Stringa GeoJSON non valida"
+  },
   "GlobalSettings.tsx_HZGiV3": {
     "defaultMessage": "Azioni delle impostazioni"
   },

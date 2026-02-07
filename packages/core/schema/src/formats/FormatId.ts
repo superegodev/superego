@@ -9,5 +9,6 @@ export default {
   },
   JsonObject: {
     TiptapRichText: "dev.superego:JsonObject.TiptapRichText",
+    GeoJSON: "dev.superego:JsonObject.GeoJSON",
   },
 } as const;

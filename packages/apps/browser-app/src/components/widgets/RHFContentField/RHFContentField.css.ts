@@ -9,6 +9,19 @@ export const JsonObjectField = {
       marginBlockEnd: vars.spacing._6,
     }),
   },
+  GeoJSON: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      gap: vars.spacing._2,
+    }),
+    map: style({
+      marginBlockEnd: vars.spacing._2,
+    }),
+    textArea: style({
+      fontFamily: vars.typography.fontFamilies.monospace,
+    }),
+  },
   Default: {
     textArea: style({
       fontFamily: vars.typography.fontFamilies.monospace,
