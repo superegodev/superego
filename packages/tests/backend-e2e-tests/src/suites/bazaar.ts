@@ -334,11 +334,7 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
             {
               message:
                 "Document at index 0 references unknown proto collection: ProtoCollection_99",
-              path: [
-                { key: "documents" },
-                { key: 0 },
-                { key: "collectionId" },
-              ],
+              path: [{ key: "documents" }, { key: 0 }, { key: "collectionId" }],
             },
           ],
         },

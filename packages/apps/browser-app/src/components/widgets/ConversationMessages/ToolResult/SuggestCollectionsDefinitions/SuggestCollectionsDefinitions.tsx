@@ -4,7 +4,7 @@ import {
   type ToolCall,
   type ToolResult,
 } from "@superego/backend";
-import { utils } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import { useId } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -66,7 +66,7 @@ export default function SuggestCollectionsDefinitions({
 
   const tabsId = useId();
   const protoCollections = collections.map((collection, index) => ({
-    id: utils.makeProtoCollectionId(index),
+    id: Id.generate.protoCollection(index),
     settings: {
       name: collection.settings.name,
       icon: collection.settings.icon,
@@ -82,7 +82,7 @@ export default function SuggestCollectionsDefinitions({
         <TabList className={cs.SuggestCollectionsDefinitions.tabList}>
           {collections.map((collection, index) => (
             <Tab
-              key={utils.makeProtoCollectionId(index)}
+              key={Id.generate.protoCollection(index)}
               id={`${tabsId}-${index}`}
               className={cs.SuggestCollectionsDefinitions.tab}
             >
@@ -92,7 +92,7 @@ export default function SuggestCollectionsDefinitions({
         </TabList>
         {collections.map((collection, index) => (
           <TabPanel
-            key={utils.makeProtoCollectionId(index)}
+            key={Id.generate.protoCollection(index)}
             id={`${tabsId}-${index}`}
             className={cs.SuggestCollectionsDefinitions.tabPanel}
           >

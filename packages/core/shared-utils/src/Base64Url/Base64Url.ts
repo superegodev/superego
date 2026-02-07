@@ -1,23 +1,26 @@
-import type Base64Url from "../../requirements/Base64Url.js";
+import bytesToBinaryString from "./bytesToBinaryString.js";
 
-export default class BrowserBase64Url implements Base64Url {
+const Base64Url = {
+  /** Encode a utf8 string into a Base64Url string. */
   encodeUtf8(source: string): string {
     const encoder = new TextEncoder();
     const bytes = encoder.encode(source);
-    return this.encodeBytes(bytes);
-  }
+    return Base64Url.encodeBytes(bytes);
+  },
 
+  /** Decode a Base64Url string into a utf8 string. */
   decodeToUtf8(encoded: string): string {
     if (encoded.length === 0) {
       return "";
     }
 
     const decoder = new TextDecoder();
-    const bytes = this.decodeToBytes(encoded);
+    const bytes = Base64Url.decodeToBytes(encoded);
     return decoder.decode(bytes);
-  }
+  },
 
-  encodeBytes(source: Uint8Array<ArrayBufferLike>): string {
+  /** Encode a bytes array into a Base64Url string. */
+  encodeBytes(source: Uint8Array<ArrayBuffer>): string {
     if (source.length === 0) {
       return "";
     }
@@ -25,9 +28,10 @@ export default class BrowserBase64Url implements Base64Url {
     const binary = bytesToBinaryString(source);
     const base64 = btoa(binary);
     return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-  }
+  },
 
-  decodeToBytes(encoded: string): Uint8Array<ArrayBufferLike> {
+  /** Decode a Base64Url string into a bytes array. */
+  decodeToBytes(encoded: string): Uint8Array<ArrayBuffer> {
     if (encoded.length === 0) {
       return new Uint8Array(0);
     }
@@ -43,17 +47,6 @@ export default class BrowserBase64Url implements Base64Url {
     }
 
     return bytes;
-  }
-}
-
-function bytesToBinaryString(bytes: Uint8Array<ArrayBufferLike>): string {
-  let binary = "";
-  const chunkSize = 0x8000;
-
-  for (let index = 0; index < bytes.length; index += chunkSize) {
-    const chunk = bytes.subarray(index, index + chunkSize);
-    binary += String.fromCharCode(...chunk);
-  }
-
-  return binary;
-}
+  },
+};
+export default Base64Url;

@@ -5,10 +5,7 @@ import {
   onOAuth2PKCEAuthorizationResponseUrl,
   StravaActivities,
 } from "@superego/connectors";
-import {
-  BrowserBase64Url,
-  BrowserSessionStorage,
-} from "@superego/connectors/requirements/browser";
+import { BrowserSessionStorage } from "@superego/connectors/requirements/browser";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
@@ -18,7 +15,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 
 const redirectUri = "http://localhost:5173/OAuth2PKCECallback";
-const base64Url = new BrowserBase64Url();
 const sessionStorage = new BrowserSessionStorage();
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
@@ -56,9 +52,9 @@ const backend = new ExecutingBackend(
   ),
   new OpenAICompatInferenceServiceFactory(),
   [
-    new GoogleCalendar(redirectUri, base64Url, sessionStorage),
-    new GoogleContacts(redirectUri, base64Url, sessionStorage),
-    new StravaActivities(redirectUri, base64Url, sessionStorage),
+    new GoogleCalendar(redirectUri, sessionStorage),
+    new GoogleContacts(redirectUri, sessionStorage),
+    new StravaActivities(redirectUri, sessionStorage),
   ],
 );
 

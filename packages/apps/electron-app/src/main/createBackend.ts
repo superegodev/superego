@@ -5,10 +5,7 @@ import {
   GoogleContacts,
   StravaActivities,
 } from "@superego/connectors";
-import {
-  NodejsBase64Url,
-  NodejsSessionStorage,
-} from "@superego/connectors/requirements/nodejs";
+import { NodejsSessionStorage } from "@superego/connectors/requirements/nodejs";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
@@ -18,7 +15,6 @@ import { app } from "electron";
 
 export default function createBackend(port: number) {
   const redirectUri = `http://localhost:${port}/OAuth2PKCECallback`;
-  const base64Url = new NodejsBase64Url();
   const sessionStorage = new NodejsSessionStorage();
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(app.getPath("userData"), "superego.db"),
@@ -62,9 +58,9 @@ export default function createBackend(port: number) {
     typescriptCompiler,
     inferenceServiceFactory,
     [
-      new GoogleCalendar(redirectUri, base64Url, sessionStorage),
-      new GoogleContacts(redirectUri, base64Url, sessionStorage),
-      new StravaActivities(redirectUri, base64Url, sessionStorage),
+      new GoogleCalendar(redirectUri, sessionStorage),
+      new GoogleContacts(redirectUri, sessionStorage),
+      new StravaActivities(redirectUri, sessionStorage),
     ],
   );
 }

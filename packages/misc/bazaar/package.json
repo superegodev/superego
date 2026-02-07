@@ -1,0 +1,21 @@
+{
+  "name": "@superego/bazaar",
+  "version": "2026.2.2",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/shared-utils": "workspace:*"
+  }
+}

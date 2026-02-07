@@ -10,6 +10,7 @@ import type {
   DocumentId,
 } from "@superego/backend";
 import { utils as schemaUtils } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import demoData from "./demoData.js";
 import type { DemoCollection } from "./types.js";
 
@@ -192,10 +193,10 @@ export default async function loadDemoData(
         );
       }
 
-      const createDocumentResult = await backend.documents.create(
-        collectionIds.collectionId,
-        resolvedContent,
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: collectionIds.collectionId,
+        content: resolvedContent,
+      });
 
       if (createDocumentResult.success) {
         collectionDocumentIds.push(createDocumentResult.data.id);
@@ -246,12 +247,12 @@ export default async function loadDemoData(
       ]),
     ) as AppVersion["files"];
 
-    const createAppResult = await backend.apps.create(
-      collection.app.type,
-      collection.app.name,
-      [collectionIds.collectionId],
-      appFiles,
-    );
+    const createAppResult = await backend.apps.create({
+      type: collection.app.type,
+      name: collection.app.name,
+      targetCollectionIds: [collectionIds.collectionId],
+      files: appFiles,
+    });
 
     // Set as default collection view app
     if (createAppResult.success) {
@@ -344,7 +345,7 @@ function _extractProtoDocumentRefs(
     if (
       typeof collectionId === "string" &&
       typeof documentId === "string" &&
-      schemaUtils.isProtoDocumentId(documentId)
+      Id.is.protoDocument(documentId)
     ) {
       refs.push({ collectionId, documentId });
     }
