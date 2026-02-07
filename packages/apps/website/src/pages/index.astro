@@ -1,6 +1,14 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "@astrojs/starlight/components";
+import getStarCount from "../utils/getStarCount";
 import logo from "../assets/logo.svg";
+
+const starsCount = await getStarCount();
+const formattedStars =
+  typeof starsCount === "number"
+    ? new Intl.NumberFormat("en-US").format(starsCount)
+    : "—";
 ---
 
 <html lang="en">
@@ -10,6 +18,38 @@ import logo from "../assets/logo.svg";
     <title>Superego</title>
   </head>
   <body>
+    <header class="sticky-header">
+      <div class="sticky-inner">
+        <div class="sticky-brand">
+          <Image
+            src={logo}
+            alt="Superego logo"
+            class="sticky-logo"
+            height={32}
+          />
+          <span>Superego</span>
+        </div>
+        <div class="sticky-actions">
+          <a
+            href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}
+            class="icon-link"
+            aria-label="Join the Superego Discord"
+          >
+            <Icon name="discord" class="icon" />
+          </a>
+          <a
+            href="https://github.com/superegodev/superego"
+            class="icon-link"
+            aria-label="Superego on GitHub"
+          >
+            <Icon name="github" class="icon" />
+          </a>
+          <a href="https://demo.superego.dev" class="button button-pill">
+            Try the demo
+          </a>
+        </div>
+      </div>
+    </header>
     <main>
       <section class="fold">
         <section class="tagline">
@@ -35,36 +75,63 @@ import logo from "../assets/logo.svg";
             <a href="https://demo.superego.dev" class="button">Try the demo</a>
             <a
               href="https://github.com/superegodev/superego/releases/latest"
-              class="button"
+              class="button button-secondary"
             >
               Get the alpha
             </a>
+          </div>
+          <div
+            class="highlights"
+            aria-label="Superego highlights and positioning"
+          >
+            <span class="highlight-item">
+              <Icon name="github" class="icon highlight-icon" />
+              {formattedStars} stars
+            </span>
+            <div role="separator" aria-orientation="vertical"></div>
+            <span class="highlight-item">Local-first</span>
+            <div role="separator" aria-orientation="vertical"></div>
+            <span class="highlight-item">AGPL-3.0</span>
           </div>
           <span class="scroll-hint">&raquo;</span>
         </section>
       </section>
 
       <section class="explainer">
+        <h2 class="explainer-title">## What</h2>
         <p>
           Superego is an <b>open-source <i>personal</i> database</b> where you can
-          store anything you want about your life. Notes, tasks, meals, expenses,
-          health logs... Whatever you want–you define what goes in.
+          store <i>anything</i> you want about your life.
         </p>
         <p>
-          Your data is stored <b>locally</b>, in a SQLite file you own and that
-          you can back up and sync with Dropbox, Google Drive, or whichever
-          service you already use. <b>No accounts, no middlemen.</b>
+          Your data is stored <b>locally</b>, in files you can back up and sync
+          with Dropbox, Google Drive, or any service you already use.
+          <b>No accounts, no middlemen.</b>
         </p>
-        <p>On top of this, Superego gives you:</p>
+        <p>Superego is also:</p>
         <ol>
           <li>
-            A <b>platform for building your own personal apps</b>.
+            A <b>platform for</b> building your own personal <b>apps</b>.
           </li>
           <li>
-            An <b>AI assistant</b> to help you work with your data.
+            An <b>AI assistant</b> for your data.
           </li>
         </ol>
-        <p>See it in action in this short demo:</p>
+        <h2 class="explainer-title">## Why</h2>
+        <p>
+          I've had it with apps that hold my data hostage, make me jump through
+          hoops to get it, and sell it to who knows who.
+        </p>
+        <p>
+          I've had it with apps that remove features, pivot, and go on
+          incredible journeys.
+        </p>
+        <p>I've had it with AIs giving me canned responses.</p>
+        <p>
+          I want my data <b>at my fingertips</b>, apps that
+          <b>do what I need</b>, and an AI that <b>knows me</b>.
+        </p>
+        <h2 class="explainer-title">## See It in Action</h2>
         <iframe
           src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
           title="Superego Demo Video"
@@ -73,6 +140,16 @@ import logo from "../assets/logo.svg";
           allowfullscreen></iframe>
       </section>
     </main>
+    <script>
+      const header = document.querySelector(".sticky-header");
+      const scrollHint = document.querySelector(".scroll-hint");
+      const toggleHeader = () => {
+        header?.classList.toggle("is-visible", window.scrollY > 24);
+        scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
+      };
+      toggleHeader();
+      window.addEventListener("scroll", toggleHeader, { passive: true });
+    </script>
   </body>
 </html>
 
@@ -80,26 +157,26 @@ import logo from "../assets/logo.svg";
   :root {
     --bg: #fff;
     --fg: #111;
-    --tagline: #333;
+    --tagline: #111;
     --subtitle: #666;
     --btn-primary-bg: #111;
     --btn-primary-fg: #fff;
-    --btn-secondary-bg: #eee;
+    --btn-secondary-bg: #fff;
     --btn-secondary-fg: #111;
-    --btn-secondary-border: #ccc;
+    --btn-secondary-border: #111;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #111;
       --fg: #fff;
-      --tagline: #ccc;
+      --tagline: #fff;
       --subtitle: #888;
       --btn-primary-bg: #fff;
       --btn-primary-fg: #111;
-      --btn-secondary-bg: #333;
+      --btn-secondary-bg: #111;
       --btn-secondary-fg: #fff;
-      --btn-secondary-border: #555;
+      --btn-secondary-border: #fff;
     }
   }
 
@@ -122,6 +199,76 @@ import logo from "../assets/logo.svg";
     padding: 0 1.5rem;
   }
 
+  .sticky-header {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 3px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .sticky-header.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sticky-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+
+  .sticky-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-weight: 700;
+    font-size: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .sticky-brand span {
+      display: none;
+    }
+  }
+
+  .sticky-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sticky-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .icon-link {
+    color: var(--fg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
   .fold {
     display: flex;
     flex-direction: column;
@@ -135,7 +282,7 @@ import logo from "../assets/logo.svg";
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: clamp(2rem, 1rem + 4.3vw, 4rem);
+    font-size: clamp(2rem, 1rem + 4.1vw, 4rem);
     font-style: italic;
     text-align: center;
     color: var(--tagline);
@@ -147,18 +294,18 @@ import logo from "../assets/logo.svg";
 
   .tagline u {
     font-weight: 700;
+    font-size: 1.1em;
   }
 
   .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-block-end: 2rem;
   }
 
   .logo-container {
     position: relative;
-    width: clamp(140px, 120px + 5vw, 180px);
+    height: clamp(80px, 120px + 5vw, 180px);
     aspect-ratio: 1 / 1;
     margin-block-end: 1.5rem;
   }
@@ -246,15 +393,44 @@ import logo from "../assets/logo.svg";
     margin-block-end: 2rem;
   }
 
+  .actions .button {
+    width: 220px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 640px) {
+    .logo-container {
+      height: 80px;
+      margin-block-end: 1rem;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      margin-block-start: 1rem;
+      margin-block-end: 2rem;
+    }
+
+    .actions .button {
+      width: 160px;
+      padding: 1rem 1.25rem;
+      font-size: 1.2rem;
+    }
+  }
+
   .button {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
     text-decoration: none;
     background: var(--btn-primary-bg);
     color: var(--btn-primary-fg);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.5rem;
     transition: opacity 0.2s;
   }
 
@@ -262,11 +438,68 @@ import logo from "../assets/logo.svg";
     opacity: 0.9;
   }
 
+  .button-secondary {
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-fg);
+    border: 1px solid var(--btn-secondary-border);
+  }
+
+  .button-pill {
+    font-size: 1rem;
+    padding: 0.8rem 1.4rem;
+  }
+
+  .highlights {
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block-end: 3rem;
+    width: 100%;
+    color: var(--subtitle);
+    font-size: 1rem;
+  }
+
+  .highlight-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .highlight-item:first-child {
+    width: 90px;
+    justify-content: flex-end;
+  }
+  .highlight-item:last-child {
+    width: 90px;
+    justify-content: flex-start;
+  }
+
+  .highlights div[role="separator"] {
+    width: 1px;
+    height: 1em;
+    background-color: var(--subtitle);
+  }
+
+  .highlight-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
   .scroll-hint {
     display: block;
     font-size: 2rem;
     color: var(--subtitle);
     transform: rotate(90deg);
+    transition: opacity 0.2s ease;
+  }
+
+  .scroll-hint.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .explainer {
@@ -275,8 +508,26 @@ import logo from "../assets/logo.svg";
     line-height: 2.5;
   }
 
-  .explainer p {
-    margin-block: 4rem;
+  .explainer-title {
+    margin-block-start: 0rem;
+    margin-block-end: 1rem;
+    font-size: 2rem;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25rem;
+  }
+
+  .explainer p,
+  .explainer ol {
+    margin-block-end: 4rem;
+  }
+
+  .explainer p:has(+ ol) {
+    margin-block-end: 2rem;
+  }
+
+  .explainer li {
+    margin-inline-start: 1.8rem;
   }
 
   iframe {
@@ -284,5 +535,30 @@ import logo from "../assets/logo.svg";
     aspect-ratio: 720 / 405;
     border: 0;
     border-radius: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .explainer {
+      font-size: 1.4rem;
+      line-height: 2;
+      margin-block: 4rem;
+    }
+
+    .explainer-title {
+      font-size: 1.4rem;
+    }
+
+    .explainer p,
+    .explainer ol {
+      margin-block-end: 2rem;
+    }
+
+    .explainer p:has(+ ol) {
+      margin-block-end: 1rem;
+    }
+
+    .explainer li {
+      margin-inline-start: 1rem;
+    }
   }
 </style>

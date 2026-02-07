@@ -48,6 +48,7 @@ jobs:
       - name: Build website
         env:
           PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+          PUBLIC_DISCORD_INVITE_URL: ${{ vars.PUBLIC_DISCORD_INVITE_URL }}
         run: yarn build-website
       - name: Deploy website to https://sueprego.dev
         env:
