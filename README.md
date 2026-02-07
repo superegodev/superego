@@ -24,13 +24,9 @@ Superego is also:
 
 ## Why
 
-I've had it with apps that hold my data hostage, make me jump through hoops to
-get it, and sell it to who knows who.
-
-I've had it with apps that remove features, pivot, and go on incredible
-journeys.
-
-I've had it with AIs giving me canned responses.
+**I've had it** with apps that hold my data hostage and make me jump through
+hoops to get it. Apps that drop features, enshittify, and go on incredible
+journeys. I'm bored by bland AIs giving me canned responses.
 
 I want my data **at my fingertips**, apps that **do what I need**, and an AI
 that **knows me**.
