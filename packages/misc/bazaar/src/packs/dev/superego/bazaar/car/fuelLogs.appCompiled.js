@@ -76,7 +76,7 @@ function shiftPeriod(period, direction) {
   };
 }
 export default function App(props) {
-  const { documents } = props.collections.$COLLECTION_ID;
+  const { documents } = props.collections.ProtoCollection_0;
   // Initialize period state to end today
   const [period, setPeriod] = React.useState(() => {
     const today = new Date();

@@ -7,24 +7,23 @@ import {
   Tile,
 } from "@superego/app-sandbox/components";
 import React from "react";
-import type * as $COLLECTION_ID from "./$COLLECTION_ID.js";
+import type * as ProtoCollection_0 from "./ProtoCollection_0.js";
 
 interface Props {
   collections: {
-    $COLLECTION_ID: {
-      id: "$COLLECTION_ID";
-      versionId: "$COLLECTION_VERSION_ID";
+    ProtoCollection_0: {
+      id: "ProtoCollection_0";
       displayName: string;
       documents: {
         id: `Document_${string}`;
-        content: $COLLECTION_ID.Expense;
+        content: ProtoCollection_0.Expense;
       }[];
     };
   };
 }
 
 export default function App(props: Props): React.ReactElement | null {
-  const expenses = props.collections.$COLLECTION_ID.documents;
+  const expenses = props.collections.ProtoCollection_0.documents;
 
   // Get unique months from expenses
   const monthOptions = React.useMemo(() => {

@@ -75,10 +75,9 @@ export default function LoadDemoDataButton() {
                 ? intl.formatMessage(
                     {
                       defaultMessage:
-                        "{message} ({current} packs installed out of {total})",
+                        "{current} packs installed out of {total}",
                     },
                     {
-                      message: progress.message,
                       current: progress.current,
                       total: progress.total,
                     },

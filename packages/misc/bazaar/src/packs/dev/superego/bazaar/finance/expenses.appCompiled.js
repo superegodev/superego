@@ -8,7 +8,7 @@ import {
 } from "@superego/app-sandbox/components";
 import React, { useMemo, useState } from "react";
 export default function App(props) {
-  const expenses = props.collections.$COLLECTION_ID.documents;
+  const expenses = props.collections.ProtoCollection_0.documents;
   // Get unique months from expenses
   const monthOptions = useMemo(() => {
     const months = new Set();

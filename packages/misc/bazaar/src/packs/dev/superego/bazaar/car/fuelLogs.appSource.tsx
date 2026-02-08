@@ -9,20 +9,19 @@ import {
   Tile,
 } from "@superego/app-sandbox/components";
 import React from "react";
-import type * as $COLLECTION_ID from "./$COLLECTION_ID.js";
+import type * as ProtoCollection_0 from "./ProtoCollection_0.js";
 
 interface Props {
   collections: {
     /**
      * "Fuel Logs" collection.
      */
-    $COLLECTION_ID: {
-      id: "$COLLECTION_ID";
-      versionId: "$COLLECTION_VERSION_ID";
+    ProtoCollection_0: {
+      id: "ProtoCollection_0";
       displayName: string;
       documents: {
         id: `Document_${string}`;
-        content: $COLLECTION_ID.FuelLog;
+        content: ProtoCollection_0.FuelLog;
       }[];
     };
   };
@@ -117,7 +116,7 @@ function shiftPeriod(
 }
 
 export default function App(props: Props): React.ReactElement | null {
-  const { documents } = props.collections.$COLLECTION_ID;
+  const { documents } = props.collections.ProtoCollection_0;
 
   // Initialize period state to end today
   const [period, setPeriod] = React.useState<PeriodState>(() => {

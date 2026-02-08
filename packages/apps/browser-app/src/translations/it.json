@@ -1394,8 +1394,8 @@
   "LoadDemoDataButton.tsx_ZBdI8u": {
     "defaultMessage": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
   },
-  "LoadDemoDataButton.tsx_bEC91W": {
-    "defaultMessage": "{message} ({current} pacchetti installati su {total})"
+  "LoadDemoDataButton.tsx_FBs/WA": {
+    "defaultMessage": "{current} pacchetti installati su {total}"
   },
   "SpeakButton.tsx_FUvUuG": {
     "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"

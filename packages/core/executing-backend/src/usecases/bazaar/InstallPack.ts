@@ -1,6 +1,7 @@
 import type {
   App,
   AppId,
+  AppVersion,
   Backend,
   Collection,
   CollectionCategory,
@@ -61,7 +62,7 @@ export default class BazaarInstallPack extends Usecase<
     const documentIdMapping = makeProtoDocumentIdMapping(documentIds);
 
     // Step 3: Validate proto id references.
-    const validationIssues = this.validateProtoIdReferences(
+    const validationIssues = BazaarInstallPack.validateProtoIdReferences(
       pack,
       collectionCategoryIdMapping,
       collectionIdMapping,
@@ -141,8 +142,10 @@ export default class BazaarInstallPack extends Usecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
-          // TODO_BAZAAR: replace proto collection ids inside source code
-          files: definition.files,
+          files: BazaarInstallPack.replaceProtoCollectionIdsInAppFiles(
+            definition.files,
+            collectionIdMapping,
+          ),
         },
         { appId: appIds[index] },
       );
@@ -195,7 +198,35 @@ export default class BazaarInstallPack extends Usecase<
     });
   }
 
-  private validateProtoIdReferences(
+  private static replaceProtoCollectionIdsInAppFiles(
+    files: AppVersion["files"],
+    collectionIdMapping: Map<ProtoCollectionId, CollectionId>,
+  ): AppVersion["files"] {
+    const mappingEntries = [...collectionIdMapping.entries()];
+    if (mappingEntries.length === 0) {
+      return files;
+    }
+
+    const replaceProtoCollectionIds = (text: string): string => {
+      let resolvedText = text;
+      for (const [protoCollectionId, collectionId] of mappingEntries) {
+        resolvedText = resolvedText.replaceAll(protoCollectionId, collectionId);
+      }
+      return resolvedText;
+    };
+
+    return Object.fromEntries(
+      Object.entries(files).map(([filePath, fileContent]) => [
+        filePath,
+        {
+          source: replaceProtoCollectionIds(fileContent.source),
+          compiled: replaceProtoCollectionIds(fileContent.compiled),
+        },
+      ]),
+    ) as AppVersion["files"];
+  }
+
+  private static validateProtoIdReferences(
     pack: Pack,
     collectionCategoryIdMapping: Map<
       ProtoCollectionCategoryId,

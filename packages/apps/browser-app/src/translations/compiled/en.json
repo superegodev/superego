@@ -2278,6 +2278,20 @@
       "value": "Load"
     }
   ],
+  "LoadDemoDataButton.tsx_FBs/WA": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " packs installed out of "
+    },
+    {
+      "type": 1,
+      "value": "total"
+    }
+  ],
   "LoadDemoDataButton.tsx_GCRF0i": [
     {
       "type": 0,
@@ -2294,32 +2308,6 @@
     {
       "type": 0,
       "value": "Loads some demo collections and documents for you to play around with."
-    }
-  ],
-  "LoadDemoDataButton.tsx_bEC91W": [
-    {
-      "type": 1,
-      "value": "message"
-    },
-    {
-      "type": 0,
-      "value": " ("
-    },
-    {
-      "type": 1,
-      "value": "current"
-    },
-    {
-      "type": 0,
-      "value": " packs installed out of "
-    },
-    {
-      "type": 1,
-      "value": "total"
-    },
-    {
-      "type": 0,
-      "value": ")"
     }
   ],
   "Logo.tsx_FbFgI4": [
