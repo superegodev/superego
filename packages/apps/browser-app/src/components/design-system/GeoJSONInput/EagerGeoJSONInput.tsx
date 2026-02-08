@@ -1,3 +1,5 @@
+import Geoman, { type GmOptionsPartial } from "@geoman-io/maplibre-geoman-free";
+import "@geoman-io/maplibre-geoman-free/dist/maplibre-geoman.css";
 import { Theme } from "@superego/backend";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -6,8 +8,6 @@ import useTheme from "../../../business-logic/theme/useTheme.js";
 import classnames from "../../../utils/classnames.js";
 import * as cs from "./GeoJSONInput.css.js";
 import type Props from "./Props.js";
-
-const SOURCE_ID = "geojson-input-source";
 
 const LIGHT_COLORS = {
   background: "#f8fafc",
@@ -26,6 +26,7 @@ const DARK_COLORS = {
 
 export default function EagerGeoJSONInput({
   value,
+  onChange,
   isInvalid = false,
   isReadOnly = false,
   className,
@@ -33,6 +34,8 @@ export default function EagerGeoJSONInput({
   const theme = useTheme();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const geomanRef = useRef<Geoman | null>(null);
+  const lastEmittedGeoJsonRef = useRef<string | null>(null);
   const colors = useMemo(
     () => (theme === Theme.Dark ? DARK_COLORS : LIGHT_COLORS),
     [theme],
@@ -52,27 +55,22 @@ export default function EagerGeoJSONInput({
       center: [0, 0],
       zoom: 1,
       attributionControl: false,
-      interactive: !isReadOnly,
+      interactive: true,
     });
     map.addControl(
       new maplibregl.NavigationControl({ showCompass: false }),
       "top-right",
     );
-    if (isReadOnly) {
-      map.scrollZoom.disable();
-      map.boxZoom.disable();
-      map.dragRotate.disable();
-      map.dragPan.disable();
-      map.keyboard.disable();
-      map.doubleClickZoom.disable();
-      map.touchZoomRotate.disable();
-    }
+    const geoman = new Geoman(map, buildGeomanOptions(colors));
+    geomanRef.current = geoman;
     mapRef.current = map;
     return () => {
+      void geomanRef.current?.destroy({ removeSources: true });
+      geomanRef.current = null;
       map.remove();
       mapRef.current = null;
     };
-  }, [styleDefinition, isReadOnly]);
+  }, [colors, styleDefinition]);
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -83,20 +81,102 @@ export default function EagerGeoJSONInput({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) {
+    const geoman = geomanRef.current;
+    if (!geoman || !map) {
       return;
     }
+    let isActive = true;
     const data = normalizeGeoJson(value);
     const applyData = () => {
-      ensureGeoJsonLayers(map, data, colors);
+      if (!isActive) {
+        return;
+      }
+      const serialized = serializeGeoJson(data);
+      if (serialized === lastEmittedGeoJsonRef.current) {
+        return;
+      }
+      geoman.features.deleteAll();
+      if (!isEmptyGeoJson(data)) {
+        geoman.features.importGeoJson(
+          data as unknown as Parameters<
+            typeof geoman.features.importGeoJson
+          >[0],
+        );
+      }
       fitToGeoJson(map, data);
     };
-    if (map.isStyleLoaded()) {
+    if (geoman.loaded) {
       applyData();
+    } else {
+      void geoman.waitForGeomanLoaded().then(applyData);
+    }
+    return () => {
+      isActive = false;
+    };
+  }, [value]);
+
+  useEffect(() => {
+    const geoman = geomanRef.current;
+    if (!geoman) {
       return;
     }
-    map.once("styledata", applyData);
-  }, [colors, value]);
+    let isActive = true;
+    const applyModeState = () => {
+      if (!isActive) {
+        return;
+      }
+      if (isReadOnly) {
+        geoman.disableAllModes();
+        geoman.removeControls();
+        return;
+      }
+      void geoman.addControls();
+    };
+    if (geoman.loaded) {
+      applyModeState();
+    } else {
+      void geoman.waitForGeomanLoaded().then(applyModeState);
+    }
+    return () => {
+      isActive = false;
+    };
+  }, [isReadOnly]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const geoman = geomanRef.current;
+    if (!map || !geoman || !onChange) {
+      return;
+    }
+    const handleUpdate = () => {
+      const geoJson = geoman.features.exportGeoJson();
+      const serialized = serializeGeoJson(geoJson);
+      lastEmittedGeoJsonRef.current = serialized;
+      onChange(geoJson);
+    };
+    const events = [
+      "gm:create",
+      "gm:remove",
+      "gm:drag",
+      "gm:change",
+      "gm:rotate",
+      "gm:scale",
+      "gm:cut",
+      "gm:split",
+      "gm:union",
+      "gm:difference",
+      "gm:line_simplification",
+      "gm:delete",
+    ] as const;
+    events.forEach((eventName) =>
+      map.on(eventName, handleUpdate as maplibregl.EventedListener),
+    );
+    return () => {
+      events.forEach((eventName) =>
+        map.off(eventName, handleUpdate as maplibregl.EventedListener),
+      );
+    };
+  }, [onChange]);
 
   return (
     <div
@@ -122,74 +202,49 @@ function normalizeGeoJson(
   return { type: "FeatureCollection", features: [] };
 }
 
-function ensureGeoJsonLayers(
-  map: maplibregl.Map,
+function buildGeomanOptions(colors: typeof LIGHT_COLORS): GmOptionsPartial {
+  return {
+    settings: {
+      controlsPosition: "top-left",
+    },
+    layerStyles: {
+      polygon: {
+        paint: {
+          "fill-color": colors.fill,
+          "fill-outline-color": colors.line,
+        },
+      },
+      line: {
+        paint: {
+          "line-color": colors.line,
+        },
+      },
+      point: {
+        paint: {
+          "circle-color": colors.point,
+          "circle-stroke-color": colors.pointStroke,
+        },
+      },
+    },
+  };
+}
+
+function isEmptyGeoJson(
   data: maplibregl.GeoJSONSourceSpecification["data"],
-  colors: typeof LIGHT_COLORS,
-) {
-  const existingSource = map.getSource(SOURCE_ID);
-  if (!existingSource) {
-    map.addSource(SOURCE_ID, {
-      type: "geojson",
-      data,
-    });
-  } else if ("setData" in existingSource) {
-    (existingSource as maplibregl.GeoJSONSource).setData(data);
-  }
+): boolean {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    data["type"] === "FeatureCollection" &&
+    Array.isArray(data["features"]) &&
+    data["features"].length === 0
+  );
+}
 
-  const fillLayerId = `${SOURCE_ID}-fill`;
-  if (!map.getLayer(fillLayerId)) {
-    map.addLayer({
-      id: fillLayerId,
-      type: "fill",
-      source: SOURCE_ID,
-      filter: ["==", "$type", "Polygon"],
-      paint: {
-        "fill-color": colors.fill,
-        "fill-opacity": 0.35,
-      },
-    });
-  } else {
-    map.setPaintProperty(fillLayerId, "fill-color", colors.fill);
-  }
-
-  const lineLayerId = `${SOURCE_ID}-line`;
-  if (!map.getLayer(lineLayerId)) {
-    map.addLayer({
-      id: lineLayerId,
-      type: "line",
-      source: SOURCE_ID,
-      paint: {
-        "line-color": colors.line,
-        "line-width": 2,
-      },
-    });
-  } else {
-    map.setPaintProperty(lineLayerId, "line-color", colors.line);
-  }
-
-  const circleLayerId = `${SOURCE_ID}-circle`;
-  if (!map.getLayer(circleLayerId)) {
-    map.addLayer({
-      id: circleLayerId,
-      type: "circle",
-      source: SOURCE_ID,
-      filter: ["==", "$type", "Point"],
-      paint: {
-        "circle-color": colors.point,
-        "circle-radius": 5,
-        "circle-stroke-color": colors.pointStroke,
-        "circle-stroke-width": 1,
-      },
-    });
-  } else {
-    map.setPaintProperty(circleLayerId, "circle-color", colors.point);
-    map.setPaintProperty(
-      circleLayerId,
-      "circle-stroke-color",
-      colors.pointStroke,
-    );
-  }
+function serializeGeoJson(
+  data: maplibregl.GeoJSONSourceSpecification["data"],
+): string {
+  return JSON.stringify(data);
 }
 
 function createStyleDefinition(

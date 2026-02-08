@@ -36,6 +36,18 @@ export default function GeoJSON({
     () => parseGeoJsonFromString(jsonValue),
     [jsonValue],
   );
+  const onMapChange = (
+    newValue: Record<string, unknown> | null | undefined,
+  ) => {
+    if (!newValue) {
+      setJsonValue("");
+      field.onChange(null);
+      return;
+    }
+    const nextValue = JSON.stringify(newValue, null, 2);
+    setJsonValue(nextValue);
+    field.onChange({ ...newValue, __dataType: DataType.JsonObject });
+  };
   return (
     <TextField
       id={field.name}
@@ -80,6 +92,7 @@ export default function GeoJSON({
       ) : null}
       <GeoJSONInput
         value={parsedGeoJson}
+        onChange={onMapChange}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         className={cs.JsonObjectField.GeoJSON.map}
