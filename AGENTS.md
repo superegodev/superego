@@ -13,10 +13,12 @@
 ## Testing
 
 - Always add unit or e2e tests for the changes you make.
+- Do not add tests unless explicitly instructed.
 - Follow the existing patterns and styling conventions when writing tests. In
   particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
   (optional), `// Exercise`, and `// Verify` to visually separate the "phases"
   of a test.
+- Ensure QA checks pass before committing changes.
 
 ## NPM scripts
 

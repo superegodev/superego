@@ -2,7 +2,10 @@ import { DataType } from "@superego/schema";
 import { useMemo } from "react";
 import { useController } from "react-hook-form";
 import classnames from "../../../../../utils/classnames.js";
-import { FieldError, TextField } from "../../../../design-system/forms/forms.js";
+import {
+  FieldError,
+  TextField,
+} from "../../../../design-system/forms/forms.js";
 import GeoJSONInput from "../../../../design-system/GeoJSONInput/GeoJSONInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
@@ -66,9 +69,7 @@ export default function GeoJSON({
   );
 }
 
-function getGeoJsonFromValue(
-  value: unknown,
-): Record<string, unknown> | null {
+function getGeoJsonFromValue(value: unknown): Record<string, unknown> | null {
   if (typeof value !== "object" || value === null) {
     return null;
   }
