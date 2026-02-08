@@ -18,9 +18,6 @@ export const JsonObjectField = {
     map: style({
       marginBlockEnd: vars.spacing._2,
     }),
-    textArea: style({
-      fontFamily: vars.typography.fontFamilies.monospace,
-    }),
   },
   Default: {
     textArea: style({

@@ -16,19 +16,18 @@ import * as cs from "./GeoJSONInput.css.js";
 import type Props from "./Props.js";
 
 const LIGHT_COLORS = {
-  background: "#f8fafc",
   fill: "#cbd5f5",
   line: "#64748b",
   point: "#475569",
   pointStroke: "#f8fafc",
 };
 const DARK_COLORS = {
-  background: "#0f172a",
   fill: "#475569",
   line: "#94a3b8",
   point: "#e2e8f0",
   pointStroke: "#0f172a",
 };
+const MAP_STYLE_URL = "https://demotiles.maplibre.org/style.json";
 
 export default function EagerGeoJSONInput({
   value,
@@ -46,10 +45,6 @@ export default function EagerGeoJSONInput({
     () => (theme === Theme.Dark ? DARK_COLORS : LIGHT_COLORS),
     [theme],
   );
-  const styleDefinition = useMemo(
-    () => createStyleDefinition(colors.background),
-    [colors.background],
-  );
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) {
@@ -57,7 +52,7 @@ export default function EagerGeoJSONInput({
     }
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
-      style: styleDefinition,
+      style: MAP_STYLE_URL,
       center: [0, 0],
       zoom: 1,
       attributionControl: false,
@@ -76,14 +71,7 @@ export default function EagerGeoJSONInput({
       map.remove();
       mapRef.current = null;
     };
-  }, [colors, styleDefinition]);
-
-  useEffect(() => {
-    if (!mapRef.current) {
-      return;
-    }
-    mapRef.current.setStyle(styleDefinition);
-  }, [styleDefinition]);
+  }, [colors]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -288,24 +276,6 @@ function serializeGeoJson(
   data: maplibregl.GeoJSONSourceSpecification["data"],
 ): string {
   return JSON.stringify(data);
-}
-
-function createStyleDefinition(
-  backgroundColor: string,
-): maplibregl.StyleSpecification {
-  return {
-    version: 8,
-    sources: {},
-    layers: [
-      {
-        id: "background",
-        type: "background",
-        paint: {
-          "background-color": backgroundColor,
-        },
-      },
-    ],
-  };
 }
 
 function fitToGeoJson(

@@ -728,9 +728,6 @@
   "GeneralSettingsTab.tsx_qmIyad": {
     "defaultMessage": "Specific instructions for this collection to pass to the assistant."
   },
-  "GeoJSON.tsx_JBD8Rn": {
-    "defaultMessage": "Not a valid GeoJSON string"
-  },
   "GlobalSettings.tsx_HZGiV3": {
     "defaultMessage": "Settings actions"
   },

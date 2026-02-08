@@ -1,13 +1,8 @@
 import { DataType } from "@superego/schema";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useController } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
 import classnames from "../../../../../utils/classnames.js";
-import {
-  FieldError,
-  TextArea,
-  TextField,
-} from "../../../../design-system/forms/forms.js";
+import { FieldError, TextField } from "../../../../design-system/forms/forms.js";
 import GeoJSONInput from "../../../../design-system/GeoJSONInput/GeoJSONInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
@@ -24,54 +19,23 @@ export default function GeoJSON({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
-  const [jsonValue, setJsonValue] = useState(() =>
-    getJsonValueFromValue(field.value),
-  );
-  useEffect(() => {
-    if (field.value === null) {
-      setJsonValue("");
-    }
-  }, [field.value]);
-  const parsedGeoJson = useMemo(
-    () => parseGeoJsonFromString(jsonValue),
-    [jsonValue],
+  const geoJsonValue = useMemo(
+    () => getGeoJsonFromValue(field.value),
+    [field.value],
   );
   const onMapChange = (
     newValue: Record<string, unknown> | null | undefined,
   ) => {
     if (!newValue) {
-      setJsonValue("");
       field.onChange(null);
       return;
     }
-    const nextValue = JSON.stringify(newValue, null, 2);
-    setJsonValue(nextValue);
     field.onChange({ ...newValue, __dataType: DataType.JsonObject });
   };
   return (
     <TextField
       id={field.name}
       name={field.name}
-      value={jsonValue}
-      onChange={(newValue) => {
-        setJsonValue(newValue);
-        if (newValue === "") {
-          field.onChange(null);
-          return;
-        }
-        try {
-          field.onChange({
-            ...JSON.parse(newValue),
-            __dataType: DataType.JsonObject,
-          });
-        } catch {
-          field.onChange(newValue);
-        }
-      }}
-      onBlur={() => {
-        setJsonValue(getJsonValueFromValue(field.value));
-        field.onBlur();
-      }}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
@@ -91,48 +55,23 @@ export default function GeoJSON({
         />
       ) : null}
       <GeoJSONInput
-        value={parsedGeoJson}
+        value={geoJsonValue}
         onChange={onMapChange}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         className={cs.JsonObjectField.GeoJSON.map}
       />
-      <TextArea
-        ref={field.ref}
-        placeholder={field.value === null ? "null" : undefined}
-        className={cs.JsonObjectField.GeoJSON.textArea}
-      />
-      <FieldError>
-        {typeof field.value === "string" ? (
-          <FormattedMessage defaultMessage="Not a valid GeoJSON string" />
-        ) : (
-          fieldState.error?.message
-        )}
-      </FieldError>
+      <FieldError>{fieldState.error?.message}</FieldError>
     </TextField>
   );
 }
 
-function getJsonValueFromValue(value: unknown): string {
+function getGeoJsonFromValue(
+  value: unknown,
+): Record<string, unknown> | null {
   if (typeof value !== "object" || value === null) {
-    return "";
+    return null;
   }
   const { __dataType, ...rest } = value as Record<string, unknown>;
-  return JSON.stringify(rest, null, 2);
-}
-
-function parseGeoJsonFromString(value: string): Record<string, unknown> | null {
-  if (value === "") {
-    return null;
-  }
-  try {
-    const parsed = JSON.parse(value);
-    if (typeof parsed !== "object" || parsed === null) {
-      return null;
-    }
-    const { __dataType, ...rest } = parsed as Record<string, unknown>;
-    return rest;
-  } catch {
-    return null;
-  }
+  return rest;
 }
