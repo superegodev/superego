@@ -6104,6 +6104,7 @@ __metadata:
   resolution: "@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests"
   dependencies:
     "@superego/backend": "workspace:*"
+    "@superego/bazaar": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
     "@superego/global-types": "workspace:*"
@@ -6335,6 +6336,7 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/backend": "workspace:*"
+    "@superego/bazaar": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/schema": "workspace:*"

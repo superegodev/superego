@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
+    "@superego/bazaar": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
     "@superego/global-types": "workspace:*",

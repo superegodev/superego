@@ -4,7 +4,7 @@ import type {
   Pack,
   ProtoCollectionId,
 } from "@superego/backend";
-import packs from "@superego/bazaar";
+import { packs } from "@superego/bazaar";
 import calendarEntriesData from "./calendarEntriesData.js";
 import contactsData from "./contactsData.js";
 import expensesData from "./expensesData.js";

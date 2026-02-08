@@ -1,4 +1,5 @@
 import { AppType } from "@superego/backend";
+import { packs } from "@superego/bazaar";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -6,9 +7,58 @@ import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Bazaar", (deps) => {
-  describe.todo("listPacks", () => {});
+  describe("listPacks", () => {
+    it("success: lists bazaar packs as lite packs", async () => {
+      // Setup SUT
+      const { backend } = deps();
 
-  describe.todo("getPack", () => {});
+      // Exercise
+      const result = await backend.bazaar.listPacks();
+
+      // Verify
+      expect(result.data).toHaveLength(packs.length);
+    });
+  });
+
+  describe("getPack", () => {
+    it("error: PackNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const packId = "Pack_com.example.unknown";
+      const result = await backend.bazaar.getPack(packId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "PackNotFound",
+          details: { packId },
+        },
+      });
+    });
+
+    it("success: gets pack by id", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const results = await Promise.all(
+        packs.map((pack) => backend.bazaar.getPack(pack.id)),
+      );
+
+      // Verify
+      expect(results).toEqual(
+        packs.map((pack) => ({
+          success: true,
+          data: pack,
+          error: null,
+        })),
+      );
+    });
+  });
 
   describe("installPack", () => {
     it("error: PackNotValid when proto collection category parent references future index", async () => {
@@ -20,7 +70,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -58,7 +107,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -124,7 +172,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -189,7 +236,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -259,7 +305,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -308,7 +353,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -350,7 +394,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -431,7 +474,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -477,7 +519,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -544,7 +585,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -613,7 +653,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
           images: [],
@@ -681,7 +720,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.complete",
         info: {
           name: "Complete Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A complete test pack",
           longDescription: "A complete test pack with all object types",
           images: [],
@@ -798,7 +836,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.crossref",
         info: {
           name: "Cross-Reference Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A pack with cross-collection references",
           longDescription:
             "A test pack with documents referencing documents in other collections",
@@ -1127,7 +1164,6 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
         id: "Pack_com.example.selfreference",
         info: {
           name: "Self-Reference Test Pack",
-          coverImage: "cover.png",
           shortDescription: "A pack with self-referencing documents",
           longDescription:
             "A test pack with a collection where documents can reference other documents in the same collection",

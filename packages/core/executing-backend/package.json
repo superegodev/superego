@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
+    "@superego/bazaar": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/javascript-sandbox-global-utils": "workspace:*",
     "@superego/schema": "workspace:*",

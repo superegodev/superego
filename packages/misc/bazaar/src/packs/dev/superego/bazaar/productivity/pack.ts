@@ -8,13 +8,12 @@ export default {
   id: "Pack_dev.superego.productivity",
   info: {
     name: "Productivity",
-    coverImage: "cover.avif",
     shortDescription: "Contacts manager and calendar.",
     longDescription:
       "A simple address book for your personal contacts, and a simple calendar for your appointments.",
     images: [
       {
-        path: "cover.avif",
+        path: "/cover.avif",
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(cover),
       },

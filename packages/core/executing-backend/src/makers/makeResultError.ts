@@ -43,6 +43,7 @@ import type {
   FileNotFound,
   FilesNotFound,
   MakingContentBlockingKeysFailed,
+  PackNotFound,
   PackNotValid,
   ParentCollectionCategoryIsDescendant,
   ParentCollectionCategoryNotFound,
@@ -101,6 +102,7 @@ type KnownResultError =
   | FileNotFound
   | FilesNotFound
   | MakingContentBlockingKeysFailed
+  | PackNotFound
   | PackNotValid
   | ParentCollectionCategoryIsDescendant
   | ParentCollectionCategoryNotFound

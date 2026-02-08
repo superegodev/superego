@@ -11,5 +11,4 @@ export const packsAsConst = [
   productivity,
 ] as const satisfies Pack[];
 
-const packs: Pack[] = packsAsConst;
-export default packs;
+export const packs: Pack[] = packsAsConst;

@@ -66,6 +66,7 @@ export type { default as ExecutingJavascriptFunctionFailed } from "./errors/Exec
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as MakingContentBlockingKeysFailed } from "./errors/MakingContentBlockingKeysFailed.js";
+export type { default as PackNotFound } from "./errors/PackNotFound.js";
 export type { default as PackNotValid } from "./errors/PackNotValid.js";
 export type { default as ParentCollectionCategoryIsDescendant } from "./errors/ParentCollectionCategoryIsDescendant.js";
 export type { default as ParentCollectionCategoryNotFound } from "./errors/ParentCollectionCategoryNotFound.js";

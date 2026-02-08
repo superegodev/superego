@@ -9,12 +9,11 @@ export default {
   id: "Pack_dev.superego.diet",
   info: {
     name: "Diet",
-    coverImage: "cover.avif",
     shortDescription: "TODO_BAZAAR: write",
     longDescription: "TODO_BAZAAR: write",
     images: [
       {
-        path: "cover.avif",
+        path: "/cover.avif",
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(cover),
       },

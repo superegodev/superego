@@ -42,6 +42,7 @@ import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.j
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
+import type PackNotFound from "./errors/PackNotFound.js";
 import type PackNotValid from "./errors/PackNotValid.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
@@ -523,7 +524,7 @@ export default interface Backend {
   bazaar: {
     listPacks(): ResultPromise<LitePack[], UnexpectedError>;
 
-    getPack(id: PackId): ResultPromise<Pack, UnexpectedError>;
+    getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;
 
     installPack(pack: Pack): ResultPromise<
       {
