@@ -14,8 +14,9 @@ Google Drive, or any service you already use. **No accounts, no middlemen.**
 
 Superego is also:
 
-1. A **platform for** building your own personal **apps**.
-2. An **AI assistant** for your data.
+1. An **app platform** for building (or vibe-coding) your own personal apps.
+2. An **AI assistant** with a precise and detailed understanding of your data
+   that can extract meaningful answers from it.
 
 [Try the demo @ demo.superego.dev](https://demo.superego.dev).
 
@@ -24,12 +25,13 @@ Superego is also:
 
 ## Why
 
-**I've had it** with apps that hold my data hostage and make me jump through
-hoops to get it. Apps that drop features, enshittify, and go on incredible
-journeys. I'm bored by bland AIs giving me canned responses.
+**I'm tired** of apps that hold my data hostage and make me jump through hoops
+to get it. Apps that drop features, enshittify, and go on incredible journeys.
 
-I want my data **at my fingertips**, apps that **do what I need**, and an AI
-that **knows me**.
+I want **access to my data** and apps that **serve _me_**.
+
+I also want **an AI assistant that actually knows me**, not one that slops out
+bland, canned responses.
 
 ## License
 
