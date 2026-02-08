@@ -1,4 +1,10 @@
-import Geoman, { type GmOptionsPartial } from "@geoman-io/maplibre-geoman-free";
+import {
+  Geoman,
+  type GmOptionsPartial,
+  defaultLayerStyles as geomanStyles,
+  type LayerStyle,
+  type PartialLayerStyle,
+} from "@geoman-io/maplibre-geoman-free";
 import "@geoman-io/maplibre-geoman-free/dist/maplibre-geoman.css";
 import { Theme } from "@superego/backend";
 import maplibregl from "maplibre-gl";
@@ -152,7 +158,7 @@ export default function EagerGeoJSONInput({
       const geoJson = geoman.features.exportGeoJson();
       const serialized = serializeGeoJson(geoJson);
       lastEmittedGeoJsonRef.current = serialized;
-      onChange(geoJson);
+      onChange(geoJson as unknown as Record<string, unknown>);
     };
     const events = [
       "gm:create",
@@ -169,11 +175,11 @@ export default function EagerGeoJSONInput({
       "gm:delete",
     ] as const;
     events.forEach((eventName) =>
-      map.on(eventName, handleUpdate as maplibregl.EventedListener),
+      map.on(eventName as any, handleUpdate as any),
     );
     return () => {
       events.forEach((eventName) =>
-        map.off(eventName, handleUpdate as maplibregl.EventedListener),
+        map.off(eventName as any, handleUpdate as any),
       );
     };
   }, [onChange]);
@@ -208,25 +214,62 @@ function buildGeomanOptions(colors: typeof LIGHT_COLORS): GmOptionsPartial {
       controlsPosition: "top-left",
     },
     layerStyles: {
-      polygon: {
-        paint: {
-          "fill-color": colors.fill,
-          "fill-outline-color": colors.line,
-        },
-      },
-      line: {
-        paint: {
-          "line-color": colors.line,
-        },
-      },
-      point: {
-        paint: {
-          "circle-color": colors.point,
-          "circle-stroke-color": colors.pointStroke,
-        },
-      },
+      ...Object.fromEntries(
+        Object.entries(geomanStyles).map(([shape, style]) => [
+          shape,
+          updateLayerStyleColors(style as LayerStyle, colors),
+        ]),
+      ),
     },
   };
+}
+
+function updateLayerStyleColors(
+  style: LayerStyle,
+  colors: typeof LIGHT_COLORS,
+): LayerStyle {
+  return Object.fromEntries(
+    Object.entries(style).map(([sourceKey, layers]) => [
+      sourceKey,
+      layers.map((layer) => updateLayerColors(layer, colors)),
+    ]),
+  ) as LayerStyle;
+}
+
+function updateLayerColors(
+  layer: PartialLayerStyle,
+  colors: typeof LIGHT_COLORS,
+): PartialLayerStyle {
+  if (layer.type === "fill") {
+    return {
+      ...layer,
+      paint: {
+        ...layer.paint,
+        "fill-color": colors.fill,
+        "fill-outline-color": colors.line,
+      },
+    };
+  }
+  if (layer.type === "line") {
+    return {
+      ...layer,
+      paint: {
+        ...layer.paint,
+        "line-color": colors.line,
+      },
+    };
+  }
+  if (layer.type === "circle") {
+    return {
+      ...layer,
+      paint: {
+        ...layer.paint,
+        "circle-color": colors.point,
+        "circle-stroke-color": colors.pointStroke,
+      },
+    };
+  }
+  return layer;
 }
 
 function isEmptyGeoJson(
