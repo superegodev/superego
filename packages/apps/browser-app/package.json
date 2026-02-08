@@ -53,6 +53,7 @@
     "zx": "8.8.5-lite"
   },
   "dependencies": {
+    "@geoman-io/maplibre-geoman-free": "^0.6.2",
     "@hookform/resolvers": "^5.2.2",
     "@react-aria/optimize-locales-plugin": "^1.1.5",
     "@standard-schema/spec": "^1.1.0",
@@ -82,6 +83,7 @@
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
+    "maplibre-gl": "^5.17.0",
     "markdown-to-jsx": "^9.6.1",
     "monaco-editor": "0.55.1",
     "p-map": "^7.0.4",

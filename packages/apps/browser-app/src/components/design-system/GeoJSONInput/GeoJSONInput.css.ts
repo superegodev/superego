@@ -1,0 +1,26 @@
+import { style } from "@vanilla-extract/css";
+import { vars } from "../../../themes.css.js";
+
+export const GeoJSONInput = {
+  root: style({
+    width: "100%",
+    height: "25rem",
+    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+    borderRadius: vars.borders.radius.md,
+    marginBlockEnd: vars.spacing._2,
+    overflow: "hidden",
+    selectors: {
+      '&[data-has-focus="true"]': {
+        outline: `2px solid ${vars.colors.accent}`,
+        outlineOffset: "-2px",
+      },
+      '&[aria-invalid="true"]': {
+        borderColor: vars.colors.semantic.error.border,
+      },
+    },
+  }),
+  map: style({
+    width: "100%",
+    height: "100%",
+  }),
+};

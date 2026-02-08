@@ -41,4 +41,43 @@ export default [
       ),
     ),
   },
+  {
+    dataType: DataType.JsonObject,
+    id: FormatId.JsonObject.GeoJSON,
+    name: "GeoJSON",
+    description: "A GeoJSON FeatureCollection.",
+    validExamples: [
+      {
+        __dataType: DataType.JsonObject,
+        type: "FeatureCollection",
+        features: [],
+      },
+      {
+        __dataType: DataType.JsonObject,
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: { type: "Point", coordinates: [0, 0] },
+            properties: {},
+          },
+        ],
+      },
+    ],
+    invalidExamples: [
+      { __dataType: DataType.JsonObject, type: "Feature", geometry: null },
+    ],
+    valibotSchema: v.pipe(
+      jsonObject(),
+      v.check(
+        (jsonObject) =>
+          jsonObject["type"] === "FeatureCollection" &&
+          Array.isArray(jsonObject["features"]),
+        ({ lang }) =>
+          translate(lang, {
+            en: "Invalid JsonObject: Not a GeoJSON FeatureCollection",
+          }),
+      ),
+    ),
+  },
 ] satisfies Format<DataType.JsonObject>[];

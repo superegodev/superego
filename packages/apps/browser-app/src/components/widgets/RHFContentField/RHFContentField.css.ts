@@ -9,6 +9,13 @@ export const JsonObjectField = {
       marginBlockEnd: vars.spacing._6,
     }),
   },
+  GeoJSON: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+  },
   Default: {
     textArea: style({
       fontFamily: vars.typography.fontFamilies.monospace,

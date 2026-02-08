@@ -1,7 +1,19 @@
 import { FormatId } from "@superego/schema";
 import Default from "./formats/Default.js";
+import GeoJSON from "./formats/GeoJSON.js";
 import TiptapRichText from "./formats/TiptapRichText.js";
 import type Props from "./Props.js";
+
+function getComponent(format: string | undefined) {
+  switch (format) {
+    case FormatId.JsonObject.TiptapRichText:
+      return TiptapRichText;
+    case FormatId.JsonObject.GeoJSON:
+      return GeoJSON;
+    default:
+      return Default;
+  }
+}
 
 export default function JsonObjectField({
   typeDefinition,
@@ -11,9 +23,7 @@ export default function JsonObjectField({
   name,
   label,
 }: Props) {
-  const { format } = typeDefinition;
-  const Component =
-    format === FormatId.JsonObject.TiptapRichText ? TiptapRichText : Default;
+  const Component = getComponent(typeDefinition.format);
   return (
     <Component
       typeDefinition={typeDefinition}
