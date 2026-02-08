@@ -521,11 +521,7 @@ export default interface Backend {
     list(): ResultPromise<App[], UnexpectedError>;
   };
 
-  bazaar: {
-    listPacks(): ResultPromise<LitePack[], UnexpectedError>;
-
-    getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;
-
+  packs: {
     installPack(pack: Pack): ResultPromise<
       {
         collectionCategories: CollectionCategory[];
@@ -554,6 +550,12 @@ export default interface Backend {
       | ConnectorDoesNotSupportUpSyncing
       | UnexpectedError
     >;
+  };
+
+  bazaar: {
+    listPacks(): ResultPromise<LitePack[], UnexpectedError>;
+
+    getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;
   };
 
   backgroundJobs: {

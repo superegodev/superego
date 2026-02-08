@@ -41,8 +41,8 @@ import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
-export default class BazaarInstallPack extends Usecase<
-  Backend["bazaar"]["installPack"]
+export default class PacksInstallPack extends Usecase<
+  Backend["packs"]["installPack"]
 > {
   async exec(pack: Pack) {
     // Step 1: Generate all IDs upfront.
@@ -62,7 +62,7 @@ export default class BazaarInstallPack extends Usecase<
     const documentIdMapping = makeProtoDocumentIdMapping(documentIds);
 
     // Step 3: Validate proto id references.
-    const validationIssues = BazaarInstallPack.validateProtoIdReferences(
+    const validationIssues = PacksInstallPack.validateProtoIdReferences(
       pack,
       collectionCategoryIdMapping,
       collectionIdMapping,
@@ -142,7 +142,7 @@ export default class BazaarInstallPack extends Usecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
-          files: BazaarInstallPack.replaceProtoCollectionIdsInAppFiles(
+          files: PacksInstallPack.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,
           ),

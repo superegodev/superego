@@ -28,7 +28,6 @@ import AssistantsStartConversation from "./usecases/assistants/StartConversation
 import BackgroundJobsGet from "./usecases/background-jobs/Get.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
 import BazaarGetPack from "./usecases/bazaar/GetPack.js";
-import BazaarInstallPack from "./usecases/bazaar/InstallPack.js";
 import BazaarListPacks from "./usecases/bazaar/ListPacks.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
@@ -62,6 +61,7 @@ import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import InferenceTts from "./usecases/inference/Tts.js";
+import PacksInstallPack from "./usecases/packs/InstallPack.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -71,6 +71,7 @@ export default class ExecutingBackend implements Backend {
   assistants: Backend["assistants"];
   inference: Backend["inference"];
   apps: Backend["apps"];
+  packs: Backend["packs"];
   bazaar: Backend["bazaar"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
@@ -173,10 +174,13 @@ export default class ExecutingBackend implements Backend {
       list: this.makeUsecase(AppsList, false),
     };
 
+    this.packs = {
+      installPack: this.makeUsecase(PacksInstallPack, true),
+    };
+
     this.bazaar = {
       listPacks: this.makeUsecase(BazaarListPacks, false),
       getPack: this.makeUsecase(BazaarGetPack, false),
-      installPack: this.makeUsecase(BazaarInstallPack, true),
     };
 
     this.backgroundJobs = {
