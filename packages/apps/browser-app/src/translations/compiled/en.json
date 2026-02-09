@@ -992,6 +992,12 @@
       "value": "Not a valid JSON string"
     }
   ],
+  "DeleteAppModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "DeleteAppModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1042,6 +1048,12 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -1124,6 +1136,12 @@
       "value": "\""
     }
   ],
+  "DeleteConversationModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "DeleteConversationModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1160,6 +1178,12 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -1390,6 +1414,12 @@
     {
       "type": 0,
       "value": "Go to"
+    }
+  ],
+  "DownSyncInfoModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -2374,6 +2404,12 @@
       "value": "There are no items in the list"
     }
   ],
+  "LoadDemoDataButton.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
@@ -3298,6 +3334,12 @@
       "value": "Remote document version ID:"
     }
   ],
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -3416,6 +3458,12 @@
       },
       "type": 5,
       "value": "type"
+    }
+  ],
+  "RestoreVersionModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "RestoreVersionModal.tsx_X3XZvD": [
@@ -3754,6 +3802,12 @@
       "value": "Set remote"
     }
   ],
+  "SetNameAndSaveModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "SetNameAndSaveModal.tsx_HAlOn1": [
     {
       "type": 0,
@@ -4056,6 +4110,12 @@
     {
       "type": 0,
       "value": "Error saving global settings"
+    }
+  ],
+  "UpdateNameModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "UpdateNameModalForm.tsx_BWpuKl": [

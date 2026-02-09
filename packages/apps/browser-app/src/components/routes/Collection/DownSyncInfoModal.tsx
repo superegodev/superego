@@ -30,15 +30,20 @@ export default function DownSyncInfoModal({
       {collection.remote.syncState.down.error ? (
         <ResultErrors errors={[collection.remote.syncState.down.error]} />
       ) : null}
-      <Button
-        variant="primary"
-        onPress={() => {
-          onClose();
-          onTriggerDownSync();
-        }}
-      >
-        <FormattedMessage defaultMessage="Sync" />
-      </Button>
+      <ModalDialog.Actions>
+        <Button onPress={onClose}>
+          <FormattedMessage defaultMessage="Cancel" />
+        </Button>
+        <Button
+          variant="primary"
+          onPress={() => {
+            onClose();
+            onTriggerDownSync();
+          }}
+        >
+          <FormattedMessage defaultMessage="Sync" />
+        </Button>
+      </ModalDialog.Actions>
     </ModalDialog>
   );
 }

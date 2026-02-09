@@ -6,7 +6,6 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
-import * as cs from "./BazaarPack.css.js";
 import PackEntityCounts from "./PackEntityCounts.js";
 
 interface Props {
@@ -47,14 +46,14 @@ export default function InstallPackModal({ pack, isOpen, onClose }: Props) {
         <PackEntityCounts pack={pack} separator=", " />{" "}
         <FormattedMessage defaultMessage="will be installed." />
       </p>
-      <div className={cs.InstallPackModal.actions}>
+      <ModalDialog.Actions>
         <Button onPress={onClose} isDisabled={isPending}>
           <FormattedMessage defaultMessage="Cancel" />
         </Button>
         <Button variant="primary" onPress={onInstall} isDisabled={isPending}>
           <FormattedMessage defaultMessage="Install" />
         </Button>
-      </div>
+      </ModalDialog.Actions>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </ModalDialog>
   );

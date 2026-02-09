@@ -91,9 +91,14 @@ export default function LoadDemoDataButton() {
             <p>
               <FormattedMessage defaultMessage="Loads some demo collections and documents for you to play around with." />
             </p>
-            <Button variant="primary" onPress={handleLoadDemoData}>
-              <FormattedMessage defaultMessage="Load" />
-            </Button>
+            <ModalDialog.Actions>
+              <Button onPress={() => setIsModalOpen(false)}>
+                <FormattedMessage defaultMessage="Cancel" />
+              </Button>
+              <Button variant="primary" onPress={handleLoadDemoData}>
+                <FormattedMessage defaultMessage="Load" />
+              </Button>
+            </ModalDialog.Actions>
           </>
         )}
       </ModalDialog>

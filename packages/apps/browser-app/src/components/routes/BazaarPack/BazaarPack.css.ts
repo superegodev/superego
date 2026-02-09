@@ -51,12 +51,3 @@ export const BazaarPack = {
     boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.neutral._12} r g b / 0.15)`,
   }),
 };
-
-export const InstallPackModal = {
-  actions: style({
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: vars.spacing._2,
-    marginBlockStart: vars.spacing._6,
-  }),
-};

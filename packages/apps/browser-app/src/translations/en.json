@@ -419,6 +419,9 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
+  "DeleteAppModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "DeleteAppModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -430,6 +433,9 @@
   },
   "DeleteAppModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteCollectionModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Deleting the collection will permanently delete all of its documents and files. </p> <p> If you're sure you want to delete the collection, write <i>delete</i> in the input below. </p>"
@@ -446,6 +452,9 @@
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Delete conversation \"{conversationName}\""
   },
+  "DeleteConversationModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -454,6 +463,9 @@
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteDocumentModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -538,6 +550,9 @@
   },
   "DocumentsTable.tsx_xIoGG9": {
     "defaultMessage": "Go to"
+  },
+  "DownSyncInfoModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Syncing with {remote}"
@@ -950,6 +965,9 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "There are no items in the list"
   },
+  "LoadDemoDataButton.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "LoadDemoDataButton.tsx_8EGRF9": {
     "defaultMessage": "Load"
   },
@@ -1109,6 +1127,9 @@
   "RemoteDocumentInfoModal.tsx_nY1/sq": {
     "defaultMessage": "Remote document version ID:"
   },
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
@@ -1135,6 +1156,9 @@
   },
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
+  },
+  "RestoreVersionModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "RestoreVersionModal.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
@@ -1231,6 +1255,9 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Set remote"
+  },
+  "SetNameAndSaveModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "SetNameAndSaveModal.tsx_HAlOn1": {
     "defaultMessage": "Name"
@@ -1369,6 +1396,9 @@
   },
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
+  },
+  "UpdateNameModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "UpdateNameModalForm.tsx_BWpuKl": {
     "defaultMessage": "Update"

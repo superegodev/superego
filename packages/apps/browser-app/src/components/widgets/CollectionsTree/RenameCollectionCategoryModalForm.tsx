@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionCategory } from "../../../business-logic/backend/hooks.js";
+import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../RHFEmojiField/RHFEmojiField.js";
@@ -77,13 +78,14 @@ export default function RenameCollectionCategoryModalForm({
             className={cs.RenameCollectionCategoryModalForm.nameInput}
           />
         </div>
-        <div
-          className={cs.RenameCollectionCategoryModalForm.submitButtonContainer}
-        >
+        <ModalDialog.Actions>
+          <Button onPress={onClose}>
+            <FormattedMessage defaultMessage="Cancel" />
+          </Button>
           <RHFSubmitButton control={control} variant="primary">
             <FormattedMessage defaultMessage="Save" />
           </RHFSubmitButton>
-        </div>
+        </ModalDialog.Actions>
         {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>

@@ -419,6 +419,9 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
   },
+  "DeleteAppModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
   "DeleteAppModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
@@ -430,6 +433,9 @@
   },
   "DeleteAppModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
+  },
+  "DeleteCollectionModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Eliminando la collezione cancellerai definitivamente tutti i suoi documenti e file. </p> <p> Se sei sicuro di voler eliminare la collezione, scrivi <i>delete</i> nel campo sottostante. </p>"
@@ -443,6 +449,9 @@
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
+  "DeleteConversationModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Elimina la conversazione \"{conversationName}\""
   },
@@ -454,6 +463,9 @@
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
+  },
+  "DeleteDocumentModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -538,6 +550,9 @@
   },
   "DocumentsTable.tsx_xIoGG9": {
     "defaultMessage": "Vai a"
+  },
+  "DownSyncInfoModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Sincronizzazione con {remote}"
@@ -1094,6 +1109,9 @@
   "RemoteDocumentInfoModal.tsx_nY1/sq": {
     "defaultMessage": "ID versione documento remoto:"
   },
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
@@ -1120,6 +1138,9 @@
   },
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> è stata eliminata.} other {<code>{collectionId}</code> ha una nuova versione.} }"
+  },
+  "RestoreVersionModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "RestoreVersionModal.tsx_X3XZvD": {
     "defaultMessage": "Ripristina versione"
@@ -1210,6 +1231,9 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Imposta remoto"
+  },
+  "SetNameAndSaveModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "SetNameAndSaveModal.tsx_HAlOn1": {
     "defaultMessage": "Nome"
@@ -1337,6 +1361,9 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
   },
+  "UpdateNameModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
   "UpdateNameModalForm.tsx_BWpuKl": {
     "defaultMessage": "Aggiorna"
   },
@@ -1438,6 +1465,9 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "Compilazione TypeScript non riuscita"
+  },
+  "LoadDemoDataButton.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "LoadDemoDataButton.tsx_8EGRF9": {
     "defaultMessage": "Carica"

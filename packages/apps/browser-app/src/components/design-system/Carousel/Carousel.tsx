@@ -1,10 +1,6 @@
 import { type ComponentProps, useState } from "react";
 import { Toolbar } from "react-aria-components";
-import {
-  PiCaretLeft,
-  PiCaretRight,
-  PiCircleFill,
-} from "react-icons/pi";
+import { PiCaretLeft, PiCaretRight, PiCircleFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";

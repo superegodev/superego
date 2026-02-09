@@ -38,6 +38,7 @@ export const ModalDialog = {
       },
     },
   }),
+
   modal: style({
     minWidth: vars.spacing._100,
     maxWidth: `min(${vars.spacing._120}, calc(100dvw - ${vars.spacing._8}))`,
@@ -54,6 +55,14 @@ export const ModalDialog = {
         animation: `${modalZoom} 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)`,
       },
     },
+  }),
+};
+
+export const Actions = {
+  root: style({
+    display: "flex",
+    gap: vars.spacing._2,
+    marginBlockStart: vars.spacing._6,
   }),
 };
 
