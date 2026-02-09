@@ -38,7 +38,7 @@ export default function InstallPackModal({ pack, isOpen, onClose }: Props) {
     >
       <ModalDialog.Heading>
         <FormattedMessage
-          defaultMessage='Install "{packName}"?'
+          defaultMessage='Install pack "{packName}"?'
           values={{ packName: pack.info.name }}
         />
       </ModalDialog.Heading>

@@ -3,7 +3,7 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import Ask from "../Ask/Ask.js";
 import BackgroundJob from "../BackgroundJob/BackgroundJob.js";
 import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
-import Bazaar from "../Bazaar/Bazaar.jsx";
+import Bazaar from "../Bazaar/Bazaar.js";
 import BazaarPack from "../BazaarPack/BazaarPack.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";

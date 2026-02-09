@@ -239,6 +239,12 @@
       "value": "packName"
     }
   ],
+  "BazaarPack.tsx_HUc4Bb": [
+    {
+      "type": 0,
+      "value": "Toggle collections preview"
+    }
+  ],
   "BazaarPack.tsx_j9FVIw": [
     {
       "type": 0,
@@ -2280,16 +2286,10 @@
       "value": "Cancel"
     }
   ],
-  "InstallPackModal.tsx_ubmFc8": [
+  "InstallPackModal.tsx_B8WL2e": [
     {
       "type": 0,
-      "value": "Install"
-    }
-  ],
-  "InstallPackModal.tsx_v2PMSC": [
-    {
-      "type": 0,
-      "value": "Install \""
+      "value": "Install pack \""
     },
     {
       "type": 1,
@@ -2298,6 +2298,12 @@
     {
       "type": 0,
       "value": "\"?"
+    }
+  ],
+  "InstallPackModal.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Install"
     }
   ],
   "Instant.tsx_AnIOVe": [

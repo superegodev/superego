@@ -2,9 +2,9 @@ import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { listBazaarPacksQuery } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
-import PackCard from "../../design-system/PackCard/PackCard.jsx";
-import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.jsx";
-import Shell from "../../design-system/Shell/Shell.jsx";
+import PackCard from "../../design-system/PackCard/PackCard.js";
+import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
+import Shell from "../../design-system/Shell/Shell.js";
 import * as cs from "./Bazaar.css.js";
 
 export default function Bazaar() {

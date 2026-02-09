@@ -113,6 +113,9 @@
   "BazaarPack.tsx_DzgcGx": {
     "defaultMessage": "Bazaar » {packName}"
   },
+  "BazaarPack.tsx_HUc4Bb": {
+    "defaultMessage": "Toggle collections preview"
+  },
   "BazaarPack.tsx_j9FVIw": {
     "defaultMessage": "Screenshot of {packName}"
   },
@@ -917,11 +920,11 @@
   "InstallPackModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
+  "InstallPackModal.tsx_B8WL2e": {
+    "defaultMessage": "Install pack \"{packName}\"?"
+  },
   "InstallPackModal.tsx_ubmFc8": {
     "defaultMessage": "Install"
-  },
-  "InstallPackModal.tsx_v2PMSC": {
-    "defaultMessage": "Install \"{packName}\"?"
   },
   "Instant.tsx_AnIOVe": {
     "defaultMessage": "{label} time"

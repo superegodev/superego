@@ -53,3 +53,10 @@ Run with `yarn workspace <package-name> run <script-name>`. Available scripts:
 - When you change frontend files in `packages/apps/browser-app`, always run
   `yarn workspace @superego/browser-app translations:extract-and-compile` and
   update `packages/apps/browser-app/src/translations/it.json` accordingly.
+- **CSS-in-TS convention:** Each component folder has at most **one** `.css.ts`
+  file, named after the folder (e.g. `CollectionPreviewsTabs.css.ts`). When a
+  folder contains multiple components, the single `.css.ts` file exports one
+  `export const ComponentName` object per component (e.g.
+  `export const CollectionPreviewsTabs = { … }` and
+  `export const CollectionPreview = { … }`). Do **not** create additional
+  `.css.ts` files for sub-components in the same folder.
