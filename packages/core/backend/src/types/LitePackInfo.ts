@@ -2,14 +2,8 @@ export default interface LitePackInfo {
   name: string;
   /** Markdown. */
   shortDescription: string;
-  /** Contains only the first image, if there is one. */
-  images:
+  /** Contains only the first screenshot, if there is one. */
+  screenshots:
     | []
-    | [
-        {
-          path: string;
-          mimeType: `image/${string}`;
-          content: Uint8Array<ArrayBuffer>;
-        },
-      ];
+    | [{ mimeType: `image/${string}`; content: Uint8Array<ArrayBuffer> }];
 }

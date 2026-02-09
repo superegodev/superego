@@ -332,6 +332,37 @@ export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
 ]);
 
 /*
+ * Packs
+ */
+
+export const useInstallPack = makeUseBackendMutation(
+  "packs",
+  "installPack",
+  () => [
+    ["listCollectionCategories"],
+    ["listCollections"],
+    ["listApps"],
+    ["listDocuments"],
+  ],
+);
+
+/*
+ * Bazaar
+ */
+
+export const listBazaarPacksQuery = makeBackendQueryGetter(
+  "bazaar",
+  "listPacks",
+  () => ["listBazaarPacks"],
+);
+
+export const getBazaarPackQuery = makeBackendQueryGetter(
+  "bazaar",
+  "getPack",
+  (packId) => ["getBazaarPack", packId],
+);
+
+/*
  * Background jobs
  */
 

@@ -4,6 +4,7 @@ import {
   PiListChecks,
   PiMagnifyingGlass,
   PiRobot,
+  PiStorefront,
 } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
 import { electronMainWorld } from "../../../business-logic/electron/electron.js";
@@ -56,6 +57,13 @@ export default function PrimarySidebarPanel() {
           >
             <PiListChecks />
             <FormattedMessage defaultMessage="Background jobs" />
+          </PrimarySidebarPanelAction>
+          <PrimarySidebarPanelAction
+            type="link"
+            to={{ name: RouteName.BazaarPacks }}
+          >
+            <PiStorefront />
+            <FormattedMessage defaultMessage="Bazaar" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"

@@ -104,6 +104,21 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
+  "BazaarPack.tsx_40netJ": {
+    "defaultMessage": "Bazaar » {packId}"
+  },
+  "BazaarPack.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "BazaarPack.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot of {packName}"
+  },
+  "BazaarPack.tsx_ubmFc8": {
+    "defaultMessage": "Install"
+  },
+  "BazaarPacks.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -121,6 +136,18 @@
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versions)"
+  },
+  "Carousel.tsx_F+ukuP": {
+    "defaultMessage": "Next image"
+  },
+  "Carousel.tsx_H/VqZ2": {
+    "defaultMessage": "Go to image {number}"
+  },
+  "Carousel.tsx_aC/Bx7": {
+    "defaultMessage": "Carousel"
+  },
+  "Carousel.tsx_fb1a/o": {
+    "defaultMessage": "Previous image"
   },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Error sending message to assistant"
@@ -869,6 +896,18 @@
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
   },
+  "InstallPackModal.tsx_+Toiai": {
+    "defaultMessage": "will be installed."
+  },
+  "InstallPackModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "InstallPackModal.tsx_ubmFc8": {
+    "defaultMessage": "Install"
+  },
+  "InstallPackModal.tsx_v2PMSC": {
+    "defaultMessage": "Install \"{packName}\"?"
+  },
   "Instant.tsx_AnIOVe": {
     "defaultMessage": "{label} time"
   },
@@ -941,6 +980,21 @@
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },
+  "PackCard.tsx_EgRJme": {
+    "defaultMessage": "Screenshot of the pack"
+  },
+  "PackEntityCounts.tsx_GPDaFU": {
+    "defaultMessage": "{appsCount, plural, one {# app} other {# apps}}"
+  },
+  "PackEntityCounts.tsx_M51yty": {
+    "defaultMessage": "{documentsCount, plural, one {# document} other {# documents}}"
+  },
+  "PackEntityCounts.tsx_P2D191": {
+    "defaultMessage": "{collectionCategoriesCount, plural, one {# category} other {# categories}}"
+  },
+  "PackEntityCounts.tsx_pKXETD": {
+    "defaultMessage": "{collectionsCount, plural, one {# collection} other {# collections}}"
+  },
   "Pagination.tsx_CDjQEk": {
     "defaultMessage": "{startItem}-{endItem} of {totalItems}"
   },
@@ -967,6 +1021,9 @@
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
+  },
+  "PrimarySidebarPanel.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
   },
   "PrimarySidebarPanel.tsx_ZT0z9z": {
     "defaultMessage": "Ask"

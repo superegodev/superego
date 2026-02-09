@@ -1,18 +1,17 @@
 import type { Pack } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
-import cover from "./cover.avif?inline";
 import expenses from "./expenses.js";
 import expensesApp from "./expensesApp.js";
+import cover from "./screenshots/0.avif?inline";
 
 export default {
-  id: "Pack_dev.superego.finance",
+  id: "Pack_dev.superego.bazaar.finance",
   info: {
     name: "Finance",
     shortDescription: "TODO_BAZAAR: write",
     longDescription: "TODO_BAZAAR: write",
-    images: [
+    screenshots: [
       {
-        path: "/cover.avif",
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(cover),
       },

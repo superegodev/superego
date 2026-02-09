@@ -104,6 +104,21 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
   },
+  "BazaarPack.tsx_40netJ": {
+    "defaultMessage": "Bazaar » {packId}"
+  },
+  "BazaarPack.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "BazaarPack.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot di {packName}"
+  },
+  "BazaarPack.tsx_ubmFc8": {
+    "defaultMessage": "Installa"
+  },
+  "BazaarPacks.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
   },
@@ -121,6 +136,18 @@
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versioni)"
+  },
+  "Carousel.tsx_F+ukuP": {
+    "defaultMessage": "Immagine successiva"
+  },
+  "Carousel.tsx_H/VqZ2": {
+    "defaultMessage": "Vai all'immagine {number}"
+  },
+  "Carousel.tsx_aC/Bx7": {
+    "defaultMessage": "Carosello"
+  },
+  "Carousel.tsx_fb1a/o": {
+    "defaultMessage": "Immagine precedente"
   },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
@@ -869,6 +896,18 @@
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
   },
+  "InstallPackModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "InstallPackModal.tsx_+Toiai": {
+    "defaultMessage": "saranno installati."
+  },
+  "InstallPackModal.tsx_ubmFc8": {
+    "defaultMessage": "Installa"
+  },
+  "InstallPackModal.tsx_v2PMSC": {
+    "defaultMessage": "Installare \"{packName}\"?"
+  },
   "Instant.tsx_AnIOVe": {
     "defaultMessage": "Orario {label}"
   },
@@ -947,11 +986,29 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Chiudi barra laterale"
   },
+  "PackCard.tsx_EgRJme": {
+    "defaultMessage": "Screenshot del pacchetto"
+  },
+  "PackEntityCounts.tsx_GPDaFU": {
+    "defaultMessage": "{appsCount, plural, one {# app} other {# app}}"
+  },
+  "PackEntityCounts.tsx_M51yty": {
+    "defaultMessage": "{documentsCount, plural, one {# documento} other {# documenti}}"
+  },
+  "PackEntityCounts.tsx_P2D191": {
+    "defaultMessage": "{collectionCategoriesCount, plural, one {# categoria} other {# categorie}}"
+  },
+  "PackEntityCounts.tsx_pKXETD": {
+    "defaultMessage": "{collectionsCount, plural, one {# collezione} other {# collezioni}}"
+  },
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "Compilazione dell'app non riuscita."
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Impostazioni"
+  },
+  "PrimarySidebarPanel.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
   },
   "PrimarySidebarPanel.tsx_ZT0z9z": {
     "defaultMessage": "Chiedi"

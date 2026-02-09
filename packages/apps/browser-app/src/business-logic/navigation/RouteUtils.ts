@@ -5,6 +5,7 @@ import type {
   ConversationId,
   DocumentId,
   DocumentVersionId,
+  PackId,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import type Route from "./Route.js";
@@ -58,6 +59,10 @@ export function toHref(route: Route): string {
     }
     case RouteName.EditApp:
       return `/apps/${route.appId}/edit`;
+    case RouteName.BazaarPacks:
+      return "/bazaar";
+    case RouteName.BazaarPack:
+      return `/bazaar/${route.packId}`;
     case RouteName.BackgroundJobs:
       return "/background-jobs";
     case RouteName.BackgroundJob:
@@ -218,6 +223,17 @@ const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({ pathname: "/conversations{/}?" }),
     toRoute: () => ({ name: RouteName.Conversations }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/bazaar/:packId{/}?" }),
+    toRoute: (match) => ({
+      name: RouteName.BazaarPack,
+      packId: decodePathSegment<PackId>(match.pathname.groups["packId"]),
+    }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/bazaar{/}?" }),
+    toRoute: () => ({ name: RouteName.BazaarPacks }),
   },
   {
     pattern: new URLPattern({

@@ -1,19 +1,18 @@
 import type { Pack } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
-import cover from "./cover.avif?inline";
 import foods from "./foods.js";
 import meals from "./meals.js";
+import cover from "./screenshots/0.avif?inline";
 import weighIns from "./weighIns.js";
 
 export default {
-  id: "Pack_dev.superego.diet",
+  id: "Pack_dev.superego.bazaar.diet",
   info: {
     name: "Diet",
     shortDescription: "TODO_BAZAAR: write",
     longDescription: "TODO_BAZAAR: write",
-    images: [
+    screenshots: [
       {
-        path: "/cover.avif",
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(cover),
       },

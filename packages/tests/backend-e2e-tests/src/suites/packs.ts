@@ -18,7 +18,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [
           {
@@ -55,7 +55,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -120,7 +120,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -184,7 +184,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -253,7 +253,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [],
@@ -301,7 +301,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [],
@@ -342,7 +342,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -422,7 +422,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [
           {
@@ -467,7 +467,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [
           {
@@ -533,7 +533,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -601,7 +601,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Test Pack",
           shortDescription: "A test pack",
           longDescription: "A test pack for testing",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
@@ -668,7 +668,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           name: "Complete Test Pack",
           shortDescription: "A complete test pack",
           longDescription: "A complete test pack with all object types",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [
           {
@@ -785,7 +785,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           shortDescription: "A pack with cross-collection references",
           longDescription:
             "A test pack with documents referencing documents in other collections",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [
           {
@@ -1113,7 +1113,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           shortDescription: "A pack with self-referencing documents",
           longDescription:
             "A test pack with a collection where documents can reference other documents in the same collection",
-          images: [],
+          screenshots: [],
         },
         collectionCategories: [],
         collections: [
