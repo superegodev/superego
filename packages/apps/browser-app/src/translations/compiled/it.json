@@ -213,6 +213,12 @@
       "value": "Stato"
     }
   ],
+  "Bazaar.tsx_T5A49y": [
+    {
+      "type": 0,
+      "value": "Bazaar"
+    }
+  ],
   "BazaarPack.tsx_40netJ": [
     {
       "type": 0,
@@ -247,12 +253,6 @@
     {
       "type": 0,
       "value": "Installa"
-    }
-  ],
-  "BazaarPacks.tsx_T5A49y": [
-    {
-      "type": 0,
-      "value": "Bazaar"
     }
   ],
   "BooleanField.tsx_KKkUks": [

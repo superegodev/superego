@@ -60,7 +60,7 @@ export default function PrimarySidebarPanel() {
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"
-            to={{ name: RouteName.BazaarPacks }}
+            to={{ name: RouteName.Bazaar }}
           >
             <PiStorefront />
             <FormattedMessage defaultMessage="Bazaar" />

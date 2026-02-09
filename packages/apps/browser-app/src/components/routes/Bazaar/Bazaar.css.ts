@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../../themes.css.js";
 
-export const BazaarPacks = {
+export const Bazaar = {
   grid: style({
     display: "grid",
     gap: vars.spacing._4,

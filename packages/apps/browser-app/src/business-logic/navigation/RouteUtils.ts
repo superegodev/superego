@@ -59,7 +59,7 @@ export function toHref(route: Route): string {
     }
     case RouteName.EditApp:
       return `/apps/${route.appId}/edit`;
-    case RouteName.BazaarPacks:
+    case RouteName.Bazaar:
       return "/bazaar";
     case RouteName.BazaarPack:
       return `/bazaar/${route.packId}`;
@@ -233,7 +233,7 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/bazaar{/}?" }),
-    toRoute: () => ({ name: RouteName.BazaarPacks }),
+    toRoute: () => ({ name: RouteName.Bazaar }),
   },
   {
     pattern: new URLPattern({

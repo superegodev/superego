@@ -21,7 +21,7 @@ export enum RouteName {
   Document = "Document",
   CreateApp = "CreateApp",
   EditApp = "EditApp",
-  BazaarPacks = "BazaarPacks",
+  Bazaar = "Bazaar",
   BazaarPack = "BazaarPack",
   BackgroundJobs = "BackgroundJobs",
   BackgroundJob = "BackgroundJob",
@@ -93,7 +93,7 @@ type Route =
       appId: AppId;
     }
   | {
-      name: RouteName.BazaarPacks;
+      name: RouteName.Bazaar;
     }
   | {
       name: RouteName.BazaarPack;

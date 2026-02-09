@@ -3,8 +3,8 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import Ask from "../Ask/Ask.js";
 import BackgroundJob from "../BackgroundJob/BackgroundJob.js";
 import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
+import Bazaar from "../Bazaar/Bazaar.jsx";
 import BazaarPack from "../BazaarPack/BazaarPack.js";
-import BazaarPacks from "../BazaarPacks/BazaarPacks.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
@@ -57,8 +57,8 @@ export default function MainPanel() {
       return <CreateApp collectionIds={activeRoute.collectionIds} />;
     case RouteName.EditApp:
       return <EditApp appId={activeRoute.appId} />;
-    case RouteName.BazaarPacks:
-      return <BazaarPacks />;
+    case RouteName.Bazaar:
+      return <Bazaar />;
     case RouteName.BazaarPack:
       return <BazaarPack packId={activeRoute.packId} />;
     case RouteName.BackgroundJobs:

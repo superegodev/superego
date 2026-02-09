@@ -110,7 +110,7 @@ const testRoutes: Route[] = [
     appId: Id.generate.app(),
   },
   {
-    name: RouteName.BazaarPacks,
+    name: RouteName.Bazaar,
   },
   {
     name: RouteName.BazaarPack,

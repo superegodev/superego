@@ -104,6 +104,9 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
   },
+  "Bazaar.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
+  },
   "BazaarPack.tsx_40netJ": {
     "defaultMessage": "Bazaar » {packId}"
   },
@@ -115,9 +118,6 @@
   },
   "BazaarPack.tsx_ubmFc8": {
     "defaultMessage": "Installa"
-  },
-  "BazaarPacks.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
