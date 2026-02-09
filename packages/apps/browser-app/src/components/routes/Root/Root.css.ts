@@ -75,5 +75,17 @@ export const PrimarySidebarPanelAction = {
         },
       }),
     ],
+    highlighted: {
+      background: vars.colors.accent,
+      color: `${vars.colors.text.onAccent} !important`,
+      fontWeight: vars.typography.fontWeights.medium,
+      selectors: {
+        "&:hover": {
+          background: vars.colors.accent,
+          color: `${vars.colors.text.onAccent} !important`,
+          fontWeight: vars.typography.fontWeights.medium,
+        },
+      },
+    },
   }),
 };
