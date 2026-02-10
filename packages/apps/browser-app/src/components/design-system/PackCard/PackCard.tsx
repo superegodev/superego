@@ -21,7 +21,7 @@ export default function PackCard({ pack, to }: Props) {
       />
       <div className={cs.PackCard.text}>
         <h2 className={cs.PackCard.name}>
-          <PackName pack={pack} />
+          <PackName pack={pack} showId={false} />
         </h2>
         <p className={cs.PackCard.shortDescription}>
           {pack.info.shortDescription}

@@ -10,7 +10,9 @@ test("Load demo data", async ({ page }) => {
   await page.getByRole("button", { name: /Load demo data/i }).click();
   await page.getByRole("button", { name: /^Load$/i }).click();
 
-  await expect(page.getByRole("gridcell", { name: /Contacts/i })).toBeVisible({
+  await expect(
+    page.getByRole("gridcell", { name: /Productivity/i }),
+  ).toBeVisible({
     timeout: 60_000,
   });
 });

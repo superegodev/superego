@@ -30,9 +30,9 @@ const packsWithDocuments = [
     ...packs[1]!,
     documents: [
       ...packs[1]!.documents,
-      ...makeDocuments("ProtoCollection_0", foodsData),
-      ...makeDocuments("ProtoCollection_1", mealsData),
-      ...makeDocuments("ProtoCollection_2", weighInsData),
+      ...makeDocuments("ProtoCollection_1", foodsData),
+      ...makeDocuments("ProtoCollection_2", mealsData),
+      ...makeDocuments("ProtoCollection_3", weighInsData),
     ],
   },
   {

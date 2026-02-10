@@ -8,13 +8,9 @@ export default {
   id: "Pack_dev.superego.bazaar.car",
   info: {
     name: "Car",
-    shortDescription: "TODO_BAZAAR: write",
-    longDescription: "TODO_BAZAAR: write",
+    shortDescription: "Log fuel fill-ups and track fuel costs.",
+    longDescription: "Log fuel fill-ups and track fuel costs.",
     screenshots: [
-      {
-        mimeType: "image/avif",
-        content: decodeInlineBase64Asset(cover),
-      },
       {
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(cover),

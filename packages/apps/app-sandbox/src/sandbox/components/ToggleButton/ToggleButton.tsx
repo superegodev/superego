@@ -33,6 +33,7 @@ export default function ToggleButton({
 
   return (
     <ToggleButtonRAC
+      isSelected={value}
       onChange={onChange}
       className={clsx(
         cs.ToggleButton.root[value ? "selected" : "notSelected"],

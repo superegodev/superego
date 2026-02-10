@@ -8,7 +8,7 @@ export default {
     description: null,
     assistantInstructions: "- If duration not supplied, default to 1 hour",
     collectionCategoryId: "ProtoCollectionCategory_0",
-    defaultCollectionViewAppId: null,
+    defaultCollectionViewAppId: "ProtoApp_0",
   },
   schema: calendarEntriesSchema,
   versionSettings: {

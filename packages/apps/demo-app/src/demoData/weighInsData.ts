@@ -2,7 +2,7 @@ import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
 
-type WeighIn = TypeOf<(typeof packsAsConst)[1]["collections"][2]["schema"]>;
+type WeighIn = TypeOf<(typeof packsAsConst)[1]["collections"][3]["schema"]>;
 
 export default [
   {

@@ -1,8 +1,8 @@
 import type {
-  CollectionId,
   CollectionNotFound,
   ConnectorDoesNotSupportUpSyncing,
   DocumentContentNotValid,
+  DocumentDefinition,
   FilesNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import useBackend from "../business-logic/backend/useBackend.js";
 
 interface UseCreateDocument {
-  mutate: (collectionId: CollectionId, content: any) => void;
+  mutate: (definition: DocumentDefinition) => void;
   isIdle: boolean;
   isPending: boolean;
   isError: boolean;
@@ -33,10 +33,10 @@ export default function useCreateDocument(): UseCreateDocument {
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError,
-    [collectionId: CollectionId, content: any]
+    DocumentDefinition
   >({
-    mutationFn: async (args) => {
-      const result = await backend.createDocument(...args);
+    mutationFn: async (definition) => {
+      const result = await backend.createDocument(definition);
       if (result.error) {
         throw result.error;
       }
@@ -44,8 +44,7 @@ export default function useCreateDocument(): UseCreateDocument {
     },
   });
   return {
-    mutate: (collectionId: CollectionId, content: any) =>
-      mutate([collectionId, content]),
+    mutate: (definition: DocumentDefinition) => mutate(definition),
     isIdle,
     isPending,
     isError,

@@ -2,7 +2,7 @@ import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
 
-type Meal = TypeOf<(typeof packsAsConst)[1]["collections"][1]["schema"]>;
+type Meal = TypeOf<(typeof packsAsConst)[1]["collections"][2]["schema"]>;
 
 const g = (amount: number) => ({ unit: "g" as const, amount });
 
@@ -13,7 +13,7 @@ const g = (amount: number) => ({ unit: "g" as const, amount });
 // when meals documents are created.
 const mealItem = (foodDocumentIndex: number, grams: number) => ({
   food: {
-    collectionId: "ProtoCollection_0",
+    collectionId: "ProtoCollection_1",
     documentId: `ProtoDocument_${foodDocumentIndex}`,
   },
   quantity: g(grams),

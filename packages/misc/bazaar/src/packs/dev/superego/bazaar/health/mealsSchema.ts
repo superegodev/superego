@@ -78,7 +78,7 @@ export default {
         food: {
           description: "Reference to a food document",
           dataType: DataType.DocumentRef,
-          collectionId: "ProtoCollection_0",
+          collectionId: "ProtoCollection_1",
         },
         quantity: {
           description: "Amount of the food consumed",

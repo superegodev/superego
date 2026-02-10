@@ -1,6 +1,7 @@
 import type { Pack } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
 import calendar from "./calendar.js";
+import calendarApp from "./calendarApp.js";
 import contacts from "./contacts.js";
 import cover from "./screenshots/0.avif?inline";
 
@@ -20,6 +21,6 @@ export default {
   },
   collectionCategories: [{ name: "Productivity", icon: "🧰", parentId: null }],
   collections: [contacts, calendar],
-  apps: [],
+  apps: [calendarApp],
   documents: [],
 } as const satisfies Pack;

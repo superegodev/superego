@@ -5,11 +5,11 @@ import expensesApp from "./expensesApp.js";
 import cover from "./screenshots/0.avif?inline";
 
 export default {
-  id: "Pack_dev.superego.bazaar.finance",
+  id: "Pack_dev.superego.bazaar.personal-finance",
   info: {
-    name: "Finance",
-    shortDescription: "TODO_BAZAAR: write",
-    longDescription: "TODO_BAZAAR: write",
+    name: "Personal Finance",
+    shortDescription: "Track expenses and analyze your spending.",
+    longDescription: "Track expenses and analyze your spending.",
     screenshots: [
       {
         mimeType: "image/avif",
@@ -17,7 +17,9 @@ export default {
       },
     ],
   },
-  collectionCategories: [{ name: "Finance", icon: "💰️", parentId: null }],
+  collectionCategories: [
+    { name: "Personal Finance", icon: "💰️", parentId: null },
+  ],
   collections: [expenses],
   apps: [expensesApp],
   documents: [],
