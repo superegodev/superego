@@ -1,13 +1,13 @@
 import type {
+  AppId,
   AppNotFound,
   Backend,
   Collection,
   CollectionCategoryNotFound,
+  CollectionDefinition,
   CollectionId,
   CollectionSchemaNotValid,
-  CollectionSettings,
   CollectionSettingsNotValid,
-  CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ReferencedCollectionsNotFound,
@@ -15,7 +15,6 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
-  type Schema,
   utils as schemaUtils,
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
@@ -37,16 +36,15 @@ import Usecase from "../../utils/Usecase.js";
 interface CollectionsCreateOptions {
   dryRun?: boolean;
   collectionId?: CollectionId;
-  allowedUnverifiedCollectionIds?: CollectionId[];
+  skipReferenceCheckForCollectionIds?: CollectionId[];
+  skipReferenceCheckForAppIds?: AppId[];
 }
 
 export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
 > {
   async exec(
-    settings: CollectionSettings,
-    schema: Schema,
-    versionSettings: CollectionVersionSettings,
+    { settings, schema, versionSettings }: CollectionDefinition,
     options: CollectionsCreateOptions = {},
   ): ResultPromise<
     Collection,
@@ -98,6 +96,9 @@ export default class CollectionsCreate extends Usecase<
 
     if (
       settings.defaultCollectionViewAppId &&
+      !options.skipReferenceCheckForAppIds?.includes(
+        settings.defaultCollectionViewAppId,
+      ) &&
       !(await this.repos.app.exists(settings.defaultCollectionViewAppId))
     ) {
       return makeUnsuccessfulResult(
@@ -131,13 +132,10 @@ export default class CollectionsCreate extends Usecase<
 
     const referencedCollectionIds =
       schemaUtils.extractReferencedCollectionIds(resolvedSchema);
-    const allowedUnverifiedCollectionIds = new Set(
-      options.allowedUnverifiedCollectionIds ?? [],
-    );
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       if (
-        !allowedUnverifiedCollectionIds.has(
+        !options.skipReferenceCheckForCollectionIds?.includes(
           referencedCollectionId as CollectionId,
         ) &&
         !(await this.repos.collection.exists(

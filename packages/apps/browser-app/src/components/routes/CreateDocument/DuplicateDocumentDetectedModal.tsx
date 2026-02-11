@@ -41,7 +41,7 @@ export default function DuplicateDocumentDetectedModal({
       <p>
         <FormattedMessage defaultMessage="Do you still want to create this document?" />
       </p>
-      <div className={cs.DuplicateDocumentDetectedModal.buttonsContainer}>
+      <ModalDialog.Actions>
         <Button onPress={onClose} isDisabled={isCreating}>
           <FormattedMessage defaultMessage="Cancel" />
         </Button>
@@ -52,7 +52,7 @@ export default function DuplicateDocumentDetectedModal({
         >
           <FormattedMessage defaultMessage="Create anyway" />
         </Button>
-      </div>
+      </ModalDialog.Actions>
     </ModalDialog>
   );
 }

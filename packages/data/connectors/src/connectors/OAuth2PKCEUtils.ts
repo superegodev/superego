@@ -1,4 +1,4 @@
-import type Base64Url from "../requirements/Base64Url.js";
+import { Base64Url } from "@superego/shared-utils";
 import type SessionStorage from "../requirements/SessionStorage.js";
 import sha256 from "../utils/sha256.js";
 
@@ -18,7 +18,7 @@ export interface AuthorizationFlowSessionState {
   nonce: string;
 }
 
-export async function makePkceParameters(base64Url: Base64Url): Promise<{
+export async function makePkceParameters(): Promise<{
   codeVerifier: string;
   codeChallenge: string;
   codeChallengeMethod: typeof PKCE_CODE_CHALLENGE_METHOD;
@@ -28,7 +28,7 @@ export async function makePkceParameters(base64Url: Base64Url): Promise<{
 
   return {
     codeVerifier,
-    codeChallenge: base64Url.encodeBytes(codeChallengeBytes),
+    codeChallenge: Base64Url.encodeBytes(codeChallengeBytes),
     codeChallengeMethod: PKCE_CODE_CHALLENGE_METHOD,
   };
 }

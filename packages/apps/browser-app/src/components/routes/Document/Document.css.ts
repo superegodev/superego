@@ -34,13 +34,6 @@ export const CreateNewDocumentVersionForm = {
   }),
 };
 
-export const DeleteDocumentModalForm = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};
-
 export const RemoteDocumentInfoModal = {
   infoProperties: style({
     display: "flex",

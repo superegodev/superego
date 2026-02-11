@@ -1,0 +1,22 @@
+{
+  "name": "@superego/browser-app-e2e-tests",
+  "version": "2026.2.2",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test:check-scenarios": "node scripts/checkStepsAndSnapshots.ts",
+    "test:playwright": "playwright test --config=playwright.config.ts",
+    "test": "yarn test:check-scenarios && yarn test:playwright",
+    "playwright": "playwright"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.58.1",
+    "@superego/schema": "workspace:*",
+    "luxon": "^3.7.2"
+  }
+}

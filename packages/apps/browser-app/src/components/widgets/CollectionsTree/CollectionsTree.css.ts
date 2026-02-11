@@ -145,10 +145,6 @@ export const RenameCollectionCategoryModalForm = {
   nameInput: style({
     flexGrow: 1,
   }),
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
 };
 
 export const CollectionTreeItem = {

@@ -14,11 +14,4 @@ export const DuplicateDocumentDetectedModal = {
     justifyContent: "center",
     marginBlock: vars.spacing._10,
   }),
-
-  buttonsContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: vars.spacing._2,
-    marginBlockStart: vars.spacing._6,
-  }),
 };

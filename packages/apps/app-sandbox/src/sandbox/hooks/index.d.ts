@@ -1,10 +1,11 @@
 export declare function useCreateDocument(): {
   /** Create a **new document**. */
-  mutate: (
-    collectionId: CollectionId,
+  mutate: (definition: {
+    collectionId: CollectionId;
     /** Full content of the document. */
-    content: any,
-  ) => void;
+    content: any;
+    options?: { skipDuplicateCheck: boolean };
+  }) => void;
   isIdle: boolean;
   isPending: boolean;
   isError: boolean;

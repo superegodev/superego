@@ -1,7 +1,9 @@
 import type {
   Backend,
   CollectionCategory,
+  CollectionCategoryDefinition,
   CollectionCategoryIconNotValid,
+  CollectionCategoryId,
   CollectionCategoryNameNotValid,
   ParentCollectionCategoryNotFound,
   UnexpectedError,
@@ -20,11 +22,17 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
+interface CollectionCategoriesCreateOptions {
+  collectionCategoryId?: CollectionCategoryId;
+  skipReferenceCheckForCollectionCategoryIds?: CollectionCategoryId[];
+}
+
 export default class CollectionCategoriesCreate extends Usecase<
   Backend["collectionCategories"]["create"]
 > {
   async exec(
-    proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
+    definition: CollectionCategoryDefinition,
+    options: CollectionCategoriesCreateOptions = {},
   ): ResultPromise<
     CollectionCategory,
     | CollectionCategoryNameNotValid
@@ -34,7 +42,7 @@ export default class CollectionCategoriesCreate extends Usecase<
   > {
     const nameValidationResult = v.safeParse(
       valibotSchemas.collectionCategoryName(),
-      proto.name,
+      definition.name,
     );
 
     if (!nameValidationResult.success) {
@@ -48,7 +56,7 @@ export default class CollectionCategoriesCreate extends Usecase<
 
     const iconValidationResult = v.safeParse(
       v.nullable(valibotSchemas.icon()),
-      proto.icon,
+      definition.icon,
     );
 
     if (!iconValidationResult.success) {
@@ -61,21 +69,24 @@ export default class CollectionCategoriesCreate extends Usecase<
     }
 
     if (
-      proto.parentId &&
-      !(await this.repos.collectionCategory.exists(proto.parentId))
+      definition.parentId &&
+      !options.skipReferenceCheckForCollectionCategoryIds?.includes(
+        definition.parentId,
+      ) &&
+      !(await this.repos.collectionCategory.exists(definition.parentId))
     ) {
       return makeUnsuccessfulResult(
         makeResultError("ParentCollectionCategoryNotFound", {
-          parentId: proto.parentId,
+          parentId: definition.parentId,
         }),
       );
     }
 
     const collectionCategory: CollectionCategoryEntity = {
-      id: Id.generate.collectionCategory(),
+      id: options.collectionCategoryId ?? Id.generate.collectionCategory(),
       name: nameValidationResult.output,
       icon: iconValidationResult.output,
-      parentId: proto.parentId,
+      parentId: definition.parentId,
       createdAt: new Date(),
     };
     await this.repos.collectionCategory.insert(collectionCategory);

@@ -3,7 +3,7 @@ import {
   DocumentVersionCreator,
 } from "@superego/backend";
 import type { Connector } from "@superego/executing-backend";
-import { DataType, type Schema, utils as schemaUtils } from "@superego/schema";
+import { DataType, type Schema } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -18,7 +18,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Exercise
       const collectionId = Id.generate.collection();
-      const result = await backend.documents.create(collectionId, {});
+      const result = await backend.documents.create({
+        collectionId: collectionId,
+        content: {},
+      });
 
       // Verify
       expect(result).toEqual({
@@ -64,8 +67,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Setup SUT
       const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -73,7 +76,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -84,7 +87,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -92,7 +95,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
@@ -110,10 +113,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
       assert.isTrue(setRemoteResult.success);
 
       // Exercise
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
 
       // Verify
       expect(createDocumentResult).toEqual({
@@ -134,8 +137,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentContentNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -143,7 +146,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -152,7 +155,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -160,14 +163,14 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: 123 },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: 123 },
+      });
 
       // Verify
       expect(createDocumentResult).toEqual({
@@ -193,8 +196,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: FilesNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -202,7 +205,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -211,7 +214,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -219,21 +222,21 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       const fileId = Id.generate.file();
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        {
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: {
           attachment: {
             id: fileId,
             name: "file.txt",
             mimeType: "text/plain",
           },
         },
-      );
+      });
 
       // Verify
       expect(createDocumentResult).toEqual({
@@ -249,8 +252,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: ReferencedDocumentsNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -258,7 +261,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -269,7 +272,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -277,20 +280,20 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       const nonExistentDocumentId = Id.generate.document();
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        {
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: {
           documentRef: {
             collectionId: createCollectionResult.data.id,
             documentId: nonExistentDocumentId,
           },
         },
-      );
+      });
 
       // Verify
       expect(createDocumentResult).toEqual({
@@ -315,8 +318,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: MakingContentBlockingKeysFailed", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -324,7 +327,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -333,7 +336,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: {
             source: "",
             compiled:
@@ -345,14 +348,14 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
 
       // Verify
       expect(createDocumentResult).toEqual({
@@ -376,8 +379,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DuplicateDocumentDetected", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -385,7 +388,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -394,7 +397,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: {
             source: "",
             compiled:
@@ -407,19 +410,19 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
-      const createDuplicateDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDuplicateDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
 
       // Verify
       expect(createDuplicateDocumentResult).toEqual({
@@ -438,8 +441,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates when duplicate exists but skipDuplicateCheck is true", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -447,7 +450,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -456,7 +459,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: {
             source: "",
             compiled:
@@ -469,21 +472,21 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
       const content = { title: "title" };
-      const createDuplicateDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
+      const createDuplicateDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
         content,
-        { skipDuplicateCheck: true },
-      );
+        options: { skipDuplicateCheck: true },
+      });
 
       // Verify
       assert.isTrue(createDuplicateDocumentResult.success);
@@ -515,8 +518,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -524,7 +527,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -533,7 +536,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -541,15 +544,15 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       const content = { title: "title" };
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        content,
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: content,
+      });
 
       // Verify
       assert.isTrue(createDocumentResult.success);
@@ -607,8 +610,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentContentNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -616,7 +619,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -625,7 +628,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -633,7 +636,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -668,8 +671,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: ReferencedDocumentsNotFound (non-existent document)", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -677,7 +680,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -689,7 +692,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -697,7 +700,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -738,8 +741,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: ReferencedDocumentsNotFound (invalid proto document id)", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -747,7 +750,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -759,7 +762,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -767,12 +770,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       // Reference a proto document that doesn't exist in the batch
-      const invalidProtoId = schemaUtils.makeProtoDocumentId(99);
+      const invalidProtoId = Id.generate.protoDocument(99);
       const result = await backend.documents.createMany([
         {
           collectionId: createCollectionResult.data.id,
@@ -809,8 +812,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates single document", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -818,7 +821,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -827,7 +830,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -835,7 +838,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -879,8 +882,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates multiple independent documents", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -888,7 +891,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -897,7 +900,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -905,7 +908,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -939,8 +942,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates documents with cross-references using proto document IDs", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -948,7 +951,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -960,7 +963,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -968,13 +971,13 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       // Document 0 references Document 1, and Document 1 references Document 0
-      const protoDocument0 = schemaUtils.makeProtoDocumentId(0);
-      const protoDocument1 = schemaUtils.makeProtoDocumentId(1);
+      const protoDocument0 = Id.generate.protoDocument(0);
+      const protoDocument1 = Id.generate.protoDocument(1);
       const result = await backend.documents.createMany([
         {
           collectionId: createCollectionResult.data.id,
@@ -1031,8 +1034,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("atomicity: no documents created if one fails validation", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1040,7 +1043,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1049,7 +1052,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1057,7 +1060,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -1115,8 +1118,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1124,7 +1127,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1133,7 +1136,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1141,7 +1144,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -1209,8 +1212,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Setup SUT
       const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1218,7 +1221,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1227,7 +1230,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1235,7 +1238,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
@@ -1293,8 +1296,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentVersionIdNotMatching", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1302,7 +1305,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1311,7 +1314,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1319,12 +1322,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1355,8 +1358,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentContentNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1364,7 +1367,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1373,7 +1376,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1381,12 +1384,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1422,8 +1425,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: FilesNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1431,7 +1434,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1441,7 +1444,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1449,12 +1452,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { attachment: null },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { attachment: null },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1487,8 +1490,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: ReferencedDocumentsNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1496,7 +1499,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1508,7 +1511,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1516,12 +1519,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { documentRef: null },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { documentRef: null },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1561,8 +1564,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: MakingContentBlockingKeysFailed", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1570,7 +1573,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1579,7 +1582,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: {
             source: "",
             compiled: `
@@ -1594,13 +1597,13 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-        { skipDuplicateCheck: true },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+        options: { skipDuplicateCheck: true },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1634,8 +1637,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1643,7 +1646,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1654,7 +1657,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1662,12 +1665,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1733,8 +1736,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1742,7 +1745,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1753,7 +1756,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1761,7 +1764,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -1786,8 +1789,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: CommandConfirmationNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1795,7 +1798,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1806,7 +1809,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1814,12 +1817,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -1886,8 +1889,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Setup SUT
       const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1895,7 +1898,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1906,7 +1909,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1914,7 +1917,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
@@ -1970,8 +1973,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentIsReferenced", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -1979,7 +1982,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -1992,7 +1995,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2000,25 +2003,25 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       // Create document A (will be referenced)
-      const createDocumentAResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "Document A", documentRef: null },
-      );
+      const createDocumentAResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "Document A", documentRef: null },
+      });
       assert.isTrue(createDocumentAResult.success);
       // Create document B that references document A
-      const createDocumentBResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        {
+      const createDocumentBResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: {
           title: "Document B",
           documentRef: {
             collectionId: createCollectionResult.data.id,
             documentId: createDocumentAResult.data.id,
           },
         },
-      );
+      });
       assert.isTrue(createDocumentBResult.success);
 
       // Exercise - try to delete document A which is referenced by B
@@ -2051,8 +2054,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: deletes", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2060,7 +2063,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2071,7 +2074,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2079,12 +2082,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2130,8 +2133,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: lists lite documents", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2139,7 +2142,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2148,7 +2151,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2156,12 +2159,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "first" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "first" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2189,8 +2192,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2198,7 +2201,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2207,7 +2210,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2215,7 +2218,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -2239,8 +2242,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: lists minimal versions (case: document with single version)", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2248,7 +2251,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2257,7 +2260,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2265,12 +2268,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2298,8 +2301,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: lists minimal versions (case: document with multiple versions)", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2307,7 +2310,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2316,7 +2319,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2324,12 +2327,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "version 1" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "version 1" },
+      });
       assert.isTrue(createDocumentResult.success);
       const createNewVersionResult1 = await backend.documents.createNewVersion(
         createCollectionResult.data.id,
@@ -2386,8 +2389,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: does not return versions from other documents", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2395,7 +2398,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2404,7 +2407,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2412,17 +2415,17 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocument1Result = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "document 1" },
-      );
+      const createDocument1Result = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "document 1" },
+      });
       assert.isTrue(createDocument1Result.success);
-      const createDocument2Result = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "document 2" },
-      );
+      const createDocument2Result = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "document 2" },
+      });
       assert.isTrue(createDocument2Result.success);
       const createNewVersionResult = await backend.documents.createNewVersion(
         createCollectionResult.data.id,
@@ -2451,8 +2454,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2460,7 +2463,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2469,7 +2472,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2477,7 +2480,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -2501,8 +2504,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: gets", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2510,7 +2513,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2521,7 +2524,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2529,12 +2532,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2556,8 +2559,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("error: DocumentVersionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2565,7 +2568,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2574,7 +2577,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2582,7 +2585,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
@@ -2612,8 +2615,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: gets version", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2621,7 +2624,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2630,7 +2633,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2638,12 +2641,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "title" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
       assert.isTrue(createDocumentResult.success);
       const createNewDocumentVersionResult =
         await backend.documents.createNewVersion(
@@ -2695,8 +2698,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: returns empty array when no matches", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2704,7 +2707,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2713,7 +2716,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2721,12 +2724,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "hello world" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "hello world" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2747,8 +2750,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: searches within a specific collection", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -2756,7 +2759,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2765,7 +2768,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2773,12 +2776,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        { title: "hello world" },
-      );
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "hello world" },
+      });
       assert.isTrue(createDocumentResult.success);
 
       // Exercise
@@ -2806,8 +2809,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: searches across all collections when collectionId is null", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult1 = await backend.collections.create(
-        {
+      const createCollectionResult1 = await backend.collections.create({
+        settings: {
           name: "collection1",
           icon: null,
           collectionCategoryId: null,
@@ -2815,7 +2818,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2824,7 +2827,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2832,10 +2835,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult1.success);
-      const createCollectionResult2 = await backend.collections.create(
-        {
+      const createCollectionResult2 = await backend.collections.create({
+        settings: {
           name: "collection2",
           icon: null,
           collectionCategoryId: null,
@@ -2843,7 +2846,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2852,7 +2855,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2860,17 +2863,17 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult2.success);
-      const createDocumentResult1 = await backend.documents.create(
-        createCollectionResult1.data.id,
-        { title: "unique keyword alpha" },
-      );
+      const createDocumentResult1 = await backend.documents.create({
+        collectionId: createCollectionResult1.data.id,
+        content: { title: "unique keyword alpha" },
+      });
       assert.isTrue(createDocumentResult1.success);
-      const createDocumentResult2 = await backend.documents.create(
-        createCollectionResult2.data.id,
-        { title: "unique keyword beta" },
-      );
+      const createDocumentResult2 = await backend.documents.create({
+        collectionId: createCollectionResult2.data.id,
+        content: { title: "unique keyword beta" },
+      });
       assert.isTrue(createDocumentResult2.success);
 
       // Exercise
@@ -2889,8 +2892,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
     it("success: does not return documents from other collections when collectionId is specified", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult1 = await backend.collections.create(
-        {
+      const createCollectionResult1 = await backend.collections.create({
+        settings: {
           name: "collection1",
           icon: null,
           collectionCategoryId: null,
@@ -2898,7 +2901,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2907,7 +2910,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2915,10 +2918,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult1.success);
-      const createCollectionResult2 = await backend.collections.create(
-        {
+      const createCollectionResult2 = await backend.collections.create({
+        settings: {
           name: "collection2",
           icon: null,
           collectionCategoryId: null,
@@ -2926,7 +2929,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -2935,7 +2938,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2943,17 +2946,17 @@ export default rd<GetDependencies>("Documents", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult2.success);
-      const createDocumentResult1 = await backend.documents.create(
-        createCollectionResult1.data.id,
-        { title: "searchterm in collection1" },
-      );
+      const createDocumentResult1 = await backend.documents.create({
+        collectionId: createCollectionResult1.data.id,
+        content: { title: "searchterm in collection1" },
+      });
       assert.isTrue(createDocumentResult1.success);
-      const createDocumentResult2 = await backend.documents.create(
-        createCollectionResult2.data.id,
-        { title: "searchterm in collection2" },
-      );
+      const createDocumentResult2 = await backend.documents.create({
+        collectionId: createCollectionResult2.data.id,
+        content: { title: "searchterm in collection2" },
+      });
       assert.isTrue(createDocumentResult2.success);
 
       // Exercise

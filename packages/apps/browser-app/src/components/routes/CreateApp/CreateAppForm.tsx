@@ -56,12 +56,12 @@ export default function CreateAppForm({
   });
 
   const onSubmit = async ({ name, files }: FormValues) => {
-    const { success, data } = await mutate(
-      AppType.CollectionView,
+    const { success, data } = await mutate({
+      type: AppType.CollectionView,
       name,
-      targetCollections.map(({ id }) => id),
-      RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
-    );
+      targetCollectionIds: targetCollections.map(({ id }) => id),
+      files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
+    });
     if (success) {
       const firstTargetedCollectionId =
         AppUtils.getFirstTargetCollectionId(data);

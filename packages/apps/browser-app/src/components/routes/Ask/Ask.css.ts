@@ -47,8 +47,10 @@ export const Hero = {
   }),
 
   tagLine: style({
-    fontSize: vars.typography.fontSizes.xl2,
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.xl,
     fontWeight: vars.typography.fontWeights.regular,
+    marginBlockStart: vars.spacing._2,
     marginBlockEnd: vars.spacing._24,
   }),
 };

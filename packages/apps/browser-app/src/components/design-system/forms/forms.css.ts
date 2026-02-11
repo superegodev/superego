@@ -47,7 +47,11 @@ export const Radio = {
         border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
         background: "var(--field-background)",
         borderRadius: vars.borders.radius.full,
-        transition: "border-width 200ms",
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            transition: "border-width 200ms",
+          },
+        },
       },
       '&[data-pressed="true"]::before': {
         borderColor: vars.colors.text.primary,
@@ -411,7 +415,11 @@ export const Switch = {
     height: vars.spacing._5,
     borderRadius: vars.borders.radius.full,
     background: vars.colors.border.default,
-    transition: "background 200ms",
+    "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "background 200ms",
+      },
+    },
     selectors: {
       '[data-selected="true"] > &': {
         background: vars.colors.accent,
@@ -433,7 +441,11 @@ export const Switch = {
     background: vars.colors.background.surface,
     marginInlineStart: vars.spacing._0_5,
     marginBlock: vars.spacing._0_5,
-    transition: "margin-inline-start 200ms",
+    "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "margin-inline-start 200ms",
+      },
+    },
     selectors: {
       '[data-selected="true"] > * > &': {
         marginInlineStart: `calc(${vars.spacing._9} - ${vars.spacing._4} - ${vars.spacing._0_5})`,

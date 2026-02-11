@@ -110,6 +110,13 @@ const testRoutes: Route[] = [
     appId: Id.generate.app(),
   },
   {
+    name: RouteName.Bazaar,
+  },
+  {
+    name: RouteName.BazaarPack,
+    packId: "Pack_dev.superego.bazaar.productivity",
+  },
+  {
     name: RouteName.BackgroundJobs,
   },
   {

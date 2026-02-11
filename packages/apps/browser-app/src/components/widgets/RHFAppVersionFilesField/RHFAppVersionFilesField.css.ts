@@ -126,11 +126,3 @@ export const ImplementingSpinner = {
     },
   }),
 };
-
-export const ResolveIncompatibilityModal = {
-  buttons: style({
-    marginBlockStart: vars.spacing._8,
-    display: "flex",
-    gap: vars.spacing._2,
-  }),
-};

@@ -12,7 +12,6 @@ import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import findIncompatibilities, {
   type Incompatibility,
 } from "./findIncompatibilities.js";
-import * as cs from "./RHFAppVersionFilesField.css.js";
 
 interface Props {
   app: App;
@@ -66,7 +65,7 @@ export default function ResolveIncompatibilityModal({
           </li>
         ))}
       </ul>
-      <div className={cs.ResolveIncompatibilityModal.buttons}>
+      <ModalDialog.Actions align="start">
         <Button
           variant="primary"
           onPress={() => {
@@ -84,7 +83,7 @@ export default function ResolveIncompatibilityModal({
         <Button slot="close">
           <FormattedMessage defaultMessage="I'll do it myself" />
         </Button>
-      </div>
+      </ModalDialog.Actions>
     </ModalDialog>
   ) : null;
 }
