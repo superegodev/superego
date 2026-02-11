@@ -1,5 +1,6 @@
 import OverType from "overtype";
 import { useEffect, useRef, useState } from "react";
+import { useFocusVisible } from "react-aria";
 import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
 import type OverTypeEditor from "./OverTypeEditor.js";
@@ -15,62 +16,69 @@ export default function EagerMarkdownInput({
   placeholder,
   ref,
 }: Props) {
+  const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
-  const [editor, setEditor] = useState<OverTypeEditor | null>(null);
+  const editorRef = useRef<OverTypeEditor | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const propsRef = useRef({ onChange, value, placeholder });
-  propsRef.current = { onChange, value, placeholder };
+  const rootElementRef = useRef<HTMLDivElement>(null);
 
+  // When value changes, the editor's value is updated by another hook. This
+  // approach avoids the editor getting re-inited every time the value changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!editorRef.current) {
+      if (!containerRef.current) {
+        return;
+      }
 
-    const [instance] = OverType.init(containerRef.current, {
-      value: propsRef.current.value ?? "",
-      onChange: (newValue) => {
-        propsRef.current.onChange(newValue);
-      },
-      autoResize: true,
-      toolbar: false,
-      smartLists: true,
-      placeholder: propsRef.current.placeholder ?? "",
-      theme,
+      const [instance] = OverType.init(containerRef.current, {
+        value: value ?? "",
+        onChange: (newValue) => onChange(newValue),
+        autoResize: true,
+        toolbar: false,
+        smartLists: true,
+        placeholder: placeholder,
+        theme,
+      });
+      editorRef.current = (instance ?? null) as OverTypeEditor | null;
+
+      return () => {
+        editorRef.current?.destroy();
+        editorRef.current = null;
+      };
+    }
+
+    editorRef.current.reinit({
+      onChange: (newValue) => onChange(newValue),
+      placeholder: placeholder,
     });
-    const editorInstance = (instance ?? null) as OverTypeEditor | null;
-    setEditor(editorInstance);
-
-    return () => {
-      editorInstance?.destroy();
-      setEditor(null);
-    };
-  }, []);
+    return;
+  }, [onChange, placeholder]);
 
   useEffect(() => {
+    const editor = editorRef.current;
     if (editor && (value ?? "") !== editor.getValue()) {
       editor.setValue(value ?? "");
     }
-  }, [editor, value]);
+  }, [value]);
 
   useEffect(() => {
-    if (!editor) return;
-    if (isReadOnly) {
-      editor.showPreviewMode();
-    } else {
-      editor.showNormalEditMode();
+    if (editorRef.current) {
+      editorRef.current.textarea.readOnly = isReadOnly;
     }
-  }, [editor, isReadOnly]);
+  }, [isReadOnly]);
 
-  const rootElementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (rootElementRef.current && ref) {
       ref({
         focus: () => {
           if (!rootElementRef.current?.contains(document.activeElement)) {
-            editor?.focus();
+            editorRef.current?.focus();
           }
         },
       });
     }
-  }, [editor, ref]);
+  }, [ref]);
 
   return (
     <div
@@ -87,10 +95,11 @@ export default function EagerMarkdownInput({
       }}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
+      data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
       className={cs.MarkdownInput.root}
     >
-      {!isReadOnly && editor ? <FormattingToolbar editor={editor} /> : null}
+      {!isReadOnly && <FormattingToolbar editorRef={editorRef} />}
       <div ref={containerRef} />
     </div>
   );

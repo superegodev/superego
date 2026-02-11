@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
+import classnames from "../../../../../utils/classnames.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import MarkdownInput from "../../../../design-system/MarkdownInput/MarkdownInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -25,7 +26,10 @@ export default function Markdown({
   );
   return (
     <div
-      className={cs.StringField.Markdown.root}
+      className={classnames(
+        cs.StringField.Markdown.root,
+        isListItem && cs.ListItemField.root,
+      )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
     >
@@ -37,7 +41,7 @@ export default function Markdown({
         />
       ) : null}
       <MarkdownInput
-        value={field.value}
+        value={field.value ?? ""}
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}

@@ -1,12 +1,7 @@
 import type { Theme } from "overtype";
 import { vars } from "../../../themes.css.js";
 
-/**
- * OverType theme that maps to Superego's design tokens via CSS custom
- * properties.  Because the values are `var(--…)` references they resolve
- * automatically when the page switches between light and dark mode.
- */
-const theme: Theme = {
+export default {
   name: "superego",
   colors: {
     // Backgrounds
@@ -19,44 +14,35 @@ const theme: Theme = {
     textSecondary: vars.colors.text.secondary,
 
     // Headings
-    h1: vars.colors.accent,
-    h2: vars.colors.oranges._3,
-    h3: vars.colors.greens._4,
+    h1: vars.colors.text.primary,
+    h2: vars.colors.text.primary,
+    h3: vars.colors.text.primary,
 
     // Inline formatting
-    strong: vars.colors.accent,
-    em: vars.colors.reds._4,
+    strong: vars.colors.text.primary,
+    em: vars.colors.text.primary,
     del: vars.colors.text.secondary,
     code: vars.colors.text.primary,
-    codeBg: vars.colors.oranges._1,
+    codeBg: vars.colors.oranges._4,
 
     // Links
-    link: vars.colors.blues._4,
+    link: vars.colors.blues._5,
 
     // Blocks
     blockquote: vars.colors.text.secondary,
-    hr: vars.colors.border.default,
+    hr: vars.colors.text.secondary,
     listMarker: vars.colors.accent,
 
     // Syntax / markers
-    syntaxMarker: vars.colors.text.secondary,
+    syntaxMarker: vars.colors.text.primary,
     syntax: vars.colors.text.secondary,
     rawLine: vars.colors.text.secondary,
 
     // Interactive
-    cursor: vars.colors.accent,
-    selection: vars.colors.oranges._1,
+    cursor: vars.colors.text.primary,
+    selection: `color-mix(in srgb, ${vars.colors.oranges._5} 20%, transparent)`,
     border: vars.colors.border.default,
     hoverBg: vars.colors.background.surfaceHighlight,
     primary: vars.colors.text.primary,
-
-    // Toolbar (unused — we render our own, but kept for completeness)
-    toolbarBg: vars.colors.background.surface,
-    toolbarIcon: vars.colors.text.primary,
-    toolbarHover: vars.colors.background.surfaceHighlight,
-    toolbarActive: vars.colors.background.secondarySurface,
-    toolbarBorder: vars.colors.border.default,
   },
-};
-
-export default theme;
+} satisfies Theme;

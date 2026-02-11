@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import { Group, Separator, Toolbar } from "react-aria-components";
 import {
   PiCode,
@@ -18,9 +19,9 @@ import * as cs from "./MarkdownInput.css.js";
 import type OverTypeEditor from "./OverTypeEditor.js";
 
 interface Props {
-  editor: OverTypeEditor;
+  editorRef: RefObject<OverTypeEditor | null>;
 }
-export default function FormattingToolbar({ editor }: Props) {
+export default function FormattingToolbar({ editorRef }: Props) {
   const intl = useIntl();
   return (
     <Toolbar
@@ -35,7 +36,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Bold" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleBold")}
+          onPress={() => editorRef.current?.performAction("toggleBold")}
         >
           <PiTextBBold />
         </IconButton>
@@ -43,7 +44,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Italic" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleItalic")}
+          onPress={() => editorRef.current?.performAction("toggleItalic")}
         >
           <PiTextItalic />
         </IconButton>
@@ -51,7 +52,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Code" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleCode")}
+          onPress={() => editorRef.current?.performAction("toggleCode")}
         >
           <PiCode />
         </IconButton>
@@ -70,7 +71,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Link" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("insertLink")}
+          onPress={() => editorRef.current?.performAction("insertLink")}
         >
           <PiLink />
         </IconButton>
@@ -89,7 +90,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Heading 1" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleH1")}
+          onPress={() => editorRef.current?.performAction("toggleH1")}
         >
           <PiTextHOne />
         </IconButton>
@@ -97,7 +98,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Heading 2" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleH2")}
+          onPress={() => editorRef.current?.performAction("toggleH2")}
         >
           <PiTextHTwo />
         </IconButton>
@@ -105,7 +106,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Heading 3" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleH3")}
+          onPress={() => editorRef.current?.performAction("toggleH3")}
         >
           <PiTextHThree />
         </IconButton>
@@ -124,7 +125,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Bullet list" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleBulletList")}
+          onPress={() => editorRef.current?.performAction("toggleBulletList")}
         >
           <PiListBullets />
         </IconButton>
@@ -132,7 +133,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Numbered list" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleNumberedList")}
+          onPress={() => editorRef.current?.performAction("toggleNumberedList")}
         >
           <PiListNumbers />
         </IconButton>
@@ -140,7 +141,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Task list" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleTaskList")}
+          onPress={() => editorRef.current?.performAction("toggleTaskList")}
         >
           <PiListChecks />
         </IconButton>
@@ -159,7 +160,7 @@ export default function FormattingToolbar({ editor }: Props) {
           label={intl.formatMessage({ defaultMessage: "Quote" })}
           variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editor.performAction("toggleQuote")}
+          onPress={() => editorRef.current?.performAction("toggleQuote")}
         >
           <PiQuotes />
         </IconButton>

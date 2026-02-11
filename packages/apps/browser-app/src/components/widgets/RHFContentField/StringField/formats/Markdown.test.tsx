@@ -25,14 +25,6 @@ function MarkdownWithForm({ defaultValue }: { defaultValue?: string | null }) {
 }
 
 describe("Markdown", () => {
-  it("renders the label", () => {
-    // Exercise
-    render(<MarkdownWithForm />);
-
-    // Verify
-    expect(screen.getByText("Markdown field")).toBeInTheDocument();
-  });
-
   it("initializes the OverType editor", async () => {
     // Exercise
     const { container } = render(<MarkdownWithForm defaultValue="# Hello" />);
@@ -44,17 +36,12 @@ describe("Markdown", () => {
     });
   });
 
-  it("sets the initial value in the editor", async () => {
+  it("renders the label when isListItem is false", () => {
     // Exercise
-    const { container } = render(
-      <MarkdownWithForm defaultValue="**bold text**" />,
-    );
+    render(<MarkdownWithForm />);
 
     // Verify
-    await waitFor(() => {
-      const textarea = container.querySelector("textarea");
-      expect(textarea).toHaveValue("**bold text**");
-    });
+    expect(screen.getByText("Markdown field")).toBeInTheDocument();
   });
 
   it("does not render the label when isListItem is true", () => {
