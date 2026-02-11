@@ -202,7 +202,9 @@ export default class PacksInstallPack extends Usecase<
     files: AppVersion["files"],
     collectionIdMapping: Map<ProtoCollectionId, CollectionId>,
   ): AppVersion["files"] {
-    const mappingEntries = [...collectionIdMapping.entries()];
+    const mappingEntries = [...collectionIdMapping.entries()].sort(
+      (a, b) => b[0].length - a[0].length,
+    );
     if (mappingEntries.length === 0) {
       return files;
     }

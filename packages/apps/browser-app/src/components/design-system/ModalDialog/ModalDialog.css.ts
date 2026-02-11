@@ -31,10 +31,18 @@ export const ModalDialog = {
         background: `rgb(from ${vars.colors.background.inverse} r g b / .2)`,
       },
       '&[data-entering="true"]': {
-        animation: `${modalOverlayFade} 200ms`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalOverlayFade} 200ms`,
+          },
+        },
       },
       '&[data-exiting="true"]': {
-        animation: `${modalOverlayFade} 150ms reverse ease-in`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalOverlayFade} 150ms reverse ease-in`,
+          },
+        },
       },
     },
   }),
@@ -52,7 +60,11 @@ export const ModalDialog = {
     boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.neutral._12} r g b / 0.1)`,
     selectors: {
       '&[data-entering="true"]': {
-        animation: `${modalZoom} 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalZoom} 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)`,
+          },
+        },
       },
     },
   }),

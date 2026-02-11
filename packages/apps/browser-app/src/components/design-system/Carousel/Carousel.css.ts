@@ -14,7 +14,11 @@ export const Carousel = {
 
   track: style({
     display: "flex",
-    transition: "transform 300ms ease-in-out",
+    "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "transform 300ms ease-in-out",
+      },
+    },
   }),
 
   slide: style({

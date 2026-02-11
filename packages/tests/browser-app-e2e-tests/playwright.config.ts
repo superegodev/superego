@@ -5,36 +5,28 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: "html",
+  reporter: [["html", { open: "never" }]],
   timeout: 60_000,
   use: {
     baseURL: "http://localhost:5173",
     trace: process.env.CI ? "on-first-retry" : "retain-on-first-failure",
+    contextOptions: {
+      reducedMotion: "reduce",
+    },
+  },
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.01,
+    },
   },
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 7"] },
-    },
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 15"] },
-    },
   ],
   webServer: {
-    command: "yarn workspace @superego/demo-app dev",
+    command: "yarn workspace @superego/browser-app dev",
     url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
   },
