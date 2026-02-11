@@ -1,5 +1,6 @@
 import test from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
+import waitForTiptapInput from "../actions/waitForTiptapInput.js";
 import mainPanel from "../locators/mainPanel.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
@@ -53,6 +54,7 @@ test("004. Navigate to Contact from collection page", async ({ page }) => {
       .getByRole("rowheader", { name: /Carl Jung/i })
       .click();
     await page.getByRole("textbox", { name: /^Name/i }).waitFor();
+    await waitForTiptapInput(page);
 
     // Verify
     await VisualEvaluator.expectToSee(

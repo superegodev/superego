@@ -1,4 +1,5 @@
 import test from "@playwright/test";
+import waitForTiptapInput from "../actions/waitForTiptapInput.js";
 import mainPanel from "../locators/mainPanel.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
@@ -20,6 +21,7 @@ test("001. Create Contact", async ({ page }) => {
     // Exercise
     await page.getByRole("link", { name: /Create document/i }).click();
     await page.getByRole("button", { name: /^Create$/i }).waitFor();
+    await waitForTiptapInput(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -58,6 +60,7 @@ test("001. Create Contact", async ({ page }) => {
     // Exercise
     await page.getByRole("button", { name: /^Create$/i }).click();
     await page.getByRole("button", { name: /^Save$/i }).waitFor();
+    await waitForTiptapInput(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
