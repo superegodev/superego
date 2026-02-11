@@ -1,11 +1,11 @@
 import {
   type Backend,
-  type CollectionId,
   type CollectionNotFound,
   type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
+  type DocumentDefinition,
   type DocumentId,
   DocumentVersionCreator,
   type DuplicateDocumentDetected,
@@ -53,24 +53,20 @@ export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
 > {
   async exec(
-    collectionId: CollectionId,
-    content: any,
+    definition: DocumentDefinition,
     options?: {
-      skipDuplicateCheck: boolean;
       documentId?: DocumentId;
-      allowedUnverifiedDocumentIds?: DocumentId[];
+      skipReferenceCheckForDocumentIds?: DocumentId[];
     },
   ): ExecReturnValue;
   async exec(
-    collectionId: CollectionId,
-    content: any,
+    definition: DocumentDefinition,
     options:
       | {
           createdBy: DocumentVersionCreator.Assistant;
           conversationId: ConversationId;
-          skipDuplicateCheck: boolean;
           documentId?: DocumentId;
-          allowedUnverifiedDocumentIds?: DocumentId[];
+          skipReferenceCheckForDocumentIds?: DocumentId[];
         }
       | {
           createdBy: DocumentVersionCreator.Connector;
@@ -78,12 +74,10 @@ export default class DocumentsCreate extends Usecase<
           remoteVersionId: string;
           remoteUrl: string | null;
           remoteDocument: any;
-          skipDuplicateCheck: true;
         },
   ): ExecReturnValue;
   async exec(
-    collectionId: CollectionId,
-    content: any,
+    definition: DocumentDefinition,
     options: {
       createdBy?:
         | DocumentVersionCreator.Assistant
@@ -93,11 +87,14 @@ export default class DocumentsCreate extends Usecase<
       remoteVersionId?: string;
       remoteUrl?: string | null;
       remoteDocument?: any;
-      skipDuplicateCheck: boolean;
       documentId?: DocumentId;
-      allowedUnverifiedDocumentIds?: DocumentId[];
-    } = { skipDuplicateCheck: false },
+      skipReferenceCheckForDocumentIds?: DocumentId[];
+    } = {},
   ): ExecReturnValue {
+    const { collectionId, content } = definition;
+    const { skipDuplicateCheck } = definition.options ?? {
+      skipDuplicateCheck: false,
+    };
     const collection = await this.repos.collection.find(collectionId);
     if (!collection) {
       return makeUnsuccessfulResult(
@@ -147,13 +144,10 @@ export default class DocumentsCreate extends Usecase<
       latestCollectionVersion.schema,
       contentValidationResult.output,
     );
-    const allowedUnverifiedDocumentIds = new Set(
-      options.allowedUnverifiedDocumentIds ?? [],
-    );
     const notFoundDocumentRefs: DocumentRef[] = [];
     for (const referencedDocument of referencedDocuments) {
       if (
-        !allowedUnverifiedDocumentIds.has(
+        !options.skipReferenceCheckForDocumentIds?.includes(
           referencedDocument.documentId as DocumentId,
         ) &&
         !(await this.repos.document.exists(
@@ -206,7 +200,7 @@ export default class DocumentsCreate extends Usecase<
     if (
       contentBlockingKeys !== null &&
       !isEmpty(contentBlockingKeys) &&
-      !options.skipDuplicateCheck
+      !skipDuplicateCheck
     ) {
       const duplicateDocumentVersion =
         await this.repos.documentVersion.findAnyLatestWhereCollectionIdEqAndContentBlockingKeysOverlap(

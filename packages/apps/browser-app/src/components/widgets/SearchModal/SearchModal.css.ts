@@ -32,10 +32,18 @@ export const SearchModal = {
         background: `rgb(from ${vars.colors.background.inverse} r g b / .2)`,
       },
       '&[data-entering="true"]': {
-        animation: `${modalOverlayFade} 150ms`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalOverlayFade} 150ms`,
+          },
+        },
       },
       '&[data-exiting="true"]': {
-        animation: `${modalOverlayFade} 100ms reverse ease-in`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalOverlayFade} 100ms reverse ease-in`,
+          },
+        },
       },
     },
   }),
@@ -55,7 +63,11 @@ export const SearchModal = {
     overflow: "hidden",
     selectors: {
       '&[data-entering="true"]': {
-        animation: `${modalSlideDown} 200ms cubic-bezier(0.16, 1, 0.3, 1)`,
+        "@media": {
+          "(prefers-reduced-motion: no-preference)": {
+            animation: `${modalSlideDown} 200ms cubic-bezier(0.16, 1, 0.3, 1)`,
+          },
+        },
       },
     },
   }),

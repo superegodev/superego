@@ -213,6 +213,54 @@
       "value": "Status"
     }
   ],
+  "Bazaar.tsx_T5A49y": [
+    {
+      "type": 0,
+      "value": "Bazaar"
+    }
+  ],
+  "BazaarPack.tsx_40netJ": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packId"
+    }
+  ],
+  "BazaarPack.tsx_DzgcGx": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "BazaarPack.tsx_HUc4Bb": [
+    {
+      "type": 0,
+      "value": "Toggle collections preview"
+    }
+  ],
+  "BazaarPack.tsx_j9FVIw": [
+    {
+      "type": 0,
+      "value": "Screenshot of "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "BazaarPack.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Install"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -267,6 +315,34 @@
     {
       "type": 0,
       "value": " versions)"
+    }
+  ],
+  "Carousel.tsx_F+ukuP": [
+    {
+      "type": 0,
+      "value": "Next image"
+    }
+  ],
+  "Carousel.tsx_H/VqZ2": [
+    {
+      "type": 0,
+      "value": "Go to image "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "Carousel.tsx_aC/Bx7": [
+    {
+      "type": 0,
+      "value": "Carousel"
+    }
+  ],
+  "Carousel.tsx_fb1a/o": [
+    {
+      "type": 0,
+      "value": "Previous image"
     }
   ],
   "Chat.tsx_zhku3H": [
@@ -922,6 +998,12 @@
       "value": "Not a valid JSON string"
     }
   ],
+  "DeleteAppModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "DeleteAppModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -972,6 +1054,12 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -1054,6 +1142,12 @@
       "value": "\""
     }
   ],
+  "DeleteConversationModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "DeleteConversationModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1090,6 +1184,12 @@
     {
       "type": 0,
       "value": "Command confirmation"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -1320,6 +1420,12 @@
     {
       "type": 0,
       "value": "Go to"
+    }
+  ],
+  "DownSyncInfoModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -2198,6 +2304,38 @@
       "value": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
     }
   ],
+  "InstallPackModal.tsx_+Toiai": [
+    {
+      "type": 0,
+      "value": "will be installed."
+    }
+  ],
+  "InstallPackModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "InstallPackModal.tsx_B8WL2e": [
+    {
+      "type": 0,
+      "value": "Install pack \""
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "InstallPackModal.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Install"
+    }
+  ],
   "Instant.tsx_AnIOVe": [
     {
       "type": 1,
@@ -2302,10 +2440,30 @@
       "value": "There are no items in the list"
     }
   ],
+  "LoadDemoDataButton.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
       "value": "Load"
+    }
+  ],
+  "LoadDemoDataButton.tsx_FBs/WA": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " packs installed out of "
+    },
+    {
+      "type": 1,
+      "value": "total"
     }
   ],
   "LoadDemoDataButton.tsx_GCRF0i": [
@@ -2362,6 +2520,140 @@
     {
       "type": 0,
       "value": " to null"
+    }
+  ],
+  "PackCard.tsx_EgRJme": [
+    {
+      "type": 0,
+      "value": "Screenshot of the pack"
+    }
+  ],
+  "PackEntityCounts.tsx_GPDaFU": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " app"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " apps"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "appsCount"
+    }
+  ],
+  "PackEntityCounts.tsx_M51yty": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " document"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documents"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "documentsCount"
+    }
+  ],
+  "PackEntityCounts.tsx_P2D191": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " category"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " categories"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "collectionCategoriesCount"
+    }
+  ],
+  "PackEntityCounts.tsx_pKXETD": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " collection"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " collections"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "collectionsCount"
     }
   ],
   "Pagination.tsx_CDjQEk": [
@@ -2436,6 +2728,12 @@
     {
       "type": 0,
       "value": "Settings"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_T5A49y": [
+    {
+      "type": 0,
+      "value": "Bazaar"
     }
   ],
   "PrimarySidebarPanel.tsx_ZT0z9z": [
@@ -3072,6 +3370,12 @@
       "value": "Remote document version ID:"
     }
   ],
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -3190,6 +3494,12 @@
       },
       "type": 5,
       "value": "type"
+    }
+  ],
+  "RestoreVersionModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "RestoreVersionModal.tsx_X3XZvD": [
@@ -3528,6 +3838,12 @@
       "value": "Set remote"
     }
   ],
+  "SetNameAndSaveModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "SetNameAndSaveModal.tsx_HAlOn1": [
     {
       "type": 0,
@@ -3830,6 +4146,12 @@
     {
       "type": 0,
       "value": "Error saving global settings"
+    }
+  ],
+  "UpdateNameModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
     }
   ],
   "UpdateNameModalForm.tsx_BWpuKl": [

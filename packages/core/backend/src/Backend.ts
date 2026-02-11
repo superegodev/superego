@@ -1,6 +1,5 @@
 import type { ResultPromise } from "@superego/global-types";
 import type { Schema } from "@superego/schema";
-import type AppType from "./enums/AppType.js";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
@@ -43,6 +42,8 @@ import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.j
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
+import type PackNotFound from "./errors/PackNotFound.js";
+import type PackNotValid from "./errors/PackNotValid.js";
 import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollectionCategoryIsDescendant.js";
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
@@ -60,12 +61,16 @@ import type ConversationId from "./ids/ConversationId.js";
 import type DocumentId from "./ids/DocumentId.js";
 import type DocumentVersionId from "./ids/DocumentVersionId.js";
 import type FileId from "./ids/FileId.js";
+import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
+import type AppDefinition from "./types/AppDefinition.js";
 import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
 import type CollectionCategory from "./types/CollectionCategory.js";
+import type CollectionCategoryDefinition from "./types/CollectionCategoryDefinition.js";
+import type CollectionDefinition from "./types/CollectionDefinition.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersion from "./types/CollectionVersion.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
@@ -74,13 +79,16 @@ import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticatio
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
+import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
+import type LitePack from "./types/LitePack.js";
 import type Message from "./types/Message.js";
 import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
+import type Pack from "./types/Pack.js";
 import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
@@ -89,7 +97,7 @@ import type TypescriptModule from "./types/TypescriptModule.js";
 export default interface Backend {
   collectionCategories: {
     create(
-      proto: Pick<CollectionCategory, "name" | "icon" | "parentId">,
+      definition: CollectionCategoryDefinition,
     ): ResultPromise<
       CollectionCategory,
       | CollectionCategoryNameNotValid
@@ -125,9 +133,7 @@ export default interface Backend {
 
   collections: {
     create(
-      settings: CollectionSettings,
-      schema: Schema,
-      versionSettings: CollectionVersionSettings,
+      definition: CollectionDefinition,
     ): ResultPromise<
       Collection,
       | CollectionSettingsNotValid
@@ -141,11 +147,7 @@ export default interface Backend {
     >;
 
     createMany(
-      protos: {
-        settings: CollectionSettings;
-        schema: Schema;
-        versionSettings: CollectionVersionSettings;
-      }[],
+      definitions: CollectionDefinition[],
     ): ResultPromise<
       Collection[],
       | CollectionSettingsNotValid
@@ -292,9 +294,7 @@ export default interface Backend {
 
   documents: {
     create(
-      collectionId: CollectionId,
-      content: any,
-      options?: { skipDuplicateCheck: boolean },
+      definition: DocumentDefinition,
     ): ResultPromise<
       Document,
       | CollectionNotFound
@@ -308,11 +308,7 @@ export default interface Backend {
     >;
 
     createMany(
-      documents: {
-        collectionId: CollectionId;
-        content: any;
-        options?: { skipDuplicateCheck: boolean };
-      }[],
+      definitions: DocumentDefinition[],
     ): ResultPromise<
       Document[],
       | CollectionNotFound
@@ -497,10 +493,7 @@ export default interface Backend {
 
   apps: {
     create(
-      type: AppType,
-      name: string,
-      targetCollectionIds: CollectionId[],
-      files: AppVersion["files"],
+      definition: AppDefinition,
     ): ResultPromise<
       App,
       AppNameNotValid | CollectionNotFound | UnexpectedError
@@ -528,8 +521,46 @@ export default interface Backend {
     list(): ResultPromise<App[], UnexpectedError>;
   };
 
+  packs: {
+    installPack(pack: Pack): ResultPromise<
+      {
+        collectionCategories: CollectionCategory[];
+        collections: Collection[];
+        apps: App[];
+        documents: Document[];
+      },
+      | PackNotValid
+      | CollectionCategoryNameNotValid
+      | CollectionCategoryIconNotValid
+      | ParentCollectionCategoryNotFound
+      | CollectionSettingsNotValid
+      | CollectionCategoryNotFound
+      | AppNotFound
+      | CollectionSchemaNotValid
+      | ReferencedCollectionsNotFound
+      | ContentBlockingKeysGetterNotValid
+      | ContentSummaryGetterNotValid
+      | AppNameNotValid
+      | CollectionNotFound
+      | DocumentContentNotValid
+      | FilesNotFound
+      | ReferencedDocumentsNotFound
+      | MakingContentBlockingKeysFailed
+      | DuplicateDocumentDetected
+      | ConnectorDoesNotSupportUpSyncing
+      | UnexpectedError
+    >;
+  };
+
+  bazaar: {
+    listPacks(): ResultPromise<LitePack[], UnexpectedError>;
+
+    getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;
+  };
+
   backgroundJobs: {
     list(): ResultPromise<LiteBackgroundJob[], UnexpectedError>;
+
     get(
       id: BackgroundJobId,
     ): ResultPromise<BackgroundJob, BackgroundJobNotFound | UnexpectedError>;

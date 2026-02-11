@@ -14,13 +14,15 @@ export const Shell = {
     color: vars.colors.text.primary,
     background: vars.colors.background.surface,
     position: "relative",
-    transition: "margin-inline-start 200ms ease",
     selectors: {
       '&[data-primary-sidebar-open="true"]': {
         marginInlineStart: 0,
       },
     },
     "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "margin-inline-start 200ms ease",
+      },
       [`(max-width: ${breakpoints.medium})`]: {
         width: `calc(100dvw + ${primarySidebarWidth})`,
         gridTemplateColumns: `${primarySidebarWidth} 100dvw`,

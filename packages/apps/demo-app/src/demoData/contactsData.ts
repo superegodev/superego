@@ -1,5 +1,7 @@
+import type { packsAsConst } from "@superego/bazaar";
 import { DataType, type TypeOf } from "@superego/schema";
-import type contactsSchema from "./contactsSchema.js";
+
+type Contact = TypeOf<(typeof packsAsConst)[3]["collections"][0]["schema"]>;
 
 export default [
   {
@@ -1867,4 +1869,4 @@ export default [
       ],
     },
   },
-] satisfies TypeOf<typeof contactsSchema>[];
+] satisfies Contact[];

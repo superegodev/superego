@@ -1,7 +1,7 @@
+import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
-import type foodsSchema from "./foodsSchema.js";
 
-type Food = TypeOf<typeof foodsSchema>;
+type Food = TypeOf<(typeof packsAsConst)[1]["collections"][1]["schema"]>;
 
 const kcal = (amount: number) => ({ unit: "kcal" as const, amount });
 const g = (amount: number) => ({ unit: "g" as const, amount });

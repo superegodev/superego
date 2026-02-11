@@ -15,8 +15,8 @@
       "**/*.json",
       "!**/package.json",
       "!**/translations/**/*",
-      "!packages/apps/demo-app/src/demoData/*.appSource.*",
-      "!packages/apps/demo-app/src/demoData/*.appCompiled.*",
+      "!packages/misc/bazaar/src/**/*.appSource.*",
+      "!packages/misc/bazaar/src/**/*.appCompiled.*",
       "!packages/core/schema/src/codegen/test-schemas/*.generated.*"
     ]
   },

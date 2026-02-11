@@ -280,15 +280,17 @@ export default class CollectionsDownSync extends Usecase {
 
     if (!document) {
       const documentsCreateResult = await this.sub(DocumentsCreate).exec(
-        collection.id,
-        conversionResult.data,
+        {
+          collectionId: collection.id,
+          content: conversionResult.data,
+          options: { skipDuplicateCheck: true },
+        },
         {
           createdBy: DocumentVersionCreator.Connector,
           remoteId: addedOrModified.id,
           remoteVersionId: addedOrModified.versionId,
           remoteUrl: addedOrModified.url,
           remoteDocument: addedOrModified.content,
-          skipDuplicateCheck: true,
         },
       );
       return documentsCreateResult.success

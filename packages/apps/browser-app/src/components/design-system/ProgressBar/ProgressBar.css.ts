@@ -37,6 +37,10 @@ export const ProgressBar = {
     width: "var(--percentage)",
     borderRadius: vars.borders.radius.full,
     background: vars.colors.button.primary.base.background,
-    transition: "width 0.2s ease-out",
+    "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "width 0.2s ease-out",
+      },
+    },
   }),
 };

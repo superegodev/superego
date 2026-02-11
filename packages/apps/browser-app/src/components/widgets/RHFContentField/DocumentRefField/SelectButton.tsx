@@ -1,5 +1,6 @@
 import type { Collection, CollectionId, DocumentId } from "@superego/backend";
-import { type DocumentRef, utils } from "@superego/schema";
+import type { DocumentRef } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import { PiArrowSquareOut } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
@@ -44,7 +45,7 @@ export default function SelectButton({
 
   const collection = collectionsById[value.collectionId] ?? null;
 
-  if (utils.isProtoCollectionId(value.collectionId)) {
+  if (Id.is.protoCollection(value.collectionId)) {
     return (
       <Button
         onPress={!isReadOnly ? onPress : undefined}

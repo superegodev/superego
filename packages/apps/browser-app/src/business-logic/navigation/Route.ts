@@ -5,6 +5,7 @@ import type {
   ConversationId,
   DocumentId,
   DocumentVersionId,
+  PackId,
 } from "@superego/backend";
 
 export enum RouteName {
@@ -20,6 +21,8 @@ export enum RouteName {
   Document = "Document",
   CreateApp = "CreateApp",
   EditApp = "EditApp",
+  Bazaar = "Bazaar",
+  BazaarPack = "BazaarPack",
   BackgroundJobs = "BackgroundJobs",
   BackgroundJob = "BackgroundJob",
   GlobalSettings = "Settings",
@@ -88,6 +91,13 @@ type Route =
   | {
       name: RouteName.EditApp;
       appId: AppId;
+    }
+  | {
+      name: RouteName.Bazaar;
+    }
+  | {
+      name: RouteName.BazaarPack;
+      packId: PackId;
     }
   | {
       name: RouteName.BackgroundJobs;

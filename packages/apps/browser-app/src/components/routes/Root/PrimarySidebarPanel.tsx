@@ -4,12 +4,15 @@ import {
   PiListChecks,
   PiMagnifyingGlass,
   PiRobot,
+  PiStorefront,
 } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CollectionsTree from "../../widgets/CollectionsTree/CollectionsTree.js";
 import PrimarySidebarPanelAction from "./PrimarySidebarPanelAction.js";
@@ -18,6 +21,7 @@ import * as cs from "./Root.css.js";
 export default function PrimarySidebarPanel() {
   const { open: openSearchModal } = useSearchModalState();
   const { canGoBack, goBack } = useNavigationState();
+  const { collections } = useGlobalData();
 
   return (
     <Shell.Panel slot="PrimarySidebar">
@@ -56,6 +60,14 @@ export default function PrimarySidebarPanel() {
           >
             <PiListChecks />
             <FormattedMessage defaultMessage="Background jobs" />
+          </PrimarySidebarPanelAction>
+          <PrimarySidebarPanelAction
+            type="link"
+            to={{ name: RouteName.Bazaar }}
+            isHighlighted={isEmpty(collections)}
+          >
+            <PiStorefront />
+            <FormattedMessage defaultMessage="Bazaar" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"

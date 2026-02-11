@@ -4,6 +4,7 @@ import type {
   ConnectorDoesNotSupportUpSyncing,
   Document,
   DocumentContentNotValid,
+  DocumentDefinition,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
@@ -35,8 +36,7 @@ export default class Backend {
   private invocations = new Map<string, (result: Result<any, any>) => void>();
 
   createDocument(
-    collectionId: CollectionId,
-    content: any,
+    definition: DocumentDefinition,
   ): ResultPromise<
     Document,
     | CollectionNotFound
@@ -45,7 +45,7 @@ export default class Backend {
     | FilesNotFound
     | UnexpectedError
   > {
-    return this.invokeMethod("documents", "create", [collectionId, content]);
+    return this.invokeMethod("documents", "create", [definition]);
   }
 
   createNewDocumentVersion(

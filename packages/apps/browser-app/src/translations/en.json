@@ -104,6 +104,24 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
+  "Bazaar.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
+  },
+  "BazaarPack.tsx_40netJ": {
+    "defaultMessage": "Bazaar » {packId}"
+  },
+  "BazaarPack.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "BazaarPack.tsx_HUc4Bb": {
+    "defaultMessage": "Toggle collections preview"
+  },
+  "BazaarPack.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot of {packName}"
+  },
+  "BazaarPack.tsx_ubmFc8": {
+    "defaultMessage": "Install"
+  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
@@ -121,6 +139,18 @@
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versions)"
+  },
+  "Carousel.tsx_F+ukuP": {
+    "defaultMessage": "Next image"
+  },
+  "Carousel.tsx_H/VqZ2": {
+    "defaultMessage": "Go to image {number}"
+  },
+  "Carousel.tsx_aC/Bx7": {
+    "defaultMessage": "Carousel"
+  },
+  "Carousel.tsx_fb1a/o": {
+    "defaultMessage": "Previous image"
   },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Error sending message to assistant"
@@ -392,6 +422,9 @@
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
+  "DeleteAppModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "DeleteAppModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -403,6 +436,9 @@
   },
   "DeleteAppModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteCollectionModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DeleteCollectionModalForm.tsx_J24oFm": {
     "defaultMessage": "<p> Deleting the collection will permanently delete all of its documents and files. </p> <p> If you're sure you want to delete the collection, write <i>delete</i> in the input below. </p>"
@@ -419,6 +455,9 @@
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Delete conversation \"{conversationName}\""
   },
+  "DeleteConversationModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -427,6 +466,9 @@
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
+  },
+  "DeleteDocumentModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DeleteDocumentModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -511,6 +553,9 @@
   },
   "DocumentsTable.tsx_xIoGG9": {
     "defaultMessage": "Go to"
+  },
+  "DownSyncInfoModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "DownSyncInfoModal.tsx_8I58x/": {
     "defaultMessage": "Syncing with {remote}"
@@ -884,6 +929,18 @@
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
   },
+  "InstallPackModal.tsx_+Toiai": {
+    "defaultMessage": "will be installed."
+  },
+  "InstallPackModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "InstallPackModal.tsx_B8WL2e": {
+    "defaultMessage": "Install pack \"{packName}\"?"
+  },
+  "InstallPackModal.tsx_ubmFc8": {
+    "defaultMessage": "Install"
+  },
   "Instant.tsx_AnIOVe": {
     "defaultMessage": "{label} time"
   },
@@ -926,8 +983,14 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "There are no items in the list"
   },
+  "LoadDemoDataButton.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "LoadDemoDataButton.tsx_8EGRF9": {
     "defaultMessage": "Load"
+  },
+  "LoadDemoDataButton.tsx_FBs/WA": {
+    "defaultMessage": "{current} packs installed out of {total}"
   },
   "LoadDemoDataButton.tsx_GCRF0i": {
     "defaultMessage": "Loading demo data"
@@ -952,6 +1015,21 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
+  },
+  "PackCard.tsx_EgRJme": {
+    "defaultMessage": "Screenshot of the pack"
+  },
+  "PackEntityCounts.tsx_GPDaFU": {
+    "defaultMessage": "{appsCount, plural, one {# app} other {# apps}}"
+  },
+  "PackEntityCounts.tsx_M51yty": {
+    "defaultMessage": "{documentsCount, plural, one {# document} other {# documents}}"
+  },
+  "PackEntityCounts.tsx_P2D191": {
+    "defaultMessage": "{collectionCategoriesCount, plural, one {# category} other {# categories}}"
+  },
+  "PackEntityCounts.tsx_pKXETD": {
+    "defaultMessage": "{collectionsCount, plural, one {# collection} other {# collections}}"
   },
   "Pagination.tsx_CDjQEk": {
     "defaultMessage": "{startItem}-{endItem} of {totalItems}"
@@ -979,6 +1057,9 @@
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
+  },
+  "PrimarySidebarPanel.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
   },
   "PrimarySidebarPanel.tsx_ZT0z9z": {
     "defaultMessage": "Ask"
@@ -1064,6 +1145,9 @@
   "RemoteDocumentInfoModal.tsx_nY1/sq": {
     "defaultMessage": "Remote document version ID:"
   },
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
@@ -1090,6 +1174,9 @@
   },
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
+  },
+  "RestoreVersionModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "RestoreVersionModal.tsx_X3XZvD": {
     "defaultMessage": "Restore version"
@@ -1186,6 +1273,9 @@
   },
   "SetCollectionRemoteForm.tsx_m8TXbJ": {
     "defaultMessage": "Set remote"
+  },
+  "SetNameAndSaveModal.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "SetNameAndSaveModal.tsx_HAlOn1": {
     "defaultMessage": "Name"
@@ -1324,6 +1414,9 @@
   },
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
+  },
+  "UpdateNameModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
   },
   "UpdateNameModalForm.tsx_BWpuKl": {
     "defaultMessage": "Update"

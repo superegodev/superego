@@ -10,22 +10,6 @@ import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
 import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
 import parsePath from "./utils/parsePath.js";
-import {
-  extractProtoCollectionIds,
-  isProtoCollectionId,
-  makeProtoCollectionId,
-  makeProtoCollectionIdMapping,
-  parseProtoCollectionIndex,
-  replaceProtoCollectionIds,
-} from "./utils/protoCollectionIds.js";
-import {
-  extractProtoDocumentIds,
-  isProtoDocumentId,
-  makeProtoDocumentId,
-  makeProtoDocumentIdMapping,
-  parseProtoDocumentIndex,
-  replaceProtoDocumentIds,
-} from "./utils/protoDocumentIds.js";
 import RHFProtoFile from "./utils/RHFProtoFile.js";
 import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
 import content from "./valibot-schemas/content/content.js";
@@ -58,17 +42,5 @@ export const utils = {
   extractReferencedCollectionIds,
   extractTextChunks,
   replaceSelfCollectionId,
-  makeProtoCollectionId,
-  makeProtoCollectionIdMapping,
-  isProtoCollectionId,
-  parseProtoCollectionIndex,
-  extractProtoCollectionIds,
-  replaceProtoCollectionIds,
-  makeProtoDocumentId,
-  makeProtoDocumentIdMapping,
-  isProtoDocumentId,
-  parseProtoDocumentIndex,
-  extractProtoDocumentIds,
-  replaceProtoDocumentIds,
   RHFProtoFile,
 };
