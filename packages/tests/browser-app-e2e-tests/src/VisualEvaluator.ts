@@ -36,6 +36,7 @@ async function takeScreenshot(target: Page | Locator): Promise<Buffer> {
     width: originalSize?.width ?? 1280,
     height: fullHeight,
   });
+  await page.waitForTimeout(10);
   const screenshot = await target.screenshot();
   if (originalSize) {
     await page.setViewportSize(originalSize);

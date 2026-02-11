@@ -12,8 +12,9 @@ When you need to write a Playwright e2e test for browser-app package.
 ## Base instructions
 
 - Directory: `packages/tests/browser-app-e2e-tests/src/scenarios`
-- File name: next three-digit sequential identifier + `.test.ts`
-- Test title: the three-digit identifier
+- Test title: three-digit identifier + dot + short description of the test
+- File name: three-digit sequential identifier + `-` +
+  snake-cased-short-description + `.test.ts`
 
 For assertions, **ONLY** use visual comparisons of screenshots via
 `VisualEvaluator.expectToSee`. **DO NOT** use other assertions.
@@ -36,7 +37,8 @@ sections (visually separated by `// $SectionName` comments):
 - Verify: calls `VisualEvaluator.expectToSee` exactly once, which:
   - Takes a screenshot of either a specific element (preferred) or the whole
     page.
-  - Describes what things it expects to see.
+  - Describes the **current** state it expects to see in the screenshot. (No
+    references to what happened before.)
 
 Additional requirements:
 
@@ -49,13 +51,13 @@ Additional requirements:
 ## Run test and evaluate screenshots
 
 Run the test with
-`yarn workspace @superego/browser-app-e2e-tests playwright test src/scenarios/$TEST_ID.test.ts`.
+`yarn workspace @superego/browser-app-e2e-tests playwright test src/scenarios/$TEST_FILE_NAME`.
 
 When the test runs the first time there are no "golden reference snapshots" yet,
 so the test will fail.
 
 However, the run generates the yet-to-be-evaluated snapshots in the
-`packages/tests/browser-app-e2e-tests/src/scenarios/$TEST_ID.test.ts-snapshots`
+`packages/tests/browser-app-e2e-tests/src/scenarios/$TEST_FILE_NAME-snapshots`
 directory.
 
 One by one, visually review the snapshots and ensure they match the

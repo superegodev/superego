@@ -62,7 +62,9 @@ function checkSingleTestMatchingFileName(scenario: ScenarioFile): CheckError[] {
     });
   }
   const expectedSlug = titleToSlug(titleText);
-  const fileSlug = scenario.fileName.replace(/^\d{3}-/, "").replace(/\.test\.ts$/, "");
+  const fileSlug = scenario.fileName
+    .replace(/^\d{3}-/, "")
+    .replace(/\.test\.ts$/, "");
   if (fileSlug !== expectedSlug) {
     errors.push({
       file: scenario.fileName,
