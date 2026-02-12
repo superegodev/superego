@@ -70,6 +70,30 @@ export default function EagerExcalidrawInput({
     return () => clearInterval(intervalId);
   }, [hasFocus, onChange]);
 
+  useEffect(() => {
+    const excalidrawApi = excalidrawApiRef.current;
+    if (!excalidrawApi) {
+      return;
+    }
+    if (!value) {
+      previousSerializedRef.current = null;
+      excalidrawApi.updateScene({ elements: [] });
+      return;
+    }
+    const serialized = JSON.stringify(value);
+    if (serialized === previousSerializedRef.current) {
+      return;
+    }
+    previousSerializedRef.current = serialized;
+    excalidrawApi.updateScene({
+      elements: value.elements,
+      appState: value.appState as any,
+    });
+    if (value.files) {
+      excalidrawApi.addFiles(Object.values(value.files) as any[]);
+    }
+  }, [value]);
+
   return (
     <div
       ref={rootRef}
