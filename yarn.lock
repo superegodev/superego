@@ -7289,6 +7289,7 @@ __metadata:
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:^25.2.3"
     luxon: "npm:^3.7.2"
+    remove-markdown: "npm:^0.6.3"
     tsafe: "npm:^1.8.12"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.2.0"
@@ -17155,6 +17156,13 @@ __metadata:
     mdast-util-to-markdown: "npm:^2.0.0"
     unified: "npm:^11.0.0"
   checksum: 10c0/0cdb37ce1217578f6f847c7ec9f50cbab35df5b9e3903d543e74b405404e67c07defcb23cd260a567b41b769400f6de03c2c3d9cd6ae7a6707d5c8d89ead489f
+  languageName: node
+  linkType: hard
+
+"remove-markdown@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "remove-markdown@npm:0.6.3"
+  checksum: 10c0/43203724cc9bba4960e0b7f5f99d266a9729dcd8a6bb915ca45ed4aaaf2402a52c6e03345463502cbd97a1d7121505c13026901672f9c1d3730b8266ccfc7fc0
   languageName: node
   linkType: hard
 
