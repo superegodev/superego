@@ -69,6 +69,8 @@ export declare function Link(props: {
 export declare function ButtonLink(props: {
   /** Defines the visual style. */
   variant?: "default" | "primary" | "invisible";
+  /** @defaultValue "md" */
+  size?: "sm" | "md" | "lg";
   href: string;
   target?: string;
   children: ReactNode;

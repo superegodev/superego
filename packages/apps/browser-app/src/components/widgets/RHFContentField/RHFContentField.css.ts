@@ -2,13 +2,14 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const JsonObjectField = {
-  TiptapRichText: {
+  ExcalidrawDrawing: {
     root: style({
       display: "flex",
       flexDirection: "column",
       marginBlockEnd: vars.spacing._6,
     }),
   },
+
   GeoJSON: {
     root: style({
       display: "flex",
@@ -16,6 +17,15 @@ export const JsonObjectField = {
       marginBlockEnd: vars.spacing._6,
     }),
   },
+
+  TiptapRichText: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+  },
+
   Default: {
     textArea: style({
       fontFamily: vars.typography.fontFamilies.monospace,
@@ -24,6 +34,14 @@ export const JsonObjectField = {
 };
 
 export const StringField = {
+  Markdown: {
+    root: style({
+      display: "flex",
+      flexDirection: "column",
+      marginBlockEnd: vars.spacing._6,
+    }),
+  },
+
   Instant: {
     root: style({
       display: "flex",

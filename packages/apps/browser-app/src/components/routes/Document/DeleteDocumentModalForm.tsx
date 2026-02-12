@@ -9,12 +9,12 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
+import Button from "../../design-system/Button/Button.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "./Document.css.js";
 
 interface FormValues {
   commandConfirmation: string;
@@ -96,11 +96,14 @@ export default function DeleteDocumentModalForm({
           placeholder="delete"
           showErrorOnError={false}
         />
-        <div className={cs.DeleteDocumentModalForm.submitButtonContainer}>
+        <ModalDialog.Actions>
+          <Button onPress={onClose}>
+            <FormattedMessage defaultMessage="Cancel" />
+          </Button>
           <RHFSubmitButton control={control} variant="danger">
             <FormattedMessage defaultMessage="Delete" />
           </RHFSubmitButton>
-        </div>
+        </ModalDialog.Actions>
         {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>

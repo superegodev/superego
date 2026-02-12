@@ -12,12 +12,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.apps.create(
-        AppType.CollectionView,
-        "name".repeat(100),
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const result = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name".repeat(100),
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
 
       // Verify
       expect(result).toEqual({
@@ -44,12 +44,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const collectionId = Id.generate.collection();
-      const result = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [collectionId],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const result = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [collectionId],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
 
       // Verify
       expect(result).toEqual({
@@ -65,8 +65,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: creates", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -74,7 +74,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -83,7 +83,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -91,17 +91,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
       const files = { "/main.tsx": { source: "", compiled: "" } };
-      const createAppResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [createCollectionResult.data.id],
-        files,
-      );
+      const createAppResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [createCollectionResult.data.id],
+        files: files,
+      });
 
       // Verify
       expect(createAppResult).toEqual({
@@ -157,12 +157,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("error: AppNameNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createAppResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createAppResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createAppResult.success);
 
       // Exercise
@@ -193,12 +193,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: updates name", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createResult.success);
 
       // Exercise
@@ -253,12 +253,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createResult.success);
 
       // Exercise
@@ -283,8 +283,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -292,7 +292,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -301,7 +301,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -309,17 +309,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const initialFiles = {
         "/main.tsx": { source: "initial", compiled: "initial" },
       };
-      const createAppResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [],
-        initialFiles,
-      );
+      const createAppResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: initialFiles,
+      });
       assert.isTrue(createAppResult.success);
 
       // Exercise
@@ -411,12 +411,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: deletes", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createResult = await backend.apps.create(
-        AppType.CollectionView,
-        "name",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createResult.success);
 
       // Exercise
@@ -442,8 +442,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: clears default collection view app", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -451,7 +451,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -460,7 +460,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -468,14 +468,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
-      const createAppResult = await backend.apps.create(
-        AppType.CollectionView,
-        "default-app",
-        [createCollectionResult.data.id],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createAppResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "default-app",
+        targetCollectionIds: [createCollectionResult.data.id],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createAppResult.success);
       const updateCollectionSettingsResult =
         await backend.collections.updateSettings(
@@ -528,19 +528,19 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("success: non-empty list, sorted by name", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createResultZeta = await backend.apps.create(
-        AppType.CollectionView,
-        "zeta",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createResultZeta = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "zeta",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createResultZeta.success);
-      const createResultAlpha = await backend.apps.create(
-        AppType.CollectionView,
-        "alpha",
-        [],
-        { "/main.tsx": { source: "", compiled: "" } },
-      );
+      const createResultAlpha = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "alpha",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
       assert.isTrue(createResultAlpha.success);
 
       // Exercise

@@ -14,7 +14,11 @@ export const Tooltip = {
     color: vars.colors.text.inverse,
     outline: "none",
     transform: "translate3d(0, 0, 0)",
-    transition: "transform 200ms, opacity 200ms",
+    "@media": {
+      "(prefers-reduced-motion: no-preference)": {
+        transition: "transform 200ms, opacity 200ms",
+      },
+    },
     selectors: {
       '&[data-entering="true"], &[data-exiting="true"]': {
         transform: "var(--origin)",

@@ -24,13 +24,6 @@ export const UpdateCollectionVersionSettingsForm = {
   }),
 };
 
-export const DeleteCollectionModalForm = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};
-
 export const SetCollectionRemoteForm = {
   root: style({
     display: "flex",

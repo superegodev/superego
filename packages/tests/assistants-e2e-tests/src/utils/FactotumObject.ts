@@ -45,8 +45,8 @@ class FactotumObject {
   private async createCollection(
     definition: FactotumObject.CollectionDefinition,
   ): Promise<FactotumObject.CreatedCollection> {
-    const createCollectionResult = await this.backend.collections.create(
-      {
+    const createCollectionResult = await this.backend.collections.create({
+      settings: {
         name: definition.name,
         icon: null,
         collectionCategoryId: null,
@@ -54,8 +54,8 @@ class FactotumObject {
         assistantInstructions: definition.assistantInstructions ?? null,
         defaultCollectionViewAppId: null,
       },
-      definition.schema,
-      {
+      schema: definition.schema,
+      versionSettings: {
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source:
@@ -64,7 +64,7 @@ class FactotumObject {
             'export default function getValue() { return { name: "name" }; }',
         },
       },
-    );
+    });
     assertSuccessfulResult(
       `Error creating collection ${definition.name}`,
       createCollectionResult,
@@ -74,10 +74,10 @@ class FactotumObject {
     const documents = await pMap(
       definition.documentContents,
       async (documentContent, index) => {
-        const createDocumentResult = await this.backend.documents.create(
-          collection.id,
-          documentContent,
-        );
+        const createDocumentResult = await this.backend.documents.create({
+          collectionId: collection.id,
+          content: documentContent,
+        });
         assertSuccessfulResult(
           `Error creating document ${index} in collection ${definition.name}`,
           createDocumentResult,

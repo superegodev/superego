@@ -37,7 +37,7 @@
     "@formatjs/cli": "^6.12.2",
     "@rollup/plugin-babel": "^6.1.0",
     "babel-plugin-formatjs": "^11.2.3",
-    "electron": "40.1.0",
+    "electron": "40.4.0",
     "electron-vite": "^5.0.0",
     "vite": "^7.3.1"
   },

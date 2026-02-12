@@ -11,10 +11,3 @@ export const CreateAppForm = {
     height: "100%",
   }),
 };
-
-export const SetNameAndSaveModal = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};

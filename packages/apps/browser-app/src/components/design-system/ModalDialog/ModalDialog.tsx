@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import classnames from "../../../utils/classnames.js";
+import Actions from "./Actions.js";
 import Heading from "./Heading.js";
 import * as cs from "./ModalDialog.css.js";
 
@@ -33,3 +34,4 @@ export default function ModalDialog({
 }
 
 ModalDialog.Heading = Heading;
+ModalDialog.Actions = Actions;

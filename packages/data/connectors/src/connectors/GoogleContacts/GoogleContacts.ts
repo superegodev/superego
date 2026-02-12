@@ -9,7 +9,6 @@ import {
   OAuth2PKCERefreshAuthenticationStateFailed,
 } from "../../common/OAuth2PKCEConnector/errors.js";
 import OAuth2PKCEConnector from "../../common/OAuth2PKCEConnector/OAuth2PKCEConnector.js";
-import type Base64Url from "../../requirements/Base64Url.js";
 import type SessionStorage from "../../requirements/SessionStorage.js";
 import type { ListConnectionsResponseBody } from "./apiTypes.js";
 import { GoogleContactsSyncTokenExpired } from "./errors.js";
@@ -20,12 +19,8 @@ export default class GoogleContacts
   extends OAuth2PKCEConnector
   implements Connector.OAuth2PKCE<null, Person>
 {
-  constructor(
-    redirectUri: string,
-    base64Url: Base64Url,
-    sessionStorage: SessionStorage,
-  ) {
-    super("GoogleContacts", redirectUri, base64Url, sessionStorage, {
+  constructor(redirectUri: string, sessionStorage: SessionStorage) {
+    super("GoogleContacts", redirectUri, sessionStorage, {
       authorizationEndpoint: "https://accounts.google.com/o/oauth2/v2/auth",
       tokenEndpoint: "https://oauth2.googleapis.com/token",
       scopes: ["https://www.googleapis.com/auth/contacts"],

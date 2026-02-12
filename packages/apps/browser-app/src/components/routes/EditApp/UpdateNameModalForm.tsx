@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateAppName } from "../../../business-logic/backend/hooks.js";
+import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "./EditApp.css.js";
 
 interface FormValues {
   name: string;
@@ -56,11 +56,14 @@ export default function UpdateNameModalForm({ app, isOpen, onClose }: Props) {
           label={intl.formatMessage({ defaultMessage: "Name" })}
           placeholder={intl.formatMessage({ defaultMessage: "My Awesome App" })}
         />
-        <div className={cs.UpdateNameModalForm.submitButtonContainer}>
+        <ModalDialog.Actions>
+          <Button onPress={onClose}>
+            <FormattedMessage defaultMessage="Cancel" />
+          </Button>
           <RHFSubmitButton control={control} variant="primary">
             <FormattedMessage defaultMessage="Update" />
           </RHFSubmitButton>
-        </div>
+        </ModalDialog.Actions>
         {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
     </ModalDialog>

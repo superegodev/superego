@@ -186,10 +186,3 @@ export const BucketTimelineNode = {
     flexDirection: "column",
   }),
 };
-
-export const RestoreVersionModal = {
-  restoreButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};

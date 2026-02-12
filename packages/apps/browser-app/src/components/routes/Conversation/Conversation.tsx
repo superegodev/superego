@@ -17,8 +17,8 @@ import ConversationUtils from "../../../utils/ConversationUtils.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import Chat from "../../widgets/Chat/Chat.js";
-import DeleteConversationModalForm from "../../widgets/DeleteConversationModalForm/DeleteConversationModalForm.js";
 import * as cs from "./Conversation.css.js";
+import DeleteConversationModalForm from "./DeleteConversationModalForm.js";
 
 interface Props {
   conversationId: ConversationId;

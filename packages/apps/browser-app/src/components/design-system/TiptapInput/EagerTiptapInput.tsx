@@ -11,8 +11,8 @@ import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useFocusVisible } from "react-aria";
 import { useIntl } from "react-intl";
-import forms from "../../../business-logic/forms/forms.js";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import type Props from "./Props.js";
@@ -29,7 +29,9 @@ export default function EagerTiptapInput({
 }: Props) {
   const intl = useIntl();
   const id = useId();
+  const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(autoFocus);
+
   const extensions = useMemo(
     () => [
       CodeBlockLowlight.configure({
@@ -56,6 +58,7 @@ export default function EagerTiptapInput({
     ],
     [intl],
   );
+
   const editor = useEditor({
     extensions: extensions,
     editorProps: {
@@ -63,13 +66,14 @@ export default function EagerTiptapInput({
         class: cs.TiptapInput.editor,
       },
     },
-    content: value ?? forms.defaults.tiptapRichTextJsonObject(),
+    content: value,
     autofocus: autoFocus ?? false,
     editable: !isReadOnly,
     onUpdate: debounce(({ editor }) => {
       onChange(editor.getJSON());
     }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE),
   });
+
   const rootElementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (rootElementRef.current && ref) {
@@ -82,6 +86,7 @@ export default function EagerTiptapInput({
       });
     }
   }, [ref, editor]);
+
   return (
     <div
       ref={rootElementRef}
@@ -112,6 +117,7 @@ export default function EagerTiptapInput({
       }}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
+      data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
       className={cs.TiptapInput.root}
     >

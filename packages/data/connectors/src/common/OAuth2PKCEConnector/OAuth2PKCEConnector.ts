@@ -7,13 +7,13 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
+  Base64Url,
   extractErrorDetails,
   failedResponseToError,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
-import type Base64Url from "../../requirements/Base64Url.js";
 import type SessionStorage from "../../requirements/SessionStorage.js";
 import sha256 from "../../utils/sha256.js";
 import CodeVerifierStorage from "./CodeVerifierStorage.js";
@@ -29,7 +29,6 @@ export default class OAuth2PKCEConnector {
   constructor(
     public name: string,
     private redirectUri: string,
-    private base64Url: Base64Url,
     sessionStorage: SessionStorage,
     private options: {
       scopes: string[];
@@ -60,7 +59,7 @@ export default class OAuth2PKCEConnector {
     url.searchParams.set("response_type", "code");
     url.searchParams.set(
       "code_challenge",
-      this.base64Url.encodeBytes(await sha256(codeVerifier, "bytes")),
+      Base64Url.encodeBytes(await sha256(codeVerifier, "bytes")),
     );
     url.searchParams.set("code_challenge_method", "S256");
     url.searchParams.set("state", UrlState.stringify({ collectionId, nonce }));

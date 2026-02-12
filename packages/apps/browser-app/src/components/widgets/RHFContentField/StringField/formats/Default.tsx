@@ -28,6 +28,7 @@ export default function Default({
       onChange={(value) => field.onChange(value !== "" ? value : null)}
       onBlur={field.onBlur}
       validationBehavior="aria"
+      autoComplete="off"
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

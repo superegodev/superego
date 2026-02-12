@@ -1,5 +1,6 @@
 import { generateText, type JSONContent } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
+import removeMarkdown from "remove-markdown";
 import DataType from "../DataType.js";
 import FormatId from "../formats/FormatId.js";
 import type Schema from "../Schema.js";
@@ -71,13 +72,24 @@ function _extractTextChunks(
     ) {
       return;
     }
-    addChunk(chunks, path, value);
+    if (typeDefinition.format === FormatId.String.Markdown) {
+      const text = removeMarkdown(value);
+      addChunk(chunks, path, text);
+    } else {
+      addChunk(chunks, path, value);
+    }
     return;
   }
 
   if (typeDefinition.dataType === DataType.JsonObject) {
     if (typeDefinition.format === FormatId.JsonObject.TiptapRichText) {
       const text = extractTextFromTiptap(value);
+      if (text) {
+        addChunk(chunks, path, text);
+      }
+    }
+    if (typeDefinition.format === FormatId.JsonObject.ExcalidrawDrawing) {
+      const text = extractTextFromExcalidraw(value);
       if (text) {
         addChunk(chunks, path, text);
       }
@@ -123,4 +135,23 @@ function extractTextFromTiptap(jsonObject: JsonObject): string {
   return generateText(tiptapContent as JSONContent, [StarterKit], {
     blockSeparator: "\n",
   });
+}
+
+function extractTextFromExcalidraw({ elements }: JsonObject): string | null {
+  if (!Array.isArray(elements)) {
+    return null;
+  }
+  return elements
+    .map((element: unknown) =>
+      typeof element === "object" &&
+      element != null &&
+      "type" in element &&
+      element.type === "text" &&
+      "text" in element &&
+      typeof element.text === "string"
+        ? element.text
+        : null,
+    )
+    .filter((text) => text !== null)
+    .join(" ");
 }

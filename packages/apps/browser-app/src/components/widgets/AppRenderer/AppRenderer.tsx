@@ -64,7 +64,7 @@ export default function AppRenderer({ app }: Props) {
 
   const sandboxNavigateTo = useCallback(
     (href: string) => {
-      navigateTo(fromHref(new URL(href).pathname));
+      navigateTo(fromHref(new URL(href, window.location.origin).pathname));
     },
     [navigateTo],
   );

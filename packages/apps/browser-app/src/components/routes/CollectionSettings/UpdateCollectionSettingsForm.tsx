@@ -9,6 +9,7 @@ import { useUpdateCollectionSettings } from "../../../business-logic/backend/hoo
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
+import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -79,19 +80,21 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
           className={cs.UpdateCollectionSettingsForm.nameInput}
         />
       </div>
-      <RHFTextField
+      <RHFMarkdownField
         control={control}
         name="description"
         label={intl.formatMessage({ defaultMessage: "Description" })}
-        textArea={true}
+        showToolbar={false}
         emptyInputValue={null}
+        placeholder="null"
       />
-      <RHFTextField
+      <RHFMarkdownField
         control={control}
         name="assistantInstructions"
         label={intl.formatMessage({ defaultMessage: "Assistant instructions" })}
-        textArea={true}
+        showToolbar={false}
         emptyInputValue={null}
+        placeholder="null"
         description={intl.formatMessage({
           defaultMessage:
             "Specific instructions for this collection to pass to the assistant.",

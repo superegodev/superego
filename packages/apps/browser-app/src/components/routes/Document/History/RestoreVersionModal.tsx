@@ -14,7 +14,6 @@ import useNavigationState from "../../../../business-logic/navigation/useNavigat
 import Button from "../../../design-system/Button/Button.js";
 import ModalDialog from "../../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
-import * as cs from "./History.css.js";
 
 interface Props {
   collection: Collection;
@@ -86,7 +85,10 @@ export default function RestoreVersionModal({
                 }}
               />
             </p>
-            <div className={cs.RestoreVersionModal.restoreButtonContainer}>
+            <ModalDialog.Actions>
+              <Button onPress={onClose} isDisabled={isPending}>
+                <FormattedMessage defaultMessage="Cancel" />
+              </Button>
               <Button
                 variant="primary"
                 onPress={() => handleRestore(documentVersion.content)}
@@ -94,7 +96,7 @@ export default function RestoreVersionModal({
               >
                 <FormattedMessage defaultMessage="Restore" />
               </Button>
-            </div>
+            </ModalDialog.Actions>
             {result?.error ? <ResultErrors errors={[result.error]} /> : null}
           </>
         )}

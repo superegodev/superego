@@ -110,7 +110,7 @@ export default function Instant({
               field.onChange(
                 fromSegments({
                   ...segments,
-                  milliseconds: newValue?.toString() ?? null,
+                  milliseconds: newValue?.toString().padStart(3, "0") ?? null,
                 }),
               )
             }
@@ -127,6 +127,7 @@ export default function Instant({
               }),
             )
           }
+          autoComplete="off"
           readOnly={isReadOnly}
           aria-invalid={fieldState.invalid || undefined}
           aria-label={

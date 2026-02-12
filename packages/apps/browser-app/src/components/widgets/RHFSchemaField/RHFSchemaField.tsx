@@ -40,17 +40,16 @@ export default function RHFSchemaField({
       : JSON.stringify(field.value, null, 2),
   );
   const errors = forms.utils.flattenError(fieldState.error);
-  const fieldOnChange = field.onChange;
   const handleChange = useCallback(
     (newValue: string) => {
       setJsonValue(newValue);
       try {
-        fieldOnChange(JSON.parse(newValue));
+        field.onChange(JSON.parse(newValue));
       } catch {
-        fieldOnChange(newValue);
+        field.onChange(newValue);
       }
     },
-    [fieldOnChange],
+    [field.onChange],
   );
   return (
     <div
