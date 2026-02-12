@@ -1,6 +1,6 @@
 import test from "@playwright/test";
-import waitForTiptapInput from "../actions/waitForTiptapInput.js";
 import mainPanel from "../locators/mainPanel.js";
+import tiptapInput from "../locators/tiptapInput.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
@@ -53,7 +53,7 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("03. Reload page and verify same state", async () => {
     // Exercise
     await page.reload();
-    await waitForTiptapInput(page);
+    await tiptapInput(page).waitFor();
     await page.getByRole("textbox", { name: /^Relation/i }).waitFor();
 
     // Verify

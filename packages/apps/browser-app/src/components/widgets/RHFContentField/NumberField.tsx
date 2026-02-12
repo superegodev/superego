@@ -53,7 +53,7 @@ export default function NumberField({
           label={label}
         />
       ) : null}
-      <Input ref={field.ref} placeholder="null" />
+      <Input ref={field.ref} placeholder="null" autoComplete="off" />
       <FieldError>{fieldState.error?.message}</FieldError>
     </NumberFieldDS>
   );

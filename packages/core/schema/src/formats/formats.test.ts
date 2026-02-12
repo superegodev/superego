@@ -7,19 +7,23 @@ Object.values(formats)
   .flat()
   .forEach((format: Format) => {
     describe(`${format.dataType} format: ${format.id}`, () => {
-      describe("valid", () => {
-        format.validExamples.forEach((value) => {
-          it(`${JSON.stringify(value)}`, () => {
-            expect(v.is(format.valibotSchema, value)).toBe(true);
+      if (format.validExamples.length > 0) {
+        describe("valid", () => {
+          format.validExamples.forEach((value) => {
+            it(`${JSON.stringify(value)}`, () => {
+              expect(v.is(format.valibotSchema, value)).toBe(true);
+            });
           });
         });
-      });
-      describe("not valid", () => {
-        format.invalidExamples.forEach((value) => {
-          it(`${JSON.stringify(value)}`, () => {
-            expect(v.is(format.valibotSchema, value)).toBe(false);
+      }
+      if (format.invalidExamples.length > 0) {
+        describe("not valid", () => {
+          format.invalidExamples.forEach((value) => {
+            it(`${JSON.stringify(value)}`, () => {
+              expect(v.is(format.valibotSchema, value)).toBe(false);
+            });
           });
         });
-      });
+      }
     });
   });

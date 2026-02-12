@@ -710,8 +710,14 @@
   "FormattingToolbar.tsx_Dkkmwm": {
     "defaultMessage": "Grassetto"
   },
+  "FormattingToolbar.tsx_HpWSb4": {
+    "defaultMessage": "Titoli"
+  },
   "FormattingToolbar.tsx_Ig/eGK": {
     "defaultMessage": "Allineamento"
+  },
+  "FormattingToolbar.tsx_JBWS0c": {
+    "defaultMessage": "Link"
   },
   "FormattingToolbar.tsx_JkS37H": {
     "defaultMessage": "Annulla"
@@ -728,6 +734,9 @@
   "FormattingToolbar.tsx_SOtMvF": {
     "defaultMessage": "Sottolineato"
   },
+  "FormattingToolbar.tsx_Up5U7K": {
+    "defaultMessage": "Blocco"
+  },
   "FormattingToolbar.tsx_Zqekct": {
     "defaultMessage": "Titolo 2"
   },
@@ -743,11 +752,17 @@
   "FormattingToolbar.tsx_g2V+es": {
     "defaultMessage": "Corsivo"
   },
+  "FormattingToolbar.tsx_gl1NeW": {
+    "defaultMessage": "Elenchi"
+  },
   "FormattingToolbar.tsx_h2vipu": {
     "defaultMessage": "Codice"
   },
   "FormattingToolbar.tsx_jWDuFc": {
     "defaultMessage": "Allinea a sinistra"
+  },
+  "FormattingToolbar.tsx_lbsCQS": {
+    "defaultMessage": "Elenco numerato"
   },
   "FormattingToolbar.tsx_rDSlqC": {
     "defaultMessage": "Pedice"

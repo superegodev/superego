@@ -11,6 +11,7 @@ import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useFocusVisible } from "react-aria";
 import { useIntl } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
@@ -29,6 +30,7 @@ export default function EagerTiptapInput({
 }: Props) {
   const intl = useIntl();
   const id = useId();
+  const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(autoFocus);
   const extensions = useMemo(
     () => [
@@ -112,6 +114,7 @@ export default function EagerTiptapInput({
       }}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
+      data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
       className={cs.TiptapInput.root}
     >

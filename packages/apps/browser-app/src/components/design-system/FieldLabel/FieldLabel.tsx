@@ -9,12 +9,14 @@ import * as cs from "./FieldLabel.css.js";
 interface Props {
   actions?: ReactNode | undefined;
   component?: "label" | "legend" | undefined;
+  htmlFor?: string | undefined;
   className?: string | undefined;
   children: ReactNode;
 }
 export default function FieldLabel({
   actions,
   component = "label",
+  htmlFor,
   className,
   children,
 }: Props) {
@@ -22,7 +24,10 @@ export default function FieldLabel({
     <Toolbar className={cs.FieldLabel.actions}>{actions}</Toolbar>
   ) : null;
   return component === "label" ? (
-    <Label className={classnames(cs.FieldLabel.root, className)}>
+    <Label
+      htmlFor={htmlFor}
+      className={classnames(cs.FieldLabel.root, className)}
+    >
       <span>{children}</span>
       {actionsToolbar}
     </Label>

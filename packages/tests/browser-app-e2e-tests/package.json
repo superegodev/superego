@@ -11,11 +11,12 @@
     "playwright": "playwright"
   },
   "devDependencies": {
-    "@types/node": "^25.2.0",
+    "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
+    "@superego/backend": "workspace:*",
     "@superego/schema": "workspace:*",
     "luxon": "^3.7.2"
   }
