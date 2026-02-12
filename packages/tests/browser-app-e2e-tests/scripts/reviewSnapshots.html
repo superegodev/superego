@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Snapshot Review</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@mantine/core@7/styles.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="https://esm.sh/tsx"></script>
+    <script type="text/tsx">
+      /** @jsxRuntime classic */
+      import React, { useState, useEffect } from "https://esm.sh/react@19";
+      import { createRoot } from "https://esm.sh/react-dom@19/client";
+      import {
+        MantineProvider,
+        AppShell,
+        NavLink,
+        Button,
+        Badge,
+        Group,
+        Stack,
+        Text,
+        Paper,
+      } from "https://esm.sh/@mantine/core@7?deps=react@19,react-dom@19";
+
+      function App() {
+        const [tests, setTests] = useState([]);
+        const [ti, setTi] = useState(0);
+        const [si, setSi] = useState(0);
+        const [results, setResults] = useState({});
+        const [submitted, setSubmitted] = useState(false);
+
+        useEffect(() => {
+          fetch("/api/tests")
+            .then((r) => r.json())
+            .then(setTests);
+        }, []);
+
+        const total = tests.reduce((s, t) => s + t.steps.length, 0);
+        const reviewed = Object.keys(results).length;
+        const passes = Object.values(results).filter(
+          (v) => v === "pass",
+        ).length;
+        const fails = Object.values(results).filter(
+          (v) => v === "fail",
+        ).length;
+        const allDone = reviewed === total && total > 0;
+
+        const test = tests[ti];
+        const step = test?.steps[si];
+        const key = test && step ? `${test.id}/${step.id}` : "";
+
+        function record(result) {
+          setResults((prev) => ({ ...prev, [key]: result }));
+          if (test && si < test.steps.length - 1) {
+            setSi(si + 1);
+          } else if (ti < tests.length - 1) {
+            setTi(ti + 1);
+            setSi(0);
+          }
+        }
+
+        async function submit() {
+          await fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(results),
+          });
+          setSubmitted(true);
+        }
+
+        if (!tests.length)
+          return (
+            <MantineProvider>
+              <Text p="xl">Loading…</Text>
+            </MantineProvider>
+          );
+
+        if (submitted)
+          return (
+            <MantineProvider>
+              <Text p="xl" ta="center" size="xl" fw={700}>
+                Review submitted — you can close this tab.
+              </Text>
+            </MantineProvider>
+          );
+
+        return (
+          <MantineProvider>
+            <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+              {/* Navbar */}
+              <Group
+                px="md"
+                py="xs"
+                style={{ borderBottom: "1px solid var(--mantine-color-gray-3)" }}
+              >
+                <Button
+                  onClick={submit}
+                  disabled={!allDone}
+                  color={allDone ? (fails > 0 ? "red" : "green") : undefined}
+                >
+                  Submit
+                </Button>
+                <Badge variant="light">Tests: {tests.length}</Badge>
+                <Badge variant="light">
+                  Reviewed: {reviewed}/{total}
+                </Badge>
+                <Badge variant="light" color="green">
+                  Pass: {passes}
+                </Badge>
+                <Badge variant="light" color="red">
+                  Fail: {fails}
+                </Badge>
+              </Group>
+
+              <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+                {/* Tests sidebar */}
+                <nav
+                  style={{
+                    width: 260,
+                    overflowY: "auto",
+                    borderRight: "1px solid var(--mantine-color-gray-3)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {tests.map((t, i) => {
+                    const rs = t.steps.map((s) => results[`${t.id}/${s.id}`]);
+                    const done = rs.every((r) => r != null);
+                    const bad = rs.some((r) => r === "fail");
+                    return (
+                      <NavLink
+                        key={t.id}
+                        label={t.title}
+                        active={i === ti}
+                        color={done ? (bad ? "red" : "green") : undefined}
+                        onClick={() => {
+                          setTi(i);
+                          setSi(0);
+                        }}
+                      />
+                    );
+                  })}
+                </nav>
+
+                {/* Steps sidebar */}
+                <nav
+                  style={{
+                    width: 260,
+                    overflowY: "auto",
+                    borderRight: "1px solid var(--mantine-color-gray-3)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {test?.steps.map((s, i) => {
+                    const r = results[`${test.id}/${s.id}`];
+                    return (
+                      <NavLink
+                        key={s.id}
+                        label={s.title}
+                        active={i === si}
+                        color={
+                          r === "pass"
+                            ? "green"
+                            : r === "fail"
+                              ? "red"
+                              : undefined
+                        }
+                        onClick={() => setSi(i)}
+                      />
+                    );
+                  })}
+                </nav>
+
+                {/* Main panel */}
+                <div style={{ flex: 1, overflowY: "auto", padding: 20 }}>
+                  {step && (
+                    <Stack>
+                      <img
+                        src={`/snapshots/${test.snapshotsDir}/${step.snapshotFile}`}
+                        style={{
+                          maxWidth: "100%",
+                          border: "1px solid var(--mantine-color-gray-3)",
+                        }}
+                      />
+                      <Paper p="md" withBorder>
+                        <Text fw={700} mb={4}>
+                          Requirement:
+                        </Text>
+                        <Text>{step.requirement}</Text>
+                      </Paper>
+                      <Group>
+                        <Button
+                          color="green"
+                          size="lg"
+                          onClick={() => record("pass")}
+                        >
+                          Pass
+                        </Button>
+                        <Button
+                          color="red"
+                          size="lg"
+                          onClick={() => record("fail")}
+                        >
+                          Fail
+                        </Button>
+                      </Group>
+                    </Stack>
+                  )}
+                </div>
+              </div>
+            </div>
+          </MantineProvider>
+        );
+      }
+
+      createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
