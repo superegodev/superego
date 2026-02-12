@@ -19,10 +19,9 @@ export default function Markdown({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
-  const fieldOnChange = field.onChange;
   const onChange = useCallback(
-    (newValue: string) => fieldOnChange(newValue !== "" ? newValue : null),
-    [fieldOnChange],
+    (newValue: string) => field.onChange(newValue !== "" ? newValue : null),
+    [field.onChange],
   );
   return (
     <div

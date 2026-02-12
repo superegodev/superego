@@ -51,7 +51,7 @@ Additional requirements:
 ## Run test and evaluate screenshots
 
 Run the test with
-`yarn workspace @superego/browser-app-e2e-tests playwright test src/scenarios/$TEST_FILE_NAME`.
+`yarn workspace @superego/browser-app-e2e-tests test:playwright`.
 
 When the test runs the first time there are no "golden reference snapshots" yet,
 so the test will fail.

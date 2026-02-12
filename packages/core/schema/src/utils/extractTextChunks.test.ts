@@ -238,6 +238,67 @@ describe("extracts text chunks for the supplied document content", () => {
       tiptap: ["paragraph"],
     });
   });
+
+  it("case: Markdown String", () => {
+    // Exercise
+    const content = {
+      markdown: "**bold** and _italic_",
+    };
+    const schema: Schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            markdown: {
+              dataType: DataType.String,
+              format: FormatId.String.Markdown,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    };
+    const textChunks = extractTextChunks(schema, content);
+
+    // Verify
+    expect(textChunks).toEqual({
+      markdown: ["bold and italic"],
+    });
+  });
+
+  it("case: ExcalidrawDrawing JsonObject", () => {
+    // Exercise
+    const content = {
+      excalidraw: {
+        __dataType: DataType.JsonObject,
+        elements: [
+          { type: "text", text: "hello" },
+          { type: "rectangle", x: 0, y: 0 },
+          { type: "text", text: "world" },
+        ],
+      },
+    };
+    const schema: Schema = {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            excalidraw: {
+              dataType: DataType.JsonObject,
+              format: FormatId.JsonObject.ExcalidrawDrawing,
+            },
+          },
+        },
+      },
+      rootType: "Root",
+    };
+    const textChunks = extractTextChunks(schema, content);
+
+    // Verify
+    expect(textChunks).toEqual({
+      excalidraw: ["hello world"],
+    });
+  });
 });
 
 describe("ignores non-text properties", () => {

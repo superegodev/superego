@@ -41,4 +41,46 @@ export default [
       ),
     ),
   },
+  {
+    dataType: DataType.JsonObject,
+    id: FormatId.JsonObject.ExcalidrawDrawing,
+    name: "Excalidraw Drawing",
+    description: "A drawing document as represented, in JSON, by Excalidraw.",
+    validExamples: [
+      {
+        __dataType: DataType.JsonObject,
+        elements: [],
+        files: {},
+      },
+      {
+        __dataType: DataType.JsonObject,
+        elements: [],
+        files: {},
+        appState: { scrollX: 0, scrollY: 0, zoom: { value: 1 } },
+      },
+    ],
+    invalidExamples: [
+      {
+        __dataType: DataType.JsonObject,
+        elements: {},
+        files: {},
+      },
+    ],
+    valibotSchema: v.pipe(
+      jsonObject(),
+      v.check(
+        (jsonObject) =>
+          Array.isArray(jsonObject["elements"]) &&
+          typeof jsonObject["files"] === "object" &&
+          jsonObject["files"] !== null &&
+          (jsonObject["appState"] === undefined ||
+            (typeof jsonObject["appState"] === "object" &&
+              jsonObject["appState"] !== null)),
+        ({ lang }) =>
+          translate(lang, {
+            en: "Invalid JsonObject: Not an Excalidraw Drawing",
+          }),
+      ),
+    ),
+  },
 ] satisfies Format<DataType.JsonObject>[];

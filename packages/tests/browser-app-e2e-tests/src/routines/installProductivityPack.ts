@@ -11,16 +11,10 @@ export default async function installProductivityPack(page: Page) {
   await page.goto("/bazaar");
 
   // Navigate to the Productivity pack detail page.
-  await page
-    .getByRole("link", { name: /Productivity/i })
-    .first()
-    .click();
+  await page.getByRole("link", { name: /Productivity/i }).click();
 
   // Open the install modal.
-  await page
-    .getByRole("button", { name: /^Install$/i })
-    .first()
-    .click();
+  await page.getByRole("button", { name: /^Install$/i }).click();
 
   // Confirm install.
   await page

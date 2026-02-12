@@ -21,10 +21,7 @@ test("000. Install Productivity pack", async ({ page }) => {
     // Exercise
     await openSidebar(page);
     await page.getByRole("link", { name: /^Bazaar$/i }).click();
-    await page
-      .getByRole("link", { name: /Productivity/i })
-      .first()
-      .waitFor();
+    await page.getByRole("link", { name: /Productivity/i }).waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -36,14 +33,8 @@ test("000. Install Productivity pack", async ({ page }) => {
 
   await test.step("02. Click on Productivity pack", async () => {
     // Exercise
-    await page
-      .getByRole("link", { name: /Productivity/i })
-      .first()
-      .click();
-    await page
-      .getByRole("button", { name: /^Install$/i })
-      .first()
-      .waitFor();
+    await page.getByRole("link", { name: /Productivity/i }).click();
+    await page.getByRole("button", { name: /^Install$/i }).waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -55,10 +46,7 @@ test("000. Install Productivity pack", async ({ page }) => {
 
   await test.step("03. Open install modal", async () => {
     // Exercise
-    await page
-      .getByRole("button", { name: /^Install$/i })
-      .first()
-      .click();
+    await page.getByRole("button", { name: /^Install$/i }).click();
     await page.getByRole("dialog").waitFor();
 
     // Verify

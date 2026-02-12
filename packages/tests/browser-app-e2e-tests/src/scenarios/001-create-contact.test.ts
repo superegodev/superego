@@ -41,10 +41,9 @@ test("001. Create Contact", async ({ page }) => {
       .getByRole("textbox", { name: /^Number/i })
       .fill("+41 44 123 45 67");
     await page.getByRole("textbox", { name: /^Address/i }).fill("carl@jung.ch");
-    await page
-      .locator(".ProseMirror")
-      .first()
-      .fill("Ambitious. Watch his drift toward mysticism.");
+    await tiptapInput(page).fill(
+      "Ambitious. Watch his drift toward mysticism.",
+    );
     // Wait for the debounce on the TipTap input.
     await page.waitForTimeout(500);
 

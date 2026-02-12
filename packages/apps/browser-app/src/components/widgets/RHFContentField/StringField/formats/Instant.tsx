@@ -110,7 +110,7 @@ export default function Instant({
               field.onChange(
                 fromSegments({
                   ...segments,
-                  milliseconds: newValue?.toString() ?? null,
+                  milliseconds: newValue?.toString().padStart(3, "0") ?? null,
                 }),
               )
             }
