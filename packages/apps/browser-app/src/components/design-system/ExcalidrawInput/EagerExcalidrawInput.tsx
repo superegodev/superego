@@ -1,6 +1,9 @@
 import "@excalidraw/excalidraw/index.css";
 import { Excalidraw, MainMenu } from "@excalidraw/excalidraw";
-import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
+import type {
+  ExcalidrawImperativeAPI,
+  ExcalidrawInitialDataState,
+} from "@excalidraw/excalidraw/types";
 import { Theme } from "@superego/backend";
 import { useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
@@ -56,7 +59,9 @@ export default function EagerExcalidrawInput({
       }
       const elements = excalidrawApi.getSceneElements();
       const files = excalidrawApi.getFiles();
-      const serialized = JSON.stringify({ elements, files });
+      const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
+      const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
+      const serialized = JSON.stringify({ elements, files, appState });
       if (serialized !== previousSerializedRef.current) {
         previousSerializedRef.current = serialized;
         onChange(JSON.parse(serialized));
@@ -87,7 +92,7 @@ export default function EagerExcalidrawInput({
         excalidrawAPI={(excalidrawApi) => {
           excalidrawApiRef.current = excalidrawApi;
         }}
-        initialData={value}
+        initialData={value as ExcalidrawInitialDataState}
         viewModeEnabled={isReadOnly || !hasFocus}
         autoFocus={autoFocus}
         langCode={langCode}

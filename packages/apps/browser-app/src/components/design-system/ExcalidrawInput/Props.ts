@@ -1,6 +1,4 @@
-import type { ExcalidrawDrawingValue } from "../../../business-logic/forms/defaults/excalidrawDrawingJsonObject.js";
-
-export type { ExcalidrawDrawingValue };
+import type ExcalidrawDrawingValue from "./ExcalidrawDrawingValue.js";
 
 export default interface Props {
   value: ExcalidrawDrawingValue | null | undefined;

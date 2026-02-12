@@ -52,6 +52,12 @@ export default [
         elements: [],
         files: {},
       },
+      {
+        __dataType: DataType.JsonObject,
+        elements: [],
+        files: {},
+        appState: { scrollX: 0, scrollY: 0, zoom: { value: 1 } },
+      },
     ],
     invalidExamples: [
       {
@@ -66,7 +72,10 @@ export default [
         (jsonObject) =>
           Array.isArray(jsonObject["elements"]) &&
           typeof jsonObject["files"] === "object" &&
-          jsonObject["files"] !== null,
+          jsonObject["files"] !== null &&
+          (jsonObject["appState"] === undefined ||
+            (typeof jsonObject["appState"] === "object" &&
+              jsonObject["appState"] !== null)),
         ({ lang }) =>
           translate(lang, {
             en: "Invalid JsonObject: Not an Excalidraw Drawing",
