@@ -56,12 +56,20 @@ Run the test with
 When the test runs the first time there are no "golden reference snapshots" yet,
 so the test will fail.
 
-However, the run generates the yet-to-be-evaluated snapshots in the
+However, the run generates the yet-to-be-evaluated snapshots (and their
+requirement `.txt` files) in the
 `packages/tests/browser-app-e2e-tests/src/scenarios/$TEST_FILE_NAME-snapshots`
 directory.
 
-One by one, visually review the snapshots and ensure they match the
-corresponding described expectation.
+To evaluate whether the generated snapshots match their requirements, run:
+
+```sh
+yarn workspace @superego/browser-app-e2e-tests test:evaluate-snapshots
+```
+
+This script sends each snapshot and its requirement to an LLM and reports
+pass/fail for every step. **Do not** evaluate the snapshots yourself — always
+use this script.
 
 ## Reusable test logic
 
