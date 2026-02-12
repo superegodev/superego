@@ -1,11 +1,17 @@
 import { execSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, resolve } from "node:path";
 
 const scenariosDir = resolve(import.meta.dirname, "../src/scenarios");
 const htmlPath = resolve(import.meta.dirname, "reviewSnapshots.html");
-const resultsPath = resolve(import.meta.dirname, "../review-results.json");
 const port = 3847;
 
 // --- Data loading ---
@@ -15,6 +21,8 @@ interface Step {
   title: string;
   requirement: string;
   snapshotFile: string;
+  snapshotHash: string;
+  existingResult?: string;
 }
 
 interface Test {
@@ -22,6 +30,10 @@ interface Test {
   title: string;
   snapshotsDir: string;
   steps: Step[];
+}
+
+function hashFile(filePath: string): string {
+  return createHash("sha256").update(readFileSync(filePath)).digest("hex");
 }
 
 function loadTests(): Test[] {
@@ -40,7 +52,7 @@ function loadTests(): Test[] {
       ...content.matchAll(/test\.step\("([^"]+)"/g),
     ].map((m) => m[1]!);
 
-    const snapshotFiles = existsSync(snapshotsDirPath)
+    const allSnapshotFiles = existsSync(snapshotsDirPath)
       ? readdirSync(snapshotsDirPath)
       : [];
 
@@ -51,10 +63,38 @@ function loadTests(): Test[] {
         ? readFileSync(requirementFile, "utf-8")
         : "(requirement not found — run tests first)";
       const snapshotFile =
-        snapshotFiles.find(
+        allSnapshotFiles.find(
           (s) => s.startsWith(`${stepId}-`) && s.endsWith(".png"),
         ) ?? `${stepId}.png`;
-      return { id: stepId, title: stepTitle, requirement, snapshotFile };
+
+      const snapshotPath = join(snapshotsDirPath, snapshotFile);
+      const snapshotHash = existsSync(snapshotPath)
+        ? hashFile(snapshotPath)
+        : "";
+
+      // Check for existing review
+      let existingResult: string | undefined;
+      const reviewFile = join(snapshotsDirPath, `${stepId}.review`);
+      if (existsSync(reviewFile)) {
+        const review = JSON.parse(readFileSync(reviewFile, "utf-8")) as {
+          result: string;
+          snapshotHash: string;
+        };
+        if (review.snapshotHash === snapshotHash) {
+          existingResult = review.result;
+        } else {
+          unlinkSync(reviewFile);
+        }
+      }
+
+      return {
+        id: stepId,
+        title: stepTitle,
+        requirement,
+        snapshotFile,
+        snapshotHash,
+        existingResult,
+      };
     });
 
     return { id, title, snapshotsDir: snapshotsDirName, steps };
@@ -107,19 +147,45 @@ const server = createServer((req, res) => {
     req.on("data", (chunk: string) => (body += chunk));
     req.on("end", () => {
       const results = JSON.parse(body) as Record<string, string>;
-      writeFileSync(resultsPath, JSON.stringify(results, null, 2));
 
+      // Write per-step .review files
+      for (const [key, result] of Object.entries(results)) {
+        const [testId, stepId] = key.split("/");
+        const test = tests.find((t) => t.id === testId);
+        const step = test?.steps.find((s) => s.id === stepId);
+        if (test && step) {
+          const reviewFile = join(
+            scenariosDir,
+            test.snapshotsDir,
+            `${stepId}.review`,
+          );
+          writeFileSync(
+            reviewFile,
+            JSON.stringify({ result, snapshotHash: step.snapshotHash }),
+          );
+        }
+      }
+
+      // Print report
       const hasFails = Object.values(results).some((v) => v === "fail");
+      console.log("\n=== Review Report ===\n");
+      for (const test of tests) {
+        console.log(`${test.title}:`);
+        for (const step of test.steps) {
+          const result = results[`${test.id}/${step.id}`] ?? "not reviewed";
+          const icon =
+            result === "pass" ? "✓" : result === "fail" ? "✗" : "?";
+          console.log(`  ${icon} ${step.title}: ${result}`);
+        }
+      }
+      console.log(
+        hasFails
+          ? "\nFAIL: Some steps failed review"
+          : "\nPASS: All steps passed review",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true }));
-
-      console.log(`Review results saved to ${resultsPath}`);
-      console.log(
-        hasFails
-          ? "FAIL: Some steps failed review"
-          : "PASS: All steps passed review",
-      );
 
       setTimeout(() => process.exit(hasFails ? 1 : 0), 100);
     });

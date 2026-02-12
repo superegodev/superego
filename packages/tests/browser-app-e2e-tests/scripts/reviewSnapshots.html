@@ -23,15 +23,24 @@
       import { createRoot } from "https://esm.sh/react-dom@19/client";
       import {
         MantineProvider,
-        AppShell,
         NavLink,
         Button,
         Badge,
         Group,
-        Stack,
         Text,
         Paper,
       } from "https://esm.sh/@mantine/core@7?deps=react@19,react-dom@19";
+
+      function findNextUnreviewed(tests, results, fromTi, fromSi) {
+        for (let t = fromTi; t < tests.length; t++) {
+          const startS = t === fromTi ? fromSi : 0;
+          for (let s = startS; s < tests[t].steps.length; s++) {
+            const k = `${tests[t].id}/${tests[t].steps[s].id}`;
+            if (!results[k]) return [t, s];
+          }
+        }
+        return null;
+      }
 
       function App() {
         const [tests, setTests] = useState([]);
@@ -43,7 +52,24 @@
         useEffect(() => {
           fetch("/api/tests")
             .then((r) => r.json())
-            .then(setTests);
+            .then((data) => {
+              setTests(data);
+              // Pre-populate results from existing reviews
+              const existing = {};
+              for (const t of data) {
+                for (const s of t.steps) {
+                  if (s.existingResult)
+                    existing[`${t.id}/${s.id}`] = s.existingResult;
+                }
+              }
+              setResults(existing);
+              // Navigate to first unreviewed step
+              const next = findNextUnreviewed(data, existing, 0, 0);
+              if (next) {
+                setTi(next[0]);
+                setSi(next[1]);
+              }
+            });
         }, []);
 
         const total = tests.reduce((s, t) => s + t.steps.length, 0);
@@ -61,12 +87,15 @@
         const key = test && step ? `${test.id}/${step.id}` : "";
 
         function record(result) {
-          setResults((prev) => ({ ...prev, [key]: result }));
-          if (test && si < test.steps.length - 1) {
-            setSi(si + 1);
-          } else if (ti < tests.length - 1) {
-            setTi(ti + 1);
-            setSi(0);
+          const next = { ...results, [key]: result };
+          setResults(next);
+          // Advance to next unreviewed step
+          const target =
+            findNextUnreviewed(tests, next, ti, si + 1) ??
+            findNextUnreviewed(tests, next, 0, 0);
+          if (target) {
+            setTi(target[0]);
+            setSi(target[1]);
           }
         }
 
@@ -97,13 +126,34 @@
 
         return (
           <MantineProvider>
-            <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+              }}
+            >
               {/* Navbar */}
               <Group
                 px="md"
                 py="xs"
-                style={{ borderBottom: "1px solid var(--mantine-color-gray-3)" }}
+                justify="space-between"
+                style={{
+                  borderBottom: "1px solid var(--mantine-color-gray-3)",
+                }}
               >
+                <Group>
+                  <Badge variant="light">Tests: {tests.length}</Badge>
+                  <Badge variant="light">
+                    Reviewed: {reviewed}/{total}
+                  </Badge>
+                  <Badge variant="light" color="green">
+                    Pass: {passes}
+                  </Badge>
+                  <Badge variant="light" color="red">
+                    Fail: {fails}
+                  </Badge>
+                </Group>
                 <Button
                   onClick={submit}
                   disabled={!allDone}
@@ -111,16 +161,6 @@
                 >
                   Submit
                 </Button>
-                <Badge variant="light">Tests: {tests.length}</Badge>
-                <Badge variant="light">
-                  Reviewed: {reviewed}/{total}
-                </Badge>
-                <Badge variant="light" color="green">
-                  Pass: {passes}
-                </Badge>
-                <Badge variant="light" color="red">
-                  Fail: {fails}
-                </Badge>
               </Group>
 
               <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
@@ -182,18 +222,37 @@
                 </nav>
 
                 {/* Main panel */}
-                <div style={{ flex: 1, overflowY: "auto", padding: 20 }}>
-                  {step && (
-                    <Stack>
+                {step && (
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {/* Scrollable snapshot */}
+                    <div
+                      style={{ flex: 1, overflowY: "auto", padding: 20 }}
+                    >
                       <img
                         src={`/snapshots/${test.snapshotsDir}/${step.snapshotFile}`}
                         style={{
                           maxWidth: "100%",
-                          border: "1px solid var(--mantine-color-gray-3)",
+                          border:
+                            "1px solid var(--mantine-color-gray-3)",
                         }}
                       />
-                      <Paper p="md" withBorder>
-                        <Text fw={700} mb={4}>
+                    </div>
+                    {/* Sticky bottom */}
+                    <div
+                      style={{
+                        borderTop: "1px solid var(--mantine-color-gray-3)",
+                        padding: 16,
+                      }}
+                    >
+                      <Paper p="sm" withBorder mb="sm">
+                        <Text fw={700} size="sm" mb={2}>
                           Requirement:
                         </Text>
                         <Text>{step.requirement}</Text>
@@ -214,9 +273,9 @@
                           Fail
                         </Button>
                       </Group>
-                    </Stack>
-                  )}
-                </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </MantineProvider>
