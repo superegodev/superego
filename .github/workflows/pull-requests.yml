@@ -34,8 +34,8 @@ jobs:
           path: |
             packages/apps/website/playwright-report/
             packages/apps/website/test-results/
-            packages/tests/demo-app-e2e-tests/playwright-report/
-            packages/tests/demo-app-e2e-tests/test-results/
+            packages/tests/browser-app-e2e-tests/playwright-report/
+            packages/tests/browser-app-e2e-tests/test-results/
           retention-days: 7
           if-no-files-found: ignore
           compression-level: 0
@@ -59,6 +59,30 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
         run: yarn deploy-demo:preview --branch ${{ github.event.number }}
+
+  build-deploy-website:
+    needs: qa
+    runs-on: ubuntu-latest
+    environment: preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Build website for preview environment
+        env:
+          PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+          PUBLIC_DISCORD_INVITE_URL: ${{ vars.PUBLIC_DISCORD_INVITE_URL }}
+        run: yarn build-website
+      - name: Deploy website to preview environment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        run: yarn deploy-website:preview --branch ${{ github.event.number }}
 
   build-deploy-electron:
     needs: qa
@@ -116,7 +140,7 @@ jobs:
           compression-level: 0
 
   add-pr-comment:
-    needs: [build-deploy-demo, build-deploy-electron]
+    needs: [build-deploy-demo, build-deploy-website, build-deploy-electron]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -127,4 +151,5 @@ jobs:
             ### 🚀 Previews available
 
             - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
+            - Website: https://${{ github.event.number }}.superegodev.pages.dev/
             - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}

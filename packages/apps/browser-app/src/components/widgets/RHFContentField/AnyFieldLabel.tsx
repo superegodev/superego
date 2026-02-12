@@ -14,6 +14,7 @@ interface Props {
   label: string;
   actions?: ReactNode | undefined;
   component?: "label" | "legend" | undefined;
+  htmlFor?: string | undefined;
   className?: string | undefined;
 }
 export default function AnyFieldLabel({
@@ -22,6 +23,7 @@ export default function AnyFieldLabel({
   label,
   actions,
   component = "label",
+  htmlFor,
   className,
 }: Props) {
   const { showTypes, showNullability } = useUiOptions();
@@ -36,7 +38,12 @@ export default function AnyFieldLabel({
           ? `${last(typeDefinition.format.split("."))} (${typeDefinition.dataType})`
           : typeDefinition.dataType;
   return (
-    <FieldLabel actions={actions} component={component} className={className}>
+    <FieldLabel
+      actions={actions}
+      component={component}
+      htmlFor={htmlFor}
+      className={className}
+    >
       {label}
       {showTypes ? (
         <span className={cs.AnyFieldLabel.dataType}>

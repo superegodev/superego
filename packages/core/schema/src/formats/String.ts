@@ -109,4 +109,18 @@ export default [
       ),
     ),
   },
+
+  {
+    dataType: DataType.String,
+    id: FormatId.String.Markdown,
+    name: "Markdown",
+    description: "A Markdown-formatted string.",
+    validExamples: [
+      "# Hello World",
+      "Some **bold** and *italic* text.",
+      "- item 1\n- item 2\n- item 3",
+    ],
+    invalidExamples: [],
+    valibotSchema: v.string(),
+  },
 ] satisfies Format<DataType.String>[];

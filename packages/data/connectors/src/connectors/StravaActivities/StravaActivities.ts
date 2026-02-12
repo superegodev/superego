@@ -9,7 +9,6 @@ import {
   OAuth2PKCERefreshAuthenticationStateFailed,
 } from "../../common/OAuth2PKCEConnector/errors.js";
 import OAuth2PKCEConnector from "../../common/OAuth2PKCEConnector/OAuth2PKCEConnector.js";
-import type Base64Url from "../../requirements/Base64Url.js";
 import type SessionStorage from "../../requirements/SessionStorage.js";
 import sha256 from "../../utils/sha256.js";
 import type { ListAthleteActivitiesResponseBody } from "./apiTypes.js";
@@ -21,12 +20,8 @@ export default class StravaActivities
   extends OAuth2PKCEConnector
   implements Connector.OAuth2PKCE<null, SummaryActivity>
 {
-  constructor(
-    redirectUri: string,
-    base64Url: Base64Url,
-    sessionStorage: SessionStorage,
-  ) {
-    super("StravaActivities", redirectUri, base64Url, sessionStorage, {
+  constructor(redirectUri: string, sessionStorage: SessionStorage) {
+    super("StravaActivities", redirectUri, sessionStorage, {
       authorizationEndpoint: "https://www.strava.com/oauth/authorize",
       tokenEndpoint: "https://www.strava.com/api/v3/oauth/token",
       scopes: ["activity:read_all"],

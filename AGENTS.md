@@ -12,11 +12,21 @@
 
 ## Testing
 
-- Always add unit or e2e tests for the changes you make.
-- Follow the existing patterns and styling conventions when writing tests. In
-  particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
-  (optional), `// Exercise`, and `// Verify` to visually separate the "phases"
-  of a test.
+What to test and how:
+
+- For focused utilities -> add unit tests.
+- For frontend components -> don't add tests at all.
+- For usecases -> add e2e tests to the relevant suite in
+  `packages/tests/backend-e2e-tests/src/suites`.
+- For data repositories -> add unit tests to the relevant suite in
+  `packages/core/executing-backend/src/requirements/data-repositories-tests/suites`.
+
+Do **not** add other types of tests.
+
+Follow the existing patterns and styling conventions when writing tests. In
+particular, always use comments `// Setup mocks` (optional), `// Setup SUT`
+(optional), `// Exercise`, and `// Verify` to visually separate the "phases" of
+a test.
 
 ## NPM scripts
 
@@ -43,3 +53,10 @@ Run with `yarn workspace <package-name> run <script-name>`. Available scripts:
 - When you change frontend files in `packages/apps/browser-app`, always run
   `yarn workspace @superego/browser-app translations:extract-and-compile` and
   update `packages/apps/browser-app/src/translations/it.json` accordingly.
+- **CSS-in-TS convention:** Each component folder has at most **one** `.css.ts`
+  file, named after the folder (e.g. `CollectionPreviewsTabs.css.ts`). When a
+  folder contains multiple components, the single `.css.ts` file exports one
+  `export const ComponentName` object per component (e.g.
+  `export const CollectionPreviewsTabs = { … }` and
+  `export const CollectionPreview = { … }`). Do **not** create additional
+  `.css.ts` files for sub-components in the same folder.

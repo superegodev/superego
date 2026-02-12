@@ -78,8 +78,8 @@ export default function CreateCollectionForm() {
     contentBlockingKeysGetter,
     contentSummaryGetter,
   }: CreateCollectionFormValues) => {
-    const { success, data } = await mutate(
-      {
+    const { success, data } = await mutate({
+      settings: {
         name,
         icon,
         collectionCategoryId: null,
@@ -88,8 +88,8 @@ export default function CreateCollectionForm() {
         assistantInstructions,
       },
       schema,
-      { contentBlockingKeysGetter, contentSummaryGetter },
-    );
+      versionSettings: { contentBlockingKeysGetter, contentSummaryGetter },
+    });
     if (success) {
       navigateTo(
         { name: RouteName.Collection, collectionId: data.id },

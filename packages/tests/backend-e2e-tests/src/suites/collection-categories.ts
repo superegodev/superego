@@ -448,8 +448,8 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
         parentId: null,
       });
       assert.isTrue(createParentResult.success);
-      const createChildCollectionResult = await backend.collections.create(
-        {
+      const createChildCollectionResult = await backend.collections.create({
+        settings: {
           name: "child",
           icon: null,
           collectionCategoryId: createParentResult.data.id,
@@ -457,11 +457,11 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -469,7 +469,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createChildCollectionResult.success);
 
       // Exercise

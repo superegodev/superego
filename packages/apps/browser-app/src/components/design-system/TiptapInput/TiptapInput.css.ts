@@ -9,15 +9,16 @@ export const TiptapInput = {
     marginBlockEnd: vars.spacing._2,
     background: vars.colors.background.surface,
     selectors: {
-      '&[data-has-focus="true"]': {
+      '&[data-has-focus="true"][data-focus-visible="true"]': {
         outline: `2px solid ${vars.colors.accent}`,
-        outlineOffset: "-2px",
+        outlineOffset: "-1px",
       },
       '&[aria-invalid="true"]': {
         borderColor: vars.colors.semantic.error.border,
       },
     },
   }),
+
   editor: style({
     width: "100%",
     whiteSpace: "pre-wrap",
@@ -46,15 +47,18 @@ export const FormattingToolbar = {
     paddingInline: vars.spacing._4,
     paddingBlockStart: vars.spacing._4,
   }),
+
   group: style({
     display: "flex",
     gap: vars.spacing._0_5,
   }),
+
   separator: style({
     alignSelf: "stretch",
     background: vars.colors.border.default,
     width: vars.borders.width.thin,
   }),
+
   menuItem: styleVariants({
     default: [formattingMenuItemBase],
     active: [
@@ -64,6 +68,7 @@ export const FormattingToolbar = {
       },
     ],
   }),
+
   button: style({
     fontSize: vars.typography.fontSizes.xl,
   }),

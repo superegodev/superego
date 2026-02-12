@@ -1,10 +1,10 @@
 import type { Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import * as cs from "./CreateApp.css.js";
 
 interface Props {
   control: Control<any>;
@@ -34,11 +34,14 @@ export default function SetNameAndSaveModal({
         autoFocus={true}
         placeholder={intl.formatMessage({ defaultMessage: "My Awesome App" })}
       />
-      <div className={cs.SetNameAndSaveModal.submitButtonContainer}>
+      <ModalDialog.Actions>
+        <Button onPress={onClose}>
+          <FormattedMessage defaultMessage="Cancel" />
+        </Button>
         <RHFSubmitButton control={control} formId={formId} variant="primary">
           <FormattedMessage defaultMessage="Create" />
         </RHFSubmitButton>
-      </div>
+      </ModalDialog.Actions>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </ModalDialog>
   );

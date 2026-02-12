@@ -213,6 +213,54 @@
       "value": "Stato"
     }
   ],
+  "Bazaar.tsx_T5A49y": [
+    {
+      "type": 0,
+      "value": "Bazaar"
+    }
+  ],
+  "BazaarPack.tsx_40netJ": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packId"
+    }
+  ],
+  "BazaarPack.tsx_DzgcGx": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "BazaarPack.tsx_HUc4Bb": [
+    {
+      "type": 0,
+      "value": "Mostra/nascondi anteprima collezioni"
+    }
+  ],
+  "BazaarPack.tsx_j9FVIw": [
+    {
+      "type": 0,
+      "value": "Screenshot di "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "BazaarPack.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Installa"
+    }
+  ],
   "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
@@ -267,6 +315,34 @@
     {
       "type": 0,
       "value": " versioni)"
+    }
+  ],
+  "Carousel.tsx_F+ukuP": [
+    {
+      "type": 0,
+      "value": "Immagine successiva"
+    }
+  ],
+  "Carousel.tsx_H/VqZ2": [
+    {
+      "type": 0,
+      "value": "Vai all'immagine "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "Carousel.tsx_aC/Bx7": [
+    {
+      "type": 0,
+      "value": "Carosello"
+    }
+  ],
+  "Carousel.tsx_fb1a/o": [
+    {
+      "type": 0,
+      "value": "Immagine precedente"
     }
   ],
   "Chat.tsx_zhku3H": [
@@ -914,6 +990,12 @@
       "value": "Stringa JSON non valida"
     }
   ],
+  "DeleteAppModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
   "DeleteAppModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -964,6 +1046,12 @@
     {
       "type": 0,
       "value": "Conferma comando"
+    }
+  ],
+  "DeleteCollectionModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
@@ -1046,6 +1134,12 @@
       "value": "\""
     }
   ],
+  "DeleteConversationModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
   "DeleteConversationModalForm.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1082,6 +1176,12 @@
     {
       "type": 0,
       "value": "Conferma comando"
+    }
+  ],
+  "DeleteDocumentModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "DeleteDocumentModalForm.tsx_K3r6DQ": [
@@ -1312,6 +1412,12 @@
     {
       "type": 0,
       "value": "Vai a"
+    }
+  ],
+  "DownSyncInfoModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "DownSyncInfoModal.tsx_8I58x/": [
@@ -1636,10 +1742,22 @@
       "value": "Grassetto"
     }
   ],
+  "FormattingToolbar.tsx_HpWSb4": [
+    {
+      "type": 0,
+      "value": "Titoli"
+    }
+  ],
   "FormattingToolbar.tsx_Ig/eGK": [
     {
       "type": 0,
       "value": "Allineamento"
+    }
+  ],
+  "FormattingToolbar.tsx_JBWS0c": [
+    {
+      "type": 0,
+      "value": "Link"
     }
   ],
   "FormattingToolbar.tsx_JkS37H": [
@@ -1672,6 +1790,12 @@
       "value": "Sottolineato"
     }
   ],
+  "FormattingToolbar.tsx_Up5U7K": [
+    {
+      "type": 0,
+      "value": "Blocco"
+    }
+  ],
   "FormattingToolbar.tsx_Zqekct": [
     {
       "type": 0,
@@ -1702,6 +1826,12 @@
       "value": "Corsivo"
     }
   ],
+  "FormattingToolbar.tsx_gl1NeW": [
+    {
+      "type": 0,
+      "value": "Elenchi"
+    }
+  ],
   "FormattingToolbar.tsx_h2vipu": [
     {
       "type": 0,
@@ -1712,6 +1842,12 @@
     {
       "type": 0,
       "value": "Allinea a sinistra"
+    }
+  ],
+  "FormattingToolbar.tsx_lbsCQS": [
+    {
+      "type": 0,
+      "value": "Elenco numerato"
     }
   ],
   "FormattingToolbar.tsx_rDSlqC": [
@@ -2160,6 +2296,38 @@
       "value": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
     }
   ],
+  "InstallPackModal.tsx_+Toiai": [
+    {
+      "type": 0,
+      "value": "saranno installati."
+    }
+  ],
+  "InstallPackModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "InstallPackModal.tsx_B8WL2e": [
+    {
+      "type": 0,
+      "value": "Installare \""
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    },
+    {
+      "type": 0,
+      "value": "\"?"
+    }
+  ],
+  "InstallPackModal.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Installa"
+    }
+  ],
   "Instant.tsx_AnIOVe": [
     {
       "type": 0,
@@ -2264,10 +2432,30 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
+  "LoadDemoDataButton.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
   "LoadDemoDataButton.tsx_8EGRF9": [
     {
       "type": 0,
       "value": "Carica"
+    }
+  ],
+  "LoadDemoDataButton.tsx_FBs/WA": [
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": " pacchetti installati su "
+    },
+    {
+      "type": 1,
+      "value": "total"
     }
   ],
   "LoadDemoDataButton.tsx_GCRF0i": [
@@ -2324,6 +2512,140 @@
     {
       "type": 0,
       "value": " su null"
+    }
+  ],
+  "PackCard.tsx_EgRJme": [
+    {
+      "type": 0,
+      "value": "Screenshot del pacchetto"
+    }
+  ],
+  "PackEntityCounts.tsx_GPDaFU": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " app"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " app"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "appsCount"
+    }
+  ],
+  "PackEntityCounts.tsx_M51yty": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documento"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " documenti"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "documentsCount"
+    }
+  ],
+  "PackEntityCounts.tsx_P2D191": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " categoria"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " categorie"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "collectionCategoriesCount"
+    }
+  ],
+  "PackEntityCounts.tsx_pKXETD": [
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " collezione"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " collezioni"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "collectionsCount"
     }
   ],
   "Pagination.tsx_CDjQEk": [
@@ -2398,6 +2720,12 @@
     {
       "type": 0,
       "value": "Impostazioni"
+    }
+  ],
+  "PrimarySidebarPanel.tsx_T5A49y": [
+    {
+      "type": 0,
+      "value": "Bazaar"
     }
   ],
   "PrimarySidebarPanel.tsx_ZT0z9z": [
@@ -3020,6 +3348,12 @@
       "value": "ID versione documento remoto:"
     }
   ],
+  "RenameCollectionCategoryModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
   "RenameCollectionCategoryModalForm.tsx_HAlOn1": [
     {
       "type": 0,
@@ -3138,6 +3472,12 @@
       },
       "type": 5,
       "value": "type"
+    }
+  ],
+  "RestoreVersionModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "RestoreVersionModal.tsx_X3XZvD": [
@@ -3476,6 +3816,12 @@
       "value": "Imposta remoto"
     }
   ],
+  "SetNameAndSaveModal.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
   "SetNameAndSaveModal.tsx_HAlOn1": [
     {
       "type": 0,
@@ -3778,6 +4124,12 @@
     {
       "type": 0,
       "value": "Errore durante il salvataggio delle impostazioni globali"
+    }
+  ],
+  "UpdateNameModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
     }
   ],
   "UpdateNameModalForm.tsx_BWpuKl": [

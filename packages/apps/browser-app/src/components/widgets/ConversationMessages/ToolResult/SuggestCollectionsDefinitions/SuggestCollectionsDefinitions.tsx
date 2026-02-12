@@ -4,17 +4,14 @@ import {
   type ToolCall,
   type ToolResult,
 } from "@superego/backend";
-import { utils } from "@superego/schema";
-import { useId } from "react";
-import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useCreateManyCollections } from "../../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../../business-logic/toasts/toasts.js";
 import Button from "../../../../design-system/Button/Button.js";
+import CollectionPreviewsTabs from "../../../../design-system/CollectionPreviewsTabs/CollectionPreviewsTabs.js";
 import Title from "../Title.js";
 import * as cs from "../ToolResult.css.js";
-import CollectionPreview from "./CollectionPreview.js";
 
 interface Props {
   conversation: Conversation;
@@ -64,13 +61,13 @@ export default function SuggestCollectionsDefinitions({
     }
   };
 
-  const tabsId = useId();
-  const protoCollections = collections.map((collection, index) => ({
-    id: utils.makeProtoCollectionId(index),
+  const collectionPreviews = collections.map((collection) => ({
     settings: {
       name: collection.settings.name,
       icon: collection.settings.icon,
     },
+    schema: collection.schema,
+    exampleDocument: collection.exampleDocument,
   }));
 
   return (
@@ -78,31 +75,11 @@ export default function SuggestCollectionsDefinitions({
       <Title>
         <FormattedMessage defaultMessage="Suggested collections" />
       </Title>
-      <Tabs>
-        <TabList className={cs.SuggestCollectionsDefinitions.tabList}>
-          {collections.map((collection, index) => (
-            <Tab
-              key={utils.makeProtoCollectionId(index)}
-              id={`${tabsId}-${index}`}
-              className={cs.SuggestCollectionsDefinitions.tab}
-            >
-              {collection.settings.icon} {collection.settings.name}
-            </Tab>
-          ))}
-        </TabList>
-        {collections.map((collection, index) => (
-          <TabPanel
-            key={utils.makeProtoCollectionId(index)}
-            id={`${tabsId}-${index}`}
-            className={cs.SuggestCollectionsDefinitions.tabPanel}
-          >
-            <CollectionPreview
-              collection={collection}
-              protoCollections={protoCollections}
-            />
-          </TabPanel>
-        ))}
-      </Tabs>
+      <CollectionPreviewsTabs
+        collections={collectionPreviews}
+        className={cs.SuggestCollectionsDefinitions.collectionPreviewsTabs}
+        tabClassName={cs.SuggestCollectionsDefinitions.collectionPreviewsTab}
+      />
       <Button
         variant="primary"
         className={cs.SuggestCollectionsDefinitions.createButton}

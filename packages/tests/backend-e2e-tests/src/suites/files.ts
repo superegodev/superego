@@ -28,8 +28,8 @@ export default rd<GetDependencies>("Files", (deps) => {
     it("success: gets content", async () => {
       // Setup SUT
       const { backend } = deps();
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -37,7 +37,7 @@ export default rd<GetDependencies>("Files", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -46,7 +46,7 @@ export default rd<GetDependencies>("Files", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -54,20 +54,20 @@ export default rd<GetDependencies>("Files", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
 
       const fileContent = new TextEncoder().encode("file-content");
-      const createDocumentResult = await backend.documents.create(
-        createCollectionResult.data.id,
-        {
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: {
           attachment: {
             name: "file.txt",
             mimeType: "text/plain",
             content: fileContent,
           },
         },
-      );
+      });
       assert.isTrue(createDocumentResult.success);
       const attachment =
         createDocumentResult.data.latestVersion.content.attachment;

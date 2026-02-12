@@ -1,9 +1,9 @@
 import type {
   App,
+  AppDefinition,
+  AppId,
   AppNameNotValid,
-  AppType,
   Backend,
-  CollectionId,
   CollectionNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -23,12 +23,14 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
+interface AppsCreateOptions {
+  appId?: AppId;
+}
+
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
   async exec(
-    type: AppType,
-    name: string,
-    targetCollectionIds: CollectionId[],
-    files: AppVersionEntity["files"],
+    { type, name, targetCollectionIds, files }: AppDefinition,
+    options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
     AppNameNotValid | CollectionNotFound | UnexpectedError
@@ -65,7 +67,7 @@ export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
 
     const now = new Date();
     const app: AppEntity = {
-      id: Id.generate.app(),
+      id: options.appId ?? Id.generate.app(),
       type: type,
       name: nameValidationResult.output,
       createdAt: now,

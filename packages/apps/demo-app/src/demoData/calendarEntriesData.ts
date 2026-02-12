@@ -1,6 +1,10 @@
+import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-import type calendarEntriesSchema from "./calendarEntriesSchema.js";
+
+type CalendarEntry = TypeOf<
+  (typeof packsAsConst)[3]["collections"][1]["schema"]
+>;
 
 export default [
   {
@@ -1777,4 +1781,4 @@ export default [
       .toISO(),
     notes: null,
   },
-] satisfies TypeOf<typeof calendarEntriesSchema>[];
+] satisfies CalendarEntry[];

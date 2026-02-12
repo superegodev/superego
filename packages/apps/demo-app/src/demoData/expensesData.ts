@@ -1,6 +1,8 @@
+import type { packsAsConst } from "@superego/bazaar";
 import { DataType, type TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
-import type expensesSchema from "./expensesSchema.js";
+
+type Expense = TypeOf<(typeof packsAsConst)[2]["collections"][0]["schema"]>;
 
 const recurringExpenses = (
   [
@@ -61,7 +63,7 @@ const recurringExpenses = (
   ] as const
 ).flatMap((recurringExpense) => {
   const { dayOfMonth, ...expense } = recurringExpense;
-  const expenses: TypeOf<typeof expensesSchema>[] = [];
+  const expenses: Expense[] = [];
   const paidInCurrentMonth = recurringExpense.dayOfMonth <= DateTime.now().day;
   for (let i = paidInCurrentMonth ? 0 : 1; i <= 11; i++) {
     expenses.push({
@@ -909,4 +911,4 @@ export default [
       ],
     },
   },
-] satisfies TypeOf<typeof expensesSchema>[];
+] satisfies Expense[];

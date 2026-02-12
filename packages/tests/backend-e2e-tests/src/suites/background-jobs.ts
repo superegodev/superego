@@ -63,8 +63,8 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
 
       // Setup SUT
       const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -72,7 +72,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -81,7 +81,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -89,7 +89,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
@@ -171,8 +171,8 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
 
       // Setup SUT
       const { backend } = deps(mockConnector);
-      const createCollectionResult = await backend.collections.create(
-        {
+      const createCollectionResult = await backend.collections.create({
+        settings: {
           name: "name",
           icon: null,
           collectionCategoryId: null,
@@ -180,7 +180,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           description: null,
           assistantInstructions: null,
         },
-        {
+        schema: {
           types: {
             Root: {
               dataType: DataType.Struct,
@@ -189,7 +189,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           },
           rootType: "Root",
         },
-        {
+        versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -197,7 +197,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
               "export default function getContentSummary() { return {}; }",
           },
         },
-      );
+      });
       assert.isTrue(createCollectionResult.success);
       const setRemoteResult = await backend.collections.setRemote(
         createCollectionResult.data.id,
