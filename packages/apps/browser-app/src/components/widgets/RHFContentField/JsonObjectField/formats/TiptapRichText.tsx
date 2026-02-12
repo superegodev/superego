@@ -24,11 +24,10 @@ export default function TiptapRichText({
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.tiptapRichTextJsonObject();
-  const fieldOnChange = field.onChange;
   const onChange = useCallback(
     (newValue: JSONContent) =>
-      fieldOnChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [fieldOnChange],
+      field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [field.onChange],
   );
   return (
     <div

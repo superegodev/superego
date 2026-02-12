@@ -39,11 +39,10 @@ export default function RHFMarkdownField<
   ...props
 }: Props<TFieldValues, TName, TTransformedValues>) {
   const { field, fieldState } = useController(props);
-  const fieldOnChange = field.onChange;
   const onChange = useCallback(
     (newValue: string) =>
-      fieldOnChange(newValue === "" ? emptyInputValue : newValue),
-    [fieldOnChange, emptyInputValue],
+      field.onChange(newValue === "" ? emptyInputValue : newValue),
+    [field.onChange, emptyInputValue],
   );
   return (
     <TextField

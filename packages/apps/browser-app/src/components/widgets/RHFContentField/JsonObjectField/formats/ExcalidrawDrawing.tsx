@@ -23,11 +23,10 @@ export default function ExcalidrawDrawing({
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.excalidrawDrawingJsonObject();
-  const fieldOnChange = field.onChange;
   const onChange = useCallback(
     (newValue: typeof value) =>
-      fieldOnChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [fieldOnChange],
+      field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [field.onChange],
   );
   return (
     <div
