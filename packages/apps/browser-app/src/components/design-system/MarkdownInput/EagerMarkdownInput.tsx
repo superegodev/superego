@@ -13,6 +13,7 @@ export default function EagerMarkdownInput({
   onBlur,
   isInvalid = false,
   isReadOnly = false,
+  showToolbar = true,
   placeholder,
   ref,
 }: Props) {
@@ -37,7 +38,7 @@ export default function EagerMarkdownInput({
         autoResize: true,
         toolbar: false,
         smartLists: true,
-        placeholder: placeholder,
+        placeholder: placeholder ?? "",
         theme,
       });
       editorRef.current = (instance ?? null) as OverTypeEditor | null;
@@ -99,7 +100,9 @@ export default function EagerMarkdownInput({
       data-read-only={isReadOnly}
       className={cs.MarkdownInput.root}
     >
-      {!isReadOnly && <FormattingToolbar editorRef={editorRef} />}
+      {showToolbar && !isReadOnly ? (
+        <FormattingToolbar editorRef={editorRef} />
+      ) : null}
       <div ref={containerRef} />
     </div>
   );

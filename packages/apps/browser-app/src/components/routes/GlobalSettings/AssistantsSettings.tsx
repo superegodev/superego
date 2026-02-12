@@ -5,6 +5,7 @@ import {
 } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
+import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
 interface Props {
@@ -25,21 +26,21 @@ export default function AssistantsSettings({
         label={intl.formatMessage({ defaultMessage: "Your name" })}
         placeholder="Alex"
       />
-      <RHFTextField
+      <RHFMarkdownField
         control={control}
         name={`assistants.developerPrompts.${AssistantName.Factotum}`}
         emptyInputValue={null}
-        textArea={true}
+        showToolbar={false}
         label={intl.formatMessage({
           defaultMessage: "Factotum developer prompt",
         })}
         placeholder={developerPrompts[AssistantName.Factotum]}
       />
-      <RHFTextField
+      <RHFMarkdownField
         control={control}
         name={`assistants.developerPrompts.${AssistantName.CollectionCreator}`}
         emptyInputValue={null}
-        textArea={true}
+        showToolbar={false}
         label={intl.formatMessage({
           defaultMessage: "Collection Creator developer prompt",
         })}

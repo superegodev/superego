@@ -4,6 +4,7 @@ export default interface Props {
   onBlur?: (() => void) | undefined;
   isInvalid?: boolean | undefined;
   isReadOnly?: boolean | undefined;
+  showToolbar?: boolean | undefined;
   placeholder?: string | undefined;
   /**
    * react-hook-form ref callback. Used to allow the input to be focused by rhf

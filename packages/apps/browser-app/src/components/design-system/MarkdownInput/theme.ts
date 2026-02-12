@@ -14,28 +14,28 @@ export default {
     textSecondary: vars.colors.text.secondary,
 
     // Headings
-    h1: vars.colors.text.primary,
-    h2: vars.colors.text.primary,
-    h3: vars.colors.text.primary,
+    h1: vars.colors.blues._5,
+    h2: vars.colors.blues._5,
+    h3: vars.colors.blues._5,
 
     // Inline formatting
-    strong: vars.colors.text.primary,
+    strong: vars.colors.blues._5,
     em: vars.colors.text.primary,
     del: vars.colors.text.secondary,
-    code: vars.colors.text.primary,
-    codeBg: vars.colors.oranges._4,
+    code: vars.colors.accent,
+    codeBg: vars.colors.background.surface,
 
     // Links
     link: vars.colors.blues._5,
 
     // Blocks
     blockquote: vars.colors.text.secondary,
-    hr: vars.colors.text.secondary,
-    listMarker: vars.colors.accent,
+    hr: vars.colors.blues._5,
+    listMarker: vars.colors.blues._5,
 
     // Syntax / markers
-    syntaxMarker: vars.colors.text.primary,
-    syntax: vars.colors.text.secondary,
+    syntaxMarker: vars.colors.blues._5,
+    syntax: vars.colors.blues._5,
     rawLine: vars.colors.text.secondary,
 
     // Interactive
