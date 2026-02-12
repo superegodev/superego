@@ -14,11 +14,11 @@
     "deploy:production": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.23.0",
-    "@cloudflare/workers-types": "^4.20260203.0",
+    "@cloudflare/vite-plugin": "1.24.0",
+    "@cloudflare/workers-types": "^4.20260210.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "wrangler": "^4.62.0"
+    "wrangler": "^4.64.0"
   },
   "dependencies": {
     "@superego/app-sandbox": "workspace:*",
@@ -33,7 +33,7 @@
     "@superego/openai-compat-inference-service": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
-    "@tanstack/react-query": "^5.90.20",
+    "@tanstack/react-query": "^5.90.21",
     "urlpattern-polyfill": "^10.1.0"
   }
 }
