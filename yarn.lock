@@ -2599,7 +2599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/excalidraw@npm:0.18.0":
+"@excalidraw/excalidraw@npm:^0.18.0":
   version: 0.18.0
   resolution: "@excalidraw/excalidraw@npm:0.18.0"
   dependencies:
@@ -6989,7 +6989,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/browser-app@workspace:packages/apps/browser-app"
   dependencies:
-    "@excalidraw/excalidraw": "npm:0.18.0"
+    "@excalidraw/excalidraw": "npm:^0.18.0"
     "@fast-check/vitest": "npm:^0.2.4"
     "@formatjs/cli": "npm:^6.12.2"
     "@hookform/resolvers": "npm:^5.2.2"

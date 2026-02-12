@@ -5,7 +5,7 @@ import type {
   ExcalidrawInitialDataState,
 } from "@excalidraw/excalidraw/types";
 import { Theme } from "@superego/backend";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
 import { useLocale } from "react-aria-components";
 import useTheme from "../../../business-logic/theme/useTheme.js";
@@ -48,27 +48,32 @@ export default function EagerExcalidrawInput({
     }
   }, [ref]);
 
+  const flushScene = useCallback(() => {
+    const excalidrawApi = excalidrawApiRef.current;
+    if (!excalidrawApi) {
+      return;
+    }
+    const elements = excalidrawApi.getSceneElements();
+    const files = excalidrawApi.getFiles();
+    const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
+    const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
+    const serialized = JSON.stringify({ elements, files, appState });
+    if (serialized !== previousSerializedRef.current) {
+      previousSerializedRef.current = serialized;
+      onChange(JSON.parse(serialized));
+    }
+  }, [onChange]);
+
   useEffect(() => {
     if (!hasFocus) {
       return;
     }
-    const intervalId = setInterval(() => {
-      const excalidrawApi = excalidrawApiRef.current;
-      if (!excalidrawApi) {
-        return;
-      }
-      const elements = excalidrawApi.getSceneElements();
-      const files = excalidrawApi.getFiles();
-      const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
-      const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
-      const serialized = JSON.stringify({ elements, files, appState });
-      if (serialized !== previousSerializedRef.current) {
-        previousSerializedRef.current = serialized;
-        onChange(JSON.parse(serialized));
-      }
-    }, EXCALIDRAW_INPUT_ON_CHANGE_CHECK_INTERVAL);
+    const intervalId = setInterval(
+      flushScene,
+      EXCALIDRAW_INPUT_ON_CHANGE_CHECK_INTERVAL,
+    );
     return () => clearInterval(intervalId);
-  }, [hasFocus, onChange]);
+  }, [hasFocus, flushScene]);
 
   useEffect(() => {
     const excalidrawApi = excalidrawApiRef.current;
@@ -77,7 +82,7 @@ export default function EagerExcalidrawInput({
     }
     if (!value) {
       previousSerializedRef.current = null;
-      excalidrawApi.updateScene({ elements: [] });
+      excalidrawApi.resetScene();
       return;
     }
     const serialized = JSON.stringify(value);
@@ -107,6 +112,7 @@ export default function EagerExcalidrawInput({
       onBlur={(evt) => {
         const focusPassedToChild = rootRef.current?.contains(evt.relatedTarget);
         if (!focusPassedToChild) {
+          flushScene();
           setHasFocus(false);
           onBlur?.();
         }
