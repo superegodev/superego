@@ -58,6 +58,7 @@ export default function RHFMarkdownField<
         value={field.value ?? ""}
         onChange={onChange}
         onBlur={field.onBlur}
+        id={field.name}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         showToolbar={showToolbar}

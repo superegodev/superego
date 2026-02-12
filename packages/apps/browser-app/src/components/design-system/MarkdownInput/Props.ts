@@ -2,6 +2,7 @@ export default interface Props {
   value: string | null | undefined;
   onChange: (newValue: string) => void;
   onBlur?: (() => void) | undefined;
+  id?: string | undefined;
   isInvalid?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   showToolbar?: boolean | undefined;

@@ -38,12 +38,14 @@ export default function Markdown({
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
+          htmlFor={field.name}
         />
       ) : null}
       <MarkdownInput
         value={field.value ?? ""}
         onChange={onChange}
         onBlur={field.onBlur}
+        id={field.name}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         placeholder="null"

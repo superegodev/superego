@@ -36,7 +36,7 @@ export default async function createContact(
     .fill(contact.relation);
   await page.getByRole("textbox", { name: /^Number/i }).fill(contact.number);
   await page.getByRole("textbox", { name: /^Address/i }).fill(contact.address);
-  await page.locator(".ProseMirror").first().fill(contact.notes);
+  await tiptapInput(page).fill(contact.notes);
   // Wait for the debounce on the TipTap input.
   await page.waitForTimeout(500);
 

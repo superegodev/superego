@@ -11,6 +11,7 @@ export default function EagerMarkdownInput({
   value,
   onChange,
   onBlur,
+  id,
   isInvalid = false,
   isReadOnly = false,
   showToolbar = true,
@@ -23,38 +24,31 @@ export default function EagerMarkdownInput({
   const containerRef = useRef<HTMLDivElement>(null);
   const rootElementRef = useRef<HTMLDivElement>(null);
 
-  // When value changes, the editor's value is updated by another hook. This
-  // approach avoids the editor getting re-inited every time the value changes.
+  // When value, onChange, or placeholder change, they editor's references are
+  // updated by other hooks.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    if (!editorRef.current) {
-      if (!containerRef.current) {
-        return;
-      }
-
-      const [instance] = OverType.init(containerRef.current, {
-        value: value ?? "",
-        onChange: (newValue) => onChange(newValue),
-        autoResize: true,
-        toolbar: false,
-        smartLists: true,
-        placeholder: placeholder ?? "",
-        theme,
-      });
-      editorRef.current = (instance ?? null) as OverTypeEditor | null;
-
-      return () => {
-        editorRef.current?.destroy();
-        editorRef.current = null;
-      };
+    if (!containerRef.current) {
+      return;
     }
 
-    editorRef.current.reinit({
+    const [instance] = OverType.init(containerRef.current, {
+      value: value ?? "",
       onChange: (newValue) => onChange(newValue),
-      placeholder: placeholder,
+      autoResize: true,
+      toolbar: false,
+      smartLists: true,
+      placeholder: placeholder ?? "",
+      theme,
+      textareaProps: { id: id, readOnly: isReadOnly },
     });
-    return;
-  }, [onChange, placeholder]);
+    editorRef.current = (instance ?? null) as OverTypeEditor | null;
+
+    return () => {
+      editorRef.current?.destroy();
+      editorRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -62,6 +56,19 @@ export default function EagerMarkdownInput({
       editor.setValue(value ?? "");
     }
   }, [value]);
+
+  useEffect(() => {
+    editorRef.current?.reinit({
+      onChange: (newValue) => onChange(newValue),
+      placeholder: placeholder,
+    });
+  }, [onChange, placeholder]);
+
+  useEffect(() => {
+    if (editorRef.current && id) {
+      editorRef.current.textarea.id = id;
+    }
+  }, [id]);
 
   useEffect(() => {
     if (editorRef.current) {
