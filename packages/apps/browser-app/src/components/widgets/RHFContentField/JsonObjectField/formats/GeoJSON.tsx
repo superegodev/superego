@@ -3,9 +3,11 @@ import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
+import classnames from "../../../../../utils/classnames.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
+import type GeoJSONFeatureCollection from "../../../../design-system/GeoJSONInput/GeoJSONFeatureCollection.js";
 import GeoJSONInput from "../../../../design-system/GeoJSONInput/GeoJSONInput.js";
-import type { GeoJSONFeatureCollection } from "../../../../design-system/GeoJSONInput/Props.js";
+import type GeoJSONValue from "../../../../design-system/GeoJSONInput/GeoJSONValue.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
@@ -23,14 +25,20 @@ export default function GeoJSON({
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
-  const fieldOnChange = field.onChange;
   const onChange = useCallback(
     (newValue: GeoJSONFeatureCollection) =>
-      fieldOnChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [fieldOnChange],
+      field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [field.onChange],
   );
   return (
-    <div className={cs.JsonObjectField.GeoJSON.root}>
+    <div
+      className={classnames(
+        cs.JsonObjectField.GeoJSON.root,
+        isListItem && cs.ListItemField.root,
+      )}
+      data-data-type={typeDefinition.dataType}
+      data-is-list-item={isListItem}
+    >
       {!isListItem ? (
         <AnyFieldLabel
           typeDefinition={typeDefinition}
@@ -39,7 +47,7 @@ export default function GeoJSON({
         />
       ) : null}
       <GeoJSONInput
-        value={value as GeoJSONFeatureCollection}
+        value={value as GeoJSONValue}
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}

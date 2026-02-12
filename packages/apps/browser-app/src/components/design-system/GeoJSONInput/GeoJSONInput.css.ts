@@ -10,15 +10,16 @@ export const GeoJSONInput = {
     marginBlockEnd: vars.spacing._2,
     overflow: "hidden",
     selectors: {
-      '&[data-has-focus="true"]': {
+      '&[data-has-focus="true"][data-focus-visible="true"]': {
         outline: `2px solid ${vars.colors.accent}`,
-        outlineOffset: "-2px",
+        outlineOffset: "-1px",
       },
       '&[aria-invalid="true"]': {
         borderColor: vars.colors.semantic.error.border,
       },
     },
   }),
+
   map: style({
     width: "100%",
     height: "100%",

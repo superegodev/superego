@@ -52,7 +52,7 @@ export default [
     dataType: DataType.JsonObject,
     id: FormatId.JsonObject.GeoJSON,
     name: "GeoJSON",
-    description: "A GeoJSON FeatureCollection.",
+    description: "A GeoJSON object (FeatureCollection, Feature, or Geometry).",
     validExamples: [
       {
         __dataType: DataType.JsonObject,
@@ -70,20 +70,44 @@ export default [
           },
         ],
       },
+      {
+        __dataType: DataType.JsonObject,
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [0, 0] },
+        properties: {},
+      },
+      {
+        __dataType: DataType.JsonObject,
+        type: "Point",
+        coordinates: [0, 0],
+      },
     ],
     invalidExamples: [
-      { __dataType: DataType.JsonObject, type: "Feature", geometry: null },
+      {
+        __dataType: DataType.JsonObject,
+        type: "SomeRandomThing",
+        data: {},
+      },
     ],
     valibotSchema: v.pipe(
       jsonObject(),
       v.check(
-        // TODO_GEOJSON: incorrect: should support arbitrary GeoJSON
         (jsonObject) =>
-          jsonObject["type"] === "FeatureCollection" &&
-          Array.isArray(jsonObject["features"]),
+          typeof jsonObject["type"] === "string" &&
+          new Set([
+            "FeatureCollection",
+            "Feature",
+            "Point",
+            "MultiPoint",
+            "LineString",
+            "MultiLineString",
+            "Polygon",
+            "MultiPolygon",
+            "GeometryCollection",
+          ]).has(jsonObject["type"]),
         ({ lang }) =>
           translate(lang, {
-            en: "Invalid JsonObject: Not a GeoJSON FeatureCollection",
+            en: "Invalid JsonObject: Not a valid GeoJSON object",
           }),
       ),
     ),

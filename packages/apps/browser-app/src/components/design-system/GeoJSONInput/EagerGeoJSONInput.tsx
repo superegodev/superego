@@ -4,65 +4,15 @@ import { Geoman } from "@geoman-io/maplibre-geoman-free";
 import debounce from "debounce";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
+import { useFocusVisible } from "react-aria";
+import useTheme from "../../../business-logic/theme/useTheme.js";
 import { GEOJSON_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
-import { dark } from "../../../themes.css.js";
+import isEmpty from "../../../utils/isEmpty.js";
+import cleanExportedGeoJson from "./cleanExportedGeoJson.js";
 import * as cs from "./GeoJSONInput.css.js";
+import getMapStyle from "./getMapStyle.js";
 import type Props from "./Props.js";
-import type { GeoJSONFeatureCollection } from "./Props.js";
-
-function getMapStyle(isDark: boolean): maplibregl.StyleSpecification {
-  return {
-    version: 8,
-    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-    sources: {
-      carto: {
-        type: "raster",
-        tiles: [
-          isDark
-            ? "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
-            : "https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        ],
-        tileSize: 256,
-        attribution:
-          '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      },
-    },
-    layers: [
-      {
-        id: "carto-tiles",
-        type: "raster",
-        source: "carto",
-      },
-    ],
-  };
-}
-
-function cleanExportedGeoJson(exported: {
-  features: {
-    type: unknown;
-    geometry: unknown;
-    properties: Record<string, unknown>;
-  }[];
-}): GeoJSONFeatureCollection {
-  return {
-    type: "FeatureCollection",
-    features: (exported.features ?? []).map(
-      (f: {
-        type: unknown;
-        geometry: unknown;
-        properties: Record<string, unknown>;
-      }) => ({
-        type: f.type,
-        geometry: f.geometry,
-        properties: Object.fromEntries(
-          Object.entries(f.properties ?? {}).filter(
-            ([key]) => !key.startsWith("__gm"),
-          ),
-        ),
-      }),
-    ),
-  };
-}
+import wrapAsFeatureCollection from "./wrapAsFeatureCollection.js";
 
 export default function EagerGeoJSONInput({
   value,
@@ -72,70 +22,171 @@ export default function EagerGeoJSONInput({
   isReadOnly = false,
   ref,
 }: Props) {
+  const { isFocusVisible } = useFocusVisible();
+  const [hasFocus, setHasFocus] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const [hasFocus, setHasFocus] = useState(false);
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
-  const initialValueRef = useRef(value);
-  const isReadOnlyRef = useRef(isReadOnly);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+  const geomanRef = useRef<Geoman | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const theme = useTheme();
 
-  // The map is initialized once and then uncontrolled, like TiptapInput's editor.
+  // Main initialization effect. Creates the map and Geoman instance. Props
+  // consumed at creation time (value, onChange, isReadOnly, theme) are kept in
+  // sync by separate effects below.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
-    const container = mapContainerRef.current;
-    if (!container) return;
+    const mapContainer = mapContainerRef.current;
+    if (!mapContainer) {
+      return;
+    }
 
-    const isDark = document.body.classList.contains(dark);
     const map = new maplibregl.Map({
-      container,
-      style: getMapStyle(isDark),
+      container: mapContainer,
+      style: getMapStyle(theme),
       center: [0, 20],
       zoom: 1,
       attributionControl: false,
     });
+    mapRef.current = map;
 
-    const gm = new Geoman(map, {
+    const geoman = new Geoman(map, {
       settings: {
         controlsPosition: "top-right",
       },
     });
+    geomanRef.current = geoman;
 
     map.on("gm:loaded", () => {
-      const initialValue = initialValueRef.current;
-      if (
-        initialValue &&
-        initialValue.type === "FeatureCollection" &&
-        Array.isArray(initialValue.features) &&
-        initialValue.features.length > 0
-      ) {
-        gm.features.importGeoJson(
-          initialValue as Parameters<typeof gm.features.importGeoJson>[0],
-        );
+      if (value) {
+        const featureCollection = wrapAsFeatureCollection(value);
+        if (!isEmpty(featureCollection.features)) {
+          geoman.features.importGeoJson(
+            featureCollection as Parameters<
+              typeof geoman.features.importGeoJson
+            >[0],
+          );
+        }
       }
 
-      if (!isReadOnlyRef.current) {
-        gm.addControls();
+      if (!isReadOnly) {
+        geoman.addControls();
       }
 
-      const debouncedOnChange = debounce(() => {
-        const exported = gm.features.exportGeoJson();
-        onChangeRef.current(
-          cleanExportedGeoJson(
-            exported as Parameters<typeof cleanExportedGeoJson>[0],
-          ),
-        );
-      }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE);
+      geoman.setGlobalEventsListener(
+        debounce(() => {
+          const exported = geoman.features.exportGeoJson();
+          onChange(
+            cleanExportedGeoJson(
+              exported as Parameters<typeof cleanExportedGeoJson>[0],
+            ),
+          );
+        }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE),
+      );
 
-      gm.setGlobalEventsListener(() => {
-        debouncedOnChange();
-      });
+      setIsLoaded(true);
     });
 
     return () => {
+      mapRef.current = null;
+      geomanRef.current = null;
+      setIsLoaded(false);
       map.remove();
     };
   }, []);
 
+  // Sync onChange: re-register the global events listener when onChange
+  // changes.
+  useEffect(() => {
+    const geoman = geomanRef.current;
+    if (!isLoaded || !geoman) {
+      return;
+    }
+
+    geoman.setGlobalEventsListener(
+      debounce(() => {
+        const exported = geoman.features.exportGeoJson();
+        onChange(
+          cleanExportedGeoJson(
+            exported as Parameters<typeof cleanExportedGeoJson>[0],
+          ),
+        );
+      }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE),
+    );
+
+    return () => {
+      geoman.setGlobalEventsListener(null);
+    };
+  }, [onChange, isLoaded]);
+
+  // Sync value: when the value changes externally, re-import into Geoman.
+  useEffect(() => {
+    const geoman = geomanRef.current;
+    if (!isLoaded || !geoman) {
+      return;
+    }
+
+    const currentExport = cleanExportedGeoJson(
+      geoman.features.exportGeoJson() as Parameters<
+        typeof cleanExportedGeoJson
+      >[0],
+    );
+    const currentSerialized = JSON.stringify(currentExport);
+    const incomingSerialized = value ? JSON.stringify(value) : null;
+
+    if (currentSerialized === incomingSerialized) {
+      return;
+    }
+
+    geoman.features.deleteAll();
+
+    if (value) {
+      const featureCollection = wrapAsFeatureCollection(value);
+      if (!isEmpty(featureCollection.features)) {
+        geoman.features.importGeoJson(
+          featureCollection as Parameters<
+            typeof geoman.features.importGeoJson
+          >[0],
+        );
+      }
+    }
+  }, [value, isLoaded]);
+
+  // Sync isReadOnly: add or remove Geoman controls.
+  useEffect(() => {
+    const geoman = geomanRef.current;
+    if (!isLoaded || !geoman) {
+      return;
+    }
+
+    if (isReadOnly) {
+      geoman.removeControls();
+    } else {
+      geoman.addControls();
+    }
+  }, [isReadOnly, isLoaded]);
+
+  // Sync theme: update the map basemap style. MapLibre's setStyle destroys
+  // Geoman's layers, so we export features first and re-import after the new
+  // style loads.
+  useEffect(() => {
+    const map = mapRef.current;
+    const geoman = geomanRef.current;
+    if (!isLoaded || !map || !geoman) {
+      return;
+    }
+
+    const exported = geoman.features.exportGeoJson();
+
+    map.setStyle(getMapStyle(theme));
+    map.once("style.load", () => {
+      geoman.features.importGeoJson(
+        exported as Parameters<typeof geoman.features.importGeoJson>[0],
+      );
+    });
+  }, [theme, isLoaded]);
+
+  // Ref callback for react-hook-form focus.
   useEffect(() => {
     if (rootRef.current && ref) {
       ref({
@@ -159,6 +210,7 @@ export default function EagerGeoJSONInput({
       }}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
+      data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
       className={cs.GeoJSONInput.root}
     >

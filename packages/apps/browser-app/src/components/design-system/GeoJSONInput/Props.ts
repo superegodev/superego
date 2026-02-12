@@ -1,11 +1,8 @@
-export interface GeoJSONFeatureCollection {
-  type: "FeatureCollection";
-  features: unknown[];
-  [key: string]: unknown;
-}
+import type GeoJSONFeatureCollection from "./GeoJSONFeatureCollection.js";
+import type GeoJSONValue from "./GeoJSONValue.js";
 
 export default interface Props {
-  value: GeoJSONFeatureCollection | null | undefined;
+  value: GeoJSONValue | null | undefined;
   onChange: (newValue: GeoJSONFeatureCollection) => void;
   onBlur?: (() => void) | undefined;
   isInvalid?: boolean | undefined;
