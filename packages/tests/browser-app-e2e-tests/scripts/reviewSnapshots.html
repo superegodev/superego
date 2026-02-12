@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Snapshot Review</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@mantine/core@7/styles.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="https://esm.sh/tsx"></script>
+    <script type="text/tsx">
+      /** @jsxRuntime classic */
+      import React, { useState, useEffect } from "https://esm.sh/react@19";
+      import { createRoot } from "https://esm.sh/react-dom@19/client";
+      import {
+        MantineProvider,
+        NavLink,
+        Button,
+        Badge,
+        Group,
+        Text,
+        Paper,
+      } from "https://esm.sh/@mantine/core@7?deps=react@19,react-dom@19";
+
+      function findNextUnreviewed(tests, results, fromTi, fromSi) {
+        for (let t = fromTi; t < tests.length; t++) {
+          const startS = t === fromTi ? fromSi : 0;
+          for (let s = startS; s < tests[t].steps.length; s++) {
+            const k = `${tests[t].id}/${tests[t].steps[s].id}`;
+            if (!results[k]) return [t, s];
+          }
+        }
+        return null;
+      }
+
+      function App() {
+        const [tests, setTests] = useState([]);
+        const [ti, setTi] = useState(0);
+        const [si, setSi] = useState(0);
+        const [results, setResults] = useState({});
+        const [submitted, setSubmitted] = useState(false);
+
+        useEffect(() => {
+          fetch("/api/tests")
+            .then((r) => r.json())
+            .then((data) => {
+              setTests(data);
+              // Pre-populate results from existing reviews
+              const existing = {};
+              for (const t of data) {
+                for (const s of t.steps) {
+                  if (s.existingResult)
+                    existing[`${t.id}/${s.id}`] = s.existingResult;
+                }
+              }
+              setResults(existing);
+              // Navigate to first unreviewed step
+              const next = findNextUnreviewed(data, existing, 0, 0);
+              if (next) {
+                setTi(next[0]);
+                setSi(next[1]);
+              }
+            });
+        }, []);
+
+        const total = tests.reduce((s, t) => s + t.steps.length, 0);
+        const reviewed = Object.keys(results).length;
+        const passes = Object.values(results).filter(
+          (v) => v === "pass",
+        ).length;
+        const fails = Object.values(results).filter(
+          (v) => v === "fail",
+        ).length;
+        const allDone = reviewed === total && total > 0;
+
+        const test = tests[ti];
+        const step = test?.steps[si];
+        const key = test && step ? `${test.id}/${step.id}` : "";
+
+        function record(result) {
+          const next = { ...results, [key]: result };
+          setResults(next);
+          // Advance to next unreviewed step
+          const target =
+            findNextUnreviewed(tests, next, ti, si + 1) ??
+            findNextUnreviewed(tests, next, 0, 0);
+          if (target) {
+            setTi(target[0]);
+            setSi(target[1]);
+          }
+        }
+
+        async function submit() {
+          await fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(results),
+          });
+          setSubmitted(true);
+        }
+
+        if (!tests.length)
+          return (
+            <MantineProvider>
+              <Text p="xl">Loading…</Text>
+            </MantineProvider>
+          );
+
+        if (submitted)
+          return (
+            <MantineProvider>
+              <Text p="xl" ta="center" size="xl" fw={700}>
+                Review submitted — you can close this tab.
+              </Text>
+            </MantineProvider>
+          );
+
+        return (
+          <MantineProvider>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+              }}
+            >
+              {/* Navbar */}
+              <Group
+                px="md"
+                py="xs"
+                justify="space-between"
+                style={{
+                  borderBottom: "1px solid var(--mantine-color-gray-3)",
+                }}
+              >
+                <Group>
+                  <Badge variant="light">Tests: {tests.length}</Badge>
+                  <Badge variant="light">
+                    Reviewed: {reviewed}/{total}
+                  </Badge>
+                  <Badge variant="light" color="green">
+                    Pass: {passes}
+                  </Badge>
+                  <Badge variant="light" color="red">
+                    Fail: {fails}
+                  </Badge>
+                </Group>
+                <Button
+                  onClick={submit}
+                  disabled={!allDone}
+                  color={allDone ? (fails > 0 ? "red" : "green") : undefined}
+                >
+                  Submit
+                </Button>
+              </Group>
+
+              <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+                {/* Tests sidebar */}
+                <nav
+                  style={{
+                    width: 260,
+                    overflowY: "auto",
+                    borderRight: "1px solid var(--mantine-color-gray-3)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {tests.map((t, i) => {
+                    const rs = t.steps.map((s) => results[`${t.id}/${s.id}`]);
+                    const done = rs.every((r) => r != null);
+                    const bad = rs.some((r) => r === "fail");
+                    return (
+                      <NavLink
+                        key={t.id}
+                        label={t.title}
+                        active={i === ti}
+                        color={done ? (bad ? "red" : "green") : undefined}
+                        onClick={() => {
+                          setTi(i);
+                          setSi(0);
+                        }}
+                      />
+                    );
+                  })}
+                </nav>
+
+                {/* Steps sidebar */}
+                <nav
+                  style={{
+                    width: 260,
+                    overflowY: "auto",
+                    borderRight: "1px solid var(--mantine-color-gray-3)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {test?.steps.map((s, i) => {
+                    const r = results[`${test.id}/${s.id}`];
+                    return (
+                      <NavLink
+                        key={s.id}
+                        label={s.title}
+                        active={i === si}
+                        color={
+                          r === "pass"
+                            ? "green"
+                            : r === "fail"
+                              ? "red"
+                              : undefined
+                        }
+                        onClick={() => setSi(i)}
+                      />
+                    );
+                  })}
+                </nav>
+
+                {/* Main panel */}
+                {step && (
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {/* Scrollable snapshot */}
+                    <div
+                      style={{ flex: 1, overflowY: "auto", padding: 20 }}
+                    >
+                      <img
+                        src={`/snapshots/${test.snapshotsDir}/${step.snapshotFile}`}
+                        style={{
+                          maxWidth: "100%",
+                          border:
+                            "1px solid var(--mantine-color-gray-3)",
+                        }}
+                      />
+                    </div>
+                    {/* Sticky bottom */}
+                    <div
+                      style={{
+                        borderTop: "1px solid var(--mantine-color-gray-3)",
+                        padding: 16,
+                      }}
+                    >
+                      <Paper p="sm" withBorder mb="sm">
+                        <Text fw={700} size="sm" mb={2}>
+                          Requirement:
+                        </Text>
+                        <Text>{step.requirement}</Text>
+                      </Paper>
+                      <Group>
+                        <Button
+                          color="green"
+                          size="lg"
+                          onClick={() => record("pass")}
+                        >
+                          Pass
+                        </Button>
+                        <Button
+                          color="red"
+                          size="lg"
+                          onClick={() => record("fail")}
+                        >
+                          Fail
+                        </Button>
+                      </Group>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </MantineProvider>
+        );
+      }
+
+      createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

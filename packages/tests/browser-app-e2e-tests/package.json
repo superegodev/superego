@@ -8,7 +8,8 @@
     "test:check-scenarios": "node scripts/checkStepsAndSnapshots.ts",
     "test:playwright": "playwright test --config=playwright.config.ts",
     "test": "yarn test:check-scenarios && yarn test:playwright",
-    "playwright": "playwright"
+    "playwright": "playwright",
+    "review": "node scripts/reviewSnapshots.ts"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",
