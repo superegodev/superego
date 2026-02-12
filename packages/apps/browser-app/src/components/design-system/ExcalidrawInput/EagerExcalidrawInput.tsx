@@ -68,6 +68,7 @@ export default function EagerExcalidrawInput({
     if (!hasFocus) {
       return;
     }
+    excalidrawApiRef.current?.refresh();
     const intervalId = setInterval(
       flushScene,
       EXCALIDRAW_INPUT_ON_CHANGE_CHECK_INTERVAL,
