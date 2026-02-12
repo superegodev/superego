@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
+import classnames from "../../../../../utils/classnames.js";
 import ExcalidrawInput from "../../../../design-system/ExcalidrawInput/ExcalidrawInput.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -29,7 +30,14 @@ export default function ExcalidrawDrawing({
     [fieldOnChange],
   );
   return (
-    <div className={cs.JsonObjectField.ExcalidrawDrawing.root}>
+    <div
+      className={classnames(
+        cs.JsonObjectField.ExcalidrawDrawing.root,
+        isListItem && cs.ListItemField.root,
+      )}
+      data-data-type={typeDefinition.dataType}
+      data-is-list-item={isListItem}
+    >
       {!isListItem ? (
         <AnyFieldLabel
           typeDefinition={typeDefinition}

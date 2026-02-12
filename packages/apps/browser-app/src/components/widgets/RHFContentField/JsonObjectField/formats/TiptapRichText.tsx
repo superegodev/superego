@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
+import classnames from "../../../../../utils/classnames.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -30,7 +31,14 @@ export default function TiptapRichText({
     [fieldOnChange],
   );
   return (
-    <div className={cs.JsonObjectField.TiptapRichText.root}>
+    <div
+      className={classnames(
+        cs.JsonObjectField.TiptapRichText.root,
+        isListItem && cs.ListItemField.root,
+      )}
+      data-data-type={typeDefinition.dataType}
+      data-is-list-item={isListItem}
+    >
       {!isListItem ? (
         <AnyFieldLabel
           typeDefinition={typeDefinition}

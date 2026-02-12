@@ -50,7 +50,6 @@ export default [
       {
         __dataType: DataType.JsonObject,
         elements: [],
-        appState: {},
         files: {},
       },
     ],
@@ -58,7 +57,6 @@ export default [
       {
         __dataType: DataType.JsonObject,
         elements: {},
-        appState: {},
         files: {},
       },
     ],
@@ -67,8 +65,6 @@ export default [
       v.check(
         (jsonObject) =>
           Array.isArray(jsonObject["elements"]) &&
-          typeof jsonObject["appState"] === "object" &&
-          jsonObject["appState"] !== null &&
           typeof jsonObject["files"] === "object" &&
           jsonObject["files"] !== null,
         ({ lang }) =>

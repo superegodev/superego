@@ -9,6 +9,7 @@ export const JsonObjectField = {
       marginBlockEnd: vars.spacing._6,
     }),
   },
+
   ExcalidrawDrawing: {
     root: style({
       display: "flex",
@@ -16,6 +17,7 @@ export const JsonObjectField = {
       marginBlockEnd: vars.spacing._6,
     }),
   },
+
   Default: {
     textArea: style({
       fontFamily: vars.typography.fontFamilies.monospace,
