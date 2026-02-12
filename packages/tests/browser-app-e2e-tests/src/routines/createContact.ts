@@ -1,6 +1,6 @@
-import type { Page } from "playwright/test";
+import type { Page } from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
-import waitForTiptapInput from "../actions/waitForTiptapInput.js";
+import tiptapInput from "../locators/tiptapInput.js";
 
 /**
  * Creates a document in the Contacts collection.
@@ -25,7 +25,7 @@ export default async function createContact(
 
   // Go to the documents creation page.
   await page.getByRole("link", { name: /Create document/i }).click();
-  await waitForTiptapInput(page);
+  await tiptapInput(page).waitFor();
 
   // Fill-in the form.
   await page.getByLabel(/^Type/i).click();
@@ -45,5 +45,5 @@ export default async function createContact(
 
   // Wait to be on the newly created Contact document page.
   await page.getByRole("button", { name: /^Save$/i }).waitFor();
-  await waitForTiptapInput(page);
+  await tiptapInput(page).waitFor();
 }

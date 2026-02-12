@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@playwright/test": "^1.58.1",
+    "@superego/backend": "workspace:*",
     "@superego/schema": "workspace:*",
     "luxon": "^3.7.2"
   }

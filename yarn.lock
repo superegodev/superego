@@ -6152,6 +6152,7 @@ __metadata:
   resolution: "@superego/browser-app-e2e-tests@workspace:packages/tests/browser-app-e2e-tests"
   dependencies:
     "@playwright/test": "npm:^1.58.1"
+    "@superego/backend": "workspace:*"
     "@superego/schema": "workspace:*"
     "@types/node": "npm:^25.2.0"
     luxon: "npm:^3.7.2"
