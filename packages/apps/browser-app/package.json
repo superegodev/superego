@@ -85,7 +85,7 @@
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
     "maplibre-gl": "^5.18.0",
-    "markdown-to-jsx": "^9.7.3",
+    "markdown-to-jsx": "^9.7.4",
     "monaco-editor": "0.55.1",
     "overtype": "^2.1.1",
     "p-map": "^7.0.4",
