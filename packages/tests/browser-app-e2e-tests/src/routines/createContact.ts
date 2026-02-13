@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
-import tiptapInput from "../locators/tiptapInput.js";
+import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
+import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
 
 /**
  * Creates a document in the Contacts collection.
@@ -25,7 +26,7 @@ export default async function createContact(
 
   // Go to the documents creation page.
   await page.getByRole("link", { name: /Create document/i }).click();
-  await tiptapInput(page).waitFor();
+  await waitForTiptapRichTextJsonObjectField(page);
 
   // Fill-in the form.
   await page.getByLabel(/^Type/i).click();
@@ -36,7 +37,9 @@ export default async function createContact(
     .fill(contact.relation);
   await page.getByRole("textbox", { name: /^Number/i }).fill(contact.number);
   await page.getByRole("textbox", { name: /^Address/i }).fill(contact.address);
-  await tiptapInput(page).fill(contact.notes);
+  await tiptapRichTextJsonObjectField(page)
+    .locator(".ProseMirror")
+    .fill(contact.notes);
   // Wait for the debounce on the TipTap input.
   await page.waitForTimeout(500);
 
@@ -45,5 +48,5 @@ export default async function createContact(
 
   // Wait to be on the newly created Contact document page.
   await page.getByRole("button", { name: /^Save$/i }).waitFor();
-  await tiptapInput(page).waitFor();
+  await waitForTiptapRichTextJsonObjectField(page);
 }

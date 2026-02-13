@@ -4,7 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const ExcalidrawInput = {
   root: style({
     width: "100%",
-    height: vars.spacing._120,
+    height: vars.spacing._140,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
     overflow: "hidden",

@@ -1,8 +1,9 @@
 import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import selectWordInMarkdownInput from "../actions/selectWordInMarkdownInput.js";
+import waitForMarkdownStringField from "../actions/waitForMarkdownStringField.js";
 import mainPanel from "../locators/mainPanel.js";
-import markdownInput from "../locators/markdownInput.js";
+import markdownStringField from "../locators/markdownStringField.js";
 import createCollection from "../routines/createCollection.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
@@ -45,7 +46,7 @@ test("005. Use markdown input for document properties", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "empty Notes collection page, create document icon button (top right)",
     );
   });
@@ -54,12 +55,12 @@ test("005. Use markdown input for document properties", async ({ page }) => {
     // Exercise
     await page.getByRole("link", { name: /Create document/i }).click();
     await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await markdownInput(page).waitFor();
+    await waitForMarkdownStringField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       'form with a "Notes" textarea field and disabled Create button',
     );
   });
@@ -68,8 +69,10 @@ test("005. Use markdown input for document properties", async ({ page }) => {
 
   await test.step("02. Fill markdown input with a markdown page", async () => {
     // Exercise
-    await markdownInput(page).fill(
-      `
+    await markdownStringField(page)
+      .locator(".overtype-input")
+      .fill(
+        `
 # Expedition Log
 
 Welcome to the northbound research notes.
@@ -94,14 +97,14 @@ echo "checkpoint alpha"
 \`\`\`
 
 The keyword ${plainWord} should remain plain text.
-      `.trim(),
-    );
+        `.trim(),
+      );
     await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       'form with a "Notes" textarea field, containing markdown content',
     );
   });
@@ -114,7 +117,7 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" textarea field, word "${plainWord}" selected`,
     );
   });
@@ -129,7 +132,7 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "04.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" textarea field, word "${plainWord}" selected and with bold markup`,
     );
   });
@@ -144,20 +147,22 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "05.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" textarea field, word "${plainWord}" selected and with no markup`,
     );
   });
 
   await test.step("06. Apply bold markup using Cmd/Ctrl+B", async () => {
     // Exercise
-    await markdownInput(page).press("ControlOrMeta+B");
+    await markdownStringField(page)
+      .locator(".overtype-input")
+      .press("ControlOrMeta+B");
     await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "06.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" textarea field, word "${plainWord}" selected and with bold markup`,
     );
   });
@@ -165,13 +170,15 @@ The keyword ${plainWord} should remain plain text.
   await test.step("07. Remove bold markup using Cmd/Ctrl+B", async () => {
     // Exercise
     await selectWordInMarkdownInput(page, plainWord);
-    await markdownInput(page).press("ControlOrMeta+B");
+    await markdownStringField(page)
+      .locator(".overtype-input")
+      .press("ControlOrMeta+B");
     await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "07.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" textarea field, word "${plainWord}" selected and with no markup`,
     );
   });

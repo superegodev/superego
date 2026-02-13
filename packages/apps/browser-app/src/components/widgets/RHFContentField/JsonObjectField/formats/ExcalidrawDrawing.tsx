@@ -36,6 +36,7 @@ export default function ExcalidrawDrawing({
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.JsonObjectField.ExcalidrawDrawing.root"
     >
       {!isListItem ? (
         <AnyFieldLabel

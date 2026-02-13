@@ -1,5 +1,4 @@
 import test from "@playwright/test";
-import mainPanel from "../locators/mainPanel.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
@@ -19,7 +18,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "page with form to edit Contact document Carl Jung",
     );
   });
@@ -32,7 +31,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      page.getByRole("dialog"),
+      page,
       "delete document confirmation modal with command confirmation input and Delete button",
     );
   });
@@ -51,7 +50,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      page.getByRole("dialog"),
+      page,
       'delete document modal with command confirmation value "delet" and a validation error',
     );
   });
@@ -65,7 +64,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      page.getByRole("dialog"),
+      page,
       'delete document modal with command confirmation value "delete" no validation errors',
     );
   });
@@ -83,7 +82,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "04.png",
-      mainPanel(page),
+      page,
       "empty Contacts collection table with no documents",
     );
   });
@@ -98,7 +97,7 @@ test("003. Delete Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "05.png",
-      mainPanel(page),
+      page,
       "empty Contacts collection table with no documents",
     );
   });

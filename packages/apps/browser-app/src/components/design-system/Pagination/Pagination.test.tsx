@@ -26,7 +26,7 @@ describe("Pagination", () => {
       expect(screen.getByLabelText("Page 4")).toBeInTheDocument();
       expect(screen.getByLabelText("Page 5")).toBeInTheDocument();
       expect(
-        screen.queryByTestId("PaginationEllipsis"),
+        screen.queryByTestId("design-system.Pagination.ellipsis"),
       ).not.toBeInTheDocument();
     });
 
@@ -47,7 +47,7 @@ describe("Pagination", () => {
         expect(screen.getByLabelText(`Page ${page}`)).toBeInTheDocument();
       }
       expect(
-        screen.queryByTestId("PaginationEllipsis"),
+        screen.queryByTestId("design-system.Pagination.ellipsis"),
       ).not.toBeInTheDocument();
     });
   });
@@ -76,7 +76,9 @@ describe("Pagination", () => {
       expect(screen.getByLabelText("Page 5")).toBeInTheDocument();
       expect(screen.queryByLabelText("Page 6")).not.toBeInTheDocument();
       expect(screen.getByLabelText("Page 15")).toBeInTheDocument();
-      const ellipses = screen.getAllByTestId("PaginationEllipsis");
+      const ellipses = screen.getAllByTestId(
+        "design-system.Pagination.ellipsis",
+      );
       expect(ellipses).toHaveLength(1);
     });
 
@@ -103,7 +105,9 @@ describe("Pagination", () => {
       expect(screen.getByLabelText("Page 9")).toBeInTheDocument();
       expect(screen.queryByLabelText("Page 10")).not.toBeInTheDocument();
       expect(screen.getByLabelText("Page 15")).toBeInTheDocument();
-      const ellipses = screen.getAllByTestId("PaginationEllipsis");
+      const ellipses = screen.getAllByTestId(
+        "design-system.Pagination.ellipsis",
+      );
       expect(ellipses).toHaveLength(2);
     });
 
@@ -130,7 +134,9 @@ describe("Pagination", () => {
       );
       expect(screen.getByLabelText("Page 14")).toBeInTheDocument();
       expect(screen.getByLabelText("Page 15")).toBeInTheDocument();
-      const ellipses = screen.getAllByTestId("PaginationEllipsis");
+      const ellipses = screen.getAllByTestId(
+        "design-system.Pagination.ellipsis",
+      );
       expect(ellipses).toHaveLength(1);
     });
   });

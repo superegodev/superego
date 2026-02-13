@@ -1,6 +1,5 @@
 import test from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
-import mainPanel from "../locators/mainPanel.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("000. Install Productivity pack", async ({ page }) => {
@@ -26,7 +25,7 @@ test("000. Install Productivity pack", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       'Bazaar page with a list of "packs" as cards, Productivity pack card',
     );
   });
@@ -39,7 +38,7 @@ test("000. Install Productivity pack", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       "Productivity pack detail page, Install button",
     );
   });
@@ -52,7 +51,7 @@ test("000. Install Productivity pack", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      page.getByRole("dialog"),
+      page,
       "install confirmation modal",
     );
   });
@@ -68,7 +67,7 @@ test("000. Install Productivity pack", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "04.png",
-      mainPanel(page),
+      page,
       "empty Contacts collection page, create document icon button (top right)",
     );
   });

@@ -37,6 +37,7 @@ export default function TiptapRichText({
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.JsonObjectField.TiptapRichText.root"
     >
       {!isListItem ? (
         <AnyFieldLabel

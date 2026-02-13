@@ -65,7 +65,7 @@ export default function Pagination({
           <span
             key={paginationItem.key}
             className={cs.Pagination.ellipsis}
-            data-testid="PaginationEllipsis"
+            data-testid="design-system.Pagination.ellipsis"
           >
             <PiDotsThree aria-hidden="true" />
           </span>

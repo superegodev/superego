@@ -1,7 +1,7 @@
 import test from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
+import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import mainPanel from "../locators/mainPanel.js";
-import tiptapInput from "../locators/tiptapInput.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
@@ -21,7 +21,7 @@ test("004. Navigate to Contact from collection page", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "contact detail page for Carl Jung, disabled save icon button (top right)",
     );
   });
@@ -43,7 +43,7 @@ test("004. Navigate to Contact from collection page", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       "Contacts collection table with a row for Carl Jung",
     );
   });
@@ -54,12 +54,12 @@ test("004. Navigate to Contact from collection page", async ({ page }) => {
       .getByRole("rowheader", { name: /Carl Jung/i })
       .click();
     await page.getByRole("textbox", { name: /^Name/i }).waitFor();
-    await tiptapInput(page).waitFor();
+    await waitForTiptapRichTextJsonObjectField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       "contact detail page for Carl Jung",
     );
   });

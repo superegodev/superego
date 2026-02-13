@@ -49,6 +49,7 @@ function NullListField({
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
     >
       <AnyFieldLabel
@@ -96,6 +97,7 @@ function NonNullListField({
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
     >
       <AnyFieldLabel

@@ -58,6 +58,7 @@ export default function FileField({
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.FileField.root"
       className={classnames(
         cs.Field.root,
         isListItem && cs.ListItemField.root,

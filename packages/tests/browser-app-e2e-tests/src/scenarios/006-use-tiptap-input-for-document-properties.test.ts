@@ -1,8 +1,9 @@
 import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import selectWordInTiptapInput from "../actions/selectWordInTiptapInput.js";
+import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import mainPanel from "../locators/mainPanel.js";
-import tiptapInput from "../locators/tiptapInput.js";
+import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
@@ -45,7 +46,7 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "empty Notes collection page, create document icon button (top right)",
     );
   });
@@ -54,12 +55,12 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
     // Exercise
     await page.getByRole("link", { name: /Create document/i }).click();
     await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await tiptapInput(page).waitFor();
+    await waitForTiptapRichTextJsonObjectField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       'form with a "Notes" rich text field and disabled Create button',
     );
   });
@@ -68,8 +69,10 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
 
   await test.step("02. Fill Tiptap input with rich text content", async () => {
     // Exercise
-    await tiptapInput(page).fill(
-      `
+    await tiptapRichTextJsonObjectField(page)
+      .locator(".ProseMirror")
+      .fill(
+        `
 Expedition Log
 
 Welcome to the northbound research notes.
@@ -86,15 +89,15 @@ Weather station: https://example.com/weather
 Keep the left ridge in sight after the old bridge.
 
 The keyword ${plainWord} should remain plain text.
-      `.trim(),
-    );
+        `.trim(),
+      );
     // Wait for debounce on Tiptap input updates.
     await page.waitForTimeout(500);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       'form with a "Notes" rich text field containing one page of content',
     );
   });
@@ -107,7 +110,7 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" rich text field, word "${plainWord}" selected`,
     );
   });
@@ -122,7 +125,7 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "04.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" rich text field, word "${plainWord}" selected and bold`,
     );
   });
@@ -137,20 +140,22 @@ The keyword ${plainWord} should remain plain text.
     // Verify
     await VisualEvaluator.expectToSee(
       "05.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" rich text field, word "${plainWord}" selected and not bold`,
     );
   });
 
   await test.step("06. Apply bold markup using Cmd/Ctrl+B", async () => {
     // Exercise
-    await tiptapInput(page).press("ControlOrMeta+B");
+    await tiptapRichTextJsonObjectField(page)
+      .locator(".ProseMirror")
+      .press("ControlOrMeta+B");
     await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "06.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" rich text field, word "${plainWord}" selected and bold`,
     );
   });
@@ -158,13 +163,15 @@ The keyword ${plainWord} should remain plain text.
   await test.step("07. Remove bold markup using Cmd/Ctrl+B", async () => {
     // Exercise
     await selectWordInTiptapInput(page, plainWord);
-    await tiptapInput(page).press("ControlOrMeta+B");
+    await tiptapRichTextJsonObjectField(page)
+      .locator(".ProseMirror")
+      .press("ControlOrMeta+B");
     await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "07.png",
-      mainPanel(page),
+      page,
       `form with a "Notes" rich text field, word "${plainWord}" selected and not bold`,
     );
   });

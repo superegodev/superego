@@ -38,6 +38,7 @@ export default function GeoJSON({
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.JsonObjectField.GeoJSON.root"
     >
       {!isListItem ? (
         <AnyFieldLabel

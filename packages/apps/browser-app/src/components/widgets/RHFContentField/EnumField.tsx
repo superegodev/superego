@@ -46,6 +46,7 @@ export default function EnumField({
         aria-label={isListItem ? label : undefined}
         data-data-type={typeDefinition.dataType}
         data-is-list-item={isListItem}
+        data-testid="widgets.RHFContentField.EnumField.root"
         className={classnames(
           cs.Field.root,
           isListItem && cs.ListItemField.root,
@@ -75,6 +76,7 @@ export default function EnumField({
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.EnumField.root"
       className={classnames(cs.Field.root, isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (

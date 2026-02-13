@@ -1,6 +1,5 @@
 import test from "@playwright/test";
-import mainPanel from "../locators/mainPanel.js";
-import tiptapInput from "../locators/tiptapInput.js";
+import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
@@ -20,7 +19,7 @@ test("002. Edit Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "page with form to edit Contact document Carl Jung",
     );
   });
@@ -32,7 +31,7 @@ test("002. Edit Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       "contact detail page, Relation set to Colleague, enabled save icon button (top right)",
     );
   });
@@ -45,7 +44,7 @@ test("002. Edit Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       "contact detail page, Relation set to Colleague, disabled save icon button (top right)",
     );
   });
@@ -53,13 +52,13 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("03. Reload page and verify same state", async () => {
     // Exercise
     await page.reload();
-    await tiptapInput(page).waitFor();
+    await waitForTiptapRichTextJsonObjectField(page);
     await page.getByRole("textbox", { name: /^Relation/i }).waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      mainPanel(page),
+      page,
       "contact detail page, Relation set to Colleague, disabled save icon button (top right)",
     );
   });

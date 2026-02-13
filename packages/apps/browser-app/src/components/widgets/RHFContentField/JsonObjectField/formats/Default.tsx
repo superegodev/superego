@@ -63,6 +63,7 @@ export default function Default({
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.JsonObjectField.Default.root"
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (
