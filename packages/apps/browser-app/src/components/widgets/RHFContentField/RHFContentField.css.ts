@@ -121,6 +121,11 @@ export const FileField = {
     columnGap: vars.spacing._2,
   }),
 
+  nonNullFileFieldsRootNotInList: style({
+    gridTemplateColumns: `calc(${vars.spacing._9} * 2) minmax(0, 1fr)`,
+    gridTemplateRows: "auto auto auto",
+  }),
+
   nonNullFileIcon: style({
     display: "flex",
     justifyContent: "center",
@@ -129,16 +134,50 @@ export const FileField = {
     height: `calc(${vars.spacing._9} + 1px)`,
     fontSize: vars.typography.fontSizes.xl4,
     marginBlockEnd: vars.spacing._2,
+    overflow: "hidden",
+    borderRadius: vars.borders.radius.md,
+    background: vars.colors.background.subtleSurface,
+  }),
+
+  nonNullFileIconNotInList: style({
+    gridColumn: 1,
+    gridRow: "1 / span 3",
+    width: "100%",
+    height: "100%",
+    minHeight: `calc(${vars.spacing._9} * 3 + ${vars.spacing._4})`,
+  }),
+
+  nonNullFilePreviewImage: style({
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   }),
 
   nonNullFileTextField: style({
     marginBlockEnd: "0",
   }),
 
+  nonNullFileTextFieldNotInList: style({
+    gridColumn: 2,
+  }),
+
+  nonNullFileNameTextField: style({
+    gridRow: 1,
+  }),
+
+  nonNullFileMimeTypeTextField: style({
+    gridRow: 2,
+  }),
+
   nonNullFileButtons: style({
     display: "flex",
     columnGap: vars.spacing._2,
     marginBlockEnd: vars.spacing._2,
+  }),
+
+  nonNullFileButtonsNotInList: style({
+    gridColumn: 2,
+    gridRow: 3,
   }),
 
   nonNullFileButton: style({
