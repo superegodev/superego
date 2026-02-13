@@ -3,7 +3,7 @@ import debounce from "debounce";
 import { type RefObject, useEffect } from "react";
 import { GEOJSON_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
 import isEmpty from "../../../utils/isEmpty.js";
-import cleanExportedGeoJson from "./cleanExportedGeoJson.js";
+import type GeoJSONFeatureCollection from "./GeoJSONFeatureCollection.js";
 import type Props from "./Props.js";
 import wrapAsFeatureCollection from "./wrapAsFeatureCollection.js";
 
@@ -30,12 +30,7 @@ export default function useSyncValue({
 
     geoman.setGlobalEventsListener(
       debounce(() => {
-        const exported = geoman.features.exportGeoJson();
-        onChange(
-          cleanExportedGeoJson(
-            exported as Parameters<typeof cleanExportedGeoJson>[0],
-          ),
-        );
+        onChange(geoman.features.exportGeoJson() as GeoJSONFeatureCollection);
       }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE),
     );
 
@@ -53,12 +48,7 @@ export default function useSyncValue({
       return;
     }
 
-    const currentExport = cleanExportedGeoJson(
-      geoman.features.exportGeoJson() as Parameters<
-        typeof cleanExportedGeoJson
-      >[0],
-    );
-    const currentSerialized = JSON.stringify(currentExport);
+    const currentSerialized = JSON.stringify(geoman.features.exportGeoJson());
     const incomingSerialized = value ? JSON.stringify(value) : null;
 
     if (currentSerialized === incomingSerialized) {

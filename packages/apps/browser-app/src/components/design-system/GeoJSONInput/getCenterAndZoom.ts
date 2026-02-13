@@ -8,13 +8,13 @@ interface CenterAndZoom {
 const DEFAULT: CenterAndZoom = { center: [0, 20], zoom: 0 };
 
 export default function getCenterAndZoom(
-  geoJson: GeoJSONValue | null | undefined,
+  geoJSON: GeoJSONValue | null | undefined,
 ): CenterAndZoom {
-  if (!geoJson) {
+  if (!geoJSON) {
     return DEFAULT;
   }
 
-  const coords = extractCoordinates(geoJson);
+  const coords = extractCoordinates(geoJSON);
   if (coords.length === 0) {
     return DEFAULT;
   }
@@ -50,53 +50,51 @@ export default function getCenterAndZoom(
     0,
     Math.min(
       18,
-      Math.floor(
-        Math.min(Math.log2(360 / lonSpan), Math.log2(180 / latSpan)),
-      ),
+      Math.floor(Math.min(Math.log2(360 / lonSpan), Math.log2(180 / latSpan))),
     ),
   );
 
   return { center, zoom };
 }
 
-function extractCoordinates(geoJson: GeoJSONValue): [number, number][] {
-  switch (geoJson.type) {
+function extractCoordinates(geoJSON: GeoJSONValue): [number, number][] {
+  switch (geoJSON.type) {
     case "FeatureCollection": {
-      const features = geoJson["features"] as GeoJSONValue[] | undefined;
+      const features = geoJSON["features"] as GeoJSONValue[] | undefined;
       return features?.flatMap(extractCoordinates) ?? [];
     }
     case "Feature": {
-      const geometry = geoJson["geometry"] as GeoJSONValue | null | undefined;
+      const geometry = geoJSON["geometry"] as GeoJSONValue | null | undefined;
       return geometry ? extractCoordinates(geometry) : [];
     }
     case "Point": {
-      const coordinates = geoJson["coordinates"] as
+      const coordinates = geoJSON["coordinates"] as
         | [number, number]
         | undefined;
       return coordinates ? [coordinates] : [];
     }
     case "MultiPoint":
     case "LineString": {
-      const coordinates = geoJson["coordinates"] as
+      const coordinates = geoJSON["coordinates"] as
         | [number, number][]
         | undefined;
       return coordinates ?? [];
     }
     case "MultiLineString":
     case "Polygon": {
-      const coordinates = geoJson["coordinates"] as
+      const coordinates = geoJSON["coordinates"] as
         | [number, number][][]
         | undefined;
       return coordinates?.flat() ?? [];
     }
     case "MultiPolygon": {
-      const coordinates = geoJson["coordinates"] as
+      const coordinates = geoJSON["coordinates"] as
         | [number, number][][][]
         | undefined;
       return coordinates?.flat(2) ?? [];
     }
     case "GeometryCollection": {
-      const geometries = geoJson["geometries"] as GeoJSONValue[] | undefined;
+      const geometries = geoJSON["geometries"] as GeoJSONValue[] | undefined;
       return geometries?.flatMap(extractCoordinates) ?? [];
     }
     default:
