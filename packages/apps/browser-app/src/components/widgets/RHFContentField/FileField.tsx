@@ -1,17 +1,17 @@
+import type { FileId } from "@superego/backend";
 import {
   type FileRef,
   type FileTypeDefinition,
   type RHFProtoFile,
   utils as schemaUtils,
 } from "@superego/schema";
-import type { FileId } from "@superego/backend";
+import { useEffect, useState } from "react";
 import {
   DropZone,
   FieldErrorContext,
   FileTrigger,
   Toolbar,
 } from "react-aria-components";
-import { useEffect, useState } from "react";
 import { type Control, useController } from "react-hook-form";
 import {
   PiArrowSquareOut,
@@ -194,7 +194,9 @@ function NonNullFileFields({
       if (!content || isUnmounted) {
         return;
       }
-      const url = URL.createObjectURL(new Blob([content], { type: file.mimeType }));
+      const url = URL.createObjectURL(
+        new Blob([content], { type: file.mimeType }),
+      );
       setImageSrc(url);
     })();
 
