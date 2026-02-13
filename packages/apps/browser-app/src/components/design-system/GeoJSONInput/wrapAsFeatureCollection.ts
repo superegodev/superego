@@ -1,7 +1,7 @@
 import type GeoJSONFeatureCollection from "./GeoJSONFeatureCollection.js";
 import type GeoJSONValue from "./GeoJSONValue.js";
 
-const GEOMETRY_TYPES = [
+const SUPPORTED_GEOMETRY_TYPES = new Set([
   "Point",
   "MultiPoint",
   "LineString",
@@ -9,7 +9,7 @@ const GEOMETRY_TYPES = [
   "Polygon",
   "MultiPolygon",
   "GeometryCollection",
-];
+]);
 
 /**
  * Wraps any valid GeoJSON value into a FeatureCollection so that Geoman can
@@ -29,7 +29,7 @@ export default function wrapAsFeatureCollection(
       features: [value],
     };
   }
-  if (GEOMETRY_TYPES.includes(value.type)) {
+  if (SUPPORTED_GEOMETRY_TYPES.has(value.type)) {
     return {
       type: "FeatureCollection",
       features: [

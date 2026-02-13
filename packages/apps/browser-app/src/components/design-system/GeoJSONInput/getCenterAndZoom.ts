@@ -43,9 +43,8 @@ export default function getCenterAndZoom(
     return { center, zoom: 14 };
   }
 
-  // Approximate zoom: at zoom 0 the full 360° of longitude is visible.
-  // Each zoom level halves the visible span. We pick the more constraining
-  // axis and subtract 1 for padding.
+  // Approximate zoom: at zoom 0 the full 360° of longitude is visible. Each
+  // zoom level halves the visible span. We pick the more constraining axis.
   const zoom = Math.max(
     0,
     Math.min(

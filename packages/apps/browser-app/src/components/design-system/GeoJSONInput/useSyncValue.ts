@@ -28,13 +28,13 @@ export default function useSyncValue({
       return;
     }
 
-    geoman.setGlobalEventsListener(
-      debounce(() => {
-        onChange(geoman.features.exportGeoJson() as GeoJSONFeatureCollection);
-      }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE),
-    );
+    const debouncedOnChange = debounce(() => {
+      onChange(geoman.features.exportGeoJson() as GeoJSONFeatureCollection);
+    }, GEOJSON_INPUT_ON_CHANGE_DEBOUNCE);
+    geoman.setGlobalEventsListener(debouncedOnChange);
 
     return () => {
+      debouncedOnChange.clear();
       geoman.setGlobalEventsListener(null);
     };
   }, [onChange, isLoaded]);
