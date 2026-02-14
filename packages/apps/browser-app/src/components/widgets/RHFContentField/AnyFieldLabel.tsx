@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Tooltip from "../../design-system/Tooltip/Tooltip.js";
+import { useFieldUiOptions } from "./documentLayoutOptions.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
 
@@ -12,6 +13,7 @@ interface Props {
   typeDefinition: AnyTypeDefinition;
   isNullable: boolean;
   label: string;
+  name?: string | undefined;
   actions?: ReactNode | undefined;
   component?: "label" | "legend" | undefined;
   htmlFor?: string | undefined;
@@ -21,12 +23,15 @@ export default function AnyFieldLabel({
   typeDefinition,
   isNullable,
   label,
+  name,
   actions,
   component = "label",
   htmlFor,
   className,
 }: Props) {
   const { showTypes, showNullability } = useUiOptions();
+  const fieldOptions = useFieldUiOptions(name ?? "");
+  if (name !== undefined && fieldOptions?.hideLabel) return null;
   const dataTypeLabel =
     typeDefinition.dataType === null
       ? typeDefinition.ref

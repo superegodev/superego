@@ -3,7 +3,7 @@ import type {
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   PiArrowSquareOut,
   PiClockCountdown,
@@ -21,6 +21,7 @@ import {
 } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import useShell from "../../../business-logic/navigation/useShell.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
@@ -53,6 +54,14 @@ export default function Document({
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
+  const layoutOptions =
+    collection?.latestVersion.settings.defaultDocumentLayoutOptions;
+  const { closePrimarySidebar, openPrimarySidebar } = useShell();
+  useEffect(() => {
+    if (!layoutOptions?.collapseSidebar) return;
+    closePrimarySidebar();
+    return () => openPrimarySidebar();
+  }, [layoutOptions?.collapseSidebar, closePrimarySidebar, openPrimarySidebar]);
 
   return collection ? (
     <DataLoader
@@ -161,7 +170,7 @@ export default function Document({
               ]}
             />
             <Shell.Panel.Content
-              fullWidth={isShowingHistory}
+              fullWidth={isShowingHistory || layoutOptions?.fullWidth}
               className={
                 isShowingHistory ? cs.Document.historyLayout : undefined
               }

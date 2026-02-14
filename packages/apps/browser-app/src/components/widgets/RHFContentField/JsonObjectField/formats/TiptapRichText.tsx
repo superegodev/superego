@@ -41,6 +41,7 @@ export default function TiptapRichText({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}

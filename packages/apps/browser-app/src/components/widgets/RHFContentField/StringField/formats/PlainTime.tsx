@@ -60,6 +60,7 @@ export default function PlainTime({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}

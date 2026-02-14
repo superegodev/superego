@@ -16,6 +16,7 @@ import IconButton from "../../design-system/IconButton/IconButton.js";
 import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
+import { useFieldUiOptions } from "./documentLayoutOptions.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
 
@@ -44,15 +45,18 @@ function NullListField({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const fieldOptions = useFieldUiOptions(name);
   const { field } = useController({ control, name });
   return (
     <Fieldset
+      isDisclosureDisabled={fieldOptions?.allowCollapsing === false}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
     >
       <AnyFieldLabel
+        name={name}
         component="legend"
         typeDefinition={typeDefinition}
         isNullable={isNullable}
@@ -90,17 +94,20 @@ function NonNullListField({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const fieldOptions = useFieldUiOptions(name);
   const intl = useIntl();
   const { field } = useController({ control, name });
   const { fields, append, remove, move } = useFieldArray({ control, name });
   return (
     <Fieldset
+      isDisclosureDisabled={fieldOptions?.allowCollapsing === false}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
     >
       <AnyFieldLabel
+        name={name}
         component="legend"
         typeDefinition={typeDefinition}
         isNullable={isNullable}

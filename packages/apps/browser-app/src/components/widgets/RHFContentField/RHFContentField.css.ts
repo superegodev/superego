@@ -179,6 +179,27 @@ export const StructAndListField = {
   }),
 };
 
+export const StructField = {
+  columnsContainer: style({
+    display: "flex",
+    gap: vars.spacing._4,
+  }),
+  scrollColumn: style({
+    display: "flex",
+    flexDirection: "column",
+    minWidth: 0,
+  }),
+  stickyColumn: style({
+    display: "flex",
+    flexDirection: "column",
+    position: "sticky",
+    top: 0,
+    alignSelf: "flex-start",
+    maxHeight: "100vh",
+    minWidth: 0,
+  }),
+};
+
 export const ListField = {
   emptyItemsPlaceholder: style({
     display: "flex",

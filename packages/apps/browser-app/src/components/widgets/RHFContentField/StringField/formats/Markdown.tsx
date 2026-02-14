@@ -35,6 +35,7 @@ export default function Markdown({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
