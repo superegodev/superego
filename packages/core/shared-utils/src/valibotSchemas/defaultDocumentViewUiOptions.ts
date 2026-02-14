@@ -2,9 +2,48 @@ import type {
   DefaultDocumentViewUiOptions,
   ValidationIssue,
 } from "@superego/backend";
-import { DataType, type Schema, utils as schemaUtils } from "@superego/schema";
+import {
+  DataType,
+  type Schema,
+  utils as schemaUtils,
+} from "@superego/schema";
+import * as v from "valibot";
 
-export default function validateDefaultDocumentViewUiOptions(
+export default function defaultDocumentViewUiOptions(
+  schema: Schema,
+): v.GenericSchema<DefaultDocumentViewUiOptions, DefaultDocumentViewUiOptions> {
+  return v.pipe(
+    v.looseObject({
+      fullWidth: v.boolean(),
+      collapsePrimarySidebar: v.boolean(),
+    }),
+    v.rawCheck(({ dataset, addIssue }) => {
+      if (!dataset.typed) return;
+      const options = dataset.value as DefaultDocumentViewUiOptions;
+      for (const issue of validate(options, schema)) {
+        const path = issue.path?.map((segment) => ({
+          type: "unknown" as const,
+          origin: "value" as const,
+          input: dataset.value,
+          key: segment.key,
+          value: undefined,
+        }));
+        addIssue({
+          message: issue.message,
+          path:
+            path && path.length > 0
+              ? (path as [v.IssuePathItem, ...v.IssuePathItem[]])
+              : undefined,
+        });
+      }
+    }),
+  ) as v.GenericSchema<
+    DefaultDocumentViewUiOptions,
+    DefaultDocumentViewUiOptions
+  >;
+}
+
+function validate(
   options: DefaultDocumentViewUiOptions,
   schema: Schema,
 ): ValidationIssue[] {

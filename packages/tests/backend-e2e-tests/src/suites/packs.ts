@@ -334,6 +334,66 @@ export default rd<GetDependencies>("Packs", (deps) => {
       });
     });
 
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.packs.installPack({
+        id: "Pack_com.example.test",
+        info: {
+          name: "Test Pack",
+          shortDescription: "A test pack",
+          longDescription: "A test pack for testing",
+          screenshots: [],
+        },
+        collectionCategories: [],
+        collections: [
+          {
+            settings: {
+              name: "Test Collection",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            schema: {
+              types: {
+                Root: {
+                  dataType: DataType.Struct,
+                  properties: {
+                    title: { dataType: DataType.String },
+                  },
+                },
+              },
+              rootType: "Root",
+            },
+            versionSettings: {
+              contentBlockingKeysGetter: null,
+              contentSummaryGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
+              },
+              defaultDocumentViewUiOptions: {
+                fullWidth: false,
+                collapsePrimarySidebar: false,
+                rootLayout: [{ propertyPath: "nonExistent" }],
+              },
+            },
+          },
+        ],
+        apps: [],
+        documents: [],
+      });
+
+      // Verify
+      expect(result.success).toBe(false);
+      assert.isFalse(result.success);
+      expect(result.error.name).toBe("DefaultDocumentViewUiOptionsNotValid");
+    });
+
     it("error: PackNotValid when document content references unknown proto document", async () => {
       // Setup SUT
       const { backend } = deps();

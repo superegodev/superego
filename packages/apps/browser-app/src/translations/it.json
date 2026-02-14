@@ -374,11 +374,8 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "Creata nuova versione della collezione"
   },
-  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
-    "defaultMessage": "4. Convertitori remoti"
-  },
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
-    "defaultMessage": "4. Migrazione"
+  "CreateNewCollectionVersionForm.tsx_FQCqoH": {
+    "defaultMessage": "5. Migrazione"
   },
   "CreateNewCollectionVersionForm.tsx_HxoW8w": {
     "defaultMessage": "3. Sommario dei contenuti"
@@ -386,11 +383,17 @@
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
+  "CreateNewCollectionVersionForm.tsx_dISRjb": {
+    "defaultMessage": "4. Opzioni UI"
+  },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
   "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
     "defaultMessage": "2. Deduplicazione"
+  },
+  "CreateNewCollectionVersionForm.tsx_sSfm9D": {
+    "defaultMessage": "5. Convertitori remoti"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
@@ -436,6 +439,9 @@
   },
   "DeleteAppModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
+  },
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
+    "defaultMessage": "Opzioni UI predefinite per la vista documento"
   },
   "DeleteCollectionModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
@@ -1072,6 +1078,15 @@
   },
   "RHFContentSummaryGetterField.tsx_BmNFs6": {
     "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<name: string, value: string | number | boolean | null>'</code>, derivato dal contenuto del documento, che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, <code>'{position:0,sortable:true,default-sort:asc}' Nome</code> rende <code>Nome</code> la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. </p>"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": {
+    "defaultMessage": "Stringa JSON non valida"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_A89PQ/": {
+    "defaultMessage": "Alle"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": {
+    "defaultMessage": "Definisce il layout predefinito e le opzioni UI per il modulo del documento in questa collezione."
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"

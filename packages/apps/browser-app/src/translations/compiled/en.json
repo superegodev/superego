@@ -884,16 +884,10 @@
       "value": "New collection version created"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_3TjzSy": [
+  "CreateNewCollectionVersionForm.tsx_FQCqoH": [
     {
       "type": 0,
-      "value": "4. Remote converters"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
-    {
-      "type": 0,
-      "value": "4. Migration"
+      "value": "5. Migration"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_HxoW8w": [
@@ -908,6 +902,12 @@
       "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_dISRjb": [
+    {
+      "type": 0,
+      "value": "4. UI options"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
     {
       "type": 0,
@@ -918,6 +918,12 @@
     {
       "type": 0,
       "value": "2. Deduplication"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
+    {
+      "type": 0,
+      "value": "5. Remote converters"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -996,6 +1002,12 @@
     {
       "type": 0,
       "value": "Not a valid JSON string"
+    }
+  ],
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": [
+    {
+      "type": 0,
+      "value": "Default document view UI options"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -3050,6 +3062,24 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Not a valid JSON string"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "At"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": [
+    {
+      "type": 0,
+      "value": "Defines the default layout and UI options for the document form in this collection."
     }
   ],
   "RHFSchemaField.tsx_9CnsYv": [

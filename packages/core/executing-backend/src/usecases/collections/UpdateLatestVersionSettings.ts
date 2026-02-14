@@ -16,17 +16,19 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import { isEqual } from "es-toolkit";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
+import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
-import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
   Backend["collections"]["updateLatestVersionSettings"]
@@ -110,16 +112,20 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     // Validate defaultDocumentViewUiOptions.
     if (settingsPatch.defaultDocumentViewUiOptions !== undefined) {
       if (settingsPatch.defaultDocumentViewUiOptions !== null) {
-        const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+        const uiOptionsValidationResult = v.safeParse(
+          sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+            latestVersion.schema,
+          ),
           settingsPatch.defaultDocumentViewUiOptions,
-          latestVersion.schema,
         );
-        if (!isEmpty(uiOptionsIssues)) {
+        if (!uiOptionsValidationResult.success) {
           return makeUnsuccessfulResult(
             makeResultError("DefaultDocumentViewUiOptionsNotValid", {
               collectionId: id,
               collectionVersionId: latestVersion.id,
-              issues: uiOptionsIssues,
+              issues: makeValidationIssues(
+                uiOptionsValidationResult.issues,
+              ),
             }),
           );
         }

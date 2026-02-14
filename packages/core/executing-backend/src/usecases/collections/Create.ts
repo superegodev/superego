@@ -33,7 +33,6 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
-import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -199,16 +198,16 @@ export default class CollectionsCreate extends Usecase<
 
     // Validate defaultDocumentViewUiOptions.
     if (versionSettings.defaultDocumentViewUiOptions !== null) {
-      const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+      const uiOptionsValidationResult = v.safeParse(
+        backedUtilsValibotSchemas.defaultDocumentViewUiOptions(resolvedSchema),
         versionSettings.defaultDocumentViewUiOptions,
-        resolvedSchema,
       );
-      if (!isEmpty(uiOptionsIssues)) {
+      if (!uiOptionsValidationResult.success) {
         return makeUnsuccessfulResult(
           makeResultError("DefaultDocumentViewUiOptionsNotValid", {
             collectionId: null,
             collectionVersionId: null,
-            issues: uiOptionsIssues,
+            issues: makeValidationIssues(uiOptionsValidationResult.issues),
           }),
         );
       }

@@ -30,6 +30,7 @@ import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
 import pMap from "p-map";
 import * as v from "valibot";
@@ -43,7 +44,6 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
-import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends Usecase<
@@ -175,16 +175,16 @@ export default class CollectionsCreateNewVersion extends Usecase<
 
     // Validate settings.defaultDocumentViewUiOptions.
     if (settings.defaultDocumentViewUiOptions !== null) {
-      const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+      const uiOptionsValidationResult = v.safeParse(
+        sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(resolvedSchema),
         settings.defaultDocumentViewUiOptions,
-        resolvedSchema,
       );
-      if (!isEmpty(uiOptionsIssues)) {
+      if (!uiOptionsValidationResult.success) {
         return makeUnsuccessfulResult(
           makeResultError("DefaultDocumentViewUiOptionsNotValid", {
             collectionId: id,
             collectionVersionId: latestVersion.id,
-            issues: uiOptionsIssues,
+            issues: makeValidationIssues(uiOptionsValidationResult.issues),
           }),
         );
       }

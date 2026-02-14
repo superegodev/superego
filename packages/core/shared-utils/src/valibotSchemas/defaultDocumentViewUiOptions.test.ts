@@ -4,7 +4,8 @@ import type {
 } from "@superego/backend";
 import { DataType, type Schema } from "@superego/schema";
 import { expect, it } from "vitest";
-import validateDefaultDocumentViewUiOptions from "./validateDefaultDocumentViewUiOptions.js";
+import * as v from "valibot";
+import defaultDocumentViewUiOptions from "./defaultDocumentViewUiOptions.js";
 
 //////////////////////////////
 // Test function definition //
@@ -21,10 +22,25 @@ const test = (
   only?: boolean,
 ) => {
   it(name, { only: only ?? false }, () => {
+    // Setup SUT
+    const valibotSchema = defaultDocumentViewUiOptions(schema);
+
     // Exercise
-    const issues = validateDefaultDocumentViewUiOptions(options, schema);
+    const result = v.safeParse(valibotSchema, options);
+
     // Verify
-    expect(issues).toEqual(expectedIssues);
+    if (expectedIssues.length === 0) {
+      expect(result.success).toBe(true);
+    } else {
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const issues = result.issues.map((issue) => ({
+          message: issue.message,
+          path: issue.path?.map((segment) => ({ key: segment.key })),
+        }));
+        expect(issues).toEqual(expectedIssues);
+      }
+    }
   });
 };
 test.only = (name: string, testCase: TestCase) => test(name, testCase, true);

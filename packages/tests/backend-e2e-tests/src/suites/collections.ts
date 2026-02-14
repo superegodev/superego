@@ -291,6 +291,74 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: {
+            fullWidth: false,
+            collapsePrimarySidebar: false,
+            rootLayout: [{ propertyPath: "nonExistent" }],
+          },
+        },
+      });
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("error: ReferencedCollectionsNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -782,6 +850,76 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  title: { dataType: DataType.String },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: {
+              fullWidth: false,
+              collapsePrimarySidebar: false,
+              rootLayout: [{ propertyPath: "nonExistent" }],
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
@@ -4615,6 +4753,101 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: {
+            fullWidth: false,
+            collapsePrimarySidebar: false,
+            rootLayout: [{ propertyPath: "nonExistent" }],
+          },
+        },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
+              },
+            ],
+          },
+        },
+      });
+    });
+
     it("error: CollectionMigrationNotValid (case: with remote, migration not null)", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE<Schema> = {
@@ -6240,6 +6473,83 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createResult.data.id,
+          createResult.data.latestVersion.id,
+          {
+            defaultDocumentViewUiOptions: {
+              fullWidth: false,
+              collapsePrimarySidebar: false,
+              rootLayout: [{ propertyPath: "nonExistent" }],
+            },
+          },
+        );
+
+      // Verify
+      expect(updateLatestVersionSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
