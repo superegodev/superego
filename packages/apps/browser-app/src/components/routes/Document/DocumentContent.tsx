@@ -68,6 +68,9 @@ export default function DocumentContent({
           key={`${formId}_${documentVersion.id}`}
           collection={collection}
           collectionSchema={collectionVersion.schema}
+          defaultDocumentViewUiOptions={
+            collectionVersion.settings.defaultDocumentViewUiOptions
+          }
           document={document}
           documentVersion={documentVersion}
           formId={formId}

@@ -9,13 +9,14 @@ interface Props {
   children: ReactNode;
 }
 export default function Shell({ locale, direction, children }: Props) {
-  const { isPrimarySidebarOpen } = useShell();
+  const { isPrimarySidebarOpen, collapsePrimarySidebar } = useShell();
   return (
     <div
       lang={locale}
       dir={direction}
       className={cs.Shell.root}
       data-primary-sidebar-open={isPrimarySidebarOpen}
+      data-collapse-primary-sidebar={collapsePrimarySidebar}
     >
       {children}
     </div>

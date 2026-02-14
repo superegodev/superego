@@ -1,5 +1,10 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { Collection, Document, DocumentVersion } from "@superego/backend";
+import type {
+  Collection,
+  DefaultDocumentViewUiOptions,
+  Document,
+  DocumentVersion,
+} from "@superego/backend";
 import { type Schema, valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
@@ -21,6 +26,7 @@ export type ReadOnlyReason = "remote" | "history-version";
 interface Props {
   collection: Collection;
   collectionSchema?: Schema;
+  defaultDocumentViewUiOptions?: DefaultDocumentViewUiOptions | null;
   document: Document;
   documentVersion?: DocumentVersion;
   formId: string;
@@ -30,6 +36,8 @@ interface Props {
 export default function CreateNewDocumentVersionForm({
   collection,
   collectionSchema = collection.latestVersion.schema,
+  defaultDocumentViewUiOptions = collection.latestVersion.settings
+    .defaultDocumentViewUiOptions,
   document,
   documentVersion = document.latestVersion,
   formId,
@@ -164,6 +172,7 @@ export default function CreateNewDocumentVersionForm({
         schema={collectionSchema}
         control={control}
         isReadOnly={isReadOnly}
+        defaultDocumentViewUiOptions={defaultDocumentViewUiOptions}
       />
     </Form>
   );

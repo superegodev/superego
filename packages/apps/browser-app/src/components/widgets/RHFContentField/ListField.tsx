@@ -17,6 +17,7 @@ import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 import { useUiOptions } from "./uiOptions.js";
 
 interface Props {
@@ -45,18 +46,21 @@ function NullListField({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
+  const { allowCollapsing } = useFieldUiOptions(name);
   return (
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
+      isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
+        name={name}
       />
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
         {isReadOnly ? (
@@ -93,18 +97,21 @@ function NonNullListField({
   const intl = useIntl();
   const { field } = useController({ control, name });
   const { fields, append, remove, move } = useFieldArray({ control, name });
+  const { allowCollapsing } = useFieldUiOptions(name);
   return (
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
+      isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
         component="legend"
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
+        name={name}
         actions={
           !isReadOnly ? (
             <>
