@@ -214,8 +214,6 @@ Remarks:
   represent “no value”.
 - **Nullability is opt-in per property.** A property may be \`null\` only if its
   name appears in \`nullableProperties\`. All other properties must be non-null.
-- \`propertiesOrder\` controls **display order** in UIs and does not affect
-  validation.
       `.trim(),
       type: "object",
       properties: {
@@ -238,16 +236,6 @@ Remarks:
 - Each entry **must** be a key present in \`properties\`.
 - **Must** not contain duplicates.
 - Defaults to none (i.e., all properties are non-nullable).
-          `.trim(),
-          type: "array",
-          items: { type: "string" },
-          uniqueItems: true,
-        },
-        propertiesOrder: {
-          description: `
-Preferred order for displaying properties in UIs. If specified:
-- **Must** contain ALL properties defined in \`properties\`, and nothing else.
-- **Must** not contain duplicates.
           `.trim(),
           type: "array",
           items: { type: "string" },

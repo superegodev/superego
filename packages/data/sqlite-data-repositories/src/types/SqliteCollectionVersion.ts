@@ -27,12 +27,17 @@ export default SqliteCollectionVersion;
 export function toEntity(
   collectionVersion: SqliteCollectionVersion,
 ): CollectionVersionEntity {
+  const settings = JSON.parse(collectionVersion.settings);
   return {
     id: collectionVersion.id,
     previousVersionId: collectionVersion.previous_version_id,
     collectionId: collectionVersion.collection_id,
     schema: JSON.parse(collectionVersion.schema),
-    settings: JSON.parse(collectionVersion.settings),
+    settings: {
+      ...settings,
+      defaultDocumentLayoutOptions:
+        settings.defaultDocumentLayoutOptions ?? null,
+    },
     migration: collectionVersion.migration
       ? JSON.parse(collectionVersion.migration)
       : null,

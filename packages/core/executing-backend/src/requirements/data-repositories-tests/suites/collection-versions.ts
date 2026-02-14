@@ -11,6 +11,7 @@ const schema: Schema = {
   rootType: "Root",
 };
 const settings: CollectionVersionSettings = {
+  defaultDocumentLayoutOptions: null,
   contentBlockingKeysGetter: null,
   contentSummaryGetter: { source: "", compiled: "" },
 };
@@ -75,6 +76,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
     const updatedCollectionVersion: CollectionVersionEntity = {
       ...collectionVersion,
       settings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "updatedSource",

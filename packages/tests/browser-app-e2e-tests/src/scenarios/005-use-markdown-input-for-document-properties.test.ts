@@ -34,6 +34,7 @@ test("005. Use markdown input for document properties", async ({ page }) => {
         rootType: "Root",
       },
       versionSettings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "",

@@ -32,6 +32,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -80,6 +81,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -120,6 +122,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -159,6 +162,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -206,6 +210,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -253,6 +258,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: {
             source: "",
             compiled: "export function getContentBlockingKeys() {}",
@@ -315,6 +321,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -357,6 +364,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -379,6 +387,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -430,6 +439,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: {
             source: "",
             compiled:
@@ -456,6 +466,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: {
                 source: "",
                 compiled:
@@ -508,6 +519,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -558,6 +570,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -600,6 +613,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -641,6 +655,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -690,6 +705,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -739,6 +755,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: {
               source: "",
               compiled: "export function getContentBlockingKeys() {}",
@@ -803,6 +820,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -859,6 +877,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -903,6 +922,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -927,6 +947,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                defaultDocumentLayoutOptions: null,
                 contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
@@ -980,6 +1001,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -1002,6 +1024,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -1026,6 +1049,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                defaultDocumentLayoutOptions: null,
                 contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
@@ -1058,6 +1082,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 rootType: "Root",
               },
               settings: {
+                defaultDocumentLayoutOptions: null,
                 contentBlockingKeysGetter: null,
                 contentSummaryGetter: {
                   source: "",
@@ -1128,6 +1153,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -1161,6 +1187,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           versionSettings: {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -1250,6 +1277,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1302,6 +1330,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1347,6 +1376,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1406,6 +1436,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1533,6 +1564,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1596,6 +1628,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1686,6 +1719,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1791,6 +1825,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1884,6 +1919,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -1987,6 +2023,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2078,6 +2115,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2171,6 +2209,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2272,6 +2311,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2397,6 +2437,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2500,6 +2541,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2572,6 +2614,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2679,6 +2722,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2758,6 +2802,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2831,6 +2876,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -2938,6 +2984,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3029,6 +3076,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3110,6 +3158,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3217,6 +3266,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3315,6 +3365,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3418,6 +3469,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3534,6 +3586,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3663,6 +3716,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3811,6 +3865,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -3951,6 +4006,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4158,6 +4214,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4269,6 +4326,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
@@ -4304,6 +4362,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4324,6 +4383,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
@@ -4363,6 +4423,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4382,6 +4443,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
         },
@@ -4425,6 +4487,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4455,6 +4518,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4500,6 +4564,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4519,6 +4584,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4599,6 +4665,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4632,6 +4699,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4684,6 +4752,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4703,6 +4772,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4750,6 +4820,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4769,6 +4840,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4816,6 +4888,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4835,6 +4908,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4921,6 +4995,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -4954,6 +5029,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5034,6 +5110,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5067,6 +5144,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5120,6 +5198,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5145,6 +5224,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5203,6 +5283,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5228,6 +5309,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5325,6 +5407,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5366,6 +5449,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5466,6 +5550,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5512,6 +5597,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5586,6 +5672,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5624,6 +5711,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5653,6 +5741,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               rootType: "Root",
             },
             settings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 compiled:
@@ -5762,6 +5851,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5827,6 +5917,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             rootType: "Root",
           },
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -5926,6 +6017,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5977,6 +6069,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -5993,6 +6086,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createResult.data.id,
           createResult.data.latestVersion.id,
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: {
               source: "",
               compiled: "export function getContentBlockingKeys() {}",
@@ -6042,6 +6136,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6063,6 +6158,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createCollectionResult.data.id,
           createCollectionResult.data.latestVersion.id,
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: {
               source: "",
               compiled:
@@ -6107,6 +6203,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6123,6 +6220,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createResult.data.id,
           createResult.data.latestVersion.id,
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -6168,6 +6266,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6184,6 +6283,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createResult.data.id,
           createResult.data.latestVersion.id,
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: null,
             contentSummaryGetter: {
               source: "",
@@ -6201,6 +6301,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           latestVersion: {
             ...createResult.data.latestVersion,
             settings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -6245,6 +6346,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6268,6 +6370,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           createCollectionResult.data.id,
           createCollectionResult.data.latestVersion.id,
           {
+            defaultDocumentLayoutOptions: null,
             contentBlockingKeysGetter: {
               source: "",
               compiled:
@@ -6320,6 +6423,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6401,6 +6505,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6450,6 +6555,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6484,6 +6590,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6537,6 +6644,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6568,6 +6676,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6638,6 +6747,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6695,6 +6805,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6772,6 +6883,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6795,6 +6907,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6818,6 +6931,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6885,6 +6999,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6938,6 +7053,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -6984,6 +7100,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -7014,6 +7131,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           rootType: "Root",
         },
         {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",

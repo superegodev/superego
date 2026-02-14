@@ -68,6 +68,7 @@ export default function FileField({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={name}
           component="legend"
           className={cs.FileField.legend}
           typeDefinition={typeDefinition}

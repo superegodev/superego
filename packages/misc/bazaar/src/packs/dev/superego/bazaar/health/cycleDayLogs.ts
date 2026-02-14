@@ -15,6 +15,7 @@ export default {
   },
   schema: cycleDayLogsSchema,
   versionSettings: {
+    defaultDocumentLayoutOptions: null,
     contentBlockingKeysGetter: {
       source: `
 import type { CycleDayLog } from "./CollectionSchema.js";

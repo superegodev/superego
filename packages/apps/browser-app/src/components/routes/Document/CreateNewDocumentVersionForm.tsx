@@ -164,6 +164,9 @@ export default function CreateNewDocumentVersionForm({
         schema={collectionSchema}
         control={control}
         isReadOnly={isReadOnly}
+        defaultDocumentLayoutOptions={
+          collection.latestVersion.settings.defaultDocumentLayoutOptions
+        }
       />
     </Form>
   );

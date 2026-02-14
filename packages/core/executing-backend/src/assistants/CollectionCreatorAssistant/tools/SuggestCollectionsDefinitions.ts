@@ -44,6 +44,7 @@ export default {
         versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: stubContentSummaryGetter,
+          defaultDocumentLayoutOptions: null,
         },
       })),
       { dryRun: true },

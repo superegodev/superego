@@ -82,6 +82,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",
@@ -190,6 +191,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",

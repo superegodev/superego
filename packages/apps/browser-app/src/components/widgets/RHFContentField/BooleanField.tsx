@@ -49,6 +49,7 @@ export default function BooleanField({
       className={classnames(cs.Field.root, isListItem && cs.ListItemField.root)}
     >
       <AnyFieldLabel
+        name={name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}

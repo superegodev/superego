@@ -111,6 +111,11 @@ export type { default as CollectionDefinition } from "./types/CollectionDefiniti
 export type { default as CollectionSettings } from "./types/CollectionSettings.js";
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
+export type { default as DefaultDocumentLayoutOptions } from "./types/DefaultDocumentLayoutOptions.js";
+export type {
+  ColumnDefinition,
+  FieldUiOptions,
+} from "./types/DefaultDocumentLayoutOptions.js";
 export type { default as Connector } from "./types/Connector.js";
 export type { default as ConnectorAuthenticationSettings } from "./types/ConnectorAuthenticationSettings.js";
 export type { default as ConnectorAuthenticationState } from "./types/ConnectorAuthenticationState.js";
