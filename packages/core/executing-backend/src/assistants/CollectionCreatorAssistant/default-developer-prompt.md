@@ -80,9 +80,7 @@ branded by the `"__dataType": "JsonObject"` property.
 4. Use lists whenever it makes sense.
 5. Unless a property or type name is fully self-explanatory, include a
    description for it.
-6. Use `propertiesOrder` in Struct type definitions to sort properties from most
-   to least important.
-7. Use PascalCase for enum member names.
-8. Use Title Case for enum member values (they can contain spaces).
-9. Use PascalCase for type names.
-10. Use camelCase for property names.
+6. Use PascalCase for enum member names.
+7. Use Title Case for enum member values (they can contain spaces).
+8. Use PascalCase for type names.
+9. Use camelCase for property names.

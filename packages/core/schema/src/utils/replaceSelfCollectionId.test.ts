@@ -307,7 +307,6 @@ it("preserves other type definition properties", () => {
           },
         },
         nullableProperties: ["parent"],
-        propertiesOrder: ["parent"],
       },
     },
     rootType: "Root",
@@ -326,6 +325,5 @@ it("preserves other type definition properties", () => {
       },
     },
     nullableProperties: ["parent"],
-    propertiesOrder: ["parent"],
   });
 });

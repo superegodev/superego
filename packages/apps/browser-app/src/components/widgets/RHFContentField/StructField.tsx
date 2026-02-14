@@ -110,9 +110,7 @@ function Fields({
   control,
   name,
 }: Pick<Props, "schema" | "typeDefinition" | "control" | "name">) {
-  const sortedPropertyNames =
-    typeDefinition.propertiesOrder ?? Object.keys(typeDefinition.properties);
-  return sortedPropertyNames.map((propertyName) => (
+  return Object.keys(typeDefinition.properties).map((propertyName) => (
     <AnyField
       key={propertyName}
       schema={schema}

@@ -12,7 +12,6 @@ import membersOrderIsValid from "./checks/membersOrderIsValid.js";
 import noTopLevelTypeDefinitionRefs from "./checks/noTopLevelTypeDefinitionRefs.js";
 import noUnusedTypes from "./checks/noUnusedTypes.js";
 import nullablePropertiesIsValid from "./checks/nullablePropertiesIsValid.js";
-import propertiesOrderIsValid from "./checks/propertiesOrderIsValid.js";
 import rootTypeIsStruct from "./checks/rootTypeIsStruct.js";
 
 const StringTypeDefinitionValibotSchema = v.strictObject({
@@ -81,10 +80,8 @@ const StructTypeDefinitionValibotSchema = v.pipe(
       v.lazy(() => AnyTypeDefinitionValibotSchema),
     ),
     nullableProperties: v.optional(v.array(v.pipe(v.string()))),
-    propertiesOrder: v.optional(v.array(v.pipe(v.string()))),
   }),
   nullablePropertiesIsValid,
-  propertiesOrderIsValid,
 );
 
 const ListTypeDefinitionValibotSchema = v.strictObject({
