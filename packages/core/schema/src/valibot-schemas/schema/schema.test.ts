@@ -630,7 +630,6 @@ describe("Invalid schemas", () => {
         ],
       });
     });
-
   });
 
   describe("Invalid type names", () => {

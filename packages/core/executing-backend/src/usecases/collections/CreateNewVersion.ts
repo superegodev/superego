@@ -286,8 +286,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
         contentBlockingKeysGetter: settings.contentBlockingKeysGetter,
-        defaultDocumentViewUiOptions:
-          settings.defaultDocumentViewUiOptions,
+        defaultDocumentViewUiOptions: settings.defaultDocumentViewUiOptions,
       },
       migration: migration,
       remoteConverters: remoteConverters,
