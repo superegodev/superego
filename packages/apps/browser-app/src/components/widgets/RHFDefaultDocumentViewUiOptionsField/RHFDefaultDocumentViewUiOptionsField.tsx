@@ -87,15 +87,11 @@ export default function RHFDefaultDocumentViewUiOptionsField({
             errors.map(({ path, message }) => (
               <div
                 key={path}
-                className={
-                  cs.RHFDefaultDocumentViewUiOptionsField.errorLine
-                }
+                className={cs.RHFDefaultDocumentViewUiOptionsField.errorLine}
               >
                 <FormattedMessage defaultMessage="At" />{" "}
                 <InlineCode
-                  className={
-                    cs.RHFDefaultDocumentViewUiOptionsField.inlineCode
-                  }
+                  className={cs.RHFDefaultDocumentViewUiOptionsField.inlineCode}
                 >
                   {path}
                 </InlineCode>
@@ -108,7 +104,9 @@ export default function RHFDefaultDocumentViewUiOptionsField({
       </FieldErrorContext>
       <Description>
         <FormattedMessage
-          defaultMessage={"Defines the default layout and UI options for the document form in this collection."}
+          defaultMessage={
+            "Defines the default layout and UI options for the document form in this collection."
+          }
         />
       </Description>
     </div>

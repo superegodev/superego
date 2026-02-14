@@ -18,8 +18,8 @@ import {
   makeUnsuccessfulResult,
   valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
-import * as v from "valibot";
 import { isEqual } from "es-toolkit";
+import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
@@ -123,9 +123,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
             makeResultError("DefaultDocumentViewUiOptionsNotValid", {
               collectionId: id,
               collectionVersionId: latestVersion.id,
-              issues: makeValidationIssues(
-                uiOptionsValidationResult.issues,
-              ),
+              issues: makeValidationIssues(uiOptionsValidationResult.issues),
             }),
           );
         }

@@ -3,8 +3,8 @@ import type {
   ValidationIssue,
 } from "@superego/backend";
 import { DataType, type Schema } from "@superego/schema";
-import { expect, it } from "vitest";
 import * as v from "valibot";
+import { expect, it } from "vitest";
 import defaultDocumentViewUiOptions from "./defaultDocumentViewUiOptions.js";
 
 //////////////////////////////

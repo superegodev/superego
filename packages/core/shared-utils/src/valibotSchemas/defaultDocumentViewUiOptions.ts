@@ -2,11 +2,7 @@ import type {
   DefaultDocumentViewUiOptions,
   ValidationIssue,
 } from "@superego/backend";
-import {
-  DataType,
-  type Schema,
-  utils as schemaUtils,
-} from "@superego/schema";
+import { DataType, type Schema, utils as schemaUtils } from "@superego/schema";
 import * as v from "valibot";
 
 export default function defaultDocumentViewUiOptions(

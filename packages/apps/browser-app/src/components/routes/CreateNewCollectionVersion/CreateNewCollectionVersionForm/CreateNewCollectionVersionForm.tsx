@@ -222,9 +222,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ? {
                 title: (
                   <TabTitle
-                    hasErrors={
-                      !!formState.errors.defaultDocumentViewUiOptions
-                    }
+                    hasErrors={!!formState.errors.defaultDocumentViewUiOptions}
                   >
                     <FormattedMessage defaultMessage="4. UI options" />
                   </TabTitle>
