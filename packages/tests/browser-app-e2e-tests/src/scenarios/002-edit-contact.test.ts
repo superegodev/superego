@@ -1,65 +1,137 @@
-import test from "@playwright/test";
-import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
+import { DataType } from "@superego/schema";
+import { test } from "../fixture.js";
+import createCollection from "../routines/createCollection.js";
 import createContact from "../routines/createContact.js";
-import installProductivityPack from "../routines/installProductivityPack.js";
-import VisualEvaluator from "../VisualEvaluator.js";
 
-test("002. Edit Contact", async ({ page }) => {
-  await test.step("00. Install Productivity pack and create Contact", async () => {
+test("002. Edit Contact", async ({
+  page,
+  aiTap,
+  aiInput,
+  aiAssert,
+  aiWaitFor,
+}) => {
+  // Setup: create Contacts collection and a Contact document programmatically.
+  const collectionId = await createCollection(page, {
+    settings: {
+      name: "Contacts",
+      icon: null,
+      collectionCategoryId: null,
+      defaultCollectionViewAppId: null,
+      description: null,
+      assistantInstructions: null,
+    },
+    schema: {
+      types: {
+        Type: {
+          dataType: DataType.Enum,
+          members: {
+            Person: { value: "Person" },
+            Organization: { value: "Organization" },
+          },
+        },
+        Phone: {
+          dataType: DataType.Struct,
+          properties: {
+            number: { dataType: DataType.String },
+            description: { dataType: DataType.String },
+          },
+          nullableProperties: ["description"],
+        },
+        Email: {
+          dataType: DataType.Struct,
+          properties: {
+            address: { dataType: DataType.String },
+            description: { dataType: DataType.String },
+          },
+          nullableProperties: ["description"],
+        },
+        Contact: {
+          dataType: DataType.Struct,
+          properties: {
+            type: { dataType: null, ref: "Type" },
+            name: { dataType: DataType.String },
+            relation: { dataType: DataType.String },
+            phones: {
+              dataType: DataType.List,
+              items: { dataType: null, ref: "Phone" },
+            },
+            emails: {
+              dataType: DataType.List,
+              items: { dataType: null, ref: "Email" },
+            },
+            notes: {
+              dataType: DataType.JsonObject,
+              format: "dev.superego:JsonObject.TiptapRichText",
+            },
+          },
+          nullableProperties: ["relation", "notes"],
+        },
+      },
+      rootType: "Contact",
+    },
+    versionSettings: {
+      contentBlockingKeysGetter: null,
+      contentSummaryGetter: {
+        source: "",
+        compiled:
+          "export default function getContentSummary() { return {}; }",
+      },
+    },
+  });
+
+  const documentId = await createContact(page, collectionId, {
+    type: "Person",
+    name: "Carl Jung",
+    relation: "Protégé",
+    phones: [{ number: "+41 44 123 45 67", description: null }],
+    emails: [{ address: "carl@jung.ch", description: null }],
+    notes: null,
+  });
+
+  await test.step("00. Navigate to Contact document page", async () => {
     // Exercise
-    await installProductivityPack(page);
-    await createContact(page, {
-      name: "Carl Jung",
-      relation: "Protégé",
-      number: "+41 44 123 45 67",
-      address: "carl@jung.ch",
-      notes: "Ambitious. Watch his drift toward mysticism.",
-    });
+    await page.goto(
+      `/collections/${collectionId}/documents/${documentId}`,
+    );
+    await aiWaitFor("a form to edit a Contact document is shown");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "00.png",
-      page,
-      "page with form to edit Contact document Carl Jung",
+    await aiAssert(
+      "the page shows a form to edit Contact document Carl Jung",
     );
   });
 
   await test.step("01. Edit relation field", async () => {
     // Exercise
-    await page.getByRole("textbox", { name: /^Relation/i }).fill("Colleague");
+    await aiInput("Colleague", "Relation text field", {
+      mode: "replace",
+    });
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "01.png",
-      page,
-      "contact detail page, Relation set to Colleague, enabled save icon button (top right)",
+    await aiAssert(
+      "the contact detail page shows Relation set to 'Colleague' and an enabled Save button in the top right",
     );
   });
 
   await test.step("02. Save updated contact", async () => {
     // Exercise
-    await page.getByRole("button", { name: /^Save$/i }).click();
+    await aiTap("Save button");
     await page.waitForTimeout(500);
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "02.png",
-      page,
-      "contact detail page, Relation set to Colleague, disabled save icon button (top right)",
+    await aiAssert(
+      "the contact detail page shows Relation set to 'Colleague' and a disabled Save button in the top right",
     );
   });
 
   await test.step("03. Reload page and verify same state", async () => {
     // Exercise
     await page.reload();
-    await waitForTiptapRichTextJsonObjectField(page);
-    await page.getByRole("textbox", { name: /^Relation/i }).waitFor();
+    await aiWaitFor("a form to edit a Contact document is shown with Relation field");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "03.png",
-      page,
-      "contact detail page, Relation set to Colleague, disabled save icon button (top right)",
+    await aiAssert(
+      "the contact detail page shows Relation set to 'Colleague' and a disabled Save button in the top right",
     );
   });
 });

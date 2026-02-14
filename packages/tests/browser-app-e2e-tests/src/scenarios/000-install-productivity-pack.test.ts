@@ -1,74 +1,61 @@
-import test from "@playwright/test";
-import openSidebar from "../actions/openSidebar.js";
-import VisualEvaluator from "../VisualEvaluator.js";
+import { test } from "../fixture.js";
 
-test("000. Install Productivity pack", async ({ page }) => {
+test("000. Install Productivity pack", async ({
+  page,
+  aiTap,
+  aiAssert,
+  aiWaitFor,
+}) => {
   await test.step("00. Go to homepage", async () => {
     // Exercise
     await page.goto("/");
-    await page.getByText("Your Digital Freedom").waitFor();
+    await aiWaitFor("the page shows text 'Your Digital Freedom'");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "00.png",
-      page,
-      "logo + name + motto, chat message input, empty sidebar",
+    await aiAssert(
+      "the page shows a logo, name, motto, a chat message input, and an empty sidebar",
     );
   });
 
   await test.step("01. Click on Bazaar sidebar link", async () => {
     // Exercise
-    await openSidebar(page);
-    await page.getByRole("link", { name: /^Bazaar$/i }).click();
-    await page.getByRole("link", { name: /Productivity/i }).waitFor();
+    await aiTap("Bazaar link in the sidebar");
+    await aiWaitFor("a list of packs is visible");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "01.png",
-      page,
-      'Bazaar page with a list of "packs" as cards, Productivity pack card',
+    await aiAssert(
+      "the Bazaar page shows a list of packs as cards, including a Productivity pack card",
     );
   });
 
   await test.step("02. Click on Productivity pack", async () => {
     // Exercise
-    await page.getByRole("link", { name: /Productivity/i }).click();
-    await page.getByRole("button", { name: /^Install$/i }).waitFor();
+    await aiTap("Productivity pack card");
+    await aiWaitFor("an Install button is visible");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "02.png",
-      page,
-      "Productivity pack detail page, Install button",
+    await aiAssert(
+      "the Productivity pack detail page is shown with an Install button",
     );
   });
 
   await test.step("03. Open install modal", async () => {
     // Exercise
-    await page.getByRole("button", { name: /^Install$/i }).click();
-    await page.getByRole("dialog").waitFor();
+    await aiTap("Install button");
+    await aiWaitFor("a dialog or modal is visible");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "03.png",
-      page,
-      "install confirmation modal",
-    );
+    await aiAssert("an install confirmation modal is shown");
   });
 
   await test.step("04. Install pack", async () => {
     // Exercise
-    await page
-      .getByRole("dialog")
-      .getByRole("button", { name: /^Install$/i })
-      .click();
-    await page.getByRole("link", { name: /Create document/i }).waitFor();
+    await aiTap("Install button inside the dialog or modal");
+    await aiWaitFor("a create document link or button is visible");
 
     // Verify
-    await VisualEvaluator.expectToSee(
-      "04.png",
-      page,
-      "empty Contacts collection page, create document icon button (top right)",
+    await aiAssert(
+      "an empty Contacts collection page is shown with a create document button in the top right",
     );
   });
 });

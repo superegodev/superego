@@ -16,113 +16,108 @@ When you need to write a Playwright e2e test for browser-app package.
 - File name: three-digit sequential identifier + `-` +
   snake-cased-short-description + `.test.ts`
 
-For assertions, **ONLY** use visual comparisons of screenshots via
-`VisualEvaluator.expectToSee`. **DO NOT** use other assertions.
+For assertions, **ONLY** use `aiAssert` from the Midscene fixture. **DO NOT**
+use screenshot comparisons, `expect`, or other assertion methods.
+
+For user interactions, **ONLY** use Midscene AI methods (`aiTap`, `aiInput`,
+`ai`, `aiWaitFor`, etc.). **DO NOT** use Playwright locators (`getByRole`,
+`getByTestId`, `locator`, etc.) or custom action functions.
 
 ## Test structure
 
 Tests are structured as multi-step scenarios in which the simulated user tries
 to reach a specific goal. Each test starts from the empty state of the
-application, so the first steps of the scenarios should be about configuring and
-creating everything needed for the later steps.
+application.
 
-The Bazaar section of the app contains ready-made "packs" of collection
-categories, collections, and apps, that can be installed to create a useful
-starting point.
+Use the `createCollection` and `createContact` routines for programmatic setup
+(creating collections and documents via the backend API) so that tests can focus
+on the UI flow being tested.
 
-Technically, a test is a sequence of Playwright test steps. Each step has two
-sections (visually separated by `// $SectionName` comments):
+Import `test` from the Midscene fixture file, **not** from `@playwright/test`:
 
-- Exercise: takes actions and waits for them to have effect.
-- Verify: calls `VisualEvaluator.expectToSee` exactly once, which:
-  - Takes a screenshot of either a specific element (preferred) or the whole
-    page.
-  - Describes the **current** state it expects to see in the screenshot. (No
-    references to what happened before.)
+```typescript
+import { test } from "../fixture.js";
+```
+
+Destructure the Midscene helpers you need from the test callback:
+
+```typescript
+test("NNN. Title", async ({
+  page,
+  ai,
+  aiTap,
+  aiInput,
+  aiAssert,
+  aiWaitFor,
+}) => {
+  // ...
+});
+```
+
+A test is a sequence of Playwright test steps. Each step has two sections
+(visually separated by `// $SectionName` comments):
+
+- Exercise: uses Midscene AI actions (`aiTap`, `aiInput`, `ai`, `aiWaitFor`)
+  and `page.goto`/`page.reload` for navigation.
+- Verify: calls `aiAssert` with a natural language description of the
+  **current** expected state. (No references to what happened before.)
 
 Additional requirements:
 
 - Step title: two-digit-index + dot + title. Example `00. Go to Homepage`.
 - Steps must be ordered correctly. I.e., `00. $title` must go before
   `01. $otherTitle`.
-- Snapshot names must match the step index. Example: `00.png` for step
-  `00. $title`.
 
-## Run test and evaluate screenshots
+## Midscene AI methods reference
+
+- `aiTap(target)` — click on an element described in natural language.
+- `aiInput(text, target, options?)` — type text into a field described in
+  natural language. Use `{ mode: "replace" }` to clear the field first.
+- `aiAssert(assertion)` — assert a condition described in natural language.
+  Throws if the assertion fails.
+- `aiWaitFor(condition, options?)` — wait until a condition described in natural
+  language is met. Accepts `{ timeoutMs }`.
+- `ai(instruction)` — perform a general AI-driven action described in natural
+  language (e.g., selecting text, keyboard shortcuts, drag-and-drop).
+- `aiQuery(query)` — extract structured data from the page.
+- `aiScroll(options, target?)` — scroll within a target element.
+
+## Run test
 
 Run the test with
 `yarn workspace @superego/browser-app-e2e-tests test:playwright`.
 
-When the test runs the first time there are no "golden reference snapshots" yet,
-so the test will fail.
-
-However, the run generates the yet-to-be-evaluated snapshots in the
-`packages/tests/browser-app-e2e-tests/src/scenarios/$TEST_FILE_NAME-snapshots`
-directory.
-
-One by one, visually review the snapshots and ensure they match the
-corresponding described expectation.
+After the run, Midscene generates a report at
+`midscene_run/report/<id>.html`.
 
 ## Reusable test logic
-
-Reusable test logic is shared code that makes scenarios simpler and more
-reliable by extracting common selectors and interactions into locators, actions,
-and routines.
-
-When writing a new locator, action, or routine:
-
-- Check existing ones and follow the same style and patterns.
-- Follow the specific guidelines written below.
-
-### Locators
-
-The `packages/tests/browser-app-e2e-tests/src/locators` directory contains
-reusable locator builders.
-
-Guidelines:
-
-- Locators must **not** contain steps, assertions, or waits.
-- Return `Locator`s (or small grouped locator objects) and scope within
-  containers when possible.
-- Name by intent + target (e.g., `bazaarPackCard`, `installPackButton`).
-
-### Actions
-
-The `packages/tests/browser-app-e2e-tests/src/actions` directory contains
-reusable functions that each perform a small single action shared across
-multiple tests.
-
-Guidelines:
-
-- Actions must **not** contain steps.
-- Do one thing: a single user interaction (click, type, select, etc.).
-- Be specific and UI-focused: name the exact intent + target (e.g.,
-  `clickInstallPackButton`), not generic helpers.
-- Include only the minimal waits/guards needed to make the action reliable
-  (e.g., ensure the element is visible/enabled before interacting).
-- Do not chain multiple actions; if you need a sequence, create a routine.
 
 ### Routines
 
 The `packages/tests/browser-app-e2e-tests/src/routines` directory contains
-reusable functions that compose multiple actions into a single higher-level
-interaction. A routine performs a specific goal (e.g., "installing a pack",
-"filling-in a form") by calling actions in sequence and handling any expected
-intermediate UI transitions (waiting for navigation, toasts, modals, etc.).
-Check existing routines for examples.
+reusable functions for programmatic test setup.
 
-Guidelines:
+Available routines:
 
-- Routines can contain actions, but must **not** contain steps.
-- Keep routines goal-oriented and deterministic: given the same starting state,
-  they should do the same thing.
+- `createCollection(page, definition)` — programmatically creates a collection
+  via the in-browser backend API. Returns the collection ID. Does not navigate.
+- `createContact(page, collectionId, contact)` — programmatically creates a
+  document in a Contacts collection via the in-browser backend API. Returns the
+  document ID. Does not navigate.
+
+These routines use `page.evaluate` to call the backend API directly. They do not
+perform any UI interactions. After calling them, navigate to the created
+resource using `page.goto`.
+
+Guidelines for new routines:
+
+- Routines must be **programmatic only**: use `page.evaluate` to call backend
+  APIs. Do not use UI interactions, locators, or Midscene AI methods.
+- Keep routines goal-oriented and deterministic.
 - Prefer a small, stable API: accept explicit inputs and avoid hidden defaults.
-- Use assertions/validation only if the routine needs a minimal guard to ensure
-  it can proceed (e.g., wait for a page to be ready).
-- Avoid branching logic when possible; if you need variants, create separate
-  routines.
+- Return the created resource's ID so tests can navigate to it.
 
 ## After writing a test
 
 After writing a test, check other tests and see if there are duplicated
-locators, actions, or routines. If there are, suggest a refactor to the user.
+routines. If there are, suggest a refactor to the user.

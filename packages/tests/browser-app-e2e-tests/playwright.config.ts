@@ -5,18 +5,16 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  reporter: [["html", { open: "never" }]],
-  timeout: 30_000,
+  reporter: [
+    ["list"],
+    ["@midscene/web/playwright-reporter", { type: "merged" }],
+  ],
+  timeout: 90_000,
   use: {
     baseURL: "http://localhost:5173",
     trace: process.env.CI ? "on-first-retry" : "retain-on-first-failure",
     contextOptions: {
       reducedMotion: "reduce",
-    },
-  },
-  expect: {
-    toHaveScreenshot: {
-      maxDiffPixelRatio: 0.01,
     },
   },
   projects: [
