@@ -79,6 +79,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -144,6 +145,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -218,6 +220,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -377,6 +380,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -502,6 +506,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -562,6 +567,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -630,6 +636,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -703,6 +710,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -829,6 +837,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
           // Collection 1: Articles (references Authors)
@@ -871,6 +880,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
           // Collection 2: Comments (references both Authors and Articles)
@@ -909,6 +919,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -1156,6 +1167,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],

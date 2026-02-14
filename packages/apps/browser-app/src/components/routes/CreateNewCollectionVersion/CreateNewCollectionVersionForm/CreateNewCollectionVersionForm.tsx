@@ -84,6 +84,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       {
         contentBlockingKeysGetter: values.contentBlockingKeysGetter,
         contentSummaryGetter: values.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          collection.latestVersion.settings.defaultDocumentViewUiOptions,
       },
       values.migration,
       values.remoteConverters,

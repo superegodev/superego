@@ -11,6 +11,7 @@ import {
   type CollectionVersionSettings,
   type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
+  type DefaultDocumentViewUiOptionsNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
   type RemoteConverters,
@@ -42,6 +43,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends Usecase<
@@ -62,6 +64,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -170,6 +173,23 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
+    // Validate settings.defaultDocumentViewUiOptions.
+    if (settings.defaultDocumentViewUiOptions !== null) {
+      const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+        settings.defaultDocumentViewUiOptions,
+        resolvedSchema,
+      );
+      if (!isEmpty(uiOptionsIssues)) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: uiOptionsIssues,
+          }),
+        );
+      }
+    }
+
     // Validate migration and remoteConverters.
     if (collection.remote) {
       if (migration !== null) {
@@ -266,6 +286,8 @@ export default class CollectionsCreateNewVersion extends Usecase<
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
         contentBlockingKeysGetter: settings.contentBlockingKeysGetter,
+        defaultDocumentViewUiOptions:
+          settings.defaultDocumentViewUiOptions,
       },
       migration: migration,
       remoteConverters: remoteConverters,

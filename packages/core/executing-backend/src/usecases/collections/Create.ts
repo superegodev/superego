@@ -10,6 +10,7 @@ import type {
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -32,6 +33,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -55,6 +57,7 @@ export default class CollectionsCreate extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -194,6 +197,23 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    // Validate defaultDocumentViewUiOptions.
+    if (versionSettings.defaultDocumentViewUiOptions !== null) {
+      const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+        versionSettings.defaultDocumentViewUiOptions,
+        resolvedSchema,
+      );
+      if (!isEmpty(uiOptionsIssues)) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: uiOptionsIssues,
+          }),
+        );
+      }
+    }
+
     const now = new Date();
     const collection: CollectionEntity = {
       id: collectionId,
@@ -219,6 +239,8 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         contentBlockingKeysGetter: versionSettings.contentBlockingKeysGetter,
         contentSummaryGetter: versionSettings.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          versionSettings.defaultDocumentViewUiOptions,
       },
       migration: null,
       remoteConverters: null,

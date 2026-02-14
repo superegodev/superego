@@ -57,5 +57,6 @@ export default function getContentSummary(cycleDayLog) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

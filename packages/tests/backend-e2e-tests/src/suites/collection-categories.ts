@@ -468,6 +468,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createChildCollectionResult.success);

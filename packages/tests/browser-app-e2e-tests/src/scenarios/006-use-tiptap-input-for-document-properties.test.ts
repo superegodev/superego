@@ -40,6 +40,7 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
           compiled:
             "export default function getContentSummary() { return {}; }",
         },
+        defaultDocumentViewUiOptions: null,
       },
     });
 

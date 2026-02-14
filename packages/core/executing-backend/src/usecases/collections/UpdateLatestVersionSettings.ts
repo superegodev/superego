@@ -8,6 +8,7 @@ import type {
   CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   MakingContentBlockingKeysFailed,
   UnexpectedError,
 } from "@superego/backend";
@@ -25,6 +26,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateDefaultDocumentViewUiOptions from "../../utils/validateDefaultDocumentViewUiOptions.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
   Backend["collections"]["updateLatestVersionSettings"]
@@ -40,6 +42,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     | ContentBlockingKeysGetterNotValid
     | MakingContentBlockingKeysFailed
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -104,6 +107,29 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       }
     }
 
+    // Validate defaultDocumentViewUiOptions.
+    if (settingsPatch.defaultDocumentViewUiOptions !== undefined) {
+      const uiOptions =
+        settingsPatch.defaultDocumentViewUiOptions !== null
+          ? settingsPatch.defaultDocumentViewUiOptions
+          : null;
+      if (uiOptions !== null) {
+        const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
+          uiOptions,
+          latestVersion.schema,
+        );
+        if (!isEmpty(uiOptionsIssues)) {
+          return makeUnsuccessfulResult(
+            makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+              collectionId: id,
+              collectionVersionId: latestVersion.id,
+              issues: uiOptionsIssues,
+            }),
+          );
+        }
+      }
+    }
+
     const updatedVersion: CollectionVersionEntity = {
       ...latestVersion,
       settings: {
@@ -114,6 +140,10 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
         contentSummaryGetter:
           settingsPatch.contentSummaryGetter ??
           latestVersion.settings.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          settingsPatch.defaultDocumentViewUiOptions !== undefined
+            ? settingsPatch.defaultDocumentViewUiOptions
+            : latestVersion.settings.defaultDocumentViewUiOptions,
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);
