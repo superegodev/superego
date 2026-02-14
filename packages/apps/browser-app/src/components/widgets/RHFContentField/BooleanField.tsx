@@ -45,6 +45,7 @@ export default function BooleanField({
       isReadOnly={isReadOnly}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.BooleanField.root"
       className={classnames(cs.Field.root, isListItem && cs.ListItemField.root)}
     >
       <AnyFieldLabel

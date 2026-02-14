@@ -31,6 +31,7 @@ export default function Markdown({
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.StringField.Markdown.root"
     >
       {!isListItem ? (
         <AnyFieldLabel

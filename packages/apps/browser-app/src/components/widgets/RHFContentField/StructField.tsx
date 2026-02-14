@@ -51,6 +51,7 @@ export default function StructField({
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.StructField.root"
       className={cs.Field.root}
     >
       <AnyFieldLabel

@@ -8,41 +8,6 @@ import FormatId from "./FormatId.js";
 export default [
   {
     dataType: DataType.JsonObject,
-    id: FormatId.JsonObject.TiptapRichText,
-    name: "Rich Text (Tiptap)",
-    description:
-      "A rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
-    validExamples: [
-      { __dataType: DataType.JsonObject, type: "doc", content: [] },
-      {
-        __dataType: DataType.JsonObject,
-        type: "doc",
-        content: [
-          {
-            type: "paragraph",
-            attrs: { textAlign: null },
-            content: [{ type: "text", text: "Hello, World!" }],
-          },
-        ],
-      },
-    ],
-    invalidExamples: [
-      { __dataType: DataType.JsonObject, type: "paragraph", content: [] },
-    ],
-    valibotSchema: v.pipe(
-      jsonObject(),
-      v.check(
-        (jsonObject) =>
-          jsonObject["type"] === "doc" && Array.isArray(jsonObject["content"]),
-        ({ lang }) =>
-          translate(lang, {
-            en: "Invalid JsonObject: Not a Tiptap JSON Document",
-          }),
-      ),
-    ),
-  },
-  {
-    dataType: DataType.JsonObject,
     id: FormatId.JsonObject.ExcalidrawDrawing,
     name: "Excalidraw Drawing",
     description: "A drawing document as represented, in JSON, by Excalidraw.",
@@ -79,6 +44,105 @@ export default [
         ({ lang }) =>
           translate(lang, {
             en: "Invalid JsonObject: Not an Excalidraw Drawing",
+          }),
+      ),
+    ),
+  },
+  {
+    dataType: DataType.JsonObject,
+    id: FormatId.JsonObject.GeoJSON,
+    name: "GeoJSON",
+    description: "A GeoJSON object (FeatureCollection, Feature, or Geometry).",
+    validExamples: [
+      {
+        __dataType: DataType.JsonObject,
+        type: "FeatureCollection",
+        features: [],
+      },
+      {
+        __dataType: DataType.JsonObject,
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: { type: "Point", coordinates: [0, 0] },
+            properties: {},
+          },
+        ],
+      },
+      {
+        __dataType: DataType.JsonObject,
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [0, 0] },
+        properties: {},
+      },
+      {
+        __dataType: DataType.JsonObject,
+        type: "Point",
+        coordinates: [0, 0],
+      },
+    ],
+    invalidExamples: [
+      {
+        __dataType: DataType.JsonObject,
+        type: "SomeRandomThing",
+        data: {},
+      },
+    ],
+    valibotSchema: v.pipe(
+      jsonObject(),
+      v.check(
+        (jsonObject) =>
+          typeof jsonObject["type"] === "string" &&
+          new Set([
+            "FeatureCollection",
+            "Feature",
+            "Point",
+            "MultiPoint",
+            "LineString",
+            "MultiLineString",
+            "Polygon",
+            "MultiPolygon",
+            "GeometryCollection",
+          ]).has(jsonObject["type"]),
+        ({ lang }) =>
+          translate(lang, {
+            en: "Invalid JsonObject: Not a valid GeoJSON object",
+          }),
+      ),
+    ),
+  },
+  {
+    dataType: DataType.JsonObject,
+    id: FormatId.JsonObject.TiptapRichText,
+    name: "Rich Text (Tiptap)",
+    description:
+      "A rich-text document as represented, in JSON, by the Tiptap rich-text editor.",
+    validExamples: [
+      { __dataType: DataType.JsonObject, type: "doc", content: [] },
+      {
+        __dataType: DataType.JsonObject,
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+            attrs: { textAlign: null },
+            content: [{ type: "text", text: "Hello, World!" }],
+          },
+        ],
+      },
+    ],
+    invalidExamples: [
+      { __dataType: DataType.JsonObject, type: "paragraph", content: [] },
+    ],
+    valibotSchema: v.pipe(
+      jsonObject(),
+      v.check(
+        (jsonObject) =>
+          jsonObject["type"] === "doc" && Array.isArray(jsonObject["content"]),
+        ({ lang }) =>
+          translate(lang, {
+            en: "Invalid JsonObject: Not a Tiptap JSON Document",
           }),
       ),
     ),

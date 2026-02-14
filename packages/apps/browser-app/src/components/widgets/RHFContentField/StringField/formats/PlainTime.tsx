@@ -55,6 +55,7 @@ export default function PlainTime({
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.StringField.PlainTime.root"
       className={classnames(isListItem && cs.ListItemField.root)}
     >
       {!isListItem ? (

@@ -3,6 +3,7 @@ import contentBlockingKeysGetter from "./contentBlockingKeysGetter.js";
 import contentSummaryGetter from "./contentSummaryGetter.js";
 import excalidrawDrawingJsonObject from "./excalidrawDrawingJsonObject.js";
 import fromRemoteDocument from "./fromRemoteDocument.js";
+import geoJsonFeatureCollection from "./geoJsonFeatureCollection.js";
 import migration from "./migration.js";
 import schema from "./schema.js";
 import schemaValue from "./schemaValue.js";
@@ -15,6 +16,7 @@ export default {
   contentSummaryGetter,
   excalidrawDrawingJsonObject,
   fromRemoteDocument,
+  geoJsonFeatureCollection,
   migration,
   schema,
   schemaValue,

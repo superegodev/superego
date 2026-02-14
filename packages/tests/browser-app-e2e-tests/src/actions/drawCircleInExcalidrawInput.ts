@@ -1,13 +1,15 @@
 import type { Page } from "@playwright/test";
-import excalidrawInput from "../locators/excalidrawInput.js";
+import excalidrawJsonObjectField from "../locators/excalidrawJsonObjectField.js";
 
 export default async function drawCircleInExcalidrawInput(page: Page) {
-  await excalidrawInput(page).click();
+  await excalidrawJsonObjectField(page).locator(".excalidraw").click();
   await selectEllipseTool(page);
   await selectArchitectSloppiness(page);
 
-  const drawingSurface = excalidrawInput(page).locator("canvas").last();
-  const boundingBox = await drawingSurface.boundingBox();
+  const boundingBox = await excalidrawJsonObjectField(page)
+    .locator("canvas")
+    .last()
+    .boundingBox();
   if (!boundingBox) {
     throw new Error("Excalidraw drawing surface not found");
   }
@@ -33,18 +35,18 @@ export default async function drawCircleInExcalidrawInput(page: Page) {
   const deselectY = Math.round(boundingBox.y + boundingBox.height * 0.85);
   await page.keyboard.press("v");
   await page.mouse.click(deselectX, deselectY);
-  await excalidrawInput(page).focus();
+  await excalidrawJsonObjectField(page).locator(".excalidraw").focus();
   await page.getByRole("button", { name: /^Undo$/i }).waitFor();
 }
 
 async function selectEllipseTool(page: Page) {
-  await excalidrawInput(page)
+  await excalidrawJsonObjectField(page)
     .getByRole("radio", { name: /^Ellipse$/i })
     .check({ force: true });
 }
 
 async function selectArchitectSloppiness(page: Page) {
-  await excalidrawInput(page)
+  await excalidrawJsonObjectField(page)
     .locator('label[title="Architect"] > input[type="radio"]')
     .check({ force: true });
 }

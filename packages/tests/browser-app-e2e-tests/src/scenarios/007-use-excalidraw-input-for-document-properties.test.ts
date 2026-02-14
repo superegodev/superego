@@ -2,8 +2,7 @@ import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import drawCircleInExcalidrawInput from "../actions/drawCircleInExcalidrawInput.js";
 import focusExcalidrawInput from "../actions/focusExcalidrawInput.js";
-import excalidrawInput from "../locators/excalidrawInput.js";
-import mainPanel from "../locators/mainPanel.js";
+import waitForExcalidrawJsonObjectField from "../actions/waitForExcalidrawJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
@@ -46,7 +45,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "empty Notes collection page, create document icon button (top right)",
     );
   });
@@ -55,12 +54,12 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     // Exercise
     await page.getByRole("link", { name: /Create document/i }).click();
     await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await excalidrawInput(page).waitFor();
+    await waitForExcalidrawJsonObjectField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       'form with a "Notes" drawing field and disabled Create button',
     );
   });
@@ -74,7 +73,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       "Excalidraw input with one empty circle drawn on the canvas",
     );
   });

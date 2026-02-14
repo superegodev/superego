@@ -31,6 +31,7 @@ export default function Instant({
     <div
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
+      data-testid="widgets.RHFContentField.StringField.Instant.root"
       className={classnames(
         cs.StringField.Instant.root,
         isListItem && cs.ListItemField.root,

@@ -1,6 +1,6 @@
 import test from "@playwright/test";
-import mainPanel from "../locators/mainPanel.js";
-import tiptapInput from "../locators/tiptapInput.js";
+import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
+import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
@@ -12,7 +12,7 @@ test("001. Create Contact", async ({ page }) => {
     // Verify
     await VisualEvaluator.expectToSee(
       "00.png",
-      mainPanel(page),
+      page,
       "empty Contacts collection page, create document icon button (top right)",
     );
   });
@@ -21,12 +21,12 @@ test("001. Create Contact", async ({ page }) => {
     // Exercise
     await page.getByRole("link", { name: /Create document/i }).click();
     await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await tiptapInput(page).waitFor();
+    await waitForTiptapRichTextJsonObjectField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
-      mainPanel(page),
+      page,
       "create Contact form, disabled Create button",
     );
   });
@@ -41,16 +41,16 @@ test("001. Create Contact", async ({ page }) => {
       .getByRole("textbox", { name: /^Number/i })
       .fill("+41 44 123 45 67");
     await page.getByRole("textbox", { name: /^Address/i }).fill("carl@jung.ch");
-    await tiptapInput(page).fill(
-      "Ambitious. Watch his drift toward mysticism.",
-    );
+    await tiptapRichTextJsonObjectField(page)
+      .locator(".ProseMirror")
+      .fill("Ambitious. Watch his drift toward mysticism.");
     // Wait for the debounce on the TipTap input.
     await page.waitForTimeout(500);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
-      mainPanel(page),
+      page,
       "contact form filled with made-up Carl Jung details",
     );
   });
@@ -59,12 +59,12 @@ test("001. Create Contact", async ({ page }) => {
     // Exercise
     await page.getByRole("button", { name: /^Create$/i }).click();
     await page.getByRole("button", { name: /^Save$/i }).waitFor();
-    await tiptapInput(page).waitFor();
+    await waitForTiptapRichTextJsonObjectField(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "03.png",
-      mainPanel(page),
+      page,
       "contact detail page for Carl Jung, disabled save icon button (top right)",
     );
   });

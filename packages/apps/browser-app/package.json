@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
+    "@geoman-io/maplibre-geoman-free": "^0.6.2",
     "@hookform/resolvers": "^5.2.2",
     "@react-aria/optimize-locales-plugin": "^1.1.5",
     "@standard-schema/spec": "^1.1.0",
@@ -83,7 +84,8 @@
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
-    "markdown-to-jsx": "^9.7.3",
+    "maplibre-gl": "^5.18.0",
+    "markdown-to-jsx": "^9.7.4",
     "monaco-editor": "0.55.1",
     "overtype": "^2.1.1",
     "p-map": "^7.0.4",
