@@ -73,6 +73,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -138,6 +139,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -212,6 +214,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -371,6 +374,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -496,6 +500,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -556,6 +561,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -624,6 +630,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -697,6 +704,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -823,6 +831,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -865,6 +874,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -903,6 +913,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",
@@ -1150,6 +1161,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               rootType: "Root",
             },
             versionSettings: {
+              defaultDocumentLayoutOptions: null,
               contentBlockingKeysGetter: null,
               contentSummaryGetter: {
                 source: "",

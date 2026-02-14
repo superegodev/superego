@@ -219,6 +219,8 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         contentBlockingKeysGetter: versionSettings.contentBlockingKeysGetter,
         contentSummaryGetter: versionSettings.contentSummaryGetter,
+        defaultDocumentLayoutOptions:
+          versionSettings.defaultDocumentLayoutOptions,
       },
       migration: null,
       remoteConverters: null,

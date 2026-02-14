@@ -14,6 +14,7 @@ Use 100g as serving size if not specified.
   },
   schema: foodsSchema,
   versionSettings: {
+    defaultDocumentLayoutOptions: null,
     contentBlockingKeysGetter: {
       source: `
 import type { Food } from "./CollectionSchema.js";

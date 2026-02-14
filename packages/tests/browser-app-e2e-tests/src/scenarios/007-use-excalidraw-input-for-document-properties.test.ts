@@ -33,6 +33,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
         rootType: "Root",
       },
       versionSettings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "",

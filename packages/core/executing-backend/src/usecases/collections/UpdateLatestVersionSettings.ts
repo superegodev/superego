@@ -114,6 +114,10 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
         contentSummaryGetter:
           settingsPatch.contentSummaryGetter ??
           latestVersion.settings.contentSummaryGetter,
+        defaultDocumentLayoutOptions:
+          settingsPatch.defaultDocumentLayoutOptions !== undefined
+            ? settingsPatch.defaultDocumentLayoutOptions
+            : latestVersion.settings.defaultDocumentLayoutOptions,
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);

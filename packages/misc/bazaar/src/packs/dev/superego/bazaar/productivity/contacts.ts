@@ -12,6 +12,7 @@ export default {
   },
   schema: contactsSchema,
   versionSettings: {
+    defaultDocumentLayoutOptions: null,
     contentBlockingKeysGetter: {
       source: `
 import type { Contact } from "./CollectionSchema.js";

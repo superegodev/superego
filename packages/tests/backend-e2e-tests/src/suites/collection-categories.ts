@@ -462,6 +462,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",

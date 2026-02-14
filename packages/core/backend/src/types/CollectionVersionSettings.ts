@@ -1,3 +1,4 @@
+import type DefaultDocumentLayoutOptions from "./DefaultDocumentLayoutOptions.js";
 import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface CollectionVersionSettings {
@@ -8,4 +9,6 @@ export default interface CollectionVersionSettings {
    */
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  /** Layout options for the document form. Null means use defaults. */
+  defaultDocumentLayoutOptions: DefaultDocumentLayoutOptions | null;
 }

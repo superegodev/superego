@@ -15,6 +15,7 @@ Default serving sizes come from the Foods collection if not specified.
   },
   schema: mealsSchema,
   versionSettings: {
+    defaultDocumentLayoutOptions: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

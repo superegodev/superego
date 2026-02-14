@@ -34,6 +34,7 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
         rootType: "Root",
       },
       versionSettings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "",

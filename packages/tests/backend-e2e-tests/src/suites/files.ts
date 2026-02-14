@@ -47,6 +47,7 @@ export default rd<GetDependencies>("Files", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
+          defaultDocumentLayoutOptions: null,
           contentBlockingKeysGetter: null,
           contentSummaryGetter: {
             source: "",

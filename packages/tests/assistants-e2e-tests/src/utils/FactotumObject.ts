@@ -56,6 +56,7 @@ class FactotumObject {
       },
       schema: definition.schema,
       versionSettings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source:

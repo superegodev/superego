@@ -42,6 +42,7 @@ test("008. Use GeoJSON input for document properties", async ({ page }) => {
         rootType: "Root",
       },
       versionSettings: {
+        defaultDocumentLayoutOptions: null,
         contentBlockingKeysGetter: null,
         contentSummaryGetter: {
           source: "",
