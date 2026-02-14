@@ -644,7 +644,7 @@ describe("Invalid schemas", () => {
         {
           kind: "validation",
           message:
-            'Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received "Root@"',
+            'Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received "Root@"',
           path: [{ key: "types" }, { key: "Root@" }],
         },
       ],
@@ -661,7 +661,7 @@ describe("Invalid schemas", () => {
         {
           kind: "validation",
           message:
-            'Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received "0Root"',
+            'Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received "0Root"',
           path: [{ key: "types" }, { key: "0Root" }],
         },
       ],

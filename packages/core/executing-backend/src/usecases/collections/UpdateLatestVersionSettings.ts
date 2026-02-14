@@ -109,13 +109,9 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
 
     // Validate defaultDocumentViewUiOptions.
     if (settingsPatch.defaultDocumentViewUiOptions !== undefined) {
-      const uiOptions =
-        settingsPatch.defaultDocumentViewUiOptions !== null
-          ? settingsPatch.defaultDocumentViewUiOptions
-          : null;
-      if (uiOptions !== null) {
+      if (settingsPatch.defaultDocumentViewUiOptions !== null) {
         const uiOptionsIssues = validateDefaultDocumentViewUiOptions(
-          uiOptions,
+          settingsPatch.defaultDocumentViewUiOptions,
           latestVersion.schema,
         );
         if (!isEmpty(uiOptionsIssues)) {

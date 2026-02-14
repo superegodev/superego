@@ -42,7 +42,7 @@ function validateLayout(
 
       const typeDef = schemaUtils.getTypeDefinitionAtPath(
         schema,
-        node.propertyPath.slice(1), // Remove leading "$".
+        node.propertyPath,
       );
 
       if (!typeDef) {
@@ -104,7 +104,7 @@ function validateLayout(
   for (const expectedProp of expectedProperties) {
     if (!foundPropertyPaths.has(expectedProp)) {
       issues.push({
-        message: `Layout is missing property "$${expectedProp}".`,
+        message: `Layout is missing property "${expectedProp}".`,
         path,
       });
     }
@@ -130,12 +130,9 @@ function isFieldNode(
   return "propertyPath" in node;
 }
 
-function getTopLevelPropertyName(
-  propertyPath: DefaultDocumentViewUiOptions.PropertyPath,
-): string {
-  // PropertyPath is like "$myProp" or "$myProp.sub". The top-level property
-  // name is the first segment after "$".
-  const withoutDollar = propertyPath.slice(1); // Remove "$".
-  const dotIndex = withoutDollar.indexOf(".");
-  return dotIndex === -1 ? withoutDollar : withoutDollar.slice(0, dotIndex);
+function getTopLevelPropertyName(propertyPath: string): string {
+  // PropertyPath is like "myProp" or "myProp.sub". The top-level property
+  // name is the first segment.
+  const dotIndex = propertyPath.indexOf(".");
+  return dotIndex === -1 ? propertyPath : propertyPath.slice(0, dotIndex);
 }

@@ -8,23 +8,20 @@ interface DefaultDocumentViewUiOptions {
 }
 
 namespace DefaultDocumentViewUiOptions {
-  /**
-   * Path to a property in the schema.
-   * Examples:
-   * - myProp
-   * - myList.$
-   * - myList.$.myProp
-   */
-  export type PropertyPath = `$${string}`;
-
   export interface DivNode {
-    // React.CSSProperties.
+    /** React.CSSProperties. */
     style?: Record<string, string | number>;
     children?: HtmlAstNode[];
   }
 
   export interface FieldNode {
-    propertyPath: PropertyPath;
+    /**
+     * Path to a property in the schema. Examples:
+     * - myProp
+     * - myList.$
+     * - myList.$.myProp
+     */
+    propertyPath: string;
     /** Only applies to StructFields. */
     layout?: Layout | undefined;
     /**
