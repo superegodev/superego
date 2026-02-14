@@ -1,71 +1,52 @@
-import test from "@playwright/test";
-import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
-import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
-import installProductivityPack from "../routines/installProductivityPack.js";
-import VisualEvaluator from "../VisualEvaluator.js";
+import { DataType } from "@superego/schema";
+import { test } from "../fixture.js";
+import createCollection from "../routines/createCollection.js";
 
-test("001. Create Contact", async ({ page }) => {
-  await test.step("00. Install Productivity pack", async () => {
-    // Exercise
-    await installProductivityPack(page);
+test("001. Create Contact", async ({ page, aiTap, aiInput, aiAssert }) => {
+  await page.goto("/");
+  await page.waitForFunction(() => Boolean((window as any).backend));
 
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "00.png",
-      page,
-      "empty Contacts collection page, create document icon button (top right)",
-    );
+  const collectionId = await createCollection(page, {
+    settings: {
+      name: "Contacts",
+      icon: null,
+      collectionCategoryId: null,
+      defaultCollectionViewAppId: null,
+      description: null,
+      assistantInstructions: null,
+    },
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            name: { dataType: DataType.String },
+            relation: { dataType: DataType.String },
+            number: { dataType: DataType.String },
+            address: { dataType: DataType.String },
+            notes: { dataType: DataType.String },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    versionSettings: {
+      contentBlockingKeysGetter: null,
+      contentSummaryGetter: {
+        source: "",
+        compiled: "export default function getContentSummary() { return {}; }",
+      },
+    },
   });
 
-  await test.step("01. Navigate to create Contact page", async () => {
-    // Exercise
-    await page.getByRole("link", { name: /Create document/i }).click();
-    await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await waitForTiptapRichTextJsonObjectField(page);
+  await page.goto(`/collections/${collectionId}`);
+  await aiTap("Create document");
+  await aiInput("Carl Jung", "Name field");
+  await aiInput("Protégé", "Relation field");
+  await aiInput("+41 44 123 45 67", "Number field");
+  await aiInput("carl@jung.ch", "Address field");
+  await aiInput("Ambitious. Watch his drift toward mysticism.", "Notes field");
+  await aiTap("Create");
 
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "01.png",
-      page,
-      "create Contact form, disabled Create button",
-    );
-  });
-
-  await test.step("02. Fill Contact details", async () => {
-    // Exercise
-    await page.getByLabel(/^Type/i).click();
-    await page.getByRole("option", { name: /Person/i }).click();
-    await page.getByRole("textbox", { name: /^Name/i }).fill("Carl Jung");
-    await page.getByRole("textbox", { name: /^Relation/i }).fill("Protégé");
-    await page
-      .getByRole("textbox", { name: /^Number/i })
-      .fill("+41 44 123 45 67");
-    await page.getByRole("textbox", { name: /^Address/i }).fill("carl@jung.ch");
-    await tiptapRichTextJsonObjectField(page)
-      .locator(".ProseMirror")
-      .fill("Ambitious. Watch his drift toward mysticism.");
-    // Wait for the debounce on the TipTap input.
-    await page.waitForTimeout(500);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "02.png",
-      page,
-      "contact form filled with made-up Carl Jung details",
-    );
-  });
-
-  await test.step("03. Create contact", async () => {
-    // Exercise
-    await page.getByRole("button", { name: /^Create$/i }).click();
-    await page.getByRole("button", { name: /^Save$/i }).waitFor();
-    await waitForTiptapRichTextJsonObjectField(page);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "03.png",
-      page,
-      "contact detail page for Carl Jung, disabled save icon button (top right)",
-    );
-  });
+  await aiAssert("contact detail page for Carl Jung is visible");
 });

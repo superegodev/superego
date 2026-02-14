@@ -1,19 +1,12 @@
 # Note on the e2e tests
 
-These e2e scenario tests only use visual comparisons of screenshots against
-"golden snapshots" for assertions. This approach has some pros and cons.
+These e2e scenario tests use Midscene (`@midscene/web`) as the primary
+interaction and assertion layer.
 
-Pros:
+Key principles:
 
-- It's easy to write assertions: just call the `VisualEvaluator.expectToSee`
-  method.
-- It's easy to verify that assertions are correct: just verify that the snapshot
-  satisfies the conditions passed to `expectToSee`.
-
-Cons:
-
-- Even minor style changes can break tests.
-- Full-page assertions are not fine-grained: they don't just verify one thing
-  looks correct, they verify the whole page looks correct.
-- When a snapshot is (re)generated, the developer has to remember to (re)verify
-  that the snapshot satisfies the conditions passed to `expectToSee`.
+- Use Midscene actions (for example `aiTap`, `aiInput`) for UI interactions.
+- Use Midscene assertions (`aiAssert`) for verification.
+- Use `createCollection` and `createContact` routines only for setup through
+  programmatic backend calls.
+- Do not use screenshot-based assertions.
