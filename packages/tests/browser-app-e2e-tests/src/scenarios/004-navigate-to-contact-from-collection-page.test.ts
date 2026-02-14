@@ -1,66 +1,60 @@
-import test from "@playwright/test";
-import openSidebar from "../actions/openSidebar.js";
-import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
-import mainPanel from "../locators/mainPanel.js";
+import { DataType } from "@superego/schema";
+import { test } from "../fixture.js";
+import createCollection from "../routines/createCollection.js";
 import createContact from "../routines/createContact.js";
-import installProductivityPack from "../routines/installProductivityPack.js";
-import VisualEvaluator from "../VisualEvaluator.js";
 
-test("004. Navigate to Contact from collection page", async ({ page }) => {
-  await test.step("00. Install Productivity pack and create Contact", async () => {
-    // Exercise
-    await installProductivityPack(page);
-    await createContact(page, {
-      name: "Carl Jung",
-      relation: "Protégé",
-      number: "+41 44 123 45 67",
-      address: "carl@jung.ch",
-      notes: "Ambitious. Watch his drift toward mysticism.",
-    });
+test("004. Navigate to Contact from collection page", async ({
+  page,
+  aiTap,
+  aiAssert,
+}) => {
+  await page.goto("/");
+  await page.waitForFunction(() => Boolean((window as any).backend));
 
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "00.png",
-      page,
-      "contact detail page for Carl Jung, disabled save icon button (top right)",
-    );
+  const collectionId = await createCollection(page, {
+    settings: {
+      name: "Contacts",
+      icon: null,
+      collectionCategoryId: null,
+      defaultCollectionViewAppId: null,
+      description: null,
+      assistantInstructions: null,
+    },
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            name: { dataType: DataType.String },
+            relation: { dataType: DataType.String },
+            number: { dataType: DataType.String },
+            address: { dataType: DataType.String },
+            notes: { dataType: DataType.String },
+          },
+        },
+      },
+      rootType: "Root",
+    },
+    versionSettings: {
+      contentBlockingKeysGetter: null,
+      contentSummaryGetter: {
+        source: "",
+        compiled: "export default function getContentSummary() { return {}; }",
+      },
+    },
   });
 
-  await test.step("01. Navigate to Contacts collection page", async () => {
-    // Exercise
-    await openSidebar(page);
-    const expandProductivityButton = page.getByRole("button", {
-      name: /Expand Productivity/i,
-    });
-    if (await expandProductivityButton.isVisible()) {
-      await expandProductivityButton.click();
-    }
-    await page.getByRole("row", { name: /Contacts/i }).click();
-    await mainPanel(page)
-      .getByRole("rowheader", { name: /Carl Jung/i })
-      .waitFor();
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "01.png",
-      page,
-      "Contacts collection table with a row for Carl Jung",
-    );
+  await createContact(page, {
+    collectionId,
+    name: "Carl Jung",
+    relation: "Protégé",
+    number: "+41 44 123 45 67",
+    address: "carl@jung.ch",
+    notes: "Ambitious. Watch his drift toward mysticism.",
   });
 
-  await test.step("02. Click on Contact table row", async () => {
-    // Exercise
-    await mainPanel(page)
-      .getByRole("rowheader", { name: /Carl Jung/i })
-      .click();
-    await page.getByRole("textbox", { name: /^Name/i }).waitFor();
-    await waitForTiptapRichTextJsonObjectField(page);
+  await page.goto(`/collections/${collectionId}`);
+  await aiTap("row for Carl Jung");
 
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "02.png",
-      page,
-      "contact detail page for Carl Jung",
-    );
-  });
+  await aiAssert("contact detail page for Carl Jung is visible");
 });

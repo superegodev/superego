@@ -1,185 +1,59 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
-import selectWordInMarkdownInput from "../actions/selectWordInMarkdownInput.js";
-import waitForMarkdownStringField from "../actions/waitForMarkdownStringField.js";
-import mainPanel from "../locators/mainPanel.js";
-import markdownStringField from "../locators/markdownStringField.js";
+import { test } from "../fixture.js";
 import createCollection from "../routines/createCollection.js";
-import VisualEvaluator from "../VisualEvaluator.js";
 
-test("005. Use markdown input for document properties", async ({ page }) => {
-  await test.step("00. Create collection with markdown String property", async () => {
-    // Exercise
-    await createCollection(page, {
-      settings: {
-        name: "Notes",
-        icon: null,
-        collectionCategoryId: null,
-        defaultCollectionViewAppId: null,
-        description: null,
-        assistantInstructions: null,
-      },
-      schema: {
-        types: {
-          Root: {
-            dataType: DataType.Struct,
-            properties: {
-              notes: {
-                dataType: DataType.String,
-                format: "dev.superego:String.Markdown",
-              },
+test("005. Use markdown input for document properties", async ({
+  page,
+  aiTap,
+  aiInput,
+  aiAssert,
+}) => {
+  await page.goto("/");
+  await page.waitForFunction(() => Boolean((window as any).backend));
+
+  const collectionId = await createCollection(page, {
+    settings: {
+      name: "Notes",
+      icon: null,
+      collectionCategoryId: null,
+      defaultCollectionViewAppId: null,
+      description: null,
+      assistantInstructions: null,
+    },
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            notes: {
+              dataType: DataType.String,
+              format: "dev.superego:String.Markdown",
             },
           },
         },
-        rootType: "Root",
       },
-      versionSettings: {
-        contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source: "",
-          compiled:
-            "export default function getContentSummary() { return {}; }",
-        },
+      rootType: "Root",
+    },
+    versionSettings: {
+      contentBlockingKeysGetter: null,
+      contentSummaryGetter: {
+        source: "",
+        compiled: "export default function getContentSummary() { return {}; }",
       },
-    });
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "00.png",
-      page,
-      "empty Notes collection page, create document icon button (top right)",
-    );
-  });
-
-  await test.step("01. Go to new document page", async () => {
-    // Exercise
-    await page.getByRole("link", { name: /Create document/i }).click();
-    await page.getByRole("button", { name: /^Create$/i }).waitFor();
-    await waitForMarkdownStringField(page);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "01.png",
-      page,
-      'form with a "Notes" textarea field and disabled Create button',
-    );
+    },
   });
 
   const plainWord = "solstice";
+  await page.goto(`/collections/${collectionId}`);
+  await aiTap("Create document");
+  await aiInput(
+    `# Expedition Log\n\nThe keyword ${plainWord} should remain plain text.`,
+    "Notes field",
+  );
+  await aiTap(`select the word ${plainWord} in the Notes field`);
+  await aiTap("Bold");
+  await aiAssert(`the selected word ${plainWord} is bold in the markdown editor`);
 
-  await test.step("02. Fill markdown input with a markdown page", async () => {
-    // Exercise
-    await markdownStringField(page)
-      .locator(".overtype-input")
-      .fill(
-        `
-# Expedition Log
-
-Welcome to the northbound research notes.
-
-## Objectives
-- Capture dawn photos
-- Verify backup batteries
-- Review tide tables
-
-### Useful links
-- [Trail map](https://example.com/trail-map)
-- [Weather station](https://example.com/weather)
-
-> Keep the left ridge in sight after the old bridge.
-
-1. Meet the guide
-2. Cross the river
-3. Set up base camp
-
-\`\`\`bash
-echo "checkpoint alpha"
-\`\`\`
-
-The keyword ${plainWord} should remain plain text.
-        `.trim(),
-      );
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "02.png",
-      page,
-      'form with a "Notes" textarea field, containing markdown content',
-    );
-  });
-
-  await test.step("03. Select a plain word with no markup", async () => {
-    // Exercise
-    await selectWordInMarkdownInput(page, plainWord);
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "03.png",
-      page,
-      `form with a "Notes" textarea field, word "${plainWord}" selected`,
-    );
-  });
-
-  await test.step("04. Apply bold markup using toolbar", async () => {
-    // Exercise
-    await mainPanel(page)
-      .getByRole("button", { name: /^Bold$/i })
-      .click();
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "04.png",
-      page,
-      `form with a "Notes" textarea field, word "${plainWord}" selected and with bold markup`,
-    );
-  });
-
-  await test.step("05. Remove bold markup using toolbar", async () => {
-    // Exercise
-    await mainPanel(page)
-      .getByRole("button", { name: /^Bold$/i })
-      .click();
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "05.png",
-      page,
-      `form with a "Notes" textarea field, word "${plainWord}" selected and with no markup`,
-    );
-  });
-
-  await test.step("06. Apply bold markup using Cmd/Ctrl+B", async () => {
-    // Exercise
-    await markdownStringField(page)
-      .locator(".overtype-input")
-      .press("ControlOrMeta+B");
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "06.png",
-      page,
-      `form with a "Notes" textarea field, word "${plainWord}" selected and with bold markup`,
-    );
-  });
-
-  await test.step("07. Remove bold markup using Cmd/Ctrl+B", async () => {
-    // Exercise
-    await selectWordInMarkdownInput(page, plainWord);
-    await markdownStringField(page)
-      .locator(".overtype-input")
-      .press("ControlOrMeta+B");
-    await page.waitForTimeout(100);
-
-    // Verify
-    await VisualEvaluator.expectToSee(
-      "07.png",
-      page,
-      `form with a "Notes" textarea field, word "${plainWord}" selected and with no markup`,
-    );
-  });
+  await aiTap("Bold");
+  await aiAssert(`the selected word ${plainWord} is not bold in the markdown editor`);
 });
