@@ -1,9 +1,11 @@
+import type { FileId } from "@superego/backend";
 import {
   type FileRef,
   type FileTypeDefinition,
   type RHFProtoFile,
   utils as schemaUtils,
 } from "@superego/schema";
+import { useEffect, useState } from "react";
 import {
   DropZone,
   FieldErrorContext,
@@ -106,6 +108,7 @@ export default function FileField({
               file={field.value}
               setFile={setFile}
               isReadOnly={isReadOnly}
+              isListItem={isListItem}
             />
           ) : (
             <NullFileFields setFile={setFile} isReadOnly={isReadOnly} />
@@ -161,6 +164,7 @@ interface NonNullFileFieldsProps {
   file: RHFProtoFile | FileRef;
   setFile: (file: File) => void;
   isReadOnly: boolean;
+  isListItem: boolean;
 }
 function NonNullFileFields({
   control,
@@ -168,30 +172,100 @@ function NonNullFileFields({
   file,
   setFile,
   isReadOnly,
+  isListItem,
 }: NonNullFileFieldsProps) {
   const intl = useIntl();
   const backend = useBackend();
   const canOpenInNativeApp = electronMainWorld.isElectron;
+  const isImage = file.mimeType.startsWith("image/");
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isImage || isListItem) {
+      setImageSrc(null);
+      return;
+    }
+
+    let isUnmounted = false;
+    (async () => {
+      const content =
+        "id" in file
+          ? (await backend.files.getContent(file.id as FileId)).data
+          : file.content;
+      if (!content || isUnmounted) {
+        return;
+      }
+      const url = URL.createObjectURL(
+        new Blob([content], { type: file.mimeType }),
+      );
+      setImageSrc(url);
+    })();
+
+    return () => {
+      isUnmounted = true;
+    };
+  }, [backend.files, file, isImage, isListItem]);
+
+  useEffect(() => {
+    if (!imageSrc) {
+      return;
+    }
+    return () => {
+      URL.revokeObjectURL(imageSrc);
+    };
+  }, [imageSrc]);
+
   return (
-    <div className={cs.FileField.nonNullFileFieldsRoot}>
-      <div className={cs.FileField.nonNullFileIcon}>
-        <FileIcon mimeType={file.mimeType} />
+    <div
+      className={classnames(
+        cs.FileField.nonNullFileFieldsRoot,
+        !isListItem && cs.FileField.nonNullFileFieldsRootNotInList,
+      )}
+    >
+      <div
+        className={classnames(
+          cs.FileField.nonNullFileIcon,
+          !isListItem && cs.FileField.nonNullFileIconNotInList,
+        )}
+      >
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={file.name}
+            className={cs.FileField.nonNullFilePreviewImage}
+          />
+        ) : (
+          <FileIcon mimeType={file.mimeType} />
+        )}
       </div>
       <RHFTextField
         control={control}
         name={`${name}.name`}
         ariaLabel={intl.formatMessage({ defaultMessage: "Name" })}
         isReadOnly={isReadOnly}
-        className={cs.FileField.nonNullFileTextField}
+        className={classnames(
+          cs.FileField.nonNullFileTextField,
+          cs.FileField.nonNullFileNameTextField,
+          !isListItem && cs.FileField.nonNullFileTextFieldNotInList,
+        )}
       />
       <RHFTextField
         control={control}
         name={`${name}.mimeType`}
         ariaLabel={intl.formatMessage({ defaultMessage: "Mime Type" })}
         isReadOnly={isReadOnly}
-        className={cs.FileField.nonNullFileTextField}
+        className={classnames(
+          cs.FileField.nonNullFileTextField,
+          cs.FileField.nonNullFileMimeTypeTextField,
+          !isListItem && cs.FileField.nonNullFileTextFieldNotInList,
+        )}
       />
-      <Toolbar className={cs.FileField.nonNullFileButtons}>
+      <Toolbar
+        className={classnames(
+          cs.FileField.nonNullFileButtons,
+          !isListItem && cs.FileField.nonNullFileButtonsNotInList,
+        )}
+      >
         {!isReadOnly && (
           <FileTrigger
             onSelect={(files) => {
