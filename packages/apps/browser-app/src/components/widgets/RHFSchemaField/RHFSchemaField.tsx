@@ -96,9 +96,7 @@ export default function RHFSchemaField({
         </FieldError>
       </FieldErrorContext>
       <Description>
-        <FormattedMessage
-          defaultMessage={`Defines the "shape" of document contents in this collection.`}
-        />
+        <FormattedMessage defaultMessage='Defines the "shape" of document contents in this collection.' />
       </Description>
     </div>
   );

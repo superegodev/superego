@@ -10,19 +10,17 @@ export default function defaultDocumentViewUiOptions(
 ): v.GenericSchema<DefaultDocumentViewUiOptions, DefaultDocumentViewUiOptions> {
   return v.pipe(
     v.looseObject({
-      fullWidth: v.boolean(),
-      collapsePrimarySidebar: v.boolean(),
+      fullWidth: v.optional(v.boolean()),
+      collapsePrimarySidebar: v.optional(v.boolean()),
     }),
     v.rawCheck(({ dataset, addIssue }) => {
-      if (!dataset.typed) return;
-      const options = dataset.value as DefaultDocumentViewUiOptions;
-      for (const issue of validate(options, schema)) {
+      if (!dataset.typed) {
+        return;
+      }
+      for (const issue of validate(dataset.value, schema)) {
         const path = issue.path?.map((segment) => ({
-          type: "unknown" as const,
-          origin: "value" as const,
           input: dataset.value,
           key: segment.key,
-          value: undefined,
         }));
         addIssue({
           message: issue.message,
@@ -33,10 +31,7 @@ export default function defaultDocumentViewUiOptions(
         });
       }
     }),
-  ) as v.GenericSchema<
-    DefaultDocumentViewUiOptions,
-    DefaultDocumentViewUiOptions
-  >;
+  );
 }
 
 function validate(
@@ -166,8 +161,8 @@ function isFieldNode(
 }
 
 function getTopLevelPropertyName(propertyPath: string): string {
-  // PropertyPath is like "myProp" or "myProp.sub". The top-level property
-  // name is the first segment.
+  // PropertyPath is like "myProp" or "myProp.sub". The top-level property name
+  // is the first segment.
   const dotIndex = propertyPath.indexOf(".");
   return dotIndex === -1 ? propertyPath : propertyPath.slice(0, dotIndex);
 }

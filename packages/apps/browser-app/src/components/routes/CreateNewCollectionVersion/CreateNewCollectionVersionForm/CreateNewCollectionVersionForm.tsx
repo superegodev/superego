@@ -217,25 +217,22 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             panel: <ContentSummaryTab control={control} schema={schema} />,
             isDisabled: !(isSchemaDirty && isSchemaValid),
           },
-          collection.latestVersion.settings.defaultDocumentViewUiOptions !==
-          null
-            ? {
-                title: (
-                  <TabTitle
-                    hasErrors={!!formState.errors.defaultDocumentViewUiOptions}
-                  >
-                    <FormattedMessage defaultMessage="4. UI options" />
-                  </TabTitle>
-                ),
-                panel: (
-                  <DefaultDocumentViewUiOptionsTab
-                    control={control}
-                    schema={schema}
-                  />
-                ),
-                isDisabled: !(isSchemaDirty && isSchemaValid),
-              }
-            : null,
+          {
+            title: (
+              <TabTitle
+                hasErrors={!!formState.errors.defaultDocumentViewUiOptions}
+              >
+                <FormattedMessage defaultMessage="4. UI options" />
+              </TabTitle>
+            ),
+            panel: (
+              <DefaultDocumentViewUiOptionsTab
+                control={control}
+                schema={schema}
+              />
+            ),
+            isDisabled: !(isSchemaDirty && isSchemaValid),
+          },
           CollectionUtils.hasRemote(collection) && connector
             ? {
                 title: (

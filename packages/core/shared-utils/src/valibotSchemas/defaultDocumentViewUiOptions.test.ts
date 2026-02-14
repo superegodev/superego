@@ -49,6 +49,22 @@ test.only = (name: string, testCase: TestCase) => test(name, testCase, true);
 // Tests //
 ///////////
 
+test("empty options returns no issues", {
+  options: {},
+  schema: {
+    types: {
+      Root: {
+        dataType: DataType.Struct,
+        properties: {
+          title: { dataType: DataType.String },
+        },
+      },
+    },
+    rootType: "Root",
+  },
+  expectedIssues: [],
+});
+
 test("no rootLayout returns no issues", {
   options: { fullWidth: false, collapsePrimarySidebar: false },
   schema: {

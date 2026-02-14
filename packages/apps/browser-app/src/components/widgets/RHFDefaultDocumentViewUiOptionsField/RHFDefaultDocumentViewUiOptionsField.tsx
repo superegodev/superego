@@ -42,10 +42,14 @@ export default function RHFDefaultDocumentViewUiOptionsField({
   const handleChange = useCallback(
     (newValue: string) => {
       setJsonValue(newValue);
-      try {
-        field.onChange(JSON.parse(newValue));
-      } catch {
-        field.onChange(newValue);
+      if (newValue === "") {
+        field.onChange(null);
+      } else {
+        try {
+          field.onChange(JSON.parse(newValue));
+        } catch {
+          field.onChange(newValue);
+        }
       }
     },
     [field.onChange],
@@ -103,11 +107,7 @@ export default function RHFDefaultDocumentViewUiOptionsField({
         </FieldError>
       </FieldErrorContext>
       <Description>
-        <FormattedMessage
-          defaultMessage={
-            "Defines the default layout and UI options for the document form in this collection."
-          }
-        />
+        <FormattedMessage defaultMessage="Defines the default layout and UI options for the document form in this collection." />
       </Description>
     </div>
   );
