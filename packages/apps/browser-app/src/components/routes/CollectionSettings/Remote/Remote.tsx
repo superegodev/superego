@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import AuthenticateOAuth2PKCEConnectorButton from "./AuthenticateOAuth2PKCEConnectorButton.js";
 import ConnectorSelect from "./ConnectorSelect.js";
 import SetCollectionRemoteForm from "./SetCollectionRemoteForm.js";
@@ -20,7 +21,7 @@ export default function Remote({ collection, connectors }: Props) {
       : null,
   );
   return (
-    <>
+    <Fields>
       <Alert variant="info">
         <FormattedMessage
           defaultMessage={`
@@ -71,6 +72,6 @@ export default function Remote({ collection, connectors }: Props) {
           }
         />
       ) : null}
-    </>
+    </Fields>
   );
 }

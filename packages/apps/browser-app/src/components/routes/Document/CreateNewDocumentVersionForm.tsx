@@ -7,7 +7,6 @@ import type {
 } from "@superego/backend";
 import { type Schema, valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
@@ -18,6 +17,7 @@ import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
+import { Form } from "../../design-system/forms/forms.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
 

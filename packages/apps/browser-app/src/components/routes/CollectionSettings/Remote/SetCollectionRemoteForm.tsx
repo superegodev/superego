@@ -6,13 +6,13 @@ import {
 } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
 import type { ReactNode } from "react";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useSetCollectionRemote } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
+import { Form } from "../../../design-system/forms/forms.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "../CollectionSettings.css.js";
@@ -111,7 +111,7 @@ export default function SetCollectionRemoteForm({
   );
 
   return (
-    <Form onSubmit={onSubmit} className={cs.SetCollectionRemoteForm.root}>
+    <Form onSubmit={onSubmit}>
       <AuthenticationSettings
         control={control}
         authenticationStrategy={connector.authenticationStrategy}

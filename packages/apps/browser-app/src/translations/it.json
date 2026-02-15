@@ -1097,18 +1097,6 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
   },
-  "RHFTextListField.tsx_2/2yg+": {
-    "defaultMessage": "Aggiungi"
-  },
-  "RHFTextListField.tsx_G/yZLu": {
-    "defaultMessage": "Rimuovi"
-  },
-  "RHFTextListField.tsx_OT7vQx": {
-    "defaultMessage": "Elemento {number}"
-  },
-  "RHFTextListField.tsx_l95YvM": {
-    "defaultMessage": "Nessun elemento"
-  },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
   },

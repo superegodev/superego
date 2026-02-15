@@ -38,9 +38,7 @@ export const CreateNewDocumentVersionForm = {
     height: "100%",
   }),
 
-  readOnlyAlert: style({
-    marginBlockEnd: vars.spacing._8,
-  }),
+  readOnlyAlert: style({}),
 };
 
 export const RemoteDocumentInfoModal = {

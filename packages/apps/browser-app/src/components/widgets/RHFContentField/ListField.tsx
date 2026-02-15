@@ -137,7 +137,7 @@ function NonNullListField({
         }
         component="legend"
       />
-      <Fieldset.Fields>
+      <Fieldset.Fields className={cs.ListField.fields}>
         {fields.length === 0 ? (
           <div className={cs.ListField.emptyItemsPlaceholder}>
             <FormattedMessage defaultMessage="There are no items in the list" />

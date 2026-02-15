@@ -8,7 +8,6 @@ export const ExcalidrawInput = {
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
     overflow: "hidden",
-    marginBlockEnd: vars.spacing._2,
     selectors: {
       '&[data-has-focus="true"][data-focus-visible="true"]': {
         outline: `2px solid ${vars.colors.accent}`,

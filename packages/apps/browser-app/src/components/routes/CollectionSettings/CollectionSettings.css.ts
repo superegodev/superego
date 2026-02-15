@@ -25,11 +25,6 @@ export const UpdateCollectionVersionSettingsForm = {
 };
 
 export const SetCollectionRemoteForm = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
-  }),
-
   buttons: style({
     display: "flex",
     justifyContent: "flex-end",

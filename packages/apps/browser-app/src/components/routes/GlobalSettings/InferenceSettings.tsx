@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
+import { Fields } from "../../design-system/forms/forms.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./GlobalSettings.css.js";
 
@@ -13,7 +14,7 @@ interface Props {
 export default function InferenceSettings({ control }: Props) {
   const intl = useIntl();
   return (
-    <>
+    <Fields>
       <Alert variant="info" className={cs.InferenceSettings.info}>
         <FormattedMessage
           defaultMessage={`
@@ -233,6 +234,6 @@ export default function InferenceSettings({ control }: Props) {
           />
         </Fieldset.Fields>
       </Fieldset>
-    </>
+    </Fields>
   );
 }

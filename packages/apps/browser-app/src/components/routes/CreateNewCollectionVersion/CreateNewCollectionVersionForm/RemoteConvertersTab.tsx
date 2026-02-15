@@ -8,6 +8,7 @@ import forms from "../../../../business-logic/forms/forms.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
@@ -50,7 +51,7 @@ export default function RemoteConvertersTab({
   }, [collection, schema, connector]);
   const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return typeof schema !== "string" ? (
-    <>
+    <Fields>
       <Alert variant="info">
         <FormattedMessage
           defaultMessage="Update the <code>fromRemoteDocument</code> function to reflect schema changes."
@@ -104,6 +105,6 @@ the conversion function to reflect the change.
         </RHFSubmitButton>
       </div>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
-    </>
+    </Fields>
   ) : null;
 }

@@ -6,7 +6,7 @@ export const JsonObjectField = {
     root: style({
       display: "flex",
       flexDirection: "column",
-      marginBlockEnd: vars.spacing._6,
+      gap: vars.spacing._2,
     }),
   },
 
@@ -14,7 +14,7 @@ export const JsonObjectField = {
     root: style({
       display: "flex",
       flexDirection: "column",
-      marginBlockEnd: vars.spacing._6,
+      gap: vars.spacing._2,
     }),
   },
 
@@ -22,7 +22,7 @@ export const JsonObjectField = {
     root: style({
       display: "flex",
       flexDirection: "column",
-      marginBlockEnd: vars.spacing._6,
+      gap: vars.spacing._2,
     }),
   },
 
@@ -38,7 +38,7 @@ export const StringField = {
     root: style({
       display: "flex",
       flexDirection: "column",
-      marginBlockEnd: vars.spacing._6,
+      gap: vars.spacing._2,
     }),
   },
 
@@ -46,7 +46,7 @@ export const StringField = {
     root: style({
       display: "flex",
       flexDirection: "column",
-      marginBlockEnd: vars.spacing._6,
+      gap: vars.spacing._2,
     }),
 
     fields: style({
@@ -56,12 +56,10 @@ export const StringField = {
 
     datePicker: style({
       flex: "3 0 0",
-      marginBlockEnd: 0,
     }),
 
     timeField: style({
       flex: "3 0 0",
-      marginBlockEnd: 0,
     }),
 
     offsetInput: style({
@@ -88,12 +86,7 @@ export const FileField = {
 
   fields: style({
     paddingInlineStart: "0 !important",
-    marginBlockEnd: vars.spacing._6,
-    selectors: {
-      ':not(:last-child) > [data-is-list-item="true"] &': {
-        marginBlockEnd: 0,
-      },
-    },
+    paddingBlockStart: "0 !important",
   }),
 
   dropZone: style({
@@ -111,7 +104,6 @@ export const FileField = {
     fontStyle: "italic",
     border: `${vars.borders.width.thin} dashed ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    marginBlockEnd: vars.spacing._2,
     selectors: {
       "&:hover": {
         color: vars.colors.text.secondary,
@@ -136,17 +128,13 @@ export const FileField = {
     width: vars.spacing._6,
     height: `calc(${vars.spacing._9} + 1px)`,
     fontSize: vars.typography.fontSizes.xl4,
-    marginBlockEnd: vars.spacing._2,
   }),
 
-  nonNullFileTextField: style({
-    marginBlockEnd: "0",
-  }),
+  nonNullFileTextField: style({}),
 
   nonNullFileButtons: style({
     display: "flex",
     columnGap: vars.spacing._2,
-    marginBlockEnd: vars.spacing._2,
   }),
 
   nonNullFileButton: style({
@@ -159,6 +147,7 @@ export const StructAndListField = {
   nullValueFields: style({
     paddingInlineStart: 0,
   }),
+
   nullValueSetValueButton: style({
     display: "flex",
     justifyContent: "center",
@@ -170,7 +159,6 @@ export const StructAndListField = {
     fontStyle: "italic",
     border: `${vars.borders.width.thin} dashed ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    marginBlockEnd: vars.spacing._8,
     selectors: {
       "&:hover": {
         color: vars.colors.text.secondary,
@@ -180,6 +168,10 @@ export const StructAndListField = {
 };
 
 export const ListField = {
+  fields: style({
+    gap: vars.spacing._2,
+  }),
+
   emptyItemsPlaceholder: style({
     display: "flex",
     justifyContent: "center",
@@ -187,11 +179,18 @@ export const ListField = {
     fontSize: vars.typography.fontSizes.md,
     fontStyle: "italic",
     color: vars.colors.text.secondary,
-    marginBlockEnd: vars.spacing._8,
   }),
+
   item: style({
     position: "relative",
+    selectors: {
+      "&:not(:first-child):has(> [data-data-type='Struct']), &:not(:first-child):has(> [data-data-type='List'])":
+        {
+          paddingBlockStart: vars.spacing._2,
+        },
+    },
   }),
+
   itemActions: style({
     position: "absolute",
     top: `calc(${vars.spacing._1} + ${vars.borders.width.thin})`,
@@ -215,6 +214,7 @@ export const ListField = {
       },
     },
   }),
+
   itemAction: style({
     fontSize: vars.typography.fontSizes.xl,
     color: vars.colors.text.secondary,
@@ -227,16 +227,7 @@ export const ListField = {
 };
 
 export const ListItemField = {
-  root: style({
-    selectors: {
-      ":not(:last-child) > &": {
-        marginBlockEnd: 0,
-      },
-      ':not(:last-child) > &[data-data-type="Boolean"]': {
-        marginBlockEnd: vars.spacing._2,
-      },
-    },
-  }),
+  root: style({}),
 };
 
 export const NullifyFieldAction = {
@@ -257,22 +248,12 @@ export const Field = {
     flexGrow: 1,
     minHeight: 0,
     height: "100%",
-    selectors: {
-      "&:last-child": {
-        marginBlockEnd: 0,
-      },
-    },
   }),
 
   growContent: style({
     flexGrow: 1,
     minHeight: 0,
     height: "100%",
-    selectors: {
-      ":last-child > &": {
-        marginBlockEnd: "0 !important",
-      },
-    },
   }),
 
   root: style({
@@ -287,7 +268,7 @@ export const Field = {
         content: "",
         position: "absolute",
         top: `calc(-1 * ${vars.spacing._2})`,
-        bottom: 0,
+        bottom: `calc(-1 * ${vars.spacing._2})`,
         left: `calc(-1 * ${vars.spacing._2})`,
         right: `calc(-1 * ${vars.spacing._2})`,
         background: vars.colors.reds._4,
@@ -299,7 +280,7 @@ export const Field = {
       },
       "&:is(fieldset)::before": {
         top: `calc(-1 * ${vars.spacing._12})`,
-        bottom: vars.spacing._6,
+        bottom: `calc(-1 * ${vars.spacing._2})`,
       },
     },
   }),
@@ -362,7 +343,6 @@ export const DocumentRefField = {
       display: "flex",
       alignItems: "center",
       gap: vars.spacing._2,
-      marginBlockEnd: vars.spacing._2,
     }),
 
     button: style({

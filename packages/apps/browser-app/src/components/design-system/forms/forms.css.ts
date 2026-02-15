@@ -1,11 +1,31 @@
-import { type ComplexStyleRule, style } from "@vanilla-extract/css";
+import {
+  type ComplexStyleRule,
+  globalStyle,
+  style,
+} from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
+
+export const Form = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._6,
+  }),
+};
+
+export const Fields = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._6,
+  }),
+};
 
 export const TextField = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
+    gap: vars.spacing._2,
   }),
 };
 
@@ -13,7 +33,7 @@ export const NumberField = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
+    gap: vars.spacing._2,
   }),
 };
 
@@ -21,8 +41,8 @@ export const RadioGroup = {
   root: style({
     display: "flex",
     flexDirection: "column",
+    gap: vars.spacing._2,
     color: vars.colors.text.primary,
-    marginBlockEnd: vars.spacing._6,
   }),
 };
 
@@ -33,11 +53,7 @@ export const Radio = {
     gap: vars.spacing._2,
     color: "var(--text-color)",
     fontSize: vars.typography.fontSizes.md,
-    marginBlockEnd: vars.spacing._2,
     selectors: {
-      "&:first-of-type": {
-        marginBlockStart: vars.spacing._1,
-      },
       "&::before": {
         content: "''",
         display: "block",
@@ -76,7 +92,7 @@ export const Select = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
+    gap: vars.spacing._2,
   }),
 };
 
@@ -88,7 +104,6 @@ export const SelectButton = {
     gap: vars.spacing._2,
     // Pixel adjustment to all inputs' heights match.
     height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
   }),
 
@@ -162,7 +177,6 @@ export const SelectOptions = {
 export const Label = {
   root: style({
     display: "block",
-    marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
     fontWeight: vars.typography.fontWeights.medium,
     color: vars.colors.text.primary,
@@ -181,7 +195,6 @@ const inputRootBase: ComplexStyleRule = {
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
-  marginBlockEnd: vars.spacing._2,
   borderWidth: vars.borders.width.thin,
   borderRadius: vars.borders.radius.md,
   borderStyle: "solid",
@@ -225,7 +238,6 @@ export const TextArea = {
 export const FieldError = {
   root: style({
     display: "block",
-    marginBlockEnd: vars.spacing._2,
     fontSize: vars.typography.fontSizes.sm,
     color: vars.colors.semantic.error.text,
   }),
@@ -242,12 +254,14 @@ export const Description = {
     },
   }),
 };
+globalStyle(`${Description.root} > :first-child`, { marginBlockStart: 0 });
+globalStyle(`${Description.root} > :last-child`, { marginBlockEnd: 0 });
 
 export const DatePicker = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
+    gap: vars.spacing._2,
   }),
 };
 
@@ -261,7 +275,6 @@ export const DatePickerInput = {
 
   dateInput: style({
     border: 0,
-    marginBlockEnd: 0,
     alignItems: "center",
     alignSelf: "center",
     width: "fit-content",
@@ -298,7 +311,7 @@ export const TimeField = {
   root: style({
     display: "flex",
     flexDirection: "column",
-    marginBlockEnd: vars.spacing._6,
+    gap: vars.spacing._2,
   }),
 };
 
@@ -337,7 +350,6 @@ export const TimeInputWithMilliseconds = {
 
   dateInput: style({
     border: 0,
-    marginBlockEnd: 0,
     alignItems: "center",
     alignSelf: "center",
     width: "fit-content",
@@ -395,7 +407,6 @@ export const Switch = {
     display: "flex",
     alignItems: "center",
     gap: vars.spacing._2,
-    marginBlockEnd: vars.spacing._6,
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
     cursor: "pointer",
@@ -403,9 +414,6 @@ export const Switch = {
       '&[data-disabled="true"]': {
         color: vars.colors.text.secondary,
         cursor: "not-allowed",
-      },
-      [`&:has(+ ${Description.root})`]: {
-        marginBlockEnd: vars.spacing._2,
       },
     },
   }),

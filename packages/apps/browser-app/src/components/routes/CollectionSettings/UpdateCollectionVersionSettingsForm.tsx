@@ -2,7 +2,6 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection, TypescriptModule } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { useMemo } from "react";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
@@ -10,6 +9,7 @@ import { useUpdateLatestCollectionVersionSettings } from "../../../business-logi
 import forms from "../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
+import { Form } from "../../design-system/forms/forms.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Section from "../../design-system/Section/Section.js";
 import RHFContentBlockingKeysGetterField from "../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";

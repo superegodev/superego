@@ -1,5 +1,6 @@
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
+import { Fields } from "../../../design-system/forms/forms.js";
 import RHFEmojiField from "../../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFMarkdownField from "../../../widgets/RHFMarkdownField/RHFMarkdownField.js";
 import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.js";
@@ -12,7 +13,7 @@ interface Props {
 export default function GeneralSettingsTab({ control }: Props) {
   const intl = useIntl();
   return (
-    <>
+    <Fields>
       <div className={cs.GeneralSettingsTab.nameIconInputs}>
         <RHFEmojiField
           control={control}
@@ -48,6 +49,6 @@ export default function GeneralSettingsTab({ control }: Props) {
             "Specific instructions for this collection to pass to the assistant.",
         })}
       />
-    </>
+    </Fields>
   );
 }

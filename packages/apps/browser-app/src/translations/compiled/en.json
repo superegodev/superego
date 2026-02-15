@@ -3100,34 +3100,6 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
-  "RHFTextListField.tsx_2/2yg+": [
-    {
-      "type": 0,
-      "value": "Add"
-    }
-  ],
-  "RHFTextListField.tsx_G/yZLu": [
-    {
-      "type": 0,
-      "value": "Remove"
-    }
-  ],
-  "RHFTextListField.tsx_OT7vQx": [
-    {
-      "type": 0,
-      "value": "Item "
-    },
-    {
-      "type": 1,
-      "value": "number"
-    }
-  ],
-  "RHFTextListField.tsx_l95YvM": [
-    {
-      "type": 0,
-      "value": "No items"
-    }
-  ],
   "Remote.tsx_s8FZNF": [
     {
       "children": [

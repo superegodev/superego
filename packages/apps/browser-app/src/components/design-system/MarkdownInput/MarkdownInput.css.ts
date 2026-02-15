@@ -7,7 +7,6 @@ export const MarkdownInput = {
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
     overflow: "auto",
-    marginBlockEnd: vars.spacing._2,
     background: vars.colors.background.surface,
     selectors: {
       '&[data-has-focus="true"][data-focus-visible="true"]': {

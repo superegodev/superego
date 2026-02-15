@@ -1115,18 +1115,6 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
   },
-  "RHFTextListField.tsx_2/2yg+": {
-    "defaultMessage": "Add"
-  },
-  "RHFTextListField.tsx_G/yZLu": {
-    "defaultMessage": "Remove"
-  },
-  "RHFTextListField.tsx_OT7vQx": {
-    "defaultMessage": "Item {number}"
-  },
-  "RHFTextListField.tsx_l95YvM": {
-    "defaultMessage": "No items"
-  },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
   },

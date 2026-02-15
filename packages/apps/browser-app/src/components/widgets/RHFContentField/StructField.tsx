@@ -10,6 +10,7 @@ import classnames from "../../../utils/classnames.js";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
+import { Fields as FormsFields } from "../../design-system/forms/forms.js";
 import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import LayoutRenderer from "./LayoutRenderer.js";
@@ -131,18 +132,22 @@ function Fields({
       />
     );
   }
-  return Object.keys(typeDefinition.properties).map((propertyName) => (
-    <AnyField
-      key={propertyName}
-      schema={schema}
-      typeDefinition={typeDefinition.properties[propertyName]!}
-      isNullable={
-        typeDefinition.nullableProperties?.includes(propertyName) ?? false
-      }
-      isListItem={false}
-      control={control}
-      name={name !== "" ? `${name}.${propertyName}` : propertyName}
-      label={toTitleCase(propertyName)}
-    />
-  ));
+  return (
+    <FormsFields>
+      {Object.keys(typeDefinition.properties).map((propertyName) => (
+        <AnyField
+          key={propertyName}
+          schema={schema}
+          typeDefinition={typeDefinition.properties[propertyName]!}
+          isNullable={
+            typeDefinition.nullableProperties?.includes(propertyName) ?? false
+          }
+          isListItem={false}
+          control={control}
+          name={name !== "" ? `${name}.${propertyName}` : propertyName}
+          label={toTitleCase(propertyName)}
+        />
+      ))}
+    </FormsFields>
+  );
 }

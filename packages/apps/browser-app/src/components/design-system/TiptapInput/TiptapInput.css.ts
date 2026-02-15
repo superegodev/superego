@@ -7,7 +7,6 @@ export const TiptapInput = {
     overflow: "auto",
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    marginBlockEnd: vars.spacing._2,
     background: vars.colors.background.surface,
     selectors: {
       '&[data-has-focus="true"][data-focus-visible="true"]': {

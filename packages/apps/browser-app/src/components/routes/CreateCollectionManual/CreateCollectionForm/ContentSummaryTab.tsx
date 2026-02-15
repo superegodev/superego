@@ -4,6 +4,7 @@ import type { Control } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import type { ResultOf } from "../../../../business-logic/backend/typeUtils.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFContentSummaryGetterField from "../../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
@@ -24,7 +25,7 @@ export default function ContentSummaryTab({ control, schema, result }: Props) {
     [schema],
   );
   return (
-    <>
+    <Fields>
       <RHFContentSummaryGetterField
         control={control}
         name="contentSummaryGetter"
@@ -42,6 +43,6 @@ export default function ContentSummaryTab({ control, schema, result }: Props) {
         </RHFSubmitButton>
       </div>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
-    </>
+    </Fields>
   );
 }

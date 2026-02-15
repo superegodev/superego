@@ -3078,34 +3078,6 @@
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
     }
   ],
-  "RHFTextListField.tsx_2/2yg+": [
-    {
-      "type": 0,
-      "value": "Aggiungi"
-    }
-  ],
-  "RHFTextListField.tsx_G/yZLu": [
-    {
-      "type": 0,
-      "value": "Rimuovi"
-    }
-  ],
-  "RHFTextListField.tsx_OT7vQx": [
-    {
-      "type": 0,
-      "value": "Elemento "
-    },
-    {
-      "type": 1,
-      "value": "number"
-    }
-  ],
-  "RHFTextListField.tsx_l95YvM": [
-    {
-      "type": 0,
-      "value": "Nessun elemento"
-    }
-  ],
   "Remote.tsx_s8FZNF": [
     {
       "children": [

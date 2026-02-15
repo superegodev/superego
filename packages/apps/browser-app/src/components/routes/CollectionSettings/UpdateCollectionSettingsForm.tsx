@@ -1,12 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionSettings } from "../../../business-logic/backend/hooks.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
+import { Form } from "../../design-system/forms/forms.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
