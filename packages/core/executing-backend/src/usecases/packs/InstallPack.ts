@@ -42,7 +42,7 @@ import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
 export default class PacksInstallPack extends Usecase<
-  Backend["packs"]["installPack"]
+  Backend["packs"]["install"]
 > {
   async exec(pack: Pack) {
     // Step 1: Generate all IDs upfront.

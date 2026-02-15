@@ -175,7 +175,7 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.packs = {
-      installPack: this.makeUsecase(PacksInstallPack, true),
+      install: this.makeUsecase(PacksInstallPack, true),
     };
 
     this.bazaar = {

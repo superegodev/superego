@@ -337,7 +337,7 @@ export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
 
 export const useInstallPack = makeUseBackendMutation(
   "packs",
-  "installPack",
+  "install",
   () => [
     ["listCollectionCategories"],
     ["listCollections"],
