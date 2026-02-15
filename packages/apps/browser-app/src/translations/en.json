@@ -584,6 +584,12 @@
   "DuplicateDocumentDetectedModal.tsx_i9essB": {
     "defaultMessage": "Create anyway"
   },
+  "EagerExcalidrawInput.tsx_QqavBC": {
+    "defaultMessage": "Enter full screen"
+  },
+  "EagerExcalidrawInput.tsx_gYg6LX": {
+    "defaultMessage": "Exit full screen"
+  },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },

@@ -8,6 +8,8 @@ import { Theme } from "@superego/backend";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
 import { useLocale } from "react-aria-components";
+import { PiArrowsIn, PiArrowsOut } from "react-icons/pi";
+import { useIntl } from "react-intl";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import { EXCALIDRAW_INPUT_ON_CHANGE_CHECK_INTERVAL } from "../../../config.js";
 import classnames from "../../../utils/classnames.js";
@@ -33,12 +35,14 @@ export default function EagerExcalidrawInput({
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(autoFocus);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const excalidrawApiRef = useRef<ExcalidrawImperativeAPI>(null);
   const previousSerializedRef = useRef<string | null>(null);
   const theme = useTheme();
   const { locale } = useLocale();
   const langCode = locale.split("-")[0];
+  const intl = useIntl();
 
   useEffect(() => {
     if (rootRef.current && ref) {
@@ -101,6 +105,7 @@ export default function EagerExcalidrawInput({
       excalidrawApi.addFiles(Object.values(value.files) as any[]);
     }
   }, [value]);
+  const viewModeEnabled = isReadOnly || !hasFocus;
 
   return (
     <div
@@ -111,6 +116,7 @@ export default function EagerExcalidrawInput({
       data-has-focus={hasFocus}
       data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
+      data-full-screen={isFullScreen}
       onFocus={() => setHasFocus(true)}
       onBlur={(evt) => {
         const focusPassedToChild = rootRef.current?.contains(evt.relatedTarget);
@@ -126,16 +132,31 @@ export default function EagerExcalidrawInput({
           excalidrawApiRef.current = excalidrawApi;
         }}
         initialData={value as ExcalidrawInitialDataState}
-        viewModeEnabled={isReadOnly || !hasFocus}
+        viewModeEnabled={viewModeEnabled}
         autoFocus={autoFocus}
         langCode={langCode}
         theme={theme === Theme.Light ? "light" : "dark"}
+        renderTopRightUI={() =>
+          !viewModeEnabled ? (
+            <button
+              type="button"
+              className={cs.ExcalidrawInput.fullScreenButton}
+              aria-label={
+                isFullScreen
+                  ? intl.formatMessage({ defaultMessage: "Exit full screen" })
+                  : intl.formatMessage({ defaultMessage: "Enter full screen" })
+              }
+              onClick={() => setIsFullScreen((isFullScreen) => !isFullScreen)}
+            >
+              {isFullScreen ? <PiArrowsIn /> : <PiArrowsOut />}
+            </button>
+          ) : null
+        }
       >
         <MainMenu>
           <MainMenu.DefaultItems.SaveAsImage />
           <MainMenu.DefaultItems.SearchMenu />
           <MainMenu.DefaultItems.ClearCanvas />
-          <MainMenu.DefaultItems.ChangeCanvasBackground />
         </MainMenu>
       </Excalidraw>
     </div>

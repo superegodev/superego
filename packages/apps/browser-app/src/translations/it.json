@@ -584,6 +584,12 @@
   "DuplicateDocumentDetectedModal.tsx_i9essB": {
     "defaultMessage": "Crea comunque"
   },
+  "EagerExcalidrawInput.tsx_QqavBC": {
+    "defaultMessage": "Attiva schermo intero"
+  },
+  "EagerExcalidrawInput.tsx_gYg6LX": {
+    "defaultMessage": "Esci da schermo intero"
+  },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
   },
