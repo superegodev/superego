@@ -66,7 +66,10 @@ export default function Default({
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.JsonObjectField.Default.root"
-      className={classnames(isListItem && cs.ListItemField.root, grow && cs.Field.grow)}
+      className={classnames(
+        isListItem && cs.ListItemField.root,
+        grow && cs.Field.grow,
+      )}
     >
       {!isListItem ? (
         <AnyFieldLabel
@@ -79,7 +82,10 @@ export default function Default({
       <TextArea
         ref={field.ref}
         placeholder={field.value === null ? "null" : undefined}
-        className={classnames(cs.JsonObjectField.Default.textArea, grow && cs.Field.growContent)}
+        className={classnames(
+          cs.JsonObjectField.Default.textArea,
+          grow && cs.Field.growContent,
+        )}
       />
       <FieldError>
         {typeof field.value === "string" ? (
