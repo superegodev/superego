@@ -3,7 +3,7 @@ import type {
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   PiArrowSquareOut,
   PiClockCountdown,
@@ -21,7 +21,6 @@ import {
 } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import useShell from "../../../business-logic/navigation/useShell.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
@@ -33,6 +32,7 @@ import DocumentContent from "./DocumentContent.js";
 import History from "./History/History.js";
 import RedirectIfLatest from "./RedirectIfLatest.js";
 import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
+import useApplyAlwaysCollapsePrimarySidebar from "./useApplyAlwaysCollapsePrimarySidebar.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -54,21 +54,13 @@ export default function Document({
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
-  const { setPrimarySidebarCollapse } = useShell();
 
   const defaultDocumentViewUiOptions =
     collection?.latestVersion.settings.defaultDocumentViewUiOptions ?? null;
 
-  useEffect(() => {
-    if (!defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar) {
-      return;
-    }
-    setPrimarySidebarCollapse("Always");
-    return () => setPrimarySidebarCollapse("SmallScreens");
-  }, [
+  useApplyAlwaysCollapsePrimarySidebar(
     defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar,
-    setPrimarySidebarCollapse,
-  ]);
+  );
 
   return collection ? (
     <DataLoader

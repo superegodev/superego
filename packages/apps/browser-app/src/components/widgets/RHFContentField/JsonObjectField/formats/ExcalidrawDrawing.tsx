@@ -40,6 +40,7 @@ export default function ExcalidrawDrawing({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}

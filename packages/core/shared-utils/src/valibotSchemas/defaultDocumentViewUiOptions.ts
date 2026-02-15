@@ -59,11 +59,31 @@ function validateLayout(
   path: { key: string | number }[],
   issues: ValidationIssue[],
 ): void {
-  // Collect all FieldNode property paths to verify completeness.
+  // Validate all nodes and collect FieldNode property paths.
   const foundPropertyPaths = new Set<string>();
+  validateNodes(layout, schema, path, issues, foundPropertyPaths);
 
-  for (let i = 0; i < layout.length; i++) {
-    const node = layout[i]!;
+  // Check completeness: layout must contain ALL properties of the Struct.
+  const expectedProperties = Object.keys(structProperties);
+  for (const expectedProp of expectedProperties) {
+    if (!foundPropertyPaths.has(expectedProp)) {
+      issues.push({
+        message: `Layout is missing property "${expectedProp}".`,
+        path,
+      });
+    }
+  }
+}
+
+function validateNodes(
+  nodes: DefaultDocumentViewUiOptions.Layout,
+  schema: Schema,
+  path: { key: string | number }[],
+  issues: ValidationIssue[],
+  foundPropertyPaths: Set<string>,
+): void {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i]!;
     const nodePath = [...path, { key: i }];
 
     if (isFieldNode(node)) {
@@ -116,40 +136,14 @@ function validateLayout(
     } else {
       // DivNode: validate children recursively.
       if (node.children) {
-        validateLayout(
+        validateNodes(
           node.children,
-          structProperties,
           schema,
           [...nodePath, { key: "children" }],
           issues,
+          foundPropertyPaths,
         );
-        // Collect property paths from children.
-        collectFieldPropertyPaths(node.children, foundPropertyPaths);
       }
-    }
-  }
-
-  // Check completeness: layout must contain ALL properties of the Struct.
-  const expectedProperties = Object.keys(structProperties);
-  for (const expectedProp of expectedProperties) {
-    if (!foundPropertyPaths.has(expectedProp)) {
-      issues.push({
-        message: `Layout is missing property "${expectedProp}".`,
-        path,
-      });
-    }
-  }
-}
-
-function collectFieldPropertyPaths(
-  layout: DefaultDocumentViewUiOptions.Layout,
-  result: Set<string>,
-): void {
-  for (const node of layout) {
-    if (isFieldNode(node)) {
-      result.add(getTopLevelPropertyName(node.propertyPath));
-    } else if (node.children) {
-      collectFieldPropertyPaths(node.children, result);
     }
   }
 }

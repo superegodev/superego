@@ -9,25 +9,27 @@ export interface FieldUiOptions {
 
 export default function useFieldUiOptions(name: string): FieldUiOptions {
   const { defaultDocumentViewUiOptions } = useUiOptions();
+
   if (!defaultDocumentViewUiOptions?.rootLayout) {
     return {};
   }
+
   if (name === "") {
     return { layout: defaultDocumentViewUiOptions.rootLayout };
   }
-  const canonicalPath = toCanonicalPath(name);
+
   const node = findFieldNode(
     defaultDocumentViewUiOptions.rootLayout,
-    canonicalPath,
+    toCanonicalPath(name),
   );
-  if (!node) {
-    return {};
-  }
-  return {
-    layout: node.layout,
-    hideLabel: node.hideLabel,
-    allowCollapsing: node.allowCollapsing,
-  };
+
+  return node
+    ? {
+        layout: node.layout,
+        hideLabel: node.hideLabel,
+        allowCollapsing: node.allowCollapsing,
+      }
+    : {};
 }
 
 /**
@@ -54,7 +56,7 @@ function isFieldNode(
 function findFieldNode(
   layout: DefaultDocumentViewUiOptions.Layout,
   canonicalPath: string,
-): DefaultDocumentViewUiOptions.FieldNode | undefined {
+): DefaultDocumentViewUiOptions.FieldNode | null {
   for (const node of layout) {
     if (isFieldNode(node)) {
       if (node.propertyPath === canonicalPath) {
@@ -74,5 +76,5 @@ function findFieldNode(
       }
     }
   }
-  return undefined;
+  return null;
 }

@@ -56,11 +56,11 @@ function NullListField({
       isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
-        name={name}
+        component="legend"
       />
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
         {isReadOnly ? (
@@ -107,11 +107,10 @@ function NonNullListField({
       isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
-        name={name}
         actions={
           !isReadOnly ? (
             <>
@@ -136,6 +135,7 @@ function NonNullListField({
             </>
           ) : undefined
         }
+        component="legend"
       />
       <Fieldset.Fields>
         {fields.length === 0 ? (

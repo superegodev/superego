@@ -21,7 +21,8 @@ export default function LayoutRenderer({
 }: Props) {
   return layout.map((node, index) => (
     <AstNode
-      // biome-ignore lint/suspicious/noArrayIndexKey: layout is a static AST that doesn't reorder.
+      // Layout is a static AST that doesn't reorder.
+      // biome-ignore lint/suspicious/noArrayIndexKey: see above.
       key={index}
       node={node}
       schema={schema}
@@ -48,10 +49,7 @@ function AstNode({
   if ("propertyPath" in node) {
     const propertyName = node.propertyPath.split(".")[0]!;
     const propertyTypeDefinition = typeDefinition.properties[propertyName];
-    if (!propertyTypeDefinition) {
-      return null;
-    }
-    return (
+    return propertyTypeDefinition ? (
       <AnyField
         schema={schema}
         typeDefinition={propertyTypeDefinition}
@@ -63,13 +61,15 @@ function AstNode({
         name={name !== "" ? `${name}.${propertyName}` : propertyName}
         label={toTitleCase(propertyName)}
       />
-    );
+    ) : null;
   }
+
   return (
     <div style={node.style as CSSProperties}>
       {node.children?.map((child, index) => (
         <AstNode
-          // biome-ignore lint/suspicious/noArrayIndexKey: layout is a static AST that doesn't reorder.
+          // Layout is a static AST that doesn't reorder.
+          // biome-ignore lint/suspicious/noArrayIndexKey: see above.
           key={index}
           node={child}
           schema={schema}

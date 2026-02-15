@@ -333,7 +333,7 @@ test("DivNode with children validates recursively", {
   expectedIssues: [],
 });
 
-test("DivNode with missing property in children reports issue", {
+test("DivNode with missing property in children reports issue at root level", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
@@ -358,13 +358,41 @@ test("DivNode with missing property in children reports issue", {
   expectedIssues: [
     {
       message: `Layout is missing property "body".`,
-      path: [{ key: "rootLayout" }, { key: 0 }, { key: "children" }],
-    },
-    {
-      message: `Layout is missing property "body".`,
       path: [{ key: "rootLayout" }],
     },
   ],
+});
+
+test("properties split across sibling DivNodes returns no issues", {
+  options: {
+    fullWidth: true,
+    rootLayout: [
+      {
+        style: { display: "grid", gridTemplateColumns: "2fr 1fr" },
+        children: [
+          {
+            children: [{ propertyPath: "title" }],
+          },
+          {
+            children: [{ propertyPath: "body" }],
+          },
+        ],
+      },
+    ],
+  },
+  schema: {
+    types: {
+      Root: {
+        dataType: DataType.Struct,
+        properties: {
+          title: { dataType: DataType.String },
+          body: { dataType: DataType.String },
+        },
+      },
+    },
+    rootType: "Root",
+  },
+  expectedIssues: [],
 });
 
 test("nested property path extracts correct top-level name", {

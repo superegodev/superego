@@ -10,20 +10,20 @@ import { useUiOptions } from "./uiOptions.js";
 import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
+  name: string;
   typeDefinition: AnyTypeDefinition;
   isNullable: boolean;
   label: string;
-  name?: string | undefined;
   actions?: ReactNode | undefined;
   component?: "label" | "legend" | undefined;
   htmlFor?: string | undefined;
   className?: string | undefined;
 }
 export default function AnyFieldLabel({
+  name,
   typeDefinition,
   isNullable,
   label,
-  name = "",
   actions,
   component = "label",
   htmlFor,
@@ -31,9 +31,6 @@ export default function AnyFieldLabel({
 }: Props) {
   const { showTypes, showNullability } = useUiOptions();
   const { hideLabel } = useFieldUiOptions(name);
-  if (hideLabel) {
-    return null;
-  }
   const dataTypeLabel =
     typeDefinition.dataType === null
       ? typeDefinition.ref
@@ -44,7 +41,7 @@ export default function AnyFieldLabel({
         : "format" in typeDefinition && typeDefinition.format
           ? `${last(typeDefinition.format.split("."))} (${typeDefinition.dataType})`
           : typeDefinition.dataType;
-  return (
+  return !hideLabel ? (
     <FieldLabel
       actions={actions}
       component={component}
@@ -84,5 +81,5 @@ export default function AnyFieldLabel({
         </TooltipTrigger>
       ) : null}
     </FieldLabel>
-  );
+  ) : null;
 }

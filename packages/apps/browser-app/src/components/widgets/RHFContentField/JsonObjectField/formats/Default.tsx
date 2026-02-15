@@ -68,6 +68,7 @@ export default function Default({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}

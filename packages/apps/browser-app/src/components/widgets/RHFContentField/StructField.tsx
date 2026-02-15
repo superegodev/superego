@@ -60,11 +60,10 @@ export default function StructField({
       isDisclosureDisabled={!isListItem && allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
-        name={name}
         actions={
           !isReadOnly ? (
             <NullifyFieldAction
@@ -74,6 +73,7 @@ export default function StructField({
             />
           ) : undefined
         }
+        component="legend"
       />
       <Fieldset.Fields
         className={classnames(
