@@ -6,7 +6,7 @@ export const MarkdownInput = {
     width: "100%",
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    overflow: "hidden",
+    overflow: "auto",
     marginBlockEnd: vars.spacing._2,
     background: vars.colors.background.surface,
     selectors: {
@@ -23,12 +23,17 @@ export const MarkdownInput = {
 
 export const FormattingToolbar = {
   root: style({
+    position: "sticky",
+    top: 0,
+    zIndex: 2,
     width: "100%",
     overflow: "auto",
     display: "flex",
     gap: vars.spacing._2,
     paddingInline: vars.spacing._4,
     paddingBlockStart: vars.spacing._4,
+    paddingBlockEnd: vars.spacing._2,
+    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgba(from ${vars.colors.background.surface} r g b / 0) 100%)`,
   }),
 
   group: style({

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../../themes.css.js";
 
 export const Document = {
@@ -8,12 +8,17 @@ export const Document = {
     paddingBlockStart: "0 !important",
   }),
 
-  contentWrapper: style({
-    paddingBlockStart: vars.spacing._4,
-    flex: "2 1 0",
-    "@media": {
-      [`(max-width: ${breakpoints.medium})`]: {
-        flex: "1 1 0",
+  contentWrapper: styleVariants({
+    base: {
+      height: "100%",
+    },
+    historyLayout: {
+      paddingBlockStart: vars.spacing._4,
+      flex: "2 1 0",
+      "@media": {
+        [`(max-width: ${breakpoints.medium})`]: {
+          flex: "1 1 0",
+        },
       },
     },
   }),
@@ -29,6 +34,10 @@ export const Document = {
 };
 
 export const CreateNewDocumentVersionForm = {
+  root: style({
+    height: "100%",
+  }),
+
   readOnlyAlert: style({
     marginBlockEnd: vars.spacing._8,
   }),

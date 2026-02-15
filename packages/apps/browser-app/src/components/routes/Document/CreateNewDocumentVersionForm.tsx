@@ -143,7 +143,12 @@ export default function CreateNewDocumentVersionForm({
   );
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      ref={formRef}
+      id={formId}
+      className={cs.CreateNewDocumentVersionForm.root}
+    >
       {readOnlyReason !== null ? (
         <Alert
           variant="info"

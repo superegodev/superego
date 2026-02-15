@@ -253,6 +253,28 @@ export const NullifyFieldAction = {
 };
 
 export const Field = {
+  grow: style({
+    flexGrow: 1,
+    minHeight: 0,
+    height: "100%",
+    selectors: {
+      "&:last-child": {
+        marginBlockEnd: 0,
+      },
+    },
+  }),
+
+  growContent: style({
+    flexGrow: 1,
+    minHeight: 0,
+    height: "100%",
+    selectors: {
+      ":last-child > &": {
+        marginBlockEnd: "0 !important",
+      },
+    },
+  }),
+
   root: style({
     position: "relative",
     selectors: {

@@ -14,6 +14,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
 import { useIntl } from "react-intl";
 import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
+import classnames from "../../../utils/classnames.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import type Props from "./Props.js";
 import * as cs from "./TiptapInput.css.js";
@@ -26,6 +27,7 @@ export default function EagerTiptapInput({
   isInvalid = false,
   isReadOnly = false,
   ref,
+  className,
 }: Props) {
   const intl = useIntl();
   const id = useId();
@@ -119,7 +121,7 @@ export default function EagerTiptapInput({
       data-has-focus={hasFocus}
       data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
-      className={cs.TiptapInput.root}
+      className={classnames(cs.TiptapInput.root, className)}
     >
       {!isReadOnly ? (
         <FormattingToolbar editor={editor} tiptapInputId={id} />

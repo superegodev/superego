@@ -5,6 +5,7 @@ export interface FieldUiOptions {
   layout?: DefaultDocumentViewUiOptions.Layout;
   hideLabel?: boolean;
   allowCollapsing?: boolean;
+  grow?: boolean;
 }
 
 export default function useFieldUiOptions(name: string): FieldUiOptions {
@@ -28,6 +29,7 @@ export default function useFieldUiOptions(name: string): FieldUiOptions {
         layout: node.layout,
         hideLabel: node.hideLabel,
         allowCollapsing: node.allowCollapsing,
+        grow: node.grow,
       }
     : {};
 }

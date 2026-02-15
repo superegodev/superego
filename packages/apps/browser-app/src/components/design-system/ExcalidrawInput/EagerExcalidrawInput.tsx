@@ -10,6 +10,7 @@ import { useFocusVisible } from "react-aria";
 import { useLocale } from "react-aria-components";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import { EXCALIDRAW_INPUT_ON_CHANGE_CHECK_INTERVAL } from "../../../config.js";
+import classnames from "../../../utils/classnames.js";
 import * as cs from "./ExcalidrawInput.css.js";
 import type Props from "./Props.js";
 
@@ -28,6 +29,7 @@ export default function EagerExcalidrawInput({
   isInvalid = false,
   isReadOnly = false,
   ref,
+  className,
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(autoFocus);
@@ -104,7 +106,7 @@ export default function EagerExcalidrawInput({
     <div
       ref={rootRef}
       tabIndex={0}
-      className={cs.ExcalidrawInput.root}
+      className={classnames(cs.ExcalidrawInput.root, className)}
       aria-invalid={isInvalid}
       data-has-focus={hasFocus}
       data-focus-visible={hasFocus && isFocusVisible}

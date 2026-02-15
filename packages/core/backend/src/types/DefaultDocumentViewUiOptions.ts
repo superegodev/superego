@@ -37,6 +37,11 @@ namespace DefaultDocumentViewUiOptions {
     hideLabel?: boolean | undefined;
     /** Only applies to StructFields and ListFields. Defaults to true. */
     allowCollapsing?: boolean | undefined;
+    /**
+     * Makes the field grow its height to fill all available space. Defaults to
+     * false.
+     */
+    grow?: boolean | undefined;
   }
 
   export type HtmlAstNode = DivNode | FieldNode;

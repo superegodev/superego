@@ -10,6 +10,7 @@ import TiptapInput from "../../../../design-system/TiptapInput/TiptapInput.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
+import useFieldUiOptions from "../../useFieldUiOptions.js";
 import type Props from "../Props.js";
 
 export default function TiptapRichText({
@@ -21,6 +22,7 @@ export default function TiptapRichText({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.tiptapRichTextJsonObject();
@@ -34,6 +36,7 @@ export default function TiptapRichText({
       className={classnames(
         cs.JsonObjectField.TiptapRichText.root,
         isListItem && cs.ListItemField.root,
+        grow && cs.Field.grow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -54,6 +57,7 @@ export default function TiptapRichText({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         ref={field.ref}
+        className={grow ? cs.Field.growContent : undefined}
       />
       <FieldErrorContext
         value={{

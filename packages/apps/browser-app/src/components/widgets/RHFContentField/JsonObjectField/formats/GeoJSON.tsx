@@ -11,6 +11,7 @@ import type GeoJSONValue from "../../../../design-system/GeoJSONInput/GeoJSONVal
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
+import useFieldUiOptions from "../../useFieldUiOptions.js";
 import type Props from "../Props.js";
 
 export default function GeoJSON({
@@ -22,6 +23,7 @@ export default function GeoJSON({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
@@ -35,6 +37,7 @@ export default function GeoJSON({
       className={classnames(
         cs.JsonObjectField.GeoJSON.root,
         isListItem && cs.ListItemField.root,
+        grow && cs.Field.grow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -55,6 +58,7 @@ export default function GeoJSON({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         ref={field.ref}
+        className={grow ? cs.Field.growContent : undefined}
       />
       <FieldErrorContext
         value={{

@@ -22,6 +22,7 @@ import {
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import classnames from "../../../utils/classnames.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
@@ -178,9 +179,10 @@ export default function Document({
               }
             >
               <div
-                className={
-                  isShowingHistory ? cs.Document.contentWrapper : undefined
-                }
+                className={classnames(
+                  cs.Document.contentWrapper.base,
+                  isShowingHistory && cs.Document.contentWrapper.historyLayout,
+                )}
               >
                 <DocumentContent
                   collection={collection}
