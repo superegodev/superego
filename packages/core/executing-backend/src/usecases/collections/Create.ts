@@ -137,15 +137,17 @@ export default class CollectionsCreate extends Usecase<
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       if (
-        !options.skipReferenceCheckForCollectionIds?.includes(
+        referencedCollectionId === collectionId ||
+        options.skipReferenceCheckForCollectionIds?.includes(
           referencedCollectionId as CollectionId,
-        ) &&
-        !(await this.repos.collection.exists(
+        ) ||
+        (await this.repos.collection.exists(
           referencedCollectionId as CollectionId,
         ))
       ) {
-        notFoundCollectionIds.push(referencedCollectionId);
+        continue;
       }
+      notFoundCollectionIds.push(referencedCollectionId);
     }
     if (!isEmpty(notFoundCollectionIds)) {
       return makeUnsuccessfulResult(

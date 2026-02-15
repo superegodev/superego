@@ -564,6 +564,66 @@ export default rd<GetDependencies>("Collections", (deps) => {
         error: null,
       });
     });
+
+    it("success: creates (case: with self-referencing DocumentRef)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "Tasks",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                parent: {
+                  dataType: DataType.DocumentRef,
+                  collectionId: "self",
+                },
+                subtasks: {
+                  dataType: DataType.List,
+                  items: {
+                    dataType: DataType.DocumentRef,
+                    collectionId: "self",
+                  },
+                },
+              },
+              nullableProperties: ["parent"],
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+
+      // Verify
+      assert(createResult.success);
+      const collectionId = createResult.data.id;
+      const rootType = createResult.data.latestVersion.schema.types[
+        "Root"
+      ] as any;
+      expect(rootType.properties.parent.collectionId).toBe(collectionId);
+      expect(rootType.properties.subtasks.items.collectionId).toBe(
+        collectionId,
+      );
+    });
   });
 
   describe("createMany", () => {
