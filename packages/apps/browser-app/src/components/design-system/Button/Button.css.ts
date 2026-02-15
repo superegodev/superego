@@ -96,7 +96,6 @@ export const Button = {
             background: vars.colors.button.danger.hover.background,
             color: vars.colors.button.danger.hover.text,
             borderColor: vars.colors.button.danger.hover.border,
-            fontWeight: vars.typography.fontWeights.medium,
           },
           "&[disabled]": {
             background: vars.colors.button.danger.disabled.background,

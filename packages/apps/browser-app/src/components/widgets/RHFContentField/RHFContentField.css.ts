@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const JsonObjectField = {
@@ -259,10 +259,6 @@ export const Field = {
   root: style({
     position: "relative",
     selectors: {
-      [`&:has(${NullifyFieldAction.root}:hover)::before`]: {
-        zIndex: 99,
-        opacity: 0.2,
-      },
       "&::before": {
         zIndex: -1,
         content: "",
@@ -285,6 +281,16 @@ export const Field = {
     },
   }),
 };
+
+// Only show the red nullify overlay on the closest Field.root ancestor, not on
+// outer Field.root ancestors in nested field structures.
+globalStyle(
+  `${Field.root}:has(${NullifyFieldAction.root}:hover):not(:has(${Field.root} ${NullifyFieldAction.root}:hover))::before`,
+  {
+    zIndex: 99,
+    opacity: 0.2,
+  },
+);
 
 export const DocumentRefField = {
   DocumentRefField: {
