@@ -65,7 +65,10 @@ export default function Document({
     }
     setCollapsePrimarySidebar(true);
     return () => setCollapsePrimarySidebar(false);
-  }, [defaultDocumentViewUiOptions?.collapsePrimarySidebar, setCollapsePrimarySidebar]);
+  }, [
+    defaultDocumentViewUiOptions?.collapsePrimarySidebar,
+    setCollapsePrimarySidebar,
+  ]);
 
   return collection ? (
     <DataLoader

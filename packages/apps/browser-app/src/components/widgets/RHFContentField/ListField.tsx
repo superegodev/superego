@@ -17,8 +17,8 @@ import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
-import useFieldUiOptions from "./useFieldUiOptions.js";
 import { useUiOptions } from "./uiOptions.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
   schema: Schema;

@@ -60,13 +60,8 @@ function findFieldNode(
       if (node.propertyPath === canonicalPath) {
         return node;
       }
-      if (
-        canonicalPath.startsWith(`${node.propertyPath}.`) &&
-        node.layout
-      ) {
-        const remaining = canonicalPath.slice(
-          node.propertyPath.length + 1,
-        );
+      if (canonicalPath.startsWith(`${node.propertyPath}.`) && node.layout) {
+        const remaining = canonicalPath.slice(node.propertyPath.length + 1);
         const found = findFieldNode(node.layout, remaining);
         if (found) {
           return found;

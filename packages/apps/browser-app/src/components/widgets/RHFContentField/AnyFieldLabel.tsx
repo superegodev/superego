@@ -6,8 +6,8 @@ import last from "../../../utils/last.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Tooltip from "../../design-system/Tooltip/Tooltip.js";
 import * as cs from "./RHFContentField.css.js";
-import useFieldUiOptions from "./useFieldUiOptions.js";
 import { useUiOptions } from "./uiOptions.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
   typeDefinition: AnyTypeDefinition;
