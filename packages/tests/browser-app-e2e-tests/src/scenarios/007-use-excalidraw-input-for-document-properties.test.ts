@@ -1,6 +1,6 @@
 import test from "@playwright/test";
 import { DataType } from "@superego/schema";
-import drawCircleInExcalidrawInput from "../actions/drawCircleInExcalidrawInput.js";
+import drawTextInExcalidrawInput from "../actions/drawTextInExcalidrawInput.js";
 import focusExcalidrawInput from "../actions/focusExcalidrawInput.js";
 import waitForExcalidrawJsonObjectField from "../actions/waitForExcalidrawJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
@@ -65,17 +65,15 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     );
   });
 
-  await test.step("02. Draw an empty circle in Excalidraw", async () => {
+  await test.step("02. Draw 'Hello world!' text in Excalidraw", async () => {
     // Exercise
-    await drawCircleInExcalidrawInput(page);
-    await page.waitForTimeout(600);
-    await focusExcalidrawInput(page);
+    await drawTextInExcalidrawInput(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
       "02.png",
       page,
-      "Excalidraw input with one empty circle drawn on the canvas",
+      'Excalidraw input with "Hello world!" text drawn on the canvas',
     );
   });
 });
