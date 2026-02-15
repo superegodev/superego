@@ -39,5 +39,6 @@ export default function getContentSummary(calendarEntry) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

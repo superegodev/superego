@@ -876,16 +876,10 @@
       "value": "Creata nuova versione della collezione"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_3TjzSy": [
+  "CreateNewCollectionVersionForm.tsx_FQCqoH": [
     {
       "type": 0,
-      "value": "4. Convertitori remoti"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
-    {
-      "type": 0,
-      "value": "4. Migrazione"
+      "value": "5. Migrazione"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_HxoW8w": [
@@ -900,6 +894,12 @@
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_dISRjb": [
+    {
+      "type": 0,
+      "value": "4. Opzioni UI"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
     {
       "type": 0,
@@ -910,6 +910,12 @@
     {
       "type": 0,
       "value": "2. Deduplicazione"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
+    {
+      "type": 0,
+      "value": "5. Convertitori remoti"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -988,6 +994,12 @@
     {
       "type": 0,
       "value": "Stringa JSON non valida"
+    }
+  ],
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": [
+    {
+      "type": 0,
+      "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -3028,6 +3040,24 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Stringa JSON non valida"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "Alle"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": [
+    {
+      "type": 0,
+      "value": "Definisce il layout predefinito e le opzioni UI per il modulo del documento in questa collezione."
     }
   ],
   "RHFSchemaField.tsx_9CnsYv": [

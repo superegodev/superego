@@ -56,6 +56,7 @@ export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSu
 export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
+export type { default as DefaultDocumentViewUiOptionsNotValid } from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
 export type { default as DocumentIsReferenced } from "./errors/DocumentIsReferenced.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
@@ -116,6 +117,7 @@ export type { default as ConnectorAuthenticationSettings } from "./types/Connect
 export type { default as ConnectorAuthenticationState } from "./types/ConnectorAuthenticationState.js";
 export type { default as ContentSummary } from "./types/ContentSummary.js";
 export type { default as Conversation } from "./types/Conversation.js";
+export type { default as DefaultDocumentViewUiOptions } from "./types/DefaultDocumentViewUiOptions.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";
 export type { default as DocumentDefinition } from "./types/DocumentDefinition.js";

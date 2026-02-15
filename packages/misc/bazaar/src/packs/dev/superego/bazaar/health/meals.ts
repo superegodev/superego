@@ -46,5 +46,6 @@ export default function getContentSummary(meal) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

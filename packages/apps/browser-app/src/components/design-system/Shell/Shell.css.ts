@@ -18,6 +18,15 @@ export const Shell = {
       '&[data-primary-sidebar-open="true"]': {
         marginInlineStart: 0,
       },
+      '&[data-primary-sidebar-collapse="Always"]': {
+        width: `calc(100dvw + ${primarySidebarWidth})`,
+        gridTemplateColumns: `${primarySidebarWidth} 100dvw`,
+        marginInlineStart: `calc(-1 * ${primarySidebarWidth})`,
+      },
+      '&[data-primary-sidebar-collapse="Always"][data-primary-sidebar-open="true"]':
+        {
+          marginInlineStart: 0,
+        },
     },
     "@media": {
       "(prefers-reduced-motion: no-preference)": {
@@ -132,6 +141,11 @@ export const PanelHeader = {
     fontSize: `${vars.typography.fontSizes.xl2} !important`,
     padding: 0,
     display: "none !important",
+    selectors: {
+      '[data-primary-sidebar-collapse="Always"] &': {
+        display: "inline-flex !important",
+      },
+    },
     "@media": {
       [`(max-width: ${breakpoints.medium})`]: {
         display: "inline-flex !important",
@@ -153,6 +167,11 @@ export const PanelContent = {
       },
       '[data-slot="Main"] &': {
         padding: vars.spacing._8,
+        vars: {
+          "--container-height": `calc(100dvh - ${vars.shell.panelHeaderHeight} - ${vars.spacing._8} - ${vars.spacing._8})`,
+          /** Distance from the top = panelHeaderHeight + paddingBlockStart */
+          "--container-top": vars.spacing._20,
+        },
       },
       '[data-slot="Main"] [data-full-width="false"]&': {
         paddingInline: `max(calc(50% - ${vars.spacing._110}), ${vars.spacing._8})`,
@@ -162,6 +181,11 @@ export const PanelContent = {
       },
       '[data-slot="Main"] header + &': {
         paddingBlockStart: vars.spacing._4,
+        vars: {
+          "--container-height": `calc(100dvh - ${vars.shell.panelHeaderHeight} - ${vars.spacing._4} - ${vars.spacing._8})`,
+          /** Distance from the top = panelHeaderHeight + paddingBlockStart */
+          "--container-top": vars.spacing._16,
+        },
       },
     },
   }),

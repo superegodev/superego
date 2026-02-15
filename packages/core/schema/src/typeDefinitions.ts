@@ -16,7 +16,7 @@ export interface EnumMember extends Described {
 export interface EnumTypeDefinition extends Described {
   dataType: DataType.Enum;
   /**
-   * Member names **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   * Member names **must** match the regex `/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/`.
    */
   members: {
     [name: string]: EnumMember;
@@ -113,7 +113,7 @@ export interface StructTypeDefinition extends Described {
   dataType: DataType.Struct;
   /**
    * The complete set of properties that make up this Struct. Property names
-   * **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   * **must** match the regex `/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/`.
    */
   properties: {
     [name: string]: AnyTypeDefinition;

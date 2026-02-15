@@ -38,6 +38,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -86,6 +87,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -126,6 +128,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -165,6 +168,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -211,6 +215,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -262,6 +267,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -278,6 +284,74 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: {
+            fullWidth: false,
+            alwaysCollapsePrimarySidebar: false,
+            rootLayout: [{ propertyPath: "nonExistent" }],
+          },
+        },
+      });
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
@@ -321,6 +395,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -363,6 +438,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -385,6 +461,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
             migration: null,
             remoteConverters: null,
@@ -440,6 +517,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
 
@@ -466,6 +544,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
             migration: null,
             remoteConverters: null,
@@ -514,6 +593,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -564,6 +644,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -606,6 +687,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -647,6 +729,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -695,6 +778,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               source: "",
               compiled: "export function getContentSummary() {}",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -748,6 +832,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -765,6 +850,76 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "name",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+          },
+          schema: {
+            types: {
+              Root: {
+                dataType: DataType.Struct,
+                properties: {
+                  title: { dataType: DataType.String },
+                },
+              },
+            },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: {
+              fullWidth: false,
+              alwaysCollapsePrimarySidebar: false,
+              rootLayout: [{ propertyPath: "nonExistent" }],
+            },
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
@@ -809,6 +964,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -865,6 +1021,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -909,6 +1066,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -933,6 +1091,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                defaultDocumentViewUiOptions: null,
               },
               migration: null,
               remoteConverters: null,
@@ -986,6 +1145,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
         {
@@ -1008,6 +1168,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -1032,6 +1193,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                defaultDocumentViewUiOptions: null,
               },
               migration: null,
               remoteConverters: null,
@@ -1064,6 +1226,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   compiled:
                     "export default function getContentSummary() { return {}; }",
                 },
+                defaultDocumentViewUiOptions: null,
               },
               migration: null,
               remoteConverters: null,
@@ -1134,6 +1297,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
         {
@@ -1167,6 +1331,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
         },
       ]);
@@ -1256,6 +1421,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1308,6 +1474,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1353,6 +1520,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1412,6 +1580,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1539,6 +1708,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -1602,6 +1772,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1692,6 +1863,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1797,6 +1969,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1890,6 +2063,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -1993,6 +2167,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2084,6 +2259,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2177,6 +2353,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2278,6 +2455,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2403,6 +2581,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2506,6 +2685,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2578,6 +2758,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2685,6 +2866,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2764,6 +2946,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2837,6 +3020,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -2944,6 +3128,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -3035,6 +3220,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3116,6 +3302,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3223,6 +3410,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3321,6 +3509,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3424,6 +3613,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3540,6 +3730,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3669,6 +3860,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3817,6 +4009,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -3957,6 +4150,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -4164,6 +4358,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -4271,6 +4466,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "" },
         null,
@@ -4310,6 +4506,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4326,6 +4523,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "" },
         null,
@@ -4369,6 +4567,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4384,6 +4583,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: { source: "", compiled: "" },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "" },
         null,
@@ -4431,6 +4631,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4461,6 +4662,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         {
           source: "",
@@ -4506,6 +4708,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4524,6 +4727,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             source: "",
             compiled: "export function getContentSummary() {}",
           },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "" },
         null,
@@ -4542,6 +4746,101 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const createNewVersionResult = await backend.collections.createNewVersion(
+        createResult.data.id,
+        createResult.data.latestVersion.id,
+        {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: {
+            fullWidth: false,
+            alwaysCollapsePrimarySidebar: false,
+            rootLayout: [{ propertyPath: "nonExistent" }],
+          },
+        },
+        { source: "", compiled: "" },
+        null,
+      );
+
+      // Verify
+      expect(createNewVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
@@ -4605,6 +4904,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4638,6 +4938,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "export function migrate() {}" },
         {
@@ -4690,6 +4991,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4709,6 +5011,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         null,
         null,
@@ -4756,6 +5059,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4775,6 +5079,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "export function migrate() {}" },
         null,
@@ -4822,6 +5127,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4841,6 +5147,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         { source: "", compiled: "export default function migrate() {}" },
         {
@@ -4927,6 +5234,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -4960,6 +5268,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         null,
         null,
@@ -5040,6 +5349,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -5073,6 +5383,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         null,
         {
@@ -5126,6 +5437,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -5151,6 +5463,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           {
             source: "",
@@ -5209,6 +5522,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -5234,6 +5548,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           {
             source: "",
@@ -5331,6 +5646,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -5372,6 +5688,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           null,
           {
@@ -5472,6 +5789,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -5518,6 +5836,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           null,
           {
@@ -5592,6 +5911,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -5630,6 +5950,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           migration,
           null,
@@ -5659,6 +5980,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                   "export default function getContentSummary() { return {}; }",
                 source: "",
               },
+              defaultDocumentViewUiOptions: null,
             },
             migration: migration,
             remoteConverters: null,
@@ -5768,6 +6090,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -5833,6 +6156,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 "export default function getContentSummary() { return {}; }",
             },
+            defaultDocumentViewUiOptions: null,
           },
           null,
           {
@@ -5932,6 +6256,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -5983,6 +6308,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -6048,6 +6374,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6113,6 +6440,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -6128,6 +6456,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               source: "",
               compiled: "export function getContentSummary() {}",
             },
+            defaultDocumentViewUiOptions: null,
           },
         );
 
@@ -6144,6 +6473,83 @@ export default rd<GetDependencies>("Collections", (deps) => {
               {
                 message:
                   "The default export of the contentSummaryGetter TypescriptModule is not a function",
+              },
+            ],
+          },
+        },
+      });
+    });
+
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const updateLatestVersionSettingsResult =
+        await backend.collections.updateLatestVersionSettings(
+          createResult.data.id,
+          createResult.data.latestVersion.id,
+          {
+            defaultDocumentViewUiOptions: {
+              fullWidth: false,
+              alwaysCollapsePrimarySidebar: false,
+              rootLayout: [{ propertyPath: "nonExistent" }],
+            },
+          },
+        );
+
+      // Verify
+      expect(updateLatestVersionSettingsResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DefaultDocumentViewUiOptionsNotValid",
+          details: {
+            collectionId: createResult.data.id,
+            collectionVersionId: createResult.data.latestVersion.id,
+            issues: [
+              {
+                message: `Property path "nonExistent" does not exist in the schema.`,
+                path: [
+                  { key: "rootLayout" },
+                  { key: 0 },
+                  { key: "propertyPath" },
+                ],
+              },
+              {
+                message: `Layout is missing property "title".`,
+                path: [{ key: "rootLayout" }],
               },
             ],
           },
@@ -6174,6 +6580,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -6190,6 +6597,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               compiled:
                 'export default function getContentSummary() { return { "key": "value"}; }',
             },
+            defaultDocumentViewUiOptions: null,
           },
         );
 
@@ -6207,6 +6615,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 compiled:
                   'export default function getContentSummary() { return { "key": "value"}; }',
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
           settings: createResult.data.settings,
@@ -6251,6 +6660,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6326,6 +6736,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6407,6 +6818,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6456,6 +6868,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionAResult.success);
@@ -6490,6 +6903,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionBResult.success);
@@ -6543,6 +6957,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionAResult.success);
@@ -6574,6 +6989,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionBResult.success);
@@ -6644,6 +7060,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6701,6 +7118,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -6778,6 +7196,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(zetaCreateResult.success);
@@ -6801,6 +7220,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(alphaCreateResult.success);
@@ -6824,6 +7244,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(betaCreateResult.success);
@@ -6891,6 +7312,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -6944,6 +7366,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -6990,6 +7413,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createResult.success);
@@ -7020,6 +7444,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
         migration,
         null,

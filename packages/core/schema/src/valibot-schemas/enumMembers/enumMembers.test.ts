@@ -37,7 +37,7 @@ describe("Invalid enum members", () => {
       {
         kind: "validation",
         message:
-          'Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received "0Member"',
+          'Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received "0Member"',
         path: [{ key: "0Member" }],
       },
     ],

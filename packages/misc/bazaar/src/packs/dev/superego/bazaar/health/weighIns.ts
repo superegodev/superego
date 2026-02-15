@@ -40,5 +40,6 @@ export default function getContentSummary(weighIn) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

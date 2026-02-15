@@ -90,6 +90,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -308,6 +309,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -467,6 +469,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);

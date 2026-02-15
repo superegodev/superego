@@ -72,5 +72,6 @@ export default function getContentSummary(fuelLog) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

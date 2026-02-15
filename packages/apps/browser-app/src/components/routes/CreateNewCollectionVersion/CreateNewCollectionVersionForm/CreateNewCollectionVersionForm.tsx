@@ -1,6 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
+import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
 import { useEffect, useMemo } from "react";
 import { Form } from "react-aria-components";
@@ -20,6 +21,7 @@ import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
+import DefaultDocumentViewUiOptionsTab from "./DefaultDocumentViewUiOptionsTab.js";
 import MigrationTab from "./MigrationTab.js";
 import RemoteConvertersTab from "./RemoteConvertersTab.js";
 import SchemaTab from "./SchemaTab.js";
@@ -57,6 +59,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         collection.latestVersion.settings.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
+      defaultDocumentViewUiOptions:
+        collection.latestVersion.settings.defaultDocumentViewUiOptions,
       migration: CollectionUtils.hasRemote(collection)
         ? null
         : defaultMigration,
@@ -70,6 +74,11 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           forms.schemas.typescriptModule(intl),
         ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
+        defaultDocumentViewUiOptions: v.nullable(
+          sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+            collection.latestVersion.schema,
+          ),
+        ),
         migration: v.nullable(forms.schemas.typescriptModule(intl)),
         remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
       }),
@@ -84,6 +93,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       {
         contentBlockingKeysGetter: values.contentBlockingKeysGetter,
         contentSummaryGetter: values.contentSummaryGetter,
+        defaultDocumentViewUiOptions: values.defaultDocumentViewUiOptions,
       },
       values.migration,
       values.remoteConverters,
@@ -207,11 +217,27 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             panel: <ContentSummaryTab control={control} schema={schema} />,
             isDisabled: !(isSchemaDirty && isSchemaValid),
           },
+          {
+            title: (
+              <TabTitle
+                hasErrors={!!formState.errors.defaultDocumentViewUiOptions}
+              >
+                <FormattedMessage defaultMessage="4. UI options" />
+              </TabTitle>
+            ),
+            panel: (
+              <DefaultDocumentViewUiOptionsTab
+                control={control}
+                schema={schema}
+              />
+            ),
+            isDisabled: !(isSchemaDirty && isSchemaValid),
+          },
           CollectionUtils.hasRemote(collection) && connector
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.remoteConverters}>
-                    <FormattedMessage defaultMessage="4. Remote converters" />
+                    <FormattedMessage defaultMessage="5. Remote converters" />
                   </TabTitle>
                 ),
                 panel: (
@@ -230,7 +256,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.migration}>
-                    <FormattedMessage defaultMessage="4. Migration" />
+                    <FormattedMessage defaultMessage="5. Migration" />
                   </TabTitle>
                 ),
                 panel: (

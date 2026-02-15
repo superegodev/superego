@@ -12,7 +12,7 @@ import {
 } from "../../design-system/forms/forms.js";
 import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import CodeInput from "../CodeInput/CodeInput.js";
-import * as cs from "./RHFSchemaField.css.js";
+import * as cs from "./RHFDefaultDocumentViewUiOptionsField.css.js";
 
 interface Props {
   control: Control<any>;
@@ -21,10 +21,9 @@ interface Props {
   isDisabled?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
-  placeholder?: string | undefined;
   className?: string | undefined;
 }
-export default function RHFSchemaField({
+export default function RHFDefaultDocumentViewUiOptionsField({
   control,
   name,
   label,
@@ -43,10 +42,14 @@ export default function RHFSchemaField({
   const handleChange = useCallback(
     (newValue: string) => {
       setJsonValue(newValue);
-      try {
-        field.onChange(JSON.parse(newValue));
-      } catch {
-        field.onChange(newValue);
+      if (newValue === "") {
+        field.onChange(null);
+      } else {
+        try {
+          field.onChange(JSON.parse(newValue));
+        } catch {
+          field.onChange(newValue);
+        }
       }
     },
     [field.onChange],
@@ -54,7 +57,10 @@ export default function RHFSchemaField({
   return (
     <div
       data-disabled={isDisabled}
-      className={classnames(cs.RHFSchemaField.root, className)}
+      className={classnames(
+        cs.RHFDefaultDocumentViewUiOptionsField.root,
+        className,
+      )}
     >
       {label ? <Label>{label}</Label> : null}
       <CodeInput
@@ -62,7 +68,7 @@ export default function RHFSchemaField({
         value={jsonValue}
         onChange={handleChange}
         ariaLabel={label}
-        filePath="/schema.json"
+        filePath="/defaultDocumentViewUiOptions.json"
         onBlur={field.onBlur}
         autoFocus={autoFocus}
         isInvalid={fieldState.invalid}
@@ -83,9 +89,14 @@ export default function RHFSchemaField({
             <FormattedMessage defaultMessage="Not a valid JSON string" />
           ) : (
             errors.map(({ path, message }) => (
-              <div key={path} className={cs.RHFSchemaField.errorLine}>
+              <div
+                key={path}
+                className={cs.RHFDefaultDocumentViewUiOptionsField.errorLine}
+              >
                 <FormattedMessage defaultMessage="At" />{" "}
-                <InlineCode className={cs.RHFSchemaField.inlineCode}>
+                <InlineCode
+                  className={cs.RHFDefaultDocumentViewUiOptionsField.inlineCode}
+                >
                   {path}
                 </InlineCode>
                 {": "}
@@ -96,7 +107,7 @@ export default function RHFSchemaField({
         </FieldError>
       </FieldErrorContext>
       <Description>
-        <FormattedMessage defaultMessage='Defines the "shape" of document contents in this collection.' />
+        <FormattedMessage defaultMessage="Defines the default layout and UI options for the document form in this collection." />
       </Description>
     </div>
   );

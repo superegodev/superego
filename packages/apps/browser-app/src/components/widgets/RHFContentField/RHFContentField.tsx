@@ -1,3 +1,4 @@
+import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import { type Schema, utils } from "@superego/schema";
 import type { Control } from "react-hook-form";
 import AnyField from "./AnyField.js";
@@ -12,6 +13,7 @@ interface Props {
   zoomLevel?: number;
   isReadOnly?: boolean;
   protoCollections?: UiOptions["protoCollections"];
+  defaultDocumentViewUiOptions?: DefaultDocumentViewUiOptions | null;
 }
 export default function RHFContentField({
   schema,
@@ -22,6 +24,7 @@ export default function RHFContentField({
   zoomLevel = 1,
   isReadOnly = false,
   protoCollections = [],
+  defaultDocumentViewUiOptions = null,
 }: Props) {
   return (
     <UiOptionsProvider
@@ -31,6 +34,7 @@ export default function RHFContentField({
         zoomLevel,
         isReadOnly,
         protoCollections,
+        defaultDocumentViewUiOptions,
       }}
     >
       <AnyField

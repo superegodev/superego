@@ -7,8 +7,10 @@ import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Tooltip from "../../design-system/Tooltip/Tooltip.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
+  name: string;
   typeDefinition: AnyTypeDefinition;
   isNullable: boolean;
   label: string;
@@ -18,6 +20,7 @@ interface Props {
   className?: string | undefined;
 }
 export default function AnyFieldLabel({
+  name,
   typeDefinition,
   isNullable,
   label,
@@ -27,6 +30,7 @@ export default function AnyFieldLabel({
   className,
 }: Props) {
   const { showTypes, showNullability } = useUiOptions();
+  const { hideLabel } = useFieldUiOptions(name);
   const dataTypeLabel =
     typeDefinition.dataType === null
       ? typeDefinition.ref
@@ -37,7 +41,7 @@ export default function AnyFieldLabel({
         : "format" in typeDefinition && typeDefinition.format
           ? `${last(typeDefinition.format.split("."))} (${typeDefinition.dataType})`
           : typeDefinition.dataType;
-  return (
+  return !hideLabel ? (
     <FieldLabel
       actions={actions}
       component={component}
@@ -77,5 +81,5 @@ export default function AnyFieldLabel({
         </TooltipTrigger>
       ) : null}
     </FieldLabel>
-  );
+  ) : null;
 }

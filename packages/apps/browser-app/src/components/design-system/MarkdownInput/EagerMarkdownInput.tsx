@@ -1,6 +1,7 @@
 import OverType from "overtype";
 import { useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
+import classnames from "../../../utils/classnames.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
 import type OverTypeEditor from "./OverTypeEditor.js";
@@ -17,6 +18,7 @@ export default function EagerMarkdownInput({
   showToolbar = true,
   placeholder,
   ref,
+  className,
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
@@ -40,7 +42,11 @@ export default function EagerMarkdownInput({
       smartLists: true,
       placeholder: placeholder ?? "",
       theme,
-      textareaProps: { id: id, readOnly: isReadOnly },
+      padding: "8px 16px 16px 16px",
+      textareaProps: {
+        id: id,
+        readOnly: isReadOnly,
+      },
     });
     editorRef.current = (instance ?? null) as OverTypeEditor | null;
 
@@ -105,7 +111,7 @@ export default function EagerMarkdownInput({
       data-has-focus={hasFocus}
       data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
-      className={cs.MarkdownInput.root}
+      className={classnames(cs.MarkdownInput.root, className)}
     >
       {showToolbar && !isReadOnly ? (
         <FormattingToolbar editorRef={editorRef} />

@@ -88,7 +88,11 @@ export default function CreateCollectionForm() {
         assistantInstructions,
       },
       schema,
-      versionSettings: { contentBlockingKeysGetter, contentSummaryGetter },
+      versionSettings: {
+        contentBlockingKeysGetter,
+        contentSummaryGetter,
+        defaultDocumentViewUiOptions: null,
+      },
     });
     if (success) {
       navigateTo(

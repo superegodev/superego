@@ -374,11 +374,8 @@
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "New collection version created"
   },
-  "CreateNewCollectionVersionForm.tsx_3TjzSy": {
-    "defaultMessage": "4. Remote converters"
-  },
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": {
-    "defaultMessage": "4. Migration"
+  "CreateNewCollectionVersionForm.tsx_FQCqoH": {
+    "defaultMessage": "5. Migration"
   },
   "CreateNewCollectionVersionForm.tsx_HxoW8w": {
     "defaultMessage": "3. Content summary"
@@ -386,11 +383,17 @@
   "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
+  "CreateNewCollectionVersionForm.tsx_dISRjb": {
+    "defaultMessage": "4. UI options"
+  },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
   "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
     "defaultMessage": "2. Deduplication"
+  },
+  "CreateNewCollectionVersionForm.tsx_sSfm9D": {
+    "defaultMessage": "5. Remote converters"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
@@ -421,6 +424,9 @@
   },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
+  },
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
+    "defaultMessage": "Default document view UI options"
   },
   "DeleteAppModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
@@ -1090,6 +1096,15 @@
   },
   "RHFContentSummaryGetterField.tsx_BmNFs6": {
     "defaultMessage": "<p> The <b>content summary</b> of a document is a<code>Record'<name: string, value: string | number | boolean | null>' </code>—derived from the document's content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. </p> <p> <b>Content summary getter</b> is the TypeScript function that derives the summary from the document content. </p> <p> The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, <code>'{position:0,sortable:true,default-sort:asc}' First Name</code> makes <code>First Name</code> the first column, makes it sortable, and sets the column as the default sort order of the table. </p>"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": {
+    "defaultMessage": "Not a valid JSON string"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_A89PQ/": {
+    "defaultMessage": "At"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": {
+    "defaultMessage": "Defines the default layout and UI options for the document form in this collection."
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"

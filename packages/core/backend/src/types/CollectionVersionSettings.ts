@@ -1,3 +1,4 @@
+import type DefaultDocumentViewUiOptions from "./DefaultDocumentViewUiOptions.js";
 import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface CollectionVersionSettings {
@@ -8,4 +9,5 @@ export default interface CollectionVersionSettings {
    */
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
 }

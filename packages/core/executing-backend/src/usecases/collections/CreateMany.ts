@@ -10,6 +10,7 @@ import type {
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -49,6 +50,7 @@ export default class CollectionsCreateMany extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
     const collectionIds =

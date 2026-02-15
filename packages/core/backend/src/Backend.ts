@@ -33,6 +33,7 @@ import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.j
 import type ContentBlockingKeysGetterNotValid from "./errors/ContentBlockingKeysGetterNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
+import type DefaultDocumentViewUiOptionsNotValid from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
@@ -143,6 +144,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
 
@@ -157,6 +159,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
 
@@ -240,6 +243,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
       | ContentBlockingKeysGetterNotValid
+      | DefaultDocumentViewUiOptionsNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
       | CollectionMigrationFailed
@@ -257,6 +261,7 @@ export default interface Backend {
       | ContentBlockingKeysGetterNotValid
       | MakingContentBlockingKeysFailed
       | ContentSummaryGetterNotValid
+      | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
 
@@ -540,6 +545,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentViewUiOptionsNotValid
       | AppNameNotValid
       | CollectionNotFound
       | DocumentContentNotValid

@@ -33,6 +33,7 @@ import type {
   ContentSummaryNotValid,
   ConversationNotFound,
   ConversationStatusNotProcessing,
+  DefaultDocumentViewUiOptionsNotValid,
   DocumentContentNotValid,
   DocumentIsReferenced,
   DocumentNotFound,
@@ -90,6 +91,7 @@ type KnownResultError =
   | ContentBlockingKeysGetterNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
+  | DefaultDocumentViewUiOptionsNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid

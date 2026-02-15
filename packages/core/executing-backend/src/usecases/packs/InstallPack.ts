@@ -1,21 +1,43 @@
 import type {
   App,
   AppId,
+  AppNameNotValid,
+  AppNotFound,
   AppVersion,
   Backend,
   Collection,
   CollectionCategory,
+  CollectionCategoryIconNotValid,
   CollectionCategoryId,
+  CollectionCategoryNameNotValid,
+  CollectionCategoryNotFound,
   CollectionId,
+  CollectionNotFound,
+  CollectionSchemaNotValid,
+  CollectionSettingsNotValid,
+  ConnectorDoesNotSupportUpSyncing,
+  ContentBlockingKeysGetterNotValid,
+  ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   Document,
+  DocumentContentNotValid,
   DocumentId,
+  DuplicateDocumentDetected,
+  FilesNotFound,
+  MakingContentBlockingKeysFailed,
   Pack,
+  PackNotValid,
+  ParentCollectionCategoryNotFound,
   ProtoAppId,
   ProtoCollectionCategoryId,
   ProtoCollectionId,
   ProtoDocumentId,
+  ReferencedCollectionsNotFound,
+  ReferencedDocumentsNotFound,
+  UnexpectedError,
   ValidationIssue,
 } from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
 import {
   Id,
   makeSuccessfulResult,
@@ -44,7 +66,35 @@ import DocumentsCreate from "../documents/Create.js";
 export default class PacksInstallPack extends Usecase<
   Backend["packs"]["installPack"]
 > {
-  async exec(pack: Pack) {
+  async exec(pack: Pack): ResultPromise<
+    {
+      collectionCategories: CollectionCategory[];
+      collections: Collection[];
+      apps: App[];
+      documents: Document[];
+    },
+    | PackNotValid
+    | CollectionCategoryNameNotValid
+    | CollectionCategoryIconNotValid
+    | ParentCollectionCategoryNotFound
+    | CollectionSettingsNotValid
+    | CollectionCategoryNotFound
+    | AppNotFound
+    | CollectionSchemaNotValid
+    | ReferencedCollectionsNotFound
+    | ContentBlockingKeysGetterNotValid
+    | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
+    | AppNameNotValid
+    | CollectionNotFound
+    | DocumentContentNotValid
+    | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | MakingContentBlockingKeysFailed
+    | DuplicateDocumentDetected
+    | ConnectorDoesNotSupportUpSyncing
+    | UnexpectedError
+  > {
     // Step 1: Generate all IDs upfront.
     const collectionCategoryIds = pack.collectionCategories.map(() =>
       Id.generate.collectionCategory(),

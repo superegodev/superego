@@ -62,5 +62,6 @@ export default function getContentSummary(contact) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;
