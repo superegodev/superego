@@ -2,10 +2,10 @@ interface DefaultDocumentViewUiOptions {
   /** Use the full width of the Main panel content. Defaults to false. */
   fullWidth?: boolean;
   /**
-   * When true, the primary sidebar collapses (like it does on mobile). Defaults
-   * to false.
+   * When true, the primary sidebar always collapses (like it does on mobile).
+   * Defaults to false.
    */
-  collapsePrimarySidebar?: boolean;
+  alwaysCollapsePrimarySidebar?: boolean;
   /** Layout of the root Struct type. */
   rootLayout?: DefaultDocumentViewUiOptions.Layout | undefined;
 }

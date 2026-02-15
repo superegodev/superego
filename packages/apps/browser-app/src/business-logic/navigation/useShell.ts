@@ -3,7 +3,7 @@ import { create } from "zustand";
 const useShellStore = create<UseShell>((set) => ({
   togglePrimarySidebarButtonId: "TogglePrimarySidebarButton",
   isPrimarySidebarOpen: false,
-  collapsePrimarySidebar: false,
+  primarySidebarCollapse: "SmallScreens",
   openPrimarySidebar() {
     set({ isPrimarySidebarOpen: true });
   },
@@ -15,19 +15,19 @@ const useShellStore = create<UseShell>((set) => ({
       isPrimarySidebarOpen: !isPrimarySidebarOpen,
     }));
   },
-  setCollapsePrimarySidebar(collapse: boolean) {
-    set({ collapsePrimarySidebar: collapse });
+  setPrimarySidebarCollapse(collapse: "Always" | "SmallScreens") {
+    set({ primarySidebarCollapse: collapse });
   },
 }));
 
 interface UseShell {
   togglePrimarySidebarButtonId: "TogglePrimarySidebarButton";
   isPrimarySidebarOpen: boolean;
-  collapsePrimarySidebar: boolean;
+  primarySidebarCollapse: "Always" | "SmallScreens";
   openPrimarySidebar: () => void;
   closePrimarySidebar: () => void;
   togglePrimarySidebar: () => void;
-  setCollapsePrimarySidebar: (collapse: boolean) => void;
+  setPrimarySidebarCollapse: (collapse: "Always" | "SmallScreens") => void;
 }
 export default function useShell(): UseShell {
   return useShellStore();

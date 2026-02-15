@@ -66,7 +66,7 @@ test("empty options returns no issues", {
 });
 
 test("no rootLayout returns no issues", {
-  options: { fullWidth: false, collapsePrimarySidebar: false },
+  options: { fullWidth: false, alwaysCollapsePrimarySidebar: false },
   schema: {
     types: {
       Root: {
@@ -85,7 +85,7 @@ test("no rootLayout returns no issues", {
 test("valid rootLayout with all properties returns no issues", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [{ propertyPath: "title" }, { propertyPath: "body" }],
   },
   schema: {
@@ -106,7 +106,7 @@ test("valid rootLayout with all properties returns no issues", {
 test("missing property in layout reports issue", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [{ propertyPath: "title" }],
   },
   schema: {
@@ -132,7 +132,7 @@ test("missing property in layout reports issue", {
 test("non-existent property path reports issue", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       { propertyPath: "title" },
       { propertyPath: "body" },
@@ -162,7 +162,7 @@ test("non-existent property path reports issue", {
 test("layout on non-Struct property reports issue", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       { propertyPath: "title", layout: [] },
       { propertyPath: "body" },
@@ -191,7 +191,7 @@ test("layout on non-Struct property reports issue", {
 test("layout on Struct property validates the nested layout", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       {
         propertyPath: "nested",
@@ -236,7 +236,7 @@ test("layout on Struct property validates the nested layout", {
 test("allowCollapsing on non-Struct/List property reports issue", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       { propertyPath: "title", allowCollapsing: true },
       { propertyPath: "body" },
@@ -265,7 +265,7 @@ test("allowCollapsing on non-Struct/List property reports issue", {
 test("allowCollapsing on Struct property is valid", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [{ propertyPath: "nested", allowCollapsing: true }],
   },
   schema: {
@@ -288,7 +288,7 @@ test("allowCollapsing on Struct property is valid", {
 test("allowCollapsing on List property is valid", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [{ propertyPath: "items", allowCollapsing: false }],
   },
   schema: {
@@ -311,7 +311,7 @@ test("allowCollapsing on List property is valid", {
 test("DivNode with children validates recursively", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       {
         children: [{ propertyPath: "title" }, { propertyPath: "body" }],
@@ -336,7 +336,7 @@ test("DivNode with children validates recursively", {
 test("DivNode with missing property in children reports issue", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [
       {
         children: [{ propertyPath: "title" }],
@@ -370,7 +370,7 @@ test("DivNode with missing property in children reports issue", {
 test("nested property path extracts correct top-level name", {
   options: {
     fullWidth: false,
-    collapsePrimarySidebar: false,
+    alwaysCollapsePrimarySidebar: false,
     rootLayout: [{ propertyPath: "nested.inner" }],
   },
   schema: {

@@ -54,20 +54,20 @@ export default function Document({
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
-  const { setCollapsePrimarySidebar } = useShell();
+  const { setPrimarySidebarCollapse } = useShell();
 
   const defaultDocumentViewUiOptions =
     collection?.latestVersion.settings.defaultDocumentViewUiOptions ?? null;
 
   useEffect(() => {
-    if (!defaultDocumentViewUiOptions?.collapsePrimarySidebar) {
+    if (!defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar) {
       return;
     }
-    setCollapsePrimarySidebar(true);
-    return () => setCollapsePrimarySidebar(false);
+    setPrimarySidebarCollapse("Always");
+    return () => setPrimarySidebarCollapse("SmallScreens");
   }, [
-    defaultDocumentViewUiOptions?.collapsePrimarySidebar,
-    setCollapsePrimarySidebar,
+    defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar,
+    setPrimarySidebarCollapse,
   ]);
 
   return collection ? (

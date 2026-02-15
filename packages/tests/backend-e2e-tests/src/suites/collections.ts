@@ -325,7 +325,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           defaultDocumentViewUiOptions: {
             fullWidth: false,
-            collapsePrimarySidebar: false,
+            alwaysCollapsePrimarySidebar: false,
             rootLayout: [{ propertyPath: "nonExistent" }],
           },
         },
@@ -892,7 +892,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             },
             defaultDocumentViewUiOptions: {
               fullWidth: false,
-              collapsePrimarySidebar: false,
+              alwaysCollapsePrimarySidebar: false,
               rootLayout: [{ propertyPath: "nonExistent" }],
             },
           },
@@ -4812,7 +4812,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
           defaultDocumentViewUiOptions: {
             fullWidth: false,
-            collapsePrimarySidebar: false,
+            alwaysCollapsePrimarySidebar: false,
             rootLayout: [{ propertyPath: "nonExistent" }],
           },
         },
@@ -6523,7 +6523,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           {
             defaultDocumentViewUiOptions: {
               fullWidth: false,
-              collapsePrimarySidebar: false,
+              alwaysCollapsePrimarySidebar: false,
               rootLayout: [{ propertyPath: "nonExistent" }],
             },
           },

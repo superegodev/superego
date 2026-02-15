@@ -378,7 +378,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               },
               defaultDocumentViewUiOptions: {
                 fullWidth: false,
-                collapsePrimarySidebar: false,
+                alwaysCollapsePrimarySidebar: false,
                 rootLayout: [{ propertyPath: "nonExistent" }],
               },
             },

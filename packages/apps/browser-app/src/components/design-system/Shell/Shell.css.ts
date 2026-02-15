@@ -18,12 +18,12 @@ export const Shell = {
       '&[data-primary-sidebar-open="true"]': {
         marginInlineStart: 0,
       },
-      '&[data-collapse-primary-sidebar="true"]': {
+      '&[data-primary-sidebar-collapse="Always"]': {
         width: `calc(100dvw + ${primarySidebarWidth})`,
         gridTemplateColumns: `${primarySidebarWidth} 100dvw`,
         marginInlineStart: `calc(-1 * ${primarySidebarWidth})`,
       },
-      '&[data-collapse-primary-sidebar="true"][data-primary-sidebar-open="true"]':
+      '&[data-primary-sidebar-collapse="Always"][data-primary-sidebar-open="true"]':
         {
           marginInlineStart: 0,
         },
@@ -142,7 +142,7 @@ export const PanelHeader = {
     padding: 0,
     display: "none !important",
     selectors: {
-      '[data-collapse-primary-sidebar="true"] &': {
+      '[data-primary-sidebar-collapse="Always"] &': {
         display: "inline-flex !important",
       },
     },

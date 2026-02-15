@@ -11,7 +11,7 @@ export default function defaultDocumentViewUiOptions(
   return v.pipe(
     v.looseObject({
       fullWidth: v.optional(v.boolean()),
-      collapsePrimarySidebar: v.optional(v.boolean()),
+      alwaysCollapsePrimarySidebar: v.optional(v.boolean()),
     }),
     v.rawCheck(({ dataset, addIssue }) => {
       if (!dataset.typed) {
