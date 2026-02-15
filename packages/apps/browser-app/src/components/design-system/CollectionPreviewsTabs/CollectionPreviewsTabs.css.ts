@@ -1,5 +1,6 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
+import { ExcalidrawInput } from "../ExcalidrawInput/ExcalidrawInput.css.js";
 
 export const CollectionPreviewsTabs = {
   root: style({
@@ -71,4 +72,10 @@ export const CollectionPreview = {
 
 globalStyle(`${CollectionPreview.root} > *`, {
   marginBlockEnd: vars.spacing._2,
+});
+
+globalStyle(`${CollectionPreview.root} ${ExcalidrawInput.root}`, {
+  zoom: 1 / 0.9,
+  width: "100%",
+  height: `calc(${vars.spacing._120} * 0.9)`,
 });
