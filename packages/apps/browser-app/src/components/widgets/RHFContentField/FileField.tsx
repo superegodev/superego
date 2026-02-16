@@ -1,11 +1,9 @@
-import type { Backend, FileId } from "@superego/backend";
 import {
   type FileRef,
   type FileTypeDefinition,
   type RHFProtoFile,
   utils as schemaUtils,
 } from "@superego/schema";
-import { useEffect, useState } from "react";
 import {
   DropZone,
   FieldErrorContext,
@@ -29,7 +27,7 @@ import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
 import FieldError from "../../design-system/forms/FieldError.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
-import Image from "../../design-system/Image/Image.js";
+import FileImage from "../FileImage/FileImage.jsx";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
@@ -89,18 +87,6 @@ export default function FileField({
           className={cs.FileField.legend}
         />
       ) : null}
-      {field.value !== null &&
-      field.value.mimeType.startsWith("image/") ? (
-        <FileImagePreview
-          key={
-            "id" in field.value
-              ? field.value.id
-              : field.value.name + field.value.mimeType
-          }
-          file={field.value}
-          backend={backend}
-        />
-      ) : null}
       <Fieldset.Fields className={cs.FileField.fields}>
         <DropZone
           onDrop={
@@ -115,6 +101,18 @@ export default function FileField({
           }
           className={cs.FileField.dropZone}
         >
+          {field.value !== null && field.value.mimeType.startsWith("image/") ? (
+            <FileImage
+              key={`FileImage-${
+                "id" in field.value
+                  ? field.value.id
+                  : field.value.name + field.value.mimeType
+              }`}
+              file={field.value}
+              backend={backend}
+              className={cs.FileField.imagePreview}
+            />
+          ) : null}
           {field.value !== null ? (
             <NonNullFileFields
               key={field.value.name + field.value.mimeType}
@@ -259,47 +257,5 @@ function NonNullFileFields({
         )}
       </Toolbar>
     </div>
-  );
-}
-
-interface FileImagePreviewProps {
-  file: RHFProtoFile | FileRef;
-  backend: Backend;
-}
-function FileImagePreview({ file, backend }: FileImagePreviewProps) {
-  const [image, setImage] = useState<{
-    mimeType: `image/${string}`;
-    content: Uint8Array<ArrayBuffer> | Blob;
-  } | null>(() =>
-    "content" in file
-      ? { mimeType: file.mimeType as `image/${string}`, content: file.content }
-      : null,
-  );
-
-  useEffect(() => {
-    if ("content" in file) return;
-    let cancelled = false;
-    (async () => {
-      const { success, data } = await backend.files.getContent(
-        file.id as FileId,
-      );
-      if (!cancelled && success) {
-        setImage({
-          mimeType: file.mimeType as `image/${string}`,
-          content: data,
-        });
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [file, backend]);
-
-  return (
-    <Image
-      image={image}
-      alt={file.name}
-      className={cs.FileField.imagePreview}
-    />
   );
 }
