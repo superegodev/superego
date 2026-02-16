@@ -4,22 +4,26 @@ import { useEffect, useState } from "react";
 import ZoomableImage from "../../design-system/ZoomableImage/ZoomableImage.js";
 
 interface Props {
-  file: RHFProtoFile | FileRef;
+  file: (RHFProtoFile | FileRef) & { mimeType: `image/${string}` };
   backend: Backend;
   className?: string;
 }
 export default function FileImage({ file, backend, className }: Props) {
   const [image, setImage] = useState<{
-    mimeType: `image/${string}`;
     content: Uint8Array<ArrayBuffer> | Blob;
+    mimeType: `image/${string}`;
   } | null>(() =>
     "content" in file
-      ? { mimeType: file.mimeType as `image/${string}`, content: file.content }
+      ? { mimeType: file.mimeType, content: file.content }
       : null,
   );
 
   useEffect(() => {
     if ("content" in file) {
+      setImage({
+        mimeType: file.mimeType,
+        content: file.content,
+      });
       return;
     }
     let cancelled = false;
@@ -29,7 +33,7 @@ export default function FileImage({ file, backend, className }: Props) {
       );
       if (!cancelled && success) {
         setImage({
-          mimeType: file.mimeType as `image/${string}`,
+          mimeType: file.mimeType,
           content: data,
         });
       }

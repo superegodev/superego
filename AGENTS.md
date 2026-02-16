@@ -41,7 +41,7 @@ a test.
 - `yarn check-translations`: checks translations are up-to-date and complete
 
 Always run the checks before committing. They **should** pass, but if some fails
-and it's not trivial to fix, you can leave it failing and commit anyways.
+and it's not trivial to fix, you can leave it failing and commit anyway.
 
 ### Workspace-specific
 
