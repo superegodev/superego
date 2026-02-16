@@ -9,6 +9,7 @@ import { Placeholder } from "@tiptap/extensions";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
+import { isEqual } from "es-toolkit";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
@@ -71,10 +72,22 @@ export default function EagerTiptapInput({
     content: value,
     autofocus: autoFocus ?? false,
     editable: !isReadOnly,
-    onUpdate: debounce(({ editor }) => {
-      onChange(editor.getJSON());
-    }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE),
+    onUpdate: debounce(
+      ({ editor }) => onChange(editor.getJSON()),
+      TIPTAP_INPUT_ON_CHANGE_DEBOUNCE,
+    ),
   });
+
+  useEffect(() => {
+    if (
+      editor &&
+      !editor.isDestroyed &&
+      value != null &&
+      !isEqual(editor.getJSON(), value)
+    ) {
+      editor.commands.setContent(value);
+    }
+  }, [editor, value]);
 
   const rootElementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

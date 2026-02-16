@@ -1,4 +1,5 @@
 import { DataType } from "@superego/schema";
+import { isEqual } from "es-toolkit";
 import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
@@ -7,10 +8,15 @@ import classnames from "../../../../../utils/classnames.js";
 import ExcalidrawInput from "../../../../design-system/ExcalidrawInput/ExcalidrawInput.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
+import NullifyFieldAction from "../../NullifyFieldAction.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
 import useFieldUiOptions from "../../useFieldUiOptions.js";
 import type Props from "../Props.js";
+
+// Immutable default value only used for comparisons. It's not used also when
+// setting the actual value to avoid mutations by the input component.
+const defaultValue = forms.defaults.excalidrawDrawingJsonObject();
 
 export default function ExcalidrawDrawing({
   typeDefinition,
@@ -27,8 +33,10 @@ export default function ExcalidrawDrawing({
     field.value ?? forms.defaults.excalidrawDrawingJsonObject();
   const onChange = useCallback(
     (newValue: typeof value) =>
-      field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange],
+      field.value === null && isEqual(newValue, defaultValue)
+        ? field.onChange(null)
+        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [field.onChange, field.value],
   );
   return (
     <div
@@ -47,6 +55,13 @@ export default function ExcalidrawDrawing({
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
+          actions={
+            <NullifyFieldAction
+              isNullable={isNullable}
+              field={field}
+              fieldLabel={label}
+            />
+          }
         />
       ) : null}
       <ExcalidrawInput
