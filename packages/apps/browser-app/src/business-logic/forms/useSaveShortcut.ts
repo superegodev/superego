@@ -12,7 +12,7 @@ export default function useSaveShortcut(
 
     function handleKeyDown(event: KeyboardEvent) {
       const isModifierKeyPressed = isMacos() ? event.metaKey : event.ctrlKey;
-      if (isModifierKeyPressed && event.key === "s") {
+      if (isModifierKeyPressed && event.key.toLowerCase() === "s") {
         event.preventDefault();
         const form = document.getElementById(formId);
         if (form instanceof HTMLFormElement) {
