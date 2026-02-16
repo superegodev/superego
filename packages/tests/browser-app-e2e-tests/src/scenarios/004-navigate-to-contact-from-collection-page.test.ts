@@ -1,9 +1,9 @@
-import test from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
 import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import mainPanel from "../locators/mainPanel.js";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("004. Navigate to Contact from collection page", async ({ page }) => {

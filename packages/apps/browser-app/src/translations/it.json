@@ -350,11 +350,17 @@
   "CreateCollectionManual.tsx_ivIDMd": {
     "defaultMessage": "Crea collezione (modalità manuale)"
   },
+  "CreateDocument.tsx_K6tRTv": {
+    "defaultMessage": "Azioni crea documento"
+  },
+  "CreateDocument.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
   "CreateDocument.tsx_saRT/V": {
     "defaultMessage": "{collection} » Crea documento"
   },
-  "CreateDocumentForm.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
+  "CreateDocumentForm.tsx_KlVScA": {
+    "defaultMessage": "Errore nella creazione del documento"
   },
   "CreateDocumentForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"

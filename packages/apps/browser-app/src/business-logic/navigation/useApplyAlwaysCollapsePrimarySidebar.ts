@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useShell from "../../../business-logic/navigation/useShell.js";
+import useShell from "./useShell.js";
 
 export default function useApplyAlwaysCollapsePrimarySidebar(
   alwaysCollapsePrimarySidebar?: boolean,

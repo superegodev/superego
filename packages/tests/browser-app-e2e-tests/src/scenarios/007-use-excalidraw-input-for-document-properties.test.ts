@@ -1,8 +1,8 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import drawTextInExcalidrawInput from "../actions/drawTextInExcalidrawInput.js";
 import waitForExcalidrawJsonObjectField from "../actions/waitForExcalidrawJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("007. Use Excalidraw input for document properties", async ({ page }) => {

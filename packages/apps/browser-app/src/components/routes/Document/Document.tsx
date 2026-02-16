@@ -20,6 +20,7 @@ import {
   listDocumentVersionsQuery,
 } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import classnames from "../../../utils/classnames.js";
@@ -33,7 +34,6 @@ import DocumentContent from "./DocumentContent.js";
 import History from "./History/History.js";
 import RedirectIfLatest from "./RedirectIfLatest.js";
 import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
-import useApplyAlwaysCollapsePrimarySidebar from "./useApplyAlwaysCollapsePrimarySidebar.js";
 
 interface Props {
   collectionId: CollectionId;

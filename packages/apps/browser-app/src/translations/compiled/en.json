@@ -793,6 +793,18 @@
       "value": "Create Collection (Manual Mode)"
     }
   ],
+  "CreateDocument.tsx_K6tRTv": [
+    {
+      "type": 0,
+      "value": "Create document actions"
+    }
+  ],
+  "CreateDocument.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
   "CreateDocument.tsx_saRT/V": [
     {
       "type": 1,
@@ -803,10 +815,10 @@
       "value": " » Create Document"
     }
   ],
-  "CreateDocumentForm.tsx_VzzYJk": [
+  "CreateDocumentForm.tsx_KlVScA": [
     {
       "type": 0,
-      "value": "Create"
+      "value": "Error creating document"
     }
   ],
   "CreateDocumentForm.tsx_Wq1yhE": [

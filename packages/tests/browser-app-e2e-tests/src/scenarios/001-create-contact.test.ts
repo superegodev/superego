@@ -1,7 +1,7 @@
-import test from "@playwright/test";
 import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("001. Create Contact", async ({ page }) => {

@@ -1,8 +1,8 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import drawPointInGeoJsonInput from "../actions/drawPointInGeoJsonInput.js";
 import waitForGeoJSONJsonObjectField from "../actions/waitForGeoJSONJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test.use({

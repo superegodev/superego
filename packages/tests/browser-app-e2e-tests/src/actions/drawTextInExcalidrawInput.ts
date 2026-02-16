@@ -18,6 +18,7 @@ export default async function drawTextInExcalidrawInput(page: Page) {
 
   await page.mouse.click(centerX, centerY);
   await page.keyboard.type("Hello world!");
+  await page.waitForTimeout(500);
 }
 
 async function selectTextTool(page: Page) {
