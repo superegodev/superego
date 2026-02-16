@@ -335,16 +335,12 @@ export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
  * Packs
  */
 
-export const useInstallPack = makeUseBackendMutation(
-  "packs",
-  "install",
-  () => [
-    ["listCollectionCategories"],
-    ["listCollections"],
-    ["listApps"],
-    ["listDocuments"],
-  ],
-);
+export const useInstallPack = makeUseBackendMutation("packs", "install", () => [
+  ["listCollectionCategories"],
+  ["listCollections"],
+  ["listApps"],
+  ["listDocuments"],
+]);
 
 /*
  * Bazaar

@@ -41,9 +41,7 @@ import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
-export default class PacksInstallPack extends Usecase<
-  Backend["packs"]["install"]
-> {
+export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
   async exec(pack: Pack) {
     // Step 1: Generate all IDs upfront.
     const collectionCategoryIds = pack.collectionCategories.map(() =>
@@ -62,7 +60,7 @@ export default class PacksInstallPack extends Usecase<
     const documentIdMapping = makeProtoDocumentIdMapping(documentIds);
 
     // Step 3: Validate proto id references.
-    const validationIssues = PacksInstallPack.validateProtoIdReferences(
+    const validationIssues = PacksInstall.validateProtoIdReferences(
       pack,
       collectionCategoryIdMapping,
       collectionIdMapping,
@@ -142,7 +140,7 @@ export default class PacksInstallPack extends Usecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
-          files: PacksInstallPack.replaceProtoCollectionIdsInAppFiles(
+          files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,
           ),
