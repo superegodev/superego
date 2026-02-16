@@ -16,8 +16,13 @@ export default defineConfig({
         },
       ],
       sidebar: [
+        {
+          label: "Customization",
+          items: [{ slug: "default-document-view-ui-options" }],
+        },
         { label: "Connectors", autogenerate: { directory: "connectors" } },
       ],
+      customCss: ["./src/styles/custom.css"],
       plugins: [starlightThemeNova()],
     }),
   ],

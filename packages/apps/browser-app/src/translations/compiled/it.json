@@ -3084,6 +3084,52 @@
       "value": "Definisce il layout predefinito e le opzioni UI per il modulo del documento in questa collezione."
     }
   ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_MGqjTr": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Per maggiori informazioni, vedi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/default-document-view-ui-options"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": [
+    {
+      "type": 0,
+      "value": "Abilita opzioni UI personalizzate per la vista documento"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4102,6 +4148,12 @@
     {
       "type": 0,
       "value": "Sommario dei contenuti"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": [
+    {
+      "type": 0,
+      "value": "Opzioni UI della vista documento"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [

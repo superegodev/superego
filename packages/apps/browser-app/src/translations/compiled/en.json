@@ -3106,6 +3106,52 @@
       "value": "Defines the default layout and UI options for the document form in this collection."
     }
   ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_MGqjTr": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Customize how the document form looks when viewing or editing documents in this collection. Options include using the full page width, collapsing the sidebar, and defining a custom field layout. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " For more information, see "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/default-document-view-ui-options"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": [
+    {
+      "type": 0,
+      "value": "Enable custom document view UI options"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4124,6 +4170,12 @@
     {
       "type": 0,
       "value": "Content summary"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": [
+    {
+      "type": 0,
+      "value": "Document view UI options"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [

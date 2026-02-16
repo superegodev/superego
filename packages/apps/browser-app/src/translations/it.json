@@ -1100,6 +1100,12 @@
   "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": {
     "defaultMessage": "Definisce il layout predefinito e le opzioni UI per il modulo del documento in questa collezione."
   },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_MGqjTr": {
+    "defaultMessage": "<p> Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. </p> <p> Per maggiori informazioni, vedi <a>https://superego.dev/default-document-view-ui-options</a>. </p>"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": {
+    "defaultMessage": "Abilita opzioni UI personalizzate per la vista documento"
+  },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
   },
@@ -1369,6 +1375,9 @@
   },
   "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": {
     "defaultMessage": "Sommario dei contenuti"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": {
+    "defaultMessage": "Opzioni UI della vista documento"
   },
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
