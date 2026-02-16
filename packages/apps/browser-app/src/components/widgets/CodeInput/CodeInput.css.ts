@@ -4,7 +4,6 @@ import { vars } from "../../../themes.css.js";
 export const EagerCodeInput = {
   root: style({
     position: "relative",
-    marginBlockEnd: vars.spacing._2,
     selectors: {
       "&::before": {
         content: "",

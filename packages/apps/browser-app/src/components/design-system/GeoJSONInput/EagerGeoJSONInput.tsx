@@ -3,6 +3,7 @@ import "@geoman-io/maplibre-geoman-free/dist/maplibre-geoman.css";
 import { useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
 import useTheme from "../../../business-logic/theme/useTheme.js";
+import classnames from "../../../utils/classnames.js";
 import * as cs from "./GeoJSONInput.css.js";
 import type Props from "./Props.js";
 import useCreateMap from "./useCreateMap.js";
@@ -17,6 +18,7 @@ export default function EagerGeoJSONInput({
   isInvalid = false,
   isReadOnly = false,
   ref,
+  className,
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
@@ -58,7 +60,7 @@ export default function EagerGeoJSONInput({
       data-has-focus={hasFocus}
       data-focus-visible={hasFocus && isFocusVisible}
       data-read-only={isReadOnly}
-      className={cs.GeoJSONInput.root}
+      className={classnames(cs.GeoJSONInput.root, className)}
     >
       <div
         ref={mapContainerRef}

@@ -68,8 +68,7 @@ export default function FileField({
     >
       {!isListItem ? (
         <AnyFieldLabel
-          component="legend"
-          className={cs.FileField.legend}
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
@@ -82,6 +81,8 @@ export default function FileField({
               />
             ) : undefined
           }
+          component="legend"
+          className={cs.FileField.legend}
         />
       ) : null}
       <Fieldset.Fields className={cs.FileField.fields}>

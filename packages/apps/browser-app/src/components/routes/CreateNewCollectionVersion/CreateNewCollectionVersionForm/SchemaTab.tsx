@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import RHFSchemaField from "../../../widgets/RHFSchemaField/RHFSchemaField.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 
@@ -18,7 +19,7 @@ interface Props {
 export default function SchemaTab({ control, collection }: Props) {
   const intl = useIntl();
   return (
-    <>
+    <Fields>
       <Alert variant="info">
         {CollectionUtils.hasRemote(collection) ? (
           <FormattedMessage
@@ -71,6 +72,6 @@ export default function SchemaTab({ control, collection }: Props) {
         name="schema"
         label={intl.formatMessage({ defaultMessage: "Schema" })}
       />
-    </>
+    </Fields>
   );
 }

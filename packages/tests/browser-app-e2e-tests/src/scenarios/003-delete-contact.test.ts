@@ -1,6 +1,6 @@
-import test from "@playwright/test";
 import createContact from "../routines/createContact.js";
 import installProductivityPack from "../routines/installProductivityPack.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("003. Delete Contact", async ({ page }) => {

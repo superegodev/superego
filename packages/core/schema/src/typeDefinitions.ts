@@ -16,7 +16,7 @@ export interface EnumMember extends Described {
 export interface EnumTypeDefinition extends Described {
   dataType: DataType.Enum;
   /**
-   * Member names **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   * Member names **must** match the regex `/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/`.
    */
   members: {
     [name: string]: EnumMember;
@@ -108,14 +108,12 @@ export interface FileTypeDefinition extends Described {
  * - **Nullability is opt-in per property.** A property may be `null` only if
  *   its name appears in {@link nullableProperties}. All other properties must
  *   be non-null.
- * - {@link propertiesOrder} controls **display order** in UIs and does not
- *   affect validation.
  */
 export interface StructTypeDefinition extends Described {
   dataType: DataType.Struct;
   /**
    * The complete set of properties that make up this Struct. Property names
-   * **must** match the regex `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   * **must** match the regex `/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/`.
    */
   properties: {
     [name: string]: AnyTypeDefinition;
@@ -129,13 +127,6 @@ export interface StructTypeDefinition extends Described {
    * - Defaults to none (i.e., all properties are non-nullable).
    */
   nullableProperties?: string[] | undefined;
-  /**
-   * Preferred order for displaying properties in UIs. If specified:
-   * - **Must** contain ALL properties defined in {@link properties}, and
-   *   nothing else.
-   * - **Must** not contain duplicates.
-   */
-  propertiesOrder?: string[] | undefined;
 }
 
 export interface ListTypeDefinition extends Described {

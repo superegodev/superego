@@ -12,4 +12,5 @@ export default interface Props {
    * in certain circumstances.
    */
   ref?: (refObject: { focus: () => void }) => void;
+  className?: string | undefined;
 }

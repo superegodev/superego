@@ -1,4 +1,5 @@
 import { DataType } from "@superego/schema";
+import { isEqual } from "es-toolkit";
 import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
@@ -9,9 +10,15 @@ import type GeoJSONFeatureCollection from "../../../../design-system/GeoJSONInpu
 import GeoJSONInput from "../../../../design-system/GeoJSONInput/GeoJSONInput.js";
 import type GeoJSONValue from "../../../../design-system/GeoJSONInput/GeoJSONValue.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
+import NullifyFieldAction from "../../NullifyFieldAction.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
+import useFieldUiOptions from "../../useFieldUiOptions.js";
 import type Props from "../Props.js";
+
+// Immutable default value only used for comparisons. It's not used also when
+// setting the actual value to avoid mutations by the input component.
+const defaultValue = forms.defaults.geoJsonFeatureCollection();
 
 export default function GeoJSON({
   typeDefinition,
@@ -22,19 +29,23 @@ export default function GeoJSON({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
   const onChange = useCallback(
     (newValue: GeoJSONFeatureCollection) =>
-      field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange],
+      field.value === null && isEqual(newValue, defaultValue)
+        ? field.onChange(null)
+        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [field.onChange, field.value],
   );
   return (
     <div
       className={classnames(
         cs.JsonObjectField.GeoJSON.root,
         isListItem && cs.ListItemField.root,
+        grow && cs.Field.grow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -42,9 +53,17 @@ export default function GeoJSON({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
+          actions={
+            <NullifyFieldAction
+              isNullable={isNullable}
+              field={field}
+              fieldLabel={label}
+            />
+          }
         />
       ) : null}
       <GeoJSONInput
@@ -54,6 +73,7 @@ export default function GeoJSON({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         ref={field.ref}
+        className={grow ? cs.Field.growContent : undefined}
       />
       <FieldErrorContext
         value={{

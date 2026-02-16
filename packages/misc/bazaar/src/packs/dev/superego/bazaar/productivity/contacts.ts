@@ -62,5 +62,113 @@ export default function getContentSummary(contact) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: {
+      fullWidth: true,
+      alwaysCollapsePrimarySidebar: false,
+      rootLayout: {
+        "(min-width: 65rem)": [
+          {
+            style: {
+              display: "grid",
+              gridTemplateColumns: "5fr 3fr",
+              columnGap: "var(--section-horizontal-gap)",
+              height: "100%",
+            },
+            children: [
+              {
+                style: {
+                  position: "sticky",
+                  height: "var(--visible-area-height)",
+                  top: "var(--visible-area-top)",
+                },
+                children: [{ propertyPath: "notes", grow: true }],
+              },
+              {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--field-vertical-gap)",
+                },
+                children: [
+                  { propertyPath: "type" },
+                  { propertyPath: "name" },
+                  { propertyPath: "relation" },
+                  {
+                    propertyPath: "phones.$",
+                    layout: [
+                      {
+                        style: {
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          columnGap: "var(--field-horizontal-gap)",
+                        },
+                        children: [
+                          { propertyPath: "number" },
+                          { propertyPath: "description" },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    propertyPath: "emails.$",
+                    layout: [
+                      {
+                        style: {
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          columnGap: "var(--field-horizontal-gap)",
+                        },
+                        children: [
+                          { propertyPath: "address" },
+                          { propertyPath: "description" },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        all: [
+          { propertyPath: "type" },
+          { propertyPath: "name" },
+          { propertyPath: "relation" },
+          {
+            propertyPath: "phones.$",
+            layout: [
+              {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  columnGap: "var(--field-horizontal-gap)",
+                },
+                children: [
+                  { propertyPath: "number" },
+                  { propertyPath: "description" },
+                ],
+              },
+            ],
+          },
+          {
+            propertyPath: "emails.$",
+            layout: [
+              {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  columnGap: "var(--field-horizontal-gap)",
+                },
+                children: [
+                  { propertyPath: "address" },
+                  { propertyPath: "description" },
+                ],
+              },
+            ],
+          },
+          { propertyPath: "notes" },
+        ],
+      },
+    },
   },
 } as const satisfies CollectionDefinition<true, true>;

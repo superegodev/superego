@@ -1,5 +1,5 @@
-import test from "@playwright/test";
 import openSidebar from "../actions/openSidebar.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("000. Install Productivity pack", async ({ page }) => {

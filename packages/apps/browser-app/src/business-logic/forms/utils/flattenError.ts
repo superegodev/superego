@@ -10,10 +10,10 @@ interface FlatError {
 // {
 //   "types": {
 //     "%FuelType": {
-//       "message": "Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received \"%FuelType\""
+//       "message": "Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received \"%FuelType\""
 //       "members": {
 //         "%G95E5": {
-//           "message": "Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received \"%G95E5\""
+//           "message": "Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received \"%G95E5\""
 //         }
 //       }
 //     }

@@ -1,8 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { Collection, Document, DocumentVersion } from "@superego/backend";
+import type {
+  Collection,
+  DefaultDocumentViewUiOptions,
+  Document,
+  DocumentVersion,
+} from "@superego/backend";
 import { type Schema, valibotSchemas } from "@superego/schema";
 import { useEffect, useRef } from "react";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
@@ -13,6 +17,7 @@ import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
+import { Form } from "../../design-system/forms/forms.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
 
@@ -21,6 +26,7 @@ export type ReadOnlyReason = "remote" | "history-version";
 interface Props {
   collection: Collection;
   collectionSchema?: Schema;
+  defaultDocumentViewUiOptions?: DefaultDocumentViewUiOptions | null;
   document: Document;
   documentVersion?: DocumentVersion;
   formId: string;
@@ -30,6 +36,8 @@ interface Props {
 export default function CreateNewDocumentVersionForm({
   collection,
   collectionSchema = collection.latestVersion.schema,
+  defaultDocumentViewUiOptions = collection.latestVersion.settings
+    .defaultDocumentViewUiOptions,
   document,
   documentVersion = document.latestVersion,
   formId,
@@ -135,7 +143,12 @@ export default function CreateNewDocumentVersionForm({
   );
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      ref={formRef}
+      id={formId}
+      className={cs.CreateNewDocumentVersionForm.root}
+    >
       {readOnlyReason !== null ? (
         <Alert
           variant="info"
@@ -164,6 +177,7 @@ export default function CreateNewDocumentVersionForm({
         schema={collectionSchema}
         control={control}
         isReadOnly={isReadOnly}
+        defaultDocumentViewUiOptions={defaultDocumentViewUiOptions}
       />
     </Form>
   );

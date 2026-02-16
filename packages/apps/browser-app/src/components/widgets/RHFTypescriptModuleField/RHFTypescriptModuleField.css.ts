@@ -3,7 +3,9 @@ import { vars } from "../../../themes.css.js";
 
 export const RHFTypescriptModuleField = {
   root: style({
-    marginBlockEnd: vars.spacing._6,
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._2,
     selectors: {
       '&[data-disabled="true"]': {
         color: vars.colors.text.secondary,

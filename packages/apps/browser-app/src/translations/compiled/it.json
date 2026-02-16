@@ -789,6 +789,18 @@
       "value": "Crea collezione (modalità manuale)"
     }
   ],
+  "CreateDocument.tsx_K6tRTv": [
+    {
+      "type": 0,
+      "value": "Azioni crea documento"
+    }
+  ],
+  "CreateDocument.tsx_VzzYJk": [
+    {
+      "type": 0,
+      "value": "Crea"
+    }
+  ],
   "CreateDocument.tsx_saRT/V": [
     {
       "type": 1,
@@ -799,10 +811,10 @@
       "value": " » Crea documento"
     }
   ],
-  "CreateDocumentForm.tsx_VzzYJk": [
+  "CreateDocumentForm.tsx_KlVScA": [
     {
       "type": 0,
-      "value": "Crea"
+      "value": "Errore nella creazione del documento"
     }
   ],
   "CreateDocumentForm.tsx_Wq1yhE": [
@@ -876,16 +888,10 @@
       "value": "Creata nuova versione della collezione"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_3TjzSy": [
+  "CreateNewCollectionVersionForm.tsx_FQCqoH": [
     {
       "type": 0,
-      "value": "4. Convertitori remoti"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_FbTtH0": [
-    {
-      "type": 0,
-      "value": "4. Migrazione"
+      "value": "5. Migrazione"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_HxoW8w": [
@@ -900,6 +906,12 @@
       "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_dISRjb": [
+    {
+      "type": 0,
+      "value": "4. Opzioni UI"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
     {
       "type": 0,
@@ -910,6 +922,12 @@
     {
       "type": 0,
       "value": "2. Deduplicazione"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
+    {
+      "type": 0,
+      "value": "5. Convertitori remoti"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -988,6 +1006,12 @@
     {
       "type": 0,
       "value": "Stringa JSON non valida"
+    }
+  ],
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": [
+    {
+      "type": 0,
+      "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -1464,6 +1488,18 @@
     {
       "type": 0,
       "value": "Crea comunque"
+    }
+  ],
+  "EagerExcalidrawInput.tsx_QqavBC": [
+    {
+      "type": 0,
+      "value": "Attiva la modalità a schermo intero"
+    }
+  ],
+  "EagerExcalidrawInput.tsx_gYg6LX": [
+    {
+      "type": 0,
+      "value": "Esci dalla modalità a schermo intero"
     }
   ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
@@ -3030,6 +3066,70 @@
       "value": "p"
     }
   ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Stringa JSON non valida"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "Alle"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": [
+    {
+      "type": 0,
+      "value": "Definisce il layout predefinito e le opzioni UI per il modulo del documento in questa collezione."
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": [
+    {
+      "type": 0,
+      "value": "Abilita opzioni UI personalizzate per la vista documento"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Per maggiori informazioni, vedi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "https://superego.dev/customization/default-document-view-ui-options"
+            }
+          ],
+          "type": 8,
+          "value": "a"
+        },
+        {
+          "type": 0,
+          "value": ". "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,
@@ -3046,34 +3146,6 @@
     {
       "type": 0,
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
-    }
-  ],
-  "RHFTextListField.tsx_2/2yg+": [
-    {
-      "type": 0,
-      "value": "Aggiungi"
-    }
-  ],
-  "RHFTextListField.tsx_G/yZLu": [
-    {
-      "type": 0,
-      "value": "Rimuovi"
-    }
-  ],
-  "RHFTextListField.tsx_OT7vQx": [
-    {
-      "type": 0,
-      "value": "Elemento "
-    },
-    {
-      "type": 1,
-      "value": "number"
-    }
-  ],
-  "RHFTextListField.tsx_l95YvM": [
-    {
-      "type": 0,
-      "value": "Nessun elemento"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -4076,6 +4148,12 @@
     {
       "type": 0,
       "value": "Sommario dei contenuti"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": [
+    {
+      "type": 0,
+      "value": "Opzioni UI della vista documento"
     }
   ],
   "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [

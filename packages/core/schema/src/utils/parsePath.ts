@@ -19,7 +19,10 @@ export default function parsePath(path: string): PathSegment[] {
     return [];
   }
   return normalizedPath.split(".").map((segmentValue) => ({
-    type: /^\d/.test(segmentValue) ? "ListItem" : "StructProperty",
+    type:
+      segmentValue === "$" || /^\d/.test(segmentValue)
+        ? "ListItem"
+        : "StructProperty",
     value: segmentValue,
   }));
 }

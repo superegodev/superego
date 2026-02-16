@@ -1,30 +1,36 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection, DuplicateDocumentDetected } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
-import { useState } from "react";
-import { Form } from "react-aria-components";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useCreateDocument } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
-import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
+import { Form } from "../../design-system/forms/forms.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CreateDocument.css.js";
 import DuplicateDocumentDetectedModal from "./DuplicateDocumentDetectedModal.js";
 
 interface Props {
   collection: Collection;
+  formId: string;
+  setSubmitDisabled: Dispatch<SetStateAction<boolean>>;
 }
-export default function CreateDocumentForm({ collection }: Props) {
+export default function CreateDocumentForm({
+  collection,
+  formId,
+  setSubmitDisabled,
+}: Props) {
   const intl = useIntl();
   const { schema } = collection.latestVersion;
   const { navigateTo } = useNavigationState();
 
-  const { result, mutate, isPending } = useCreateDocument();
+  const { mutate, isPending } = useCreateDocument();
 
   const [duplicateError, setDuplicateError] =
     useState<DuplicateDocumentDetected | null>(null);
@@ -36,7 +42,11 @@ export default function CreateDocumentForm({ collection }: Props) {
     resolver: standardSchemaResolver(valibotSchemas.content(schema, "rhf")),
   });
 
-  const { isDirty } = useFormState({ control });
+  const { isDirty, isSubmitting } = useFormState({ control });
+
+  useEffect(() => {
+    setSubmitDisabled(isSubmitting);
+  }, [isSubmitting, setSubmitDisabled]);
 
   useExitWarning(
     isDirty
@@ -65,6 +75,15 @@ export default function CreateDocumentForm({ collection }: Props) {
     } else if (error?.name === "DuplicateDocumentDetected") {
       setPendingContent(content);
       setDuplicateError(error);
+    } else if (error) {
+      console.error(error);
+      toasts.add({
+        type: ToastType.Error,
+        title: intl.formatMessage({
+          defaultMessage: "Error creating document",
+        }),
+        error,
+      });
     }
   };
 
@@ -91,16 +110,18 @@ export default function CreateDocumentForm({ collection }: Props) {
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <RHFContentField schema={schema} control={control} />
-        <div className={cs.CreateDocumentForm.submitButtonContainer}>
-          <RHFSubmitButton control={control} variant="primary">
-            <FormattedMessage defaultMessage="Create" />
-          </RHFSubmitButton>
-        </div>
-        {result?.error && result.error.name !== "DuplicateDocumentDetected" ? (
-          <ResultErrors errors={[result.error]} />
-        ) : null}
+      <Form
+        id={formId}
+        onSubmit={handleSubmit(onSubmit)}
+        className={cs.CreateDocumentForm.root}
+      >
+        <RHFContentField
+          schema={schema}
+          control={control}
+          defaultDocumentViewUiOptions={
+            collection.latestVersion.settings.defaultDocumentViewUiOptions
+          }
+        />
       </Form>
       {duplicateError ? (
         <DuplicateDocumentDetectedModal

@@ -141,7 +141,7 @@ function renderPanelHeaderAction(
         type={"submit" in action ? "submit" : "button"}
         form={"submit" in action ? action.submit : undefined}
         onPress={"onPress" in action ? action.onPress : undefined}
-        variant="invisible"
+        variant={action.isPrimary ? "primary" : "invisible"}
         className={classnames(cs.PanelHeader.action, action.className)}
       >
         {action.icon}

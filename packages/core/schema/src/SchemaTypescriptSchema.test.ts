@@ -53,7 +53,7 @@ it("exports the Schema type definition", () => {
     interface EnumTypeDefinition extends Described {
       dataType: DataType.Enum;
       /**
-       * Member names **must** match the regex \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * Member names **must** match the regex \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       members: {
         [name: string]: EnumMember;
@@ -145,14 +145,12 @@ it("exports the Schema type definition", () => {
      * - **Nullability is opt-in per property.** A property may be \`null\` only if
      *   its name appears in {@link nullableProperties}. All other properties must
      *   be non-null.
-     * - {@link propertiesOrder} controls **display order** in UIs and does not
-     *   affect validation.
      */
     interface StructTypeDefinition extends Described {
       dataType: DataType.Struct;
       /**
        * The complete set of properties that make up this Struct. Property names
-       * **must** match the regex \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * **must** match the regex \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       properties: {
         [name: string]: AnyTypeDefinition;
@@ -166,13 +164,6 @@ it("exports the Schema type definition", () => {
        * - Defaults to none (i.e., all properties are non-nullable).
        */
       nullableProperties?: string[] | undefined;
-      /**
-       * Preferred order for displaying properties in UIs. If specified:
-       * - **Must** contain ALL properties defined in {@link properties}, and
-       *   nothing else.
-       * - **Must** not contain duplicates.
-       */
-      propertiesOrder?: string[] | undefined;
     }
 
     interface ListTypeDefinition extends Described {
@@ -211,7 +202,7 @@ it("exports the Schema type definition", () => {
       /**
        * Record (by name) of type definitions. Define complex types here once and
        * reuse them elsewhere in the schema. Type names **must** match the regex
-       * \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       types: {
         [name: string]: AnyTypeDefinition;

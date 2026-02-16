@@ -11,6 +11,7 @@ import {
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
+import useFieldUiOptions from "../../useFieldUiOptions.js";
 import type Props from "../Props.js";
 
 export default function Default({
@@ -22,6 +23,7 @@ export default function Default({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const [jsonValue, setJsonValue] = useState(() =>
     getJsonValueFromValue(field.value),
@@ -64,10 +66,14 @@ export default function Default({
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.JsonObjectField.Default.root"
-      className={classnames(isListItem && cs.ListItemField.root)}
+      className={classnames(
+        isListItem && cs.ListItemField.root,
+        grow && cs.Field.grow,
+      )}
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
@@ -76,7 +82,10 @@ export default function Default({
       <TextArea
         ref={field.ref}
         placeholder={field.value === null ? "null" : undefined}
-        className={cs.JsonObjectField.Default.textArea}
+        className={classnames(
+          cs.JsonObjectField.Default.textArea,
+          grow && cs.Field.growContent,
+        )}
       />
       <FieldError>
         {typeof field.value === "string" ? (

@@ -5,6 +5,7 @@ type PanelHeaderAction = {
   label: string;
   icon: ReactNode;
   isDisabled?: boolean | undefined;
+  isPrimary?: boolean | undefined;
   className?: string | undefined;
 } & (
   | { to: Route }

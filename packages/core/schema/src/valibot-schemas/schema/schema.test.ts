@@ -630,84 +630,6 @@ describe("Invalid schemas", () => {
         ],
       });
     });
-
-    describe("invalid propertiesOrder in struct type definition", () => {
-      test("case: non-existing property", {
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {},
-              propertiesOrder: ["nonExisting"],
-            },
-          },
-          rootType: "Root",
-        },
-        expectedIssues: [
-          {
-            kind: "validation",
-            message: "Must contain all property names and nothing else",
-            path: [
-              { key: "types" },
-              { key: "Root" },
-              { key: "propertiesOrder" },
-            ],
-          },
-        ],
-      });
-
-      test("case: missing property", {
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                string: { dataType: DataType.String },
-              },
-              propertiesOrder: [],
-            },
-          },
-          rootType: "Root",
-        },
-        expectedIssues: [
-          {
-            kind: "validation",
-            message: "Must contain all property names and nothing else",
-            path: [
-              { key: "types" },
-              { key: "Root" },
-              { key: "propertiesOrder" },
-            ],
-          },
-        ],
-      });
-
-      test("case: duplicate property", {
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                string: { dataType: DataType.String },
-              },
-              propertiesOrder: ["string", "string"],
-            },
-          },
-          rootType: "Root",
-        },
-        expectedIssues: [
-          {
-            kind: "validation",
-            message: "Must not contain duplicates",
-            path: [
-              { key: "types" },
-              { key: "Root" },
-              { key: "propertiesOrder" },
-            ],
-          },
-        ],
-      });
-    });
   });
 
   describe("Invalid type names", () => {
@@ -722,7 +644,7 @@ describe("Invalid schemas", () => {
         {
           kind: "validation",
           message:
-            'Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received "Root@"',
+            'Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received "Root@"',
           path: [{ key: "types" }, { key: "Root@" }],
         },
       ],
@@ -739,7 +661,7 @@ describe("Invalid schemas", () => {
         {
           kind: "validation",
           message:
-            'Invalid identifier: Should match /^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/ but received "0Root"',
+            'Invalid identifier: Should match /^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/ but received "0Root"',
           path: [{ key: "types" }, { key: "0Root" }],
         },
       ],
@@ -984,15 +906,8 @@ describe("Valid schemas", () => {
                   ref: "MassQuantity",
                 },
               },
-              propertiesOrder: ["calories", "fat", "carbs", "protein"],
             },
           },
-          propertiesOrder: [
-            "name",
-            "novaGroup",
-            "servingSize",
-            "nutritionFacts",
-          ],
         },
         MassQuantity: {
           dataType: DataType.Struct,
@@ -1005,7 +920,6 @@ describe("Valid schemas", () => {
               dataType: DataType.Number,
             },
           },
-          propertiesOrder: ["amount", "unit"],
         },
         EnergyQuantity: {
           dataType: DataType.Struct,
@@ -1018,7 +932,6 @@ describe("Valid schemas", () => {
               dataType: DataType.Number,
             },
           },
-          propertiesOrder: ["amount", "unit"],
         },
         NovaGroup: {
           dataType: DataType.Enum,

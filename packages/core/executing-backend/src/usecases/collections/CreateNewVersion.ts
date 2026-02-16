@@ -11,6 +11,7 @@ import {
   type CollectionVersionSettings,
   type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
+  type DefaultDocumentViewUiOptionsNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
   type RemoteConverters,
@@ -29,6 +30,7 @@ import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
 import pMap from "p-map";
 import * as v from "valibot";
@@ -62,6 +64,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
     | CollectionMigrationFailed
@@ -170,6 +173,23 @@ export default class CollectionsCreateNewVersion extends Usecase<
       );
     }
 
+    // Validate settings.defaultDocumentViewUiOptions.
+    if (settings.defaultDocumentViewUiOptions !== null) {
+      const uiOptionsValidationResult = v.safeParse(
+        sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(resolvedSchema),
+        settings.defaultDocumentViewUiOptions,
+      );
+      if (!uiOptionsValidationResult.success) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: makeValidationIssues(uiOptionsValidationResult.issues),
+          }),
+        );
+      }
+    }
+
     // Validate migration and remoteConverters.
     if (collection.remote) {
       if (migration !== null) {
@@ -266,6 +286,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
         contentBlockingKeysGetter: settings.contentBlockingKeysGetter,
+        defaultDocumentViewUiOptions: settings.defaultDocumentViewUiOptions,
       },
       migration: migration,
       remoteConverters: remoteConverters,

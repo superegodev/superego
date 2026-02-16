@@ -4,9 +4,10 @@ import { vars } from "../../../themes.css.js";
 export const TiptapInput = {
   root: style({
     width: "100%",
+    minHeight: vars.spacing._40,
+    overflow: "auto",
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
-    marginBlockEnd: vars.spacing._2,
     background: vars.colors.background.surface,
     selectors: {
       '&[data-has-focus="true"][data-focus-visible="true"]': {
@@ -24,6 +25,7 @@ export const TiptapInput = {
     whiteSpace: "pre-wrap",
     fontSize: vars.typography.fontSizes.md,
     padding: vars.spacing._4,
+    paddingBlockStart: vars.spacing._2,
     selectors: {
       "&:focus-visible": {
         outline: "none",
@@ -40,12 +42,17 @@ const formattingMenuItemBase = style({
 });
 export const FormattingToolbar = {
   root: style({
+    position: "sticky",
+    top: 0,
+    zIndex: 1,
     width: "100%",
     overflow: "auto",
     display: "flex",
     gap: vars.spacing._2,
     paddingInline: vars.spacing._4,
     paddingBlockStart: vars.spacing._4,
+    paddingBlockEnd: vars.spacing._2,
+    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgba(from ${vars.colors.background.surface} r g b / 0) 100%)`,
   }),
 
   group: style({

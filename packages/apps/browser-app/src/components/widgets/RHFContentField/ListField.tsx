@@ -18,6 +18,7 @@ import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
   schema: Schema;
@@ -45,18 +46,21 @@ function NullListField({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
+  const { allowCollapsing } = useFieldUiOptions(name);
   return (
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
+      isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
+        component="legend"
       />
       <Fieldset.Fields className={cs.StructAndListField.nullValueFields}>
         {isReadOnly ? (
@@ -93,15 +97,17 @@ function NonNullListField({
   const intl = useIntl();
   const { field } = useController({ control, name });
   const { fields, append, remove, move } = useFieldArray({ control, name });
+  const { allowCollapsing } = useFieldUiOptions(name);
   return (
     <Fieldset
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.ListField.root"
       className={cs.Field.root}
+      isDisclosureDisabled={allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
@@ -129,8 +135,9 @@ function NonNullListField({
             </>
           ) : undefined
         }
+        component="legend"
       />
-      <Fieldset.Fields>
+      <Fieldset.Fields className={cs.ListField.fields}>
         {fields.length === 0 ? (
           <div className={cs.ListField.emptyItemsPlaceholder}>
             <FormattedMessage defaultMessage="There are no items in the list" />

@@ -1,8 +1,8 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import drawPointInGeoJsonInput from "../actions/drawPointInGeoJsonInput.js";
 import waitForGeoJSONJsonObjectField from "../actions/waitForGeoJSONJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test.use({
@@ -48,6 +48,7 @@ test("008. Use GeoJSON input for document properties", async ({ page }) => {
           compiled:
             "export default function getContentSummary() { return {}; }",
         },
+        defaultDocumentViewUiOptions: null,
       },
     });
 

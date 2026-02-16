@@ -86,7 +86,6 @@ export default {
           ref: "GramsQuantity",
         },
       },
-      propertiesOrder: ["food", "quantity"],
     },
     Meal: {
       description: "A meal with foods consumed",
@@ -124,7 +123,6 @@ export default {
         },
       },
       nullableProperties: ["notes"],
-      propertiesOrder: ["type", "dateTime", "foods", "tags", "notes"],
     },
   },
   rootType: "Meal",
