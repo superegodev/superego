@@ -64,7 +64,7 @@ export default function getContentSummary(contact) {
     },
     defaultDocumentViewUiOptions: {
       fullWidth: true,
-      alwaysCollapsePrimarySidebar: true,
+      alwaysCollapsePrimarySidebar: false,
       rootLayout: {
         "(min-width: 65rem)": [
           {
