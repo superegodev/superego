@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import isMacos from "../../utils/isMacos.js";
 import useSearchModalState from "./useSearchModalState.js";
 
 export default function useSearchShortcut(): void {
@@ -16,13 +17,4 @@ export default function useSearchShortcut(): void {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
-}
-
-function isMacos() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  return (
-    userAgent.includes("mac os") &&
-    !userAgent.includes("iphone") &&
-    !userAgent.includes("ipad")
-  );
 }

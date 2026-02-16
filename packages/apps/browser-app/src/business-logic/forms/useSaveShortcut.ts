@@ -1,15 +1,19 @@
 import { useEffect } from "react";
+import isMacos from "../../utils/isMacos.js";
 
 export default function useSaveShortcut(
   formId: string,
   isDisabled: boolean,
 ): void {
   useEffect(() => {
+    if (isDisabled) {
+      return;
+    }
+
     function handleKeyDown(event: KeyboardEvent) {
       const isModifierKeyPressed = isMacos() ? event.metaKey : event.ctrlKey;
       if (isModifierKeyPressed && event.key === "s") {
         event.preventDefault();
-        if (isDisabled) return;
         const form = document.getElementById(formId);
         if (form instanceof HTMLFormElement) {
           form.requestSubmit();
@@ -21,13 +25,4 @@ export default function useSaveShortcut(
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [formId, isDisabled]);
-}
-
-function isMacos() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  return (
-    userAgent.includes("mac os") &&
-    !userAgent.includes("iphone") &&
-    !userAgent.includes("ipad")
-  );
 }
