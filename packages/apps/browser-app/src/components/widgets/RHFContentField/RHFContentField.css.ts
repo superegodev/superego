@@ -115,6 +115,11 @@ export const FileField = {
     },
   }),
 
+  imagePreview: style({
+    width: "100%",
+    borderRadius: vars.borders.radius.md,
+  }),
+
   nonNullFileFieldsRoot: style({
     display: "grid",
     gridTemplateColumns: "auto 3fr 2fr auto",

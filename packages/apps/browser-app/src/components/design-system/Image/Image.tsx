@@ -5,7 +5,7 @@ import * as cs from "./Image.css.js";
 interface Props {
   image: {
     mimeType: `image/${string}`;
-    content: Uint8Array<ArrayBuffer>;
+    content: Uint8Array<ArrayBuffer> | Blob;
   } | null;
   alt: string;
   className?: string | undefined;
