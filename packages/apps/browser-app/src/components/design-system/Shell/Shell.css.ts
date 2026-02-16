@@ -167,11 +167,6 @@ export const PanelContent = {
       },
       '[data-slot="Main"] &': {
         padding: vars.spacing._8,
-        vars: {
-          "--container-height": `calc(100dvh - ${vars.shell.panelHeaderHeight} - ${vars.spacing._8} - ${vars.spacing._8})`,
-          /** Distance from the top = panelHeaderHeight + paddingBlockStart */
-          "--container-top": vars.spacing._20,
-        },
       },
       '[data-slot="Main"] [data-full-width="false"]&': {
         paddingInline: `max(calc(50% - ${vars.spacing._110}), ${vars.spacing._8})`,
@@ -181,11 +176,6 @@ export const PanelContent = {
       },
       '[data-slot="Main"] header + &': {
         paddingBlockStart: vars.spacing._4,
-        vars: {
-          "--container-height": `calc(100dvh - ${vars.shell.panelHeaderHeight} - ${vars.spacing._4} - ${vars.spacing._8})`,
-          /** Distance from the top = panelHeaderHeight + paddingBlockStart */
-          "--container-top": vars.spacing._16,
-        },
       },
     },
   }),

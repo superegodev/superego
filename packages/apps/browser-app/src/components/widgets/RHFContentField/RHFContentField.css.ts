@@ -193,7 +193,7 @@ export const ListField = {
 
   itemActions: style({
     position: "absolute",
-    top: `calc(${vars.spacing._1} + ${vars.borders.width.thin})`,
+    top: `calc(${vars.spacing._0_5} + 1px)`,
     transform: "translateX(-100%)",
     paddingInlineEnd: vars.spacing._2,
     opacity: 0,
@@ -206,9 +206,14 @@ export const ListField = {
         opacity: 1,
       },
       [`
-        div:has(> [data-data-type="Boolean"]) > &,
-        div:has(> [data-data-type="Struct"]) > &,
-        div:has(> [data-data-type="List"]) > &
+        div:has(> [data-data-type="Boolean"]) > &
+      `]: {
+        top: `calc(-1 * ${vars.spacing._1})`,
+      },
+      [`
+        div:first-child:has(> [data-data-type="Boolean"]) > &,
+        div:first-child:has(> [data-data-type="Struct"]) > &,
+        div:first-child:has(> [data-data-type="List"]) > &
       `]: {
         top: `calc(-1 * ${vars.spacing._1})`,
       },

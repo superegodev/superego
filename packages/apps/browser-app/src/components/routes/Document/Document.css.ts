@@ -36,9 +36,66 @@ export const Document = {
 export const CreateNewDocumentVersionForm = {
   root: style({
     height: "100%",
+    vars: {
+      // Height of the visible area in which RHFContentField is rendered. Can be
+      // used to define "sticky" custom layouts.
+      "--visible-area-height": `
+        calc(
+          100dvh - (
+            ${vars.shell.panelHeaderHeight}
+            + ${vars.spacing._4}
+            + ${vars.spacing._8}
+          )
+        )
+      `,
+      // Distance from the top of the visible area.
+      "--visible-area-top": `
+        calc(
+          ${vars.shell.panelHeaderHeight}
+          + ${vars.spacing._4}
+        )
+      `,
+      // Standard gap to use between columns.
+      "--column-gap": vars.spacing._8,
+      // Standard gap to use between fields.
+      "--field-gap": vars.spacing._6,
+    },
+    selectors: {
+      [`${Document.historyLayout} &`]: {
+        vars: {
+          "--visible-area-height": `
+            calc(
+              100dvh - (
+                ${vars.shell.panelHeaderHeight}
+                + ${vars.spacing._4}
+                + ${vars.spacing._8}
+                + ${vars.spacing._14}
+                + ${vars.spacing._6}
+              )
+            )
+          `,
+          "--visible-area-top": `
+            calc(
+              ${vars.shell.panelHeaderHeight}
+              + ${vars.spacing._4}
+              + ${vars.spacing._14}
+              + ${vars.spacing._6}
+            )
+          `,
+        },
+      },
+    },
   }),
 
-  readOnlyAlert: style({}),
+  readOnlyAlert: style({
+    position: "sticky",
+    top: `calc(${vars.shell.panelHeaderHeight} + ${vars.spacing._4})`,
+    zIndex: 1,
+    height: vars.spacing._14,
+    margin: 0,
+    // Hack to hide the form scrolling below.
+    boxShadow: `0 calc(-1 * ${vars.spacing._8}) 0 0 ${vars.colors.background.surface}`,
+  }),
 };
 
 export const RemoteDocumentInfoModal = {

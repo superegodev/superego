@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { vars } from "../../../themes.css.js";
+import { dark, vars } from "../../../themes.css.js";
 
 export const ExcalidrawInput = {
   root: style({
@@ -36,11 +36,23 @@ export const ExcalidrawInput = {
     height: "2.25rem",
     borderRadius: "0.5rem",
     border: "none",
-    backgroundColor: "#ececf4",
+    background: "#ececf4",
     cursor: "pointer",
     fontSize: "1rem",
     color: "#1b1b2f",
     padding: 0,
+    selectors: {
+      "&:hover": {
+        background: "#f1f0ff",
+      },
+      [`${dark} &`]: {
+        background: "#2e2d39",
+        color: "#e3e3e8",
+      },
+      [`${dark} &:hover`]: {
+        background: "#363541",
+      },
+    },
   }),
 };
 

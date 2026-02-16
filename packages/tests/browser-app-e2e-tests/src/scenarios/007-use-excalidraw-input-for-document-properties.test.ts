@@ -1,7 +1,6 @@
 import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import drawTextInExcalidrawInput from "../actions/drawTextInExcalidrawInput.js";
-import focusExcalidrawInput from "../actions/focusExcalidrawInput.js";
 import waitForExcalidrawJsonObjectField from "../actions/waitForExcalidrawJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
 import VisualEvaluator from "../VisualEvaluator.js";
