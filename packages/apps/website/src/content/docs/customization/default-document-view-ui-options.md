@@ -94,11 +94,17 @@ can reference them in Div Node `style` values via `var(...)`.
 /** Distance from the top of the viewport to the top of the visible area. */
 --visible-area-top
 
-/** Standard gap to use between columns. */
---column-gap
+/** Standard vertical gap to use between sections. */
+--section-vertical-gap
 
-/** Standard gap to use between fields. */
---field-gap
+/** Standard horizontal gap to use between sections. */
+--section-horizontal-gap
+
+/** Standard vertical gap to use between fields. */
+--field-vertical-gap
+
+/** Standard horizontal gap to use between fields. */
+--field-horizontal-gap
 ```
 
 ## Responsive root layout
@@ -133,7 +139,7 @@ all fields are stacked vertically.
         "style": {
           "display": "grid",
           "gridTemplateColumns": "5fr 3fr",
-          "columnGap": "var(--column-gap)",
+          "columnGap": "var(--section-horizontal-gap)",
           "height": "100%"
         },
         "children": [
@@ -149,7 +155,7 @@ all fields are stacked vertically.
             "style": {
               "display": "flex",
               "flexDirection": "column",
-              "gap": "var(--field-gap)"
+              "gap": "var(--field-vertical-gap)"
             },
             "children": [
               { "propertyPath": "type" },

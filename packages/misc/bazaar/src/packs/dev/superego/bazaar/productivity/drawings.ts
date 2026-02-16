@@ -42,7 +42,7 @@ export default function getContentSummary(drawing) {
             style: {
               display: "flex",
               flexDirection: "column",
-              gap: "var(--field-gap)",
+              gap: "var(--field-vertical-gap)",
               height: "var(--visible-area-height)",
             },
             children: [

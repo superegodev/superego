@@ -201,10 +201,74 @@ test("layout on non-Struct property reports issue", {
   ],
 });
 
-test("layout on Struct property validates the nested layout", {
+test("valid nested layout on Struct property returns no issues", {
   options: {
-    fullWidth: false,
-    alwaysCollapsePrimarySidebar: false,
+    rootLayout: {
+      all: [
+        {
+          propertyPath: "nested",
+          layout: [{ propertyPath: "inner" }, { propertyPath: "other" }],
+        },
+      ],
+    },
+  },
+  schema: {
+    types: {
+      Root: {
+        dataType: DataType.Struct,
+        properties: {
+          nested: {
+            dataType: DataType.Struct,
+            properties: {
+              inner: { dataType: DataType.String },
+              other: { dataType: DataType.String },
+            },
+          },
+        },
+      },
+    },
+    rootType: "Root",
+  },
+  expectedIssues: [],
+});
+
+test("valid nested layout on list item Struct returns no issues", {
+  options: {
+    rootLayout: {
+      all: [
+        {
+          propertyPath: "items.$",
+          layout: [{ propertyPath: "name" }, { propertyPath: "value" }],
+        },
+      ],
+    },
+  },
+  schema: {
+    types: {
+      Item: {
+        dataType: DataType.Struct,
+        properties: {
+          name: { dataType: DataType.String },
+          value: { dataType: DataType.String },
+        },
+      },
+      Root: {
+        dataType: DataType.Struct,
+        properties: {
+          items: {
+            dataType: DataType.List,
+            items: { dataType: null, ref: "Item" },
+          },
+        },
+      },
+    },
+    rootType: "Root",
+  },
+  expectedIssues: [],
+});
+
+test("nested layout validates property paths relative to parent struct", {
+  options: {
     rootLayout: {
       all: [
         {

@@ -71,7 +71,7 @@ export default function getContentSummary(contact) {
             style: {
               display: "grid",
               gridTemplateColumns: "5fr 3fr",
-              columnGap: "var(--column-gap)",
+              columnGap: "var(--section-horizontal-gap)",
               height: "100%",
             },
             children: [
@@ -87,14 +87,44 @@ export default function getContentSummary(contact) {
                 style: {
                   display: "flex",
                   flexDirection: "column",
-                  gap: "var(--field-gap)",
+                  gap: "var(--field-vertical-gap)",
                 },
                 children: [
                   { propertyPath: "type" },
                   { propertyPath: "name" },
                   { propertyPath: "relation" },
-                  { propertyPath: "phones" },
-                  { propertyPath: "emails" },
+                  {
+                    propertyPath: "phones.$",
+                    layout: [
+                      {
+                        style: {
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          columnGap: "var(--field-horizontal-gap)",
+                        },
+                        children: [
+                          { propertyPath: "number" },
+                          { propertyPath: "description" },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    propertyPath: "emails.$",
+                    layout: [
+                      {
+                        style: {
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          columnGap: "var(--field-horizontal-gap)",
+                        },
+                        children: [
+                          { propertyPath: "address" },
+                          { propertyPath: "description" },
+                        ],
+                      },
+                    ],
+                  },
                 ],
               },
             ],
@@ -104,8 +134,38 @@ export default function getContentSummary(contact) {
           { propertyPath: "type" },
           { propertyPath: "name" },
           { propertyPath: "relation" },
-          { propertyPath: "phones" },
-          { propertyPath: "emails" },
+          {
+            propertyPath: "phones.$",
+            layout: [
+              {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  columnGap: "var(--field-horizontal-gap)",
+                },
+                children: [
+                  { propertyPath: "number" },
+                  { propertyPath: "description" },
+                ],
+              },
+            ],
+          },
+          {
+            propertyPath: "emails.$",
+            layout: [
+              {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  columnGap: "var(--field-horizontal-gap)",
+                },
+                children: [
+                  { propertyPath: "address" },
+                  { propertyPath: "description" },
+                ],
+              },
+            ],
+          },
           { propertyPath: "notes" },
         ],
       },

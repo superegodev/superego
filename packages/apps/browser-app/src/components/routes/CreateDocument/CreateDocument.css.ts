@@ -22,10 +22,14 @@ export const CreateDocumentForm = {
           + ${vars.spacing._4}
         )
       `,
-      // Standard gap to use between columns.
-      "--column-gap": vars.spacing._8,
-      // Standard gap to use between fields.
-      "--field-gap": vars.spacing._6,
+      // Standard vertical gap to use between sections.
+      "--section-vertical-gap": vars.spacing._8,
+      // Standard horizontal gap to use between sections.
+      "--section-horizontal-gap": vars.spacing._8,
+      // Standard vertical gap to use between fields.
+      "--field-vertical-gap": vars.spacing._6,
+      // Standard horizontal gap to use between fields.
+      "--field-horizontal-gap": vars.spacing._2,
     },
   }),
 };

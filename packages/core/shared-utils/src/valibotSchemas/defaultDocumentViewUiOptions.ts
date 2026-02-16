@@ -12,6 +12,7 @@ export default function defaultDocumentViewUiOptions(
     v.looseObject({
       fullWidth: v.optional(v.boolean()),
       alwaysCollapsePrimarySidebar: v.optional(v.boolean()),
+      rootLayout: v.optional(v.record(v.string(), v.array(htmlAstNodeSchema))),
     }),
     v.rawCheck(({ dataset, addIssue }) => {
       if (!dataset.typed) {
@@ -34,6 +35,27 @@ export default function defaultDocumentViewUiOptions(
   );
 }
 
+const htmlAstNodeSchema: v.GenericSchema<
+  DefaultDocumentViewUiOptions.HtmlAstNode,
+  DefaultDocumentViewUiOptions.HtmlAstNode
+> = v.lazy(() =>
+  v.union([
+    v.looseObject({
+      propertyPath: v.string(),
+      layout: v.optional(v.array(htmlAstNodeSchema)),
+      hideLabel: v.optional(v.boolean()),
+      allowCollapsing: v.optional(v.boolean()),
+      grow: v.optional(v.boolean()),
+    }),
+    v.looseObject({
+      style: v.optional(
+        v.record(v.string(), v.union([v.string(), v.number()])),
+      ),
+      children: v.optional(v.array(htmlAstNodeSchema)),
+    }),
+  ]),
+);
+
 function validate(
   options: DefaultDocumentViewUiOptions,
   schema: Schema,
@@ -50,6 +72,7 @@ function validate(
         schema,
         [{ key: "rootLayout" }, { key: mediaFeatureExpression }],
         issues,
+        "",
       );
     }
   }
@@ -62,10 +85,11 @@ function validateLayout(
   schema: Schema,
   path: { key: string | number }[],
   issues: ValidationIssue[],
+  pathPrefix: string,
 ): void {
   // Validate all nodes and collect FieldNode property paths.
   const foundPropertyPaths = new Set<string>();
-  validateNodes(layout, schema, path, issues, foundPropertyPaths);
+  validateNodes(layout, schema, path, issues, foundPropertyPaths, pathPrefix);
 
   // Check completeness: layout must contain ALL properties of the Struct.
   const expectedProperties = Object.keys(structProperties);
@@ -85,6 +109,7 @@ function validateNodes(
   path: { key: string | number }[],
   issues: ValidationIssue[],
   foundPropertyPaths: Set<string>,
+  pathPrefix: string,
 ): void {
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i]!;
@@ -94,12 +119,15 @@ function validateNodes(
       const propertyName = getTopLevelPropertyName(node.propertyPath);
       foundPropertyPaths.add(propertyName);
 
-      const typeDef = schemaUtils.getTypeDefinitionAtPath(
+      const fullPropertyPath = pathPrefix
+        ? `${pathPrefix}.${node.propertyPath}`
+        : node.propertyPath;
+      const typeDefinition = schemaUtils.getTypeDefinitionAtPath(
         schema,
-        node.propertyPath,
+        fullPropertyPath,
       );
 
-      if (!typeDef) {
+      if (!typeDefinition) {
         issues.push({
           message: `Property path "${node.propertyPath}" does not exist in the schema.`,
           path: [...nodePath, { key: "propertyPath" }],
@@ -109,18 +137,19 @@ function validateNodes(
 
       // Validate layout: only on Struct properties.
       if (node.layout !== undefined) {
-        if (typeDef.dataType !== DataType.Struct) {
+        if (typeDefinition.dataType !== DataType.Struct) {
           issues.push({
-            message: `"layout" can only be defined on Struct properties, but "${node.propertyPath}" is ${typeDef.dataType}.`,
+            message: `"layout" can only be defined on Struct properties, but "${node.propertyPath}" is ${typeDefinition.dataType}.`,
             path: [...nodePath, { key: "layout" }],
           });
         } else {
           validateLayout(
             node.layout,
-            typeDef.properties,
+            typeDefinition.properties,
             schema,
             [...nodePath, { key: "layout" }],
             issues,
+            fullPropertyPath,
           );
         }
       }
@@ -128,11 +157,11 @@ function validateNodes(
       // Validate allowCollapsing: only on Struct and List properties.
       if (node.allowCollapsing !== undefined) {
         if (
-          typeDef.dataType !== DataType.Struct &&
-          typeDef.dataType !== DataType.List
+          typeDefinition.dataType !== DataType.Struct &&
+          typeDefinition.dataType !== DataType.List
         ) {
           issues.push({
-            message: `"allowCollapsing" can only be defined on Struct and List properties, but "${node.propertyPath}" is ${typeDef.dataType}.`,
+            message: `"allowCollapsing" can only be defined on Struct and List properties, but "${node.propertyPath}" is ${typeDefinition.dataType}.`,
             path: [...nodePath, { key: "allowCollapsing" }],
           });
         }
@@ -146,6 +175,7 @@ function validateNodes(
           [...nodePath, { key: "children" }],
           issues,
           foundPropertyPaths,
+          pathPrefix,
         );
       }
     }
