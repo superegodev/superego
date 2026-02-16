@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 import excalidrawJsonObjectField from "../locators/excalidrawJsonObjectField.js";
 
-export default async function drawTextInExcalidrawInput(page: Page) {
+export default async function drawRectangleInExcalidrawInput(page: Page) {
   const excalidraw = excalidrawJsonObjectField(page).locator(".excalidraw");
   await excalidraw.click();
 
