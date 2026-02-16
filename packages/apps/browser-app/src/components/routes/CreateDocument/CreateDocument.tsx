@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PiFloppyDiskFill } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
 import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -18,6 +19,7 @@ export default function CreateDocument({ collectionId }: Props) {
   const createFormId = `CreateDocumentForm_${collectionId}`;
   const [isCreateFormSubmitDisabled, setIsCreateFormSubmitDisabled] =
     useState(false);
+  useSaveShortcut(createFormId, isCreateFormSubmitDisabled);
   useApplyAlwaysCollapsePrimarySidebar(
     collection?.latestVersion.settings.defaultDocumentViewUiOptions
       ?.alwaysCollapsePrimarySidebar,

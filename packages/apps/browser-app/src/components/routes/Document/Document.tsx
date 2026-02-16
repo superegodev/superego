@@ -19,6 +19,7 @@ import {
   getDocumentQuery,
   listDocumentVersionsQuery,
 } from "../../../business-logic/backend/hooks.js";
+import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
@@ -59,6 +60,7 @@ export default function Document({
   const defaultDocumentViewUiOptions =
     collection?.latestVersion.settings.defaultDocumentViewUiOptions ?? null;
 
+  useSaveShortcut(createFormId, isCreateFormSubmitDisabled);
   useApplyAlwaysCollapsePrimarySidebar(
     defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar,
   );
