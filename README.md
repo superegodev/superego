@@ -33,6 +33,31 @@ I want **access to my data** and apps that **serve _me_**.
 I also want **an AI assistant that actually knows me**, not one that slops out
 bland, canned responses.
 
+## Core Philosophy
+
+Ownership requires awareness. To truly own your data you first need to know what
+it is.
+
+**Superego puts your data right in front of you.** You can view it all and you
+have unrestricted access to it.
+
+You can have nicer interfaces to manage it – that's what _apps_ are for – but
+the database foundation is always visible. You own it.
+
+## Roadmap
+
+- [x] Document versioning.
+- [x] Search.
+- [x] Collection view apps.
+- [x] Data-aware AI assistant.
+- [ ] Write apps with your coding agent.
+- [ ] MCP/HTTP server.
+- [ ] Database hooks.
+- [ ] AI-powered data import.
+- [ ] Mobile app.
+- [ ] Sync between devices.
+- [ ] Database encryption.
+
 ## License
 
 Unless otherwise specified, all files in this repository are licensed under the
