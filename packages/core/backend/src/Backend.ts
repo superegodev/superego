@@ -527,7 +527,7 @@ export default interface Backend {
   };
 
   packs: {
-    installPack(pack: Pack): ResultPromise<
+    install(pack: Pack): ResultPromise<
       {
         collectionCategories: CollectionCategory[];
         collections: Collection[];

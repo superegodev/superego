@@ -6,13 +6,13 @@ import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Packs", (deps) => {
-  describe("installPack", () => {
+  describe("install", () => {
     it("error: PackNotValid when proto collection category parent references future index", async () => {
       // Setup SUT
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -49,7 +49,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -115,7 +115,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -180,7 +180,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -250,7 +250,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -298,7 +298,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -339,7 +339,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -399,7 +399,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -480,7 +480,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -525,7 +525,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -592,7 +592,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -661,7 +661,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.test",
         info: {
           name: "Test Pack",
@@ -729,7 +729,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.complete",
         info: {
           name: "Complete Test Pack",
@@ -846,7 +846,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.crossref",
         info: {
           name: "Cross-Reference Test Pack",
@@ -1177,7 +1177,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.packs.installPack({
+      const result = await backend.packs.install({
         id: "Pack_com.example.selfreference",
         info: {
           name: "Self-Reference Test Pack",

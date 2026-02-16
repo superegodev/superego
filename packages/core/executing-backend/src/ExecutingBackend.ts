@@ -61,7 +61,7 @@ import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import InferenceTts from "./usecases/inference/Tts.js";
-import PacksInstallPack from "./usecases/packs/InstallPack.js";
+import PacksInstall from "./usecases/packs/Install.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -175,7 +175,7 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.packs = {
-      installPack: this.makeUsecase(PacksInstallPack, true),
+      install: this.makeUsecase(PacksInstall, true),
     };
 
     this.bazaar = {

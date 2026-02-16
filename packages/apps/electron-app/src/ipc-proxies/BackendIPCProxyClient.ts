@@ -102,7 +102,7 @@ export default class BackendIPCProxyClient implements Backend {
     };
 
     this.packs = {
-      installPack: this.makeMainIpcCall("packs.installPack"),
+      install: this.makeMainIpcCall("packs.install"),
     };
 
     this.bazaar = {

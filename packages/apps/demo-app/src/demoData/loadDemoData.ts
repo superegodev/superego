@@ -70,7 +70,7 @@ export default async function loadDemoData(
       total: totalPacks,
     });
 
-    const installPackResult = await backend.packs.installPack(pack);
+    const installPackResult = await backend.packs.install(pack);
     if (!installPackResult.success) {
       throw new Error(
         `Failed to install pack ${pack.id}: ${JSON.stringify(installPackResult.error)}`,
