@@ -53,7 +53,7 @@ it("exports the Schema type definition", () => {
     interface EnumTypeDefinition extends Described {
       dataType: DataType.Enum;
       /**
-       * Member names **must** match the regex \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * Member names **must** match the regex \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       members: {
         [name: string]: EnumMember;
@@ -150,7 +150,7 @@ it("exports the Schema type definition", () => {
       dataType: DataType.Struct;
       /**
        * The complete set of properties that make up this Struct. Property names
-       * **must** match the regex \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * **must** match the regex \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       properties: {
         [name: string]: AnyTypeDefinition;
@@ -202,7 +202,7 @@ it("exports the Schema type definition", () => {
       /**
        * Record (by name) of type definitions. Define complex types here once and
        * reuse them elsewhere in the schema. Type names **must** match the regex
-       * \`/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/\`.
+       * \`/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/\`.
        */
       types: {
         [name: string]: AnyTypeDefinition;

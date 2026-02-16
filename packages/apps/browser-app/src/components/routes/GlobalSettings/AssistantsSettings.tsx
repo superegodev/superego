@@ -5,6 +5,7 @@ import {
 } from "@superego/backend";
 import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
+import { Fields } from "../../design-system/forms/forms.js";
 import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
@@ -18,7 +19,7 @@ export default function AssistantsSettings({
 }: Props) {
   const intl = useIntl();
   return (
-    <>
+    <Fields>
       <RHFTextField
         control={control}
         name="assistants.userName"
@@ -46,6 +47,6 @@ export default function AssistantsSettings({
         })}
         placeholder={developerPrompts[AssistantName.CollectionCreator]}
       />
-    </>
+    </Fields>
   );
 }

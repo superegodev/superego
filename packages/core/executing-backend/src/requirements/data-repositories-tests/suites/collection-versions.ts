@@ -13,6 +13,7 @@ const schema: Schema = {
 const settings: CollectionVersionSettings = {
   contentBlockingKeysGetter: null,
   contentSummaryGetter: { source: "", compiled: "" },
+  defaultDocumentViewUiOptions: null,
 };
 
 export default rd<GetDependencies>("Collection versions", (deps) => {
@@ -80,6 +81,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
           source: "updatedSource",
           compiled: "updatedCompiled",
         },
+        defaultDocumentViewUiOptions: null,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

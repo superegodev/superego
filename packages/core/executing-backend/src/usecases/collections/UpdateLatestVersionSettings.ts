@@ -8,6 +8,7 @@ import type {
   CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   MakingContentBlockingKeysFailed,
   UnexpectedError,
 } from "@superego/backend";
@@ -15,13 +16,16 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
+import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
+import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
@@ -40,6 +44,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     | ContentBlockingKeysGetterNotValid
     | MakingContentBlockingKeysFailed
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
     const collection = await this.repos.collection.find(id);
@@ -104,6 +109,27 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       }
     }
 
+    // Validate defaultDocumentViewUiOptions.
+    if (settingsPatch.defaultDocumentViewUiOptions !== undefined) {
+      if (settingsPatch.defaultDocumentViewUiOptions !== null) {
+        const uiOptionsValidationResult = v.safeParse(
+          sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+            latestVersion.schema,
+          ),
+          settingsPatch.defaultDocumentViewUiOptions,
+        );
+        if (!uiOptionsValidationResult.success) {
+          return makeUnsuccessfulResult(
+            makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+              collectionId: id,
+              collectionVersionId: latestVersion.id,
+              issues: makeValidationIssues(uiOptionsValidationResult.issues),
+            }),
+          );
+        }
+      }
+    }
+
     const updatedVersion: CollectionVersionEntity = {
       ...latestVersion,
       settings: {
@@ -114,6 +140,10 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
         contentSummaryGetter:
           settingsPatch.contentSummaryGetter ??
           latestVersion.settings.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          settingsPatch.defaultDocumentViewUiOptions !== undefined
+            ? settingsPatch.defaultDocumentViewUiOptions
+            : latestVersion.settings.defaultDocumentViewUiOptions,
       },
     };
     await this.repos.collectionVersion.replace(updatedVersion);

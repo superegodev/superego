@@ -10,6 +10,7 @@ import type {
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentViewUiOptionsNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -55,6 +56,7 @@ export default class CollectionsCreate extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
     const settingsValidationResult = v.safeParse(
@@ -135,15 +137,17 @@ export default class CollectionsCreate extends Usecase<
     const notFoundCollectionIds: string[] = [];
     for (const referencedCollectionId of referencedCollectionIds) {
       if (
-        !options.skipReferenceCheckForCollectionIds?.includes(
+        referencedCollectionId === collectionId ||
+        options.skipReferenceCheckForCollectionIds?.includes(
           referencedCollectionId as CollectionId,
-        ) &&
-        !(await this.repos.collection.exists(
+        ) ||
+        (await this.repos.collection.exists(
           referencedCollectionId as CollectionId,
         ))
       ) {
-        notFoundCollectionIds.push(referencedCollectionId);
+        continue;
       }
+      notFoundCollectionIds.push(referencedCollectionId);
     }
     if (!isEmpty(notFoundCollectionIds)) {
       return makeUnsuccessfulResult(
@@ -194,6 +198,23 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    // Validate defaultDocumentViewUiOptions.
+    if (versionSettings.defaultDocumentViewUiOptions !== null) {
+      const uiOptionsValidationResult = v.safeParse(
+        backedUtilsValibotSchemas.defaultDocumentViewUiOptions(resolvedSchema),
+        versionSettings.defaultDocumentViewUiOptions,
+      );
+      if (!uiOptionsValidationResult.success) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentViewUiOptionsNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: makeValidationIssues(uiOptionsValidationResult.issues),
+          }),
+        );
+      }
+    }
+
     const now = new Date();
     const collection: CollectionEntity = {
       id: collectionId,
@@ -219,6 +240,8 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         contentBlockingKeysGetter: versionSettings.contentBlockingKeysGetter,
         contentSummaryGetter: versionSettings.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          versionSettings.defaultDocumentViewUiOptions,
       },
       migration: null,
       remoteConverters: null,

@@ -1,10 +1,10 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import selectWordInMarkdownInput from "../actions/selectWordInMarkdownInput.js";
 import waitForMarkdownStringField from "../actions/waitForMarkdownStringField.js";
 import mainPanel from "../locators/mainPanel.js";
 import markdownStringField from "../locators/markdownStringField.js";
 import createCollection from "../routines/createCollection.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("005. Use markdown input for document properties", async ({ page }) => {
@@ -40,6 +40,7 @@ test("005. Use markdown input for document properties", async ({ page }) => {
           compiled:
             "export default function getContentSummary() { return {}; }",
         },
+        defaultDocumentViewUiOptions: null,
       },
     });
 

@@ -79,6 +79,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -144,6 +145,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -218,6 +220,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -331,6 +334,66 @@ export default rd<GetDependencies>("Packs", (deps) => {
       });
     });
 
+    it("error: DefaultDocumentViewUiOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.packs.installPack({
+        id: "Pack_com.example.test",
+        info: {
+          name: "Test Pack",
+          shortDescription: "A test pack",
+          longDescription: "A test pack for testing",
+          screenshots: [],
+        },
+        collectionCategories: [],
+        collections: [
+          {
+            settings: {
+              name: "Test Collection",
+              icon: null,
+              collectionCategoryId: null,
+              defaultCollectionViewAppId: null,
+              description: null,
+              assistantInstructions: null,
+            },
+            schema: {
+              types: {
+                Root: {
+                  dataType: DataType.Struct,
+                  properties: {
+                    title: { dataType: DataType.String },
+                  },
+                },
+              },
+              rootType: "Root",
+            },
+            versionSettings: {
+              contentBlockingKeysGetter: null,
+              contentSummaryGetter: {
+                source: "",
+                compiled:
+                  "export default function getContentSummary() { return {}; }",
+              },
+              defaultDocumentViewUiOptions: {
+                fullWidth: false,
+                alwaysCollapsePrimarySidebar: false,
+                rootLayout: { all: [{ propertyPath: "nonExistent" }] },
+              },
+            },
+          },
+        ],
+        apps: [],
+        documents: [],
+      });
+
+      // Verify
+      expect(result.success).toBe(false);
+      assert.isFalse(result.success);
+      expect(result.error.name).toBe("DefaultDocumentViewUiOptionsNotValid");
+    });
+
     it("error: PackNotValid when document content references unknown proto document", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -377,6 +440,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -502,6 +566,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -562,6 +627,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -630,6 +696,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -703,6 +770,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -829,6 +897,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
           // Collection 1: Articles (references Authors)
@@ -871,6 +940,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
           // Collection 2: Comments (references both Authors and Articles)
@@ -909,6 +979,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],
@@ -1156,6 +1227,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentViewUiOptions: null,
             },
           },
         ],

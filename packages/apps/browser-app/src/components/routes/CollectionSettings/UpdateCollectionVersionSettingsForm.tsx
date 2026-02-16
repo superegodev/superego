@@ -1,8 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { Collection, TypescriptModule } from "@superego/backend";
+import type {
+  Collection,
+  DefaultDocumentViewUiOptions,
+  TypescriptModule,
+} from "@superego/backend";
 import { codegen } from "@superego/schema";
+import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-utils";
 import { useMemo } from "react";
-import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
@@ -10,16 +14,19 @@ import { useUpdateLatestCollectionVersionSettings } from "../../../business-logi
 import forms from "../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
+import { Form } from "../../design-system/forms/forms.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Section from "../../design-system/Section/Section.js";
 import RHFContentBlockingKeysGetterField from "../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
+import RHFDefaultDocumentViewUiOptionsField from "../../widgets/RHFDefaultDocumentViewUiOptionsField/RHFDefaultDocumentViewUiOptionsField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
 
 interface FormValues {
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
 }
 
 interface Props {
@@ -38,6 +45,8 @@ export default function UpdateCollectionVersionSettingsForm({
         collection.latestVersion.settings.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
+      defaultDocumentViewUiOptions:
+        collection.latestVersion.settings.defaultDocumentViewUiOptions,
     },
     mode: "onBlur",
     resolver: standardSchemaResolver(
@@ -46,6 +55,11 @@ export default function UpdateCollectionVersionSettingsForm({
           forms.schemas.typescriptModule(intl),
         ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
+        defaultDocumentViewUiOptions: v.nullable(
+          sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+            collection.latestVersion.schema,
+          ),
+        ),
       }),
     ),
   });
@@ -57,9 +71,16 @@ export default function UpdateCollectionVersionSettingsForm({
       values,
     );
     if (success) {
-      const { contentBlockingKeysGetter, contentSummaryGetter } =
-        data.latestVersion.settings;
-      reset({ contentBlockingKeysGetter, contentSummaryGetter });
+      const {
+        contentBlockingKeysGetter,
+        contentSummaryGetter,
+        defaultDocumentViewUiOptions,
+      } = data.latestVersion.settings;
+      reset({
+        contentBlockingKeysGetter,
+        contentSummaryGetter,
+        defaultDocumentViewUiOptions,
+      });
     }
   };
   useExitWarning(
@@ -101,6 +122,17 @@ export default function UpdateCollectionVersionSettingsForm({
           name="contentSummaryGetter"
           schema={collection.latestVersion.schema}
           schemaTypescriptLib={schemaTypescriptLib}
+        />
+      </Section>
+      <Section
+        title={intl.formatMessage({
+          defaultMessage: "Document view UI options",
+        })}
+        level={3}
+      >
+        <RHFDefaultDocumentViewUiOptionsField
+          control={control}
+          name="defaultDocumentViewUiOptions"
         />
       </Section>
       <div

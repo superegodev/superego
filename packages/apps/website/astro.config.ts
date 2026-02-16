@@ -16,8 +16,13 @@ export default defineConfig({
         },
       ],
       sidebar: [
+        {
+          label: "Customization",
+          autogenerate: { directory: "customization" },
+        },
         { label: "Connectors", autogenerate: { directory: "connectors" } },
       ],
+      customCss: ["./src/styles/custom.css"],
       plugins: [starlightThemeNova()],
     }),
   ],

@@ -1,10 +1,10 @@
-import test from "@playwright/test";
 import { DataType } from "@superego/schema";
 import selectWordInTiptapInput from "../actions/selectWordInTiptapInput.js";
 import waitForTiptapRichTextJsonObjectField from "../actions/waitForTiptapRichTextJsonObjectField.js";
 import mainPanel from "../locators/mainPanel.js";
 import tiptapRichTextJsonObjectField from "../locators/tiptapRichTextJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
+import test from "../test.js";
 import VisualEvaluator from "../VisualEvaluator.js";
 
 test("006. Use TipTap input for document properties", async ({ page }) => {
@@ -40,6 +40,7 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
           compiled:
             "export default function getContentSummary() { return {}; }",
         },
+        defaultDocumentViewUiOptions: null,
       },
     });
 

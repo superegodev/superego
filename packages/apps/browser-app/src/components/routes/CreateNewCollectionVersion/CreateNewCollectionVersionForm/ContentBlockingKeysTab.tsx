@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import RHFContentBlockingKeysGetterField from "../../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 
@@ -25,7 +26,7 @@ export default function ContentBlockingKeysTab({ control, schema }: Props) {
     [schema],
   );
   return typeof schema !== "string" ? (
-    <>
+    <Fields>
       <Alert variant="info">
         <FormattedMessage
           defaultMessage="Update the <code>getContentBlockingKeys</code> function to reflect schema changes."
@@ -38,6 +39,6 @@ export default function ContentBlockingKeysTab({ control, schema }: Props) {
         schema={schema}
         schemaTypescriptLib={schemaTypescriptLib}
       />
-    </>
+    </Fields>
   ) : null;
 }

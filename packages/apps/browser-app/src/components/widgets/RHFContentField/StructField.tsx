@@ -10,11 +10,14 @@ import classnames from "../../../utils/classnames.js";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
+import { Fields as FormsFields } from "../../design-system/forms/forms.js";
 import AnyField from "./AnyField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
+import LayoutRenderer from "./LayoutRenderer.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
+import useFieldUiOptions from "./useFieldUiOptions.js";
 
 interface Props {
   schema: Schema;
@@ -36,6 +39,7 @@ export default function StructField({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
+  const { layout, allowCollapsing } = useFieldUiOptions(name);
   if (utils.getRootType(schema) === typeDefinition) {
     return (
       <Fields
@@ -43,6 +47,7 @@ export default function StructField({
         typeDefinition={typeDefinition}
         control={control}
         name={name}
+        layout={layout}
       />
     );
   }
@@ -53,9 +58,10 @@ export default function StructField({
       data-is-list-item={isListItem}
       data-testid="widgets.RHFContentField.StructField.root"
       className={cs.Field.root}
+      isDisclosureDisabled={!isListItem && allowCollapsing === false}
     >
       <AnyFieldLabel
-        component="legend"
+        name={field.name}
         typeDefinition={typeDefinition}
         isNullable={isNullable}
         label={label}
@@ -68,6 +74,7 @@ export default function StructField({
             />
           ) : undefined
         }
+        component="legend"
       />
       <Fieldset.Fields
         className={classnames(
@@ -97,6 +104,7 @@ export default function StructField({
             typeDefinition={typeDefinition}
             control={control}
             name={name}
+            layout={layout}
           />
         )}
       </Fieldset.Fields>
@@ -109,19 +117,37 @@ function Fields({
   typeDefinition,
   control,
   name,
-}: Pick<Props, "schema" | "typeDefinition" | "control" | "name">) {
-  return Object.keys(typeDefinition.properties).map((propertyName) => (
-    <AnyField
-      key={propertyName}
-      schema={schema}
-      typeDefinition={typeDefinition.properties[propertyName]!}
-      isNullable={
-        typeDefinition.nullableProperties?.includes(propertyName) ?? false
-      }
-      isListItem={false}
-      control={control}
-      name={name !== "" ? `${name}.${propertyName}` : propertyName}
-      label={toTitleCase(propertyName)}
-    />
-  ));
+  layout,
+}: Pick<Props, "schema" | "typeDefinition" | "control" | "name"> & {
+  layout: ReturnType<typeof useFieldUiOptions>["layout"];
+}) {
+  if (layout) {
+    return (
+      <LayoutRenderer
+        layout={layout}
+        schema={schema}
+        typeDefinition={typeDefinition}
+        control={control}
+        name={name}
+      />
+    );
+  }
+  return (
+    <FormsFields>
+      {Object.keys(typeDefinition.properties).map((propertyName) => (
+        <AnyField
+          key={propertyName}
+          schema={schema}
+          typeDefinition={typeDefinition.properties[propertyName]!}
+          isNullable={
+            typeDefinition.nullableProperties?.includes(propertyName) ?? false
+          }
+          isListItem={false}
+          control={control}
+          name={name !== "" ? `${name}.${propertyName}` : propertyName}
+          label={toTitleCase(propertyName)}
+        />
+      ))}
+    </FormsFields>
+  );
 }

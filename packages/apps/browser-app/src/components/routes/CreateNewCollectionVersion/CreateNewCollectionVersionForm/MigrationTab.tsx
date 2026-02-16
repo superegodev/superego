@@ -8,6 +8,7 @@ import forms from "../../../../business-logic/forms/forms.js";
 import wellKnownLibPaths from "../../../../business-logic/typescript/wellKnownLibPaths.js";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../../design-system/Alert/Alert.js";
+import { Fields } from "../../../design-system/forms/forms.js";
 import ResultErrors from "../../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTypescriptModuleField from "../../../widgets/RHFTypescriptModuleField/RHFTypescriptModuleField.js";
@@ -49,7 +50,7 @@ export default function MigrationTab({
   );
   const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return typeof schema !== "string" ? (
-    <>
+    <Fields>
       <Alert variant="info">
         <FormattedMessage
           defaultMessage="Write a migration function to convert documents from the previous schema to the updated schema."
@@ -90,6 +91,6 @@ next schema.
         </RHFSubmitButton>
       </div>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
-    </>
+    </Fields>
   ) : null;
 }

@@ -11,6 +11,7 @@ import Input from "../../../../design-system/forms/Input.js";
 import TimeField from "../../../../design-system/forms/TimeField.js";
 import TimeInputWithMilliseconds from "../../../../design-system/forms/TimeInputWithMilliseconds.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
+import NullifyFieldAction from "../../NullifyFieldAction.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";
 import type Props from "../Props.js";
@@ -39,9 +40,17 @@ export default function Instant({
     >
       {!isListItem ? (
         <AnyFieldLabel
+          name={field.name}
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
+          actions={
+            <NullifyFieldAction
+              isNullable={isNullable}
+              field={field}
+              fieldLabel={label}
+            />
+          }
         />
       ) : null}
       <div className={cs.StringField.Instant.fields}>

@@ -20,8 +20,10 @@ import {
   listDocumentVersionsQuery,
 } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
+import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import classnames from "../../../utils/classnames.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
@@ -53,6 +55,13 @@ export default function Document({
   const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
     useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
+
+  const defaultDocumentViewUiOptions =
+    collection?.latestVersion.settings.defaultDocumentViewUiOptions ?? null;
+
+  useApplyAlwaysCollapsePrimarySidebar(
+    defaultDocumentViewUiOptions?.alwaysCollapsePrimarySidebar,
+  );
 
   return collection ? (
     <DataLoader
@@ -161,15 +170,19 @@ export default function Document({
               ]}
             />
             <Shell.Panel.Content
-              fullWidth={isShowingHistory}
+              fullWidth={
+                isShowingHistory ||
+                (defaultDocumentViewUiOptions?.fullWidth ?? false)
+              }
               className={
                 isShowingHistory ? cs.Document.historyLayout : undefined
               }
             >
               <div
-                className={
-                  isShowingHistory ? cs.Document.contentWrapper : undefined
-                }
+                className={classnames(
+                  cs.Document.contentWrapper.base,
+                  isShowingHistory && cs.Document.contentWrapper.historyLayout,
+                )}
               >
                 <DocumentContent
                   collection={collection}

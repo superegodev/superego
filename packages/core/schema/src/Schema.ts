@@ -4,7 +4,7 @@ export default interface Schema {
   /**
    * Record (by name) of type definitions. Define complex types here once and
    * reuse them elsewhere in the schema. Type names **must** match the regex
-   * `/^[a-zA-Z_$][a-zA-Z0-9_$]{0,127}$/`.
+   * `/^[a-zA-Z_][a-zA-Z0-9_]{0,127}$/`.
    */
   types: {
     [name: string]: AnyTypeDefinition;

@@ -53,8 +53,8 @@
     "zx": "8.8.5-lite"
   },
   "dependencies": {
-    "@excalidraw/excalidraw": "^0.18.0",
-    "@geoman-io/maplibre-geoman-free": "^0.6.2",
+    "@excalidraw/excalidraw": "0.18.0-3a5ef40",
+    "@geoman-io/maplibre-geoman-free": "^0.6.3",
     "@hookform/resolvers": "^5.2.2",
     "@react-aria/optimize-locales-plugin": "^1.1.5",
     "@standard-schema/spec": "^1.1.0",

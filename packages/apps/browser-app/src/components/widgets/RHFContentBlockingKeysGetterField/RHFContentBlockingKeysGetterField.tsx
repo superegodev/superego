@@ -37,43 +37,48 @@ export default function RHFContentBlockingKeysGetterField({
   );
   const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return (
-    <div>
-      <Switch
-        isSelected={isDeduplicationEnabled}
-        onChange={handleSwitchChange}
-        isDisabled={isDisabled}
+    <div className={cs.RHFContentBlockingKeysGetterField.root}>
+      <div
+        className={cs.RHFContentBlockingKeysGetterField.switchGroup}
+        data-disabled={isDisabled ? "true" : undefined}
       >
-        <FormattedMessage defaultMessage="Enable deduplication" />
-      </Switch>
-      <Description
-        className={
-          cs.RHFContentBlockingKeysGetterField.deduplicationDescription
-        }
-      >
-        <FormattedMessage
-          defaultMessage={`
-          <p>
-            Document deduplication helps you avoid creating duplicate records.
-            For example, preventing a second contact from being created with the
-            same email address.
-          </p>
-          <p>
-            When enabled, every time you create a new document, Superego checks
-            that another <i>similar document</i> doesn't already exist, and
-            warns you if it does.
-          </p>
-          <p>
-            This is done by associating to each document a set of <b>"blocking
-            keys"</b>: small, deterministic fingerprints derived from the
-            document’s content (for example, a normalized email address, or a
-            last-name + postal-code pair) that <i>almost uniquely</i> identify a
-            document. If two documents share a blocking key, they’re likely
-            duplicates.
-          </p>
-        `}
-          values={formattedMessageHtmlTags}
-        />
-      </Description>
+        <Switch
+          isSelected={isDeduplicationEnabled}
+          onChange={handleSwitchChange}
+          isDisabled={isDisabled}
+        >
+          <FormattedMessage defaultMessage="Enable deduplication" />
+        </Switch>
+        <Description
+          className={
+            cs.RHFContentBlockingKeysGetterField.deduplicationDescription
+          }
+        >
+          <FormattedMessage
+            defaultMessage={`
+              <p>
+                Document deduplication helps you avoid creating duplicate records.
+                For example, preventing a second contact from being created with the
+                same email address.
+              </p>
+              <p>
+                When enabled, every time you create a new document, Superego checks
+                that another <i>similar document</i> doesn't already exist, and
+                warns you if it does.
+              </p>
+              <p>
+                This is done by associating to each document a set of <b>"blocking
+                keys"</b>: small, deterministic fingerprints derived from the
+                document’s content (for example, a normalized email address, or a
+                last-name + postal-code pair) that <i>almost uniquely</i> identify a
+                document. If two documents share a blocking key, they’re likely
+                duplicates.
+              </p>
+            `}
+            values={formattedMessageHtmlTags}
+          />
+        </Description>
+      </div>
       {isDeduplicationEnabled ? (
         <RHFTypescriptModuleField
           label={intl.formatMessage({
@@ -151,7 +156,7 @@ Guidelines:
           description={
             <FormattedMessage
               defaultMessage={`
-               <p>
+                <p>
                   The <b>content blocking keys</b> of a document are a list of
                   <code>strings</code>—derived from the document's content—that
                   uniquely identify the document based on its data. Documents

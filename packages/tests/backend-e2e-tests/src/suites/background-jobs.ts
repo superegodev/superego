@@ -88,6 +88,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
@@ -196,6 +197,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);

@@ -1,3 +1,4 @@
+import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import { createContext, useContext } from "react";
 
 export interface UiOptions {
@@ -12,6 +13,7 @@ export interface UiOptions {
       icon: string | null;
     };
   }[];
+  defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
 }
 
 const UiOptionsContext = createContext<UiOptions>({
@@ -20,6 +22,7 @@ const UiOptionsContext = createContext<UiOptions>({
   zoomLevel: 1,
   isReadOnly: false,
   protoCollections: [],
+  defaultDocumentViewUiOptions: null,
 });
 
 export const UiOptionsProvider = UiOptionsContext.Provider;

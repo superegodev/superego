@@ -45,5 +45,6 @@ export default function getContentSummary(expense) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

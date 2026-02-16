@@ -90,5 +90,6 @@ export default function getContentSummary(food) {
 }
       `.trim(),
     },
+    defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

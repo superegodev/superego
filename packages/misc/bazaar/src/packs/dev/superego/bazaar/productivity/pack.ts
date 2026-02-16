@@ -3,6 +3,7 @@ import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asse
 import calendar from "./calendar.js";
 import calendarApp from "./calendarApp.js";
 import contacts from "./contacts.js";
+import drawings from "./drawings.js";
 import cover from "./screenshots/0.avif?inline";
 
 export default {
@@ -20,7 +21,7 @@ export default {
     ],
   },
   collectionCategories: [{ name: "Productivity", icon: "🧰", parentId: null }],
-  collections: [contacts, calendar],
+  collections: [contacts, calendar, drawings],
   apps: [calendarApp],
   documents: [],
 } as const satisfies Pack;

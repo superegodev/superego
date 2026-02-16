@@ -44,6 +44,7 @@ export default {
         versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: stubContentSummaryGetter,
+          defaultDocumentViewUiOptions: null,
         },
       })),
       { dryRun: true },
@@ -55,7 +56,8 @@ export default {
         createManyResult.error.name === "CollectionCategoryNotFound" ||
         createManyResult.error.name === "AppNotFound" ||
         createManyResult.error.name === "ContentBlockingKeysGetterNotValid" ||
-        createManyResult.error.name === "ContentSummaryGetterNotValid")
+        createManyResult.error.name === "ContentSummaryGetterNotValid" ||
+        createManyResult.error.name === "DefaultDocumentViewUiOptionsNotValid")
     ) {
       throw new UnexpectedAssistantError(
         [

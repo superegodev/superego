@@ -23,7 +23,6 @@ export const Legend = {
     width: "100%",
     margin: 0,
     padding: 0,
-    marginBlockEnd: vars.spacing._4,
     paddingBlockEnd: vars.spacing._2,
     borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     fontSize: vars.typography.fontSizes.md,
@@ -34,6 +33,11 @@ export const Legend = {
 export const Fields = {
   root: style({
     paddingInlineStart: vars.spacing._4,
+    selectors: {
+      '&[aria-hidden="false"]': {
+        paddingBlockStart: vars.spacing._4,
+      },
+    },
   }),
 };
 
