@@ -140,6 +140,33 @@ const formattedStars =
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen></iframe>
+        <h2 class="explainer-title">## Core Philosophy</h2>
+        <p>
+          Ownership requires awareness. To truly own your data you first need to
+          know what it is.
+        </p>
+        <p>
+          <b>Superego puts your data right in front of you.</b> You can view it all
+          and you have unrestricted access to it.
+        </p>
+        <p>
+          You can have nicer interfaces to manage it – that's what <i>apps</i> are
+          for – but the database foundation is always visible. You own it.
+        </p>
+        <h2 class="explainer-title">## Roadmap</h2>
+        <ul class="roadmap">
+          <li class="done">Document versioning.</li>
+          <li class="done">Search.</li>
+          <li class="done">Collection view apps.</li>
+          <li class="done">Data-aware AI assistant.</li>
+          <li class="todo">Write apps with your coding agent.</li>
+          <li class="todo">MCP/HTTP server.</li>
+          <li class="todo">Database hooks.</li>
+          <li class="todo">AI-powered data import.</li>
+          <li class="todo">Mobile app.</li>
+          <li class="todo">Sync between devices.</li>
+          <li class="todo">Database encryption.</li>
+        </ul>
       </section>
     </main>
     <script>
@@ -324,6 +351,7 @@ const formattedStars =
     height: 100%;
     opacity: 0.4;
     animation: glitch 10s infinite;
+    animation-delay: -7s;
   }
 
   @keyframes glitch {
@@ -528,8 +556,26 @@ const formattedStars =
     margin-block-end: 2rem;
   }
 
-  .explainer li {
+  .explainer li:not(.roadmap li) {
     margin-inline-start: 1.8rem;
+  }
+
+  .roadmap {
+    list-style: none;
+    padding-inline-start: 0;
+  }
+
+  .roadmap .todo::before {
+    content: "[ ] ";
+  }
+
+  .roadmap .done {
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--fg) 25%, transparent);
+  }
+
+  .roadmap .done::before {
+    content: "[x] ";
   }
 
   iframe {
@@ -537,6 +583,8 @@ const formattedStars =
     aspect-ratio: 720 / 405;
     border: 0;
     border-radius: 0.5rem;
+    margin-block-start: 2.6rem;
+    margin-block-end: 4rem;
   }
 
   @media (max-width: 640px) {
@@ -559,7 +607,12 @@ const formattedStars =
       margin-block-end: 1rem;
     }
 
-    .explainer li {
+    iframe {
+      margin-block-start: 1rem;
+      margin-block-end: 2rem;
+    }
+
+    .explainer li:not(.roadmap li) {
       margin-inline-start: 1rem;
     }
   }
