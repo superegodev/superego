@@ -62,6 +62,43 @@ export default function getContentSummary(contact) {
 }
       `.trim(),
     },
-    defaultDocumentViewUiOptions: null,
+    defaultDocumentViewUiOptions: {
+      fullWidth: true,
+      alwaysCollapsePrimarySidebar: true,
+      rootLayout: [
+        {
+          style: {
+            display: "grid",
+            gridTemplateColumns: "5fr 3fr",
+            columnGap: "var(--column-gap)",
+            height: "100%",
+          },
+          children: [
+            {
+              style: {
+                position: "sticky",
+                height: "var(--visible-area-height)",
+                top: "var(--visible-area-top)",
+              },
+              children: [{ propertyPath: "notes", grow: true }],
+            },
+            {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--field-gap)",
+              },
+              children: [
+                { propertyPath: "type" },
+                { propertyPath: "name" },
+                { propertyPath: "relation" },
+                { propertyPath: "phones" },
+                { propertyPath: "emails" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
 } as const satisfies CollectionDefinition<true, true>;
