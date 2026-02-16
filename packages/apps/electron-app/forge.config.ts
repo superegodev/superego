@@ -62,6 +62,10 @@ export default {
         categories: ["Office"],
       },
     }),
+    {
+      name: "electron-forge-maker-appimage",
+      platforms: ["linux"],
+    },
   ],
   plugins: [
     new FusesPlugin({

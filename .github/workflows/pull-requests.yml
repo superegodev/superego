@@ -100,11 +100,13 @@ jobs:
             artifact-path: |
               packages/apps/electron-app/out/make/deb/x64/*.deb
               packages/apps/electron-app/out/make/rpm/x64/*.rpm
+              packages/apps/electron-app/out/make/**/*.AppImage
           - os: ubuntu-24.04-arm
             arch: arm64
             artifact-path: |
               packages/apps/electron-app/out/make/deb/arm64/*.deb
               packages/apps/electron-app/out/make/rpm/arm64/*.rpm
+              packages/apps/electron-app/out/make/**/*.AppImage
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -118,6 +120,9 @@ jobs:
           node-version: "24"
       - name: Enable corepack
         run: corepack enable
+      - name: Install libfuse2 (required for AppImage)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: sudo apt-get update && sudo apt-get install -y libfuse2
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Set electron-app package version
