@@ -4,6 +4,7 @@ import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { MakerZIP } from "@electron-forge/maker-zip";
+import { MakerAppImage } from "@reforged/maker-appimage";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
@@ -62,10 +63,14 @@ export default {
         categories: ["Office"],
       },
     }),
-    {
-      name: "electron-forge-maker-appimage",
-      platforms: ["linux"],
-    },
+    new MakerAppImage({
+      options: {
+        name: "superego",
+        bin: "superego",
+        icon: "./assets/icon.png",
+        categories: ["Office"],
+      },
+    }),
   ],
   plugins: [
     new FusesPlugin({
