@@ -1,5 +1,5 @@
 import { DataType } from "@superego/schema";
-import drawTextInExcalidrawInput from "../actions/drawTextInExcalidrawInput.js";
+import drawRectangleInExcalidrawInput from "../actions/drawRectangleInExcalidrawInput.js";
 import waitForExcalidrawJsonObjectField from "../actions/waitForExcalidrawJsonObjectField.js";
 import createCollection from "../routines/createCollection.js";
 import test from "../test.js";
@@ -66,7 +66,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
 
   await test.step("02. Draw 'Hello world!' text in Excalidraw", async () => {
     // Exercise
-    await drawTextInExcalidrawInput(page);
+    await drawRectangleInExcalidrawInput(page);
 
     // Verify
     await VisualEvaluator.expectToSee(
