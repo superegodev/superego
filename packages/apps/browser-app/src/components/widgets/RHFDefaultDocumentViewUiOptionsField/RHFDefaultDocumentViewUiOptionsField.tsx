@@ -60,7 +60,12 @@ export default function RHFDefaultDocumentViewUiOptionsField({
     [field.onChange],
   );
   return (
-    <div className={classnames(cs.RHFDefaultDocumentViewUiOptionsField.root, className)}>
+    <div
+      className={classnames(
+        cs.RHFDefaultDocumentViewUiOptionsField.root,
+        className,
+      )}
+    >
       <div className={cs.RHFDefaultDocumentViewUiOptionsField.switchGroup}>
         <Switch
           isSelected={isEnabled}
@@ -70,9 +75,7 @@ export default function RHFDefaultDocumentViewUiOptionsField({
           <FormattedMessage defaultMessage="Enable custom document view UI options" />
         </Switch>
         <Description
-          className={
-            cs.RHFDefaultDocumentViewUiOptionsField.switchDescription
-          }
+          className={cs.RHFDefaultDocumentViewUiOptionsField.switchDescription}
         >
           <FormattedMessage
             defaultMessage={`
@@ -124,11 +127,15 @@ export default function RHFDefaultDocumentViewUiOptionsField({
                 errors.map(({ path, message }) => (
                   <div
                     key={path}
-                    className={cs.RHFDefaultDocumentViewUiOptionsField.errorLine}
+                    className={
+                      cs.RHFDefaultDocumentViewUiOptionsField.errorLine
+                    }
                   >
                     <FormattedMessage defaultMessage="At" />{" "}
                     <InlineCode
-                      className={cs.RHFDefaultDocumentViewUiOptionsField.inlineCode}
+                      className={
+                        cs.RHFDefaultDocumentViewUiOptionsField.inlineCode
+                      }
                     >
                       {path}
                     </InlineCode>
