@@ -141,6 +141,7 @@ export default function EagerExcalidrawInput({
             <button
               type="button"
               className={cs.ExcalidrawInput.fullScreenButton}
+              aria-pressed={isFullScreen}
               aria-label={
                 isFullScreen
                   ? intl.formatMessage({ defaultMessage: "Exit full screen" })

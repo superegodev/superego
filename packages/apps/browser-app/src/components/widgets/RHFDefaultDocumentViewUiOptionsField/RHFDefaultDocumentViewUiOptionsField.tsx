@@ -66,7 +66,10 @@ export default function RHFDefaultDocumentViewUiOptionsField({
         className,
       )}
     >
-      <div className={cs.RHFDefaultDocumentViewUiOptionsField.switchGroup}>
+      <div
+        className={cs.RHFDefaultDocumentViewUiOptionsField.switchGroup}
+        data-disabled={isDisabled ? "true" : undefined}
+      >
         <Switch
           isSelected={isEnabled}
           onChange={handleSwitchChange}

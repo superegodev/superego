@@ -38,7 +38,10 @@ export default function RHFContentBlockingKeysGetterField({
   const includedGlobalUtils = useMemo(() => ({ LocalInstant: true }), []);
   return (
     <div className={cs.RHFContentBlockingKeysGetterField.root}>
-      <div className={cs.RHFContentBlockingKeysGetterField.switchGroup}>
+      <div
+        className={cs.RHFContentBlockingKeysGetterField.switchGroup}
+        data-disabled={isDisabled ? "true" : undefined}
+      >
         <Switch
           isSelected={isDeduplicationEnabled}
           onChange={handleSwitchChange}
