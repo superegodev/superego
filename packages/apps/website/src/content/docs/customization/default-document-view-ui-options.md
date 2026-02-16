@@ -1,5 +1,6 @@
 ---
 title: Default document view UI options
+tableOfContents: false
 ---
 
 To customize how the document form looks when viewing or editing documents, you
@@ -12,8 +13,14 @@ settings_ -> _Version settings_ tab):
   "fullWidth": true,
   /** Always collapse the primary sidebar (like it does on mobile). */
   "alwaysCollapsePrimarySidebar": true,
-  /** Custom layout for the root Struct type. See [Layout](#layout) below. */
-  "layout": []
+  /**
+   * Responsive root layout. Keys are CSS media feature expressions.
+   * See [Responsive root layout](#responsive-root-layout) below.
+   */
+  "rootLayout": {
+    "(min-width: 65rem)": [],
+    "all": []
+  }
 }
 ```
 
@@ -94,52 +101,79 @@ can reference them in Div Node `style` values via `var(...)`.
 --field-gap
 ```
 
+## Responsive root layout
+
+`rootLayout` is an object whose keys are
+[CSS media feature expressions](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#media_features)
+and whose values are layouts. At runtime, the first matching expression wins
+(evaluated in insertion order).
+
+Use `"all"` as a catch-all fallback (it always matches). Place it last so that
+more specific expressions are checked first.
+
+| Key                    | Meaning                                          |
+| ---------------------- | ------------------------------------------------ |
+| `"(min-width: 65rem)"` | Matches when the viewport is at least 65rem wide |
+| `"(min-width: 45rem)"` | Matches when the viewport is at least 45rem wide |
+| `"all"`                | Always matches (fallback)                        |
+
 ### Layout example
 
-A two-column layout where the left column is a sticky notes editor and the right
-column lists the remaining fields:
+A responsive two-column layout: on wide screens the left column is a sticky
+notes editor and the right column lists the remaining fields. On narrow screens,
+all fields are stacked vertically.
 
 ```json
 {
   "fullWidth": true,
   "alwaysCollapsePrimarySidebar": true,
-  "rootLayout": [
-    {
-      "style": {
-        "display": "grid",
-        "gridTemplateColumns": "5fr 3fr",
-        "columnGap": "var(--column-gap)",
-        "height": "100%"
-      },
-      "children": [
-        {
-          "style": {
-            "position": "sticky",
-            "height": "var(--visible-area-height)",
-            "top": "var(--visible-area-top)"
-          },
-          "children": [{ "propertyPath": "notes", "grow": true }]
+  "rootLayout": {
+    "(min-width: 65rem)": [
+      {
+        "style": {
+          "display": "grid",
+          "gridTemplateColumns": "5fr 3fr",
+          "columnGap": "var(--column-gap)",
+          "height": "100%"
         },
-        {
-          "style": {
-            "display": "flex",
-            "flexDirection": "column",
-            "gap": "var(--field-gap)"
+        "children": [
+          {
+            "style": {
+              "position": "sticky",
+              "height": "var(--visible-area-height)",
+              "top": "var(--visible-area-top)"
+            },
+            "children": [{ "propertyPath": "notes", "grow": true }]
           },
-          "children": [
-            { "propertyPath": "type" },
-            { "propertyPath": "name" },
-            { "propertyPath": "relation" },
-            { "propertyPath": "phones" },
-            { "propertyPath": "emails" }
-          ]
-        }
-      ]
-    }
-  ]
+          {
+            "style": {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": "var(--field-gap)"
+            },
+            "children": [
+              { "propertyPath": "type" },
+              { "propertyPath": "name" },
+              { "propertyPath": "relation" },
+              { "propertyPath": "phones" },
+              { "propertyPath": "emails" }
+            ]
+          }
+        ]
+      }
+    ],
+    "all": [
+      { "propertyPath": "type" },
+      { "propertyPath": "name" },
+      { "propertyPath": "relation" },
+      { "propertyPath": "phones" },
+      { "propertyPath": "emails" },
+      { "propertyPath": "notes" }
+    ]
+  }
 }
 ```
 
-Result:
+Result (wide screen):
 
-![Two-column layout](./images/custom-layout.png)
+![Two-column layout](../images/custom-layout.png)

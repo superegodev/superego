@@ -1118,11 +1118,11 @@
   "RHFDefaultDocumentViewUiOptionsField.tsx_DvD4Rl": {
     "defaultMessage": "Defines the default layout and UI options for the document form in this collection."
   },
-  "RHFDefaultDocumentViewUiOptionsField.tsx_MGqjTr": {
-    "defaultMessage": "<p> Customize how the document form looks when viewing or editing documents in this collection. Options include using the full page width, collapsing the sidebar, and defining a custom field layout. </p> <p> For more information, see <a>https://superego.dev/default-document-view-ui-options</a>. </p>"
-  },
   "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": {
     "defaultMessage": "Enable custom document view UI options"
+  },
+  "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": {
+    "defaultMessage": "<p> Customize how the document form looks when viewing or editing documents in this collection. Options include using the full page width, collapsing the sidebar, and defining a custom field layout. </p> <p> For more information, see <a>https://superego.dev/customization/default-document-view-ui-options</a>. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"

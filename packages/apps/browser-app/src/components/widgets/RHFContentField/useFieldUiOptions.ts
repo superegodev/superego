@@ -1,5 +1,6 @@
 import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import { useUiOptions } from "./uiOptions.js";
+import useMatchingLayout from "./useMatchingLayout.js";
 
 export interface FieldUiOptions {
   layout?: DefaultDocumentViewUiOptions.Layout;
@@ -10,19 +11,19 @@ export interface FieldUiOptions {
 
 export default function useFieldUiOptions(name: string): FieldUiOptions {
   const { defaultDocumentViewUiOptions } = useUiOptions();
+  const matchingLayout = useMatchingLayout(
+    defaultDocumentViewUiOptions?.rootLayout ?? null,
+  );
 
-  if (!defaultDocumentViewUiOptions?.rootLayout) {
+  if (!matchingLayout) {
     return {};
   }
 
   if (name === "") {
-    return { layout: defaultDocumentViewUiOptions.rootLayout };
+    return { layout: matchingLayout };
   }
 
-  const node = findFieldNode(
-    defaultDocumentViewUiOptions.rootLayout,
-    toCanonicalPath(name),
-  );
+  const node = findFieldNode(matchingLayout, toCanonicalPath(name));
 
   return node
     ? {

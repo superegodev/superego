@@ -86,7 +86,9 @@ test("valid rootLayout with all properties returns no issues", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [{ propertyPath: "title" }, { propertyPath: "body" }],
+    rootLayout: {
+      all: [{ propertyPath: "title" }, { propertyPath: "body" }],
+    },
   },
   schema: {
     types: {
@@ -107,7 +109,7 @@ test("missing property in layout reports issue", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [{ propertyPath: "title" }],
+    rootLayout: { all: [{ propertyPath: "title" }] },
   },
   schema: {
     types: {
@@ -124,7 +126,7 @@ test("missing property in layout reports issue", {
   expectedIssues: [
     {
       message: `Layout is missing property "body".`,
-      path: [{ key: "rootLayout" }],
+      path: [{ key: "rootLayout" }, { key: "all" }],
     },
   ],
 });
@@ -133,11 +135,13 @@ test("non-existent property path reports issue", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      { propertyPath: "title" },
-      { propertyPath: "body" },
-      { propertyPath: "nonExistent" },
-    ],
+    rootLayout: {
+      all: [
+        { propertyPath: "title" },
+        { propertyPath: "body" },
+        { propertyPath: "nonExistent" },
+      ],
+    },
   },
   schema: {
     types: {
@@ -154,7 +158,12 @@ test("non-existent property path reports issue", {
   expectedIssues: [
     {
       message: `Property path "nonExistent" does not exist in the schema.`,
-      path: [{ key: "rootLayout" }, { key: 2 }, { key: "propertyPath" }],
+      path: [
+        { key: "rootLayout" },
+        { key: "all" },
+        { key: 2 },
+        { key: "propertyPath" },
+      ],
     },
   ],
 });
@@ -163,10 +172,9 @@ test("layout on non-Struct property reports issue", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      { propertyPath: "title", layout: [] },
-      { propertyPath: "body" },
-    ],
+    rootLayout: {
+      all: [{ propertyPath: "title", layout: [] }, { propertyPath: "body" }],
+    },
   },
   schema: {
     types: {
@@ -183,7 +191,12 @@ test("layout on non-Struct property reports issue", {
   expectedIssues: [
     {
       message: `"layout" can only be defined on Struct properties, but "title" is ${DataType.String}.`,
-      path: [{ key: "rootLayout" }, { key: 0 }, { key: "layout" }],
+      path: [
+        { key: "rootLayout" },
+        { key: "all" },
+        { key: 0 },
+        { key: "layout" },
+      ],
     },
   ],
 });
@@ -192,12 +205,14 @@ test("layout on Struct property validates the nested layout", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      {
-        propertyPath: "nested",
-        layout: [{ propertyPath: "nonExistent" }],
-      },
-    ],
+    rootLayout: {
+      all: [
+        {
+          propertyPath: "nested",
+          layout: [{ propertyPath: "nonExistent" }],
+        },
+      ],
+    },
   },
   schema: {
     types: {
@@ -220,6 +235,7 @@ test("layout on Struct property validates the nested layout", {
       message: `Property path "nonExistent" does not exist in the schema.`,
       path: [
         { key: "rootLayout" },
+        { key: "all" },
         { key: 0 },
         { key: "layout" },
         { key: 0 },
@@ -228,7 +244,12 @@ test("layout on Struct property validates the nested layout", {
     },
     {
       message: `Layout is missing property "inner".`,
-      path: [{ key: "rootLayout" }, { key: 0 }, { key: "layout" }],
+      path: [
+        { key: "rootLayout" },
+        { key: "all" },
+        { key: 0 },
+        { key: "layout" },
+      ],
     },
   ],
 });
@@ -237,10 +258,12 @@ test("allowCollapsing on non-Struct/List property reports issue", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      { propertyPath: "title", allowCollapsing: true },
-      { propertyPath: "body" },
-    ],
+    rootLayout: {
+      all: [
+        { propertyPath: "title", allowCollapsing: true },
+        { propertyPath: "body" },
+      ],
+    },
   },
   schema: {
     types: {
@@ -257,7 +280,12 @@ test("allowCollapsing on non-Struct/List property reports issue", {
   expectedIssues: [
     {
       message: `"allowCollapsing" can only be defined on Struct and List properties, but "title" is ${DataType.String}.`,
-      path: [{ key: "rootLayout" }, { key: 0 }, { key: "allowCollapsing" }],
+      path: [
+        { key: "rootLayout" },
+        { key: "all" },
+        { key: 0 },
+        { key: "allowCollapsing" },
+      ],
     },
   ],
 });
@@ -266,7 +294,9 @@ test("allowCollapsing on Struct property is valid", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [{ propertyPath: "nested", allowCollapsing: true }],
+    rootLayout: {
+      all: [{ propertyPath: "nested", allowCollapsing: true }],
+    },
   },
   schema: {
     types: {
@@ -289,7 +319,9 @@ test("allowCollapsing on List property is valid", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [{ propertyPath: "items", allowCollapsing: false }],
+    rootLayout: {
+      all: [{ propertyPath: "items", allowCollapsing: false }],
+    },
   },
   schema: {
     types: {
@@ -312,11 +344,13 @@ test("DivNode with children validates recursively", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      {
-        children: [{ propertyPath: "title" }, { propertyPath: "body" }],
-      },
-    ],
+    rootLayout: {
+      all: [
+        {
+          children: [{ propertyPath: "title" }, { propertyPath: "body" }],
+        },
+      ],
+    },
   },
   schema: {
     types: {
@@ -337,11 +371,13 @@ test("DivNode with missing property in children reports issue at root level", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [
-      {
-        children: [{ propertyPath: "title" }],
-      },
-    ],
+    rootLayout: {
+      all: [
+        {
+          children: [{ propertyPath: "title" }],
+        },
+      ],
+    },
   },
   schema: {
     types: {
@@ -358,7 +394,7 @@ test("DivNode with missing property in children reports issue at root level", {
   expectedIssues: [
     {
       message: `Layout is missing property "body".`,
-      path: [{ key: "rootLayout" }],
+      path: [{ key: "rootLayout" }, { key: "all" }],
     },
   ],
 });
@@ -366,19 +402,21 @@ test("DivNode with missing property in children reports issue at root level", {
 test("properties split across sibling DivNodes returns no issues", {
   options: {
     fullWidth: true,
-    rootLayout: [
-      {
-        style: { display: "grid", gridTemplateColumns: "2fr 1fr" },
-        children: [
-          {
-            children: [{ propertyPath: "title" }],
-          },
-          {
-            children: [{ propertyPath: "body" }],
-          },
-        ],
-      },
-    ],
+    rootLayout: {
+      all: [
+        {
+          style: { display: "grid", gridTemplateColumns: "2fr 1fr" },
+          children: [
+            {
+              children: [{ propertyPath: "title" }],
+            },
+            {
+              children: [{ propertyPath: "body" }],
+            },
+          ],
+        },
+      ],
+    },
   },
   schema: {
     types: {
@@ -399,7 +437,7 @@ test("nested property path extracts correct top-level name", {
   options: {
     fullWidth: false,
     alwaysCollapsePrimarySidebar: false,
-    rootLayout: [{ propertyPath: "nested.inner" }],
+    rootLayout: { all: [{ propertyPath: "nested.inner" }] },
   },
   schema: {
     types: {
@@ -418,4 +456,34 @@ test("nested property path extracts correct top-level name", {
     rootType: "Root",
   },
   expectedIssues: [],
+});
+
+test("multiple media expressions are validated independently", {
+  options: {
+    rootLayout: {
+      "(min-width: 768px)": [
+        { propertyPath: "title" },
+        { propertyPath: "body" },
+      ],
+      all: [{ propertyPath: "title" }],
+    },
+  },
+  schema: {
+    types: {
+      Root: {
+        dataType: DataType.Struct,
+        properties: {
+          title: { dataType: DataType.String },
+          body: { dataType: DataType.String },
+        },
+      },
+    },
+    rootType: "Root",
+  },
+  expectedIssues: [
+    {
+      message: `Layout is missing property "body".`,
+      path: [{ key: "rootLayout" }, { key: "all" }],
+    },
+  ],
 });

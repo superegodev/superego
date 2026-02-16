@@ -36,20 +36,22 @@ export default function getContentSummary(drawing) {
     defaultDocumentViewUiOptions: {
       fullWidth: true,
       alwaysCollapsePrimarySidebar: true,
-      rootLayout: [
-        {
-          style: {
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--field-gap)",
-            height: "var(--visible-area-height)",
+      rootLayout: {
+        all: [
+          {
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--field-gap)",
+              height: "var(--visible-area-height)",
+            },
+            children: [
+              { propertyPath: "drawing", grow: true },
+              { propertyPath: "title" },
+            ],
           },
-          children: [
-            { propertyPath: "drawing", grow: true },
-            { propertyPath: "title" },
-          ],
-        },
-      ],
+        ],
+      },
     },
   },
 } as const satisfies CollectionDefinition<true, true>;

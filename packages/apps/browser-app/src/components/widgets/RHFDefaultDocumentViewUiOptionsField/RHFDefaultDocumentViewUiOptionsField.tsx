@@ -86,7 +86,7 @@ export default function RHFDefaultDocumentViewUiOptionsField({
                 layout.
               </p>
               <p>
-                For more information, see <a>https://superego.dev/default-document-view-ui-options</a>.
+                For more information, see <a>https://superego.dev/customization/default-document-view-ui-options</a>.
               </p>
             `}
             values={formattedMessageHtmlTags}

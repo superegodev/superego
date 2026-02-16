@@ -326,7 +326,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultDocumentViewUiOptions: {
             fullWidth: false,
             alwaysCollapsePrimarySidebar: false,
-            rootLayout: [{ propertyPath: "nonExistent" }],
+            rootLayout: { all: [{ propertyPath: "nonExistent" }] },
           },
         },
       });
@@ -345,13 +345,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 message: `Property path "nonExistent" does not exist in the schema.`,
                 path: [
                   { key: "rootLayout" },
+                  { key: "all" },
                   { key: 0 },
                   { key: "propertyPath" },
                 ],
               },
               {
                 message: `Layout is missing property "title".`,
-                path: [{ key: "rootLayout" }],
+                path: [{ key: "rootLayout" }, { key: "all" }],
               },
             ],
           },
@@ -953,7 +954,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultDocumentViewUiOptions: {
               fullWidth: false,
               alwaysCollapsePrimarySidebar: false,
-              rootLayout: [{ propertyPath: "nonExistent" }],
+              rootLayout: { all: [{ propertyPath: "nonExistent" }] },
             },
           },
         },
@@ -973,13 +974,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 message: `Property path "nonExistent" does not exist in the schema.`,
                 path: [
                   { key: "rootLayout" },
+                  { key: "all" },
                   { key: 0 },
                   { key: "propertyPath" },
                 ],
               },
               {
                 message: `Layout is missing property "title".`,
-                path: [{ key: "rootLayout" }],
+                path: [{ key: "rootLayout" }, { key: "all" }],
               },
             ],
           },
@@ -4873,7 +4875,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultDocumentViewUiOptions: {
             fullWidth: false,
             alwaysCollapsePrimarySidebar: false,
-            rootLayout: [{ propertyPath: "nonExistent" }],
+            rootLayout: { all: [{ propertyPath: "nonExistent" }] },
           },
         },
         { source: "", compiled: "" },
@@ -4894,13 +4896,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 message: `Property path "nonExistent" does not exist in the schema.`,
                 path: [
                   { key: "rootLayout" },
+                  { key: "all" },
                   { key: 0 },
                   { key: "propertyPath" },
                 ],
               },
               {
                 message: `Layout is missing property "title".`,
-                path: [{ key: "rootLayout" }],
+                path: [{ key: "rootLayout" }, { key: "all" }],
               },
             ],
           },
@@ -6584,7 +6587,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultDocumentViewUiOptions: {
               fullWidth: false,
               alwaysCollapsePrimarySidebar: false,
-              rootLayout: [{ propertyPath: "nonExistent" }],
+              rootLayout: { all: [{ propertyPath: "nonExistent" }] },
             },
           },
         );
@@ -6603,13 +6606,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
                 message: `Property path "nonExistent" does not exist in the schema.`,
                 path: [
                   { key: "rootLayout" },
+                  { key: "all" },
                   { key: 0 },
                   { key: "propertyPath" },
                 ],
               },
               {
                 message: `Layout is missing property "title".`,
-                path: [{ key: "rootLayout" }],
+                path: [{ key: "rootLayout" }, { key: "all" }],
               },
             ],
           },

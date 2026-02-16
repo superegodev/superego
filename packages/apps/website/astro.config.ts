@@ -18,7 +18,7 @@ export default defineConfig({
       sidebar: [
         {
           label: "Customization",
-          items: [{ slug: "default-document-view-ui-options" }],
+          autogenerate: { directory: "customization" },
         },
         { label: "Connectors", autogenerate: { directory: "connectors" } },
       ],

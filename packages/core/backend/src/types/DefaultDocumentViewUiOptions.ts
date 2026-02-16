@@ -6,8 +6,17 @@ interface DefaultDocumentViewUiOptions {
    * Defaults to false.
    */
   alwaysCollapsePrimarySidebar?: boolean;
-  /** Layout of the root Struct type. */
-  rootLayout?: DefaultDocumentViewUiOptions.Layout | undefined;
+  /**
+   * Responsive layouts for the root Struct type. Keys are CSS media feature
+   * expressions (e.g. "(min-width: 65rem)"). Use "all" as a catch-all fallback
+   * (it always matches). The first matching expression (in insertion order)
+   * wins at runtime.
+   */
+  rootLayout?:
+    | {
+        [mediaFeatureExpression: string]: DefaultDocumentViewUiOptions.Layout;
+      }
+    | undefined;
 }
 
 namespace DefaultDocumentViewUiOptions {

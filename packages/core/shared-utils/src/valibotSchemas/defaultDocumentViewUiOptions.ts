@@ -41,13 +41,17 @@ function validate(
   const issues: ValidationIssue[] = [];
   if (options.rootLayout) {
     const rootType = schemaUtils.getRootType(schema);
-    validateLayout(
+    for (const [mediaFeatureExpression, layout] of Object.entries(
       options.rootLayout,
-      rootType.properties,
-      schema,
-      [{ key: "rootLayout" }],
-      issues,
-    );
+    )) {
+      validateLayout(
+        layout,
+        rootType.properties,
+        schema,
+        [{ key: "rootLayout" }, { key: mediaFeatureExpression }],
+        issues,
+      );
+    }
   }
   return issues;
 }

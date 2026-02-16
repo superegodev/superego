@@ -4,6 +4,7 @@ import { vars } from "../../../themes.css.js";
 export const TiptapInput = {
   root: style({
     width: "100%",
+    minHeight: vars.spacing._40,
     overflow: "auto",
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,

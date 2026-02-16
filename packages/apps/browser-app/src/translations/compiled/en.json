@@ -3106,7 +3106,13 @@
       "value": "Defines the default layout and UI options for the document form in this collection."
     }
   ],
-  "RHFDefaultDocumentViewUiOptionsField.tsx_MGqjTr": [
+  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": [
+    {
+      "type": 0,
+      "value": "Enable custom document view UI options"
+    }
+  ],
+  "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": [
     {
       "children": [
         {
@@ -3131,7 +3137,7 @@
           "children": [
             {
               "type": 0,
-              "value": "https://superego.dev/default-document-view-ui-options"
+              "value": "https://superego.dev/customization/default-document-view-ui-options"
             }
           ],
           "type": 8,
@@ -3144,12 +3150,6 @@
       ],
       "type": 8,
       "value": "p"
-    }
-  ],
-  "RHFDefaultDocumentViewUiOptionsField.tsx_Pm+iEE": [
-    {
-      "type": 0,
-      "value": "Enable custom document view UI options"
     }
   ],
   "RHFSchemaField.tsx_9CnsYv": [
