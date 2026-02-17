@@ -7401,7 +7401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reforged/maker-appimage@npm:^5.1.0":
+"@reforged/maker-appimage@npm:^5.2.0":
   version: 5.2.0
   resolution: "@reforged/maker-appimage@npm:5.2.0"
   dependencies:
@@ -8176,7 +8176,7 @@ __metadata:
     "@electron/fuses": "npm:^2.0.0"
     "@formatjs/cli": "npm:^6.12.2"
     "@formatjs/intl": "npm:^4.1.2"
-    "@reforged/maker-appimage": "npm:^5.1.0"
+    "@reforged/maker-appimage": "npm:^5.2.0"
     "@rollup/plugin-babel": "npm:^6.1.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
