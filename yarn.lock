@@ -1273,7 +1273,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-base@npm:7.11.1":
+"@electron-forge/maker-base@npm:7.11.1, @electron-forge/maker-base@npm:^6.0.0 || ^7.0.0":
   version: 7.11.1
   resolution: "@electron-forge/maker-base@npm:7.11.1"
   dependencies:
@@ -7401,6 +7401,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reforged/maker-appimage@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@reforged/maker-appimage@npm:5.2.0"
+  dependencies:
+    "@electron-forge/maker-base": "npm:^6.0.0 || ^7.0.0"
+    "@reforged/maker-types": "npm:^2.1.0"
+    "@spacingbat3/lss": "npm:^1.0.0"
+    semver: "npm:^7.3.8"
+  checksum: 10c0/90b9d7db21194fea2c555a3faaf1a071089d48afd56d281006e601a5a4654914f42e9120db18358decc5818b297e674607ffeb34ab16b9564d617bf77840c1e9
+  languageName: node
+  linkType: hard
+
+"@reforged/maker-types@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@reforged/maker-types@npm:2.1.0"
+  checksum: 10c0/afbb8ae8950e8ca389aaa8d4b7402f6df37156fcd250562885c57bd84585d398578737f1ebcf67906d167b05131310679a10574c5055e32578110d943c0aba4c
+  languageName: node
+  linkType: hard
+
 "@remirror/core-constants@npm:3.0.0":
   version: 3.0.0
   resolution: "@remirror/core-constants@npm:3.0.0"
@@ -7853,6 +7872,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@spacingbat3/lss@npm:^1.0.0":
+  version: 1.2.0
+  resolution: "@spacingbat3/lss@npm:1.2.0"
+  checksum: 10c0/b467343209f3b2beaf2500c1d75c5824b59ed5aba3cdf7688194751ee822e9df4cc990ba93176e762c59d346de39109f12ac666409232c12a53b27798c6e34c5
+  languageName: node
+  linkType: hard
+
 "@speed-highlight/core@npm:^1.2.7":
   version: 1.2.7
   resolution: "@speed-highlight/core@npm:1.2.7"
@@ -8150,6 +8176,7 @@ __metadata:
     "@electron/fuses": "npm:^2.0.0"
     "@formatjs/cli": "npm:^6.12.2"
     "@formatjs/intl": "npm:^4.1.2"
+    "@reforged/maker-appimage": "npm:^5.2.0"
     "@rollup/plugin-babel": "npm:^6.1.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"

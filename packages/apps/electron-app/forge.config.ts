@@ -7,6 +7,7 @@ import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
+import { MakerAppImage } from "@reforged/maker-appimage";
 
 const { GITHUB_REF: githubRef } = process.env;
 const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
@@ -55,6 +56,14 @@ export default {
       },
     }),
     new MakerDeb({
+      options: {
+        name: "superego",
+        bin: "superego",
+        icon: "./assets/icon.png",
+        categories: ["Office"],
+      },
+    }),
+    new MakerAppImage({
       options: {
         name: "superego",
         bin: "superego",
