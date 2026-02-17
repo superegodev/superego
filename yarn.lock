@@ -8298,8 +8298,6 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/global-types": "workspace:*"
-    "@tiptap/core": "npm:^3.19.0"
-    "@tiptap/starter-kit": "npm:^3.19.0"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:^25.2.3"
