@@ -5,6 +5,7 @@ enum ToolName {
   ExecuteTypescriptFunction = "executeTypescriptFunction",
   GetCollectionTypescriptSchema = "getCollectionTypescriptSchema",
   CreateChart = "createChart",
+  CreateMap = "createMap",
   CreateDocumentsTables = "createDocumentsTables",
   SearchDocuments = "searchDocuments",
   // CollectionCreator

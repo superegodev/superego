@@ -617,6 +617,9 @@
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
   },
+  "EagerGeoJSONMap.tsx_FUqf3/": {
+    "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
+  },
   "Echart.tsx_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
@@ -1339,6 +1342,9 @@
   },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "Nessuna risposta"
+  },
+  "Title.tsx_fBfv7E": {
+    "defaultMessage": "Crea mappa da {collections}"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Chiama strumento: {tool}"

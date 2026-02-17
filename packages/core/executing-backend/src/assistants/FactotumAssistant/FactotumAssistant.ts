@@ -21,6 +21,7 @@ import defaultDeveloperPrompt from "./default-developer-prompt.md?raw";
 import CreateChart from "./tools/CreateChart.js";
 import CreateDocuments from "./tools/CreateDocuments.js";
 import CreateDocumentsTables from "./tools/CreateDocumentsTables.js";
+import CreateMap from "./tools/CreateMap.js";
 import CreateNewDocumentVersion from "./tools/CreateNewDocumentVersion.js";
 import ExecuteTypescriptFunction from "./tools/ExecuteTypescriptFunction.js";
 import GetCollectionTypescriptSchema from "./tools/GetCollectionTypescriptSchema.js";
@@ -84,6 +85,7 @@ export default class FactotumAssistant extends Assistant {
         ToolName.GetCollectionTypescriptSchema,
       )
       .replaceAll("$TOOL_NAME_CREATE_CHART", ToolName.CreateChart)
+      .replaceAll("$TOOL_NAME_CREATE_MAP", ToolName.CreateMap)
       .replaceAll(
         "$TOOL_NAME_CREATE_DOCUMENTS_TABLE",
         ToolName.CreateDocumentsTables,
@@ -124,6 +126,7 @@ export default class FactotumAssistant extends Assistant {
       CreateDocuments.get(),
       CreateNewDocumentVersion.get(),
       CreateChart.get(),
+      CreateMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
       InspectFile.get(),
@@ -162,6 +165,15 @@ export default class FactotumAssistant extends Assistant {
     }
     if (CreateChart.is(toolCall)) {
       return CreateChart.exec(
+        toolCall,
+        this.collections,
+        this.usecases.documentsList,
+        this.javascriptSandbox,
+        this.typescriptCompiler,
+      );
+    }
+    if (CreateMap.is(toolCall)) {
+      return CreateMap.exec(
         toolCall,
         this.collections,
         this.usecases.documentsList,

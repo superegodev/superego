@@ -52,6 +52,13 @@ namespace ToolCall {
       getEChartsOption: string;
     }
   >;
+  export type CreateMap = ToolCall<
+    ToolName.CreateMap,
+    {
+      collectionIds: CollectionId[];
+      getGeoJSON: string;
+    }
+  >;
   export type CreateDocumentsTables = ToolCall<
     ToolName.CreateDocumentsTables,
     {

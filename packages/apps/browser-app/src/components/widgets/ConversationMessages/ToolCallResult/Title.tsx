@@ -57,6 +57,14 @@ export default function Title({ toolCall, toolResult }: Props) {
       />
     );
   }
+  if (ConversationUtils.isCreateMapToolCall(toolCall)) {
+    title = (
+      <FormattedMessage
+        defaultMessage="Create map from {collections}"
+        values={{ collections: getCollections(collections, toolCall) }}
+      />
+    );
+  }
   if (ConversationUtils.isCreateDocumentsTablesToolCall(toolCall)) {
     title = (
       <FormattedMessage

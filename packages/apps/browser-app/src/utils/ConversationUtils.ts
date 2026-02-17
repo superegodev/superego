@@ -115,6 +115,15 @@ export default {
     );
   },
 
+  isSuccessfulCreateMapToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.CreateMap & {
+    output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateMap["artifacts"]>;
+  } {
+    return toolResult.tool === ToolName.CreateMap && toolResult.output.success;
+  },
+
   isSuccessfulCreateDocumentsTablesToolResult(
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocumentsTables & {
@@ -147,6 +156,10 @@ export default {
 
   isCreateChartToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
     return toolCall.tool === ToolName.CreateChart;
+  },
+
+  isCreateMapToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateMap {
+    return toolCall.tool === ToolName.CreateMap;
   },
 
   isCreateDocumentsTablesToolCall(

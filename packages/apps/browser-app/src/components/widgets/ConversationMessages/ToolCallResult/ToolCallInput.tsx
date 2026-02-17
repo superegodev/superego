@@ -8,6 +8,7 @@ interface Props {
 export default function ToolCallInput({ toolCall }: Props) {
   return ConversationUtils.isExecuteTypescriptFunctionToolCall(toolCall) ||
     ConversationUtils.isCreateChartToolCall(toolCall) ||
+    ConversationUtils.isCreateMapToolCall(toolCall) ||
     ConversationUtils.isCreateDocumentsTablesToolCall(toolCall) ? (
     <CodeBlock
       language="typescript"
@@ -16,7 +17,9 @@ export default function ToolCallInput({ toolCall }: Props) {
           ? toolCall.input.typescriptFunction
           : "getEChartsOption" in toolCall.input
             ? toolCall.input.getEChartsOption
-            : toolCall.input.getDocumentIds
+            : "getGeoJSON" in toolCall.input
+              ? toolCall.input.getGeoJSON
+              : toolCall.input.getDocumentIds
       }
       showCopyButton={true}
     />
