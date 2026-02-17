@@ -1,8 +1,74 @@
 {
-  "createApplicationMenu.ts_k+NxC/": [
+  "cli.ts_ALEodV": [
+    {
+      "type": 0,
+      "value": "CLI installata"
+    }
+  ],
+  "cli.ts_Il/Mm3": [
+    {
+      "type": 0,
+      "value": "CLI disinstallata"
+    }
+  ],
+  "cli.ts_W+nD/f": [
+    {
+      "type": 0,
+      "value": "La CLI è stata installata in "
+    },
+    {
+      "type": 1,
+      "value": "path"
+    },
+    {
+      "type": 0,
+      "value": ". Assicurati che "
+    },
+    {
+      "type": 1,
+      "value": "dir"
+    },
+    {
+      "type": 0,
+      "value": " sia nel tuo PATH."
+    }
+  ],
+  "cli.ts_ppdoZI": [
+    {
+      "type": 0,
+      "value": "La CLI è stata rimossa da "
+    },
+    {
+      "type": 1,
+      "value": "path"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "setApplicationMenu.ts_PJD5PQ": [
+    {
+      "type": 0,
+      "value": "Disinstalla CLI"
+    }
+  ],
+  "setApplicationMenu.ts_k+NxC/": [
     {
       "type": 0,
       "value": "Nuova Finestra"
+    }
+  ],
+  "setApplicationMenu.ts_yI2VVT": [
+    {
+      "type": 0,
+      "value": "Installa CLI"
+    }
+  ],
+  "setApplicationMenu.ts_yZJxVS": [
+    {
+      "type": 0,
+      "value": "Sviluppatore"
     }
   ]
 }

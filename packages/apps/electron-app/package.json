@@ -1,7 +1,7 @@
 {
   "name": "@superego/electron-app",
   "productName": "superego",
-  "description": "Your Life's Database",
+  "description": "Your Digital Freedom",
   "version": "2026.2.2",
   "type": "module",
   "private": true,
@@ -21,9 +21,10 @@
     "translations:compile": "formatjs compile-folder --ast src/main/translations/ src/main/translations/compiled",
     "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/main/translations/*.json'",
     "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile",
+    "build:cli": "vite --config=cli.vite.config.ts build",
     "build:vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
-    "build": "yarn build:vite && yarn build:forge",
+    "build": "yarn build:cli && yarn build:vite && yarn build:forge",
     "deploy": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@typescript/vfs": "^1.6.3",
+    "commander": "^14.0.3",
     "filenamify": "^7.0.1",
     "typescript": "^5.9.3"
   }

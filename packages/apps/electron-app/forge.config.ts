@@ -38,6 +38,7 @@ export default {
       "forge.config.ts",
       "tsconfig.json",
     ],
+    extraResource: ["./dist/cli/superego.js"],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {
