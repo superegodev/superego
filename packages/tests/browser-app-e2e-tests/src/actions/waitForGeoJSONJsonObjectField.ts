@@ -9,5 +9,5 @@ export default async function waitForGeoJSONJsonObjectField(page: Page) {
   await geoJSONJsonObjectField(page)
     .locator("[data-loaded]")
     .waitFor({ state: "attached" });
-  await page.waitForTimeout(1_000);
+  await page.waitForTimeout(3_000);
 }
