@@ -1,7 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import { valibotSchemas as backendUtilsValibotSchemas } from "@superego/shared-utils";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,39 +35,32 @@ export default function CreateCollectionForm() {
     () => forms.defaults.contentSummaryGetter(defaultSchema),
     [],
   );
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    getValues,
-    resetField,
-    watch,
-    formState,
-  } = useForm<CreateCollectionFormValues>({
-    defaultValues: {
-      name: "",
-      icon: null,
-      description: null,
-      assistantInstructions: null,
-      schema: defaultSchema,
-      contentBlockingKeysGetter: defaultContentBlockingKeysGetter,
-      contentSummaryGetter: defaultContentSummaryGetter,
-    },
-    mode: "all",
-    resolver: standardSchemaResolver(
-      v.strictObject({
-        name: backendUtilsValibotSchemas.collectionName(),
-        icon: v.nullable(backendUtilsValibotSchemas.icon()),
-        description: v.nullable(v.string()),
-        assistantInstructions: v.nullable(v.string()),
-        schema: schemaValibotSchemas.schema(),
-        contentBlockingKeysGetter: v.nullable(
-          forms.schemas.typescriptModule(intl),
-        ),
-        contentSummaryGetter: forms.schemas.typescriptModule(intl),
-      }),
-    ),
-  });
+  const { control, handleSubmit, setValue, getValues, watch, formState } =
+    useForm<CreateCollectionFormValues>({
+      defaultValues: {
+        name: "",
+        icon: null,
+        description: null,
+        assistantInstructions: null,
+        schema: defaultSchema,
+        contentBlockingKeysGetter: defaultContentBlockingKeysGetter,
+        contentSummaryGetter: defaultContentSummaryGetter,
+      },
+      mode: "all",
+      resolver: standardSchemaResolver(
+        v.strictObject({
+          name: backendUtilsValibotSchemas.collectionName(),
+          icon: v.nullable(backendUtilsValibotSchemas.icon()),
+          description: v.nullable(v.string()),
+          assistantInstructions: v.nullable(v.string()),
+          schema: schemaValibotSchemas.schema(),
+          contentBlockingKeysGetter: v.nullable(
+            forms.schemas.typescriptModule(intl),
+          ),
+          contentSummaryGetter: forms.schemas.typescriptModule(intl),
+        }),
+      ),
+    });
 
   const onSubmit = async ({
     schema,
@@ -107,6 +100,21 @@ export default function CreateCollectionForm() {
     typeof schema === "string" || formState.errors.schema
   );
 
+  // Track the last-applied default source for each dependent field. We use refs
+  // instead of formState.defaultValues because resetField (which would update
+  // formState.defaultValues) silently does nothing when the target field's
+  // controller is not mounted — which is the case here because
+  // react-aria-components' TabPanel only renders the active tab's content.
+  // setValue, on the other hand, always updates _formValues regardless of
+  // whether the field is registered, so we pair it with a ref to track whether
+  // the user has customized the source.
+  const lastDefaultContentBlockingKeysGetterSourceRef = useRef(
+    defaultContentBlockingKeysGetter?.source,
+  );
+  const lastDefaultContentSummaryGetterSourceRef = useRef(
+    defaultContentSummaryGetter.source,
+  );
+
   // When schema changes, if it's valid:
   // - Update contentSummaryGetter and contentBlockingKeysGetter, if they are
   //   still the default ones, and in any case require recompilation.
@@ -115,18 +123,16 @@ export default function CreateCollectionForm() {
       return;
     }
 
-    const defaultContentBlockingKeysGetterSource =
-      formState.defaultValues?.contentBlockingKeysGetter?.source;
     const currentContentBlockingKeysGetterSource = getValues(
       "contentBlockingKeysGetter.source",
     );
     if (
       currentContentBlockingKeysGetterSource ===
-      defaultContentBlockingKeysGetterSource
+      lastDefaultContentBlockingKeysGetterSourceRef.current
     ) {
-      resetField("contentBlockingKeysGetter", {
-        defaultValue: forms.defaults.contentBlockingKeysGetter(schema),
-      });
+      const newDefault = forms.defaults.contentBlockingKeysGetter(schema);
+      setValue("contentBlockingKeysGetter", newDefault);
+      lastDefaultContentBlockingKeysGetterSourceRef.current = newDefault.source;
     } else {
       setValue(
         "contentBlockingKeysGetter.compiled",
@@ -134,32 +140,23 @@ export default function CreateCollectionForm() {
       );
     }
 
-    const defaultContentSummaryGetterSource =
-      formState.defaultValues?.contentSummaryGetter?.source;
     const currentContentSummaryGetterSource = getValues(
       "contentSummaryGetter.source",
     );
     if (
-      currentContentSummaryGetterSource === defaultContentSummaryGetterSource
+      currentContentSummaryGetterSource ===
+      lastDefaultContentSummaryGetterSourceRef.current
     ) {
-      resetField("contentSummaryGetter", {
-        defaultValue: forms.defaults.contentSummaryGetter(schema),
-      });
+      const newDefault = forms.defaults.contentSummaryGetter(schema);
+      setValue("contentSummaryGetter", newDefault);
+      lastDefaultContentSummaryGetterSourceRef.current = newDefault.source;
     } else {
       setValue(
         "contentSummaryGetter.compiled",
         forms.constants.COMPILATION_REQUIRED,
       );
     }
-  }, [
-    schema,
-    setValue,
-    getValues,
-    resetField,
-    isSchemaValid,
-    formState.defaultValues?.contentBlockingKeysGetter?.source,
-    formState.defaultValues?.contentSummaryGetter?.source,
-  ]);
+  }, [schema, setValue, getValues, isSchemaValid]);
 
   useExitWarning(
     formState.isDirty
