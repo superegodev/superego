@@ -5,7 +5,7 @@ import {
   isValidPlainTime,
 } from "./utils/dateTimeValidators.js";
 import extractReferencedCollectionIds from "./utils/extractReferencedCollectionIds.js";
-import extractTextChunks from "./utils/extractTextChunks.js";
+import extractTextChunks from "./utils/extractTextChunks/extractTextChunks.js";
 import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
 import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
@@ -29,7 +29,7 @@ export type { default as FileRef } from "./types/FileRef.js";
 export type { default as JsonObject } from "./types/JsonObject.js";
 export type { default as ProtoFile } from "./types/ProtoFile.js";
 export type { default as RHFProtoFile } from "./types/RHFProtoFile.js";
-export type { TextChunks } from "./utils/extractTextChunks.js";
+export type { TextChunks } from "./utils/extractTextChunks/extractTextChunks.js";
 export const valibotSchemas = { schema, content };
 export const utils = {
   getRootType,
