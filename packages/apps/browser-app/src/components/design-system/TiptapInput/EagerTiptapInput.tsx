@@ -79,6 +79,12 @@ export default function EagerTiptapInput({
   });
 
   useEffect(() => {
+    if (editor && !editor.isDestroyed) {
+      editor.setEditable(!isReadOnly);
+    }
+  }, [editor, isReadOnly]);
+
+  useEffect(() => {
     if (
       editor &&
       !editor.isDestroyed &&

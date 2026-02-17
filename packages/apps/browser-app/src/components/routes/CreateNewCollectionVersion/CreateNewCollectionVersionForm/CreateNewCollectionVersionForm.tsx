@@ -3,7 +3,7 @@ import type { Collection } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
 import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,46 +44,39 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       ),
     [collection.latestVersion.schema],
   );
-  const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    getValues,
-    resetField,
-    formState,
-  } = useForm<CreateNewCollectionVersionFormValues>({
-    defaultValues: {
-      schema: collection.latestVersion.schema,
-      contentBlockingKeysGetter:
-        collection.latestVersion.settings.contentBlockingKeysGetter,
-      contentSummaryGetter:
-        collection.latestVersion.settings.contentSummaryGetter,
-      defaultDocumentViewUiOptions:
-        collection.latestVersion.settings.defaultDocumentViewUiOptions,
-      migration: CollectionUtils.hasRemote(collection)
-        ? null
-        : defaultMigration,
-      remoteConverters: collection.latestVersion.remoteConverters,
-    },
-    mode: "all",
-    resolver: standardSchemaResolver(
-      v.strictObject({
-        schema: valibotSchemas.schema(),
-        contentBlockingKeysGetter: v.nullable(
-          forms.schemas.typescriptModule(intl),
-        ),
-        contentSummaryGetter: forms.schemas.typescriptModule(intl),
-        defaultDocumentViewUiOptions: v.nullable(
-          sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
-            collection.latestVersion.schema,
+  const { control, handleSubmit, watch, setValue, getValues, formState } =
+    useForm<CreateNewCollectionVersionFormValues>({
+      defaultValues: {
+        schema: collection.latestVersion.schema,
+        contentBlockingKeysGetter:
+          collection.latestVersion.settings.contentBlockingKeysGetter,
+        contentSummaryGetter:
+          collection.latestVersion.settings.contentSummaryGetter,
+        defaultDocumentViewUiOptions:
+          collection.latestVersion.settings.defaultDocumentViewUiOptions,
+        migration: CollectionUtils.hasRemote(collection)
+          ? null
+          : defaultMigration,
+        remoteConverters: collection.latestVersion.remoteConverters,
+      },
+      mode: "all",
+      resolver: standardSchemaResolver(
+        v.strictObject({
+          schema: valibotSchemas.schema(),
+          contentBlockingKeysGetter: v.nullable(
+            forms.schemas.typescriptModule(intl),
           ),
-        ),
-        migration: v.nullable(forms.schemas.typescriptModule(intl)),
-        remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
-      }),
-    ),
-  });
+          contentSummaryGetter: forms.schemas.typescriptModule(intl),
+          defaultDocumentViewUiOptions: v.nullable(
+            sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+              collection.latestVersion.schema,
+            ),
+          ),
+          migration: v.nullable(forms.schemas.typescriptModule(intl)),
+          remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
+        }),
+      ),
+    });
 
   const onSubmit = async (values: CreateNewCollectionVersionFormValues) => {
     const { success } = await mutate(
@@ -111,6 +104,15 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       );
     }
   };
+
+  // Track the last-applied default source for the migration field. We use a ref
+  // instead of formState.defaultValues because resetField silently does nothing
+  // when the target field's controller is not mounted — which is the case here
+  // because react-aria-components' TabPanel only renders the active tab's
+  // content. setValue, on the other hand, always updates _formValues regardless
+  // of whether the field is registered, so we pair it with a ref to track
+  // whether the user has customized the source.
+  const lastDefaultMigrationSourceRef = useRef(defaultMigration?.source);
 
   const schema = watch("schema");
   const isSchemaDirty =
@@ -149,15 +151,14 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     }
 
     if (getValues("migration") !== null) {
-      const defaultMigrationSource = formState.defaultValues?.migration?.source;
       const currentMigrationSource = getValues("migration.source");
-      if (currentMigrationSource === defaultMigrationSource) {
-        resetField("migration", {
-          defaultValue: forms.defaults.migration(
-            collection.latestVersion.schema,
-            schema,
-          ),
-        });
+      if (currentMigrationSource === lastDefaultMigrationSourceRef.current) {
+        const newDefault = forms.defaults.migration(
+          collection.latestVersion.schema,
+          schema,
+        );
+        setValue("migration", newDefault);
+        lastDefaultMigrationSourceRef.current = newDefault.source;
       } else {
         setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
       }
@@ -167,9 +168,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     schema,
     setValue,
     getValues,
-    resetField,
     isSchemaValid,
-    formState.defaultValues?.migration?.source,
   ]);
 
   const { connectors } = useGlobalData();

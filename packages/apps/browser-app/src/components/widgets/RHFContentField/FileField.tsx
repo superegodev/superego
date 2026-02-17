@@ -27,6 +27,7 @@ import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
 import FieldError from "../../design-system/forms/FieldError.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
+import FileImage from "../FileImage/FileImage.jsx";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";
@@ -50,6 +51,7 @@ export default function FileField({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
+  const backend = useBackend();
   const { field, fieldState } = useController({ control, name });
   const setFile = async (file: File) =>
     field.onChange({ name: file.name, mimeType: file.type, content: file });
@@ -99,6 +101,18 @@ export default function FileField({
           }
           className={cs.FileField.dropZone}
         >
+          {field.value !== null && field.value.mimeType.startsWith("image/") ? (
+            <FileImage
+              key={`FileImage-${
+                "id" in field.value
+                  ? field.value.id
+                  : field.value.name + field.value.mimeType
+              }`}
+              file={field.value}
+              backend={backend}
+              className={cs.FileField.imagePreview}
+            />
+          ) : null}
           {field.value !== null ? (
             <NonNullFileFields
               key={field.value.name + field.value.mimeType}

@@ -40,6 +40,9 @@ a test.
 - `yarn check-types`: checks that **all packages** compile correctly
 - `yarn check-translations`: checks translations are up-to-date and complete
 
+Always run the checks before committing. They **should** pass, but if some fails
+and it's not trivial to fix, you can leave it failing and commit anyway.
+
 ### Workspace-specific
 
 Run with `yarn workspace <package-name> run <script-name>`. Available scripts:

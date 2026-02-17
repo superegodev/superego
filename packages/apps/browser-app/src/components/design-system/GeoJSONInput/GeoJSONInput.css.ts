@@ -29,7 +29,7 @@ export const GeoJSONInput = {
 globalStyle(`${GeoJSONInput.map} .maplibregl-control-container`, {
   opacity: 0,
   pointerEvents: "none",
-  transition: "opacity 150ms ease-in-out",
+  transition: "opacity 300ms ease-in-out",
 });
 globalStyle(
   `${GeoJSONInput.root}:hover ${GeoJSONInput.map}[data-loaded="true"] .maplibregl-control-container`,

@@ -248,6 +248,18 @@
   "ContentSummaryTab.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
+  "Controls.tsx_/UnJ3S": {
+    "defaultMessage": "Zoom out"
+  },
+  "Controls.tsx_N2HbmZ": {
+    "defaultMessage": "Fit"
+  },
+  "Controls.tsx_QPmWTa": {
+    "defaultMessage": "Center"
+  },
+  "Controls.tsx_xbi38c": {
+    "defaultMessage": "Zoom in"
+  },
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },

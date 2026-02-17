@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import DataType from "../DataType.js";
-import FormatId from "../formats/FormatId.js";
-import type Schema from "../Schema.js";
+import DataType from "../../DataType.js";
+import FormatId from "../../formats/FormatId.js";
+import type Schema from "../../Schema.js";
 import extractTextChunks from "./extractTextChunks.js";
 
 describe("extracts text chunks for the supplied document content", () => {

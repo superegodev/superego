@@ -931,18 +931,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/biome@npm:2.4.0"
+"@biomejs/biome@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/biome@npm:2.4.1"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:2.4.0"
-    "@biomejs/cli-darwin-x64": "npm:2.4.0"
-    "@biomejs/cli-linux-arm64": "npm:2.4.0"
-    "@biomejs/cli-linux-arm64-musl": "npm:2.4.0"
-    "@biomejs/cli-linux-x64": "npm:2.4.0"
-    "@biomejs/cli-linux-x64-musl": "npm:2.4.0"
-    "@biomejs/cli-win32-arm64": "npm:2.4.0"
-    "@biomejs/cli-win32-x64": "npm:2.4.0"
+    "@biomejs/cli-darwin-arm64": "npm:2.4.1"
+    "@biomejs/cli-darwin-x64": "npm:2.4.1"
+    "@biomejs/cli-linux-arm64": "npm:2.4.1"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.4.1"
+    "@biomejs/cli-linux-x64": "npm:2.4.1"
+    "@biomejs/cli-linux-x64-musl": "npm:2.4.1"
+    "@biomejs/cli-win32-arm64": "npm:2.4.1"
+    "@biomejs/cli-win32-x64": "npm:2.4.1"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -962,62 +962,62 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10c0/c10de983720ac20df56755f42f48b2b56fcc1082d364193f1410d07b62c4b7c3437abdbc9cfd60f2a65cd0f3baa7abf8d09a85cd6962b1363f77034e877c13b3
+  checksum: 10c0/49afddd92d2d562d850a4cf0b1e56731c2c2e4ea973055f9e57012c40cbcb2046bb0c970f5339d05c8eee0e011f69c6d8d5d6fbf7630ad5c829b68bd5187c779
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-darwin-arm64@npm:2.4.0"
+"@biomejs/cli-darwin-arm64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.4.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-darwin-x64@npm:2.4.0"
+"@biomejs/cli-darwin-x64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-darwin-x64@npm:2.4.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.4.0"
+"@biomejs/cli-linux-arm64-musl@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.4.1"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-linux-arm64@npm:2.4.0"
+"@biomejs/cli-linux-arm64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-linux-arm64@npm:2.4.1"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-linux-x64-musl@npm:2.4.0"
+"@biomejs/cli-linux-x64-musl@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.4.1"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-linux-x64@npm:2.4.0"
+"@biomejs/cli-linux-x64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-linux-x64@npm:2.4.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-win32-arm64@npm:2.4.0"
+"@biomejs/cli-win32-arm64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-win32-arm64@npm:2.4.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@biomejs/cli-win32-x64@npm:2.4.0"
+"@biomejs/cli-win32-x64@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@biomejs/cli-win32-x64@npm:2.4.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3772,46 +3772,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jitl/quickjs-ffi-types@npm:0.31.0":
-  version: 0.31.0
-  resolution: "@jitl/quickjs-ffi-types@npm:0.31.0"
-  checksum: 10c0/0684b2ea64c0975778ea4836f80fd527ea643b668bbe66c6a3caf2aecf2c4a332afcf27e7f8dbe187b848b056a48b8f26d4e3ae32964a4856c05808a00a27fb5
+"@jitl/quickjs-ffi-types@npm:0.32.0":
+  version: 0.32.0
+  resolution: "@jitl/quickjs-ffi-types@npm:0.32.0"
+  checksum: 10c0/80a35558d1d466115366999cebde2aa5aa3f78297d69db1d3c662f021e39ec3b2d89b6b8b85d4defa41a4ea24b94a6fd528ddc227cd2e67fb16edb3b43a9e84f
   languageName: node
   linkType: hard
 
-"@jitl/quickjs-wasmfile-debug-asyncify@npm:0.31.0":
-  version: 0.31.0
-  resolution: "@jitl/quickjs-wasmfile-debug-asyncify@npm:0.31.0"
+"@jitl/quickjs-wasmfile-debug-asyncify@npm:0.32.0":
+  version: 0.32.0
+  resolution: "@jitl/quickjs-wasmfile-debug-asyncify@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-ffi-types": "npm:0.31.0"
-  checksum: 10c0/b67657419f396df6e3292f66775060389ec11537ee8c5805128e879160c6790fe5d0e4d35568ff240bc163528063c36a0b18a56346bdec504ec1a92398e41efc
+    "@jitl/quickjs-ffi-types": "npm:0.32.0"
+  checksum: 10c0/f7bad41e050e9fcf0f8ba1cf368fc2242e645126d260966264a72cf5d769f009e0edfab9aed542a6519b7a7bfb6499b9362ea077eb5a3355fc3599b0382b8057
   languageName: node
   linkType: hard
 
-"@jitl/quickjs-wasmfile-debug-sync@npm:0.31.0, @jitl/quickjs-wasmfile-debug-sync@npm:^0.31.0":
-  version: 0.31.0
-  resolution: "@jitl/quickjs-wasmfile-debug-sync@npm:0.31.0"
+"@jitl/quickjs-wasmfile-debug-sync@npm:0.32.0, @jitl/quickjs-wasmfile-debug-sync@npm:^0.32.0":
+  version: 0.32.0
+  resolution: "@jitl/quickjs-wasmfile-debug-sync@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-ffi-types": "npm:0.31.0"
-  checksum: 10c0/5e62740218b6674cb511547363def9e4dc916fc014a8008dd11aecf2a3b7852ae864d8cbab666e09c3fc3342d4b327953f4aaeb606f77f171b5b87a53595f43e
+    "@jitl/quickjs-ffi-types": "npm:0.32.0"
+  checksum: 10c0/415b2b7864aceaf451f80db76d3cb94f52071630c7b5256edfa8b21bf89a47a16a35947c2927a1cedfbd5e53846abeeeca4ac886156d0048c0c19079102e0113
   languageName: node
   linkType: hard
 
-"@jitl/quickjs-wasmfile-release-asyncify@npm:0.31.0":
-  version: 0.31.0
-  resolution: "@jitl/quickjs-wasmfile-release-asyncify@npm:0.31.0"
+"@jitl/quickjs-wasmfile-release-asyncify@npm:0.32.0":
+  version: 0.32.0
+  resolution: "@jitl/quickjs-wasmfile-release-asyncify@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-ffi-types": "npm:0.31.0"
-  checksum: 10c0/463d9e38fc7e2f4f62de3c6296d610661f127cd4a0964df47278fd62941b7d416fd6c8de7c9ab7b0002122255b6c3f1904930db26f7e1793cc01955769f962f5
+    "@jitl/quickjs-ffi-types": "npm:0.32.0"
+  checksum: 10c0/b8bdf21fe2f1599602a16fcc1a71eb103a0bc41830a6138728d804b4b77546029c78470f32befc3b872beb971e6bc4c3c604ccbf6256c70551f68913aa938f5b
   languageName: node
   linkType: hard
 
-"@jitl/quickjs-wasmfile-release-sync@npm:0.31.0, @jitl/quickjs-wasmfile-release-sync@npm:^0.31.0":
-  version: 0.31.0
-  resolution: "@jitl/quickjs-wasmfile-release-sync@npm:0.31.0"
+"@jitl/quickjs-wasmfile-release-sync@npm:0.32.0, @jitl/quickjs-wasmfile-release-sync@npm:^0.32.0":
+  version: 0.32.0
+  resolution: "@jitl/quickjs-wasmfile-release-sync@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-ffi-types": "npm:0.31.0"
-  checksum: 10c0/751a8a0b3f2b66fa499de13f21eff264faa9a2b256104dbe1384b0acda64efeabd756d12d5480ae18d002e8200a4176621c5a0f0e13f2920b202515fcc4b6751
+    "@jitl/quickjs-ffi-types": "npm:0.32.0"
+  checksum: 10c0/c095815a3b9bc765d7e15c5f648e6ec5b2390a733869ac2df2aa3579f66e36706b25b104f45d8f80b2257a2ced267fb6b8b71d8b167d224269a48eb0a8d0c946
   languageName: node
   linkType: hard
 
@@ -8093,6 +8093,7 @@ __metadata:
     react-icons: "npm:^5.5.0"
     react-intl: "npm:^8.1.3"
     react-stately: "npm:^3.44.0"
+    react-zoom-pan-pinch: "npm:^3.7.0"
     typescript: "npm:^5.9.3"
     valibot: "npm:^1.2.0"
     vite: "npm:^7.3.1"
@@ -8292,13 +8293,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox"
   dependencies:
-    "@jitl/quickjs-wasmfile-debug-sync": "npm:^0.31.0"
-    "@jitl/quickjs-wasmfile-release-sync": "npm:^0.31.0"
+    "@jitl/quickjs-wasmfile-debug-sync": "npm:^0.32.0"
+    "@jitl/quickjs-wasmfile-release-sync": "npm:^0.32.0"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/javascript-sandbox-global-utils": "workspace:*"
-    quickjs-emscripten: "npm:^0.31.0"
+    quickjs-emscripten: "npm:^0.32.0"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.18"
   languageName: unknown
@@ -8308,7 +8309,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/root@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:2.4.0"
+    "@biomejs/biome": "npm:2.4.1"
     playwright: "npm:^1.58.2"
     prettier: "npm:^3.8.1"
     prettier-plugin-astro: "npm:^0.14.1"
@@ -8324,8 +8325,6 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/global-types": "workspace:*"
-    "@tiptap/core": "npm:^3.19.0"
-    "@tiptap/starter-kit": "npm:^3.19.0"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:^25.2.3"
@@ -18376,25 +18375,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quickjs-emscripten-core@npm:0.31.0":
-  version: 0.31.0
-  resolution: "quickjs-emscripten-core@npm:0.31.0"
+"quickjs-emscripten-core@npm:0.32.0":
+  version: 0.32.0
+  resolution: "quickjs-emscripten-core@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-ffi-types": "npm:0.31.0"
-  checksum: 10c0/f212754ada4bbcf0bbf43f7128c7ba1890a1071bb2e633767cc1dc5d25035ab88a4010d0db071dbd4a41c254bba57cbb8b1407b99bbe98419e706a3b1192ce48
+    "@jitl/quickjs-ffi-types": "npm:0.32.0"
+  checksum: 10c0/3d38df2cc6408b4bd343a955b5f435f0b26b5ed2692f0f878d5dbe1fa5bcc7e9ae0e914ea2cea04e4abd3a03691d3e4ee0e6244b9ce761374c73bf132b2c3958
   languageName: node
   linkType: hard
 
-"quickjs-emscripten@npm:^0.31.0":
-  version: 0.31.0
-  resolution: "quickjs-emscripten@npm:0.31.0"
+"quickjs-emscripten@npm:^0.32.0":
+  version: 0.32.0
+  resolution: "quickjs-emscripten@npm:0.32.0"
   dependencies:
-    "@jitl/quickjs-wasmfile-debug-asyncify": "npm:0.31.0"
-    "@jitl/quickjs-wasmfile-debug-sync": "npm:0.31.0"
-    "@jitl/quickjs-wasmfile-release-asyncify": "npm:0.31.0"
-    "@jitl/quickjs-wasmfile-release-sync": "npm:0.31.0"
-    quickjs-emscripten-core: "npm:0.31.0"
-  checksum: 10c0/18cfda9477cb68e0bd5812ea4642b7b67d14bfd16e414ff611b495a8af27b1f9fc879c062cb79e5e428fc961ad4591e3798f1ead16cc5b3bf2b0ae02415e5648
+    "@jitl/quickjs-wasmfile-debug-asyncify": "npm:0.32.0"
+    "@jitl/quickjs-wasmfile-debug-sync": "npm:0.32.0"
+    "@jitl/quickjs-wasmfile-release-asyncify": "npm:0.32.0"
+    "@jitl/quickjs-wasmfile-release-sync": "npm:0.32.0"
+    quickjs-emscripten-core: "npm:0.32.0"
+  checksum: 10c0/378a95e625c88b867489cb5972e02501d43fd128c94aac537fd8298a123ddb26e25ab0fac409ebb1b1abff9f5226d4c528abfed13821f72a452729e4239dfe0f
   languageName: node
   linkType: hard
 
@@ -18775,6 +18774,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/841938ff16d16a6b76895f4cb2e1fea957e5fe3b30febbf03a54892dae1c9153f2383e231dea0b3ba41192ad2f2849448fa859caccd288943bce32639e971bee
+  languageName: node
+  linkType: hard
+
+"react-zoom-pan-pinch@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "react-zoom-pan-pinch@npm:3.7.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: 10c0/96889849800a953128fe7f9e42bed0d5cbc48d03024995b136f5e972146236688efb24d7381d8e6f09598f5512b4897d2420f62d828a665fdf24b745b7d55911
   languageName: node
   linkType: hard
 

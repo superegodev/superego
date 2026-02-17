@@ -33,6 +33,61 @@ I want **access to my data** and apps that **serve _me_**.
 I also want **an AI assistant that actually knows me**, not one that slops out
 bland, canned responses.
 
+## Core Philosophy
+
+Ownership requires awareness. To truly own your data you first need to know what
+it is.
+
+**Superego puts your data right in front of you.** You can view it all and you
+have unrestricted access to it.
+
+You can have nicer interfaces to manage it – that's what _apps_ are for – but
+the database foundation is always visible. You own it.
+
+## Roadmap
+
+- [x] Document versioning.
+- [x] Search.
+- [x] Collection view apps.
+- [x] Data-aware AI assistant.
+- [ ] Write apps with your coding agent.
+- [ ] MCP/HTTP server.
+- [ ] Database hooks.
+- [ ] AI-powered data import.
+- [ ] Mobile app.
+- [ ] Sync between devices.
+- [ ] Database encryption.
+
+## Is This Vibe-Coded Slop?
+
+Short answer: **no**.
+
+Longer answer: most of the project was developed without any assistance. Around
+Dec 2025, I started using coding agents, but — as Freud would put it — I'm
+particularly anal when it comes to architecture and coding style, so it's very
+difficult for me to just accept stock AI-generated code.
+
+Currently (Feb 2026), my AI-assisted workflow (which you can see in PR commits)
+is the following:
+
+1. I ask Claude or Codex to implement small feature X. They open a draft PR.
+2. I test that the feature "more or less works", and keep asking for changes
+   until it does.
+3. I comb through the generated files, changing names, simplifying loops,
+   removing overly defensive code, adding missing automated tests, etc. I do
+   this over and over (combined with manual testing) until I'm satisfied with
+   the result, and I push a "fix vibed code" commit.
+4. I ask AIs to review the PR, go through the comments, and address the
+   meaningful ones.
+
+It often happens that, around step 1 or step 2, I realize that, architecturally,
+the coding agent's implementation is just wrong. So I bin the PR, draw up a
+better prompt laying out the architecture I have in mind, and start over.
+
+Does this speed me up? I feel like it, but it's hard to tell for sure. It
+definitely makes me more productive, though, because it lowers the effort
+required to get started on something.
+
 ## License
 
 Unless otherwise specified, all files in this repository are licensed under the

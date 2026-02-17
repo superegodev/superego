@@ -90,6 +90,9 @@ export const FileField = {
   }),
 
   dropZone: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._2,
     width: "100%",
   }),
 
@@ -113,6 +116,14 @@ export const FileField = {
         borderWidth: vars.borders.width.medium,
       },
     },
+  }),
+
+  imagePreview: style({
+    alignSelf: "center",
+    width: "100%",
+    height: vars.spacing._120,
+    background: vars.colors.background.surfaceHighlight,
+    borderRadius: vars.borders.radius.md,
   }),
 
   nonNullFileFieldsRoot: style({
@@ -275,7 +286,7 @@ export const Field = {
         background: vars.colors.reds._4,
         borderRadius: vars.borders.radius.md,
         opacity: 0,
-        transition: "opacity 200ms ease",
+        transition: "opacity 300ms ease",
         transitionDelay: "300ms",
         pointerEvents: "none",
       },
