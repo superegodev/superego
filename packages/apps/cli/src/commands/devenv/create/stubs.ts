@@ -1,9 +1,17 @@
-import type { Schema } from "@superego/schema";
-import { DataType } from "@superego/schema";
+import { DataType, type Schema } from "@superego/schema";
+
+export const packJsonStub = {
+  id: "Pack_com.example.mypack",
+  name: "My Pack",
+  shortDescription: "",
+  longDescription: "",
+  collectionCategories: [],
+};
 
 export const collectionSettingsStub = {
   name: "My Collection",
   icon: null,
+  collectionCategoryId: null,
   description: null,
   assistantInstructions: null,
   defaultCollectionViewAppId: null,

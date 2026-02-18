@@ -13,6 +13,7 @@ import {
   collectionSettingsStub,
   contentBlockingKeysGetterStub,
   contentSummaryGetterStub,
+  packJsonStub,
 } from "./stubs.js";
 import tsconfig from "./tsconfig.js";
 
@@ -37,7 +38,10 @@ export default async function createAction(targetPath: string): Promise<void> {
   // 4. CLAUDE.md symlink -> AGENTS.md
   symlinkSync("AGENTS.md", join(basePath, "CLAUDE.md"));
 
-  // 5. Collection stub (ProtoCollection_0/)
+  // 5. pack.json
+  writeJsonFile(join(basePath, "pack.json"), packJsonStub);
+
+  // 6. Collection stub (ProtoCollection_0/)
   const collectionDir = join(basePath, "ProtoCollection_0");
   writeJsonFile(join(collectionDir, "settings.json"), collectionSettingsStub);
   writeJsonFile(join(collectionDir, "schema.json"), collectionSchemaStub);
@@ -52,14 +56,14 @@ export default async function createAction(targetPath: string): Promise<void> {
     { trailingNewline: true },
   );
 
-  // 6. App stub (ProtoApp_0/)
+  // 7. App stub (ProtoApp_0/)
   const appDir = join(basePath, "ProtoApp_0");
   writeJsonFile(join(appDir, "settings.json"), appSettingsStub);
   writeFile(join(appDir, "main.tsx"), appMainTsxStub, {
     trailingNewline: true,
   });
 
-  // 7. Generate types for the stub schema
+  // 8. Generate types for the stub schema
   const generatedTypes = codegen(collectionSchemaStub);
   writeFile(
     join(basePath, "generated", "ProtoCollection_0.ts"),

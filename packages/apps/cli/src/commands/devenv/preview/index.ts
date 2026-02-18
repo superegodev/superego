@@ -3,8 +3,8 @@ import { watch } from "node:fs";
 import { resolve } from "node:path";
 import debounce from "debounce";
 import { sendPreviewPack } from "../../../DevenvSignalCliMainIpc.js";
+import compilePack from "../utils/compilePack.js";
 import Log from "../utils/Log.js";
-import compilePack from "./compilePack.js";
 import getSuperegoAppBin from "./getSuperegoAppBin.js";
 
 export default async function previewAction(options: {

@@ -1,16 +1,26 @@
-import { resolve } from "node:path";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 import type { Schema } from "@superego/schema";
 import getProtoApps from "../utils/getProtoApps.js";
 import getProtoCollections from "../utils/getProtoCollections.js";
 import Log from "../utils/Log.js";
+import packJsonSchema from "../utils/packJsonSchema.js";
 import type CheckResult from "./CheckResult.js";
 import checkApp from "./checkApp.js";
 import checkCollection from "./checkCollection.js";
+import checkJsonValidation from "./checkJsonValidation.js";
 
 export default async function checkAction(): Promise<void> {
   const basePath = resolve(process.cwd());
   const results: CheckResult[] = [];
   const schemas = new Map<string, Schema>();
+
+  const packJsonPath = join(basePath, "pack.json");
+  if (existsSync(packJsonPath)) {
+    results.push(
+      checkJsonValidation("pack.json", packJsonPath, packJsonSchema()),
+    );
+  }
 
   const collections = getProtoCollections(basePath);
   for (const collectionName of collections) {

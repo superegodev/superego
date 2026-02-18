@@ -16,8 +16,17 @@
 **This is a development environment for building Superego collections and
 apps.** Help the user create what they want.
 
+## Packs
+
+A pack is a self-contained bundle that packages collections and apps together
+for distribution. The `pack.json` file in the root of the development
+environment defines pack metadata (id, name, description, and collection
+categories). Run `superego devenv pack` to compile the development environment
+into a single `pack.mpk` file.
+
 ## Directory structure
 
+- `pack.json` - Pack metadata (id, name, description, collection categories)
 - `ProtoCollection_*/` - Collection definitions
   - `settings.json` - Collection name, icon, description
   - `schema.json` - Document schema (defines the shape of documents)

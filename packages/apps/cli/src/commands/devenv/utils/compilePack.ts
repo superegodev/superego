@@ -1,13 +1,15 @@
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { extname, join } from "node:path";
 import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import {
   type AppDefinition,
   AppType,
+  type CollectionCategoryDefinition,
   type CollectionDefinition,
   type DocumentDefinition,
   type Pack,
   type PackId,
+  type ProtoCollectionCategoryId,
   type TypescriptFile,
   type TypescriptModule,
 } from "@superego/backend";
@@ -19,11 +21,12 @@ import {
 import { valibotSchemas as sharedValibotSchemas } from "@superego/shared-utils";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import * as v from "valibot";
-import appSettingsSchema from "../utils/appSettingsSchema.js";
-import collectionSettingsSchema from "../utils/collectionSettingsSchema.js";
-import getProtoApps from "../utils/getProtoApps.js";
-import getProtoCollections from "../utils/getProtoCollections.js";
-import readJsonFile from "../utils/readJsonFile.js";
+import appSettingsSchema from "./appSettingsSchema.js";
+import collectionSettingsSchema from "./collectionSettingsSchema.js";
+import getProtoApps from "./getProtoApps.js";
+import getProtoCollections from "./getProtoCollections.js";
+import packJsonSchema from "./packJsonSchema.js";
+import readJsonFile from "./readJsonFile.js";
 
 export default async function compilePack(basePath: string): Promise<Pack> {
   const collections: CollectionDefinition<true, true>[] = [];
@@ -147,7 +150,9 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       settings: {
         name: settings.name,
         icon: settings.icon,
-        collectionCategoryId: null,
+        collectionCategoryId:
+          (settings.collectionCategoryId as ProtoCollectionCategoryId | null) ??
+          null,
         defaultCollectionViewAppId: settings.defaultCollectionViewAppId as
           | `ProtoApp_${string}`
           | null,
@@ -197,6 +202,63 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       targetCollectionIds: settings.targetCollectionIds as any,
       files: { "/main.tsx": mainModule },
     });
+  }
+
+  // pack.json (optional)
+  const packJsonPath = join(basePath, "pack.json");
+  if (existsSync(packJsonPath)) {
+    const packJsonResult = v.safeParse(
+      packJsonSchema(),
+      readJsonFile(packJsonPath),
+    );
+    if (!packJsonResult.success) {
+      throw new Error(
+        `pack.json validation failed:\n${packJsonResult.issues.map((i) => i.message).join("\n")}`,
+      );
+    }
+    const packJson = packJsonResult.output;
+
+    const screenshotsDir = join(basePath, "screenshots");
+    const screenshots = existsSync(screenshotsDir)
+      ? readdirSync(screenshotsDir)
+          .sort()
+          .map((filename) => {
+            const content = new Uint8Array(
+              readFileSync(join(screenshotsDir, filename)),
+            );
+            const extension = extname(filename).slice(1).toLowerCase();
+            const mimeTypeMap: Record<string, string> = {
+              png: "image/png",
+              jpg: "image/jpeg",
+              jpeg: "image/jpeg",
+              avif: "image/avif",
+              webp: "image/webp",
+            };
+            const mimeType = mimeTypeMap[extension] ?? `image/${extension}`;
+            return { mimeType: mimeType as `image/${string}`, content };
+          })
+      : [];
+
+    const collectionCategories: CollectionCategoryDefinition<true>[] =
+      packJson.collectionCategories.map((cat) => ({
+        name: cat.name,
+        icon: cat.icon,
+        parentId: cat.parentId as ProtoCollectionCategoryId | null,
+      }));
+
+    return {
+      id: packJson.id as PackId,
+      info: {
+        name: packJson.name,
+        shortDescription: packJson.shortDescription,
+        longDescription: packJson.longDescription,
+        screenshots,
+      },
+      collectionCategories,
+      collections,
+      apps,
+      documents,
+    };
   }
 
   return {
