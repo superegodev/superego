@@ -43,10 +43,7 @@ export default async function checkCollection(
   if (!schemaResult.success) {
     return { results, schema: null };
   }
-  const schema = v.parse(
-    schemaValibotSchemas.schema(),
-    readJsonFile(schemaPath),
-  );
+  const schema = readJsonFile(schemaPath);
 
   // 3. defaultDocumentViewUiOptions.json (optional)
   const defaultDocumentViewUiOptionsPath = join(

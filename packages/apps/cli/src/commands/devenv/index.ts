@@ -34,7 +34,9 @@ devenv
 
 devenv
   .command("preview")
-  .description("Preview the development environment in the browser")
+  .description(
+    "Preview the development environment in a dev instance of Superego",
+  )
   .option("-w, --watch", "Watch for file changes and reload automatically")
   .action(previewAction);
 

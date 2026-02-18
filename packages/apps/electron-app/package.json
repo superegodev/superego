@@ -13,7 +13,6 @@
   },
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "dev": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" electron-vite --outDir=dist dev",
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
     "check-translations": "node scripts/checkTranslations.ts",

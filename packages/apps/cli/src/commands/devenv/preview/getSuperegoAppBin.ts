@@ -5,7 +5,7 @@ export default function getSuperegoAppBin(): string {
   const binName = "superego-app";
 
   if (process.platform === "darwin") {
-    const appBundleMatch = __dirname.match(/^(.*?\.app)\b/);
+    const appBundleMatch = import.meta.dirname.match(/^(.*?\.app)\b/);
     if (!appBundleMatch?.[1]) {
       Log.error("Not in an app bundle. Cannot locate superego-app binary.");
       process.exit(1);

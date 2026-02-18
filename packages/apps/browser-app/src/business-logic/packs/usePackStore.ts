@@ -14,7 +14,7 @@ export default create<UsePackStore>((set, get) => ({
     set((state) => {
       const packs = new Map(state.packs);
       packs.set(pack.id, pack);
-      return { packs: new Map(state.packs).set(pack.id, pack) };
+      return { packs };
     });
   },
   clearPack(packId) {

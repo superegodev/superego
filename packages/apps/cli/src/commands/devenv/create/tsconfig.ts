@@ -8,7 +8,7 @@ export default {
 
     // Modules
     module: "ESNext",
-    moduleResolution: "Node",
+    moduleResolution: "Bundler",
 
     // Interop constraints
     allowSyntheticDefaultImports: true,

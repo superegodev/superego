@@ -47,9 +47,13 @@ export async function* readDevenvSignals(): AsyncGenerator<DevenvSignal> {
 
     const signal = parsed as Record<string, unknown>;
     if (signal["type"] === DevenvSignalType.PreviewPack) {
-      if (!("pack" in signal) || typeof signal["pack"] !== "object") {
+      if (
+        !("pack" in signal) ||
+        typeof signal["pack"] !== "object" ||
+        signal["pack"] === null
+      ) {
         console.error(
-          "[devenv] Signal of type 'preview-pack' must include a 'pack' object.",
+          "[devenv] Signal of type 'PreviewPack' must include a 'pack' object.",
         );
         continue;
       }

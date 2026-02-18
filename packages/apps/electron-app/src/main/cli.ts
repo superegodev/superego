@@ -13,37 +13,59 @@ export default {
   },
 
   install(intl: IntlShape): void {
-    mkdirSync(dirname(INSTALL_PATH), { recursive: true });
-    symlinkSync(CLI_PATH, INSTALL_PATH);
+    try {
+      mkdirSync(dirname(INSTALL_PATH), { recursive: true });
+      symlinkSync(CLI_PATH, INSTALL_PATH);
 
-    dialog.showMessageBox({
-      type: "info",
-      message: intl.formatMessage({ defaultMessage: "CLI installed" }),
-      detail: intl.formatMessage(
-        {
-          defaultMessage:
-            "The CLI has been installed at {path}. Make sure {dir} is in your PATH.",
-        },
-        {
-          path: INSTALL_PATH,
-          dir: INSTALL_PATH.replace(/\/[^/]+$/, ""),
-        },
-      ),
-      buttons: ["OK"],
-    });
+      dialog.showMessageBox({
+        type: "info",
+        message: intl.formatMessage({ defaultMessage: "CLI installed" }),
+        detail: intl.formatMessage(
+          {
+            defaultMessage:
+              "The CLI has been installed at {path}. Make sure {dir} is in your PATH.",
+          },
+          {
+            path: INSTALL_PATH,
+            dir: INSTALL_PATH.replace(/\/[^/]+$/, ""),
+          },
+        ),
+        buttons: ["OK"],
+      });
+    } catch (error) {
+      dialog.showMessageBox({
+        type: "error",
+        message: intl.formatMessage({
+          defaultMessage: "CLI installation failed",
+        }),
+        detail: error instanceof Error ? error.message : String(error),
+        buttons: ["OK"],
+      });
+    }
   },
 
   uninstall(intl: IntlShape): void {
-    rmSync(INSTALL_PATH, { force: true });
+    try {
+      rmSync(INSTALL_PATH, { force: true });
 
-    dialog.showMessageBox({
-      type: "info",
-      message: intl.formatMessage({ defaultMessage: "CLI uninstalled" }),
-      detail: intl.formatMessage(
-        { defaultMessage: "The CLI has been removed from {path}." },
-        { path: INSTALL_PATH },
-      ),
-      buttons: ["OK"],
-    });
+      dialog.showMessageBox({
+        type: "info",
+        message: intl.formatMessage({ defaultMessage: "CLI uninstalled" }),
+        detail: intl.formatMessage(
+          { defaultMessage: "The CLI has been removed from {path}." },
+          { path: INSTALL_PATH },
+        ),
+        buttons: ["OK"],
+      });
+    } catch (error) {
+      dialog.showMessageBox({
+        type: "error",
+        message: intl.formatMessage({
+          defaultMessage: "CLI uninstallation failed",
+        }),
+        detail: error instanceof Error ? error.message : String(error),
+        buttons: ["OK"],
+      });
+    }
   },
 };

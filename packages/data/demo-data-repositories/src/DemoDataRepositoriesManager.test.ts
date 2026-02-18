@@ -73,7 +73,8 @@ describe("InMemory", () => {
           },
         },
       },
-      crypto.randomUUID().replaceAll("-", ""),
+      undefined,
+      true,
     );
     return { dataRepositoriesManager };
   });

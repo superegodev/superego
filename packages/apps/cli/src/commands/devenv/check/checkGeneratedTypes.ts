@@ -15,7 +15,7 @@ export default function checkGeneratedTypes(
   }
 
   const actual = readFileSync(filePath, "utf-8");
-  if (actual !== expectedSource) {
+  if (normalizeNewlines(actual) !== normalizeNewlines(expectedSource)) {
     return {
       target: target,
       success: false,
@@ -26,4 +26,8 @@ export default function checkGeneratedTypes(
   }
 
   return { target: target, success: true };
+}
+
+function normalizeNewlines(str: string): string {
+  return str.replace(/\r\n/g, "\n");
 }

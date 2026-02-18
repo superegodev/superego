@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
-import { watch } from "node:fs";
 import { resolve } from "node:path";
+import chokidar from "chokidar";
 import debounce from "debounce";
 import { sendPreviewPack } from "../../../DevenvSignalCliMainIpc.js";
 import compilePack from "../utils/compilePack.js";
@@ -38,11 +38,11 @@ export default async function previewAction(options: {
         );
       }
     }, 500);
-    watch(basePath, { recursive: true }, (_event, filename) => {
-      if (filename && !filename.startsWith("generated/")) {
+    chokidar
+      .watch(basePath, { ignored: /generated\//, ignoreInitial: true })
+      .on("all", () => {
         recompileAndReload();
-      }
-    });
+      });
   }
 
   const killApp = () => superegoAppProcess.kill();

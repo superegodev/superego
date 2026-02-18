@@ -53,5 +53,7 @@ export default async function checkAction(): Promise<void> {
       }
     }
   }
-  process.exit(hasFailures ? 1 : 0);
+  if (hasFailures) {
+    process.exit(1);
+  }
 }

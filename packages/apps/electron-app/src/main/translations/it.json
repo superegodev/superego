@@ -8,8 +8,14 @@
   "cli.ts_W+nD/f": {
     "defaultMessage": "La CLI è stata installata in {path}. Assicurati che {dir} sia nel tuo PATH."
   },
+  "cli.ts_e6n/61": {
+    "defaultMessage": "Disinstallazione CLI fallita"
+  },
   "cli.ts_ppdoZI": {
     "defaultMessage": "La CLI è stata rimossa da {path}."
+  },
+  "cli.ts_qqfYjN": {
+    "defaultMessage": "Installazione CLI fallita"
   },
   "setApplicationMenu.ts_PJD5PQ": {
     "defaultMessage": "Disinstalla CLI"

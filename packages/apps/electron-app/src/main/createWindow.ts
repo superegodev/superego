@@ -44,8 +44,8 @@ export default function createWindow(): BrowserWindow {
   });
 
   win.maximize();
-  win.show();
   win.loadFile(join(import.meta.dirname, "../renderer/index.html"));
+  win.show();
 
   return win;
 }

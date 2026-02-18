@@ -8118,6 +8118,7 @@ __metadata:
     "@superego/tsc-typescript-compiler": "workspace:*"
     "@typescript/vfs": "npm:^1.6.3"
     chalk: "npm:^5.6.2"
+    chokidar: "npm:^5.0.0"
     commander: "npm:^14.0.3"
     debounce: "npm:^3.0.0"
     typescript: "npm:^5.9.3"
