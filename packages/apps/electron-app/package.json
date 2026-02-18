@@ -41,6 +41,7 @@
     "babel-plugin-formatjs": "^11.2.3",
     "electron": "40.4.1",
     "electron-vite": "^5.0.0",
+    "typescript": "^5.9.3",
     "vite": "^7.3.1"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
+    "@superego/cli": "workspace:*",
     "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
@@ -58,11 +60,6 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "@typescript/vfs": "^1.6.3",
-    "chalk": "^5.6.2",
-    "commander": "^14.0.3",
-    "debounce": "^3.0.0",
-    "filenamify": "^7.0.1",
-    "typescript": "^5.9.3"
+    "filenamify": "^7.0.1"
   }
 }

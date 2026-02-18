@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { watch } from "node:fs";
 import { resolve } from "node:path";
 import debounce from "debounce";
-import { sendPreviewPack } from "../../../../common/DevenvSignalCliMainIpc.js";
+import { sendPreviewPack } from "../../../DevenvSignalCliMainIpc.js";
 import Log from "../utils/Log.js";
 import compilePack from "./compilePack.js";
 import getSuperegoAppBin from "./getSuperegoAppBin.js";

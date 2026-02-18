@@ -1,8 +1,5 @@
+import { DevenvSignalType, readDevenvSignals } from "@superego/cli";
 import { app, BrowserWindow, dialog } from "electron";
-import {
-  DevenvSignalType,
-  readDevenvSignals,
-} from "../common/DevenvSignalCliMainIpc.js";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
 import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
