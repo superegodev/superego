@@ -60,7 +60,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         remoteConverters: collection.latestVersion.remoteConverters,
       },
       mode: "all",
-      resolver: async (values, context, options) => {
+      resolver: (values, context, options) => {
         const schemaParseResult = v.safeParse(
           valibotSchemas.schema(),
           values.schema,
