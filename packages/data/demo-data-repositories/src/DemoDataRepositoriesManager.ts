@@ -18,6 +18,7 @@ export default class DemoDataRepositoriesManager
   private objectStoreName = "data";
   private objectStoreDataKeyPath = "id";
   private objectStoreDataKeyValue = "data";
+  private data: Data | null = null;
   private lock: string | null = null;
   private searchTextIndexStates = {
     conversation: DemoConversationTextSearchIndex.getSearchTextIndexState(),
@@ -27,6 +28,7 @@ export default class DemoDataRepositoriesManager
   constructor(
     private defaultGlobalSettings: GlobalSettings,
     private databaseName = "superego",
+    private inMemory = false,
   ) {}
 
   async runInSerializableTransaction<ReturnValue>(
@@ -120,6 +122,18 @@ export default class DemoDataRepositoriesManager
   }
 
   private async writeData(data: Data, initialVersion: string): Promise<void> {
+    if (this.inMemory) {
+      if (
+        this.data === null ||
+        initialVersion === OVERWRITE ||
+        this.data.version === initialVersion
+      ) {
+        this.data = data;
+        return;
+      }
+      throw new Error("Transaction aborted");
+    }
+
     return new Promise((resolve, reject) => {
       const openReq = indexedDB.open(this.databaseName, this.databaseVersion);
       openReq.onupgradeneeded = (evt) => {
@@ -207,6 +221,10 @@ export default class DemoDataRepositoriesManager
   }
 
   private async readData(): Promise<Data | null> {
+    if (this.inMemory) {
+      return this.data ? clone(this.data) : null;
+    }
+
     return new Promise((resolve, reject) => {
       const openReq = indexedDB.open(this.databaseName, this.databaseVersion);
       openReq.onupgradeneeded = (evt) => {

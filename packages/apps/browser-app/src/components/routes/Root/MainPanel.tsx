@@ -4,7 +4,6 @@ import Ask from "../Ask/Ask.js";
 import BackgroundJob from "../BackgroundJob/BackgroundJob.js";
 import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
 import Bazaar from "../Bazaar/Bazaar.js";
-import BazaarPack from "../BazaarPack/BazaarPack.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
@@ -17,6 +16,7 @@ import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewC
 import Document from "../Document/Document.js";
 import EditApp from "../EditApp/EditApp.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
+import Pack from "../Pack/Pack.js";
 
 export default function MainPanel() {
   const { activeRoute } = useNavigationState();
@@ -59,8 +59,8 @@ export default function MainPanel() {
       return <EditApp appId={activeRoute.appId} />;
     case RouteName.Bazaar:
       return <Bazaar />;
-    case RouteName.BazaarPack:
-      return <BazaarPack packId={activeRoute.packId} />;
+    case RouteName.Pack:
+      return <Pack packId={activeRoute.packId} source={activeRoute.source} />;
     case RouteName.BackgroundJobs:
       return <BackgroundJobs />;
     case RouteName.BackgroundJob:

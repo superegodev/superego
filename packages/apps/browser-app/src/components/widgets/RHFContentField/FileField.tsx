@@ -27,7 +27,7 @@ import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
 import FieldError from "../../design-system/forms/FieldError.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
-import FileImage from "../FileImage/FileImage.jsx";
+import FileImage from "../FileImage/FileImage.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
 import NullifyFieldAction from "./NullifyFieldAction.js";

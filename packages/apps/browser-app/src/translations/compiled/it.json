@@ -219,6 +219,38 @@
       "value": "Bazaar"
     }
   ],
+  "Bazaar.tsx_XBMGwY": [
+    {
+      "type": 0,
+      "value": "Impossibile decodificare il file pack"
+    }
+  ],
+  "Bazaar.tsx_rrrB1P": [
+    {
+      "type": 0,
+      "value": "Trascina "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "pack.mpk"
+        }
+      ],
+      "type": 8,
+      "value": "packMpk"
+    },
+    {
+      "type": 0,
+      "value": " per installare"
+    }
+  ],
+  "Bazaar.tsx_sX7yk3": [
+    {
+      "type": 0,
+      "value": "Oppure installa dal bazaar"
+    }
+  ],
   "BazaarPack.tsx_40netJ": [
     {
       "type": 0,
@@ -227,38 +259,6 @@
     {
       "type": 1,
       "value": "packId"
-    }
-  ],
-  "BazaarPack.tsx_DzgcGx": [
-    {
-      "type": 0,
-      "value": "Bazaar » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "BazaarPack.tsx_HUc4Bb": [
-    {
-      "type": 0,
-      "value": "Mostra/nascondi anteprima collezioni"
-    }
-  ],
-  "BazaarPack.tsx_j9FVIw": [
-    {
-      "type": 0,
-      "value": "Screenshot di "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "BazaarPack.tsx_ubmFc8": [
-    {
-      "type": 0,
-      "value": "Installa"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -2536,6 +2536,16 @@
       "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
     }
   ],
+  "LocalPack.tsx_/hNhmZ": [
+    {
+      "type": 0,
+      "value": "Pack personalizzati » "
+    },
+    {
+      "type": 1,
+      "value": "packId"
+    }
+  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,
@@ -2706,6 +2716,48 @@
       "pluralType": "cardinal",
       "type": 6,
       "value": "collectionsCount"
+    }
+  ],
+  "PackMainPanel.tsx_DzgcGx": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_HUc4Bb": [
+    {
+      "type": 0,
+      "value": "Mostra/nascondi anteprima collezioni"
+    }
+  ],
+  "PackMainPanel.tsx_hgmRAL": [
+    {
+      "type": 0,
+      "value": "Pack personalizzati » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_j9FVIw": [
+    {
+      "type": 0,
+      "value": "Screenshot di "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Installa"
     }
   ],
   "Pagination.tsx_CDjQEk": [

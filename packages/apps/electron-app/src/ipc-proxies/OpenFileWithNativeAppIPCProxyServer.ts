@@ -47,6 +47,11 @@ export default class OpenFileWithNativeAppIPCProxyServer {
     );
   }
 
+  /** Used in devenv mode. */
+  replaceBackend(backend: Backend) {
+    this.backend = backend;
+  }
+
   private async createTempFile(file: ProtoFile | FileRef): Promise<string> {
     let content: Uint8Array<ArrayBuffer>;
     if ("content" in file) {

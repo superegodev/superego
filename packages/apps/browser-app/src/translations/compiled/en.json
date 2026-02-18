@@ -219,6 +219,38 @@
       "value": "Bazaar"
     }
   ],
+  "Bazaar.tsx_XBMGwY": [
+    {
+      "type": 0,
+      "value": "Failed to decode pack file"
+    }
+  ],
+  "Bazaar.tsx_rrrB1P": [
+    {
+      "type": 0,
+      "value": "Drop "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "pack.mpk"
+        }
+      ],
+      "type": 8,
+      "value": "packMpk"
+    },
+    {
+      "type": 0,
+      "value": " to install"
+    }
+  ],
+  "Bazaar.tsx_sX7yk3": [
+    {
+      "type": 0,
+      "value": "Or install from the bazaar"
+    }
+  ],
   "BazaarPack.tsx_40netJ": [
     {
       "type": 0,
@@ -227,38 +259,6 @@
     {
       "type": 1,
       "value": "packId"
-    }
-  ],
-  "BazaarPack.tsx_DzgcGx": [
-    {
-      "type": 0,
-      "value": "Bazaar » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "BazaarPack.tsx_HUc4Bb": [
-    {
-      "type": 0,
-      "value": "Toggle collections preview"
-    }
-  ],
-  "BazaarPack.tsx_j9FVIw": [
-    {
-      "type": 0,
-      "value": "Screenshot of "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "BazaarPack.tsx_ubmFc8": [
-    {
-      "type": 0,
-      "value": "Install"
     }
   ],
   "BooleanField.tsx_KKkUks": [
@@ -2544,6 +2544,16 @@
       "value": "Loads some demo collections and documents for you to play around with."
     }
   ],
+  "LocalPack.tsx_/hNhmZ": [
+    {
+      "type": 0,
+      "value": "Custom Packs » "
+    },
+    {
+      "type": 1,
+      "value": "packId"
+    }
+  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,
@@ -2714,6 +2724,48 @@
       "pluralType": "cardinal",
       "type": 6,
       "value": "collectionsCount"
+    }
+  ],
+  "PackMainPanel.tsx_DzgcGx": [
+    {
+      "type": 0,
+      "value": "Bazaar » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_HUc4Bb": [
+    {
+      "type": 0,
+      "value": "Toggle collections preview"
+    }
+  ],
+  "PackMainPanel.tsx_hgmRAL": [
+    {
+      "type": 0,
+      "value": "Custom Packs » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_j9FVIw": [
+    {
+      "type": 0,
+      "value": "Screenshot of "
+    },
+    {
+      "type": 1,
+      "value": "packName"
+    }
+  ],
+  "PackMainPanel.tsx_ubmFc8": [
+    {
+      "type": 0,
+      "value": "Install"
     }
   ],
   "Pagination.tsx_CDjQEk": [

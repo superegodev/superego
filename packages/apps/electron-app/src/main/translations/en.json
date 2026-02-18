@@ -1,5 +1,32 @@
 {
-  "createApplicationMenu.ts_k+NxC/": {
+  "cli.ts_ALEodV": {
+    "defaultMessage": "CLI installed"
+  },
+  "cli.ts_Il/Mm3": {
+    "defaultMessage": "CLI uninstalled"
+  },
+  "cli.ts_W+nD/f": {
+    "defaultMessage": "The CLI has been installed at {path}. Make sure {dir} is in your PATH."
+  },
+  "cli.ts_e6n/61": {
+    "defaultMessage": "CLI uninstallation failed"
+  },
+  "cli.ts_ppdoZI": {
+    "defaultMessage": "The CLI has been removed from {path}."
+  },
+  "cli.ts_qqfYjN": {
+    "defaultMessage": "CLI installation failed"
+  },
+  "setApplicationMenu.ts_PJD5PQ": {
+    "defaultMessage": "Uninstall CLI"
+  },
+  "setApplicationMenu.ts_k+NxC/": {
     "defaultMessage": "New Window"
+  },
+  "setApplicationMenu.ts_yI2VVT": {
+    "defaultMessage": "Install CLI"
+  },
+  "setApplicationMenu.ts_yZJxVS": {
+    "defaultMessage": "Developer"
   }
 }

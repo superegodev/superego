@@ -1,8 +1,86 @@
 {
-  "createApplicationMenu.ts_k+NxC/": [
+  "cli.ts_ALEodV": [
+    {
+      "type": 0,
+      "value": "CLI installed"
+    }
+  ],
+  "cli.ts_Il/Mm3": [
+    {
+      "type": 0,
+      "value": "CLI uninstalled"
+    }
+  ],
+  "cli.ts_W+nD/f": [
+    {
+      "type": 0,
+      "value": "The CLI has been installed at "
+    },
+    {
+      "type": 1,
+      "value": "path"
+    },
+    {
+      "type": 0,
+      "value": ". Make sure "
+    },
+    {
+      "type": 1,
+      "value": "dir"
+    },
+    {
+      "type": 0,
+      "value": " is in your PATH."
+    }
+  ],
+  "cli.ts_e6n/61": [
+    {
+      "type": 0,
+      "value": "CLI uninstallation failed"
+    }
+  ],
+  "cli.ts_ppdoZI": [
+    {
+      "type": 0,
+      "value": "The CLI has been removed from "
+    },
+    {
+      "type": 1,
+      "value": "path"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "cli.ts_qqfYjN": [
+    {
+      "type": 0,
+      "value": "CLI installation failed"
+    }
+  ],
+  "setApplicationMenu.ts_PJD5PQ": [
+    {
+      "type": 0,
+      "value": "Uninstall CLI"
+    }
+  ],
+  "setApplicationMenu.ts_k+NxC/": [
     {
       "type": 0,
       "value": "New Window"
+    }
+  ],
+  "setApplicationMenu.ts_yI2VVT": [
+    {
+      "type": 0,
+      "value": "Install CLI"
+    }
+  ],
+  "setApplicationMenu.ts_yZJxVS": [
+    {
+      "type": 0,
+      "value": "Developer"
     }
   ]
 }

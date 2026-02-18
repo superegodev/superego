@@ -22,7 +22,7 @@ export enum RouteName {
   CreateApp = "CreateApp",
   EditApp = "EditApp",
   Bazaar = "Bazaar",
-  BazaarPack = "BazaarPack",
+  Pack = "Pack",
   BackgroundJobs = "BackgroundJobs",
   BackgroundJob = "BackgroundJob",
   GlobalSettings = "Settings",
@@ -31,6 +31,11 @@ export enum RouteName {
 export enum CollectionRouteView {
   Table = "Table",
   App = "App",
+}
+
+export enum PackSource {
+  Local = "Local",
+  Bazaar = "Bazaar",
 }
 
 type Route =
@@ -96,8 +101,9 @@ type Route =
       name: RouteName.Bazaar;
     }
   | {
-      name: RouteName.BazaarPack;
+      name: RouteName.Pack;
       packId: PackId;
+      source: PackSource;
     }
   | {
       name: RouteName.BackgroundJobs;

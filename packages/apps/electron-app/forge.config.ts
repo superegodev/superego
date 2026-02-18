@@ -31,14 +31,16 @@ export default {
   },
   packagerConfig: {
     appBundleId: "dev.superego.superego",
-    executableName: "superego",
+    executableName: "superego-app",
     asar: true,
     ignore: [
       "src",
+      "cli.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",
       "tsconfig.json",
     ],
+    extraResource: ["./dist/cli/superego.js"],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {
@@ -50,7 +52,7 @@ export default {
     new MakerRpm({
       options: {
         name: "superego",
-        bin: "superego",
+        bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
       },
@@ -58,7 +60,7 @@ export default {
     new MakerDeb({
       options: {
         name: "superego",
-        bin: "superego",
+        bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
       },
@@ -66,7 +68,7 @@ export default {
     new MakerAppImage({
       options: {
         name: "superego",
-        bin: "superego",
+        bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
       },

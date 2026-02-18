@@ -1,30 +1,23 @@
 import { app, BrowserWindow } from "electron";
-import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
-import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
-import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
-import WindowCloseIPCProxyServer from "../ipc-proxies/WindowCloseIPCProxyServer.js";
-import { OAUTH2_PKCE_CALLBACK_SERVER_PORT } from "./config.js";
-import createApplicationMenu from "./createApplicationMenu.js";
-import createBackend from "./createBackend.js";
 import createWindow from "./createWindow.js";
+import onReadyDevenv from "./onReadyDevenv.js";
+import onReadyProd from "./onReadyProd.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
-import startOAuth2PKCECallbackServer from "./startOAuth2PKCECallbackServer.js";
 
 registerAppSandboxProtocol();
 
+const isDevenv = process.argv.includes("--devenv");
+
 app
   .on("ready", () => {
-    const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT);
-    startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
-    new BackendIPCProxyServer(backend).start();
-    new OpenFileWithNativeAppIPCProxyServer(backend).start();
-    new OpenInNativeBrowserIPCProxyServer().start();
-    new WindowCloseIPCProxyServer().start();
-    createApplicationMenu({ onNewWindow: createWindow });
-    createWindow();
+    if (isDevenv) {
+      onReadyDevenv();
+    } else {
+      onReadyProd();
+    }
   })
   .on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
+    if (isDevenv || process.platform !== "darwin") {
       app.quit();
     }
   })
