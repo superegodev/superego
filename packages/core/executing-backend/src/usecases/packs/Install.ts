@@ -187,6 +187,7 @@ export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
         {
           type: definition.type,
           name: definition.name,
+          settings: definition.settings,
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),

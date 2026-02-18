@@ -13,11 +13,17 @@ export default class SqliteAppRepository implements AppRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "type", "name", "created_at")
+          ("id", "type", "name", "settings", "created_at")
         VALUES
-          (?, ?, ?, ?)
+          (?, ?, ?, ?, ?)
       `)
-      .run(app.id, app.type, app.name, app.createdAt.toISOString());
+      .run(
+        app.id,
+        app.type,
+        app.name,
+        JSON.stringify(app.settings),
+        app.createdAt.toISOString(),
+      );
   }
 
   async replace(app: AppEntity): Promise<void> {
@@ -27,10 +33,17 @@ export default class SqliteAppRepository implements AppRepository {
         SET
           "type" = ?,
           "name" = ?,
+          "settings" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
-      .run(app.type, app.name, app.createdAt.toISOString(), app.id);
+      .run(
+        app.type,
+        app.name,
+        JSON.stringify(app.settings),
+        app.createdAt.toISOString(),
+        app.id,
+      );
   }
 
   async delete(id: AppId): Promise<AppId> {

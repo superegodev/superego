@@ -1,10 +1,14 @@
 import type { AppId } from "@superego/backend";
 import { useId, useMemo, useState } from "react";
 import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import { useUpdateAppSettings } from "../../../business-logic/backend/hooks.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import { Switch } from "../../design-system/forms/forms.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewAppVersionForm from "./CreateNewAppVersionForm.js";
 import DeleteAppModalForm from "./DeleteAppModalForm.js";
@@ -30,6 +34,8 @@ export default function EditApp({ appId }: Props) {
   ] = useState(true);
 
   const formId = useId();
+
+  const { mutate: updateSettings } = useUpdateAppSettings();
 
   const app = AppUtils.findApp(apps, appId);
   const targetCollections = useMemo(
@@ -70,6 +76,26 @@ export default function EditApp({ appId }: Props) {
         ]}
       />
       <Shell.Panel.Content fullWidth={true} className={cs.EditApp.panelContent}>
+        <Switch
+          isSelected={app.settings.alwaysCollapsePrimarySidebar}
+          onChange={async (isSelected: boolean) => {
+            const { success, error } = await updateSettings(app.id, {
+              alwaysCollapsePrimarySidebar: isSelected,
+            });
+            if (!success) {
+              console.error(error);
+              toasts.add({
+                type: ToastType.Error,
+                title: intl.formatMessage({
+                  defaultMessage: "Error updating app settings",
+                }),
+                error: error,
+              });
+            }
+          }}
+        >
+          <FormattedMessage defaultMessage="Always collapse sidebar" />
+        </Switch>
         <CreateNewAppVersionForm
           app={app}
           targetCollections={targetCollections}

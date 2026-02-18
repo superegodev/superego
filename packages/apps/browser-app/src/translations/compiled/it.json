@@ -1570,6 +1570,12 @@
       "value": " » Modifica"
     }
   ],
+  "EditApp.tsx_OyXJZ5": [
+    {
+      "type": 0,
+      "value": "Errore nell'aggiornamento delle impostazioni dell'app"
+    }
+  ],
   "EditApp.tsx_Vl13tq": [
     {
       "type": 0,
@@ -1580,6 +1586,12 @@
     {
       "type": 0,
       "value": "Modifica nome"
+    }
+  ],
+  "EditApp.tsx_dF1wv2": [
+    {
+      "type": 0,
+      "value": "Comprimi sempre la barra laterale"
     }
   ],
   "EditingToolbar.tsx_1hhuuF": [

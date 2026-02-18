@@ -23,6 +23,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 // Errors
 export type { default as AppNameNotValid } from "./errors/AppNameNotValid.js";
 export type { default as AppNotFound } from "./errors/AppNotFound.js";
+export type { default as AppSettingsNotValid } from "./errors/AppSettingsNotValid.js";
 export type { default as BackgroundJobNotFound } from "./errors/BackgroundJobNotFound.js";
 export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";
@@ -101,6 +102,7 @@ export type { default as ProtoDocumentId } from "./ids/ProtoDocumentId.js";
 export type { default as App } from "./types/App.js";
 export type { default as AppDefinition } from "./types/AppDefinition.js";
 export type { default as AppearanceSettings } from "./types/AppearanceSettings.js";
+export type { default as AppSettings } from "./types/AppSettings.js";
 export type { default as AppVersion } from "./types/AppVersion.js";
 export type { default as AssistantsSettings } from "./types/AssistantsSettings.js";
 export type { default as AudioContent } from "./types/AudioContent.js";

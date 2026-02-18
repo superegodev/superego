@@ -623,11 +623,17 @@
   "EditApp.tsx_LDlHu6": {
     "defaultMessage": "🧩 {app} » Edit"
   },
+  "EditApp.tsx_OyXJZ5": {
+    "defaultMessage": "Error updating app settings"
+  },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"
   },
   "EditApp.tsx_Vva+Yr": {
     "defaultMessage": "Edit name"
+  },
+  "EditApp.tsx_dF1wv2": {
+    "defaultMessage": "Always collapse sidebar"
   },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "App preview"

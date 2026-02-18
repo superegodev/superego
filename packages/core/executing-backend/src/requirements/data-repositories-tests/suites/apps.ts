@@ -15,6 +15,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "name",
+      settings: { alwaysCollapsePrimarySidebar: false },
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -41,6 +42,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "original name",
+      settings: { alwaysCollapsePrimarySidebar: false },
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -76,6 +78,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "name",
+      settings: { alwaysCollapsePrimarySidebar: false },
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -113,6 +116,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name",
+        settings: { alwaysCollapsePrimarySidebar: false },
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -175,12 +179,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name 1",
+        settings: { alwaysCollapsePrimarySidebar: false },
         createdAt: new Date(),
       };
       const app2: AppEntity = {
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name 2",
+        settings: { alwaysCollapsePrimarySidebar: false },
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(

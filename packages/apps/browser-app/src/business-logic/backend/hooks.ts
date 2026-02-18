@@ -321,6 +321,12 @@ export const useUpdateAppName = makeUseBackendMutation(
   () => [["listApps"]],
 );
 
+export const useUpdateAppSettings = makeUseBackendMutation(
+  "apps",
+  "updateSettings",
+  () => [["listApps"]],
+);
+
 export const useCreateNewAppVersion = makeUseBackendMutation(
   "apps",
   "createNewVersion",

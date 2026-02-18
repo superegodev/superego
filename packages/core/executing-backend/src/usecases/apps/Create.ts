@@ -3,6 +3,7 @@ import type {
   AppDefinition,
   AppId,
   AppNameNotValid,
+  AppSettings,
   Backend,
   CollectionNotFound,
   UnexpectedError,
@@ -29,7 +30,13 @@ interface AppsCreateOptions {
 
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
   async exec(
-    { type, name, targetCollectionIds, files }: AppDefinition,
+    {
+      type,
+      name,
+      settings: settingsPatch,
+      targetCollectionIds,
+      files,
+    }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
@@ -65,11 +72,16 @@ export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
       });
     }
 
+    const defaultSettings: AppSettings = {
+      alwaysCollapsePrimarySidebar: false,
+    };
+
     const now = new Date();
     const app: AppEntity = {
       id: options.appId ?? Id.generate.app(),
       type: type,
       name: nameValidationResult.output,
+      settings: { ...defaultSettings, ...settingsPatch },
       createdAt: now,
     };
     const appVersion: AppVersionEntity = {

@@ -111,6 +111,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: expect.any(String),
           type: AppType.CollectionView,
           name: "name",
+          settings: { alwaysCollapsePrimarySidebar: false },
           latestVersion: {
             id: expect.any(String),
             targetCollections: [
@@ -215,6 +216,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: createResult.data.id,
           type: AppType.CollectionView,
           name: "updated name",
+          settings: { alwaysCollapsePrimarySidebar: false },
           latestVersion: createResult.data.latestVersion,
           createdAt: createResult.data.createdAt,
         },
@@ -224,6 +226,67 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(listResult).toEqual({
         success: true,
         data: [updateNameResult.data],
+        error: null,
+      });
+    });
+  });
+
+  describe("updateSettings", () => {
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const appId = Id.generate.app();
+      const result = await backend.apps.updateSettings(appId, {
+        alwaysCollapsePrimarySidebar: true,
+      });
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "AppNotFound",
+          details: { appId },
+        },
+      });
+    });
+
+    it("success: updates settings", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "name",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const updateSettingsResult = await backend.apps.updateSettings(
+        createResult.data.id,
+        { alwaysCollapsePrimarySidebar: true },
+      );
+
+      // Verify
+      expect(updateSettingsResult).toEqual({
+        success: true,
+        data: {
+          id: createResult.data.id,
+          type: AppType.CollectionView,
+          name: "name",
+          settings: { alwaysCollapsePrimarySidebar: true },
+          latestVersion: createResult.data.latestVersion,
+          createdAt: createResult.data.createdAt,
+        },
+        error: null,
+      });
+      const listResult = await backend.apps.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [updateSettingsResult.data],
         error: null,
       });
     });
@@ -341,6 +404,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: createAppResult.data.id,
           type: AppType.CollectionView,
           name: "name",
+          settings: { alwaysCollapsePrimarySidebar: false },
           latestVersion: {
             id: expect.any(String),
             targetCollections: [

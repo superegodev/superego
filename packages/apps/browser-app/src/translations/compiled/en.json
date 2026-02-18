@@ -1578,6 +1578,12 @@
       "value": " » Edit"
     }
   ],
+  "EditApp.tsx_OyXJZ5": [
+    {
+      "type": 0,
+      "value": "Error updating app settings"
+    }
+  ],
   "EditApp.tsx_Vl13tq": [
     {
       "type": 0,
@@ -1588,6 +1594,12 @@
     {
       "type": 0,
       "value": "Edit name"
+    }
+  ],
+  "EditApp.tsx_dF1wv2": [
+    {
+      "type": 0,
+      "value": "Always collapse sidebar"
     }
   ],
   "EditingToolbar.tsx_1hhuuF": [

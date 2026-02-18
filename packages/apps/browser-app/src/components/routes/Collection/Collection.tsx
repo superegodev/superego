@@ -26,6 +26,7 @@ import {
   CollectionRouteView,
   RouteName,
 } from "../../../business-logic/navigation/Route.js";
+import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
@@ -60,6 +61,10 @@ export default function Collection(props: Props) {
         : props.appId
       : (collection?.settings.defaultCollectionViewAppId ?? null);
   const app = appId ? AppUtils.findApp(apps, appId) : null;
+
+  useApplyAlwaysCollapsePrimarySidebar(
+    app?.settings.alwaysCollapsePrimarySidebar,
+  );
 
   const [showTimestamps, setShowTimestamps] = useState(false);
 

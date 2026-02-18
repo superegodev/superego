@@ -16,6 +16,7 @@ import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
 import AppsList from "./usecases/apps/List.js";
 import AppsUpdateName from "./usecases/apps/UpdateName.js";
+import AppsUpdateSettings from "./usecases/apps/UpdateSettings.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
@@ -169,6 +170,7 @@ export default class ExecutingBackend implements Backend {
     this.apps = {
       create: this.makeUsecase(AppsCreate, true),
       updateName: this.makeUsecase(AppsUpdateName, true),
+      updateSettings: this.makeUsecase(AppsUpdateSettings, true),
       createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
       delete: this.makeUsecase(AppsDelete, true),
       list: this.makeUsecase(AppsList, false),

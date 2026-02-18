@@ -3,6 +3,7 @@ import type { Schema } from "@superego/schema";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
+import type AppSettingsNotValid from "./errors/AppSettingsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
@@ -65,6 +66,7 @@ import type FileId from "./ids/FileId.js";
 import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
+import type AppSettings from "./types/AppSettings.js";
 import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
@@ -508,6 +510,11 @@ export default interface Backend {
       id: AppId,
       name: string,
     ): ResultPromise<App, AppNotFound | AppNameNotValid | UnexpectedError>;
+
+    updateSettings(
+      id: AppId,
+      settingsPatch: Partial<AppSettings>,
+    ): ResultPromise<App, AppNotFound | AppSettingsNotValid | UnexpectedError>;
 
     createNewVersion(
       id: AppId,
