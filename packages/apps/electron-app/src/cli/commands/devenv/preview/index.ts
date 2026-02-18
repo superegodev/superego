@@ -5,20 +5,20 @@ import debounce from "debounce";
 import { sendPreviewPack } from "../../../../common/DevenvSignalCliMainIpc.js";
 import Log from "../utils/Log.js";
 import compilePack from "./compilePack.js";
-import getAppBinaryPath from "./getAppBinaryPath.js";
+import getSuperegoAppBin from "./getSuperegoAppBin.js";
 
 export default async function previewAction(options: {
   watch?: boolean;
 }): Promise<void> {
   const basePath = resolve(process.cwd());
-  const appBinaryPath = getAppBinaryPath();
+  const superegoAppBin = getSuperegoAppBin();
 
   Log.info("Compiling pack...");
   const pack = await compilePack(basePath);
   Log.info("Pack compiled successfully.");
 
   Log.info("Starting Superego in devenv mode...");
-  const superegoAppProcess = spawn(appBinaryPath, ["--devenv"], {
+  const superegoAppProcess = spawn(superegoAppBin, ["--devenv"], {
     stdio: ["pipe", "ignore", "ignore"],
   });
 

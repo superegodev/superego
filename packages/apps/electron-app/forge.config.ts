@@ -31,7 +31,7 @@ export default {
   },
   packagerConfig: {
     appBundleId: "dev.superego.superego",
-    executableName: "superego",
+    executableName: "superego-app",
     asar: true,
     ignore: [
       "src",
