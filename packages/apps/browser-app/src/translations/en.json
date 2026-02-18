@@ -107,20 +107,17 @@
   "Bazaar.tsx_T5A49y": {
     "defaultMessage": "Bazaar"
   },
+  "Bazaar.tsx_XBMGwY": {
+    "defaultMessage": "Failed to decode pack file"
+  },
+  "Bazaar.tsx_rrrB1P": {
+    "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
+  },
+  "Bazaar.tsx_sX7yk3": {
+    "defaultMessage": "Or install from the bazaar"
+  },
   "BazaarPack.tsx_40netJ": {
     "defaultMessage": "Bazaar » {packId}"
-  },
-  "BazaarPack.tsx_DzgcGx": {
-    "defaultMessage": "Bazaar » {packName}"
-  },
-  "BazaarPack.tsx_HUc4Bb": {
-    "defaultMessage": "Toggle collections preview"
-  },
-  "BazaarPack.tsx_j9FVIw": {
-    "defaultMessage": "Screenshot of {packName}"
-  },
-  "BazaarPack.tsx_ubmFc8": {
-    "defaultMessage": "Install"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
@@ -1031,6 +1028,9 @@
   "LoadDemoDataButton.tsx_ZBdI8u": {
     "defaultMessage": "Loads some demo collections and documents for you to play around with."
   },
+  "LocalPack.tsx_/hNhmZ": {
+    "defaultMessage": "Custom Packs » {packId}"
+  },
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Superego Logo"
   },
@@ -1060,6 +1060,21 @@
   },
   "PackEntityCounts.tsx_pKXETD": {
     "defaultMessage": "{collectionsCount, plural, one {# collection} other {# collections}}"
+  },
+  "PackMainPanel.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "PackMainPanel.tsx_HUc4Bb": {
+    "defaultMessage": "Toggle collections preview"
+  },
+  "PackMainPanel.tsx_hgmRAL": {
+    "defaultMessage": "Custom Packs » {packName}"
+  },
+  "PackMainPanel.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot of {packName}"
+  },
+  "PackMainPanel.tsx_ubmFc8": {
+    "defaultMessage": "Install"
   },
   "Pagination.tsx_CDjQEk": {
     "defaultMessage": "{startItem}-{endItem} of {totalItems}"

@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../../themes.css.js";
 
-export const BazaarPack = {
+export const PackMainPanel = {
   root: style({
     display: "flex",
     flexDirection: "column",

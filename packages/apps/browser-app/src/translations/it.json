@@ -104,23 +104,20 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
   },
+  "Bazaar.tsx_rrrB1P": {
+    "defaultMessage": "Trascina <packMpk>pack.mpk</packMpk> per installare"
+  },
+  "Bazaar.tsx_XBMGwY": {
+    "defaultMessage": "Impossibile decodificare il file pack"
+  },
   "Bazaar.tsx_T5A49y": {
     "defaultMessage": "Bazaar"
   },
+  "Bazaar.tsx_sX7yk3": {
+    "defaultMessage": "Oppure installa dal bazaar"
+  },
   "BazaarPack.tsx_40netJ": {
     "defaultMessage": "Bazaar » {packId}"
-  },
-  "BazaarPack.tsx_DzgcGx": {
-    "defaultMessage": "Bazaar » {packName}"
-  },
-  "BazaarPack.tsx_HUc4Bb": {
-    "defaultMessage": "Mostra/nascondi anteprima collezioni"
-  },
-  "BazaarPack.tsx_j9FVIw": {
-    "defaultMessage": "Screenshot di {packName}"
-  },
-  "BazaarPack.tsx_ubmFc8": {
-    "defaultMessage": "Installa"
   },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
@@ -1049,6 +1046,21 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Chiudi barra laterale"
   },
+  "PackMainPanel.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "PackMainPanel.tsx_HUc4Bb": {
+    "defaultMessage": "Mostra/nascondi anteprima collezioni"
+  },
+  "PackMainPanel.tsx_hgmRAL": {
+    "defaultMessage": "Pack personalizzati » {packName}"
+  },
+  "PackMainPanel.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot di {packName}"
+  },
+  "PackMainPanel.tsx_ubmFc8": {
+    "defaultMessage": "Installa"
+  },
   "PackCard.tsx_EgRJme": {
     "defaultMessage": "Screenshot del pacchetto"
   },
@@ -1519,6 +1531,9 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "Compilazione TypeScript non riuscita"
+  },
+  "LocalPack.tsx_/hNhmZ": {
+    "defaultMessage": "Pack personalizzati » {packId}"
   },
   "LoadDemoDataButton.tsx_47FYwb": {
     "defaultMessage": "Annulla"
