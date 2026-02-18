@@ -7,7 +7,6 @@ import {
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
 import { valibotSchemas as sharedValibotSchemas } from "@superego/shared-utils";
-import * as v from "valibot";
 import collectionSettingsSchema from "../utils/collectionSettingsSchema.js";
 import readJsonFile from "../utils/readJsonFile.js";
 import type CheckResult from "./CheckResult.js";
