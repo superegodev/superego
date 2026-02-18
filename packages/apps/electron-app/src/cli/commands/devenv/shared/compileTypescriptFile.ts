@@ -7,13 +7,15 @@ const compiler = new TscTypescriptCompiler();
 export default async function compileTypescriptFile(
   main: TypescriptFile,
   additionalLibs: TypescriptFile[] = [],
-): Promise<{ success: true } | { success: false; errors: string }> {
+): Promise<
+  { success: true; compiled: string } | { success: false; errors: string }
+> {
   const result = await compiler.compile(main, [
     ...typescriptLibs,
     ...additionalLibs,
   ]);
   if (result.success) {
-    return { success: true };
+    return { success: true, compiled: result.data };
   }
   if (result.error.name === "TypescriptCompilationFailed") {
     return {

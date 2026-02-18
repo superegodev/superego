@@ -48,6 +48,7 @@
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
     "@superego/connectors": "workspace:*",
+    "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/openai-compat-inference-service": "workspace:*",
@@ -57,6 +58,7 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@typescript/vfs": "^1.6.3",
+    "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "filenamify": "^7.0.1",
     "typescript": "^5.9.3"

@@ -13,6 +13,7 @@ import collectionSettingsSchema from "../shared/collectionSettingsSchema.js";
 import compileTypescriptFile from "../shared/compileTypescriptFile.js";
 import discoverProtoApps from "../shared/discoverProtoApps.js";
 import discoverProtoCollections from "../shared/discoverProtoCollections.js";
+import Log from "../shared/log.js";
 import readJsonFile from "../shared/readJsonFile.js";
 
 interface CheckResult {
@@ -243,12 +244,12 @@ export default async function checkAction(): Promise<void> {
   let hasFailures = false;
   for (const result of results) {
     if (result.success) {
-      console.log(`PASS  ${result.label}`);
+      Log.info(`PASS  ${result.label}`);
     } else {
       hasFailures = true;
-      console.error(`FAIL  ${result.label}`);
+      Log.error(`FAIL  ${result.label}`);
       for (const error of result.errors ?? []) {
-        console.error(`      ${error}`);
+        Log.error(`      ${error}`);
       }
     }
   }
@@ -256,6 +257,6 @@ export default async function checkAction(): Promise<void> {
   if (hasFailures) {
     process.exit(1);
   } else {
-    console.log("\nAll checks passed.");
+    Log.info("All checks passed.");
   }
 }

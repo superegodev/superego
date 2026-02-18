@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { codegen, valibotSchemas } from "@superego/schema";
 import * as v from "valibot";
 import discoverProtoCollections from "../shared/discoverProtoCollections.js";
+import Log from "../shared/log.js";
 import readJsonFile from "../shared/readJsonFile.js";
 
 export default async function generateTypesAction(): Promise<void> {
@@ -10,7 +11,7 @@ export default async function generateTypesAction(): Promise<void> {
   const collections = discoverProtoCollections(basePath);
 
   if (collections.length === 0) {
-    console.log("No ProtoCollection_* directories found.");
+    Log.warning("No ProtoCollection_* directories found.");
     return;
   }
 
@@ -19,7 +20,7 @@ export default async function generateTypesAction(): Promise<void> {
   for (const collectionName of collections) {
     const schemaPath = join(basePath, collectionName, "schema.json");
     if (!existsSync(schemaPath)) {
-      console.error(`FAIL  ${collectionName}/schema.json not found`);
+      Log.error(`FAIL  ${collectionName}/schema.json not found`);
       hasErrors = true;
       continue;
     }
@@ -28,18 +29,18 @@ export default async function generateTypesAction(): Promise<void> {
     try {
       schemaJson = readJsonFile(schemaPath);
     } catch {
-      console.error(`FAIL  ${collectionName}/schema.json is not valid JSON`);
+      Log.error(`FAIL  ${collectionName}/schema.json is not valid JSON`);
       hasErrors = true;
       continue;
     }
 
     const parseResult = v.safeParse(valibotSchemas.schema(), schemaJson);
     if (!parseResult.success) {
-      console.error(
+      Log.error(
         `FAIL  ${collectionName}/schema.json is not a valid schema:`,
       );
       for (const issue of parseResult.issues) {
-        console.error(`      ${issue.message}`);
+        Log.error(`      ${issue.message}`);
       }
       hasErrors = true;
       continue;
@@ -49,7 +50,7 @@ export default async function generateTypesAction(): Promise<void> {
     const generatedDir = join(basePath, "generated");
     mkdirSync(generatedDir, { recursive: true });
     writeFileSync(join(generatedDir, `${collectionName}.ts`), generated);
-    console.log(`PASS  generated/${collectionName}.ts`);
+    Log.info(`PASS  generated/${collectionName}.ts`);
   }
 
   if (hasErrors) {

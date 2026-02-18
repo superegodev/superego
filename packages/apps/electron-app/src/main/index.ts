@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import type { Pack } from "@superego/backend";
+import { Command } from "commander";
 import { app, BrowserWindow } from "electron";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
@@ -13,21 +16,49 @@ import getIntl from "./translations/getIntl.js";
 
 registerAppSandboxProtocol();
 
-const intl = getIntl();
+const program = new Command();
+program
+  .option("--ephemeral", "Start in ephemeral mode with in-memory storage")
+  .option("--pack-file <path>", "Path to a pack JSON file to install on startup")
+  .allowUnknownOption()
+  .parse(process.argv, { from: "electron" });
+
+const opts = program.opts<{ ephemeral?: boolean; packFile?: string }>();
+const isEphemeral = opts.ephemeral === true;
+const packFilePath = opts.packFile ?? null;
 
 app
-  .on("ready", () => {
-    const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT);
-    startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
+  .on("ready", async () => {
+    const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT, {
+      ephemeral: isEphemeral,
+    });
+
+    if (!isEphemeral) {
+      startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
+    }
+
+    if (isEphemeral && packFilePath) {
+      const packJson = readFileSync(packFilePath, "utf-8");
+      const pack: Pack = JSON.parse(packJson);
+      const result = await backend.packs.install(pack);
+      if (!result.success) {
+        console.error("Failed to install pack:", result.error);
+        app.quit();
+        return;
+      }
+      console.log("Pack installed successfully.");
+    }
+
     new BackendIPCProxyServer(backend).start();
     new OpenFileWithNativeAppIPCProxyServer(backend).start();
     new OpenInNativeBrowserIPCProxyServer().start();
     new WindowCloseIPCProxyServer().start();
+    const intl = getIntl();
     setApplicationMenu(intl, { onNewWindow: createWindow });
     createWindow();
   })
   .on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
+    if (isEphemeral || process.platform !== "darwin") {
       app.quit();
     }
   })

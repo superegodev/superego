@@ -2,6 +2,7 @@ import { mkdirSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import { codegen } from "@superego/schema";
+import Log from "../shared/log.js";
 import agentsMd from "./agent-instructions/AGENTS.md?raw";
 import writingAppsMd from "./agent-instructions/writing-apps.md?raw";
 import writingCollectionSchemasMd from "./agent-instructions/writing-collection-schemas.md?raw";
@@ -104,5 +105,5 @@ export default async function createAction(targetPath: string): Promise<void> {
     generatedTypes,
   );
 
-  console.log(`Development environment created at ${basePath}`);
+  Log.info(`Development environment created at ${basePath}`);
 }
