@@ -42,7 +42,7 @@ export default async function checkCollection(
   if (!schemaResult.success) {
     return { results, schema: null };
   }
-  const schema = readJsonFile(schemaPath);
+  const schema = readJsonFile(schemaPath) as Schema;
 
   // 3. defaultDocumentViewUiOptions.json (optional)
   const defaultDocumentViewUiOptionsPath = join(
