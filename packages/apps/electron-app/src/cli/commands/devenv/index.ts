@@ -29,6 +29,7 @@ devenv
 devenv
   .command("preview")
   .description("Preview the development environment in the browser")
+  .option("-w, --watch", "Watch for file changes and reload automatically")
   .action(previewAction);
 
 export default devenv;

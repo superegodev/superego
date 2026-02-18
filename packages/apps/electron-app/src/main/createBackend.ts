@@ -7,21 +7,18 @@ import {
 } from "@superego/connectors";
 import { NodejsSessionStorage } from "@superego/connectors/requirements/nodejs";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
-import { ExecutingBackend } from "@superego/executing-backend";
+import {
+  type Connector,
+  type DataRepositoriesManager,
+  ExecutingBackend,
+} from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { app } from "electron";
 
-interface CreateBackendOptions {
-  ephemeral?: boolean;
-}
-
-export default function createBackend(
-  port: number,
-  options?: CreateBackendOptions,
-) {
+export default function createBackend(port: number, isDevenv: boolean) {
   const defaultGlobalSettings = {
     appearance: { theme: Theme.Auto },
     inference: {
@@ -52,28 +49,34 @@ export default function createBackend(
     },
   };
 
-  const dataRepositoriesManager = options?.ephemeral
-    ? new DemoDataRepositoriesManager(defaultGlobalSettings, "ephemeral", true)
-    : (() => {
-        const mgr = new SqliteDataRepositoriesManager({
-          fileName: join(app.getPath("userData"), "superego.db"),
-          defaultGlobalSettings,
-        });
-        mgr.runMigrations();
-        return mgr;
-      })();
+  let dataRepositoriesManager: DataRepositoriesManager;
+  if (isDevenv) {
+    dataRepositoriesManager = new DemoDataRepositoriesManager(
+      defaultGlobalSettings,
+      undefined,
+      true,
+    );
+  } else {
+    const sqliteDataRepositoriesManager = new SqliteDataRepositoriesManager({
+      fileName: join(app.getPath("userData"), "superego.db"),
+      defaultGlobalSettings,
+    });
+    sqliteDataRepositoriesManager.runMigrations();
+    dataRepositoriesManager = sqliteDataRepositoriesManager;
+  }
 
-  const connectors = options?.ephemeral
-    ? []
-    : (() => {
-        const redirectUri = `http://localhost:${port}/OAuth2PKCECallback`;
-        const sessionStorage = new NodejsSessionStorage();
-        return [
-          new GoogleCalendar(redirectUri, sessionStorage),
-          new GoogleContacts(redirectUri, sessionStorage),
-          new StravaActivities(redirectUri, sessionStorage),
-        ];
-      })();
+  let connectors: Connector<any, any>[];
+  if (isDevenv) {
+    connectors = [];
+  } else {
+    const redirectUri = `http://localhost:${port}/OAuth2PKCECallback`;
+    const sessionStorage = new NodejsSessionStorage();
+    connectors = [
+      new GoogleCalendar(redirectUri, sessionStorage),
+      new GoogleContacts(redirectUri, sessionStorage),
+      new StravaActivities(redirectUri, sessionStorage),
+    ];
+  }
 
   return new ExecutingBackend(
     dataRepositoriesManager,

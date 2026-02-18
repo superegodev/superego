@@ -23,7 +23,7 @@ export default defineConfig({
   },
   plugins: [
     {
-      name: "chmod-cli",
+      name: "make-cli-executable",
       closeBundle() {
         chmodSync(resolve("dist/cli/superego.js"), 0o755);
       },

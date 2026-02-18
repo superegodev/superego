@@ -1,6 +1,6 @@
 import type { IntlShape } from "@formatjs/intl";
 import { Menu } from "electron";
-import { installCLI, isCLIInstalled, uninstallCLI } from "./cli.js";
+import cli from "./cli.js";
 
 interface ActionHandlers {
   onNewWindow: () => void;
@@ -32,14 +32,14 @@ export default function setApplicationMenu(
         label: intl.formatMessage({ defaultMessage: "Developer" }),
         submenu: [
           {
-            label: isCLIInstalled()
+            label: cli.isInstalled()
               ? intl.formatMessage({ defaultMessage: "Uninstall CLI" })
               : intl.formatMessage({ defaultMessage: "Install CLI" }),
             click: () => {
-              if (isCLIInstalled()) {
-                uninstallCLI(intl);
+              if (cli.isInstalled()) {
+                cli.uninstall(intl);
               } else {
-                installCLI(intl);
+                cli.install(intl);
               }
               setApplicationMenu(intl, handlers);
             },

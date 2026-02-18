@@ -50,7 +50,7 @@ the database foundation is always visible. You own it.
 - [x] Search.
 - [x] Collection view apps.
 - [x] Data-aware AI assistant.
-- [ ] Write apps with your coding agent.
+- [x] Write apps with your coding agent.
 - [ ] MCP/HTTP server.
 - [ ] Database hooks.
 - [ ] AI-powered data import.

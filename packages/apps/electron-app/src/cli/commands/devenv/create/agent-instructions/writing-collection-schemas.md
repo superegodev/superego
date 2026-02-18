@@ -1,3 +1,8 @@
+---
+name: writing-collection-schemas
+description: How to write collection schemas
+---
+
 # Writing Collection Schemas
 
 ## Overview
@@ -5,64 +10,51 @@
 A collection schema defines the structure of documents in a collection. It is
 stored as `schema.json` in the collection directory.
 
-## Schema format
+## Superego Schema anatomy
 
-The schema is a JSON object with two fields:
+A Superego Schema is a custom schema, conceptually similar to JSON schema,
+but—crucially—with a different syntax. A Superego Schema satisfies the following
+TypeScript definition:
 
-- `types`: A record of named type definitions.
-- `rootType`: The name of the top-level type (must be a Struct defined in
-  `types`).
+<!-- prettier-ignore-start -->
 
-## Type definitions
-
-Each type definition has a `dataType` discriminator:
-
-- `Struct` - Object with fixed named properties. All properties are required.
-  Use `nullableProperties` to allow `null` on specific properties.
-- `List` - Ordered array of items: `{ "dataType": "List", "items": <type> }`
-- `Enum` - Set of allowed string values:
-  `{ "dataType": "Enum", "members": { "MemberName": { "value": "member_value" } } }`
-- `String` - Text value. Optional `format`: `"dev.superego:String.PlainDate"`,
-  `"dev.superego:String.PlainTime"`, `"dev.superego:String.Instant"`,
-  `"dev.superego:String.Markdown"`, `"dev.superego:String.Url"`.
-- `Number` - Numeric value. Optional `format`: `"dev.superego:Number.Integer"`.
-- `Boolean` - True/false value.
-- `File` - File attachment. Optional `accept` to restrict mime types.
-- `DocumentRef` - Reference to a document in another collection.
-- `JsonObject` - Arbitrary JSON object.
-- TypeDefinitionRef - Reference to another type:
-  `{ "dataType": null, "ref": "TypeName" }`
-
-All type definitions support an optional `description` field.
-
-## Example
-
-```json
-{
-  "types": {
-    "Contact": {
-      "description": "A person's contact information.",
-      "dataType": "Struct",
-      "properties": {
-        "name": { "dataType": "String" },
-        "email": { "dataType": "String" },
-        "age": {
-          "dataType": "Number",
-          "format": "dev.superego:Number.Integer"
-        },
-        "notes": {
-          "dataType": "String",
-          "format": "dev.superego:String.Markdown"
-        }
-      },
-      "nullableProperties": ["notes"]
-    }
-  },
-  "rootType": "Contact"
-}
+```ts
+$SUPEREGO_SCHEMA_TYPESCRIPT_SCHEMA
 ```
+
+<!-- prettier-ignore-end -->
+
+## Well-known formats
+
+For `DataType.String`:
+
+$WELL_KNOWN_FORMATS_STRINGS
+
+For `DataType.Number`:
+
+$WELL_KNOWN_FORMATS_NUMBERS
+
+For `DataType.JsonObject`:
+
+$WELL_KNOWN_FORMATS_JSON_OBJECTS
+
+Note: document properties with `dataType: DataType.JsonObject` MUST be objects
+branded by the `"__dataType": "JsonObject"` property.
+
+## Tips for writing a good schema
+
+1. Unless the user asks otherwise, generate the simplest possible schema that
+   contains just enough info to satisfy the user request.
+2. Define and reuse common types whenever possible.
+3. Group closely related information into Structs.
+4. Use lists whenever it makes sense.
+5. Unless a property or type name is fully self-explanatory, include a
+   description for it.
+6. Use PascalCase for enum member names.
+7. Use Title Case for enum member values (they can contain spaces).
+8. Use PascalCase for type names.
+9. Use camelCase for property names.
 
 ## After editing
 
-Run `superego devenv generate-types` to regenerate TypeScript types, then
-`superego devenv check` to validate.
+Run `superego devenv generate-types` to regenerate TypeScript types.

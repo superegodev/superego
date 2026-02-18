@@ -1,8 +1,20 @@
 # Superego Development Environment
 
-## Overview
+## What is Superego
 
-This is a development environment for building superego collections and apps.
+- Superego is an open-source personal database. Personal means **for one single
+  user**.
+- It allows the user to store their data (any kind) and to write personal apps
+  to interact and manage that data.
+- Data is stored in json documents, organized into collections.
+- Each collection has a strict schema: all documents in the collection match the
+  schema.
+- The schema uses a custom format (**not** JSON Schema). TypeScript types can be
+  generated from the schema.
+- The user can write apps to extend Superego. Apps are written in TypeScript.
+
+**This is a development environment for building Superego collections and
+apps.** Help the user create what they want.
 
 ## Directory structure
 
@@ -19,7 +31,7 @@ This is a development environment for building superego collections and apps.
     against the schema
 - `ProtoApp_*/` - App definitions
   - `settings.json` - App name, type, target collections
-  - `main.tsx` - React component (the app UI)
+  - `main.tsx` - App implementation
 - `generated/` - Auto-generated TypeScript types from collection schemas (do not
   edit)
 - `node_modules/` - TypeScript type definitions (do not edit)
@@ -43,4 +55,4 @@ This is a development environment for building superego collections and apps.
 - writing-content-summary-getters
 - writing-content-blocking-keys-getters
 - writing-default-document-view-ui-options
-- writing-apps
+- writing-collection-view-apps

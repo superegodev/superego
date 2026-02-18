@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import {
   type AppDefinition,
   AppType,
@@ -16,36 +17,13 @@ import {
   valibotSchemas as schemaValibotSchemas,
 } from "@superego/schema";
 import { valibotSchemas as sharedValibotSchemas } from "@superego/shared-utils";
+import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import * as v from "valibot";
-import appSettingsSchema from "../shared/appSettingsSchema.js";
-import collectionSettingsSchema from "../shared/collectionSettingsSchema.js";
-import compileTypescriptFile from "../shared/compileTypescriptFile.js";
-import discoverProtoApps from "../shared/discoverProtoApps.js";
-import discoverProtoCollections from "../shared/discoverProtoCollections.js";
-import Log from "../shared/log.js";
-import readJsonFile from "../shared/readJsonFile.js";
-
-function fail(message: string): never {
-  Log.error(message);
-  process.exit(1);
-}
-
-async function compileToModule(
-  label: string,
-  filePath: string,
-  mainVirtualPath: `/${string}.ts` | `/${string}.tsx`,
-  additionalLibs: TypescriptFile[],
-): Promise<TypescriptModule> {
-  const source = readFileSync(filePath, "utf-8");
-  const result = await compileTypescriptFile(
-    { path: mainVirtualPath, source },
-    additionalLibs,
-  );
-  if (!result.success) {
-    fail(`Failed to compile ${label}:\n${result.errors}`);
-  }
-  return { source, compiled: result.compiled };
-}
+import appSettingsSchema from "../utils/appSettingsSchema.js";
+import collectionSettingsSchema from "../utils/collectionSettingsSchema.js";
+import getProtoApps from "../utils/getProtoApps.js";
+import getProtoCollections from "../utils/getProtoCollections.js";
+import readJsonFile from "../utils/readJsonFile.js";
 
 export default async function compilePack(basePath: string): Promise<Pack> {
   const collections: CollectionDefinition<true, true>[] = [];
@@ -54,7 +32,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
   const generatedLibs: TypescriptFile[] = [];
 
   // Collections
-  const collectionNames = discoverProtoCollections(basePath);
+  const collectionNames = getProtoCollections(basePath);
   for (const collectionName of collectionNames) {
     const collectionDir = join(basePath, collectionName);
 
@@ -66,7 +44,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       settingsData,
     );
     if (!settingsResult.success) {
-      fail(
+      throw new Error(
         `${collectionName}/settings.json validation failed:\n${settingsResult.issues.map((i) => i.message).join("\n")}`,
       );
     }
@@ -77,7 +55,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     const schemaData = readJsonFile(schemaPath);
     const schemaResult = v.safeParse(schemaValibotSchemas.schema(), schemaData);
     if (!schemaResult.success) {
-      fail(
+      throw new Error(
         `${collectionName}/schema.json validation failed:\n${schemaResult.issues.map((i) => i.message).join("\n")}`,
       );
     }
@@ -92,24 +70,30 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     generatedLibs.push(generatedLib);
 
     // contentSummaryGetter.ts (required)
-    const csgPath = join(collectionDir, "contentSummaryGetter.ts");
-    if (!existsSync(csgPath)) {
-      fail(`${collectionName}/contentSummaryGetter.ts not found`);
+    const contentSummaryGetterPath = join(
+      collectionDir,
+      "contentSummaryGetter.ts",
+    );
+    if (!existsSync(contentSummaryGetterPath)) {
+      throw new Error(`${collectionName}/contentSummaryGetter.ts not found`);
     }
     const contentSummaryGetter = await compileToModule(
       `${collectionName}/contentSummaryGetter.ts`,
-      csgPath,
+      contentSummaryGetterPath,
       `/${collectionName}/contentSummaryGetter.ts`,
       [generatedLib],
     );
 
     // contentBlockingKeysGetter.ts (optional)
     let contentBlockingKeysGetter: TypescriptModule | null = null;
-    const cbkgPath = join(collectionDir, "contentBlockingKeysGetter.ts");
-    if (existsSync(cbkgPath)) {
+    const contentBlockingKeysGetterPath = join(
+      collectionDir,
+      "contentBlockingKeysGetter.ts",
+    );
+    if (existsSync(contentBlockingKeysGetterPath)) {
       contentBlockingKeysGetter = await compileToModule(
         `${collectionName}/contentBlockingKeysGetter.ts`,
-        cbkgPath,
+        contentBlockingKeysGetterPath,
         `/${collectionName}/contentBlockingKeysGetter.ts`,
         [generatedLib],
       );
@@ -117,18 +101,18 @@ export default async function compilePack(basePath: string): Promise<Pack> {
 
     // defaultDocumentViewUiOptions.json (optional)
     let defaultDocumentViewUiOptions = null;
-    const uiOptionsPath = join(
+    const defaultDocumentViewUiOptionsPath = join(
       collectionDir,
       "defaultDocumentViewUiOptions.json",
     );
-    if (existsSync(uiOptionsPath)) {
-      const uiOptionsData = readJsonFile(uiOptionsPath);
+    if (existsSync(defaultDocumentViewUiOptionsPath)) {
+      const uiOptionsData = readJsonFile(defaultDocumentViewUiOptionsPath);
       const uiOptionsResult = v.safeParse(
         sharedValibotSchemas.defaultDocumentViewUiOptions(schema),
         uiOptionsData,
       );
       if (!uiOptionsResult.success) {
-        fail(
+        throw new Error(
           `${collectionName}/defaultDocumentViewUiOptions.json validation failed:\n${uiOptionsResult.issues.map((i) => i.message).join("\n")}`,
         );
       }
@@ -136,11 +120,11 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     }
 
     // test-documents.json (optional)
-    const testDocsPath = join(collectionDir, "test-documents.json");
-    if (existsSync(testDocsPath)) {
-      const testDocsData = readJsonFile(testDocsPath);
+    const testDocumentsPath = join(collectionDir, "test-documents.json");
+    if (existsSync(testDocumentsPath)) {
+      const testDocsData = readJsonFile(testDocumentsPath);
       if (!Array.isArray(testDocsData)) {
-        fail(
+        throw new Error(
           `${collectionName}/test-documents.json: expected an array of documents`,
         );
       }
@@ -148,7 +132,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       for (let i = 0; i < testDocsData.length; i++) {
         const docResult = v.safeParse(contentSchema, testDocsData[i]);
         if (!docResult.success) {
-          fail(
+          throw new Error(
             `${collectionName}/test-documents.json[${i}] validation failed:\n${docResult.issues.map((iss) => iss.message).join("\n")}`,
           );
         }
@@ -180,7 +164,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
   }
 
   // Apps
-  const appNames = discoverProtoApps(basePath);
+  const appNames = getProtoApps(basePath);
   for (const appName of appNames) {
     const appDir = join(basePath, appName);
 
@@ -189,7 +173,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     const settingsData = readJsonFile(settingsPath);
     const settingsResult = v.safeParse(appSettingsSchema(), settingsData);
     if (!settingsResult.success) {
-      fail(
+      throw new Error(
         `${appName}/settings.json validation failed:\n${settingsResult.issues.map((i) => i.message).join("\n")}`,
       );
     }
@@ -198,13 +182,13 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     // main.tsx (required)
     const mainTsxPath = join(appDir, "main.tsx");
     if (!existsSync(mainTsxPath)) {
-      fail(`${appName}/main.tsx not found`);
+      throw new Error(`${appName}/main.tsx not found`);
     }
     const mainModule = await compileToModule(
       `${appName}/main.tsx`,
       mainTsxPath,
       `/${appName}/main.tsx`,
-      generatedLibs,
+      [...typescriptLibs, ...generatedLibs],
     );
 
     apps.push({
@@ -227,5 +211,38 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     collections,
     apps,
     documents,
+  };
+}
+
+async function compileToModule(
+  target: string,
+  filePath: string,
+  mainVirtualPath: `/${string}.ts` | `/${string}.tsx`,
+  additionalLibs: TypescriptFile[],
+): Promise<TypescriptModule> {
+  const source = readFileSync(filePath, "utf-8");
+  const result = await new TscTypescriptCompiler().compile(
+    { path: mainVirtualPath, source },
+    additionalLibs,
+  );
+  if (!result.success) {
+    throw new Error(
+      result.error.name === "TypescriptCompilationFailed"
+        ? `Failed to compile ${target}:\n${
+            result.error.details.reason === "TypeErrors"
+              ? result.error.details.errors
+              : "Missing output after compilation"
+          }`
+        : `Failed to compile ${target}:\nUnexpected error: ${JSON.stringify(result.error.details)}`,
+    );
+  }
+  return {
+    // In the devenv environment, generated collection types are imported as
+    // ../generated/ProtoCollection_*.js. The superego app expects
+    // ./ProtoCollection_*.js. Only the TypeScript source needs rewriting —
+    // these are type-only imports, so the compiled JS output doesn't contain
+    // them.
+    source: source.replaceAll("../generated/", "./"),
+    compiled: result.data,
   };
 }

@@ -1,41 +1,49 @@
+---
+name: writing-content-summary-getters
+description: How to write a collection's contentSummaryGetter function
+---
+
 # Writing Content Summary Getters
 
 ## Overview
 
-A content summary getter is a TypeScript function that extracts the most
-important information from a document, returning it as a flat
-`Record<string, string | number | boolean | null>`.
+The "content summary" of a document is an object—derived from the document's
+content—that contains its most important bits of information. The properties of
+the object are displayed when showing a "summary view" of the document; for
+example, in tables where each property becomes a column.
 
-The file is `contentSummaryGetter.ts` in the collection directory.
+The summary object is a `Record<string, string | number | boolean | null>`.
 
-## Template
+The file `contentSummaryGetter.ts` in the collection directory implements and
+default-exports the function that derives the summary from the document content.
 
-```typescript
-import type { RootType } from "../generated/ProtoCollection_N.js";
+### Attributes
 
-export default function getContentSummary(
-  item: RootType,
-): Record<string, string | number | boolean | null> {
-  return {
-    "{position:0,sortable:true,default-sort:asc} Name": item.name,
-    "{position:1} Description": item.description ?? null,
-  };
-}
-```
+The property names of the summary object can include an "attributes" prefix that
+configures the behavior of the UIs that render the summary. Examples:
 
-Replace `RootType` with the actual root type name from the generated types and
-`ProtoCollection_N` with the collection directory name.
+- `"{position:0,sortable:true,default-sort:asc} Prop Zero"`:
+  - property displayed first;
+  - when rendered in a table, the property's column is sortable;
+  - when rendered in a table, the table is—by default—sorted by the property's
+    column, in ascending order.
+- `"{position:1} Prop One"`:
+  - property displayed second;
+  - when rendered in a table, the property's column is not sortable.
 
-## Rules
+(Note: it only makes sense to define `default-sort` for one property.)
 
-- Return between 1 and 5 properties.
-- Only include the most salient information.
-- Properties must always exist in the return value; use `null` for empty values.
-- Keys can include metadata prefixes in curly braces.
+## Date-like String Properties
 
-## Key metadata attributes
+You can return Strings with formats Instant, PlainDate, or PlainTime as-is,
+without doing any formatting. The frontend takes care of formatting them
+correctly.
 
-- `position:N` - Display order (0-based).
-- `sortable:true` - Column is sortable in tables.
-- `default-sort:asc|desc` - Default sort direction (use on at most one
-  property).
+## Guidelines
+
+- The content summary object should have between 1 and 5 properties.
+- Only include the most salient and useful pieces of information.
+- A summary property doesn't necessarily need to have a 1-to-1 correspondence
+  with a document property: it can be a value derived from more than one
+  document properties.
+- The properties must always exist, but you can use `null` for empty values.

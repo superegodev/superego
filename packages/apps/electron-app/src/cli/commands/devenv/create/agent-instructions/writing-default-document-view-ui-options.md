@@ -1,3 +1,8 @@
+---
+name: writing-default-document-view-ui-options
+description: How to write a collection's defaultDocumentViewUiOptions object
+---
+
 # Writing Default Document View UI Options
 
 ## Overview
@@ -12,8 +17,13 @@
   "fullWidth": false,
   "alwaysCollapsePrimarySidebar": false,
   "rootLayout": {
-    "(min-width: 65rem)": [ ...nodes ],
-    "all": [ ...nodes ]
+    // A media feature expression. E.g.
+    "(min-width: 65rem)": [
+      // ...nodes
+    ],
+    "all": [
+      // ...nodes
+    ]
   }
 }
 ```
@@ -32,7 +42,12 @@ Optional fields: `layout` (sub-layout for Struct fields), `hideLabel` (boolean),
 **DivNode** — layout container:
 
 ```json
-{ "style": { "display": "grid", "gridTemplateColumns": "1fr 1fr" }, "children": [ ...nodes ] }
+{
+  "style": { "display": "grid", "gridTemplateColumns": "1fr 1fr" },
+  "children": [
+    // ...nodes
+  ]
+}
 ```
 
 ## Rules

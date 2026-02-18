@@ -19,21 +19,15 @@ export const collectionSchemaStub: Schema = {
   rootType: "Item",
 };
 
-export function getContentSummaryGetterStub(
-  collectionId: string,
-  rootType: string,
-): string {
-  const argName = rootType[0]!.toLowerCase() + rootType.slice(1);
-  return [
-    `import type { ${rootType} } from "../generated/${collectionId}.js";`,
-    "",
-    "export default function getContentSummary(",
-    `  ${argName}: ${rootType}`,
-    "): Record<string, string | number | boolean | null> {",
-    "  return {};",
-    "}",
-  ].join("\n");
+export const contentSummaryGetterStub = `
+import type { Item } from "../generated/ProtoCollection_0.js";
+
+export default function getContentSummary(
+  item: Item
+): Record<string, string | number | boolean | null> {
+  return {};
 }
+`.trim();
 
 export const appSettingsStub = {
   type: "CollectionView",
@@ -41,21 +35,44 @@ export const appSettingsStub = {
   targetCollectionIds: ["ProtoCollection_0"],
 };
 
-// TODO_DEVENV: use DefaultApp from @superego/app-sandbox/components
-export const appMainTsxStub = `import { Grid, Text, Tile } from "@superego/app-sandbox/components";
-import React from "react";
+export const contentBlockingKeysGetterStub = `
+import type { Item } from "../generated/ProtoCollection_0.js";
 
-export default function App(): React.ReactElement {
-  return (
-    <Grid>
-      <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
-        <Tile>
-          <Text element="h2" size="lg" weight="semibold">
-            My App
-          </Text>
-        </Tile>
-      </Grid.Col>
-    </Grid>
-  );
+export default function getContentBlockingKeys(
+  item: Item
+): string[] {
+  return [];
 }
-`;
+`.trim();
+
+export const appMainTsxStub = `
+import React from "react";
+import { DefaultApp } from "@superego/app-sandbox/components";
+import type * as ProtoCollection_0 from "../generated/ProtoCollection_0.js";
+
+interface Props {
+  collections: {
+    ProtoCollection_0: {
+      id: "ProtoCollection_0";
+      versionId: string;
+      displayName: string;
+      documents: {
+        id: \`Document_\${string}\`;
+        versionId: \`DocumentVersion_\${string}\`;
+        /**
+         * Href to the document details page. The anchor element setting this as
+         * \`href\` must also set \`target=_top\`.
+         */
+        href: string;
+        content: ProtoCollection_0.Item;
+      }[];
+    };
+  };
+}
+
+export default function App(props: Props): React.ReactElement | null {
+  // The DefaultApp component is only a placeholder. Don't include it in the
+  // final version of the app.
+  return <DefaultApp {...props} />;
+}
+`.trim();
