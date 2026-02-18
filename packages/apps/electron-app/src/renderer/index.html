@@ -6,8 +6,9 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src 'self' 'unsafe-inline' data: blob:;
+        font-src 'self' data: https://esm.sh;
         frame-src 'self' dev.superego.app-sandbox:;
-        connect-src 'self' https://cdn.jsdelivr.net;
+        connect-src 'self' https://cdn.jsdelivr.net https://esm.sh https://tiles.openfreemap.org;
       "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

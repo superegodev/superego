@@ -60,22 +60,28 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         remoteConverters: collection.latestVersion.remoteConverters,
       },
       mode: "all",
-      resolver: standardSchemaResolver(
-        v.strictObject({
-          schema: valibotSchemas.schema(),
-          contentBlockingKeysGetter: v.nullable(
-            forms.schemas.typescriptModule(intl),
-          ),
-          contentSummaryGetter: forms.schemas.typescriptModule(intl),
-          defaultDocumentViewUiOptions: v.nullable(
-            sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
-              collection.latestVersion.schema,
+      resolver: async (values, context, options) => {
+        const currentSchema =
+          typeof values.schema !== "string"
+            ? values.schema
+            : collection.latestVersion.schema;
+        return standardSchemaResolver(
+          v.strictObject({
+            schema: valibotSchemas.schema(),
+            contentBlockingKeysGetter: v.nullable(
+              forms.schemas.typescriptModule(intl),
             ),
-          ),
-          migration: v.nullable(forms.schemas.typescriptModule(intl)),
-          remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
-        }),
-      ),
+            contentSummaryGetter: forms.schemas.typescriptModule(intl),
+            defaultDocumentViewUiOptions: v.nullable(
+              sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
+                currentSchema,
+              ),
+            ),
+            migration: v.nullable(forms.schemas.typescriptModule(intl)),
+            remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
+          }),
+        )(values, context, options);
+      },
     });
 
   const onSubmit = async (values: CreateNewCollectionVersionFormValues) => {

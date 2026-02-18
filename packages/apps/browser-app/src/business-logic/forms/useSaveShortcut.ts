@@ -14,15 +14,16 @@ export default function useSaveShortcut(
       const isModifierKeyPressed = isMacos() ? event.metaKey : event.ctrlKey;
       if (isModifierKeyPressed && event.key.toLowerCase() === "s") {
         event.preventDefault();
+        event.stopPropagation();
         const form = document.getElementById(formId);
         if (form instanceof HTMLFormElement) {
           form.requestSubmit();
         }
       }
     }
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown, { capture: true });
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown, { capture: true });
     };
   }, [formId, isDisabled]);
 }
