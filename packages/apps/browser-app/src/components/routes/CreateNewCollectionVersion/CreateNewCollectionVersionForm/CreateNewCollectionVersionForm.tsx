@@ -61,10 +61,13 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       },
       mode: "all",
       resolver: async (values, context, options) => {
-        const currentSchema =
-          typeof values.schema !== "string"
-            ? values.schema
-            : collection.latestVersion.schema;
+        const schemaParseResult = v.safeParse(
+          valibotSchemas.schema(),
+          values.schema,
+        );
+        const currentSchema = schemaParseResult.success
+          ? schemaParseResult.output
+          : collection.latestVersion.schema;
         return standardSchemaResolver(
           v.strictObject({
             schema: valibotSchemas.schema(),
