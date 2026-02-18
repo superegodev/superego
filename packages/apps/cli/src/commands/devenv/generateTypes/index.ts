@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { codegen, valibotSchemas } from "@superego/schema";
 import * as v from "valibot";
 import getProtoCollections from "../utils/getProtoCollections.js";
@@ -7,7 +7,7 @@ import Log from "../utils/Log.js";
 import readJsonFile from "../utils/readJsonFile.js";
 
 export default async function generateTypesAction(): Promise<void> {
-  const basePath = resolve(process.cwd());
+  const basePath = process.cwd();
   const collections = getProtoCollections(basePath);
 
   if (collections.length === 0) {

@@ -1,11 +1,11 @@
 import { writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { encode } from "@msgpack/msgpack";
 import compilePack from "../utils/compilePack.js";
 import Log from "../utils/Log.js";
 
 export default async function packAction(): Promise<void> {
-  const basePath = resolve(process.cwd());
+  const basePath = process.cwd();
 
   Log.info("Compiling pack...");
   const pack = await compilePack(basePath);

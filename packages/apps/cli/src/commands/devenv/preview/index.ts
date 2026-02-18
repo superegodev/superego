@@ -1,5 +1,4 @@
 import { spawn } from "node:child_process";
-import { resolve } from "node:path";
 import chokidar from "chokidar";
 import debounce from "debounce";
 import { sendPreviewPack } from "../../../DevenvSignalCliMainIpc.js";
@@ -10,7 +9,7 @@ import getSuperegoAppBin from "./getSuperegoAppBin.js";
 export default async function previewAction(options: {
   watch?: boolean;
 }): Promise<void> {
-  const basePath = resolve(process.cwd());
+  const basePath = process.cwd();
   const superegoAppBin = getSuperegoAppBin();
 
   Log.info("Compiling pack...");

@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import type { Schema } from "@superego/schema";
 import getProtoApps from "../utils/getProtoApps.js";
 import getProtoCollections from "../utils/getProtoCollections.js";
@@ -11,7 +11,7 @@ import checkCollection from "./checkCollection.js";
 import checkJsonValidation from "./checkJsonValidation.js";
 
 export default async function checkAction(): Promise<void> {
-  const basePath = resolve(process.cwd());
+  const basePath = process.cwd();
   const results: CheckResult[] = [];
   const schemas = new Map<string, Schema>();
 
