@@ -3,11 +3,6 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import browserAppConfig from "@superego/browser-app/vite.config.js";
 import { mergeConfig, type UserConfig } from "vite";
 
-const commitSha = process.env["GITHUB_SHA"]?.slice(0, 7);
-if (commitSha) {
-  process.env["VITE_COMMIT_SHA"] = commitSha;
-}
-
 const isProduction = process.env["VITE_DEPLOY_ENVIRONMENT"] === "production";
 
 export default isProduction
