@@ -21,7 +21,8 @@ const redirectUri = isProduction
   ? "https://demo.superego.dev/OAuth2PKCECallback"
   : "http://localhost:5173/OAuth2PKCECallback";
 const sessionStorage = new BrowserSessionStorage();
-const databaseName = __COMMIT_SHA__ ? `superego-${__COMMIT_SHA__}` : "superego";
+const commitSha = import.meta.env["VITE_COMMIT_SHA"];
+const databaseName = commitSha ? `superego-${commitSha}` : "superego";
 const dataRepositoriesManager = new DemoDataRepositoriesManager(
   {
     appearance: { theme: Theme.Auto },
