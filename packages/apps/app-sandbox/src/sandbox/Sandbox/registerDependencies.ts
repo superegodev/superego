@@ -5,6 +5,7 @@ import ButtonLink from "../components/ButtonLink/ButtonLink.js";
 import DefaultApp from "../components/DefaultApp/DefaultApp.js";
 import Echart from "../components/Echart/Echart.js";
 import NumberField from "../components/forms/NumberField.js";
+import GeoJSONMap from "../components/GeoJSONMap/GeoJSONMap.js";
 import PlainDatePicker from "../components/forms/PlainDatePicker.js";
 import RadioGroup from "../components/forms/RadioGroup.js";
 import Select from "../components/forms/Select.js";
@@ -34,6 +35,7 @@ export default function registerDependencies() {
         SimpleMonthCalendar,
         DefaultApp,
         Echart,
+        GeoJSONMap,
         Grid,
         IconButton,
         Image,

@@ -7902,6 +7902,7 @@ __metadata:
     clsx: "npm:^2.1.1"
     echarts: "npm:^6.0.0"
     luxon: "npm:^3.7.2"
+    maplibre-gl: "npm:^5.18.0"
     playwright: "npm:^1.58.2"
     react: "npm:^19.2.4"
     react-aria: "npm:^3.46.0"

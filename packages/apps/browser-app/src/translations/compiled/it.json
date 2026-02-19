@@ -4441,6 +4441,12 @@
       "value": "Mese precedente"
     }
   ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
+    }
+  ],
   "getIntlMessages.ts_J1XXSx": [
     {
       "type": 0,

@@ -116,6 +116,19 @@ export declare function Echart(props: {
 }): JSX.Element;
 
 /**
+ * Renders an interactive map from GeoJSON data using MapLibre GL. Supports
+ * Points, LineStrings, Polygons, and their Multi* variants. Features with
+ * properties show a popup on click.
+ */
+export declare function GeoJSONMap(props: {
+  /** A GeoJSON FeatureCollection to render on the map. */
+  geoJSON: { type: "FeatureCollection"; features: unknown[] };
+  /** You should usually set this to 100%. */
+  width: string;
+  height: string;
+}): JSX.Element;
+
+/**
  * A simple 12-column responsive grid container with good default visual
  * separation between inner `Gird.Col`s.
  *
