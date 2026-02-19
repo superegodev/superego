@@ -8,8 +8,8 @@
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
     "check-types": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "build:preview": "yarn clean && VITE_COMMIT_SHA=${GITHUB_SHA} vite build",
-    "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production VITE_COMMIT_SHA=${GITHUB_SHA} vite build",
+    "build:preview": "yarn clean && vite build",
+    "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production vite build",
     "deploy:preview": "wrangler pages deploy dist/ --project-name demosuperegodev",
     "deploy:production": "wrangler deploy"
   },
