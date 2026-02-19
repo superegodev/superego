@@ -21,10 +21,23 @@ import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
+
+const collectionCategoryPatchSchema = v.partial(
+  v.object({
+    name: v.string(),
+    icon: v.nullable(v.string()),
+    parentId: v.nullable(valibotSchemas.id.collectionCategory()),
+  }),
+);
 
 export default class CollectionCategoriesUpdate extends Usecase<
   Backend["collectionCategories"]["update"]
 > {
+  @validateArgs([
+    valibotSchemas.id.collectionCategory(),
+    collectionCategoryPatchSchema,
+  ])
   async exec(
     id: CollectionCategoryId,
     patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,

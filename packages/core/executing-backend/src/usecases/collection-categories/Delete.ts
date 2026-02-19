@@ -9,13 +9,16 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionCategoriesDelete extends Usecase<
   Backend["collectionCategories"]["delete"]
 > {
+  @validateArgs([valibotSchemas.id.collectionCategory()])
   async exec(
     id: CollectionCategoryId,
   ): ResultPromise<

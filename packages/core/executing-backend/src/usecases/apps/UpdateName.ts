@@ -19,10 +19,12 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class AppsUpdateName extends Usecase<
   Backend["apps"]["updateName"]
 > {
+  @validateArgs([valibotSchemas.id.app(), v.string()])
   async exec(
     id: AppId,
     name: string,

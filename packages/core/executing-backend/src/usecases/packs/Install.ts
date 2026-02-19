@@ -44,6 +44,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import isEmpty from "../../utils/isEmpty.js";
 import {
   extractProtoCollectionIds,
@@ -58,12 +59,14 @@ import {
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import AppsCreate from "../apps/Create.js";
 import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
 export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
+  @validateArgs([argSchemas.pack()])
   async exec(pack: Pack): ResultPromise<
     {
       collectionCategories: CollectionCategory[];

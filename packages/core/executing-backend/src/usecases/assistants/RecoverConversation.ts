@@ -13,6 +13,7 @@ import type { Milliseconds, ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
@@ -21,6 +22,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsList from "../collections/List.js";
 
 const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
@@ -28,6 +30,7 @@ const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
 export default class AssistantsRecoverConversation extends Usecase<
   Backend["assistants"]["recoverConversation"]
 > {
+  @validateArgs([valibotSchemas.id.conversation()])
   async exec(
     id: ConversationId,
   ): ResultPromise<

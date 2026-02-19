@@ -43,6 +43,7 @@ import type {
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
+  InputNotValid,
   MakingContentBlockingKeysFailed,
   PackNotFound,
   PackNotValid,
@@ -103,6 +104,7 @@ type KnownResultError =
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
+  | InputNotValid
   | MakingContentBlockingKeysFailed
   | PackNotFound
   | PackNotValid

@@ -20,14 +20,21 @@ import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
 }
 
+const appsCreateOptionsSchema = v.strictObject({
+  appId: v.optional(valibotSchemas.id.app()),
+});
+
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
+  @validateArgs([argSchemas.appDefinition(), appsCreateOptionsSchema])
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,
     options: AppsCreateOptions = {},

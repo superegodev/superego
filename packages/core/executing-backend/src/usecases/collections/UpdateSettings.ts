@@ -20,12 +20,23 @@ import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionsUpdateSettings extends Usecase<
   Backend["collections"]["updateSettings"]
 > {
+  @validateArgs([
+    valibotSchemas.id.collection(),
+    v.partial(
+      argSchemas.collectionSettings() as unknown as v.StrictObjectSchema<
+        v.ObjectEntries,
+        undefined
+      >,
+    ) as unknown as v.GenericSchema<Partial<CollectionSettings>>,
+  ])
   async exec(
     id: CollectionId,
     settingsPatch: Partial<CollectionSettings>,

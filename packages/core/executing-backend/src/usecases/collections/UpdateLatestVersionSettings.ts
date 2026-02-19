@@ -26,13 +26,25 @@ import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
   Backend["collections"]["updateLatestVersionSettings"]
 > {
+  @validateArgs([
+    sharedUtilsValibotSchemas.id.collection(),
+    sharedUtilsValibotSchemas.id.collectionVersion(),
+    v.partial(
+      argSchemas.collectionVersionSettings() as unknown as v.StrictObjectSchema<
+        v.ObjectEntries,
+        undefined
+      >,
+    ) as unknown as v.GenericSchema<Partial<CollectionVersionSettings>>,
+  ])
   async exec(
     id: CollectionId,
     latestVersionId: CollectionVersionId,

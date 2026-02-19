@@ -1,5 +1,5 @@
 import {
-  type AssistantName,
+  AssistantName,
   type Backend,
   BackgroundJobName,
   type Conversation,
@@ -17,21 +17,28 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsStartConversation extends Usecase<
   Backend["assistants"]["startConversation"]
 > {
+  @validateArgs([
+    v.enum(AssistantName),
+    argSchemas.nonEmptyArray(argSchemas.messageContentPart()),
+  ])
   async exec(
     assistant: AssistantName,
     userMessageContent: Message.User["content"],

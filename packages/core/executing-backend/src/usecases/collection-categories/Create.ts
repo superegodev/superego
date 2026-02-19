@@ -20,16 +20,29 @@ import type CollectionCategoryEntity from "../../entities/CollectionCategoryEnti
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 interface CollectionCategoriesCreateOptions {
   collectionCategoryId?: CollectionCategoryId;
   skipReferenceCheckForCollectionCategoryIds?: CollectionCategoryId[];
 }
 
+const collectionCategoriesCreateOptionsSchema = v.strictObject({
+  collectionCategoryId: v.optional(valibotSchemas.id.collectionCategory()),
+  skipReferenceCheckForCollectionCategoryIds: v.optional(
+    v.array(valibotSchemas.id.collectionCategory()),
+  ),
+});
+
 export default class CollectionCategoriesCreate extends Usecase<
   Backend["collectionCategories"]["create"]
 > {
+  @validateArgs([
+    argSchemas.collectionCategoryDefinition(),
+    collectionCategoriesCreateOptionsSchema,
+  ])
   async exec(
     definition: CollectionCategoryDefinition,
     options: CollectionCategoriesCreateOptions = {},

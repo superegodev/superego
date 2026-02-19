@@ -40,15 +40,25 @@ import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import type ArrayElement from "../../utils/ArrayElement.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends Usecase<
   Backend["collections"]["createNewVersion"]
 > {
+  @validateArgs([
+    sharedUtilsValibotSchemas.id.collection(),
+    sharedUtilsValibotSchemas.id.collectionVersion(),
+    argSchemas.schema(),
+    argSchemas.collectionVersionSettings(),
+    v.nullable(argSchemas.typescriptModule()),
+    v.nullable(argSchemas.remoteConverters()),
+  ])
   async exec(
     id: CollectionId,
     latestVersionId: CollectionVersionId,

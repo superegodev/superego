@@ -66,6 +66,7 @@ export type { default as DuplicateDocumentDetected } from "./errors/DuplicateDoc
 export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
+export type { default as InputNotValid } from "./errors/InputNotValid.js";
 export type { default as MakingContentBlockingKeysFailed } from "./errors/MakingContentBlockingKeysFailed.js";
 export type { default as PackNotFound } from "./errors/PackNotFound.js";
 export type { default as PackNotValid } from "./errors/PackNotValid.js";

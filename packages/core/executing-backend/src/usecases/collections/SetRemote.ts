@@ -20,6 +20,7 @@ import { valibotSchemas } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
@@ -27,12 +28,21 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionsSetRemote extends Usecase<
   Backend["collections"]["setRemote"]
 > {
+  @validateArgs([
+    sharedUtilsValibotSchemas.id.collection(),
+    v.string(),
+    argSchemas.connectorAuthenticationSettings(),
+    v.unknown(),
+    argSchemas.remoteConverters(),
+  ])
   async exec(
     id: CollectionId,
     connectorName: string,

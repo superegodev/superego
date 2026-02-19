@@ -8,13 +8,16 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class FilesGetContent extends Usecase<
   Backend["files"]["getContent"]
 > {
+  @validateArgs([valibotSchemas.id.file()])
   async exec(
     id: FileId,
   ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {
