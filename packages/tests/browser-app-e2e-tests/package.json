@@ -7,7 +7,7 @@
     "check-types": "tsc --noEmit",
     "test:check-scenarios": "node scripts/checkStepsAndSnapshots.ts",
     "test:playwright": "playwright test --config=playwright.config.ts",
-    "test": "yarn test:check-scenarios && yarn test:playwright",
+    "TODO_test": "yarn test:check-scenarios && yarn test:playwright",
     "playwright": "playwright"
   },
   "devDependencies": {

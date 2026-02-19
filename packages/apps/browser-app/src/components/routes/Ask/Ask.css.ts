@@ -53,4 +53,26 @@ export const Hero = {
     marginBlockStart: vars.spacing._2,
     marginBlockEnd: vars.spacing._24,
   }),
+
+  tagLineCompact: style({
+    marginBlockEnd: vars.spacing._8,
+  }),
+};
+
+export const Welcome = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    maxWidth: "32rem",
+    marginBlockEnd: vars.spacing._8,
+  }),
+
+  paragraph: style({
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.md,
+    lineHeight: vars.typography.lineHeights.relaxed,
+    marginBlock: vars.spacing._1,
+  }),
 };

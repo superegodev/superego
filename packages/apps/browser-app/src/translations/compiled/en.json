@@ -23,10 +23,50 @@
       "value": "Theme"
     }
   ],
+  "Ask.tsx_AMCW+X": [
+    {
+      "type": 0,
+      "value": "Welcome! Superego is a personal knowledge management app that lets you organize your data into collections with custom schemas."
+    }
+  ],
   "Ask.tsx_khigiR": [
     {
       "type": 0,
       "value": "Previous conversations"
+    }
+  ],
+  "Ask.tsx_ltLdPH": [
+    {
+      "type": 0,
+      "value": "You can "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "create your collection"
+        }
+      ],
+      "type": 8,
+      "value": "createCollectionLink"
+    },
+    {
+      "type": 0,
+      "value": " or install some pre-made ones from the "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "bazaar"
+        }
+      ],
+      "type": 8,
+      "value": "bazaarLink"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "Ask.tsx_oZLZvb": [
@@ -4360,6 +4400,12 @@
     {
       "type": 0,
       "value": "Message assistant"
+    }
+  ],
+  "UserMessageContentInput.tsx_kNl1RN": [
+    {
+      "type": 0,
+      "value": "Configure assistant"
     }
   ],
   "UserMessageContentInput.tsx_yvK6cX": [
