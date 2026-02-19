@@ -2,9 +2,7 @@ import type { DistributiveOmit } from "@superego/global-types";
 import MessageSender from "./MessageSender.js";
 import MessageType from "./MessageType.js";
 import {
-  type HeightChangedMessage,
   type InvokeBackendMethodMessage,
-  isHeightChangedMessage,
   isInvokeBackendMethodMessage,
   isNavigateHostToMessage,
   isSandboxReadyMessage,
@@ -33,7 +31,6 @@ export default class HostIpc {
   /** Register handlers for messages coming from the Sandbox. */
   registerHandlers(handlers: {
     [MessageType.SandboxReady]: (message: SandboxReadyMessage) => void;
-    [MessageType.HeightChanged]: (message: HeightChangedMessage) => void;
     [MessageType.InvokeBackendMethod]: (
       message: InvokeBackendMethodMessage,
     ) => void;
@@ -46,8 +43,6 @@ export default class HostIpc {
       }
       if (isSandboxReadyMessage(message)) {
         handlers[MessageType.SandboxReady](message);
-      } else if (isHeightChangedMessage(message)) {
-        handlers[MessageType.HeightChanged](message);
       } else if (isInvokeBackendMethodMessage(message)) {
         handlers[MessageType.InvokeBackendMethod](message);
       } else if (isNavigateHostToMessage(message)) {

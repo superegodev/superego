@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { Button, TooltipTrigger } from "react-aria-components";
 import {
+  PiArchive,
   PiCaretDown,
   PiCaretLeft,
   PiCaretRight,
@@ -22,6 +23,7 @@ const icons = {
   plus: PiPlus,
   minus: PiMinus,
   x: PiX,
+  archive: PiArchive,
 } as const;
 
 interface Props {

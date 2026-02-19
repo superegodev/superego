@@ -2,7 +2,6 @@ import type { DistributiveOmit } from "@superego/global-types";
 import MessageSender from "./MessageSender.js";
 import MessageType from "./MessageType.js";
 import {
-  type HeightChangedMessage,
   type InvokeBackendMethodMessage,
   isRenderAppMessage,
   isRespondToBackendMethodInvocationMessage,
@@ -21,10 +20,7 @@ export default class SandboxIpc {
   /** Send a Sandbox message to the Host. */
   send(
     message: DistributiveOmit<
-      | SandboxReadyMessage
-      | HeightChangedMessage
-      | InvokeBackendMethodMessage
-      | NavigateHostToMessage,
+      SandboxReadyMessage | InvokeBackendMethodMessage | NavigateHostToMessage,
       "sender"
     >,
   ) {

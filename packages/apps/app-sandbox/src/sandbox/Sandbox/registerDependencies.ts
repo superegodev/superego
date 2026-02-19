@@ -12,6 +12,7 @@ import TextField from "../components/forms/TextField.js";
 import Grid from "../components/Grid/Grid.js";
 import IconButton from "../components/IconButton/IconButton.js";
 import Image from "../components/Image/Image.js";
+import KanbanBoard from "../components/KanbanBoard/KanbanBoard.jsx";
 import Link from "../components/Link/Link.js";
 import SimpleMonthCalendar from "../components/SimpleMonthCalendar/SimpleMonthCalendar.js";
 import Table from "../components/Table/Table.js";
@@ -37,6 +38,7 @@ export default function registerDependencies() {
         Grid,
         IconButton,
         Image,
+        KanbanBoard,
         Link,
         NumberField,
         PlainDatePicker,

@@ -50,12 +50,6 @@ export default function Sandbox({
     hostIpcRef.current = hostIpc;
     return hostIpc.registerHandlers({
       [MessageType.SandboxReady]: () => setSandboxReady(true),
-      [MessageType.HeightChanged]: (message) => {
-        const height = `${message.payload.height}px`;
-        if (iframeRef.current && iframeRef.current.style.minHeight !== height) {
-          iframeRef.current.style.minHeight = height;
-        }
-      },
       [MessageType.InvokeBackendMethod]: async ({ payload }) => {
         const result = await (backend as any)[payload.entity][payload.method](
           ...payload.args,

@@ -19,4 +19,7 @@ export default interface IntlMessages {
     nextMonthButton: string;
     closeDayPopoverButton: string;
   };
+  KanbanBoard: {
+    dragButton: string;
+  };
 }

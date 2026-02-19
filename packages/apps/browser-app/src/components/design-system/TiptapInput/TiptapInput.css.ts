@@ -122,7 +122,8 @@ globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li`, {
 });
 globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li > label`, {
   flex: "0 0 auto",
-  marginInlineEnd: vars.spacing._2,
+  marginBlockStart: `calc(${vars.spacing._1} + 1px)`,
+  marginInlineEnd: vars.spacing._1,
   userSelect: "none",
 });
 globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li > div`, {

@@ -43,5 +43,8 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
       nextMonthButton: intl.formatMessage({ defaultMessage: "Next month" }),
       closeDayPopoverButton: intl.formatMessage({ defaultMessage: "Close" }),
     },
+    KanbanBoard: {
+      dragButton: intl.formatMessage({ defaultMessage: "Drag" }),
+    },
   };
 }

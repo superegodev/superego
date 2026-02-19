@@ -34,7 +34,8 @@ export declare function IconButton(props: {
     | "check"
     | "plus"
     | "minus"
-    | "x";
+    | "x"
+    | "archive";
   /** Label for the button, shown in a tooltip. */
   label: string;
   onPress?: () => void;
@@ -353,6 +354,68 @@ export declare function Text(props: {
   style?: CSSProperties;
   children: ReactNode;
 }): JSX.Element;
+
+/**
+ * A drag-and-drop kanban board. Cards can be reordered within columns and moved
+ * between columns. The component is fully controlled: the parent owns the data
+ * and updates it in response to `onCardMoved` events.
+ *
+ * @example
+ * ```tsx
+ * <KanbanBoard onCardMoved={handleCardMoved}>
+ *   <KanbanBoard.Column id="todo" title="To Do">
+ *     <KanbanBoard.Card id="card-1" textValue="Task 1">
+ *       Task 1
+ *     </KanbanBoard.Card>
+ *   </KanbanBoard.Column>
+ *   <KanbanBoard.Column id="done" title="Done">
+ *     <KanbanBoard.Card id="card-2" textValue="Task 2">
+ *       Task 2
+ *     </KanbanBoard.Card>
+ *   </KanbanBoard.Column>
+ * </KanbanBoard>
+ * ```
+ */
+export declare function KanbanBoard(props: {
+  /** Callback when a card is moved via drag-and-drop. */
+  onCardMoved?: (event: {
+    /** The key of the card that was moved. */
+    cardId: string | number;
+    /** The key of the source column. */
+    fromColumnId: string | number;
+    /** The key of the destination column. */
+    toColumnId: string | number;
+    /** Where the card was dropped. */
+    target:
+      | { type: "root" }
+      | {
+          type: "item";
+          key: string | number;
+          dropPosition: "before" | "after";
+        };
+  }) => void;
+  children: ReactNode;
+}): JSX.Element;
+export declare namespace KanbanBoard {
+  /** A column in the kanban board. */
+  var Column: (props: {
+    id: string | number;
+    /** Title displayed in the header. */
+    title: ReactNode;
+    ariaLabel: string;
+    children: ReactNode;
+  }) => JSX.Element;
+  /** A draggable card within a column. */
+  var Card: (props: {
+    /** Must be globally unique across all columns. */
+    id: string | number;
+    /** Plain text value used for accessibility. */
+    textValue: string;
+    /** When provided, navigates to the href onPress. */
+    href?: string;
+    children: ReactNode;
+  }) => JSX.Element;
+}
 
 /**
  * A minimal, unopinionated visual surface for a single dashboard element. Use
