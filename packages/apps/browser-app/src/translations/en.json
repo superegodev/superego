@@ -11,8 +11,14 @@
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Theme"
   },
+  "Ask.tsx_AMCW+X": {
+    "defaultMessage": "Welcome! Superego is a personal knowledge management app that lets you organize your data into collections with custom schemas."
+  },
   "Ask.tsx_khigiR": {
     "defaultMessage": "Previous conversations"
+  },
+  "Ask.tsx_ltLdPH": {
+    "defaultMessage": "You can <createCollectionLink>create your collection</createCollectionLink> or install some pre-made ones from the <bazaarLink>bazaar</bazaarLink>."
   },
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
@@ -1495,6 +1501,9 @@
   },
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Message assistant"
+  },
+  "UserMessageContentInput.tsx_kNl1RN": {
+    "defaultMessage": "Configure assistant"
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."

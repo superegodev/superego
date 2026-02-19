@@ -9,7 +9,9 @@ import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
+import { RouteName } from "../../../business-logic/navigation/Route.js";
 import classnames from "../../../utils/classnames.js";
+import Link from "../../design-system/Link/Link.js";
 import AddFilesButton from "./AddFilesButton.js";
 import FilesTray from "./FilesTray.js";
 import SendRecordButtons from "./SendRecordButtons.js";
@@ -156,6 +158,15 @@ export default function UserMessageContentInput({
           onFinishRecording={finishRecording}
         />
       </div>
+      {!isInferenceConfigured.chatCompletions ? (
+        <Link
+          to={{ name: RouteName.GlobalSettings }}
+          className={cs.UserMessageContentInput.settingsOverlay}
+          aria-label={intl.formatMessage({
+            defaultMessage: "Configure assistant",
+          })}
+        />
+      ) : null}
     </DropZone>
   );
 }

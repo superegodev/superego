@@ -64,6 +64,16 @@ export const UserMessageContentInput = {
     display: "flex",
     justifyContent: "space-between",
   }),
+
+  settingsOverlay: style({
+    position: "absolute",
+    inset: 0,
+    cursor: "pointer",
+    borderRadius: vars.borders.radius.xl,
+    zIndex: 1,
+    background: "transparent",
+    textDecoration: "none",
+  }),
 };
 
 export const FilesTray = {

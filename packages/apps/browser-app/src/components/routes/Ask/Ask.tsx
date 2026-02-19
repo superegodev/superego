@@ -1,9 +1,12 @@
 import { AssistantName, type Message } from "@superego/backend";
+import type { ReactNode } from "react";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import Link from "../../design-system/Link/Link.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -14,6 +17,7 @@ import Hero from "./Hero.js";
 export default function Ask() {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
+  const { collections } = useGlobalData();
 
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (userMessageContent: Message.User["content"]) => {
@@ -29,7 +33,29 @@ export default function Ask() {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header />
       <Shell.Panel.Content className={cs.Ask.panelContent}>
-        <Hero />
+        <Hero hasWelcome={isEmpty(collections)} />
+        {isEmpty(collections) ? (
+          <div className={cs.Welcome.root}>
+            <p className={cs.Welcome.paragraph}>
+              <FormattedMessage defaultMessage="Welcome! Superego is a personal knowledge management app that lets you organize your data into collections with custom schemas." />
+            </p>
+            <p className={cs.Welcome.paragraph}>
+              <FormattedMessage
+                defaultMessage="You can <createCollectionLink>create your collection</createCollectionLink> or install some pre-made ones from the <bazaarLink>bazaar</bazaarLink>."
+                values={{
+                  createCollectionLink: (chunks: ReactNode) => (
+                    <Link to={{ name: RouteName.CreateCollectionAssisted }}>
+                      {chunks}
+                    </Link>
+                  ),
+                  bazaarLink: (chunks: ReactNode) => (
+                    <Link to={{ name: RouteName.Bazaar }}>{chunks}</Link>
+                  ),
+                }}
+              />
+            </p>
+          </div>
+        ) : null}
         <UserMessageContentInput
           conversation={null}
           onSend={onSend}

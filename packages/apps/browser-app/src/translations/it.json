@@ -11,8 +11,14 @@
   "AppearanceSettings.tsx_Pe0ogR": {
     "defaultMessage": "Tema"
   },
+  "Ask.tsx_AMCW+X": {
+    "defaultMessage": "Benvenuto! Superego è un'app di gestione della conoscenza personale che ti permette di organizzare i tuoi dati in collezioni con schemi personalizzati."
+  },
   "Ask.tsx_khigiR": {
     "defaultMessage": "Conversazioni precedenti"
+  },
+  "Ask.tsx_ltLdPH": {
+    "defaultMessage": "Puoi <createCollectionLink>creare la tua collezione</createCollectionLink> o installarne alcune già pronte dal <bazaarLink>bazaar</bazaarLink>."
   },
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
@@ -1456,6 +1462,9 @@
   },
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Invia messaggio all'assistente"
+  },
+  "UserMessageContentInput.tsx_kNl1RN": {
+    "defaultMessage": "Configura l'assistente"
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
