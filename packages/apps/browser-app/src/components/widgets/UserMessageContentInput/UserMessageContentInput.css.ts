@@ -28,12 +28,12 @@ export const UserMessageContentInput = {
   textArea: style({
     width: "100%",
     maxHeight: vars.spacing._80,
+    fieldSizing: "content",
     fontFamily: vars.typography.fontFamilies.sansSerif,
     fontSize: vars.typography.fontSizes.md,
     border: 0,
     background: vars.colors.background.surface,
     color: vars.colors.text.primary,
-    height: 16.5,
     padding: 0,
     marginBlock: vars.spacing._0_5,
     resize: "none",
