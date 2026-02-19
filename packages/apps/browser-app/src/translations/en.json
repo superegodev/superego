@@ -605,6 +605,9 @@
   "EagerExcalidrawInput.tsx_gYg6LX": {
     "defaultMessage": "Exit full screen"
   },
+  "EagerGeoJSONMap.tsx_FUqf3/": {
+    "defaultMessage": "An error occurred rendering the map."
+  },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
@@ -1391,6 +1394,9 @@
   "Title.tsx_XnBm2q": {
     "defaultMessage": "No response"
   },
+  "Title.tsx_fBfv7E": {
+    "defaultMessage": "Create map from {collections}"
+  },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
   },
@@ -1528,6 +1534,9 @@
   },
   "getIntlMessages.ts_8mRNBD": {
     "defaultMessage": "Previous month"
+  },
+  "getIntlMessages.ts_FUqf3/": {
+    "defaultMessage": "An error occurred rendering the map."
   },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "My Awesome App"

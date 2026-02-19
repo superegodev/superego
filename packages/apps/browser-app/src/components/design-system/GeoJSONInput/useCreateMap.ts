@@ -2,9 +2,9 @@ import { Geoman } from "@geoman-io/maplibre-geoman-free";
 import type { Theme } from "@superego/backend";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
-import type GeoJSONValue from "./GeoJSONValue.js";
-import getCenterAndZoom from "./getCenterAndZoom.js";
-import getMapStyle from "./getMapStyle.js";
+import type GeoJSONValue from "../../../utils/GeoJSONValue.js";
+import getCenterAndZoom from "../../../utils/getCenterAndZoom.js";
+import getMapStyle from "../../../utils/getMapStyle.js";
 
 // Create the map and Geoman (on map load). The effect re-runs when `theme`
 // changes, tearing down and recreating the map with the new style. Other

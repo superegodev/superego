@@ -9,10 +9,11 @@ import PlainDatePicker from "../components/forms/PlainDatePicker.js";
 import RadioGroup from "../components/forms/RadioGroup.js";
 import Select from "../components/forms/Select.js";
 import TextField from "../components/forms/TextField.js";
+import GeoJSONMap from "../components/GeoJSONMap/GeoJSONMap.js";
 import Grid from "../components/Grid/Grid.js";
 import IconButton from "../components/IconButton/IconButton.js";
 import Image from "../components/Image/Image.js";
-import KanbanBoard from "../components/KanbanBoard/KanbanBoard.jsx";
+import KanbanBoard from "../components/KanbanBoard/KanbanBoard.js";
 import Link from "../components/Link/Link.js";
 import SimpleMonthCalendar from "../components/SimpleMonthCalendar/SimpleMonthCalendar.js";
 import Table from "../components/Table/Table.js";
@@ -35,6 +36,7 @@ export default function registerDependencies() {
         SimpleMonthCalendar,
         DefaultApp,
         Echart,
+        GeoJSONMap,
         Grid,
         IconButton,
         Image,

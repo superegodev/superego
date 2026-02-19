@@ -116,6 +116,16 @@ export declare function Echart(props: {
   height: string;
 }): JSX.Element;
 
+/** Renders an interactive map from GeoJSON data. */
+export declare function GeoJSONMap(props: {
+  // TODO_KAN: also support other GeoJSON types
+  /** A GeoJSON FeatureCollection to render on the map. */
+  geoJSON: { type: "FeatureCollection"; features: unknown[] };
+  /** You should usually set this to 100%. */
+  width: string;
+  height: string;
+}): JSX.Element;
+
 /**
  * A simple 12-column responsive grid container with good default visual
  * separation between inner `Gird.Col`s.

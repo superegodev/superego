@@ -16,6 +16,11 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
         defaultMessage: "An error occurred rendering the chart.",
       }),
     },
+    GeoJSONMap: {
+      renderingErrorAlertTitle: intl.formatMessage({
+        defaultMessage: "An error occurred rendering the map.",
+      }),
+    },
     DefaultApp: {
       name: intl.formatMessage({
         defaultMessage: "My Awesome App",

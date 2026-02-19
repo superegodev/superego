@@ -13,6 +13,7 @@ import Markdown from "../../../design-system/Markdown/Markdown.js";
 import ThinkingTime from "../ThinkingTime.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
+import CreateGeoJSONMap from "../ToolResult/CreateGeoJSONMap.js";
 import * as cs from "./AssistantContentMessage.css.js";
 import RetryButton from "./RetryButton.js";
 import SpeakButton from "./SpeakButton.js";
@@ -93,6 +94,19 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
       );
     };
 
-    return { Chart, DocumentsTable };
+    const GeoJSONMap = ({ id }: { id: string }) => {
+      const toolResult = conversation.messages
+        .filter((message) => message.role === MessageRole.Tool)
+        .flatMap((message) => message.toolResults)
+        .filter(ConversationUtils.isSuccessfulCreateGeoJSONMapToolResult)
+        .find((toolResult) => toolResult.artifacts?.geoJSONMapId === id);
+      return toolResult ? (
+        <CreateGeoJSONMap key={id} toolResult={toolResult} />
+      ) : (
+        `<GeoJSONMapNotFound id="${id}">`
+      );
+    };
+
+    return { Chart, DocumentsTable, GeoJSONMap };
   }, [conversation]);
 }

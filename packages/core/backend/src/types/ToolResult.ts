@@ -132,6 +132,22 @@ namespace ToolResult {
       };
     }
   >;
+  export type CreateGeoJSONMap = BaseToolResult<
+    ToolName.CreateGeoJSONMap,
+    Result<
+      {
+        markdownSnippet: string;
+      },
+      | CollectionNotFound
+      | TypescriptCompilationFailed
+      | ExecutingJavascriptFunctionFailed
+      | ResultError<"GeoJSONNotValid", { issues: ValidationIssue[] }>
+    >,
+    {
+      geoJSONMapId: string;
+      geoJSON: { type: string; [key: string]: unknown };
+    }
+  >;
   export type CreateDocumentsTables = BaseToolResult<
     ToolName.CreateDocumentsTables,
     Result<
@@ -219,6 +235,7 @@ type ToolResult =
   | ToolResult.ExecuteTypescriptFunction
   | ToolResult.GetCollectionTypescriptSchema
   | ToolResult.CreateChart
+  | ToolResult.CreateGeoJSONMap
   | ToolResult.CreateDocumentsTables
   | ToolResult.SearchDocuments
   | ToolResult.SuggestCollectionsDefinitions

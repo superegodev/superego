@@ -1526,6 +1526,12 @@
       "value": "Esci dalla modalità a schermo intero"
     }
   ],
+  "EagerGeoJSONMap.tsx_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
+    }
+  ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
     {
       "type": 0,
@@ -4118,6 +4124,16 @@
       "value": "Nessuna risposta"
     }
   ],
+  "Title.tsx_fBfv7E": [
+    {
+      "type": 0,
+      "value": "Crea mappa da "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_foZAHu": [
     {
       "type": 0,
@@ -4475,6 +4491,12 @@
     {
       "type": 0,
       "value": "Mese precedente"
+    }
+  ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
   "getIntlMessages.ts_J1XXSx": [

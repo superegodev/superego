@@ -1534,6 +1534,12 @@
       "value": "Exit full screen"
     }
   ],
+  "EagerGeoJSONMap.tsx_FUqf3/": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the map."
+    }
+  ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
     {
       "type": 0,
@@ -4140,6 +4146,16 @@
       "value": "No response"
     }
   ],
+  "Title.tsx_fBfv7E": [
+    {
+      "type": 0,
+      "value": "Create map from "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_foZAHu": [
     {
       "type": 0,
@@ -4497,6 +4513,12 @@
     {
       "type": 0,
       "value": "Previous month"
+    }
+  ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the map."
     }
   ],
   "getIntlMessages.ts_J1XXSx": [
