@@ -14,13 +14,23 @@ import type { DocumentRef } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class DocumentsDelete extends Usecase<
   Backend["documents"]["delete"]
 > {
+  @validateArgs([
+    valibotSchemas.id.collection(),
+    valibotSchemas.id.document(),
+    v.string(),
+    v.boolean(),
+    v.boolean(),
+  ])
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

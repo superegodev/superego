@@ -11,14 +11,17 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import pMap from "p-map";
+import * as v from "valibot";
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class DocumentsSearch extends Usecase<
   Backend["documents"]["search"]
@@ -40,6 +43,12 @@ export default class DocumentsSearch extends Usecase<
     TextSearchResult<Document>[],
     CollectionNotFound | UnexpectedError
   >;
+  @validateArgs([
+    v.nullable(valibotSchemas.id.collection()),
+    v.string(),
+    v.strictObject({ limit: v.number() }),
+    v.boolean(),
+  ])
   async exec(
     collectionId: CollectionId | null,
     query: string,

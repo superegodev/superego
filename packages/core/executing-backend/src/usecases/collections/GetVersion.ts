@@ -10,14 +10,20 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import makeCollectionVersion from "../../makers/makeCollectionVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionsGetVersion extends Usecase<
   Backend["collections"]["getVersion"]
 > {
+  @validateArgs([
+    valibotSchemas.id.collection(),
+    valibotSchemas.id.collectionVersion(),
+  ])
   async exec(
     collectionId: CollectionId,
     collectionVersionId: CollectionVersionId,

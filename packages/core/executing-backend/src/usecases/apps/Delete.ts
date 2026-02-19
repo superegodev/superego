@@ -9,11 +9,15 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class AppsDelete extends Usecase<Backend["apps"]["delete"]> {
+  @validateArgs([valibotSchemas.id.app(), v.string()])
   async exec(
     id: AppId,
     commandConfirmation: string,

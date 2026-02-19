@@ -17,15 +17,36 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 const MAX_ATTEMPTS = 5;
+
+const implementTypescriptModuleSpecSchema = v.strictObject({
+  description: v.string(),
+  rules: v.nullable(v.string()),
+  additionalInstructions: v.nullable(v.string()),
+  template: v.string(),
+  libs: v.array(
+    v.strictObject({
+      path: v.string() as v.GenericSchema<`/${string}.ts` | `/${string}.tsx`>,
+      source: v.string(),
+    }),
+  ),
+  startingPoint: v.strictObject({
+    path: v.string() as v.GenericSchema<`/${string}.ts` | `/${string}.tsx`>,
+    source: v.string(),
+  }),
+  userRequest: v.string(),
+});
 
 export default class InferenceImplementTypescriptModule extends Usecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
+  @validateArgs([implementTypescriptModuleSpecSchema])
   async exec({
     description,
     rules,

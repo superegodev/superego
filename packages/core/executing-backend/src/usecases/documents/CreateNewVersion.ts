@@ -22,6 +22,7 @@ import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas as sharedUtilsValibotSchemas,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type DocumentEntity from "../../entities/DocumentEntity.js";
@@ -39,6 +40,7 @@ import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
@@ -82,6 +84,13 @@ export default class DocumentsCreateNewVersion extends Usecase<
           remoteDocument: any;
         },
   ): ExecReturnValue;
+  @validateArgs([
+    sharedUtilsValibotSchemas.id.collection(),
+    sharedUtilsValibotSchemas.id.document(),
+    sharedUtilsValibotSchemas.id.documentVersion(),
+    v.any(),
+    v.optional(v.any()),
+  ])
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

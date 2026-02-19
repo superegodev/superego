@@ -12,17 +12,26 @@ import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class AppsCreateNewVersion extends Usecase<
   Backend["apps"]["createNewVersion"]
 > {
+  @validateArgs([
+    valibotSchemas.id.app(),
+    v.array(valibotSchemas.id.collection()),
+    argSchemas.appVersionFiles(),
+  ])
   async exec(
     id: AppId,
     targetCollectionIds: CollectionId[],

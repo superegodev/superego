@@ -12,14 +12,17 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends Usecase<
   Backend["collections"]["getOAuth2PKCEConnectorAuthorizationRequestUrl"]
 > {
+  @validateArgs([valibotSchemas.id.collection()])
   async exec(
     id: CollectionId,
   ): ResultPromise<

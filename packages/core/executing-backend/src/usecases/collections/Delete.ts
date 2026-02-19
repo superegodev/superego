@@ -13,10 +13,13 @@ import { utils as schemaUtils } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import AppsDelete from "../apps/Delete.js";
 import AppsList from "../apps/List.js";
 import DocumentsDelete from "../documents/Delete.js";
@@ -24,6 +27,7 @@ import DocumentsDelete from "../documents/Delete.js";
 export default class CollectionsDelete extends Usecase<
   Backend["collections"]["delete"]
 > {
+  @validateArgs([valibotSchemas.id.collection(), v.string()])
   async exec(
     id: CollectionId,
     commandConfirmation: string,

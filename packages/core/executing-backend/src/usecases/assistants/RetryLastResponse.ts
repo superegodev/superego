@@ -12,6 +12,7 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
@@ -19,11 +20,13 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsRetryLastResponse extends Usecase<
   Backend["assistants"]["retryLastResponse"]
 > {
+  @validateArgs([valibotSchemas.id.conversation()])
   async exec(
     id: ConversationId,
   ): ResultPromise<

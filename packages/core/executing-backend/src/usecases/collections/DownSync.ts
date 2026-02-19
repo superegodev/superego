@@ -13,7 +13,9 @@ import type { ResultError, ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type RemoteEntity from "../../entities/RemoteEntity.js";
@@ -26,11 +28,13 @@ import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists
 import CollectionUtils from "../../utils/CollectionUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsDelete from "../documents/Delete.js";
 
 export default class CollectionsDownSync extends Usecase {
+  @validateArgs([v.strictObject({ id: valibotSchemas.id.collection() })])
   async exec({
     id,
   }: {

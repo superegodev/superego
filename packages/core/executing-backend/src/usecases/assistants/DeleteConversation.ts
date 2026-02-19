@@ -9,13 +9,17 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class AssistantsDeleteConversation extends Usecase<
   Backend["assistants"]["deleteConversation"]
 > {
+  @validateArgs([valibotSchemas.id.conversation(), v.string()])
   async exec(
     id: ConversationId,
     commandConfirmation: string,

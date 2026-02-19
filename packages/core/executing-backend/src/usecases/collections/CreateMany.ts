@@ -19,14 +19,18 @@ import {
   Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import {
   extractProtoCollectionIds,
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
@@ -35,9 +39,19 @@ interface CollectionsCreateManyOptions {
   skipReferenceCheckForAppIds?: AppId[];
 }
 
+const collectionsCreateManyOptionsSchema = v.strictObject({
+  dryRun: v.optional(v.boolean()),
+  collectionIds: v.optional(v.array(valibotSchemas.id.collection())),
+  skipReferenceCheckForAppIds: v.optional(v.array(valibotSchemas.id.app())),
+});
+
 export default class CollectionsCreateMany extends Usecase<
   Backend["collections"]["createMany"]
 > {
+  @validateArgs([
+    v.array(argSchemas.collectionDefinition()),
+    collectionsCreateManyOptionsSchema,
+  ])
   async exec(
     definitions: CollectionDefinition[],
     options: CollectionsCreateManyOptions = {},

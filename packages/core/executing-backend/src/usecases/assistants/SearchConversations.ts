@@ -5,12 +5,15 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeConversation from "../../makers/makeConversation.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsSearchConversations extends Usecase {
+  @validateArgs([v.string(), v.strictObject({ limit: v.number() })])
   async exec(
     query: string,
     options: { limit: number },

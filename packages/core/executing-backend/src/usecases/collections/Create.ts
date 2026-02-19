@@ -31,8 +31,10 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -41,9 +43,24 @@ interface CollectionsCreateOptions {
   skipReferenceCheckForAppIds?: AppId[];
 }
 
+const collectionsCreateOptionsSchema = v.strictObject({
+  dryRun: v.optional(v.boolean()),
+  collectionId: v.optional(backedUtilsValibotSchemas.id.collection()),
+  skipReferenceCheckForCollectionIds: v.optional(
+    v.array(backedUtilsValibotSchemas.id.collection()),
+  ),
+  skipReferenceCheckForAppIds: v.optional(
+    v.array(backedUtilsValibotSchemas.id.app()),
+  ),
+});
+
 export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
 > {
+  @validateArgs([
+    argSchemas.collectionDefinition(),
+    collectionsCreateOptionsSchema,
+  ])
   async exec(
     { settings, schema, versionSettings }: CollectionDefinition,
     options: CollectionsCreateOptions = {},

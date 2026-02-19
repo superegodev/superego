@@ -20,7 +20,9 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as argSchemas from "../../utils/argSchemas.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import {
   extractProtoDocumentIds,
@@ -28,6 +30,7 @@ import {
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import DocumentsCreate from "./Create.js";
 
 interface DocumentsCreateManyOptions {
@@ -39,6 +42,7 @@ interface DocumentsCreateManyOptions {
 export default class DocumentsCreateMany extends Usecase<
   Backend["documents"]["createMany"]
 > {
+  @validateArgs([v.array(argSchemas.documentDefinition()), v.looseObject({})])
   async exec(
     definitions: DocumentDefinition[],
     options?: DocumentsCreateManyOptions,

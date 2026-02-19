@@ -10,13 +10,16 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 
 export default class BazaarGetPack extends Usecase<
   Backend["bazaar"]["getPack"]
 > {
+  @validateArgs([valibotSchemas.id.pack()])
   async exec(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError> {
     const pack = packs.find((pack) => pack.id === id);
     if (!pack) {

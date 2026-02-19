@@ -9,17 +9,20 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateArgs from "../../utils/validateArgs.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsGetConversation extends Usecase<
   Backend["assistants"]["getConversation"]
 > {
+  @validateArgs([valibotSchemas.id.conversation()])
   async exec(
     id: ConversationId,
   ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError> {
