@@ -1514,6 +1514,12 @@
       "value": "Crea comunque"
     }
   ],
+  "EagerEchart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
   "EagerExcalidrawInput.tsx_QqavBC": [
     {
       "type": 0,
@@ -1548,12 +1554,6 @@
     {
       "type": 0,
       "value": "Scrivi..."
-    }
-  ],
-  "Echart.tsx_1nnRAQ": [
-    {
-      "type": 0,
-      "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
   "EditApp.tsx_K3r6DQ": [

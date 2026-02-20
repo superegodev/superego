@@ -1522,6 +1522,12 @@
       "value": "Create anyway"
     }
   ],
+  "EagerEchart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the chart."
+    }
+  ],
   "EagerExcalidrawInput.tsx_QqavBC": [
     {
       "type": 0,
@@ -1556,12 +1562,6 @@
     {
       "type": 0,
       "value": "Write..."
-    }
-  ],
-  "Echart.tsx_1nnRAQ": [
-    {
-      "type": 0,
-      "value": "An error occurred rendering the chart."
     }
   ],
   "EditApp.tsx_K3r6DQ": [
