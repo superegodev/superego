@@ -8,8 +8,9 @@ import type SelectOption from "./SelectOption.js";
 import SelectOptions from "./SelectOptions.js";
 
 interface Props {
-  value: string | null;
-  onChange: (newValue: string) => void;
+  mode?: "single" | "multiple" | undefined;
+  value: string | null | string[];
+  onChange: (newValue: string | string[]) => void;
   options: SelectOption[];
   isDisabled?: boolean | undefined;
   label?: ReactNode | undefined;
@@ -17,6 +18,7 @@ interface Props {
   description?: ReactNode | undefined;
 }
 export default function Select({
+  mode = "single",
   value,
   onChange,
   options,
@@ -27,8 +29,9 @@ export default function Select({
 }: Props) {
   return (
     <SelectRAC
-      value={value}
-      onChange={(newValue) => onChange(newValue as string)}
+      selectionMode={mode}
+      value={value as any}
+      onChange={(newValue) => onChange(newValue as any)}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
       className={cs.Select.root}

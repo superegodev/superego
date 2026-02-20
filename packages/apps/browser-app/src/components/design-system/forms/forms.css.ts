@@ -136,6 +136,7 @@ export const SelectOptions = {
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
+    border: `${vars.borders.width.thin} solid transparent`,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
@@ -144,7 +145,7 @@ export const SelectOptions = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.medium,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        borderColor: vars.colors.border.strong,
       },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,

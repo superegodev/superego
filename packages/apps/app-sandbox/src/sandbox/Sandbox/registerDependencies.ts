@@ -6,6 +6,7 @@ import DefaultApp from "../components/DefaultApp/DefaultApp.js";
 import Echart from "../components/Echart/Echart.js";
 import NumberField from "../components/forms/NumberField.js";
 import PlainDatePicker from "../components/forms/PlainDatePicker.js";
+import PlainDateRangePicker from "../components/forms/PlainDateRangePicker.js";
 import RadioGroup from "../components/forms/RadioGroup.js";
 import Select from "../components/forms/Select.js";
 import TextField from "../components/forms/TextField.js";
@@ -22,6 +23,7 @@ import Tile from "../components/Tile/Tile.js";
 import ToggleButton from "../components/ToggleButton/ToggleButton.js";
 import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
+import useDeleteDocument from "../hooks/useDeleteDocument.js";
 import theme from "../theme/theme.js";
 import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
@@ -44,6 +46,7 @@ export default function registerDependencies() {
         Link,
         NumberField,
         PlainDatePicker,
+        PlainDateRangePicker,
         RadioGroup,
         Select,
         Table,
@@ -55,6 +58,7 @@ export default function registerDependencies() {
       "@superego/app-sandbox/hooks": {
         useCreateDocument,
         useCreateNewDocumentVersion,
+        useDeleteDocument,
       },
       "@superego/app-sandbox/theme": theme,
     };

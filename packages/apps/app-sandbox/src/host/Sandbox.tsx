@@ -1,4 +1,5 @@
-import type { Backend } from "@superego/backend";
+import type { Backend, CollectionId, DocumentId } from "@superego/backend";
+import type { Result } from "@superego/global-types";
 import { useEffect, useRef, useState } from "react";
 import HostIpc from "../ipc/HostIpc.js";
 import MessageType from "../ipc/MessageType.js";
@@ -12,6 +13,10 @@ interface Props {
     documents: {
       create: Backend["documents"]["create"];
       createNewVersion: Backend["documents"]["createNewVersion"];
+      delete: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+      ) => Result<null, never>;
     };
     files: {
       getContent: Backend["files"]["getContent"];

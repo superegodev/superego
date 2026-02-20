@@ -152,6 +152,7 @@ export const SelectOptions = {
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
+    border: `${vars.borders.width.thin} solid transparent`,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
@@ -160,7 +161,7 @@ export const SelectOptions = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.medium,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        borderColor: vars.colors.border.strong,
       },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
@@ -264,6 +265,136 @@ export const DatePickerInput = {
     border: 0,
     cursor: "pointer",
     background: "transparent",
+  }),
+};
+
+export const DateRangePicker = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+};
+
+export const DateRangePickerInput = {
+  root: style([
+    inputRootBase,
+    {
+      display: "flex",
+    },
+  ]),
+
+  dateFields: style({
+    display: "flex",
+    alignItems: "center",
+    flexGrow: 1,
+  }),
+
+  dateInput: style({
+    border: 0,
+    marginBlockEnd: 0,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "fit-content",
+    whiteSpace: "nowrap",
+    forcedColorAdjust: "none",
+  }),
+
+  separator: style({
+    paddingInline: vars.spacing._1,
+    color: vars.colors.text.secondary,
+  }),
+
+  dateSegment: style({
+    paddingInline: vars.spacing._0_5,
+    selectors: {
+      "&:focus": {
+        borderRadius: vars.borders.radius.sm,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+        outlineOffset: 0,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: vars.spacing._9,
+    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+  }),
+};
+
+export const DateRangePickerCalendar = {
+  previousNextButton: style({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: `calc(${vars.spacing._9} + 1px)`,
+    marginBlockEnd: 0,
+    border: 0,
+    cursor: "pointer",
+  }),
+
+  header: style({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }),
+
+  heading: style({
+    flexGrow: 1,
+    margin: 0,
+    textAlign: "center",
+    fontSize: vars.typography.fontSizes.lg,
+  }),
+
+  headerCell: style({
+    paddingBlock: vars.spacing._3,
+    fontSize: vars.typography.fontSizes.sm,
+  }),
+
+  cell: style({
+    width: vars.spacing._9,
+    height: vars.spacing._9,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: vars.spacing._0_5,
+    fontSize: vars.typography.fontSizes.md,
+    color: vars.colors.text.primary,
+    borderRadius: vars.borders.radius.md,
+    cursor: "pointer",
+    selectors: {
+      '&[data-is-today="true"]': {
+        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
+      },
+      '&[data-outside-month="true"]': {
+        color: vars.colors.text.secondary,
+        pointerEvents: "none",
+      },
+      '&[data-hovered="true"]': {
+        backgroundColor: vars.colors.background.surfaceHighlight,
+      },
+      '&[data-selected="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+      },
+      '&[data-selection-start="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+      },
+      '&[data-selection-end="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+      },
+    },
   }),
 };
 

@@ -15,9 +15,11 @@ interface Props {
      */
     ProtoCollection_1: {
       id: "ProtoCollection_1";
+      versionId: string;
       displayName: string;
       documents: {
-        id: `Document_${string}`;
+        id: string;
+        versionId: string;
         href: string;
         content: ProtoCollection_1.CalendarEntry;
       }[];

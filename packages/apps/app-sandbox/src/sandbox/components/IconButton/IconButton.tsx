@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { CSSProperties } from "react";
 import { Button, TooltipTrigger } from "react-aria-components";
 import {
   PiArchive,
@@ -9,6 +10,7 @@ import {
   PiCheck,
   PiMinus,
   PiPlus,
+  PiTrash,
   PiX,
 } from "react-icons/pi";
 import Tooltip from "../Tooltip/Tooltip.js";
@@ -23,6 +25,7 @@ const icons = {
   plus: PiPlus,
   minus: PiMinus,
   x: PiX,
+  trash: PiTrash,
   archive: PiArchive,
 } as const;
 
@@ -33,6 +36,7 @@ interface Props {
   icon: keyof typeof icons;
   label: string;
   onPress?: (() => void) | undefined;
+  style?: CSSProperties | undefined;
   /** @internal */
   slot?: string | null | undefined;
   /** @internal */
@@ -45,6 +49,7 @@ export default function IconButton({
   icon,
   label,
   onPress,
+  style = {},
   slot,
   className,
 }: Props) {
@@ -59,7 +64,10 @@ export default function IconButton({
           cs.IconButton.root[size],
           className,
         )}
-        style={{ borderRadius: shape === "circle" ? "100%" : undefined }}
+        style={{
+          borderRadius: shape === "circle" ? "100%" : undefined,
+          ...style,
+        }}
         slot={slot}
       >
         <IconComponent />

@@ -13,8 +13,8 @@ import Button from "../../design-system/Button/Button.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
+import RHFSubmitButton from "../RHFSubmitButton/RHFSubmitButton.js";
+import RHFTextField from "../RHFTextField/RHFTextField.js";
 
 interface FormValues {
   commandConfirmation: string;
@@ -22,14 +22,9 @@ interface FormValues {
 
 interface Props {
   document: Document;
-  isOpen: boolean;
   onClose: () => void;
 }
-export default function DeleteDocumentModalForm({
-  document,
-  isOpen,
-  onClose,
-}: Props) {
+export default function ModalContent({ document, onClose }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
@@ -59,7 +54,7 @@ export default function DeleteDocumentModalForm({
   };
 
   return (
-    <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
+    <>
       <ModalDialog.Heading>
         <FormattedMessage
           defaultMessage='Delete document "{documentName}"'
@@ -106,6 +101,6 @@ export default function DeleteDocumentModalForm({
         </ModalDialog.Actions>
         {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
-    </ModalDialog>
+    </>
   );
 }
