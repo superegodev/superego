@@ -17,6 +17,7 @@ interface DateRange {
 interface Props {
   value: DateRange | null;
   onChange: (newValue: DateRange | null) => void;
+  layout?: "vertical" | "horizontal" | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
@@ -25,6 +26,7 @@ interface Props {
 export default function PlainDateRangePicker({
   value,
   onChange,
+  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -45,7 +47,7 @@ export default function PlainDateRangePicker({
       }
       isDisabled={isDisabled}
       aria-label={ariaLabel}
-      className={cs.DateRangePicker.root}
+      className={cs.DateRangePicker.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
       <DateRangePickerInput />

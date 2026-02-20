@@ -8,6 +8,7 @@ const buttonRootBase = style({
   paddingInline: vars.spacing._3,
   borderRadius: vars.borders.radius.md,
   cursor: "pointer",
+  textDecoration: "none",
   selectors: {
     "&[disabled]": {
       cursor: "not-allowed",

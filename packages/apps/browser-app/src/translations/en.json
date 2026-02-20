@@ -488,21 +488,6 @@
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
   },
-  "DeleteDocumentModalForm.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "DeleteDocumentModalForm.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
-  },
-  "DeleteDocumentModalForm.tsx_cpePvc": {
-    "defaultMessage": "Delete document \"{documentName}\""
-  },
-  "DeleteDocumentModalForm.tsx_lml5ZH": {
-    "defaultMessage": "Command confirmation"
-  },
-  "DeleteDocumentModalForm.tsx_qjTjxw": {
-    "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
-  },
   "Document.tsx_AB6IO/": {
     "defaultMessage": "Go to remote document"
   },
@@ -1045,6 +1030,21 @@
   },
   "MigrationTab.tsx_i8zErH": {
     "defaultMessage": "Write a migration function to convert documents from the previous schema to the updated schema."
+  },
+  "ModalContent.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "ModalContent.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "ModalContent.tsx_cpePvc": {
+    "defaultMessage": "Delete document \"{documentName}\""
+  },
+  "ModalContent.tsx_lml5ZH": {
+    "defaultMessage": "Command confirmation"
+  },
+  "ModalContent.tsx_qjTjxw": {
+    "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"

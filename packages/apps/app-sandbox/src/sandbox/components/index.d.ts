@@ -183,6 +183,8 @@ export declare function PlainDatePicker(props: {
      */
     newValue: string | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -202,6 +204,8 @@ export declare function PlainDateRangePicker(props: {
      */
     newValue: { start: string; end: string } | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -223,6 +227,8 @@ export declare function Select(
     ariaLabel?: string;
     description?: ReactNode;
     isDisabled?: boolean;
+    /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+    layout?: "vertical" | "horizontal";
   } & (
     | {
         /** @defaultValue "single" */
@@ -253,6 +259,8 @@ export declare function TextField(props: {
     /** New value typed by the user, or `null` if the field is empty. */
     newValue: string | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -268,6 +276,8 @@ export declare function NumberField(props: {
     /** New value typed by the user, or `null` if the field is empty. */
     newValue: number | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -293,6 +303,8 @@ export declare function RadioGroup(props: {
     label: ReactNode;
     description?: ReactNode;
   }[];
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;

@@ -1,4 +1,9 @@
-import { type ComplexStyleRule, style } from "@vanilla-extract/css";
+import {
+  type ComplexStyleRule,
+  globalStyle,
+  style,
+  styleVariants,
+} from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
 const inputRootBase: ComplexStyleRule = {
@@ -6,7 +11,6 @@ const inputRootBase: ComplexStyleRule = {
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
-  marginBlockEnd: vars.spacing._2,
   borderWidth: vars.borders.width.thin,
   borderRadius: vars.borders.radius.md,
   borderStyle: "solid",
@@ -26,39 +30,64 @@ const inputRootBase: ComplexStyleRule = {
   },
 };
 
+const labelRootBase = style({
+  display: "block",
+  fontSize: vars.typography.fontSizes.md,
+  fontWeight: vars.typography.fontWeights.medium,
+  color: vars.colors.text.primary,
+  selectors: {
+    '[data-disabled="true"] > &': {
+      color: vars.colors.text.secondary,
+    },
+  },
+});
+
+const verticalFieldRootBse: ComplexStyleRule = {
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing._2,
+};
+
+const horizontalFieldBase = style({
+  display: "grid",
+  gridTemplateColumns: "auto 1fr",
+  gap: vars.spacing._2,
+  alignItems: "center",
+});
+
+globalStyle(`${horizontalFieldBase} > :not(${labelRootBase})`, {
+  gridColumn: 2,
+});
+
 export const TextField = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBse,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
 export const NumberField = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBse,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
 export const RadioGroup = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
-    color: vars.colors.text.primary,
+  root: styleVariants({
+    vertical: { ...verticalFieldRootBse, color: vars.colors.text.primary },
+    horizontal: [horizontalFieldBase, { color: vars.colors.text.primary }],
   }),
 };
 
 export const Radio = {
   root: style({
     display: "flex",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: vars.spacing._2,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
-      "&:not(:last-child)": {
-        marginBlockEnd: vars.spacing._2,
-      },
       "&::before": {
         content: "''",
         display: "block",
@@ -105,9 +134,9 @@ export const Radio = {
 };
 
 export const Select = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBse,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
@@ -121,7 +150,6 @@ export const SelectButton = {
     justifyContent: "space-between",
     alignItems: "center",
     height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: vars.spacing._2,
   }),
 
   selectValue: style({
@@ -192,18 +220,7 @@ export const SelectOptions = {
 };
 
 export const Label = {
-  root: style({
-    display: "block",
-    marginBlockEnd: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.md,
-    fontWeight: vars.typography.fontWeights.medium,
-    color: vars.colors.text.primary,
-    selectors: {
-      '[data-disabled="true"] > &': {
-        color: vars.colors.text.secondary,
-      },
-    },
-  }),
+  root: labelRootBase,
 };
 
 export const Description = {
@@ -219,9 +236,9 @@ export const Description = {
 };
 
 export const DatePicker = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBse,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
@@ -235,7 +252,6 @@ export const DatePickerInput = {
 
   dateInput: style({
     border: 0,
-    marginBlockEnd: 0,
     alignItems: "center",
     alignSelf: "center",
     width: "fit-content",
@@ -269,9 +285,9 @@ export const DatePickerInput = {
 };
 
 export const DateRangePicker = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBse,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
@@ -291,7 +307,6 @@ export const DateRangePickerInput = {
 
   dateInput: style({
     border: 0,
-    marginBlockEnd: 0,
     alignItems: "center",
     alignSelf: "center",
     width: "fit-content",
@@ -335,7 +350,6 @@ export const DateRangePickerCalendar = {
     justifyContent: "space-between",
     alignItems: "center",
     height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",
   }),
@@ -404,7 +418,6 @@ export const DatePickerCalendar = {
     justifyContent: "space-between",
     alignItems: "center",
     height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",
   }),

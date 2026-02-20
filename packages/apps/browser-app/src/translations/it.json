@@ -488,19 +488,19 @@
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DeleteDocumentModalForm.tsx_47FYwb": {
+  "ModalContent.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "DeleteDocumentModalForm.tsx_K3r6DQ": {
+  "ModalContent.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
-  "DeleteDocumentModalForm.tsx_cpePvc": {
+  "ModalContent.tsx_cpePvc": {
     "defaultMessage": "Elimina il documento \"{documentName}\""
   },
-  "DeleteDocumentModalForm.tsx_lml5ZH": {
+  "ModalContent.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DeleteDocumentModalForm.tsx_qjTjxw": {
+  "ModalContent.tsx_qjTjxw": {
     "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
   "Document.tsx_AB6IO/": {

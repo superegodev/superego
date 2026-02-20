@@ -12,6 +12,7 @@ interface Props {
   value: string | null | string[];
   onChange: (newValue: string | string[]) => void;
   options: SelectOption[];
+  layout?: "vertical" | "horizontal" | undefined;
   isDisabled?: boolean | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
@@ -22,6 +23,7 @@ export default function Select({
   value,
   onChange,
   options,
+  layout = "vertical",
   isDisabled,
   label,
   ariaLabel,
@@ -34,7 +36,7 @@ export default function Select({
       onChange={(newValue) => onChange(newValue as any)}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
-      className={cs.Select.root}
+      className={cs.Select.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
       <SelectButton />
