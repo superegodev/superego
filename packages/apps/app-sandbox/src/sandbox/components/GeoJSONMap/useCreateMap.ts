@@ -144,6 +144,9 @@ export default function useCreateMap(geoJSON: {
     });
 
     map.on("error", (e) => {
+      if (mapRef.current !== map) {
+        return;
+      }
       setRenderingError(e.error);
     });
 
