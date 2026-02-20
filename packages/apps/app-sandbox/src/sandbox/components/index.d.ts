@@ -1,3 +1,4 @@
+import type { EChartsOption } from "echarts";
 import type { CSSProperties, JSX, ReactNode } from "react";
 
 /** Shows a visual alert. */
@@ -471,6 +472,13 @@ export declare namespace KanbanBoard {
     textValue: string;
     /** When provided, navigates to the href onPress. Target is always set to _top. */
     href?: string;
+    /** Leaving undefined results in an acceptable default. */
+    style?: {
+      backgroundColor?: string;
+      borderColor?: string;
+      borderStyle?: string;
+      color?: string;
+    };
     /** Note: no need to add padding for children. */
     children: ReactNode;
   }) => JSX.Element;

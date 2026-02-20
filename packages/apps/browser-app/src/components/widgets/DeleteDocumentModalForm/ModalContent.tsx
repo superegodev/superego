@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Button from "../../design-system/Button/Button.js";
@@ -23,10 +21,10 @@ interface FormValues {
 interface Props {
   document: Document;
   onClose: () => void;
+  onDeleted?: () => void;
 }
-export default function ModalContent({ document, onClose }: Props) {
+export default function ModalContent({ document, onClose, onDeleted }: Props) {
   const intl = useIntl();
-  const { navigateTo } = useNavigationState();
 
   const { result, mutate } = useDeleteDocument();
 
@@ -46,10 +44,8 @@ export default function ModalContent({ document, onClose }: Props) {
       commandConfirmation,
     );
     if (success) {
-      navigateTo({
-        name: RouteName.Collection,
-        collectionId: document.collectionId,
-      });
+      onClose();
+      onDeleted?.();
     }
   };
 

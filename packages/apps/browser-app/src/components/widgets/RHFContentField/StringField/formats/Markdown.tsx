@@ -19,7 +19,7 @@ export default function Markdown({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { grow } = useFieldUiOptions(name);
+  const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const onChange = useCallback(
     (newValue: string) => field.onChange(newValue !== "" ? newValue : null),
@@ -30,7 +30,7 @@ export default function Markdown({
       className={classnames(
         cs.StringField.Markdown.root,
         isListItem && cs.ListItemField.root,
-        grow && cs.Field.grow,
+        flexGrow && cs.Field.flexGrow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -54,7 +54,7 @@ export default function Markdown({
         isReadOnly={isReadOnly}
         placeholder="null"
         ref={field.ref}
-        className={grow ? cs.Field.growContent : undefined}
+        className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext
         value={{

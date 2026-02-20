@@ -218,6 +218,9 @@ export default function Document({
                 documentId={documentId}
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
+                onDeleted={() =>
+                  navigateTo({ name: RouteName.Collection, collectionId })
+                }
               />
               <RemoteDocumentInfoModal
                 collection={collection}

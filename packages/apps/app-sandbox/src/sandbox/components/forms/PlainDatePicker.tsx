@@ -35,7 +35,9 @@ export default function PlainDatePicker({
       className={cs.DatePicker.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
-      <DatePickerInput />
+      <DatePickerInput
+        onClear={value !== null ? () => onChange(null) : undefined}
+      />
       <DatePickerCalendar />
       {description ? <Description>{description}</Description> : null}
     </DatePickerRAC>

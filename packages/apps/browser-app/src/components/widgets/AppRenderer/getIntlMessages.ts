@@ -51,5 +51,8 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
     KanbanBoard: {
       dragButton: intl.formatMessage({ defaultMessage: "Drag" }),
     },
+    forms: {
+      clearButton: intl.formatMessage({ defaultMessage: "Clear" }),
+    },
   };
 }

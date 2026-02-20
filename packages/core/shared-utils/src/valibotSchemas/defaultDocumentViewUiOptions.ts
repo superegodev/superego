@@ -45,7 +45,7 @@ const htmlAstNodeSchema: v.GenericSchema<
       layout: v.optional(v.array(htmlAstNodeSchema)),
       hideLabel: v.optional(v.boolean()),
       allowCollapsing: v.optional(v.boolean()),
-      grow: v.optional(v.boolean()),
+      flexGrow: v.optional(v.boolean()),
     }),
     v.looseObject({
       style: v.optional(

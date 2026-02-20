@@ -13,9 +13,17 @@ interface Props {
   id: Key;
   textValue: string;
   href?: string;
+  style?:
+    | {
+        backgroundColor?: string | undefined;
+        borderColor?: string | undefined;
+        borderStyle?: string | undefined;
+        color?: string | undefined;
+      }
+    | undefined;
   children: ReactNode;
 }
-export default function Card({ id, textValue, href, children }: Props) {
+export default function Card({ id, textValue, href, style, children }: Props) {
   const { dragButton } = useIntlMessages("KanbanBoard");
   const navigateHostTo = useNavigateHostTo();
 
@@ -39,7 +47,13 @@ export default function Card({ id, textValue, href, children }: Props) {
       textValue={textValue}
       className={cs.Card.root}
       onAction={href ? () => navigateHostTo(href) : undefined}
-      style={href ? { cursor: "pointer" } : undefined}
+      style={{
+        backgroundColor: style?.backgroundColor,
+        borderColor: style?.borderColor,
+        borderStyle: style?.borderStyle,
+        color: style?.color,
+        ...(href ? { cursor: "pointer" } : undefined),
+      }}
     >
       <Button
         slot="drag"

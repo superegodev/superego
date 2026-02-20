@@ -50,7 +50,9 @@ export default function PlainDateRangePicker({
       className={cs.DateRangePicker.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
-      <DateRangePickerInput />
+      <DateRangePickerInput
+        onClear={value !== null ? () => onChange(null) : undefined}
+      />
       <DateRangePickerCalendar />
       {description ? <Description>{description}</Description> : null}
     </DateRangePickerRAC>

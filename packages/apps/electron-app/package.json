@@ -21,9 +21,10 @@
     "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/main/translations/*.json'",
     "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile",
     "build:cli": "vite --config=cli.vite.config.ts build",
-    "build:vite": "electron-vite --outDir=dist build",
+    "build:devenv": "vite --config=devenv.vite.config.ts build",
+    "build:electron-vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
-    "build": "yarn build:cli && yarn build:vite && yarn build:forge",
+    "build": "yarn build:cli && yarn build:electron-vite && yarn build:devenv && yarn build:forge",
     "deploy": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {

@@ -9,18 +9,26 @@ interface Props {
   documentId: DocumentId;
   isOpen: boolean;
   onClose: () => void;
+  onDeleted?: () => void;
 }
 export default function DeleteDocumentModalForm({
   collectionId,
   documentId,
   isOpen,
   onClose,
+  onDeleted,
 }: Props) {
   return (
     <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
       {isOpen ? (
         <DataLoader queries={[getDocumentQuery([collectionId, documentId])]}>
-          {(document) => <ModalContent document={document} onClose={onClose} />}
+          {(document) => (
+            <ModalContent
+              document={document}
+              onClose={onClose}
+              onDeleted={onDeleted}
+            />
+          )}
         </DataLoader>
       ) : null}
     </ModalDialog>

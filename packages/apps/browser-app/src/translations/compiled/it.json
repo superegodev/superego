@@ -1026,6 +1026,12 @@
       "value": "Creato dalla sincronizzazione"
     }
   ],
+  "DatePickerInput.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4479,6 +4485,12 @@
     {
       "type": 0,
       "value": "Ultima sincronizzazione non riuscita"
+    }
+  ],
+  "getIntlMessages.ts_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
     }
   ],
   "getIntlMessages.ts_1nnRAQ": [

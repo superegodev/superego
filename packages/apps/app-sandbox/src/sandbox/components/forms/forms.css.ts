@@ -8,6 +8,8 @@ import { vars } from "../../themes.css.js";
 
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
+  // Pixel adjustment so all inputs' heights match.
+  height: `calc(${vars.spacing._9} + 1px)`,
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
@@ -257,6 +259,7 @@ export const DatePickerInput = {
     width: "fit-content",
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
+    flexGrow: 1,
   }),
 
   dateSegment: style({
@@ -271,12 +274,26 @@ export const DatePickerInput = {
     },
   }),
 
-  button: style({
+  clearButton: style({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
     height: vars.spacing._9,
-    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
     cursor: "pointer",
@@ -331,12 +348,26 @@ export const DateRangePickerInput = {
     },
   }),
 
-  button: style({
+  clearButton: style({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
     height: vars.spacing._9,
-    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
     cursor: "pointer",

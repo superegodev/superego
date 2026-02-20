@@ -437,6 +437,9 @@
   "CreatedByLine.tsx_ufqNmd": {
     "defaultMessage": "Created by sync"
   },
+  "DatePickerInput.tsx_/GCoTA": {
+    "defaultMessage": "Clear"
+  },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
@@ -1528,6 +1531,9 @@
   },
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Last sync failed"
+  },
+  "getIntlMessages.ts_/GCoTA": {
+    "defaultMessage": "Clear"
   },
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."

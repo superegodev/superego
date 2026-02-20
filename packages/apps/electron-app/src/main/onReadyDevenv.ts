@@ -45,12 +45,12 @@ export default async function onReadyDevenv(): Promise<void> {
         openFileIPCProxyServer.start();
         new OpenInNativeBrowserIPCProxyServer().start();
         new WindowCloseIPCProxyServer().start();
-        setApplicationMenu(intl, { onNewWindow: createWindow });
-        createWindow();
+        setApplicationMenu(intl, { onNewWindow: () => createWindow(true) });
+        createWindow(true);
       } else {
         backendIPCProxyServer.replaceBackend(backend);
         openFileIPCProxyServer!.replaceBackend(backend);
-        const newWindow = createWindow();
+        const newWindow = createWindow(true);
         for (const win of BrowserWindow.getAllWindows()) {
           if (win !== newWindow) {
             win.destroy();

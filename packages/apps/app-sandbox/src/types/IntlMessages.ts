@@ -25,4 +25,7 @@ export default interface IntlMessages {
   KanbanBoard: {
     dragButton: string;
   };
+  forms: {
+    clearButton: string;
+  };
 }

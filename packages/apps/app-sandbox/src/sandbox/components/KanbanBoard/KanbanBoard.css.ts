@@ -16,7 +16,7 @@ export const Column = {
     flexDirection: "column",
     minWidth: vars.spacing._64,
     flex: "1 1 0%",
-    background: vars.colors.background.subtleSurface,
+    background: vars.colors.background.secondarySurface,
     borderRadius: vars.borders.radius.lg,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     overflow: "hidden",

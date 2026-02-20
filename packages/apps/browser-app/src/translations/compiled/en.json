@@ -1034,6 +1034,12 @@
       "value": "Created by sync"
     }
   ],
+  "DatePickerInput.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4501,6 +4507,12 @@
     {
       "type": 0,
       "value": "Last sync failed"
+    }
+  ],
+  "getIntlMessages.ts_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Clear"
     }
   ],
   "getIntlMessages.ts_1nnRAQ": [
