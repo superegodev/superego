@@ -39,7 +39,6 @@ export default function useCreateMap(geoJSON: {
       container: mapContainer,
       style: getMapStyle(theme),
       ...getCenterAndZoom(geoJSON),
-      attributionControl: false,
     });
     mapRef.current = map;
 

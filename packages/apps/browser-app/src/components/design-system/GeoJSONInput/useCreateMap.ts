@@ -34,7 +34,6 @@ export default function useCreateMap({
       container: mapContainer,
       style: getMapStyle(theme),
       ...getCenterAndZoom(value),
-      attributionControl: false,
     });
     mapRef.current = map;
 

@@ -16,7 +16,6 @@ interface Props {
 export default function CreateChart({ toolResult }: Props) {
   const { echartsOption } = toolResult.artifacts;
   const { title } = echartsOption;
-
   // echartsOption actual value (not ref) only changes when toolCallId changes.
   // Since we don't want to redraw the chart on every change of ref, we memoize
   // the option.
@@ -25,7 +24,6 @@ export default function CreateChart({ toolResult }: Props) {
     () => omit(echartsOption as EChartsOption, ["title", "toolbox"]),
     [toolResult.toolCallId],
   );
-
   return (
     <div>
       <Title>{Array.isArray(title) ? title[0].text : title.text}</Title>

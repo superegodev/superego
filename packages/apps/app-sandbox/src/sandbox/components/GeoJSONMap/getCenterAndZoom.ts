@@ -58,7 +58,8 @@ export default function getCenterAndZoom(
     0,
     Math.min(
       18,
-      Math.floor(Math.min(Math.log2(360 / lonSpan), Math.log2(180 / latSpan))),
+      Math.floor(Math.min(Math.log2(360 / lonSpan), Math.log2(180 / latSpan))) +
+        1,
     ),
   );
 

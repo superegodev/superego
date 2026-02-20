@@ -42,7 +42,6 @@ export default function useCreateMap(geoJSON: {
           ? "https://tiles.openfreemap.org/styles/fiord"
           : "https://tiles.openfreemap.org/styles/positron",
       ...getCenterAndZoom(geoJSON),
-      attributionControl: false,
     });
     mapRef.current = map;
 
