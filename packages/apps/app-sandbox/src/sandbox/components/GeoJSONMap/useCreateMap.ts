@@ -35,14 +35,20 @@ export default function useCreateMap(geoJSON: {
       .getPropertyValue("--_text-inverse")
       .trim();
 
-    const map = new maplibregl.Map({
-      container: mapContainer,
-      style:
-        theme === Theme.Dark
-          ? "https://tiles.openfreemap.org/styles/fiord"
-          : "https://tiles.openfreemap.org/styles/positron",
-      ...getCenterAndZoom(geoJSON),
-    });
+    let map: maplibregl.Map;
+    try {
+      map = new maplibregl.Map({
+        container: mapContainer,
+        style:
+          theme === Theme.Dark
+            ? "https://tiles.openfreemap.org/styles/fiord"
+            : "https://tiles.openfreemap.org/styles/positron",
+        ...getCenterAndZoom(geoJSON),
+      });
+    } catch (error) {
+      setRenderingError(error);
+      return;
+    }
     mapRef.current = map;
 
     map.on("load", () => {
