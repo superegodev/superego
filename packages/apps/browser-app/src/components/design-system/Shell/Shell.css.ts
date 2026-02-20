@@ -75,7 +75,7 @@ export const PanelHeader = {
         180deg,
         ${vars.colors.background.surface} 0%,
         ${vars.colors.background.surface} 80%,
-        rgba(from ${vars.colors.background.surface} r g b / 0) 100%
+        rgb(from ${vars.colors.background.surface} r g b / 0) 100%
       )
     `,
     display: "flex",

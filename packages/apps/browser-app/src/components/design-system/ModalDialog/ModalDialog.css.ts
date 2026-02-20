@@ -57,7 +57,7 @@ export const ModalDialog = {
     outline: "none",
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.neutral._12} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.neutral._12} r g b / 0.1)`,
     selectors: {
       '&[data-entering="true"]': {
         "@media": {

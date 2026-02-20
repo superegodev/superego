@@ -12,7 +12,7 @@ export const UserMessageContentInput = {
     paddingBlockEnd: vars.spacing._2,
     borderRadius: vars.borders.radius.xl,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
-    boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgb(from ${vars.colors.border.focus} r g b / 0.1)`,
     selectors: {
       [`${dark} &`]: {
         boxShadow: "none",

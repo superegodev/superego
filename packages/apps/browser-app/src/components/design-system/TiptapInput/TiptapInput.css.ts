@@ -52,7 +52,7 @@ export const FormattingToolbar = {
     paddingInline: vars.spacing._4,
     paddingBlockStart: vars.spacing._4,
     paddingBlockEnd: vars.spacing._2,
-    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgba(from ${vars.colors.background.surface} r g b / 0) 100%)`,
+    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgb(from ${vars.colors.background.surface} r g b / 0) 100%)`,
   }),
 
   group: style({

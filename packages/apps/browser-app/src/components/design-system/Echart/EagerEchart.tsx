@@ -38,25 +38,32 @@ export default function EagerEchart({
     };
   }, [option, theme]);
 
-  return renderingError === null ? (
-    <div
-      ref={chartElementRef}
-      style={{ width, height }}
-      className={className}
-    />
-  ) : (
-    <Alert
-      title={intl.formatMessage({
-        defaultMessage: "An error occurred rendering the chart.",
-      })}
-      variant="error"
-      style={{ width, height }}
-    >
-      <CodeBlock
-        language="json"
-        code={JSON.stringify(extractErrorDetails(renderingError))}
-        showCopyButton={true}
+  return (
+    <>
+      <div
+        ref={chartElementRef}
+        style={{
+          width,
+          height,
+          display: renderingError !== null ? "none" : undefined,
+        }}
+        className={className}
       />
-    </Alert>
+      {renderingError !== null && (
+        <Alert
+          title={intl.formatMessage({
+            defaultMessage: "An error occurred rendering the chart.",
+          })}
+          variant="error"
+          style={{ width, height }}
+        >
+          <CodeBlock
+            language="json"
+            code={JSON.stringify(extractErrorDetails(renderingError))}
+            showCopyButton={true}
+          />
+        </Alert>
+      )}
+    </>
   );
 }

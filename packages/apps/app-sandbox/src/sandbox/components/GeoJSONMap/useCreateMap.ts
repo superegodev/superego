@@ -12,8 +12,12 @@ export default function useCreateMap(geoJSON: {
 }) {
   const [renderingError, setRenderingError] = useState<any>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const theme = useTheme();
 
+  // geoJSON is synced in a separate effect.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const mapContainer = mapContainerRef.current;
     if (!mapContainer) {
@@ -21,6 +25,7 @@ export default function useCreateMap(geoJSON: {
     }
 
     setRenderingError(null);
+    setIsLoaded(false);
 
     mapContainer.style.setProperty("--_accent", vars.colors.accent);
     mapContainer.style.setProperty("--_text-inverse", vars.colors.text.inverse);
@@ -39,8 +44,13 @@ export default function useCreateMap(geoJSON: {
       ...getCenterAndZoom(geoJSON),
       attributionControl: false,
     });
+    mapRef.current = map;
 
     map.on("load", () => {
+      if (mapRef.current !== map) {
+        return;
+      }
+
       try {
         map.addSource("geojson-data", {
           type: "geojson",
@@ -126,6 +136,8 @@ export default function useCreateMap(geoJSON: {
             map.getCanvas().style.cursor = "";
           });
         }
+
+        setIsLoaded(true);
       } catch (error) {
         setRenderingError(error);
       }
@@ -136,9 +148,26 @@ export default function useCreateMap(geoJSON: {
     });
 
     return () => {
+      mapRef.current = null;
+      setIsLoaded(false);
       map.remove();
     };
-  }, [geoJSON, theme]);
+  }, [theme]);
+
+  // Depend on stringified geoJSON for deep comparison.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isLoaded) {
+      return;
+    }
+    const source = map.getSource("geojson-data") as
+      | maplibregl.GeoJSONSource
+      | undefined;
+    if (source) {
+      source.setData(geoJSON as unknown as GeoJSON.GeoJSON);
+    }
+  }, [isLoaded, JSON.stringify(geoJSON)]);
 
   return { renderingError, mapContainerRef };
 }

@@ -151,7 +151,7 @@ export const DayPopover = {
     position: "relative",
     minWidth: `calc(3 / 7 * 100% - ${vars.spacing._3})`,
     background: vars.colors.background.subtleSurface,
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.background.inverseHighlight} r g b / 0.2)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.2)`,
     boxSizing: "content-box",
     padding: 0,
   }),
