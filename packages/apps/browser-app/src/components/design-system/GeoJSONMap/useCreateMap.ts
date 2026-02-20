@@ -1,10 +1,10 @@
+import { escapeHtml } from "@superego/shared-utils";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import { vars } from "../../../themes.css.js";
 import getCenterAndZoom from "../../../utils/getCenterAndZoom.js";
 import getMapStyle from "../../../utils/getMapStyle.js";
-import escapeHtml from "./escapeHtml.js";
 
 export default function useCreateMap(geoJSON: {
   type: string;

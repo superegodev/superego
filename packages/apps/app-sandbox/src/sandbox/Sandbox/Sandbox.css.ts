@@ -25,7 +25,7 @@ globalStyle("body::before", {
   right: 0,
   height: "0.6rem",
   background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, rgba(from ${vars.colors.background.surface} r g b / 0) 100%)`,
-  zIndex: 9999,
+  zIndex: 99,
   pointerEvents: "none",
 });
 

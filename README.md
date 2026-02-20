@@ -51,12 +51,12 @@ the database foundation is always visible. You own it.
 - [x] Collection view apps.
 - [x] Data-aware AI assistant.
 - [x] Write apps with your coding agent.
-- [ ] MCP/HTTP server.
-- [ ] Database hooks.
+- [ ] CLI.
 - [ ] AI-powered data import.
 - [ ] Mobile app.
 - [ ] Sync between devices.
 - [ ] Database encryption.
+- [ ] Database hooks.
 
 ## Is This Vibe-Coded Slop?
 

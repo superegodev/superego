@@ -1,9 +1,9 @@
 import { Theme } from "@superego/backend";
+import { escapeHtml } from "@superego/shared-utils";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import useTheme from "../../business-logic/theme/useTheme.js";
 import { vars } from "../../themes.css.js";
-import escapeHtml from "./escapeHtml.js";
 import getCenterAndZoom from "./getCenterAndZoom.js";
 
 export default function useCreateMap(geoJSON: {

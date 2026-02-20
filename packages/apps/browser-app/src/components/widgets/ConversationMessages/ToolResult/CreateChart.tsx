@@ -1,13 +1,11 @@
 import type { ToolResult } from "@superego/backend";
 import type { EChartsOption } from "echarts";
 import { omit } from "es-toolkit";
-import { lazy, Suspense, useMemo } from "react";
+import { useMemo } from "react";
 import { vars } from "../../../../themes.css.js";
-import Skeleton from "../../../design-system/Skeleton/Skeleton.js";
+import Echart from "../../../design-system/Echart/Echart.js";
 import Title from "./Title.js";
 import * as cs from "./ToolResult.css.js";
-
-const Echart = lazy(() => import("../../../design-system/Echart/Echart.js"));
 
 interface Props {
   toolResult: ToolResult.CreateChart & {
@@ -31,22 +29,12 @@ export default function CreateChart({ toolResult }: Props) {
   return (
     <div>
       <Title>{Array.isArray(title) ? title[0].text : title.text}</Title>
-      <Suspense
-        fallback={
-          <Skeleton
-            variant="rectangle"
-            width="100%"
-            height={vars.spacing._80}
-          />
-        }
-      >
-        <Echart
-          option={option}
-          width="100%"
-          height={vars.spacing._80}
-          className={cs.CreateChart.chart}
-        />
-      </Suspense>
+      <Echart
+        option={option}
+        width="100%"
+        height={vars.spacing._80}
+        className={cs.CreateChart.chart}
+      />
     </div>
   );
 }
