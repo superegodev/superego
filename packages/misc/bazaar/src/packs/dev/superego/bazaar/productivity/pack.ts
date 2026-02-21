@@ -24,7 +24,7 @@ A basic productivity pack to get you started:
 
 - An address book for your personal contacts.
 - A calendar for your appointments.
-- A kanban board for you tasks.
+- A kanban board for your tasks.
 - A collection of notes, because who doesn't take notes.
 - And finally a collection to keep your Excalidraw drawings organized.
     `.trim(),

@@ -44,7 +44,7 @@ const labelRootBase = style({
   },
 });
 
-const verticalFieldRootBse: ComplexStyleRule = {
+const verticalFieldRootBase: ComplexStyleRule = {
   display: "flex",
   flexDirection: "column",
   gap: vars.spacing._2,
@@ -63,21 +63,21 @@ globalStyle(`${horizontalFieldBase} > :not(${labelRootBase})`, {
 
 export const TextField = {
   root: styleVariants({
-    vertical: verticalFieldRootBse,
+    vertical: verticalFieldRootBase,
     horizontal: [horizontalFieldBase],
   }),
 };
 
 export const NumberField = {
   root: styleVariants({
-    vertical: verticalFieldRootBse,
+    vertical: verticalFieldRootBase,
     horizontal: [horizontalFieldBase],
   }),
 };
 
 export const RadioGroup = {
   root: styleVariants({
-    vertical: { ...verticalFieldRootBse, color: vars.colors.text.primary },
+    vertical: { ...verticalFieldRootBase, color: vars.colors.text.primary },
     horizontal: [horizontalFieldBase, { color: vars.colors.text.primary }],
   }),
 };
@@ -137,7 +137,7 @@ export const Radio = {
 
 export const Select = {
   root: styleVariants({
-    vertical: verticalFieldRootBse,
+    vertical: verticalFieldRootBase,
     horizontal: [horizontalFieldBase],
   }),
 };
@@ -165,6 +165,22 @@ export const SelectButton = {
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
+  }),
+
+  clearButton: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
   }),
 };
 
@@ -239,7 +255,7 @@ export const Description = {
 
 export const DatePicker = {
   root: styleVariants({
-    vertical: verticalFieldRootBse,
+    vertical: verticalFieldRootBase,
     horizontal: [horizontalFieldBase],
   }),
 };
@@ -303,7 +319,7 @@ export const DatePickerInput = {
 
 export const DateRangePicker = {
   root: styleVariants({
-    vertical: verticalFieldRootBse,
+    vertical: verticalFieldRootBase,
     horizontal: [horizontalFieldBase],
   }),
 };

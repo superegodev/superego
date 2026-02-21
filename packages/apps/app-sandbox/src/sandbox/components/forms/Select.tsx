@@ -10,7 +10,7 @@ import SelectOptions from "./SelectOptions.js";
 interface Props {
   mode?: "single" | "multiple" | undefined;
   value: string | null | string[];
-  onChange: (newValue: string | string[]) => void;
+  onChange: (newValue: string | null | string[]) => void;
   options: SelectOption[];
   layout?: "vertical" | "horizontal" | undefined;
   isDisabled?: boolean | undefined;
@@ -39,7 +39,9 @@ export default function Select({
       className={cs.Select.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
-      <SelectButton />
+      <SelectButton
+        onClear={typeof value === "string" ? () => onChange(null) : undefined}
+      />
       <SelectOptions options={options} />
       {description ? <Description>{description}</Description> : null}
     </SelectRAC>

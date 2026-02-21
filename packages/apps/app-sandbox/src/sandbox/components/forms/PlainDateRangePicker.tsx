@@ -35,16 +35,13 @@ export default function PlainDateRangePicker({
   return (
     <DateRangePickerRAC
       value={value !== null ? safeParseDateRange(value.start, value.end) : null}
-      onChange={(value) =>
-        onChange(
-          value
-            ? {
-                start: value.start?.toString() ?? "",
-                end: value.end?.toString() ?? "",
-              }
-            : null,
-        )
-      }
+      onChange={(value) => {
+        if (value && value.start && value.end) {
+          onChange({ start: value.start.toString(), end: value.end.toString() });
+        } else {
+          onChange(null);
+        }
+      }}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
       className={cs.DateRangePicker.root[layout]}

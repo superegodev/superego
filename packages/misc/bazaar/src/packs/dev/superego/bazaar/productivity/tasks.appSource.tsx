@@ -334,7 +334,7 @@ export default function App(props: Props): React.ReactElement | null {
 
                   <div style={{ minHeight: "1.25rem" }}>
                     {(() => {
-                      const subtasks = parseSubtasks(doc.content.description);
+                      const subtasks = doc.content.description ? parseSubtasks(doc.content.description) : null;
                       return subtasks ? (
                         <Text size="xs" color="secondary">
                           Subtasks: {subtasks.done}/{subtasks.total}

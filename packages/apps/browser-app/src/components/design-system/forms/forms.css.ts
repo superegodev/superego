@@ -119,6 +119,22 @@ export const SelectButton = {
     color: vars.colors.text.secondary,
     fontStyle: "italic",
   }),
+
+  clearButton: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
 };
 
 export const SelectOptions = {

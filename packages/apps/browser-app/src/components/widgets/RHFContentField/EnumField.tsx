@@ -11,7 +11,6 @@ import {
   TextField,
 } from "../../design-system/forms/forms.js";
 import AnyFieldLabel from "./AnyFieldLabel.js";
-import NullifyFieldAction from "./NullifyFieldAction.js";
 import * as cs from "./RHFContentField.css.js";
 import { useUiOptions } from "./uiOptions.js";
 
@@ -86,16 +85,14 @@ export default function EnumField({
           typeDefinition={typeDefinition}
           isNullable={isNullable}
           label={label}
-          actions={
-            <NullifyFieldAction
-              isNullable={isNullable}
-              field={field}
-              fieldLabel={label}
-            />
-          }
         />
       ) : null}
       <SelectButton
+        onClear={
+          field.value !== null && !isListItem
+            ? () => field.onChange(null)
+            : undefined
+        }
         placeholder={
           <FormattedMessage defaultMessage="null - click to select a value" />
         }

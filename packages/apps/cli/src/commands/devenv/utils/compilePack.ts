@@ -161,10 +161,13 @@ export default async function compilePack(
         const filePath = join(demoDocumentsDir, fileName);
         const data = readJsonFile(filePath);
         if (
-          typeof data !== "object" ||
-          data === null ||
-          !("collectionId" in data) ||
-          !("content" in data)
+          !(
+            typeof data === "object" &&
+            data !== null &&
+            "collectionId" in data &&
+            typeof data.collectionId === "string" &&
+            "content" in data
+          )
         ) {
           throw new Error(
             `demo-documents/${fileName}: expected an object with "collectionId" and "content" fields`,

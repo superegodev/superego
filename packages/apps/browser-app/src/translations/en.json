@@ -1289,6 +1289,9 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "SelectButton.tsx_/GCoTA": {
+    "defaultMessage": "Clear"
+  },
   "SelectButton.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },

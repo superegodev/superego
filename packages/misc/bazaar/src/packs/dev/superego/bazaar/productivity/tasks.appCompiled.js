@@ -206,7 +206,7 @@ export default function App(props) {
                     "Due date: ",
                     formatDate(doc.content.dueDate))) : null),
                 React.createElement("div", { style: { minHeight: "1.25rem" } }, (() => {
-                    const subtasks = parseSubtasks(doc.content.description);
+                    const subtasks = doc.content.description ? parseSubtasks(doc.content.description) : null;
                     return subtasks ? (React.createElement(Text, { size: "xs", color: "secondary" },
                         "Subtasks: ",
                         subtasks.done,

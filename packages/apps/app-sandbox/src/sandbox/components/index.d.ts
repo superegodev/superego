@@ -238,7 +238,7 @@ export declare function Select(
         value: string;
         onChange: (
           /** New value selected by the user. */
-          newValue: string,
+          newValue: string | null,
         ) => void;
       }
     | {
