@@ -17,7 +17,7 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/shared-utils": "workspace:*",
-    "@typescript/vfs": "^1.6.3",
+    "@typescript/vfs": "^1.6.4",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
