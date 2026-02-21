@@ -1158,10 +1158,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:^4.20260227.0":
-  version: 4.20260227.0
-  resolution: "@cloudflare/workers-types@npm:4.20260227.0"
-  checksum: 10c0/5eac95dfa639c458a4ac68aa98b47575be0d82ade95266013351f92f8777b86274eb05dae36f00fd062cb5665227979eb7b36903983f94e7513b7602470cdf5c
+"@cloudflare/workers-types@npm:^4.20260228.0":
+  version: 4.20260228.0
+  resolution: "@cloudflare/workers-types@npm:4.20260228.0"
+  checksum: 10c0/5de59a2faacdcb91b141e0b8719880c9ed66592335cd9e1a059eebf0a1fb24401994db5f8767c1e10fb877228f6c820260ea00f1e822b9f9dc785da4c5be372b
   languageName: node
   linkType: hard
 
@@ -8082,7 +8082,7 @@ __metadata:
     maplibre-gl: "npm:^5.18.0"
     markdown-to-jsx: "npm:^9.7.6"
     monaco-editor: "npm:0.55.1"
-    overtype: "npm:^2.2.0"
+    overtype: "npm:^2.3.2"
     p-map: "npm:^7.0.4"
     p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.58.2"
@@ -8148,7 +8148,7 @@ __metadata:
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
     "@cloudflare/vite-plugin": "npm:1.25.2"
-    "@cloudflare/workers-types": "npm:^4.20260227.0"
+    "@cloudflare/workers-types": "npm:^4.20260228.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/bazaar": "workspace:*"
@@ -17428,13 +17428,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"overtype@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "overtype@npm:2.2.0"
+"overtype@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "overtype@npm:2.3.2"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     markdown-actions: "npm:^1.1.2"
-  checksum: 10c0/37e125ec2a8e6147e8e3a0accd54ad3eb36fdcd9f90c71b7eb6690fe064c7e444001bb743f08b51334d9d83e2fb5c07aeeadb1937eb4e472d539229f3cb32cd3
+  checksum: 10c0/34487684fed70c2696714efa388068397465c1c26c965de08143f2c10b53f5a7ec6ee3a9abfc3a90e9fa41a1a4e65eadf788da1398feef3d48a68d6380edf744
   languageName: node
   linkType: hard
 
