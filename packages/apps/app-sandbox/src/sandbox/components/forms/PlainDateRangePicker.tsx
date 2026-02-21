@@ -35,11 +35,11 @@ export default function PlainDateRangePicker({
   return (
     <DateRangePickerRAC
       value={value !== null ? safeParseDateRange(value.start, value.end) : null}
-      onChange={(value) => {
-        if (value && value.start && value.end) {
+      onChange={(newValue) => {
+        if (newValue && newValue.start && newValue.end) {
           onChange({
-            start: value.start.toString(),
-            end: value.end.toString(),
+            start: newValue.start.toString(),
+            end: newValue.end.toString(),
           });
         } else {
           onChange(null);
