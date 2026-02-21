@@ -13,7 +13,7 @@ export default async function previewAction(options: {
   const superegoAppBin = getSuperegoAppBin();
 
   Log.info("Compiling pack...");
-  const pack = await compilePack(basePath);
+  const pack = await compilePack(basePath, { includeDemoDocuments: true });
   Log.info("Pack compiled successfully.");
 
   Log.info("Starting Superego in devenv mode...");
@@ -28,7 +28,9 @@ export default async function previewAction(options: {
     const recompileAndReload = debounce(async () => {
       Log.info("Change detected, recompiling...");
       try {
-        const newPack = await compilePack(basePath);
+        const newPack = await compilePack(basePath, {
+          includeDemoDocuments: true,
+        });
         Log.info("Pack compiled successfully. Reloading...");
         sendPreviewPack(superegoAppProcess.stdin!, newPack);
       } catch (error) {

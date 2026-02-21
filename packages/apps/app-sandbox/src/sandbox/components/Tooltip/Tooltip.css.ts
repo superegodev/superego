@@ -9,7 +9,7 @@ export const Tooltip = {
     fontSize: vars.typography.fontSizes.md,
     textAlign: "center",
     borderRadius: vars.borders.radius.sm,
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.background.inverseHighlight} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.25)`,
     background: vars.colors.background.inverseHighlight,
     color: vars.colors.text.inverse,
     outline: "none",

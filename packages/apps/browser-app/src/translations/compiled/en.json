@@ -1034,6 +1034,12 @@
       "value": "Created by sync"
     }
   ],
+  "DatePickerInput.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
@@ -1232,78 +1238,6 @@
     {
       "type": 0,
       "value": "Command confirmation"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_cpePvc": [
-    {
-      "type": 0,
-      "value": "Delete document \""
-    },
-    {
-      "type": 1,
-      "value": "documentName"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_lml5ZH": [
-    {
-      "type": 0,
-      "value": "Command confirmation"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_qjTjxw": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " If you're sure you want to delete the document, write "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "delete"
-            }
-          ],
-          "type": 8,
-          "value": "i"
-        },
-        {
-          "type": 0,
-          "value": " in the input below. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
     }
   ],
   "Document.tsx_AB6IO/": [
@@ -1522,6 +1456,12 @@
       "value": "Create anyway"
     }
   ],
+  "EagerEchart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the chart."
+    }
+  ],
   "EagerExcalidrawInput.tsx_QqavBC": [
     {
       "type": 0,
@@ -1532,6 +1472,12 @@
     {
       "type": 0,
       "value": "Exit full screen"
+    }
+  ],
+  "EagerGeoJSONMap.tsx_FUqf3/": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the map."
     }
   ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
@@ -1550,12 +1496,6 @@
     {
       "type": 0,
       "value": "Write..."
-    }
-  ],
-  "Echart.tsx_1nnRAQ": [
-    {
-      "type": 0,
-      "value": "An error occurred rendering the chart."
     }
   ],
   "EditApp.tsx_K3r6DQ": [
@@ -2576,6 +2516,78 @@
     {
       "type": 0,
       "value": "Write a migration function to convert documents from the previous schema to the updated schema."
+    }
+  ],
+  "ModalContent.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "ModalContent.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "ModalContent.tsx_cpePvc": [
+    {
+      "type": 0,
+      "value": "Delete document \""
+    },
+    {
+      "type": 1,
+      "value": "documentName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "ModalContent.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Command confirmation"
+    }
+  ],
+  "ModalContent.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " If you're sure you want to delete the document, write "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " in the input below. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -3896,6 +3908,12 @@
       "value": "No results found"
     }
   ],
+  "SelectButton.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "SelectButton.tsx_EPTOBf": [
     {
       "type": 1,
@@ -4138,6 +4156,16 @@
     {
       "type": 0,
       "value": "No response"
+    }
+  ],
+  "Title.tsx_fBfv7E": [
+    {
+      "type": 0,
+      "value": "Create map from "
+    },
+    {
+      "type": 1,
+      "value": "collections"
     }
   ],
   "Title.tsx_foZAHu": [
@@ -4487,6 +4515,12 @@
       "value": "Last sync failed"
     }
   ],
+  "getIntlMessages.ts_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Clear"
+    }
+  ],
   "getIntlMessages.ts_1nnRAQ": [
     {
       "type": 0,
@@ -4497,6 +4531,12 @@
     {
       "type": 0,
       "value": "Previous month"
+    }
+  ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "An error occurred rendering the map."
     }
   ],
   "getIntlMessages.ts_J1XXSx": [
@@ -4545,6 +4585,12 @@
     {
       "type": 0,
       "value": "In this section you can see the live preview of your app."
+    }
+  ],
+  "getIntlMessages.ts_r5pj/5": [
+    {
+      "type": 0,
+      "value": "Drag"
     }
   ],
   "getIntlMessages.ts_rbrahO": [

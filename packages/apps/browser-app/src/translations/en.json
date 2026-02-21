@@ -437,6 +437,9 @@
   "CreatedByLine.tsx_ufqNmd": {
     "defaultMessage": "Created by sync"
   },
+  "DatePickerInput.tsx_/GCoTA": {
+    "defaultMessage": "Clear"
+  },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
@@ -487,21 +490,6 @@
   },
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
-  },
-  "DeleteDocumentModalForm.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "DeleteDocumentModalForm.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
-  },
-  "DeleteDocumentModalForm.tsx_cpePvc": {
-    "defaultMessage": "Delete document \"{documentName}\""
-  },
-  "DeleteDocumentModalForm.tsx_lml5ZH": {
-    "defaultMessage": "Command confirmation"
-  },
-  "DeleteDocumentModalForm.tsx_qjTjxw": {
-    "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
   },
   "Document.tsx_AB6IO/": {
     "defaultMessage": "Go to remote document"
@@ -599,11 +587,17 @@
   "DuplicateDocumentDetectedModal.tsx_i9essB": {
     "defaultMessage": "Create anyway"
   },
+  "EagerEchart.tsx_1nnRAQ": {
+    "defaultMessage": "An error occurred rendering the chart."
+  },
   "EagerExcalidrawInput.tsx_QqavBC": {
     "defaultMessage": "Enter full screen"
   },
   "EagerExcalidrawInput.tsx_gYg6LX": {
     "defaultMessage": "Exit full screen"
+  },
+  "EagerGeoJSONMap.tsx_FUqf3/": {
+    "defaultMessage": "An error occurred rendering the map."
   },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
@@ -613,9 +607,6 @@
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
-  },
-  "Echart.tsx_1nnRAQ": {
-    "defaultMessage": "An error occurred rendering the chart."
   },
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -1043,6 +1034,21 @@
   "MigrationTab.tsx_i8zErH": {
     "defaultMessage": "Write a migration function to convert documents from the previous schema to the updated schema."
   },
+  "ModalContent.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "ModalContent.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "ModalContent.tsx_cpePvc": {
+    "defaultMessage": "Delete document \"{documentName}\""
+  },
+  "ModalContent.tsx_lml5ZH": {
+    "defaultMessage": "Command confirmation"
+  },
+  "ModalContent.tsx_qjTjxw": {
+    "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
+  },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },
@@ -1283,6 +1289,9 @@
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
+  "SelectButton.tsx_/GCoTA": {
+    "defaultMessage": "Clear"
+  },
   "SelectButton.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },
@@ -1390,6 +1399,9 @@
   },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "No response"
+  },
+  "Title.tsx_fBfv7E": {
+    "defaultMessage": "Create map from {collections}"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Call tool: {tool}"
@@ -1523,11 +1535,17 @@
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Last sync failed"
   },
+  "getIntlMessages.ts_/GCoTA": {
+    "defaultMessage": "Clear"
+  },
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "An error occurred rendering the chart."
   },
   "getIntlMessages.ts_8mRNBD": {
     "defaultMessage": "Previous month"
+  },
+  "getIntlMessages.ts_FUqf3/": {
+    "defaultMessage": "An error occurred rendering the map."
   },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "My Awesome App"
@@ -1552,6 +1570,9 @@
   },
   "getIntlMessages.ts_hPMG1H": {
     "defaultMessage": "In this section you can see the live preview of your app."
+  },
+  "getIntlMessages.ts_r5pj/5": {
+    "defaultMessage": "Drag"
   },
   "getIntlMessages.ts_rbrahO": {
     "defaultMessage": "Close"

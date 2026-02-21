@@ -13,9 +13,12 @@ interface Props {
   collections: {
     ProtoCollection_0: {
       id: "ProtoCollection_0";
+      versionId: string;
       displayName: string;
       documents: {
-        id: `Document_${string}`;
+        id: string;
+        versionId: string;
+        href: string;
         content: ProtoCollection_0.Expense;
       }[];
     };

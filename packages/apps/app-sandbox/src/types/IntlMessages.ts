@@ -6,6 +6,9 @@ export default interface IntlMessages {
   Echart: {
     renderingErrorAlertTitle: string;
   };
+  GeoJSONMap: {
+    renderingErrorAlertTitle: string;
+  };
   DefaultApp: {
     name: string;
     infoLine1: string;
@@ -18,5 +21,11 @@ export default interface IntlMessages {
     previousMonthButton: string;
     nextMonthButton: string;
     closeDayPopoverButton: string;
+  };
+  KanbanBoard: {
+    dragButton: string;
+  };
+  forms: {
+    clearButton: string;
   };
 }

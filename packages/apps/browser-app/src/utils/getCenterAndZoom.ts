@@ -25,10 +25,18 @@ export default function getCenterAndZoom(
   let maxLat = Number.NEGATIVE_INFINITY;
 
   for (const [lon, lat] of coords) {
-    if (lon < minLon) minLon = lon;
-    if (lon > maxLon) maxLon = lon;
-    if (lat < minLat) minLat = lat;
-    if (lat > maxLat) maxLat = lat;
+    if (lon < minLon) {
+      minLon = lon;
+    }
+    if (lon > maxLon) {
+      maxLon = lon;
+    }
+    if (lat < minLat) {
+      minLat = lat;
+    }
+    if (lat > maxLat) {
+      maxLat = lat;
+    }
   }
 
   const center: [number, number] = [

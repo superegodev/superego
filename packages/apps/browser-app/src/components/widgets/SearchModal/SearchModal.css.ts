@@ -59,7 +59,7 @@ export const SearchModal = {
     outline: "none",
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
-    boxShadow: `0 ${vars.spacing._4} ${vars.spacing._8} rgba(from ${vars.colors.neutral._12} r g b / 0.15)`,
+    boxShadow: `0 ${vars.spacing._4} ${vars.spacing._8} rgb(from ${vars.colors.neutral._12} r g b / 0.15)`,
     overflow: "hidden",
     selectors: {
       '&[data-entering="true"]': {

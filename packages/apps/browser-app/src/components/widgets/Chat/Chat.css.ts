@@ -25,7 +25,7 @@ export const Chat = {
         0deg,
         ${vars.colors.background.surface} 0%,
         ${vars.colors.background.surface} calc(100% - ${vars.spacing._4}),
-        rgba(from ${vars.colors.background.surface} r g b / 0) 100%
+        rgb(from ${vars.colors.background.surface} r g b / 0) 100%
       )
     `,
   }),

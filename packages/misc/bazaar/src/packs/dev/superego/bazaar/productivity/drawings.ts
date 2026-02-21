@@ -46,7 +46,7 @@ export default function getContentSummary(drawing) {
               height: "var(--visible-area-height)",
             },
             children: [
-              { propertyPath: "drawing", grow: true },
+              { propertyPath: "drawing", flexGrow: true },
               { propertyPath: "title" },
             ],
           },

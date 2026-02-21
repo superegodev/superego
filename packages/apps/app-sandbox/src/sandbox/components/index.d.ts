@@ -1,3 +1,4 @@
+import type { EChartsOption } from "echarts";
 import type { CSSProperties, JSX, ReactNode } from "react";
 
 /** Shows a visual alert. */
@@ -34,9 +35,13 @@ export declare function IconButton(props: {
     | "check"
     | "plus"
     | "minus"
-    | "x";
+    | "x"
+    | "trash"
+    | "archive";
   /** Label for the button, shown in a tooltip. */
   label: string;
+  /** Only use if you need to override default styles. */
+  style?: CSSProperties;
   onPress?: () => void;
 }): JSX.Element;
 
@@ -115,6 +120,14 @@ export declare function Echart(props: {
   height: string;
 }): JSX.Element;
 
+/** Renders an interactive map from GeoJSON data. */
+export declare function GeoJSONMap(props: {
+  geoJSON: object;
+  /** You should usually set this to 100%. */
+  width: string;
+  height: string;
+}): JSX.Element;
+
 /**
  * A simple 12-column responsive grid container with good default visual
  * separation between inner `Gird.Col`s.
@@ -171,6 +184,8 @@ export declare function PlainDatePicker(props: {
      */
     newValue: string | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -178,26 +193,65 @@ export declare function PlainDatePicker(props: {
   isDisabled?: boolean;
 }): JSX.Element;
 
-export declare function Select(props: {
-  /** Controlled value for the select. Must match an option's `value`. */
-  value: string;
+export declare function PlainDateRangePicker(props: {
+  /**
+   * Controlled value for the picker: an object with `start` and `end` ISO 8601
+   * dates (YYYY-MM-DD). Set to `null` when no range is selected.
+   */
+  value: { start: string; end: string } | null;
   onChange: (
-    /** New value selected by the user. */
-    newValue: string,
+    /**
+     * New range selected by the user, or `null` if the selection was cleared.
+     */
+    newValue: { start: string; end: string } | null,
   ) => void;
-  /** Available choices. Each `value` must be unique. */
-  options: {
-    /** Unique option identifier. Returned from `onChange`. */
-    value: string;
-    label: ReactNode;
-    description?: ReactNode;
-  }[];
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
   description?: ReactNode;
   isDisabled?: boolean;
 }): JSX.Element;
+
+export declare function Select(
+  props: {
+    /** Available choices. Each `value` must be unique. */
+    options: {
+      /** Unique option identifier. Returned from `onChange`. */
+      value: string;
+      label: ReactNode;
+      description?: ReactNode;
+    }[];
+    label?: ReactNode;
+    /** Required if label is not supplied. */
+    ariaLabel?: string;
+    description?: ReactNode;
+    isDisabled?: boolean;
+    /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+    layout?: "vertical" | "horizontal";
+  } & (
+    | {
+        /** @defaultValue "single" */
+        mode?: "single";
+        /** Controlled value for the select. Must match an option's `value`. */
+        value: string | null;
+        onChange: (
+          /** New value selected by the user. */
+          newValue: string | null,
+        ) => void;
+      }
+    | {
+        mode: "multiple";
+        /** Controlled value for the select. Each entry must match an option's `value`. */
+        value: string[];
+        onChange: (
+          /** New values selected by the user. */
+          newValue: string[],
+        ) => void;
+      }
+  ),
+): JSX.Element;
 
 export declare function TextField(props: {
   /** Controlled value for the input. Use `null` to represent empty. */
@@ -206,6 +260,8 @@ export declare function TextField(props: {
     /** New value typed by the user, or `null` if the field is empty. */
     newValue: string | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -221,6 +277,8 @@ export declare function NumberField(props: {
     /** New value typed by the user, or `null` if the field is empty. */
     newValue: number | null,
   ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -246,6 +304,8 @@ export declare function RadioGroup(props: {
     label: ReactNode;
     description?: ReactNode;
   }[];
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -353,6 +413,76 @@ export declare function Text(props: {
   style?: CSSProperties;
   children: ReactNode;
 }): JSX.Element;
+
+/**
+ * A drag-and-drop kanban board. Cards can be reordered within columns and moved
+ * between columns. The component is fully controlled: the parent owns the data
+ * and updates it in response to `onCardMoved` events.
+ *
+ * @example
+ * ```tsx
+ * <KanbanBoard onCardMoved={handleCardMoved}>
+ *   <KanbanBoard.Column id="todo" title="To Do" ariaLabel="To Do">
+ *     <KanbanBoard.Card id="card-1" textValue="Task 1">
+ *       Task 1
+ *     </KanbanBoard.Card>
+ *   </KanbanBoard.Column>
+ *   <KanbanBoard.Column id="done" title="Done" ariaLabel="Done">
+ *     <KanbanBoard.Card id="card-2" textValue="Task 2">
+ *       Task 2
+ *     </KanbanBoard.Card>
+ *   </KanbanBoard.Column>
+ * </KanbanBoard>
+ * ```
+ */
+export declare function KanbanBoard(props: {
+  /** Callback when a card is moved via drag-and-drop. */
+  onCardMoved?: (event: {
+    /** The key of the card that was moved. */
+    cardId: string | number;
+    /** The key of the source column. */
+    fromColumnId: string | number;
+    /** The key of the destination column. */
+    toColumnId: string | number;
+    /** Where the card was dropped. */
+    target:
+      | { type: "root" }
+      | {
+          type: "item";
+          key: string | number;
+          dropPosition: "before" | "after";
+        };
+  }) => void;
+  children: ReactNode;
+}): JSX.Element;
+export declare namespace KanbanBoard {
+  /** A column in the kanban board. */
+  var Column: (props: {
+    id: string | number;
+    /** Title displayed in the header. */
+    title: ReactNode;
+    ariaLabel: string;
+    children: ReactNode;
+  }) => JSX.Element;
+  /** A draggable card within a column. */
+  var Card: (props: {
+    /** Must be globally unique across all columns. */
+    id: string | number;
+    /** Plain text value used for accessibility. */
+    textValue: string;
+    /** When provided, navigates to the href onPress. Target is always set to _top. */
+    href?: string;
+    /** Leaving undefined results in an acceptable default. */
+    style?: {
+      backgroundColor?: string;
+      borderColor?: string;
+      borderStyle?: string;
+      color?: string;
+    };
+    /** Note: no need to add padding for children. */
+    children: ReactNode;
+  }) => JSX.Element;
+}
 
 /**
  * A minimal, unopinionated visual surface for a single dashboard element. Use

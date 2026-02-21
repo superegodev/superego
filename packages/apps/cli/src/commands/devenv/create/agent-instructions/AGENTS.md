@@ -36,8 +36,11 @@ into a single `pack.mpk` file.
     duplicate-detection keys
   - `defaultDocumentViewUiOptions.json` - (optional) Custom UI layout for the
     document view
-  - `test-documents.json` - (optional) Array of test documents to validate
-    against the schema
+- `demo-documents/` - (optional) Demo documents for previewing
+  - `ProtoDocument_0.json`, `ProtoDocument_1.json`, etc. - Each file is a JSON
+    object with `{ "collectionId": "ProtoCollection_0", "content": { ... } }`.
+    The `collectionId` references one of the defined collections, and `content`
+    must conform to that collection's schema.
 - `ProtoApp_*/` - App definitions
   - `settings.json` - App name, type, target collections
   - `main.tsx` - App implementation
@@ -50,13 +53,32 @@ into a single `pack.mpk` file.
 1. Edit collection schemas and settings
 2. Run `superego devenv generate-types` to regenerate TypeScript types
 3. Edit content summary getters, apps, etc.
-4. Run `superego devenv check` to validate everything
+4. Generate around 20 demo documents in `demo-documents/` (realistic, varied
+   data that exercises the schema)
+5. Run `superego devenv check` to validate everything
 
-## Naming conventions
+## Naming conventions and cross-references
 
 - Collections: `ProtoCollection_0`, `ProtoCollection_1`, etc.
 - Apps: `ProtoApp_0`, `ProtoApp_1`, etc.
+- Collection categories: `ProtoCollectionCategory_0`,
+  `ProtoCollectionCategory_1`, etc. (defined in `pack.json`)
+- Demo documents: `ProtoDocument_0`, `ProtoDocument_1`, etc.
 - Generated types: `generated/ProtoCollection_0.ts`, etc.
+
+Entities reference each other by their proto ID strings. For example:
+
+- A collection's `settings.json` can set
+  `"collectionCategoryId": "ProtoCollectionCategory_0"` to assign it to a
+  category defined in `pack.json`.
+- A collection's `settings.json` can set
+  `"defaultCollectionViewAppId": "ProtoApp_0"` to link it to an app.
+- An app's `settings.json` lists `"targetCollectionIds": ["ProtoCollection_0"]`
+  to declare which collections it works with.
+- A demo document's `"collectionId": "ProtoCollection_0"` indicates which
+  collection it belongs to.
+- A collection category in `pack.json` can set
+  `"parentId": "ProtoCollectionCategory_0"` to nest under another category.
 
 ## Available skills
 

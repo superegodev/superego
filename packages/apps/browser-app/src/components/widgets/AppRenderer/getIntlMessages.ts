@@ -16,6 +16,11 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
         defaultMessage: "An error occurred rendering the chart.",
       }),
     },
+    GeoJSONMap: {
+      renderingErrorAlertTitle: intl.formatMessage({
+        defaultMessage: "An error occurred rendering the map.",
+      }),
+    },
     DefaultApp: {
       name: intl.formatMessage({
         defaultMessage: "My Awesome App",
@@ -42,6 +47,12 @@ export default function getIntlMessages(intl: IntlShape): IntlMessages {
       }),
       nextMonthButton: intl.formatMessage({ defaultMessage: "Next month" }),
       closeDayPopoverButton: intl.formatMessage({ defaultMessage: "Close" }),
+    },
+    KanbanBoard: {
+      dragButton: intl.formatMessage({ defaultMessage: "Drag" }),
+    },
+    forms: {
+      clearButton: intl.formatMessage({ defaultMessage: "Clear" }),
     },
   };
 }

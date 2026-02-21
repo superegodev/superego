@@ -46,7 +46,10 @@ export default function PlainDate({
           label={label}
         />
       ) : null}
-      <DatePickerInput ref={field.ref} />
+      <DatePickerInput
+        ref={field.ref}
+        onClear={field.value !== null ? () => field.onChange(null) : undefined}
+      />
       <FieldError>{fieldState.error?.message}</FieldError>
       <DatePickerCalendar />
     </DatePicker>

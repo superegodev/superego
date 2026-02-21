@@ -1,5 +1,5 @@
+import type GeoJSONValue from "../../../utils/GeoJSONValue.js";
 import type GeoJSONFeatureCollection from "./GeoJSONFeatureCollection.js";
-import type GeoJSONValue from "./GeoJSONValue.js";
 
 export default interface Props {
   value: GeoJSONValue | null | undefined;

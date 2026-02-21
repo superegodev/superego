@@ -44,9 +44,6 @@
   "AuthenticationSettings.tsx_U5+MBC": {
     "defaultMessage": "ID del client"
   },
-  "BackgroundJobTableRow.tsx_SL+c5a": {
-    "defaultMessage": "—"
-  },
   "BackgroundJob.tsx_EiyxpM": {
     "defaultMessage": "Terminato il"
   },
@@ -80,6 +77,9 @@
   "BackgroundJob.tsx_x6bqrY": {
     "defaultMessage": "Dettagli del lavoro in background"
   },
+  "BackgroundJobTableRow.tsx_SL+c5a": {
+    "defaultMessage": "—"
+  },
   "BackgroundJobs.tsx_lZrF3s": {
     "defaultMessage": "Lavori in background"
   },
@@ -104,14 +104,14 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
   },
-  "Bazaar.tsx_rrrB1P": {
-    "defaultMessage": "Trascina <packMpk>pack.mpk</packMpk> per installare"
+  "Bazaar.tsx_T5A49y": {
+    "defaultMessage": "Bazaar"
   },
   "Bazaar.tsx_XBMGwY": {
     "defaultMessage": "Impossibile decodificare il file pack"
   },
-  "Bazaar.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
+  "Bazaar.tsx_rrrB1P": {
+    "defaultMessage": "Trascina <packMpk>pack.mpk</packMpk> per installare"
   },
   "Bazaar.tsx_sX7yk3": {
     "defaultMessage": "Oppure installa dal bazaar"
@@ -151,15 +151,6 @@
   },
   "Chat.tsx_zhku3H": {
     "defaultMessage": "Errore durante l'invio del messaggio all'assistente"
-  },
-  "CreateApp.tsx_dtELK2": {
-    "defaultMessage": "Crea app"
-  },
-  "CreateApp.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
-  },
-  "CreateAppForm.tsx_Wq1yhE": {
-    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
   },
   "Collection.tsx_59cQpf": {
     "defaultMessage": "Modifica app"
@@ -323,6 +314,15 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistente"
   },
+  "CreateApp.tsx_VzzYJk": {
+    "defaultMessage": "Crea"
+  },
+  "CreateApp.tsx_dtELK2": {
+    "defaultMessage": "Crea app"
+  },
+  "CreateAppForm.tsx_Wq1yhE": {
+    "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Vai alla modalità manuale"
   },
@@ -437,8 +437,14 @@
   "CreatedByLine.tsx_ufqNmd": {
     "defaultMessage": "Creato dalla sincronizzazione"
   },
+  "DatePickerInput.tsx_/GCoTA": {
+    "defaultMessage": "Cancella"
+  },
   "Default.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
+  },
+  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
+    "defaultMessage": "Opzioni UI predefinite per la vista documento"
   },
   "DeleteAppModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
@@ -455,9 +461,6 @@
   "DeleteAppModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
-    "defaultMessage": "Opzioni UI predefinite per la vista documento"
-  },
   "DeleteCollectionModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
@@ -473,11 +476,11 @@
   "DeleteCollectionModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DeleteConversationModalForm.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
   "DeleteConversationModalForm.tsx_0Gdwem": {
     "defaultMessage": "Elimina la conversazione \"{conversationName}\""
+  },
+  "DeleteConversationModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "DeleteConversationModalForm.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -488,19 +491,19 @@
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DeleteDocumentModalForm.tsx_47FYwb": {
+  "ModalContent.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "DeleteDocumentModalForm.tsx_K3r6DQ": {
+  "ModalContent.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
-  "DeleteDocumentModalForm.tsx_cpePvc": {
+  "ModalContent.tsx_cpePvc": {
     "defaultMessage": "Elimina il documento \"{documentName}\""
   },
-  "DeleteDocumentModalForm.tsx_lml5ZH": {
+  "ModalContent.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "DeleteDocumentModalForm.tsx_qjTjxw": {
+  "ModalContent.tsx_qjTjxw": {
     "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
   "Document.tsx_AB6IO/": {
@@ -599,11 +602,17 @@
   "DuplicateDocumentDetectedModal.tsx_i9essB": {
     "defaultMessage": "Crea comunque"
   },
+  "EagerEchart.tsx_1nnRAQ": {
+    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
   "EagerExcalidrawInput.tsx_QqavBC": {
     "defaultMessage": "Attiva la modalità a schermo intero"
   },
   "EagerExcalidrawInput.tsx_gYg6LX": {
     "defaultMessage": "Esci dalla modalità a schermo intero"
+  },
+  "EagerGeoJSONMap.tsx_FUqf3/": {
+    "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
   },
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
@@ -613,9 +622,6 @@
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Scrivi..."
-  },
-  "Echart.tsx_1nnRAQ": {
-    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
@@ -956,17 +962,17 @@
   "InferenceSettings.tsx_waSfdV": {
     "defaultMessage": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
   },
-  "InstallPackModal.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."
   },
-  "InstallPackModal.tsx_ubmFc8": {
-    "defaultMessage": "Installa"
+  "InstallPackModal.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
   },
   "InstallPackModal.tsx_B8WL2e": {
     "defaultMessage": "Installare \"{packName}\"?"
+  },
+  "InstallPackModal.tsx_ubmFc8": {
+    "defaultMessage": "Installa"
   },
   "Instant.tsx_AnIOVe": {
     "defaultMessage": "Orario {label}"
@@ -1010,6 +1016,27 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "Non ci sono elementi nell'elenco"
   },
+  "LoadDemoDataButton.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "LoadDemoDataButton.tsx_8EGRF9": {
+    "defaultMessage": "Carica"
+  },
+  "LoadDemoDataButton.tsx_FBs/WA": {
+    "defaultMessage": "{current} pacchetti installati su {total}"
+  },
+  "LoadDemoDataButton.tsx_GCRF0i": {
+    "defaultMessage": "Caricamento dati demo"
+  },
+  "LoadDemoDataButton.tsx_VXuroA": {
+    "defaultMessage": "Carica dati demo"
+  },
+  "LoadDemoDataButton.tsx_ZBdI8u": {
+    "defaultMessage": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
+  },
+  "LocalPack.tsx_/hNhmZ": {
+    "defaultMessage": "Pack personalizzati » {packId}"
+  },
   "Logo.tsx_FbFgI4": {
     "defaultMessage": "Logo di Superego"
   },
@@ -1024,6 +1051,36 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
+  },
+  "PackCard.tsx_EgRJme": {
+    "defaultMessage": "Screenshot del pacchetto"
+  },
+  "PackEntityCounts.tsx_GPDaFU": {
+    "defaultMessage": "{appsCount, plural, one {# app} other {# app}}"
+  },
+  "PackEntityCounts.tsx_M51yty": {
+    "defaultMessage": "{documentsCount, plural, one {# documento} other {# documenti}}"
+  },
+  "PackEntityCounts.tsx_P2D191": {
+    "defaultMessage": "{collectionCategoriesCount, plural, one {# categoria} other {# categorie}}"
+  },
+  "PackEntityCounts.tsx_pKXETD": {
+    "defaultMessage": "{collectionsCount, plural, one {# collezione} other {# collezioni}}"
+  },
+  "PackMainPanel.tsx_DzgcGx": {
+    "defaultMessage": "Bazaar » {packName}"
+  },
+  "PackMainPanel.tsx_HUc4Bb": {
+    "defaultMessage": "Mostra/nascondi anteprima collezioni"
+  },
+  "PackMainPanel.tsx_hgmRAL": {
+    "defaultMessage": "Pack personalizzati » {packName}"
+  },
+  "PackMainPanel.tsx_j9FVIw": {
+    "defaultMessage": "Screenshot di {packName}"
+  },
+  "PackMainPanel.tsx_ubmFc8": {
+    "defaultMessage": "Installa"
   },
   "Pagination.tsx_CDjQEk": {
     "defaultMessage": "{startItem}-{endItem} di {totalItems}"
@@ -1045,36 +1102,6 @@
   },
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Chiudi barra laterale"
-  },
-  "PackMainPanel.tsx_DzgcGx": {
-    "defaultMessage": "Bazaar » {packName}"
-  },
-  "PackMainPanel.tsx_HUc4Bb": {
-    "defaultMessage": "Mostra/nascondi anteprima collezioni"
-  },
-  "PackMainPanel.tsx_hgmRAL": {
-    "defaultMessage": "Pack personalizzati » {packName}"
-  },
-  "PackMainPanel.tsx_j9FVIw": {
-    "defaultMessage": "Screenshot di {packName}"
-  },
-  "PackMainPanel.tsx_ubmFc8": {
-    "defaultMessage": "Installa"
-  },
-  "PackCard.tsx_EgRJme": {
-    "defaultMessage": "Screenshot del pacchetto"
-  },
-  "PackEntityCounts.tsx_GPDaFU": {
-    "defaultMessage": "{appsCount, plural, one {# app} other {# app}}"
-  },
-  "PackEntityCounts.tsx_M51yty": {
-    "defaultMessage": "{documentsCount, plural, one {# documento} other {# documenti}}"
-  },
-  "PackEntityCounts.tsx_P2D191": {
-    "defaultMessage": "{collectionCategoriesCount, plural, one {# categoria} other {# categorie}}"
-  },
-  "PackEntityCounts.tsx_pKXETD": {
-    "defaultMessage": "{collectionsCount, plural, one {# collezione} other {# collezioni}}"
   },
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "Compilazione dell'app non riuscita."
@@ -1220,11 +1247,17 @@
   "ResultErrors.tsx_Lv0zJu": {
     "defaultMessage": "Dettagli"
   },
-  "SchemaTab.tsx_Lktmvk": {
-    "defaultMessage": "Schema"
+  "RetryButton.tsx_HMN20q": {
+    "defaultMessage": "Riprova la risposta"
+  },
+  "RetryButton.tsx_l02CSg": {
+    "defaultMessage": "Riprovo..."
   },
   "SchemaTab.tsx_/WLKzQ": {
     "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. </li> <li> Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato. </li> </ol>"
+  },
+  "SchemaTab.tsx_Lktmvk": {
+    "defaultMessage": "Schema"
   },
   "SchemaTab.tsx_Vi4BUn": {
     "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. </li> <li> Poiché si tratta di una collezione remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
@@ -1255,6 +1288,9 @@
   },
   "SearchResults.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
+  },
+  "SelectButton.tsx_/GCoTA": {
+    "defaultMessage": "Cancella"
   },
   "SelectButton.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
@@ -1310,6 +1346,18 @@
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
   },
+  "SpeakButton.tsx_FUvUuG": {
+    "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
+  },
+  "SpeakButton.tsx_J3ca41": {
+    "defaultMessage": "Riproduci"
+  },
+  "SpeakButton.tsx_mM7O7f": {
+    "defaultMessage": "Sintesi vocale in corso..."
+  },
+  "SpeakButton.tsx_tFFMkF": {
+    "defaultMessage": "Pausa"
+  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1351,6 +1399,9 @@
   },
   "Title.tsx_XnBm2q": {
     "defaultMessage": "Nessuna risposta"
+  },
+  "Title.tsx_fBfv7E": {
+    "defaultMessage": "Crea mappa da {collections}"
   },
   "Title.tsx_foZAHu": {
     "defaultMessage": "Chiama strumento: {tool}"
@@ -1484,11 +1535,17 @@
   "getDownSyncAction.tsx_mG35sa": {
     "defaultMessage": "Ultima sincronizzazione non riuscita"
   },
+  "getIntlMessages.ts_/GCoTA": {
+    "defaultMessage": "Cancella"
+  },
   "getIntlMessages.ts_1nnRAQ": {
     "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
   },
   "getIntlMessages.ts_8mRNBD": {
     "defaultMessage": "Mese precedente"
+  },
+  "getIntlMessages.ts_FUqf3/": {
+    "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
   },
   "getIntlMessages.ts_J1XXSx": {
     "defaultMessage": "La mia fantastica app"
@@ -1514,6 +1571,9 @@
   "getIntlMessages.ts_hPMG1H": {
     "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
   },
+  "getIntlMessages.ts_r5pj/5": {
+    "defaultMessage": "Trascina"
+  },
   "getIntlMessages.ts_rbrahO": {
     "defaultMessage": "Chiudi"
   },
@@ -1531,44 +1591,5 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "Compilazione TypeScript non riuscita"
-  },
-  "LocalPack.tsx_/hNhmZ": {
-    "defaultMessage": "Pack personalizzati » {packId}"
-  },
-  "LoadDemoDataButton.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "LoadDemoDataButton.tsx_8EGRF9": {
-    "defaultMessage": "Carica"
-  },
-  "LoadDemoDataButton.tsx_GCRF0i": {
-    "defaultMessage": "Caricamento dati demo"
-  },
-  "LoadDemoDataButton.tsx_VXuroA": {
-    "defaultMessage": "Carica dati demo"
-  },
-  "LoadDemoDataButton.tsx_ZBdI8u": {
-    "defaultMessage": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
-  },
-  "LoadDemoDataButton.tsx_FBs/WA": {
-    "defaultMessage": "{current} pacchetti installati su {total}"
-  },
-  "SpeakButton.tsx_FUvUuG": {
-    "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-  },
-  "SpeakButton.tsx_J3ca41": {
-    "defaultMessage": "Riproduci"
-  },
-  "SpeakButton.tsx_mM7O7f": {
-    "defaultMessage": "Sintesi vocale in corso..."
-  },
-  "SpeakButton.tsx_tFFMkF": {
-    "defaultMessage": "Pausa"
-  },
-  "RetryButton.tsx_HMN20q": {
-    "defaultMessage": "Riprova la risposta"
-  },
-  "RetryButton.tsx_l02CSg": {
-    "defaultMessage": "Riprovo..."
   }
 }

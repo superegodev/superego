@@ -5,10 +5,10 @@ import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
 import classnames from "../../../../../utils/classnames.js";
+import type GeoJSONValue from "../../../../../utils/GeoJSONValue.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import type GeoJSONFeatureCollection from "../../../../design-system/GeoJSONInput/GeoJSONFeatureCollection.js";
 import GeoJSONInput from "../../../../design-system/GeoJSONInput/GeoJSONInput.js";
-import type GeoJSONValue from "../../../../design-system/GeoJSONInput/GeoJSONValue.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import NullifyFieldAction from "../../NullifyFieldAction.js";
 import * as cs from "../../RHFContentField.css.js";
@@ -29,7 +29,7 @@ export default function GeoJSON({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { grow } = useFieldUiOptions(name);
+  const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
@@ -45,7 +45,7 @@ export default function GeoJSON({
       className={classnames(
         cs.JsonObjectField.GeoJSON.root,
         isListItem && cs.ListItemField.root,
-        grow && cs.Field.grow,
+        flexGrow && cs.Field.flexGrow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -73,7 +73,7 @@ export default function GeoJSON({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         ref={field.ref}
-        className={grow ? cs.Field.growContent : undefined}
+        className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext
         value={{

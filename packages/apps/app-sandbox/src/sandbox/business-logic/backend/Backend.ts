@@ -71,6 +71,13 @@ export default class Backend {
     ]);
   }
 
+  deleteDocument(
+    collectionId: CollectionId,
+    id: DocumentId,
+  ): ResultPromise<null, UnexpectedError> {
+    return this.invokeMethod("documents", "delete", [collectionId, id]);
+  }
+
   getFileContent(
     id: FileId,
   ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {

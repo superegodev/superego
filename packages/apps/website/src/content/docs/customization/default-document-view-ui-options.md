@@ -58,10 +58,10 @@ A **Field Node** references a property in the schema and renders it.
    */
   "allowCollapsing": true,
   /**
-   * Makes the field grow its height to fill all available space. Defaults to
-   * false.
+   * Makes the field flex-grow its height to fill all available space. Defaults
+   * to false.
    */
-  "grow": false
+  "flexGrow": false
 }
 ```
 
@@ -147,9 +147,12 @@ all fields are stacked vertically.
             "style": {
               "position": "sticky",
               "height": "var(--visible-area-height)",
-              "top": "var(--visible-area-top)"
+              "top": "var(--visible-area-top)",
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": "var(--field-vertical-gap)"
             },
-            "children": [{ "propertyPath": "notes", "grow": true }]
+            "children": [{ "propertyPath": "notes", "flexGrow": true }]
           },
           {
             "style": {

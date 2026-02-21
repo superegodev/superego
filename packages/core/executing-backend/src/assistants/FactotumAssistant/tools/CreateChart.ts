@@ -137,14 +137,17 @@ export default {
     }
 
     const title = result.data?.title?.text ?? result.data?.title?.[0]?.text;
-    if (typeof title !== "string") {
+    if (typeof title !== "string" || title.trim() === "") {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
         output: makeUnsuccessfulResult(
           makeResultError("EChartsOptionNotValid", {
             issues: [
-              { message: "Missing chart title.", path: [{ key: "title" }] },
+              {
+                message: "Missing or empty chart title.",
+                path: [{ key: "title" }],
+              },
             ],
           }),
         ),

@@ -1,4 +1,5 @@
-import type { Backend } from "@superego/backend";
+import type { Backend, CollectionId, DocumentId } from "@superego/backend";
+import type { Result } from "@superego/global-types";
 import { useEffect, useRef, useState } from "react";
 import HostIpc from "../ipc/HostIpc.js";
 import MessageType from "../ipc/MessageType.js";
@@ -12,6 +13,10 @@ interface Props {
     documents: {
       create: Backend["documents"]["create"];
       createNewVersion: Backend["documents"]["createNewVersion"];
+      delete: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+      ) => Result<null, never>;
     };
     files: {
       getContent: Backend["files"]["getContent"];
@@ -50,12 +55,6 @@ export default function Sandbox({
     hostIpcRef.current = hostIpc;
     return hostIpc.registerHandlers({
       [MessageType.SandboxReady]: () => setSandboxReady(true),
-      [MessageType.HeightChanged]: (message) => {
-        const height = `${message.payload.height}px`;
-        if (iframeRef.current && iframeRef.current.style.minHeight !== height) {
-          iframeRef.current.style.minHeight = height;
-        }
-      },
       [MessageType.InvokeBackendMethod]: async ({ payload }) => {
         const result = await (backend as any)[payload.entity][payload.method](
           ...payload.args,

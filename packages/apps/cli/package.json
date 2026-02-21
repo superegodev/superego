@@ -19,7 +19,7 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "@typescript/vfs": "^1.6.3",
+    "@typescript/vfs": "^1.6.4",
     "chalk": "^5.6.2",
     "chokidar": "^5.0.0",
     "commander": "^14.0.3",

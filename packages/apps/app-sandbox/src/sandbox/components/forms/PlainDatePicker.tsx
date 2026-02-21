@@ -11,6 +11,7 @@ interface Props {
   /** ISO 8601 */
   value: string | null;
   onChange: (newValue: string | null) => void;
+  layout?: "vertical" | "horizontal" | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
@@ -19,6 +20,7 @@ interface Props {
 export default function PlainDatePicker({
   value,
   onChange,
+  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -30,10 +32,12 @@ export default function PlainDatePicker({
       onChange={(value) => onChange(value?.toString() ?? null)}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
-      className={cs.DatePicker.root}
+      className={cs.DatePicker.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
-      <DatePickerInput />
+      <DatePickerInput
+        onClear={value !== null ? () => onChange(null) : undefined}
+      />
       <DatePickerCalendar />
       {description ? <Description>{description}</Description> : null}
     </DatePickerRAC>

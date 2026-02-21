@@ -7,6 +7,7 @@ import Label from "./Label.js";
 interface Props {
   value: number | null;
   onChange: (newValue: number | null) => void;
+  layout?: "vertical" | "horizontal" | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
@@ -19,6 +20,7 @@ interface Props {
 export default function NumberField({
   value,
   onChange,
+  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -37,7 +39,7 @@ export default function NumberField({
       minValue={minValue}
       maxValue={maxValue}
       step={step}
-      className={cs.NumberField.root}
+      className={cs.NumberField.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
       <Input

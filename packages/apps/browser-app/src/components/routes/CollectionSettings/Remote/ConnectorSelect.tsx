@@ -35,6 +35,7 @@ export default function ConnectorSelect({
         <FormattedMessage defaultMessage="Connector" />
       </Label>
       <SelectButton
+        onClear={value?.name ? () => onChange(null) : undefined}
         placeholder={intl.formatMessage({
           defaultMessage: "Select a connector",
         })}

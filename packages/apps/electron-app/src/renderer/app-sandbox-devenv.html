@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self' 'unsafe-inline' data: blob:;
+        connect-src 'self' https://tiles.openfreemap.org;
+      "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Superego Development Environment - App Sandbox</title>
+  </head>
+  <body>
+    <script type="module">
+      import { renderSandbox } from "@superego/app-sandbox/sandbox";
+      renderSandbox();
+    </script>
+  </body>
+</html>

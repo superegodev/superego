@@ -7,6 +7,7 @@ import Label from "./Label.js";
 interface Props {
   value: string | null;
   onChange: (newValue: string | null) => void;
+  layout?: "vertical" | "horizontal" | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
@@ -16,6 +17,7 @@ interface Props {
 export default function TextField({
   value,
   onChange,
+  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -28,7 +30,7 @@ export default function TextField({
       onChange={(newValue) => onChange(newValue === "" ? null : newValue)}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
-      className={cs.TextField.root}
+      className={cs.TextField.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
       <Input className={cs.Input.root} placeholder={placeholder} />

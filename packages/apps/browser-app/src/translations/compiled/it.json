@@ -1026,6 +1026,12 @@
       "value": "Creato dalla sincronizzazione"
     }
   ],
+  "DatePickerInput.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
@@ -1224,78 +1230,6 @@
     {
       "type": 0,
       "value": "Conferma comando"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Elimina"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_cpePvc": [
-    {
-      "type": 0,
-      "value": "Elimina il documento \""
-    },
-    {
-      "type": 1,
-      "value": "documentName"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_lml5ZH": [
-    {
-      "type": 0,
-      "value": "Conferma comando"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_qjTjxw": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "delete"
-            }
-          ],
-          "type": 8,
-          "value": "i"
-        },
-        {
-          "type": 0,
-          "value": " nel campo sottostante. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
     }
   ],
   "Document.tsx_AB6IO/": [
@@ -1514,6 +1448,12 @@
       "value": "Crea comunque"
     }
   ],
+  "EagerEchart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
   "EagerExcalidrawInput.tsx_QqavBC": [
     {
       "type": 0,
@@ -1524,6 +1464,12 @@
     {
       "type": 0,
       "value": "Esci dalla modalità a schermo intero"
+    }
+  ],
+  "EagerGeoJSONMap.tsx_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
@@ -1542,12 +1488,6 @@
     {
       "type": 0,
       "value": "Scrivi..."
-    }
-  ],
-  "Echart.tsx_1nnRAQ": [
-    {
-      "type": 0,
-      "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
   "EditApp.tsx_K3r6DQ": [
@@ -2568,6 +2508,78 @@
     {
       "type": 0,
       "value": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
+    }
+  ],
+  "ModalContent.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "ModalContent.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "ModalContent.tsx_cpePvc": [
+    {
+      "type": 0,
+      "value": "Elimina il documento \""
+    },
+    {
+      "type": 1,
+      "value": "documentName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "ModalContent.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
+    }
+  ],
+  "ModalContent.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -3874,6 +3886,12 @@
       "value": "Nessun risultato trovato"
     }
   ],
+  "SelectButton.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "SelectButton.tsx_EPTOBf": [
     {
       "type": 1,
@@ -4116,6 +4134,16 @@
     {
       "type": 0,
       "value": "Nessuna risposta"
+    }
+  ],
+  "Title.tsx_fBfv7E": [
+    {
+      "type": 0,
+      "value": "Crea mappa da "
+    },
+    {
+      "type": 1,
+      "value": "collections"
     }
   ],
   "Title.tsx_foZAHu": [
@@ -4465,6 +4493,12 @@
       "value": "Ultima sincronizzazione non riuscita"
     }
   ],
+  "getIntlMessages.ts_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "getIntlMessages.ts_1nnRAQ": [
     {
       "type": 0,
@@ -4475,6 +4509,12 @@
     {
       "type": 0,
       "value": "Mese precedente"
+    }
+  ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
   "getIntlMessages.ts_J1XXSx": [
@@ -4523,6 +4563,12 @@
     {
       "type": 0,
       "value": "In questa sezione puoi vedere l'anteprima live della tua app."
+    }
+  ],
+  "getIntlMessages.ts_r5pj/5": [
+    {
+      "type": 0,
+      "value": "Trascina"
     }
   ],
   "getIntlMessages.ts_rbrahO": [

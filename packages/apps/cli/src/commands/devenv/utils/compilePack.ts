@@ -10,6 +10,7 @@ import {
   type Pack,
   type PackId,
   type ProtoCollectionCategoryId,
+  Theme,
   type TypescriptFile,
   type TypescriptModule,
 } from "@superego/backend";
@@ -28,11 +29,15 @@ import getProtoCollections from "./getProtoCollections.js";
 import packJsonSchema from "./packJsonSchema.js";
 import readJsonFile from "./readJsonFile.js";
 
-export default async function compilePack(basePath: string): Promise<Pack> {
+export default async function compilePack(
+  basePath: string,
+  options?: { includeDemoDocuments?: boolean },
+): Promise<Pack> {
   const collections: CollectionDefinition<true, true>[] = [];
   const apps: AppDefinition<true>[] = [];
   const documents: DocumentDefinition<true>[] = [];
   const generatedLibs: TypescriptFile[] = [];
+  const collectionSchemas = new Map<string, Schema>();
 
   // Collections
   const collectionNames = getProtoCollections(basePath);
@@ -63,6 +68,7 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       );
     }
     const schema: Schema = schemaResult.output;
+    collectionSchemas.set(collectionName, schema);
 
     // Generate types for this collection
     const generatedTypes = codegen(schema);
@@ -122,30 +128,6 @@ export default async function compilePack(basePath: string): Promise<Pack> {
       defaultDocumentViewUiOptions = uiOptionsResult.output;
     }
 
-    // test-documents.json (optional)
-    const testDocumentsPath = join(collectionDir, "test-documents.json");
-    if (existsSync(testDocumentsPath)) {
-      const testDocsData = readJsonFile(testDocumentsPath);
-      if (!Array.isArray(testDocsData)) {
-        throw new Error(
-          `${collectionName}/test-documents.json: expected an array of documents`,
-        );
-      }
-      const contentSchema = schemaValibotSchemas.content(schema, "normal");
-      for (let i = 0; i < testDocsData.length; i++) {
-        const docResult = v.safeParse(contentSchema, testDocsData[i]);
-        if (!docResult.success) {
-          throw new Error(
-            `${collectionName}/test-documents.json[${i}] validation failed:\n${docResult.issues.map((iss) => iss.message).join("\n")}`,
-          );
-        }
-        documents.push({
-          collectionId: collectionName as `ProtoCollection_${number}`,
-          content: docResult.output,
-        });
-      }
-    }
-
     collections.push({
       settings: {
         name: settings.name,
@@ -166,6 +148,54 @@ export default async function compilePack(basePath: string): Promise<Pack> {
         defaultDocumentViewUiOptions,
       },
     });
+  }
+
+  // Demo documents
+  if (options?.includeDemoDocuments) {
+    const demoDocumentsDir = join(basePath, "demo-documents");
+    if (existsSync(demoDocumentsDir)) {
+      const demoFiles = readdirSync(demoDocumentsDir)
+        .filter((f) => /^ProtoDocument_\d+\.json$/.test(f))
+        .sort();
+      for (const fileName of demoFiles) {
+        const filePath = join(demoDocumentsDir, fileName);
+        const data = readJsonFile(filePath);
+        if (
+          !(
+            typeof data === "object" &&
+            data !== null &&
+            "collectionId" in data &&
+            typeof data.collectionId === "string" &&
+            "content" in data
+          )
+        ) {
+          throw new Error(
+            `demo-documents/${fileName}: expected an object with "collectionId" and "content" fields`,
+          );
+        }
+        const { collectionId, content } = data as {
+          collectionId: string;
+          content: unknown;
+        };
+        const schema = collectionSchemas.get(collectionId);
+        if (!schema) {
+          throw new Error(
+            `demo-documents/${fileName}: unknown collectionId "${collectionId}"`,
+          );
+        }
+        const contentSchema = schemaValibotSchemas.content(schema, "normal");
+        const docResult = v.safeParse(contentSchema, content);
+        if (!docResult.success) {
+          throw new Error(
+            `demo-documents/${fileName} content validation failed:\n${docResult.issues.map((iss) => iss.message).join("\n")}`,
+          );
+        }
+        documents.push({
+          collectionId: collectionId as `ProtoCollection_${number}`,
+          content: docResult.output,
+        });
+      }
+    }
   }
 
   // Apps
@@ -219,13 +249,31 @@ export default async function compilePack(basePath: string): Promise<Pack> {
     const packJson = packJsonResult.output;
 
     const screenshotsDir = join(basePath, "screenshots");
+    const themeMap: Record<string, Theme.Light | Theme.Dark> = {
+      light: Theme.Light,
+      dark: Theme.Dark,
+    };
     const screenshots = existsSync(screenshotsDir)
       ? readdirSync(screenshotsDir)
+          .filter((filename) => !filename.startsWith("."))
           .sort()
           .map((filename) => {
             const content = new Uint8Array(
               readFileSync(join(screenshotsDir, filename)),
             );
+            const parts = filename.split(".");
+            if (parts.length < 3) {
+              throw new Error(
+                `screenshots/${filename}: expected format <name>.<light|dark>.<ext>`,
+              );
+            }
+            const themePart = parts[parts.length - 2]!.toLowerCase();
+            const theme = themeMap[themePart];
+            if (!theme) {
+              throw new Error(
+                `screenshots/${filename}: unrecognized theme "${themePart}", expected "light" or "dark"`,
+              );
+            }
             const extension = extname(filename).slice(1).toLowerCase();
             const mimeTypeMap: Record<string, string> = {
               png: "image/png",
@@ -235,7 +283,11 @@ export default async function compilePack(basePath: string): Promise<Pack> {
               webp: "image/webp",
             };
             const mimeType = mimeTypeMap[extension] ?? `image/${extension}`;
-            return { mimeType: mimeType as `image/${string}`, content };
+            return {
+              theme,
+              mimeType: mimeType as `image/${string}`,
+              content,
+            };
           })
       : [];
 

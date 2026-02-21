@@ -4,7 +4,13 @@ import type {
   IntlMessages,
   Settings,
 } from "@superego/app-sandbox/types";
-import type { App, Document } from "@superego/backend";
+import type {
+  App,
+  CollectionId,
+  Document,
+  DocumentId,
+} from "@superego/backend";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
@@ -23,6 +29,7 @@ import {
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
+import DeleteDocumentModalForm from "../DeleteDocumentModalForm/DeleteDocumentModalForm.js";
 import * as cs from "./AppRenderer.css.js";
 import getIntlMessages from "./getIntlMessages.js";
 import IncompatibilityWarning from "./IncompatibilityWarning.js";
@@ -37,11 +44,20 @@ export default function AppRenderer({ app }: Props) {
   const { collections } = useGlobalData();
   const collectionsById = CollectionUtils.makeByIdMap(collections);
 
+  const [deleteModalState, setDeleteModalState] = useState<{
+    collectionId: CollectionId;
+    documentId: DocumentId;
+  } | null>(null);
+
   const backend = {
     // Pass these as mutation so the query cache is automatically invalidated.
     documents: {
       create: useCreateDocument().mutate,
       createNewVersion: useCreateNewDocumentVersion().mutate,
+      delete: (collectionId: CollectionId, documentId: DocumentId) => {
+        setDeleteModalState({ collectionId, documentId });
+        return makeSuccessfulResult(null);
+      },
     },
     files: {
       getContent: useBackend().files.getContent,
@@ -87,48 +103,58 @@ export default function AppRenderer({ app }: Props) {
     .map((targetCollection) => collectionsById[targetCollection.id])
     .filter((collection) => collection !== undefined);
   return (
-    <DataLoader
-      queries={targetCollections.map(({ id }) =>
-        listDocumentsQuery([id, false]),
-      )}
-    >
-      {(...documentsLists) => (
-        <Sandbox
-          backend={backend}
-          navigateTo={sandboxNavigateTo}
-          iframeSrc={
-            import.meta.env["VITE_SANDBOX_URL"] ??
-            "http://app-sandbox.localhost:5173/app-sandbox.html"
-          }
-          appName={app.name}
-          appCode={app.latestVersion.files["/main.tsx"].compiled}
-          appProps={{
-            collections: Object.fromEntries(
-              targetCollections.map((collection, index) => [
-                collection.id,
-                {
-                  id: collection.id,
-                  versionId: collection.latestVersion.id,
-                  displayName: CollectionUtils.getDisplayName(collection),
-                  documents: documentsLists[index]!.map((document) => ({
-                    id: document.id,
-                    versionId: document.latestVersion.id,
-                    href: `${window.location.origin}${toHref({
-                      name: RouteName.Document,
-                      collectionId: collection.id,
-                      documentId: document.id,
-                    })}`,
-                    content: (document as Document).latestVersion.content,
-                  })),
-                },
-              ]),
-            ) satisfies AppComponentProps["collections"],
-          }}
-          settings={settings}
-          intlMessages={intlMessages}
-          className={cs.AppRenderer.sandbox}
+    <>
+      <DataLoader
+        queries={targetCollections.map(({ id }) =>
+          listDocumentsQuery([id, false]),
+        )}
+      >
+        {(...documentsLists) => (
+          <Sandbox
+            backend={backend}
+            navigateTo={sandboxNavigateTo}
+            iframeSrc={
+              import.meta.env["VITE_SANDBOX_URL"] ??
+              "http://app-sandbox.localhost:5173/app-sandbox.html"
+            }
+            appName={app.name}
+            appCode={app.latestVersion.files["/main.tsx"].compiled}
+            appProps={{
+              collections: Object.fromEntries(
+                targetCollections.map((collection, index) => [
+                  collection.id,
+                  {
+                    id: collection.id,
+                    versionId: collection.latestVersion.id,
+                    displayName: CollectionUtils.getDisplayName(collection),
+                    documents: documentsLists[index]!.map((document) => ({
+                      id: document.id,
+                      versionId: document.latestVersion.id,
+                      href: `${window.location.origin}${toHref({
+                        name: RouteName.Document,
+                        collectionId: collection.id,
+                        documentId: document.id,
+                      })}`,
+                      content: (document as Document).latestVersion.content,
+                    })),
+                  },
+                ]),
+              ) satisfies AppComponentProps["collections"],
+            }}
+            settings={settings}
+            intlMessages={intlMessages}
+            className={cs.AppRenderer.sandbox}
+          />
+        )}
+      </DataLoader>
+      {deleteModalState !== null ? (
+        <DeleteDocumentModalForm
+          collectionId={deleteModalState.collectionId}
+          documentId={deleteModalState.documentId}
+          isOpen={true}
+          onClose={() => setDeleteModalState(null)}
         />
-      )}
-    </DataLoader>
+      ) : null}
+    </>
   );
 }

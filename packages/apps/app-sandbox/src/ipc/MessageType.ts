@@ -4,7 +4,6 @@ enum MessageType {
   RespondToBackendMethodInvocation = "RespondToBackendMethodInvocation",
   // Sent by sandbox:
   SandboxReady = "SandboxReady",
-  HeightChanged = "HeightChanged",
   InvokeBackendMethod = "InvokeBackendMethod",
   NavigateHostTo = "NavigateHostTo",
 }

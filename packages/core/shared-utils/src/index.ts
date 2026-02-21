@@ -1,6 +1,7 @@
 export { default as Base64Url } from "./Base64Url/Base64Url.js";
 export type { default as ContentSummaryProperty } from "./ContentSummaryUtils/ContentSummaryProperty.js";
 export { default as ContentSummaryUtils } from "./ContentSummaryUtils/ContentSummaryUtils.js";
+export { default as escapeHtml } from "./escapeHtml.js";
 export { default as extractErrorDetails } from "./extractErrorDetails.js";
 export { default as failedResponseToError } from "./failedResponseToError.js";
 export { default as Id } from "./Id/Id.js";

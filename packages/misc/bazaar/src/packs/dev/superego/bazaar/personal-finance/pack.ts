@@ -1,8 +1,9 @@
-import type { Pack } from "@superego/backend";
+import { type Pack, Theme } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
 import expenses from "./expenses.js";
 import expensesApp from "./expensesApp.js";
-import cover from "./screenshots/0.avif?inline";
+import screenshot0Dark from "./screenshots/0.dark.avif?inline";
+import screenshot0Light from "./screenshots/0.light.avif?inline";
 
 export default {
   id: "Pack_dev.superego.bazaar.personal-finance",
@@ -12,8 +13,14 @@ export default {
     longDescription: "Track expenses and analyze your spending.",
     screenshots: [
       {
+        theme: Theme.Light,
         mimeType: "image/avif",
-        content: decodeInlineBase64Asset(cover),
+        content: decodeInlineBase64Asset(screenshot0Light),
+      },
+      {
+        theme: Theme.Dark,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot0Dark),
       },
     ],
   },

@@ -29,7 +29,7 @@ import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import DeleteDocumentModalForm from "./DeleteDocumentModalForm.js";
+import DeleteDocumentModalForm from "../../widgets/DeleteDocumentModalForm/DeleteDocumentModalForm.js";
 import * as cs from "./Document.css.js";
 import DocumentContent from "./DocumentContent.js";
 import History from "./History/History.js";
@@ -214,9 +214,13 @@ export default function Document({
               ) : null}
               <DeleteDocumentModalForm
                 key={`DeleteDocumentModalForm_${documentId}`}
-                document={document}
+                collectionId={collectionId}
+                documentId={documentId}
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
+                onDeleted={() =>
+                  navigateTo({ name: RouteName.Collection, collectionId })
+                }
               />
               <RemoteDocumentInfoModal
                 collection={collection}

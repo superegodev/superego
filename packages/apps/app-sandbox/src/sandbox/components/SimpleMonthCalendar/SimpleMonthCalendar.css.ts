@@ -6,7 +6,7 @@ const headerHeight = vars.spacing._12;
 export const SimpleMonthCalendar = {
   root: style({
     position: "relative",
-    height: "100vh",
+    height: "100%",
     width: "100%",
   }),
 
@@ -129,13 +129,13 @@ export const DayCell = {
     display: "inline-block",
     lineHeight: vars.spacing._5,
     height: vars.spacing._5,
-    width: vars.spacing._5,
+    paddingInline: vars.spacing._1,
     borderRadius: vars.borders.radius.md,
     selectors: {
       '[data-today="true"] &': {
         background: vars.colors.background.inverse,
         color: vars.colors.text.inverse,
-        fontWeight: vars.typography.fontWeights.semibold,
+        fontWeight: vars.typography.fontWeights.medium,
       },
     },
   }),
@@ -151,7 +151,7 @@ export const DayPopover = {
     position: "relative",
     minWidth: `calc(3 / 7 * 100% - ${vars.spacing._3})`,
     background: vars.colors.background.subtleSurface,
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgba(from ${vars.colors.background.inverseHighlight} r g b / 0.2)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.2)`,
     boxSizing: "content-box",
     padding: 0,
   }),

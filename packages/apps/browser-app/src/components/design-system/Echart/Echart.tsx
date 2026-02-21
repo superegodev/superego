@@ -1,62 +1,21 @@
-import { extractErrorDetails } from "@superego/shared-utils";
-import { getEchartsTheme } from "@superego/themes";
-import * as echarts from "echarts";
-import { useEffect, useRef, useState } from "react";
-import { useIntl } from "react-intl";
-import useTheme from "../../../business-logic/theme/useTheme.js";
-import Alert from "../Alert/Alert.js";
-import CodeBlock from "../CodeBlock/CodeBlock.js";
+import { lazy, Suspense } from "react";
+import Skeleton from "../Skeleton/Skeleton.js";
+import type Props from "./Props.js";
 
-interface Props {
-  option: echarts.EChartsOption;
-  width: string;
-  height: string;
-  className?: string | undefined;
-}
-export default function Echart({ option, width, height, className }: Props) {
-  const intl = useIntl();
-  const [renderingError, setRenderingError] = useState<any>(null);
-  const chartElementRef = useRef<HTMLDivElement>(null);
-  const theme = useTheme();
+const EagerEchart = lazy(() => import("./EagerEchart.js"));
 
-  useEffect(() => {
-    if (!chartElementRef.current) {
-      return;
-    }
-    setRenderingError(null);
-    const chart = echarts.init(chartElementRef.current, getEchartsTheme(theme));
-    try {
-      chart.setOption(option);
-    } catch (error) {
-      setRenderingError(error);
-    }
-    const resizeObserver = new ResizeObserver(() => chart.resize());
-    resizeObserver.observe(chartElementRef.current);
-    return () => {
-      chart.dispose();
-      resizeObserver.disconnect();
-    };
-  }, [option, theme]);
-
-  return renderingError === null ? (
-    <div
-      ref={chartElementRef}
-      style={{ width, height }}
-      className={className}
-    />
-  ) : (
-    <Alert
-      title={intl.formatMessage({
-        defaultMessage: "An error occurred rendering the chart.",
-      })}
-      variant="error"
-      style={{ width, height }}
+export default function Echart(props: Props) {
+  return (
+    <Suspense
+      fallback={
+        <Skeleton
+          variant="rectangle"
+          width={props.width}
+          height={props.height}
+        />
+      }
     >
-      <CodeBlock
-        language="json"
-        code={JSON.stringify(extractErrorDetails(renderingError))}
-        showCopyButton={true}
-      />
-    </Alert>
+      <EagerEchart {...props} />
+    </Suspense>
   );
 }

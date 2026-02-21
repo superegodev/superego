@@ -12,7 +12,6 @@ import readJsonFile from "../utils/readJsonFile.js";
 import type CheckResult from "./CheckResult.js";
 import checkGeneratedTypes from "./checkGeneratedTypes.js";
 import checkJsonValidation from "./checkJsonValidation.js";
-import checkTestDocuments from "./checkTestDocuments.js";
 import checkTypescriptCompilation from "./checkTypescriptCompilation.js";
 
 export default async function checkCollection(
@@ -59,19 +58,7 @@ export default async function checkCollection(
     );
   }
 
-  // 4. test-documents.json (optional)
-  const testDocumentsPath = join(collectionDir, "test-documents.json");
-  if (existsSync(testDocumentsPath)) {
-    results.push(
-      checkTestDocuments(
-        `${collectionName}/test-documents.json`,
-        testDocumentsPath,
-        schema,
-      ),
-    );
-  }
-
-  // 5. generated types
+  // 4. generated types
   const generatedTypes = codegen(schema);
   results.push(
     checkGeneratedTypes(
@@ -85,7 +72,7 @@ export default async function checkCollection(
     source: generatedTypes,
   };
 
-  // 6. contentSummaryGetter.ts
+  // 5. contentSummaryGetter.ts
   const contentSummaryGetterPath = join(
     collectionDir,
     "contentSummaryGetter.ts",
@@ -107,7 +94,7 @@ export default async function checkCollection(
     });
   }
 
-  // 7. contentBlockingKeysGetter.ts (optional)
+  // 6. contentBlockingKeysGetter.ts (optional)
   const contentBlockingKeysGetterPath = join(
     collectionDir,
     "contentBlockingKeysGetter.ts",

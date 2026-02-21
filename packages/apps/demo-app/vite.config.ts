@@ -1,12 +1,12 @@
 import { resolve } from "node:path";
 import { cloudflare } from "@cloudflare/vite-plugin";
-import browserAppConfig from "@superego/browser-app/vite.config.js";
+import browserAppViteConfig from "@superego/browser-app/vite.config.js";
 import { mergeConfig, type UserConfig } from "vite";
 
 const isProduction = process.env["VITE_DEPLOY_ENVIRONMENT"] === "production";
 
 export default isProduction
-  ? mergeConfig(browserAppConfig as UserConfig, {
+  ? mergeConfig(browserAppViteConfig as UserConfig, {
       plugins: [cloudflare({ configPath: "production.wrangler.jsonc" })],
       environments: {
         client: {
@@ -21,4 +21,4 @@ export default isProduction
         },
       },
     })
-  : browserAppConfig;
+  : browserAppViteConfig;

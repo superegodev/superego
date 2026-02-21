@@ -1,6 +1,7 @@
 import http from "node:http";
 import type { Backend } from "@superego/backend";
 import { onOAuth2PKCEAuthorizationResponseUrl } from "@superego/connectors";
+import { escapeHtml } from "@superego/shared-utils";
 import { BrowserWindow } from "electron";
 
 export default function startOAuth2PKCECallbackServer(
@@ -45,14 +46,4 @@ export default function startOAuth2PKCECallbackServer(
       }
     })
     .listen(port);
-}
-
-function escapeHtml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;")
-    .replace(/\//g, "&#x2F;");
 }

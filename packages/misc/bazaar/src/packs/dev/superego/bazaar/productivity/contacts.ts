@@ -80,8 +80,10 @@ export default function getContentSummary(contact) {
                   position: "sticky",
                   height: "var(--visible-area-height)",
                   top: "var(--visible-area-top)",
+                  display: "flex",
+                  flexDirection: "column",
                 },
-                children: [{ propertyPath: "notes", grow: true }],
+                children: [{ propertyPath: "notes", flexGrow: true }],
               },
               {
                 style: {

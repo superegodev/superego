@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client";
 import MessageType from "../ipc/MessageType.js";
 import SandboxIpc from "../ipc/SandboxIpc.js";
 import Backend from "./business-logic/backend/Backend.js";
-import onHeightChanged from "./onHeightChanged.js";
 import Sandbox from "./Sandbox/Sandbox.js";
 
 export default function renderSandbox() {
@@ -16,13 +15,6 @@ export default function renderSandbox() {
       queries: { retry: false, networkMode: "always" },
       mutations: { networkMode: "always" },
     },
-  });
-
-  onHeightChanged((height) => {
-    sandboxIpc.send({
-      type: MessageType.HeightChanged,
-      payload: { height },
-    });
   });
 
   const rootElement = document.createElement("div");

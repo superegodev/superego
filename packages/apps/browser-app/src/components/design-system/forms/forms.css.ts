@@ -119,6 +119,22 @@ export const SelectButton = {
     color: vars.colors.text.secondary,
     fontStyle: "italic",
   }),
+
+  clearButton: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
 };
 
 export const SelectOptions = {
@@ -136,6 +152,7 @@ export const SelectOptions = {
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
+    border: `${vars.borders.width.thin} solid transparent`,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
@@ -144,7 +161,7 @@ export const SelectOptions = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.medium,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        borderColor: vars.colors.border.strong,
       },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
@@ -280,6 +297,7 @@ export const DatePickerInput = {
     width: "fit-content",
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
+    flexGrow: 1,
   }),
 
   dateSegment: style({
@@ -294,12 +312,26 @@ export const DatePickerInput = {
     },
   }),
 
-  button: style({
+  clearButton: style({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
     height: vars.spacing._9,
-    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
     cursor: "pointer",

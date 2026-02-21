@@ -9,6 +9,7 @@ interface Props {
   value: string;
   onChange: (newValue: string) => void;
   options: SelectOption[];
+  layout?: "vertical" | "horizontal" | undefined;
   isDisabled?: boolean | undefined;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
@@ -18,6 +19,7 @@ export default function RadioGroup({
   value,
   onChange,
   options,
+  layout = "vertical",
   isDisabled,
   label,
   ariaLabel,
@@ -29,7 +31,7 @@ export default function RadioGroup({
       onChange={(newValue) => onChange(newValue)}
       isDisabled={isDisabled}
       aria-label={ariaLabel}
-      className={cs.RadioGroup.root}
+      className={cs.RadioGroup.root[layout]}
     >
       {label ? <Label>{label}</Label> : null}
       {options.map(

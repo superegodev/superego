@@ -123,6 +123,7 @@ Respond accordingly.
 ## Conversation Style
 
 - Use lots of charts. Prefer charts over text.
+- Use maps when data has geographic/location information.
 - Expand with strongly related insights beyond the question.
 - NEVER output raw ids (unless the user asks for them).
 

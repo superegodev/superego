@@ -5,16 +5,14 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useDeleteDocument } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Button from "../../design-system/Button/Button.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
-import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
+import RHFSubmitButton from "../RHFSubmitButton/RHFSubmitButton.js";
+import RHFTextField from "../RHFTextField/RHFTextField.js";
 
 interface FormValues {
   commandConfirmation: string;
@@ -22,16 +20,11 @@ interface FormValues {
 
 interface Props {
   document: Document;
-  isOpen: boolean;
   onClose: () => void;
+  onDeleted?: () => void;
 }
-export default function DeleteDocumentModalForm({
-  document,
-  isOpen,
-  onClose,
-}: Props) {
+export default function ModalContent({ document, onClose, onDeleted }: Props) {
   const intl = useIntl();
-  const { navigateTo } = useNavigationState();
 
   const { result, mutate } = useDeleteDocument();
 
@@ -51,15 +44,13 @@ export default function DeleteDocumentModalForm({
       commandConfirmation,
     );
     if (success) {
-      navigateTo({
-        name: RouteName.Collection,
-        collectionId: document.collectionId,
-      });
+      onClose();
+      onDeleted?.();
     }
   };
 
   return (
-    <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
+    <>
       <ModalDialog.Heading>
         <FormattedMessage
           defaultMessage='Delete document "{documentName}"'
@@ -106,6 +97,6 @@ export default function DeleteDocumentModalForm({
         </ModalDialog.Actions>
         {result?.error ? <ResultErrors errors={[result.error]} /> : null}
       </Form>
-    </ModalDialog>
+    </>
   );
 }

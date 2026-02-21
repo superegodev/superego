@@ -52,7 +52,7 @@ export const FormattingToolbar = {
     paddingInline: vars.spacing._4,
     paddingBlockStart: vars.spacing._4,
     paddingBlockEnd: vars.spacing._2,
-    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgba(from ${vars.colors.background.surface} r g b / 0) 100%)`,
+    background: `linear-gradient(180deg, ${vars.colors.background.surface} 0%, ${vars.colors.background.surface} 90%, rgb(from ${vars.colors.background.surface} r g b / 0) 100%)`,
   }),
 
   group: style({
@@ -122,7 +122,8 @@ globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li`, {
 });
 globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li > label`, {
   flex: "0 0 auto",
-  marginInlineEnd: vars.spacing._2,
+  marginBlockStart: `calc(${vars.spacing._1} + 1px)`,
+  marginInlineEnd: vars.spacing._1,
   userSelect: "none",
 });
 globalStyle(`${TiptapInput.editor} ul[data-type="taskList"] li > div`, {

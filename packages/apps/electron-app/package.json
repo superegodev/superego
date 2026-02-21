@@ -21,9 +21,10 @@
     "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/main/translations/*.json'",
     "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile",
     "build:cli": "vite --config=cli.vite.config.ts build",
-    "build:vite": "electron-vite --outDir=dist build",
+    "build:devenv": "vite --config=devenv.vite.config.ts build",
+    "build:electron-vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
-    "build": "yarn build:cli && yarn build:vite && yarn build:forge",
+    "build": "yarn build:cli && yarn build:electron-vite && yarn build:devenv && yarn build:forge",
     "deploy": "electron-forge publish --from-dry-run"
   },
   "devDependencies": {
@@ -34,11 +35,11 @@
     "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron-forge/publisher-github": "^7.11.1",
     "@electron/fuses": "^2.0.0",
-    "@formatjs/cli": "^6.12.2",
+    "@formatjs/cli": "^6.13.0",
     "@reforged/maker-appimage": "^5.2.0",
     "@rollup/plugin-babel": "^6.1.0",
-    "babel-plugin-formatjs": "^11.2.3",
-    "electron": "40.4.1",
+    "babel-plugin-formatjs": "^11.2.4",
+    "electron": "40.6.0",
     "electron-vite": "^5.0.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"

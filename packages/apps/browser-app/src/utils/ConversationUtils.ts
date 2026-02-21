@@ -115,6 +115,17 @@ export default {
     );
   },
 
+  isSuccessfulCreateGeoJSONMapToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.CreateGeoJSONMap & {
+    output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateGeoJSONMap["artifacts"]>;
+  } {
+    return (
+      toolResult.tool === ToolName.CreateGeoJSONMap && toolResult.output.success
+    );
+  },
+
   isSuccessfulCreateDocumentsTablesToolResult(
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocumentsTables & {
@@ -147,6 +158,12 @@ export default {
 
   isCreateChartToolCall(toolCall: ToolCall): toolCall is ToolCall.CreateChart {
     return toolCall.tool === ToolName.CreateChart;
+  },
+
+  isCreateGeoJSONMapToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.CreateGeoJSONMap {
+    return toolCall.tool === ToolName.CreateGeoJSONMap;
   },
 
   isCreateDocumentsTablesToolCall(

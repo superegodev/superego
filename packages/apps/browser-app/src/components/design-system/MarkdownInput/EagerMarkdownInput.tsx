@@ -1,10 +1,9 @@
-import OverType from "overtype";
+import OverType, { type OverTypeInstance } from "overtype";
 import { useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
 import classnames from "../../../utils/classnames.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
-import type OverTypeEditor from "./OverTypeEditor.js";
 import type Props from "./Props.js";
 import theme from "./theme.js";
 
@@ -22,7 +21,7 @@ export default function EagerMarkdownInput({
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
-  const editorRef = useRef<OverTypeEditor | null>(null);
+  const editorRef = useRef<OverTypeInstance | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rootElementRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +47,7 @@ export default function EagerMarkdownInput({
         readOnly: isReadOnly,
       },
     });
-    editorRef.current = (instance ?? null) as OverTypeEditor | null;
+    editorRef.current = instance ?? null;
 
     return () => {
       editorRef.current?.destroy();
