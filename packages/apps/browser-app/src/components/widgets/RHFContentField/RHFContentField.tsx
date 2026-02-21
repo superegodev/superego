@@ -14,6 +14,7 @@ interface Props {
   isReadOnly?: boolean;
   protoCollections?: UiOptions["protoCollections"];
   defaultDocumentViewUiOptions?: DefaultDocumentViewUiOptions | null;
+  documentId?: string | null;
 }
 export default function RHFContentField({
   schema,
@@ -25,6 +26,7 @@ export default function RHFContentField({
   isReadOnly = false,
   protoCollections = [],
   defaultDocumentViewUiOptions = null,
+  documentId = null,
 }: Props) {
   return (
     <UiOptionsProvider
@@ -35,6 +37,7 @@ export default function RHFContentField({
         isReadOnly,
         protoCollections,
         defaultDocumentViewUiOptions,
+        documentId,
       }}
     >
       <AnyField

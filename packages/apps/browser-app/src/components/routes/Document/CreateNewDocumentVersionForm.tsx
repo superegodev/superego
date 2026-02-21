@@ -178,6 +178,7 @@ export default function CreateNewDocumentVersionForm({
         control={control}
         isReadOnly={isReadOnly}
         defaultDocumentViewUiOptions={defaultDocumentViewUiOptions}
+        documentId={document.id}
       />
     </Form>
   );

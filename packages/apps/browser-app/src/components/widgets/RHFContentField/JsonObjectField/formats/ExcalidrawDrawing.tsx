@@ -1,10 +1,11 @@
 import { DataType } from "@superego/schema";
 import { isEqual } from "es-toolkit";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
 import classnames from "../../../../../utils/classnames.js";
+import type ExcalidrawDrawingValue from "../../../../design-system/ExcalidrawInput/ExcalidrawDrawingValue.js";
 import ExcalidrawInput from "../../../../design-system/ExcalidrawInput/ExcalidrawInput.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -26,18 +27,47 @@ export default function ExcalidrawDrawing({
   name,
   label,
 }: Props) {
-  const { isReadOnly } = useUiOptions();
+  const { isReadOnly, documentId } = useUiOptions();
   const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
-  const { __dataType, ...value } =
-    field.value ?? forms.defaults.excalidrawDrawingJsonObject();
+  const localStorageKey = documentId
+    ? `edap-${documentId.slice("Document_".length)}-${field.name}`
+    : null;
+  const valueWithoutAppState = useMemo(() => {
+    const {
+      __dataType: _dt,
+      appState: _as,
+      ...rest
+    } = field.value ?? forms.defaults.excalidrawDrawingJsonObject();
+    return rest;
+  }, [field.value]);
   const onChange = useCallback(
-    (newValue: typeof value) =>
-      field.value === null && isEqual(newValue, defaultValue)
-        ? field.onChange(null)
-        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange, field.value],
+    (newValue: ExcalidrawDrawingValue) => {
+      const { appState, ...rest } = newValue;
+      if (localStorageKey && appState) {
+        try {
+          localStorage.setItem(localStorageKey, JSON.stringify(appState));
+        } catch {}
+      }
+      if (field.value === null && isEqual(rest, defaultValue)) {
+        field.onChange(null);
+      } else {
+        field.onChange({ ...rest, __dataType: DataType.JsonObject });
+      }
+    },
+    [field.onChange, field.value, localStorageKey],
   );
+  const excalidrawValue = useMemo(() => {
+    if (!isReadOnly && localStorageKey) {
+      try {
+        const stored = localStorage.getItem(localStorageKey);
+        if (stored) {
+          return { ...valueWithoutAppState, appState: JSON.parse(stored) };
+        }
+      } catch {}
+    }
+    return valueWithoutAppState;
+  }, [isReadOnly, localStorageKey, valueWithoutAppState]);
   return (
     <div
       className={classnames(
@@ -65,7 +95,7 @@ export default function ExcalidrawDrawing({
         />
       ) : null}
       <ExcalidrawInput
-        value={value}
+        value={excalidrawValue}
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
