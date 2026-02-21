@@ -37,7 +37,10 @@ export default function PlainDateRangePicker({
       value={value !== null ? safeParseDateRange(value.start, value.end) : null}
       onChange={(value) => {
         if (value && value.start && value.end) {
-          onChange({ start: value.start.toString(), end: value.end.toString() });
+          onChange({
+            start: value.start.toString(),
+            end: value.end.toString(),
+          });
         } else {
           onChange(null);
         }

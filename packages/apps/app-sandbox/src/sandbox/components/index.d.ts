@@ -235,7 +235,7 @@ export declare function Select(
         /** @defaultValue "single" */
         mode?: "single";
         /** Controlled value for the select. Must match an option's `value`. */
-        value: string;
+        value: string | null;
         onChange: (
           /** New value selected by the user. */
           newValue: string | null,
