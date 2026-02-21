@@ -1,6 +1,7 @@
 import type { LitePack } from "@superego/backend";
 import { useIntl } from "react-intl";
 import type Route from "../../../business-logic/navigation/Route.js";
+import useTheme from "../../../business-logic/theme/useTheme.js";
 import Image from "../Image/Image.js";
 import Link from "../Link/Link.js";
 import PackName from "../PackName/PackName.js";
@@ -12,10 +13,15 @@ interface Props {
 }
 export default function PackCard({ pack, to }: Props) {
   const intl = useIntl();
+  const theme = useTheme();
+  const screenshot =
+    pack.info.screenshots.find((screenshot) => screenshot.theme === theme) ??
+    pack.info.screenshots[0] ??
+    null;
   return (
     <Link to={to} className={cs.PackCard.root}>
       <Image
-        image={pack.info.screenshots[0] ?? null}
+        image={screenshot}
         alt={intl.formatMessage({ defaultMessage: "Screenshot of the pack" })}
         className={cs.PackCard.screenshot}
       />

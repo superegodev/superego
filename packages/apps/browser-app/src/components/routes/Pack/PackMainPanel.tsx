@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PiEye, PiEyeFill } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { PackSource } from "../../../business-logic/navigation/Route.js";
+import useTheme from "../../../business-logic/theme/useTheme.js";
 import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import Button from "../../design-system/Button/Button.js";
@@ -22,8 +23,15 @@ interface Props {
 }
 export default function PackMainPanel({ pack, source }: Props) {
   const intl = useIntl();
+  const theme = useTheme();
   const [isInstallModalOpen, setInstallModalOpen] = useState(false);
   const [isCollectionsOpen, setCollectionsOpen] = useState(false);
+
+  const themedScreenshots = pack.info.screenshots.filter(
+    (screenshot) => screenshot.theme === theme,
+  );
+  const screenshotsToShow =
+    themedScreenshots.length > 0 ? themedScreenshots : pack.info.screenshots;
 
   const collectionPreviews = pack.collections.map((collection, index) => {
     const protoCollectionId = Id.generate.protoCollection(index);
@@ -85,7 +93,7 @@ export default function PackMainPanel({ pack, source }: Props) {
           )}
         >
           <Carousel
-            images={pack.info.screenshots}
+            images={screenshotsToShow}
             alt={intl.formatMessage(
               { defaultMessage: "Screenshot of {packName}" },
               { packName: pack.info.name },

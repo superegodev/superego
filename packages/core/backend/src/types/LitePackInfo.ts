@@ -1,9 +1,13 @@
+import type Theme from "../enums/Theme.js";
+
 export default interface LitePackInfo {
   name: string;
   /** Markdown. */
   shortDescription: string;
-  /** Contains only the first screenshot, if there is one. */
-  screenshots:
-    | []
-    | [{ mimeType: `image/${string}`; content: Uint8Array<ArrayBuffer> }];
+  /** Contains at most one screenshot per theme. */
+  screenshots: {
+    theme: Theme.Light | Theme.Dark;
+    mimeType: `image/${string}`;
+    content: Uint8Array<ArrayBuffer>;
+  }[];
 }

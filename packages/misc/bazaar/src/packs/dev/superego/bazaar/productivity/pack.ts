@@ -1,11 +1,16 @@
-import type { Pack } from "@superego/backend";
+import { type Pack, Theme } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
 import calendar from "./calendar.js";
 import calendarApp from "./calendarApp.js";
 import contacts from "./contacts.js";
 import drawings from "./drawings.js";
 import notes from "./notes.js";
-import cover from "./screenshots/0.avif?inline";
+import screenshot0Dark from "./screenshots/0.dark.avif?inline";
+import screenshot0Light from "./screenshots/0.light.avif?inline";
+import screenshot1Dark from "./screenshots/1.dark.avif?inline";
+import screenshot1Light from "./screenshots/1.light.avif?inline";
+import screenshot2Dark from "./screenshots/2.dark.avif?inline";
+import screenshot2Light from "./screenshots/2.light.avif?inline";
 import tasks from "./tasks.js";
 import tasksApp from "./tasksApp.js";
 
@@ -25,8 +30,34 @@ A basic productivity pack to get you started:
     `.trim(),
     screenshots: [
       {
+        theme: Theme.Light,
         mimeType: "image/avif",
-        content: decodeInlineBase64Asset(cover),
+        content: decodeInlineBase64Asset(screenshot0Light),
+      },
+      {
+        theme: Theme.Dark,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot0Dark),
+      },
+      {
+        theme: Theme.Light,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot1Light),
+      },
+      {
+        theme: Theme.Dark,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot1Dark),
+      },
+      {
+        theme: Theme.Light,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot2Light),
+      },
+      {
+        theme: Theme.Dark,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot2Dark),
       },
     ],
   },

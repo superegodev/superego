@@ -9,7 +9,6 @@ export const Carousel = {
 
   viewport: style({
     overflow: "hidden",
-    borderRadius: vars.borders.radius.md,
   }),
 
   track: style({
@@ -28,9 +27,9 @@ export const Carousel = {
 
   image: style({
     width: "100%",
-    aspectRatio: "16 / 9",
-    objectFit: "cover",
-    objectPosition: "left top",
+    aspectRatio: "16 / 10",
+    objectFit: "contain",
+    objectPosition: "bottom",
     display: "block",
   }),
 

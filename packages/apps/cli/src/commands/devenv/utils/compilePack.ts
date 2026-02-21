@@ -10,6 +10,7 @@ import {
   type Pack,
   type PackId,
   type ProtoCollectionCategoryId,
+  Theme,
   type TypescriptFile,
   type TypescriptModule,
 } from "@superego/backend";
@@ -245,13 +246,31 @@ export default async function compilePack(
     const packJson = packJsonResult.output;
 
     const screenshotsDir = join(basePath, "screenshots");
+    const themeMap: Record<string, Theme.Light | Theme.Dark> = {
+      light: Theme.Light,
+      dark: Theme.Dark,
+    };
     const screenshots = existsSync(screenshotsDir)
       ? readdirSync(screenshotsDir)
+          .filter((filename) => !filename.startsWith("."))
           .sort()
           .map((filename) => {
             const content = new Uint8Array(
               readFileSync(join(screenshotsDir, filename)),
             );
+            const parts = filename.split(".");
+            if (parts.length < 3) {
+              throw new Error(
+                `screenshots/${filename}: expected format <name>.<light|dark>.<ext>`,
+              );
+            }
+            const themePart = parts[parts.length - 2]!.toLowerCase();
+            const theme = themeMap[themePart];
+            if (!theme) {
+              throw new Error(
+                `screenshots/${filename}: unrecognized theme "${themePart}", expected "light" or "dark"`,
+              );
+            }
             const extension = extname(filename).slice(1).toLowerCase();
             const mimeTypeMap: Record<string, string> = {
               png: "image/png",
@@ -261,7 +280,11 @@ export default async function compilePack(
               webp: "image/webp",
             };
             const mimeType = mimeTypeMap[extension] ?? `image/${extension}`;
-            return { mimeType: mimeType as `image/${string}`, content };
+            return {
+              theme,
+              mimeType: mimeType as `image/${string}`,
+              content,
+            };
           })
       : [];
 
