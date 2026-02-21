@@ -60,36 +60,6 @@ export default class SqliteGlobalSettingsRepository
                 .baseUrl,
           },
         },
-        transcriptions: {
-          model:
-            settings.inference?.transcriptions?.model ??
-            this.defaultGlobalSettings.inference.transcriptions.model,
-          provider: {
-            apiKey:
-              settings.inference?.transcriptions?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.transcriptions.provider
-                .apiKey,
-            baseUrl:
-              settings.inference?.transcriptions?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.transcriptions.provider
-                .baseUrl,
-          },
-        },
-        fileInspection: {
-          model:
-            settings.inference?.fileInspection?.model ??
-            this.defaultGlobalSettings.inference.fileInspection.model,
-          provider: {
-            apiKey:
-              settings.inference?.fileInspection?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.fileInspection.provider
-                .apiKey,
-            baseUrl:
-              settings.inference?.fileInspection?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.fileInspection.provider
-                .baseUrl,
-          },
-        },
       },
       assistants: {
         userName:

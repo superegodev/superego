@@ -9,15 +9,15 @@ import * as cs from "./UserMessageContentInput.css.js";
 interface Props {
   onFilesAdded: (files: FileList) => void;
   isDisabled: boolean;
-  isFileInspectionConfigured: boolean;
+  isChatCompletionsConfigured: boolean;
 }
 export default function AddFilesButton({
   onFilesAdded,
   isDisabled,
-  isFileInspectionConfigured,
+  isChatCompletionsConfigured,
 }: Props) {
   const intl = useIntl();
-  return isFileInspectionConfigured ? (
+  return isChatCompletionsConfigured ? (
     <FileTrigger
       onSelect={(files) => {
         if (files) {
@@ -39,7 +39,7 @@ export default function AddFilesButton({
     <IconLink
       variant="invisible"
       label={intl.formatMessage({
-        defaultMessage: "Configure assistant for file inspection",
+        defaultMessage: "Configure assistant",
       })}
       to={{ name: RouteName.GlobalSettings }}
       className={cs.AddFilesButton.disabledLookingButton}

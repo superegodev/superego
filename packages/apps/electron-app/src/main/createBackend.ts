@@ -26,14 +26,6 @@ export default function createBackend(port: number, isDevenv: boolean) {
         provider: { baseUrl: null, apiKey: null },
         model: null,
       },
-      transcriptions: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
-      fileInspection: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
     },
     assistants: {
       userName: null,

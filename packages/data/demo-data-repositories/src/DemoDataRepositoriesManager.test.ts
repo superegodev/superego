@@ -13,14 +13,6 @@ describe("IndexedDB", () => {
             provider: { baseUrl: null, apiKey: null },
             model: null,
           },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          fileInspection: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
         },
         assistants: {
           userName: null,
@@ -43,14 +35,6 @@ describe("InMemory", () => {
         appearance: { theme: Theme.Auto },
         inference: {
           chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          fileInspection: {
             provider: { baseUrl: null, apiKey: null },
             model: null,
           },

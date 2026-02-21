@@ -35,31 +35,9 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
             },
             model: "openai/gpt-oss-120b",
           },
-          transcriptions: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/audio/transcriptions`,
-              apiKey: null,
-            },
-            model: "whisper-large-v3-turbo",
-          },
-          fileInspection: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
-              apiKey: null,
-            },
-            model: "google/gemini-2.0-flash-001",
-          },
         }
       : {
           chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          fileInspection: {
             provider: { baseUrl: null, apiKey: null },
             model: null,
           },

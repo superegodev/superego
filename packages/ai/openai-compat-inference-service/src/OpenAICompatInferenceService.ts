@@ -16,10 +16,10 @@ import {
   toFileInspectionRequest,
 } from "./FileInspection.js";
 import {
-  fromTranscriptionsResponse,
-  type Transcriptions,
-  toTranscriptionsRequest,
-} from "./Transcriptions.js";
+  fromSpeechToTextResponse,
+  type SpeechToText,
+  toSpeechToTextRequest,
+} from "./SpeechToText.js";
 
 export default class OpenAICompatInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
@@ -59,53 +59,54 @@ export default class OpenAICompatInferenceService implements InferenceService {
   }
 
   async stt(audio: AudioContent): Promise<string> {
-    const { transcriptions } = this.settings;
-    if (!transcriptions.provider.baseUrl) {
-      throw new Error("Missing transcriptions provider base URL.");
+    const { chatCompletions } = this.settings;
+    if (!chatCompletions.provider.baseUrl) {
+      throw new Error("Missing chat completions provider base URL.");
     }
-    if (!transcriptions.model) {
-      throw new Error("Missing transcriptions model.");
+    if (!chatCompletions.model) {
+      throw new Error("Missing chat completions model.");
     }
 
-    const requestBody = toTranscriptionsRequest(transcriptions.model, audio);
-    const response = await fetch(transcriptions.provider.baseUrl, {
+    const requestBody = toSpeechToTextRequest(chatCompletions.model, audio);
+    const response = await fetch(chatCompletions.provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(transcriptions.provider.apiKey
-          ? { Authorization: `Bearer ${transcriptions.provider.apiKey}` }
+        ...(chatCompletions.provider.apiKey
+          ? { Authorization: `Bearer ${chatCompletions.provider.apiKey}` }
           : null),
+        "Content-Type": "application/json",
       },
-      body: requestBody,
+      body: JSON.stringify(requestBody),
     });
 
     await this.handleError("stt", requestBody, response);
 
-    const json = (await response.json()) as Transcriptions.Response;
-    return fromTranscriptionsResponse(json);
+    const json = (await response.json()) as SpeechToText.Response;
+    return fromSpeechToTextResponse(json);
   }
 
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
   ): Promise<string> {
-    const { fileInspection } = this.settings;
-    if (!fileInspection.provider.baseUrl) {
-      throw new Error("Missing file inspection provider base URL.");
+    const { chatCompletions } = this.settings;
+    if (!chatCompletions.provider.baseUrl) {
+      throw new Error("Missing chat completions provider base URL.");
     }
-    if (!fileInspection.model) {
-      throw new Error("Missing file inspection model.");
+    if (!chatCompletions.model) {
+      throw new Error("Missing chat completions model.");
     }
 
     const requestBody = toFileInspectionRequest(
-      fileInspection.model,
+      chatCompletions.model,
       file,
       prompt,
     );
-    const response = await fetch(fileInspection.provider.baseUrl, {
+    const response = await fetch(chatCompletions.provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(fileInspection.provider.apiKey
-          ? { Authorization: `Bearer ${fileInspection.provider.apiKey}` }
+        ...(chatCompletions.provider.apiKey
+          ? { Authorization: `Bearer ${chatCompletions.provider.apiKey}` }
           : null),
         "Content-Type": "application/json",
       },
@@ -120,7 +121,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
 
   private async handleError(
     requestMethod: string,
-    requestBody: object | FormData,
+    requestBody: object,
     response: Response,
   ) {
     if (!response.ok) {

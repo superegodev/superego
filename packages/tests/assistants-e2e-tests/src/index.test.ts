@@ -48,14 +48,6 @@ const evaluator = new Evaluator(
       },
       model: evaluatorModel,
     },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
   }),
 );
 
@@ -99,14 +91,6 @@ describe.concurrent.each(
             apiKey: chatCompletionsApiKey,
           },
           model: model,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
         },
       },
       assistants: {

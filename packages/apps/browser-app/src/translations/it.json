@@ -1,6 +1,6 @@
 {
-  "AddFilesButton.tsx_DYNOvl": {
-    "defaultMessage": "Configura l'assistente per l'ispezione dei file"
+  "AddFilesButton.tsx_kNl1RN": {
+    "defaultMessage": "Configura l'assistente"
   },
   "AddFilesButton.tsx_sXiGbo": {
     "defaultMessage": "Aggiungi file"
@@ -917,9 +917,6 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
-  "InferenceSettings.tsx_AJlr3w": {
-    "defaultMessage": "Ispezione dei file"
-  },
   "InferenceSettings.tsx_BUf4e4": {
     "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
   },
@@ -929,17 +926,11 @@
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Chiave API del provider"
   },
-  "InferenceSettings.tsx_eV3UHK": {
-    "defaultMessage": "Trascrizioni (necessarie per parlare con l'assistente)"
-  },
   "InferenceSettings.tsx_fBc46F": {
     "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p>"
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"
-  },
-  "InferenceSettings.tsx_uTE4Se": {
-    "defaultMessage": "Il nome di un modello multimodale che supporta immagini, video e PDF."
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."
@@ -1282,9 +1273,6 @@
   },
   "SelectButton.tsx_uCylWN": {
     "defaultMessage": "{collection} » Documento d'esempio"
-  },
-  "SendRecordButtons.tsx_/8QiK8": {
-    "defaultMessage": "Configura l'assistente per la trascrizione"
   },
   "SendRecordButtons.tsx_3LSnIf": {
     "defaultMessage": "Termina e invia"

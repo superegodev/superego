@@ -1,8 +1,8 @@
 {
-  "AddFilesButton.tsx_DYNOvl": [
+  "AddFilesButton.tsx_kNl1RN": [
     {
       "type": 0,
-      "value": "Configura l'assistente per l'ispezione dei file"
+      "value": "Configura l'assistente"
     }
   ],
   "AddFilesButton.tsx_sXiGbo": [
@@ -2110,12 +2110,6 @@
       "value": "Chat Completions"
     }
   ],
-  "InferenceSettings.tsx_AJlr3w": [
-    {
-      "type": 0,
-      "value": "Ispezione dei file"
-    }
-  ],
   "InferenceSettings.tsx_BUf4e4": [
     {
       "type": 0,
@@ -2176,12 +2170,6 @@
       "value": "Chiave API del provider"
     }
   ],
-  "InferenceSettings.tsx_eV3UHK": [
-    {
-      "type": 0,
-      "value": "Trascrizioni (necessarie per parlare con l'assistente)"
-    }
-  ],
   "InferenceSettings.tsx_fBc46F": [
     {
       "children": [
@@ -2226,12 +2214,6 @@
     {
       "type": 0,
       "value": "Modello"
-    }
-  ],
-  "InferenceSettings.tsx_uTE4Se": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello multimodale che supporta immagini, video e PDF."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -3864,12 +3846,6 @@
     {
       "type": 0,
       "value": " » Documento d'esempio"
-    }
-  ],
-  "SendRecordButtons.tsx_/8QiK8": [
-    {
-      "type": 0,
-      "value": "Configura l'assistente per la trascrizione"
     }
   ],
   "SendRecordButtons.tsx_3LSnIf": [

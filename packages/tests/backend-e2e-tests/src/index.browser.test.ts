@@ -13,14 +13,6 @@ const defaultGlobalSettings = {
       provider: { baseUrl: null, apiKey: null },
       model: null,
     },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
   },
   assistants: {
     userName: null,

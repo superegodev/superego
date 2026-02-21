@@ -1,6 +1,6 @@
 {
-  "AddFilesButton.tsx_DYNOvl": {
-    "defaultMessage": "Configure assistant for file inspection"
+  "AddFilesButton.tsx_kNl1RN": {
+    "defaultMessage": "Configure assistant"
   },
   "AddFilesButton.tsx_sXiGbo": {
     "defaultMessage": "Add file"
@@ -902,9 +902,6 @@
   "InferenceSettings.tsx_25pjeS": {
     "defaultMessage": "Chat Completions"
   },
-  "InferenceSettings.tsx_AJlr3w": {
-    "defaultMessage": "File Inspection"
-  },
   "InferenceSettings.tsx_BUf4e4": {
     "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
   },
@@ -914,17 +911,11 @@
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
   },
-  "InferenceSettings.tsx_eV3UHK": {
-    "defaultMessage": "Transcriptions (required to speak to the assistant)"
-  },
   "InferenceSettings.tsx_fBc46F": {
     "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p>"
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
-  },
-  "InferenceSettings.tsx_uTE4Se": {
-    "defaultMessage": "The name of a multimodal model supporting images, videos, and pdfs."
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "will be installed."
@@ -1282,9 +1273,6 @@
   },
   "SelectButton.tsx_uCylWN": {
     "defaultMessage": "{collection} » Example document"
-  },
-  "SendRecordButtons.tsx_/8QiK8": {
-    "defaultMessage": "Configure assistant for transcription"
   },
   "SendRecordButtons.tsx_3LSnIf": {
     "defaultMessage": "Finish and send"

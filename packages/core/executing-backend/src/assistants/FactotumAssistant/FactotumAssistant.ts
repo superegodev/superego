@@ -129,6 +129,7 @@ export default class FactotumAssistant extends Assistant {
       CreateGeoJSONMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
+      // TODO_AI: this should be passed only if there's support
       InspectFile.get(),
     ];
   }

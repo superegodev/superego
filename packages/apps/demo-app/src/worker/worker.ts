@@ -1,8 +1,6 @@
 interface Env {
   CHAT_COMPLETIONS_BASE_URL: string;
   CHAT_COMPLETIONS_API_KEY: string;
-  TRANSCRIPTIONS_BASE_URL: string;
-  TRANSCRIPTIONS_API_KEY: string;
   IP_RATE_LIMITER: {
     limit(input: { key: string }): Promise<{ success: boolean }>;
   };
@@ -11,15 +9,11 @@ interface Env {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const isChatCompletionsRequest =
-      url.pathname === "/api/openai/v1/chat/completions";
-    const isTranscriptionsRequest =
-      url.pathname === "/api/openai/v1/audio/transcriptions";
 
     if (
       !(
         request.method === "POST" &&
-        (isChatCompletionsRequest || isTranscriptionsRequest)
+        url.pathname === "/api/openai/v1/chat/completions"
       )
     ) {
       return new Response(null, { status: 404 });
@@ -32,16 +26,10 @@ export default {
       return new Response("Too many requests from your IP.", { status: 429 });
     }
 
-    const baseUrl = isChatCompletionsRequest
-      ? env.CHAT_COMPLETIONS_BASE_URL
-      : env.TRANSCRIPTIONS_BASE_URL;
-    const apiKey = isChatCompletionsRequest
-      ? env.CHAT_COMPLETIONS_API_KEY
-      : env.TRANSCRIPTIONS_API_KEY;
-    return fetch(baseUrl, {
+    return fetch(env.CHAT_COMPLETIONS_BASE_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${env.CHAT_COMPLETIONS_API_KEY}`,
         "Content-Type": request.headers.get("Content-Type") ?? "",
       },
       body: request.body,

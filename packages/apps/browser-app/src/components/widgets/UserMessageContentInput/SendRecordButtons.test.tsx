@@ -6,7 +6,6 @@ describe("renders different buttons according to the supplied props", () => {
   interface TestCase {
     props: {
       areCompletionsConfigured: boolean;
-      areTranscriptionsConfigured: boolean;
       isWriting: boolean;
       isRecording: boolean;
     };
@@ -17,16 +16,6 @@ describe("renders different buttons according to the supplied props", () => {
     {
       props: {
         areCompletionsConfigured: false,
-        areTranscriptionsConfigured: false,
-        isWriting: false,
-        isRecording: false,
-      },
-      expectedButtons: ["Configure assistant"],
-    },
-    {
-      props: {
-        areCompletionsConfigured: false,
-        areTranscriptionsConfigured: true,
         isWriting: false,
         isRecording: false,
       },
@@ -35,37 +24,6 @@ describe("renders different buttons according to the supplied props", () => {
     {
       props: {
         areCompletionsConfigured: true,
-        areTranscriptionsConfigured: false,
-        isWriting: false,
-        isRecording: false,
-      },
-      expectedButtons: [
-        "Configure assistant for transcription",
-        "[DISABLED]Send",
-      ],
-    },
-    {
-      props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: false,
-        isWriting: true,
-        isRecording: false,
-      },
-      expectedButtons: ["Configure assistant for transcription", "Send"],
-    },
-    {
-      props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
-        isWriting: true,
-        isRecording: false,
-      },
-      expectedButtons: ["Send"],
-    },
-    {
-      props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
         isWriting: false,
         isRecording: false,
       },
@@ -74,7 +32,14 @@ describe("renders different buttons according to the supplied props", () => {
     {
       props: {
         areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
+        isWriting: true,
+        isRecording: false,
+      },
+      expectedButtons: ["Send"],
+    },
+    {
+      props: {
+        areCompletionsConfigured: true,
         isWriting: false,
         isRecording: true,
       },
@@ -83,12 +48,7 @@ describe("renders different buttons according to the supplied props", () => {
   ];
   testCases.forEach(
     ({
-      props: {
-        areCompletionsConfigured,
-        areTranscriptionsConfigured,
-        isWriting,
-        isRecording,
-      },
+      props: { areCompletionsConfigured, isWriting, isRecording },
       expectedButtons,
       only,
     }) => {
@@ -96,7 +56,6 @@ describe("renders different buttons according to the supplied props", () => {
       (only ? it.only : it)(
         [
           `acc=${renderBoolean(areCompletionsConfigured)},`,
-          `atc=${renderBoolean(areTranscriptionsConfigured)},`,
           `iw=${renderBoolean(isWriting)},`,
           `ir=${renderBoolean(isRecording)},`,
           "->",
@@ -110,7 +69,6 @@ describe("renders different buttons according to the supplied props", () => {
               isWriting={isWriting}
               isDisabled={false}
               areChatCompletionsConfigured={areCompletionsConfigured}
-              areTranscriptionsConfigured={areTranscriptionsConfigured}
               onSend={vi.fn()}
               onStartRecording={vi.fn()}
               onFinishRecording={vi.fn()}

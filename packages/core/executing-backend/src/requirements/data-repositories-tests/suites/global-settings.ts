@@ -14,14 +14,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
       },
       assistants: {
         userName: null,
@@ -43,14 +35,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       appearance: { theme: Theme.Auto },
       inference: {
         chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        fileInspection: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
@@ -87,14 +71,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       appearance: { theme: Theme.Auto },
       inference: {
         chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        fileInspection: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
