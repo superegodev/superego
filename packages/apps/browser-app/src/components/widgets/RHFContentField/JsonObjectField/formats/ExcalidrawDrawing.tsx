@@ -1,6 +1,6 @@
 import { DataType } from "@superego/schema";
 import { isEqual } from "es-toolkit";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
@@ -30,44 +30,49 @@ export default function ExcalidrawDrawing({
   const { isReadOnly, documentId } = useUiOptions();
   const { grow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+
   const localStorageKey = documentId
-    ? `edap-${documentId.slice("Document_".length)}-${field.name}`
+    ? getLocalStorageKey(documentId, field.name)
     : null;
-  const valueWithoutAppState = useMemo(() => {
-    const {
-      __dataType: _dt,
-      appState: _as,
-      ...rest
-    } = field.value ?? forms.defaults.excalidrawDrawingJsonObject();
-    return rest;
-  }, [field.value]);
+
+  const { __dataType, ...value } =
+    field.value ?? forms.defaults.excalidrawDrawingJsonObject();
+
   const onChange = useCallback(
     (newValue: ExcalidrawDrawingValue) => {
       const { appState, ...rest } = newValue;
+
       if (localStorageKey && appState) {
         try {
           localStorage.setItem(localStorageKey, JSON.stringify(appState));
-        } catch {}
+        } catch {
+          // Ignore rare errors, fallback to not saving.
+        }
       }
-      if (field.value === null && isEqual(rest, defaultValue)) {
-        field.onChange(null);
-      } else {
-        field.onChange({ ...rest, __dataType: DataType.JsonObject });
-      }
+
+      field.onChange(
+        isEqual(rest, defaultValue) && field.value === null
+          ? null
+          : { ...rest, __dataType: DataType.JsonObject },
+      );
     },
     [field.onChange, field.value, localStorageKey],
   );
-  const excalidrawValue = useMemo(() => {
+
+  const inputValue = (() => {
     if (!isReadOnly && localStorageKey) {
       try {
         const stored = localStorage.getItem(localStorageKey);
         if (stored) {
-          return { ...valueWithoutAppState, appState: JSON.parse(stored) };
+          return { ...value, appState: JSON.parse(stored) };
         }
-      } catch {}
+      } catch {
+        // Ignore rare errors, fallback to not restoring.
+      }
     }
-    return valueWithoutAppState;
-  }, [isReadOnly, localStorageKey, valueWithoutAppState]);
+    return value;
+  })();
+
   return (
     <div
       className={classnames(
@@ -95,7 +100,7 @@ export default function ExcalidrawDrawing({
         />
       ) : null}
       <ExcalidrawInput
-        value={excalidrawValue}
+        value={inputValue}
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
@@ -116,4 +121,8 @@ export default function ExcalidrawDrawing({
       </FieldErrorContext>
     </div>
   );
+}
+
+function getLocalStorageKey(documentId: string, fieldName: string) {
+  return `edap-${documentId}-${fieldName}`;
 }
