@@ -422,12 +422,12 @@ export declare function Text(props: {
  * @example
  * ```tsx
  * <KanbanBoard onCardMoved={handleCardMoved}>
- *   <KanbanBoard.Column id="todo" title="To Do">
+ *   <KanbanBoard.Column id="todo" title="To Do" ariaLabel="To Do">
  *     <KanbanBoard.Card id="card-1" textValue="Task 1">
  *       Task 1
  *     </KanbanBoard.Card>
  *   </KanbanBoard.Column>
- *   <KanbanBoard.Column id="done" title="Done">
+ *   <KanbanBoard.Column id="done" title="Done" ariaLabel="Done">
  *     <KanbanBoard.Card id="card-2" textValue="Task 2">
  *       Task 2
  *     </KanbanBoard.Card>
