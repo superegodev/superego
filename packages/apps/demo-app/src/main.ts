@@ -28,19 +28,49 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
     appearance: { theme: Theme.Auto },
     inference: isProduction
       ? {
-          chatCompletions: {
-            provider: {
+          providers: [
+            {
+              name: "superego",
               baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
               apiKey: null,
             },
-            model: "openai/gpt-oss-120b",
-          },
+          ],
+          models: [
+            {
+              id: "openai/gpt-oss-120b@superego",
+              name: "openai/gpt-oss-120b",
+              providerName: "superego",
+              capabilities: {
+                reasoning: false,
+                audioUnderstanding: false,
+                imageUnderstanding: false,
+                pdfUnderstanding: false,
+                webSearching: false,
+              },
+            },
+            {
+              id: "google/gemini-2.5-flash-lite@superego",
+              name: "google/gemini-2.5-flash-lite",
+              providerName: "superego",
+              capabilities: {
+                reasoning: false,
+                audioUnderstanding: false,
+                imageUnderstanding: false,
+                pdfUnderstanding: false,
+                webSearching: false,
+              },
+            },
+          ],
+          defaultChatModel: "openai/gpt-oss-120b@superego",
+          defaultTranscriptionModel: "google/gemini-2.5-flash-lite@superego",
+          defaultFileInspectionModel: "google/gemini-2.5-flash-lite@superego",
         }
       : {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
+          providers: [],
+          models: [],
+          defaultChatModel: null,
+          defaultTranscriptionModel: null,
+          defaultFileInspectionModel: null,
         },
     assistants: {
       userName: null,

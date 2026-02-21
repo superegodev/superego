@@ -899,23 +899,77 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Incompatibility warning"
   },
-  "InferenceSettings.tsx_25pjeS": {
-    "defaultMessage": "Chat Completions"
+  "InferenceSettings.tsx_+goFsL": {
+    "defaultMessage": "Add provider"
   },
-  "InferenceSettings.tsx_BUf4e4": {
-    "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
+  "InferenceSettings.tsx_450Fty": {
+    "defaultMessage": "None"
   },
-  "InferenceSettings.tsx_NNEajY": {
-    "defaultMessage": "Provider base URL"
+  "InferenceSettings.tsx_Aw3qRf": {
+    "defaultMessage": "Reasoning"
   },
-  "InferenceSettings.tsx_YctX0J": {
-    "defaultMessage": "Provider API key"
+  "InferenceSettings.tsx_CVFhNd": {
+    "defaultMessage": "File inspection"
+  },
+  "InferenceSettings.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
+  "InferenceSettings.tsx_HAlOn1": {
+    "defaultMessage": "Name"
+  },
+  "InferenceSettings.tsx_IL1Uey": {
+    "defaultMessage": "Providers"
+  },
+  "InferenceSettings.tsx_KTNoOq": {
+    "defaultMessage": "API key"
+  },
+  "InferenceSettings.tsx_LkFVk7": {
+    "defaultMessage": "Provider {index}"
+  },
+  "InferenceSettings.tsx_MbwCPh": {
+    "defaultMessage": "Web searching"
+  },
+  "InferenceSettings.tsx_WTrOy3": {
+    "defaultMessage": "Chat"
+  },
+  "InferenceSettings.tsx_WXrISI": {
+    "defaultMessage": "Transcription"
+  },
+  "InferenceSettings.tsx_XFievo": {
+    "defaultMessage": "Capabilities"
+  },
+  "InferenceSettings.tsx_blWvag": {
+    "defaultMessage": "Models"
+  },
+  "InferenceSettings.tsx_dqWH5L": {
+    "defaultMessage": "Base URL"
+  },
+  "InferenceSettings.tsx_eiZmJr": {
+    "defaultMessage": "Select a provider"
+  },
+  "InferenceSettings.tsx_eloJkb": {
+    "defaultMessage": "Default models"
   },
   "InferenceSettings.tsx_fBc46F": {
     "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p>"
   },
-  "InferenceSettings.tsx_rhSI1/": {
-    "defaultMessage": "Model"
+  "InferenceSettings.tsx_hPttNf": {
+    "defaultMessage": "Model {index}"
+  },
+  "InferenceSettings.tsx_jV3SlA": {
+    "defaultMessage": "Image understanding"
+  },
+  "InferenceSettings.tsx_k47TT2": {
+    "defaultMessage": "Audio understanding"
+  },
+  "InferenceSettings.tsx_v5qMgS": {
+    "defaultMessage": "PDF understanding"
+  },
+  "InferenceSettings.tsx_xaj9Ba": {
+    "defaultMessage": "Provider"
+  },
+  "InferenceSettings.tsx_zUO6Ii": {
+    "defaultMessage": "Add model"
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "will be installed."

@@ -9,10 +9,11 @@ describe("IndexedDB", () => {
       {
         appearance: { theme: Theme.Auto },
         inference: {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
+          providers: [],
+          models: [],
+          defaultChatModel: null,
+          defaultTranscriptionModel: null,
+          defaultFileInspectionModel: null,
         },
         assistants: {
           userName: null,
@@ -34,10 +35,11 @@ describe("InMemory", () => {
       {
         appearance: { theme: Theme.Auto },
         inference: {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
+          providers: [],
+          models: [],
+          defaultChatModel: null,
+          defaultTranscriptionModel: null,
+          defaultFileInspectionModel: null,
         },
         assistants: {
           userName: null,

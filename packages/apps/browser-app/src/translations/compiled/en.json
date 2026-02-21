@@ -2112,70 +2112,110 @@
       "value": "Incompatibility warning"
     }
   ],
-  "InferenceSettings.tsx_25pjeS": [
+  "InferenceSettings.tsx_+goFsL": [
     {
       "type": 0,
-      "value": "Chat Completions"
+      "value": "Add provider"
     }
   ],
-  "InferenceSettings.tsx_BUf4e4": [
+  "InferenceSettings.tsx_450Fty": [
     {
       "type": 0,
-      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "z-ai/glm-4.7"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", and "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " generally perform quite well."
+      "value": "None"
     }
   ],
-  "InferenceSettings.tsx_NNEajY": [
+  "InferenceSettings.tsx_Aw3qRf": [
     {
       "type": 0,
-      "value": "Provider base URL"
+      "value": "Reasoning"
     }
   ],
-  "InferenceSettings.tsx_YctX0J": [
+  "InferenceSettings.tsx_CVFhNd": [
     {
       "type": 0,
-      "value": "Provider API key"
+      "value": "File inspection"
+    }
+  ],
+  "InferenceSettings.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "InferenceSettings.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "InferenceSettings.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Providers"
+    }
+  ],
+  "InferenceSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "InferenceSettings.tsx_LkFVk7": [
+    {
+      "type": 0,
+      "value": "Provider "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    }
+  ],
+  "InferenceSettings.tsx_MbwCPh": [
+    {
+      "type": 0,
+      "value": "Web searching"
+    }
+  ],
+  "InferenceSettings.tsx_WTrOy3": [
+    {
+      "type": 0,
+      "value": "Chat"
+    }
+  ],
+  "InferenceSettings.tsx_WXrISI": [
+    {
+      "type": 0,
+      "value": "Transcription"
+    }
+  ],
+  "InferenceSettings.tsx_XFievo": [
+    {
+      "type": 0,
+      "value": "Capabilities"
+    }
+  ],
+  "InferenceSettings.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Models"
+    }
+  ],
+  "InferenceSettings.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "Base URL"
+    }
+  ],
+  "InferenceSettings.tsx_eiZmJr": [
+    {
+      "type": 0,
+      "value": "Select a provider"
+    }
+  ],
+  "InferenceSettings.tsx_eloJkb": [
+    {
+      "type": 0,
+      "value": "Default models"
     }
   ],
   "InferenceSettings.tsx_fBc46F": [
@@ -2218,10 +2258,44 @@
       "value": "p"
     }
   ],
-  "InferenceSettings.tsx_rhSI1/": [
+  "InferenceSettings.tsx_hPttNf": [
     {
       "type": 0,
-      "value": "Model"
+      "value": "Model "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    }
+  ],
+  "InferenceSettings.tsx_jV3SlA": [
+    {
+      "type": 0,
+      "value": "Image understanding"
+    }
+  ],
+  "InferenceSettings.tsx_k47TT2": [
+    {
+      "type": 0,
+      "value": "Audio understanding"
+    }
+  ],
+  "InferenceSettings.tsx_v5qMgS": [
+    {
+      "type": 0,
+      "value": "PDF understanding"
+    }
+  ],
+  "InferenceSettings.tsx_xaj9Ba": [
+    {
+      "type": 0,
+      "value": "Provider"
+    }
+  ],
+  "InferenceSettings.tsx_zUO6Ii": [
+    {
+      "type": 0,
+      "value": "Add model"
     }
   ],
   "InstallPackModal.tsx_+Toiai": [

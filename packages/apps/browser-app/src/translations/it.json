@@ -914,23 +914,77 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Avviso di incompatibilità"
   },
-  "InferenceSettings.tsx_25pjeS": {
-    "defaultMessage": "Chat Completions"
+  "InferenceSettings.tsx_+goFsL": {
+    "defaultMessage": "Aggiungi provider"
   },
-  "InferenceSettings.tsx_BUf4e4": {
-    "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
+  "InferenceSettings.tsx_450Fty": {
+    "defaultMessage": "Nessuno"
   },
-  "InferenceSettings.tsx_NNEajY": {
-    "defaultMessage": "URL di base del provider"
+  "InferenceSettings.tsx_Aw3qRf": {
+    "defaultMessage": "Ragionamento"
   },
-  "InferenceSettings.tsx_YctX0J": {
-    "defaultMessage": "Chiave API del provider"
+  "InferenceSettings.tsx_CVFhNd": {
+    "defaultMessage": "Ispezione file"
+  },
+  "InferenceSettings.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "InferenceSettings.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "InferenceSettings.tsx_IL1Uey": {
+    "defaultMessage": "Provider"
+  },
+  "InferenceSettings.tsx_KTNoOq": {
+    "defaultMessage": "Chiave API"
+  },
+  "InferenceSettings.tsx_LkFVk7": {
+    "defaultMessage": "Provider {index}"
+  },
+  "InferenceSettings.tsx_MbwCPh": {
+    "defaultMessage": "Ricerca web"
+  },
+  "InferenceSettings.tsx_WTrOy3": {
+    "defaultMessage": "Chat"
+  },
+  "InferenceSettings.tsx_WXrISI": {
+    "defaultMessage": "Trascrizione"
+  },
+  "InferenceSettings.tsx_XFievo": {
+    "defaultMessage": "Capacità"
+  },
+  "InferenceSettings.tsx_blWvag": {
+    "defaultMessage": "Modelli"
+  },
+  "InferenceSettings.tsx_dqWH5L": {
+    "defaultMessage": "URL di base"
+  },
+  "InferenceSettings.tsx_eiZmJr": {
+    "defaultMessage": "Seleziona un provider"
+  },
+  "InferenceSettings.tsx_eloJkb": {
+    "defaultMessage": "Modelli predefiniti"
   },
   "InferenceSettings.tsx_fBc46F": {
     "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p>"
   },
-  "InferenceSettings.tsx_rhSI1/": {
-    "defaultMessage": "Modello"
+  "InferenceSettings.tsx_hPttNf": {
+    "defaultMessage": "Modello {index}"
+  },
+  "InferenceSettings.tsx_jV3SlA": {
+    "defaultMessage": "Comprensione immagini"
+  },
+  "InferenceSettings.tsx_k47TT2": {
+    "defaultMessage": "Comprensione audio"
+  },
+  "InferenceSettings.tsx_v5qMgS": {
+    "defaultMessage": "Comprensione PDF"
+  },
+  "InferenceSettings.tsx_xaj9Ba": {
+    "defaultMessage": "Provider"
+  },
+  "InferenceSettings.tsx_zUO6Ii": {
+    "defaultMessage": "Aggiungi modello"
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."

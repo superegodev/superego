@@ -56,6 +56,10 @@ export default {
     };
   },
 
+  // TODO_AI:
+  // - add param changing what files can be inspected based on the capabilities
+  //   of the configured models
+  // - support inspecting audio files
   get(): InferenceService.Tool {
     return {
       type: InferenceService.ToolType.Function,
