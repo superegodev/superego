@@ -3,6 +3,7 @@ import { useId, useMemo, useState } from "react";
 import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
@@ -29,7 +30,8 @@ export default function EditApp({ appId }: Props) {
     setIsCreateNewVersionFormSubmitDisabled,
   ] = useState(true);
 
-  const formId = useId();
+  const createNewVersionFormId = useId();
+  useSaveShortcut(createNewVersionFormId, isCreateNewVersionFormSubmitDisabled);
 
   const app = AppUtils.findApp(apps, appId);
   const targetCollections = useMemo(
@@ -59,7 +61,7 @@ export default function EditApp({ appId }: Props) {
           {
             icon: <PiFloppyDisk />,
             label: intl.formatMessage({ defaultMessage: "Create new version" }),
-            submit: formId,
+            submit: createNewVersionFormId,
             isDisabled: isCreateNewVersionFormSubmitDisabled,
           },
           {
@@ -73,7 +75,7 @@ export default function EditApp({ appId }: Props) {
         <CreateNewAppVersionForm
           app={app}
           targetCollections={targetCollections}
-          formId={formId}
+          formId={createNewVersionFormId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}
         />
         <UpdateNameModalForm
