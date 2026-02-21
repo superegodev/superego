@@ -21,67 +21,72 @@ const redirectUri = isProduction
   ? "https://demo.superego.dev/OAuth2PKCECallback"
   : "http://localhost:5173/OAuth2PKCECallback";
 const sessionStorage = new BrowserSessionStorage();
-const dataRepositoriesManager = new DemoDataRepositoriesManager({
-  appearance: { theme: Theme.Auto },
-  inference: isProduction
-    ? {
-        chatCompletions: {
-          provider: {
-            baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
-            apiKey: null,
+const commitSha = import.meta.env["VITE_COMMIT_SHA"]?.slice(0, 7);
+const databaseName = commitSha ? `superego-${commitSha}` : "superego";
+const dataRepositoriesManager = new DemoDataRepositoriesManager(
+  {
+    appearance: { theme: Theme.Auto },
+    inference: isProduction
+      ? {
+          chatCompletions: {
+            provider: {
+              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+              apiKey: null,
+            },
+            model: "openai/gpt-oss-120b",
           },
-          model: "openai/gpt-oss-120b",
-        },
-        transcriptions: {
-          provider: {
-            baseUrl: `${window.location.origin}/api/openai/v1/audio/transcriptions`,
-            apiKey: null,
+          transcriptions: {
+            provider: {
+              baseUrl: `${window.location.origin}/api/openai/v1/audio/transcriptions`,
+              apiKey: null,
+            },
+            model: "whisper-large-v3-turbo",
           },
-          model: "whisper-large-v3-turbo",
-        },
-        speech: {
-          provider: {
-            baseUrl: `${window.location.origin}/api/openai/v1/audio/speech`,
-            apiKey: null,
+          speech: {
+            provider: {
+              baseUrl: `${window.location.origin}/api/openai/v1/audio/speech`,
+              apiKey: null,
+            },
+            model: "gpt-4o-mini-tts",
+            voice: "nova",
           },
-          model: "gpt-4o-mini-tts",
-          voice: "nova",
-        },
-        fileInspection: {
-          provider: {
-            baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
-            apiKey: null,
+          fileInspection: {
+            provider: {
+              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+              apiKey: null,
+            },
+            model: "google/gemini-2.0-flash-001",
           },
-          model: "google/gemini-2.0-flash-001",
+        }
+      : {
+          chatCompletions: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+          },
+          transcriptions: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+          },
+          speech: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+            voice: null,
+          },
+          fileInspection: {
+            provider: { baseUrl: null, apiKey: null },
+            model: null,
+          },
         },
-      }
-    : {
-        chatCompletions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-        fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
+    assistants: {
+      userName: null,
+      developerPrompts: {
+        [AssistantName.Factotum]: null,
+        [AssistantName.CollectionCreator]: null,
       },
-  assistants: {
-    userName: null,
-    developerPrompts: {
-      [AssistantName.Factotum]: null,
-      [AssistantName.CollectionCreator]: null,
     },
   },
-});
+  databaseName,
+);
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),

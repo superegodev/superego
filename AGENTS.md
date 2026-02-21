@@ -9,6 +9,8 @@
 - **Node version:** >= 24.
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
+- **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
+  bodies.
 
 ## Testing
 
