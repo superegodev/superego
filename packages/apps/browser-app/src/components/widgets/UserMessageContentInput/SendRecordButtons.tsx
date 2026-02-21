@@ -14,7 +14,6 @@ import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
   areChatCompletionsConfigured: boolean;
-  areTranscriptionsConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
   isDisabled: boolean;
@@ -25,7 +24,6 @@ interface Props {
 }
 export default function SendRecordButtons({
   areChatCompletionsConfigured,
-  areTranscriptionsConfigured,
   isWriting,
   isRecording,
   isDisabled,
@@ -48,23 +46,7 @@ export default function SendRecordButtons({
           <PiX />
         </IconButton>
       ) : null}
-      {areChatCompletionsConfigured && !areTranscriptionsConfigured ? (
-        <IconLink
-          variant="invisible"
-          label={intl.formatMessage({
-            defaultMessage: "Configure assistant for transcription",
-          })}
-          to={{ name: RouteName.GlobalSettings }}
-          isDisabled={isDisabled}
-          className={cs.SendRecordButtons.disabledLookingButton}
-          tooltipDelay={0}
-        >
-          <PiMicrophoneFill />
-        </IconLink>
-      ) : null}
-      {areChatCompletionsConfigured &&
-      areTranscriptionsConfigured &&
-      !isWriting ? (
+      {areChatCompletionsConfigured && !isWriting ? (
         <IconButton
           variant="invisible"
           label={
@@ -90,8 +72,7 @@ export default function SendRecordButtons({
           <PiGear />
         </IconLink>
       ) : null}
-      {areChatCompletionsConfigured &&
-      (areTranscriptionsConfigured ? isWriting : true) ? (
+      {areChatCompletionsConfigured && isWriting ? (
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Send" })}

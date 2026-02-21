@@ -63,7 +63,7 @@ export default function UserMessageContentInput({
     onRemoveFile,
     removeAllFiles,
     getContentParts,
-  } = useFiles(allowFileParts && isInferenceConfigured.fileInspection);
+  } = useFiles(allowFileParts && isInferenceConfigured.chatCompletions);
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
@@ -140,13 +140,14 @@ export default function UserMessageContentInput({
             <AddFilesButton
               onFilesAdded={onFilesAdded}
               isDisabled={isDisabled || isRecording}
-              isFileInspectionConfigured={isInferenceConfigured.fileInspection}
+              isChatCompletionsConfigured={
+                isInferenceConfigured.chatCompletions
+              }
             />
           ) : null}
         </div>
         <SendRecordButtons
           areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
-          areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
           isDisabled={isDisabled}

@@ -16,7 +16,6 @@ import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
 import CreateGeoJSONMap from "../ToolResult/CreateGeoJSONMap.js";
 import * as cs from "./AssistantContentMessage.css.js";
 import RetryButton from "./RetryButton.js";
-import SpeakButton from "./SpeakButton.js";
 
 interface Props {
   conversation: Conversation;
@@ -36,10 +35,6 @@ export default function AssistantContentMessage({
         <Separator
           orientation="vertical"
           className={cs.AssistantContentMessage.infoAndActionsSeparator}
-        />
-        <SpeakButton
-          message={message}
-          className={cs.AssistantContentMessage.infoAndActionsAction}
         />
         <RetryButton
           conversation={conversation}

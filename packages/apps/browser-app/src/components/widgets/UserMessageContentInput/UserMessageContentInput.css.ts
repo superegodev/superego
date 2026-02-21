@@ -156,11 +156,4 @@ export const SendRecordButtons = {
   }),
 
   button: actionsToolbarButtonBase,
-
-  disabledLookingButton: style([
-    actionsToolbarButtonBase,
-    {
-      color: vars.colors.button.invisible.disabled.text,
-    },
-  ]),
 };

@@ -1,31 +1,11 @@
+import type InferenceModelId from "../ids/InferenceModelId.js";
+import type InferenceModel from "./InferenceModel.js";
+import type InferenceProvider from "./InferenceProvider.js";
+
 export default interface InferenceSettings {
-  chatCompletions: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
-  transcriptions: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
-  speech: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-    voice: string | null;
-  };
-  fileInspection: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
+  providers: InferenceProvider[];
+  models: InferenceModel[];
+  defaultChatModel: InferenceModelId | null;
+  defaultTranscriptionModel: InferenceModelId | null;
+  defaultFileInspectionModel: InferenceModelId | null;
 }

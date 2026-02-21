@@ -1,5 +1,8 @@
 import type {
   AudioContent,
+  InferenceModel,
+  InferenceModelId,
+  InferenceProvider,
   InferenceSettings,
   Message,
 } from "@superego/backend";
@@ -15,12 +18,11 @@ import {
   fromFileInspectionResponse,
   toFileInspectionRequest,
 } from "./FileInspection.js";
-import { fromSpeechResponse, toSpeechRequest } from "./Speech.js";
 import {
-  fromTranscriptionsResponse,
-  type Transcriptions,
-  toTranscriptionsRequest,
-} from "./Transcriptions.js";
+  fromSpeechToTextResponse,
+  type SpeechToText,
+  toSpeechToTextRequest,
+} from "./SpeechToText.js";
 
 export default class OpenAICompatInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
@@ -29,24 +31,18 @@ export default class OpenAICompatInferenceService implements InferenceService {
     previousMessages: Message[],
     tools: InferenceService.Tool[],
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    const { chatCompletions } = this.settings;
-    if (!chatCompletions.provider.baseUrl) {
-      throw new Error("Missing chat completions provider base URL.");
-    }
-    if (!chatCompletions.model) {
-      throw new Error("Missing chat completions model.");
-    }
+    const { model, provider } = this.resolve(this.settings.defaultChatModel);
 
     const requestBody = toChatCompletionsRequest(
-      chatCompletions.model,
+      model.name,
       previousMessages,
       tools,
     );
-    const response = await fetch(chatCompletions.provider.baseUrl, {
+    const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(chatCompletions.provider.apiKey
-          ? { Authorization: `Bearer ${chatCompletions.provider.apiKey}` }
+        ...(provider.apiKey
+          ? { Authorization: `Bearer ${provider.apiKey}` }
           : null),
         "Content-Type": "application/json",
       },
@@ -59,84 +55,43 @@ export default class OpenAICompatInferenceService implements InferenceService {
     return fromChatCompletionsResponse(json);
   }
 
-  async tts(text: string): Promise<AudioContent> {
-    const { speech } = this.settings;
-    if (!speech.provider.baseUrl) {
-      throw new Error("Missing speech provider base URL.");
-    }
-    if (!speech.model) {
-      throw new Error("Missing speech model.");
-    }
-    if (!speech.voice) {
-      throw new Error("Missing speech voice.");
-    }
+  async stt(audio: AudioContent): Promise<string> {
+    const { model, provider } = this.resolve(
+      this.settings.defaultTranscriptionModel,
+    );
 
-    const requestBody = toSpeechRequest(speech.model, speech.voice, text);
-    const response = await fetch(speech.provider.baseUrl, {
+    const requestBody = toSpeechToTextRequest(model.name, audio);
+    const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(speech.provider.apiKey
-          ? { Authorization: `Bearer ${speech.provider.apiKey}` }
+        ...(provider.apiKey
+          ? { Authorization: `Bearer ${provider.apiKey}` }
           : null),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(requestBody),
     });
 
-    await this.handleError("tts", requestBody, response);
-
-    const arrayBuffer = await response.arrayBuffer();
-    return fromSpeechResponse(new Uint8Array(arrayBuffer));
-  }
-
-  async stt(audio: AudioContent): Promise<string> {
-    const { transcriptions } = this.settings;
-    if (!transcriptions.provider.baseUrl) {
-      throw new Error("Missing transcriptions provider base URL.");
-    }
-    if (!transcriptions.model) {
-      throw new Error("Missing transcriptions model.");
-    }
-
-    const requestBody = toTranscriptionsRequest(transcriptions.model, audio);
-    const response = await fetch(transcriptions.provider.baseUrl, {
-      method: "POST",
-      headers: {
-        ...(transcriptions.provider.apiKey
-          ? { Authorization: `Bearer ${transcriptions.provider.apiKey}` }
-          : null),
-      },
-      body: requestBody,
-    });
-
     await this.handleError("stt", requestBody, response);
 
-    const json = (await response.json()) as Transcriptions.Response;
-    return fromTranscriptionsResponse(json);
+    const json = (await response.json()) as SpeechToText.Response;
+    return fromSpeechToTextResponse(json);
   }
 
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
   ): Promise<string> {
-    const { fileInspection } = this.settings;
-    if (!fileInspection.provider.baseUrl) {
-      throw new Error("Missing file inspection provider base URL.");
-    }
-    if (!fileInspection.model) {
-      throw new Error("Missing file inspection model.");
-    }
-
-    const requestBody = toFileInspectionRequest(
-      fileInspection.model,
-      file,
-      prompt,
+    const { model, provider } = this.resolve(
+      this.settings.defaultFileInspectionModel,
     );
-    const response = await fetch(fileInspection.provider.baseUrl, {
+
+    const requestBody = toFileInspectionRequest(model.name, file, prompt);
+    const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
-        ...(fileInspection.provider.apiKey
-          ? { Authorization: `Bearer ${fileInspection.provider.apiKey}` }
+        ...(provider.apiKey
+          ? { Authorization: `Bearer ${provider.apiKey}` }
           : null),
         "Content-Type": "application/json",
       },
@@ -149,9 +104,31 @@ export default class OpenAICompatInferenceService implements InferenceService {
     return fromFileInspectionResponse(json);
   }
 
+  private resolve(modelId: InferenceModelId | null): {
+    model: InferenceModel;
+    provider: InferenceProvider;
+  } {
+    if (!modelId) {
+      throw new Error("No model configured.");
+    }
+    const model = this.settings.models.find((m) => m.id === modelId);
+    if (!model) {
+      throw new Error(`Model "${modelId}" not found in settings.`);
+    }
+    const provider = this.settings.providers.find(
+      (provider) => provider.name === model.providerName,
+    );
+    if (!provider) {
+      throw new Error(
+        `Provider "${model.providerName}" not found in settings.`,
+      );
+    }
+    return { model, provider };
+  }
+
   private async handleError(
     requestMethod: string,
-    requestBody: object | FormData,
+    requestBody: object,
     response: Response,
   ) {
     if (!response.ok) {

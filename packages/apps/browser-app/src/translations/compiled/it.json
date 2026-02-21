@@ -1,8 +1,8 @@
 {
-  "AddFilesButton.tsx_DYNOvl": [
+  "AddFilesButton.tsx_kNl1RN": [
     {
       "type": 0,
-      "value": "Configura l'assistente per l'ispezione dei file"
+      "value": "Configura l'assistente"
     }
   ],
   "AddFilesButton.tsx_sXiGbo": [
@@ -2104,85 +2104,113 @@
       "value": "Avviso di incompatibilità"
     }
   ],
-  "InferenceSettings.tsx_25pjeS": [
+  "InferenceSettings.tsx_+goFsL": [
     {
       "type": 0,
-      "value": "Chat Completions"
+      "value": "Aggiungi provider"
     }
   ],
-  "InferenceSettings.tsx_AJlr3w": [
+  "InferenceSettings.tsx_450Fty": [
     {
       "type": 0,
-      "value": "Ispezione dei file"
+      "value": "Nessuno"
     }
   ],
-  "InferenceSettings.tsx_BUf4e4": [
+  "InferenceSettings.tsx_Aw3qRf": [
     {
       "type": 0,
-      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "z-ai/glm-4.7"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " e "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " funzionano generalmente molto bene."
+      "value": "Ragionamento"
     }
   ],
-  "InferenceSettings.tsx_FJPyVh": [
+  "InferenceSettings.tsx_CVFhNd": [
     {
       "type": 0,
-      "value": ": veloce, economico, supporta tutte le API."
+      "value": "Ispezione file"
     }
   ],
-  "InferenceSettings.tsx_HRac2N": [
+  "InferenceSettings.tsx_G/yZLu": [
     {
       "type": 0,
-      "value": "Sintesi vocale (necessaria perché l'assistente ti parli)"
+      "value": "Rimuovi"
     }
   ],
-  "InferenceSettings.tsx_NNEajY": [
+  "InferenceSettings.tsx_HAlOn1": [
     {
       "type": 0,
-      "value": "URL di base del provider"
+      "value": "Nome"
     }
   ],
-  "InferenceSettings.tsx_RPpwVn": [
+  "InferenceSettings.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Provider"
+    }
+  ],
+  "InferenceSettings.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "Chiave API"
+    }
+  ],
+  "InferenceSettings.tsx_LkFVk7": [
+    {
+      "type": 0,
+      "value": "Provider "
+    },
+    {
+      "type": 1,
+      "value": "index"
+    }
+  ],
+  "InferenceSettings.tsx_MbwCPh": [
+    {
+      "type": 0,
+      "value": "Ricerca web"
+    }
+  ],
+  "InferenceSettings.tsx_WTrOy3": [
+    {
+      "type": 0,
+      "value": "Chat"
+    }
+  ],
+  "InferenceSettings.tsx_WXrISI": [
+    {
+      "type": 0,
+      "value": "Trascrizione"
+    }
+  ],
+  "InferenceSettings.tsx_XFievo": [
+    {
+      "type": 0,
+      "value": "Capacità"
+    }
+  ],
+  "InferenceSettings.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Modelli"
+    }
+  ],
+  "InferenceSettings.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "URL di base"
+    }
+  ],
+  "InferenceSettings.tsx_eiZmJr": [
+    {
+      "type": 0,
+      "value": "Seleziona un provider"
+    }
+  ],
+  "InferenceSettings.tsx_eloJkb": [
+    {
+      "type": 0,
+      "value": "Modelli predefiniti"
+    }
+  ],
+  "InferenceSettings.tsx_fBc46F": [
     {
       "children": [
         {
@@ -2201,7 +2229,7 @@
         },
         {
           "type": 0,
-          "value": " — un servizio che offre API per LLM, trascrizione vocale e sintesi vocale. Il provider deve offrire API "
+          "value": ". Il provider deve offrire API "
         },
         {
           "children": [
@@ -2220,80 +2248,46 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "InferenceSettings.tsx_hPttNf": [
+    {
+      "type": 0,
+      "value": "Modello "
     },
     {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Provider che funzionano: "
-        }
-      ],
-      "type": 8,
-      "value": "p"
+      "type": 1,
+      "value": "index"
     }
   ],
-  "InferenceSettings.tsx_YctX0J": [
+  "InferenceSettings.tsx_jV3SlA": [
     {
       "type": 0,
-      "value": "Chiave API del provider"
+      "value": "Comprensione immagini"
     }
   ],
-  "InferenceSettings.tsx_eV3UHK": [
+  "InferenceSettings.tsx_k47TT2": [
     {
       "type": 0,
-      "value": "Trascrizioni (necessarie per parlare con l'assistente)"
+      "value": "Comprensione audio"
     }
   ],
-  "InferenceSettings.tsx_gi9ckp": [
+  "InferenceSettings.tsx_v5qMgS": [
     {
       "type": 0,
-      "value": ": supporta solo l'API Chat Completions."
+      "value": "Comprensione PDF"
     }
   ],
-  "InferenceSettings.tsx_mnJYBQ": [
+  "InferenceSettings.tsx_xaj9Ba": [
     {
       "type": 0,
-      "value": "Voce"
+      "value": "Provider"
     }
   ],
-  "InferenceSettings.tsx_rhSI1/": [
+  "InferenceSettings.tsx_zUO6Ii": [
     {
       "type": 0,
-      "value": "Modello"
-    }
-  ],
-  "InferenceSettings.tsx_u2jTeg": [
-    {
-      "type": 0,
-      "value": ": supporta tutte le API."
-    }
-  ],
-  "InferenceSettings.tsx_uTE4Se": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello multimodale che supporta immagini, video e PDF."
-    }
-  ],
-  "InferenceSettings.tsx_vuJYgx": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_waSfdV": [
-    {
-      "type": 0,
-      "value": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
+      "value": "Aggiungi modello"
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -3928,12 +3922,6 @@
       "value": " » Documento d'esempio"
     }
   ],
-  "SendRecordButtons.tsx_/8QiK8": [
-    {
-      "type": 0,
-      "value": "Configura l'assistente per la trascrizione"
-    }
-  ],
   "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
@@ -4010,30 +3998,6 @@
     {
       "type": 0,
       "value": "Crea app"
-    }
-  ],
-  "SpeakButton.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-    }
-  ],
-  "SpeakButton.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Riproduci"
-    }
-  ],
-  "SpeakButton.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Sintesi vocale in corso..."
-    }
-  ],
-  "SpeakButton.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pausa"
     }
   ],
   "StructField.tsx_BPj/Jo": [

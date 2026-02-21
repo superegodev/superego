@@ -1,3 +1,5 @@
+import toBase64 from "./toBase64.js";
+
 export namespace FileInspection {
   export type Message =
     | { role: "user"; content: ContentPart[] }
@@ -83,24 +85,7 @@ export function toFileInspectionRequest(
 }
 
 function toDataURL(content: Uint8Array<ArrayBuffer>, mimeType: string): string {
-  let base64: string;
-
-  if (typeof Buffer !== "undefined") {
-    base64 = Buffer.from(content).toString("base64");
-  } else {
-    // 32KB chunks
-    const CHUNK_SIZE = 0x8000;
-    let binary = "";
-    for (let i = 0; i < content.length; i += CHUNK_SIZE) {
-      binary += String.fromCharCode.apply(
-        null,
-        Array.from(content.subarray(i, i + CHUNK_SIZE)),
-      );
-    }
-    base64 = btoa(binary);
-  }
-
-  return `data:${mimeType};base64,${base64}`;
+  return `data:${mimeType};base64,${toBase64(content)}`;
 }
 
 export function fromFileInspectionResponse(

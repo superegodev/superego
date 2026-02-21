@@ -1,30 +1,15 @@
 import { useGlobalData } from "../backend/GlobalData.js";
 
+// TODO_AI:
+// - when the input is overhauled, we probably need to extract more info here
+//   (e.g., hasAudioCapableModel, etc).
+// - chatCompletions definitely needs to be renamed
 interface UseIsInferenceConfigured {
   chatCompletions: boolean;
-  transcriptions: boolean;
-  speech: boolean;
-  fileInspection: boolean;
 }
 export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
   const { inference } = useGlobalData().globalSettings;
   return {
-    chatCompletions: Boolean(
-      inference.chatCompletions.model &&
-        inference.chatCompletions.provider.baseUrl,
-    ),
-    transcriptions: Boolean(
-      inference.transcriptions.model &&
-        inference.transcriptions.provider.baseUrl,
-    ),
-    speech: Boolean(
-      inference.speech.model &&
-        inference.speech.voice &&
-        inference.speech.provider.baseUrl,
-    ),
-    fileInspection: Boolean(
-      inference.fileInspection.model &&
-        inference.fileInspection.provider.baseUrl,
-    ),
+    chatCompletions: Boolean(inference.defaultChatModel),
   };
 }

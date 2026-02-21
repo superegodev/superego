@@ -9,23 +9,11 @@ import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js"
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
-    chatCompletions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
+    providers: [],
+    models: [],
+    defaultChatModel: null,
+    defaultTranscriptionModel: null,
+    defaultFileInspectionModel: null,
   },
   assistants: {
     userName: null,

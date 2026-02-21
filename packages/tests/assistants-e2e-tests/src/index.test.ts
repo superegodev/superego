@@ -1,7 +1,11 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  type InferenceSettings,
+  Theme,
+} from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
@@ -37,31 +41,40 @@ const typescriptCompiler = new TscTypescriptCompiler();
 // Inference service
 const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
 
-// Evaluator
-const evaluatorModel = "openai/gpt-oss-120b";
-const evaluator = new Evaluator(
-  inferenceServiceFactory.create({
-    chatCompletions: {
-      provider: {
+function makeInferenceSettings(model: string): InferenceSettings {
+  const providerName = "test-provider";
+  return {
+    providers: [
+      {
+        name: providerName,
         baseUrl: chatCompletionsBaseUrl,
         apiKey: chatCompletionsApiKey,
       },
-      model: evaluatorModel,
-    },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-  }),
+    ],
+    models: [
+      {
+        id: `${model}@${providerName}`,
+        name: model,
+        providerName,
+        capabilities: {
+          reasoning: false,
+          audioUnderstanding: false,
+          imageUnderstanding: false,
+          pdfUnderstanding: false,
+          webSearching: false,
+        },
+      },
+    ],
+    defaultChatModel: `${model}@${providerName}`,
+    defaultTranscriptionModel: null,
+    defaultFileInspectionModel: null,
+  };
+}
+
+// Evaluator
+const evaluatorModel = "openai/gpt-oss-120b";
+const evaluator = new Evaluator(
+  inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
 );
 
 const assistantsModels = [
@@ -97,28 +110,7 @@ describe.concurrent.each(
   registerTests(() => {
     const defaultGlobalSettings = {
       appearance: { theme: Theme.Auto },
-      inference: {
-        chatCompletions: {
-          provider: {
-            baseUrl: chatCompletionsBaseUrl,
-            apiKey: chatCompletionsApiKey,
-          },
-          model: model,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-        fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-      },
+      inference: makeInferenceSettings(model),
       assistants: {
         userName: null,
         developerPrompts: {
