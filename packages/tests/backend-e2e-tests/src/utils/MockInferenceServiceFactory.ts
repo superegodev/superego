@@ -1,5 +1,4 @@
 import {
-  type AudioContent,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -16,10 +15,6 @@ class MockInferenceService implements InferenceService {
       content: [{ type: MessageContentPartType.Text, text: "Mock response" }],
       createdAt: new Date(),
     };
-  }
-
-  async tts(): Promise<AudioContent> {
-    return { content: new Uint8Array(), contentType: "audio/mp3" };
   }
 
   async stt(): Promise<string> {

@@ -28,11 +28,6 @@ const backend = new ExecutingBackend(
         provider: { baseUrl: null, apiKey: null },
         model: null,
       },
-      speech: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-        voice: null,
-      },
       fileInspection: {
         provider: { baseUrl: null, apiKey: null },
         model: null,

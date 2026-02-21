@@ -75,22 +75,6 @@ export default class SqliteGlobalSettingsRepository
                 .baseUrl,
           },
         },
-        speech: {
-          model:
-            settings.inference?.speech?.model ??
-            this.defaultGlobalSettings.inference.speech.model,
-          voice:
-            settings.inference?.speech?.voice ??
-            this.defaultGlobalSettings.inference.speech.voice,
-          provider: {
-            apiKey:
-              settings.inference?.speech?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.speech.provider.apiKey,
-            baseUrl:
-              settings.inference?.speech?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.speech.provider.baseUrl,
-          },
-        },
         fileInspection: {
           model:
             settings.inference?.fileInspection?.model ??

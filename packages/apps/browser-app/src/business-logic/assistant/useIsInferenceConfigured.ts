@@ -3,7 +3,6 @@ import { useGlobalData } from "../backend/GlobalData.js";
 interface UseIsInferenceConfigured {
   chatCompletions: boolean;
   transcriptions: boolean;
-  speech: boolean;
   fileInspection: boolean;
 }
 export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
@@ -16,11 +15,6 @@ export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
     transcriptions: Boolean(
       inference.transcriptions.model &&
         inference.transcriptions.provider.baseUrl,
-    ),
-    speech: Boolean(
-      inference.speech.model &&
-        inference.speech.voice &&
-        inference.speech.provider.baseUrl,
     ),
     fileInspection: Boolean(
       inference.fileInspection.model &&

@@ -60,7 +60,6 @@ import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
-import InferenceTts from "./usecases/inference/Tts.js";
 import PacksInstall from "./usecases/packs/Install.js";
 
 export default class ExecutingBackend implements Backend {
@@ -159,7 +158,6 @@ export default class ExecutingBackend implements Backend {
 
     this.inference = {
       stt: this.makeUsecase(InferenceStt, false),
-      tts: this.makeUsecase(InferenceTts, false),
       implementTypescriptModule: this.makeUsecase(
         InferenceImplementTypescriptModule,
         false,

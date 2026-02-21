@@ -908,17 +908,8 @@
   "InferenceSettings.tsx_BUf4e4": {
     "defaultMessage": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code>, and <code>qwen/qwen3-coder</code> generally perform quite well."
   },
-  "InferenceSettings.tsx_FJPyVh": {
-    "defaultMessage": ": fast, cheap, supports all APIs."
-  },
-  "InferenceSettings.tsx_HRac2N": {
-    "defaultMessage": "Speech (required for the assistant to speak to you)"
-  },
   "InferenceSettings.tsx_NNEajY": {
     "defaultMessage": "Provider base URL"
-  },
-  "InferenceSettings.tsx_RPpwVn": {
-    "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p> <p> Providers known to work: </p>"
   },
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Provider API key"
@@ -926,26 +917,14 @@
   "InferenceSettings.tsx_eV3UHK": {
     "defaultMessage": "Transcriptions (required to speak to the assistant)"
   },
-  "InferenceSettings.tsx_gi9ckp": {
-    "defaultMessage": ": only supports the Chat Completions API."
-  },
-  "InferenceSettings.tsx_mnJYBQ": {
-    "defaultMessage": "Voice"
+  "InferenceSettings.tsx_fBc46F": {
+    "defaultMessage": "<p> To make the assistant work you need to connect it to an <b>inference provider</b>. The provider must offer APIs <b>compatible with the OpenAI format.</b> </p>"
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Model"
   },
-  "InferenceSettings.tsx_u2jTeg": {
-    "defaultMessage": ": supports all APIs."
-  },
   "InferenceSettings.tsx_uTE4Se": {
     "defaultMessage": "The name of a multimodal model supporting images, videos, and pdfs."
-  },
-  "InferenceSettings.tsx_vuJYgx": {
-    "defaultMessage": "<p> Create an account with your chosen provider, get an API key, and enter the details below. </p>"
-  },
-  "InferenceSettings.tsx_waSfdV": {
-    "defaultMessage": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "will be installed."
@@ -1345,18 +1324,6 @@
   },
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Create app"
-  },
-  "SpeakButton.tsx_FUvUuG": {
-    "defaultMessage": "Configure speech to play assistant messages"
-  },
-  "SpeakButton.tsx_J3ca41": {
-    "defaultMessage": "Play"
-  },
-  "SpeakButton.tsx_mM7O7f": {
-    "defaultMessage": "Synthesizing speech..."
-  },
-  "SpeakButton.tsx_tFFMkF": {
-    "defaultMessage": "Pause"
   },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"

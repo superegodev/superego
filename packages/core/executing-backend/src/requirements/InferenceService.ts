@@ -24,8 +24,6 @@ interface InferenceService {
     tools: InferenceService.Tool[],
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
 
-  tts(text: string): Promise<AudioContent>;
-
   stt(audio: AudioContent): Promise<string>;
 
   inspectFile(

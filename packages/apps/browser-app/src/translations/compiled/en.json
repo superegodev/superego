@@ -2172,25 +2172,25 @@
       "value": " generally perform quite well."
     }
   ],
-  "InferenceSettings.tsx_FJPyVh": [
-    {
-      "type": 0,
-      "value": ": fast, cheap, supports all APIs."
-    }
-  ],
-  "InferenceSettings.tsx_HRac2N": [
-    {
-      "type": 0,
-      "value": "Speech (required for the assistant to speak to you)"
-    }
-  ],
   "InferenceSettings.tsx_NNEajY": [
     {
       "type": 0,
       "value": "Provider base URL"
     }
   ],
-  "InferenceSettings.tsx_RPpwVn": [
+  "InferenceSettings.tsx_YctX0J": [
+    {
+      "type": 0,
+      "value": "Provider API key"
+    }
+  ],
+  "InferenceSettings.tsx_eV3UHK": [
+    {
+      "type": 0,
+      "value": "Transcriptions (required to speak to the assistant)"
+    }
+  ],
+  "InferenceSettings.tsx_fBc46F": [
     {
       "children": [
         {
@@ -2209,7 +2209,7 @@
         },
         {
           "type": 0,
-          "value": "—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs "
+          "value": ". The provider must offer APIs "
         },
         {
           "children": [
@@ -2228,44 +2228,6 @@
       ],
       "type": 8,
       "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Providers known to work: "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_YctX0J": [
-    {
-      "type": 0,
-      "value": "Provider API key"
-    }
-  ],
-  "InferenceSettings.tsx_eV3UHK": [
-    {
-      "type": 0,
-      "value": "Transcriptions (required to speak to the assistant)"
-    }
-  ],
-  "InferenceSettings.tsx_gi9ckp": [
-    {
-      "type": 0,
-      "value": ": only supports the Chat Completions API."
-    }
-  ],
-  "InferenceSettings.tsx_mnJYBQ": [
-    {
-      "type": 0,
-      "value": "Voice"
     }
   ],
   "InferenceSettings.tsx_rhSI1/": [
@@ -2274,34 +2236,10 @@
       "value": "Model"
     }
   ],
-  "InferenceSettings.tsx_u2jTeg": [
-    {
-      "type": 0,
-      "value": ": supports all APIs."
-    }
-  ],
   "InferenceSettings.tsx_uTE4Se": [
     {
       "type": 0,
       "value": "The name of a multimodal model supporting images, videos, and pdfs."
-    }
-  ],
-  "InferenceSettings.tsx_vuJYgx": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Create an account with your chosen provider, get an API key, and enter the details below. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_waSfdV": [
-    {
-      "type": 0,
-      "value": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -4032,30 +3970,6 @@
     {
       "type": 0,
       "value": "Create app"
-    }
-  ],
-  "SpeakButton.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configure speech to play assistant messages"
-    }
-  ],
-  "SpeakButton.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Play"
-    }
-  ],
-  "SpeakButton.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Synthesizing speech..."
-    }
-  ],
-  "SpeakButton.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pause"
     }
   ],
   "StructField.tsx_BPj/Jo": [

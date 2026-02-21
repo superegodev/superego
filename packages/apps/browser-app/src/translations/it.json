@@ -923,17 +923,8 @@
   "InferenceSettings.tsx_BUf4e4": {
     "defaultMessage": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. <code>z-ai/glm-4.7</code>, <code>openai/gpt-oss-120b</code> e <code>qwen/qwen3-coder</code> funzionano generalmente molto bene."
   },
-  "InferenceSettings.tsx_FJPyVh": {
-    "defaultMessage": ": veloce, economico, supporta tutte le API."
-  },
-  "InferenceSettings.tsx_HRac2N": {
-    "defaultMessage": "Sintesi vocale (necessaria perché l'assistente ti parli)"
-  },
   "InferenceSettings.tsx_NNEajY": {
     "defaultMessage": "URL di base del provider"
-  },
-  "InferenceSettings.tsx_RPpwVn": {
-    "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b> — un servizio che offre API per LLM, trascrizione vocale e sintesi vocale. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p> <p> Provider che funzionano: </p>"
   },
   "InferenceSettings.tsx_YctX0J": {
     "defaultMessage": "Chiave API del provider"
@@ -941,26 +932,14 @@
   "InferenceSettings.tsx_eV3UHK": {
     "defaultMessage": "Trascrizioni (necessarie per parlare con l'assistente)"
   },
-  "InferenceSettings.tsx_gi9ckp": {
-    "defaultMessage": ": supporta solo l'API Chat Completions."
-  },
-  "InferenceSettings.tsx_mnJYBQ": {
-    "defaultMessage": "Voce"
+  "InferenceSettings.tsx_fBc46F": {
+    "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p>"
   },
   "InferenceSettings.tsx_rhSI1/": {
     "defaultMessage": "Modello"
   },
-  "InferenceSettings.tsx_u2jTeg": {
-    "defaultMessage": ": supporta tutte le API."
-  },
   "InferenceSettings.tsx_uTE4Se": {
     "defaultMessage": "Il nome di un modello multimodale che supporta immagini, video e PDF."
-  },
-  "InferenceSettings.tsx_vuJYgx": {
-    "defaultMessage": "<p> Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. </p>"
-  },
-  "InferenceSettings.tsx_waSfdV": {
-    "defaultMessage": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."
@@ -1345,18 +1324,6 @@
   },
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
-  },
-  "SpeakButton.tsx_FUvUuG": {
-    "defaultMessage": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-  },
-  "SpeakButton.tsx_J3ca41": {
-    "defaultMessage": "Riproduci"
-  },
-  "SpeakButton.tsx_mM7O7f": {
-    "defaultMessage": "Sintesi vocale in corso..."
-  },
-  "SpeakButton.tsx_tFFMkF": {
-    "defaultMessage": "Pausa"
   },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"

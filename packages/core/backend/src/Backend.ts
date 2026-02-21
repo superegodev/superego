@@ -478,8 +478,6 @@ export default interface Backend {
   inference: {
     stt(audio: AudioContent): ResultPromise<string, UnexpectedError>;
 
-    tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
-
     implementTypescriptModule(spec: {
       description: string;
       rules: string | null;

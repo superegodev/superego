@@ -42,14 +42,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
             },
             model: "whisper-large-v3-turbo",
           },
-          speech: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/audio/speech`,
-              apiKey: null,
-            },
-            model: "gpt-4o-mini-tts",
-            voice: "nova",
-          },
           fileInspection: {
             provider: {
               baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
@@ -66,11 +58,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
           transcriptions: {
             provider: { baseUrl: null, apiKey: null },
             model: null,
-          },
-          speech: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-            voice: null,
           },
           fileInspection: {
             provider: { baseUrl: null, apiKey: null },

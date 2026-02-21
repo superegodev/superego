@@ -87,7 +87,6 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.inference = {
       stt: this.makeMainIpcCall("inference.stt"),
-      tts: this.makeMainIpcCall("inference.tts"),
       implementTypescriptModule: this.makeMainIpcCall(
         "inference.implementTypescriptModule",
       ),

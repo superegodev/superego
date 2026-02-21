@@ -15,7 +15,6 @@ import {
   fromFileInspectionResponse,
   toFileInspectionRequest,
 } from "./FileInspection.js";
-import { fromSpeechResponse, toSpeechRequest } from "./Speech.js";
 import {
   fromTranscriptionsResponse,
   type Transcriptions,
@@ -57,36 +56,6 @@ export default class OpenAICompatInferenceService implements InferenceService {
 
     const json = (await response.json()) as ChatCompletions.Response;
     return fromChatCompletionsResponse(json);
-  }
-
-  async tts(text: string): Promise<AudioContent> {
-    const { speech } = this.settings;
-    if (!speech.provider.baseUrl) {
-      throw new Error("Missing speech provider base URL.");
-    }
-    if (!speech.model) {
-      throw new Error("Missing speech model.");
-    }
-    if (!speech.voice) {
-      throw new Error("Missing speech voice.");
-    }
-
-    const requestBody = toSpeechRequest(speech.model, speech.voice, text);
-    const response = await fetch(speech.provider.baseUrl, {
-      method: "POST",
-      headers: {
-        ...(speech.provider.apiKey
-          ? { Authorization: `Bearer ${speech.provider.apiKey}` }
-          : null),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    await this.handleError("tts", requestBody, response);
-
-    const arrayBuffer = await response.arrayBuffer();
-    return fromSpeechResponse(new Uint8Array(arrayBuffer));
   }
 
   async stt(audio: AudioContent): Promise<string> {

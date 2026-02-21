@@ -52,11 +52,6 @@ const evaluator = new Evaluator(
       provider: { baseUrl: null, apiKey: null },
       model: null,
     },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
     fileInspection: {
       provider: { baseUrl: null, apiKey: null },
       model: null,
@@ -108,11 +103,6 @@ describe.concurrent.each(
         transcriptions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
         },
         fileInspection: {
           provider: { baseUrl: null, apiKey: null },

@@ -18,11 +18,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
           provider: { baseUrl: null, apiKey: null },
           model: null,
         },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
         fileInspection: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
@@ -54,11 +49,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         transcriptions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
         },
         fileInspection: {
           provider: { baseUrl: null, apiKey: null },
@@ -103,11 +93,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         transcriptions: {
           provider: { baseUrl: null, apiKey: null },
           model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
         },
         fileInspection: {
           provider: { baseUrl: null, apiKey: null },
