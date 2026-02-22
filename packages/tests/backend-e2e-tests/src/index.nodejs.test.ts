@@ -23,10 +23,11 @@ const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
     providers: [],
-    models: [],
-    defaultChatModel: null,
-    defaultTranscriptionModel: null,
-    defaultFileInspectionModel: null,
+    defaults: {
+      chat: null,
+      transcription: null,
+      fileInspection: null,
+    },
   },
   assistants: {
     userName: null,

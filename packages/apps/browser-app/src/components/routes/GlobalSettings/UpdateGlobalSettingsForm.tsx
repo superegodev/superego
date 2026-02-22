@@ -15,7 +15,7 @@ import applyTheme from "../../../utils/applyTheme.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
 import AppearanceSettings from "./AppearanceSettings.js";
 import AssistantsSettings from "./AssistantsSettings.js";
-import InferenceSettings from "./InferenceSettings.js";
+import InferenceSettings from "./InferenceSettings/InferenceSettings.js";
 
 interface Props {
   formId: string;

@@ -38,44 +38,52 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
               apiKey: null,
               driver: InferenceProviderDriver.OpenRouter,
+              models: [
+                {
+                  name: "openai/gpt-oss-120b",
+                  capabilities: {
+                    reasoning: false,
+                    audioUnderstanding: false,
+                    imageUnderstanding: false,
+                    pdfUnderstanding: false,
+                    webSearching: false,
+                  },
+                },
+                {
+                  name: "google/gemini-2.5-flash-lite",
+                  capabilities: {
+                    reasoning: false,
+                    audioUnderstanding: false,
+                    imageUnderstanding: false,
+                    pdfUnderstanding: false,
+                    webSearching: false,
+                  },
+                },
+              ],
             },
           ],
-          models: [
-            {
-              id: "openai/gpt-oss-120b@superego",
-              name: "openai/gpt-oss-120b",
+          defaults: {
+            chat: {
               providerName: "superego",
-              capabilities: {
-                reasoning: false,
-                audioUnderstanding: false,
-                imageUnderstanding: false,
-                pdfUnderstanding: false,
-                webSearching: false,
-              },
+              modelName: "openai/gpt-oss-120b",
             },
-            {
-              id: "google/gemini-2.5-flash-lite@superego",
-              name: "google/gemini-2.5-flash-lite",
+            transcription: {
               providerName: "superego",
-              capabilities: {
-                reasoning: false,
-                audioUnderstanding: false,
-                imageUnderstanding: false,
-                pdfUnderstanding: false,
-                webSearching: false,
-              },
+              modelName: "google/gemini-2.5-flash-lite",
             },
-          ],
-          defaultChatModel: "openai/gpt-oss-120b@superego",
-          defaultTranscriptionModel: "google/gemini-2.5-flash-lite@superego",
-          defaultFileInspectionModel: "google/gemini-2.5-flash-lite@superego",
+            fileInspection: {
+              providerName: "superego",
+              modelName: "google/gemini-2.5-flash-lite",
+            },
+          },
         }
       : {
           providers: [],
-          models: [],
-          defaultChatModel: null,
-          defaultTranscriptionModel: null,
-          defaultFileInspectionModel: null,
+          defaults: {
+            chat: null,
+            transcription: null,
+            fileInspection: null,
+          },
         },
     assistants: {
       userName: null,

@@ -51,25 +51,25 @@ function makeInferenceSettings(model: string): InferenceSettings {
         baseUrl: chatCompletionsBaseUrl,
         apiKey: chatCompletionsApiKey,
         driver: InferenceProviderDriver.OpenRouter,
+        models: [
+          {
+            name: model,
+            capabilities: {
+              reasoning: false,
+              audioUnderstanding: false,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+              webSearching: false,
+            },
+          },
+        ],
       },
     ],
-    models: [
-      {
-        id: `${model}@${providerName}`,
-        name: model,
-        providerName,
-        capabilities: {
-          reasoning: false,
-          audioUnderstanding: false,
-          imageUnderstanding: false,
-          pdfUnderstanding: false,
-          webSearching: false,
-        },
-      },
-    ],
-    defaultChatModel: `${model}@${providerName}`,
-    defaultTranscriptionModel: null,
-    defaultFileInspectionModel: null,
+    defaults: {
+      chat: { providerName, modelName: model },
+      transcription: null,
+      fileInspection: null,
+    },
   };
 }
 

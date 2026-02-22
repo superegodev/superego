@@ -317,6 +317,36 @@
       "value": " versions)"
     }
   ],
+  "Capabilities.tsx_7Lllg5": [
+    {
+      "type": 0,
+      "value": "Supports web searching"
+    }
+  ],
+  "Capabilities.tsx_HjTr28": [
+    {
+      "type": 0,
+      "value": "Supports image understanding"
+    }
+  ],
+  "Capabilities.tsx_KihMPW": [
+    {
+      "type": 0,
+      "value": "Supports audio understanding"
+    }
+  ],
+  "Capabilities.tsx_MuSZiS": [
+    {
+      "type": 0,
+      "value": "Supports reasoning"
+    }
+  ],
+  "Capabilities.tsx_xRp25e": [
+    {
+      "type": 0,
+      "value": "Supports PDF understanding"
+    }
+  ],
   "Carousel.tsx_F+ukuP": [
     {
       "type": 0,
@@ -1050,6 +1080,30 @@
     {
       "type": 0,
       "value": "Default document view UI options"
+    }
+  ],
+  "Defaults.tsx_CVFhNd": [
+    {
+      "type": 0,
+      "value": "File inspection"
+    }
+  ],
+  "Defaults.tsx_WTrOy3": [
+    {
+      "type": 0,
+      "value": "Chat"
+    }
+  ],
+  "Defaults.tsx_WXrISI": [
+    {
+      "type": 0,
+      "value": "Transcription"
+    }
+  ],
+  "Defaults.tsx_x6K+Ry": [
+    {
+      "type": 0,
+      "value": "Defaults"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2118,190 +2172,40 @@
       "value": "Add provider"
     }
   ],
-  "InferenceSettings.tsx_450Fty": [
-    {
-      "type": 0,
-      "value": "None"
-    }
-  ],
-  "InferenceSettings.tsx_Aw3qRf": [
-    {
-      "type": 0,
-      "value": "Reasoning"
-    }
-  ],
-  "InferenceSettings.tsx_CVFhNd": [
-    {
-      "type": 0,
-      "value": "File inspection"
-    }
-  ],
-  "InferenceSettings.tsx_G/yZLu": [
-    {
-      "type": 0,
-      "value": "Remove"
-    }
-  ],
-  "InferenceSettings.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
   "InferenceSettings.tsx_IL1Uey": [
     {
       "type": 0,
       "value": "Providers"
     }
   ],
-  "InferenceSettings.tsx_KTNoOq": [
+  "InferenceSettings.tsx_kav6Ry": [
     {
       "type": 0,
-      "value": "API key"
-    }
-  ],
-  "InferenceSettings.tsx_LkFVk7": [
-    {
-      "type": 0,
-      "value": "Provider "
+      "value": "To make the assistant work you need to connect it to an "
     },
-    {
-      "type": 1,
-      "value": "index"
-    }
-  ],
-  "InferenceSettings.tsx_MbbFzn": [
-    {
-      "type": 0,
-      "value": "Driver"
-    }
-  ],
-  "InferenceSettings.tsx_MbwCPh": [
-    {
-      "type": 0,
-      "value": "Web searching"
-    }
-  ],
-  "InferenceSettings.tsx_WTrOy3": [
-    {
-      "type": 0,
-      "value": "Chat"
-    }
-  ],
-  "InferenceSettings.tsx_WXrISI": [
-    {
-      "type": 0,
-      "value": "Transcription"
-    }
-  ],
-  "InferenceSettings.tsx_XFievo": [
-    {
-      "type": 0,
-      "value": "Capabilities"
-    }
-  ],
-  "InferenceSettings.tsx_blWvag": [
-    {
-      "type": 0,
-      "value": "Models"
-    }
-  ],
-  "InferenceSettings.tsx_dqWH5L": [
-    {
-      "type": 0,
-      "value": "Base URL"
-    }
-  ],
-  "InferenceSettings.tsx_eiZmJr": [
-    {
-      "type": 0,
-      "value": "Select a provider"
-    }
-  ],
-  "InferenceSettings.tsx_eloJkb": [
-    {
-      "type": 0,
-      "value": "Default models"
-    }
-  ],
-  "InferenceSettings.tsx_fBc46F": [
     {
       "children": [
         {
           "type": 0,
-          "value": " To make the assistant work you need to connect it to an "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "inference provider"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": ". The provider must offer APIs "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "compatible with the OpenAI format."
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " "
+          "value": "inference provider"
         }
       ],
       "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_hPttNf": [
-    {
-      "type": 0,
-      "value": "Model "
+      "value": "b"
     },
     {
-      "type": 1,
-      "value": "index"
-    }
-  ],
-  "InferenceSettings.tsx_jV3SlA": [
-    {
       "type": 0,
-      "value": "Image understanding"
-    }
-  ],
-  "InferenceSettings.tsx_k47TT2": [
+      "value": ". The provider must offer APIs "
+    },
     {
-      "type": 0,
-      "value": "Audio understanding"
-    }
-  ],
-  "InferenceSettings.tsx_v5qMgS": [
-    {
-      "type": 0,
-      "value": "PDF understanding"
-    }
-  ],
-  "InferenceSettings.tsx_xaj9Ba": [
-    {
-      "type": 0,
-      "value": "Provider"
-    }
-  ],
-  "InferenceSettings.tsx_zUO6Ii": [
-    {
-      "type": 0,
-      "value": "Add model"
+      "children": [
+        {
+          "type": 0,
+          "value": "compatible with the OpenAI format."
+        }
+      ],
+      "type": 8,
+      "value": "b"
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2588,6 +2492,18 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "Model.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "Model.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -2882,6 +2798,48 @@
     {
       "type": 0,
       "value": "Search"
+    }
+  ],
+  "Provider.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "Provider.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "Provider.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "Provider.tsx_MbbFzn": [
+    {
+      "type": 0,
+      "value": "Driver"
+    }
+  ],
+  "Provider.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Models"
+    }
+  ],
+  "Provider.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "Base URL"
+    }
+  ],
+  "Provider.tsx_zUO6Ii": [
+    {
+      "type": 0,
+      "value": "Add model"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [

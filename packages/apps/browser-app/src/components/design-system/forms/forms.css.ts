@@ -437,7 +437,6 @@ export const TimeInputWithMilliseconds = {
 export const Switch = {
   root: style({
     display: "flex",
-    alignItems: "center",
     gap: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,

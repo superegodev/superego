@@ -1,8 +1,8 @@
 import type {
   AudioContent,
   InferenceModel,
-  InferenceModelId,
   InferenceProvider,
+  InferenceProviderModelRef,
   InferenceSettings,
   Message,
 } from "@superego/backend";
@@ -31,7 +31,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
     previousMessages: Message[],
     tools: InferenceService.Tool[],
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    const { model, provider } = this.resolve(this.settings.defaultChatModel);
+    const { model, provider } = this.resolve(this.settings.defaults.chat);
 
     const requestBody = toChatCompletionsRequest(
       model.name,
@@ -57,7 +57,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
 
   async stt(audio: AudioContent): Promise<string> {
     const { model, provider } = this.resolve(
-      this.settings.defaultTranscriptionModel,
+      this.settings.defaults.transcription,
     );
 
     const requestBody = toSpeechToTextRequest(model.name, audio);
@@ -83,7 +83,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
     prompt: string,
   ): Promise<string> {
     const { model, provider } = this.resolve(
-      this.settings.defaultFileInspectionModel,
+      this.settings.defaults.fileInspection,
     );
 
     const requestBody = toFileInspectionRequest(model.name, file, prompt);
@@ -104,23 +104,23 @@ export default class OpenAICompatInferenceService implements InferenceService {
     return fromFileInspectionResponse(json);
   }
 
-  private resolve(modelId: InferenceModelId | null): {
+  private resolve(ref: InferenceProviderModelRef | null): {
     model: InferenceModel;
     provider: InferenceProvider;
   } {
-    if (!modelId) {
+    if (!ref) {
       throw new Error("No model configured.");
     }
-    const model = this.settings.models.find((m) => m.id === modelId);
-    if (!model) {
-      throw new Error(`Model "${modelId}" not found in settings.`);
-    }
     const provider = this.settings.providers.find(
-      (provider) => provider.name === model.providerName,
+      (p) => p.name === ref.providerName,
     );
     if (!provider) {
+      throw new Error(`Provider "${ref.providerName}" not found in settings.`);
+    }
+    const model = provider.models.find((m) => m.name === ref.modelName);
+    if (!model) {
       throw new Error(
-        `Provider "${model.providerName}" not found in settings.`,
+        `Model "${ref.modelName}" not found in provider "${ref.providerName}".`,
       );
     }
     return { model, provider };

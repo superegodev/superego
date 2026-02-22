@@ -914,79 +914,67 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Avviso di incompatibilità"
   },
-  "InferenceSettings.tsx_+goFsL": {
-    "defaultMessage": "Aggiungi provider"
+  "Capabilities.tsx_7Lllg5": {
+    "defaultMessage": "Supporta ricerca web"
   },
-  "InferenceSettings.tsx_450Fty": {
-    "defaultMessage": "Nessuno"
+  "Capabilities.tsx_HjTr28": {
+    "defaultMessage": "Supporta comprensione immagini"
   },
-  "InferenceSettings.tsx_Aw3qRf": {
-    "defaultMessage": "Ragionamento"
+  "Capabilities.tsx_KihMPW": {
+    "defaultMessage": "Supporta comprensione audio"
   },
-  "InferenceSettings.tsx_CVFhNd": {
+  "Capabilities.tsx_MuSZiS": {
+    "defaultMessage": "Supporta ragionamento"
+  },
+  "Capabilities.tsx_xRp25e": {
+    "defaultMessage": "Supporta comprensione PDF"
+  },
+  "Defaults.tsx_CVFhNd": {
     "defaultMessage": "Ispezione file"
   },
-  "InferenceSettings.tsx_G/yZLu": {
-    "defaultMessage": "Rimuovi"
+  "Defaults.tsx_WTrOy3": {
+    "defaultMessage": "Chat"
   },
-  "InferenceSettings.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
+  "Defaults.tsx_WXrISI": {
+    "defaultMessage": "Trascrizione"
+  },
+  "Defaults.tsx_x6K+Ry": {
+    "defaultMessage": "Predefiniti"
+  },
+  "InferenceSettings.tsx_+goFsL": {
+    "defaultMessage": "Aggiungi provider"
   },
   "InferenceSettings.tsx_IL1Uey": {
     "defaultMessage": "Provider"
   },
-  "InferenceSettings.tsx_KTNoOq": {
+  "InferenceSettings.tsx_kav6Ry": {
+    "defaultMessage": "Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b>"
+  },
+  "Model.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "Model.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "Provider.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "Provider.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "Provider.tsx_KTNoOq": {
     "defaultMessage": "Chiave API"
   },
-  "InferenceSettings.tsx_LkFVk7": {
-    "defaultMessage": "Provider {index}"
-  },
-  "InferenceSettings.tsx_MbbFzn": {
+  "Provider.tsx_MbbFzn": {
     "defaultMessage": "Driver"
   },
-  "InferenceSettings.tsx_MbwCPh": {
-    "defaultMessage": "Ricerca web"
-  },
-  "InferenceSettings.tsx_WTrOy3": {
-    "defaultMessage": "Chat"
-  },
-  "InferenceSettings.tsx_WXrISI": {
-    "defaultMessage": "Trascrizione"
-  },
-  "InferenceSettings.tsx_XFievo": {
-    "defaultMessage": "Capacità"
-  },
-  "InferenceSettings.tsx_blWvag": {
+  "Provider.tsx_blWvag": {
     "defaultMessage": "Modelli"
   },
-  "InferenceSettings.tsx_dqWH5L": {
+  "Provider.tsx_dqWH5L": {
     "defaultMessage": "URL di base"
   },
-  "InferenceSettings.tsx_eiZmJr": {
-    "defaultMessage": "Seleziona un provider"
-  },
-  "InferenceSettings.tsx_eloJkb": {
-    "defaultMessage": "Modelli predefiniti"
-  },
-  "InferenceSettings.tsx_fBc46F": {
-    "defaultMessage": "<p> Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b> </p>"
-  },
-  "InferenceSettings.tsx_hPttNf": {
-    "defaultMessage": "Modello {index}"
-  },
-  "InferenceSettings.tsx_jV3SlA": {
-    "defaultMessage": "Comprensione immagini"
-  },
-  "InferenceSettings.tsx_k47TT2": {
-    "defaultMessage": "Comprensione audio"
-  },
-  "InferenceSettings.tsx_v5qMgS": {
-    "defaultMessage": "Comprensione PDF"
-  },
-  "InferenceSettings.tsx_xaj9Ba": {
-    "defaultMessage": "Provider"
-  },
-  "InferenceSettings.tsx_zUO6Ii": {
+  "Provider.tsx_zUO6Ii": {
     "defaultMessage": "Aggiungi modello"
   },
   "InstallPackModal.tsx_+Toiai": {

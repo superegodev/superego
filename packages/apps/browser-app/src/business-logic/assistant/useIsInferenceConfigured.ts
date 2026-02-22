@@ -10,6 +10,6 @@ interface UseIsInferenceConfigured {
 export default function useIsInferenceConfigured(): UseIsInferenceConfigured {
   const { inference } = useGlobalData().globalSettings;
   return {
-    chatCompletions: Boolean(inference.defaultChatModel),
+    chatCompletions: Boolean(inference.defaults.chat),
   };
 }

@@ -1,11 +1,11 @@
-import type InferenceModelId from "../ids/InferenceModelId.js";
-import type InferenceModel from "./InferenceModel.js";
 import type InferenceProvider from "./InferenceProvider.js";
+import type InferenceProviderModelRef from "./InferenceProviderModelRef.js";
 
 export default interface InferenceSettings {
   providers: InferenceProvider[];
-  models: InferenceModel[];
-  defaultChatModel: InferenceModelId | null;
-  defaultTranscriptionModel: InferenceModelId | null;
-  defaultFileInspectionModel: InferenceModelId | null;
+  defaults: {
+    chat: InferenceProviderModelRef | null;
+    transcription: InferenceProviderModelRef | null;
+    fileInspection: InferenceProviderModelRef | null;
+  };
 }

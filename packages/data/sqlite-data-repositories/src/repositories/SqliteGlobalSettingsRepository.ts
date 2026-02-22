@@ -49,19 +49,20 @@ export default class SqliteGlobalSettingsRepository
           (settings.inference
             ?.providers as GlobalSettings["inference"]["providers"]) ??
           this.defaultGlobalSettings.inference.providers,
-        models:
-          (settings.inference
-            ?.models as GlobalSettings["inference"]["models"]) ??
-          this.defaultGlobalSettings.inference.models,
-        defaultChatModel:
-          settings.inference?.defaultChatModel ??
-          this.defaultGlobalSettings.inference.defaultChatModel,
-        defaultTranscriptionModel:
-          settings.inference?.defaultTranscriptionModel ??
-          this.defaultGlobalSettings.inference.defaultTranscriptionModel,
-        defaultFileInspectionModel:
-          settings.inference?.defaultFileInspectionModel ??
-          this.defaultGlobalSettings.inference.defaultFileInspectionModel,
+        defaults: {
+          chat:
+            (settings.inference?.defaults
+              ?.chat as GlobalSettings["inference"]["defaults"]["chat"]) ??
+            this.defaultGlobalSettings.inference.defaults.chat,
+          transcription:
+            (settings.inference?.defaults
+              ?.transcription as GlobalSettings["inference"]["defaults"]["transcription"]) ??
+            this.defaultGlobalSettings.inference.defaults.transcription,
+          fileInspection:
+            (settings.inference?.defaults
+              ?.fileInspection as GlobalSettings["inference"]["defaults"]["fileInspection"]) ??
+            this.defaultGlobalSettings.inference.defaults.fileInspection,
+        },
       },
       assistants: {
         userName:

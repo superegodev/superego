@@ -317,6 +317,36 @@
       "value": " versioni)"
     }
   ],
+  "Capabilities.tsx_7Lllg5": [
+    {
+      "type": 0,
+      "value": "Supporta ricerca web"
+    }
+  ],
+  "Capabilities.tsx_HjTr28": [
+    {
+      "type": 0,
+      "value": "Supporta comprensione immagini"
+    }
+  ],
+  "Capabilities.tsx_KihMPW": [
+    {
+      "type": 0,
+      "value": "Supporta comprensione audio"
+    }
+  ],
+  "Capabilities.tsx_MuSZiS": [
+    {
+      "type": 0,
+      "value": "Supporta ragionamento"
+    }
+  ],
+  "Capabilities.tsx_xRp25e": [
+    {
+      "type": 0,
+      "value": "Supporta comprensione PDF"
+    }
+  ],
   "Carousel.tsx_F+ukuP": [
     {
       "type": 0,
@@ -1042,6 +1072,30 @@
     {
       "type": 0,
       "value": "Opzioni UI predefinite per la vista documento"
+    }
+  ],
+  "Defaults.tsx_CVFhNd": [
+    {
+      "type": 0,
+      "value": "Ispezione file"
+    }
+  ],
+  "Defaults.tsx_WTrOy3": [
+    {
+      "type": 0,
+      "value": "Chat"
+    }
+  ],
+  "Defaults.tsx_WXrISI": [
+    {
+      "type": 0,
+      "value": "Trascrizione"
+    }
+  ],
+  "Defaults.tsx_x6K+Ry": [
+    {
+      "type": 0,
+      "value": "Predefiniti"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2110,190 +2164,40 @@
       "value": "Aggiungi provider"
     }
   ],
-  "InferenceSettings.tsx_450Fty": [
-    {
-      "type": 0,
-      "value": "Nessuno"
-    }
-  ],
-  "InferenceSettings.tsx_Aw3qRf": [
-    {
-      "type": 0,
-      "value": "Ragionamento"
-    }
-  ],
-  "InferenceSettings.tsx_CVFhNd": [
-    {
-      "type": 0,
-      "value": "Ispezione file"
-    }
-  ],
-  "InferenceSettings.tsx_G/yZLu": [
-    {
-      "type": 0,
-      "value": "Rimuovi"
-    }
-  ],
-  "InferenceSettings.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Nome"
-    }
-  ],
   "InferenceSettings.tsx_IL1Uey": [
     {
       "type": 0,
       "value": "Provider"
     }
   ],
-  "InferenceSettings.tsx_KTNoOq": [
+  "InferenceSettings.tsx_kav6Ry": [
     {
       "type": 0,
-      "value": "Chiave API"
-    }
-  ],
-  "InferenceSettings.tsx_LkFVk7": [
-    {
-      "type": 0,
-      "value": "Provider "
+      "value": "Per far funzionare l'assistente devi collegarlo a un "
     },
-    {
-      "type": 1,
-      "value": "index"
-    }
-  ],
-  "InferenceSettings.tsx_MbbFzn": [
-    {
-      "type": 0,
-      "value": "Driver"
-    }
-  ],
-  "InferenceSettings.tsx_MbwCPh": [
-    {
-      "type": 0,
-      "value": "Ricerca web"
-    }
-  ],
-  "InferenceSettings.tsx_WTrOy3": [
-    {
-      "type": 0,
-      "value": "Chat"
-    }
-  ],
-  "InferenceSettings.tsx_WXrISI": [
-    {
-      "type": 0,
-      "value": "Trascrizione"
-    }
-  ],
-  "InferenceSettings.tsx_XFievo": [
-    {
-      "type": 0,
-      "value": "Capacità"
-    }
-  ],
-  "InferenceSettings.tsx_blWvag": [
-    {
-      "type": 0,
-      "value": "Modelli"
-    }
-  ],
-  "InferenceSettings.tsx_dqWH5L": [
-    {
-      "type": 0,
-      "value": "URL di base"
-    }
-  ],
-  "InferenceSettings.tsx_eiZmJr": [
-    {
-      "type": 0,
-      "value": "Seleziona un provider"
-    }
-  ],
-  "InferenceSettings.tsx_eloJkb": [
-    {
-      "type": 0,
-      "value": "Modelli predefiniti"
-    }
-  ],
-  "InferenceSettings.tsx_fBc46F": [
     {
       "children": [
         {
           "type": 0,
-          "value": " Per far funzionare l'assistente devi collegarlo a un "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "fornitore di inferenza"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": ". Il provider deve offrire API "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "compatibili con il formato OpenAI."
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " "
+          "value": "fornitore di inferenza"
         }
       ],
       "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_hPttNf": [
-    {
-      "type": 0,
-      "value": "Modello "
+      "value": "b"
     },
     {
-      "type": 1,
-      "value": "index"
-    }
-  ],
-  "InferenceSettings.tsx_jV3SlA": [
-    {
       "type": 0,
-      "value": "Comprensione immagini"
-    }
-  ],
-  "InferenceSettings.tsx_k47TT2": [
+      "value": ". Il provider deve offrire API "
+    },
     {
-      "type": 0,
-      "value": "Comprensione audio"
-    }
-  ],
-  "InferenceSettings.tsx_v5qMgS": [
-    {
-      "type": 0,
-      "value": "Comprensione PDF"
-    }
-  ],
-  "InferenceSettings.tsx_xaj9Ba": [
-    {
-      "type": 0,
-      "value": "Provider"
-    }
-  ],
-  "InferenceSettings.tsx_zUO6Ii": [
-    {
-      "type": 0,
-      "value": "Aggiungi modello"
+      "children": [
+        {
+          "type": 0,
+          "value": "compatibili con il formato OpenAI."
+        }
+      ],
+      "type": 8,
+      "value": "b"
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2580,6 +2484,18 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "Model.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "Model.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -2874,6 +2790,48 @@
     {
       "type": 0,
       "value": "Cerca"
+    }
+  ],
+  "Provider.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "Provider.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "Provider.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "Chiave API"
+    }
+  ],
+  "Provider.tsx_MbbFzn": [
+    {
+      "type": 0,
+      "value": "Driver"
+    }
+  ],
+  "Provider.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Modelli"
+    }
+  ],
+  "Provider.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "URL di base"
+    }
+  ],
+  "Provider.tsx_zUO6Ii": [
+    {
+      "type": 0,
+      "value": "Aggiungi modello"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
