@@ -13,6 +13,7 @@ export { default as ConnectorAuthenticationStrategy } from "./enums/ConnectorAut
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
 export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
 export { default as DownSyncStatus } from "./enums/DownSyncStatus.js";
+export { default as InferenceProviderDriver } from "./enums/InferenceProviderDriver.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
 export { default as Theme } from "./enums/Theme.js";

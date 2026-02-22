@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   AssistantName,
+  InferenceProviderDriver,
   type InferenceSettings,
   Theme,
 } from "@superego/backend";
@@ -49,6 +50,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
         name: providerName,
         baseUrl: chatCompletionsBaseUrl,
         apiKey: chatCompletionsApiKey,
+        driver: InferenceProviderDriver.OpenRouter,
       },
     ],
     models: [

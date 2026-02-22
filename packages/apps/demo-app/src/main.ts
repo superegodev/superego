@@ -1,6 +1,10 @@
 /// <reference types="vite/client" />
 import "urlpattern-polyfill";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  Theme,
+} from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
 import {
   GoogleCalendar,
@@ -33,6 +37,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               name: "superego",
               baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
               apiKey: null,
+              driver: InferenceProviderDriver.OpenRouter,
             },
           ],
           models: [

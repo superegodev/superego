@@ -2,6 +2,7 @@ import {
   AssistantName,
   type GlobalSettings,
   type InferenceModelId,
+  InferenceProviderDriver,
   Theme,
 } from "@superego/backend";
 import * as v from "valibot";
@@ -28,6 +29,7 @@ export default function globalSettings(): v.GenericSchema<
           name: v.string(),
           baseUrl: v.string(),
           apiKey: v.nullable(v.string()),
+          driver: v.picklist(Object.values(InferenceProviderDriver)),
         }),
       ),
       models: v.array(

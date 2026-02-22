@@ -1,4 +1,8 @@
-import type { GlobalSettings, InferenceModelId } from "@superego/backend";
+import {
+  type GlobalSettings,
+  type InferenceModelId,
+  InferenceProviderDriver,
+} from "@superego/backend";
 import {
   type Control,
   type FieldPath,
@@ -98,12 +102,28 @@ export default function InferenceSettings({ control }: Props) {
                   label={intl.formatMessage({ defaultMessage: "API key" })}
                   placeholder="sk-..."
                 />
+                <RHFSelectField
+                  control={control}
+                  name={`inference.providers.${index}.driver`}
+                  options={Object.values(InferenceProviderDriver).map(
+                    (driver) => ({
+                      id: driver,
+                      label: driver,
+                    }),
+                  )}
+                  label={intl.formatMessage({ defaultMessage: "Driver" })}
+                />
               </Fieldset.Fields>
             </Fieldset>
           ))}
           <Button
             onPress={() =>
-              providers.append({ name: "", baseUrl: "", apiKey: null })
+              providers.append({
+                name: "",
+                baseUrl: "",
+                apiKey: null,
+                driver: InferenceProviderDriver.OpenRouter,
+              })
             }
           >
             <PiPlus />
