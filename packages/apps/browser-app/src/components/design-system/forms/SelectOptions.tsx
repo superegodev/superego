@@ -32,10 +32,12 @@ export default function SelectOptions({
               <>
                 <div className={cs.SelectOptions.optionValue}>{label}</div>
                 {description ? (
-                  <div className={cs.SelectOptions.optionDescription}>
-                    {"\u2002-\u2002"}
-                    {description}
-                  </div>
+                  <>
+                    <span className={cs.SelectOptions.optionDash}>{"-"}</span>
+                    <div className={cs.SelectOptions.optionDescription}>
+                      {description}
+                    </div>
+                  </>
                 ) : null}
                 {isSelected ? <PiCheck /> : null}
               </>

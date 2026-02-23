@@ -127,6 +127,7 @@ const MemoizedConversation = memo(
               }),
               icon: <PiTrash />,
               onPress: () => setIsDeleteModalOpen(true),
+              isDanger: true,
             },
           ]}
         />

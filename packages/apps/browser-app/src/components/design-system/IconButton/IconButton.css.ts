@@ -72,11 +72,6 @@ export const IconButton = {
         borderWidth: vars.borders.width.thin,
         borderStyle: "solid",
         selectors: {
-          '&[data-selected="true"]': {
-            background: vars.colors.button.invisible.selected.background,
-            color: vars.colors.button.invisible.selected.text,
-            borderColor: vars.colors.button.invisible.selected.border,
-          },
           "&:hover": {
             background: vars.colors.button.invisible.hover.background,
             color: vars.colors.button.invisible.hover.text,
@@ -84,6 +79,27 @@ export const IconButton = {
           "&[disabled]": {
             background: vars.colors.button.invisible.disabled.background,
             color: vars.colors.button.invisible.disabled.text,
+          },
+        },
+      },
+    ],
+    "invisible-danger": [
+      iconButtonRootBase,
+      {
+        background: vars.colors.button.invisibleDanger.base.background,
+        color: vars.colors.button.invisibleDanger.base.text,
+        borderColor: vars.colors.button.invisibleDanger.base.border,
+        borderWidth: vars.borders.width.thin,
+        borderStyle: "solid",
+        selectors: {
+          "&:hover": {
+            background: vars.colors.button.invisibleDanger.hover.background,
+            color: vars.colors.button.invisibleDanger.hover.text,
+            borderColor: vars.colors.button.invisibleDanger.hover.border,
+          },
+          "&[disabled]": {
+            background: vars.colors.button.invisibleDanger.disabled.background,
+            color: vars.colors.button.invisibleDanger.disabled.text,
           },
         },
       },

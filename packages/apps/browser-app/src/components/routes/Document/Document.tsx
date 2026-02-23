@@ -149,6 +149,7 @@ export default function Document({
                       }),
                       icon: <PiTrash />,
                       onPress: () => setIsDeleteModalOpen(true),
+                      isDanger: true,
                     }
                   : null,
                 isRemote

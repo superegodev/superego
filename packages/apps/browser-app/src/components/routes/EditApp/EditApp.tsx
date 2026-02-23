@@ -68,6 +68,7 @@ export default function EditApp({ appId }: Props) {
             icon: <PiTrash />,
             label: intl.formatMessage({ defaultMessage: "Delete" }),
             onPress: () => setIsDeleteAppModalFormOpen(true),
+            isDanger: true,
           },
         ]}
       />
