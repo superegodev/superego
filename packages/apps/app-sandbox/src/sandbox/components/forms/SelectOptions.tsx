@@ -23,10 +23,12 @@ export default function SelectOptions({ options }: Props) {
                   {label ?? value}
                 </div>
                 {description ? (
-                  <div className={cs.SelectOptions.optionDescription}>
-                    {"\u2002-\u2002"}
-                    {description}
-                  </div>
+                  <>
+                    <span className={cs.SelectOptions.optionDash}>{"-"}</span>
+                    <div className={cs.SelectOptions.optionDescription}>
+                      {description}
+                    </div>
+                  </>
                 ) : null}
                 {isSelected ? <PiCheck /> : null}
               </>

@@ -189,10 +189,15 @@ export const SelectOptions = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.medium,
-        borderColor: vars.colors.border.strong,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        borderColor: vars.colors.border.inverse,
       },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
+      },
+      '&[data-selected="true"]:hover': {
+        background: vars.colors.background.inverseHighlight,
       },
       '&[data-disabled="true"]': {
         color: vars.colors.text.secondary,
@@ -208,6 +213,14 @@ export const SelectOptions = {
     flexShrink: 0,
   }),
 
+  optionDash: style({
+    selectors: {
+      [`${SelectButton.selectValue} &`]: {
+        padding: vars.spacing._2,
+      },
+    },
+  }),
+
   optionDescription: style({
     flexGrow: 1,
     color: vars.colors.text.secondary,
@@ -218,6 +231,11 @@ export const SelectOptions = {
     textWrap: "nowrap",
   }),
 };
+
+globalStyle(
+  `${SelectOptions.option}[data-selected="true"] .${SelectOptions.optionDescription}`,
+  { color: vars.colors.text.inverse },
+);
 
 export const Label = {
   root: style({
@@ -537,9 +555,6 @@ export const DatePickerCalendar = {
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",
     selectors: {
-      '&[data-is-today="true"]': {
-        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
-      },
       '&[data-outside-month="true"]': {
         color: vars.colors.text.secondary,
         pointerEvents: "none",
@@ -549,7 +564,15 @@ export const DatePickerCalendar = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.bold,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.inverse}`,
+      },
+      '&[data-selected="true"][data-hovered="true"]': {
+        background: vars.colors.background.inverseHighlight,
+      },
+      '&[data-is-today="true"]': {
+        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
       },
     },
   }),
