@@ -43,8 +43,9 @@ export default function CollectionSettings({ collectionId }: Props) {
             isDanger: true,
           },
         ]}
+        noFadedBackground={true}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content noBlockStartPadding={true}>
         <FullPageTabs
           tabs={[
             {

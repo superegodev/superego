@@ -98,7 +98,7 @@ export const Select = {
 
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
-  // Pixel adjustment to all inputs' heights match.
+  // Pixel adjustment so all inputs' heights match.
   height: `calc(${vars.spacing._9} + 1px)`,
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,

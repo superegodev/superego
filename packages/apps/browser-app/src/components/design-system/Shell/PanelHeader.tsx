@@ -19,6 +19,7 @@ interface Props {
     | undefined;
   actionsAriaLabel?: string | undefined;
   withPrimarySidebarToggleButton?: boolean | undefined;
+  noFadedBackground?: boolean | undefined;
   className?: string | undefined;
 }
 export default function PanelHeader({
@@ -26,6 +27,7 @@ export default function PanelHeader({
   actions,
   actionsAriaLabel,
   withPrimarySidebarToggleButton = true,
+  noFadedBackground = false,
   className,
 }: Props) {
   const intl = useIntl();
@@ -35,7 +37,10 @@ export default function PanelHeader({
     togglePrimarySidebar,
   } = useShell();
   return (
-    <header className={classnames(cs.PanelHeader.root, className)}>
+    <header
+      className={classnames(cs.PanelHeader.root, className)}
+      data-no-faded-background={noFadedBackground}
+    >
       <div className={cs.PanelHeader.leftSection}>
         {withPrimarySidebarToggleButton ? (
           <IconButton
