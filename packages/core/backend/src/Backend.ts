@@ -42,6 +42,7 @@ import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
+import type InferenceOptionsNotValid from "./errors/InferenceOptionsNotValid.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
 import type PackNotFound from "./errors/PackNotFound.js";
 import type PackNotValid from "./errors/PackNotValid.js";
@@ -83,6 +84,7 @@ import type Document from "./types/Document.js";
 import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type InferenceOptions from "./types/InferenceOptions.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
@@ -426,31 +428,45 @@ export default interface Backend {
     startConversation(
       assistant: AssistantName,
       userMessageContent: Message.User["content"],
-    ): ResultPromise<Conversation, FilesNotFound | UnexpectedError>;
+      inferenceOptions: InferenceOptions,
+    ): ResultPromise<
+      Conversation,
+      FilesNotFound | InferenceOptionsNotValid | UnexpectedError
+    >;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
+      inferenceOptions: InferenceOptions,
     ): ResultPromise<
       Conversation,
       | ConversationNotFound
       | CannotContinueConversation
       | FilesNotFound
+      | InferenceOptionsNotValid
       | UnexpectedError
     >;
 
     retryLastResponse(
       id: ConversationId,
+      inferenceOptions: InferenceOptions,
     ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotRetryLastResponse | UnexpectedError
+      | ConversationNotFound
+      | CannotRetryLastResponse
+      | InferenceOptionsNotValid
+      | UnexpectedError
     >;
 
     recoverConversation(
       id: ConversationId,
+      inferenceOptions: InferenceOptions,
     ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotRecoverConversation | UnexpectedError
+      | ConversationNotFound
+      | CannotRecoverConversation
+      | InferenceOptionsNotValid
+      | UnexpectedError
     >;
 
     deleteConversation(

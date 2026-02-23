@@ -1,15 +1,24 @@
 import {
   type Conversation,
   ConversationStatus,
+  type InferenceOptions,
+  type InferenceProviderModelRef,
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
-import { type RefObject, useRef, useState } from "react";
+import { type RefObject, useMemo, useRef, useState } from "react";
 import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import classnames from "../../../utils/classnames.js";
+import {
+  type Option,
+  Select,
+  SelectButton,
+  SelectOptions,
+} from "../../design-system/forms/forms.js";
 import AddFilesButton from "./AddFilesButton.js";
 import FilesTray from "./FilesTray.js";
 import SendRecordButtons from "./SendRecordButtons.js";
@@ -17,9 +26,25 @@ import * as cs from "./UserMessageContentInput.css.js";
 import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
 import useFiles from "./useFiles.js";
 
+function serializeModelRef(ref: InferenceProviderModelRef): string {
+  return `${ref.modelName}@${ref.providerName}`;
+}
+
+function deserializeModelRef(id: string): InferenceProviderModelRef {
+  const atIndex = id.lastIndexOf("@");
+  return {
+    modelName: id.slice(0, atIndex),
+    providerName: id.slice(atIndex + 1),
+  };
+}
+
+// TODO_AI: review and refactor
 interface Props {
   conversation: Conversation | null;
-  onSend: (messageContent: Message.User["content"]) => void;
+  onSend: (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions,
+  ) => void;
   isSending: boolean;
   initialMessage?: string | undefined;
   placeholder: string;
@@ -47,6 +72,8 @@ export default function UserMessageContentInput({
   const internalTextAreaRef = useRef<HTMLTextAreaElement>(null);
   const actualTextAreaRef = textAreaRef ?? internalTextAreaRef;
 
+  const { inference } = useGlobalData().globalSettings;
+
   const isInferenceConfigured = useIsInferenceConfigured();
   const isDisabled =
     (conversation !== null &&
@@ -54,6 +81,33 @@ export default function UserMessageContentInput({
         conversation?.status !== ConversationStatus.Idle)) ||
     isSending ||
     !isInferenceConfigured.chatCompletions;
+
+  const modelOptions: Option[] = useMemo(() => {
+    const options: Option[] = [];
+    for (const provider of inference.providers) {
+      for (const model of provider.models) {
+        options.push({
+          id: serializeModelRef({
+            providerName: provider.name,
+            modelName: model.name,
+          }),
+          label: `${model.name} (${provider.name})`,
+        });
+      }
+    }
+    return options;
+  }, [inference.providers]);
+
+  const [selectedModelRefKey, setSelectedModelRefKey] = useState<string | null>(
+    inference.defaults.chat ? serializeModelRef(inference.defaults.chat) : null,
+  );
+
+  const getInferenceOptions = (): InferenceOptions => {
+    const providerModelRef = selectedModelRefKey
+      ? deserializeModelRef(selectedModelRefKey)
+      : inference.defaults.chat!;
+    return { providerModelRef };
+  };
 
   const {
     files,
@@ -67,20 +121,26 @@ export default function UserMessageContentInput({
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
-    onSend([
-      { type: MessageContentPartType.Text, text: text },
-      ...(await getContentParts()),
-    ]);
+    onSend(
+      [
+        { type: MessageContentPartType.Text, text: text },
+        ...(await getContentParts()),
+      ],
+      getInferenceOptions(),
+    );
     setText("");
     removeAllFiles();
   };
 
   const { isRecording, startRecording, finishRecording, cancelRecording } =
     useRecordAudio(async (audio) => {
-      onSend([
-        { type: MessageContentPartType.Audio, audio: audio },
-        ...(await getContentParts()),
-      ]);
+      onSend(
+        [
+          { type: MessageContentPartType.Audio, audio: audio },
+          ...(await getContentParts()),
+        ],
+        getInferenceOptions(),
+      );
       removeAllFiles();
     });
 
@@ -135,7 +195,7 @@ export default function UserMessageContentInput({
         />
       </TextField>
       <div className={cs.UserMessageContentInput.actionsToolbar}>
-        <div>
+        <div className={cs.UserMessageContentInput.actionsToolbarLeft}>
           {allowFileParts ? (
             <AddFilesButton
               onFilesAdded={onFilesAdded}
@@ -144,6 +204,18 @@ export default function UserMessageContentInput({
                 isInferenceConfigured.chatCompletions
               }
             />
+          ) : null}
+          {modelOptions.length > 0 ? (
+            <Select
+              aria-label={intl.formatMessage({ defaultMessage: "Model" })}
+              value={selectedModelRefKey}
+              onChange={(key) => setSelectedModelRefKey(key as string | null)}
+              isDisabled={isDisabled || isRecording}
+              className={cs.UserMessageContentInput.modelSelect}
+            >
+              <SelectButton />
+              <SelectOptions options={modelOptions} />
+            </Select>
           ) : null}
         </div>
         <SendRecordButtons

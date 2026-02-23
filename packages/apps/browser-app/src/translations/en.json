@@ -1508,6 +1508,9 @@
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Message assistant"
   },
+  "UserMessageContentInput.tsx_rhSI1/": {
+    "defaultMessage": "Model"
+  },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."
   },

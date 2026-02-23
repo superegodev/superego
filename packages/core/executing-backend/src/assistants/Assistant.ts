@@ -1,4 +1,5 @@
 import {
+  type InferenceOptions,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -20,6 +21,7 @@ export default abstract class Assistant {
 
   async generateAndProcessNextMessages(
     messages: Message[],
+    inferenceOptions: InferenceOptions,
   ): Promise<Message[]> {
     try {
       const assistantMessage = await this.inferenceService.generateNextMessage(
@@ -49,6 +51,7 @@ export default abstract class Assistant {
           ),
         ],
         this.getTools(),
+        inferenceOptions,
       );
 
       // Case: assistantMessage is Message.ContentAssistant
@@ -67,11 +70,10 @@ export default abstract class Assistant {
         toolResults: toolResults,
         createdAt: new Date(),
       };
-      return this.generateAndProcessNextMessages([
-        ...messages,
-        assistantMessage,
-        toolMessage,
-      ]);
+      return this.generateAndProcessNextMessages(
+        [...messages, assistantMessage, toolMessage],
+        inferenceOptions,
+      );
     } catch (error) {
       console.error(error);
       throw error;

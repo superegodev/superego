@@ -4,6 +4,7 @@ import type BackgroundJobStatus from "../enums/BackgroundJobStatus.js";
 import type BackgroundJobId from "../ids/BackgroundJobId.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type ConversationId from "../ids/ConversationId.js";
+import type InferenceOptions from "./InferenceOptions.js";
 
 type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
   id: BackgroundJobId;
@@ -44,7 +45,7 @@ type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
 namespace BackgroundJob {
   export type ProcessConversation = BaseBackgroundJob<
     BackgroundJobName.ProcessConversation,
-    { id: ConversationId }
+    { id: ConversationId; inferenceOptions: InferenceOptions }
   >;
 
   export type DownSyncCollection = BaseBackgroundJob<

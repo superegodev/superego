@@ -1,8 +1,15 @@
-import { MessageContentPartType, MessageRole } from "@superego/backend";
+import {
+  type InferenceOptions,
+  MessageContentPartType,
+  MessageRole,
+} from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
 
 export default class Evaluator {
-  constructor(private inferenceService: InferenceService) {}
+  constructor(
+    private inferenceService: InferenceService,
+    private inferenceOptions: InferenceOptions,
+  ) {}
 
   async score(
     instructions: string,
@@ -39,6 +46,7 @@ export default class Evaluator {
           },
         },
       ],
+      this.inferenceOptions,
     );
     const toolCall =
       "toolCalls" in message &&

@@ -64,6 +64,16 @@ export const UserMessageContentInput = {
     display: "flex",
     justifyContent: "space-between",
   }),
+
+  actionsToolbarLeft: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._1,
+  }),
+
+  modelSelect: style({
+    fontSize: vars.typography.fontSizes.sm,
+  }),
 };
 
 export const FilesTray = {

@@ -1,6 +1,7 @@
 import type { Conversation, ConversationStatus } from "@superego/backend";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
@@ -13,8 +14,12 @@ interface Props {
 export default function ErrorMessage({ conversation }: Props) {
   const intl = useIntl();
 
+  const { inference } = useGlobalData().globalSettings;
   const { mutate } = useRecoverConversation();
   const { cause } = conversation.error.details;
+  // TODO_AI:
+  // - default to the same model that was used, not to the default model
+  // - allow to choose a different model to recover the conversation
   return (
     <div className={cs.ErrorMessage.root}>
       <div className={cs.ErrorMessage.message}>
@@ -22,7 +27,11 @@ export default function ErrorMessage({ conversation }: Props) {
         <IconButton
           label={intl.formatMessage({ defaultMessage: "Retry" })}
           variant="invisible"
-          onPress={() => mutate(conversation.id)}
+          onPress={() =>
+            mutate(conversation.id, {
+              providerModelRef: inference.defaults.chat!,
+            })
+          }
           className={cs.ErrorMessage.retryButton}
         >
           <PiArrowCounterClockwiseBold />

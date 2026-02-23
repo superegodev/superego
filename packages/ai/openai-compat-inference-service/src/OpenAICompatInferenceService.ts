@@ -1,6 +1,7 @@
 import type {
   AudioContent,
   InferenceModel,
+  InferenceOptions,
   InferenceProvider,
   InferenceProviderModelRef,
   InferenceSettings,
@@ -30,8 +31,9 @@ export default class OpenAICompatInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
+    inferenceOptions: InferenceOptions,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    const { model, provider } = this.resolve(this.settings.defaults.chat);
+    const { model, provider } = this.resolve(inferenceOptions.providerModelRef);
 
     const requestBody = toChatCompletionsRequest(
       model.name,
@@ -52,7 +54,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
     await this.handleError("generateNextMessage", requestBody, response);
 
     const json = (await response.json()) as ChatCompletions.Response;
-    return fromChatCompletionsResponse(json);
+    return fromChatCompletionsResponse(json, inferenceOptions);
   }
 
   async stt(audio: AudioContent): Promise<string> {

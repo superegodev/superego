@@ -1,4 +1,8 @@
-import { AssistantName, type Message } from "@superego/backend";
+import {
+  AssistantName,
+  type InferenceOptions,
+  type Message,
+} from "@superego/backend";
 import { PiCode } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -18,10 +22,14 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const { navigateTo } = useNavigationState();
 
   const { result, mutate, isPending } = useStartConversation();
-  const onSend = async (userMessageContent: Message.User["content"]) => {
+  const onSend = async (
+    userMessageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions,
+  ) => {
     const { success, data } = await mutate(
       AssistantName.CollectionCreator,
       userMessageContent,
+      inferenceOptions,
     );
     if (success) {
       navigateTo({ name: RouteName.Conversation, conversationId: data.id });

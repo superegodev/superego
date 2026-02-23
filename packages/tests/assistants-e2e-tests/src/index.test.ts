@@ -77,6 +77,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
 const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
+  { providerModelRef: makeInferenceSettings(evaluatorModel).defaults.chat! },
 );
 
 const assistantsModels = [
@@ -138,6 +139,10 @@ describe.concurrent.each(
       [],
     );
 
-    return { backend, booleanOracle: evaluator };
+    const inferenceOptions = {
+      providerModelRef: makeInferenceSettings(model).defaults.chat!,
+    };
+
+    return { backend, booleanOracle: evaluator, inferenceOptions };
   });
 });

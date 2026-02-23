@@ -6,6 +6,8 @@ import {
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type UnexpectedError,
 } from "@superego/backend";
@@ -21,6 +23,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
@@ -30,10 +33,23 @@ export default class AssistantsRecoverConversation extends Usecase<
 > {
   async exec(
     id: ConversationId,
+    inferenceOptions: InferenceOptions,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotRecoverConversation | UnexpectedError
+    | ConversationNotFound
+    | CannotRecoverConversation
+    | InferenceOptionsNotValid
+    | UnexpectedError
   > {
+    const globalSettings = await this.repos.globalSettings.get();
+    const inferenceOptionsError = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsError) {
+      return makeUnsuccessfulResult(inferenceOptionsError);
+    }
+
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulResult(
@@ -75,7 +91,7 @@ export default class AssistantsRecoverConversation extends Usecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id },
+      input: { id, inferenceOptions },
     });
 
     return makeSuccessfulResult(

@@ -1,4 +1,8 @@
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  Theme,
+} from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
@@ -9,9 +13,28 @@ import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js"
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
-    providers: [],
+    providers: [
+      {
+        name: "providerName",
+        baseUrl: "http://localhost",
+        apiKey: null,
+        driver: InferenceProviderDriver.OpenRouter,
+        models: [
+          {
+            name: "modelName",
+            capabilities: {
+              reasoning: false,
+              audioUnderstanding: false,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+              webSearching: false,
+            },
+          },
+        ],
+      },
+    ],
     defaults: {
-      chat: null,
+      chat: { providerName: "providerName", modelName: "modelName" },
       transcription: null,
       fileInspection: null,
     },

@@ -5,6 +5,8 @@ import {
   type Conversation,
   ConversationStatus,
   type FilesNotFound,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type MessageContentPart,
   MessageRole,
@@ -27,6 +29,7 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsStartConversation extends Usecase<
@@ -35,7 +38,20 @@ export default class AssistantsStartConversation extends Usecase<
   async exec(
     assistant: AssistantName,
     userMessageContent: Message.User["content"],
-  ): ResultPromise<Conversation, FilesNotFound | UnexpectedError> {
+    inferenceOptions: InferenceOptions,
+  ): ResultPromise<
+    Conversation,
+    FilesNotFound | InferenceOptionsNotValid | UnexpectedError
+  > {
+    const globalSettings = await this.repos.globalSettings.get();
+    const inferenceOptionsError = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsError) {
+      return makeUnsuccessfulResult(inferenceOptionsError);
+    }
+
     const referencedFileIds =
       MessageContentFileUtils.extractReferencedFileIds(userMessageContent);
     const referencedFiles =
@@ -96,7 +112,7 @@ export default class AssistantsStartConversation extends Usecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id: conversation.id },
+      input: { id: conversation.id, inferenceOptions },
     });
 
     return makeSuccessfulResult(

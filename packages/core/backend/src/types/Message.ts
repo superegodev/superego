@@ -1,4 +1,5 @@
 import type MessageRole from "../enums/MessageRole.js";
+import type InferenceOptions from "./InferenceOptions.js";
 import type MessageContentPart from "./MessageContentPart.js";
 import type NonEmptyArray from "./NonEmptyArray.js";
 import type ToolCall from "./ToolCall.js";
@@ -30,11 +31,13 @@ namespace Message {
   export interface ContentAssistant {
     role: MessageRole.Assistant;
     content: NonEmptyArray<MessageContentPart.Text>;
+    inferenceOptions: InferenceOptions;
     createdAt: Date;
   }
   export interface ToolCallAssistant {
     role: MessageRole.Assistant;
     toolCalls: ToolCall[];
+    inferenceOptions: InferenceOptions;
     createdAt: Date;
   }
   export type Assistant = ContentAssistant | ToolCallAssistant;

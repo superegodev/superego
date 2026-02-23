@@ -7,6 +7,7 @@ import {
   ConversationStatus,
   type ConversationStatusNotProcessing,
   type GlobalSettings,
+  type InferenceOptions,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -44,8 +45,10 @@ import InferenceImplementTypescriptModule from "../inference/ImplementTypescript
 export default class AssistantsProcessConversation extends Usecase {
   async exec({
     id,
+    inferenceOptions,
   }: {
     id: ConversationId;
+    inferenceOptions: InferenceOptions;
   }): ResultPromise<
     null,
     ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
@@ -108,13 +111,17 @@ export default class AssistantsProcessConversation extends Usecase {
       );
 
       const [messages, title] = await Promise.all([
-        assistant.generateAndProcessNextMessages(transcribedMessages),
+        assistant.generateAndProcessNextMessages(
+          transcribedMessages,
+          inferenceOptions,
+        ),
         conversation.title === null
           ? generateTitle(
               inferenceService,
               transcribedMessages.find(
                 (message) => message.role === MessageRole.User,
               )!,
+              inferenceOptions,
             )
           : conversation.title,
       ]);

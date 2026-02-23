@@ -1,4 +1,5 @@
 import {
+  type InferenceOptions,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -149,10 +150,12 @@ function toChatCompletionsTool(
 
 export function fromChatCompletionsResponse(
   response: ChatCompletions.Response,
+  inferenceOptions: InferenceOptions,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const { message } = response.choices[0];
   const baseMessage = {
     role: MessageRole.Assistant,
+    inferenceOptions: inferenceOptions,
     createdAt: new Date(),
   } as const;
   if (isChatCompletionsAssistantToolMessage(message)) {

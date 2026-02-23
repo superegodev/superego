@@ -66,6 +66,7 @@ export type { default as DuplicateDocumentDetected } from "./errors/DuplicateDoc
 export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
+export type { default as InferenceOptionsNotValid } from "./errors/InferenceOptionsNotValid.js";
 export type { default as MakingContentBlockingKeysFailed } from "./errors/MakingContentBlockingKeysFailed.js";
 export type { default as PackNotFound } from "./errors/PackNotFound.js";
 export type { default as PackNotValid } from "./errors/PackNotValid.js";
@@ -124,6 +125,7 @@ export type { default as DocumentDefinition } from "./types/DocumentDefinition.j
 export type { default as DocumentVersion } from "./types/DocumentVersion.js";
 export type { default as GlobalSettings } from "./types/GlobalSettings.js";
 export type { default as InferenceModel } from "./types/InferenceModel.js";
+export type { default as InferenceOptions } from "./types/InferenceOptions.js";
 export type { default as InferenceProvider } from "./types/InferenceProvider.js";
 export type { default as InferenceProviderModelRef } from "./types/InferenceProviderModelRef.js";
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";

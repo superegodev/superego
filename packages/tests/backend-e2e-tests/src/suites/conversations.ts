@@ -28,9 +28,21 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const startConversationResult =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "uniquekeyword alpha" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [
+            {
+              type: MessageContentPartType.Text,
+              text: "uniquekeyword alpha",
+            },
+          ],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult.success);
       await waitForConversationProcessing(
         backend,
@@ -58,18 +70,32 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const startConversationResult1 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "commonterm first" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "commonterm first" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
         backend,
         startConversationResult1.data.id,
       );
       const startConversationResult2 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "commonterm second" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "commonterm second" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
         backend,
@@ -94,18 +120,32 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const startConversationResult1 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "matchingterm here" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "matchingterm here" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
         backend,
         startConversationResult1.data.id,
       );
       const startConversationResult2 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "different content" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "different content" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
         backend,
@@ -130,27 +170,48 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const startConversationResult1 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "limitterm one" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "limitterm one" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
         backend,
         startConversationResult1.data.id,
       );
       const startConversationResult2 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "limitterm two" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "limitterm two" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
         backend,
         startConversationResult2.data.id,
       );
       const startConversationResult3 =
-        await backend.assistants.startConversation(AssistantName.Factotum, [
-          { type: MessageContentPartType.Text, text: "limitterm three" },
-        ]);
+        await backend.assistants.startConversation(
+          AssistantName.Factotum,
+          [{ type: MessageContentPartType.Text, text: "limitterm three" }],
+          {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
+        );
       assert.isTrue(startConversationResult3.success);
       await waitForConversationProcessing(
         backend,

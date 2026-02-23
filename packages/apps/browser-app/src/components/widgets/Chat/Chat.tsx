@@ -1,5 +1,6 @@
 import {
   type Conversation,
+  type InferenceOptions,
   type Message,
   MessageRole,
 } from "@superego/backend";
@@ -60,8 +61,15 @@ export default function Chat({
     }
   }, [lastMessageCreatedAtTime]);
 
-  const onSend = async (messageContent: Message.User["content"]) => {
-    const { error } = await mutate(conversation.id, messageContent);
+  const onSend = async (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions,
+  ) => {
+    const { error } = await mutate(
+      conversation.id,
+      messageContent,
+      inferenceOptions,
+    );
     if (error) {
       console.error(error);
       toasts.add({

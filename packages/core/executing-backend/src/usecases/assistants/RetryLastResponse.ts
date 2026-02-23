@@ -6,6 +6,8 @@ import {
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -19,6 +21,7 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsRetryLastResponse extends Usecase<
@@ -26,10 +29,23 @@ export default class AssistantsRetryLastResponse extends Usecase<
 > {
   async exec(
     id: ConversationId,
+    inferenceOptions: InferenceOptions,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotRetryLastResponse | UnexpectedError
+    | ConversationNotFound
+    | CannotRetryLastResponse
+    | InferenceOptionsNotValid
+    | UnexpectedError
   > {
+    const globalSettings = await this.repos.globalSettings.get();
+    const inferenceOptionsError = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsError) {
+      return makeUnsuccessfulResult(inferenceOptionsError);
+    }
+
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulResult(
@@ -75,7 +91,7 @@ export default class AssistantsRetryLastResponse extends Usecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id },
+      input: { id, inferenceOptions },
     });
 
     return makeSuccessfulResult(

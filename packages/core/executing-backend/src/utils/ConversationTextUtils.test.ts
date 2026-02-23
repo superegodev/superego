@@ -79,6 +79,12 @@ describe("extractTextChunks", () => {
             { type: MessageContentPartType.Text, text: "Response 1" },
             { type: MessageContentPartType.Text, text: "Response 2" },
           ],
+          inferenceOptions: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
           createdAt: new Date(),
         },
       ]);
@@ -93,6 +99,12 @@ describe("extractTextChunks", () => {
         {
           role: MessageRole.Assistant,
           toolCalls: [{ id: "call-1", tool: "someTool", input: {} }],
+          inferenceOptions: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
           createdAt: new Date(),
         },
       ]);
@@ -162,6 +174,12 @@ describe("extractTextChunks", () => {
           content: [
             { type: MessageContentPartType.Text, text: "Assistant reply" },
           ],
+          inferenceOptions: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelName: "modelName",
+            },
+          },
           createdAt: new Date(),
         },
         {

@@ -75,6 +75,11 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   > {
     const shouldReattempt = attemptNumber < MAX_ATTEMPTS;
 
+    const globalSettings = await this.repos.globalSettings.get();
+    const inferenceOptions = {
+      providerModelRef: globalSettings.inference.defaults.chat!,
+    };
+
     const message = await inferenceService.generateNextMessage(
       [
         InferenceImplementTypescriptModule.getDeveloperMessage(
@@ -92,6 +97,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         previousAttemptResponse ?? null,
       ].filter((message) => message !== null),
       [WriteTypescriptModuleTool.get()],
+      inferenceOptions,
     );
 
     if (

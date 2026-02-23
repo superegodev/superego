@@ -1,7 +1,11 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  Theme,
+} from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -22,9 +26,28 @@ afterAll(() => {
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
-    providers: [],
+    providers: [
+      {
+        name: "providerName",
+        baseUrl: "http://localhost",
+        apiKey: null,
+        driver: InferenceProviderDriver.OpenRouter,
+        models: [
+          {
+            name: "modelName",
+            capabilities: {
+              reasoning: false,
+              audioUnderstanding: false,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+              webSearching: false,
+            },
+          },
+        ],
+      },
+    ],
     defaults: {
-      chat: null,
+      chat: { providerName: "providerName", modelName: "mock-model" },
       transcription: null,
       fileInspection: null,
     },
