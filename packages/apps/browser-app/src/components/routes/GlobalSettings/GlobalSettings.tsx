@@ -28,8 +28,9 @@ export default function GlobalSettings() {
             isDisabled: isUpdateFormSubmitDisabled,
           },
         ]}
+        noFadedBackground={true}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content noBlockStartPadding={true}>
         <UpdateGlobalSettingsForm
           formId={updateFormId}
           setSubmitDisabled={setIsUpdateFormSubmitDisabled}

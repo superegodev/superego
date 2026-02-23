@@ -24,8 +24,9 @@ export default function CreateCollectionManual() {
             to: { name: RouteName.CreateCollectionAssisted },
           },
         ]}
+        noFadedBackground={true}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content noBlockStartPadding={true}>
         <CreateCollectionForm />
       </Shell.Panel.Content>
     </Shell.Panel>

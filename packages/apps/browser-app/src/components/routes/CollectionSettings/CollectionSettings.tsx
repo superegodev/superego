@@ -40,10 +40,12 @@ export default function CollectionSettings({ collectionId }: Props) {
             label: intl.formatMessage({ defaultMessage: "Delete collection" }),
             icon: <PiTrash />,
             onPress: () => setIsDeleteModalOpen(true),
+            isDanger: true,
           },
         ]}
+        noFadedBackground={true}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content noBlockStartPadding={true}>
         <FullPageTabs
           tabs={[
             {

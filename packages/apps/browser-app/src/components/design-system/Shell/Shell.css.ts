@@ -88,6 +88,9 @@ export const PanelHeader = {
       '[data-slot="Main"] &': {
         paddingInline: vars.spacing._8,
       },
+      '&[data-no-faded-background="true"]': {
+        background: vars.colors.background.surface,
+      },
     },
   }),
 
@@ -176,6 +179,9 @@ export const PanelContent = {
       },
       '[data-slot="Main"] header + &': {
         paddingBlockStart: vars.spacing._4,
+      },
+      '[data-slot="Main"] header + &[data-no-block-start-padding="true"]': {
+        paddingBlockStart: 0,
       },
     },
   }),

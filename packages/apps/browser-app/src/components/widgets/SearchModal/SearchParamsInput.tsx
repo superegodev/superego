@@ -92,7 +92,7 @@ export default function SearchParamsInput({ value, onChange }: Props) {
               placeholder={intl.formatMessage({
                 defaultMessage: "All collections",
               })}
-              className={cs.SearchParamsInput.collectionSelectButton}
+              triggerClassName={cs.SearchParamsInput.collectionSelectButton}
             />
             <SelectOptions
               className={cs.SearchParamsInput.collectionSelectOptions}

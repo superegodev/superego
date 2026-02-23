@@ -4,11 +4,13 @@ import * as cs from "./Shell.css.js";
 
 interface Props {
   fullWidth?: boolean | undefined;
+  noBlockStartPadding?: boolean | undefined;
   className?: string | undefined;
   children: ReactNode;
 }
 export default function PanelContent({
   fullWidth = false,
+  noBlockStartPadding = false,
   className,
   children,
 }: Props) {
@@ -16,6 +18,7 @@ export default function PanelContent({
     <div
       className={classnames(cs.PanelContent.root, className)}
       data-full-width={fullWidth}
+      data-no-block-start-padding={noBlockStartPadding}
     >
       {children}
     </div>
