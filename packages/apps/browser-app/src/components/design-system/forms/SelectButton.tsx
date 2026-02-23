@@ -3,7 +3,7 @@ import { Button, Group, SelectValue } from "react-aria-components";
 import { PiCaretDown, PiX } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import IconButton from "../IconButton/IconButton.jsx";
+import IconButton from "../IconButton/IconButton.js";
 import * as cs from "./forms.css.js";
 
 interface Props {

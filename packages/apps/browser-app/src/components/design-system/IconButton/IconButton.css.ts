@@ -72,11 +72,6 @@ export const IconButton = {
         borderWidth: vars.borders.width.thin,
         borderStyle: "solid",
         selectors: {
-          '&[data-selected="true"]': {
-            background: vars.colors.button.invisible.selected.background,
-            color: vars.colors.button.invisible.selected.text,
-            borderColor: vars.colors.button.invisible.selected.border,
-          },
           "&:hover": {
             background: vars.colors.button.invisible.hover.background,
             color: vars.colors.button.invisible.hover.text,

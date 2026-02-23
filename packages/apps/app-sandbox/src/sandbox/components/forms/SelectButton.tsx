@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Button, Group, SelectValue } from "react-aria-components";
 import { PiCaretDown } from "react-icons/pi";
 import useIntlMessages from "../../business-logic/intl-messages/useIntlMessages.js";
-import IconButton from "../IconButton/IconButton.jsx";
+import IconButton from "../IconButton/IconButton.js";
 import * as cs from "./forms.css.js";
 import type SelectOption from "./SelectOption.js";
 
