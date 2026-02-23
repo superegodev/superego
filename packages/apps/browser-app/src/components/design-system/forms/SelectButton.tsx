@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { SelectValue } from "react-aria-components";
+import { Button, Group, SelectValue } from "react-aria-components";
 import { PiCaretDown, PiX } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import Button from "../Button/Button.js";
+import IconButton from "../IconButton/IconButton.jsx";
 import * as cs from "./forms.css.js";
 
 interface Props {
@@ -18,27 +18,31 @@ export default function SelectButton({
 }: Props) {
   const intl = useIntl();
   return (
-    <Button className={classnames(cs.SelectButton.root, className)}>
-      <SelectValue className={cs.SelectButton.selectValue}>
-        {({ defaultChildren, isPlaceholder }) =>
-          isPlaceholder && placeholder !== undefined ? (
-            <span className={cs.SelectButton.placeholder}>{placeholder}</span>
-          ) : (
-            defaultChildren
-          )
-        }
-      </SelectValue>
+    <Group className={classnames(cs.SelectButton.root, className)}>
+      <Button className={cs.SelectButton.trigger}>
+        <SelectValue className={cs.SelectButton.selectValue}>
+          {({ defaultChildren, isPlaceholder }) =>
+            isPlaceholder && placeholder !== undefined ? (
+              <span className={cs.SelectButton.placeholder}>{placeholder}</span>
+            ) : (
+              defaultChildren
+            )
+          }
+        </SelectValue>
+        <div className={cs.SelectButton.clearButtonStub} />
+        <PiCaretDown aria-hidden="true" />
+      </Button>
       {onClear ? (
-        <Button
+        <IconButton
           slot={null}
-          aria-label={intl.formatMessage({ defaultMessage: "Clear" })}
+          variant="invisible"
+          label={intl.formatMessage({ defaultMessage: "Clear" })}
           onPress={onClear}
           className={cs.SelectButton.clearButton}
         >
           <PiX aria-hidden="true" />
-        </Button>
+        </IconButton>
       ) : null}
-      <PiCaretDown aria-hidden="true" />
-    </Button>
+    </Group>
   );
 }

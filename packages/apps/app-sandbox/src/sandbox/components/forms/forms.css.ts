@@ -148,17 +148,23 @@ export const Input = {
 
 export const SelectButton = {
   root: style({
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: `calc(${vars.spacing._9} + 1px)`,
+    position: "relative",
   }),
+
+  trigger: style([
+    inputRootBase,
+    {
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+    },
+  ]),
 
   selectValue: style({
     display: "flex",
     flexWrap: "nowrap",
     alignItems: "center",
-    width: "100%",
+    flexGrow: 1,
     overflow: "hidden",
   }),
 
@@ -167,20 +173,20 @@ export const SelectButton = {
     fontStyle: "italic",
   }),
 
+  clearButtonStub: style({
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin})`,
+    height: "100%",
+    flexShrink: 0,
+  }),
+
   clearButton: style({
-    display: "flex",
-    alignItems: "center",
-    height: vars.spacing._9,
-    marginBlock: `calc(-1 * ${vars.spacing._2})`,
-    border: 0,
-    cursor: "pointer",
-    background: "transparent",
-    color: vars.colors.text.secondary,
-    selectors: {
-      "&:hover": {
-        color: vars.colors.text.primary,
-      },
-    },
+    position: "absolute",
+    height: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2* ${vars.borders.width.thin}) !important`,
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2* ${vars.borders.width.thin}) !important`,
+    // Manual pixel adjustment to center the button.
+    top: "5.5px",
+    right: `calc(${vars.spacing._2} + ${vars.spacing._4} + ${vars.spacing._2})`,
+    color: `${vars.colors.text.secondary} !important`,
   }),
 };
 
