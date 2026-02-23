@@ -10,7 +10,12 @@ import Tooltip from "../Tooltip/Tooltip.js";
 import * as cs from "./IconButton.css.js";
 
 type Props = {
-  variant?: "default" | "primary" | "invisible" | undefined;
+  variant?:
+    | "default"
+    | "primary"
+    | "invisible"
+    | "invisible-danger"
+    | undefined;
   label: string;
   tooltipPlacement?: Placement | undefined;
   tooltipDelay?: number | undefined;

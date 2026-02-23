@@ -30,7 +30,12 @@ const icons = {
 } as const;
 
 interface Props {
-  variant?: "default" | "primary" | "invisible" | undefined;
+  variant?:
+    | "default"
+    | "primary"
+    | "invisible"
+    | "invisible-danger"
+    | undefined;
   shape?: "square" | "circle" | undefined;
   size?: "sm" | "md" | "lg" | undefined;
   icon: keyof typeof icons;

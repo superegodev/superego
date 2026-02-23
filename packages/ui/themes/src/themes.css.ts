@@ -349,6 +349,19 @@ export const [light, vars] = createTheme({
           border: colors.greys._4,
         },
       },
+      invisibleDanger: {
+        base: {
+          background: "none",
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        hover: {
+          background: colors.reds._1,
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        disabled: { background: "none", text: colors.greys._6 },
+      },
     },
     neutral: colors.greys,
     text: {
@@ -483,6 +496,19 @@ export const dark = createTheme(vars, {
           text: colors.greys._6,
           border: colors.greys._8,
         },
+      },
+      invisibleDanger: {
+        base: {
+          background: "none",
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        hover: {
+          background: colors.greys._8,
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        disabled: { background: "none", text: colors.greys._6 },
       },
     },
     neutral: {

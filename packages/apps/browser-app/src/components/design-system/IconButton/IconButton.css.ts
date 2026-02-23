@@ -83,5 +83,26 @@ export const IconButton = {
         },
       },
     ],
+    "invisible-danger": [
+      iconButtonRootBase,
+      {
+        background: vars.colors.button.invisibleDanger.base.background,
+        color: vars.colors.button.invisibleDanger.base.text,
+        borderColor: vars.colors.button.invisibleDanger.base.border,
+        borderWidth: vars.borders.width.thin,
+        borderStyle: "solid",
+        selectors: {
+          "&:hover": {
+            background: vars.colors.button.invisibleDanger.hover.background,
+            color: vars.colors.button.invisibleDanger.hover.text,
+            borderColor: vars.colors.button.invisibleDanger.hover.border,
+          },
+          "&[disabled]": {
+            background: vars.colors.button.invisibleDanger.disabled.background,
+            color: vars.colors.button.invisibleDanger.disabled.text,
+          },
+        },
+      },
+    ],
   }),
 };

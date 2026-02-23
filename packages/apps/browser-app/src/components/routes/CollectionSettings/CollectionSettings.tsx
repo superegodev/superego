@@ -40,6 +40,7 @@ export default function CollectionSettings({ collectionId }: Props) {
             label: intl.formatMessage({ defaultMessage: "Delete collection" }),
             icon: <PiTrash />,
             onPress: () => setIsDeleteModalOpen(true),
+            isDanger: true,
           },
         ]}
       />
