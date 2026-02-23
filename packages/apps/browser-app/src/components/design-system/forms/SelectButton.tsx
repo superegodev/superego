@@ -9,21 +9,23 @@ import * as cs from "./forms.css.js";
 interface Props {
   onClear?: (() => void) | undefined;
   placeholder?: ReactNode | undefined;
-  className?: string | undefined;
+  triggerClassName?: string | undefined;
 }
 export default function SelectButton({
   onClear,
   placeholder,
-  className,
+  triggerClassName,
 }: Props) {
   const intl = useIntl();
   return (
-    <Group className={classnames(cs.SelectButton.root, className)}>
-      <Button className={cs.SelectButton.trigger}>
+    <Group className={cs.SelectButton.root}>
+      <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
         <SelectValue className={cs.SelectButton.selectValue}>
           {({ defaultChildren, isPlaceholder }) =>
-            isPlaceholder && placeholder !== undefined ? (
-              <span className={cs.SelectButton.placeholder}>{placeholder}</span>
+            isPlaceholder ? (
+              <span className={cs.SelectButton.placeholder}>
+                {placeholder ?? defaultChildren}
+              </span>
             ) : (
               defaultChildren
             )

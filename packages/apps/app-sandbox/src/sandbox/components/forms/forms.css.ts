@@ -181,8 +181,8 @@ export const SelectButton = {
 
   clearButton: style({
     position: "absolute",
-    height: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2* ${vars.borders.width.thin}) !important`,
-    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2* ${vars.borders.width.thin}) !important`,
+    height: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin}) !important`,
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin}) !important`,
     // Manual pixel adjustment to center the button.
     top: "5.5px",
     right: `calc(${vars.spacing._2} + ${vars.spacing._4} + ${vars.spacing._2})`,

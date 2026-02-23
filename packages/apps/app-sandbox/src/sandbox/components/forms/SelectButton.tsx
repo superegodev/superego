@@ -18,7 +18,9 @@ export default function SelectButton({ onClear, placeholder }: Props) {
         <SelectValue<SelectOption> className={cs.SelectButton.selectValue}>
           {({ defaultChildren, isPlaceholder, selectedItems }) =>
             isPlaceholder ? (
-              <span className={cs.SelectButton.placeholder}>{placeholder}</span>
+              <span className={cs.SelectButton.placeholder}>
+                {placeholder ?? defaultChildren}
+              </span>
             ) : selectedItems && selectedItems.length > 1 ? (
               intersperse(
                 selectedItems.map((item) => item?.label),
