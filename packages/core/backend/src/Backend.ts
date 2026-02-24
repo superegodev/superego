@@ -492,18 +492,23 @@ export default interface Backend {
   };
 
   inference: {
+    // TODO_AI: remove? Add inferenceOptions=?
     stt(audio: AudioContent): ResultPromise<string, UnexpectedError>;
 
-    implementTypescriptModule(spec: {
-      description: string;
-      rules: string | null;
-      additionalInstructions: string | null;
-      template: string;
-      libs: TypescriptFile[];
-      startingPoint: TypescriptFile;
-      userRequest: string;
-    }): ResultPromise<
+    implementTypescriptModule(
+      spec: {
+        description: string;
+        rules: string | null;
+        additionalInstructions: string | null;
+        template: string;
+        libs: TypescriptFile[];
+        startingPoint: TypescriptFile;
+        userRequest: string;
+      },
+      inferenceOptions: InferenceOptions,
+    ): ResultPromise<
       TypescriptModule,
+      | InferenceOptionsNotValid
       | WriteTypescriptModuleToolNotCalled
       | TooManyFailedImplementationAttempts
       | UnexpectedError

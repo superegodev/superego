@@ -1,4 +1,9 @@
-import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
+import {
+  type InferenceOptions,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+} from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
 import {
   makeSuccessfulResult,
@@ -29,6 +34,7 @@ export default {
     toolCall: ToolCall.SuggestCollectionsDefinitions,
     collectionsCreateMany: CollectionsCreateMany,
     inferenceImplementTypescriptModule: InferenceImplementTypescriptModule,
+    inferenceOptions: InferenceOptions,
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
 
@@ -108,9 +114,11 @@ export default {
           await Promise.all([
             inferenceImplementTypescriptModule.exec(
               getImplementContentBlockingKeysGetterSpec(schema),
+              inferenceOptions,
             ),
             inferenceImplementTypescriptModule.exec(
               getImplementContentSummaryGetterSpec(schema),
+              inferenceOptions,
             ),
           ]);
 

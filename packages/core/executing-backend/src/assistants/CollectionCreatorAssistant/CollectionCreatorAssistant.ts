@@ -1,6 +1,7 @@
 import {
   type Collection,
   type CollectionCategory,
+  type InferenceOptions,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -100,12 +101,16 @@ export default class CollectionCreatorAssistant extends Assistant {
     return [SuggestCollectionsDefinitions.get(), InspectFile.get()];
   }
 
-  protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
+  protected async processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions,
+  ): Promise<ToolResult> {
     if (SuggestCollectionsDefinitions.is(toolCall)) {
       return SuggestCollectionsDefinitions.exec(
         toolCall,
         this.usecases.collectionsCreateMany,
         this.usecases.inferenceImplementTypescriptModule,
+        inferenceOptions,
       );
     }
     if (InspectFile.is(toolCall)) {

@@ -1,5 +1,7 @@
 import {
   type Collection,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type MessageContentPart,
   MessageContentPartType,
   type NonEmptyArray,
@@ -24,6 +26,7 @@ interface UseSttAndImplement {
     >,
   ) => ResultPromise<
     TypescriptModule,
+    | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
     | UnexpectedError
@@ -33,6 +36,7 @@ export default function useSttAndImplement(
   targetCollections: Collection[],
   mainTsx: TypescriptModule,
   typescriptLibs: TypescriptFile[],
+  inferenceOptions: InferenceOptions,
 ): UseSttAndImplement {
   const { isPending: isSttPending, mutate: stt } = useStt();
   const {
@@ -48,6 +52,7 @@ export default function useSttAndImplement(
     >,
   ): ResultPromise<
     TypescriptModule,
+    | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
     | UnexpectedError
@@ -80,32 +85,35 @@ export default function useSttAndImplement(
       })
       .join("\n");
 
-    return implementTypescriptModule({
-      description: `
+    return implementTypescriptModule(
+      {
+        description: `
 This module implements and default-exports a single-file React app for
 visualizing the documents in the following collections:
 
 ${targetCollectionsSnippet}
-      `.trim(),
-      rules: `
+        `.trim(),
+        rules: `
 - Break the implementation into focused components, each handling a distinct
   part of the UI or a specific piece of logic.
-      `.trim(),
-      additionalInstructions: `
+        `.trim(),
+        additionalInstructions: `
 - Don't include a top-level title for the App.
 - Don't use top-level padding/margin.
-      `.trim(),
-      template:
-        forms.defaults.collectionViewAppFiles(targetCollections)[
-          "/main__DOT__tsx"
-        ].source,
-      libs: typescriptLibs,
-      startingPoint: {
-        path: "/main.tsx",
-        source: mainTsx.source,
+        `.trim(),
+        template:
+          forms.defaults.collectionViewAppFiles(targetCollections)[
+            "/main__DOT__tsx"
+          ].source,
+        libs: typescriptLibs,
+        startingPoint: {
+          path: "/main.tsx",
+          source: mainTsx.source,
+        },
+        userRequest: userRequest,
       },
-      userRequest: userRequest,
-    });
+      inferenceOptions,
+    );
   };
 
   return { isPending, mutate };

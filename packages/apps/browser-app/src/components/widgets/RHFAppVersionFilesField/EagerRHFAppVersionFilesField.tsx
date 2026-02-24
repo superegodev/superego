@@ -7,6 +7,7 @@ import type {
 import { useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import useUndoRedo from "../CodeInput/common-hooks/useUndoRedo.js";
@@ -30,6 +31,8 @@ export default function EagerRHFAppVersionFilesField({
   targetCollections,
 }: Props) {
   const intl = useIntl();
+  const { inference } = useGlobalData().globalSettings;
+
   const [activeView, setActiveView] = useState(View.Preview);
 
   const fieldName = `${name}./main__DOT__tsx`;
@@ -42,6 +45,9 @@ export default function EagerRHFAppVersionFilesField({
     targetCollections,
     mainTsx,
     typescriptLibs,
+    // TODO_AI: utility function that either gets the default or the first
+    // suitable model
+    { providerModelRef: inference.defaults.chat! },
   );
 
   const onSend = async (messageContent: Message.User["content"]) => {

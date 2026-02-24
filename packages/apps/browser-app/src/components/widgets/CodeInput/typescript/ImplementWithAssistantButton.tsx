@@ -3,6 +3,7 @@ import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
+import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
@@ -34,6 +35,7 @@ export default function ImplementWithAssistantButton({
   onImplemented,
 }: Props) {
   const intl = useIntl();
+  const { inference } = useGlobalData().globalSettings;
   const { chatCompletions } = useIsInferenceConfigured();
   const { isPending, mutate } = useImplementTypescriptModule();
   return chatCompletions && assistantImplementation ? (
@@ -48,19 +50,24 @@ export default function ImplementWithAssistantButton({
           if (!valueModelRef.current) {
             return;
           }
-          const result = await mutate({
-            description: assistantImplementation.description,
-            rules: assistantImplementation.rules ?? null,
-            additionalInstructions:
-              assistantImplementation.additionalInstructions ?? null,
-            template: assistantImplementation.template,
-            libs: typescriptLibs,
-            startingPoint: {
-              path: filePath,
-              source: valueModelRef.current.getValue(),
+          const result = await mutate(
+            {
+              description: assistantImplementation.description,
+              rules: assistantImplementation.rules ?? null,
+              additionalInstructions:
+                assistantImplementation.additionalInstructions ?? null,
+              template: assistantImplementation.template,
+              libs: typescriptLibs,
+              startingPoint: {
+                path: filePath,
+                source: valueModelRef.current.getValue(),
+              },
+              userRequest: assistantImplementation.userRequest,
             },
-            userRequest: assistantImplementation.userRequest,
-          });
+            // TODO_AI: utility function that uses default or first suitable
+            // model.
+            { providerModelRef: inference.defaults.chat! },
+          );
           if (result.success) {
             onImplemented(result.data);
           } else {

@@ -1,5 +1,6 @@
 import {
   type Backend,
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -20,30 +21,42 @@ import {
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
 
 const MAX_ATTEMPTS = 5;
 
 export default class InferenceImplementTypescriptModule extends Usecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
-  async exec({
-    description,
-    rules,
-    additionalInstructions,
-    template,
-    libs,
-    startingPoint,
-    userRequest,
-  }: Parameters<
-    Backend["inference"]["implementTypescriptModule"]
-  >[0]): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
+  async exec(
+    {
+      description,
+      rules,
+      additionalInstructions,
+      template,
+      libs,
+      startingPoint,
+      userRequest,
+    }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
+    inferenceOptions: InferenceOptions,
+  ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
     const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    }
+
     const inferenceService = this.inferenceServiceFactory.create(
       globalSettings.inference,
     );
 
     return this.attemptImplementation(
       inferenceService,
+      inferenceOptions,
       description,
       rules,
       additionalInstructions,
@@ -57,6 +70,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
 
   private async attemptImplementation(
     inferenceService: InferenceService,
+    inferenceOptions: InferenceOptions,
     description: string,
     rules: string | null,
     additionalInstructions: string | null,
@@ -74,11 +88,6 @@ export default class InferenceImplementTypescriptModule extends Usecase<
     | UnexpectedError
   > {
     const shouldReattempt = attemptNumber < MAX_ATTEMPTS;
-
-    const globalSettings = await this.repos.globalSettings.get();
-    const inferenceOptions = {
-      providerModelRef: globalSettings.inference.defaults.chat!,
-    };
 
     const message = await inferenceService.generateNextMessage(
       [
@@ -110,6 +119,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       return shouldReattempt
         ? this.attemptImplementation(
             inferenceService,
+            inferenceOptions,
             description,
             rules,
             additionalInstructions,
@@ -141,6 +151,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         : shouldReattempt
           ? this.attemptImplementation(
               inferenceService,
+              inferenceOptions,
               description,
               rules,
               additionalInstructions,
@@ -296,6 +307,7 @@ const WriteTypescriptModuleTool = {
   },
 };
 
+// TODO_AI: react and echarts should only be added for modules using them.
 /** Slims down libs to avoid a huge and largely useless context. */
 function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
   return [

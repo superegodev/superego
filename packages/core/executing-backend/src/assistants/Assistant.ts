@@ -15,7 +15,10 @@ import isEmpty from "../utils/isEmpty.js";
 export default abstract class Assistant {
   protected abstract inferenceService: InferenceService;
   protected abstract getTools(): InferenceService.Tool[];
-  protected abstract processToolCall(toolCall: ToolCall): Promise<ToolResult>;
+  protected abstract processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions,
+  ): Promise<ToolResult>;
   protected abstract getDeveloperPrompt(): string;
   protected abstract getUserContextPrompt(): string;
 
@@ -62,7 +65,7 @@ export default abstract class Assistant {
       // Case: assistantMessage is Message.ToolCallAssistant.
       const toolResults: ToolResult[] = await pMap(
         assistantMessage.toolCalls,
-        (toolCall) => this.processToolCall(toolCall),
+        (toolCall) => this.processToolCall(toolCall, inferenceOptions),
         { concurrency: 1 },
       );
       const toolMessage: Message.Tool = {
