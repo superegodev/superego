@@ -1,10 +1,10 @@
 import type { ResultError } from "@superego/global-types";
-import type InferenceProviderModelRef from "../types/InferenceProviderModelRef.js";
+import type ValidationIssue from "../types/ValidationIssue.js";
 
 type InferenceOptionsNotValid = ResultError<
   "InferenceOptionsNotValid",
   {
-    providerModelRef: InferenceProviderModelRef;
+    issues: ValidationIssue[];
   }
 >;
 export default InferenceOptionsNotValid;
