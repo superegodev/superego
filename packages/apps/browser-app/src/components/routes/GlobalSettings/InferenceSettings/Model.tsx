@@ -19,16 +19,23 @@ export default function Model({ control, name, onRemove }: Props) {
     <div className={cs.Model.row}>
       <RHFTextField
         control={control}
+        name={`${name}.id`}
+        ariaLabel={intl.formatMessage({ defaultMessage: "ID" })}
+        placeholder="openai/gpt-oss-120b"
+        className={cs.Model.nameField}
+      />
+      <RHFTextField
+        control={control}
         name={`${name}.name`}
         ariaLabel={intl.formatMessage({ defaultMessage: "Name" })}
-        placeholder="openai/gpt-oss-120b"
+        placeholder="GPT OSS 120B"
         className={cs.Model.nameField}
       />
       <Capabilities control={control} name={name} />
       <IconButton
         label={intl.formatMessage({ defaultMessage: "Remove" })}
         onPress={onRemove}
-        variant="invisible"
+        variant="invisible-danger"
         className={cs.Model.deleteButton}
       >
         <PiTrash />

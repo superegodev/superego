@@ -19,7 +19,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         inferenceOptions: {
           providerModelRef: {
             providerName: "providerName",
-            modelName: "modelName",
+            modelId: "modelName",
           },
         },
       },
@@ -57,7 +57,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         inferenceOptions: {
           providerModelRef: {
             providerName: "providerName",
-            modelName: "modelName",
+            modelId: "modelName",
           },
         },
       },
@@ -109,7 +109,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -169,7 +169,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -227,7 +227,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -268,7 +268,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -286,7 +286,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -304,7 +304,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -365,7 +365,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },
@@ -383,7 +383,7 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         },

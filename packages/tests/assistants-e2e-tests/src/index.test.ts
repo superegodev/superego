@@ -53,6 +53,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
+            id: model,
             name: model,
             capabilities: {
               reasoning: false,
@@ -66,7 +67,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
       },
     ],
     defaults: {
-      chat: { providerName, modelName: model },
+      chat: { providerName, modelId: model },
       transcription: null,
       fileInspection: null,
     },

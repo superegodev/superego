@@ -40,7 +40,8 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               driver: InferenceProviderDriver.OpenRouter,
               models: [
                 {
-                  name: "openai/gpt-oss-120b",
+                  id: "openai/gpt-oss-120b",
+                  name: "GPT OSS 120B",
                   capabilities: {
                     reasoning: false,
                     audioUnderstanding: false,
@@ -50,7 +51,8 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                   },
                 },
                 {
-                  name: "google/gemini-2.5-flash-lite",
+                  id: "google/gemini-2.5-flash-lite",
+                  name: "Gemini 2.5 Flash Lite",
                   capabilities: {
                     reasoning: false,
                     audioUnderstanding: false,
@@ -65,15 +67,15 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
           defaults: {
             chat: {
               providerName: "superego",
-              modelName: "openai/gpt-oss-120b",
+              modelId: "openai/gpt-oss-120b",
             },
             transcription: {
               providerName: "superego",
-              modelName: "google/gemini-2.5-flash-lite",
+              modelId: "google/gemini-2.5-flash-lite",
             },
             fileInspection: {
               providerName: "superego",
-              modelName: "google/gemini-2.5-flash-lite",
+              modelId: "google/gemini-2.5-flash-lite",
             },
           },
         }

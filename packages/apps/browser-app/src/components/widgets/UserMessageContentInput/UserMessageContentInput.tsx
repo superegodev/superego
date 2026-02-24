@@ -27,13 +27,13 @@ import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
 import useFiles from "./useFiles.js";
 
 function serializeModelRef(ref: InferenceProviderModelRef): string {
-  return `${ref.modelName}@${ref.providerName}`;
+  return `${ref.modelId}@${ref.providerName}`;
 }
 
 function deserializeModelRef(id: string): InferenceProviderModelRef {
   const atIndex = id.lastIndexOf("@");
   return {
-    modelName: id.slice(0, atIndex),
+    modelId: id.slice(0, atIndex),
     providerName: id.slice(atIndex + 1),
   };
 }
@@ -89,9 +89,9 @@ export default function UserMessageContentInput({
         options.push({
           id: serializeModelRef({
             providerName: provider.name,
-            modelName: model.name,
+            modelId: model.id,
           }),
-          label: `${model.name} (${provider.name})`,
+          label: `${model.name || model.id} (${provider.name})`,
         });
       }
     }

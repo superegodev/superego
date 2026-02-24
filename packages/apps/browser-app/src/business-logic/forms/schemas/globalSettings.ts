@@ -12,7 +12,7 @@ import * as v from "valibot";
 const inferenceModelRef = () =>
   v.strictObject({
     providerName: v.string(),
-    modelName: v.string(),
+    modelId: v.string(),
   });
 
 export default function globalSettings(): v.GenericSchema<
@@ -32,6 +32,7 @@ export default function globalSettings(): v.GenericSchema<
           driver: v.picklist(Object.values(InferenceProviderDriver)),
           models: v.array(
             v.strictObject({
+              id: v.string(),
               name: v.string(),
               capabilities: v.strictObject({
                 reasoning: v.boolean(),

@@ -9,7 +9,7 @@ import {
   PiMicrophone,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import IconButton from "../../../design-system/IconButton/IconButton.js";
+import IconToggleButton from "../../../design-system/IconToggleButton/IconToggleButton.js";
 import * as cs from "./InferenceSettings.css.js";
 
 interface Props {
@@ -78,15 +78,13 @@ function CapabilityToggle({
 }) {
   const { field } = useController({ control, name });
   return (
-    <IconButton
-      isToggle={true}
-      variant="invisible"
+    <IconToggleButton
       label={label}
       className={cs.Capabilities.button}
       isSelected={field.value as boolean}
       onChange={field.onChange}
     >
       {icon}
-    </IconButton>
+    </IconToggleButton>
   );
 }

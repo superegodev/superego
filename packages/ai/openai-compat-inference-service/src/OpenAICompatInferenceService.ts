@@ -36,7 +36,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
     const { model, provider } = this.resolve(inferenceOptions.providerModelRef);
 
     const requestBody = toChatCompletionsRequest(
-      model.name,
+      model.id,
       previousMessages,
       tools,
     );
@@ -62,7 +62,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
       this.settings.defaults.transcription,
     );
 
-    const requestBody = toSpeechToTextRequest(model.name, audio);
+    const requestBody = toSpeechToTextRequest(model.id, audio);
     const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
@@ -88,7 +88,7 @@ export default class OpenAICompatInferenceService implements InferenceService {
       this.settings.defaults.fileInspection,
     );
 
-    const requestBody = toFileInspectionRequest(model.name, file, prompt);
+    const requestBody = toFileInspectionRequest(model.id, file, prompt);
     const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
@@ -119,10 +119,10 @@ export default class OpenAICompatInferenceService implements InferenceService {
     if (!provider) {
       throw new Error(`Provider "${ref.providerName}" not found in settings.`);
     }
-    const model = provider.models.find((m) => m.name === ref.modelName);
+    const model = provider.models.find((m) => m.id === ref.modelId);
     if (!model) {
       throw new Error(
-        `Model "${ref.modelName}" not found in provider "${ref.providerName}".`,
+        `Model "${ref.modelId}" not found in provider "${ref.providerName}".`,
       );
     }
     return { model, provider };

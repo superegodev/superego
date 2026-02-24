@@ -77,6 +77,7 @@ export default function Provider({ control, name, onRemove }: Props) {
               className={cs.Provider.addButton}
               onPress={() =>
                 models.append({
+                  id: "",
                   name: "",
                   capabilities: {
                     reasoning: false,

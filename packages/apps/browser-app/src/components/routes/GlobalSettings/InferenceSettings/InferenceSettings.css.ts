@@ -43,7 +43,7 @@ export const Model = {
   row: style({
     display: "flex",
     flexDirection: "row",
-    gap: vars.spacing._6,
+    gap: vars.spacing._2,
     alignItems: "center",
   }),
 

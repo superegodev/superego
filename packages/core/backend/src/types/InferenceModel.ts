@@ -1,4 +1,5 @@
 export default interface InferenceModel {
+  id: string;
   name: string;
   capabilities: {
     reasoning: boolean;

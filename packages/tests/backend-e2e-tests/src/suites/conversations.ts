@@ -39,7 +39,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -76,7 +76,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -92,7 +92,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -126,7 +126,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -142,7 +142,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -176,7 +176,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -192,7 +192,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );
@@ -208,7 +208,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelName: "modelName",
+              modelId: "modelName",
             },
           },
         );

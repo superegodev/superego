@@ -25,7 +25,7 @@ export default function validateInferenceOptions(
   }
 
   const model = provider.models.find(
-    ({ name }) => name === providerModelRef.modelName,
+    ({ id }) => id === providerModelRef.modelId,
   );
   if (!model) {
     return makeResultError("InferenceOptionsNotValid", {

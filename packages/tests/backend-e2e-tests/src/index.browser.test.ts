@@ -21,6 +21,7 @@ const defaultGlobalSettings = {
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
+            id: "modelName",
             name: "modelName",
             capabilities: {
               reasoning: false,
@@ -34,7 +35,7 @@ const defaultGlobalSettings = {
       },
     ],
     defaults: {
-      chat: { providerName: "providerName", modelName: "modelName" },
+      chat: { providerName: "providerName", modelId: "modelName" },
       transcription: null,
       fileInspection: null,
     },
