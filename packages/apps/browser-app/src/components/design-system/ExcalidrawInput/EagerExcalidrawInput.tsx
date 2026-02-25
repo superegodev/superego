@@ -17,6 +17,21 @@ import classnames from "../../../utils/classnames.js";
 import * as cs from "./ExcalidrawInput.css.js";
 import type Props from "./Props.js";
 
+// This input component wraps the Excalidraw editor, which manages its own
+// internal state. The `value` prop is used both for the initial value and for
+// ongoing synchronization (e.g., when the form resets after an external change,
+// or when the nullify button sets it to `null`).
+//
+// Because `onChange` is debounced, there is a window where the editor's
+// internal state is ahead of the form value. If the form refreshes the `value`
+// prop during this window (e.g., after an auto-save), the component would
+// overwrite the user's in-flight edits with the stale saved value.
+//
+// To prevent this, the component tracks whether it has "pending local changes"
+// — changes that exist in the editor but have not yet been flushed to
+// `onChange`. While pending local changes exist, incoming `value` prop updates
+// are ignored — except for `null`, which is always accepted (for the nullify
+// button).
 export default function EagerExcalidrawInput({
   value,
   onChange,
@@ -33,6 +48,7 @@ export default function EagerExcalidrawInput({
   const rootRef = useRef<HTMLDivElement>(null);
   const excalidrawApiRef = useRef<ExcalidrawImperativeAPI>(null);
   const previousSerializedRef = useRef<string | null>(null);
+  const hasPendingLocalChangesRef = useRef(false);
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
   const theme = useTheme();
@@ -63,6 +79,7 @@ export default function EagerExcalidrawInput({
     const serialized = JSON.stringify({ elements, files, appState });
     if (serialized !== previousSerializedRef.current) {
       previousSerializedRef.current = serialized;
+      hasPendingLocalChangesRef.current = false;
       onChangeRef.current(JSON.parse(serialized));
     }
   }, []);
@@ -77,6 +94,7 @@ export default function EagerExcalidrawInput({
   // Stable callback with no dependencies to avoid Excalidraw re-render loops.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   const handleExcalidrawChange = useCallback(() => {
+    hasPendingLocalChangesRef.current = true;
     debouncedFlushScene();
   }, []);
 
@@ -92,8 +110,12 @@ export default function EagerExcalidrawInput({
       return;
     }
     if (!value) {
+      hasPendingLocalChangesRef.current = false;
       previousSerializedRef.current = null;
       excalidrawApi.resetScene();
+      return;
+    }
+    if (hasPendingLocalChangesRef.current) {
       return;
     }
     const serialized = JSON.stringify(value);
