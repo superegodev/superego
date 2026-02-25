@@ -72,7 +72,18 @@ export default function EagerExcalidrawInput({
     if (!excalidrawApi) {
       return;
     }
-    const elements = excalidrawApi.getSceneElements();
+    const elements = excalidrawApi
+      .getSceneElements()
+      // Excalidraw bug: the editor creates elements with boundElements = null.
+      // However, when the scene is loaded into the editor the first time,
+      // elements with boundElements = null are converted to boundElements = [],
+      // which causes an unwanted change in the json (which in turn triggers a
+      // save for a new document version, which is undesired, since there's no
+      // functional difference).
+      // Solution: make the conversion on export.
+      .map((element) =>
+        element.boundElements ? element : { ...element, boundElements: [] },
+      );
     const files = excalidrawApi.getFiles();
     const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
     const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
