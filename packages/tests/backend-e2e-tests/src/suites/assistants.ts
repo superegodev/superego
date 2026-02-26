@@ -4,7 +4,7 @@ import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 import waitForConversationProcessing from "../utils/waitForConversationProcessing.js";
 
-export default rd<GetDependencies>("Conversations", (deps) => {
+export default rd<GetDependencies>("Assistants", (deps) => {
   describe("searchConversations", () => {
     it("success: returns empty array when no matches", async () => {
       // Setup SUT
