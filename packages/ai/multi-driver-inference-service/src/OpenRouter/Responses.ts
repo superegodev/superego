@@ -6,9 +6,9 @@ import {
   MessageRole,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
-import getAudioFormat from "./utils/getAudioFormat.js";
-import toBase64 from "./utils/toBase64.js";
-import toDataURL from "./utils/toDataURL.js";
+import getAudioFormat from "../utils/getAudioFormat.js";
+import toBase64 from "../utils/toBase64.js";
+import toDataURL from "../utils/toDataURL.js";
 
 export namespace Responses {
   ///////////////////
