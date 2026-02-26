@@ -9,11 +9,13 @@
   },
   "private": true,
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",

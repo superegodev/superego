@@ -18,7 +18,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   const validInferenceOptions = {
     providerModelRef: {
       providerName: "providerName",
-      modelId: "modelName",
+      modelId: "modelId",
     },
   };
 
@@ -31,8 +31,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
-            id: "modelName",
-            name: "modelName",
+            id: "modelId",
+            name: "modelId",
             capabilities: {
               reasoning: false,
               audioUnderstanding: false,
@@ -45,7 +45,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       },
     ],
     defaults: {
-      completion: { providerName: "providerName", modelId: "modelName" },
+      completion: { providerName: "providerName", modelId: "modelId" },
       transcription: null,
       fileInspection: null,
     },
@@ -1138,7 +1138,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1175,7 +1175,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1191,7 +1191,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1225,7 +1225,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1241,7 +1241,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1275,7 +1275,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1291,7 +1291,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );
@@ -1307,7 +1307,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
         );

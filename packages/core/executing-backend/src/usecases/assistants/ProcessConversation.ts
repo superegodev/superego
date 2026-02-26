@@ -9,6 +9,7 @@ import {
   type ConversationStatusNotProcessing,
   type GlobalSettings,
   type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -33,6 +34,7 @@ import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
@@ -55,6 +57,7 @@ export default class AssistantsProcessConversation extends Usecase {
     | CannotTranscribeAudioMessage
     | ConversationNotFound
     | ConversationStatusNotProcessing
+    | InferenceOptionsNotValid
     | UnexpectedError
   > {
     const collectionsListResult = await this.sub(CollectionsList).exec();
@@ -86,6 +89,16 @@ export default class AssistantsProcessConversation extends Usecase {
       );
     }
 
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    }
+
     let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
@@ -96,7 +109,6 @@ export default class AssistantsProcessConversation extends Usecase {
         throw new Error("Context fingerprint changed");
       }
 
-      const globalSettings = await this.repos.globalSettings.get();
       const inferenceService = this.inferenceServiceFactory.create(
         globalSettings.inference,
       );

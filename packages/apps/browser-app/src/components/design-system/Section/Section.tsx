@@ -1,8 +1,6 @@
 import type { JSX, ReactNode } from "react";
 import * as cs from "./Section.css.js";
 
-// TODO_AI: check existing usages of Section
-
 interface Props {
   title: ReactNode;
   // Add more levels as necessary.

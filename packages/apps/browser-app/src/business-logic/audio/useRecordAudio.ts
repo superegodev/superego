@@ -30,7 +30,11 @@ export default function useRecordAudio(
   const startRecording = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaStreamRef.current = stream;
-    const mediaRecorder = new MediaRecorder(stream, { audioBitsPerSecond });
+    const mimeType = getPreferredMimeType();
+    const mediaRecorder = new MediaRecorder(stream, {
+      audioBitsPerSecond,
+      ...(mimeType ? { mimeType } : null),
+    });
     mediaRecorderRef.current = mediaRecorder;
 
     const recordedChunks: BlobPart[] = [];
@@ -76,6 +80,14 @@ export default function useRecordAudio(
   }, []);
 
   return { isRecording, startRecording, finishRecording, cancelRecording };
+}
+
+const PREFERRED_MIME_TYPES = ["audio/wav", "audio/mp3", "audio/mpeg"];
+
+function getPreferredMimeType(): string | undefined {
+  return PREFERRED_MIME_TYPES.find((type) =>
+    MediaRecorder.isTypeSupported(type),
+  );
 }
 
 function cleanup(

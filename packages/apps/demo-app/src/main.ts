@@ -35,7 +35,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
           providers: [
             {
               name: "superego",
-              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+              baseUrl: `${window.location.origin}/api/v1/responses`,
               apiKey: null,
               driver: InferenceProviderDriver.OpenRouter,
               models: [

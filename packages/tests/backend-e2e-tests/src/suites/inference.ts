@@ -13,7 +13,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
   const validInferenceOptions = {
     providerModelRef: {
       providerName: "providerName",
-      modelId: "modelName",
+      modelId: "modelId",
     },
   };
 
@@ -26,8 +26,8 @@ export default rd<GetDependencies>("Inference", (deps) => {
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
-            id: "modelName",
-            name: "modelName",
+            id: "modelId",
+            name: "modelId",
             capabilities: {
               reasoning: false,
               audioUnderstanding: false,
@@ -40,7 +40,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
       },
     ],
     defaults: {
-      completion: { providerName: "providerName", modelId: "modelName" },
+      completion: { providerName: "providerName", modelId: "modelId" },
       transcription: null,
       fileInspection: null,
     },

@@ -21,8 +21,8 @@ const defaultGlobalSettings = {
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
-            id: "modelName",
-            name: "modelName",
+            id: "modelId",
+            name: "modelId",
             capabilities: {
               reasoning: false,
               audioUnderstanding: false,
@@ -35,7 +35,7 @@ const defaultGlobalSettings = {
       },
     ],
     defaults: {
-      completion: { providerName: "providerName", modelId: "modelName" },
+      completion: { providerName: "providerName", modelId: "modelId" },
       transcription: null,
       fileInspection: null,
     },

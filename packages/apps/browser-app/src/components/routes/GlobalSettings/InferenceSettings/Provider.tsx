@@ -47,7 +47,7 @@ export default function Provider({ control, name, onRemove }: Props) {
             control={control}
             name={`${name}.baseUrl`}
             label={intl.formatMessage({ defaultMessage: "Base URL" })}
-            placeholder="https://openrouter.ai/api/v1/chat/completions"
+            placeholder="https://openrouter.ai/api/v1/responses"
           />
           <RHFTextField
             control={control}

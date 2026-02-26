@@ -82,7 +82,7 @@ describe("extractTextChunks", () => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
           createdAt: new Date(),
@@ -102,7 +102,7 @@ describe("extractTextChunks", () => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
           createdAt: new Date(),
@@ -177,7 +177,7 @@ describe("extractTextChunks", () => {
           inferenceOptions: {
             providerModelRef: {
               providerName: "providerName",
-              modelId: "modelName",
+              modelId: "modelId",
             },
           },
           createdAt: new Date(),

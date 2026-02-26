@@ -7,7 +7,7 @@ const inferenceSettings: InferenceSettings = {
   providers: [
     {
       name: "openrouter",
-      baseUrl: "https://openrouter.ai/api/v1/chat/completions",
+      baseUrl: "https://openrouter.ai/api/v1/responses",
       apiKey: "apiKey",
       driver: InferenceProviderDriver.OpenRouter,
       models: [

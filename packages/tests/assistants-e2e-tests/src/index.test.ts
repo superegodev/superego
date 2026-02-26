@@ -16,14 +16,10 @@ import { afterAll, assert, beforeAll, describe } from "vitest";
 import registerTests from "./registerTests.js";
 import Evaluator from "./utils/Evaluator.js";
 
-const chatCompletionsBaseUrl = import.meta.env[
-  "SUPEREGO_TESTS_CHAT_COMPLETIONS_BASE_URL"
-];
-assert.isDefined(chatCompletionsBaseUrl);
-const chatCompletionsApiKey = import.meta.env[
-  "SUPEREGO_TESTS_CHAT_COMPLETIONS_API_KEY"
-];
-assert.isDefined(chatCompletionsApiKey);
+const responsesBaseUrl = import.meta.env["SUPEREGO_TESTS_RESPONSES_BASE_URL"];
+assert.isDefined(responsesBaseUrl);
+const responsesApiKey = import.meta.env["SUPEREGO_TESTS_RESPONSES_API_KEY"];
+assert.isDefined(responsesApiKey);
 
 const databasesTmpDir = join(tmpdir(), "superego-assistants-e2e-tests");
 beforeAll(() => {
@@ -48,8 +44,8 @@ function makeInferenceSettings(model: string): InferenceSettings {
     providers: [
       {
         name: providerName,
-        baseUrl: chatCompletionsBaseUrl,
-        apiKey: chatCompletionsApiKey,
+        baseUrl: responsesBaseUrl,
+        apiKey: responsesApiKey,
         driver: InferenceProviderDriver.OpenRouter,
         models: [
           {
