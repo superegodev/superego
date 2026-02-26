@@ -4,16 +4,13 @@ import type {
   InferenceSettings,
   ValidationIssue,
 } from "@superego/backend";
-import type { ResultError } from "@superego/global-types";
 import makeResultError from "../makers/makeResultError.js";
+import isEmpty from "../utils/isEmpty.js";
 
 export default function validateInferenceOptions(
   inferenceOptions: InferenceOptions,
   inferenceSettings: InferenceSettings,
-): ResultError<
-  InferenceOptionsNotValid["name"],
-  InferenceOptionsNotValid["details"]
-> | null {
+): InferenceOptionsNotValid | null {
   const issues: ValidationIssue[] = [];
   const { providerModelRef } = inferenceOptions;
 
@@ -37,7 +34,7 @@ export default function validateInferenceOptions(
     }
   }
 
-  if (issues.length > 0) {
+  if (!isEmpty(issues)) {
     return makeResultError("InferenceOptionsNotValid", { issues });
   }
 

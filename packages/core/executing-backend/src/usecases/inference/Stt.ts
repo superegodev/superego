@@ -11,7 +11,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 
 export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
   async exec(

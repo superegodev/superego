@@ -267,7 +267,7 @@ export default class AssistantsProcessConversation extends Usecase {
 
   private resolveTranscriptionInferenceOptions(
     inferenceSettings: GlobalSettings["inference"],
-    requestInferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions,
   ): InferenceOptions | null {
     // Priority 1: the default transcription model.
     if (inferenceSettings.defaults.transcription) {
@@ -278,15 +278,14 @@ export default class AssistantsProcessConversation extends Usecase {
 
     // Priority 2: the ones that were sent in with the request, if the
     // referenced model has audioUnderstanding capabilities.
-    if (requestInferenceOptions.providerModelRef) {
-      const { providerName, modelId } =
-        requestInferenceOptions.providerModelRef;
+    if (inferenceOptions.providerModelRef) {
+      const { providerName, modelId } = inferenceOptions.providerModelRef;
       const provider = inferenceSettings.providers.find(
         ({ name }) => name === providerName,
       );
       const model = provider?.models.find((m) => m.id === modelId);
       if (model?.capabilities.audioUnderstanding) {
-        return requestInferenceOptions;
+        return inferenceOptions;
       }
     }
 

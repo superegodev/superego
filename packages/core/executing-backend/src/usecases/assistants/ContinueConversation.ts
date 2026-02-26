@@ -30,7 +30,7 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsContinueConversation extends Usecase<
@@ -49,12 +49,13 @@ export default class AssistantsContinueConversation extends Usecase<
     | UnexpectedError
   > {
     const globalSettings = await this.repos.globalSettings.get();
-    const inferenceOptionsError = validateInferenceOptions(
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsError) {
-      return makeUnsuccessfulResult(inferenceOptionsError);
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
     }
 
     const conversation = await this.repos.conversation.find(id);

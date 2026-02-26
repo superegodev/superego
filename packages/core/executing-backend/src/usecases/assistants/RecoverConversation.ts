@@ -23,7 +23,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
@@ -42,12 +42,13 @@ export default class AssistantsRecoverConversation extends Usecase<
     | UnexpectedError
   > {
     const globalSettings = await this.repos.globalSettings.get();
-    const inferenceOptionsError = validateInferenceOptions(
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsError) {
-      return makeUnsuccessfulResult(inferenceOptionsError);
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
     }
 
     const conversation = await this.repos.conversation.find(id);

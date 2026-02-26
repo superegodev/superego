@@ -21,7 +21,7 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsRetryLastResponse extends Usecase<
@@ -38,12 +38,13 @@ export default class AssistantsRetryLastResponse extends Usecase<
     | UnexpectedError
   > {
     const globalSettings = await this.repos.globalSettings.get();
-    const inferenceOptionsError = validateInferenceOptions(
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsError) {
-      return makeUnsuccessfulResult(inferenceOptionsError);
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
     }
 
     const conversation = await this.repos.conversation.find(id);

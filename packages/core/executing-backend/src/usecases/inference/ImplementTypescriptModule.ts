@@ -21,7 +21,7 @@ import {
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
+import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 
 const MAX_ATTEMPTS = 5;
 
