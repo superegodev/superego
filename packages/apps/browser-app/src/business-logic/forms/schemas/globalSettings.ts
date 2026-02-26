@@ -46,7 +46,7 @@ export default function globalSettings(): v.GenericSchema<
         }),
       ),
       defaults: v.strictObject({
-        chat: v.nullable(inferenceModelRef()),
+        completion: v.nullable(inferenceModelRef()),
         transcription: v.nullable(inferenceModelRef()),
         fileInspection: v.nullable(inferenceModelRef()),
       }),

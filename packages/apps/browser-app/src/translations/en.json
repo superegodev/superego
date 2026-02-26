@@ -461,11 +461,11 @@
   "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
     "defaultMessage": "Default document view UI options"
   },
+  "Defaults.tsx_8KW01q": {
+    "defaultMessage": "Completion"
+  },
   "Defaults.tsx_CVFhNd": {
     "defaultMessage": "File inspection"
-  },
-  "Defaults.tsx_WTrOy3": {
-    "defaultMessage": "Chat"
   },
   "Defaults.tsx_WXrISI": {
     "defaultMessage": "Transcription"

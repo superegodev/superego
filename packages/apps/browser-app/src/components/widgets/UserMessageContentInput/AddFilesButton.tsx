@@ -9,15 +9,15 @@ import * as cs from "./UserMessageContentInput.css.js";
 interface Props {
   onFilesAdded: (files: FileList) => void;
   isDisabled: boolean;
-  isChatCompletionsConfigured: boolean;
+  isCompletionConfigured: boolean;
 }
 export default function AddFilesButton({
   onFilesAdded,
   isDisabled,
-  isChatCompletionsConfigured,
+  isCompletionConfigured,
 }: Props) {
   const intl = useIntl();
-  return isChatCompletionsConfigured ? (
+  return isCompletionConfigured ? (
     <FileTrigger
       onSelect={(files) => {
         if (files) {

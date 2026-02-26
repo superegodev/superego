@@ -4,7 +4,7 @@ import type InferenceProviderModelRef from "./InferenceProviderModelRef.js";
 export default interface InferenceSettings {
   providers: InferenceProvider[];
   defaults: {
-    chat: InferenceProviderModelRef | null;
+    completion: InferenceProviderModelRef | null;
     transcription: InferenceProviderModelRef | null;
     fileInspection: InferenceProviderModelRef | null;
   };

@@ -13,7 +13,7 @@ import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
-  areChatCompletionsConfigured: boolean;
+  isCompletionConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
   isDisabled: boolean;
@@ -23,7 +23,7 @@ interface Props {
   onCancelRecording: () => void;
 }
 export default function SendRecordButtons({
-  areChatCompletionsConfigured,
+  isCompletionConfigured,
   isWriting,
   isRecording,
   isDisabled,
@@ -46,7 +46,7 @@ export default function SendRecordButtons({
           <PiX />
         </IconButton>
       ) : null}
-      {areChatCompletionsConfigured && !isWriting ? (
+      {isCompletionConfigured && !isWriting ? (
         <IconButton
           variant="invisible"
           label={
@@ -61,7 +61,7 @@ export default function SendRecordButtons({
           {isRecording ? <PiStopFill /> : <PiMicrophoneFill />}
         </IconButton>
       ) : null}
-      {!areChatCompletionsConfigured ? (
+      {!isCompletionConfigured ? (
         <IconLink
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Configure assistant" })}
@@ -72,7 +72,7 @@ export default function SendRecordButtons({
           <PiGear />
         </IconLink>
       ) : null}
-      {areChatCompletionsConfigured && isWriting ? (
+      {isCompletionConfigured && isWriting ? (
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Send" })}

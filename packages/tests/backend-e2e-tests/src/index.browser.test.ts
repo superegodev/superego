@@ -35,7 +35,7 @@ const defaultGlobalSettings = {
       },
     ],
     defaults: {
-      chat: { providerName: "providerName", modelId: "modelName" },
+      completion: { providerName: "providerName", modelId: "modelName" },
       transcription: null,
       fileInspection: null,
     },

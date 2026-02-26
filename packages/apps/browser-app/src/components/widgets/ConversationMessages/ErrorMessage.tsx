@@ -29,7 +29,7 @@ export default function ErrorMessage({ conversation }: Props) {
           variant="invisible"
           onPress={() =>
             mutate(conversation.id, {
-              providerModelRef: inference.defaults.chat!,
+              providerModelRef: inference.defaults.completion!,
             })
           }
           className={cs.ErrorMessage.retryButton}

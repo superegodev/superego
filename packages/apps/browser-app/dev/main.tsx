@@ -22,7 +22,7 @@ const backend = new ExecutingBackend(
     inference: {
       providers: [],
       defaults: {
-        chat: null,
+        completion: null,
         transcription: null,
         fileInspection: null,
       },

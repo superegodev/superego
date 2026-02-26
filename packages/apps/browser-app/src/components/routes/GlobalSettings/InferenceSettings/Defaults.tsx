@@ -54,8 +54,8 @@ export default function Defaults({ control }: Props) {
       <Fieldset.Fields>
         <DefaultModelSelect
           control={control}
-          name="inference.defaults.chat"
-          label={intl.formatMessage({ defaultMessage: "Chat" })}
+          name="inference.defaults.completion"
+          label={intl.formatMessage({ defaultMessage: "Completion" })}
           modelOptions={modelOptions}
         />
         <DefaultModelSelect
@@ -82,7 +82,7 @@ function DefaultModelSelect({
   modelOptions,
 }: {
   control: Control<GlobalSettings, any, GlobalSettings>;
-  name: `inference.defaults.${"chat" | "transcription" | "fileInspection"}`;
+  name: `inference.defaults.${"completion" | "transcription" | "fileInspection"}`;
   label: string;
   modelOptions: Option[];
 }) {

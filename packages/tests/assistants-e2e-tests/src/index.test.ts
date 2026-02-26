@@ -67,7 +67,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
       },
     ],
     defaults: {
-      chat: { providerName, modelId: model },
+      completion: { providerName, modelId: model },
       transcription: null,
       fileInspection: null,
     },
@@ -78,7 +78,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
 const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
-  { providerModelRef: makeInferenceSettings(evaluatorModel).defaults.chat! },
+  { providerModelRef: makeInferenceSettings(evaluatorModel).defaults.completion! },
 );
 
 const assistantsModels = [
@@ -141,7 +141,7 @@ describe.concurrent.each(
     );
 
     const inferenceOptions = {
-      providerModelRef: makeInferenceSettings(model).defaults.chat!,
+      providerModelRef: makeInferenceSettings(model).defaults.completion!,
     };
 
     return { backend, booleanOracle: evaluator, inferenceOptions };

@@ -50,10 +50,10 @@ export default class SqliteGlobalSettingsRepository
             ?.providers as GlobalSettings["inference"]["providers"]) ??
           this.defaultGlobalSettings.inference.providers,
         defaults: {
-          chat:
+          completion:
             (settings.inference?.defaults
-              ?.chat as GlobalSettings["inference"]["defaults"]["chat"]) ??
-            this.defaultGlobalSettings.inference.defaults.chat,
+              ?.completion as GlobalSettings["inference"]["defaults"]["completion"]) ??
+            this.defaultGlobalSettings.inference.defaults.completion,
           transcription:
             (settings.inference?.defaults
               ?.transcription as GlobalSettings["inference"]["defaults"]["transcription"]) ??

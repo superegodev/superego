@@ -35,7 +35,7 @@ export default function RetryButton({
       }
       onPress={() =>
         mutate(conversation.id, {
-          providerModelRef: inference.defaults.chat!,
+          providerModelRef: inference.defaults.completion!,
         })
       }
       className={className}

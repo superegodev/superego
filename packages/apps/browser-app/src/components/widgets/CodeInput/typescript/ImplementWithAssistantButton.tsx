@@ -36,9 +36,9 @@ export default function ImplementWithAssistantButton({
 }: Props) {
   const intl = useIntl();
   const { inference } = useGlobalData().globalSettings;
-  const { chatCompletions } = useIsInferenceConfigured();
+  const { completion } = useIsInferenceConfigured();
   const { isPending, mutate } = useImplementTypescriptModule();
-  return chatCompletions && assistantImplementation ? (
+  return completion && assistantImplementation ? (
     <>
       <IconButton
         variant="primary"
@@ -66,7 +66,7 @@ export default function ImplementWithAssistantButton({
             },
             // TODO_AI: utility function that uses default or first suitable
             // model.
-            { providerModelRef: inference.defaults.chat! },
+            { providerModelRef: inference.defaults.completion! },
           );
           if (result.success) {
             onImplemented(result.data);

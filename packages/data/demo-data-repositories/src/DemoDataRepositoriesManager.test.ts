@@ -12,7 +12,7 @@ describe("IndexedDB", () => {
           providers: [],
 
           defaults: {
-            chat: null,
+            completion: null,
             transcription: null,
             fileInspection: null,
           },
@@ -40,7 +40,7 @@ describe("InMemory", () => {
           providers: [],
 
           defaults: {
-            chat: null,
+            completion: null,
             transcription: null,
             fileInspection: null,
           },

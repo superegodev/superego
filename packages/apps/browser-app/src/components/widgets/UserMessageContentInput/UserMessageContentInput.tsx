@@ -80,7 +80,7 @@ export default function UserMessageContentInput({
       (conversation.hasOutdatedContext ||
         conversation?.status !== ConversationStatus.Idle)) ||
     isSending ||
-    !isInferenceConfigured.chatCompletions;
+    !isInferenceConfigured.completion;
 
   const modelOptions: Option[] = useMemo(() => {
     const options: Option[] = [];
@@ -99,13 +99,13 @@ export default function UserMessageContentInput({
   }, [inference.providers]);
 
   const [selectedModelRefKey, setSelectedModelRefKey] = useState<string | null>(
-    inference.defaults.chat ? serializeModelRef(inference.defaults.chat) : null,
+    inference.defaults.completion ? serializeModelRef(inference.defaults.completion) : null,
   );
 
   const getInferenceOptions = (): InferenceOptions => {
     const providerModelRef = selectedModelRefKey
       ? deserializeModelRef(selectedModelRefKey)
-      : inference.defaults.chat!;
+      : inference.defaults.completion!;
     return { providerModelRef };
   };
 
@@ -117,7 +117,7 @@ export default function UserMessageContentInput({
     onRemoveFile,
     removeAllFiles,
     getContentParts,
-  } = useFiles(allowFileParts && isInferenceConfigured.chatCompletions);
+  } = useFiles(allowFileParts && isInferenceConfigured.completion);
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
@@ -184,7 +184,7 @@ export default function UserMessageContentInput({
                   defaultMessage:
                     "Your collections changed since having this conversation. It cannot be continued.",
                 })
-              : isInferenceConfigured.chatCompletions
+              : isInferenceConfigured.completion
                 ? placeholder
                 : intl.formatMessage({
                     defaultMessage: "Configure assistant to start chatting",
@@ -200,8 +200,8 @@ export default function UserMessageContentInput({
             <AddFilesButton
               onFilesAdded={onFilesAdded}
               isDisabled={isDisabled || isRecording}
-              isChatCompletionsConfigured={
-                isInferenceConfigured.chatCompletions
+              isCompletionConfigured={
+                isInferenceConfigured.completion
               }
             />
           ) : null}
@@ -219,7 +219,7 @@ export default function UserMessageContentInput({
           ) : null}
         </div>
         <SendRecordButtons
-          areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
+          isCompletionConfigured={isInferenceConfigured.completion}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
           isDisabled={isDisabled}

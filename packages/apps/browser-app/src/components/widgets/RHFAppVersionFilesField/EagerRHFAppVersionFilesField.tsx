@@ -47,7 +47,7 @@ export default function EagerRHFAppVersionFilesField({
     typescriptLibs,
     // TODO_AI: utility function that either gets the default or the first
     // suitable model
-    { providerModelRef: inference.defaults.chat! },
+    { providerModelRef: inference.defaults.completion! },
   );
 
   const onSend = async (messageContent: Message.User["content"]) => {

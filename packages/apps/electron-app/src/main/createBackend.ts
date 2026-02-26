@@ -24,7 +24,7 @@ export default function createBackend(port: number, isDevenv: boolean) {
     inference: {
       providers: [],
       defaults: {
-        chat: null,
+        completion: null,
         transcription: null,
         fileInspection: null,
       },

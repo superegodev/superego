@@ -1074,16 +1074,16 @@
       "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
+  "Defaults.tsx_8KW01q": [
+    {
+      "type": 0,
+      "value": "Completamento"
+    }
+  ],
   "Defaults.tsx_CVFhNd": [
     {
       "type": 0,
       "value": "Ispezione file"
-    }
-  ],
-  "Defaults.tsx_WTrOy3": [
-    {
-      "type": 0,
-      "value": "Chat"
     }
   ],
   "Defaults.tsx_WXrISI": [

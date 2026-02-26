@@ -65,7 +65,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
             },
           ],
           defaults: {
-            chat: {
+            completion: {
               providerName: "superego",
               modelId: "openai/gpt-oss-120b",
             },
@@ -82,7 +82,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
       : {
           providers: [],
           defaults: {
-            chat: null,
+            completion: null,
             transcription: null,
             fileInspection: null,
           },
