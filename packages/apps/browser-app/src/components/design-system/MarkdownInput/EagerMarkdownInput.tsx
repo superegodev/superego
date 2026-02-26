@@ -42,6 +42,7 @@ export default function EagerMarkdownInput({
       placeholder: placeholder ?? "",
       theme,
       padding: "8px 16px 16px 16px",
+      fontSize: "16px",
       textareaProps: {
         id: id,
         readOnly: isReadOnly,
