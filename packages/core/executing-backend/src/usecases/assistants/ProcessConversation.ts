@@ -295,7 +295,7 @@ export default class AssistantsProcessConversation extends Usecase {
       const provider = inferenceSettings.providers.find(
         ({ name }) => name === providerName,
       );
-      const model = provider?.models.find((m) => m.id === modelId);
+      const model = provider?.models.find(({ id }) => id === modelId);
       if (model?.capabilities.audioUnderstanding) {
         return inferenceOptions;
       }
