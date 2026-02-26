@@ -18,7 +18,7 @@ import {
   toResponsesRequest,
 } from "./Responses.js";
 
-export default class OpenAICompatInferenceService implements InferenceService {
+export default class MultiDriverInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
 
   async generateNextMessage(

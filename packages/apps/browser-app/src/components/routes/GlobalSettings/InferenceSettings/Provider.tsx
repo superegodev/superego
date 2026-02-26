@@ -5,9 +5,9 @@ import {
 import { type Control, useFieldArray } from "react-hook-form";
 import { PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import Button from "../../../design-system/Button/Button.jsx";
+import Button from "../../../design-system/Button/Button.js";
 import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
-import Fields from "../../../design-system/forms/Fields.jsx";
+import Fields from "../../../design-system/forms/Fields.js";
 import RHFSelectField from "../../../widgets/RHFSelectField/RHFSelectField.js";
 import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./InferenceSettings.css.js";

@@ -17,7 +17,7 @@ import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
+import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QueryClient } from "@tanstack/react-query";
 
 const isProduction = import.meta.env["VITE_DEPLOY_ENVIRONMENT"];
@@ -101,7 +101,7 @@ const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
   new MonacoTypescriptCompiler(async () => await import("monaco-editor")),
-  new OpenAICompatInferenceServiceFactory(),
+  new MultiDriverInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, sessionStorage),
     new GoogleContacts(redirectUri, sessionStorage),
