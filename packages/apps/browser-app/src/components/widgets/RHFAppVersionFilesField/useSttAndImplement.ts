@@ -61,7 +61,7 @@ export default function useSttAndImplement(
 
     let userRequest: string;
     if (part.type === MessageContentPartType.Audio) {
-      const sttResult = await stt(part.audio);
+      const sttResult = await stt(part.audio, inferenceOptions);
       if (!sttResult.success) {
         return sttResult;
       }

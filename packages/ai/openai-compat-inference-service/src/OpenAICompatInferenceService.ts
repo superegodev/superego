@@ -57,10 +57,11 @@ export default class OpenAICompatInferenceService implements InferenceService {
     return fromChatCompletionsResponse(json, inferenceOptions);
   }
 
-  async stt(audio: AudioContent): Promise<string> {
-    const { model, provider } = this.resolve(
-      this.settings.defaults.transcription,
-    );
+  async stt(
+    audio: AudioContent,
+    inferenceOptions: InferenceOptions,
+  ): Promise<string> {
+    const { model, provider } = this.resolve(inferenceOptions.providerModelRef);
 
     const requestBody = toSpeechToTextRequest(model.id, audio);
     const response = await fetch(provider.baseUrl, {

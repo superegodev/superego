@@ -29,7 +29,7 @@ interface InferenceService {
     inferenceOptions: InferenceOptions,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
 
-  stt(audio: AudioContent): Promise<string>;
+  stt(audio: AudioContent, inferenceOptions: InferenceOptions): Promise<string>;
 
   inspectFile(
     file: {

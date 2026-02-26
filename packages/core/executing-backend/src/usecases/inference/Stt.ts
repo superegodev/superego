@@ -1,15 +1,37 @@
-import type { AudioContent, Backend, UnexpectedError } from "@superego/backend";
+import type {
+  AudioContent,
+  Backend,
+  InferenceOptions,
+  InferenceOptionsNotValid,
+  UnexpectedError,
+} from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { makeSuccessfulResult } from "@superego/shared-utils";
+import {
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+} from "@superego/shared-utils";
 import Usecase from "../../utils/Usecase.js";
+import validateInferenceOptions from "../../utils/validateInferenceOptions.js";
 
 export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
-  async exec(audio: AudioContent): ResultPromise<string, UnexpectedError> {
+  async exec(
+    audio: AudioContent,
+    inferenceOptions: InferenceOptions,
+  ): ResultPromise<string, InferenceOptionsNotValid | UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsNotValid = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (inferenceOptionsNotValid) {
+      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    }
+
     const inferenceService = this.inferenceServiceFactory.create(
       globalSettings.inference,
     );
-    const text = await inferenceService.stt(audio);
+    const text = await inferenceService.stt(audio, inferenceOptions);
     return makeSuccessfulResult(text);
   }
 }

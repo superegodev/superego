@@ -1,5 +1,6 @@
 import {
   AssistantName,
+  type CannotTranscribeAudioMessage,
   type Collection,
   type CollectionCategory,
   type ConversationId,
@@ -51,7 +52,10 @@ export default class AssistantsProcessConversation extends Usecase {
     inferenceOptions: InferenceOptions;
   }): ResultPromise<
     null,
-    ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
+    | CannotTranscribeAudioMessage
+    | ConversationNotFound
+    | ConversationStatusNotProcessing
+    | UnexpectedError
   > {
     const collectionsListResult = await this.sub(CollectionsList).exec();
     if (!collectionsListResult.success) {
@@ -107,8 +111,17 @@ export default class AssistantsProcessConversation extends Usecase {
 
       const transcribedMessages = await this.transcribeLastUserMessage(
         inferenceService,
+        globalSettings.inference,
         conversation.messages,
+        inferenceOptions,
       );
+      if (!transcribedMessages) {
+        return makeUnsuccessfulResult(
+          makeResultError("CannotTranscribeAudioMessage", {
+            conversationId: id,
+          }),
+        );
+      }
 
       const [messages, title] = await Promise.all([
         assistant.generateAndProcessNextMessages(
@@ -208,14 +221,15 @@ export default class AssistantsProcessConversation extends Usecase {
 
   private async transcribeLastUserMessage(
     inferenceService: InferenceService,
+    inferenceSettings: GlobalSettings["inference"],
     messages: Message[],
-  ): Promise<Message[]> {
+    requestInferenceOptions: InferenceOptions,
+  ): Promise<Message[] | null> {
     const otherMessages = [...messages];
     const lastMessage = otherMessages.pop();
 
-    // There should always be a last message, it should always be a user message
-    // and it should always not have been transcribed. Nonetheless, we check to
-    // avoid transcribing unnecessarily.
+    // Skip transcription if there is no last user message or if it already
+    // contains text (i.e. it was typed, or it was already transcribed).
     if (
       !lastMessage ||
       lastMessage.role !== MessageRole.User ||
@@ -226,6 +240,14 @@ export default class AssistantsProcessConversation extends Usecase {
       return messages;
     }
 
+    const inferenceOptions = this.resolveTranscriptionInferenceOptions(
+      inferenceSettings,
+      requestInferenceOptions,
+    );
+    if (!inferenceOptions) {
+      return null;
+    }
+
     return [
       ...otherMessages,
       {
@@ -234,12 +256,55 @@ export default class AssistantsProcessConversation extends Usecase {
           part.type === MessageContentPartType.Audio
             ? {
                 type: MessageContentPartType.Text,
-                text: await inferenceService.stt(part.audio),
+                text: await inferenceService.stt(part.audio, inferenceOptions),
                 audio: part.audio,
               }
             : part,
         )) as NonEmptyArray<MessageContentPart>,
       },
     ];
+  }
+
+  private resolveTranscriptionInferenceOptions(
+    inferenceSettings: GlobalSettings["inference"],
+    requestInferenceOptions: InferenceOptions,
+  ): InferenceOptions | null {
+    // Priority 1: the default transcription model.
+    if (inferenceSettings.defaults.transcription) {
+      return {
+        providerModelRef: inferenceSettings.defaults.transcription,
+      };
+    }
+
+    // Priority 2: the ones that were sent in with the request, if the
+    // referenced model has audioUnderstanding capabilities.
+    if (requestInferenceOptions.providerModelRef) {
+      const { providerName, modelId } =
+        requestInferenceOptions.providerModelRef;
+      const provider = inferenceSettings.providers.find(
+        ({ name }) => name === providerName,
+      );
+      const model = provider?.models.find((m) => m.id === modelId);
+      if (model?.capabilities.audioUnderstanding) {
+        return requestInferenceOptions;
+      }
+    }
+
+    // Priority 3: the first InferenceModel with audioUnderstanding
+    // capabilities.
+    for (const provider of inferenceSettings.providers) {
+      for (const model of provider.models) {
+        if (model.capabilities.audioUnderstanding) {
+          return {
+            providerModelRef: {
+              providerName: provider.name,
+              modelId: model.id,
+            },
+          };
+        }
+      }
+    }
+
+    return null;
   }
 }
