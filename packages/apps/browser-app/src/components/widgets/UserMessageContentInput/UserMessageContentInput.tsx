@@ -99,7 +99,9 @@ export default function UserMessageContentInput({
   }, [inference.providers]);
 
   const [selectedModelRefKey, setSelectedModelRefKey] = useState<string | null>(
-    inference.defaults.completion ? serializeModelRef(inference.defaults.completion) : null,
+    inference.defaults.completion
+      ? serializeModelRef(inference.defaults.completion)
+      : null,
   );
 
   const getInferenceOptions = (): InferenceOptions => {
@@ -200,9 +202,7 @@ export default function UserMessageContentInput({
             <AddFilesButton
               onFilesAdded={onFilesAdded}
               isDisabled={isDisabled || isRecording}
-              isCompletionConfigured={
-                isInferenceConfigured.completion
-              }
+              isCompletionConfigured={isInferenceConfigured.completion}
             />
           ) : null}
           {modelOptions.length > 0 ? (

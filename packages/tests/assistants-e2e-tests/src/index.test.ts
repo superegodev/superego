@@ -78,7 +78,10 @@ function makeInferenceSettings(model: string): InferenceSettings {
 const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
-  { providerModelRef: makeInferenceSettings(evaluatorModel).defaults.completion! },
+  {
+    providerModelRef:
+      makeInferenceSettings(evaluatorModel).defaults.completion!,
+  },
 );
 
 const assistantsModels = [
