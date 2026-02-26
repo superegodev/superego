@@ -118,6 +118,8 @@ export default class CollectionCreatorAssistant extends Assistant {
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
+        // TODO_AI: pass in either this or the default fileInspection options
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);

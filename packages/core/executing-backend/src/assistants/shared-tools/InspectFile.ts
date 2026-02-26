@@ -1,5 +1,6 @@
 import {
   type FileId,
+  type InferenceOptions,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -21,6 +22,7 @@ export default {
     toolCall: ToolCall.InspectFile,
     inferenceService: InferenceService,
     filesGetContent: FilesGetContent,
+    inferenceOptions: InferenceOptions,
   ): Promise<ToolResult.InspectFile> {
     const { file, prompt } = toolCall.input;
 
@@ -47,6 +49,7 @@ export default {
     const fileInfo = await inferenceService.inspectFile(
       { name: file.name, mimeType: file.mimeType, content: content },
       prompt,
+      inferenceOptions,
     );
 
     return {

@@ -38,6 +38,7 @@ interface InferenceService {
       content: Uint8Array<ArrayBuffer>;
     },
     prompt: string,
+    inferenceOptions: InferenceOptions,
   ): Promise<string>;
 }
 

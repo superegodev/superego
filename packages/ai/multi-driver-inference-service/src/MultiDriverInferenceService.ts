@@ -95,9 +95,10 @@ export default class MultiDriverInferenceService implements InferenceService {
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
+    inferenceOptions: InferenceOptions,
   ): Promise<string> {
     const { model, provider } = this.resolveRef(
-      this.settings.defaults.fileInspection,
+      inferenceOptions.providerModelRef,
     );
 
     const requestBody = toResponsesRequest(

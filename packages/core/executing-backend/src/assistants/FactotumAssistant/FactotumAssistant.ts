@@ -1,6 +1,7 @@
 import {
   type Collection,
   type ConversationId,
+  type InferenceOptions,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -134,7 +135,10 @@ export default class FactotumAssistant extends Assistant {
     ];
   }
 
-  protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
+  protected async processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions,
+  ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
     }
@@ -199,6 +203,8 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
+        // TODO_AI: pass in either this or the default fileInspection options
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);
