@@ -88,9 +88,9 @@ export default function EagerExcalidrawInput({
     const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
     const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
     const serialized = JSON.stringify({ elements, files, appState });
+    hasPendingLocalChangesRef.current = false;
     if (serialized !== previousSerializedRef.current) {
       previousSerializedRef.current = serialized;
-      hasPendingLocalChangesRef.current = false;
       onChangeRef.current(JSON.parse(serialized));
     }
   }, []);
