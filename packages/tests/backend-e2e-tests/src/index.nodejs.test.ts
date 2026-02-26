@@ -62,10 +62,14 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests((connector) => {
+registerTests(({ connector, inferenceService, inferenceSettings } = {}) => {
+  const effectiveGlobalSettings = inferenceSettings
+    ? { ...defaultGlobalSettings, inference: inferenceSettings }
+    : defaultGlobalSettings;
+
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-    defaultGlobalSettings: defaultGlobalSettings,
+    defaultGlobalSettings: effectiveGlobalSettings,
   });
   dataRepositoriesManager.runMigrations();
 
@@ -74,7 +78,9 @@ registerTests((connector) => {
       dataRepositoriesManager,
       new QuickjsJavascriptSandbox(),
       new TscTypescriptCompiler(),
-      new MockInferenceServiceFactory(),
+      inferenceService
+        ? { create: () => inferenceService }
+        : new MockInferenceServiceFactory(),
       connector ? [connector] : [],
     ),
   };
