@@ -1076,28 +1076,28 @@
       "value": "Default document view UI options"
     }
   ],
-  "DefaultInferenceOptions.tsx_8KW01q": [
+  "DefaultInferenceOptions.tsx_24dwvV": [
     {
       "type": 0,
-      "value": "Completion"
+      "value": "Transcription model"
     }
   ],
-  "DefaultInferenceOptions.tsx_CVFhNd": [
+  "DefaultInferenceOptions.tsx_V5GxyN": [
     {
       "type": 0,
-      "value": "File inspection"
+      "value": "File inspection model"
     }
   ],
-  "DefaultInferenceOptions.tsx_WXrISI": [
+  "DefaultInferenceOptions.tsx_gQ9pya": [
     {
       "type": 0,
-      "value": "Transcription"
+      "value": "Completion model"
     }
   ],
-  "DefaultInferenceOptions.tsx_x6K+Ry": [
+  "DefaultInferenceOptions.tsx_mTnRNG": [
     {
       "type": 0,
-      "value": "Defaults"
+      "value": "Default inference options"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2166,22 +2166,10 @@
       "value": "Model"
     }
   ],
-  "InferenceSettings.tsx_+goFsL": [
+  "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
-      "value": "Add provider"
-    }
-  ],
-  "InferenceSettings.tsx_IL1Uey": [
-    {
-      "type": 0,
-      "value": "Providers"
-    }
-  ],
-  "InferenceSettings.tsx_kav6Ry": [
-    {
-      "type": 0,
-      "value": "To make the assistant work you need to connect it to an "
+      "value": "Configure an "
     },
     {
       "children": [
@@ -2195,17 +2183,7 @@
     },
     {
       "type": 0,
-      "value": ". The provider must offer APIs "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "compatible with the OpenAI format."
-        }
-      ],
-      "type": 8,
-      "value": "b"
+      "value": " to enable the assistant. A model with audio understanding capabilities is necessary for the \"speak\" feature."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2846,6 +2824,18 @@
     {
       "type": 0,
       "value": "Add model"
+    }
+  ],
+  "Providers.tsx_+goFsL": [
+    {
+      "type": 0,
+      "value": "Add provider"
+    }
+  ],
+  "Providers.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Providers"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -3932,22 +3922,28 @@
       "value": "Cancel"
     }
   ],
-  "SendRecordButtons.tsx_7Y6Yvq": [
-    {
-      "type": 0,
-      "value": "Record"
-    }
-  ],
   "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Send"
     }
   ],
+  "SendRecordButtons.tsx_GEd3kV": [
+    {
+      "type": 0,
+      "value": "Speak"
+    }
+  ],
   "SendRecordButtons.tsx_kNl1RN": [
     {
       "type": 0,
       "value": "Configure assistant"
+    }
+  ],
+  "SendRecordButtons.tsx_kSy9pJ": [
+    {
+      "type": 0,
+      "value": "Add model w/ audio understanding to use voice"
     }
   ],
   "SetCollectionRemoteForm.tsx_Wq1yhE": [

@@ -31,7 +31,7 @@ export default function Model({ control, name, onRemove }: Props) {
         placeholder="GPT OSS 120B"
         className={cs.Model.nameField}
       />
-      <Capabilities control={control} name={name} />
+      <Capabilities control={control} name={`${name}.capabilities`} />
       <IconButton
         label={intl.formatMessage({ defaultMessage: "Remove" })}
         onPress={onRemove}

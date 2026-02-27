@@ -14,34 +14,23 @@ import {
   SelectOptions,
 } from "../../../design-system/forms/forms.js";
 
-function serializeModelRef(ref: InferenceProviderModelRef): string {
-  return `${ref.modelId}@${ref.providerName}`;
-}
-
-function deserializeModelRef(id: string): InferenceProviderModelRef {
-  const atIndex = id.lastIndexOf("@");
-  return {
-    modelId: id.slice(0, atIndex),
-    providerName: id.slice(atIndex + 1),
-  };
-}
-
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
 }
 export default function DefaultInferenceOptions({ control }: Props) {
   const intl = useIntl();
 
-  const watchedProviders = useWatch({ control, name: "inference.providers" });
+  const providers = useWatch({ control, name: "inference.providers" });
   const modelOptions: Option[] = [];
-  for (const provider of watchedProviders) {
+  for (const provider of providers) {
     for (const model of provider.models) {
       modelOptions.push({
-        id: serializeModelRef({
+        id: serializeProviderModelRef({
           providerName: provider.name,
           modelId: model.id,
         }),
-        label: `${model.name || model.id} (${provider.name})`,
+        label: model.name,
+        description: provider.name,
       });
     }
   }
@@ -49,25 +38,27 @@ export default function DefaultInferenceOptions({ control }: Props) {
   return (
     <Fieldset isDisclosureDisabled={true}>
       <Fieldset.Legend>
-        <FormattedMessage defaultMessage="Defaults" />
+        <FormattedMessage defaultMessage="Default inference options" />
       </Fieldset.Legend>
       <Fieldset.Fields>
         <DefaultModelSelect
           control={control}
           name="inference.defaultInferenceOptions.completion"
-          label={intl.formatMessage({ defaultMessage: "Completion" })}
+          label={intl.formatMessage({ defaultMessage: "Completion model" })}
           modelOptions={modelOptions}
         />
         <DefaultModelSelect
           control={control}
           name="inference.defaultInferenceOptions.transcription"
-          label={intl.formatMessage({ defaultMessage: "Transcription" })}
+          label={intl.formatMessage({ defaultMessage: "Transcription model" })}
           modelOptions={modelOptions}
         />
         <DefaultModelSelect
           control={control}
           name="inference.defaultInferenceOptions.fileInspection"
-          label={intl.formatMessage({ defaultMessage: "File inspection" })}
+          label={intl.formatMessage({
+            defaultMessage: "File inspection model",
+          })}
           modelOptions={modelOptions}
         />
       </Fieldset.Fields>
@@ -75,31 +66,38 @@ export default function DefaultInferenceOptions({ control }: Props) {
   );
 }
 
+interface DefaultModelSelectProps {
+  control: Control<GlobalSettings, any, GlobalSettings>;
+  name: `inference.defaultInferenceOptions.${"completion" | "transcription" | "fileInspection"}`;
+  label: string;
+  modelOptions: Option[];
+}
 function DefaultModelSelect({
   control,
   name,
   label,
   modelOptions,
-}: {
-  control: Control<GlobalSettings, any, GlobalSettings>;
-  name: `inference.defaultInferenceOptions.${"completion" | "transcription" | "fileInspection"}`;
-  label: string;
-  modelOptions: Option[];
-}) {
+}: DefaultModelSelectProps) {
   const { field, fieldState } = useController({ control, name });
 
-  const value = field.value
-    ? serializeModelRef(field.value.providerModelRef)
+  const selectedOptionId = field.value
+    ? serializeProviderModelRef(field.value.providerModelRef)
     : null;
 
   return (
     <Select
       id={field.name}
       name={field.name}
-      value={value}
-      onChange={(key) => {
+      value={selectedOptionId}
+      onChange={(optionId) => {
         field.onChange(
-          key ? { providerModelRef: deserializeModelRef(key as string) } : null,
+          optionId
+            ? {
+                providerModelRef: deserializeProviderModelRef(
+                  optionId as string,
+                ),
+              }
+            : null,
         );
       }}
       validationBehavior="aria"
@@ -113,4 +111,14 @@ function DefaultModelSelect({
       <SelectOptions options={modelOptions} />
     </Select>
   );
+}
+
+function serializeProviderModelRef(
+  providerModelRef: InferenceProviderModelRef,
+): string {
+  return JSON.stringify(providerModelRef);
+}
+
+function deserializeProviderModelRef(id: string): InferenceProviderModelRef {
+  return JSON.parse(id);
 }

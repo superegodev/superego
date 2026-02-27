@@ -1068,28 +1068,28 @@
       "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
-  "DefaultInferenceOptions.tsx_8KW01q": [
+  "DefaultInferenceOptions.tsx_24dwvV": [
     {
       "type": 0,
-      "value": "Completamento"
+      "value": "Modello di trascrizione"
     }
   ],
-  "DefaultInferenceOptions.tsx_CVFhNd": [
+  "DefaultInferenceOptions.tsx_V5GxyN": [
     {
       "type": 0,
-      "value": "Ispezione file"
+      "value": "Modello di ispezione file"
     }
   ],
-  "DefaultInferenceOptions.tsx_WXrISI": [
+  "DefaultInferenceOptions.tsx_gQ9pya": [
     {
       "type": 0,
-      "value": "Trascrizione"
+      "value": "Modello di completamento"
     }
   ],
-  "DefaultInferenceOptions.tsx_x6K+Ry": [
+  "DefaultInferenceOptions.tsx_mTnRNG": [
     {
       "type": 0,
-      "value": "Predefiniti"
+      "value": "Opzioni di inferenza predefinite"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2158,22 +2158,10 @@
       "value": "Modello"
     }
   ],
-  "InferenceSettings.tsx_+goFsL": [
+  "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
-      "value": "Aggiungi provider"
-    }
-  ],
-  "InferenceSettings.tsx_IL1Uey": [
-    {
-      "type": 0,
-      "value": "Provider"
-    }
-  ],
-  "InferenceSettings.tsx_kav6Ry": [
-    {
-      "type": 0,
-      "value": "Per far funzionare l'assistente devi collegarlo a un "
+      "value": "Configura un "
     },
     {
       "children": [
@@ -2187,17 +2175,7 @@
     },
     {
       "type": 0,
-      "value": ". Il provider deve offrire API "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "compatibili con il formato OpenAI."
-        }
-      ],
-      "type": 8,
-      "value": "b"
+      "value": " per abilitare l'assistente. Un modello con capacità di comprensione audio è necessario per la funzione \"parla\"."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2838,6 +2816,18 @@
     {
       "type": 0,
       "value": "Aggiungi modello"
+    }
+  ],
+  "Providers.tsx_+goFsL": [
+    {
+      "type": 0,
+      "value": "Aggiungi provider"
+    }
+  ],
+  "Providers.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Provider"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -3910,22 +3900,28 @@
       "value": "Annulla"
     }
   ],
-  "SendRecordButtons.tsx_7Y6Yvq": [
-    {
-      "type": 0,
-      "value": "Registra"
-    }
-  ],
   "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Invia"
     }
   ],
+  "SendRecordButtons.tsx_GEd3kV": [
+    {
+      "type": 0,
+      "value": "Parla"
+    }
+  ],
   "SendRecordButtons.tsx_kNl1RN": [
     {
       "type": 0,
       "value": "Configura assistente"
+    }
+  ],
+  "SendRecordButtons.tsx_kSy9pJ": [
+    {
+      "type": 0,
+      "value": "Aggiungi un modello con comprensione audio per usare la voce"
     }
   ],
   "SetCollectionRemoteForm.tsx_Wq1yhE": [

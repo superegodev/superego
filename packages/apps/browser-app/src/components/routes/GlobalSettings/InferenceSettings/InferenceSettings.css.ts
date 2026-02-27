@@ -5,7 +5,9 @@ export const InferenceSettings = {
   info: style({
     marginBlockStart: 0,
   }),
+};
 
+export const Providers = {
   addButton: style({
     display: "flex",
     gap: vars.spacing._1,

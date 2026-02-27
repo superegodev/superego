@@ -172,13 +172,6 @@ const actionsToolbarButtonBase = style({
 
 export const AddFilesButton = {
   button: actionsToolbarButtonBase,
-
-  disabledLookingButton: style([
-    actionsToolbarButtonBase,
-    {
-      color: vars.colors.button.invisible.disabled.text,
-    },
-  ]),
 };
 
 export const SendRecordButtons = {
@@ -187,4 +180,11 @@ export const SendRecordButtons = {
   }),
 
   button: actionsToolbarButtonBase,
+
+  disabledLookingButton: style([
+    actionsToolbarButtonBase,
+    {
+      color: vars.colors.button.invisible.disabled.text,
+    },
+  ]),
 };

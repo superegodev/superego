@@ -926,26 +926,20 @@
   "Capabilities.tsx_xRp25e": {
     "defaultMessage": "Supporta comprensione PDF"
   },
-  "DefaultInferenceOptions.tsx_CVFhNd": {
-    "defaultMessage": "Ispezione file"
+  "DefaultInferenceOptions.tsx_24dwvV": {
+    "defaultMessage": "Modello di trascrizione"
   },
-  "DefaultInferenceOptions.tsx_8KW01q": {
-    "defaultMessage": "Completamento"
+  "DefaultInferenceOptions.tsx_V5GxyN": {
+    "defaultMessage": "Modello di ispezione file"
   },
-  "DefaultInferenceOptions.tsx_WXrISI": {
-    "defaultMessage": "Trascrizione"
+  "DefaultInferenceOptions.tsx_gQ9pya": {
+    "defaultMessage": "Modello di completamento"
   },
-  "DefaultInferenceOptions.tsx_x6K+Ry": {
-    "defaultMessage": "Predefiniti"
+  "DefaultInferenceOptions.tsx_mTnRNG": {
+    "defaultMessage": "Opzioni di inferenza predefinite"
   },
-  "InferenceSettings.tsx_+goFsL": {
-    "defaultMessage": "Aggiungi provider"
-  },
-  "InferenceSettings.tsx_IL1Uey": {
-    "defaultMessage": "Provider"
-  },
-  "InferenceSettings.tsx_kav6Ry": {
-    "defaultMessage": "Per far funzionare l'assistente devi collegarlo a un <b>fornitore di inferenza</b>. Il provider deve offrire API <b>compatibili con il formato OpenAI.</b>"
+  "InferenceSettings.tsx_P817ae": {
+    "defaultMessage": "Configura un <b>fornitore di inferenza</b> per abilitare l'assistente. Un modello con capacità di comprensione audio è necessario per la funzione \"parla\"."
   },
   "Model.tsx_G/yZLu": {
     "defaultMessage": "Rimuovi"
@@ -976,6 +970,12 @@
   },
   "Provider.tsx_zUO6Ii": {
     "defaultMessage": "Aggiungi modello"
+  },
+  "Providers.tsx_+goFsL": {
+    "defaultMessage": "Aggiungi provider"
+  },
+  "Providers.tsx_IL1Uey": {
+    "defaultMessage": "Provider"
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."
@@ -1328,14 +1328,17 @@
   "SendRecordButtons.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "SendRecordButtons.tsx_7Y6Yvq": {
-    "defaultMessage": "Registra"
-  },
   "SendRecordButtons.tsx_9WRlF4": {
     "defaultMessage": "Invia"
   },
+  "SendRecordButtons.tsx_GEd3kV": {
+    "defaultMessage": "Parla"
+  },
   "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configura assistente"
+  },
+  "SendRecordButtons.tsx_kSy9pJ": {
+    "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
   },
   "SetCollectionRemoteForm.tsx_Wq1yhE": {
     "defaultMessage": "Hai modifiche non salvate. Sei sicuro di voler uscire?"

@@ -14,6 +14,7 @@ import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
   isCompletionConfigured: boolean;
+  isTranscriptionConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
   isDisabled: boolean;
@@ -24,6 +25,7 @@ interface Props {
 }
 export default function SendRecordButtons({
   isCompletionConfigured,
+  isTranscriptionConfigured,
   isWriting,
   isRecording,
   isDisabled,
@@ -46,13 +48,27 @@ export default function SendRecordButtons({
           <PiX />
         </IconButton>
       ) : null}
-      {isCompletionConfigured && !isWriting ? (
+      {isCompletionConfigured && !isTranscriptionConfigured ? (
+        <IconLink
+          variant="invisible"
+          label={intl.formatMessage({
+            defaultMessage: "Add model w/ audio understanding to use voice",
+          })}
+          to={{ name: RouteName.GlobalSettings }}
+          isDisabled={isDisabled}
+          className={cs.SendRecordButtons.disabledLookingButton}
+          tooltipDelay={0}
+        >
+          <PiMicrophoneFill />
+        </IconLink>
+      ) : null}
+      {isCompletionConfigured && isTranscriptionConfigured && !isWriting ? (
         <IconButton
           variant="invisible"
           label={
             isRecording
               ? intl.formatMessage({ defaultMessage: "Finish and send" })
-              : intl.formatMessage({ defaultMessage: "Record" })
+              : intl.formatMessage({ defaultMessage: "Speak" })
           }
           onPress={isRecording ? onFinishRecording : onStartRecording}
           isDisabled={isDisabled}
@@ -72,7 +88,8 @@ export default function SendRecordButtons({
           <PiGear />
         </IconLink>
       ) : null}
-      {isCompletionConfigured && isWriting ? (
+      {isCompletionConfigured &&
+      (isTranscriptionConfigured ? isWriting : true) ? (
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Send" })}

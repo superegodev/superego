@@ -458,17 +458,17 @@
   "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
     "defaultMessage": "Default document view UI options"
   },
-  "DefaultInferenceOptions.tsx_8KW01q": {
-    "defaultMessage": "Completion"
+  "DefaultInferenceOptions.tsx_24dwvV": {
+    "defaultMessage": "Transcription model"
   },
-  "DefaultInferenceOptions.tsx_CVFhNd": {
-    "defaultMessage": "File inspection"
+  "DefaultInferenceOptions.tsx_V5GxyN": {
+    "defaultMessage": "File inspection model"
   },
-  "DefaultInferenceOptions.tsx_WXrISI": {
-    "defaultMessage": "Transcription"
+  "DefaultInferenceOptions.tsx_gQ9pya": {
+    "defaultMessage": "Completion model"
   },
-  "DefaultInferenceOptions.tsx_x6K+Ry": {
-    "defaultMessage": "Defaults"
+  "DefaultInferenceOptions.tsx_mTnRNG": {
+    "defaultMessage": "Default inference options"
   },
   "DeleteAppModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
@@ -926,14 +926,8 @@
   "InferenceOptionsInput.tsx_rhSI1/": {
     "defaultMessage": "Model"
   },
-  "InferenceSettings.tsx_+goFsL": {
-    "defaultMessage": "Add provider"
-  },
-  "InferenceSettings.tsx_IL1Uey": {
-    "defaultMessage": "Providers"
-  },
-  "InferenceSettings.tsx_kav6Ry": {
-    "defaultMessage": "To make the assistant work you need to connect it to an <b>inference provider</b>. The provider must offer APIs <b>compatible with the OpenAI format.</b>"
+  "InferenceSettings.tsx_P817ae": {
+    "defaultMessage": "Configure an <b>inference provider</b> to enable the assistant. A model with audio understanding capabilities is necessary for the \"speak\" feature."
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "will be installed."
@@ -1142,6 +1136,12 @@
   "Provider.tsx_zUO6Ii": {
     "defaultMessage": "Add model"
   },
+  "Providers.tsx_+goFsL": {
+    "defaultMessage": "Add provider"
+  },
+  "Providers.tsx_IL1Uey": {
+    "defaultMessage": "Providers"
+  },
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
     "defaultMessage": "Content blocking keys getter"
   },
@@ -1331,14 +1331,17 @@
   "SendRecordButtons.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "SendRecordButtons.tsx_7Y6Yvq": {
-    "defaultMessage": "Record"
-  },
   "SendRecordButtons.tsx_9WRlF4": {
     "defaultMessage": "Send"
   },
+  "SendRecordButtons.tsx_GEd3kV": {
+    "defaultMessage": "Speak"
+  },
   "SendRecordButtons.tsx_kNl1RN": {
     "defaultMessage": "Configure assistant"
+  },
+  "SendRecordButtons.tsx_kSy9pJ": {
+    "defaultMessage": "Add model w/ audio understanding to use voice"
   },
   "SetCollectionRemoteForm.tsx_Wq1yhE": {
     "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"

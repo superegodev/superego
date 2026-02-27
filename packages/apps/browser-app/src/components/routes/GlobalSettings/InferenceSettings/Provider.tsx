@@ -21,7 +21,6 @@ interface Props {
 export default function Provider({ control, name, onRemove }: Props) {
   const intl = useIntl();
   const models = useFieldArray({ control, name: `${name}.models` });
-
   return (
     <section className={cs.Provider.root}>
       <Fields>
@@ -58,7 +57,6 @@ export default function Provider({ control, name, onRemove }: Props) {
             placeholder="sk-..."
           />
         </div>
-
         <Fieldset isDisclosureDisabled={true}>
           <Fieldset.Legend>
             <FormattedMessage defaultMessage="Models" />

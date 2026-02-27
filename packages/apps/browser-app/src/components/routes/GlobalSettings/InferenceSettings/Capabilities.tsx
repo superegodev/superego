@@ -1,6 +1,5 @@
-import type { GlobalSettings } from "@superego/backend";
-import type { ReactNode } from "react";
-import { type Control, type FieldPath, useController } from "react-hook-form";
+import type { GlobalSettings, InferenceModel } from "@superego/backend";
+import { type Control, useController } from "react-hook-form";
 import {
   PiBrain,
   PiFilePdf,
@@ -14,77 +13,66 @@ import * as cs from "./InferenceSettings.css.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
-  name: `inference.providers.${number}.models.${number}`;
+  name: `inference.providers.${number}.models.${number}.capabilities`;
 }
 export default function Capabilities({ control, name }: Props) {
   const intl = useIntl();
-  const prefix = `${name}.capabilities` as const;
+
+  const { field } = useController({ control, name });
+
+  const capabilities = field.value as InferenceModel["capabilities"];
+
+  const toggle = (key: keyof InferenceModel["capabilities"]) =>
+    field.onChange({ ...capabilities, [key]: !capabilities[key] });
+
   return (
     <div className={cs.Capabilities.root}>
-      <CapabilityToggle
-        control={control}
-        name={`${prefix}.reasoning`}
-        label={intl.formatMessage({
-          defaultMessage: "Supports reasoning",
-        })}
-        icon={<PiBrain />}
-      />
-      <CapabilityToggle
-        control={control}
-        name={`${prefix}.audioUnderstanding`}
+      <IconToggleButton
+        label={intl.formatMessage({ defaultMessage: "Supports reasoning" })}
+        className={cs.Capabilities.button}
+        isSelected={capabilities.reasoning}
+        onChange={() => toggle("reasoning")}
+      >
+        <PiBrain />
+      </IconToggleButton>
+      <IconToggleButton
         label={intl.formatMessage({
           defaultMessage: "Supports audio understanding",
         })}
-        icon={<PiMicrophone />}
-      />
-      <CapabilityToggle
-        control={control}
-        name={`${prefix}.imageUnderstanding`}
+        className={cs.Capabilities.button}
+        isSelected={capabilities.audioUnderstanding}
+        onChange={() => toggle("audioUnderstanding")}
+      >
+        <PiMicrophone />
+      </IconToggleButton>
+      <IconToggleButton
         label={intl.formatMessage({
           defaultMessage: "Supports image understanding",
         })}
-        icon={<PiImage />}
-      />
-      <CapabilityToggle
-        control={control}
-        name={`${prefix}.pdfUnderstanding`}
+        className={cs.Capabilities.button}
+        isSelected={capabilities.imageUnderstanding}
+        onChange={() => toggle("imageUnderstanding")}
+      >
+        <PiImage />
+      </IconToggleButton>
+      <IconToggleButton
         label={intl.formatMessage({
           defaultMessage: "Supports PDF understanding",
         })}
-        icon={<PiFilePdf />}
-      />
-      <CapabilityToggle
-        control={control}
-        name={`${prefix}.webSearching`}
-        label={intl.formatMessage({
-          defaultMessage: "Supports web searching",
-        })}
-        icon={<PiGlobe />}
-      />
+        className={cs.Capabilities.button}
+        isSelected={capabilities.pdfUnderstanding}
+        onChange={() => toggle("pdfUnderstanding")}
+      >
+        <PiFilePdf />
+      </IconToggleButton>
+      <IconToggleButton
+        label={intl.formatMessage({ defaultMessage: "Supports web searching" })}
+        className={cs.Capabilities.button}
+        isSelected={capabilities.webSearching}
+        onChange={() => toggle("webSearching")}
+      >
+        <PiGlobe />
+      </IconToggleButton>
     </div>
-  );
-}
-
-function CapabilityToggle({
-  control,
-  name,
-  label,
-  icon,
-}: {
-  control: Control<GlobalSettings, any, GlobalSettings>;
-  name: FieldPath<GlobalSettings>;
-  label: string;
-  icon: ReactNode;
-}) {
-  const { field } = useController({ control, name });
-  return (
-    <IconToggleButton
-      label={label}
-      className={cs.Capabilities.button}
-      isSelected={field.value as boolean}
-      onChange={field.onChange}
-    >
-      {icon}
-    </IconToggleButton>
   );
 }

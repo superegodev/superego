@@ -181,6 +181,7 @@ export default function UserMessageContentInput({
         </div>
         <SendRecordButtons
           isCompletionConfigured={isInferenceConfigured.completion}
+          isTranscriptionConfigured={isInferenceConfigured.transcription}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
           isDisabled={globalIsDisabled}
