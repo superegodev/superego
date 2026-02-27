@@ -14,10 +14,14 @@ import {
 } from "./Responses.js";
 
 const inferenceOptions: InferenceOptions = {
-  providerModelRef: {
-    providerName: "providerName",
-    modelId: "modelId",
+  completion: {
+    providerModelRef: {
+      providerName: "providerName",
+      modelId: "modelId",
+    },
   },
+  transcription: null,
+  fileInspection: null,
 };
 
 describe("toResponsesRequest", () => {

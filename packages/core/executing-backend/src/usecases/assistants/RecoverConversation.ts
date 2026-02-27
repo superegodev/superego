@@ -33,7 +33,7 @@ export default class AssistantsRecoverConversation extends Usecase<
 > {
   async exec(
     id: ConversationId,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
     | ConversationNotFound

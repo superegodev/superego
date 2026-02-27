@@ -34,7 +34,7 @@ export default {
     toolCall: ToolCall.SuggestCollectionsDefinitions,
     collectionsCreateMany: CollectionsCreateMany,
     inferenceImplementTypescriptModule: InferenceImplementTypescriptModule,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
 

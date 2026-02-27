@@ -17,10 +17,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       input: {
         id: Id.generate.conversation(),
         inferenceOptions: {
-          providerModelRef: {
-            providerName: "providerName",
-            modelId: "modelId",
+          completion: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelId: "modelId",
+            },
           },
+          transcription: null,
+          fileInspection: null,
         },
       },
       status: BackgroundJobStatus.Enqueued,
@@ -55,10 +59,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       input: {
         id: Id.generate.conversation(),
         inferenceOptions: {
-          providerModelRef: {
-            providerName: "providerName",
-            modelId: "modelId",
+          completion: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelId: "modelId",
+            },
           },
+          transcription: null,
+          fileInspection: null,
         },
       },
       status: BackgroundJobStatus.Enqueued,
@@ -107,10 +115,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,
@@ -167,10 +179,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Processing,
@@ -225,10 +241,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Succeeded,
@@ -266,10 +286,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,
@@ -284,10 +308,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,
@@ -302,10 +330,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,
@@ -363,10 +395,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,
@@ -381,10 +417,14 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
         input: {
           id: Id.generate.conversation(),
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
         },
         status: BackgroundJobStatus.Enqueued,

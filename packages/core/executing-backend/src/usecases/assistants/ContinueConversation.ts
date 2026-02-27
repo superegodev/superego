@@ -39,7 +39,7 @@ export default class AssistantsContinueConversation extends Usecase<
   async exec(
     id: ConversationId,
     userMessageContent: NonEmptyArray<MessageContentPart.Text>,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
     | ConversationNotFound

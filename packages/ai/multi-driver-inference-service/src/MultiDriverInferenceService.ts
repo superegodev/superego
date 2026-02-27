@@ -17,37 +17,37 @@ export default class MultiDriverInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    return this.getDriver(inferenceOptions).generateNextMessage(
-      previousMessages,
-      tools,
-      inferenceOptions,
-    );
+    return this.getDriver(
+      inferenceOptions.completion.providerModelRef,
+    ).generateNextMessage(previousMessages, tools, inferenceOptions);
   }
 
   async stt(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"transcription">,
   ): Promise<string> {
-    return this.getDriver(inferenceOptions).stt(audio, inferenceOptions);
+    return this.getDriver(inferenceOptions.transcription.providerModelRef).stt(
+      audio,
+      inferenceOptions,
+    );
   }
 
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<string> {
-    return this.getDriver(inferenceOptions).inspectFile(
-      file,
-      prompt,
-      inferenceOptions,
-    );
+    return this.getDriver(
+      inferenceOptions.fileInspection.providerModelRef,
+    ).inspectFile(file, prompt, inferenceOptions);
   }
 
-  private getDriver(inferenceOptions: InferenceOptions): InferenceService {
-    const provider = this.resolveProvider(inferenceOptions.providerModelRef);
-
+  private getDriver(
+    providerModelRef: InferenceProviderModelRef,
+  ): InferenceService {
+    const provider = this.resolveProvider(providerModelRef);
     switch (provider.driver) {
       case InferenceProviderDriver.OpenRouter:
         return new OpenRouterInferenceService(this.settings);
@@ -59,19 +59,16 @@ export default class MultiDriverInferenceService implements InferenceService {
   }
 
   private resolveProvider(
-    ref: InferenceProviderModelRef | null,
+    providerModelRef: InferenceProviderModelRef,
   ): InferenceProvider {
-    if (!ref) {
-      throw new Error("No model configured.");
-    }
-
     const provider = this.settings.providers.find(
-      ({ name }) => name === ref.providerName,
+      ({ name }) => name === providerModelRef.providerName,
     );
     if (!provider) {
-      throw new Error(`Provider "${ref.providerName}" not found in settings.`);
+      throw new Error(
+        `Provider "${providerModelRef.providerName}" not found in settings.`,
+      );
     }
-
     return provider;
   }
 }

@@ -98,12 +98,17 @@ export default class CollectionCreatorAssistant extends Assistant {
   }
 
   protected getTools(): InferenceService.Tool[] {
-    return [SuggestCollectionsDefinitions.get(), InspectFile.get()];
+    return [
+      SuggestCollectionsDefinitions.get(),
+      // TODO_AI: pass inferenceOptions to getTools and pass this tool only if
+      // inferenceOptions.fileInspection
+      InspectFile.get(),
+    ];
   }
 
   protected async processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult> {
     if (SuggestCollectionsDefinitions.is(toolCall)) {
       return SuggestCollectionsDefinitions.exec(
@@ -113,13 +118,12 @@ export default class CollectionCreatorAssistant extends Assistant {
         inferenceOptions,
       );
     }
-    if (InspectFile.is(toolCall)) {
+    if (InspectFile.is(toolCall) && inferenceOptions.fileInspection) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
-        // TODO_AI: pass in either this or the default fileInspection options
-        inferenceOptions,
+        inferenceOptions as InferenceOptions<"completion" | "fileInspection">,
       );
     }
     return Unknown.exec(toolCall);

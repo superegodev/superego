@@ -24,10 +24,10 @@ export default class OpenRouterInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
-    const { model, provider } = this.resolveRef(
-      inferenceOptions.providerModelRef,
+    const { provider, model } = this.resolveProviderAndModel(
+      inferenceOptions.completion.providerModelRef,
     );
 
     const requestBody = toResponsesRequest(model.id, previousMessages, tools);
@@ -51,10 +51,10 @@ export default class OpenRouterInferenceService implements InferenceService {
 
   async stt(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"transcription">,
   ): Promise<string> {
-    const { model, provider } = this.resolveRef(
-      inferenceOptions.providerModelRef,
+    const { provider, model } = this.resolveProviderAndModel(
+      inferenceOptions.transcription.providerModelRef,
     );
 
     const requestBody = toResponsesRequest(
@@ -95,10 +95,10 @@ export default class OpenRouterInferenceService implements InferenceService {
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<string> {
-    const { model, provider } = this.resolveRef(
-      inferenceOptions.providerModelRef,
+    const { provider, model } = this.resolveProviderAndModel(
+      inferenceOptions.fileInspection.providerModelRef,
     );
 
     const requestBody = toResponsesRequest(
@@ -133,25 +133,24 @@ export default class OpenRouterInferenceService implements InferenceService {
     return extractTextFromResponse(json);
   }
 
-  private resolveRef(ref: InferenceProviderModelRef | null): {
-    provider: InferenceProvider;
-    model: InferenceModel;
-  } {
-    if (!ref) {
-      throw new Error("No model configured.");
-    }
-
+  private resolveProviderAndModel(
+    providerModelRef: InferenceProviderModelRef,
+  ): { provider: InferenceProvider; model: InferenceModel } {
     const provider = this.settings.providers.find(
-      ({ name }) => name === ref.providerName,
+      ({ name }) => name === providerModelRef.providerName,
     );
     if (!provider) {
-      throw new Error(`Provider "${ref.providerName}" not found in settings.`);
+      throw new Error(
+        `Provider "${providerModelRef.providerName}" not found in settings.`,
+      );
     }
 
-    const model = provider.models.find(({ id }) => id === ref.modelId);
+    const model = provider.models.find(
+      ({ id }) => id === providerModelRef.modelId,
+    );
     if (!model) {
       throw new Error(
-        `Model "${ref.modelId}" not found in provider "${ref.providerName}".`,
+        `Model "${providerModelRef.modelId}" not found in provider "${providerModelRef.providerName}".`,
       );
     }
 

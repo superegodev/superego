@@ -17,14 +17,14 @@ export default abstract class Assistant {
   protected abstract getTools(): InferenceService.Tool[];
   protected abstract processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult>;
   protected abstract getDeveloperPrompt(): string;
   protected abstract getUserContextPrompt(): string;
 
   async generateAndProcessNextMessages(
     messages: Message[],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message[]> {
     try {
       const assistantMessage = await this.inferenceService.generateNextMessage(

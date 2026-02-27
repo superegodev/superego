@@ -45,7 +45,10 @@ type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
 namespace BackgroundJob {
   export type ProcessConversation = BaseBackgroundJob<
     BackgroundJobName.ProcessConversation,
-    { id: ConversationId; inferenceOptions: InferenceOptions }
+    {
+      id: ConversationId;
+      inferenceOptions: InferenceOptions<"completion">;
+    }
   >;
 
   export type DownSyncCollection = BaseBackgroundJob<

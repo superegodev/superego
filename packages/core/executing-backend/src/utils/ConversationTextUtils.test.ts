@@ -80,10 +80,14 @@ describe("extractTextChunks", () => {
             { type: MessageContentPartType.Text, text: "Response 2" },
           ],
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
           createdAt: new Date(),
         },
@@ -100,10 +104,14 @@ describe("extractTextChunks", () => {
           role: MessageRole.Assistant,
           toolCalls: [{ id: "call-1", tool: "someTool", input: {} }],
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
           createdAt: new Date(),
         },
@@ -175,10 +183,14 @@ describe("extractTextChunks", () => {
             { type: MessageContentPartType.Text, text: "Assistant reply" },
           ],
           inferenceOptions: {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
             },
+            transcription: null,
+            fileInspection: null,
           },
           createdAt: new Date(),
         },

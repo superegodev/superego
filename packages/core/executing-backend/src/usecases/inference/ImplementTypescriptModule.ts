@@ -38,7 +38,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       startingPoint,
       userRequest,
     }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
     const globalSettings = await this.repos.globalSettings.get();
 
@@ -70,7 +70,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
 
   private async attemptImplementation(
     inferenceService: InferenceService,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
     description: string,
     rules: string | null,
     additionalInstructions: string | null,

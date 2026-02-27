@@ -1,4 +1,4 @@
-import type { InferenceOptions, InferenceSettings } from "@superego/backend";
+import type { InferenceSettings } from "@superego/backend";
 import { InferenceProviderDriver } from "@superego/backend";
 import { expect, it } from "vitest";
 import validateInferenceOptions from "./validateInferenceOptions.js";
@@ -32,13 +32,17 @@ const inferenceSettings: InferenceSettings = {
   },
 };
 
-it("returns error when provider is not found", () => {
+it("returns error when completion provider is not found", () => {
   // Exercise
-  const inferenceOptions: InferenceOptions = {
-    providerModelRef: {
-      providerName: "unknown",
-      modelId: "openai/gpt-oss-120b",
+  const inferenceOptions = {
+    completion: {
+      providerModelRef: {
+        providerName: "unknown",
+        modelId: "openai/gpt-oss-120b",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
   const result = validateInferenceOptions(inferenceOptions, inferenceSettings);
 
@@ -49,17 +53,25 @@ it("returns error when provider is not found", () => {
       issues: [
         {
           message: 'Provider "unknown" not found',
-          path: [{ key: "providerModelRef" }, { key: "providerName" }],
+          path: [
+            { key: "completion" },
+            { key: "providerModelRef" },
+            { key: "providerName" },
+          ],
         },
       ],
     },
   });
 });
 
-it("returns error when model is not found", () => {
+it("returns error when completion model is not found", () => {
   // Exercise
-  const inferenceOptions: InferenceOptions = {
-    providerModelRef: { providerName: "openrouter", modelId: "unknown" },
+  const inferenceOptions = {
+    completion: {
+      providerModelRef: { providerName: "openrouter", modelId: "unknown" },
+    },
+    transcription: null,
+    fileInspection: null,
   };
   const result = validateInferenceOptions(inferenceOptions, inferenceSettings);
 
@@ -70,7 +82,11 @@ it("returns error when model is not found", () => {
       issues: [
         {
           message: 'Model "unknown" not found in provider "openrouter"',
-          path: [{ key: "providerModelRef" }, { key: "modelId" }],
+          path: [
+            { key: "completion" },
+            { key: "providerModelRef" },
+            { key: "modelId" },
+          ],
         },
       ],
     },
@@ -79,14 +95,65 @@ it("returns error when model is not found", () => {
 
 it("returns null when inference options are valid", () => {
   // Exercise
-  const inferenceOptions: InferenceOptions = {
-    providerModelRef: {
-      providerName: "openrouter",
-      modelId: "openai/gpt-oss-120b",
+  const inferenceOptions = {
+    completion: {
+      providerModelRef: {
+        providerName: "openrouter",
+        modelId: "openai/gpt-oss-120b",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
   const result = validateInferenceOptions(inferenceOptions, inferenceSettings);
 
   // Verify
   expect(result).toBeNull();
+});
+
+it("returns null when all fields are null", () => {
+  // Exercise
+  const inferenceOptions = {
+    completion: null,
+    transcription: null,
+    fileInspection: null,
+  };
+  const result = validateInferenceOptions(inferenceOptions, inferenceSettings);
+
+  // Verify
+  expect(result).toBeNull();
+});
+
+it("validates multiple non-null fields", () => {
+  // Exercise
+  const inferenceOptions = {
+    completion: {
+      providerModelRef: {
+        providerName: "openrouter",
+        modelId: "openai/gpt-oss-120b",
+      },
+    },
+    transcription: {
+      providerModelRef: { providerName: "unknown", modelId: "some-model" },
+    },
+    fileInspection: null,
+  };
+  const result = validateInferenceOptions(inferenceOptions, inferenceSettings);
+
+  // Verify
+  expect(result).toEqual({
+    name: "InferenceOptionsNotValid",
+    details: {
+      issues: [
+        {
+          message: 'Provider "unknown" not found',
+          path: [
+            { key: "transcription" },
+            { key: "providerModelRef" },
+            { key: "providerName" },
+          ],
+        },
+      ],
+    },
+  });
 });

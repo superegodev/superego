@@ -75,8 +75,12 @@ const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
   {
-    providerModelRef:
-      makeInferenceSettings(evaluatorModel).defaults.completion!,
+    completion: {
+      providerModelRef:
+        makeInferenceSettings(evaluatorModel).defaults.completion!,
+    },
+    transcription: null,
+    fileInspection: null,
   },
 );
 
@@ -140,7 +144,11 @@ describe.concurrent.each(
     );
 
     const inferenceOptions = {
-      providerModelRef: makeInferenceSettings(model).defaults.completion!,
+      completion: {
+        providerModelRef: makeInferenceSettings(model).defaults.completion!,
+      },
+      transcription: null,
+      fileInspection: null,
     };
 
     return { backend, booleanOracle: evaluator, inferenceOptions };

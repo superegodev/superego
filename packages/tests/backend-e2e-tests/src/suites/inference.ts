@@ -11,10 +11,14 @@ import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Inference", (deps) => {
   const validInferenceOptions = {
-    providerModelRef: {
-      providerName: "providerName",
-      modelId: "modelId",
+    completion: {
+      providerModelRef: {
+        providerName: "providerName",
+        modelId: "modelId",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
 
   const inferenceSettings = {
@@ -47,10 +51,14 @@ export default rd<GetDependencies>("Inference", (deps) => {
   };
 
   const invalidInferenceOptions = {
-    providerModelRef: {
-      providerName: "unknownProvider",
-      modelId: "unknownModel",
+    completion: {
+      providerModelRef: {
+        providerName: "unknownProvider",
+        modelId: "unknownModel",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
 
   describe("stt", () => {

@@ -26,10 +26,13 @@ interface InferenceService {
   generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
 
-  stt(audio: AudioContent, inferenceOptions: InferenceOptions): Promise<string>;
+  stt(
+    audio: AudioContent,
+    inferenceOptions: InferenceOptions<"transcription">,
+  ): Promise<string>;
 
   inspectFile(
     file: {
@@ -38,7 +41,7 @@ interface InferenceService {
       content: Uint8Array<ArrayBuffer>;
     },
     prompt: string,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<string>;
 }
 

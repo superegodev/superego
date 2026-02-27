@@ -130,14 +130,15 @@ export default class FactotumAssistant extends Assistant {
       CreateGeoJSONMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
-      // TODO_AI: this should be passed only if there's support
+      // TODO_AI: pass inferenceOptions to getTools and pass this tool only if
+      // inferenceOptions.fileInspection
       InspectFile.get(),
     ];
   }
 
   protected async processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
@@ -198,13 +199,12 @@ export default class FactotumAssistant extends Assistant {
     if (SearchDocuments.is(toolCall)) {
       return SearchDocuments.exec(toolCall, this.usecases.documentsSearch);
     }
-    if (InspectFile.is(toolCall)) {
+    if (InspectFile.is(toolCall) && inferenceOptions.fileInspection) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
-        // TODO_AI: pass in either this or the default fileInspection options
-        inferenceOptions,
+        inferenceOptions as InferenceOptions<"completion" | "fileInspection">,
       );
     }
     return Unknown.exec(toolCall);

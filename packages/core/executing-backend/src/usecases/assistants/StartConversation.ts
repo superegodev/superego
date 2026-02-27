@@ -38,7 +38,7 @@ export default class AssistantsStartConversation extends Usecase<
   async exec(
     assistant: AssistantName,
     userMessageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
     FilesNotFound | InferenceOptionsNotValid | UnexpectedError

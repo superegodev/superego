@@ -9,7 +9,7 @@ import type InferenceService from "../requirements/InferenceService.js";
 export default async function generateTitle(
   inferenceService: InferenceService,
   message: Message.User,
-  inferenceOptions: InferenceOptions,
+  inferenceOptions: InferenceOptions<"completion">,
 ): Promise<string | null> {
   try {
     const assistantMessage = await inferenceService.generateNextMessage(

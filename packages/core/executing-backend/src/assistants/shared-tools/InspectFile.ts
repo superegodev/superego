@@ -22,7 +22,7 @@ export default {
     toolCall: ToolCall.InspectFile,
     inferenceService: InferenceService,
     filesGetContent: FilesGetContent,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<ToolResult.InspectFile> {
     const { file, prompt } = toolCall.input;
 

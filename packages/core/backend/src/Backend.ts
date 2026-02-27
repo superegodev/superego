@@ -428,7 +428,7 @@ export default interface Backend {
     startConversation(
       assistant: AssistantName,
       userMessageContent: Message.User["content"],
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
       FilesNotFound | InferenceOptionsNotValid | UnexpectedError
@@ -437,7 +437,7 @@ export default interface Backend {
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
       | ConversationNotFound
@@ -449,7 +449,7 @@ export default interface Backend {
 
     retryLastResponse(
       id: ConversationId,
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
       | ConversationNotFound
@@ -460,7 +460,7 @@ export default interface Backend {
 
     recoverConversation(
       id: ConversationId,
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
       | ConversationNotFound
@@ -494,7 +494,7 @@ export default interface Backend {
   inference: {
     stt(
       audio: AudioContent,
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"transcription">,
     ): ResultPromise<string, InferenceOptionsNotValid | UnexpectedError>;
 
     implementTypescriptModule(
@@ -507,7 +507,7 @@ export default interface Backend {
         startingPoint: TypescriptFile;
         userRequest: string;
       },
-      inferenceOptions: InferenceOptions,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       TypescriptModule,
       | InferenceOptionsNotValid

@@ -16,10 +16,14 @@ import waitForConversationProcessing from "../utils/waitForConversationProcessin
 
 export default rd<GetDependencies>("Assistants", (deps) => {
   const validInferenceOptions = {
-    providerModelRef: {
-      providerName: "providerName",
-      modelId: "modelId",
+    completion: {
+      providerModelRef: {
+        providerName: "providerName",
+        modelId: "modelId",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
 
   const inferenceSettings = {
@@ -52,10 +56,14 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   };
 
   const invalidInferenceOptions = {
-    providerModelRef: {
-      providerName: "unknownProvider",
-      modelId: "unknownModel",
+    completion: {
+      providerModelRef: {
+        providerName: "unknownProvider",
+        modelId: "unknownModel",
+      },
     },
+    transcription: null,
+    fileInspection: null,
   };
 
   describe("startConversation", () => {
@@ -1135,12 +1143,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
               text: "uniquekeyword alpha",
             },
           ],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult.success);
       await waitForConversationProcessing(
@@ -1172,12 +1175,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "commonterm first" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
@@ -1188,12 +1186,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "commonterm second" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
@@ -1222,12 +1215,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "matchingterm here" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
@@ -1238,12 +1226,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "different content" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
@@ -1272,12 +1255,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "limitterm one" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult1.success);
       await waitForConversationProcessing(
@@ -1288,12 +1266,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "limitterm two" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult2.success);
       await waitForConversationProcessing(
@@ -1304,12 +1277,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         await backend.assistants.startConversation(
           AssistantName.Factotum,
           [{ type: MessageContentPartType.Text, text: "limitterm three" }],
-          {
-            providerModelRef: {
-              providerName: "providerName",
-              modelId: "modelId",
-            },
-          },
+          validInferenceOptions,
         );
       assert.isTrue(startConversationResult3.success);
       await waitForConversationProcessing(

@@ -16,7 +16,7 @@ import validateInferenceOptions from "../../validators/validateInferenceOptions.
 export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
   async exec(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"transcription">,
   ): ResultPromise<string, InferenceOptionsNotValid | UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
 
