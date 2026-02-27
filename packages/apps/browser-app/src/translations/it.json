@@ -1,7 +1,4 @@
 {
-  "AddFilesButton.tsx_kNl1RN": {
-    "defaultMessage": "Configura l'assistente"
-  },
   "AddFilesButton.tsx_sXiGbo": {
     "defaultMessage": "Aggiungi file"
   },
@@ -1247,6 +1244,9 @@
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> è stata eliminata.} other {<code>{collectionId}</code> ha una nuova versione.} }"
   },
+  "ResolveIncompatibilityModal.tsx_kAEQyV": {
+    "defaultMessage": "OK"
+  },
   "RestoreVersionModal.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
@@ -1511,7 +1511,7 @@
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Invia messaggio all'assistente"
   },
-  "UserMessageContentInput.tsx_rhSI1/": {
+  "InferenceOptionsInput.tsx_rhSI1/": {
     "defaultMessage": "Modello"
   },
   "UserMessageContentInput.tsx_yvK6cX": {

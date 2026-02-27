@@ -23,7 +23,7 @@ class FactotumObject {
   constructor(
     private backend: Backend,
     private evaluator: Evaluator,
-    private inferenceOptions: InferenceOptions,
+    private inferenceOptions: InferenceOptions<"completion">,
   ) {}
 
   /////////////////////////////////////

@@ -24,6 +24,7 @@ interface UseSttAndImplement {
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => ResultPromise<
     TypescriptModule,
     | InferenceOptionsNotValid
@@ -36,7 +37,6 @@ export default function useSttAndImplement(
   targetCollections: Collection[],
   mainTsx: TypescriptModule,
   typescriptLibs: TypescriptFile[],
-  inferenceOptions: InferenceOptions,
 ): UseSttAndImplement {
   const { isPending: isSttPending, mutate: stt } = useStt();
   const {
@@ -50,6 +50,7 @@ export default function useSttAndImplement(
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     TypescriptModule,
     | InferenceOptionsNotValid
@@ -61,7 +62,12 @@ export default function useSttAndImplement(
 
     let userRequest: string;
     if (part.type === MessageContentPartType.Audio) {
-      const sttResult = await stt(part.audio, inferenceOptions);
+      const sttResult = await stt(
+        part.audio,
+        // Message content can contain an audio part only when
+        // inferenceOptions.transcription is not null.
+        inferenceOptions as InferenceOptions<"transcription">,
+      );
       if (!sttResult.success) {
         return sttResult;
       }

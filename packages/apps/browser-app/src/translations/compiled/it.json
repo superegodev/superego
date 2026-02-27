@@ -1,10 +1,4 @@
 {
-  "AddFilesButton.tsx_kNl1RN": [
-    {
-      "type": 0,
-      "value": "Configura l'assistente"
-    }
-  ],
   "AddFilesButton.tsx_sXiGbo": [
     {
       "type": 0,
@@ -2158,6 +2152,12 @@
       "value": "Avviso di incompatibilità"
     }
   ],
+  "InferenceOptionsInput.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Modello"
+    }
+  ],
   "InferenceSettings.tsx_+goFsL": [
     {
       "type": 0,
@@ -3598,6 +3598,12 @@
       "value": "type"
     }
   ],
+  "ResolveIncompatibilityModal.tsx_kAEQyV": [
+    {
+      "type": 0,
+      "value": "OK"
+    }
+  ],
   "RestoreVersionModal.tsx_47FYwb": [
     {
       "type": 0,
@@ -4300,12 +4306,6 @@
     {
       "type": 0,
       "value": "Invia messaggio all'assistente"
-    }
-  ],
-  "UserMessageContentInput.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Modello"
     }
   ],
   "UserMessageContentInput.tsx_yvK6cX": [

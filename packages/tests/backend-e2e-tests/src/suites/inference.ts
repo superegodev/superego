@@ -17,7 +17,12 @@ export default rd<GetDependencies>("Inference", (deps) => {
         modelId: "modelId",
       },
     },
-    transcription: null,
+    transcription: {
+      providerModelRef: {
+        providerName: "providerName",
+        modelId: "modelId",
+      },
+    },
     fileInspection: null,
   };
 
@@ -57,7 +62,12 @@ export default rd<GetDependencies>("Inference", (deps) => {
         modelId: "unknownModel",
       },
     },
-    transcription: null,
+    transcription: {
+      providerModelRef: {
+        providerName: "unknownProvider",
+        modelId: "unknownModel",
+      },
+    },
     fileInspection: null,
   };
 

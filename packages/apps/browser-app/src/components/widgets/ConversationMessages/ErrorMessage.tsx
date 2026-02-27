@@ -1,8 +1,12 @@
-import type { Conversation, ConversationStatus } from "@superego/backend";
+import type {
+  Conversation,
+  ConversationStatus,
+  InferenceOptions,
+} from "@superego/backend";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
@@ -14,28 +18,31 @@ interface Props {
 export default function ErrorMessage({ conversation }: Props) {
   const intl = useIntl();
 
-  const { inference } = useGlobalData().globalSettings;
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { mutate } = useRecoverConversation();
   const { cause } = conversation.error.details;
-  // TODO_AI:
-  // - default to the same model that was used, not to the default model
-  // - allow to choose a different model to recover the conversation
   return (
     <div className={cs.ErrorMessage.root}>
       <div className={cs.ErrorMessage.message}>
         <FormattedMessage defaultMessage="The assistant encountered an error." />
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Retry" })}
-          variant="invisible"
-          onPress={() =>
-            mutate(conversation.id, {
-              providerModelRef: inference.defaults.completion!,
-            })
-          }
-          className={cs.ErrorMessage.retryButton}
-        >
-          <PiArrowCounterClockwiseBold />
-        </IconButton>
+        {defaultInferenceOptions.completion ? (
+          <IconButton
+            label={intl.formatMessage({ defaultMessage: "Retry" })}
+            variant="invisible"
+            onPress={() =>
+              mutate(
+                conversation.id,
+                // TypeScript doesn't understand, but since we're in the branch
+                // defaultInferenceOptions.completion !== null, this cast is
+                // safe.
+                defaultInferenceOptions as InferenceOptions<"completion">,
+              )
+            }
+            className={cs.ErrorMessage.retryButton}
+          >
+            <PiArrowCounterClockwiseBold />
+          </IconButton>
+        ) : null}
       </div>
       <Disclosure
         title={intl.formatMessage({ defaultMessage: "Details" })}

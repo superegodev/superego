@@ -8,7 +8,7 @@ import { InferenceService } from "@superego/executing-backend";
 export default class Evaluator {
   constructor(
     private inferenceService: InferenceService,
-    private inferenceOptions: InferenceOptions,
+    private inferenceOptions: InferenceOptions<"completion">,
   ) {}
 
   async score(

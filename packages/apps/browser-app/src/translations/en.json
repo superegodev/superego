@@ -1,7 +1,4 @@
 {
-  "AddFilesButton.tsx_kNl1RN": {
-    "defaultMessage": "Configure assistant"
-  },
   "AddFilesButton.tsx_sXiGbo": {
     "defaultMessage": "Add file"
   },
@@ -926,6 +923,9 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Incompatibility warning"
   },
+  "InferenceOptionsInput.tsx_rhSI1/": {
+    "defaultMessage": "Model"
+  },
   "InferenceSettings.tsx_+goFsL": {
     "defaultMessage": "Add provider"
   },
@@ -1247,6 +1247,9 @@
   "ResolveIncompatibilityModal.tsx_Gf4r/F": {
     "defaultMessage": "{type, select, WasDeleted {<code>{collectionId}</code> was deleted.} other {<code>{collectionId}</code> has a new version.} }"
   },
+  "ResolveIncompatibilityModal.tsx_kAEQyV": {
+    "defaultMessage": "OK"
+  },
   "RestoreVersionModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
@@ -1510,9 +1513,6 @@
   },
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Message assistant"
-  },
-  "UserMessageContentInput.tsx_rhSI1/": {
-    "defaultMessage": "Model"
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."

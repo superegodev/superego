@@ -1,4 +1,5 @@
 import type {
+  InferenceOptions,
   Message,
   MessageContentPart,
   NonEmptyArray,
@@ -7,7 +8,6 @@ import type {
 import { useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
-import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import useUndoRedo from "../CodeInput/common-hooks/useUndoRedo.js";
@@ -31,7 +31,6 @@ export default function EagerRHFAppVersionFilesField({
   targetCollections,
 }: Props) {
   const intl = useIntl();
-  const { inference } = useGlobalData().globalSettings;
 
   const [activeView, setActiveView] = useState(View.Preview);
 
@@ -45,17 +44,18 @@ export default function EagerRHFAppVersionFilesField({
     targetCollections,
     mainTsx,
     typescriptLibs,
-    // TODO_AI: utility function that either gets the default or the first
-    // suitable model
-    { providerModelRef: inference.defaults.completion! },
   );
 
-  const onSend = async (messageContent: Message.User["content"]) => {
+  const onSend = async (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => {
     const { success, data, error } = await mutate(
       // There aren't File parts since allowFileParts is set to false.
       messageContent as NonEmptyArray<
         MessageContentPart.Text | MessageContentPart.Audio
       >,
+      inferenceOptions,
     );
     if (success) {
       field.onChange(data);

@@ -24,7 +24,7 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (
     userMessageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => {
     const { success, data } = await mutate(
       AssistantName.CollectionCreator,

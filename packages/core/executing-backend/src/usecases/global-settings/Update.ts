@@ -18,6 +18,7 @@ export default class GlobalSettingsUpdate extends Usecase<
       ...globalSettings,
       ...globalSettingsPatch,
     };
+    // TODO_AI: validate
     await this.repos.globalSettings.replace(updatedGlobalSettings);
     return makeSuccessfulResult(updatedGlobalSettings);
   }

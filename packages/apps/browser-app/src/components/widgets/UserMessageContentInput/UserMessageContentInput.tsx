@@ -8,13 +8,14 @@ import {
 import { type RefObject, useRef, useState } from "react";
 import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
-import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import getIsInferenceConfigured from "../../../business-logic/inference/getIsInferenceConfigured.js";
+import mergeInferenceOptions from "../../../business-logic/inference/mergeInferenceOptions.js";
+import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import classnames from "../../../utils/classnames.js";
 import AddFilesButton from "./AddFilesButton.js";
 import FilesTray from "./FilesTray.js";
-import getDefaultInferenceOptions from "./getDefaultInferenceOptions.js";
 import InferenceOptionsInput from "./InferenceOptionsInput.js";
 import SendRecordButtons from "./SendRecordButtons.js";
 import * as cs from "./UserMessageContentInput.css.js";
@@ -25,7 +26,7 @@ interface Props {
   conversation: Conversation | null;
   onSend: (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => void;
   isSending: boolean;
   initialMessage?: string | undefined;
@@ -45,27 +46,33 @@ export default function UserMessageContentInput({
   autoFocus,
   allowFileParts = true,
   ref,
-  textAreaRef,
+  textAreaRef: externalTextAreaRef,
   className,
 }: Props) {
   const intl = useIntl();
 
   // We define an internal ref in case one is not provided from outside.
   const internalTextAreaRef = useRef<HTMLTextAreaElement>(null);
-  const actualTextAreaRef = textAreaRef ?? internalTextAreaRef;
+  const textAreaRef = externalTextAreaRef ?? internalTextAreaRef;
 
-  const { inference } = useGlobalData().globalSettings;
+  const { globalSettings } = useGlobalData();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
+  const [customInferenceOptions, setCustomInferenceOptions] =
+    useState<InferenceOptions<"completion"> | null>(null);
+  const inferenceOptions = mergeInferenceOptions(
+    defaultInferenceOptions,
+    customInferenceOptions,
+  );
 
-  const isInferenceConfigured = useIsInferenceConfigured();
-  const isDisabled =
+  const isInferenceConfigured = getIsInferenceConfigured(
+    defaultInferenceOptions,
+  );
+  const globalIsDisabled =
     (conversation !== null &&
       (conversation.hasOutdatedContext ||
         conversation?.status !== ConversationStatus.Idle)) ||
     isSending ||
     !isInferenceConfigured.completion;
-
-  const [inferenceOptions, setInferenceOptions] =
-    useState<InferenceOptions | null>(getDefaultInferenceOptions(inference));
 
   const {
     files,
@@ -75,7 +82,7 @@ export default function UserMessageContentInput({
     onRemoveFile,
     removeAllFiles,
     getContentParts,
-  } = useFiles(allowFileParts && isInferenceConfigured.completion);
+  } = useFiles(allowFileParts && !globalIsDisabled);
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
@@ -84,7 +91,9 @@ export default function UserMessageContentInput({
         { type: MessageContentPartType.Text, text: text },
         ...(await getContentParts()),
       ],
-      inferenceOptions!,
+      // sendText can be invoked only when inferenceOptions.completion is not
+      // null.
+      inferenceOptions as InferenceOptions<"completion">,
     );
     setText("");
     removeAllFiles();
@@ -97,25 +106,27 @@ export default function UserMessageContentInput({
           { type: MessageContentPartType.Audio, audio: audio },
           ...(await getContentParts()),
         ],
-        inferenceOptions!,
+        // This callback can be invoked only when inferenceOptions.completion
+        // and inferenceOptions.transcription are not null.
+        inferenceOptions as InferenceOptions<"completion" | "transcription">,
       );
       removeAllFiles();
     });
 
   // Auto-resize textarea.
-  useAutoResizeTextArea(actualTextAreaRef, text);
+  useAutoResizeTextArea(textAreaRef, text);
 
   return (
     <DropZone
       ref={ref}
       onDrop={onDrop}
-      isDisabled={isDisabled || isRecording}
+      isDisabled={globalIsDisabled || isRecording}
       className={classnames(cs.UserMessageContentInput.root, className)}
     >
       <FilesTray
         files={files}
         onRemoveFile={onRemoveFile}
-        isRemoveDisabled={isDisabled || isRecording}
+        isRemoveDisabled={globalIsDisabled || isRecording}
       />
       <TextField
         className={cs.UserMessageContentInput.textField}
@@ -123,7 +134,7 @@ export default function UserMessageContentInput({
         value={text}
         aria-label={intl.formatMessage({ defaultMessage: "Message assistant" })}
         autoFocus={autoFocus}
-        isDisabled={isDisabled || isRecording}
+        isDisabled={globalIsDisabled || isRecording}
         onPaste={onPaste}
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
@@ -135,6 +146,7 @@ export default function UserMessageContentInput({
         }}
       >
         <TextArea
+          ref={textAreaRef}
           rows={1}
           placeholder={
             conversation?.hasOutdatedContext
@@ -149,7 +161,6 @@ export default function UserMessageContentInput({
                   })
           }
           className={cs.UserMessageContentInput.textArea}
-          ref={actualTextAreaRef}
         />
       </TextField>
       <div className={cs.UserMessageContentInput.actionsToolbar}>
@@ -157,22 +168,22 @@ export default function UserMessageContentInput({
           {allowFileParts ? (
             <AddFilesButton
               onFilesAdded={onFilesAdded}
-              isDisabled={isDisabled || isRecording}
-              isCompletionConfigured={isInferenceConfigured.completion}
+              isDisabled={globalIsDisabled || isRecording}
             />
           ) : null}
           <InferenceOptionsInput
-            inference={inference}
-            value={inferenceOptions}
-            onChange={setInferenceOptions}
-            isDisabled={isDisabled || isRecording}
+            inferenceSettings={globalSettings.inference}
+            defaultInferenceOptions={defaultInferenceOptions}
+            value={customInferenceOptions}
+            onChange={setCustomInferenceOptions}
+            isDisabled={globalIsDisabled || isRecording}
           />
         </div>
         <SendRecordButtons
           isCompletionConfigured={isInferenceConfigured.completion}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
-          isDisabled={isDisabled}
+          isDisabled={globalIsDisabled}
           onSend={sendText}
           onStartRecording={startRecording}
           onCancelRecording={cancelRecording}

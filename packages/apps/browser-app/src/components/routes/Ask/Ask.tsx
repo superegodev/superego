@@ -22,7 +22,7 @@ export default function Ask() {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (
     userMessageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => {
     const { success, data } = await mutate(
       AssistantName.Factotum,

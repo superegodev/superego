@@ -1,8 +1,12 @@
-import type { Conversation, Message } from "@superego/backend";
+import type {
+  Conversation,
+  InferenceOptions,
+  Message,
+} from "@superego/backend";
 import { PiArrowsClockwise } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
 import last from "../../../../utils/last.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
 
@@ -18,14 +22,12 @@ export default function RetryButton({
 }: Props) {
   const intl = useIntl();
 
-  const { inference } = useGlobalData().globalSettings;
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useRetryLastResponse();
 
-  // TODO_AI:
-  // - default to the same model that was used, not to the default model
-  // - allow to choose a different model to retry the conversation
   return conversation.canRetryLastResponse &&
-    message === last(conversation.messages) ? (
+    message === last(conversation.messages) &&
+    defaultInferenceOptions.completion ? (
     <IconButton
       variant="invisible"
       label={
@@ -34,9 +36,12 @@ export default function RetryButton({
           : intl.formatMessage({ defaultMessage: "Retry response" })
       }
       onPress={() =>
-        mutate(conversation.id, {
-          providerModelRef: inference.defaults.completion!,
-        })
+        mutate(
+          conversation.id,
+          // TypeScript doesn't understand, but since we're in the branch
+          // defaultInferenceOptions.completion !== null, this cast is safe.
+          defaultInferenceOptions as InferenceOptions<"completion">,
+        )
       }
       className={className}
     >

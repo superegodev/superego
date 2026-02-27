@@ -1,10 +1,13 @@
-import type { TypescriptFile, TypescriptModule } from "@superego/backend";
+import type {
+  InferenceOptions,
+  TypescriptFile,
+  TypescriptModule,
+} from "@superego/backend";
 import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
-import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import type monaco from "../../../../monaco.js";
@@ -35,10 +38,9 @@ export default function ImplementWithAssistantButton({
   onImplemented,
 }: Props) {
   const intl = useIntl();
-  const { inference } = useGlobalData().globalSettings;
-  const { completion } = useIsInferenceConfigured();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useImplementTypescriptModule();
-  return completion && assistantImplementation ? (
+  return defaultInferenceOptions.completion && assistantImplementation ? (
     <>
       <IconButton
         variant="primary"
@@ -64,9 +66,9 @@ export default function ImplementWithAssistantButton({
               },
               userRequest: assistantImplementation.userRequest,
             },
-            // TODO_AI: utility function that uses default or first suitable
-            // model.
-            { providerModelRef: inference.defaults.completion! },
+            // TypeScript doesn't understand, but since we're in the branch
+            // defaultInferenceOptions.completion !== null, this cast is safe.
+            defaultInferenceOptions as InferenceOptions<"completion">,
           );
           if (result.success) {
             onImplemented(result.data);

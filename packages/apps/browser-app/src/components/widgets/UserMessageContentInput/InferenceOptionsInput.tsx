@@ -5,6 +5,7 @@ import type {
 } from "@superego/backend";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
+import isEmpty from "../../../utils/isEmpty.js";
 import {
   type Option,
   Select,
@@ -13,14 +14,18 @@ import {
 } from "../../design-system/forms/forms.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
+// TODO_AI: for now the component only has the model selector. Refactor once more
+// options are supported.
 interface Props {
-  inference: InferenceSettings;
-  value: InferenceOptions | null;
-  onChange: (value: InferenceOptions) => void;
+  inferenceSettings: InferenceSettings;
+  defaultInferenceOptions: InferenceOptions;
+  value: InferenceOptions<"completion"> | null;
+  onChange: (value: InferenceOptions<"completion">) => void;
   isDisabled: boolean;
 }
 export default function InferenceOptionsInput({
-  inference,
+  inferenceSettings,
+  defaultInferenceOptions,
   value,
   onChange,
   isDisabled,
@@ -29,10 +34,10 @@ export default function InferenceOptionsInput({
 
   const modelOptions: Option[] = useMemo(() => {
     const options: Option[] = [];
-    for (const provider of inference.providers) {
+    for (const provider of inferenceSettings.providers) {
       for (const model of provider.models) {
         options.push({
-          id: serializeModelRef({
+          id: serializeProviderModelRef({
             providerName: provider.name,
             modelId: model.id,
           }),
@@ -42,21 +47,29 @@ export default function InferenceOptionsInput({
       }
     }
     return options;
-  }, [inference.providers]);
+  }, [inferenceSettings.providers]);
 
-  if (modelOptions.length === 0) {
-    return null;
-  }
+  const selectedOptionId = value?.completion
+    ? serializeProviderModelRef(value.completion.providerModelRef)
+    : defaultInferenceOptions.completion
+      ? serializeProviderModelRef(
+          defaultInferenceOptions.completion.providerModelRef,
+        )
+      : null;
 
-  const selectedKey = value ? serializeModelRef(value.providerModelRef) : null;
-
-  return (
+  return !isEmpty(modelOptions) ? (
     <Select
       aria-label={intl.formatMessage({ defaultMessage: "Model" })}
-      value={selectedKey}
-      onChange={(key) => {
-        if (key) {
-          onChange({ providerModelRef: deserializeModelRef(key as string) });
+      value={selectedOptionId}
+      onChange={(optionId) => {
+        if (optionId) {
+          onChange({
+            completion: {
+              providerModelRef: deserializeProviderModelRef(optionId as string),
+            },
+            transcription: value?.transcription ?? null,
+            fileInspection: value?.fileInspection ?? null,
+          });
         }
       }}
       isDisabled={isDisabled}
@@ -66,17 +79,17 @@ export default function InferenceOptionsInput({
       />
       <SelectOptions options={modelOptions} matchTriggerWidth={false} />
     </Select>
-  );
+  ) : null;
 }
 
-function serializeModelRef(ref: InferenceProviderModelRef): string {
-  return `${ref.modelId}@${ref.providerName}`;
+function serializeProviderModelRef(
+  providerModelRef: InferenceProviderModelRef,
+): string {
+  return JSON.stringify(providerModelRef);
 }
 
-function deserializeModelRef(id: string): InferenceProviderModelRef {
-  const atIndex = id.lastIndexOf("@");
-  return {
-    modelId: id.slice(0, atIndex),
-    providerName: id.slice(atIndex + 1),
-  };
+function deserializeProviderModelRef(
+  optionId: string,
+): InferenceProviderModelRef {
+  return JSON.parse(optionId);
 }

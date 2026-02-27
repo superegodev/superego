@@ -4,6 +4,6 @@ import type Evaluator from "./utils/Evaluator.js";
 type GetDependencies = () => {
   backend: Backend;
   booleanOracle: Evaluator;
-  inferenceOptions: InferenceOptions;
+  inferenceOptions: InferenceOptions<"completion">;
 };
 export default GetDependencies;

@@ -63,7 +63,7 @@ export default function Chat({
 
   const onSend = async (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => {
     const { error } = await mutate(
       conversation.id,
