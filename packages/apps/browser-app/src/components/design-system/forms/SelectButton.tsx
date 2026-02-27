@@ -31,7 +31,7 @@ export default function SelectButton({
             )
           }
         </SelectValue>
-        <div className={cs.SelectButton.clearButtonStub} />
+        {onClear ? <div className={cs.SelectButton.clearButtonStub} /> : null}
         <PiCaretDown aria-hidden="true" />
       </Button>
       {onClear ? (

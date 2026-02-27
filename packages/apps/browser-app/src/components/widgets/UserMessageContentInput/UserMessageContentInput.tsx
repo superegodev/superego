@@ -2,43 +2,25 @@ import {
   type Conversation,
   ConversationStatus,
   type InferenceOptions,
-  type InferenceProviderModelRef,
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
-import { type RefObject, useMemo, useRef, useState } from "react";
+import { type RefObject, useRef, useState } from "react";
 import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
 import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import classnames from "../../../utils/classnames.js";
-import {
-  type Option,
-  Select,
-  SelectButton,
-  SelectOptions,
-} from "../../design-system/forms/forms.js";
 import AddFilesButton from "./AddFilesButton.js";
 import FilesTray from "./FilesTray.js";
+import getDefaultInferenceOptions from "./getDefaultInferenceOptions.js";
+import InferenceOptionsInput from "./InferenceOptionsInput.js";
 import SendRecordButtons from "./SendRecordButtons.js";
 import * as cs from "./UserMessageContentInput.css.js";
 import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
 import useFiles from "./useFiles.js";
 
-function serializeModelRef(ref: InferenceProviderModelRef): string {
-  return `${ref.modelId}@${ref.providerName}`;
-}
-
-function deserializeModelRef(id: string): InferenceProviderModelRef {
-  const atIndex = id.lastIndexOf("@");
-  return {
-    modelId: id.slice(0, atIndex),
-    providerName: id.slice(atIndex + 1),
-  };
-}
-
-// TODO_AI: review and refactor
 interface Props {
   conversation: Conversation | null;
   onSend: (
@@ -82,34 +64,8 @@ export default function UserMessageContentInput({
     isSending ||
     !isInferenceConfigured.completion;
 
-  const modelOptions: Option[] = useMemo(() => {
-    const options: Option[] = [];
-    for (const provider of inference.providers) {
-      for (const model of provider.models) {
-        options.push({
-          id: serializeModelRef({
-            providerName: provider.name,
-            modelId: model.id,
-          }),
-          label: `${model.name || model.id} (${provider.name})`,
-        });
-      }
-    }
-    return options;
-  }, [inference.providers]);
-
-  const [selectedModelRefKey, setSelectedModelRefKey] = useState<string | null>(
-    inference.defaults.completion
-      ? serializeModelRef(inference.defaults.completion)
-      : null,
-  );
-
-  const getInferenceOptions = (): InferenceOptions => {
-    const providerModelRef = selectedModelRefKey
-      ? deserializeModelRef(selectedModelRefKey)
-      : inference.defaults.completion!;
-    return { providerModelRef };
-  };
+  const [inferenceOptions, setInferenceOptions] =
+    useState<InferenceOptions | null>(getDefaultInferenceOptions(inference));
 
   const {
     files,
@@ -128,7 +84,7 @@ export default function UserMessageContentInput({
         { type: MessageContentPartType.Text, text: text },
         ...(await getContentParts()),
       ],
-      getInferenceOptions(),
+      inferenceOptions!,
     );
     setText("");
     removeAllFiles();
@@ -141,7 +97,7 @@ export default function UserMessageContentInput({
           { type: MessageContentPartType.Audio, audio: audio },
           ...(await getContentParts()),
         ],
-        getInferenceOptions(),
+        inferenceOptions!,
       );
       removeAllFiles();
     });
@@ -205,18 +161,12 @@ export default function UserMessageContentInput({
               isCompletionConfigured={isInferenceConfigured.completion}
             />
           ) : null}
-          {modelOptions.length > 0 ? (
-            <Select
-              aria-label={intl.formatMessage({ defaultMessage: "Model" })}
-              value={selectedModelRefKey}
-              onChange={(key) => setSelectedModelRefKey(key as string | null)}
-              isDisabled={isDisabled || isRecording}
-              className={cs.UserMessageContentInput.modelSelect}
-            >
-              <SelectButton />
-              <SelectOptions options={modelOptions} />
-            </Select>
-          ) : null}
+          <InferenceOptionsInput
+            inference={inference}
+            value={inferenceOptions}
+            onChange={setInferenceOptions}
+            isDisabled={isDisabled || isRecording}
+          />
         </div>
         <SendRecordButtons
           isCompletionConfigured={isInferenceConfigured.completion}

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { dark, vars } from "../../../themes.css.js";
 
 export const UserMessageContentInput = {
@@ -70,11 +70,32 @@ export const UserMessageContentInput = {
     alignItems: "center",
     gap: vars.spacing._1,
   }),
+};
 
-  modelSelect: style({
+export const InferenceOptionsInput = {
+  selectModelTrigger: style({
     fontSize: vars.typography.fontSizes.sm,
+    height: vars.spacing._9,
+    alignItems: "center",
+    gap: vars.spacing._1,
+    padding: 0,
+    border: 0,
   }),
 };
+
+// Hide dash and description in the SelectButton.
+globalStyle(
+  `${InferenceOptionsInput.selectModelTrigger} > span:first-child > *`,
+  {
+    display: "none",
+  },
+);
+globalStyle(
+  `${InferenceOptionsInput.selectModelTrigger} > span:first-child > div:first-child`,
+  {
+    display: "block",
+  },
+);
 
 export const FilesTray = {
   root: style({
