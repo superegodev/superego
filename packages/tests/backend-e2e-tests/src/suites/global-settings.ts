@@ -1,9 +1,43 @@
-import { Theme } from "@superego/backend";
+import { InferenceProviderDriver, Theme } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Global Settings", (deps) => {
+  const inferenceSettings = {
+    providers: [
+      {
+        name: "providerName",
+        baseUrl: "http://localhost",
+        apiKey: null,
+        driver: InferenceProviderDriver.OpenRouter,
+        models: [
+          {
+            id: "modelId",
+            name: "modelId",
+            capabilities: {
+              reasoning: false,
+              audioUnderstanding: false,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+              webSearching: false,
+            },
+          },
+        ],
+      },
+    ],
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+      },
+      transcription: null,
+      fileInspection: null,
+    },
+  };
+
   describe("get", () => {
     it("success: returns current global settings", async () => {
       // Setup SUT
@@ -24,6 +58,40 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
   });
 
   describe("update", () => {
+    it("error: InferenceOptionsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps({ inferenceSettings });
+
+      // Exercise
+      const result = await backend.globalSettings.update({
+        inference: {
+          ...inferenceSettings,
+          defaultInferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "unknownProvider",
+                modelId: "unknownModel",
+              },
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
+      });
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "InferenceOptionsNotValid",
+          details: {
+            issues: expect.any(Array),
+          },
+        },
+      });
+    });
+
     it("success: updates and persists global settings", async () => {
       // Setup SUT
       const { backend } = deps();

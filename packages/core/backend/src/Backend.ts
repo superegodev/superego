@@ -598,6 +598,9 @@ export default interface Backend {
 
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
-    ): ResultPromise<GlobalSettings, UnexpectedError>;
+    ): ResultPromise<
+      GlobalSettings,
+      InferenceOptionsNotValid | UnexpectedError
+    >;
   };
 }
