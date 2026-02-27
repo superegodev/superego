@@ -6,9 +6,6 @@ import {
 } from "@superego/backend";
 import * as v from "valibot";
 
-// TODO_AI:
-// - move this (and the whole inference?) to shared-utils validation schemas
-// - non-structural validation should be done in the usecase
 const inferenceModelRef = () =>
   v.strictObject({
     providerName: v.string(),

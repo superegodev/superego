@@ -134,6 +134,7 @@ export default class AssistantsProcessConversation extends Usecase {
       const [messages, title] = await Promise.all([
         assistant.generateAndProcessNextMessages(
           transcribedMessages,
+          globalSettings.inference,
           inferenceOptions,
         ),
         conversation.title === null

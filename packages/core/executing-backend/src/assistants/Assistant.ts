@@ -1,5 +1,6 @@
 import {
   type InferenceOptions,
+  type InferenceSettings,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -14,7 +15,10 @@ import isEmpty from "../utils/isEmpty.js";
 
 export default abstract class Assistant {
   protected abstract inferenceService: InferenceService;
-  protected abstract getTools(): InferenceService.Tool[];
+  protected abstract getTools(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): InferenceService.Tool[];
   protected abstract processToolCall(
     toolCall: ToolCall,
     inferenceOptions: InferenceOptions<"completion">,
@@ -24,6 +28,7 @@ export default abstract class Assistant {
 
   async generateAndProcessNextMessages(
     messages: Message[],
+    inferenceSettings: InferenceSettings,
     inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message[]> {
     try {
@@ -53,7 +58,7 @@ export default abstract class Assistant {
               : message,
           ),
         ],
-        this.getTools(),
+        this.getTools(inferenceSettings, inferenceOptions),
         inferenceOptions,
       );
 
@@ -75,6 +80,7 @@ export default abstract class Assistant {
       };
       return this.generateAndProcessNextMessages(
         [...messages, assistantMessage, toolMessage],
+        inferenceSettings,
         inferenceOptions,
       );
     } catch (error) {

@@ -2,12 +2,14 @@ import {
   type Collection,
   type CollectionCategory,
   type InferenceOptions,
+  type InferenceSettings,
   type ToolCall,
   ToolName,
   type ToolResult,
 } from "@superego/backend";
 import { DataType, formats } from "@superego/schema";
 import SchemaTypescriptSchema from "@superego/schema/SchemaTypescriptSchema";
+import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreateMany from "../../usecases/collections/CreateMany.js";
@@ -97,13 +99,21 @@ export default class CollectionCreatorAssistant extends Assistant {
     ].join("\n");
   }
 
-  protected getTools(): InferenceService.Tool[] {
-    return [
+  protected getTools(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions,
+  ): InferenceService.Tool[] {
+    return compact([
       SuggestCollectionsDefinitions.get(),
-      // TODO_AI: pass inferenceOptions to getTools and pass this tool only if
-      // inferenceOptions.fileInspection
-      InspectFile.get(),
-    ];
+      inferenceOptions.fileInspection
+        ? InspectFile.get(
+            inferenceSettings,
+            // TypeScript doesn't understand, but since we're in the branch
+            // inferenceOptions.fileInspection !== null, this cast is safe.
+            inferenceOptions as InferenceOptions<"fileInspection">,
+          )
+        : null,
+    ]);
   }
 
   protected async processToolCall(

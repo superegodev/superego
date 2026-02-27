@@ -14,8 +14,8 @@ import {
 } from "../../design-system/forms/forms.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
-// TODO_AI: for now the component only has the model selector. Refactor once more
-// options are supported.
+// TODO_AI: for now the component only has the model selector. Refactor once
+// more options are supported.
 interface Props {
   inferenceSettings: InferenceSettings;
   defaultInferenceOptions: InferenceOptions;
