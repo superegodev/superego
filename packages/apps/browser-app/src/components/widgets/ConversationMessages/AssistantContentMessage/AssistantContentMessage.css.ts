@@ -32,6 +32,11 @@ export const AssistantContentMessage = {
     height: vars.spacing._4,
     width: vars.borders.width.thin,
     marginInline: vars.spacing._2,
+    selectors: {
+      "&:last-child": {
+        display: "none",
+      },
+    },
   }),
 
   infoAndActionsAction: style({

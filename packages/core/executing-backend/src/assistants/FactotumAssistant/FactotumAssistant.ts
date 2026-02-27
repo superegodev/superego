@@ -124,7 +124,7 @@ export default class FactotumAssistant extends Assistant {
 
   protected getTools(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): InferenceService.Tool[] {
     return compact([
       GetCollectionTypescriptSchema.get(),

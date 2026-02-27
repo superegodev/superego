@@ -13,7 +13,7 @@ import {
   toResponsesRequest,
 } from "./Responses.js";
 
-const inferenceOptions: InferenceOptions = {
+const inferenceOptions: InferenceOptions<"completion"> = {
   completion: {
     providerModelRef: {
       providerName: "providerName",

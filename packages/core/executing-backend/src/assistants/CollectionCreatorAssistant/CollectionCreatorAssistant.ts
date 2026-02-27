@@ -101,7 +101,7 @@ export default class CollectionCreatorAssistant extends Assistant {
 
   protected getTools(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): InferenceService.Tool[] {
     return compact([
       SuggestCollectionsDefinitions.get(),

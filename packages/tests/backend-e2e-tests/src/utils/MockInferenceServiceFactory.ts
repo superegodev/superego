@@ -13,7 +13,7 @@ class MockInferenceService implements InferenceService {
   async generateNextMessage(
     _previousMessages: Message[],
     _tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions,
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ContentAssistant> {
     return {
       role: MessageRole.Assistant,

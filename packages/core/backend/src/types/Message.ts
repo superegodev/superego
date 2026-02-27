@@ -31,13 +31,13 @@ namespace Message {
   export interface ContentAssistant {
     role: MessageRole.Assistant;
     content: NonEmptyArray<MessageContentPart.Text>;
-    inferenceOptions: InferenceOptions;
+    inferenceOptions: InferenceOptions<"completion">;
     createdAt: Date;
   }
   export interface ToolCallAssistant {
     role: MessageRole.Assistant;
     toolCalls: ToolCall[];
-    inferenceOptions: InferenceOptions;
+    inferenceOptions: InferenceOptions<"completion">;
     createdAt: Date;
   }
   export type Assistant = ContentAssistant | ToolCallAssistant;

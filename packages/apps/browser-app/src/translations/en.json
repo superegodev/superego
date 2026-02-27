@@ -1385,8 +1385,8 @@
   "SuggestCollectionsDefinitions.tsx_wNj/kt": {
     "defaultMessage": "Error creating the collections"
   },
-  "ThinkingTime.tsx_uKcW4C": {
-    "defaultMessage": "Thought for {time}"
+  "ThinkingTime.tsx_O5Mn+P": {
+    "defaultMessage": "{model} thought for {time}"
   },
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Milliseconds"

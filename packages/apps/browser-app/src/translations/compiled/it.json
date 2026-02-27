@@ -4008,10 +4008,14 @@
       "value": "Errore durante la creazione delle collezioni"
     }
   ],
-  "ThinkingTime.tsx_uKcW4C": [
+  "ThinkingTime.tsx_O5Mn+P": [
+    {
+      "type": 1,
+      "value": "model"
+    },
     {
       "type": 0,
-      "value": "Riflessione per "
+      "value": " ha riflettuto per "
     },
     {
       "type": 1,

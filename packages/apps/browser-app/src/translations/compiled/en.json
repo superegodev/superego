@@ -4030,10 +4030,14 @@
       "value": "Error creating the collections"
     }
   ],
-  "ThinkingTime.tsx_uKcW4C": [
+  "ThinkingTime.tsx_O5Mn+P": [
+    {
+      "type": 1,
+      "value": "model"
+    },
     {
       "type": 0,
-      "value": "Thought for "
+      "value": " thought for "
     },
     {
       "type": 1,

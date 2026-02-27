@@ -213,7 +213,7 @@ function toResponsesTool(tool: InferenceService.Tool): Responses.Tool {
 
 export function fromResponsesResponse(
   response: Responses.Response,
-  inferenceOptions: InferenceOptions,
+  inferenceOptions: InferenceOptions<"completion">,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const baseMessage = {
     role: MessageRole.Assistant,

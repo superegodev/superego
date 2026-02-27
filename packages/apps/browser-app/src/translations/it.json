@@ -1382,8 +1382,8 @@
   "SuggestCollectionsDefinitions.tsx_wNj/kt": {
     "defaultMessage": "Errore durante la creazione delle collezioni"
   },
-  "ThinkingTime.tsx_uKcW4C": {
-    "defaultMessage": "Riflessione per {time}"
+  "ThinkingTime.tsx_O5Mn+P": {
+    "defaultMessage": "{model} ha riflettuto per {time}"
   },
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Millisecondi"
