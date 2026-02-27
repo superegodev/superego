@@ -17,33 +17,45 @@ export default function useDefaultInferenceOptions(): InferenceOptions {
 }
 
 function getDefaultCompletion(inferenceSettings: InferenceSettings) {
-  const completionRef =
-    inferenceSettings.defaults.completion ??
-    findFirstModel(inferenceSettings.providers, () => true);
-  return completionRef ? { providerModelRef: completionRef } : null;
+  return (
+    inferenceSettings.defaultInferenceOptions.completion ??
+    wrapProviderModelRef(
+      findFirstModel(inferenceSettings.providers, () => true),
+    )
+  );
 }
 
 function getDefaultTranscription(inferenceSettings: InferenceSettings) {
-  const transcriptionRef =
-    inferenceSettings.defaults.transcription ??
-    findFirstModel(
-      inferenceSettings.providers,
-      (model) => model.capabilities.audioUnderstanding,
-    );
-  return transcriptionRef ? { providerModelRef: transcriptionRef } : null;
+  return (
+    inferenceSettings.defaultInferenceOptions.transcription ??
+    wrapProviderModelRef(
+      findFirstModel(
+        inferenceSettings.providers,
+        (model) => model.capabilities.audioUnderstanding,
+      ),
+    )
+  );
 }
 
 function getDefaultFileInspection(inferenceSettings: InferenceSettings) {
-  const fileInspectionRef =
-    inferenceSettings.defaults.fileInspection ??
-    findFirstModel(
-      inferenceSettings.providers,
-      (model) =>
-        model.capabilities.pdfUnderstanding ||
-        model.capabilities.imageUnderstanding ||
-        model.capabilities.audioUnderstanding,
-    );
-  return fileInspectionRef ? { providerModelRef: fileInspectionRef } : null;
+  return (
+    inferenceSettings.defaultInferenceOptions.fileInspection ??
+    wrapProviderModelRef(
+      findFirstModel(
+        inferenceSettings.providers,
+        (model) =>
+          model.capabilities.pdfUnderstanding ||
+          model.capabilities.imageUnderstanding ||
+          model.capabilities.audioUnderstanding,
+      ),
+    )
+  );
+}
+
+function wrapProviderModelRef(
+  providerModelRef: InferenceProviderModelRef | null,
+) {
+  return providerModelRef ? { providerModelRef } : null;
 }
 
 function findFirstModel(

@@ -1068,25 +1068,25 @@
       "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
-  "Defaults.tsx_8KW01q": [
+  "DefaultInferenceOptions.tsx_8KW01q": [
     {
       "type": 0,
       "value": "Completamento"
     }
   ],
-  "Defaults.tsx_CVFhNd": [
+  "DefaultInferenceOptions.tsx_CVFhNd": [
     {
       "type": 0,
       "value": "Ispezione file"
     }
   ],
-  "Defaults.tsx_WXrISI": [
+  "DefaultInferenceOptions.tsx_WXrISI": [
     {
       "type": 0,
       "value": "Trascrizione"
     }
   ],
-  "Defaults.tsx_x6K+Ry": [
+  "DefaultInferenceOptions.tsx_x6K+Ry": [
     {
       "type": 0,
       "value": "Predefiniti"

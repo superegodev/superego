@@ -11,7 +11,7 @@ describe("IndexedDB", () => {
         inference: {
           providers: [],
 
-          defaults: {
+          defaultInferenceOptions: {
             completion: null,
             transcription: null,
             fileInspection: null,
@@ -39,7 +39,7 @@ describe("InMemory", () => {
         inference: {
           providers: [],
 
-          defaults: {
+          defaultInferenceOptions: {
             completion: null,
             transcription: null,
             fileInspection: null,

@@ -64,24 +64,30 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               ],
             },
           ],
-          defaults: {
+          defaultInferenceOptions: {
             completion: {
-              providerName: "superego",
-              modelId: "openai/gpt-oss-120b",
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "openai/gpt-oss-120b",
+              },
             },
             transcription: {
-              providerName: "superego",
-              modelId: "google/gemini-2.5-flash-lite",
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "google/gemini-2.5-flash-lite",
+              },
             },
             fileInspection: {
-              providerName: "superego",
-              modelId: "google/gemini-2.5-flash-lite",
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "google/gemini-2.5-flash-lite",
+              },
             },
           },
         }
       : {
           providers: [],
-          defaults: {
+          defaultInferenceOptions: {
             completion: null,
             transcription: null,
             fileInspection: null,

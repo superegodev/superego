@@ -25,7 +25,7 @@ const inferenceSettings: InferenceSettings = {
       ],
     },
   ],
-  defaults: {
+  defaultInferenceOptions: {
     completion: null,
     transcription: null,
     fileInspection: null,

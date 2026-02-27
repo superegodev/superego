@@ -12,7 +12,7 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       inference: {
         providers: [],
 
-        defaults: {
+        defaultInferenceOptions: {
           completion: null,
           transcription: null,
           fileInspection: null,
@@ -39,7 +39,7 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       inference: {
         providers: [],
 
-        defaults: {
+        defaultInferenceOptions: {
           completion: null,
           transcription: null,
           fileInspection: null,
@@ -78,7 +78,7 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       inference: {
         providers: [],
 
-        defaults: {
+        defaultInferenceOptions: {
           completion: null,
           transcription: null,
           fileInspection: null,

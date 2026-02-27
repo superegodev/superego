@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import formattedMessageHtmlTags from "../../../../utils/formattedMessageHtmlTags.js";
 import Button from "../../../design-system/Button/Button.js";
 import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
-import Defaults from "./Defaults.js";
+import DefaultInferenceOptions from "./DefaultInferenceOptions.js";
 import * as cs from "./InferenceSettings.css.js";
 import Provider from "./Provider.js";
 
@@ -60,7 +60,7 @@ export default function InferenceSettings({ control }: Props) {
           </Button>
         </Fieldset.Fields>
       </Fieldset>
-      <Defaults control={control} />
+      <DefaultInferenceOptions control={control} />
     </>
   );
 }

@@ -29,7 +29,7 @@ function deserializeModelRef(id: string): InferenceProviderModelRef {
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
 }
-export default function Defaults({ control }: Props) {
+export default function DefaultInferenceOptions({ control }: Props) {
   const intl = useIntl();
 
   const watchedProviders = useWatch({ control, name: "inference.providers" });
@@ -54,19 +54,19 @@ export default function Defaults({ control }: Props) {
       <Fieldset.Fields>
         <DefaultModelSelect
           control={control}
-          name="inference.defaults.completion"
+          name="inference.defaultInferenceOptions.completion"
           label={intl.formatMessage({ defaultMessage: "Completion" })}
           modelOptions={modelOptions}
         />
         <DefaultModelSelect
           control={control}
-          name="inference.defaults.transcription"
+          name="inference.defaultInferenceOptions.transcription"
           label={intl.formatMessage({ defaultMessage: "Transcription" })}
           modelOptions={modelOptions}
         />
         <DefaultModelSelect
           control={control}
-          name="inference.defaults.fileInspection"
+          name="inference.defaultInferenceOptions.fileInspection"
           label={intl.formatMessage({ defaultMessage: "File inspection" })}
           modelOptions={modelOptions}
         />
@@ -82,13 +82,15 @@ function DefaultModelSelect({
   modelOptions,
 }: {
   control: Control<GlobalSettings, any, GlobalSettings>;
-  name: `inference.defaults.${"completion" | "transcription" | "fileInspection"}`;
+  name: `inference.defaultInferenceOptions.${"completion" | "transcription" | "fileInspection"}`;
   label: string;
   modelOptions: Option[];
 }) {
   const { field, fieldState } = useController({ control, name });
 
-  const value = field.value ? serializeModelRef(field.value) : null;
+  const value = field.value
+    ? serializeModelRef(field.value.providerModelRef)
+    : null;
 
   return (
     <Select
@@ -96,7 +98,9 @@ function DefaultModelSelect({
       name={field.name}
       value={value}
       onChange={(key) => {
-        field.onChange(key ? deserializeModelRef(key as string) : null);
+        field.onChange(
+          key ? { providerModelRef: deserializeModelRef(key as string) } : null,
+        );
       }}
       validationBehavior="aria"
       isInvalid={fieldState.invalid}

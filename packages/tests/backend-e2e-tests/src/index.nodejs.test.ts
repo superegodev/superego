@@ -47,8 +47,13 @@ const defaultGlobalSettings = {
         ],
       },
     ],
-    defaults: {
-      completion: { providerName: "providerName", modelId: "mock-model" },
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+      },
       transcription: null,
       fileInspection: null,
     },

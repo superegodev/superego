@@ -48,8 +48,13 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         ],
       },
     ],
-    defaults: {
-      completion: { providerName: "providerName", modelId: "modelId" },
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+      },
       transcription: null,
       fileInspection: null,
     },

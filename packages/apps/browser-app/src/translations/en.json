@@ -458,16 +458,16 @@
   "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
     "defaultMessage": "Default document view UI options"
   },
-  "Defaults.tsx_8KW01q": {
+  "DefaultInferenceOptions.tsx_8KW01q": {
     "defaultMessage": "Completion"
   },
-  "Defaults.tsx_CVFhNd": {
+  "DefaultInferenceOptions.tsx_CVFhNd": {
     "defaultMessage": "File inspection"
   },
-  "Defaults.tsx_WXrISI": {
+  "DefaultInferenceOptions.tsx_WXrISI": {
     "defaultMessage": "Transcription"
   },
-  "Defaults.tsx_x6K+Ry": {
+  "DefaultInferenceOptions.tsx_x6K+Ry": {
     "defaultMessage": "Defaults"
   },
   "DeleteAppModalForm.tsx_47FYwb": {

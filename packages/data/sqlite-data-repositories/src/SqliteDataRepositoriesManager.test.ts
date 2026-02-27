@@ -25,7 +25,7 @@ registerDataRepositoriesTests(() => {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: [],
-        defaults: {
+        defaultInferenceOptions: {
           completion: null,
           transcription: null,
           fileInspection: null,

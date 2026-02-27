@@ -926,16 +926,16 @@
   "Capabilities.tsx_xRp25e": {
     "defaultMessage": "Supporta comprensione PDF"
   },
-  "Defaults.tsx_CVFhNd": {
+  "DefaultInferenceOptions.tsx_CVFhNd": {
     "defaultMessage": "Ispezione file"
   },
-  "Defaults.tsx_8KW01q": {
+  "DefaultInferenceOptions.tsx_8KW01q": {
     "defaultMessage": "Completamento"
   },
-  "Defaults.tsx_WXrISI": {
+  "DefaultInferenceOptions.tsx_WXrISI": {
     "defaultMessage": "Trascrizione"
   },
-  "Defaults.tsx_x6K+Ry": {
+  "DefaultInferenceOptions.tsx_x6K+Ry": {
     "defaultMessage": "Predefiniti"
   },
   "InferenceSettings.tsx_+goFsL": {

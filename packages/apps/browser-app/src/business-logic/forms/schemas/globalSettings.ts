@@ -45,10 +45,16 @@ export default function globalSettings(): v.GenericSchema<
           ),
         }),
       ),
-      defaults: v.strictObject({
-        completion: v.nullable(inferenceModelRef()),
-        transcription: v.nullable(inferenceModelRef()),
-        fileInspection: v.nullable(inferenceModelRef()),
+      defaultInferenceOptions: v.strictObject({
+        completion: v.nullable(
+          v.strictObject({ providerModelRef: inferenceModelRef() }),
+        ),
+        transcription: v.nullable(
+          v.strictObject({ providerModelRef: inferenceModelRef() }),
+        ),
+        fileInspection: v.nullable(
+          v.strictObject({ providerModelRef: inferenceModelRef() }),
+        ),
       }),
     }),
     assistants: v.strictObject({

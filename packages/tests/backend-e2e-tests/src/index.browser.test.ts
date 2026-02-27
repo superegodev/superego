@@ -34,8 +34,13 @@ const defaultGlobalSettings = {
         ],
       },
     ],
-    defaults: {
-      completion: { providerName: "providerName", modelId: "modelId" },
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+      },
       transcription: null,
       fileInspection: null,
     },

@@ -1,5 +1,10 @@
 import type { DatabaseSync } from "node:sqlite";
-import { AssistantName, type GlobalSettings } from "@superego/backend";
+import {
+  AssistantName,
+  type GlobalSettings,
+  type InferenceOptions,
+  type InferenceProvider,
+} from "@superego/backend";
 import type { GlobalSettingsRepository } from "@superego/executing-backend";
 import type SqliteGlobalSettings from "../types/SqliteGlobalSettings.js";
 import { toEntity } from "../types/SqliteGlobalSettings.js";
@@ -46,22 +51,24 @@ export default class SqliteGlobalSettingsRepository
       },
       inference: {
         providers:
-          (settings.inference
-            ?.providers as GlobalSettings["inference"]["providers"]) ??
+          (settings.inference?.providers as InferenceProvider[]) ??
           this.defaultGlobalSettings.inference.providers,
-        defaults: {
+        defaultInferenceOptions: {
           completion:
-            (settings.inference?.defaults
-              ?.completion as GlobalSettings["inference"]["defaults"]["completion"]) ??
-            this.defaultGlobalSettings.inference.defaults.completion,
+            (settings.inference?.defaultInferenceOptions
+              ?.completion as InferenceOptions["completion"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .completion,
           transcription:
-            (settings.inference?.defaults
-              ?.transcription as GlobalSettings["inference"]["defaults"]["transcription"]) ??
-            this.defaultGlobalSettings.inference.defaults.transcription,
+            (settings.inference?.defaultInferenceOptions
+              ?.transcription as InferenceOptions["transcription"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .transcription,
           fileInspection:
-            (settings.inference?.defaults
-              ?.fileInspection as GlobalSettings["inference"]["defaults"]["fileInspection"]) ??
-            this.defaultGlobalSettings.inference.defaults.fileInspection,
+            (settings.inference?.defaultInferenceOptions
+              ?.fileInspection as InferenceOptions["fileInspection"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .fileInspection,
         },
       },
       assistants: {

@@ -62,8 +62,8 @@ function makeInferenceSettings(model: string): InferenceSettings {
         ],
       },
     ],
-    defaults: {
-      completion: { providerName, modelId: model },
+    defaultInferenceOptions: {
+      completion: { providerModelRef: { providerName, modelId: model } },
       transcription: null,
       fileInspection: null,
     },
@@ -75,10 +75,8 @@ const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
   inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
   {
-    completion: {
-      providerModelRef:
-        makeInferenceSettings(evaluatorModel).defaults.completion!,
-    },
+    completion:
+      makeInferenceSettings(evaluatorModel).defaultInferenceOptions.completion!,
     transcription: null,
     fileInspection: null,
   },
@@ -144,9 +142,8 @@ describe.concurrent.each(
     );
 
     const inferenceOptions = {
-      completion: {
-        providerModelRef: makeInferenceSettings(model).defaults.completion!,
-      },
+      completion:
+        makeInferenceSettings(model).defaultInferenceOptions.completion!,
       transcription: null,
       fileInspection: null,
     };
