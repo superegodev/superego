@@ -46,7 +46,7 @@ function makeInferenceSettings(model: string): InferenceSettings {
         name: providerName,
         baseUrl: responsesBaseUrl,
         apiKey: responsesApiKey,
-        driver: InferenceProviderDriver.OpenRouter,
+        driver: InferenceProviderDriver.OpenResponses,
         models: [
           {
             id: model,

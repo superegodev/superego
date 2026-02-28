@@ -1,4 +1,4 @@
 enum InferenceProviderDriver {
-  OpenRouter = "OpenRouter",
+  OpenResponses = "OpenResponses",
 }
 export default InferenceProviderDriver;

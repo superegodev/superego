@@ -37,7 +37,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               name: "superego",
               baseUrl: `${window.location.origin}/api/v1/responses`,
               apiKey: null,
-              driver: InferenceProviderDriver.OpenRouter,
+              driver: InferenceProviderDriver.OpenResponses,
               models: [
                 {
                   id: "openai/gpt-oss-120b",

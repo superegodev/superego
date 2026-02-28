@@ -18,7 +18,7 @@ import {
   toResponsesRequest,
 } from "./Responses.js";
 
-export default class OpenRouterInferenceService implements InferenceService {
+export default class OpenResponsesInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
 
   async generateNextMessage(

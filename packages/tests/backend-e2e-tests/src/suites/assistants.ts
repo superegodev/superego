@@ -32,7 +32,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         name: "providerName",
         baseUrl: "http://localhost",
         apiKey: null,
-        driver: InferenceProviderDriver.OpenRouter,
+        driver: InferenceProviderDriver.OpenResponses,
         models: [
           {
             id: "modelId",

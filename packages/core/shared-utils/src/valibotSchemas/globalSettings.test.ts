@@ -59,7 +59,7 @@ test("valid settings with all null inference options returns no issues", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -101,7 +101,7 @@ test("valid settings with completion returns no issues", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -148,7 +148,7 @@ test("completion referencing unknown provider returns issue", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -204,7 +204,7 @@ test("completion referencing unknown model returns issue", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -260,7 +260,7 @@ test("transcription model without audio understanding returns issue", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -317,7 +317,7 @@ test("valid transcription model with audio understanding returns no issues", {
           name: "providerName",
           baseUrl: "http://localhost",
           apiKey: null,
-          driver: InferenceProviderDriver.OpenRouter,
+          driver: InferenceProviderDriver.OpenResponses,
           models: [
             {
               id: "modelId",
@@ -366,7 +366,7 @@ test(
             name: "providerName",
             baseUrl: "http://localhost",
             apiKey: null,
-            driver: InferenceProviderDriver.OpenRouter,
+            driver: InferenceProviderDriver.OpenResponses,
             models: [
               {
                 id: "modelId",

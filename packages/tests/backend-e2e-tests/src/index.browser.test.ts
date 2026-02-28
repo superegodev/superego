@@ -18,7 +18,7 @@ const defaultGlobalSettings = {
         name: "providerName",
         baseUrl: "http://localhost",
         apiKey: null,
-        driver: InferenceProviderDriver.OpenRouter,
+        driver: InferenceProviderDriver.OpenResponses,
         models: [
           {
             id: "modelId",

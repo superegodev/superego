@@ -36,7 +36,7 @@ export default function Providers({ control }: Props) {
               name: "",
               baseUrl: "",
               apiKey: null,
-              driver: InferenceProviderDriver.OpenRouter,
+              driver: InferenceProviderDriver.OpenResponses,
               models: [],
             })
           }

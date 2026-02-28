@@ -10,7 +10,7 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
         name: "providerName",
         baseUrl: "http://localhost",
         apiKey: null,
-        driver: InferenceProviderDriver.OpenRouter,
+        driver: InferenceProviderDriver.OpenResponses,
         models: [
           {
             id: "modelId",

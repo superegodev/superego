@@ -9,7 +9,7 @@ import {
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 
-import OpenRouterInferenceService from "./OpenRouter/OpenRouterInferenceService.js";
+import OpenResponsesInferenceService from "./OpenResponses/OpenResponsesInferenceService.js";
 
 export default class MultiDriverInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
@@ -49,8 +49,8 @@ export default class MultiDriverInferenceService implements InferenceService {
   ): InferenceService {
     const provider = this.resolveProvider(providerModelRef);
     switch (provider.driver) {
-      case InferenceProviderDriver.OpenRouter:
-        return new OpenRouterInferenceService(this.settings);
+      case InferenceProviderDriver.OpenResponses:
+        return new OpenResponsesInferenceService(this.settings);
       default:
         throw new Error(
           `Unsupported inference provider driver: "${provider.driver}"`,

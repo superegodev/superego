@@ -9,7 +9,7 @@ const inferenceSettings: InferenceSettings = {
       name: "openrouter",
       baseUrl: "https://openrouter.ai/api/v1/responses",
       apiKey: "apiKey",
-      driver: InferenceProviderDriver.OpenRouter,
+      driver: InferenceProviderDriver.OpenResponses,
       models: [
         {
           id: "openai/gpt-oss-120b",
