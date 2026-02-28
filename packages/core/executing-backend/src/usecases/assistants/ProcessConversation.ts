@@ -93,22 +93,20 @@ export default class AssistantsProcessConversation extends Usecase {
 
     const globalSettings = await this.repos.globalSettings.get();
 
-    const inferenceOptionsIssues = validateInferenceOptions(
-      inferenceOptions,
-      globalSettings.inference,
-    );
-    if (!isEmpty(inferenceOptionsIssues)) {
-      return makeUnsuccessfulResult(
-        makeResultError("InferenceOptionsNotValid", {
-          issues: inferenceOptionsIssues,
-        }),
-      );
-    }
-
     let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
     try {
+      const inferenceOptionsIssues = validateInferenceOptions(
+        inferenceOptions,
+        globalSettings.inference,
+      );
+      if (!isEmpty(inferenceOptionsIssues)) {
+        throw makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        });
+      }
+
       const contextFingerprint =
         await ConversationUtils.getContextFingerprint(collections);
       if (conversation.contextFingerprint !== contextFingerprint) {
@@ -134,7 +132,7 @@ export default class AssistantsProcessConversation extends Usecase {
           inferenceOptions,
         );
       if (cannotTranscribeAudioMessage) {
-        return makeUnsuccessfulResult(cannotTranscribeAudioMessage);
+        throw cannotTranscribeAudioMessage;
       }
 
       const [messages, title] = await Promise.all([
