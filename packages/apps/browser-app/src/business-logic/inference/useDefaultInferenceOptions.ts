@@ -1,9 +1,10 @@
-import type {
-  InferenceModel,
-  InferenceOptions,
-  InferenceProvider,
-  InferenceProviderModelRef,
-  InferenceSettings,
+import {
+  type InferenceModel,
+  type InferenceOptions,
+  type InferenceProvider,
+  type InferenceProviderModelRef,
+  type InferenceSettings,
+  ReasoningEffort,
 } from "@superego/backend";
 import { useGlobalData } from "../backend/GlobalData.js";
 
@@ -17,44 +18,40 @@ export default function useDefaultInferenceOptions(): InferenceOptions {
 }
 
 function getDefaultCompletion(inferenceSettings: InferenceSettings) {
-  return (
-    inferenceSettings.defaultInferenceOptions.completion ??
-    wrapProviderModelRef(
-      findFirstModel(inferenceSettings.providers, () => true),
-    )
+  if (inferenceSettings.defaultInferenceOptions.completion) {
+    return inferenceSettings.defaultInferenceOptions.completion;
+  }
+  const providerModelRef = findFirstModel(
+    inferenceSettings.providers,
+    () => true,
   );
+  return providerModelRef
+    ? { providerModelRef, reasoningEffort: ReasoningEffort.Medium }
+    : null;
 }
 
 function getDefaultTranscription(inferenceSettings: InferenceSettings) {
-  return (
-    inferenceSettings.defaultInferenceOptions.transcription ??
-    wrapProviderModelRef(
-      findFirstModel(
-        inferenceSettings.providers,
-        (model) => model.capabilities.audioUnderstanding,
-      ),
-    )
+  if (inferenceSettings.defaultInferenceOptions.transcription) {
+    return inferenceSettings.defaultInferenceOptions.transcription;
+  }
+  const providerModelRef = findFirstModel(
+    inferenceSettings.providers,
+    (model) => model.capabilities.audioUnderstanding,
   );
+  return providerModelRef ? { providerModelRef } : null;
 }
 
 function getDefaultFileInspection(inferenceSettings: InferenceSettings) {
-  return (
-    inferenceSettings.defaultInferenceOptions.fileInspection ??
-    wrapProviderModelRef(
-      findFirstModel(
-        inferenceSettings.providers,
-        (model) =>
-          model.capabilities.pdfUnderstanding ||
-          model.capabilities.imageUnderstanding ||
-          model.capabilities.audioUnderstanding,
-      ),
-    )
+  if (inferenceSettings.defaultInferenceOptions.fileInspection) {
+    return inferenceSettings.defaultInferenceOptions.fileInspection;
+  }
+  const providerModelRef = findFirstModel(
+    inferenceSettings.providers,
+    (model) =>
+      model.capabilities.pdfUnderstanding ||
+      model.capabilities.imageUnderstanding ||
+      model.capabilities.audioUnderstanding,
   );
-}
-
-function wrapProviderModelRef(
-  providerModelRef: InferenceProviderModelRef | null,
-) {
   return providerModelRef ? { providerModelRef } : null;
 }
 

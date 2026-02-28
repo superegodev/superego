@@ -2,6 +2,7 @@ import {
   AssistantName,
   type GlobalSettings,
   InferenceProviderDriver,
+  ReasoningEffort,
   Theme,
 } from "@superego/backend";
 import * as v from "valibot";
@@ -34,7 +35,6 @@ export default function globalSettings(): v.GenericSchema<
                 id: v.string(),
                 name: v.string(),
                 capabilities: v.strictObject({
-                  reasoning: v.boolean(),
                   audioUnderstanding: v.boolean(),
                   imageUnderstanding: v.boolean(),
                   pdfUnderstanding: v.boolean(),
@@ -46,7 +46,10 @@ export default function globalSettings(): v.GenericSchema<
         ),
         defaultInferenceOptions: v.strictObject({
           completion: v.nullable(
-            v.strictObject({ providerModelRef: inferenceModelRef() }),
+            v.strictObject({
+              providerModelRef: inferenceModelRef(),
+              reasoningEffort: v.picklist(Object.values(ReasoningEffort)),
+            }),
           ),
           transcription: v.nullable(
             v.strictObject({ providerModelRef: inferenceModelRef() }),

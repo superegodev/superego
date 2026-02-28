@@ -77,7 +77,6 @@ export default function Provider({ control, name, onRemove }: Props) {
                   id: "",
                   name: "",
                   capabilities: {
-                    reasoning: false,
                     audioUnderstanding: false,
                     imageUnderstanding: false,
                     pdfUnderstanding: false,

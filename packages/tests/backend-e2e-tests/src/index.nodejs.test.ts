@@ -4,6 +4,7 @@ import { join } from "node:path";
 import {
   AssistantName,
   InferenceProviderDriver,
+  ReasoningEffort,
   Theme,
 } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
@@ -37,7 +38,6 @@ const defaultGlobalSettings = {
             id: "modelId",
             name: "modelId",
             capabilities: {
-              reasoning: false,
               audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
@@ -53,6 +53,7 @@ const defaultGlobalSettings = {
           providerName: "providerName",
           modelId: "modelId",
         },
+        reasoningEffort: ReasoningEffort.Medium,
       },
       transcription: null,
       fileInspection: null,

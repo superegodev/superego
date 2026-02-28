@@ -4,6 +4,7 @@ import {
   type MessageContentPart,
   MessageContentPartType,
   MessageRole,
+  type ReasoningEffort,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 import getAudioFormat from "../utils/getAudioFormat.js";
@@ -19,6 +20,7 @@ export namespace Responses {
     input: InputItem[];
     model: string;
     tools: Tool[] | undefined;
+    reasoning: { effort: string } | undefined;
     stream: boolean;
   };
 
@@ -116,12 +118,14 @@ export function toResponsesRequest(
   model: string,
   messages: Message[],
   tools: InferenceService.Tool[],
+  reasoningEffort: ReasoningEffort | null,
 ): Responses.Request {
   const responsesTools = tools.map(toResponsesTool);
   return {
     model: model,
     input: messages.flatMap(toResponsesInputItem),
     tools: responsesTools.length > 0 ? responsesTools : undefined,
+    reasoning: reasoningEffort ? { effort: reasoningEffort } : undefined,
     stream: false,
   };
 }

@@ -5,6 +5,7 @@ import {
   AssistantName,
   InferenceProviderDriver,
   type InferenceSettings,
+  ReasoningEffort,
   Theme,
 } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
@@ -52,7 +53,6 @@ function makeInferenceSettings(model: string): InferenceSettings {
             id: model,
             name: model,
             capabilities: {
-              reasoning: false,
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
@@ -63,7 +63,10 @@ function makeInferenceSettings(model: string): InferenceSettings {
       },
     ],
     defaultInferenceOptions: {
-      completion: { providerModelRef: { providerName, modelId: model } },
+      completion: {
+        providerModelRef: { providerName, modelId: model },
+        reasoningEffort: ReasoningEffort.Medium,
+      },
       transcription: null,
       fileInspection: null,
     },

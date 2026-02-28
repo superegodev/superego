@@ -2,6 +2,7 @@ import {
   AssistantName,
   type GlobalSettings,
   InferenceProviderDriver,
+  ReasoningEffort,
   Theme,
   type ValidationIssue,
 } from "@superego/backend";
@@ -65,7 +66,6 @@ test("valid settings with all null inference options returns no issues", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: true,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -107,7 +107,6 @@ test("valid settings with completion returns no issues", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: true,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -123,6 +122,7 @@ test("valid settings with completion returns no issues", {
             providerName: "providerName",
             modelId: "modelId",
           },
+          reasoningEffort: ReasoningEffort.Medium,
         },
         transcription: null,
         fileInspection: null,
@@ -154,7 +154,6 @@ test("completion referencing unknown provider returns issue", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: true,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -170,6 +169,7 @@ test("completion referencing unknown provider returns issue", {
             providerName: "unknown",
             modelId: "modelId",
           },
+          reasoningEffort: ReasoningEffort.Medium,
         },
         transcription: null,
         fileInspection: null,
@@ -210,7 +210,6 @@ test("completion referencing unknown model returns issue", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: true,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -226,6 +225,7 @@ test("completion referencing unknown model returns issue", {
             providerName: "providerName",
             modelId: "unknown",
           },
+          reasoningEffort: ReasoningEffort.Medium,
         },
         transcription: null,
         fileInspection: null,
@@ -266,7 +266,6 @@ test("transcription model without audio understanding returns issue", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: false,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -323,7 +322,6 @@ test("valid transcription model with audio understanding returns no issues", {
               id: "modelId",
               name: "Model",
               capabilities: {
-                reasoning: false,
                 audioUnderstanding: true,
                 imageUnderstanding: false,
                 pdfUnderstanding: false,
@@ -372,7 +370,6 @@ test(
                 id: "modelId",
                 name: "Model",
                 capabilities: {
-                  reasoning: false,
                   audioUnderstanding: false,
                   imageUnderstanding: false,
                   pdfUnderstanding: false,

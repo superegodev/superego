@@ -1,6 +1,7 @@
 import {
   AssistantName,
   InferenceProviderDriver,
+  ReasoningEffort,
   Theme,
 } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
@@ -24,7 +25,6 @@ const defaultGlobalSettings = {
             id: "modelId",
             name: "modelId",
             capabilities: {
-              reasoning: false,
               audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
@@ -40,6 +40,7 @@ const defaultGlobalSettings = {
           providerName: "providerName",
           modelId: "modelId",
         },
+        reasoningEffort: ReasoningEffort.Medium,
       },
       transcription: null,
       fileInspection: null,

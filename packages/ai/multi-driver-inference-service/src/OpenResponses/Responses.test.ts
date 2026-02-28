@@ -3,6 +3,7 @@ import {
   type Message,
   MessageContentPartType,
   MessageRole,
+  ReasoningEffort,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
 import { describe, expect, it } from "vitest";
@@ -19,6 +20,7 @@ const inferenceOptions: InferenceOptions<"completion"> = {
       providerName: "providerName",
       modelId: "modelId",
     },
+    reasoningEffort: ReasoningEffort.Medium,
   },
   transcription: null,
   fileInspection: null,
@@ -45,7 +47,7 @@ describe("toResponsesRequest", () => {
         },
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, tools);
+    const result = toResponsesRequest("gpt-oss-120b", messages, tools, null);
 
     // Verify
     expect(result).toEqual({
@@ -72,6 +74,41 @@ describe("toResponsesRequest", () => {
     });
   });
 
+  it("sets reasoning when reasoningEffort is provided", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    expect(result.reasoning).toEqual({ effort: "high" });
+  });
+
+  it("sets reasoning to undefined when reasoningEffort is null", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
+
+    // Verify
+    expect(result.reasoning).toBeUndefined();
+  });
+
   it("sets tools to undefined when empty", () => {
     // Exercise
     const messages: Message[] = [
@@ -81,7 +118,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.tools).toBeUndefined();
@@ -97,7 +134,7 @@ describe("toResponsesRequest", () => {
         ],
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([
@@ -114,7 +151,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([
@@ -134,7 +171,7 @@ describe("toResponsesRequest", () => {
         content: [{ type: MessageContentPartType.Text, text: "Context info" }],
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([
@@ -161,7 +198,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     const inputItem = result.input[0] as Responses.MessageItem;
@@ -194,7 +231,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     const inputItem = result.input[0] as Responses.MessageItem;
@@ -224,7 +261,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     const inputItem = result.input[0] as Responses.MessageItem;
@@ -254,7 +291,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     const inputItem = result.input[0] as Responses.MessageItem;
@@ -281,7 +318,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([
@@ -316,7 +353,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([
@@ -348,7 +385,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
     ];
-    const result = toResponsesRequest("gpt-oss-120b", messages, []);
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
 
     // Verify
     expect(result.input).toEqual([

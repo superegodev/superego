@@ -16,6 +16,7 @@ export { default as DownSyncStatus } from "./enums/DownSyncStatus.js";
 export { default as InferenceProviderDriver } from "./enums/InferenceProviderDriver.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";
 export { default as MessageRole } from "./enums/MessageRole.js";
+export { default as ReasoningEffort } from "./enums/ReasoningEffort.js";
 export { default as Theme } from "./enums/Theme.js";
 export { default as ToolName } from "./enums/ToolName.js";
 export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";

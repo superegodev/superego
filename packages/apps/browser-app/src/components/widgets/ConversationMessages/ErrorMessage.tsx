@@ -2,6 +2,7 @@ import {
   type Conversation,
   type ConversationStatus,
   MessageRole,
+  ReasoningEffort,
 } from "@superego/backend";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -45,7 +46,12 @@ export default function ErrorMessage({ conversation }: Props) {
             models={models}
             onModelAction={(providerModelRef) =>
               mutate(conversation.id, {
-                completion: { providerModelRef },
+                completion: {
+                  providerModelRef,
+                  reasoningEffort:
+                    defaultInferenceOptions.completion?.reasoningEffort ??
+                    ReasoningEffort.Medium,
+                },
                 transcription: defaultInferenceOptions.transcription,
                 fileInspection: defaultInferenceOptions.fileInspection,
               })

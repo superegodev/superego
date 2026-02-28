@@ -4,6 +4,7 @@ import {
   InferenceProviderDriver,
   MessageContentPartType,
   MessageRole,
+  ReasoningEffort,
   ToolName,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
@@ -21,6 +22,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         providerName: "providerName",
         modelId: "modelId",
       },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: null,
     fileInspection: null,
@@ -38,7 +40,6 @@ export default rd<GetDependencies>("Assistants", (deps) => {
             id: "modelId",
             name: "modelId",
             capabilities: {
-              reasoning: false,
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
@@ -54,6 +55,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           providerName: "providerName",
           modelId: "modelId",
         },
+        reasoningEffort: ReasoningEffort.Medium,
       },
       transcription: null,
       fileInspection: null,
@@ -66,6 +68,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         providerName: "unknownProvider",
         modelId: "unknownModel",
       },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: null,
     fileInspection: null,

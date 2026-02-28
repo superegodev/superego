@@ -1,4 +1,8 @@
-import { InferenceProviderDriver, Theme } from "@superego/backend";
+import {
+  InferenceProviderDriver,
+  ReasoningEffort,
+  Theme,
+} from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
@@ -16,7 +20,6 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
             id: "modelId",
             name: "modelId",
             capabilities: {
-              reasoning: false,
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
@@ -32,6 +35,7 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
           providerName: "providerName",
           modelId: "modelId",
         },
+        reasoningEffort: ReasoningEffort.Medium,
       },
       transcription: null,
       fileInspection: null,
@@ -72,6 +76,7 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
                 providerName: "unknownProvider",
                 modelId: "unknownModel",
               },
+              reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: null,
             fileInspection: null,

@@ -3,6 +3,7 @@ import "urlpattern-polyfill";
 import {
   AssistantName,
   InferenceProviderDriver,
+  ReasoningEffort,
   Theme,
 } from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
@@ -43,7 +44,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                   id: "openai/gpt-oss-120b",
                   name: "GPT OSS 120B",
                   capabilities: {
-                    reasoning: true,
                     audioUnderstanding: false,
                     imageUnderstanding: false,
                     pdfUnderstanding: false,
@@ -54,7 +54,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                   id: "google/gemini-2.5-flash-lite",
                   name: "Gemini 2.5 Flash Lite",
                   capabilities: {
-                    reasoning: true,
                     audioUnderstanding: true,
                     imageUnderstanding: true,
                     pdfUnderstanding: true,
@@ -70,6 +69,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                 providerName: "superego",
                 modelId: "openai/gpt-oss-120b",
               },
+              reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: {
               providerModelRef: {

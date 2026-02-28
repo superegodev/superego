@@ -1,12 +1,6 @@
 import type { GlobalSettings, InferenceModel } from "@superego/backend";
 import { type Control, useController } from "react-hook-form";
-import {
-  PiBrain,
-  PiFilePdf,
-  PiGlobe,
-  PiImage,
-  PiMicrophone,
-} from "react-icons/pi";
+import { PiFilePdf, PiGlobe, PiImage, PiMicrophone } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import IconToggleButton from "../../../design-system/IconToggleButton/IconToggleButton.js";
 import * as cs from "./InferenceSettings.css.js";
@@ -27,14 +21,6 @@ export default function Capabilities({ control, name }: Props) {
 
   return (
     <div className={cs.Capabilities.root}>
-      <IconToggleButton
-        label={intl.formatMessage({ defaultMessage: "Supports reasoning" })}
-        className={cs.Capabilities.button}
-        isSelected={capabilities.reasoning}
-        onChange={() => toggle("reasoning")}
-      >
-        <PiBrain />
-      </IconToggleButton>
       <IconToggleButton
         label={intl.formatMessage({
           defaultMessage: "Supports audio understanding",

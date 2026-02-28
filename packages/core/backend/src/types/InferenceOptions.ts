@@ -1,3 +1,4 @@
+import type ReasoningEffort from "../enums/ReasoningEffort.js";
 import type InferenceProviderModelRef from "./InferenceProviderModelRef.js";
 
 type NullableExceptForProps<Type, NonNullableProp extends keyof Type> = {
@@ -7,6 +8,7 @@ type NullableExceptForProps<Type, NonNullableProp extends keyof Type> = {
 type NonNullableInferenceOptions = {
   completion: {
     providerModelRef: InferenceProviderModelRef;
+    reasoningEffort: ReasoningEffort;
   };
   transcription: {
     providerModelRef: InferenceProviderModelRef;

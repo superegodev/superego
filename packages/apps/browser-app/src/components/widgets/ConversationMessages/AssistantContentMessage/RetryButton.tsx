@@ -43,7 +43,11 @@ export default function RetryButton({
       models={models}
       onModelAction={(providerModelRef) =>
         mutate(conversation.id, {
-          completion: { providerModelRef },
+          completion: {
+            providerModelRef,
+            reasoningEffort:
+              message.inferenceOptions.completion.reasoningEffort,
+          },
           transcription: defaultInferenceOptions.transcription,
           fileInspection: defaultInferenceOptions.fileInspection,
         })

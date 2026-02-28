@@ -1,5 +1,8 @@
-import type { InferenceSettings } from "@superego/backend";
-import { InferenceProviderDriver } from "@superego/backend";
+import {
+  InferenceProviderDriver,
+  type InferenceSettings,
+  ReasoningEffort,
+} from "@superego/backend";
 import { expect, it } from "vitest";
 import validateInferenceOptions from "./validateInferenceOptions.js";
 
@@ -15,7 +18,6 @@ const inferenceSettings: InferenceSettings = {
           id: "openai/gpt-oss-120b",
           name: "GPT OSS 120b",
           capabilities: {
-            reasoning: true,
             audioUnderstanding: false,
             imageUnderstanding: false,
             pdfUnderstanding: false,
@@ -26,7 +28,6 @@ const inferenceSettings: InferenceSettings = {
           id: "openai/gpt-audio-120b",
           name: "GPT Audio 120b",
           capabilities: {
-            reasoning: true,
             audioUnderstanding: true,
             imageUnderstanding: false,
             pdfUnderstanding: false,
@@ -37,7 +38,6 @@ const inferenceSettings: InferenceSettings = {
           id: "openai/gpt-vision-120b",
           name: "GPT Vision 120b",
           capabilities: {
-            reasoning: true,
             audioUnderstanding: false,
             imageUnderstanding: true,
             pdfUnderstanding: false,
@@ -62,6 +62,7 @@ it("returns error when completion provider is not found", () => {
         providerName: "unknown",
         modelId: "openai/gpt-oss-120b",
       },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: null,
     fileInspection: null,
@@ -82,6 +83,7 @@ it("returns error when completion model is not found", () => {
   const inferenceOptions = {
     completion: {
       providerModelRef: { providerName: "openrouter", modelId: "unknown" },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: null,
     fileInspection: null,
@@ -105,6 +107,7 @@ it("returns no issues when inference options are valid", () => {
         providerName: "openrouter",
         modelId: "openai/gpt-oss-120b",
       },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: null,
     fileInspection: null,
@@ -136,6 +139,7 @@ it("validates multiple non-null fields", () => {
         providerName: "openrouter",
         modelId: "openai/gpt-oss-120b",
       },
+      reasoningEffort: ReasoningEffort.Medium,
     },
     transcription: {
       providerModelRef: { providerName: "unknown", modelId: "some-model" },

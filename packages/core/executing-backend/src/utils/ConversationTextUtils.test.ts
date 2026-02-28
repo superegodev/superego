@@ -1,4 +1,8 @@
-import { MessageContentPartType, MessageRole } from "@superego/backend";
+import {
+  MessageContentPartType,
+  MessageRole,
+  ReasoningEffort,
+} from "@superego/backend";
 import { describe, expect, it } from "vitest";
 import ConversationTextUtils from "./ConversationTextUtils.js";
 
@@ -85,6 +89,7 @@ describe("extractTextChunks", () => {
                 providerName: "providerName",
                 modelId: "modelId",
               },
+              reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: null,
             fileInspection: null,
@@ -115,6 +120,7 @@ describe("extractTextChunks", () => {
                 providerName: "providerName",
                 modelId: "modelId",
               },
+              reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: null,
             fileInspection: null,
@@ -200,6 +206,7 @@ describe("extractTextChunks", () => {
                 providerName: "providerName",
                 modelId: "modelId",
               },
+              reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: null,
             fileInspection: null,

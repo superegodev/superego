@@ -30,7 +30,12 @@ export default class OpenResponsesInferenceService implements InferenceService {
       inferenceOptions.completion.providerModelRef,
     );
 
-    const requestBody = toResponsesRequest(model.id, previousMessages, tools);
+    const requestBody = toResponsesRequest(
+      model.id,
+      previousMessages,
+      tools,
+      inferenceOptions.completion.reasoningEffort,
+    );
 
     const startTime = Date.now();
     const response = await fetch(provider.baseUrl, {
@@ -75,6 +80,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
         },
       ],
       [],
+      null,
     );
 
     const response = await fetch(provider.baseUrl, {
@@ -116,6 +122,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
         },
       ],
       [],
+      null,
     );
 
     const response = await fetch(provider.baseUrl, {
