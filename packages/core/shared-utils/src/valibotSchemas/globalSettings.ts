@@ -80,7 +80,7 @@ export default function globalSettings(): v.GenericSchema<
             key: "defaultInferenceOptions",
           },
           ...(issue.path?.map((segment) => ({
-            input: dataset.value,
+            input: dataset.value.inference.defaultInferenceOptions,
             key: segment.key,
           })) ?? []),
         ];

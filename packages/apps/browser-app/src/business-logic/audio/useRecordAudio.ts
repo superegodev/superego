@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import convertToWav from "./convertToWav.js";
 
 interface UseRecordAudio {
   isRecording: boolean;
@@ -51,8 +52,11 @@ export default function useRecordAudio(
             type: mediaRecorder.mimeType,
           });
           onFinish({
-            content: new Uint8Array(await chunksBlob.arrayBuffer()),
-            contentType: mediaRecorder.mimeType,
+            content:
+              mediaRecorder.mimeType === "audio/wav"
+                ? new Uint8Array(await chunksBlob.arrayBuffer())
+                : await convertToWav(chunksBlob),
+            contentType: "audio/wav",
           });
         }
       } finally {
@@ -84,10 +88,9 @@ export default function useRecordAudio(
 
 const PREFERRED_MIME_TYPES = [
   "audio/wav",
-  "audio/mp3",
-  "audio/mpeg",
   "audio/webm",
   "audio/ogg",
+  "audio/mp4",
 ];
 
 function getPreferredMimeType(): string | undefined {

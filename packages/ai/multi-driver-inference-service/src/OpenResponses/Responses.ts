@@ -140,7 +140,7 @@ function toResponsesInputItem(
       role: "user",
       content: (message.content as MessageContentPart[])
         .map(toResponsesInputContentPart)
-        .filter((p): p is Responses.InputContentPart => p !== null),
+        .filter((part): part is Responses.InputContentPart => part !== null),
     };
   }
 

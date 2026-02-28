@@ -1,5 +1,5 @@
 export default function getAudioFormat(contentType: string): string {
-  const baseType = contentType.split(";")[0]!.trim();
+  const baseType = contentType.split(";")[0]!.trim().toLowerCase();
   switch (baseType) {
     case "audio/mpeg":
     case "audio/mpga":
@@ -8,6 +8,8 @@ export default function getAudioFormat(contentType: string): string {
     case "audio/wav":
     case "audio/x-wav":
       return "wav";
+    case "audio/mp4":
+      return "mp4";
     case "audio/webm":
       return "webm";
     case "audio/ogg":
