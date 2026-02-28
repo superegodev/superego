@@ -24,6 +24,9 @@ export const AssistantContentMessage = {
       "&:has(:focus)": {
         opacity: 1,
       },
+      '&:has([aria-expanded="true"])': {
+        opacity: 1,
+      },
     },
   }),
 

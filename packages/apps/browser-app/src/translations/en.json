@@ -1043,6 +1043,9 @@
   "Model.tsx_qlcuNQ": {
     "defaultMessage": "ID"
   },
+  "ModelActionMenu.tsx_SikIJG": {
+    "defaultMessage": "(last used)"
+  },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },

@@ -1,15 +1,17 @@
 import type { Conversation, Message } from "@superego/backend";
-import { inferenceOptionsHas } from "@superego/shared-utils";
 import { PiArrowsClockwise } from "react-icons/pi";
 import { useIntl } from "react-intl";
+import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.js";
 import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
+import isEmpty from "../../../../utils/isEmpty.js";
 import last from "../../../../utils/last.js";
-import IconButton from "../../../design-system/IconButton/IconButton.js";
+import ModelActionMenu from "../ModelActionMenu/ModelActionMenu.js";
+import makeModelActionMenuItems from "../ModelActionMenu/makeModelActionMenuItems.js";
 
 interface Props {
   conversation: Conversation;
-  message: Message;
+  message: Message.ContentAssistant;
   className: string;
 }
 export default function RetryButton({
@@ -19,23 +21,35 @@ export default function RetryButton({
 }: Props) {
   const intl = useIntl();
 
+  const { globalSettings } = useGlobalData();
   const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useRetryLastResponse();
 
+  const models = makeModelActionMenuItems(
+    globalSettings.inference.providers,
+    message.inferenceOptions.completion.providerModelRef,
+  );
+
   return conversation.canRetryLastResponse &&
     message === last(conversation.messages) &&
-    inferenceOptionsHas(defaultInferenceOptions, "completion") ? (
-    <IconButton
-      variant="invisible"
+    !isEmpty(models) ? (
+    <ModelActionMenu
+      icon={<PiArrowsClockwise />}
       label={
         isPending
           ? intl.formatMessage({ defaultMessage: "Retrying..." })
           : intl.formatMessage({ defaultMessage: "Retry response" })
       }
-      onPress={() => mutate(conversation.id, defaultInferenceOptions)}
+      models={models}
+      onModelAction={(providerModelRef) =>
+        mutate(conversation.id, {
+          completion: { providerModelRef },
+          transcription: defaultInferenceOptions.transcription,
+          fileInspection: defaultInferenceOptions.fileInspection,
+        })
+      }
+      isDisabled={isPending}
       className={className}
-    >
-      <PiArrowsClockwise />
-    </IconButton>
+    />
   ) : null;
 }
