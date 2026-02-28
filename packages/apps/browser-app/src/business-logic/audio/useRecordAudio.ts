@@ -82,7 +82,13 @@ export default function useRecordAudio(
   return { isRecording, startRecording, finishRecording, cancelRecording };
 }
 
-const PREFERRED_MIME_TYPES = ["audio/wav", "audio/mp3", "audio/mpeg"];
+const PREFERRED_MIME_TYPES = [
+  "audio/wav",
+  "audio/mp3",
+  "audio/mpeg",
+  "audio/webm",
+  "audio/ogg",
+];
 
 function getPreferredMimeType(): string | undefined {
   return PREFERRED_MIME_TYPES.find((type) =>

@@ -599,9 +599,6 @@ export default interface Backend {
 
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
-    ): ResultPromise<
-      GlobalSettings,
-      GlobalSettingsNotValid | UnexpectedError
-    >;
+    ): ResultPromise<GlobalSettings, GlobalSettingsNotValid | UnexpectedError>;
   };
 }
