@@ -115,9 +115,9 @@ const MemoizedConversation = memo(
           })}
           actions={[
             {
-              label: intl.formatMessage({
-                defaultMessage: "Toggle tool calls",
-              }),
+              label: showToolCalls
+                ? intl.formatMessage({ defaultMessage: "Hide tool calls" })
+                : intl.formatMessage({ defaultMessage: "Show tool calls" }),
               icon: showToolCalls ? <PiLightningSlash /> : <PiLightning />,
               onPress: () => setShowToolCalls(!showToolCalls),
             },

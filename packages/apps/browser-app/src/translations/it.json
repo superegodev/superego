@@ -87,7 +87,7 @@
     "defaultMessage": "Nome"
   },
   "BackgroundJobsTable.tsx_IBAQRm": {
-    "defaultMessage": "Non c'è ancora nessuno lavoro in background."
+    "defaultMessage": "Non c'è ancora nessun lavoro in background."
   },
   "BackgroundJobsTable.tsx_TDUfVk": {
     "defaultMessage": "Avviato"
@@ -153,7 +153,7 @@
     "defaultMessage": "Modifica app"
   },
   "Collection.tsx_5WK7jL": {
-    "defaultMessage": "Crea nuova app"
+    "defaultMessage": "Crea nuova"
   },
   "Collection.tsx_B+R508": {
     "defaultMessage": "Imposta come vista predefinita"
@@ -234,7 +234,7 @@
     "defaultMessage": "Aggiorna la funzione <code>getContentBlockingKeys</code> per riflettere le modifiche allo schema."
   },
   "ContentSummary.tsx_kvPscx": {
-    "defaultMessage": "Errore durante l'elaborazione del sommario dei contenuti: {error}"
+    "defaultMessage": "Errore durante la derivazione del sommario dei contenuti: {error}"
   },
   "ContentSummaryTab.tsx_RGFGD8": {
     "defaultMessage": "Aggiorna la funzione <code>getContentSummary</code> per riflettere le modifiche allo schema."
@@ -260,8 +260,8 @@
   "Conversation.tsx_eq3LES": {
     "defaultMessage": "🤖 Conversazioni » {conversation}"
   },
-  "Conversation.tsx_gKk3/v": {
-    "defaultMessage": "Attiva/disattiva le chiamate allo strumento"
+  "Conversation.tsx_A4DzYS": {
+    "defaultMessage": "Mostra le tool call"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
@@ -272,8 +272,11 @@
   "Conversation.tsx_y2z/xn": {
     "defaultMessage": "🤖 Conversazioni » {conversationId}"
   },
+  "Conversation.tsx_yGVyFv": {
+    "defaultMessage": "Nascondi le tool call"
+  },
   "Conversation.tsx_yWDfdE": {
-    "defaultMessage": "Che tipo di dati vuoi archiviare?"
+    "defaultMessage": "Che tipo di dati vuoi salvare?"
   },
   "Conversation.tsx_yYmfIl": {
     "defaultMessage": "🤖 Conversazioni"
@@ -330,7 +333,7 @@
     "defaultMessage": "Crea collezione (modalità assistita)"
   },
   "CreateCollectionAssisted.tsx_yWDfdE": {
-    "defaultMessage": "Che tipo di dati vuoi archiviare?"
+    "defaultMessage": "Che tipo di dati vuoi salvare?"
   },
   "CreateCollectionForm.tsx_+gaKsp": {
     "defaultMessage": "4. Sommario dei contenuti"
@@ -357,7 +360,7 @@
     "defaultMessage": "Crea collezione (modalità manuale)"
   },
   "CreateDocument.tsx_K6tRTv": {
-    "defaultMessage": "Azioni crea documento"
+    "defaultMessage": "Azioni della pagina di creazione documento"
   },
   "CreateDocument.tsx_VzzYJk": {
     "defaultMessage": "Crea"
@@ -912,19 +915,19 @@
     "defaultMessage": "Avviso di incompatibilità"
   },
   "Capabilities.tsx_7Lllg5": {
-    "defaultMessage": "Supporta ricerca web"
+    "defaultMessage": "Supporta la ricerca web"
   },
   "Capabilities.tsx_HjTr28": {
-    "defaultMessage": "Supporta comprensione immagini"
+    "defaultMessage": "Supporta la comprensione delle immagini"
   },
   "Capabilities.tsx_KihMPW": {
-    "defaultMessage": "Supporta comprensione audio"
+    "defaultMessage": "Supporta la comprensione audio"
   },
   "Capabilities.tsx_MuSZiS": {
-    "defaultMessage": "Supporta ragionamento"
+    "defaultMessage": "Supporta il ragionamento"
   },
   "Capabilities.tsx_xRp25e": {
-    "defaultMessage": "Supporta comprensione PDF"
+    "defaultMessage": "Supporta la comprensione PDF"
   },
   "DefaultInferenceOptions.tsx_24dwvV": {
     "defaultMessage": "Modello di trascrizione"
@@ -984,7 +987,7 @@
     "defaultMessage": "Annulla"
   },
   "InstallPackModal.tsx_B8WL2e": {
-    "defaultMessage": "Installare \"{packName}\"?"
+    "defaultMessage": "Installare il pacchetto \"{packName}\"?"
   },
   "InstallPackModal.tsx_ubmFc8": {
     "defaultMessage": "Installa"
@@ -1047,7 +1050,7 @@
     "defaultMessage": "Carica dati demo"
   },
   "LoadDemoDataButton.tsx_ZBdI8u": {
-    "defaultMessage": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
+    "defaultMessage": "Carica alcune collezioni e documenti demo con cui puoi fare delle prove."
   },
   "LocalPack.tsx_/hNhmZ": {
     "defaultMessage": "Pack personalizzati » {packId}"
@@ -1170,7 +1173,7 @@
     "defaultMessage": "Abilita opzioni UI personalizzate per la vista documento"
   },
   "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": {
-    "defaultMessage": "<p> Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. </p> <p> Per maggiori informazioni, vedi <a>https://superego.dev/customization/default-document-view-ui-options</a>. </p>"
+    "defaultMessage": "<p> Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la chiusura della barra laterale e la definizione di un layout personalizzato dei campi. </p> <p> Per maggiori informazioni, vedi <a>https://superego.dev/customization/default-document-view-ui-options</a>. </p>"
   },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
@@ -1185,7 +1188,7 @@
     "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
   },
   "RemoteConverters.tsx_3cBs4J": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci <code>null</code> per non sincronizzare il documento."
   },
   "RemoteConverters.tsx_GqZhDC": {
     "defaultMessage": "Dal documento remoto"
@@ -1194,7 +1197,7 @@
     "defaultMessage": "Convertitori di documenti remoti"
   },
   "RemoteConvertersTab.tsx_3cBs4J": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna <code>null</code> per non sincronizzare il documento."
+    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci <code>null</code> per non sincronizzare il documento."
   },
   "RemoteConvertersTab.tsx_CPS541": {
     "defaultMessage": "Aggiorna la funzione <code>fromRemoteDocument</code> per riflettere le modifiche allo schema."
@@ -1383,7 +1386,7 @@
     "defaultMessage": "Errore durante la creazione delle collezioni"
   },
   "ThinkingTime.tsx_O5Mn+P": {
-    "defaultMessage": "{model} ha riflettuto per {time}"
+    "defaultMessage": "{model} ha pensato per {time}"
   },
   "TimeInputWithMilliseconds.tsx_/w7Rru": {
     "defaultMessage": "Millisecondi"

@@ -67,7 +67,6 @@ export default function Provider({ control, name, onRemove }: Props) {
                 key={field.id}
                 control={control}
                 name={`${name}.models.${modelIndex}`}
-                index={modelIndex}
                 onRemove={() => models.remove(modelIndex)}
               />
             ))}

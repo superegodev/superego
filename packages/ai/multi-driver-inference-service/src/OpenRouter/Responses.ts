@@ -237,20 +237,19 @@ export function fromResponsesResponse(
     };
   }
 
-  const text =
-    response.output
-      .filter(
-        (item): item is Responses.MessageOutputItem => item.type === "message",
-      )
-      .flatMap((item) =>
-        item.content
-          .filter(
-            (part): part is Responses.OutputTextPart =>
-              part.type === "output_text",
-          )
-          .map((part) => part.text),
-      )
-      .join("\n") ?? "";
+  const text = response.output
+    .filter(
+      (item): item is Responses.MessageOutputItem => item.type === "message",
+    )
+    .flatMap((item) =>
+      item.content
+        .filter(
+          (part): part is Responses.OutputTextPart =>
+            part.type === "output_text",
+        )
+        .map((part) => part.text),
+    )
+    .join("\n");
 
   return {
     ...baseMessage,

@@ -240,13 +240,18 @@ export default class AssistantsProcessConversation extends Usecase {
     const otherMessages = [...conversation.messages];
     const lastMessage = otherMessages.pop();
 
-    // Skip transcription if there is no last user message or if it already
-    // contains text (i.e. it was typed, or it was already transcribed).
+    // Skip transcription if:
     if (
+      // there is no last message, or the last message is not a user message
       !lastMessage ||
       lastMessage.role !== MessageRole.User ||
+      // it already contains text (i.e. it was typed, or already transcribed)
       lastMessage.content.some(
         (part) => part.type === MessageContentPartType.Text,
+      ) ||
+      // it doesn't contain any audio to transcribe
+      !lastMessage.content.some(
+        (part) => part.type === MessageContentPartType.Audio,
       )
     ) {
       return makeSuccessfulResult(conversation.messages);

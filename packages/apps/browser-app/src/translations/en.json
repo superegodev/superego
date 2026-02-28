@@ -272,11 +272,11 @@
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
+  "Conversation.tsx_A4DzYS": {
+    "defaultMessage": "Show tool calls"
+  },
   "Conversation.tsx_eq3LES": {
     "defaultMessage": "🤖 Conversations » {conversation}"
-  },
-  "Conversation.tsx_gKk3/v": {
-    "defaultMessage": "Toggle tool calls"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
@@ -286,6 +286,9 @@
   },
   "Conversation.tsx_y2z/xn": {
     "defaultMessage": "🤖 Conversations » {conversationId}"
+  },
+  "Conversation.tsx_yGVyFv": {
+    "defaultMessage": "Hide tool calls"
   },
   "Conversation.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"

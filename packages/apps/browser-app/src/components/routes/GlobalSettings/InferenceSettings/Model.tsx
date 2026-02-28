@@ -10,7 +10,6 @@ import * as cs from "./InferenceSettings.css.js";
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
   name: `inference.providers.${number}.models.${number}`;
-  index: number;
   onRemove: () => void;
 }
 export default function Model({ control, name, onRemove }: Props) {

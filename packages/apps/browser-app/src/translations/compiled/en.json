@@ -635,6 +635,12 @@
       "value": "Delete conversation"
     }
   ],
+  "Conversation.tsx_A4DzYS": [
+    {
+      "type": 0,
+      "value": "Show tool calls"
+    }
+  ],
   "Conversation.tsx_eq3LES": [
     {
       "type": 0,
@@ -643,12 +649,6 @@
     {
       "type": 1,
       "value": "conversation"
-    }
-  ],
-  "Conversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Toggle tool calls"
     }
   ],
   "Conversation.tsx_oZLZvb": [
@@ -671,6 +671,12 @@
     {
       "type": 1,
       "value": "conversationId"
+    }
+  ],
+  "Conversation.tsx_yGVyFv": [
+    {
+      "type": 0,
+      "value": "Hide tool calls"
     }
   ],
   "Conversation.tsx_yWDfdE": [

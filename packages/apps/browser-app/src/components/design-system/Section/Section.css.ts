@@ -6,11 +6,6 @@ const sectionTitleBase = style({
   margin: 0,
   borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
   fontWeight: vars.typography.fontWeights.regular,
-  selectors: {
-    "&:first-child": {
-      marginBlockStart: 0,
-    },
-  },
 });
 export const Section = {
   root: style({

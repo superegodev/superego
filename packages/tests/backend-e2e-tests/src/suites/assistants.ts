@@ -540,7 +540,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
 
     it("error: CannotRetryLastResponse (reason: ResponseHadSideEffects)", async () => {
       // Setup SUT
-      let collectionId: string = "" as any;
+      let collectionId = "";
       let callCount = 0;
       const sideEffectsInferenceService: InferenceService = {
         generateNextMessage: async (_messages, _tools, inferenceOptions) => {

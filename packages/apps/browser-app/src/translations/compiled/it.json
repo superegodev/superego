@@ -180,7 +180,7 @@
   "BackgroundJobsTable.tsx_IBAQRm": [
     {
       "type": 0,
-      "value": "Non c'è ancora nessuno lavoro in background."
+      "value": "Non c'è ancora nessun lavoro in background."
     }
   ],
   "BackgroundJobsTable.tsx_TDUfVk": [
@@ -314,31 +314,31 @@
   "Capabilities.tsx_7Lllg5": [
     {
       "type": 0,
-      "value": "Supporta ricerca web"
+      "value": "Supporta la ricerca web"
     }
   ],
   "Capabilities.tsx_HjTr28": [
     {
       "type": 0,
-      "value": "Supporta comprensione immagini"
+      "value": "Supporta la comprensione delle immagini"
     }
   ],
   "Capabilities.tsx_KihMPW": [
     {
       "type": 0,
-      "value": "Supporta comprensione audio"
+      "value": "Supporta la comprensione audio"
     }
   ],
   "Capabilities.tsx_MuSZiS": [
     {
       "type": 0,
-      "value": "Supporta ragionamento"
+      "value": "Supporta il ragionamento"
     }
   ],
   "Capabilities.tsx_xRp25e": [
     {
       "type": 0,
-      "value": "Supporta comprensione PDF"
+      "value": "Supporta la comprensione PDF"
     }
   ],
   "Carousel.tsx_F+ukuP": [
@@ -384,7 +384,7 @@
   "Collection.tsx_5WK7jL": [
     {
       "type": 0,
-      "value": "Crea nuova app"
+      "value": "Crea nuova"
     }
   ],
   "Collection.tsx_B+R508": [
@@ -568,7 +568,7 @@
   "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
-      "value": "Errore durante l'elaborazione del sommario dei contenuti: "
+      "value": "Errore durante la derivazione del sommario dei contenuti: "
     },
     {
       "type": 1,
@@ -631,6 +631,12 @@
       "value": "Elimina conversazione"
     }
   ],
+  "Conversation.tsx_A4DzYS": [
+    {
+      "type": 0,
+      "value": "Mostra le tool call"
+    }
+  ],
   "Conversation.tsx_eq3LES": [
     {
       "type": 0,
@@ -639,12 +645,6 @@
     {
       "type": 1,
       "value": "conversation"
-    }
-  ],
-  "Conversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Attiva/disattiva le chiamate allo strumento"
     }
   ],
   "Conversation.tsx_oZLZvb": [
@@ -669,10 +669,16 @@
       "value": "conversationId"
     }
   ],
+  "Conversation.tsx_yGVyFv": [
+    {
+      "type": 0,
+      "value": "Nascondi le tool call"
+    }
+  ],
   "Conversation.tsx_yWDfdE": [
     {
       "type": 0,
-      "value": "Che tipo di dati vuoi archiviare?"
+      "value": "Che tipo di dati vuoi salvare?"
     }
   ],
   "Conversation.tsx_yYmfIl": [
@@ -786,7 +792,7 @@
   "CreateCollectionAssisted.tsx_yWDfdE": [
     {
       "type": 0,
-      "value": "Che tipo di dati vuoi archiviare?"
+      "value": "Che tipo di dati vuoi salvare?"
     }
   ],
   "CreateCollectionForm.tsx_+gaKsp": [
@@ -840,7 +846,7 @@
   "CreateDocument.tsx_K6tRTv": [
     {
       "type": 0,
-      "value": "Azioni crea documento"
+      "value": "Azioni della pagina di creazione documento"
     }
   ],
   "CreateDocument.tsx_VzzYJk": [
@@ -2193,7 +2199,7 @@
   "InstallPackModal.tsx_B8WL2e": [
     {
       "type": 0,
-      "value": "Installare \""
+      "value": "Installare il pacchetto \""
     },
     {
       "type": 1,
@@ -2355,7 +2361,7 @@
   "LoadDemoDataButton.tsx_ZBdI8u": [
     {
       "type": 0,
-      "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
+      "value": "Carica alcune collezioni e documenti demo con cui puoi fare delle prove."
     }
   ],
   "LocalPack.tsx_/hNhmZ": [
@@ -3137,7 +3143,7 @@
       "children": [
         {
           "type": 0,
-          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. "
+          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la chiusura della barra laterale e la definizione di un layout personalizzato dei campi. "
         }
       ],
       "type": 8,
@@ -3359,7 +3365,7 @@
   "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
     },
     {
       "children": [
@@ -3391,7 +3397,7 @@
   "RemoteConvertersTab.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
     },
     {
       "children": [
@@ -4015,7 +4021,7 @@
     },
     {
       "type": 0,
-      "value": " ha riflettuto per "
+      "value": " ha pensato per "
     },
     {
       "type": 1,

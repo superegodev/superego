@@ -25,7 +25,8 @@ export default {
       method: "POST",
       headers: {
         Authorization: `Bearer ${env.RESPONSES_API_KEY}`,
-        "Content-Type": request.headers.get("Content-Type") ?? "",
+        "Content-Type":
+          request.headers.get("Content-Type") ?? "application/json",
       },
       body: request.body,
       signal: request.signal,

@@ -10,9 +10,11 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
+import isEmpty from "../../utils/isEmpty.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.InspectFile {
@@ -126,16 +128,14 @@ function getSupportedFileTypes(
   )!;
   const model = provider.models.find(({ id }) => id === modelId)!;
 
-  const types: string[] = [];
-  if (model.capabilities.imageUnderstanding) {
-    types.push("Image");
-  }
-  if (model.capabilities.audioUnderstanding) {
-    types.push("Audio");
-  }
-  if (model.capabilities.pdfUnderstanding) {
-    types.push("PDF");
+  const types = compact([
+    model.capabilities.imageUnderstanding ? "Image" : null,
+    model.capabilities.audioUnderstanding ? "Audio" : null,
+    model.capabilities.pdfUnderstanding ? "PDF" : null,
+  ]);
+  if (isEmpty(types)) {
+    throw new Error("No supported file types");
   }
 
-  return types.length > 0 ? types.join(", ") : "Image, Audio, PDF";
+  return types.join(", ");
 }
