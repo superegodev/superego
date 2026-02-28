@@ -1,12 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { GlobalSettings, Theme } from "@superego/backend";
+import { valibotSchemas } from "@superego/shared-utils";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
-import forms from "../../../business-logic/forms/forms.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
@@ -29,11 +29,11 @@ export default function UpdateGlobalSettingsForm({
   const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 
-  const { control, handleSubmit, reset, formState, watch } =
+  const { control, handleSubmit, reset, formState, watch, trigger } =
     useForm<GlobalSettings>({
       defaultValues: globalSettings,
       mode: "all",
-      resolver: standardSchemaResolver(forms.schemas.globalSettings()),
+      resolver: standardSchemaResolver(valibotSchemas.globalSettings()),
     });
 
   const onSubmit = async (values: GlobalSettings) => {
@@ -86,7 +86,12 @@ export default function UpdateGlobalSettingsForm({
         tabs={[
           {
             title: <FormattedMessage defaultMessage="Inference" />,
-            panel: <InferenceSettings control={control} />,
+            panel: (
+              <InferenceSettings
+                control={control}
+                triggerValidation={trigger}
+              />
+            ),
           },
           {
             title: <FormattedMessage defaultMessage="Assistants" />,

@@ -23,6 +23,7 @@ import {
   inferenceOptionsHas,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import pMap from "p-map";
 import type Assistant from "../../assistants/Assistant.js";
@@ -34,8 +35,8 @@ import type InferenceService from "../../requirements/InferenceService.js";
 import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
@@ -92,12 +93,16 @@ export default class AssistantsProcessConversation extends Usecase {
 
     const globalSettings = await this.repos.globalSettings.get();
 
-    const inferenceOptionsNotValid = validateInferenceOptions(
+    const inferenceOptionsIssues = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsNotValid) {
-      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
     }
 
     let updatedConversation: ConversationEntity;

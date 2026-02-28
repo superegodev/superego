@@ -11,4 +11,6 @@ export { default as isNonEmptyArray } from "./isNonEmptyArray.js";
 export { default as makeSuccessfulResult } from "./makeSuccessfulResult.js";
 export { default as makeUnsuccessfulResult } from "./makeUnsuccessfulResult.js";
 export { default as mapNonEmptyArray } from "./mapNonEmptyArray.js";
+export { default as globalSettingsValibotSchema } from "./valibotSchemas/globalSettings.js";
 export { default as valibotSchemas } from "./valibotSchemas/valibotSchemas.js";
+export { default as validateInferenceOptions } from "./validators/validateInferenceOptions.js";

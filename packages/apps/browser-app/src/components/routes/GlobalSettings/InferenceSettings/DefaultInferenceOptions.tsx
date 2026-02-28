@@ -2,7 +2,13 @@ import type {
   GlobalSettings,
   InferenceProviderModelRef,
 } from "@superego/backend";
-import { type Control, useController, useWatch } from "react-hook-form";
+import { useEffect, useRef } from "react";
+import {
+  type Control,
+  type UseFormTrigger,
+  useController,
+  useWatch,
+} from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import Fieldset from "../../../design-system/Fieldset/Fieldset.js";
 import {
@@ -16,11 +22,27 @@ import {
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
+  triggerValidation: UseFormTrigger<GlobalSettings>;
 }
-export default function DefaultInferenceOptions({ control }: Props) {
+export default function DefaultInferenceOptions({
+  control,
+  triggerValidation,
+}: Props) {
   const intl = useIntl();
 
   const providers = useWatch({ control, name: "inference.providers" });
+
+  // Re-validate default inference options when providers change, since
+  // their validity depends on provider model capabilities.
+  const prevProvidersRef = useRef(providers);
+  useEffect(() => {
+    if (prevProvidersRef.current === providers) {
+      return;
+    }
+    prevProvidersRef.current = providers;
+    triggerValidation("inference.defaultInferenceOptions");
+  }, [providers, triggerValidation]);
+
   const modelOptions: Option[] = [];
   for (const provider of providers) {
     for (const model of provider.models) {

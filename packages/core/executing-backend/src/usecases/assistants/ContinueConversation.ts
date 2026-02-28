@@ -19,6 +19,7 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
@@ -30,7 +31,6 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsContinueConversation extends Usecase<
@@ -50,12 +50,16 @@ export default class AssistantsContinueConversation extends Usecase<
   > {
     const globalSettings = await this.repos.globalSettings.get();
 
-    const inferenceOptionsNotValid = validateInferenceOptions(
+    const inferenceOptionsIssues = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsNotValid) {
-      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
     }
 
     const conversation = await this.repos.conversation.find(id);

@@ -17,11 +17,12 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 
 const MAX_ATTEMPTS = 5;
 
@@ -42,12 +43,16 @@ export default class InferenceImplementTypescriptModule extends Usecase<
   ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
     const globalSettings = await this.repos.globalSettings.get();
 
-    const inferenceOptionsNotValid = validateInferenceOptions(
+    const inferenceOptionsIssues = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsNotValid) {
-      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
     }
 
     const inferenceService = this.inferenceServiceFactory.create(

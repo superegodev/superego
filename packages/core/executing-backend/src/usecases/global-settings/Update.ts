@@ -1,35 +1,42 @@
 import type {
   Backend,
   GlobalSettings,
-  InferenceOptionsNotValid,
+  GlobalSettingsNotValid,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
+import * as v from "valibot";
+import makeResultError from "../../makers/makeResultError.js";
+import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 
 export default class GlobalSettingsUpdate extends Usecase<
   Backend["globalSettings"]["update"]
 > {
   async exec(
     globalSettingsPatch: Partial<GlobalSettings>,
-  ): ResultPromise<GlobalSettings, InferenceOptionsNotValid | UnexpectedError> {
+  ): ResultPromise<GlobalSettings, GlobalSettingsNotValid | UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
     const updatedGlobalSettings: GlobalSettings = {
       ...globalSettings,
       ...globalSettingsPatch,
     };
 
-    const inferenceOptionsNotValid = validateInferenceOptions(
-      updatedGlobalSettings.inference.defaultInferenceOptions,
-      updatedGlobalSettings.inference,
+    const validationResult = v.safeParse(
+      valibotSchemas.globalSettings(),
+      updatedGlobalSettings,
     );
-    if (inferenceOptionsNotValid) {
-      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    if (!validationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("GlobalSettingsNotValid", {
+          issues: makeValidationIssues(validationResult.issues),
+        }),
+      );
     }
 
     await this.repos.globalSettings.replace(updatedGlobalSettings);

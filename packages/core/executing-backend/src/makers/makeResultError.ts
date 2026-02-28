@@ -44,6 +44,7 @@ import type {
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
+  GlobalSettingsNotValid,
   InferenceOptionsNotValid,
   MakingContentBlockingKeysFailed,
   PackNotFound,
@@ -106,6 +107,7 @@ type KnownResultError =
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
+  | GlobalSettingsNotValid
   | InferenceOptionsNotValid
   | MakingContentBlockingKeysFailed
   | PackNotFound

@@ -25,7 +25,7 @@ const defaultGlobalSettings = {
             name: "modelId",
             capabilities: {
               reasoning: false,
-              audioUnderstanding: false,
+              audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
               webSearching: false,

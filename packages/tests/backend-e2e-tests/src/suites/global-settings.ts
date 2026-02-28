@@ -58,7 +58,7 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
   });
 
   describe("update", () => {
-    it("error: InferenceOptionsNotValid", async () => {
+    it("error: GlobalSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
 
@@ -84,7 +84,7 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "InferenceOptionsNotValid",
+          name: "GlobalSettingsNotValid",
           details: {
             issues: expect.any(Array),
           },

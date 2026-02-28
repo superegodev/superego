@@ -42,6 +42,7 @@ import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
+import type GlobalSettingsNotValid from "./errors/GlobalSettingsNotValid.js";
 import type InferenceOptionsNotValid from "./errors/InferenceOptionsNotValid.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
 import type PackNotFound from "./errors/PackNotFound.js";
@@ -600,7 +601,7 @@ export default interface Backend {
       globalSettingsPatch: Partial<GlobalSettings>,
     ): ResultPromise<
       GlobalSettings,
-      InferenceOptionsNotValid | UnexpectedError
+      GlobalSettingsNotValid | UnexpectedError
     >;
   };
 }

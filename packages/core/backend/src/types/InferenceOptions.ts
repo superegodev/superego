@@ -1,6 +1,6 @@
 import type InferenceProviderModelRef from "./InferenceProviderModelRef.js";
 
-type WithNonNullableProp<Type, NonNullableProp extends keyof Type> = {
+type NullableExceptForProps<Type, NonNullableProp extends keyof Type> = {
   [P in keyof Type]: P extends NonNullableProp ? Type[P] : Type[P] | null;
 };
 
@@ -23,5 +23,5 @@ type NonNullableInferenceOptions = {
  * `InferenceOptions<"completion">` guarantees `completion` is non-null.
  */
 type InferenceOptions<Prop extends keyof NonNullableInferenceOptions = never> =
-  WithNonNullableProp<NonNullableInferenceOptions, Prop>;
+  NullableExceptForProps<NonNullableInferenceOptions, Prop>;
 export default InferenceOptions;

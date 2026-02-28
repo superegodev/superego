@@ -1,17 +1,14 @@
 import type {
   InferenceOptions,
-  InferenceOptionsNotValid,
   InferenceProviderModelRef,
   InferenceSettings,
   ValidationIssue,
 } from "@superego/backend";
-import makeResultError from "../makers/makeResultError.js";
-import isEmpty from "../utils/isEmpty.js";
 
 export default function validateInferenceOptions(
   inferenceOptions: InferenceOptions,
   inferenceSettings: InferenceSettings,
-): InferenceOptionsNotValid | null {
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   if (inferenceOptions.completion) {
@@ -41,11 +38,7 @@ export default function validateInferenceOptions(
     );
   }
 
-  if (!isEmpty(issues)) {
-    return makeResultError("InferenceOptionsNotValid", { issues });
-  }
-
-  return null;
+  return issues;
 }
 
 function validateProviderModelRef(
@@ -60,11 +53,7 @@ function validateProviderModelRef(
   if (!provider) {
     issues.push({
       message: `Provider "${providerModelRef.providerName}" not found`,
-      path: [
-        { key: category },
-        { key: "providerModelRef" },
-        { key: "providerName" },
-      ],
+      path: [{ key: category }],
     });
   } else {
     const model = provider.models.find(
@@ -73,12 +62,29 @@ function validateProviderModelRef(
     if (!model) {
       issues.push({
         message: `Model "${providerModelRef.modelId}" not found in provider "${providerModelRef.providerName}"`,
-        path: [
-          { key: category },
-          { key: "providerModelRef" },
-          { key: "modelId" },
-        ],
+        path: [{ key: category }],
       });
+    } else {
+      if (
+        category === "transcription" &&
+        !model.capabilities.audioUnderstanding
+      ) {
+        issues.push({
+          message: `Model "${model.id}" does not support audio understanding, required for transcription`,
+          path: [{ key: category }],
+        });
+      }
+      if (
+        category === "fileInspection" &&
+        !model.capabilities.audioUnderstanding &&
+        !model.capabilities.imageUnderstanding &&
+        !model.capabilities.pdfUnderstanding
+      ) {
+        issues.push({
+          message: `Model "${model.id}" does not support any file understanding capability (audio, image, or PDF), required for file inspection`,
+          path: [{ key: category }],
+        });
+      }
     }
   }
 }

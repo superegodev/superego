@@ -39,7 +39,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
             name: "modelId",
             capabilities: {
               reasoning: false,
-              audioUnderstanding: false,
+              audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
               webSearching: false,

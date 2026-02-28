@@ -15,15 +15,16 @@ import type { Milliseconds, ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
+import isEmpty from "../../utils/isEmpty.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
-import validateInferenceOptions from "../../validators/validateInferenceOptions.js";
 import CollectionsList from "../collections/List.js";
 
 const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
@@ -43,12 +44,16 @@ export default class AssistantsRecoverConversation extends Usecase<
   > {
     const globalSettings = await this.repos.globalSettings.get();
 
-    const inferenceOptionsNotValid = validateInferenceOptions(
+    const inferenceOptionsIssues = validateInferenceOptions(
       inferenceOptions,
       globalSettings.inference,
     );
-    if (inferenceOptionsNotValid) {
-      return makeUnsuccessfulResult(inferenceOptionsNotValid);
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
     }
 
     const conversation = await this.repos.conversation.find(id);
