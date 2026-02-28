@@ -19,6 +19,7 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import isEmpty from "../../utils/isEmpty.js";
@@ -312,32 +313,33 @@ const WriteTypescriptModuleTool = {
   },
 };
 
-// TODO_AI: react and echarts should only be added for modules using them.
 /** Slims down libs to avoid a huge and largely useless context. */
 function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
-  return [
+  return compact([
     ...libs.filter(
-      // Remove full definitions of well-known libraries.
       (lib) =>
         !(
           lib.path.startsWith("/node_modules/react") ||
           lib.path.startsWith("/node_modules/echarts")
         ),
     ),
-    // Add shim definitions for well-known libraries.
-    {
-      path: "/node_modules/react/index.d.ts",
-      source: [
-        "// Full type definitions omitted. Use standard APIs",
-        'declare module "react";',
-      ].join("\n"),
-    },
-    {
-      path: "/node_modules/echarts/index.d.ts",
-      source: [
-        "// Full type definitions omitted. Use standard APIs",
-        'declare module "echarts";',
-      ].join("\n"),
-    },
-  ];
+    libs.some((lib) => lib.path.startsWith("/node_modules/react"))
+      ? {
+          path: "/node_modules/react/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "react";',
+          ].join("\n"),
+        }
+      : null,
+    libs.some((lib) => lib.path.startsWith("/node_modules/echarts"))
+      ? {
+          path: "/node_modules/echarts/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "echarts";',
+          ].join("\n"),
+        }
+      : null,
+  ]);
 }
