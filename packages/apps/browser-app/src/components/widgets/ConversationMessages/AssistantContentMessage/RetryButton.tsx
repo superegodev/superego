@@ -1,8 +1,5 @@
-import type {
-  Conversation,
-  InferenceOptions,
-  Message,
-} from "@superego/backend";
+import type { Conversation, Message } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import { PiArrowsClockwise } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.js";
@@ -27,7 +24,7 @@ export default function RetryButton({
 
   return conversation.canRetryLastResponse &&
     message === last(conversation.messages) &&
-    defaultInferenceOptions.completion ? (
+    inferenceOptionsHas(defaultInferenceOptions, "completion") ? (
     <IconButton
       variant="invisible"
       label={
@@ -35,14 +32,7 @@ export default function RetryButton({
           ? intl.formatMessage({ defaultMessage: "Retrying..." })
           : intl.formatMessage({ defaultMessage: "Retry response" })
       }
-      onPress={() =>
-        mutate(
-          conversation.id,
-          // TypeScript doesn't understand, but since we're in the branch
-          // defaultInferenceOptions.completion !== null, this cast is safe.
-          defaultInferenceOptions as InferenceOptions<"completion">,
-        )
-      }
+      onPress={() => mutate(conversation.id, defaultInferenceOptions)}
       className={className}
     >
       <PiArrowsClockwise />

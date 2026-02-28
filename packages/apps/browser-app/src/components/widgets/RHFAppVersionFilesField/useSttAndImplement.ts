@@ -12,6 +12,7 @@ import {
   type WriteTypescriptModuleToolNotCalled,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import {
   useImplementTypescriptModule,
   useStt,
@@ -62,12 +63,8 @@ export default function useSttAndImplement(
 
     let userRequest: string;
     if (part.type === MessageContentPartType.Audio) {
-      const sttResult = await stt(
-        part.audio,
-        // Message content can contain an audio part only when
-        // inferenceOptions.transcription is not null.
-        inferenceOptions as InferenceOptions<"transcription">,
-      );
+      assertInferenceOptionsHas(inferenceOptions, "transcription");
+      const sttResult = await stt(part.audio, inferenceOptions);
       if (!sttResult.success) {
         return sttResult;
       }

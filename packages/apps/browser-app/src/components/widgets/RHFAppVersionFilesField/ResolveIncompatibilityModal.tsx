@@ -5,6 +5,7 @@ import {
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
@@ -72,7 +73,7 @@ export default function ResolveIncompatibilityModal({
         ))}
       </ul>
       <ModalDialog.Actions align="start">
-        {defaultInferenceOptions.completion ? (
+        {inferenceOptionsHas(defaultInferenceOptions, "completion") ? (
           <>
             <Button
               variant="primary"
@@ -84,10 +85,7 @@ export default function ResolveIncompatibilityModal({
                       text: getUserRequest(incompatibilities),
                     },
                   ],
-                  // TypeScript doesn't understand, but since we're in the
-                  // branch defaultInferenceOptions.completion !== null, this
-                  // cast is safe.
-                  defaultInferenceOptions as InferenceOptions<"completion">,
+                  defaultInferenceOptions,
                 );
                 setIsOpen(false);
               }}

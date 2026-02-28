@@ -1,8 +1,5 @@
-import type {
-  Conversation,
-  ConversationStatus,
-  InferenceOptions,
-} from "@superego/backend";
+import type { Conversation, ConversationStatus } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
@@ -25,19 +22,11 @@ export default function ErrorMessage({ conversation }: Props) {
     <div className={cs.ErrorMessage.root}>
       <div className={cs.ErrorMessage.message}>
         <FormattedMessage defaultMessage="The assistant encountered an error." />
-        {defaultInferenceOptions.completion ? (
+        {inferenceOptionsHas(defaultInferenceOptions, "completion") ? (
           <IconButton
             label={intl.formatMessage({ defaultMessage: "Retry" })}
             variant="invisible"
-            onPress={() =>
-              mutate(
-                conversation.id,
-                // TypeScript doesn't understand, but since we're in the branch
-                // defaultInferenceOptions.completion !== null, this cast is
-                // safe.
-                defaultInferenceOptions as InferenceOptions<"completion">,
-              )
-            }
+            onPress={() => mutate(conversation.id, defaultInferenceOptions)}
             className={cs.ErrorMessage.retryButton}
           >
             <PiArrowCounterClockwiseBold />

@@ -5,6 +5,7 @@ import {
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
+import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import { type RefObject, useRef, useState } from "react";
 import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
@@ -86,14 +87,13 @@ export default function UserMessageContentInput({
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
+    assertInferenceOptionsHas(inferenceOptions, "completion");
     onSend(
       [
         { type: MessageContentPartType.Text, text: text },
         ...(await getContentParts()),
       ],
-      // sendText can be invoked only when inferenceOptions.completion is not
-      // null.
-      inferenceOptions as InferenceOptions<"completion">,
+      inferenceOptions,
     );
     setText("");
     removeAllFiles();
@@ -101,14 +101,17 @@ export default function UserMessageContentInput({
 
   const { isRecording, startRecording, finishRecording, cancelRecording } =
     useRecordAudio(async (audio) => {
+      assertInferenceOptionsHas(
+        inferenceOptions,
+        "completion",
+        "transcription",
+      );
       onSend(
         [
           { type: MessageContentPartType.Audio, audio: audio },
           ...(await getContentParts()),
         ],
-        // This callback can be invoked only when inferenceOptions.completion
-        // and inferenceOptions.transcription are not null.
-        inferenceOptions as InferenceOptions<"completion" | "transcription">,
+        inferenceOptions,
       );
       removeAllFiles();
     });

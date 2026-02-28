@@ -7,6 +7,7 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
@@ -135,13 +136,8 @@ export default class FactotumAssistant extends Assistant {
       CreateGeoJSONMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
-      inferenceOptions.fileInspection
-        ? InspectFile.get(
-            inferenceSettings,
-            // TypeScript doesn't understand, but since we're in the branch
-            // inferenceOptions.fileInspection !== null, this cast is safe.
-            inferenceOptions as InferenceOptions<"fileInspection">,
-          )
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+        ? InspectFile.get(inferenceSettings, inferenceOptions)
         : null,
     ]);
   }
@@ -209,12 +205,15 @@ export default class FactotumAssistant extends Assistant {
     if (SearchDocuments.is(toolCall)) {
       return SearchDocuments.exec(toolCall, this.usecases.documentsSearch);
     }
-    if (InspectFile.is(toolCall) && inferenceOptions.fileInspection) {
+    if (
+      InspectFile.is(toolCall) &&
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+    ) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
-        inferenceOptions as InferenceOptions<"completion" | "fileInspection">,
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);

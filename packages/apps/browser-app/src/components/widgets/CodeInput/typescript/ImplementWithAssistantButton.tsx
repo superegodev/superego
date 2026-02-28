@@ -1,8 +1,5 @@
-import type {
-  InferenceOptions,
-  TypescriptFile,
-  TypescriptModule,
-} from "@superego/backend";
+import type { TypescriptFile, TypescriptModule } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -40,7 +37,8 @@ export default function ImplementWithAssistantButton({
   const intl = useIntl();
   const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useImplementTypescriptModule();
-  return defaultInferenceOptions.completion && assistantImplementation ? (
+  return inferenceOptionsHas(defaultInferenceOptions, "completion") &&
+    assistantImplementation ? (
     <>
       <IconButton
         variant="primary"
@@ -66,9 +64,7 @@ export default function ImplementWithAssistantButton({
               },
               userRequest: assistantImplementation.userRequest,
             },
-            // TypeScript doesn't understand, but since we're in the branch
-            // defaultInferenceOptions.completion !== null, this cast is safe.
-            defaultInferenceOptions as InferenceOptions<"completion">,
+            defaultInferenceOptions,
           );
           if (result.success) {
             onImplemented(result.data);

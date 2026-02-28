@@ -1,3 +1,4 @@
+export { default as assertInferenceOptionsHas } from "./assertInferenceOptionsHas.js";
 export { default as Base64Url } from "./Base64Url/Base64Url.js";
 export type { default as ContentSummaryProperty } from "./ContentSummaryUtils/ContentSummaryProperty.js";
 export { default as ContentSummaryUtils } from "./ContentSummaryUtils/ContentSummaryUtils.js";
@@ -5,6 +6,7 @@ export { default as escapeHtml } from "./escapeHtml.js";
 export { default as extractErrorDetails } from "./extractErrorDetails.js";
 export { default as failedResponseToError } from "./failedResponseToError.js";
 export { default as Id } from "./Id/Id.js";
+export { default as inferenceOptionsHas } from "./inferenceOptionsHas.js";
 export { default as isNonEmptyArray } from "./isNonEmptyArray.js";
 export { default as makeSuccessfulResult } from "./makeSuccessfulResult.js";
 export { default as makeUnsuccessfulResult } from "./makeUnsuccessfulResult.js";

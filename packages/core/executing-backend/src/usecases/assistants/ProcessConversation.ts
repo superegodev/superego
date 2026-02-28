@@ -20,6 +20,7 @@ import {
 import type { ResultPromise } from "@superego/global-types";
 import {
   extractErrorDetails,
+  inferenceOptionsHas,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
@@ -248,7 +249,7 @@ export default class AssistantsProcessConversation extends Usecase {
       return makeSuccessfulResult(conversation.messages);
     }
 
-    if (!inferenceOptions.transcription) {
+    if (!inferenceOptionsHas(inferenceOptions, "transcription")) {
       return makeUnsuccessfulResult(
         makeResultError("CannotTranscribeAudioMessage", {
           conversationId: conversation.id,
@@ -264,14 +265,7 @@ export default class AssistantsProcessConversation extends Usecase {
           part.type === MessageContentPartType.Audio
             ? {
                 type: MessageContentPartType.Text,
-                text: await inferenceService.stt(
-                  part.audio,
-                  // TypeScript doesn't understand, but since we checked above
-                  // that transcription !== null, this cast is safe.
-                  inferenceOptions as InferenceOptions<
-                    "completion" | "transcription"
-                  >,
-                ),
+                text: await inferenceService.stt(part.audio, inferenceOptions),
                 audio: part.audio,
               }
             : part,
