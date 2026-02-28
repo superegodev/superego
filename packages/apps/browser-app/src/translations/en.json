@@ -1436,6 +1436,21 @@
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Close"
   },
+  "TokenUsage.tsx_MJ2jZQ": {
+    "defaultMessage": "Total"
+  },
+  "TokenUsage.tsx_Wk7BO4": {
+    "defaultMessage": "{totalTokens} tokens"
+  },
+  "TokenUsage.tsx_fBG/Ge": {
+    "defaultMessage": "Cost"
+  },
+  "TokenUsage.tsx_fio5op": {
+    "defaultMessage": "Output"
+  },
+  "TokenUsage.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "This call has no result."
   },

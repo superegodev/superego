@@ -10,6 +10,7 @@ export const AssistantContentMessage = {
 
   infoAndActions: style({
     display: "flex",
+    gap: vars.spacing._2,
     alignItems: "center",
     marginBlockStart: vars.spacing._4,
     fontSize: vars.typography.fontSizes.sm,
@@ -34,7 +35,9 @@ export const AssistantContentMessage = {
     background: vars.colors.border.default,
     height: vars.spacing._4,
     width: vars.borders.width.thin,
-    marginInline: vars.spacing._2,
+    // Adjustment to make the next-child button look correctly spaced. (Else it
+    // looks to far due to its internal padding.)
+    marginInlineEnd: `calc(-1 * ${vars.spacing._1})`,
     selectors: {
       "&:last-child": {
         display: "none",

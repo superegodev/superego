@@ -1433,6 +1433,21 @@
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Chiudi"
   },
+  "TokenUsage.tsx_MJ2jZQ": {
+    "defaultMessage": "Totale"
+  },
+  "TokenUsage.tsx_Wk7BO4": {
+    "defaultMessage": "{totalTokens} token"
+  },
+  "TokenUsage.tsx_fBG/Ge": {
+    "defaultMessage": "Costo"
+  },
+  "TokenUsage.tsx_fio5op": {
+    "defaultMessage": "Output"
+  },
+  "TokenUsage.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
   },

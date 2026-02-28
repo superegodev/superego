@@ -76,6 +76,7 @@ export const InferenceOptionsInput = {
   selectModelTrigger: style({
     fontSize: vars.typography.fontSizes.sm,
     height: vars.spacing._9,
+    lineHeight: vars.spacing._9,
     alignItems: "center",
     gap: vars.spacing._1,
     padding: 0,

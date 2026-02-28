@@ -307,6 +307,12 @@ describe("toResponsesRequest", () => {
           { id: "call-1", tool: "get_weather", input: { city: "NYC" } },
         ],
         inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
         createdAt: new Date(),
       },
     ];
@@ -333,6 +339,12 @@ describe("toResponsesRequest", () => {
           { type: MessageContentPartType.Text, text: "Line 2" },
         ],
         inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
         createdAt: new Date(),
       },
     ];
@@ -359,8 +371,9 @@ describe("fromResponsesResponse", () => {
           arguments: JSON.stringify({ city: "NYC" }),
         },
       ],
+      usage: { input_tokens: 100, output_tokens: 50, total_tokens: 150 },
     };
-    const result = fromResponsesResponse(response, inferenceOptions);
+    const result = fromResponsesResponse(response, inferenceOptions, 1500);
 
     // Verify
     expect(result).toEqual(
@@ -370,6 +383,12 @@ describe("fromResponsesResponse", () => {
           { id: "call-1", tool: "get_weather", input: { city: "NYC" } },
         ],
         inferenceOptions,
+        generationStats: {
+          timeTaken: 1500,
+          inputTokens: 100,
+          outputTokens: 50,
+          totalTokens: 150,
+        },
       }),
     );
   });
@@ -385,8 +404,9 @@ describe("fromResponsesResponse", () => {
           content: [{ type: "output_text", text: "Hello!" }],
         },
       ],
+      usage: { input_tokens: 80, output_tokens: 20, total_tokens: 100 },
     };
-    const result = fromResponsesResponse(response, inferenceOptions);
+    const result = fromResponsesResponse(response, inferenceOptions, 1200);
 
     // Verify
     expect(result).toEqual(
@@ -394,6 +414,12 @@ describe("fromResponsesResponse", () => {
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Hello!" }],
         inferenceOptions,
+        generationStats: {
+          timeTaken: 1200,
+          inputTokens: 80,
+          outputTokens: 20,
+          totalTokens: 100,
+        },
       }),
     );
   });
@@ -416,8 +442,9 @@ describe("fromResponsesResponse", () => {
           arguments: JSON.stringify({ q: "test" }),
         },
       ],
+      usage: { input_tokens: 50, output_tokens: 30, total_tokens: 80 },
     };
-    const result = fromResponsesResponse(response, inferenceOptions);
+    const result = fromResponsesResponse(response, inferenceOptions, 800);
 
     // Verify
     expect(result).toEqual(
@@ -445,8 +472,9 @@ describe("fromResponsesResponse", () => {
           content: [{ type: "output_text", text: "Part 2" }],
         },
       ],
+      usage: { input_tokens: 60, output_tokens: 40, total_tokens: 100 },
     };
-    const result = fromResponsesResponse(response, inferenceOptions);
+    const result = fromResponsesResponse(response, inferenceOptions, 900);
 
     // Verify
     expect(result).toEqual(
@@ -474,6 +502,7 @@ describe("extractTextFromResponse", () => {
           ],
         },
       ],
+      usage: { input_tokens: 0, output_tokens: 0, total_tokens: 0 },
     };
     const result = extractTextFromResponse(response);
 
@@ -494,6 +523,7 @@ describe("extractTextFromResponse", () => {
           arguments: "{}",
         },
       ],
+      usage: { input_tokens: 0, output_tokens: 0, total_tokens: 0 },
     };
     const result = extractTextFromResponse(response);
 

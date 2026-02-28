@@ -4146,6 +4146,40 @@
       "value": "Chiudi"
     }
   ],
+  "TokenUsage.tsx_MJ2jZQ": [
+    {
+      "type": 0,
+      "value": "Totale"
+    }
+  ],
+  "TokenUsage.tsx_Wk7BO4": [
+    {
+      "type": 1,
+      "value": "totalTokens"
+    },
+    {
+      "type": 0,
+      "value": " token"
+    }
+  ],
+  "TokenUsage.tsx_fBG/Ge": [
+    {
+      "type": 0,
+      "value": "Costo"
+    }
+  ],
+  "TokenUsage.tsx_fio5op": [
+    {
+      "type": 0,
+      "value": "Output"
+    }
+  ],
+  "TokenUsage.tsx_it6Lig": [
+    {
+      "type": 0,
+      "value": "Input"
+    }
+  ],
   "ToolCallResult.tsx_yq9SNC": [
     {
       "type": 0,

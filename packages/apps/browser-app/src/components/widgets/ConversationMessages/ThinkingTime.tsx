@@ -1,24 +1,17 @@
-import {
-  type Conversation,
-  type GlobalSettings,
-  type Message,
-  MessageRole,
-} from "@superego/backend";
-import type { Milliseconds } from "@superego/global-types";
+import type { GlobalSettings, Message } from "@superego/backend";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import formatDuration from "../../../utils/formatDuration.js";
 
 interface Props {
   message: Message.ContentAssistant;
-  conversation: Conversation;
 }
-export default function ThinkingTime({ message, conversation }: Props) {
+export default function ThinkingTime({ message }: Props) {
   const intl = useIntl();
   const { globalSettings } = useGlobalData();
-  const thinkingTime = getThinkingTime(message, conversation);
+  const thinkingTime = message.generationStats.timeTaken;
   const modelName = getModelName(message, globalSettings);
-  return thinkingTime ? (
+  return thinkingTime > 0 ? (
     <FormattedMessage
       defaultMessage={"{model} thought for {time}"}
       values={{
@@ -27,24 +20,6 @@ export default function ThinkingTime({ message, conversation }: Props) {
       }}
     />
   ) : null;
-}
-
-function getThinkingTime(
-  message: Message.ContentAssistant,
-  conversation: Conversation,
-): Milliseconds | null {
-  const indexOfMessage = conversation.messages.indexOf(message);
-  let previousUserMessage: Message.User | null = null;
-  for (let i = indexOfMessage; i >= 0; i--) {
-    const previousMessage = conversation.messages[i];
-    if (previousMessage?.role === MessageRole.User) {
-      previousUserMessage = previousMessage;
-      break;
-    }
-  }
-  return previousUserMessage
-    ? message.createdAt.getTime() - previousUserMessage.createdAt.getTime()
-    : null;
 }
 
 function getModelName(

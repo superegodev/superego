@@ -11,6 +11,7 @@ import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
 import Markdown from "../../../design-system/Markdown/Markdown.js";
 import ThinkingTime from "../ThinkingTime.js";
+import TokenUsage from "../TokenUsage.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
 import CreateGeoJSONMap from "../ToolResult/CreateGeoJSONMap.js";
@@ -31,7 +32,8 @@ export default function AssistantContentMessage({
     <div className={cs.AssistantContentMessage.root}>
       <Markdown text={textPart.text} overrides={overrides} />
       <div className={cs.AssistantContentMessage.infoAndActions}>
-        <ThinkingTime message={message} conversation={conversation} />
+        <ThinkingTime message={message} />
+        <TokenUsage message={message} />
         <Separator
           orientation="vertical"
           className={cs.AssistantContentMessage.infoAndActionsSeparator}

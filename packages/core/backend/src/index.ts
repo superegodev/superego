@@ -139,6 +139,7 @@ export type { default as LitePack } from "./types/LitePack.js";
 export type { default as LitePackInfo } from "./types/LitePackInfo.js";
 export type { default as Message } from "./types/Message.js";
 export type { default as MessageContentPart } from "./types/MessageContentPart.js";
+export type { default as MessageGenerationStats } from "./types/MessageGenerationStats.js";
 export type { default as MinimalDocumentVersion } from "./types/MinimalDocumentVersion.js";
 export type { default as NonEmptyArray } from "./types/NonEmptyArray.js";
 export type { default as Pack } from "./types/Pack.js";

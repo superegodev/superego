@@ -558,6 +558,12 @@ export default rd<GetDependencies>("Assistants", (deps) => {
                 },
               ],
               inferenceOptions,
+              generationStats: {
+                timeTaken: 0,
+                inputTokens: 0,
+                outputTokens: 0,
+                totalTokens: 0,
+              },
               createdAt: new Date(),
             };
           }
@@ -565,6 +571,12 @@ export default rd<GetDependencies>("Assistants", (deps) => {
             role: MessageRole.Assistant,
             content: [{ type: MessageContentPartType.Text, text: "Done" }],
             inferenceOptions,
+            generationStats: {
+              timeTaken: 0,
+              inputTokens: 0,
+              outputTokens: 0,
+              totalTokens: 0,
+            },
             createdAt: new Date(),
           };
         },

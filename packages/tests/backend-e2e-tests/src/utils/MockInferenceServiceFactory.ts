@@ -19,6 +19,12 @@ class MockInferenceService implements InferenceService {
       role: MessageRole.Assistant,
       content: [{ type: MessageContentPartType.Text, text: "Mock response" }],
       inferenceOptions,
+      generationStats: {
+        timeTaken: 0,
+        inputTokens: 0,
+        outputTokens: 0,
+        totalTokens: 0,
+      },
       createdAt: new Date(),
     };
   }

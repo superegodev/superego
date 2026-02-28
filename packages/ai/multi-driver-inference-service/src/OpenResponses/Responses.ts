@@ -83,6 +83,12 @@ export namespace Responses {
   export interface Response {
     id: string;
     output: OutputItem[];
+    usage: {
+      input_tokens: number;
+      output_tokens: number;
+      total_tokens: number;
+      cost?: number;
+    };
   }
 
   export type OutputItem = MessageOutputItem | ResponseFunctionCallItem;
@@ -214,10 +220,18 @@ function toResponsesTool(tool: InferenceService.Tool): Responses.Tool {
 export function fromResponsesResponse(
   response: Responses.Response,
   inferenceOptions: InferenceOptions<"completion">,
+  timeTaken: number,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const baseMessage = {
     role: MessageRole.Assistant,
     inferenceOptions: inferenceOptions,
+    generationStats: {
+      timeTaken,
+      inputTokens: response.usage.input_tokens,
+      outputTokens: response.usage.output_tokens,
+      totalTokens: response.usage.total_tokens,
+      cost: response.usage.cost,
+    },
     createdAt: new Date(),
   } as const;
 

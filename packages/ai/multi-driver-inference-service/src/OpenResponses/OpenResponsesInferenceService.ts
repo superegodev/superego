@@ -32,6 +32,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
 
     const requestBody = toResponsesRequest(model.id, previousMessages, tools);
 
+    const startTime = Date.now();
     const response = await fetch(provider.baseUrl, {
       method: "POST",
       headers: {
@@ -46,7 +47,8 @@ export default class OpenResponsesInferenceService implements InferenceService {
     await this.handleError("generateNextMessage", requestBody, response);
 
     const json = (await response.json()) as Responses.Response;
-    return fromResponsesResponse(json, inferenceOptions);
+    const timeTaken = Date.now() - startTime;
+    return fromResponsesResponse(json, inferenceOptions, timeTaken);
   }
 
   async stt(

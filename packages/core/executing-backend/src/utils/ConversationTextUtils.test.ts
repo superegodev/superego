@@ -89,6 +89,12 @@ describe("extractTextChunks", () => {
             transcription: null,
             fileInspection: null,
           },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
           createdAt: new Date(),
         },
       ]);
@@ -112,6 +118,12 @@ describe("extractTextChunks", () => {
             },
             transcription: null,
             fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
           },
           createdAt: new Date(),
         },
@@ -191,6 +203,12 @@ describe("extractTextChunks", () => {
             },
             transcription: null,
             fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
           },
           createdAt: new Date(),
         },

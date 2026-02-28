@@ -23,6 +23,33 @@ export const ThinkingMessage = {
   }),
 };
 
+export const TokenUsage = {
+  trigger: style({
+    all: "unset",
+    cursor: "default",
+    textDecorationLine: "underline",
+    textDecorationStyle: "dotted",
+    textUnderlineOffset: vars.spacing._1,
+  }),
+
+  tooltip: style({
+    textAlign: "start",
+  }),
+
+  statsList: style({
+    display: "grid",
+    gridTemplateColumns: "auto auto",
+    gap: `${vars.spacing._1} ${vars.spacing._2}`,
+    margin: 0,
+    padding: 0,
+  }),
+
+  statsListValue: style({
+    margin: 0,
+    textAlign: "end",
+  }),
+};
+
 export const ErrorMessage = {
   root: style({
     display: "flex",
