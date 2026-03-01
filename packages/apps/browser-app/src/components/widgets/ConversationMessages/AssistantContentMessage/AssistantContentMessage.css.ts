@@ -71,7 +71,7 @@ export const TokenUsage = {
     borderColor: vars.colors.border.default,
     borderWidth: vars.borders.width.thin,
     borderStyle: "solid",
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.shadow.default} r g b / 0.1)`,
   }),
 
   title: style({

@@ -9,7 +9,7 @@ export const Popover = {
     borderWidth: vars.borders.width.thin,
     borderStyle: "solid",
     borderRadius: vars.borders.radius.md,
-    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.25)`,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.shadow.default} r g b / 0.25)`,
   }),
 
   arrow: style({
