@@ -91,7 +91,7 @@ describe("toResponsesRequest", () => {
     );
 
     // Verify
-    expect(result.reasoning).toEqual({ effort: "high" });
+    expect(result.reasoning).toEqual({ effort: "high", summary: "auto" });
   });
 
   it("sets reasoning to undefined when reasoningEffort is null", () => {
@@ -343,6 +343,7 @@ describe("toResponsesRequest", () => {
         toolCalls: [
           { id: "call-1", tool: "get_weather", input: { city: "NYC" } },
         ],
+        reasoning: {},
         inferenceOptions,
         generationStats: {
           timeTaken: 0,
@@ -375,6 +376,7 @@ describe("toResponsesRequest", () => {
           { type: MessageContentPartType.Text, text: "Line 1" },
           { type: MessageContentPartType.Text, text: "Line 2" },
         ],
+        reasoning: {},
         inferenceOptions,
         generationStats: {
           timeTaken: 0,
@@ -391,6 +393,279 @@ describe("toResponsesRequest", () => {
     expect(result.input).toEqual([
       { type: "message", role: "assistant", content: "Line 1\nLine 2" },
     ]);
+  });
+
+  it("passes back reasoning for assistant messages after the last user message", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "First" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Old reply" }],
+        reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Second" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        toolCalls: [{ id: "call-1", tool: "search", input: { q: "test" } }],
+        reasoning: { content: "new-reasoning", contentSignature: "new-sig" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Tool,
+        toolResults: [
+          { tool: "search", toolCallId: "call-1", output: "result" as any },
+        ],
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    const oldAssistantItems = result.input.filter(
+      (item) =>
+        item.type === "message" &&
+        (item as Responses.MessageItem).role === "assistant",
+    );
+    expect(oldAssistantItems).toHaveLength(1);
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(1);
+    expect(reasoningItems[0]).toEqual(
+      expect.objectContaining({
+        type: "reasoning",
+        content: [{ type: "reasoning_text", text: "new-reasoning" }],
+        signature: "new-sig",
+      }),
+    );
+  });
+
+  it("does not pass back reasoning for assistant messages before the last user message", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "First" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Reply" }],
+        reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Second" }],
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(0);
+  });
+
+  it("does not emit reasoning input items when reasoningEffort is null", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Reply" }],
+        reasoning: { content: "some reasoning" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest("gpt-oss-120b", messages, [], null);
+
+    // Verify
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(0);
+  });
+
+  it("passes back reasoning for content assistant messages after the last user message", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Reply" }],
+        reasoning: { content: "some reasoning", contentSignature: "sig-1" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(1);
+    expect(reasoningItems[0]).toEqual(
+      expect.objectContaining({
+        type: "reasoning",
+        content: [{ type: "reasoning_text", text: "some reasoning" }],
+        signature: "sig-1",
+      }),
+    );
+    const assistantItems = result.input.filter(
+      (item) =>
+        item.type === "message" &&
+        (item as Responses.MessageItem).role === "assistant",
+    );
+    expect(assistantItems).toHaveLength(1);
+  });
+
+  it("passes back reasoning with encrypted content", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Reply" }],
+        reasoning: { encryptedContent: "encrypted-data" },
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(1);
+    expect(reasoningItems[0]).toEqual(
+      expect.objectContaining({
+        type: "reasoning",
+        encrypted_content: "encrypted-data",
+      }),
+    );
+  });
+
+  it("does not emit reasoning input item when reasoning is empty", () => {
+    // Exercise
+    const messages: Message[] = [
+      {
+        role: MessageRole.User,
+        content: [{ type: MessageContentPartType.Text, text: "Hello" }],
+        createdAt: new Date(),
+      },
+      {
+        role: MessageRole.Assistant,
+        content: [{ type: MessageContentPartType.Text, text: "Reply" }],
+        reasoning: {},
+        inferenceOptions,
+        generationStats: {
+          timeTaken: 0,
+          inputTokens: 0,
+          outputTokens: 0,
+          totalTokens: 0,
+        },
+        createdAt: new Date(),
+      },
+    ];
+    const result = toResponsesRequest(
+      "gpt-oss-120b",
+      messages,
+      [],
+      ReasoningEffort.High,
+    );
+
+    // Verify
+    const reasoningItems = result.input.filter(
+      (item) => item.type === "reasoning",
+    );
+    expect(reasoningItems).toHaveLength(0);
   });
 });
 
@@ -491,6 +766,86 @@ describe("fromResponsesResponse", () => {
       }),
     );
     expect(result).not.toHaveProperty("content");
+  });
+
+  it("extracts reasoning from response output", () => {
+    // Exercise
+    const response: Responses.Response = {
+      id: "resp-1",
+      output: [
+        {
+          type: "reasoning",
+          id: "rs_123",
+          content: [
+            { type: "reasoning_text", text: "The model reasoned..." },
+          ],
+          signature: "sig-123",
+          summary: [{ type: "summary_text", text: "Summary of reasoning" }],
+        },
+        {
+          type: "message",
+          role: "assistant",
+          content: [{ type: "output_text", text: "Hello!" }],
+        },
+      ],
+      usage: { input_tokens: 80, output_tokens: 20, total_tokens: 100 },
+    };
+    const result = fromResponsesResponse(response, inferenceOptions, 1200);
+
+    // Verify
+    expect(result.reasoning).toEqual({
+      content: "The model reasoned...",
+      contentSignature: "sig-123",
+      summary: "Summary of reasoning",
+    });
+  });
+
+  it("extracts reasoning with multiple content parts", () => {
+    // Exercise
+    const response: Responses.Response = {
+      id: "resp-1",
+      output: [
+        {
+          type: "reasoning",
+          id: "rs_456",
+          content: [
+            { type: "reasoning_text", text: "First thought." },
+            { type: "reasoning_text", text: "Second thought." },
+          ],
+        },
+        {
+          type: "message",
+          role: "assistant",
+          content: [{ type: "output_text", text: "Hello!" }],
+        },
+      ],
+      usage: { input_tokens: 80, output_tokens: 20, total_tokens: 100 },
+    };
+    const result = fromResponsesResponse(response, inferenceOptions, 1200);
+
+    // Verify
+    expect(result.reasoning).toEqual({
+      content: "First thought.\nSecond thought.",
+    });
+  });
+
+  it("returns empty reasoning when no reasoning output item", () => {
+    // Exercise
+    const response: Responses.Response = {
+      id: "resp-1",
+      output: [
+        {
+          type: "message",
+          role: "assistant",
+          content: [{ type: "output_text", text: "Hello!" }],
+        },
+      ],
+      usage: { input_tokens: 80, output_tokens: 20, total_tokens: 100 },
+    };
+    const result = fromResponsesResponse(response, inferenceOptions, 1200);
+
+    // Verify
+    expect(result.reasoning).toEqual({});
   });
 
   it("joins text from multiple message output items", () => {

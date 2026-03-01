@@ -11,6 +11,7 @@ function makeContentAssistant(stats: {
   return {
     role: MessageRole.Assistant,
     content: [{ type: MessageContentPartType.Text, text: "hello" }],
+    reasoning: {},
     inferenceOptions: { completion: {} } as any,
     generationStats: {
       timeTaken: 100,
@@ -34,6 +35,7 @@ function makeToolCallAssistant(
       tool: "some_tool",
       input: {},
     })),
+    reasoning: {},
     inferenceOptions: { completion: {} } as any,
     generationStats: {
       timeTaken: 50,

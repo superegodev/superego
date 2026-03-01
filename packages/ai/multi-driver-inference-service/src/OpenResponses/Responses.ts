@@ -7,6 +7,7 @@ import {
   type ReasoningEffort,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
+import { compact } from "es-toolkit";
 import getAudioFormat from "../utils/getAudioFormat.js";
 import toBase64 from "../utils/toBase64.js";
 import toDataURL from "../utils/toDataURL.js";
@@ -20,7 +21,7 @@ export namespace Responses {
     input: InputItem[];
     model: string;
     tools: Tool[] | undefined;
-    reasoning: { effort: string } | undefined;
+    reasoning: { effort: string; summary: "auto" } | undefined;
     stream: boolean;
   };
 
@@ -40,10 +41,20 @@ export namespace Responses {
     call_id: string;
     output: string;
   }
+  export interface ReasoningInputItem {
+    type: "reasoning";
+    id?: string;
+    content?: { type: "reasoning_text"; text: string }[];
+    encrypted_content?: string;
+    summary?: { type: "summary_text"; text: string }[];
+    signature?: string;
+    format?: string;
+  }
   export type InputItem =
     | MessageItem
     | FunctionCallItem
-    | FunctionCallOutputItem;
+    | FunctionCallOutputItem
+    | ReasoningInputItem;
 
   export interface InputTextPart {
     type: "input_text";
@@ -93,7 +104,10 @@ export namespace Responses {
     };
   }
 
-  export type OutputItem = MessageOutputItem | ResponseFunctionCallItem;
+  export type OutputItem =
+    | MessageOutputItem
+    | ResponseFunctionCallItem
+    | ReasoningOutputItem;
   export interface MessageOutputItem {
     type: "message";
     role: "assistant";
@@ -112,6 +126,15 @@ export namespace Responses {
     text: string;
   }
   export type OutputContentPart = OutputTextPart;
+
+  export interface ReasoningOutputItem {
+    type: "reasoning";
+    id: string;
+    content?: { type: "reasoning_text"; text: string }[];
+    encrypted_content?: string;
+    summary?: { type: "summary_text"; text: string }[];
+    signature?: string;
+  }
 }
 
 export function toResponsesRequest(
@@ -121,17 +144,36 @@ export function toResponsesRequest(
   reasoningEffort: ReasoningEffort | null,
 ): Responses.Request {
   const responsesTools = tools.map(toResponsesTool);
+  const latestTurnStartIndex = findLatestTurnStartIndex(messages);
   return {
     model: model,
-    input: messages.flatMap(toResponsesInputItem),
+    input: messages.flatMap((message, index) =>
+      toResponsesInputItem(
+        message,
+        reasoningEffort !== null && index >= latestTurnStartIndex,
+      ),
+    ),
     tools: responsesTools.length > 0 ? responsesTools : undefined,
-    reasoning: reasoningEffort ? { effort: reasoningEffort } : undefined,
+    reasoning: reasoningEffort
+      ? { effort: reasoningEffort, summary: "auto" }
+      : undefined,
     stream: false,
   };
 }
 
+function findLatestTurnStartIndex(messages: Message[]): number {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message && message.role === MessageRole.User) {
+      return i + 1;
+    }
+  }
+  return 0;
+}
+
 function toResponsesInputItem(
   message: Message,
+  includeReasoning: boolean,
 ): Responses.InputItem | Responses.InputItem[] {
   if (message.role === MessageRole.Developer) {
     return {
@@ -162,22 +204,64 @@ function toResponsesInputItem(
     }));
   }
 
+  const reasoningItem = includeReasoning
+    ? toReasoningInputItem(message.reasoning)
+    : null;
+
   if ("toolCalls" in message) {
-    return message.toolCalls.map((toolCall) => ({
-      type: "function_call",
-      call_id: toolCall.id,
-      name: toolCall.tool,
-      arguments: JSON.stringify(toolCall.input),
-    }));
+    return compact([
+      reasoningItem,
+      ...message.toolCalls.map((toolCall) => ({
+        type: "function_call" as const,
+        call_id: toolCall.id,
+        name: toolCall.tool,
+        arguments: JSON.stringify(toolCall.input),
+      })),
+    ]);
   }
 
+  return compact([
+    reasoningItem,
+    {
+      type: "message",
+      role: "assistant",
+      content: message.content
+        .filter((part) => part.type === MessageContentPartType.Text)
+        .map((part) => part.text)
+        .join("\n"),
+    },
+  ]);
+}
+
+function toReasoningInputItem(
+  reasoning: Message.Assistant.Reasoning,
+): Responses.ReasoningInputItem | null {
+  if (
+    !reasoning.content &&
+    !reasoning.encryptedContent &&
+    !reasoning.contentSignature &&
+    !reasoning.summary
+  ) {
+    return null;
+  }
   return {
-    type: "message",
-    role: "assistant",
-    content: message.content
-      .filter((part) => part.type === MessageContentPartType.Text)
-      .map((part) => part.text)
-      .join("\n"),
+    type: "reasoning",
+    ...(reasoning.content !== undefined
+      ? {
+          content: [{ type: "reasoning_text", text: reasoning.content }],
+        }
+      : null),
+    ...(reasoning.encryptedContent !== undefined
+      ? { encrypted_content: reasoning.encryptedContent }
+      : null),
+    ...(reasoning.contentSignature !== undefined
+      ? { signature: reasoning.contentSignature }
+      : null),
+    ...(reasoning.summary !== undefined
+      ? {
+          summary: [{ type: "summary_text", text: reasoning.summary }],
+        }
+      : null),
   };
 }
 
@@ -221,6 +305,33 @@ function toResponsesTool(tool: InferenceService.Tool): Responses.Tool {
   };
 }
 
+function extractReasoning(
+  output: Responses.OutputItem[],
+): Message.Assistant.Reasoning {
+  const reasoningItem = output.find((item) => item.type === "reasoning");
+  if (!reasoningItem) {
+    return {};
+  }
+  const reasoning: Message.Assistant.Reasoning = {};
+  if (reasoningItem.content && reasoningItem.content.length > 0) {
+    reasoning.content = reasoningItem.content
+      .map((part) => part.text)
+      .join("\n");
+  }
+  if (reasoningItem.encrypted_content !== undefined) {
+    reasoning.encryptedContent = reasoningItem.encrypted_content;
+  }
+  if (reasoningItem.signature !== undefined) {
+    reasoning.contentSignature = reasoningItem.signature;
+  }
+  if (reasoningItem.summary && reasoningItem.summary.length > 0) {
+    reasoning.summary = reasoningItem.summary
+      .map((part) => part.text)
+      .join("\n");
+  }
+  return reasoning;
+}
+
 export function fromResponsesResponse(
   response: Responses.Response,
   inferenceOptions: InferenceOptions<"completion">,
@@ -239,6 +350,8 @@ export function fromResponsesResponse(
     createdAt: new Date(),
   } as const;
 
+  const reasoning = extractReasoning(response.output);
+
   const functionCalls = response.output.filter(
     (item): item is Responses.ResponseFunctionCallItem =>
       item.type === "function_call",
@@ -247,6 +360,7 @@ export function fromResponsesResponse(
   if (functionCalls.length > 0) {
     return {
       ...baseMessage,
+      reasoning,
       toolCalls: functionCalls.map((call) => ({
         id: call.call_id,
         tool: call.name,
@@ -271,6 +385,7 @@ export function fromResponsesResponse(
 
   return {
     ...baseMessage,
+    reasoning,
     content: [{ type: MessageContentPartType.Text, text }],
   };
 }

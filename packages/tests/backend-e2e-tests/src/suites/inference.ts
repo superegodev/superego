@@ -108,6 +108,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
         generateNextMessage: async (_msgs, _tools, inferenceOptions) => ({
           role: MessageRole.Assistant,
           content: [{ type: MessageContentPartType.Text, text: "Mock" }],
+          reasoning: {},
           inferenceOptions,
           generationStats: {
             timeTaken: 0,
@@ -189,6 +190,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
               text: "Here is the code...",
             },
           ],
+          reasoning: {},
           inferenceOptions,
           generationStats: {
             timeTaken: 0,
@@ -240,6 +242,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
                 input: { source: "const x: number = 'not a number';" },
               },
             ],
+            reasoning: {},
             inferenceOptions,
             generationStats: {
               timeTaken: 0,
@@ -293,6 +296,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
                 },
               },
             ],
+            reasoning: {},
             inferenceOptions,
             generationStats: {
               timeTaken: 0,

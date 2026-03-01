@@ -83,6 +83,7 @@ describe("extractTextChunks", () => {
             { type: MessageContentPartType.Text, text: "Response 1" },
             { type: MessageContentPartType.Text, text: "Response 2" },
           ],
+          reasoning: {},
           inferenceOptions: {
             completion: {
               providerModelRef: {
@@ -114,6 +115,7 @@ describe("extractTextChunks", () => {
         {
           role: MessageRole.Assistant,
           toolCalls: [{ id: "call-1", tool: "someTool", input: {} }],
+          reasoning: {},
           inferenceOptions: {
             completion: {
               providerModelRef: {
@@ -200,6 +202,7 @@ describe("extractTextChunks", () => {
           content: [
             { type: MessageContentPartType.Text, text: "Assistant reply" },
           ],
+          reasoning: {},
           inferenceOptions: {
             completion: {
               providerModelRef: {

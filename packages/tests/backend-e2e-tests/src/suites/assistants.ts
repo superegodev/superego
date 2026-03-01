@@ -559,6 +559,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
                   },
                 },
               ],
+              reasoning: {},
               inferenceOptions,
               generationStats: {
                 timeTaken: 0,
@@ -572,6 +573,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           return {
             role: MessageRole.Assistant,
             content: [{ type: MessageContentPartType.Text, text: "Done" }],
+            reasoning: {},
             inferenceOptions,
             generationStats: {
               timeTaken: 0,

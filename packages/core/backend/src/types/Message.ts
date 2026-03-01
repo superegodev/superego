@@ -32,6 +32,7 @@ namespace Message {
   export interface ContentAssistant {
     role: MessageRole.Assistant;
     content: NonEmptyArray<MessageContentPart.Text>;
+    reasoning: Assistant.Reasoning;
     inferenceOptions: InferenceOptions<"completion">;
     generationStats: MessageGenerationStats;
     createdAt: Date;
@@ -39,11 +40,21 @@ namespace Message {
   export interface ToolCallAssistant {
     role: MessageRole.Assistant;
     toolCalls: ToolCall[];
+    reasoning: Assistant.Reasoning;
     inferenceOptions: InferenceOptions<"completion">;
     generationStats: MessageGenerationStats;
     createdAt: Date;
   }
   export type Assistant = ContentAssistant | ToolCallAssistant;
+
+  export namespace Assistant {
+    export interface Reasoning {
+      content?: string;
+      encryptedContent?: string;
+      contentSignature?: string;
+      summary?: string;
+    }
+  }
 }
 
 type Message =
