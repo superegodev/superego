@@ -104,7 +104,9 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
-  new MonacoTypescriptCompiler(async () => await import("monaco-editor")),
+  new MonacoTypescriptCompiler(
+    async () => (await import("@superego/browser-app/monaco")).default,
+  ),
   new MultiDriverInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, sessionStorage),

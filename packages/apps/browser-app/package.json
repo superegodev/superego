@@ -6,6 +6,9 @@
     ".": {
       "import": "./src/index.tsx"
     },
+    "./monaco": {
+      "import": "./src/monaco.ts"
+    },
     "./vite.config.js": {
       "import": "./vite.config.ts"
     }
