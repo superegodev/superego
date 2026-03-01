@@ -25,8 +25,9 @@ test("009. Set inference settings", async ({ page }) => {
     await page
       .getByRole("textbox", { name: /^Base URL$/i })
       .fill("https://openrouter.ai/api/v1/responses");
-    // Wait for the form setSubmitDisabled debounce.
-    await page.waitForTimeout(500);
+    await page
+      .getByRole("button", { name: /^Save$/i, disabled: false })
+      .waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -88,9 +89,9 @@ test("009. Set inference settings", async ({ page }) => {
   await test.step("05. Save settings", async () => {
     // Exercise
     await page.getByRole("button", { name: /^Save$/i }).click();
-    // Wait for save to complete - the Save button becomes disabled after
-    // saving.
-    await page.waitForTimeout(1_000);
+    await page
+      .getByRole("button", { name: /^Save$/i, disabled: true })
+      .waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(

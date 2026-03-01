@@ -121,6 +121,7 @@ export default function EagerExcalidrawInput({
       return;
     }
     if (!value) {
+      debouncedFlushScene.clear();
       hasPendingLocalChangesRef.current = false;
       previousSerializedRef.current = null;
       excalidrawApi.resetScene();
@@ -141,7 +142,7 @@ export default function EagerExcalidrawInput({
     if (value.files) {
       excalidrawApi.addFiles(Object.values(value.files) as any[]);
     }
-  }, [value]);
+  }, [value, debouncedFlushScene]);
   const viewModeEnabled = isReadOnly || !hasFocus;
 
   return (

@@ -22,7 +22,7 @@ export default function SelectButton({
   return (
     <Group className={cs.SelectButton.root}>
       <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
-        {prefix ? prefix : null}
+        {prefix}
         <SelectValue className={cs.SelectButton.selectValue}>
           {({ defaultChildren, isPlaceholder }) =>
             isPlaceholder ? (
