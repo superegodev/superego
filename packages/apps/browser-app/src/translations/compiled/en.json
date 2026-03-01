@@ -4198,6 +4198,42 @@
       "value": "Close"
     }
   ],
+  "TokenUsage.tsx_6nAVv6": [
+    {
+      "type": 0,
+      "value": "Message + "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " tool call"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " tool calls"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "toolCallCount"
+    }
+  ],
   "TokenUsage.tsx_MJ2jZQ": [
     {
       "type": 0,

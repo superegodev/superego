@@ -1445,6 +1445,9 @@
   "TokenUsage.tsx_it6Lig": {
     "defaultMessage": "Input"
   },
+  "TokenUsage.tsx_6nAVv6": {
+    "defaultMessage": "Messaggio + {toolCallCount, plural, one {# chiamata strumento} other {# chiamate strumento}}"
+  },
   "ToolCallResult.tsx_yq9SNC": {
     "defaultMessage": "Questa chiamata non ha alcun risultato."
   },

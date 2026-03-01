@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../../themes.css.js";
 
 export const AssistantContentMessage = {
@@ -52,3 +52,50 @@ export const AssistantContentMessage = {
     color: vars.colors.text.secondary,
   }),
 };
+
+export const TokenUsage = {
+  trigger: style({
+    all: "unset",
+    cursor: "default",
+    textDecorationLine: "underline",
+    textDecorationStyle: "dotted",
+    textUnderlineOffset: vars.spacing._1,
+  }),
+
+  tooltip: style({
+    padding: vars.spacing._4,
+    background: vars.colors.background.surface,
+    color: vars.colors.text.primary,
+    fontSize: vars.typography.fontSizes.sm,
+    textAlign: "start",
+    borderColor: vars.colors.border.default,
+    borderWidth: vars.borders.width.thin,
+    borderStyle: "solid",
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.background.inverseHighlight} r g b / 0.1)`,
+  }),
+
+  title: style({
+    margin: 0,
+    marginBlockEnd: vars.spacing._3,
+    color: vars.colors.text.secondary,
+  }),
+
+  statsList: style({
+    display: "grid",
+    gridTemplateColumns: "auto auto",
+    gap: `${vars.spacing._1} ${vars.spacing._2}`,
+    margin: 0,
+    padding: 0,
+  }),
+
+  statsListValue: style({
+    margin: 0,
+    textAlign: "end",
+  }),
+};
+
+globalStyle(`${TokenUsage.tooltip} svg`, {
+  fill: vars.colors.background.surface,
+  stroke: vars.colors.border.default,
+  strokeWidth: 1,
+});

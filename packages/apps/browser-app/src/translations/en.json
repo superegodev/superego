@@ -1451,6 +1451,9 @@
   "Toast.tsx_rbrahO": {
     "defaultMessage": "Close"
   },
+  "TokenUsage.tsx_6nAVv6": {
+    "defaultMessage": "Message + {toolCallCount, plural, one {# tool call} other {# tool calls}}"
+  },
   "TokenUsage.tsx_MJ2jZQ": {
     "defaultMessage": "Total"
   },

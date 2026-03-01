@@ -10,13 +10,14 @@ import { useMemo } from "react";
 import { Separator } from "react-aria-components";
 import ConversationUtils from "../../../../utils/ConversationUtils.js";
 import Markdown from "../../../design-system/Markdown/Markdown.js";
-import ThinkingTime from "../ThinkingTime.js";
-import TokenUsage from "../TokenUsage.js";
 import CreateChart from "../ToolResult/CreateChart.js";
 import CreateDocumentsTables from "../ToolResult/CreateDocumentsTables.js";
 import CreateGeoJSONMap from "../ToolResult/CreateGeoJSONMap.js";
 import * as cs from "./AssistantContentMessage.css.js";
+import aggregateGenerationStats from "./aggregateGenerationStats.js";
 import RetryButton from "./RetryButton.js";
+import ThinkingTime from "./ThinkingTime.js";
+import TokenUsage from "./TokenUsage.js";
 
 interface Props {
   conversation: Conversation;
@@ -28,12 +29,16 @@ export default function AssistantContentMessage({
 }: Props) {
   const [textPart] = message.content;
   const overrides = useOverrides(conversation);
+  const generationStats = aggregateGenerationStats(
+    conversation.messages,
+    message,
+  );
   return (
     <div className={cs.AssistantContentMessage.root}>
       <Markdown text={textPart.text} overrides={overrides} />
       <div className={cs.AssistantContentMessage.infoAndActions}>
-        <ThinkingTime message={message} />
-        <TokenUsage message={message} />
+        <ThinkingTime generationStats={generationStats} message={message} />
+        <TokenUsage generationStats={generationStats} />
         <Separator
           orientation="vertical"
           className={cs.AssistantContentMessage.infoAndActionsSeparator}

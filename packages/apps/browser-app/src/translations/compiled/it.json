@@ -4176,6 +4176,42 @@
       "value": "Chiudi"
     }
   ],
+  "TokenUsage.tsx_6nAVv6": [
+    {
+      "type": 0,
+      "value": "Messaggio + "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " chiamata strumento"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " chiamate strumento"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "toolCallCount"
+    }
+  ],
   "TokenUsage.tsx_MJ2jZQ": [
     {
       "type": 0,

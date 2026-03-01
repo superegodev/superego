@@ -32,7 +32,7 @@ export default function SelectOptions({
         } as CSSProperties
       }
     >
-      <ListBox items={options}>
+      <ListBox items={options} className={cs.SelectOptions.list}>
         {({ label, description }) => (
           <ListBoxItem textValue={label} className={cs.SelectOptions.option}>
             {({ isSelected }) => (

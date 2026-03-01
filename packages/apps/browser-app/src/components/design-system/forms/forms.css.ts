@@ -168,6 +168,12 @@ export const SelectButton = {
 export const SelectOptions = {
   root: style({
     width: "calc(var(--trigger-width) * var(--zoom-level))",
+    display: "flex",
+    flexDirection: "column",
+  }),
+
+  list: style({
+    flexGrow: "1",
     overflow: "auto",
   }),
 
