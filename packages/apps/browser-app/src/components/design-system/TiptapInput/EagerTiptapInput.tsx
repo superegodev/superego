@@ -20,6 +20,21 @@ import FormattingToolbar from "./FormattingToolbar.js";
 import type Props from "./Props.js";
 import * as cs from "./TiptapInput.css.js";
 
+// This input component wraps the Tiptap editor, which manages its own internal
+// state. The `value` prop is used both for the initial value and for ongoing
+// synchronization (e.g., when the form resets after an external change, or when
+// the nullify button sets it to `null`).
+//
+// Because `onChange` is debounced, there is a window where the editor's
+// internal state is ahead of the form value. If the form refreshes the `value`
+// prop during this window (e.g., after an auto-save), the component would
+// overwrite the user's in-flight edits with the stale saved value.
+//
+// To prevent this, the component tracks whether it has "pending local changes"
+// — changes that exist in the editor but have not yet been flushed to
+// `onChange`. While pending local changes exist, incoming `value` prop updates
+// are ignored — except for `null`, which is always accepted (for the nullify
+// button).
 export default function EagerTiptapInput({
   value,
   onChange,
@@ -34,6 +49,7 @@ export default function EagerTiptapInput({
   const id = useId();
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(autoFocus);
+  const hasPendingLocalChangesRef = useRef(false);
 
   const extensions = useMemo(
     () => [
@@ -72,10 +88,16 @@ export default function EagerTiptapInput({
     content: value,
     autofocus: autoFocus ?? false,
     editable: !isReadOnly,
-    onUpdate: debounce(
-      ({ editor }) => onChange(editor.getJSON()),
-      TIPTAP_INPUT_ON_CHANGE_DEBOUNCE,
-    ),
+    onUpdate: (() => {
+      const debouncedOnChange = debounce(({ editor }: { editor: any }) => {
+        hasPendingLocalChangesRef.current = false;
+        onChange(editor.getJSON());
+      }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE);
+      return (args: { editor: any }) => {
+        hasPendingLocalChangesRef.current = true;
+        debouncedOnChange(args);
+      };
+    })(),
   });
 
   useEffect(() => {
@@ -85,12 +107,18 @@ export default function EagerTiptapInput({
   }, [editor, isReadOnly]);
 
   useEffect(() => {
-    if (
-      editor &&
-      !editor.isDestroyed &&
-      value != null &&
-      !isEqual(editor.getJSON(), value)
-    ) {
+    if (!editor || editor.isDestroyed) {
+      return;
+    }
+    if (value == null) {
+      hasPendingLocalChangesRef.current = false;
+      editor.commands.clearContent();
+      return;
+    }
+    if (hasPendingLocalChangesRef.current) {
+      return;
+    }
+    if (!isEqual(editor.getJSON(), value)) {
       editor.commands.setContent(value);
     }
   }, [editor, value]);
