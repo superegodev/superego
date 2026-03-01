@@ -1,5 +1,5 @@
 import type { GlobalSettings } from "@superego/backend";
-import type { Control } from "react-hook-form";
+import type { Control, UseFormTrigger } from "react-hook-form";
 import { PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
@@ -9,10 +9,16 @@ import * as cs from "./InferenceSettings.css.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
+  triggerValidation: UseFormTrigger<GlobalSettings>;
   name: `inference.providers.${number}.models.${number}`;
   onRemove: () => void;
 }
-export default function Model({ control, name, onRemove }: Props) {
+export default function Model({
+  control,
+  triggerValidation,
+  name,
+  onRemove,
+}: Props) {
   const intl = useIntl();
   return (
     <div className={cs.Model.row}>
@@ -30,7 +36,11 @@ export default function Model({ control, name, onRemove }: Props) {
         placeholder="GPT OSS 120B"
         className={cs.Model.nameField}
       />
-      <Capabilities control={control} name={`${name}.capabilities`} />
+      <Capabilities
+        control={control}
+        triggerValidation={triggerValidation}
+        name={`${name}.capabilities`}
+      />
       <IconButton
         label={intl.formatMessage({ defaultMessage: "Remove" })}
         onPress={onRemove}

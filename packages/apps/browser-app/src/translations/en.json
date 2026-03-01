@@ -329,9 +329,6 @@
   "CreateApp.tsx_dtELK2": {
     "defaultMessage": "Create App"
   },
-  "CreateAppForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -355,9 +352,6 @@
   },
   "CreateCollectionForm.tsx_PgbTyn": {
     "defaultMessage": "1. General settings"
-  },
-  "CreateCollectionForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateCollectionManual.tsx_9/rVBT": {
     "defaultMessage": "Create collection actions"
@@ -389,9 +383,6 @@
   "CreateNewAppVersionForm.tsx_6GRvO0": {
     "defaultMessage": "Error creating a new app version"
   },
-  "CreateNewAppVersionForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
-  },
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Create New Version"
   },
@@ -403,9 +394,6 @@
   },
   "CreateNewCollectionVersionForm.tsx_HxoW8w": {
     "defaultMessage": "3. Content summary"
-  },
-  "CreateNewCollectionVersionForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateNewCollectionVersionForm.tsx_dISRjb": {
     "defaultMessage": "4. UI options"
@@ -424,9 +412,6 @@
   },
   "CreateNewDocumentVersionForm.tsx_KtoryI": {
     "defaultMessage": "Viewing document version from <b>{date}</b>. Document editing is disabled."
-  },
-  "CreateNewDocumentVersionForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
     "defaultMessage": "This document is synced from a remote source and cannot be edited."
@@ -706,6 +691,9 @@
   },
   "FilePart.tsx_5q3qC0": {
     "defaultMessage": "Download"
+  },
+  "FormStateEffects.tsx_Wq1yhE": {
+    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "FormattingToolbar.tsx_+im1ZA": {
     "defaultMessage": "Blocks"
@@ -1364,9 +1352,6 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
   },
-  "SetCollectionRemoteForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
-  },
   "SetCollectionRemoteForm.tsx_fsGyC4": {
     "defaultMessage": "Update remote"
   },
@@ -1484,9 +1469,6 @@
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Description"
   },
-  "UpdateCollectionSettingsForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
-  },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
   },
@@ -1502,9 +1484,6 @@
   "UpdateCollectionVersionSettingsForm.tsx_U64U7V": {
     "defaultMessage": "Document view UI options"
   },
-  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
-  },
   "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": {
     "defaultMessage": "Deduplication"
   },
@@ -1513,9 +1492,6 @@
   },
   "UpdateGlobalSettingsForm.tsx_2GURQY": {
     "defaultMessage": "Appearance"
-  },
-  "UpdateGlobalSettingsForm.tsx_Wq1yhE": {
-    "defaultMessage": "You have unsaved changes. Are you sure you want to leave?"
   },
   "UpdateGlobalSettingsForm.tsx_jvrMfo": {
     "defaultMessage": "Assistants"

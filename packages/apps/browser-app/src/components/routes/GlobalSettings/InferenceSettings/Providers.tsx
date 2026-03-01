@@ -2,7 +2,11 @@ import {
   type GlobalSettings,
   InferenceProviderDriver,
 } from "@superego/backend";
-import { type Control, useFieldArray } from "react-hook-form";
+import {
+  type Control,
+  type UseFormTrigger,
+  useFieldArray,
+} from "react-hook-form";
 import { PiPlus } from "react-icons/pi";
 import { FormattedMessage } from "react-intl";
 import Button from "../../../design-system/Button/Button.js";
@@ -12,8 +16,9 @@ import Provider from "./Provider.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
+  triggerValidation: UseFormTrigger<GlobalSettings>;
 }
-export default function Providers({ control }: Props) {
+export default function Providers({ control, triggerValidation }: Props) {
   const providers = useFieldArray({ control, name: "inference.providers" });
   return (
     <Fieldset isDisclosureDisabled={true}>
@@ -25,6 +30,7 @@ export default function Providers({ control }: Props) {
           <Provider
             key={field.id}
             control={control}
+            triggerValidation={triggerValidation}
             name={`inference.providers.${index}`}
             onRemove={() => providers.remove(index)}
           />

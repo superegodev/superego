@@ -50,6 +50,7 @@ export default function ReasoningEffortSelect({ control, name, label }: Props) {
 
   return (
     <Select
+      id={`${field.name}.reasoningEffort`}
       name={`${field.name}.reasoningEffort`}
       value={field.value?.reasoningEffort ?? null}
       onChange={(optionId) => {

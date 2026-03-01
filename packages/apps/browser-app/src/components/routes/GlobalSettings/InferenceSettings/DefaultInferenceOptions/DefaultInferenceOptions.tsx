@@ -1,6 +1,5 @@
 import type { GlobalSettings } from "@superego/backend";
-import { useEffect, useRef } from "react";
-import { type Control, type UseFormTrigger, useWatch } from "react-hook-form";
+import { type Control, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import ProviderModelRefUtils from "../../../../../utils/ProviderModelRefUtils.js";
 import Fieldset from "../../../../design-system/Fieldset/Fieldset.js";
@@ -10,26 +9,11 @@ import ReasoningEffortSelect from "./ReasoningEffortSelect.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
-  triggerValidation: UseFormTrigger<GlobalSettings>;
 }
-export default function DefaultInferenceOptions({
-  control,
-  triggerValidation,
-}: Props) {
+export default function DefaultInferenceOptions({ control }: Props) {
   const intl = useIntl();
 
   const providers = useWatch({ control, name: "inference.providers" });
-
-  // Re-validate default inference options when providers change, since
-  // their validity depends on provider model capabilities.
-  const previousProvidersRef = useRef(providers);
-  useEffect(() => {
-    // Skips triggering on first render.
-    if (previousProvidersRef.current !== providers) {
-      previousProvidersRef.current = providers;
-      triggerValidation("inference.defaultInferenceOptions");
-    }
-  }, [providers, triggerValidation]);
 
   const modelOptions: Option[] = providers.flatMap((provider) =>
     provider.models.map((model) => ({

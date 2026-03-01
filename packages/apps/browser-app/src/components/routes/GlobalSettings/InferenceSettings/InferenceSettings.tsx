@@ -27,11 +27,8 @@ export default function InferenceSettings({
           values={formattedMessageHtmlTags}
         />
       </p>
-      <Providers control={control} />
-      <DefaultInferenceOptions
-        control={control}
-        triggerValidation={triggerValidation}
-      />
+      <Providers control={control} triggerValidation={triggerValidation} />
+      <DefaultInferenceOptions control={control} />
     </Fields>
   );
 }

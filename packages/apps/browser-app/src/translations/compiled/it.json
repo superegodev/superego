@@ -753,12 +753,6 @@
       "value": "Crea app"
     }
   ],
-  "CreateAppForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -805,12 +799,6 @@
     {
       "type": 0,
       "value": "1. Impostazioni generali"
-    }
-  ],
-  "CreateCollectionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "CreateCollectionManual.tsx_9/rVBT": [
@@ -908,12 +896,6 @@
       "value": "Errore durante la creazione di una nuova versione dell'app"
     }
   ],
-  "CreateNewAppVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -940,12 +922,6 @@
     {
       "type": 0,
       "value": "3. Sommario dei contenuti"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_dISRjb": [
@@ -1000,12 +976,6 @@
     {
       "type": 0,
       "value": ". La modifica del documento è disabilitata."
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
@@ -1698,6 +1668,12 @@
     {
       "type": 0,
       "value": "Scarica"
+    }
+  ],
+  "FormStateEffects.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "FormattingToolbar.tsx_+im1ZA": [
@@ -3966,12 +3942,6 @@
       "value": "Aggiungi un modello con comprensione audio per usare la voce"
     }
   ],
-  "SetCollectionRemoteForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "SetCollectionRemoteForm.tsx_fsGyC4": [
     {
       "type": 0,
@@ -4276,12 +4246,6 @@
       "value": "Descrizione"
     }
   ],
-  "UpdateCollectionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
     {
       "type": 0,
@@ -4312,12 +4276,6 @@
       "value": "Opzioni UI della vista documento"
     }
   ],
-  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
     {
       "type": 0,
@@ -4334,12 +4292,6 @@
     {
       "type": 0,
       "value": "Aspetto"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [

@@ -757,12 +757,6 @@
       "value": "Create App"
     }
   ],
-  "CreateAppForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -809,12 +803,6 @@
     {
       "type": 0,
       "value": "1. General settings"
-    }
-  ],
-  "CreateCollectionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateCollectionManual.tsx_9/rVBT": [
@@ -916,12 +904,6 @@
       "value": "Error creating a new app version"
     }
   ],
-  "CreateNewAppVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -948,12 +930,6 @@
     {
       "type": 0,
       "value": "3. Content summary"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_dISRjb": [
@@ -1008,12 +984,6 @@
     {
       "type": 0,
       "value": ". Document editing is disabled."
-    }
-  ],
-  "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
@@ -1706,6 +1676,12 @@
     {
       "type": 0,
       "value": "Download"
+    }
+  ],
+  "FormStateEffects.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "FormattingToolbar.tsx_+im1ZA": [
@@ -3988,12 +3964,6 @@
       "value": "Add model w/ audio understanding to use voice"
     }
   ],
-  "SetCollectionRemoteForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "SetCollectionRemoteForm.tsx_fsGyC4": [
     {
       "type": 0,
@@ -4298,12 +4268,6 @@
       "value": "Description"
     }
   ],
-  "UpdateCollectionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
     {
       "type": 0,
@@ -4334,12 +4298,6 @@
       "value": "Document view UI options"
     }
   ],
-  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
     {
       "type": 0,
@@ -4356,12 +4314,6 @@
     {
       "type": 0,
       "value": "Appearance"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [

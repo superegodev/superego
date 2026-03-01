@@ -27,6 +27,8 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("01. Edit relation field", async () => {
     // Exercise
     await page.getByRole("textbox", { name: /^Relation/i }).fill("Colleague");
+    // Wait for the form setSubmitDisabled debounce.
+    await page.waitForTimeout(500);
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -39,7 +41,9 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("02. Save updated contact", async () => {
     // Exercise
     await page.getByRole("button", { name: /^Save$/i }).click();
-    await page.waitForTimeout(500);
+    // Wait for save to complete - the Save button becomes disabled after
+    // saving.
+    await page.waitForTimeout(1_000);
 
     // Verify
     await VisualEvaluator.expectToSee(

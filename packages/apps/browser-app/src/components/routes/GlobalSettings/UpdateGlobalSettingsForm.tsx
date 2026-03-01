@@ -7,12 +7,12 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
-import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { SETTINGS_AUTOSAVE_INTERVAL } from "../../../config.js";
 import applyTheme from "../../../utils/applyTheme.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
+import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import AppearanceSettings from "./AppearanceSettings.js";
 import AssistantsSettings from "./AssistantsSettings.js";
 import InferenceSettings from "./InferenceSettings/InferenceSettings.js";
@@ -29,10 +29,10 @@ export default function UpdateGlobalSettingsForm({
   const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 
-  const { control, handleSubmit, reset, formState, watch, trigger } =
+  const { control, handleSubmit, reset, watch, trigger } =
     useForm<GlobalSettings>({
       defaultValues: globalSettings,
-      mode: "all",
+      mode: "onBlur",
       resolver: standardSchemaResolver(valibotSchemas.globalSettings()),
     });
 
@@ -52,36 +52,20 @@ export default function UpdateGlobalSettingsForm({
     }
   };
 
-  // When the form dirty state changes:
-  // - Enable or disable the submit button.
-  // - If the form is dirty, schedule an autosave.
   const formRef = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    setSubmitDisabled(!formState.isDirty);
-    if (!formState.isDirty || !formState.isValid) {
-      return;
-    }
-    const timeoutId = setTimeout(
-      () => formRef.current?.requestSubmit(),
-      SETTINGS_AUTOSAVE_INTERVAL,
-    );
-    return () => clearTimeout(timeoutId);
-  }, [formState.isDirty, formState.isValid, setSubmitDisabled]);
-
-  useExitWarning(
-    formState.isDirty
-      ? intl.formatMessage({
-          defaultMessage:
-            "You have unsaved changes. Are you sure you want to leave?",
-        })
-      : null,
-  );
 
   const theme = watch("appearance.theme");
   usePreviewTheme(globalSettings.appearance.theme, theme);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} ref={formRef} id={formId}>
+      <FormStateEffects
+        control={control}
+        formRef={formRef}
+        autosaveInterval={SETTINGS_AUTOSAVE_INTERVAL}
+        setSubmitDisabled={setSubmitDisabled}
+        triggerExitWarningWhenDirty={true}
+      />
       <FullPageTabs
         tabs={[
           {

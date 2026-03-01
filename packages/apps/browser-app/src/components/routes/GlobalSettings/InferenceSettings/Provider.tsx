@@ -2,7 +2,11 @@ import {
   type GlobalSettings,
   InferenceProviderDriver,
 } from "@superego/backend";
-import { type Control, useFieldArray } from "react-hook-form";
+import {
+  type Control,
+  type UseFormTrigger,
+  useFieldArray,
+} from "react-hook-form";
 import { PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import Button from "../../../design-system/Button/Button.js";
@@ -15,10 +19,16 @@ import Model from "./Model.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
+  triggerValidation: UseFormTrigger<GlobalSettings>;
   name: `inference.providers.${number}`;
   onRemove: () => void;
 }
-export default function Provider({ control, name, onRemove }: Props) {
+export default function Provider({
+  control,
+  triggerValidation,
+  name,
+  onRemove,
+}: Props) {
   const intl = useIntl();
   const models = useFieldArray({ control, name: `${name}.models` });
   return (
@@ -66,8 +76,12 @@ export default function Provider({ control, name, onRemove }: Props) {
               <Model
                 key={field.id}
                 control={control}
+                triggerValidation={triggerValidation}
                 name={`${name}.models.${modelIndex}`}
-                onRemove={() => models.remove(modelIndex)}
+                onRemove={() => {
+                  models.remove(modelIndex);
+                  triggerValidation("inference.defaultInferenceOptions");
+                }}
               />
             ))}
             <Button

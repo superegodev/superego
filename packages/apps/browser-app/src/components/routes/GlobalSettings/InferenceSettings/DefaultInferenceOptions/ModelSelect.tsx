@@ -45,6 +45,7 @@ export default function ModelSelect({
 
   return (
     <Select
+      id={`${sectionField.name}.providerModelRef`}
       name={`${sectionField.name}.providerModelRef`}
       value={selectedOptionId}
       onChange={(optionId) => {
