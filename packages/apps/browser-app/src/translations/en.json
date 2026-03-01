@@ -134,17 +134,11 @@
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versions)"
   },
-  "Capabilities.tsx_7Lllg5": {
-    "defaultMessage": "Supports web searching"
-  },
   "Capabilities.tsx_HjTr28": {
     "defaultMessage": "Supports image understanding"
   },
   "Capabilities.tsx_KihMPW": {
     "defaultMessage": "Supports audio understanding"
-  },
-  "Capabilities.tsx_MuSZiS": {
-    "defaultMessage": "Supports reasoning"
   },
   "Capabilities.tsx_xRp25e": {
     "defaultMessage": "Supports PDF understanding"
@@ -461,17 +455,20 @@
   "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
     "defaultMessage": "Default document view UI options"
   },
-  "DefaultInferenceOptions.tsx_24dwvV": {
-    "defaultMessage": "Transcription model"
+  "DefaultInferenceOptions.tsx_2X1lvg": {
+    "defaultMessage": "Reasoning effort"
   },
-  "DefaultInferenceOptions.tsx_V5GxyN": {
-    "defaultMessage": "File inspection model"
+  "DefaultInferenceOptions.tsx_DEgFqm": {
+    "defaultMessage": "Default transcription options"
   },
-  "DefaultInferenceOptions.tsx_gQ9pya": {
-    "defaultMessage": "Completion model"
+  "DefaultInferenceOptions.tsx_qAb0dx": {
+    "defaultMessage": "Default completion options"
   },
-  "DefaultInferenceOptions.tsx_mTnRNG": {
-    "defaultMessage": "Default inference options"
+  "DefaultInferenceOptions.tsx_rhSI1/": {
+    "defaultMessage": "Model"
+  },
+  "DefaultInferenceOptions.tsx_uIQJ+w": {
+    "defaultMessage": "Default file inspection options"
   },
   "DeleteAppModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
@@ -926,9 +923,6 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Incompatibility warning"
   },
-  "InferenceOptionsInput.tsx_rhSI1/": {
-    "defaultMessage": "Model"
-  },
   "InferenceSettings.tsx_P817ae": {
     "defaultMessage": "Configure an <b>inference provider</b> to enable the assistant. A model with audio understanding capabilities is necessary for the \"speak\" feature."
   },
@@ -1045,6 +1039,9 @@
   },
   "ModelActionMenu.tsx_SikIJG": {
     "defaultMessage": "(last used)"
+  },
+  "ModelSelect.tsx_rhSI1/": {
+    "defaultMessage": "Model"
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
@@ -1189,6 +1186,24 @@
   },
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
+  },
+  "ReasoningEffortSelect.tsx_2X1lvg": {
+    "defaultMessage": "Reasoning effort"
+  },
+  "ReasoningEffortSelect.tsx_450Fty": {
+    "defaultMessage": "None"
+  },
+  "ReasoningEffortSelect.tsx_477I0g": {
+    "defaultMessage": "Low"
+  },
+  "ReasoningEffortSelect.tsx_AxMhQr": {
+    "defaultMessage": "High"
+  },
+  "ReasoningEffortSelect.tsx_kDEj60": {
+    "defaultMessage": "Extra high"
+  },
+  "ReasoningEffortSelect.tsx_ovJ26C": {
+    "defaultMessage": "Medium"
   },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"

@@ -1,6 +1,6 @@
 import type { GlobalSettings, InferenceModel } from "@superego/backend";
 import { type Control, useController } from "react-hook-form";
-import { PiFilePdf, PiGlobe, PiImage, PiMicrophone } from "react-icons/pi";
+import { PiFilePdf, PiImage, PiMicrophone } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import IconToggleButton from "../../../design-system/IconToggleButton/IconToggleButton.js";
 import * as cs from "./InferenceSettings.css.js";
@@ -50,14 +50,6 @@ export default function Capabilities({ control, name }: Props) {
         onChange={() => toggle("pdfUnderstanding")}
       >
         <PiFilePdf />
-      </IconToggleButton>
-      <IconToggleButton
-        label={intl.formatMessage({ defaultMessage: "Supports web searching" })}
-        className={cs.Capabilities.button}
-        isSelected={capabilities.webSearching}
-        onChange={() => toggle("webSearching")}
-      >
-        <PiGlobe />
       </IconToggleButton>
     </div>
   );

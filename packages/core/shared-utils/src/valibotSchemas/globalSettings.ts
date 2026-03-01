@@ -8,12 +8,6 @@ import {
 import * as v from "valibot";
 import validateInferenceOptions from "../validators/validateInferenceOptions.js";
 
-const inferenceModelRef = () =>
-  v.strictObject({
-    providerName: v.string(),
-    modelId: v.string(),
-  });
-
 export default function globalSettings(): v.GenericSchema<
   GlobalSettings,
   GlobalSettings
@@ -38,7 +32,6 @@ export default function globalSettings(): v.GenericSchema<
                   audioUnderstanding: v.boolean(),
                   imageUnderstanding: v.boolean(),
                   pdfUnderstanding: v.boolean(),
-                  webSearching: v.boolean(),
                 }),
               }),
             ),
@@ -76,22 +69,36 @@ export default function globalSettings(): v.GenericSchema<
         dataset.value.inference,
       );
       for (const issue of inferenceOptionsIssues) {
-        const path = [
-          { input: dataset.value, key: "inference" },
-          {
-            input: dataset.value.inference,
-            key: "defaultInferenceOptions",
-          },
-          ...(issue.path?.map((segment) => ({
-            input: dataset.value.inference.defaultInferenceOptions,
-            key: segment.key,
-          })) ?? []),
-        ];
         addIssue({
           message: issue.message,
-          path: path as [v.IssuePathItem, ...v.IssuePathItem[]],
+          path: makeIssuePath(dataset.value, issue.path ?? []),
         });
       }
     }),
   );
+}
+
+const inferenceModelRef = () =>
+  v.strictObject({
+    providerName: v.string(),
+    modelId: v.string(),
+  });
+
+function makeIssuePath(
+  root: GlobalSettings,
+  segments: { key: string | number }[],
+): [v.IssuePathItem, ...v.IssuePathItem[]] {
+  // Populate each segment with the correct input value.
+  let currentInput: unknown = root.inference.defaultInferenceOptions;
+  const issuePathSegments = segments.map((segment) => {
+    const pathSegment = { input: currentInput, key: segment.key };
+    currentInput = (currentInput as Record<string, unknown>)?.[segment.key];
+    return pathSegment;
+  });
+
+  return [
+    { input: root, key: "inference" },
+    { input: root.inference, key: "defaultInferenceOptions" },
+    ...issuePathSegments,
+  ] as unknown as [v.IssuePathItem, ...v.IssuePathItem[]];
 }

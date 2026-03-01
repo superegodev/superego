@@ -5,6 +5,5 @@ export default interface InferenceModel {
     audioUnderstanding: boolean;
     imageUnderstanding: boolean;
     pdfUnderstanding: boolean;
-    webSearching: boolean;
   };
 }

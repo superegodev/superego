@@ -80,7 +80,6 @@ export default function Provider({ control, name, onRemove }: Props) {
                     audioUnderstanding: false,
                     imageUnderstanding: false,
                     pdfUnderstanding: false,
-                    webSearching: false,
                   },
                 })
               }

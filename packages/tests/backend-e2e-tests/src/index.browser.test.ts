@@ -28,7 +28,6 @@ const defaultGlobalSettings = {
               audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
-              webSearching: false,
             },
           },
         ],

@@ -53,7 +53,7 @@ function validateProviderModelRef(
   if (!provider) {
     issues.push({
       message: `Provider "${providerModelRef.providerName}" not found`,
-      path: [{ key: category }],
+      path: [{ key: category }, { key: "providerModelRef" }],
     });
   } else {
     const model = provider.models.find(
@@ -62,7 +62,7 @@ function validateProviderModelRef(
     if (!model) {
       issues.push({
         message: `Model "${providerModelRef.modelId}" not found in provider "${providerModelRef.providerName}"`,
-        path: [{ key: category }],
+        path: [{ key: category }, { key: "providerModelRef" }],
       });
     } else {
       if (
@@ -71,7 +71,7 @@ function validateProviderModelRef(
       ) {
         issues.push({
           message: `Model "${model.id}" does not support audio understanding, required for transcription`,
-          path: [{ key: category }],
+          path: [{ key: category }, { key: "providerModelRef" }],
         });
       }
       if (
@@ -82,7 +82,7 @@ function validateProviderModelRef(
       ) {
         issues.push({
           message: `Model "${model.id}" does not support any file understanding capability (audio, image, or PDF), required for file inspection`,
-          path: [{ key: category }],
+          path: [{ key: category }, { key: "providerModelRef" }],
         });
       }
     }

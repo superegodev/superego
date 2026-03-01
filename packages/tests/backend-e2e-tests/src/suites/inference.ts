@@ -43,7 +43,6 @@ export default rd<GetDependencies>("Inference", (deps) => {
               audioUnderstanding: true,
               imageUnderstanding: false,
               pdfUnderstanding: false,
-              webSearching: false,
             },
           },
         ],

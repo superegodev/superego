@@ -47,7 +47,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                     audioUnderstanding: false,
                     imageUnderstanding: false,
                     pdfUnderstanding: false,
-                    webSearching: false,
                   },
                 },
                 {
@@ -57,7 +56,6 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
                     audioUnderstanding: true,
                     imageUnderstanding: true,
                     pdfUnderstanding: true,
-                    webSearching: true,
                   },
                 },
               ],

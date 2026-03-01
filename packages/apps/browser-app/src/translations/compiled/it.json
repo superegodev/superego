@@ -311,12 +311,6 @@
       "value": " versioni)"
     }
   ],
-  "Capabilities.tsx_7Lllg5": [
-    {
-      "type": 0,
-      "value": "Supporta la ricerca web"
-    }
-  ],
   "Capabilities.tsx_HjTr28": [
     {
       "type": 0,
@@ -327,12 +321,6 @@
     {
       "type": 0,
       "value": "Supporta la comprensione audio"
-    }
-  ],
-  "Capabilities.tsx_MuSZiS": [
-    {
-      "type": 0,
-      "value": "Supporta il ragionamento"
     }
   ],
   "Capabilities.tsx_xRp25e": [
@@ -1074,28 +1062,34 @@
       "value": "Opzioni UI predefinite per la vista documento"
     }
   ],
-  "DefaultInferenceOptions.tsx_24dwvV": [
+  "DefaultInferenceOptions.tsx_2X1lvg": [
     {
       "type": 0,
-      "value": "Modello di trascrizione"
+      "value": "Sforzo di ragionamento"
     }
   ],
-  "DefaultInferenceOptions.tsx_V5GxyN": [
+  "DefaultInferenceOptions.tsx_DEgFqm": [
     {
       "type": 0,
-      "value": "Modello di ispezione file"
+      "value": "Opzioni di trascrizione predefinite"
     }
   ],
-  "DefaultInferenceOptions.tsx_gQ9pya": [
+  "DefaultInferenceOptions.tsx_qAb0dx": [
     {
       "type": 0,
-      "value": "Modello di completamento"
+      "value": "Opzioni di completamento predefinite"
     }
   ],
-  "DefaultInferenceOptions.tsx_mTnRNG": [
+  "DefaultInferenceOptions.tsx_rhSI1/": [
     {
       "type": 0,
-      "value": "Opzioni di inferenza predefinite"
+      "value": "Modello"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_uIQJ+w": [
+    {
+      "type": 0,
+      "value": "Opzioni di ispezione file predefinite"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2158,12 +2152,6 @@
       "value": "Avviso di incompatibilità"
     }
   ],
-  "InferenceOptionsInput.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Modello"
-    }
-  ],
   "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
@@ -2492,6 +2480,12 @@
     {
       "type": 0,
       "value": "(precedentemente usato)"
+    }
+  ],
+  "ModelSelect.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Modello"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -3200,6 +3194,42 @@
     {
       "type": 0,
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+    }
+  ],
+  "ReasoningEffortSelect.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Sforzo di ragionamento"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "Nessuno"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_477I0g": [
+    {
+      "type": 0,
+      "value": "Basso"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_AxMhQr": [
+    {
+      "type": 0,
+      "value": "Alto"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_kDEj60": [
+    {
+      "type": 0,
+      "value": "Extra alto"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_ovJ26C": [
+    {
+      "type": 0,
+      "value": "Medio"
     }
   ],
   "Remote.tsx_s8FZNF": [

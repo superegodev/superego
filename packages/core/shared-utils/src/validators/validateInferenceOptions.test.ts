@@ -21,7 +21,6 @@ const inferenceSettings: InferenceSettings = {
             audioUnderstanding: false,
             imageUnderstanding: false,
             pdfUnderstanding: false,
-            webSearching: false,
           },
         },
         {
@@ -31,7 +30,6 @@ const inferenceSettings: InferenceSettings = {
             audioUnderstanding: true,
             imageUnderstanding: false,
             pdfUnderstanding: false,
-            webSearching: false,
           },
         },
         {
@@ -41,7 +39,6 @@ const inferenceSettings: InferenceSettings = {
             audioUnderstanding: false,
             imageUnderstanding: true,
             pdfUnderstanding: false,
-            webSearching: false,
           },
         },
       ],
@@ -73,7 +70,7 @@ it("returns error when completion provider is not found", () => {
   expect(result).toEqual([
     {
       message: 'Provider "unknown" not found',
-      path: [{ key: "completion" }],
+      path: [{ key: "completion" }, { key: "providerModelRef" }],
     },
   ]);
 });
@@ -94,7 +91,7 @@ it("returns error when completion model is not found", () => {
   expect(result).toEqual([
     {
       message: 'Model "unknown" not found in provider "openrouter"',
-      path: [{ key: "completion" }],
+      path: [{ key: "completion" }, { key: "providerModelRef" }],
     },
   ]);
 });
@@ -152,7 +149,7 @@ it("validates multiple non-null fields", () => {
   expect(result).toEqual([
     {
       message: 'Provider "unknown" not found',
-      path: [{ key: "transcription" }],
+      path: [{ key: "transcription" }, { key: "providerModelRef" }],
     },
   ]);
 });
@@ -176,7 +173,7 @@ it("returns error when transcription model lacks audio understanding", () => {
     {
       message:
         'Model "openai/gpt-oss-120b" does not support audio understanding, required for transcription',
-      path: [{ key: "transcription" }],
+      path: [{ key: "transcription" }, { key: "providerModelRef" }],
     },
   ]);
 });
@@ -218,7 +215,7 @@ it("returns error when file inspection model lacks all file understanding capabi
     {
       message:
         'Model "openai/gpt-oss-120b" does not support any file understanding capability (audio, image, or PDF), required for file inspection',
-      path: [{ key: "fileInspection" }],
+      path: [{ key: "fileInspection" }, { key: "providerModelRef" }],
     },
   ]);
 });

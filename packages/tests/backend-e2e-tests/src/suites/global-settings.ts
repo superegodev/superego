@@ -23,7 +23,6 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
-              webSearching: false,
             },
           },
         ],

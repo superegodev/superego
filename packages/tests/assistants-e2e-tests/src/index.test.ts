@@ -56,7 +56,6 @@ function makeInferenceSettings(model: string): InferenceSettings {
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
-              webSearching: false,
             },
           },
         ],

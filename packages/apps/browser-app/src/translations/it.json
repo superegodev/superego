@@ -446,6 +446,21 @@
   "DefaultDocumentViewUiOptionsTab.tsx_8CT4h1": {
     "defaultMessage": "Opzioni UI predefinite per la vista documento"
   },
+  "DefaultInferenceOptions.tsx_2X1lvg": {
+    "defaultMessage": "Sforzo di ragionamento"
+  },
+  "DefaultInferenceOptions.tsx_DEgFqm": {
+    "defaultMessage": "Opzioni di trascrizione predefinite"
+  },
+  "DefaultInferenceOptions.tsx_qAb0dx": {
+    "defaultMessage": "Opzioni di completamento predefinite"
+  },
+  "DefaultInferenceOptions.tsx_rhSI1/": {
+    "defaultMessage": "Modello"
+  },
+  "DefaultInferenceOptions.tsx_uIQJ+w": {
+    "defaultMessage": "Opzioni di ispezione file predefinite"
+  },
   "DeleteAppModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
@@ -914,32 +929,14 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Avviso di incompatibilità"
   },
-  "Capabilities.tsx_7Lllg5": {
-    "defaultMessage": "Supporta la ricerca web"
-  },
   "Capabilities.tsx_HjTr28": {
     "defaultMessage": "Supporta la comprensione delle immagini"
   },
   "Capabilities.tsx_KihMPW": {
     "defaultMessage": "Supporta la comprensione audio"
   },
-  "Capabilities.tsx_MuSZiS": {
-    "defaultMessage": "Supporta il ragionamento"
-  },
   "Capabilities.tsx_xRp25e": {
     "defaultMessage": "Supporta la comprensione PDF"
-  },
-  "DefaultInferenceOptions.tsx_24dwvV": {
-    "defaultMessage": "Modello di trascrizione"
-  },
-  "DefaultInferenceOptions.tsx_V5GxyN": {
-    "defaultMessage": "Modello di ispezione file"
-  },
-  "DefaultInferenceOptions.tsx_gQ9pya": {
-    "defaultMessage": "Modello di completamento"
-  },
-  "DefaultInferenceOptions.tsx_mTnRNG": {
-    "defaultMessage": "Opzioni di inferenza predefinite"
   },
   "InferenceSettings.tsx_P817ae": {
     "defaultMessage": "Configura un <b>fornitore di inferenza</b> per abilitare l'assistente. Un modello con capacità di comprensione audio è necessario per la funzione \"parla\"."
@@ -1535,8 +1532,26 @@
   "UserMessageContentInput.tsx_XE7R4v": {
     "defaultMessage": "Invia messaggio all'assistente"
   },
-  "InferenceOptionsInput.tsx_rhSI1/": {
+  "ModelSelect.tsx_rhSI1/": {
     "defaultMessage": "Modello"
+  },
+  "ReasoningEffortSelect.tsx_2X1lvg": {
+    "defaultMessage": "Sforzo di ragionamento"
+  },
+  "ReasoningEffortSelect.tsx_450Fty": {
+    "defaultMessage": "Nessuno"
+  },
+  "ReasoningEffortSelect.tsx_477I0g": {
+    "defaultMessage": "Basso"
+  },
+  "ReasoningEffortSelect.tsx_AxMhQr": {
+    "defaultMessage": "Alto"
+  },
+  "ReasoningEffortSelect.tsx_kDEj60": {
+    "defaultMessage": "Extra alto"
+  },
+  "ReasoningEffortSelect.tsx_ovJ26C": {
+    "defaultMessage": "Medio"
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."

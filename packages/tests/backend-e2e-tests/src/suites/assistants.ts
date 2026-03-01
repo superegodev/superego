@@ -43,7 +43,6 @@ export default rd<GetDependencies>("Assistants", (deps) => {
               audioUnderstanding: false,
               imageUnderstanding: false,
               pdfUnderstanding: false,
-              webSearching: false,
             },
           },
         ],

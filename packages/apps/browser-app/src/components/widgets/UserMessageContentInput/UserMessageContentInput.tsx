@@ -16,8 +16,8 @@ import mergeInferenceOptions from "../../../business-logic/inference/mergeInfere
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import classnames from "../../../utils/classnames.js";
 import AddFilesButton from "./AddFilesButton.js";
+import CompletionInferenceOptionsInput from "./CompletionInferenceOptionsInput/CompletionInferenceOptionsInput.js";
 import FilesTray from "./FilesTray.js";
-import InferenceOptionsInput from "./InferenceOptionsInput.js";
 import SendRecordButtons from "./SendRecordButtons.js";
 import * as cs from "./UserMessageContentInput.css.js";
 import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
@@ -174,7 +174,7 @@ export default function UserMessageContentInput({
               isDisabled={globalIsDisabled || isRecording}
             />
           ) : null}
-          <InferenceOptionsInput
+          <CompletionInferenceOptionsInput
             inferenceSettings={globalSettings.inference}
             defaultInferenceOptions={defaultInferenceOptions}
             value={customInferenceOptions}

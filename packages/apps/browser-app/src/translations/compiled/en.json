@@ -311,12 +311,6 @@
       "value": " versions)"
     }
   ],
-  "Capabilities.tsx_7Lllg5": [
-    {
-      "type": 0,
-      "value": "Supports web searching"
-    }
-  ],
   "Capabilities.tsx_HjTr28": [
     {
       "type": 0,
@@ -327,12 +321,6 @@
     {
       "type": 0,
       "value": "Supports audio understanding"
-    }
-  ],
-  "Capabilities.tsx_MuSZiS": [
-    {
-      "type": 0,
-      "value": "Supports reasoning"
     }
   ],
   "Capabilities.tsx_xRp25e": [
@@ -1082,28 +1070,34 @@
       "value": "Default document view UI options"
     }
   ],
-  "DefaultInferenceOptions.tsx_24dwvV": [
+  "DefaultInferenceOptions.tsx_2X1lvg": [
     {
       "type": 0,
-      "value": "Transcription model"
+      "value": "Reasoning effort"
     }
   ],
-  "DefaultInferenceOptions.tsx_V5GxyN": [
+  "DefaultInferenceOptions.tsx_DEgFqm": [
     {
       "type": 0,
-      "value": "File inspection model"
+      "value": "Default transcription options"
     }
   ],
-  "DefaultInferenceOptions.tsx_gQ9pya": [
+  "DefaultInferenceOptions.tsx_qAb0dx": [
     {
       "type": 0,
-      "value": "Completion model"
+      "value": "Default completion options"
     }
   ],
-  "DefaultInferenceOptions.tsx_mTnRNG": [
+  "DefaultInferenceOptions.tsx_rhSI1/": [
     {
       "type": 0,
-      "value": "Default inference options"
+      "value": "Model"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_uIQJ+w": [
+    {
+      "type": 0,
+      "value": "Default file inspection options"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -2166,12 +2160,6 @@
       "value": "Incompatibility warning"
     }
   ],
-  "InferenceOptionsInput.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Model"
-    }
-  ],
   "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
@@ -2500,6 +2488,12 @@
     {
       "type": 0,
       "value": "(last used)"
+    }
+  ],
+  "ModelSelect.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -3222,6 +3216,42 @@
     {
       "type": 0,
       "value": "Defines the \"shape\" of document contents in this collection."
+    }
+  ],
+  "ReasoningEffortSelect.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Reasoning effort"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "None"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_477I0g": [
+    {
+      "type": 0,
+      "value": "Low"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_AxMhQr": [
+    {
+      "type": 0,
+      "value": "High"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_kDEj60": [
+    {
+      "type": 0,
+      "value": "Extra high"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_ovJ26C": [
+    {
+      "type": 0,
+      "value": "Medium"
     }
   ],
   "Remote.tsx_s8FZNF": [
