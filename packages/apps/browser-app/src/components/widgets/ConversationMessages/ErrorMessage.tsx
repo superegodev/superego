@@ -12,6 +12,7 @@ import useDefaultInferenceOptions from "../../../business-logic/inference/useDef
 import isEmpty from "../../../utils/isEmpty.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
+import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
 import ModelActionMenu from "./ModelActionMenu/ModelActionMenu.js";
 import makeModelActionMenuItems from "./ModelActionMenu/makeModelActionMenuItems.js";
@@ -41,8 +42,15 @@ export default function ErrorMessage({ conversation }: Props) {
         <FormattedMessage defaultMessage="The assistant encountered an error." />
         {!isEmpty(models) ? (
           <ModelActionMenu
-            icon={<PiArrowCounterClockwiseBold />}
-            label={intl.formatMessage({ defaultMessage: "Retry" })}
+            trigger={
+              <IconButton
+                variant="invisible"
+                label={intl.formatMessage({ defaultMessage: "Retry" })}
+                className={cs.ErrorMessage.retryButton}
+              >
+                <PiArrowCounterClockwiseBold />
+              </IconButton>
+            }
             models={models}
             onModelAction={(providerModelRef) =>
               mutate(conversation.id, {
@@ -56,7 +64,6 @@ export default function ErrorMessage({ conversation }: Props) {
                 fileInspection: defaultInferenceOptions.fileInspection,
               })
             }
-            className={cs.ErrorMessage.retryButton}
           />
         ) : null}
       </div>

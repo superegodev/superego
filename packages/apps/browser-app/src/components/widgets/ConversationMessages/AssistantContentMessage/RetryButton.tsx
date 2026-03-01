@@ -6,6 +6,7 @@ import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.j
 import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
 import isEmpty from "../../../../utils/isEmpty.js";
 import last from "../../../../utils/last.js";
+import IconButton from "../../../design-system/IconButton/IconButton.js";
 import ModelActionMenu from "../ModelActionMenu/ModelActionMenu.js";
 import makeModelActionMenuItems from "../ModelActionMenu/makeModelActionMenuItems.js";
 
@@ -34,11 +35,19 @@ export default function RetryButton({
     message === last(conversation.messages) &&
     !isEmpty(models) ? (
     <ModelActionMenu
-      icon={<PiArrowsClockwise />}
-      label={
-        isPending
-          ? intl.formatMessage({ defaultMessage: "Retrying..." })
-          : intl.formatMessage({ defaultMessage: "Retry response" })
+      trigger={
+        <IconButton
+          variant="invisible"
+          label={
+            isPending
+              ? intl.formatMessage({ defaultMessage: "Retrying..." })
+              : intl.formatMessage({ defaultMessage: "Retry response" })
+          }
+          isDisabled={isPending}
+          className={className}
+        >
+          <PiArrowsClockwise />
+        </IconButton>
       }
       models={models}
       onModelAction={(providerModelRef) =>
@@ -52,8 +61,6 @@ export default function RetryButton({
           fileInspection: defaultInferenceOptions.fileInspection,
         })
       }
-      isDisabled={isPending}
-      className={className}
     />
   ) : null;
 }

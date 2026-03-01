@@ -1,39 +1,23 @@
 import type { InferenceProviderModelRef } from "@superego/backend";
 import type { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import IconButton from "../../../design-system/IconButton/IconButton.js";
 import PopoverMenu from "../../../design-system/PopoverMenu/PopoverMenu.js";
 import * as cs from "./ModelActionMenu.css.js";
 import type ModelActionMenuItem from "./ModelActionMenuItem.js";
 
 interface Props {
-  icon: ReactNode;
-  label: string;
+  trigger: ReactNode;
   models: ModelActionMenuItem[];
   onModelAction: (providerModelRef: InferenceProviderModelRef) => void;
-  className?: string | undefined;
-  isDisabled?: boolean | undefined;
 }
 export default function ModelActionMenu({
-  icon,
-  label,
+  trigger,
   models,
   onModelAction,
-  className,
-  isDisabled,
 }: Props) {
   return (
     <PopoverMenu>
-      <PopoverMenu.Trigger>
-        <IconButton
-          variant="invisible"
-          label={label}
-          className={className}
-          isDisabled={isDisabled}
-        >
-          {icon}
-        </IconButton>
-      </PopoverMenu.Trigger>
+      <PopoverMenu.Trigger>{trigger}</PopoverMenu.Trigger>
       <PopoverMenu.Menu>
         {models.map((model) => (
           <PopoverMenu.MenuItem

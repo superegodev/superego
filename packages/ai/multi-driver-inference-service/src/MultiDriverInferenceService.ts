@@ -9,6 +9,7 @@ import {
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 
+import AnthropicMessagesInferenceService from "./AnthropicMessages/AnthropicMessagesInferenceService.js";
 import OpenResponsesInferenceService from "./OpenResponses/OpenResponsesInferenceService.js";
 
 export default class MultiDriverInferenceService implements InferenceService {
@@ -51,6 +52,8 @@ export default class MultiDriverInferenceService implements InferenceService {
     switch (provider.driver) {
       case InferenceProviderDriver.OpenResponses:
         return new OpenResponsesInferenceService(this.settings);
+      case InferenceProviderDriver.AnthropicMessages:
+        return new AnthropicMessagesInferenceService(this.settings);
       default:
         throw new Error(
           `Unsupported inference provider driver: "${provider.driver}"`,

@@ -6,6 +6,7 @@ import {
   type Control,
   type UseFormTrigger,
   useFieldArray,
+  useWatch,
 } from "react-hook-form";
 import { PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -30,6 +31,7 @@ export default function Provider({
   onRemove,
 }: Props) {
   const intl = useIntl();
+  const driver = useWatch({ control, name: `${name}.driver` });
   const models = useFieldArray({ control, name: `${name}.models` });
   return (
     <section className={cs.Provider.root}>
@@ -56,7 +58,11 @@ export default function Provider({
             control={control}
             name={`${name}.baseUrl`}
             label={intl.formatMessage({ defaultMessage: "Base URL" })}
-            placeholder="https://openrouter.ai/api/v1/responses"
+            placeholder={
+              driver === InferenceProviderDriver.AnthropicMessages
+                ? "https://api.anthropic.com/v1/messages"
+                : "https://openrouter.ai/api/v1/responses"
+            }
           />
           <RHFTextField
             control={control}
