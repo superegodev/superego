@@ -776,9 +776,7 @@ describe("fromResponsesResponse", () => {
         {
           type: "reasoning",
           id: "rs_123",
-          content: [
-            { type: "reasoning_text", text: "The model reasoned..." },
-          ],
+          content: [{ type: "reasoning_text", text: "The model reasoned..." }],
           signature: "sig-123",
           summary: [{ type: "summary_text", text: "Summary of reasoning" }],
         },
