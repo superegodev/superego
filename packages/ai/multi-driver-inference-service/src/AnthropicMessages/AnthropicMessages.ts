@@ -256,7 +256,9 @@ function toRequestMessage(
 
 function toThinkingBlocks(
   reasoning: Message.Assistant.Reasoning,
-): Array<AnthropicMessages.ThinkingBlock | AnthropicMessages.RedactedThinkingBlock> {
+): Array<
+  AnthropicMessages.ThinkingBlock | AnthropicMessages.RedactedThinkingBlock
+> {
   const blocks: Array<
     AnthropicMessages.ThinkingBlock | AnthropicMessages.RedactedThinkingBlock
   > = [];
@@ -348,8 +350,11 @@ function extractReasoning(
 
   const thinkingBlocks = content.filter((block) => block.type === "thinking");
   if (thinkingBlocks.length > 0) {
-    reasoning.content = thinkingBlocks.map((block) => block.thinking).join("\n");
-    reasoning.contentSignature = thinkingBlocks[thinkingBlocks.length - 1]!.signature;
+    reasoning.content = thinkingBlocks
+      .map((block) => block.thinking)
+      .join("\n");
+    reasoning.contentSignature =
+      thinkingBlocks[thinkingBlocks.length - 1]!.signature;
   }
 
   const redactedThinkingBlocks = content.filter(
