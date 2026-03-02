@@ -1,6 +1,15 @@
 import type { EChartsOption } from "echarts";
 import type { CSSProperties, JSX, ReactNode } from "react";
 
+/** Tiptap rich-text document structure. */
+interface JSONContent {
+  type?: string;
+  attrs?: Record<string, any>;
+  content?: JSONContent[];
+  marks?: { type: string; attrs?: Record<string, any> }[];
+  text?: string;
+}
+
 /** Shows a visual alert. */
 export declare function Alert(props: {
   variant: "neutral" | "info" | "error";
@@ -267,6 +276,52 @@ export declare function TextField(props: {
   ariaLabel?: string;
   description?: ReactNode;
   placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+/**
+ * A markdown editor field with a formatting toolbar. The value is a plain
+ * markdown string. Use `null` to represent empty.
+ */
+export declare function MarkdownField(props: {
+  /** Controlled value for the editor. Use `null` to represent empty. */
+  value: string | null;
+  onChange: (
+    /** New markdown string typed by the user, or `null` if the field is empty. */
+    newValue: string | null,
+  ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+/**
+ * A rich text editor field powered by Tiptap. The value is a Tiptap
+ * `JSONContent` object. Use `null` to represent empty.
+ */
+export declare function TiptapRichTextField(props: {
+  /**
+   * Controlled value for the editor: a Tiptap JSONContent object, or `null`
+   * when empty.
+   */
+  value: JSONContent | null;
+  onChange: (
+    /**
+     * New content produced by the editor, or `null` if the editor is empty.
+     */
+    newValue: JSONContent | null,
+  ) => void;
+  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
+  layout?: "vertical" | "horizontal";
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
   isDisabled?: boolean;
 }): JSX.Element;
 
