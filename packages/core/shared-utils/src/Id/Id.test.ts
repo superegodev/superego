@@ -71,6 +71,11 @@ it("conversation", () => {
   expect(Id.is.conversation(Id.generate.conversation())).toBe(true);
 });
 
+it("message", () => {
+  // Exercise and verify
+  expect(Id.is.message(Id.generate.message())).toBe(true);
+});
+
 it("protoApp", () => {
   // Exercise and verify
   expect(Id.is.protoApp(Id.generate.protoApp(0))).toBe(true);

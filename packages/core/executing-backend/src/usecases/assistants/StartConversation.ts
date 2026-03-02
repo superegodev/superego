@@ -82,6 +82,7 @@ export default class AssistantsStartConversation extends Usecase<
     const { protoFilesWithIds, convertedMessageContent } =
       MessageContentFileUtils.extractAndConvertProtoFiles(userMessageContent);
     const userMessage: Message.User = {
+      id: Id.generate.message(),
       role: MessageRole.User,
       content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,

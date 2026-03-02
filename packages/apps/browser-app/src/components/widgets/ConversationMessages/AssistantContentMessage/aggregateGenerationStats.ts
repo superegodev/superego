@@ -5,7 +5,9 @@ export default function aggregateGenerationStats(
   messages: Message[],
   targetMessage: Message.ContentAssistant,
 ): AggregatedGenerationStats {
-  const targetIndex = messages.indexOf(targetMessage);
+  const targetIndex = messages.findIndex(
+    (message) => "id" in message && message.id === targetMessage.id,
+  );
 
   let inputTokens = 0;
   let outputTokens = 0;

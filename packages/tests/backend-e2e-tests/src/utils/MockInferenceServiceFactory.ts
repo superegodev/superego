@@ -8,6 +8,7 @@ import type {
   InferenceService,
   InferenceServiceFactory,
 } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 
 class MockInferenceService implements InferenceService {
   async generateNextMessage(
@@ -16,6 +17,7 @@ class MockInferenceService implements InferenceService {
     inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ContentAssistant> {
     return {
+      id: Id.generate.message(),
       role: MessageRole.Assistant,
       content: [{ type: MessageContentPartType.Text, text: "Mock response" }],
       reasoning: {},

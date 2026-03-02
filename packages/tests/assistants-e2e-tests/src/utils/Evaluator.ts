@@ -4,6 +4,7 @@ import {
   MessageRole,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 
 export default class Evaluator {
   constructor(
@@ -17,6 +18,7 @@ export default class Evaluator {
     const message = await this.inferenceService.generateNextMessage(
       [
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [{ type: MessageContentPartType.Text, text: instructions }],
           createdAt: new Date(),

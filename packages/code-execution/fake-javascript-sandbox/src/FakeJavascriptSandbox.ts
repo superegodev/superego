@@ -9,7 +9,6 @@ import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
 (globalThis as any).LocalInstant = LocalInstant;
 
 export default class FakeJavascriptSandbox implements JavascriptSandbox {
-  // TODO: consider using an LRU cache to avoid memory ballooning.
   private moduleImportPromiseCache = new Map<string, Promise<unknown>>();
 
   async moduleDefaultExportsFunction(

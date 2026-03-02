@@ -34,6 +34,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       contextFingerprint: "contextFingerprint",
       messages: [
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [
             { type: MessageContentPartType.Text, text: "text", audio },

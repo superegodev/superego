@@ -549,6 +549,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           callCount++;
           if (callCount === 1) {
             return {
+              id: Id.generate.message(),
               role: MessageRole.Assistant,
               toolCalls: [
                 {
@@ -571,6 +572,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
             };
           }
           return {
+            id: Id.generate.message(),
             role: MessageRole.Assistant,
             content: [{ type: MessageContentPartType.Text, text: "Done" }],
             reasoning: {},

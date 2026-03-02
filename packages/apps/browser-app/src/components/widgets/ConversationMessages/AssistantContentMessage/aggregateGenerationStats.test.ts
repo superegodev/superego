@@ -1,5 +1,6 @@
 import type { Message } from "@superego/backend";
 import { MessageContentPartType, MessageRole } from "@superego/backend";
+import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import aggregateGenerationStats from "./aggregateGenerationStats.js";
 
@@ -9,6 +10,7 @@ function makeContentAssistant(stats: {
   cost?: number;
 }): Message.ContentAssistant {
   return {
+    id: Id.generate.message(),
     role: MessageRole.Assistant,
     content: [{ type: MessageContentPartType.Text, text: "hello" }],
     reasoning: {},
@@ -29,6 +31,7 @@ function makeToolCallAssistant(
   toolCallCount = 1,
 ): Message.ToolCallAssistant {
   return {
+    id: Id.generate.message(),
     role: MessageRole.Assistant,
     toolCalls: Array.from({ length: toolCallCount }, (_, i) => ({
       id: `tc_${i}`,
@@ -50,6 +53,7 @@ function makeToolCallAssistant(
 
 function makeUserMessage(): Message.User {
   return {
+    id: Id.generate.message(),
     role: MessageRole.User,
     content: [{ type: MessageContentPartType.Text, text: "hi" }],
     createdAt: new Date(),
@@ -58,6 +62,7 @@ function makeUserMessage(): Message.User {
 
 function makeToolMessage(): Message.Tool {
   return {
+    id: Id.generate.message(),
     role: MessageRole.Tool,
     toolResults: [],
     createdAt: new Date(),

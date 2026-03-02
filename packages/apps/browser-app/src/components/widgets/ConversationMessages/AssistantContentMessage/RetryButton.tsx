@@ -31,8 +31,11 @@ export default function RetryButton({
     message.inferenceOptions.completion.providerModelRef,
   );
 
+  const lastMessage = last(conversation.messages);
   return conversation.canRetryLastResponse &&
-    message === last(conversation.messages) &&
+    lastMessage !== null &&
+    "id" in lastMessage &&
+    lastMessage.id === message.id &&
     !isEmpty(models) ? (
     <ModelActionMenu
       trigger={

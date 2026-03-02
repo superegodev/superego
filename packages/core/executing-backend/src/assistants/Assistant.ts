@@ -9,6 +9,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import type { FileRef } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import pMap from "p-map";
 import type InferenceService from "../requirements/InferenceService.js";
 import isEmpty from "../utils/isEmpty.js";
@@ -74,6 +75,7 @@ export default abstract class Assistant {
         { concurrency: 1 },
       );
       const toolMessage: Message.Tool = {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: toolResults,
         createdAt: new Date(),

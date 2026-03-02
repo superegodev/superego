@@ -19,8 +19,7 @@ export default function ConversationMessages({
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {conversation.messages.map((message, index) => (
         <ConversationMessage
-          // biome-ignore lint/suspicious/noArrayIndexKey: order is stable.
-          key={index}
+          key={"id" in message ? message.id : index}
           message={message}
           conversation={conversation}
           showToolCalls={showToolCalls}

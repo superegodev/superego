@@ -6,6 +6,7 @@ import {
   ReasoningEffort,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import {
   type AnthropicMessages,
@@ -31,6 +32,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -84,6 +86,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -107,6 +110,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -127,6 +131,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -147,6 +152,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -173,6 +179,7 @@ describe("toAnthropicMessagesRequest", () => {
         ],
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hi" }],
         createdAt: new Date(),
@@ -196,6 +203,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hi there" }],
         createdAt: new Date(),
@@ -246,6 +254,7 @@ describe("toAnthropicMessagesRequest", () => {
     const fileBytes = new Uint8Array([0x89, 0x50, 0x4e, 0x47]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -284,6 +293,7 @@ describe("toAnthropicMessagesRequest", () => {
     const fileBytes = new Uint8Array([0x25, 0x50, 0x44, 0x46]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -321,6 +331,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -352,6 +363,7 @@ describe("toAnthropicMessagesRequest", () => {
     const audioBytes = new Uint8Array([1, 2, 3]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -375,6 +387,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: [
           {
@@ -425,6 +438,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         toolCalls: [
           { id: "call-1", tool: "get_weather", input: { city: "NYC" } },
@@ -467,6 +481,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [
           { type: MessageContentPartType.Text, text: "Line 1" },
@@ -507,6 +522,7 @@ describe("toAnthropicMessagesRequest", () => {
         content: [{ type: MessageContentPartType.Text, text: "Context info" }],
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -535,6 +551,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: [
           { tool: "search", toolCallId: "call-1", output: "result" as any },
@@ -542,6 +559,7 @@ describe("toAnthropicMessagesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           { type: MessageContentPartType.Text, text: "Thanks, now do more" },
@@ -573,11 +591,13 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "First" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Old reply" }],
         reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
@@ -591,11 +611,13 @@ describe("toAnthropicMessagesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Second" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         toolCalls: [{ id: "call-1", tool: "search", input: { q: "test" } }],
         reasoning: { content: "new-reasoning", contentSignature: "new-sig" },
@@ -609,6 +631,7 @@ describe("toAnthropicMessagesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: [
           { tool: "search", toolCallId: "call-1", output: "result" as any },
@@ -658,11 +681,13 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "First" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
@@ -676,6 +701,7 @@ describe("toAnthropicMessagesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Second" }],
         createdAt: new Date(),
@@ -699,11 +725,13 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "some reasoning", contentSignature: "sig-1" },
@@ -735,11 +763,13 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { encryptedContent: "encrypted-data" },
@@ -773,11 +803,13 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "some reasoning", contentSignature: "sig-1" },
@@ -818,6 +850,7 @@ describe("toAnthropicMessagesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),

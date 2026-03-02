@@ -7,6 +7,7 @@ import {
   type ReasoningEffort,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
 import getAudioFormat from "../utils/getAudioFormat.js";
 import toBase64 from "../utils/toBase64.js";
@@ -338,6 +339,7 @@ export function fromResponsesResponse(
   timeTaken: number,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const baseMessage = {
+    id: Id.generate.message(),
     role: MessageRole.Assistant,
     inferenceOptions: inferenceOptions,
     generationStats: {
