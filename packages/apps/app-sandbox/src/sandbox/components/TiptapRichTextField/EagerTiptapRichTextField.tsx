@@ -6,24 +6,20 @@ import TextAlign from "@tiptap/extension-text-align";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
 import { Placeholder } from "@tiptap/extensions";
-import { EditorContent, type JSONContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { isEqual } from "es-toolkit";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
+import Description from "../forms/Description.js";
+import Label from "../forms/Label.js";
 import FormattingToolbar from "./FormattingToolbar.js";
+import type Props from "./Props.js";
 import * as cs from "./TiptapRichTextField.css.js";
 
 const ON_CHANGE_DEBOUNCE = 300;
-
-interface Props {
-  value: JSONContent | null;
-  onChange: (newValue: JSONContent | null) => void;
-  isDisabled?: boolean | undefined;
-  ariaLabel?: string | undefined;
-}
 
 // This input component wraps the Tiptap editor, which manages its own internal
 // state. The `value` prop is used both for the initial value and for ongoing
@@ -38,11 +34,14 @@ interface Props {
 // — changes that exist in the editor but have not yet been flushed to
 // `onChange`. While pending local changes exist, incoming `value` prop updates
 // are ignored — except for `null`, which is always accepted.
-export default function TiptapInput({
+export default function EagerTiptapRichTextField({
   value,
   onChange,
-  isDisabled = false,
+  layout = "vertical",
+  label,
   ariaLabel,
+  description,
+  isDisabled = false,
 }: Props) {
   const id = useId();
   const { isFocusVisible } = useFocusVisible();
@@ -123,26 +122,33 @@ export default function TiptapInput({
 
   return (
     <div
-      onFocus={() => setHasFocus(true)}
-      onBlur={(evt) => {
-        const rootEl = evt.currentTarget;
-        const focusPassedToChild = rootEl.contains(evt.relatedTarget);
-        const focusPassedToPortalled =
-          evt.relatedTarget !== null &&
-          evt.relatedTarget.closest(`[data-tiptap-input-id="${id}"]`);
-        if (!(focusPassedToChild || focusPassedToPortalled)) {
-          setHasFocus(false);
-        }
-      }}
-      data-has-focus={hasFocus}
-      data-focus-visible={hasFocus && isFocusVisible}
       data-disabled={isDisabled || undefined}
-      className={cs.TiptapInput.root}
+      className={cs.TiptapRichTextField.root[layout]}
     >
-      {!isDisabled && editor ? (
-        <FormattingToolbar editor={editor} tiptapInputId={id} />
-      ) : null}
-      <EditorContent editor={editor} />
+      {label ? <Label>{label}</Label> : null}
+      <div
+        onFocus={() => setHasFocus(true)}
+        onBlur={(evt) => {
+          const rootEl = evt.currentTarget;
+          const focusPassedToChild = rootEl.contains(evt.relatedTarget);
+          const focusPassedToPortalled =
+            evt.relatedTarget !== null &&
+            evt.relatedTarget.closest(`[data-tiptap-input-id="${id}"]`);
+          if (!(focusPassedToChild || focusPassedToPortalled)) {
+            setHasFocus(false);
+          }
+        }}
+        data-has-focus={hasFocus}
+        data-focus-visible={hasFocus && isFocusVisible}
+        data-disabled={isDisabled || undefined}
+        className={cs.TiptapInput.root}
+      >
+        {!isDisabled && editor ? (
+          <FormattingToolbar editor={editor} tiptapInputId={id} />
+        ) : null}
+        <EditorContent editor={editor} />
+      </div>
+      {description ? <Description>{description}</Description> : null}
     </div>
   );
 }

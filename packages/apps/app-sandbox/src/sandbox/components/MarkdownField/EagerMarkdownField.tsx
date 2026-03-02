@@ -1,23 +1,22 @@
 import OverType, { type OverTypeInstance } from "overtype";
 import { useEffect, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
+import Description from "../forms/Description.js";
+import Label from "../forms/Label.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownField.css.js";
+import type Props from "./Props.js";
 import theme from "./theme.js";
 
-interface Props {
-  value: string | null;
-  onChange: (newValue: string) => void;
-  placeholder?: string | undefined;
-  isDisabled?: boolean | undefined;
-  ariaLabel?: string | undefined;
-}
-export default function MarkdownInput({
+export default function EagerMarkdownField({
   value,
   onChange,
+  layout = "vertical",
+  label,
+  ariaLabel,
+  description,
   placeholder,
   isDisabled = false,
-  ariaLabel,
 }: Props) {
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
@@ -35,7 +34,7 @@ export default function MarkdownInput({
 
     const [instance] = OverType.init(containerRef.current, {
       value: value ?? "",
-      onChange: (newValue) => onChange(newValue),
+      onChange: (newValue) => onChange(newValue === "" ? null : newValue),
       autoResize: true,
       toolbar: false,
       smartLists: true,
@@ -65,7 +64,7 @@ export default function MarkdownInput({
 
   useEffect(() => {
     editorRef.current?.reinit({
-      onChange: (newValue) => onChange(newValue),
+      onChange: (newValue) => onChange(newValue === "" ? null : newValue),
       placeholder: placeholder,
     });
   }, [onChange, placeholder]);
@@ -78,22 +77,29 @@ export default function MarkdownInput({
 
   return (
     <div
-      ref={rootElementRef}
-      onFocus={() => setHasFocus(true)}
-      onBlur={(evt) => {
-        const focusPassedToChild = rootElementRef.current?.contains(
-          evt.relatedTarget,
-        );
-        if (!focusPassedToChild) {
-          setHasFocus(false);
-        }
-      }}
-      data-has-focus={hasFocus}
-      data-focus-visible={hasFocus && isFocusVisible}
-      className={cs.MarkdownInput.root}
+      data-disabled={isDisabled || undefined}
+      className={cs.MarkdownField.root[layout]}
     >
-      {!isDisabled ? <FormattingToolbar editorRef={editorRef} /> : null}
-      <div ref={containerRef} />
+      {label ? <Label>{label}</Label> : null}
+      <div
+        ref={rootElementRef}
+        onFocus={() => setHasFocus(true)}
+        onBlur={(evt) => {
+          const focusPassedToChild = rootElementRef.current?.contains(
+            evt.relatedTarget,
+          );
+          if (!focusPassedToChild) {
+            setHasFocus(false);
+          }
+        }}
+        data-has-focus={hasFocus}
+        data-focus-visible={hasFocus && isFocusVisible}
+        className={cs.MarkdownInput.root}
+      >
+        {!isDisabled ? <FormattingToolbar editorRef={editorRef} /> : null}
+        <div ref={containerRef} />
+      </div>
+      {description ? <Description>{description}</Description> : null}
     </div>
   );
 }
