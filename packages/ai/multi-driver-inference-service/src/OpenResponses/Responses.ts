@@ -22,7 +22,7 @@ export namespace Responses {
     input: InputItem[];
     model: string;
     tools: Tool[] | undefined;
-    reasoning: { effort: string; summary: "auto" } | undefined;
+    reasoning: { effort: string } | undefined;
     stream: boolean;
   };
 
@@ -155,9 +155,7 @@ export function toResponsesRequest(
       ),
     ),
     tools: responsesTools.length > 0 ? responsesTools : undefined,
-    reasoning: reasoningEffort
-      ? { effort: reasoningEffort, summary: "auto" }
-      : undefined,
+    reasoning: reasoningEffort ? { effort: reasoningEffort } : undefined,
     stream: false,
   };
 }

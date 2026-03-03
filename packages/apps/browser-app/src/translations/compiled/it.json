@@ -4587,6 +4587,222 @@
       "value": "Oggi"
     }
   ],
+  "getStatusText.ts_+cQcX2": [
+    {
+      "type": 0,
+      "value": "creazione di mappe da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_/0ISuY": [
+    {
+      "type": 0,
+      "value": "ancora in esecuzione codice"
+    }
+  ],
+  "getStatusText.ts_1dVfTZ": [
+    {
+      "type": 0,
+      "value": "lettura di altri schemi collezione"
+    }
+  ],
+  "getStatusText.ts_2eapm9": [
+    {
+      "type": 0,
+      "value": "esecuzione di strumenti"
+    }
+  ],
+  "getStatusText.ts_2j+fZj": [
+    {
+      "type": 0,
+      "value": "creazione di grafici da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_4Trl/i": [
+    {
+      "type": 0,
+      "value": "aggiornamento dei documenti esistenti"
+    }
+  ],
+  "getStatusText.ts_8UqYYj": [
+    {
+      "type": 0,
+      "value": "ricerca tra più documenti"
+    }
+  ],
+  "getStatusText.ts_8jDOjv": [
+    {
+      "type": 0,
+      "value": "aggiornamento di più documenti"
+    }
+  ],
+  "getStatusText.ts_Aneja+": [
+    {
+      "type": 0,
+      "value": "lettura di più schemi collezione"
+    }
+  ],
+  "getStatusText.ts_BJ4SuP": [
+    {
+      "type": 0,
+      "value": "esecuzione di codice per analizzare i documenti"
+    }
+  ],
+  "getStatusText.ts_EYmnCf": [
+    {
+      "type": 0,
+      "value": "esecuzione di più strumenti"
+    }
+  ],
+  "getStatusText.ts_EdD8dJ": [
+    {
+      "type": 0,
+      "value": "creazione di più grafici"
+    }
+  ],
+  "getStatusText.ts_FV3TfA": [
+    {
+      "type": 0,
+      "value": "ricerca tra altri documenti"
+    }
+  ],
+  "getStatusText.ts_G5yjJ5": [
+    {
+      "type": 0,
+      "value": "suggerimento di più collezioni"
+    }
+  ],
+  "getStatusText.ts_Gx9pE5": [
+    {
+      "type": 0,
+      "value": "ispezione di più file"
+    }
+  ],
+  "getStatusText.ts_GzcNLM": [
+    {
+      "type": 0,
+      "value": "creazione di più mappe"
+    }
+  ],
+  "getStatusText.ts_HRMIeI": [
+    {
+      "type": 0,
+      "value": "esecuzione di altri strumenti"
+    }
+  ],
+  "getStatusText.ts_IOpa7w": [
+    {
+      "type": 0,
+      "value": "ispezione di altri file"
+    }
+  ],
+  "getStatusText.ts_NGqPvQ": [
+    {
+      "type": 0,
+      "value": "Ruminando"
+    }
+  ],
+  "getStatusText.ts_NwXVbw": [
+    {
+      "type": 0,
+      "value": "creazione di altri documenti"
+    }
+  ],
+  "getStatusText.ts_P5Fv4Z": [
+    {
+      "type": 0,
+      "value": "creazione di più tabelle"
+    }
+  ],
+  "getStatusText.ts_P9gC6s": [
+    {
+      "type": 0,
+      "value": "lettura schemi collezione"
+    }
+  ],
+  "getStatusText.ts_Q0zqsp": [
+    {
+      "type": 0,
+      "value": "creazione di altri grafici"
+    }
+  ],
+  "getStatusText.ts_b63n3p": [
+    {
+      "type": 0,
+      "value": "creazione di altre mappe"
+    }
+  ],
+  "getStatusText.ts_cAkSRB": [
+    {
+      "type": 0,
+      "value": "Ponderando"
+    }
+  ],
+  "getStatusText.ts_cmj5Mv": [
+    {
+      "type": 0,
+      "value": "esecuzione di più codice"
+    }
+  ],
+  "getStatusText.ts_f8cQJW": [
+    {
+      "type": 0,
+      "value": "aggiornamento di altri documenti"
+    }
+  ],
+  "getStatusText.ts_gKneh7": [
+    {
+      "type": 0,
+      "value": "suggerimento di altre collezioni"
+    }
+  ],
+  "getStatusText.ts_hU96dI": [
+    {
+      "type": 0,
+      "value": "suggerimento di nuove collezioni"
+    }
+  ],
+  "getStatusText.ts_nP8jqi": [
+    {
+      "type": 0,
+      "value": "Cogitando"
+    }
+  ],
+  "getStatusText.ts_rvd9sh": [
+    {
+      "type": 0,
+      "value": "creazione di tabelle da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_ryvDft": [
+    {
+      "type": 0,
+      "value": "creazione di più documenti"
+    }
+  ],
+  "getStatusText.ts_sso0oA": [
+    {
+      "type": 0,
+      "value": "ricerca tra i documenti"
+    }
+  ],
+  "getStatusText.ts_u7GfRG": [
+    {
+      "type": 0,
+      "value": "ispezione dei file forniti"
+    }
+  ],
+  "getStatusText.ts_uL10Ji": [
+    {
+      "type": 0,
+      "value": "creazione di altre tabelle"
+    }
+  ],
+  "getStatusText.ts_uf3oCA": [
+    {
+      "type": 0,
+      "value": "creazione di nuovi documenti"
+    }
+  ],
   "openFileWithNativeApp.ts_Blh3UZ": [
     {
       "type": 0,

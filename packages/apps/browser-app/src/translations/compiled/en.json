@@ -4609,6 +4609,222 @@
       "value": "Today"
     }
   ],
+  "getStatusText.ts_+cQcX2": [
+    {
+      "type": 0,
+      "value": "creating maps to use in response"
+    }
+  ],
+  "getStatusText.ts_/0ISuY": [
+    {
+      "type": 0,
+      "value": "still running code"
+    }
+  ],
+  "getStatusText.ts_1dVfTZ": [
+    {
+      "type": 0,
+      "value": "reading other collection schemas"
+    }
+  ],
+  "getStatusText.ts_2eapm9": [
+    {
+      "type": 0,
+      "value": "running tools"
+    }
+  ],
+  "getStatusText.ts_2j+fZj": [
+    {
+      "type": 0,
+      "value": "creating charts to use in response"
+    }
+  ],
+  "getStatusText.ts_4Trl/i": [
+    {
+      "type": 0,
+      "value": "updating existing documents"
+    }
+  ],
+  "getStatusText.ts_8UqYYj": [
+    {
+      "type": 0,
+      "value": "searching through more documents"
+    }
+  ],
+  "getStatusText.ts_8jDOjv": [
+    {
+      "type": 0,
+      "value": "updating more documents"
+    }
+  ],
+  "getStatusText.ts_Aneja+": [
+    {
+      "type": 0,
+      "value": "reading more collection schemas"
+    }
+  ],
+  "getStatusText.ts_BJ4SuP": [
+    {
+      "type": 0,
+      "value": "running code to analyze documents"
+    }
+  ],
+  "getStatusText.ts_EYmnCf": [
+    {
+      "type": 0,
+      "value": "running more tools"
+    }
+  ],
+  "getStatusText.ts_EdD8dJ": [
+    {
+      "type": 0,
+      "value": "creating more charts"
+    }
+  ],
+  "getStatusText.ts_FV3TfA": [
+    {
+      "type": 0,
+      "value": "searching through other documents"
+    }
+  ],
+  "getStatusText.ts_G5yjJ5": [
+    {
+      "type": 0,
+      "value": "suggesting more collections"
+    }
+  ],
+  "getStatusText.ts_Gx9pE5": [
+    {
+      "type": 0,
+      "value": "inspecting more files"
+    }
+  ],
+  "getStatusText.ts_GzcNLM": [
+    {
+      "type": 0,
+      "value": "creating more maps"
+    }
+  ],
+  "getStatusText.ts_HRMIeI": [
+    {
+      "type": 0,
+      "value": "running other tools"
+    }
+  ],
+  "getStatusText.ts_IOpa7w": [
+    {
+      "type": 0,
+      "value": "inspecting other files"
+    }
+  ],
+  "getStatusText.ts_NGqPvQ": [
+    {
+      "type": 0,
+      "value": "Ruminating"
+    }
+  ],
+  "getStatusText.ts_NwXVbw": [
+    {
+      "type": 0,
+      "value": "creating other documents"
+    }
+  ],
+  "getStatusText.ts_P5Fv4Z": [
+    {
+      "type": 0,
+      "value": "creating more tables"
+    }
+  ],
+  "getStatusText.ts_P9gC6s": [
+    {
+      "type": 0,
+      "value": "reading collection schemas"
+    }
+  ],
+  "getStatusText.ts_Q0zqsp": [
+    {
+      "type": 0,
+      "value": "creating other charts"
+    }
+  ],
+  "getStatusText.ts_b63n3p": [
+    {
+      "type": 0,
+      "value": "creating other maps"
+    }
+  ],
+  "getStatusText.ts_cAkSRB": [
+    {
+      "type": 0,
+      "value": "Pondering"
+    }
+  ],
+  "getStatusText.ts_cmj5Mv": [
+    {
+      "type": 0,
+      "value": "running more code"
+    }
+  ],
+  "getStatusText.ts_f8cQJW": [
+    {
+      "type": 0,
+      "value": "updating other documents"
+    }
+  ],
+  "getStatusText.ts_gKneh7": [
+    {
+      "type": 0,
+      "value": "suggesting other collections"
+    }
+  ],
+  "getStatusText.ts_hU96dI": [
+    {
+      "type": 0,
+      "value": "suggesting new collections"
+    }
+  ],
+  "getStatusText.ts_nP8jqi": [
+    {
+      "type": 0,
+      "value": "Cogitating"
+    }
+  ],
+  "getStatusText.ts_rvd9sh": [
+    {
+      "type": 0,
+      "value": "creating tables to use in response"
+    }
+  ],
+  "getStatusText.ts_ryvDft": [
+    {
+      "type": 0,
+      "value": "creating more documents"
+    }
+  ],
+  "getStatusText.ts_sso0oA": [
+    {
+      "type": 0,
+      "value": "searching through documents"
+    }
+  ],
+  "getStatusText.ts_u7GfRG": [
+    {
+      "type": 0,
+      "value": "inspecting the provided files"
+    }
+  ],
+  "getStatusText.ts_uL10Ji": [
+    {
+      "type": 0,
+      "value": "creating other tables"
+    }
+  ],
+  "getStatusText.ts_uf3oCA": [
+    {
+      "type": 0,
+      "value": "creating new documents"
+    }
+  ],
   "openFileWithNativeApp.ts_Blh3UZ": [
     {
       "type": 0,

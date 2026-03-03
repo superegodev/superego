@@ -76,6 +76,9 @@ export default class BackendIPCProxyClient implements Backend {
       ),
       deleteConversation: this.makeMainIpcCall("assistants.deleteConversation"),
       getConversation: this.makeMainIpcCall("assistants.getConversation"),
+      getLiveConversation: this.makeMainIpcCall(
+        "assistants.getLiveConversation",
+      ),
       listConversations: this.makeMainIpcCall("assistants.listConversations"),
       searchConversations: this.makeMainIpcCall(
         "assistants.searchConversations",

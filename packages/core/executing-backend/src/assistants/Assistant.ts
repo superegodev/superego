@@ -31,6 +31,7 @@ export default abstract class Assistant {
     messages: Message[],
     inferenceSettings: InferenceSettings,
     inferenceOptions: InferenceOptions<"completion">,
+    onMessagesUpdated: (messages: Message[]) => void,
   ): Promise<Message[]> {
     try {
       const assistantMessage = await this.inferenceService.generateNextMessage(
@@ -65,10 +66,15 @@ export default abstract class Assistant {
 
       // Case: assistantMessage is Message.ContentAssistant
       if ("content" in assistantMessage) {
-        return [...messages, assistantMessage];
+        const updatedMessages = [...messages, assistantMessage];
+        onMessagesUpdated(updatedMessages);
+        return updatedMessages;
       }
 
       // Case: assistantMessage is Message.ToolCallAssistant.
+      const messagesAfterAssistant = [...messages, assistantMessage];
+      onMessagesUpdated(messagesAfterAssistant);
+
       const toolResults: ToolResult[] = await pMap(
         assistantMessage.toolCalls,
         (toolCall) => this.processToolCall(toolCall, inferenceOptions),
@@ -80,10 +86,14 @@ export default abstract class Assistant {
         toolResults: toolResults,
         createdAt: new Date(),
       };
+      const messagesAfterTool = [...messagesAfterAssistant, toolMessage];
+      onMessagesUpdated(messagesAfterTool);
+
       return this.generateAndProcessNextMessages(
-        [...messages, assistantMessage, toolMessage],
+        messagesAfterTool,
         inferenceSettings,
         inferenceOptions,
+        onMessagesUpdated,
       );
     } catch (error) {
       console.error(error);

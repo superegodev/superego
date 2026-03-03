@@ -1370,6 +1370,114 @@
   "SuggestCollectionsDefinitions.tsx_wNj/kt": {
     "defaultMessage": "Errore durante la creazione delle collezioni"
   },
+  "getStatusText.ts_+cQcX2": {
+    "defaultMessage": "creazione di mappe da usare nella risposta"
+  },
+  "getStatusText.ts_/0ISuY": {
+    "defaultMessage": "ancora in esecuzione codice"
+  },
+  "getStatusText.ts_1dVfTZ": {
+    "defaultMessage": "lettura di altri schemi collezione"
+  },
+  "getStatusText.ts_2eapm9": {
+    "defaultMessage": "esecuzione di strumenti"
+  },
+  "getStatusText.ts_2j+fZj": {
+    "defaultMessage": "creazione di grafici da usare nella risposta"
+  },
+  "getStatusText.ts_4Trl/i": {
+    "defaultMessage": "aggiornamento dei documenti esistenti"
+  },
+  "getStatusText.ts_8UqYYj": {
+    "defaultMessage": "ricerca tra più documenti"
+  },
+  "getStatusText.ts_8jDOjv": {
+    "defaultMessage": "aggiornamento di più documenti"
+  },
+  "getStatusText.ts_Aneja+": {
+    "defaultMessage": "lettura di più schemi collezione"
+  },
+  "getStatusText.ts_BJ4SuP": {
+    "defaultMessage": "esecuzione di codice per analizzare i documenti"
+  },
+  "getStatusText.ts_EYmnCf": {
+    "defaultMessage": "esecuzione di più strumenti"
+  },
+  "getStatusText.ts_EdD8dJ": {
+    "defaultMessage": "creazione di più grafici"
+  },
+  "getStatusText.ts_FV3TfA": {
+    "defaultMessage": "ricerca tra altri documenti"
+  },
+  "getStatusText.ts_G5yjJ5": {
+    "defaultMessage": "suggerimento di più collezioni"
+  },
+  "getStatusText.ts_Gx9pE5": {
+    "defaultMessage": "ispezione di più file"
+  },
+  "getStatusText.ts_GzcNLM": {
+    "defaultMessage": "creazione di più mappe"
+  },
+  "getStatusText.ts_HRMIeI": {
+    "defaultMessage": "esecuzione di altri strumenti"
+  },
+  "getStatusText.ts_IOpa7w": {
+    "defaultMessage": "ispezione di altri file"
+  },
+  "getStatusText.ts_NGqPvQ": {
+    "defaultMessage": "Ruminando"
+  },
+  "getStatusText.ts_NwXVbw": {
+    "defaultMessage": "creazione di altri documenti"
+  },
+  "getStatusText.ts_P5Fv4Z": {
+    "defaultMessage": "creazione di più tabelle"
+  },
+  "getStatusText.ts_P9gC6s": {
+    "defaultMessage": "lettura schemi collezione"
+  },
+  "getStatusText.ts_Q0zqsp": {
+    "defaultMessage": "creazione di altri grafici"
+  },
+  "getStatusText.ts_b63n3p": {
+    "defaultMessage": "creazione di altre mappe"
+  },
+  "getStatusText.ts_cAkSRB": {
+    "defaultMessage": "Ponderando"
+  },
+  "getStatusText.ts_cmj5Mv": {
+    "defaultMessage": "esecuzione di più codice"
+  },
+  "getStatusText.ts_f8cQJW": {
+    "defaultMessage": "aggiornamento di altri documenti"
+  },
+  "getStatusText.ts_gKneh7": {
+    "defaultMessage": "suggerimento di altre collezioni"
+  },
+  "getStatusText.ts_hU96dI": {
+    "defaultMessage": "suggerimento di nuove collezioni"
+  },
+  "getStatusText.ts_nP8jqi": {
+    "defaultMessage": "Cogitando"
+  },
+  "getStatusText.ts_rvd9sh": {
+    "defaultMessage": "creazione di tabelle da usare nella risposta"
+  },
+  "getStatusText.ts_ryvDft": {
+    "defaultMessage": "creazione di più documenti"
+  },
+  "getStatusText.ts_sso0oA": {
+    "defaultMessage": "ricerca tra i documenti"
+  },
+  "getStatusText.ts_u7GfRG": {
+    "defaultMessage": "ispezione dei file forniti"
+  },
+  "getStatusText.ts_uL10Ji": {
+    "defaultMessage": "creazione di altre tabelle"
+  },
+  "getStatusText.ts_uf3oCA": {
+    "defaultMessage": "creazione di nuovi documenti"
+  },
   "ThinkingTime.tsx_O5Mn+P": {
     "defaultMessage": "{model} ha pensato per {time}"
   },

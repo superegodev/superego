@@ -93,6 +93,22 @@ export default class AssistantsProcessConversation extends Usecase {
 
     const globalSettings = await this.repos.globalSettings.get();
 
+    const onMessagesUpdated = (messages: Message[]) =>
+      this.liveConversationStore.set(id, {
+        id: conversation.id,
+        assistant: conversation.assistant,
+        title: conversation.title,
+        hasOutdatedContext: false,
+        canRetryLastResponse: false,
+        messages: messages,
+        status: ConversationStatus.Processing,
+        error: null,
+        createdAt: conversation.createdAt,
+      });
+
+    // Set initial live state with the current messages (before generation).
+    onMessagesUpdated(conversation.messages);
+
     let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
@@ -140,6 +156,7 @@ export default class AssistantsProcessConversation extends Usecase {
           transcribedMessages,
           globalSettings.inference,
           inferenceOptions,
+          onMessagesUpdated,
         ),
         conversation.title === null
           ? generateTitle(
@@ -167,6 +184,8 @@ export default class AssistantsProcessConversation extends Usecase {
           cause: extractErrorDetails(error),
         }),
       };
+    } finally {
+      this.liveConversationStore.delete(id);
     }
 
     await this.repos.conversation.upsert(updatedConversation);
