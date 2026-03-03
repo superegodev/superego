@@ -1,15 +1,6 @@
 import type { EChartsOption } from "echarts";
 import type { CSSProperties, JSX, ReactNode } from "react";
 
-/** Tiptap rich-text document structure. */
-interface JSONContent {
-  type?: string;
-  attrs?: Record<string, any>;
-  content?: JSONContent[];
-  marks?: { type: string; attrs?: Record<string, any> }[];
-  text?: string;
-}
-
 /** Shows a visual alert. */
 export declare function Alert(props: {
   variant: "neutral" | "info" | "error";
@@ -290,8 +281,6 @@ export declare function MarkdownField(props: {
     /** New markdown string typed by the user, or `null` if the field is empty. */
     newValue: string | null,
   ) => void;
-  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
-  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;
@@ -301,23 +290,23 @@ export declare function MarkdownField(props: {
 }): JSX.Element;
 
 /**
- * A rich text editor field powered by Tiptap. The value is a Tiptap
- * `JSONContent` object. Use `null` to represent empty.
+ * A rich text editor field powered by Tiptap. The value is a valid Tiptap
+ * JSONContent object branded with `__dataType: "JsonObject"` (a Superego
+ * JsonObject). Use `null` to represent empty.
  */
 export declare function TiptapRichTextField(props: {
   /**
-   * Controlled value for the editor: a Tiptap JSONContent object, or `null`
-   * when empty.
+   * Controlled value for the editor: a valid Tiptap JSONContent object branded
+   * with `{ __dataType: "JsonObject" }`, or `null` when empty.
    */
-  value: JSONContent | null;
+  value: any;
   onChange: (
     /**
-     * New content produced by the editor, or `null` if the editor is empty.
+     * New content produced by the editor (a Tiptap JSONContent object branded
+     * with `{ __dataType: "JsonObject" }`), or `null` if the editor is empty.
      */
-    newValue: JSONContent | null,
+    newValue: any,
   ) => void;
-  /** Whether the label is above ("vertical") or beside ("horizontal") the input. @defaultValue "vertical" */
-  layout?: "vertical" | "horizontal";
   label?: ReactNode;
   /** Required if label is not supplied. */
   ariaLabel?: string;

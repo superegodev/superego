@@ -1,10 +1,8 @@
-import type { JSONContent } from "@tiptap/react";
 import type { ReactNode } from "react";
 
 export default interface Props {
-  value: JSONContent | null;
-  onChange: (newValue: JSONContent | null) => void;
-  layout?: "vertical" | "horizontal" | undefined;
+  value: Record<string, any> | null;
+  onChange: (newValue: Record<string, any> | null) => void;
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;

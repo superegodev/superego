@@ -11,7 +11,6 @@ import theme from "./theme.js";
 export default function EagerMarkdownField({
   value,
   onChange,
-  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -78,7 +77,7 @@ export default function EagerMarkdownField({
   return (
     <div
       data-disabled={isDisabled || undefined}
-      className={cs.MarkdownField.root[layout]}
+      className={cs.MarkdownField.root}
     >
       {label ? <Label>{label}</Label> : null}
       <div

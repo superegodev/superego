@@ -1,3 +1,4 @@
+import { DataType } from "@superego/schema";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import Subscript from "@tiptap/extension-subscript";
@@ -21,6 +22,16 @@ import * as cs from "./TiptapRichTextField.css.js";
 
 const ON_CHANGE_DEBOUNCE = 300;
 
+function stripBranding(
+  value: Record<string, any> | null,
+): Record<string, any> | null {
+  if (value == null) {
+    return null;
+  }
+  const { __dataType, ...rest } = value;
+  return rest;
+}
+
 // This input component wraps the Tiptap editor, which manages its own internal
 // state. The `value` prop is used both for the initial value and for ongoing
 // synchronization (e.g., when the form resets after an external change).
@@ -37,7 +48,6 @@ const ON_CHANGE_DEBOUNCE = 300;
 export default function EagerTiptapRichTextField({
   value,
   onChange,
-  layout = "vertical",
   label,
   ariaLabel,
   description,
@@ -83,12 +93,16 @@ export default function EagerTiptapRichTextField({
         ...(ariaLabel ? { "aria-label": ariaLabel } : {}),
       },
     },
-    content: value,
+    content: stripBranding(value),
     editable: !isDisabled,
     onUpdate: (() => {
       const debouncedOnChange = debounce(({ editor }: { editor: any }) => {
         hasPendingLocalChangesRef.current = false;
-        onChange(editor.isEmpty ? null : editor.getJSON());
+        onChange(
+          editor.isEmpty
+            ? null
+            : { ...editor.getJSON(), __dataType: DataType.JsonObject },
+        );
       }, ON_CHANGE_DEBOUNCE);
       return (args: { editor: any }) => {
         hasPendingLocalChangesRef.current = true;
@@ -115,15 +129,16 @@ export default function EagerTiptapRichTextField({
     if (hasPendingLocalChangesRef.current) {
       return;
     }
-    if (!isEqual(editor.getJSON(), value)) {
-      editor.commands.setContent(value);
+    const stripped = stripBranding(value);
+    if (!isEqual(editor.getJSON(), stripped)) {
+      editor.commands.setContent(stripped);
     }
   }, [editor, value]);
 
   return (
     <div
       data-disabled={isDisabled || undefined}
-      className={cs.TiptapRichTextField.root[layout]}
+      className={cs.TiptapRichTextField.root}
     >
       {label ? <Label>{label}</Label> : null}
       <div

@@ -1,28 +1,11 @@
 import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
-import { Label } from "../forms/forms.css.js";
-
-const verticalFieldRootBase = {
-  display: "flex" as const,
-  flexDirection: "column" as const,
-  gap: vars.spacing._2,
-};
-
-const horizontalFieldBase = style({
-  display: "grid",
-  gridTemplateColumns: "auto 1fr",
-  gap: vars.spacing._2,
-  alignItems: "start",
-});
-
-globalStyle(`${horizontalFieldBase} > :not(${Label.root})`, {
-  gridColumn: 2,
-});
 
 export const TiptapRichTextField = {
-  root: styleVariants({
-    vertical: verticalFieldRootBase,
-    horizontal: [horizontalFieldBase],
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._2,
   }),
 };
 
