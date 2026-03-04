@@ -123,7 +123,8 @@ and remaining fields on the right; narrow screens stack everything vertically.
               "top": "var(--visible-area-top)",
               "display": "flex",
               "flexDirection": "column",
-              "gap": "var(--field-vertical-gap)"
+              "gap": "var(--field-vertical-gap)",
+              "minWidth": 0
             },
             "children": [{ "propertyPath": "notes", "flexGrow": true }]
           },
@@ -131,7 +132,8 @@ and remaining fields on the right; narrow screens stack everything vertically.
             "style": {
               "display": "flex",
               "flexDirection": "column",
-              "gap": "var(--field-vertical-gap)"
+              "gap": "var(--field-vertical-gap)",
+              "minWidth": 0
             },
             "children": [
               { "propertyPath": "type" },

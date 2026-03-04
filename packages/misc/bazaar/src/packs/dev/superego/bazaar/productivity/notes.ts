@@ -57,6 +57,7 @@ export default function getContentSummary(note) {
                   top: "var(--visible-area-top)",
                   display: "flex",
                   flexDirection: "column",
+                  minWidth: 0,
                 },
                 children: [{ propertyPath: "note", flexGrow: true }],
               },
@@ -65,6 +66,7 @@ export default function getContentSummary(note) {
                   display: "flex",
                   flexDirection: "column",
                   gap: "var(--field-vertical-gap)",
+                  minWidth: 0,
                 },
                 children: [
                   { propertyPath: "title" },

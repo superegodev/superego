@@ -150,7 +150,8 @@ all fields are stacked vertically.
               "top": "var(--visible-area-top)",
               "display": "flex",
               "flexDirection": "column",
-              "gap": "var(--field-vertical-gap)"
+              "gap": "var(--field-vertical-gap)",
+              "minWidth": 0
             },
             "children": [{ "propertyPath": "notes", "flexGrow": true }]
           },
@@ -158,7 +159,8 @@ all fields are stacked vertically.
             "style": {
               "display": "flex",
               "flexDirection": "column",
-              "gap": "var(--field-vertical-gap)"
+              "gap": "var(--field-vertical-gap)",
+              "minWidth": 0
             },
             "children": [
               { "propertyPath": "type" },
