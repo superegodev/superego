@@ -6,6 +6,8 @@ import {
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type UnexpectedError,
 } from "@superego/backend";
@@ -13,12 +15,14 @@ import type { Milliseconds, ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
+import isEmpty from "../../utils/isEmpty.js";
 import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
@@ -30,10 +34,28 @@ export default class AssistantsRecoverConversation extends Usecase<
 > {
   async exec(
     id: ConversationId,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotRecoverConversation | UnexpectedError
+    | ConversationNotFound
+    | CannotRecoverConversation
+    | InferenceOptionsNotValid
+    | UnexpectedError
   > {
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsIssues = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
+    }
+
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulResult(
@@ -75,7 +97,7 @@ export default class AssistantsRecoverConversation extends Usecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id },
+      input: { id, inferenceOptions },
     });
 
     return makeSuccessfulResult(

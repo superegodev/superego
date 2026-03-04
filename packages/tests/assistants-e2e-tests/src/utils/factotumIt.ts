@@ -34,8 +34,12 @@ export default function factotumIt(
       for (let i = 0; i < repeatTimes; i++) {
         let factotum: FactotumObject | null = null;
         try {
-          const { backend, booleanOracle } = options.deps();
-          factotum = new FactotumObject(backend, booleanOracle);
+          const { backend, booleanOracle, inferenceOptions } = options.deps();
+          factotum = new FactotumObject(
+            backend,
+            booleanOracle,
+            inferenceOptions,
+          );
           await testFunction(factotum);
         } catch (error) {
           if (factotum) {

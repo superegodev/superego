@@ -1,9 +1,11 @@
 import { parseTime } from "@internationalized/date";
 import { useController } from "react-hook-form";
 import classnames from "../../../../../utils/classnames.js";
-import FieldError from "../../../../design-system/forms/FieldError.js";
-import TimeField from "../../../../design-system/forms/TimeField.js";
-import TimeInputWithMilliseconds from "../../../../design-system/forms/TimeInputWithMilliseconds.js";
+import {
+  FieldError,
+  TimeField,
+  TimeInputWithMilliseconds,
+} from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
 import * as cs from "../../RHFContentField.css.js";
 import { useUiOptions } from "../../uiOptions.js";

@@ -6,6 +6,9 @@
     ".": {
       "import": "./src/index.tsx"
     },
+    "./monaco": {
+      "import": "./src/monaco.ts"
+    },
     "./vite.config.js": {
       "import": "./vite.config.ts"
     }
@@ -31,7 +34,7 @@
     "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/monaco-typescript-compiler": "workspace:*",
-    "@superego/openai-compat-inference-service": "workspace:*",
+    "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/themes": "workspace:*",
@@ -53,8 +56,8 @@
     "zx": "8.8.5-lite"
   },
   "dependencies": {
-    "@excalidraw/excalidraw": "0.18.0-2874f9e",
-    "@geoman-io/maplibre-geoman-free": "^0.6.3",
+    "@excalidraw/excalidraw": "0.18.0-60b2758",
+    "@geoman-io/maplibre-geoman-free": "^0.7.0",
     "@hookform/resolvers": "^5.2.2",
     "@msgpack/msgpack": "^3.1.3",
     "@react-aria/optimize-locales-plugin": "^1.1.5",

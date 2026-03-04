@@ -1,5 +1,5 @@
 import {
-  type AudioContent,
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -8,18 +8,28 @@ import type {
   InferenceService,
   InferenceServiceFactory,
 } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 
 class MockInferenceService implements InferenceService {
-  async generateNextMessage(): Promise<Message.ContentAssistant> {
+  async generateNextMessage(
+    _previousMessages: Message[],
+    _tools: InferenceService.Tool[],
+    inferenceOptions: InferenceOptions<"completion">,
+  ): Promise<Message.ContentAssistant> {
     return {
+      id: Id.generate.message(),
       role: MessageRole.Assistant,
       content: [{ type: MessageContentPartType.Text, text: "Mock response" }],
+      reasoning: {},
+      inferenceOptions,
+      generationStats: {
+        timeTaken: 0,
+        inputTokens: 0,
+        outputTokens: 0,
+        totalTokens: 0,
+      },
       createdAt: new Date(),
     };
-  }
-
-  async tts(): Promise<AudioContent> {
-    return { content: new Uint8Array(), contentType: "audio/mp3" };
   }
 
   async stt(): Promise<string> {

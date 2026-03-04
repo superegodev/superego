@@ -245,6 +245,12 @@ export const getConversationQuery = makeBackendQueryGetter(
   (conversationId) => ["getConversation", conversationId],
 );
 
+export const getLiveConversationQuery = makeBackendQueryGetter(
+  "assistants",
+  "getLiveConversation",
+  (conversationId) => ["getLiveConversation", conversationId],
+);
+
 export const getDeveloperPromptsQuery = makeBackendQueryGetter(
   "assistants",
   "getDeveloperPrompts",
@@ -294,8 +300,6 @@ export const useDeleteConversation = makeUseBackendMutation(
 );
 
 export const useStt = makeUseBackendMutation("inference", "stt", () => []);
-
-export const useTts = makeUseBackendMutation("inference", "tts", () => []);
 
 export const useImplementTypescriptModule = makeUseBackendMutation(
   "inference",

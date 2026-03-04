@@ -1,5 +1,8 @@
 import type MessageRole from "../enums/MessageRole.js";
+import type MessageId from "../ids/MessageId.js";
+import type InferenceOptions from "./InferenceOptions.js";
 import type MessageContentPart from "./MessageContentPart.js";
+import type MessageGenerationStats from "./MessageGenerationStats.js";
 import type NonEmptyArray from "./NonEmptyArray.js";
 import type ToolCall from "./ToolCall.js";
 import type ToolResult from "./ToolResult.js";
@@ -16,28 +19,47 @@ namespace Message {
   }
 
   export interface User {
+    id: MessageId;
     role: MessageRole.User;
     content: NonEmptyArray<MessageContentPart>;
     createdAt: Date;
   }
 
   export interface Tool {
+    id: MessageId;
     role: MessageRole.Tool;
     toolResults: ToolResult[];
     createdAt: Date;
   }
 
   export interface ContentAssistant {
+    id: MessageId;
     role: MessageRole.Assistant;
     content: NonEmptyArray<MessageContentPart.Text>;
+    reasoning: Assistant.Reasoning;
+    inferenceOptions: InferenceOptions<"completion">;
+    generationStats: MessageGenerationStats;
     createdAt: Date;
   }
   export interface ToolCallAssistant {
+    id: MessageId;
     role: MessageRole.Assistant;
     toolCalls: ToolCall[];
+    reasoning: Assistant.Reasoning;
+    inferenceOptions: InferenceOptions<"completion">;
+    generationStats: MessageGenerationStats;
     createdAt: Date;
   }
   export type Assistant = ContentAssistant | ToolCallAssistant;
+
+  export namespace Assistant {
+    export interface Reasoning {
+      content?: string;
+      encryptedContent?: string;
+      contentSignature?: string;
+      summary?: string;
+    }
+  }
 }
 
 type Message =

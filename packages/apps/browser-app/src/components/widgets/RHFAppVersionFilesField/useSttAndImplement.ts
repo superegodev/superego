@@ -1,5 +1,7 @@
 import {
   type Collection,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type MessageContentPart,
   MessageContentPartType,
   type NonEmptyArray,
@@ -10,6 +12,7 @@ import {
   type WriteTypescriptModuleToolNotCalled,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import {
   useImplementTypescriptModule,
   useStt,
@@ -22,8 +25,10 @@ interface UseSttAndImplement {
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
+    inferenceOptions: InferenceOptions<"completion">,
   ) => ResultPromise<
     TypescriptModule,
+    | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
     | UnexpectedError
@@ -46,8 +51,10 @@ export default function useSttAndImplement(
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     TypescriptModule,
+    | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
     | UnexpectedError
@@ -56,7 +63,8 @@ export default function useSttAndImplement(
 
     let userRequest: string;
     if (part.type === MessageContentPartType.Audio) {
-      const sttResult = await stt(part.audio);
+      assertInferenceOptionsHas(inferenceOptions, "transcription");
+      const sttResult = await stt(part.audio, inferenceOptions);
       if (!sttResult.success) {
         return sttResult;
       }
@@ -80,32 +88,35 @@ export default function useSttAndImplement(
       })
       .join("\n");
 
-    return implementTypescriptModule({
-      description: `
+    return implementTypescriptModule(
+      {
+        description: `
 This module implements and default-exports a single-file React app for
 visualizing the documents in the following collections:
 
 ${targetCollectionsSnippet}
-      `.trim(),
-      rules: `
+        `.trim(),
+        rules: `
 - Break the implementation into focused components, each handling a distinct
   part of the UI or a specific piece of logic.
-      `.trim(),
-      additionalInstructions: `
+        `.trim(),
+        additionalInstructions: `
 - Don't include a top-level title for the App.
 - Don't use top-level padding/margin.
-      `.trim(),
-      template:
-        forms.defaults.collectionViewAppFiles(targetCollections)[
-          "/main__DOT__tsx"
-        ].source,
-      libs: typescriptLibs,
-      startingPoint: {
-        path: "/main.tsx",
-        source: mainTsx.source,
+        `.trim(),
+        template:
+          forms.defaults.collectionViewAppFiles(targetCollections)[
+            "/main__DOT__tsx"
+          ].source,
+        libs: typescriptLibs,
+        startingPoint: {
+          path: "/main.tsx",
+          source: mainTsx.source,
+        },
+        userRequest: userRequest,
       },
-      userRequest: userRequest,
-    });
+      inferenceOptions,
+    );
   };
 
   return { isPending, mutate };

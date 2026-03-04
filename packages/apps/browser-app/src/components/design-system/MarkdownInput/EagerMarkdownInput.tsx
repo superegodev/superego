@@ -66,7 +66,7 @@ export default function EagerMarkdownInput({
   useEffect(() => {
     editorRef.current?.reinit({
       onChange: (newValue) => onChange(newValue),
-      placeholder: placeholder,
+      placeholder: placeholder ?? "",
     });
   }, [onChange, placeholder]);
 

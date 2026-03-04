@@ -5,6 +5,7 @@ import type {
   CannotContinueConversation,
   CannotRecoverConversation,
   CannotRetryLastResponse,
+  CannotTranscribeAudioMessage,
   CollectionCategoryHasChildren,
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
@@ -43,6 +44,8 @@ import type {
   ExecutingJavascriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
+  GlobalSettingsNotValid,
+  InferenceOptionsNotValid,
   MakingContentBlockingKeysFailed,
   PackNotFound,
   PackNotValid,
@@ -65,6 +68,7 @@ type KnownResultError =
   | CannotContinueConversation
   | CannotRecoverConversation
   | CannotRetryLastResponse
+  | CannotTranscribeAudioMessage
   | CollectionCategoryHasChildren
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
@@ -103,6 +107,8 @@ type KnownResultError =
   | ExecutingJavascriptFunctionFailed
   | FileNotFound
   | FilesNotFound
+  | GlobalSettingsNotValid
+  | InferenceOptionsNotValid
   | MakingContentBlockingKeysFailed
   | PackNotFound
   | PackNotValid

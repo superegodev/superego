@@ -64,6 +64,16 @@ export default class SqliteConversationTextSearchIndex
       matchedText: string;
     }[]
   > {
+    if (query === "") {
+      const rows = this.db
+        .prepare(`SELECT * FROM "${table}" LIMIT ?`)
+        .all(options.limit) as SqliteConversationTextSearchText[];
+      return rows.map((row) => ({
+        conversationId: row.conversation_id,
+        matchedText: "",
+      }));
+    }
+
     this.loadIndex();
 
     const results = this.searchTextIndexState.index.search(query, {
