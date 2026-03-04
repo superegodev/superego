@@ -6,7 +6,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
 import { Placeholder } from "@tiptap/extensions";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { type Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { isEqual } from "es-toolkit";
@@ -89,11 +89,16 @@ export default function EagerTiptapInput({
     autofocus: autoFocus ?? false,
     editable: !isReadOnly,
     onUpdate: (() => {
-      const debouncedOnChange = debounce(({ editor }: { editor: any }) => {
+      const debouncedOnChange = debounce(({ editor }: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = false;
-        onChange(editor.getJSON());
+        const newValue = editor.getJSON();
+        // TipTap considers an editor that only contains newlines as empty. For
+        // us, this is not empty, hence the additional check on content.length.
+        onChange(
+          editor.isEmpty && newValue.content.length === 1 ? null : newValue,
+        );
       }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE);
-      return (args: { editor: any }) => {
+      return (args: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = true;
         debouncedOnChange(args);
       };

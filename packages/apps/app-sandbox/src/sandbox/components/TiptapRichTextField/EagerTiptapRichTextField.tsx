@@ -7,7 +7,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
 import { Placeholder } from "@tiptap/extensions";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { type Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import debounce from "debounce";
 import { isEqual } from "es-toolkit";
@@ -21,16 +21,6 @@ import type Props from "./Props.js";
 import * as cs from "./TiptapRichTextField.css.js";
 
 const ON_CHANGE_DEBOUNCE = 300;
-
-function stripBranding(
-  value: Record<string, any> | null,
-): Record<string, any> | null {
-  if (value == null) {
-    return null;
-  }
-  const { __dataType, ...rest } = value;
-  return rest;
-}
 
 // This input component wraps the Tiptap editor, which manages its own internal
 // state. The `value` prop is used both for the initial value and for ongoing
@@ -96,15 +86,18 @@ export default function EagerTiptapRichTextField({
     content: stripBranding(value),
     editable: !isDisabled,
     onUpdate: (() => {
-      const debouncedOnChange = debounce(({ editor }: { editor: any }) => {
+      const debouncedOnChange = debounce(({ editor }: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = false;
+        const newValue = editor.getJSON();
+        // TipTap considers an editor that only contains newlines as empty. For
+        // us, this is not empty, hence the additional check on content.length.
         onChange(
-          editor.isEmpty
+          editor.isEmpty && newValue.content.length === 1
             ? null
-            : { ...editor.getJSON(), __dataType: DataType.JsonObject },
+            : { ...newValue, __dataType: DataType.JsonObject },
         );
       }, ON_CHANGE_DEBOUNCE);
-      return (args: { editor: any }) => {
+      return (args: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = true;
         debouncedOnChange(args);
       };
@@ -129,9 +122,9 @@ export default function EagerTiptapRichTextField({
     if (hasPendingLocalChangesRef.current) {
       return;
     }
-    const stripped = stripBranding(value);
-    if (!isEqual(editor.getJSON(), stripped)) {
-      editor.commands.setContent(stripped);
+    const strippedValue = stripBranding(value);
+    if (!isEqual(editor.getJSON(), strippedValue)) {
+      editor.commands.setContent(strippedValue);
     }
   }, [editor, value]);
 
@@ -166,4 +159,14 @@ export default function EagerTiptapRichTextField({
       {description ? <Description>{description}</Description> : null}
     </div>
   );
+}
+
+function stripBranding(
+  value: Record<string, any> | null,
+): Record<string, any> | null {
+  if (value == null) {
+    return null;
+  }
+  const { __dataType, ...rest } = value;
+  return rest;
 }
