@@ -16,10 +16,12 @@ import IconButton from "../components/IconButton/IconButton.js";
 import Image from "../components/Image/Image.js";
 import KanbanBoard from "../components/KanbanBoard/KanbanBoard.js";
 import Link from "../components/Link/Link.js";
+import MarkdownField from "../components/MarkdownField/MarkdownField.js";
 import SimpleMonthCalendar from "../components/SimpleMonthCalendar/SimpleMonthCalendar.js";
 import Table from "../components/Table/Table.js";
 import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
+import TiptapRichTextField from "../components/TiptapRichTextField/TiptapRichTextField.js";
 import ToggleButton from "../components/ToggleButton/ToggleButton.js";
 import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
@@ -44,6 +46,7 @@ export default function registerDependencies() {
         Image,
         KanbanBoard,
         Link,
+        MarkdownField,
         NumberField,
         PlainDatePicker,
         PlainDateRangePicker,
@@ -53,6 +56,7 @@ export default function registerDependencies() {
         Text,
         TextField,
         Tile,
+        TiptapRichTextField,
         ToggleButton,
       },
       "@superego/app-sandbox/hooks": {

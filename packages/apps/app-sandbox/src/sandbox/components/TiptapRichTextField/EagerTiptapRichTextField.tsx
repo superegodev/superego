@@ -1,3 +1,4 @@
+import { DataType } from "@superego/schema";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import Subscript from "@tiptap/extension-subscript";
@@ -13,42 +14,38 @@ import { isEqual } from "es-toolkit";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useFocusVisible } from "react-aria";
-import { useIntl } from "react-intl";
-import { TIPTAP_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
-import classnames from "../../../utils/classnames.js";
+import Description from "../forms/Description.js";
+import Label from "../forms/Label.js";
 import FormattingToolbar from "./FormattingToolbar.js";
 import type Props from "./Props.js";
-import * as cs from "./TiptapInput.css.js";
+import * as cs from "./TiptapRichTextField.css.js";
+
+const ON_CHANGE_DEBOUNCE = 300;
 
 // This input component wraps the Tiptap editor, which manages its own internal
 // state. The `value` prop is used both for the initial value and for ongoing
-// synchronization (e.g., when the form resets after an external change, or when
-// the nullify button sets it to `null`).
+// synchronization (e.g., when the form resets after an external change).
 //
 // Because `onChange` is debounced, there is a window where the editor's
 // internal state is ahead of the form value. If the form refreshes the `value`
-// prop during this window (e.g., after an auto-save), the component would
-// overwrite the user's in-flight edits with the stale saved value.
+// prop during this window, the component would overwrite the user's in-flight
+// edits with the stale saved value.
 //
 // To prevent this, the component tracks whether it has "pending local changes"
 // — changes that exist in the editor but have not yet been flushed to
 // `onChange`. While pending local changes exist, incoming `value` prop updates
-// are ignored — except for `null`, which is always accepted (for the nullify
-// button).
-export default function EagerTiptapInput({
+// are ignored — except for `null`, which is always accepted.
+export default function EagerTiptapRichTextField({
   value,
   onChange,
-  onBlur,
-  autoFocus,
-  isInvalid = false,
-  isReadOnly = false,
-  ref,
-  className,
+  label,
+  ariaLabel,
+  description,
+  isDisabled = false,
 }: Props) {
-  const intl = useIntl();
   const id = useId();
   const { isFocusVisible } = useFocusVisible();
-  const [hasFocus, setHasFocus] = useState(autoFocus);
+  const [hasFocus, setHasFocus] = useState(false);
   const hasPendingLocalChangesRef = useRef(false);
 
   const extensions = useMemo(
@@ -57,7 +54,7 @@ export default function EagerTiptapInput({
         lowlight: createLowlight(common),
       }),
       Placeholder.configure({
-        placeholder: intl.formatMessage({ defaultMessage: "Write..." }),
+        placeholder: "Write...",
       }),
       StarterKit.configure({
         link: false,
@@ -75,7 +72,7 @@ export default function EagerTiptapInput({
       TextStyleKit,
       Typography,
     ],
-    [intl],
+    [],
   );
 
   const editor = useEditor({
@@ -83,11 +80,11 @@ export default function EagerTiptapInput({
     editorProps: {
       attributes: {
         class: cs.TiptapInput.editor,
+        ...(ariaLabel ? { "aria-label": ariaLabel } : {}),
       },
     },
-    content: value,
-    autofocus: autoFocus ?? false,
-    editable: !isReadOnly,
+    content: stripBranding(value),
+    editable: !isDisabled,
     onUpdate: (() => {
       const debouncedOnChange = debounce(({ editor }: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = false;
@@ -95,9 +92,11 @@ export default function EagerTiptapInput({
         // TipTap considers an editor that only contains newlines as empty. For
         // us, this is not empty, hence the additional check on content.length.
         onChange(
-          editor.isEmpty && newValue.content.length === 1 ? null : newValue,
+          editor.isEmpty && newValue.content.length === 1
+            ? null
+            : { ...newValue, __dataType: DataType.JsonObject },
         );
-      }, TIPTAP_INPUT_ON_CHANGE_DEBOUNCE);
+      }, ON_CHANGE_DEBOUNCE);
       return (args: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = true;
         debouncedOnChange(args);
@@ -107,9 +106,9 @@ export default function EagerTiptapInput({
 
   useEffect(() => {
     if (editor && !editor.isDestroyed) {
-      editor.setEditable(!isReadOnly);
+      editor.setEditable(!isDisabled);
     }
-  }, [editor, isReadOnly]);
+  }, [editor, isDisabled]);
 
   useEffect(() => {
     if (!editor || editor.isDestroyed) {
@@ -123,62 +122,51 @@ export default function EagerTiptapInput({
     if (hasPendingLocalChangesRef.current) {
       return;
     }
-    if (!isEqual(editor.getJSON(), value)) {
-      editor.commands.setContent(value, { emitUpdate: false });
+    const strippedValue = stripBranding(value);
+    if (!isEqual(editor.getJSON(), strippedValue)) {
+      editor.commands.setContent(strippedValue, { emitUpdate: false });
     }
   }, [editor, value]);
 
-  const rootElementRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (rootElementRef.current && ref) {
-      ref({
-        focus: () => {
-          if (!rootElementRef.current?.contains(document.activeElement)) {
-            editor.commands.focus();
-          }
-        },
-      });
-    }
-  }, [ref, editor]);
-
   return (
     <div
-      ref={rootElementRef}
-      onFocus={() => setHasFocus(true)}
-      // A blur event (technically, a focusout) is emitted every time either
-      // this element or any of its children lose focus. This means that we also
-      // get blur events when the focus passes to:
-      //
-      // - A child element of the FormattingToolbar.
-      // - A portalled element of the FormattingToolbar (i.e., one of its
-      //   menus).
-      //
-      // We don't want to trigger onBlur when that occurs. We only trigger it
-      // when the element which will receive focus is an "outside" element.
-      onBlur={(evt) => {
-        const focusPassedToChild = rootElementRef.current?.contains(
-          evt.relatedTarget,
-        );
-        const focusPassedToPortalled =
-          // Focus is not un-set (passed to no element).
-          evt.relatedTarget !== null &&
-          // Focus is passed to a portalled element of _this_ TiptapInput.
-          evt.relatedTarget.closest(`[data-tiptap-input-id="${id}"]`);
-        if (!(focusPassedToChild || focusPassedToPortalled)) {
-          setHasFocus(false);
-          onBlur?.();
-        }
-      }}
-      aria-invalid={isInvalid}
-      data-has-focus={hasFocus}
-      data-focus-visible={hasFocus && isFocusVisible}
-      data-read-only={isReadOnly}
-      className={classnames(cs.TiptapInput.root, className)}
+      data-disabled={isDisabled || undefined}
+      className={cs.TiptapRichTextField.root}
     >
-      {!isReadOnly ? (
-        <FormattingToolbar editor={editor} tiptapInputId={id} />
-      ) : null}
-      <EditorContent editor={editor} />
+      {label ? <Label>{label}</Label> : null}
+      <div
+        onFocus={() => setHasFocus(true)}
+        onBlur={(evt) => {
+          const rootEl = evt.currentTarget;
+          const focusPassedToChild = rootEl.contains(evt.relatedTarget);
+          const focusPassedToPortalled =
+            evt.relatedTarget !== null &&
+            evt.relatedTarget.closest(`[data-tiptap-input-id="${id}"]`);
+          if (!(focusPassedToChild || focusPassedToPortalled)) {
+            setHasFocus(false);
+          }
+        }}
+        data-has-focus={hasFocus}
+        data-focus-visible={hasFocus && isFocusVisible}
+        data-disabled={isDisabled || undefined}
+        className={cs.TiptapInput.root}
+      >
+        {!isDisabled && editor ? (
+          <FormattingToolbar editor={editor} tiptapInputId={id} />
+        ) : null}
+        <EditorContent editor={editor} />
+      </div>
+      {description ? <Description>{description}</Description> : null}
     </div>
   );
+}
+
+function stripBranding(
+  value: Record<string, any> | null,
+): Record<string, any> | null {
+  if (value == null) {
+    return null;
+  }
+  const { __dataType, ...rest } = value;
+  return rest;
 }

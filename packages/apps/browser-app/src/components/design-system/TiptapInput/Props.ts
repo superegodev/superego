@@ -2,7 +2,7 @@ import type { JSONContent } from "@tiptap/react";
 
 export default interface Props {
   value: JSONContent | null | undefined;
-  onChange: (newValue: JSONContent) => void;
+  onChange: (newValue: JSONContent | null) => void;
   onBlur?: (() => void) | undefined;
   autoFocus?: boolean | undefined;
   isInvalid?: boolean | undefined;
