@@ -51,8 +51,10 @@ export default async function loadDemoData(backend: Backend): Promise<void> {
   for (const pack of packsWithDocuments) {
     const installPackResult = await backend.packs.install(pack);
     if (!installPackResult.success) {
-      throw new Error(
-        `Failed to install pack ${pack.id}: ${JSON.stringify(installPackResult.error)}`,
+      // Just log the error and move on.
+      console.error(
+        `Failed to install pack ${pack.id}`,
+        installPackResult.error,
       );
     }
   }
