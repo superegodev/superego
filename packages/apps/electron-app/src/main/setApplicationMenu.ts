@@ -1,5 +1,5 @@
 import type { IntlShape } from "@formatjs/intl";
-import { Menu } from "electron";
+import { BrowserWindow, Menu } from "electron";
 import cli from "./cli.js";
 
 interface ActionHandlers {
@@ -42,6 +42,16 @@ export default function setApplicationMenu(
                 cli.install(intl);
               }
               setApplicationMenu(intl, handlers);
+            },
+          },
+          { type: "separator" },
+          {
+            label: intl.formatMessage({ defaultMessage: "Background Jobs" }),
+            click: () => {
+              BrowserWindow.getFocusedWindow()?.webContents.postMessage(
+                "navigate-to",
+                { type: "navigate-to", href: "/background-jobs" },
+              );
             },
           },
         ],
