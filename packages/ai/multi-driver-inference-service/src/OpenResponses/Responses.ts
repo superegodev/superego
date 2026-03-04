@@ -22,7 +22,7 @@ export namespace Responses {
     input: InputItem[];
     model: string;
     tools: Tool[] | undefined;
-    reasoning: { effort: string } | undefined;
+    reasoning: { effort: ReasoningEffort } | undefined;
     stream: boolean;
   };
 

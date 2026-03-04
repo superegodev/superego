@@ -12,7 +12,7 @@ export default function getReasoningTrace(
       message.role === MessageRole.Assistant &&
       (message.reasoning.content || message.reasoning.summary)
     ) {
-      return message.reasoning.content ?? message.reasoning.summary ?? null;
+      return message.reasoning.content || message.reasoning.summary || null;
     }
   }
   return null;

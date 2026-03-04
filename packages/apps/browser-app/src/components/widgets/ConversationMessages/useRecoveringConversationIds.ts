@@ -21,7 +21,7 @@ export default function useRecoveringConversationIds(
   const setIsRecovering = useCallback(
     (value: boolean) => {
       if (value) {
-        setIds([...ids, conversationId]);
+        setIds(ids.includes(conversationId) ? ids : [...ids, conversationId]);
       } else {
         setIds(ids.filter((id) => id !== conversationId));
       }
