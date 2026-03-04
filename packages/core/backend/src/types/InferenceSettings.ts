@@ -1,31 +1,7 @@
+import type InferenceOptions from "./InferenceOptions.js";
+import type InferenceProvider from "./InferenceProvider.js";
+
 export default interface InferenceSettings {
-  chatCompletions: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
-  transcriptions: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
-  speech: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-    voice: string | null;
-  };
-  fileInspection: {
-    provider: {
-      baseUrl: string | null;
-      apiKey: string | null;
-    };
-    model: string | null;
-  };
+  providers: InferenceProvider[];
+  defaultInferenceOptions: InferenceOptions;
 }

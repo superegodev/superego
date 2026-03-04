@@ -11,13 +11,13 @@ import { useForm } from "react-hook-form";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import { Form } from "../../design-system/forms/forms.js";
+import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
 
@@ -50,7 +50,7 @@ export default function CreateNewDocumentVersionForm({
 
   const { mutate } = useCreateNewDocumentVersion();
 
-  const { control, handleSubmit, reset, formState } = useForm<any>({
+  const { control, handleSubmit, reset } = useForm<any>({
     defaultValues: forms.utils.RHFContent.toRHFContent(
       documentVersion.content,
       collectionSchema,
@@ -115,32 +115,7 @@ export default function CreateNewDocumentVersionForm({
     }
   };
 
-  // When the form dirty state changes:
-  // - Enable or disable the submit button.
-  // - If the form is dirty, schedule an autosave.
   const formRef = useRef<HTMLFormElement>(null);
-  // Temporary workaround for https://github.com/react-hook-form/react-hook-form/issues/13141
-  const isDirty = Object.values(formState.dirtyFields).length !== 0;
-  useEffect(() => {
-    setSubmitDisabled(!isDirty);
-    if (isReadOnly || !isDirty || !formState.isValid) {
-      return;
-    }
-    const timeoutId = setTimeout(
-      () => formRef.current?.requestSubmit(),
-      DOCUMENT_AUTOSAVE_INTERVAL,
-    );
-    return () => clearTimeout(timeoutId);
-  }, [isReadOnly, isDirty, formState.isValid, setSubmitDisabled]);
-
-  useExitWarning(
-    isDirty && !isReadOnly
-      ? intl.formatMessage({
-          defaultMessage:
-            "You have unsaved changes. Are you sure you want to leave?",
-        })
-      : null,
-  );
 
   return (
     <Form
@@ -149,6 +124,14 @@ export default function CreateNewDocumentVersionForm({
       id={formId}
       className={cs.CreateNewDocumentVersionForm.root}
     >
+      <FormStateEffects
+        control={control}
+        formRef={formRef}
+        autosaveInterval={DOCUMENT_AUTOSAVE_INTERVAL}
+        setSubmitDisabled={setSubmitDisabled}
+        triggerExitWarningWhenDirty={true}
+        isDisabled={isReadOnly}
+      />
       {readOnlyReason !== null ? (
         <Alert
           variant="info"

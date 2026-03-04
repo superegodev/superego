@@ -1,4 +1,5 @@
 import {
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -8,6 +9,7 @@ import type InferenceService from "../requirements/InferenceService.js";
 export default async function generateTitle(
   inferenceService: InferenceService,
   message: Message.User,
+  inferenceOptions: InferenceOptions<"completion">,
 ): Promise<string | null> {
   try {
     const assistantMessage = await inferenceService.generateNextMessage(
@@ -46,6 +48,7 @@ WORD COUNT RULES
         message,
       ],
       [],
+      inferenceOptions,
     );
     return "content" in assistantMessage
       ? assistantMessage.content[0].text

@@ -30,9 +30,11 @@ export const Col = {
   root: style({
     minWidth: 0,
   }),
+
   spanSm: styleVariants(spanValues, (span) => ({
     gridColumn: `span ${span}`,
   })),
+
   spanMd: styleVariants(spanValues, (span) => ({
     "@media": {
       [`(min-width: ${breakpoints.small})`]: {
@@ -40,6 +42,7 @@ export const Col = {
       },
     },
   })),
+
   spanLg: styleVariants(spanValues, (span) => ({
     "@media": {
       [`(min-width: ${breakpoints.medium})`]: {

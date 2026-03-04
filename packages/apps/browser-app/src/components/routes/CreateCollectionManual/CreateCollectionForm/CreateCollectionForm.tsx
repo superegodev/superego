@@ -9,9 +9,9 @@ import * as v from "valibot";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
-import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
+import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects.js";
 import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
@@ -158,17 +158,9 @@ export default function CreateCollectionForm() {
     }
   }, [schema, setValue, getValues, isSchemaValid]);
 
-  useExitWarning(
-    formState.isDirty
-      ? intl.formatMessage({
-          defaultMessage:
-            "You have unsaved changes. Are you sure you want to leave?",
-        })
-      : null,
-  );
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
       <FullPageTabs
         tabs={[
           {

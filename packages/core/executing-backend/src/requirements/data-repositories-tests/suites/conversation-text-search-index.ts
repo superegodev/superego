@@ -289,6 +289,46 @@ export default rd<GetDependencies>("ConversationTextSearchIndex", (deps) => {
       expect(results3).toEqual([expect.objectContaining({ conversationId })]);
     });
 
+    it("case: search with empty query => returns all conversations", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const conversationId1 = Id.generate.conversation();
+      const conversationId2 = Id.generate.conversation();
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.conversationTextSearchIndex.upsert(conversationId1, {
+            title: ["First conversation"],
+            messages: [],
+          });
+          await repos.conversationTextSearchIndex.upsert(conversationId2, {
+            title: ["Second conversation"],
+            messages: [],
+          });
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const results =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: await repos.conversationTextSearchIndex.search("", {
+              limit: 20,
+            }),
+          }),
+        );
+
+      // Verify
+      expect(results).toHaveLength(2);
+      expect(results).toContainEqual(
+        expect.objectContaining({ conversationId: conversationId1 }),
+      );
+      expect(results).toContainEqual(
+        expect.objectContaining({ conversationId: conversationId2 }),
+      );
+    });
+
     it("case: search matches partial words", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();

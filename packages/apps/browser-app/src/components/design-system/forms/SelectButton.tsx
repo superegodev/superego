@@ -9,17 +9,20 @@ import * as cs from "./forms.css.js";
 interface Props {
   onClear?: (() => void) | undefined;
   placeholder?: ReactNode | undefined;
+  prefix?: ReactNode | undefined;
   triggerClassName?: string | undefined;
 }
 export default function SelectButton({
   onClear,
   placeholder,
+  prefix,
   triggerClassName,
 }: Props) {
   const intl = useIntl();
   return (
     <Group className={cs.SelectButton.root}>
       <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
+        {prefix}
         <SelectValue className={cs.SelectButton.selectValue}>
           {({ defaultChildren, isPlaceholder }) =>
             isPlaceholder ? (
@@ -31,7 +34,7 @@ export default function SelectButton({
             )
           }
         </SelectValue>
-        <div className={cs.SelectButton.clearButtonStub} />
+        {onClear ? <div className={cs.SelectButton.clearButtonStub} /> : null}
         <PiCaretDown aria-hidden="true" />
       </Button>
       {onClear ? (

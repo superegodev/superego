@@ -1,4 +1,8 @@
-import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
+import {
+  BackgroundJobName,
+  BackgroundJobStatus,
+  ReasoningEffort,
+} from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
@@ -14,7 +18,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
     const backgroundJob: BackgroundJobEntity = {
       id: Id.generate.backgroundJob(),
       name: BackgroundJobName.ProcessConversation,
-      input: { id: Id.generate.conversation() },
+      input: {
+        id: Id.generate.conversation(),
+        inferenceOptions: {
+          completion: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelId: "modelId",
+            },
+            reasoningEffort: ReasoningEffort.Medium,
+          },
+          transcription: null,
+          fileInspection: null,
+        },
+      },
       status: BackgroundJobStatus.Enqueued,
       enqueuedAt: new Date(),
       startedProcessingAt: null,
@@ -44,7 +61,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
     const backgroundJob: BackgroundJobEntity = {
       id: Id.generate.backgroundJob(),
       name: BackgroundJobName.ProcessConversation,
-      input: { id: Id.generate.conversation() },
+      input: {
+        id: Id.generate.conversation(),
+        inferenceOptions: {
+          completion: {
+            providerModelRef: {
+              providerName: "providerName",
+              modelId: "modelId",
+            },
+            reasoningEffort: ReasoningEffort.Medium,
+          },
+          transcription: null,
+          fileInspection: null,
+        },
+      },
       status: BackgroundJobStatus.Enqueued,
       enqueuedAt: new Date(),
       startedProcessingAt: null,
@@ -88,7 +118,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(),
         startedProcessingAt: null,
@@ -140,7 +183,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Processing,
         enqueuedAt: new Date(),
         startedProcessingAt: new Date(),
@@ -190,7 +246,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Succeeded,
         enqueuedAt: new Date(),
         startedProcessingAt: new Date(),
@@ -223,7 +292,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob1: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(1),
         startedProcessingAt: null,
@@ -233,7 +315,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob2: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(2),
         startedProcessingAt: null,
@@ -243,7 +338,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob3: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(3),
         startedProcessingAt: null,
@@ -296,7 +404,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob1: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(1),
         startedProcessingAt: null,
@@ -306,7 +427,20 @@ export default rd<GetDependencies>("Background jobs", (deps) => {
       const backgroundJob2: BackgroundJobEntity = {
         id: Id.generate.backgroundJob(),
         name: BackgroundJobName.ProcessConversation,
-        input: { id: Id.generate.conversation() },
+        input: {
+          id: Id.generate.conversation(),
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+        },
         status: BackgroundJobStatus.Enqueued,
         enqueuedAt: new Date(2),
         startedProcessingAt: null,

@@ -1,11 +1,21 @@
-import type { Conversation, ConversationStatus } from "@superego/backend";
+import {
+  type Conversation,
+  type ConversationStatus,
+  MessageRole,
+  ReasoningEffort,
+} from "@superego/backend";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
+import isEmpty from "../../../utils/isEmpty.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
+import ModelActionMenu from "./ModelActionMenu/ModelActionMenu.js";
+import makeModelActionMenuItems from "./ModelActionMenu/makeModelActionMenuItems.js";
 
 interface Props {
   conversation: Conversation & { status: ConversationStatus.Error };
@@ -13,20 +23,49 @@ interface Props {
 export default function ErrorMessage({ conversation }: Props) {
   const intl = useIntl();
 
+  const { globalSettings } = useGlobalData();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { mutate } = useRecoverConversation();
   const { cause } = conversation.error.details;
+
+  const lastAssistantMessage = conversation.messages.findLast(
+    (message) => message.role === MessageRole.Assistant,
+  );
+  const models = makeModelActionMenuItems(
+    globalSettings.inference.providers,
+    lastAssistantMessage?.inferenceOptions.completion.providerModelRef ?? null,
+  );
+
   return (
     <div className={cs.ErrorMessage.root}>
       <div className={cs.ErrorMessage.message}>
         <FormattedMessage defaultMessage="The assistant encountered an error." />
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Retry" })}
-          variant="invisible"
-          onPress={() => mutate(conversation.id)}
-          className={cs.ErrorMessage.retryButton}
-        >
-          <PiArrowCounterClockwiseBold />
-        </IconButton>
+        {!isEmpty(models) ? (
+          <ModelActionMenu
+            trigger={
+              <IconButton
+                variant="invisible"
+                label={intl.formatMessage({ defaultMessage: "Retry" })}
+                className={cs.ErrorMessage.retryButton}
+              >
+                <PiArrowCounterClockwiseBold />
+              </IconButton>
+            }
+            models={models}
+            onModelAction={(providerModelRef) =>
+              mutate(conversation.id, {
+                completion: {
+                  providerModelRef,
+                  reasoningEffort:
+                    defaultInferenceOptions.completion?.reasoningEffort ??
+                    ReasoningEffort.Medium,
+                },
+                transcription: defaultInferenceOptions.transcription,
+                fileInspection: defaultInferenceOptions.fileInspection,
+              })
+            }
+          />
+        ) : null}
       </div>
       <Disclosure
         title={intl.formatMessage({ defaultMessage: "Details" })}

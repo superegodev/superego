@@ -9,22 +9,12 @@ describe("IndexedDB", () => {
       {
         appearance: { theme: Theme.Auto },
         inference: {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          speech: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-            voice: null,
-          },
-          fileInspection: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
+          providers: [],
+
+          defaultInferenceOptions: {
+            completion: null,
+            transcription: null,
+            fileInspection: null,
           },
         },
         assistants: {
@@ -47,22 +37,12 @@ describe("InMemory", () => {
       {
         appearance: { theme: Theme.Auto },
         inference: {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          speech: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-            voice: null,
-          },
-          fileInspection: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
+          providers: [],
+
+          defaultInferenceOptions: {
+            completion: null,
+            transcription: null,
+            fileInspection: null,
           },
         },
         assistants: {

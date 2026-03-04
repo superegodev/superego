@@ -5,8 +5,8 @@ import SendRecordButtons from "./SendRecordButtons.js";
 describe("renders different buttons according to the supplied props", () => {
   interface TestCase {
     props: {
-      areCompletionsConfigured: boolean;
-      areTranscriptionsConfigured: boolean;
+      isCompletionConfigured: boolean;
+      isTranscriptionConfigured: boolean;
       isWriting: boolean;
       isRecording: boolean;
     };
@@ -16,8 +16,8 @@ describe("renders different buttons according to the supplied props", () => {
   const testCases: TestCase[] = [
     {
       props: {
-        areCompletionsConfigured: false,
-        areTranscriptionsConfigured: false,
+        isCompletionConfigured: false,
+        isTranscriptionConfigured: false,
         isWriting: false,
         isRecording: false,
       },
@@ -25,8 +25,8 @@ describe("renders different buttons according to the supplied props", () => {
     },
     {
       props: {
-        areCompletionsConfigured: false,
-        areTranscriptionsConfigured: true,
+        isCompletionConfigured: false,
+        isTranscriptionConfigured: true,
         isWriting: false,
         isRecording: false,
       },
@@ -34,29 +34,32 @@ describe("renders different buttons according to the supplied props", () => {
     },
     {
       props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: false,
+        isCompletionConfigured: true,
+        isTranscriptionConfigured: false,
         isWriting: false,
         isRecording: false,
       },
       expectedButtons: [
-        "Configure assistant for transcription",
+        "Add model w/ audio understanding to use voice",
         "[DISABLED]Send",
       ],
     },
     {
       props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: false,
+        isCompletionConfigured: true,
+        isTranscriptionConfigured: false,
         isWriting: true,
         isRecording: false,
       },
-      expectedButtons: ["Configure assistant for transcription", "Send"],
+      expectedButtons: [
+        "Add model w/ audio understanding to use voice",
+        "Send",
+      ],
     },
     {
       props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
+        isCompletionConfigured: true,
+        isTranscriptionConfigured: true,
         isWriting: true,
         isRecording: false,
       },
@@ -64,17 +67,17 @@ describe("renders different buttons according to the supplied props", () => {
     },
     {
       props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
+        isCompletionConfigured: true,
+        isTranscriptionConfigured: true,
         isWriting: false,
         isRecording: false,
       },
-      expectedButtons: ["Record"],
+      expectedButtons: ["Speak"],
     },
     {
       props: {
-        areCompletionsConfigured: true,
-        areTranscriptionsConfigured: true,
+        isCompletionConfigured: true,
+        isTranscriptionConfigured: true,
         isWriting: false,
         isRecording: true,
       },
@@ -84,8 +87,8 @@ describe("renders different buttons according to the supplied props", () => {
   testCases.forEach(
     ({
       props: {
-        areCompletionsConfigured,
-        areTranscriptionsConfigured,
+        isCompletionConfigured,
+        isTranscriptionConfigured,
         isWriting,
         isRecording,
       },
@@ -95,8 +98,8 @@ describe("renders different buttons according to the supplied props", () => {
       const renderBoolean = (b: boolean) => String(b)[0];
       (only ? it.only : it)(
         [
-          `acc=${renderBoolean(areCompletionsConfigured)},`,
-          `atc=${renderBoolean(areTranscriptionsConfigured)},`,
+          `icc=${renderBoolean(isCompletionConfigured)},`,
+          `itc=${renderBoolean(isTranscriptionConfigured)},`,
           `iw=${renderBoolean(isWriting)},`,
           `ir=${renderBoolean(isRecording)},`,
           "->",
@@ -106,11 +109,11 @@ describe("renders different buttons according to the supplied props", () => {
           // Exercise
           const component = render(
             <SendRecordButtons
+              isCompletionConfigured={isCompletionConfigured}
+              isTranscriptionConfigured={isTranscriptionConfigured}
               isRecording={isRecording}
               isWriting={isWriting}
               isDisabled={false}
-              areChatCompletionsConfigured={areCompletionsConfigured}
-              areTranscriptionsConfigured={areTranscriptionsConfigured}
               onSend={vi.fn()}
               onStartRecording={vi.fn()}
               onFinishRecording={vi.fn()}

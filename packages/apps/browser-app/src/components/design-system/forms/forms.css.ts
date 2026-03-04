@@ -168,6 +168,12 @@ export const SelectButton = {
 export const SelectOptions = {
   root: style({
     width: "calc(var(--trigger-width) * var(--zoom-level))",
+    display: "flex",
+    flexDirection: "column",
+  }),
+
+  list: style({
+    flexGrow: "1",
     overflow: "auto",
   }),
 
@@ -457,7 +463,6 @@ export const TimeInputWithMilliseconds = {
 export const Switch = {
   root: style({
     display: "flex",
-    alignItems: "center",
     gap: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,

@@ -4,6 +4,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
+import LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
@@ -20,6 +21,7 @@ import AssistantsContinueConversation from "./usecases/assistants/ContinueConver
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
 import AssistantsGetDeveloperPrompts from "./usecases/assistants/GetDeveloperPrompts.js";
+import AssistantsGetLiveConversation from "./usecases/assistants/GetLiveConversation.js";
 import AssistantsListConversations from "./usecases/assistants/ListConversations.js";
 import AssistantsRecoverConversation from "./usecases/assistants/RecoverConversation.js";
 import AssistantsRetryLastResponse from "./usecases/assistants/RetryLastResponse.js";
@@ -60,7 +62,6 @@ import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
-import InferenceTts from "./usecases/inference/Tts.js";
 import PacksInstall from "./usecases/packs/Install.js";
 
 export default class ExecutingBackend implements Backend {
@@ -76,6 +77,7 @@ export default class ExecutingBackend implements Backend {
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
 
+  private liveConversationStore: LiveConversationStore;
   private backgroundJobExecutor: BackgroundJobExecutor;
 
   constructor(
@@ -151,6 +153,10 @@ export default class ExecutingBackend implements Backend {
         AssistantsSearchConversations,
         false,
       ),
+      getLiveConversation: this.makeUsecase(
+        AssistantsGetLiveConversation,
+        false,
+      ),
       getDeveloperPrompts: this.makeUsecase(
         AssistantsGetDeveloperPrompts,
         false,
@@ -159,7 +165,6 @@ export default class ExecutingBackend implements Backend {
 
     this.inference = {
       stt: this.makeUsecase(InferenceStt, false),
-      tts: this.makeUsecase(InferenceTts, false),
       implementTypescriptModule: this.makeUsecase(
         InferenceImplementTypescriptModule,
         false,
@@ -193,12 +198,14 @@ export default class ExecutingBackend implements Backend {
       update: this.makeUsecase(GlobalSettingsUpdate, true),
     };
 
+    this.liveConversationStore = new LiveConversationStore();
     this.backgroundJobExecutor = new BackgroundJobExecutor(
       dataRepositoriesManager,
       javascriptSandbox,
       typescriptCompiler,
       inferenceServiceFactory,
       connectors,
+      this.liveConversationStore,
     );
   }
 
@@ -209,6 +216,7 @@ export default class ExecutingBackend implements Backend {
       typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
+      liveConversationStore: LiveConversationStore,
     ) => { exec: Exec },
     triggerBackgroundJobCheck: boolean,
   ): Exec {
@@ -221,6 +229,7 @@ export default class ExecutingBackend implements Backend {
             this.typescriptCompiler,
             this.inferenceServiceFactory,
             this.connectors,
+            this.liveConversationStore,
           );
           const result = await usecase.exec(...args);
           return {

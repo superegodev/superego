@@ -25,7 +25,7 @@ import openFileWithNativeApp from "../../../utils/openFileWithNativeApp.js";
 import Button from "../../design-system/Button/Button.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
 import FileIcon from "../../design-system/FileIcon/FileIcon.js";
-import FieldError from "../../design-system/forms/FieldError.js";
+import { FieldError } from "../../design-system/forms/forms.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import FileImage from "../FileImage/FileImage.js";
 import RHFTextField from "../RHFTextField/RHFTextField.js";

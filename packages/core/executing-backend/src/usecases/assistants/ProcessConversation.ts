@@ -1,5 +1,6 @@
 import {
   AssistantName,
+  type CannotTranscribeAudioMessage,
   type Collection,
   type CollectionCategory,
   type ConversationId,
@@ -7,6 +8,8 @@ import {
   ConversationStatus,
   type ConversationStatusNotProcessing,
   type GlobalSettings,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
@@ -17,8 +20,10 @@ import {
 import type { ResultPromise } from "@superego/global-types";
 import {
   extractErrorDetails,
+  inferenceOptionsHas,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import pMap from "p-map";
 import type Assistant from "../../assistants/Assistant.js";
@@ -30,6 +35,7 @@ import type InferenceService from "../../requirements/InferenceService.js";
 import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
@@ -44,11 +50,17 @@ import InferenceImplementTypescriptModule from "../inference/ImplementTypescript
 export default class AssistantsProcessConversation extends Usecase {
   async exec({
     id,
+    inferenceOptions,
   }: {
     id: ConversationId;
+    inferenceOptions: InferenceOptions<"completion">;
   }): ResultPromise<
     null,
-    ConversationNotFound | ConversationStatusNotProcessing | UnexpectedError
+    | CannotTranscribeAudioMessage
+    | ConversationNotFound
+    | ConversationStatusNotProcessing
+    | InferenceOptionsNotValid
+    | UnexpectedError
   > {
     const collectionsListResult = await this.sub(CollectionsList).exec();
     if (!collectionsListResult.success) {
@@ -79,17 +91,44 @@ export default class AssistantsProcessConversation extends Usecase {
       );
     }
 
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const onMessagesUpdated = (messages: Message[]) =>
+      this.liveConversationStore.set(id, {
+        id: conversation.id,
+        assistant: conversation.assistant,
+        title: conversation.title,
+        hasOutdatedContext: false,
+        canRetryLastResponse: false,
+        messages: messages,
+        status: ConversationStatus.Processing,
+        error: null,
+        createdAt: conversation.createdAt,
+      });
+
+    // Set initial live state with the current messages (before generation).
+    onMessagesUpdated(conversation.messages);
+
     let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
     try {
+      const inferenceOptionsIssues = validateInferenceOptions(
+        inferenceOptions,
+        globalSettings.inference,
+      );
+      if (!isEmpty(inferenceOptionsIssues)) {
+        throw makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        });
+      }
+
       const contextFingerprint =
         await ConversationUtils.getContextFingerprint(collections);
       if (conversation.contextFingerprint !== contextFingerprint) {
         throw new Error("Context fingerprint changed");
       }
 
-      const globalSettings = await this.repos.globalSettings.get();
       const inferenceService = this.inferenceServiceFactory.create(
         globalSettings.inference,
       );
@@ -102,19 +141,30 @@ export default class AssistantsProcessConversation extends Usecase {
         collections,
       );
 
-      const transcribedMessages = await this.transcribeLastUserMessage(
-        inferenceService,
-        conversation.messages,
-      );
+      const { data: transcribedMessages, error: cannotTranscribeAudioMessage } =
+        await this.transcribeLastUserMessage(
+          inferenceService,
+          conversation,
+          inferenceOptions,
+        );
+      if (cannotTranscribeAudioMessage) {
+        throw cannotTranscribeAudioMessage;
+      }
 
       const [messages, title] = await Promise.all([
-        assistant.generateAndProcessNextMessages(transcribedMessages),
+        assistant.generateAndProcessNextMessages(
+          transcribedMessages,
+          globalSettings.inference,
+          inferenceOptions,
+          onMessagesUpdated,
+        ),
         conversation.title === null
           ? generateTitle(
               inferenceService,
               transcribedMessages.find(
                 (message) => message.role === MessageRole.User,
               )!,
+              inferenceOptions,
             )
           : conversation.title,
       ]);
@@ -134,6 +184,8 @@ export default class AssistantsProcessConversation extends Usecase {
           cause: extractErrorDetails(error),
         }),
       };
+    } finally {
+      this.liveConversationStore.delete(id);
     }
 
     await this.repos.conversation.upsert(updatedConversation);
@@ -201,25 +253,38 @@ export default class AssistantsProcessConversation extends Usecase {
 
   private async transcribeLastUserMessage(
     inferenceService: InferenceService,
-    messages: Message[],
-  ): Promise<Message[]> {
-    const otherMessages = [...messages];
+    conversation: ConversationEntity,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): ResultPromise<Message[], CannotTranscribeAudioMessage> {
+    const otherMessages = [...conversation.messages];
     const lastMessage = otherMessages.pop();
 
-    // There should always be a last message, it should always be a user message
-    // and it should always not have been transcribed. Nonetheless, we check to
-    // avoid transcribing unnecessarily.
+    // Skip transcription if:
     if (
+      // there is no last message, or the last message is not a user message
       !lastMessage ||
       lastMessage.role !== MessageRole.User ||
+      // it already contains text (i.e. it was typed, or already transcribed)
       lastMessage.content.some(
         (part) => part.type === MessageContentPartType.Text,
+      ) ||
+      // it doesn't contain any audio to transcribe
+      !lastMessage.content.some(
+        (part) => part.type === MessageContentPartType.Audio,
       )
     ) {
-      return messages;
+      return makeSuccessfulResult(conversation.messages);
     }
 
-    return [
+    if (!inferenceOptionsHas(inferenceOptions, "transcription")) {
+      return makeUnsuccessfulResult(
+        makeResultError("CannotTranscribeAudioMessage", {
+          conversationId: conversation.id,
+        }),
+      );
+    }
+
+    return makeSuccessfulResult([
       ...otherMessages,
       {
         ...lastMessage,
@@ -227,12 +292,12 @@ export default class AssistantsProcessConversation extends Usecase {
           part.type === MessageContentPartType.Audio
             ? {
                 type: MessageContentPartType.Text,
-                text: await inferenceService.stt(part.audio),
+                text: await inferenceService.stt(part.audio, inferenceOptions),
                 audio: part.audio,
               }
             : part,
         )) as NonEmptyArray<MessageContentPart>,
       },
-    ];
+    ]);
   }
 }

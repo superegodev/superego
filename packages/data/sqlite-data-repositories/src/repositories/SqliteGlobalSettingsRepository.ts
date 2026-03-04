@@ -1,5 +1,10 @@
 import type { DatabaseSync } from "node:sqlite";
-import { AssistantName, type GlobalSettings } from "@superego/backend";
+import {
+  AssistantName,
+  type GlobalSettings,
+  type InferenceOptions,
+  type InferenceProvider,
+} from "@superego/backend";
 import type { GlobalSettingsRepository } from "@superego/executing-backend";
 import type SqliteGlobalSettings from "../types/SqliteGlobalSettings.js";
 import { toEntity } from "../types/SqliteGlobalSettings.js";
@@ -45,66 +50,25 @@ export default class SqliteGlobalSettingsRepository
           this.defaultGlobalSettings.appearance.theme,
       },
       inference: {
-        chatCompletions: {
-          model:
-            settings.inference?.chatCompletions?.model ??
-            this.defaultGlobalSettings.inference.chatCompletions.model,
-          provider: {
-            apiKey:
-              settings.inference?.chatCompletions?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.chatCompletions.provider
-                .apiKey,
-            baseUrl:
-              settings.inference?.chatCompletions?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.chatCompletions.provider
-                .baseUrl,
-          },
-        },
-        transcriptions: {
-          model:
-            settings.inference?.transcriptions?.model ??
-            this.defaultGlobalSettings.inference.transcriptions.model,
-          provider: {
-            apiKey:
-              settings.inference?.transcriptions?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.transcriptions.provider
-                .apiKey,
-            baseUrl:
-              settings.inference?.transcriptions?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.transcriptions.provider
-                .baseUrl,
-          },
-        },
-        speech: {
-          model:
-            settings.inference?.speech?.model ??
-            this.defaultGlobalSettings.inference.speech.model,
-          voice:
-            settings.inference?.speech?.voice ??
-            this.defaultGlobalSettings.inference.speech.voice,
-          provider: {
-            apiKey:
-              settings.inference?.speech?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.speech.provider.apiKey,
-            baseUrl:
-              settings.inference?.speech?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.speech.provider.baseUrl,
-          },
-        },
-        fileInspection: {
-          model:
-            settings.inference?.fileInspection?.model ??
-            this.defaultGlobalSettings.inference.fileInspection.model,
-          provider: {
-            apiKey:
-              settings.inference?.fileInspection?.provider?.apiKey ??
-              this.defaultGlobalSettings.inference.fileInspection.provider
-                .apiKey,
-            baseUrl:
-              settings.inference?.fileInspection?.provider?.baseUrl ??
-              this.defaultGlobalSettings.inference.fileInspection.provider
-                .baseUrl,
-          },
+        providers:
+          (settings.inference?.providers as InferenceProvider[]) ??
+          this.defaultGlobalSettings.inference.providers,
+        defaultInferenceOptions: {
+          completion:
+            (settings.inference?.defaultInferenceOptions
+              ?.completion as InferenceOptions["completion"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .completion,
+          transcription:
+            (settings.inference?.defaultInferenceOptions
+              ?.transcription as InferenceOptions["transcription"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .transcription,
+          fileInspection:
+            (settings.inference?.defaultInferenceOptions
+              ?.fileInspection as InferenceOptions["fileInspection"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .fileInspection,
         },
       },
       assistants: {
