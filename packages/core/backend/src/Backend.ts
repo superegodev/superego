@@ -579,4 +579,8 @@ export default interface Backend {
       globalSettingsPatch: Partial<GlobalSettings>,
     ): ResultPromise<GlobalSettings, UnexpectedError>;
   };
+
+  database: {
+    export(path: string): ResultPromise<null, UnexpectedError>;
+  };
 }

@@ -17,6 +17,9 @@
   "cli.ts_qqfYjN": {
     "defaultMessage": "Installazione CLI fallita"
   },
+  "setApplicationMenu.ts_OC234H": {
+    "defaultMessage": "Esporta database"
+  },
   "setApplicationMenu.ts_PJD5PQ": {
     "defaultMessage": "Disinstalla CLI"
   },

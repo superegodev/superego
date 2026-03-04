@@ -4,6 +4,7 @@ import cli from "./cli.js";
 
 interface ActionHandlers {
   onNewWindow: () => void;
+  onExportDatabase: () => void;
 }
 
 export default function setApplicationMenu(
@@ -20,6 +21,10 @@ export default function setApplicationMenu(
             label: intl.formatMessage({ defaultMessage: "New Window" }),
             accelerator: "CmdOrCtrl+N",
             click: handlers.onNewWindow,
+          },
+          {
+            label: intl.formatMessage({ defaultMessage: "Export database" }),
+            click: handlers.onExportDatabase,
           },
           { type: "separator" },
           { role: "close" },

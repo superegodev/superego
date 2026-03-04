@@ -59,6 +59,12 @@
       "value": "CLI installation failed"
     }
   ],
+  "setApplicationMenu.ts_OC234H": [
+    {
+      "type": 0,
+      "value": "Export database"
+    }
+  ],
   "setApplicationMenu.ts_PJD5PQ": [
     {
       "type": 0,

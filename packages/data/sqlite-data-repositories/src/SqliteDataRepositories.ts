@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from "node:sqlite";
 import type { GlobalSettings } from "@superego/backend";
 import type {
   BackgroundJobRepository,
@@ -70,6 +70,17 @@ export default class SqliteDataRepositories implements DataRepositories {
       db,
       defaultGlobalSettings,
     );
+  }
+
+  async export(path: string): Promise<void> {
+    const location = this.db.location()!;
+    const backupDb = new DatabaseSync(location, { readOnly: true });
+    try {
+      const escapedPath = path.replace(/'/g, "''");
+      backupDb.exec(`VACUUM INTO '${escapedPath}'`);
+    } finally {
+      backupDb.close();
+    }
   }
 
   async createSavepoint(): Promise<string> {

@@ -34,7 +34,7 @@ export default class DemoDataRepositories implements DataRepositories {
   globalSettings: DemoGlobalSettingsRepository;
 
   constructor(
-    data: Data,
+    private data: Data,
     onWrite: () => void,
     onTransactionSucceeded: (callback: () => void) => void,
     searchTextIndexStates: {
@@ -85,6 +85,22 @@ export default class DemoDataRepositories implements DataRepositories {
       data.globalSettings,
       onWrite,
     );
+  }
+
+  async export(_path: string): Promise<void> {
+    const json = JSON.stringify(this.data, null, 2);
+    if (typeof document !== "undefined") {
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "superego-backup.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } else {
+      const { writeFileSync } = await import("node:fs");
+      writeFileSync(_path, json);
+    }
   }
 
   dispose() {

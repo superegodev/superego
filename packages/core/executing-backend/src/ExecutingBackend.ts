@@ -58,6 +58,7 @@ import DocumentsSearch from "./usecases/documents/Search.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
+import DatabaseExport from "./usecases/database/Export.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import InferenceTts from "./usecases/inference/Tts.js";
@@ -75,6 +76,7 @@ export default class ExecutingBackend implements Backend {
   bazaar: Backend["bazaar"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+  database: Backend["database"];
 
   private backgroundJobExecutor: BackgroundJobExecutor;
 
@@ -191,6 +193,10 @@ export default class ExecutingBackend implements Backend {
     this.globalSettings = {
       get: this.makeUsecase(GlobalSettingsGet, false),
       update: this.makeUsecase(GlobalSettingsUpdate, true),
+    };
+
+    this.database = {
+      export: this.makeUsecase(DatabaseExport, false),
     };
 
     this.backgroundJobExecutor = new BackgroundJobExecutor(

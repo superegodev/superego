@@ -1,3 +1,4 @@
+import { dialog } from "electron";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
 import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
@@ -17,6 +18,17 @@ export default function onReadyProd(): void {
   new OpenFileWithNativeAppIPCProxyServer(backend).start();
   new OpenInNativeBrowserIPCProxyServer().start();
   new WindowCloseIPCProxyServer().start();
-  setApplicationMenu(intl, { onNewWindow: createWindow });
+  setApplicationMenu(intl, {
+    onNewWindow: createWindow,
+    onExportDatabase: async () => {
+      const { filePath } = await dialog.showSaveDialog({
+        defaultPath: "superego-backup.db",
+        filters: [{ name: "SQLite Database", extensions: ["db"] }],
+      });
+      if (filePath) {
+        await backend.database.export(filePath);
+      }
+    },
+  });
   createWindow();
 }
