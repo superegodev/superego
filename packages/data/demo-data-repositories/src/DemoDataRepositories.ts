@@ -87,19 +87,20 @@ export default class DemoDataRepositories implements DataRepositories {
     );
   }
 
-  async export(_path: string): Promise<void> {
+  async export(path: string): Promise<void> {
     const json = JSON.stringify(this.data, null, 2);
     if (typeof document !== "undefined") {
+      const fileName = path.split("/").pop() || path.split("\\").pop() || path;
       const blob = new Blob([json], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "superego-backup.json";
+      a.download = fileName;
       a.click();
       URL.revokeObjectURL(url);
     } else {
       const { writeFileSync } = await import("node:fs");
-      writeFileSync(_path, json);
+      writeFileSync(path, json);
     }
   }
 
