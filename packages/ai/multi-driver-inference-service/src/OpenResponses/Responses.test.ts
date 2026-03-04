@@ -6,6 +6,7 @@ import {
   ReasoningEffort,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import {
   extractTextFromResponse,
@@ -31,6 +32,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -78,6 +80,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -91,13 +94,14 @@ describe("toResponsesRequest", () => {
     );
 
     // Verify
-    expect(result.reasoning).toEqual({ effort: "high", summary: "auto" });
+    expect(result.reasoning).toEqual({ effort: "high" });
   });
 
   it("sets reasoning to undefined when reasoningEffort is null", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -113,6 +117,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
@@ -146,6 +151,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hi there" }],
         createdAt: new Date(),
@@ -188,6 +194,7 @@ describe("toResponsesRequest", () => {
     const audioBytes = new Uint8Array([1, 2, 3]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -217,6 +224,7 @@ describe("toResponsesRequest", () => {
     const fileBytes = new Uint8Array([0x89, 0x50, 0x4e, 0x47]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -247,6 +255,7 @@ describe("toResponsesRequest", () => {
     const fileBytes = new Uint8Array([0x25, 0x50, 0x44, 0x46]);
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -277,6 +286,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [
           {
@@ -302,6 +312,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: [
           {
@@ -339,6 +350,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         toolCalls: [
           { id: "call-1", tool: "get_weather", input: { city: "NYC" } },
@@ -371,6 +383,7 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [
           { type: MessageContentPartType.Text, text: "Line 1" },
@@ -399,11 +412,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "First" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Old reply" }],
         reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
@@ -417,11 +432,13 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Second" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         toolCalls: [{ id: "call-1", tool: "search", input: { q: "test" } }],
         reasoning: { content: "new-reasoning", contentSignature: "new-sig" },
@@ -435,6 +452,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: [
           { tool: "search", toolCallId: "call-1", output: "result" as any },
@@ -473,11 +491,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "First" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "old-reasoning", contentSignature: "old-sig" },
@@ -491,6 +511,7 @@ describe("toResponsesRequest", () => {
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Second" }],
         createdAt: new Date(),
@@ -514,11 +535,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "some reasoning" },
@@ -545,11 +568,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { content: "some reasoning", contentSignature: "sig-1" },
@@ -594,11 +619,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: { encryptedContent: "encrypted-data" },
@@ -636,11 +663,13 @@ describe("toResponsesRequest", () => {
     // Exercise
     const messages: Message[] = [
       {
+        id: Id.generate.message(),
         role: MessageRole.User,
         content: [{ type: MessageContentPartType.Text, text: "Hello" }],
         createdAt: new Date(),
       },
       {
+        id: Id.generate.message(),
         role: MessageRole.Assistant,
         content: [{ type: MessageContentPartType.Text, text: "Reply" }],
         reasoning: {},

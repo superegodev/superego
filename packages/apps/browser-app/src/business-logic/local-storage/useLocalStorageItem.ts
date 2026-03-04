@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import type WellKnownKey from "./WellKnownKey.js";
 
-type UseLocalStorage<Value> = [
+type UseLocalStorageItem<Value> = [
   value: Value,
   setValue: (newValue: Value) => void,
 ];
@@ -9,7 +9,7 @@ type UseLocalStorage<Value> = [
 export default function useLocalStorageItem<Value>(
   key: WellKnownKey,
   initialValue: Value,
-): UseLocalStorage<Value> {
+): UseLocalStorageItem<Value> {
   const [value, setValue] = useState(() => {
     try {
       const storedValue = localStorage.getItem(key);

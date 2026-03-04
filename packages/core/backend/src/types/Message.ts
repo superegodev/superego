@@ -1,4 +1,5 @@
 import type MessageRole from "../enums/MessageRole.js";
+import type MessageId from "../ids/MessageId.js";
 import type InferenceOptions from "./InferenceOptions.js";
 import type MessageContentPart from "./MessageContentPart.js";
 import type MessageGenerationStats from "./MessageGenerationStats.js";
@@ -18,18 +19,21 @@ namespace Message {
   }
 
   export interface User {
+    id: MessageId;
     role: MessageRole.User;
     content: NonEmptyArray<MessageContentPart>;
     createdAt: Date;
   }
 
   export interface Tool {
+    id: MessageId;
     role: MessageRole.Tool;
     toolResults: ToolResult[];
     createdAt: Date;
   }
 
   export interface ContentAssistant {
+    id: MessageId;
     role: MessageRole.Assistant;
     content: NonEmptyArray<MessageContentPart.Text>;
     reasoning: Assistant.Reasoning;
@@ -38,6 +42,7 @@ namespace Message {
     createdAt: Date;
   }
   export interface ToolCallAssistant {
+    id: MessageId;
     role: MessageRole.Assistant;
     toolCalls: ToolCall[];
     reasoning: Assistant.Reasoning;

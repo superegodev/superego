@@ -76,6 +76,23 @@ export default class SqliteDocumentTextSearchIndex
       matchedText: string;
     }[]
   > {
+    if (query === "") {
+      const rows = this.db
+        .prepare(
+          collectionId
+            ? `SELECT * FROM "${table}" WHERE "collection_id" = ? LIMIT ?`
+            : `SELECT * FROM "${table}" LIMIT ?`,
+        )
+        .all(
+          ...(collectionId ? [collectionId, options.limit] : [options.limit]),
+        ) as SqliteDocumentTextSearchText[];
+      return rows.map((row) => ({
+        collectionId: row.collection_id,
+        documentId: row.document_id,
+        matchedText: "",
+      }));
+    }
+
     this.loadIndex();
 
     const results = this.searchTextIndexState.index.search(query, {

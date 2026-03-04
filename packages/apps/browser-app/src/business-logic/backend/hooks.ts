@@ -245,6 +245,12 @@ export const getConversationQuery = makeBackendQueryGetter(
   (conversationId) => ["getConversation", conversationId],
 );
 
+export const getLiveConversationQuery = makeBackendQueryGetter(
+  "assistants",
+  "getLiveConversation",
+  (conversationId) => ["getLiveConversation", conversationId],
+);
+
 export const getDeveloperPromptsQuery = makeBackendQueryGetter(
   "assistants",
   "getDeveloperPrompts",

@@ -9,7 +9,7 @@ import {
   MessageRole,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
-import { failedResponseToError } from "@superego/shared-utils";
+import { failedResponseToError, Id } from "@superego/shared-utils";
 import {
   type AnthropicMessages,
   extractTextFromResponse,
@@ -74,6 +74,7 @@ export default class AnthropicMessagesInferenceService
       model.id,
       [
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [
             { type: MessageContentPartType.Text, text: prompt },

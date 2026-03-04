@@ -95,6 +95,7 @@ export type { default as ConversationId } from "./ids/ConversationId.js";
 export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
+export type { default as MessageId } from "./ids/MessageId.js";
 export type { default as PackId } from "./ids/PackId.js";
 export type { default as ProtoAppId } from "./ids/ProtoAppId.js";
 export type { default as ProtoCollectionCategoryId } from "./ids/ProtoCollectionCategoryId.js";

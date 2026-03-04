@@ -1379,6 +1379,12 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
+  "StuckProcessingMessage.tsx_62nsdy": {
+    "defaultMessage": "Retry"
+  },
+  "StuckProcessingMessage.tsx_kCDSl2": {
+    "defaultMessage": "The assistant seems to be taking too long."
+  },
   "SuggestCollectionsDefinitions.tsx_65g2mb": {
     "defaultMessage": "Suggested collections"
   },
@@ -1603,6 +1609,114 @@
   },
   "getIntlMessages.ts_zWgbGg": {
     "defaultMessage": "Today"
+  },
+  "getStatusText.ts_+cQcX2": {
+    "defaultMessage": "creating maps to use in response"
+  },
+  "getStatusText.ts_/0ISuY": {
+    "defaultMessage": "still running code"
+  },
+  "getStatusText.ts_1dVfTZ": {
+    "defaultMessage": "reading other collection schemas"
+  },
+  "getStatusText.ts_2eapm9": {
+    "defaultMessage": "running tools"
+  },
+  "getStatusText.ts_2j+fZj": {
+    "defaultMessage": "creating charts to use in response"
+  },
+  "getStatusText.ts_4Trl/i": {
+    "defaultMessage": "updating existing documents"
+  },
+  "getStatusText.ts_8UqYYj": {
+    "defaultMessage": "searching through more documents"
+  },
+  "getStatusText.ts_8jDOjv": {
+    "defaultMessage": "updating more documents"
+  },
+  "getStatusText.ts_Aneja+": {
+    "defaultMessage": "reading more collection schemas"
+  },
+  "getStatusText.ts_BJ4SuP": {
+    "defaultMessage": "running code to analyze documents"
+  },
+  "getStatusText.ts_EYmnCf": {
+    "defaultMessage": "running more tools"
+  },
+  "getStatusText.ts_EdD8dJ": {
+    "defaultMessage": "creating more charts"
+  },
+  "getStatusText.ts_FV3TfA": {
+    "defaultMessage": "searching through other documents"
+  },
+  "getStatusText.ts_G5yjJ5": {
+    "defaultMessage": "suggesting more collections"
+  },
+  "getStatusText.ts_Gx9pE5": {
+    "defaultMessage": "inspecting more files"
+  },
+  "getStatusText.ts_GzcNLM": {
+    "defaultMessage": "creating more maps"
+  },
+  "getStatusText.ts_HRMIeI": {
+    "defaultMessage": "running other tools"
+  },
+  "getStatusText.ts_IOpa7w": {
+    "defaultMessage": "inspecting other files"
+  },
+  "getStatusText.ts_NGqPvQ": {
+    "defaultMessage": "Ruminating"
+  },
+  "getStatusText.ts_NwXVbw": {
+    "defaultMessage": "creating other documents"
+  },
+  "getStatusText.ts_P5Fv4Z": {
+    "defaultMessage": "creating more tables"
+  },
+  "getStatusText.ts_P9gC6s": {
+    "defaultMessage": "reading collection schemas"
+  },
+  "getStatusText.ts_Q0zqsp": {
+    "defaultMessage": "creating other charts"
+  },
+  "getStatusText.ts_b63n3p": {
+    "defaultMessage": "creating other maps"
+  },
+  "getStatusText.ts_cAkSRB": {
+    "defaultMessage": "Pondering"
+  },
+  "getStatusText.ts_cmj5Mv": {
+    "defaultMessage": "running more code"
+  },
+  "getStatusText.ts_f8cQJW": {
+    "defaultMessage": "updating other documents"
+  },
+  "getStatusText.ts_gKneh7": {
+    "defaultMessage": "suggesting other collections"
+  },
+  "getStatusText.ts_hU96dI": {
+    "defaultMessage": "suggesting new collections"
+  },
+  "getStatusText.ts_nP8jqi": {
+    "defaultMessage": "Cogitating"
+  },
+  "getStatusText.ts_rvd9sh": {
+    "defaultMessage": "creating tables to use in response"
+  },
+  "getStatusText.ts_ryvDft": {
+    "defaultMessage": "creating more documents"
+  },
+  "getStatusText.ts_sso0oA": {
+    "defaultMessage": "searching through documents"
+  },
+  "getStatusText.ts_u7GfRG": {
+    "defaultMessage": "inspecting the provided files"
+  },
+  "getStatusText.ts_uL10Ji": {
+    "defaultMessage": "creating other tables"
+  },
+  "getStatusText.ts_uf3oCA": {
+    "defaultMessage": "creating new documents"
   },
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Opening file failed"

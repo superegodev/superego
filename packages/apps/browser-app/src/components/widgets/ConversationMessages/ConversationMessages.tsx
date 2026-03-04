@@ -1,9 +1,17 @@
-import { type Conversation, ConversationStatus } from "@superego/backend";
+import {
+  type Conversation,
+  ConversationStatus,
+  MessageRole,
+} from "@superego/backend";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import classnames from "../../../utils/classnames.js";
 import ConversationMessage from "./ConversationMessage.js";
 import * as cs from "./ConversationMessages.css.js";
 import ErrorMessage from "./ErrorMessage.js";
-import ThinkingMessage from "./ThinkingMessage.js";
+import StuckProcessingMessage from "./StuckProcessingMessage.js";
+import ThinkingMessage from "./ThinkingMessage/ThinkingMessage.js";
+import useRecoveringConversationIds from "./useRecoveringConversationIds.js";
+import useTailMinHeight from "./useTailMinHeight.js";
 
 interface Props {
   conversation: Conversation;
@@ -15,23 +23,87 @@ export default function ConversationMessages({
   showToolCalls,
   className,
 }: Props) {
-  return (
-    <div className={classnames(cs.ConversationMessages.root, className)}>
-      {conversation.messages.map((message, index) => (
+  const { isRecovering, setIsRecovering } = useRecoveringConversationIds(
+    conversation.id,
+  );
+
+  const lastUserMessageIndex = conversation.messages.findLastIndex(
+    (message) => message.role === MessageRole.User,
+  );
+
+  const { tailMinHeight, lastUserMessageRef, tailRef } = useTailMinHeight([
+    conversation.messages.length,
+    conversation.status,
+  ]);
+
+  const headMessages = conversation.messages.slice(0, lastUserMessageIndex);
+  const lastUserMessage =
+    lastUserMessageIndex >= 0
+      ? conversation.messages[lastUserMessageIndex]
+      : null;
+  const tailMessages = conversation.messages.slice(lastUserMessageIndex + 1);
+
+  const tailContent = (
+    <>
+      {conversation.status === ConversationStatus.Processing ? (
+        ConversationUtils.isStuckProcessing(conversation) && !isRecovering ? (
+          <StuckProcessingMessage
+            conversation={conversation}
+            onRecoverStarted={() => setIsRecovering(true)}
+          />
+        ) : (
+          <ThinkingMessage conversation={conversation} />
+        )
+      ) : null}
+      {tailMessages.map((message, index) => (
         <ConversationMessage
-          // biome-ignore lint/suspicious/noArrayIndexKey: order is stable.
-          key={index}
+          key={"id" in message ? message.id : `tail-${index}`}
           message={message}
           conversation={conversation}
           showToolCalls={showToolCalls}
         />
       ))}
-      {conversation.status === ConversationStatus.Processing ? (
-        <ThinkingMessage />
-      ) : null}
       {conversation.status === ConversationStatus.Error ? (
         <ErrorMessage conversation={conversation} />
       ) : null}
+    </>
+  );
+
+  if (!lastUserMessage) {
+    return (
+      <div className={classnames(cs.ConversationMessages.root, className)}>
+        {tailContent}
+      </div>
+    );
+  }
+
+  return (
+    <div className={classnames(cs.ConversationMessages.root, className)}>
+      {headMessages.map((message, index) => (
+        <ConversationMessage
+          key={"id" in message ? message.id : index}
+          message={message}
+          conversation={conversation}
+          showToolCalls={showToolCalls}
+        />
+      ))}
+      <div ref={lastUserMessageRef}>
+        <ConversationMessage
+          key={
+            "id" in lastUserMessage ? lastUserMessage.id : lastUserMessageIndex
+          }
+          message={lastUserMessage}
+          conversation={conversation}
+          showToolCalls={showToolCalls}
+        />
+      </div>
+      <div
+        ref={tailRef}
+        className={cs.ConversationMessages.tail}
+        style={{ minHeight: tailMinHeight > 0 ? tailMinHeight : undefined }}
+      >
+        {tailContent}
+      </div>
     </div>
   );
 }

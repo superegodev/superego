@@ -9,6 +9,7 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import type { FileRef } from "@superego/schema";
+import { Id } from "@superego/shared-utils";
 import pMap from "p-map";
 import type InferenceService from "../requirements/InferenceService.js";
 import isEmpty from "../utils/isEmpty.js";
@@ -30,6 +31,7 @@ export default abstract class Assistant {
     messages: Message[],
     inferenceSettings: InferenceSettings,
     inferenceOptions: InferenceOptions<"completion">,
+    onMessagesUpdated: (messages: Message[]) => void,
   ): Promise<Message[]> {
     try {
       const assistantMessage = await this.inferenceService.generateNextMessage(
@@ -64,24 +66,34 @@ export default abstract class Assistant {
 
       // Case: assistantMessage is Message.ContentAssistant
       if ("content" in assistantMessage) {
-        return [...messages, assistantMessage];
+        const updatedMessages = [...messages, assistantMessage];
+        onMessagesUpdated(updatedMessages);
+        return updatedMessages;
       }
 
       // Case: assistantMessage is Message.ToolCallAssistant.
+      const messagesAfterAssistant = [...messages, assistantMessage];
+      onMessagesUpdated(messagesAfterAssistant);
+
       const toolResults: ToolResult[] = await pMap(
         assistantMessage.toolCalls,
         (toolCall) => this.processToolCall(toolCall, inferenceOptions),
         { concurrency: 1 },
       );
       const toolMessage: Message.Tool = {
+        id: Id.generate.message(),
         role: MessageRole.Tool,
         toolResults: toolResults,
         createdAt: new Date(),
       };
+      const messagesAfterTool = [...messagesAfterAssistant, toolMessage];
+      onMessagesUpdated(messagesAfterTool);
+
       return this.generateAndProcessNextMessages(
-        [...messages, assistantMessage, toolMessage],
+        messagesAfterTool,
         inferenceSettings,
         inferenceOptions,
+        onMessagesUpdated,
       );
     } catch (error) {
       console.error(error);

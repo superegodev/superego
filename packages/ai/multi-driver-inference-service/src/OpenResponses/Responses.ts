@@ -7,6 +7,7 @@ import {
   type ReasoningEffort,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
 import getAudioFormat from "../utils/getAudioFormat.js";
 import toBase64 from "../utils/toBase64.js";
@@ -21,7 +22,7 @@ export namespace Responses {
     input: InputItem[];
     model: string;
     tools: Tool[] | undefined;
-    reasoning: { effort: string; summary: "auto" } | undefined;
+    reasoning: { effort: ReasoningEffort } | undefined;
     stream: boolean;
   };
 
@@ -154,9 +155,7 @@ export function toResponsesRequest(
       ),
     ),
     tools: responsesTools.length > 0 ? responsesTools : undefined,
-    reasoning: reasoningEffort
-      ? { effort: reasoningEffort, summary: "auto" }
-      : undefined,
+    reasoning: reasoningEffort ? { effort: reasoningEffort } : undefined,
     stream: false,
   };
 }
@@ -338,6 +337,7 @@ export function fromResponsesResponse(
   timeTaken: number,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const baseMessage = {
+    id: Id.generate.message(),
     role: MessageRole.Assistant,
     inferenceOptions: inferenceOptions,
     generationStats: {

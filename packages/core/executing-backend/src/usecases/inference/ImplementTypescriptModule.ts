@@ -15,6 +15,7 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
+  Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
   validateInferenceOptions,
@@ -168,6 +169,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
               attemptNumber + 1,
               message,
               {
+                id: Id.generate.message(),
                 role: MessageRole.Tool,
                 toolResults: [
                   {

@@ -17,6 +17,7 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
+  Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
   validateInferenceOptions,
@@ -110,6 +111,7 @@ export default class AssistantsContinueConversation extends Usecase<
     const { protoFilesWithIds, convertedMessageContent } =
       MessageContentFileUtils.extractAndConvertProtoFiles(userMessageContent);
     const userMessage: Message.User = {
+      id: Id.generate.message(),
       role: MessageRole.User,
       content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,

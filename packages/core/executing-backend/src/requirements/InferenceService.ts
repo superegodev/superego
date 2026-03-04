@@ -21,8 +21,6 @@ namespace InferenceService {
 }
 
 interface InferenceService {
-  // TODO: handle multiple messages. Apparently both OpenAI and Anthropic models
-  // can output multiple messages.
   generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],

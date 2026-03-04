@@ -484,6 +484,10 @@ export default interface Backend {
       id: ConversationId,
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
+    getLiveConversation(
+      id: ConversationId,
+    ): ResultPromise<Conversation | null, UnexpectedError>;
+
     searchConversations(
       query: string,
       options: { limit: number },

@@ -2,7 +2,6 @@ import {
   AssistantName,
   type Conversation as ConversationB,
   type ConversationId,
-  ConversationStatus,
 } from "@superego/backend";
 import { memo, useState } from "react";
 import { PiLightning, PiLightningSlash, PiTrash } from "react-icons/pi";
@@ -28,13 +27,7 @@ export default function Conversation({ conversationId }: Props) {
   const screenSize = useScreenSize();
   return (
     <DataLoader
-      queries={[
-        getConversationQuery([conversationId], {
-          pollingInterval: 200,
-          pollWhile: (result) =>
-            result?.data?.status === ConversationStatus.Processing,
-        }),
-      ]}
+      queries={[getConversationQuery([conversationId])]}
       renderLoading={() => (
         <Shell.Panel slot="Main">
           <Shell.Panel.Header

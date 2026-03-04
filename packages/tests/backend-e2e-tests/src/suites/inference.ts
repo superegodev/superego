@@ -6,6 +6,7 @@ import {
   ToolName,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
+import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
@@ -106,6 +107,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
       // Setup SUT
       const sttService: InferenceService = {
         generateNextMessage: async (_msgs, _tools, inferenceOptions) => ({
+          id: Id.generate.message(),
           role: MessageRole.Assistant,
           content: [{ type: MessageContentPartType.Text, text: "Mock" }],
           reasoning: {},
@@ -183,6 +185,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
       // Setup SUT
       const noToolCallService: InferenceService = {
         generateNextMessage: async (_msgs, _tools, inferenceOptions) => ({
+          id: Id.generate.message(),
           role: MessageRole.Assistant,
           content: [
             {
@@ -234,6 +237,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
         // Setup SUT
         const badCodeService: InferenceService = {
           generateNextMessage: async (_msgs, _tools, inferenceOptions) => ({
+            id: Id.generate.message(),
             role: MessageRole.Assistant,
             toolCalls: [
               {
@@ -285,6 +289,7 @@ export default rd<GetDependencies>("Inference", (deps) => {
         // Setup SUT
         const goodCodeService: InferenceService = {
           generateNextMessage: async (_msgs, _tools, inferenceOptions) => ({
+            id: Id.generate.message(),
             role: MessageRole.Assistant,
             toolCalls: [
               {

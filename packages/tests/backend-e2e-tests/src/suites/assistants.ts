@@ -11,7 +11,7 @@ import type { InferenceService } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { assert, describe, expect, it } from "vitest";
+import { assert, describe, expect, it, vi } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 import waitForConversationProcessing from "../utils/waitForConversationProcessing.js";
 
@@ -549,6 +549,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           callCount++;
           if (callCount === 1) {
             return {
+              id: Id.generate.message(),
               role: MessageRole.Assistant,
               toolCalls: [
                 {
@@ -571,6 +572,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
             };
           }
           return {
+            id: Id.generate.message(),
             role: MessageRole.Assistant,
             content: [{ type: MessageContentPartType.Text, text: "Done" }],
             reasoning: {},
@@ -1071,6 +1073,67 @@ export default rd<GetDependencies>("Assistants", (deps) => {
         }),
       );
       expect(result.data.messages.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe("getLiveConversation", () => {
+    it("success: returns null when conversation is not in live store", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const conversationId = Id.generate.conversation();
+      const result =
+        await backend.assistants.getLiveConversation(conversationId);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: null,
+        error: null,
+      });
+    });
+
+    it("success: returns conversation when it is in live store", async () => {
+      // Setup SUT
+      const neverResolvingInferenceService: InferenceService = {
+        generateNextMessage: () => new Promise(() => {}),
+        stt: () => new Promise(() => {}),
+        inspectFile: () => new Promise(() => {}),
+      };
+      const { backend } = deps({
+        inferenceService: neverResolvingInferenceService,
+      });
+      const startResult = await backend.assistants.startConversation(
+        AssistantName.Factotum,
+        [{ type: MessageContentPartType.Text, text: "Hello" }],
+        validInferenceOptions,
+      );
+      assert.isTrue(startResult.success);
+
+      // Exercise
+      let result!: Awaited<
+        ReturnType<typeof backend.assistants.getLiveConversation>
+      >;
+      await vi.waitUntil(
+        async () => {
+          result = await backend.assistants.getLiveConversation(
+            startResult.data.id,
+          );
+          return result.success && result.data !== null;
+        },
+        { interval: 5, timeout: 5_000 },
+      );
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data).toEqual(
+        expect.objectContaining({
+          id: startResult.data.id,
+          assistant: AssistantName.Factotum,
+          status: ConversationStatus.Processing,
+        }),
+      );
     });
   });
 
