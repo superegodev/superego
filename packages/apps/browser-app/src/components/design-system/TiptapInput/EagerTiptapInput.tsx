@@ -117,14 +117,14 @@ export default function EagerTiptapInput({
     }
     if (value == null) {
       hasPendingLocalChangesRef.current = false;
-      editor.commands.clearContent();
+      editor.commands.clearContent(false);
       return;
     }
     if (hasPendingLocalChangesRef.current) {
       return;
     }
     if (!isEqual(editor.getJSON(), value)) {
-      editor.commands.setContent(value);
+      editor.commands.setContent(value, { emitUpdate: false });
     }
   }, [editor, value]);
 

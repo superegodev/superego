@@ -64,7 +64,7 @@ export default function EagerMarkdownField({
   useEffect(() => {
     editorRef.current?.reinit({
       onChange: (newValue) => onChange(newValue === "" ? null : newValue),
-      placeholder: placeholder,
+      placeholder: placeholder ?? "",
     });
   }, [onChange, placeholder]);
 

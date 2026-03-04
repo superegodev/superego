@@ -116,7 +116,7 @@ export default function EagerTiptapRichTextField({
     }
     if (value == null) {
       hasPendingLocalChangesRef.current = false;
-      editor.commands.clearContent();
+      editor.commands.clearContent(false);
       return;
     }
     if (hasPendingLocalChangesRef.current) {
@@ -124,7 +124,7 @@ export default function EagerTiptapRichTextField({
     }
     const strippedValue = stripBranding(value);
     if (!isEqual(editor.getJSON(), strippedValue)) {
-      editor.commands.setContent(strippedValue);
+      editor.commands.setContent(strippedValue, { emitUpdate: false });
     }
   }, [editor, value]);
 
