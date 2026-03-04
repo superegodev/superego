@@ -1,6 +1,7 @@
 import { BackgroundJobStatus } from "@superego/backend";
 import type { DistributivePick, ResultPromise } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
+import type Config from "../Config.js";
 import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
 import type CollectionEntity from "../entities/CollectionEntity.js";
 import type LiveConversationStore from "../LiveConversationStore.js";
@@ -22,6 +23,7 @@ export default abstract class Usecase<
     protected inferenceServiceFactory: InferenceServiceFactory,
     protected connectors: Connector[],
     protected liveConversationStore: LiveConversationStore,
+    protected config: Config,
   ) {}
 
   abstract exec(...args: Parameters<Exec>): ReturnType<Exec>;
@@ -34,6 +36,7 @@ export default abstract class Usecase<
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
       liveConversationStore: LiveConversationStore,
+      config: Config,
     ) => Usecase,
   >(UsecaseClass: SubUsecase): InstanceType<SubUsecase> {
     return new UsecaseClass(
@@ -43,6 +46,7 @@ export default abstract class Usecase<
       this.inferenceServiceFactory,
       this.connectors,
       this.liveConversationStore,
+      this.config,
     ) as InstanceType<SubUsecase>;
   }
 

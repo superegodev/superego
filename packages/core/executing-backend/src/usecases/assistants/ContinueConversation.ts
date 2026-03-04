@@ -120,6 +120,7 @@ export default class AssistantsContinueConversation extends Usecase<
       ...conversation,
       messages: [...conversation.messages, userMessage],
       status: ConversationStatus.Processing,
+      processingStartedAt: now,
     };
     const conversationReference: FileEntity.ConversationReference = {
       conversationId: conversation.id,

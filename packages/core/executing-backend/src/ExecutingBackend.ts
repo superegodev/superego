@@ -4,6 +4,7 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
+import type Config from "./Config.js";
 import LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import type Connector from "./requirements/Connector.js";
@@ -80,13 +81,21 @@ export default class ExecutingBackend implements Backend {
   private liveConversationStore: LiveConversationStore;
   private backgroundJobExecutor: BackgroundJobExecutor;
 
+  private resolvedConfig: Config;
+
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector<any, any>[],
+    config?: Partial<Config>,
   ) {
+    this.resolvedConfig = {
+      conversationProcessingStuckTimeout: 5 * 60 * 1_000,
+      backgroundJobProcessingStuckTimeout: 10 * 60 * 1_000,
+      ...config,
+    };
     this.collectionCategories = {
       create: this.makeUsecase(CollectionCategoriesCreate, true),
       update: this.makeUsecase(CollectionCategoriesUpdate, true),
@@ -206,6 +215,7 @@ export default class ExecutingBackend implements Backend {
       inferenceServiceFactory,
       connectors,
       this.liveConversationStore,
+      this.resolvedConfig,
     );
   }
 
@@ -217,6 +227,7 @@ export default class ExecutingBackend implements Backend {
       inferenceServiceFactory: InferenceServiceFactory,
       connectors: Connector[],
       liveConversationStore: LiveConversationStore,
+      config: Config,
     ) => { exec: Exec },
     triggerBackgroundJobCheck: boolean,
   ): Exec {
@@ -230,6 +241,7 @@ export default class ExecutingBackend implements Backend {
             this.inferenceServiceFactory,
             this.connectors,
             this.liveConversationStore,
+            this.resolvedConfig,
           );
           const result = await usecase.exec(...args);
           return {
@@ -243,8 +255,13 @@ export default class ExecutingBackend implements Backend {
           // the BackgroundJobExecutor wouldn't even see the created background
           // jobs, since it executes in a separate transaction.)
           if (triggerBackgroundJobCheck) {
-            // Note: this call is purposefully not awaited.
-            this.backgroundJobExecutor.executeNext();
+            // Trigger after the current microtask queue drains.
+            setTimeout(() => {
+              this.backgroundJobExecutor.executeNext().catch((error) => {
+                console.error("Error triggering next background job execution");
+                console.error(error);
+              });
+            }, 0);
           }
           return result;
         })

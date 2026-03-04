@@ -91,6 +91,7 @@ export default class AssistantsRetryLastResponse extends Usecase<
       ...conversation,
       messages: ConversationUtils.sliceOffLastResponse(conversation.messages),
       status: ConversationStatus.Processing,
+      processingStartedAt: new Date(),
       error: null,
     };
     await this.repos.conversation.upsert(updatedConversation);

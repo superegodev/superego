@@ -94,6 +94,7 @@ export default class AssistantsStartConversation extends Usecase<
       contextFingerprint: contextFingerprint,
       messages: [userMessage],
       status: ConversationStatus.Processing,
+      processingStartedAt: now,
       error: null,
       createdAt: now,
     };
