@@ -13,11 +13,6 @@ import fuelLogsData from "./fuelLogsData.js";
 import mealsData from "./mealsData.js";
 import weighInsData from "./weighInsData.js";
 
-export type LoadDemoDataProgress = {
-  current: number;
-  total: number;
-};
-
 const packsWithDocuments = [
   {
     ...packs[0]!,
@@ -52,35 +47,14 @@ const packsWithDocuments = [
   },
 ] as const satisfies Pack[];
 
-export default async function loadDemoData(
-  backend: Backend,
-  onProgress: (progress: LoadDemoDataProgress) => void,
-): Promise<void> {
-  const totalPacks = packsWithDocuments.length;
-
-  onProgress({
-    current: 0,
-    total: totalPacks,
-  });
-
-  for (const [packIndex, pack] of packsWithDocuments.entries()) {
-    const currentPackNumber = packIndex + 1;
-    onProgress({
-      current: packIndex,
-      total: totalPacks,
-    });
-
+export default async function loadDemoData(backend: Backend): Promise<void> {
+  for (const pack of packsWithDocuments) {
     const installPackResult = await backend.packs.install(pack);
     if (!installPackResult.success) {
       throw new Error(
         `Failed to install pack ${pack.id}: ${JSON.stringify(installPackResult.error)}`,
       );
     }
-
-    onProgress({
-      current: currentPackNumber,
-      total: totalPacks,
-    });
   }
 }
 
