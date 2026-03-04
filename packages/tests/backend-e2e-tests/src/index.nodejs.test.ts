@@ -1,7 +1,12 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  ReasoningEffort,
+  Theme,
+} from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -22,22 +27,35 @@ afterAll(() => {
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
-    chatCompletions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
+    providers: [
+      {
+        name: "providerName",
+        baseUrl: "http://localhost",
+        apiKey: null,
+        driver: InferenceProviderDriver.OpenResponses,
+        models: [
+          {
+            id: "modelId",
+            name: "modelId",
+            capabilities: {
+              audioUnderstanding: true,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+            },
+          },
+        ],
+      },
+    ],
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+        reasoningEffort: ReasoningEffort.Medium,
+      },
+      transcription: null,
+      fileInspection: null,
     },
   },
   assistants: {
@@ -49,10 +67,14 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests((connector) => {
+registerTests(({ connector, inferenceService, inferenceSettings } = {}) => {
+  const effectiveGlobalSettings = inferenceSettings
+    ? { ...defaultGlobalSettings, inference: inferenceSettings }
+    : defaultGlobalSettings;
+
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
     fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-    defaultGlobalSettings: defaultGlobalSettings,
+    defaultGlobalSettings: effectiveGlobalSettings,
   });
   dataRepositoriesManager.runMigrations();
 
@@ -61,7 +83,9 @@ registerTests((connector) => {
       dataRepositoriesManager,
       new QuickjsJavascriptSandbox(),
       new TscTypescriptCompiler(),
-      new MockInferenceServiceFactory(),
+      inferenceService
+        ? { create: () => inferenceService }
+        : new MockInferenceServiceFactory(),
       connector ? [connector] : [],
     ),
   };

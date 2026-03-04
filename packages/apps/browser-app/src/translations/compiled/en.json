@@ -1,10 +1,4 @@
 {
-  "AddFilesButton.tsx_DYNOvl": [
-    {
-      "type": 0,
-      "value": "Configure assistant for file inspection"
-    }
-  ],
   "AddFilesButton.tsx_sXiGbo": [
     {
       "type": 0,
@@ -317,6 +311,24 @@
       "value": " versions)"
     }
   ],
+  "Capabilities.tsx_HjTr28": [
+    {
+      "type": 0,
+      "value": "Supports image understanding"
+    }
+  ],
+  "Capabilities.tsx_KihMPW": [
+    {
+      "type": 0,
+      "value": "Supports audio understanding"
+    }
+  ],
+  "Capabilities.tsx_xRp25e": [
+    {
+      "type": 0,
+      "value": "Supports PDF understanding"
+    }
+  ],
   "Carousel.tsx_F+ukuP": [
     {
       "type": 0,
@@ -611,6 +623,12 @@
       "value": "Delete conversation"
     }
   ],
+  "Conversation.tsx_A4DzYS": [
+    {
+      "type": 0,
+      "value": "Show tool calls"
+    }
+  ],
   "Conversation.tsx_eq3LES": [
     {
       "type": 0,
@@ -619,12 +637,6 @@
     {
       "type": 1,
       "value": "conversation"
-    }
-  ],
-  "Conversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Toggle tool calls"
     }
   ],
   "Conversation.tsx_oZLZvb": [
@@ -647,6 +659,12 @@
     {
       "type": 1,
       "value": "conversationId"
+    }
+  ],
+  "Conversation.tsx_yGVyFv": [
+    {
+      "type": 0,
+      "value": "Hide tool calls"
     }
   ],
   "Conversation.tsx_yWDfdE": [
@@ -739,12 +757,6 @@
       "value": "Create App"
     }
   ],
-  "CreateAppForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -791,12 +803,6 @@
     {
       "type": 0,
       "value": "1. General settings"
-    }
-  ],
-  "CreateCollectionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateCollectionManual.tsx_9/rVBT": [
@@ -898,12 +904,6 @@
       "value": "Error creating a new app version"
     }
   ],
-  "CreateNewAppVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -930,12 +930,6 @@
     {
       "type": 0,
       "value": "3. Content summary"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_dISRjb": [
@@ -992,12 +986,6 @@
       "value": ". Document editing is disabled."
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
     {
       "type": 0,
@@ -1050,6 +1038,36 @@
     {
       "type": 0,
       "value": "Default document view UI options"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Reasoning effort"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_DEgFqm": [
+    {
+      "type": 0,
+      "value": "Default transcription options"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_qAb0dx": [
+    {
+      "type": 0,
+      "value": "Default completion options"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_uIQJ+w": [
+    {
+      "type": 0,
+      "value": "Default file inspection options"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -1660,6 +1678,12 @@
       "value": "Download"
     }
   ],
+  "FormStateEffects.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "You have unsaved changes. Are you sure you want to leave?"
+    }
+  ],
   "FormattingToolbar.tsx_+im1ZA": [
     {
       "type": 0,
@@ -2112,196 +2136,24 @@
       "value": "Incompatibility warning"
     }
   ],
-  "InferenceSettings.tsx_25pjeS": [
+  "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
-      "value": "Chat Completions"
-    }
-  ],
-  "InferenceSettings.tsx_AJlr3w": [
-    {
-      "type": 0,
-      "value": "File Inspection"
-    }
-  ],
-  "InferenceSettings.tsx_BUf4e4": [
-    {
-      "type": 0,
-      "value": "The name of a model supported by the provider you've chosen. You can usually find this in your provider's docs. "
+      "value": "Configure an "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "z-ai/glm-4.7"
+          "value": "inference provider"
         }
       ],
       "type": 8,
-      "value": "code"
+      "value": "b"
     },
     {
       "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": ", and "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " generally perform quite well."
-    }
-  ],
-  "InferenceSettings.tsx_FJPyVh": [
-    {
-      "type": 0,
-      "value": ": fast, cheap, supports all APIs."
-    }
-  ],
-  "InferenceSettings.tsx_HRac2N": [
-    {
-      "type": 0,
-      "value": "Speech (required for the assistant to speak to you)"
-    }
-  ],
-  "InferenceSettings.tsx_NNEajY": [
-    {
-      "type": 0,
-      "value": "Provider base URL"
-    }
-  ],
-  "InferenceSettings.tsx_RPpwVn": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " To make the assistant work you need to connect it to an "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "inference provider"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": "—a service that offers APIs for LLMs, speech transcription, and speech synthesis. The provider must offer APIs "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "compatible with the OpenAI format."
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Providers known to work: "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_YctX0J": [
-    {
-      "type": 0,
-      "value": "Provider API key"
-    }
-  ],
-  "InferenceSettings.tsx_eV3UHK": [
-    {
-      "type": 0,
-      "value": "Transcriptions (required to speak to the assistant)"
-    }
-  ],
-  "InferenceSettings.tsx_gi9ckp": [
-    {
-      "type": 0,
-      "value": ": only supports the Chat Completions API."
-    }
-  ],
-  "InferenceSettings.tsx_mnJYBQ": [
-    {
-      "type": 0,
-      "value": "Voice"
-    }
-  ],
-  "InferenceSettings.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Model"
-    }
-  ],
-  "InferenceSettings.tsx_u2jTeg": [
-    {
-      "type": 0,
-      "value": ": supports all APIs."
-    }
-  ],
-  "InferenceSettings.tsx_uTE4Se": [
-    {
-      "type": 0,
-      "value": "The name of a multimodal model supporting images, videos, and pdfs."
-    }
-  ],
-  "InferenceSettings.tsx_vuJYgx": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Create an account with your chosen provider, get an API key, and enter the details below. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_waSfdV": [
-    {
-      "type": 0,
-      "value": ": app that runs locally on your computer (needs a lot of RAM and a beefy GPU). Only supports the Chat Completions API."
+      "value": " to enable the assistant. A model with audio understanding capabilities is necessary for the \"speak\" feature."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2588,6 +2440,36 @@
       ],
       "type": 8,
       "value": "p"
+    }
+  ],
+  "Model.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "Model.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "Model.tsx_qlcuNQ": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "ModelActionMenu.tsx_SikIJG": [
+    {
+      "type": 0,
+      "value": "(last used)"
+    }
+  ],
+  "ModelSelect.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Model"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -2882,6 +2764,60 @@
     {
       "type": 0,
       "value": "Search"
+    }
+  ],
+  "Provider.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "Provider.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "Provider.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "API key"
+    }
+  ],
+  "Provider.tsx_MbbFzn": [
+    {
+      "type": 0,
+      "value": "Driver"
+    }
+  ],
+  "Provider.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Models"
+    }
+  ],
+  "Provider.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "Base URL"
+    }
+  ],
+  "Provider.tsx_zUO6Ii": [
+    {
+      "type": 0,
+      "value": "Add model"
+    }
+  ],
+  "Providers.tsx_+goFsL": [
+    {
+      "type": 0,
+      "value": "Add provider"
+    }
+  ],
+  "Providers.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Providers"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -3256,6 +3192,42 @@
     {
       "type": 0,
       "value": "Defines the \"shape\" of document contents in this collection."
+    }
+  ],
+  "ReasoningEffortSelect.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Reasoning effort"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "None"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_477I0g": [
+    {
+      "type": 0,
+      "value": "Low"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_AxMhQr": [
+    {
+      "type": 0,
+      "value": "High"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_kDEj60": [
+    {
+      "type": 0,
+      "value": "Extra high"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_ovJ26C": [
+    {
+      "type": 0,
+      "value": "Medium"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -3656,6 +3628,12 @@
       "value": "type"
     }
   ],
+  "ResolveIncompatibilityModal.tsx_kAEQyV": [
+    {
+      "type": 0,
+      "value": "OK"
+    }
+  ],
   "RestoreVersionModal.tsx_47FYwb": [
     {
       "type": 0,
@@ -3950,12 +3928,6 @@
       "value": " » Example document"
     }
   ],
-  "SendRecordButtons.tsx_/8QiK8": [
-    {
-      "type": 0,
-      "value": "Configure assistant for transcription"
-    }
-  ],
   "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
@@ -3968,16 +3940,16 @@
       "value": "Cancel"
     }
   ],
-  "SendRecordButtons.tsx_7Y6Yvq": [
-    {
-      "type": 0,
-      "value": "Record"
-    }
-  ],
   "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Send"
+    }
+  ],
+  "SendRecordButtons.tsx_GEd3kV": [
+    {
+      "type": 0,
+      "value": "Speak"
     }
   ],
   "SendRecordButtons.tsx_kNl1RN": [
@@ -3986,10 +3958,10 @@
       "value": "Configure assistant"
     }
   ],
-  "SetCollectionRemoteForm.tsx_Wq1yhE": [
+  "SendRecordButtons.tsx_kSy9pJ": [
     {
       "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
+      "value": "Add model w/ audio understanding to use voice"
     }
   ],
   "SetCollectionRemoteForm.tsx_fsGyC4": [
@@ -4034,30 +4006,6 @@
       "value": "Create app"
     }
   ],
-  "SpeakButton.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configure speech to play assistant messages"
-    }
-  ],
-  "SpeakButton.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Play"
-    }
-  ],
-  "SpeakButton.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Synthesizing speech..."
-    }
-  ],
-  "SpeakButton.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pause"
-    }
-  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4068,6 +4016,18 @@
     {
       "type": 0,
       "value": "null - click to set a value"
+    }
+  ],
+  "StuckProcessingMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Retry"
+    }
+  ],
+  "StuckProcessingMessage.tsx_kCDSl2": [
+    {
+      "type": 0,
+      "value": "The assistant seems to be taking too long."
     }
   ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [
@@ -4094,10 +4054,14 @@
       "value": "Error creating the collections"
     }
   ],
-  "ThinkingTime.tsx_uKcW4C": [
+  "ThinkingTime.tsx_O5Mn+P": [
+    {
+      "type": 1,
+      "value": "model"
+    },
     {
       "type": 0,
-      "value": "Thought for "
+      "value": " thought for "
     },
     {
       "type": 1,
@@ -4216,6 +4180,76 @@
       "value": "Close"
     }
   ],
+  "TokenUsage.tsx_6nAVv6": [
+    {
+      "type": 0,
+      "value": "Message + "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " tool call"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " tool calls"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "toolCallCount"
+    }
+  ],
+  "TokenUsage.tsx_MJ2jZQ": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "TokenUsage.tsx_Wk7BO4": [
+    {
+      "type": 1,
+      "value": "totalTokens"
+    },
+    {
+      "type": 0,
+      "value": " tokens"
+    }
+  ],
+  "TokenUsage.tsx_fBG/Ge": [
+    {
+      "type": 0,
+      "value": "Cost"
+    }
+  ],
+  "TokenUsage.tsx_fio5op": [
+    {
+      "type": 0,
+      "value": "Output"
+    }
+  ],
+  "TokenUsage.tsx_it6Lig": [
+    {
+      "type": 0,
+      "value": "Input"
+    }
+  ],
   "ToolCallResult.tsx_yq9SNC": [
     {
       "type": 0,
@@ -4244,12 +4278,6 @@
     {
       "type": 0,
       "value": "Description"
-    }
-  ],
-  "UpdateCollectionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
@@ -4282,12 +4310,6 @@
       "value": "Document view UI options"
     }
   ],
-  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
-    }
-  ],
   "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
     {
       "type": 0,
@@ -4304,12 +4326,6 @@
     {
       "type": 0,
       "value": "Appearance"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "You have unsaved changes. Are you sure you want to leave?"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [
@@ -4603,6 +4619,222 @@
     {
       "type": 0,
       "value": "Today"
+    }
+  ],
+  "getStatusText.ts_+cQcX2": [
+    {
+      "type": 0,
+      "value": "creating maps to use in response"
+    }
+  ],
+  "getStatusText.ts_/0ISuY": [
+    {
+      "type": 0,
+      "value": "still running code"
+    }
+  ],
+  "getStatusText.ts_1dVfTZ": [
+    {
+      "type": 0,
+      "value": "reading other collection schemas"
+    }
+  ],
+  "getStatusText.ts_2eapm9": [
+    {
+      "type": 0,
+      "value": "running tools"
+    }
+  ],
+  "getStatusText.ts_2j+fZj": [
+    {
+      "type": 0,
+      "value": "creating charts to use in response"
+    }
+  ],
+  "getStatusText.ts_4Trl/i": [
+    {
+      "type": 0,
+      "value": "updating existing documents"
+    }
+  ],
+  "getStatusText.ts_8UqYYj": [
+    {
+      "type": 0,
+      "value": "searching through more documents"
+    }
+  ],
+  "getStatusText.ts_8jDOjv": [
+    {
+      "type": 0,
+      "value": "updating more documents"
+    }
+  ],
+  "getStatusText.ts_Aneja+": [
+    {
+      "type": 0,
+      "value": "reading more collection schemas"
+    }
+  ],
+  "getStatusText.ts_BJ4SuP": [
+    {
+      "type": 0,
+      "value": "running code to analyze documents"
+    }
+  ],
+  "getStatusText.ts_EYmnCf": [
+    {
+      "type": 0,
+      "value": "running more tools"
+    }
+  ],
+  "getStatusText.ts_EdD8dJ": [
+    {
+      "type": 0,
+      "value": "creating more charts"
+    }
+  ],
+  "getStatusText.ts_FV3TfA": [
+    {
+      "type": 0,
+      "value": "searching through other documents"
+    }
+  ],
+  "getStatusText.ts_G5yjJ5": [
+    {
+      "type": 0,
+      "value": "suggesting more collections"
+    }
+  ],
+  "getStatusText.ts_Gx9pE5": [
+    {
+      "type": 0,
+      "value": "inspecting more files"
+    }
+  ],
+  "getStatusText.ts_GzcNLM": [
+    {
+      "type": 0,
+      "value": "creating more maps"
+    }
+  ],
+  "getStatusText.ts_HRMIeI": [
+    {
+      "type": 0,
+      "value": "running other tools"
+    }
+  ],
+  "getStatusText.ts_IOpa7w": [
+    {
+      "type": 0,
+      "value": "inspecting other files"
+    }
+  ],
+  "getStatusText.ts_NGqPvQ": [
+    {
+      "type": 0,
+      "value": "Ruminating"
+    }
+  ],
+  "getStatusText.ts_NwXVbw": [
+    {
+      "type": 0,
+      "value": "creating other documents"
+    }
+  ],
+  "getStatusText.ts_P5Fv4Z": [
+    {
+      "type": 0,
+      "value": "creating more tables"
+    }
+  ],
+  "getStatusText.ts_P9gC6s": [
+    {
+      "type": 0,
+      "value": "reading collection schemas"
+    }
+  ],
+  "getStatusText.ts_Q0zqsp": [
+    {
+      "type": 0,
+      "value": "creating other charts"
+    }
+  ],
+  "getStatusText.ts_b63n3p": [
+    {
+      "type": 0,
+      "value": "creating other maps"
+    }
+  ],
+  "getStatusText.ts_cAkSRB": [
+    {
+      "type": 0,
+      "value": "Pondering"
+    }
+  ],
+  "getStatusText.ts_cmj5Mv": [
+    {
+      "type": 0,
+      "value": "running more code"
+    }
+  ],
+  "getStatusText.ts_f8cQJW": [
+    {
+      "type": 0,
+      "value": "updating other documents"
+    }
+  ],
+  "getStatusText.ts_gKneh7": [
+    {
+      "type": 0,
+      "value": "suggesting other collections"
+    }
+  ],
+  "getStatusText.ts_hU96dI": [
+    {
+      "type": 0,
+      "value": "suggesting new collections"
+    }
+  ],
+  "getStatusText.ts_nP8jqi": [
+    {
+      "type": 0,
+      "value": "Cogitating"
+    }
+  ],
+  "getStatusText.ts_rvd9sh": [
+    {
+      "type": 0,
+      "value": "creating tables to use in response"
+    }
+  ],
+  "getStatusText.ts_ryvDft": [
+    {
+      "type": 0,
+      "value": "creating more documents"
+    }
+  ],
+  "getStatusText.ts_sso0oA": [
+    {
+      "type": 0,
+      "value": "searching through documents"
+    }
+  ],
+  "getStatusText.ts_u7GfRG": [
+    {
+      "type": 0,
+      "value": "inspecting the provided files"
+    }
+  ],
+  "getStatusText.ts_uL10Ji": [
+    {
+      "type": 0,
+      "value": "creating other tables"
+    }
+  ],
+  "getStatusText.ts_uf3oCA": [
+    {
+      "type": 0,
+      "value": "creating new documents"
     }
   ],
   "openFileWithNativeApp.ts_Blh3UZ": [

@@ -5,4 +5,4 @@ export const TIPTAP_INPUT_ON_CHANGE_DEBOUNCE: Milliseconds = 300;
 export const GEOJSON_INPUT_ON_CHANGE_DEBOUNCE: Milliseconds = 300;
 export const EXCALIDRAW_INPUT_ON_CHANGE_DEBOUNCE: Milliseconds = 500;
 export const DOCUMENT_AUTOSAVE_INTERVAL: Milliseconds = 10_000;
-export const SETTINGS_AUTOSAVE_INTERVAL: Milliseconds = 2_000;
+export const SETTINGS_AUTOSAVE_INTERVAL: Milliseconds = 5_000;

@@ -386,6 +386,9 @@ export const [light, vars] = createTheme({
       disabled: colors.greys._2,
       inverse: colors.greys._10,
     },
+    shadow: {
+      default: colors.greys._12,
+    },
   },
 });
 
@@ -553,6 +556,9 @@ export const dark = createTheme(vars, {
       focus: colors.greys._5,
       disabled: colors.greys._10,
       inverse: colors.greys._0,
+    },
+    shadow: {
+      default: colors.greys._12,
     },
   },
 });

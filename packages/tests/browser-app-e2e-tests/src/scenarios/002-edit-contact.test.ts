@@ -27,6 +27,9 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("01. Edit relation field", async () => {
     // Exercise
     await page.getByRole("textbox", { name: /^Relation/i }).fill("Colleague");
+    await page
+      .getByRole("button", { name: /^Save$/i, disabled: false })
+      .waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
@@ -39,7 +42,9 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("02. Save updated contact", async () => {
     // Exercise
     await page.getByRole("button", { name: /^Save$/i }).click();
-    await page.waitForTimeout(500);
+    await page
+      .getByRole("button", { name: /^Save$/i, disabled: true })
+      .waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(

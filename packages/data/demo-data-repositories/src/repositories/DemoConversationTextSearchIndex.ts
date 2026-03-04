@@ -65,6 +65,17 @@ export default class DemoConversationTextSearchIndex
     this.ensureNotDisposed();
     this.loadIndex();
 
+    if (query === "") {
+      const entries = Object.values(this.conversationTextSearchTexts).slice(
+        0,
+        options.limit,
+      );
+      return entries.map((entry) => ({
+        conversationId: entry.conversationId,
+        matchedText: "",
+      }));
+    }
+
     const results = this.searchTextIndexState.index.search(query, {
       limit: options.limit,
       merge: true,

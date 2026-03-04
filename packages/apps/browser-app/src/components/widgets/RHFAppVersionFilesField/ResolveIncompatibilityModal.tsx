@@ -1,11 +1,14 @@
 import {
   type App,
   type Collection,
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
@@ -16,7 +19,10 @@ import findIncompatibilities, {
 interface Props {
   app: App;
   targetCollections: Collection[];
-  onResolveWithAssistant: (messageContent: Message.User["content"]) => void;
+  onResolveWithAssistant: (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => void;
 }
 export default function ResolveIncompatibilityModal({
   app,
@@ -24,6 +30,7 @@ export default function ResolveIncompatibilityModal({
   onResolveWithAssistant,
 }: Props) {
   const incompatibilities = findIncompatibilities(app, targetCollections);
+  const defaultInferenceOptions = useDefaultInferenceOptions();
 
   const [isOpen, setIsOpen] = useState(incompatibilities !== null);
 
@@ -66,23 +73,34 @@ export default function ResolveIncompatibilityModal({
         ))}
       </ul>
       <ModalDialog.Actions align="start">
-        <Button
-          variant="primary"
-          onPress={() => {
-            onResolveWithAssistant([
-              {
-                type: MessageContentPartType.Text,
-                text: getUserRequest(incompatibilities),
-              },
-            ]);
-            setIsOpen(false);
-          }}
-        >
-          <FormattedMessage defaultMessage="Ask the assistant" />
-        </Button>
-        <Button slot="close">
-          <FormattedMessage defaultMessage="I'll do it myself" />
-        </Button>
+        {inferenceOptionsHas(defaultInferenceOptions, "completion") ? (
+          <>
+            <Button
+              variant="primary"
+              onPress={() => {
+                onResolveWithAssistant(
+                  [
+                    {
+                      type: MessageContentPartType.Text,
+                      text: getUserRequest(incompatibilities),
+                    },
+                  ],
+                  defaultInferenceOptions,
+                );
+                setIsOpen(false);
+              }}
+            >
+              <FormattedMessage defaultMessage="Ask the assistant" />
+            </Button>
+            <Button slot="close">
+              <FormattedMessage defaultMessage="I'll do it myself" />
+            </Button>
+          </>
+        ) : (
+          <Button slot="close">
+            <FormattedMessage defaultMessage="OK" />
+          </Button>
+        )}
       </ModalDialog.Actions>
     </ModalDialog>
   ) : null;

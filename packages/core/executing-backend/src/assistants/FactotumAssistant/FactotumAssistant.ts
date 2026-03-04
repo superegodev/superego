@@ -1,10 +1,14 @@
 import {
   type Collection,
   type ConversationId,
+  type InferenceOptions,
+  type InferenceSettings,
   type ToolCall,
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
@@ -119,8 +123,11 @@ export default class FactotumAssistant extends Assistant {
     ].join("\n");
   }
 
-  protected getTools(): InferenceService.Tool[] {
-    return [
+  protected getTools(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): InferenceService.Tool[] {
+    return compact([
       GetCollectionTypescriptSchema.get(),
       ExecuteTypescriptFunction.get(),
       CreateDocuments.get(),
@@ -129,11 +136,16 @@ export default class FactotumAssistant extends Assistant {
       CreateGeoJSONMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
-      InspectFile.get(),
-    ];
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+        ? InspectFile.get(inferenceSettings, inferenceOptions)
+        : null,
+    ]);
   }
 
-  protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
+  protected async processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
     }
@@ -193,11 +205,15 @@ export default class FactotumAssistant extends Assistant {
     if (SearchDocuments.is(toolCall)) {
       return SearchDocuments.exec(toolCall, this.usecases.documentsSearch);
     }
-    if (InspectFile.is(toolCall)) {
+    if (
+      InspectFile.is(toolCall) &&
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+    ) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);

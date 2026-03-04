@@ -7,6 +7,7 @@ import {
   ConversationStatus,
   type Document,
   type DocumentId,
+  type InferenceOptions,
   MessageContentPartType,
 } from "@superego/backend";
 import type { Schema } from "@superego/schema";
@@ -22,6 +23,7 @@ class FactotumObject {
   constructor(
     private backend: Backend,
     private evaluator: Evaluator,
+    private inferenceOptions: InferenceOptions<"completion">,
   ) {}
 
   /////////////////////////////////////
@@ -193,9 +195,11 @@ class FactotumObject {
 
   private async startConversation(message: string) {
     const startConversationResult =
-      await this.backend.assistants.startConversation(AssistantName.Factotum, [
-        { type: MessageContentPartType.Text, text: message },
-      ]);
+      await this.backend.assistants.startConversation(
+        AssistantName.Factotum,
+        [{ type: MessageContentPartType.Text, text: message }],
+        this.inferenceOptions,
+      );
     assertSuccessfulResult(
       "Failed to start conversation",
       startConversationResult,
@@ -208,6 +212,7 @@ class FactotumObject {
       await this.backend.assistants.continueConversation(
         this.conversation!.id,
         [{ type: MessageContentPartType.Text, text: message }],
+        this.inferenceOptions,
       );
     assertSuccessfulResult(
       "Failed to continue conversation",

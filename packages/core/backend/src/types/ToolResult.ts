@@ -51,7 +51,6 @@ type BaseToolResult<
     }
 );
 
-// TODO: consider using specific errors, without reusing the API ones.
 namespace ToolResult {
   // Factotum
   export type GetCollectionTypescriptSchema = BaseToolResult<

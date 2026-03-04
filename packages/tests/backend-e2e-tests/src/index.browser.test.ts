@@ -1,4 +1,9 @@
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  ReasoningEffort,
+  Theme,
+} from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
@@ -9,22 +14,35 @@ import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js"
 const defaultGlobalSettings = {
   appearance: { theme: Theme.Auto },
   inference: {
-    chatCompletions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
+    providers: [
+      {
+        name: "providerName",
+        baseUrl: "http://localhost",
+        apiKey: null,
+        driver: InferenceProviderDriver.OpenResponses,
+        models: [
+          {
+            id: "modelId",
+            name: "modelId",
+            capabilities: {
+              audioUnderstanding: true,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+            },
+          },
+        ],
+      },
+    ],
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: {
+          providerName: "providerName",
+          modelId: "modelId",
+        },
+        reasoningEffort: ReasoningEffort.Medium,
+      },
+      transcription: null,
+      fileInspection: null,
     },
   },
   assistants: {
@@ -36,12 +54,23 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests((connector) => ({
-  backend: new ExecutingBackend(
-    new DemoDataRepositoriesManager(defaultGlobalSettings, crypto.randomUUID()),
-    new FakeJavascriptSandbox(),
-    new MonacoTypescriptCompiler(() => import("monaco-editor")),
-    new MockInferenceServiceFactory(),
-    connector ? [connector] : [],
-  ),
-}));
+registerTests(({ connector, inferenceService, inferenceSettings } = {}) => {
+  const effectiveGlobalSettings = inferenceSettings
+    ? { ...defaultGlobalSettings, inference: inferenceSettings }
+    : defaultGlobalSettings;
+
+  return {
+    backend: new ExecutingBackend(
+      new DemoDataRepositoriesManager(
+        effectiveGlobalSettings,
+        crypto.randomUUID(),
+      ),
+      new FakeJavascriptSandbox(),
+      new MonacoTypescriptCompiler(() => import("monaco-editor")),
+      inferenceService
+        ? { create: () => inferenceService }
+        : new MockInferenceServiceFactory(),
+      connector ? [connector] : [],
+    ),
+  };
+});
