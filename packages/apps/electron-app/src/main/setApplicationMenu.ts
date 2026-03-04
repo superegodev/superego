@@ -1,34 +1,38 @@
 import type { IntlShape } from "@formatjs/intl";
+import type { MenuItemConstructorOptions } from "electron";
 import { Menu } from "electron";
 import cli from "./cli.js";
 
 interface ActionHandlers {
   onNewWindow: () => void;
-  onExportDatabase: () => void;
+  onExportDatabase?: () => void;
 }
 
 export default function setApplicationMenu(
   intl: IntlShape,
   handlers: ActionHandlers,
 ) {
+  const fileSubmenu: MenuItemConstructorOptions[] = [
+    {
+      label: intl.formatMessage({ defaultMessage: "New Window" }),
+      accelerator: "CmdOrCtrl+N",
+      click: handlers.onNewWindow,
+    },
+  ];
+  if (handlers.onExportDatabase) {
+    fileSubmenu.push({
+      label: intl.formatMessage({ defaultMessage: "Export database" }),
+      click: handlers.onExportDatabase,
+    });
+  }
+  fileSubmenu.push({ type: "separator" }, { role: "close" });
+
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
       { role: "appMenu" },
       {
         role: "fileMenu",
-        submenu: [
-          {
-            label: intl.formatMessage({ defaultMessage: "New Window" }),
-            accelerator: "CmdOrCtrl+N",
-            click: handlers.onNewWindow,
-          },
-          {
-            label: intl.formatMessage({ defaultMessage: "Export database" }),
-            click: handlers.onExportDatabase,
-          },
-          { type: "separator" },
-          { role: "close" },
-        ],
+        submenu: fileSubmenu,
       },
       { role: "editMenu" },
       { role: "viewMenu" },

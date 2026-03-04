@@ -15,12 +15,10 @@ export default async function onReadyDevenv(): Promise<void> {
 
   let backendIPCProxyServer: BackendIPCProxyServer | null = null;
   let openFileIPCProxyServer: OpenFileWithNativeAppIPCProxyServer | null = null;
-  let currentBackend: ReturnType<typeof createBackend> | null = null;
 
   for await (const devenvSignal of readDevenvSignals()) {
     if (devenvSignal.type === DevenvSignalType.PreviewPack) {
       const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT, true);
-      currentBackend = backend;
       const result = await backend.packs.install(devenvSignal.pack);
       if (!result.success) {
         if (!backendIPCProxyServer) {
@@ -47,21 +45,7 @@ export default async function onReadyDevenv(): Promise<void> {
         openFileIPCProxyServer.start();
         new OpenInNativeBrowserIPCProxyServer().start();
         new WindowCloseIPCProxyServer().start();
-        setApplicationMenu(intl, {
-          onNewWindow: () => createWindow(true),
-          onExportDatabase: async () => {
-            if (!currentBackend) {
-              return;
-            }
-            const { filePath } = await dialog.showSaveDialog({
-              defaultPath: "superego-backup.json",
-              filters: [{ name: "JSON", extensions: ["json"] }],
-            });
-            if (filePath) {
-              await currentBackend.database.export(filePath);
-            }
-          },
-        });
+        setApplicationMenu(intl, { onNewWindow: () => createWindow(true) });
         createWindow(true);
       } else {
         backendIPCProxyServer.replaceBackend(backend);
