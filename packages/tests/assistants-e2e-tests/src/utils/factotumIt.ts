@@ -26,44 +26,40 @@ export default function factotumIt(
     DEFAULT_REPEAT_TIMES;
   const passRate = options.passRate ?? DEFAULT_PASS_RATE;
 
-  it(
-    repeatTimes === 1 ? name : `${name} (x ${repeatTimes})`,
-    { only: options.only, skip: options.skip, todo: options.todo },
-    async ({ annotate }) => {
-      let failedCount = 0;
-      for (let i = 0; i < repeatTimes; i++) {
-        let factotum: FactotumObject | null = null;
-        try {
-          const { backend, booleanOracle, inferenceOptions } = options.deps();
-          factotum = new FactotumObject(
-            backend,
-            booleanOracle,
-            inferenceOptions,
+  it(repeatTimes === 1 ? name : `${name} (x ${repeatTimes})`, {
+    only: options.only,
+    skip: options.skip,
+    todo: options.todo,
+  }, async ({ annotate }) => {
+    let failedCount = 0;
+    for (let i = 0; i < repeatTimes; i++) {
+      let factotum: FactotumObject | null = null;
+      try {
+        const { backend, booleanOracle, inferenceOptions } = options.deps();
+        factotum = new FactotumObject(backend, booleanOracle, inferenceOptions);
+        await testFunction(factotum);
+      } catch (error) {
+        if (factotum) {
+          await annotate(
+            JSON.stringify(factotum.getConversation()),
+            `Repeat ${i} - Conversation log`,
           );
-          await testFunction(factotum);
-        } catch (error) {
-          if (factotum) {
-            await annotate(
-              JSON.stringify(factotum.getConversation()),
-              `Repeat ${i} - Conversation log`,
-            );
-          }
-          if (repeatTimes === 1) {
-            throw error;
-          }
-          await annotate(String(error), `Repeat ${i} - Error`);
-          failedCount += 1;
         }
+        if (repeatTimes === 1) {
+          throw error;
+        }
+        await annotate(String(error), `Repeat ${i} - Error`);
+        failedCount += 1;
       }
-      const passedCount = repeatTimes - failedCount;
-      const actualRate =
-        Math.round((passedCount / repeatTimes + Number.EPSILON) * 100) / 100;
-      await annotate(`Pass rate = ${actualRate}`);
+    }
+    const passedCount = repeatTimes - failedCount;
+    const actualRate =
+      Math.round((passedCount / repeatTimes + Number.EPSILON) * 100) / 100;
+    await annotate(`Pass rate = ${actualRate}`);
 
-      expect(
-        actualRate,
-        `Insufficient pass rate. ${passedCount} passed out of ${repeatTimes} attempts; rate = ${actualRate}; desired rate = ${passRate}.`,
-      ).toBeGreaterThanOrEqual(passRate);
-    },
-  );
+    expect(
+      actualRate,
+      `Insufficient pass rate. ${passedCount} passed out of ${repeatTimes} attempts; rate = ${actualRate}; desired rate = ${passRate}.`,
+    ).toBeGreaterThanOrEqual(passRate);
+  });
 }
