@@ -3996,6 +3996,18 @@
       "value": "null - fai clic per impostare un valore"
     }
   ],
+  "StuckProcessingMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Riprova"
+    }
+  ],
+  "StuckProcessingMessage.tsx_kCDSl2": [
+    {
+      "type": 0,
+      "value": "L'assistente sembra impiegare troppo tempo."
+    }
+  ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [
     {
       "type": 0,

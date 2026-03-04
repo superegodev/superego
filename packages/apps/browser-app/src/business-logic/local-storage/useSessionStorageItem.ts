@@ -1,18 +1,18 @@
 import { useCallback, useState } from "react";
 import type WellKnownKey from "./WellKnownKey.js";
 
-type UseLocalStorageItem<Value> = [
+type UseSessionStorageItem<Value> = [
   value: Value,
   setValue: (newValue: Value) => void,
 ];
 
-export default function useLocalStorageItem<Value>(
+export default function useSessionStorageItem<Value>(
   key: WellKnownKey,
   initialValue: Value,
-): UseLocalStorageItem<Value> {
+): UseSessionStorageItem<Value> {
   const [value, setValue] = useState(() => {
     try {
-      const storedValue = localStorage.getItem(key);
+      const storedValue = sessionStorage.getItem(key);
       return storedValue ? JSON.parse(storedValue) : initialValue;
     } catch {
       return initialValue;
@@ -22,7 +22,7 @@ export default function useLocalStorageItem<Value>(
     value,
     useCallback(
       (newValue) => {
-        localStorage.setItem(key, JSON.stringify(newValue));
+        sessionStorage.setItem(key, JSON.stringify(newValue));
         setValue(newValue);
       },
       [key],

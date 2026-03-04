@@ -1358,6 +1358,12 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - fai clic per impostare un valore"
   },
+  "StuckProcessingMessage.tsx_62nsdy": {
+    "defaultMessage": "Riprova"
+  },
+  "StuckProcessingMessage.tsx_kCDSl2": {
+    "defaultMessage": "L'assistente sembra impiegare troppo tempo."
+  },
   "SuggestCollectionsDefinitions.tsx_65g2mb": {
     "defaultMessage": "Collezioni suggerite"
   },

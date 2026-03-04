@@ -1,5 +1,6 @@
 import {
   type Conversation,
+  ConversationStatus,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -7,6 +8,7 @@ import {
 import type { IntlShape } from "react-intl";
 
 const DISPLAY_NAME_LENGTH = 16;
+const PROCESSING_TIMEOUT = 5 * 60 * 1_000;
 
 export default {
   getDisplayTitle(
@@ -176,5 +178,18 @@ export default {
     toolCall: ToolCall,
   ): toolCall is ToolCall.GetCollectionTypescriptSchema {
     return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
+  },
+
+  isStuckProcessing(conversation: Conversation): boolean {
+    if (conversation.status !== ConversationStatus.Processing) {
+      return false;
+    }
+    for (let i = conversation.messages.length - 1; i >= 0; i--) {
+      const message = conversation.messages[i]!;
+      if ("createdAt" in message) {
+        return Date.now() - message.createdAt.getTime() > PROCESSING_TIMEOUT;
+      }
+    }
+    return false;
   },
 };

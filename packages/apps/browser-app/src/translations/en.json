@@ -1379,6 +1379,12 @@
   "StructField.tsx_Dp51E2": {
     "defaultMessage": "null - click to set a value"
   },
+  "StuckProcessingMessage.tsx_62nsdy": {
+    "defaultMessage": "Retry"
+  },
+  "StuckProcessingMessage.tsx_kCDSl2": {
+    "defaultMessage": "The assistant seems to be taking too long."
+  },
   "SuggestCollectionsDefinitions.tsx_65g2mb": {
     "defaultMessage": "Suggested collections"
   },

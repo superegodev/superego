@@ -4018,6 +4018,18 @@
       "value": "null - click to set a value"
     }
   ],
+  "StuckProcessingMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Retry"
+    }
+  ],
+  "StuckProcessingMessage.tsx_kCDSl2": [
+    {
+      "type": 0,
+      "value": "The assistant seems to be taking too long."
+    }
+  ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [
     {
       "type": 0,

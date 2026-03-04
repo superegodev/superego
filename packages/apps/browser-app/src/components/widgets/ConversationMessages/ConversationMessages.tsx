@@ -3,11 +3,14 @@ import {
   ConversationStatus,
   MessageRole,
 } from "@superego/backend";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import classnames from "../../../utils/classnames.js";
 import ConversationMessage from "./ConversationMessage.js";
 import * as cs from "./ConversationMessages.css.js";
 import ErrorMessage from "./ErrorMessage.js";
+import StuckProcessingMessage from "./StuckProcessingMessage.js";
 import ThinkingMessage from "./ThinkingMessage/ThinkingMessage.js";
+import useRecoveringConversationIds from "./useRecoveringConversationIds.js";
 import useTailMinHeight from "./useTailMinHeight.js";
 
 interface Props {
@@ -20,6 +23,10 @@ export default function ConversationMessages({
   showToolCalls,
   className,
 }: Props) {
+  const { isRecovering, setIsRecovering } = useRecoveringConversationIds(
+    conversation.id,
+  );
+
   const lastUserMessageIndex = conversation.messages.findLastIndex(
     (message) => message.role === MessageRole.User,
   );
@@ -39,7 +46,14 @@ export default function ConversationMessages({
   const tailContent = (
     <>
       {conversation.status === ConversationStatus.Processing ? (
-        <ThinkingMessage conversation={conversation} />
+        ConversationUtils.isStuckProcessing(conversation) && !isRecovering ? (
+          <StuckProcessingMessage
+            conversation={conversation}
+            onRecoverStarted={() => setIsRecovering(true)}
+          />
+        ) : (
+          <ThinkingMessage conversation={conversation} />
+        )
       ) : null}
       {tailMessages.map((message, index) => (
         <ConversationMessage

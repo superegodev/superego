@@ -94,7 +94,7 @@ describe("toResponsesRequest", () => {
     );
 
     // Verify
-    expect(result.reasoning).toEqual({ effort: "high", summary: "auto" });
+    expect(result.reasoning).toEqual({ effort: "high" });
   });
 
   it("sets reasoning to undefined when reasoningEffort is null", () => {
