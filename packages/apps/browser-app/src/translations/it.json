@@ -1022,24 +1022,6 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "Non ci sono elementi nell'elenco"
   },
-  "LoadDemoDataButton.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "LoadDemoDataButton.tsx_8EGRF9": {
-    "defaultMessage": "Carica"
-  },
-  "LoadDemoDataButton.tsx_FBs/WA": {
-    "defaultMessage": "{current} pacchetti installati su {total}"
-  },
-  "LoadDemoDataButton.tsx_GCRF0i": {
-    "defaultMessage": "Caricamento dati demo"
-  },
-  "LoadDemoDataButton.tsx_VXuroA": {
-    "defaultMessage": "Carica dati demo"
-  },
-  "LoadDemoDataButton.tsx_ZBdI8u": {
-    "defaultMessage": "Carica alcune collezioni e documenti demo con cui puoi fare delle prove."
-  },
   "LocalPack.tsx_/hNhmZ": {
     "defaultMessage": "Pack personalizzati » {packId}"
   },

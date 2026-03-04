@@ -13,8 +13,6 @@ import {
   listConnectorsQuery,
 } from "./business-logic/backend/hooks.js";
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
-import type LoadDemoDataFn from "./business-logic/load-demo-data/LoadDemoDataFn.js";
-import LoadDemoDataProvider from "./business-logic/load-demo-data/LoadDemoDataProvider.js";
 import { fromHref } from "./business-logic/navigation/RouteUtils.js";
 import useNavigationState from "./business-logic/navigation/useNavigationState.js";
 import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.js";
@@ -26,13 +24,8 @@ import "./BrowserApp.css.js";
 interface Props {
   backend: Backend;
   queryClient: QueryClient;
-  loadDemoData?: LoadDemoDataFn;
 }
-export default function BrowserApp({
-  backend,
-  queryClient,
-  loadDemoData,
-}: Props) {
+export default function BrowserApp({ backend, queryClient }: Props) {
   const { locale } = useLocale();
   const { navigateTo } = useNavigationState();
   const messages = getMessages(locale);
@@ -78,13 +71,7 @@ export default function BrowserApp({
                       developerPrompts,
                     }}
                   >
-                    {import.meta.env["VITE_IS_DEMO"] === "true" ? (
-                      <LoadDemoDataProvider value={loadDemoData}>
-                        <Root />
-                      </LoadDemoDataProvider>
-                    ) : (
-                      <Root />
-                    )}
+                    <Root />
                   </GlobalDataProvider>
                 )}
               </DataLoader>

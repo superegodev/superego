@@ -2284,50 +2284,6 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
-  "LoadDemoDataButton.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "LoadDemoDataButton.tsx_8EGRF9": [
-    {
-      "type": 0,
-      "value": "Carica"
-    }
-  ],
-  "LoadDemoDataButton.tsx_FBs/WA": [
-    {
-      "type": 1,
-      "value": "current"
-    },
-    {
-      "type": 0,
-      "value": " pacchetti installati su "
-    },
-    {
-      "type": 1,
-      "value": "total"
-    }
-  ],
-  "LoadDemoDataButton.tsx_GCRF0i": [
-    {
-      "type": 0,
-      "value": "Caricamento dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_VXuroA": [
-    {
-      "type": 0,
-      "value": "Carica dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_ZBdI8u": [
-    {
-      "type": 0,
-      "value": "Carica alcune collezioni e documenti demo con cui puoi fare delle prove."
-    }
-  ],
   "LocalPack.tsx_/hNhmZ": [
     {
       "type": 0,

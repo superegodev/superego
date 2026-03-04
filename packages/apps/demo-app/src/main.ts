@@ -20,6 +20,7 @@ import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QueryClient } from "@tanstack/react-query";
+import loadDemoData from "./demoData/loadDemoData.js";
 
 const isProduction = import.meta.env["VITE_DEPLOY_ENVIRONMENT"];
 const redirectUri = isProduction
@@ -142,12 +143,11 @@ if (window.location.href.startsWith(redirectUri)) {
     window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
   }
 } else {
-  renderBrowserApp(backend, queryClient, async (onProgress) => {
-    const { default: loadDemoData } = await import(
-      "./demoData/loadDemoData.js"
-    );
-    await loadDemoData(backend, onProgress);
-  });
+  const collectionsResult = await backend.collections.list();
+  if (collectionsResult.success && collectionsResult.data.length === 0) {
+    await loadDemoData(backend);
+  }
+  renderBrowserApp(backend, queryClient);
 }
 
 window.addEventListener("message", (evt) => {

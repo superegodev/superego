@@ -64,6 +64,7 @@ export default function getContentSummary(
                   display: "flex",
                   flexDirection: "column",
                   gap: "var(--field-vertical-gap)",
+                  minWidth: 0,
                 },
                 children: [
                   { propertyPath: "title" },
@@ -75,6 +76,7 @@ export default function getContentSummary(
                   display: "flex",
                   flexDirection: "column",
                   gap: "var(--field-vertical-gap)",
+                  minWidth: 0,
                 },
                 children: [
                   { propertyPath: "stage" },
@@ -103,6 +105,7 @@ export default function getContentSummary(
                   display: "flex",
                   flexDirection: "column",
                   gap: "var(--field-vertical-gap)",
+                  minWidth: 0,
                 },
                 children: [
                   { propertyPath: "title" },
@@ -114,6 +117,7 @@ export default function getContentSummary(
                   display: "flex",
                   flexDirection: "column",
                   gap: "var(--field-vertical-gap)",
+                  minWidth: 0,
                 },
                 children: [
                   { propertyPath: "stage" },
