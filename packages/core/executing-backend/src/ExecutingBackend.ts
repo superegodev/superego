@@ -93,7 +93,7 @@ export default class ExecutingBackend implements Backend {
   ) {
     this.resolvedConfig = {
       conversationProcessingStuckTimeout: 5 * 60 * 1_000,
-      backgroundJobProcessingStuckTimeout: 10 * 60 * 1_000,
+      backgroundJobProcessingStuckTimeout: 5 * 60 * 1_000,
       ...config,
     };
     this.collectionCategories = {

@@ -182,7 +182,7 @@ export default {
   isStuckProcessing(conversation: Conversation): boolean {
     if (conversation.processingStartedAt) {
       return (
-        Date.now() - conversation.processingStartedAt.getTime() >
+        Date.now() - conversation.processingStartedAt.getTime() >=
         PROCESSING_TIMEOUT
       );
     }
