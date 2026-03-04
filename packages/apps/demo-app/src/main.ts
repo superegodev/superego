@@ -126,12 +126,14 @@ if (window.location.href.startsWith(redirectUri)) {
     window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
   }
 } else {
-  renderBrowserApp(backend, queryClient, async (onProgress) => {
+  const collectionsResult = await backend.collections.list();
+  if (collectionsResult.success && collectionsResult.data.length === 0) {
     const { default: loadDemoData } = await import(
       "./demoData/loadDemoData.js"
     );
-    await loadDemoData(backend, onProgress);
-  });
+    await loadDemoData(backend, () => {});
+  }
+  renderBrowserApp(backend, queryClient);
 }
 
 window.addEventListener("message", (evt) => {

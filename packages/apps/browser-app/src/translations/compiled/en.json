@@ -2440,50 +2440,6 @@
       "value": "There are no items in the list"
     }
   ],
-  "LoadDemoDataButton.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "LoadDemoDataButton.tsx_8EGRF9": [
-    {
-      "type": 0,
-      "value": "Load"
-    }
-  ],
-  "LoadDemoDataButton.tsx_FBs/WA": [
-    {
-      "type": 1,
-      "value": "current"
-    },
-    {
-      "type": 0,
-      "value": " packs installed out of "
-    },
-    {
-      "type": 1,
-      "value": "total"
-    }
-  ],
-  "LoadDemoDataButton.tsx_GCRF0i": [
-    {
-      "type": 0,
-      "value": "Loading demo data"
-    }
-  ],
-  "LoadDemoDataButton.tsx_VXuroA": [
-    {
-      "type": 0,
-      "value": "Load demo data"
-    }
-  ],
-  "LoadDemoDataButton.tsx_ZBdI8u": [
-    {
-      "type": 0,
-      "value": "Loads some demo collections and documents for you to play around with."
-    }
-  ],
   "LocalPack.tsx_/hNhmZ": [
     {
       "type": 0,

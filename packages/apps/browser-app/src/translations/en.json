@@ -1001,24 +1001,6 @@
   "ListField.tsx_pUcgkI": {
     "defaultMessage": "There are no items in the list"
   },
-  "LoadDemoDataButton.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "LoadDemoDataButton.tsx_8EGRF9": {
-    "defaultMessage": "Load"
-  },
-  "LoadDemoDataButton.tsx_FBs/WA": {
-    "defaultMessage": "{current} packs installed out of {total}"
-  },
-  "LoadDemoDataButton.tsx_GCRF0i": {
-    "defaultMessage": "Loading demo data"
-  },
-  "LoadDemoDataButton.tsx_VXuroA": {
-    "defaultMessage": "Load demo data"
-  },
-  "LoadDemoDataButton.tsx_ZBdI8u": {
-    "defaultMessage": "Loads some demo collections and documents for you to play around with."
-  },
   "LocalPack.tsx_/hNhmZ": {
     "defaultMessage": "Custom Packs » {packId}"
   },
