@@ -16,42 +16,49 @@ describe("isStuckProcessing", () => {
   const testCases: {
     label: string;
     status: ConversationStatus;
+    processingStartedAt: Date | null;
     lastMessageCreatedAt: Date | null;
     expected: boolean;
   }[] = [
     {
       label: "Idle, old message",
       status: ConversationStatus.Idle,
+      processingStartedAt: null,
       lastMessageCreatedAt: new Date("1970-01-01T00:00:00Z"),
       expected: false,
     },
     {
       label: "Error, old message",
       status: ConversationStatus.Error,
+      processingStartedAt: null,
       lastMessageCreatedAt: new Date("1970-01-01T00:00:00Z"),
       expected: false,
     },
     {
-      label: "Processing, recent message",
+      label: "Processing, recent message (fallback)",
       status: ConversationStatus.Processing,
+      processingStartedAt: null,
       lastMessageCreatedAt: new Date("1970-01-01T00:06:00Z"),
       expected: false,
     },
     {
-      label: "Processing, message older than 5 minutes",
+      label: "Processing, recent processingStartedAt, old message",
       status: ConversationStatus.Processing,
-      lastMessageCreatedAt: new Date("1970-01-01T00:04:59Z"),
-      expected: true,
+      processingStartedAt: new Date("1970-01-01T00:06:00Z"),
+      lastMessageCreatedAt: new Date("1970-01-01T00:00:00Z"),
+      expected: false,
     },
     {
-      label: "Processing, no messages with createdAt",
+      label: "Processing, old processingStartedAt",
       status: ConversationStatus.Processing,
-      lastMessageCreatedAt: null,
-      expected: false,
+      processingStartedAt: new Date("1970-01-01T00:04:59Z"),
+      lastMessageCreatedAt: new Date("1970-01-01T00:09:00Z"),
+      expected: true,
     },
   ];
   it.each(testCases)("case: $label -> $expected", ({
     status,
+    processingStartedAt,
     lastMessageCreatedAt,
     expected,
   }) => {
@@ -79,6 +86,7 @@ describe("isStuckProcessing", () => {
               },
             ],
       status,
+      processingStartedAt,
       error:
         status === ConversationStatus.Error
           ? { name: "TestError", details: {} }

@@ -44,6 +44,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
         },
       ],
       status: ConversationStatus.Idle,
+      processingStartedAt: null,
       error: null,
       createdAt: new Date(),
     };
@@ -74,6 +75,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       contextFingerprint: "contextFingerprint",
       messages: [],
       status: ConversationStatus.Idle,
+      processingStartedAt: null,
       error: null,
       createdAt: new Date(),
     };
@@ -116,6 +118,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       contextFingerprint: "contextFingerprint",
       messages: [],
       status: ConversationStatus.Idle,
+      processingStartedAt: null,
       error: null,
       createdAt: new Date(),
     };
@@ -157,6 +160,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
         contextFingerprint: "contextFingerprint",
         messages: [],
         status: ConversationStatus.Idle,
+        processingStartedAt: null,
         error: null,
         createdAt: new Date(),
       };
@@ -209,6 +213,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
         contextFingerprint: "contextFingerprint",
         messages: [],
         status: ConversationStatus.Idle,
+        processingStartedAt: null,
         error: null,
         createdAt: new Date(),
       };
@@ -277,6 +282,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
         contextFingerprint: "contextFingerprint",
         messages: [],
         status: ConversationStatus.Idle,
+        processingStartedAt: null,
         error: null,
         createdAt: new Date(1),
       };
@@ -287,6 +293,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
         contextFingerprint: "contextFingerprint",
         messages: [],
         status: ConversationStatus.Idle,
+        processingStartedAt: null,
         error: null,
         createdAt: new Date(2),
       };

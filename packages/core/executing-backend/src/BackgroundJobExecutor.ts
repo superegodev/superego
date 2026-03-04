@@ -1,6 +1,6 @@
 import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
-import type { Milliseconds } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
+import type Config from "./Config.js";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import type LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
@@ -20,7 +20,7 @@ export default class BackgroundJobExecutor {
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector[],
     private liveConversationStore: LiveConversationStore,
-    private stuckJobTimeout: Milliseconds = 30 * 1000,
+    private config: Config,
   ) {}
 
   async executeNext(): Promise<void> {
@@ -43,6 +43,7 @@ export default class BackgroundJobExecutor {
           this.inferenceServiceFactory,
           this.connectors,
           this.liveConversationStore,
+          this.config,
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();
@@ -97,7 +98,7 @@ export default class BackgroundJobExecutor {
         if (processingBackgroundJob) {
           if (
             Date.now() - processingBackgroundJob.startedProcessingAt.getTime() <
-            this.stuckJobTimeout
+            this.config.backgroundJobProcessingStuckTimeout
           ) {
             return { action: "commit", returnValue: null };
           }

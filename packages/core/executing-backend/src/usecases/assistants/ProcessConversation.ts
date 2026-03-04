@@ -102,6 +102,7 @@ export default class AssistantsProcessConversation extends Usecase {
         canRetryLastResponse: false,
         messages: messages,
         status: ConversationStatus.Processing,
+        processingStartedAt: conversation.processingStartedAt,
         error: null,
         createdAt: conversation.createdAt,
       });
@@ -173,6 +174,7 @@ export default class AssistantsProcessConversation extends Usecase {
         ...conversation,
         title: title,
         status: ConversationStatus.Idle,
+        processingStartedAt: null,
         messages: messages,
       };
     } catch (error) {
@@ -180,6 +182,7 @@ export default class AssistantsProcessConversation extends Usecase {
       updatedConversation = {
         ...conversation,
         status: ConversationStatus.Error,
+        processingStartedAt: null,
         error: makeResultError("UnexpectedError", {
           cause: extractErrorDetails(error),
         }),

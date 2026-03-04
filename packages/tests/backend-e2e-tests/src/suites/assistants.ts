@@ -1,5 +1,6 @@
 import {
   AssistantName,
+  BackgroundJobStatus,
   ConversationStatus,
   InferenceProviderDriver,
   MessageContentPartType,
@@ -913,6 +914,52 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           },
         },
       });
+    });
+
+    it("success: recovers conversation stuck processing", async () => {
+      // Setup SUT
+      const neverResolvingInferenceService: InferenceService = {
+        generateNextMessage: () => new Promise(() => {}),
+        stt: () => new Promise(() => {}),
+        inspectFile: () => new Promise(() => {}),
+      };
+      const { backend } = deps({
+        inferenceService: neverResolvingInferenceService,
+        config: { conversationProcessingStuckTimeout: 0 },
+      });
+      const startResult = await backend.assistants.startConversation(
+        AssistantName.Factotum,
+        [{ type: MessageContentPartType.Text, text: "Hello" }],
+        validInferenceOptions,
+      );
+      assert.isTrue(startResult.success);
+      // Wait for the background job to reach Processing status, ensuring the
+      // background job lock acquisition transaction has committed.
+      await vi.waitUntil(
+        async () => {
+          const backgroundJobsResult = await backend.backgroundJobs.list();
+          assert.isTrue(backgroundJobsResult.success);
+          return backgroundJobsResult.data.some(
+            ({ status }) => status === BackgroundJobStatus.Processing,
+          );
+        },
+        { interval: 5, timeout: 5_000 },
+      );
+
+      // Exercise
+      const result = await backend.assistants.recoverConversation(
+        startResult.data.id,
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data).toEqual(
+        expect.objectContaining({
+          id: startResult.data.id,
+          status: ConversationStatus.Processing,
+        }),
+      );
     });
 
     it("success: recovers conversation from Error state", async () => {

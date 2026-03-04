@@ -8,10 +8,9 @@ import {
   ConversationStatus,
   type InferenceOptions,
   type InferenceOptionsNotValid,
-  type Message,
   type UnexpectedError,
 } from "@superego/backend";
-import type { Milliseconds, ResultPromise } from "@superego/global-types";
+import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
@@ -23,11 +22,8 @@ import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
-import last from "../../utils/last.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
-
-const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
 
 export default class AssistantsRecoverConversation extends Usecase<
   Backend["assistants"]["recoverConversation"]
@@ -69,10 +65,12 @@ export default class AssistantsRecoverConversation extends Usecase<
     }
     const contextFingerprint =
       await ConversationUtils.getContextFingerprint(collections);
+    const isStuckProcessing =
+      conversation.status === ConversationStatus.Processing &&
+      Date.now() - conversation.processingStartedAt.getTime() >=
+        this.config.conversationProcessingStuckTimeout;
     const canBeRecovered =
-      ((conversation.status === ConversationStatus.Processing &&
-        lastMessageOlderThan(conversation.messages, PROCESSING_TIMEOUT)) ||
-        conversation.status === ConversationStatus.Error) &&
+      (isStuckProcessing || conversation.status === ConversationStatus.Error) &&
       conversation.contextFingerprint === contextFingerprint;
     if (!canBeRecovered) {
       return makeUnsuccessfulResult(
@@ -91,6 +89,7 @@ export default class AssistantsRecoverConversation extends Usecase<
     const updatedConversation: ConversationEntity = {
       ...conversation,
       status: ConversationStatus.Processing,
+      processingStartedAt: new Date(),
       error: null,
     };
     await this.repos.conversation.upsert(updatedConversation);
@@ -104,16 +103,4 @@ export default class AssistantsRecoverConversation extends Usecase<
       makeConversation(updatedConversation, contextFingerprint),
     );
   }
-}
-
-function lastMessageOlderThan(
-  messages: Message[],
-  threshold: Milliseconds,
-): boolean {
-  const lastMessage = last(messages);
-  return (
-    lastMessage !== null &&
-    "createdAt" in lastMessage &&
-    Date.now() - lastMessage.createdAt.getTime() > threshold
-  );
 }

@@ -44,6 +44,16 @@ export default function TypingText({
         span.textContent = text.slice(0, displayedLengthRef.current);
         waitFrames = 1 + Math.floor(Math.random() * 2);
       }
+      // If the container is clipping overflow, the remaining text is invisible.
+      // Skip ahead and finish immediately.
+      const container = span.parentElement;
+      if (container && container.scrollHeight > container.clientHeight) {
+        displayedLengthRef.current = targetLength;
+        span.textContent = text;
+        onEffectFinished?.();
+        return;
+      }
+
       if (displayedLengthRef.current < targetLength) {
         rafId = requestAnimationFrame(tick);
       } else {

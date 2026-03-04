@@ -39,7 +39,7 @@
     "@reforged/maker-appimage": "^5.2.0",
     "@rollup/plugin-babel": "^6.1.0",
     "babel-plugin-formatjs": "^11.2.4",
-    "electron": "40.6.1",
+    "electron": "40.7.0",
     "electron-vite": "^5.0.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
