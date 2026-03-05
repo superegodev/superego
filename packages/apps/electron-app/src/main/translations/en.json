@@ -17,6 +17,15 @@
   "cli.ts_qqfYjN": {
     "defaultMessage": "CLI installation failed"
   },
+  "exportDatabase.ts_Y3aZlu": {
+    "defaultMessage": "Export completed"
+  },
+  "exportDatabase.ts_heAhPr": {
+    "defaultMessage": "Export failed"
+  },
+  "exportDatabase.ts_vVq/iv": {
+    "defaultMessage": "Database exported successfully."
+  },
   "setApplicationMenu.ts_OC234H": {
     "defaultMessage": "Export database"
   },

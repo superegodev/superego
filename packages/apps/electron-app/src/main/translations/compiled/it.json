@@ -59,6 +59,24 @@
       "value": "Installazione CLI fallita"
     }
   ],
+  "exportDatabase.ts_Y3aZlu": [
+    {
+      "type": 0,
+      "value": "Esportazione completata"
+    }
+  ],
+  "exportDatabase.ts_heAhPr": [
+    {
+      "type": 0,
+      "value": "Esportazione fallita"
+    }
+  ],
+  "exportDatabase.ts_vVq/iv": [
+    {
+      "type": 0,
+      "value": "Database esportato con successo."
+    }
+  ],
   "setApplicationMenu.ts_OC234H": [
     {
       "type": 0,

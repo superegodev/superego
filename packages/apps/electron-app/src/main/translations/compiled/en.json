@@ -59,6 +59,24 @@
       "value": "CLI installation failed"
     }
   ],
+  "exportDatabase.ts_Y3aZlu": [
+    {
+      "type": 0,
+      "value": "Export completed"
+    }
+  ],
+  "exportDatabase.ts_heAhPr": [
+    {
+      "type": 0,
+      "value": "Export failed"
+    }
+  ],
+  "exportDatabase.ts_vVq/iv": [
+    {
+      "type": 0,
+      "value": "Database exported successfully."
+    }
+  ],
   "setApplicationMenu.ts_OC234H": [
     {
       "type": 0,

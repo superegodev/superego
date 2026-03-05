@@ -20,7 +20,7 @@ export default function onReadyProd(): void {
   new WindowCloseIPCProxyServer().start();
   setApplicationMenu(intl, {
     onNewWindow: createWindow,
-    onExportDatabase: () => exportDatabase(backend),
+    onExportDatabase: () => exportDatabase(backend, intl),
   });
   createWindow();
 }
