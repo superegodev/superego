@@ -88,7 +88,11 @@ export default class DemoDataRepositories implements DataRepositories {
   }
 
   async export(path: string): Promise<void> {
-    const blob = new Blob([JSON.stringify(this.data)], {
+    // No-op in demo mode.
+    if (typeof document === "undefined") {
+      return;
+    }
+    const blob = new Blob([JSON.stringify(this.data, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(blob);

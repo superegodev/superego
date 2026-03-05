@@ -7,6 +7,12 @@ export default async function exportDatabase(backend: Backend): Promise<void> {
     filters: [{ name: "SQLite Database", extensions: ["db"] }],
   });
   if (filePath) {
-    await backend.database.export(filePath);
+    const result = await backend.database.export(filePath);
+    if (!result.success) {
+      dialog.showErrorBox(
+        "Export failed",
+        JSON.stringify(result.error, null, 2),
+      );
+    }
   }
 }
