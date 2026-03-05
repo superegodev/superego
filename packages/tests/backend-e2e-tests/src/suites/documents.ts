@@ -66,7 +66,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
 
       // Setup SUT
-      const { backend } = deps(mockConnector);
+      const { backend } = deps({ connector: mockConnector });
       const createCollectionResult = await backend.collections.create({
         settings: {
           name: "name",
@@ -1227,7 +1227,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
 
       // Setup SUT
-      const { backend } = deps(mockConnector);
+      const { backend } = deps({ connector: mockConnector });
       const createCollectionResult = await backend.collections.create({
         settings: {
           name: "name",
@@ -1913,7 +1913,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       };
 
       // Setup SUT
-      const { backend } = deps(mockConnector);
+      const { backend } = deps({ connector: mockConnector });
       const createCollectionResult = await backend.collections.create({
         settings: {
           name: "name",

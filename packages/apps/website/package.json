@@ -18,8 +18,8 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/starlight": "^0.37.6",
     "astro": "^5.18.0",
-    "starlight-theme-nova": "^0.11.5",
+    "starlight-theme-nova": "^0.11.6",
     "typescript": "^5.9.3",
-    "wrangler": "^4.68.1"
+    "wrangler": "^4.70.0"
   }
 }

@@ -1,12 +1,16 @@
 import {
   type Collection,
   type CollectionCategory,
+  type InferenceOptions,
+  type InferenceSettings,
   type ToolCall,
   ToolName,
   type ToolResult,
 } from "@superego/backend";
 import { DataType, formats } from "@superego/schema";
 import SchemaTypescriptSchema from "@superego/schema/SchemaTypescriptSchema";
+import { inferenceOptionsHas } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type CollectionsCreateMany from "../../usecases/collections/CreateMany.js";
@@ -96,23 +100,39 @@ export default class CollectionCreatorAssistant extends Assistant {
     ].join("\n");
   }
 
-  protected getTools(): InferenceService.Tool[] {
-    return [SuggestCollectionsDefinitions.get(), InspectFile.get()];
+  protected getTools(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): InferenceService.Tool[] {
+    return compact([
+      SuggestCollectionsDefinitions.get(),
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+        ? InspectFile.get(inferenceSettings, inferenceOptions)
+        : null,
+    ]);
   }
 
-  protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
+  protected async processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): Promise<ToolResult> {
     if (SuggestCollectionsDefinitions.is(toolCall)) {
       return SuggestCollectionsDefinitions.exec(
         toolCall,
         this.usecases.collectionsCreateMany,
         this.usecases.inferenceImplementTypescriptModule,
+        inferenceOptions,
       );
     }
-    if (InspectFile.is(toolCall)) {
+    if (
+      InspectFile.is(toolCall) &&
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+    ) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);

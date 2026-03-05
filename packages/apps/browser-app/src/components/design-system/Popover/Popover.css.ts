@@ -9,5 +9,24 @@ export const Popover = {
     borderWidth: vars.borders.width.thin,
     borderStyle: "solid",
     borderRadius: vars.borders.radius.md,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.shadow.default} r g b / 0.25)`,
+  }),
+
+  arrow: style({
+    display: "block",
+    fill: vars.colors.background.surface,
+    stroke: vars.colors.border.default,
+    strokeWidth: vars.borders.width.thin,
+    selectors: {
+      "[data-placement=bottom] &": {
+        transform: "rotate(180deg)",
+      },
+      "[data-placement=left] &": {
+        transform: "rotate(-90deg)",
+      },
+      "[data-placement=right] &": {
+        transform: "rotate(90deg)",
+      },
+    },
   }),
 };

@@ -1,5 +1,6 @@
 import {
   type Backend,
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -14,11 +15,15 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
+  Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 const MAX_ATTEMPTS = 5;
@@ -26,24 +31,39 @@ const MAX_ATTEMPTS = 5;
 export default class InferenceImplementTypescriptModule extends Usecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
-  async exec({
-    description,
-    rules,
-    additionalInstructions,
-    template,
-    libs,
-    startingPoint,
-    userRequest,
-  }: Parameters<
-    Backend["inference"]["implementTypescriptModule"]
-  >[0]): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
+  async exec(
+    {
+      description,
+      rules,
+      additionalInstructions,
+      template,
+      libs,
+      startingPoint,
+      userRequest,
+    }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
+    inferenceOptions: InferenceOptions<"completion">,
+  ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
     const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsIssues = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
+    }
+
     const inferenceService = this.inferenceServiceFactory.create(
       globalSettings.inference,
     );
 
     return this.attemptImplementation(
       inferenceService,
+      inferenceOptions,
       description,
       rules,
       additionalInstructions,
@@ -57,6 +77,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
 
   private async attemptImplementation(
     inferenceService: InferenceService,
+    inferenceOptions: InferenceOptions<"completion">,
     description: string,
     rules: string | null,
     additionalInstructions: string | null,
@@ -92,6 +113,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         previousAttemptResponse ?? null,
       ].filter((message) => message !== null),
       [WriteTypescriptModuleTool.get()],
+      inferenceOptions,
     );
 
     if (
@@ -104,6 +126,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       return shouldReattempt
         ? this.attemptImplementation(
             inferenceService,
+            inferenceOptions,
             description,
             rules,
             additionalInstructions,
@@ -135,6 +158,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
         : shouldReattempt
           ? this.attemptImplementation(
               inferenceService,
+              inferenceOptions,
               description,
               rules,
               additionalInstructions,
@@ -145,6 +169,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
               attemptNumber + 1,
               message,
               {
+                id: Id.generate.message(),
                 role: MessageRole.Tool,
                 toolResults: [
                   {
@@ -292,29 +317,31 @@ const WriteTypescriptModuleTool = {
 
 /** Slims down libs to avoid a huge and largely useless context. */
 function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
-  return [
+  return compact([
     ...libs.filter(
-      // Remove full definitions of well-known libraries.
       (lib) =>
         !(
           lib.path.startsWith("/node_modules/react") ||
           lib.path.startsWith("/node_modules/echarts")
         ),
     ),
-    // Add shim definitions for well-known libraries.
-    {
-      path: "/node_modules/react/index.d.ts",
-      source: [
-        "// Full type definitions omitted. Use standard APIs",
-        'declare module "react";',
-      ].join("\n"),
-    },
-    {
-      path: "/node_modules/echarts/index.d.ts",
-      source: [
-        "// Full type definitions omitted. Use standard APIs",
-        'declare module "echarts";',
-      ].join("\n"),
-    },
-  ];
+    libs.some((lib) => lib.path.startsWith("/node_modules/react"))
+      ? {
+          path: "/node_modules/react/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "react";',
+          ].join("\n"),
+        }
+      : null,
+    libs.some((lib) => lib.path.startsWith("/node_modules/echarts"))
+      ? {
+          path: "/node_modules/echarts/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "echarts";',
+          ].join("\n"),
+        }
+      : null,
+  ]);
 }

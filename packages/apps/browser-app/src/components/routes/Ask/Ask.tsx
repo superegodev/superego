@@ -1,4 +1,8 @@
-import { AssistantName, type Message } from "@superego/backend";
+import {
+  AssistantName,
+  type InferenceOptions,
+  type Message,
+} from "@superego/backend";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -16,10 +20,14 @@ export default function Ask() {
   const { navigateTo } = useNavigationState();
 
   const { result, mutate, isPending } = useStartConversation();
-  const onSend = async (userMessageContent: Message.User["content"]) => {
+  const onSend = async (
+    userMessageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => {
     const { success, data } = await mutate(
       AssistantName.Factotum,
       userMessageContent,
+      inferenceOptions,
     );
     if (success) {
       navigateTo({ name: RouteName.Conversation, conversationId: data.id });

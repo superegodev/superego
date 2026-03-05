@@ -1,5 +1,5 @@
 import { ListBox, ListBoxItem } from "react-aria-components";
-import { PiCheck } from "react-icons/pi";
+import { PiCheckBold } from "react-icons/pi";
 import Popover from "../Popover/Popover.js";
 import * as cs from "./forms.css.js";
 import type SelectOption from "./SelectOption.js";
@@ -30,7 +30,7 @@ export default function SelectOptions({ options }: Props) {
                     </div>
                   </>
                 ) : null}
-                {isSelected ? <PiCheck /> : null}
+                {isSelected ? <PiCheckBold /> : null}
               </>
             )}
           </ListBoxItem>

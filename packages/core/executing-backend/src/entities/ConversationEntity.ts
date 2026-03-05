@@ -10,19 +10,25 @@ type ConversationEntity = {
   assistant: AssistantName;
   title: string | null;
   contextFingerprint: string;
-  // TODO: add model that was used, in case we want to ensure that a
-  // conversation is only done with one model.
   messages: Message[];
   status: ConversationStatus;
+  processingStartedAt: Date | null;
   error: { name: string; details: any } | null;
   createdAt: Date;
 } & (
   | {
-      status: ConversationStatus.Idle | ConversationStatus.Processing;
+      status: ConversationStatus.Idle;
+      processingStartedAt: null;
+      error: null;
+    }
+  | {
+      status: ConversationStatus.Processing;
+      processingStartedAt: Date;
       error: null;
     }
   | {
       status: ConversationStatus.Error;
+      processingStartedAt: null;
       error: { name: string; details: any };
     }
 );

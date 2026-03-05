@@ -1,7 +1,8 @@
 import { BackgroundJobName, BackgroundJobStatus } from "@superego/backend";
-import type { Milliseconds } from "@superego/global-types";
 import { extractErrorDetails } from "@superego/shared-utils";
+import type Config from "./Config.js";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
+import type LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import type Connector from "./requirements/Connector.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
@@ -18,7 +19,8 @@ export default class BackgroundJobExecutor {
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private connectors: Connector[],
-    private stuckJobTimeout: Milliseconds = 30 * 1000,
+    private liveConversationStore: LiveConversationStore,
+    private config: Config,
   ) {}
 
   async executeNext(): Promise<void> {
@@ -40,6 +42,8 @@ export default class BackgroundJobExecutor {
           this.typescriptCompiler,
           this.inferenceServiceFactory,
           this.connectors,
+          this.liveConversationStore,
+          this.config,
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();
@@ -94,7 +98,7 @@ export default class BackgroundJobExecutor {
         if (processingBackgroundJob) {
           if (
             Date.now() - processingBackgroundJob.startedProcessingAt.getTime() <
-            this.stuckJobTimeout
+            this.config.backgroundJobProcessingStuckTimeout
           ) {
             return { action: "commit", returnValue: null };
           }

@@ -7,6 +7,7 @@ import {
 import type { IntlShape } from "react-intl";
 
 const DISPLAY_NAME_LENGTH = 16;
+const PROCESSING_TIMEOUT = 5 * 60 * 1_000;
 
 export default {
   getDisplayTitle(
@@ -176,5 +177,15 @@ export default {
     toolCall: ToolCall,
   ): toolCall is ToolCall.GetCollectionTypescriptSchema {
     return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
+  },
+
+  isStuckProcessing(conversation: Conversation): boolean {
+    if (conversation.processingStartedAt) {
+      return (
+        Date.now() - conversation.processingStartedAt.getTime() >=
+        PROCESSING_TIMEOUT
+      );
+    }
+    return false;
   },
 };

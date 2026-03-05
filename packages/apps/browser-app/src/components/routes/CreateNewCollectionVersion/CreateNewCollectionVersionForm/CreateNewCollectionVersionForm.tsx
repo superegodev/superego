@@ -12,12 +12,12 @@ import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js"
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
-import useExitWarning from "../../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
+import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects.js";
 import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
@@ -184,17 +184,9 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   const connectorName = collection.remote?.connector.name;
   const connector = connectors.find(({ name }) => name === connectorName);
 
-  useExitWarning(
-    formState.isDirty
-      ? intl.formatMessage({
-          defaultMessage:
-            "You have unsaved changes. Are you sure you want to leave?",
-        })
-      : null,
-  );
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
       <FullPageTabs
         tabs={[
           {

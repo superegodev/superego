@@ -7,6 +7,8 @@ import {
   type ConversationNotFound,
   ConversationStatus,
   type FilesNotFound,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   type MessageContentPart,
   MessageRole,
@@ -15,8 +17,10 @@ import {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
+  Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
@@ -36,13 +40,29 @@ export default class AssistantsContinueConversation extends Usecase<
   async exec(
     id: ConversationId,
     userMessageContent: NonEmptyArray<MessageContentPart.Text>,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
     | ConversationNotFound
     | CannotContinueConversation
     | FilesNotFound
+    | InferenceOptionsNotValid
     | UnexpectedError
   > {
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsIssues = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
+    }
+
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulResult(
@@ -91,6 +111,7 @@ export default class AssistantsContinueConversation extends Usecase<
     const { protoFilesWithIds, convertedMessageContent } =
       MessageContentFileUtils.extractAndConvertProtoFiles(userMessageContent);
     const userMessage: Message.User = {
+      id: Id.generate.message(),
       role: MessageRole.User,
       content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,
@@ -99,6 +120,7 @@ export default class AssistantsContinueConversation extends Usecase<
       ...conversation,
       messages: [...conversation.messages, userMessage],
       status: ConversationStatus.Processing,
+      processingStartedAt: now,
     };
     const conversationReference: FileEntity.ConversationReference = {
       conversationId: conversation.id,
@@ -121,7 +143,7 @@ export default class AssistantsContinueConversation extends Usecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id },
+      input: { id, inferenceOptions },
     });
 
     return makeSuccessfulResult(

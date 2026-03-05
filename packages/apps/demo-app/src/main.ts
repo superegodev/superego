@@ -1,6 +1,11 @@
 /// <reference types="vite/client" />
 import "urlpattern-polyfill";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  ReasoningEffort,
+  Theme,
+} from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
 import {
   GoogleCalendar,
@@ -13,8 +18,9 @@ import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
+import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QueryClient } from "@tanstack/react-query";
+import loadDemoData from "./demoData/loadDemoData.js";
 
 const isProduction = import.meta.env["VITE_DEPLOY_ENVIRONMENT"];
 const redirectUri = isProduction
@@ -28,53 +34,62 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
     appearance: { theme: Theme.Auto },
     inference: isProduction
       ? {
-          chatCompletions: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
+          providers: [
+            {
+              name: "superego",
+              baseUrl: `${window.location.origin}/api/v1/responses`,
               apiKey: null,
+              driver: InferenceProviderDriver.OpenResponses,
+              models: [
+                {
+                  id: "openai/gpt-oss-120b",
+                  name: "GPT OSS 120B",
+                  capabilities: {
+                    audioUnderstanding: false,
+                    imageUnderstanding: false,
+                    pdfUnderstanding: false,
+                  },
+                },
+                {
+                  id: "google/gemini-2.5-flash-lite",
+                  name: "Gemini 2.5 Flash Lite",
+                  capabilities: {
+                    audioUnderstanding: true,
+                    imageUnderstanding: true,
+                    pdfUnderstanding: true,
+                  },
+                },
+              ],
             },
-            model: "openai/gpt-oss-120b",
-          },
-          transcriptions: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/audio/transcriptions`,
-              apiKey: null,
+          ],
+          defaultInferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "openai/gpt-oss-120b",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
             },
-            model: "whisper-large-v3-turbo",
-          },
-          speech: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/audio/speech`,
-              apiKey: null,
+            transcription: {
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "google/gemini-2.5-flash-lite",
+              },
             },
-            model: "gpt-4o-mini-tts",
-            voice: "nova",
-          },
-          fileInspection: {
-            provider: {
-              baseUrl: `${window.location.origin}/api/openai/v1/chat/completions`,
-              apiKey: null,
+            fileInspection: {
+              providerModelRef: {
+                providerName: "superego",
+                modelId: "google/gemini-2.5-flash-lite",
+              },
             },
-            model: "google/gemini-2.0-flash-001",
           },
         }
       : {
-          chatCompletions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          transcriptions: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-          },
-          speech: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
-            voice: null,
-          },
-          fileInspection: {
-            provider: { baseUrl: null, apiKey: null },
-            model: null,
+          providers: [],
+          defaultInferenceOptions: {
+            completion: null,
+            transcription: null,
+            fileInspection: null,
           },
         },
     assistants: {
@@ -90,8 +105,10 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
   new FakeJavascriptSandbox(),
-  new MonacoTypescriptCompiler(async () => await import("monaco-editor")),
-  new OpenAICompatInferenceServiceFactory(),
+  new MonacoTypescriptCompiler(
+    async () => (await import("@superego/browser-app/monaco")).default,
+  ),
+  new MultiDriverInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, sessionStorage),
     new GoogleContacts(redirectUri, sessionStorage),
@@ -126,12 +143,11 @@ if (window.location.href.startsWith(redirectUri)) {
     window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
   }
 } else {
-  renderBrowserApp(backend, queryClient, async (onProgress) => {
-    const { default: loadDemoData } = await import(
-      "./demoData/loadDemoData.js"
-    );
-    await loadDemoData(backend, onProgress);
-  });
+  const collectionsResult = await backend.collections.list();
+  if (collectionsResult.success && collectionsResult.data.length === 0) {
+    await loadDemoData(backend);
+  }
+  renderBrowserApp(backend, queryClient);
 }
 
 window.addEventListener("message", (evt) => {

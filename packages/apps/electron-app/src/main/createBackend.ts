@@ -12,7 +12,7 @@ import {
   type DataRepositoriesManager,
   ExecutingBackend,
 } from "@superego/executing-backend";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
+import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
@@ -22,22 +22,11 @@ export default function createBackend(port: number, isDevenv: boolean) {
   const defaultGlobalSettings = {
     appearance: { theme: Theme.Auto },
     inference: {
-      chatCompletions: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
-      transcriptions: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
-      speech: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-        voice: null,
-      },
-      fileInspection: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
+      providers: [],
+      defaultInferenceOptions: {
+        completion: null,
+        transcription: null,
+        fileInspection: null,
       },
     },
     assistants: {
@@ -82,7 +71,7 @@ export default function createBackend(port: number, isDevenv: boolean) {
     dataRepositoriesManager,
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
-    new OpenAICompatInferenceServiceFactory(),
+    new MultiDriverInferenceServiceFactory(),
     connectors,
   );
 }
