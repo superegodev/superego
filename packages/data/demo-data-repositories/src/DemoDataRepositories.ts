@@ -88,13 +88,13 @@ export default class DemoDataRepositories implements DataRepositories {
   }
 
   async export(path: string): Promise<void> {
-    const json = JSON.stringify(this.data, null, 2);
-    const fileName = path.split("/").pop() || path.split("\\").pop() || path;
-    const blob = new Blob([json], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(this.data)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = fileName;
+    a.download = path;
     a.click();
     URL.revokeObjectURL(url);
   }

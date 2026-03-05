@@ -1,4 +1,4 @@
-import { backup, DatabaseSync } from "node:sqlite";
+import { backup, type DatabaseSync } from "node:sqlite";
 import type { GlobalSettings } from "@superego/backend";
 import type {
   BackgroundJobRepository,
