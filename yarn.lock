@@ -8248,6 +8248,7 @@ __metadata:
     babel-plugin-formatjs: "npm:^11.2.4"
     electron: "npm:40.7.0"
     electron-vite: "npm:^5.0.0"
+    es-toolkit: "npm:^1.45.1"
     filenamify: "npm:^7.0.1"
     typescript: "npm:^5.9.3"
     vite: "npm:^7.3.1"

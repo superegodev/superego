@@ -49,6 +49,7 @@ import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
 import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
+import DatabaseExport from "./usecases/database/Export.js";
 import DocumentsCreate from "./usecases/documents/Create.js";
 import DocumentsCreateMany from "./usecases/documents/CreateMany.js";
 import DocumentsCreateNewVersion from "./usecases/documents/CreateNewVersion.js";
@@ -77,6 +78,7 @@ export default class ExecutingBackend implements Backend {
   bazaar: Backend["bazaar"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+  database: Backend["database"];
 
   private liveConversationStore: LiveConversationStore;
   private backgroundJobExecutor: BackgroundJobExecutor;
@@ -205,6 +207,10 @@ export default class ExecutingBackend implements Backend {
     this.globalSettings = {
       get: this.makeUsecase(GlobalSettingsGet, false),
       update: this.makeUsecase(GlobalSettingsUpdate, true),
+    };
+
+    this.database = {
+      export: this.makeUsecase(DatabaseExport, false),
     };
 
     this.liveConversationStore = new LiveConversationStore();

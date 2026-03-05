@@ -60,6 +60,7 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
+    "es-toolkit": "^1.45.1",
     "filenamify": "^7.0.1"
   }
 }

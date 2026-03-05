@@ -5,6 +5,7 @@ import WindowCloseIPCProxyServer from "../ipc-proxies/WindowCloseIPCProxyServer.
 import { OAUTH2_PKCE_CALLBACK_SERVER_PORT } from "./config.js";
 import createBackend from "./createBackend.js";
 import createWindow from "./createWindow.js";
+import exportDatabase from "./exportDatabase.js";
 import setApplicationMenu from "./setApplicationMenu.js";
 import startOAuth2PKCECallbackServer from "./startOAuth2PKCECallbackServer.js";
 import getIntl from "./translations/getIntl.js";
@@ -17,6 +18,9 @@ export default function onReadyProd(): void {
   new OpenFileWithNativeAppIPCProxyServer(backend).start();
   new OpenInNativeBrowserIPCProxyServer().start();
   new WindowCloseIPCProxyServer().start();
-  setApplicationMenu(intl, { onNewWindow: createWindow });
+  setApplicationMenu(intl, {
+    onNewWindow: createWindow,
+    onExportDatabase: () => exportDatabase(backend, intl),
+  });
   createWindow();
 }
