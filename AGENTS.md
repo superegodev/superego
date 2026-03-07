@@ -8,6 +8,7 @@
 - **Package manager:** Yarn (Berry) via Corepack. PnP is **not** used.
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
+- **Never** use abbreviations for variable names.
 - **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
   bodies.
 
