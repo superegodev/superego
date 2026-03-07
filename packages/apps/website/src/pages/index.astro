@@ -16,8 +16,134 @@ const formattedStars =
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Superego</title>
+    <meta
+      name="description"
+      content="An open-source, local-first personal data store and app platform. Collect all your data, build your own apps, own everything."
+    />
   </head>
   <body>
+    <div class="bg-icons" aria-hidden="true">
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -45px);left:calc(50vw + -399px);transform:rotate(-12deg)"
+      >
+        🏃
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 84px);left:calc(50vw + -536px);transform:rotate(-14deg)"
+      >
+        🩺
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 56px);left:calc(50vw + -843px);transform:rotate(-13deg)"
+      >
+        🌱
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 258px);left:calc(50vw + 776px);transform:rotate(1deg)"
+      >
+        😊
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -190px);left:calc(50vw + 535px);transform:rotate(6deg)"
+      >
+        ✅
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -129px);left:calc(50vw + 809px);transform:rotate(5deg)"
+      >
+        📝
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 243px);left:calc(50vw + -607px);transform:rotate(9deg)"
+      >
+        👤
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 189px);left:calc(50vw + 481px);transform:rotate(11deg)"
+      >
+        📅
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -347px);left:calc(50vw + -563px);transform:rotate(13deg)"
+      >
+        📚
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 414px);left:calc(50vw + 680px);transform:rotate(-10deg)"
+      >
+        🍳
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -376px);left:calc(50vw + 600px);transform:rotate(-5deg)"
+      >
+        💰
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 308px);left:calc(50vw + -865px);transform:rotate(9deg)"
+      >
+        💊
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 391px);left:calc(50vw + -720px);transform:rotate(-14deg)"
+      >
+        🎯
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -140px);left:calc(50vw + -642px);transform:rotate(-3deg)"
+      >
+        💡
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -434px);left:calc(50vw + -766px);transform:rotate(13deg)"
+      >
+        ✈️
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 59px);left:calc(50vw + 678px);transform:rotate(5deg)"
+      >
+        🍗
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -421px);left:calc(50vw + 831px);transform:rotate(-10deg)"
+      >
+        💤
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + 159px);left:calc(50vw + 814px);transform:rotate(10deg)"
+      >
+        📊
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -15px);left:calc(50vw + 362px);transform:rotate(5deg)"
+      >
+        🐾
+      </span>
+      <span
+        class="bg-icon"
+        style="top:calc(50vh + -238px);left:calc(50vw + -874px);transform:rotate(1deg)"
+      >
+        🔗
+      </span>
+    </div>
     <header class="sticky-header">
       <div class="sticky-inner">
         <div class="sticky-brand">
@@ -44,8 +170,8 @@ const formattedStars =
           >
             <Icon name="github" class="icon" />
           </a>
-          <a href="https://demo.superego.dev" class="button button-pill">
-            Try the demo
+          <a href="https://demo.superego.dev" class="button button-header">
+            Try demo
           </a>
         </div>
       </div>
@@ -53,37 +179,38 @@ const formattedStars =
     <main>
       <section class="fold">
         <section class="tagline">
-          <p><u>Own</u> your data</p>
-          <p><u>Build</u> your own apps</p>
-          <p><u>Shape</u> your AI</p>
+          <p><u>ditch</u> your apps</p>
+          <p><u>build</u> your own</p>
+          <p><u>own</u> your data</p>
         </section>
 
         <section class="hero">
           <div class="logo-container">
-            <Image src={logo} alt="Superego logo" class="logo" height={180} />
+            <Image src={logo} alt="Superego logo" class="logo" height={140} />
             <Image
               src={logo}
               alt=""
               class="logo-glitch"
               aria-hidden="true"
-              height={180}
+              height={140}
             />
           </div>
           <h1 class="title">Superego</h1>
-          <p class="subtitle">Your Digital Freedom</p>
+          <p class="subtitle">A personal data store and app platform</p>
           <div class="actions">
-            <a href="https://demo.superego.dev" class="button">Try the demo</a>
+            <a href="https://demo.superego.dev" class="button">
+              Try demo
+              <div class="additional-info">(no login)</div>
+            </a>
             <a
               href="https://github.com/superegodev/superego/releases/latest"
               class="button button-secondary"
             >
-              Get the alpha
+              Download
+              <div class="additional-info">(alpha)</div>
             </a>
           </div>
-          <div
-            class="highlights"
-            aria-label="Superego highlights and positioning"
-          >
+          <div class="highlights">
             <span class="highlight-item">
               <Icon name="github" class="icon highlight-icon" />
               {formattedStars} stars
@@ -98,114 +225,168 @@ const formattedStars =
       </section>
 
       <section class="explainer">
-        <h2 class="explainer-title">## What</h2>
+        <h2>You Deserve Better Software</h2>
         <p>
-          Superego is an <b>open-source <i>personal</i> database</b> where you can
-          store <i>anything</i> you want about your life.
+          <b>You don't have control of your data.</b> It's scattered, trapped inside
+          apps that hold it hostage.
         </p>
         <p>
-          Your data is stored <b>locally</b>, in files you can back up and sync
-          with Dropbox, Google Drive, or any service you already use.
-          <b>No accounts, no middlemen.</b>
+          <b>Apps are not serving you.</b> They serve growth targets, while you get
+          bloat, banners, enshittification.
         </p>
-        <p>Superego is also:</p>
-        <ol>
+        <h2>So We Built Superego</h2>
+        <p>
+          A private place to <b>collect your data</b> and a platform to
+          <b>build (or vibe) your <i>home-cooked</i> apps</b> around it.
+        </p>
+        <p>
+          Your portfolio tracker? Don't settle for generic. Make it just like
+          <b>you</b> want it.
+        </p>
+        <p>
+          A chore scoreboard for your family? Too niche for the app stores, but
+          you can <b>build it yourself</b>.
+        </p>
+        <h2>With an AI That Actually Knows You</h2>
+        <p>
+          Bring your own LLM. Direct access to your data gives it a precise
+          understanding of your world, so it can answer questions like:
+        </p>
+        <blockquote>
+          I need 30k for a car. What stocks should I sell?
+        </blockquote>
+        <h2>See It in Action</h2>
+        <div>
+          <iframe
+            src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
+            title="Superego Demo Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <h2>Feature Highlights</h2>
+        <ul>
+          <li>Open-source, local-first, no-login.</li>
+          <li>Everything in <b>one single SQLite file</b>.</li>
+          <li>Built-in version control for your documents.</li>
           <li>
-            An <b>app platform</b> for building (or vibe-coding) your own personal
-            apps.
+            A CLI to integrate with your personal <a
+              href="https://simonwillison.net/2026/Feb/21/claws/"><i>Claw</i></a
+            > (for managing data) or coding agent (for writing apps).
           </li>
-          <li>
-            An <b>AI assistant</b> with a precise and detailed understanding of your
-            data that can extract meaningful answers from it.
-          </li>
-        </ol>
-        <h2 class="explainer-title">## Why</h2>
-        <p>
-          <b>I'm tired</b> of apps that hold my data hostage and make me jump through
-          hoops to get it. Apps that drop features, enshittify, and go on incredible
-          journeys.
-        </p>
-        <p>
-          I want <b>access to my data</b> and
-          <b>apps that serve <i>me</i></b>.
-        </p>
-        <p>
-          I also want <b>an AI assistant that actually knows me</b>, not one
-          that slops out bland, canned responses.
-        </p>
-        <h2 class="explainer-title">## See It in Action</h2>
-        <iframe
-          src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
-          title="Superego Demo Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen></iframe>
-        <h2 class="explainer-title">## Core Philosophy</h2>
-        <p>
-          Ownership requires awareness. To truly own your data you first need to
-          know what it is.
-        </p>
-        <p>
-          <b>Superego puts your data right in front of you.</b> You can view it all
-          and you have unrestricted access to it.
-        </p>
-        <p>
-          You can have nicer interfaces to manage it – that's what <i>apps</i> are
-          for – but the database foundation is always visible. You own it.
-        </p>
-        <h2 class="explainer-title">## Roadmap</h2>
+        </ul>
+        <h2>Roadmap</h2>
         <ul class="roadmap">
           <li class="done">Document versioning.</li>
-          <li class="done">Search.</li>
-          <li class="done">Collection view apps.</li>
           <li class="done">Data-aware AI assistant.</li>
-          <li class="done">Write apps with your coding agent.</li>
-          <li class="todo">CLI.</li>
-          <li class="todo">AI-powered data import.</li>
+          <li class="done">User-defined apps.</li>
+          <li class="done">Full-text search.</li>
+          <li class="in-progress">CLI.</li>
+          <li class="todo">AI-assisted data import.</li>
           <li class="todo">Mobile app.</li>
-          <li class="todo">Sync between devices.</li>
+          <li class="todo">Sync via file-syncing service.</li>
           <li class="todo">Database encryption.</li>
           <li class="todo">Database hooks.</li>
         </ul>
       </section>
+      <div class="actions">
+        <a href="https://demo.superego.dev" class="button">
+          Try demo
+          <div class="additional-info">(no login)</div>
+        </a>
+        <a
+          href="https://github.com/superegodev/superego/releases/latest"
+          class="button button-secondary"
+        >
+          Download
+          <div class="additional-info">(alpha)</div>
+        </a>
+      </div>
     </main>
-    <script>
-      const header = document.querySelector(".sticky-header");
-      const scrollHint = document.querySelector(".scroll-hint");
-      const toggleHeader = () => {
-        header?.classList.toggle("is-visible", window.scrollY > 24);
-        scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
-      };
-      toggleHeader();
-      window.addEventListener("scroll", toggleHeader, { passive: true });
-    </script>
   </body>
+  <script>
+    const header = document.querySelector(".sticky-header");
+    const scrollHint = document.querySelector(".scroll-hint");
+    const toggleHeader = () => {
+      header?.classList.toggle("is-visible", window.scrollY > 24);
+      scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
+    };
+    toggleHeader();
+    window.addEventListener("scroll", toggleHeader, { passive: true });
+  </script>
 </html>
 
 <style>
   :root {
     --bg: #fff;
-    --fg: #111;
-    --tagline: #111;
-    --subtitle: #666;
-    --btn-primary-bg: #111;
+    --fg: #000;
+    --tagline: #000;
+    --subtitle: #555;
+    --btn-primary-bg: #000;
     --btn-primary-fg: #fff;
+    --btn-primary-inner-border: #fff;
     --btn-secondary-bg: #fff;
-    --btn-secondary-fg: #111;
-    --btn-secondary-border: #111;
+    --btn-secondary-fg: #000;
+    --btn-secondary-border: #000;
+    --accent: #e63946;
+    --border: 3px solid #000;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #111;
+      --bg: #0a0a0a;
       --fg: #fff;
       --tagline: #fff;
-      --subtitle: #888;
+      --subtitle: #999;
       --btn-primary-bg: #fff;
-      --btn-primary-fg: #111;
-      --btn-secondary-bg: #111;
+      --btn-primary-fg: #000;
+      --btn-primary-inner-border: #000;
+      --btn-secondary-bg: #0a0a0a;
       --btn-secondary-fg: #fff;
       --btn-secondary-border: #fff;
+      --border: 3px solid #fff;
+    }
+  }
+
+  .bg-icons {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: radial-gradient(
+      circle at center,
+      black 0%,
+      black 70%,
+      transparent 95%
+    );
+  }
+
+  .bg-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.8rem;
+    background: var(--bg);
+    border: var(--border);
+    box-shadow: 3px 3px 0 var(--fg);
+    opacity: 0.7;
+  }
+
+  @media (max-width: 900px) {
+    .bg-icon {
+      width: 2.8rem;
+      height: 2.8rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bg-icons {
+      display: none;
     }
   }
 
@@ -220,6 +401,8 @@ const formattedStars =
   }
 
   main {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,15 +416,14 @@ const formattedStars =
     inset-block-start: 0;
     inset-inline: 0;
     z-index: 20;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 3px 16px rgb(0 0 0 / 0.08);
+    background: var(--bg);
+    border-block-end: var(--border);
     transform: translateY(-120%);
     opacity: 0;
     pointer-events: none;
     transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
+      transform 0.1s linear,
+      opacity 0.1s linear;
   }
 
   .sticky-header.is-visible {
@@ -264,7 +446,7 @@ const formattedStars =
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    font-weight: 700;
+    font-weight: 900;
     font-size: 2rem;
   }
 
@@ -293,6 +475,11 @@ const formattedStars =
     justify-content: center;
   }
 
+  .icon-link:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
   .icon {
     width: 2.2rem;
     height: 2.2rem;
@@ -312,18 +499,36 @@ const formattedStars =
     justify-content: center;
     align-items: center;
     font-size: clamp(2rem, 1rem + 4.1vw, 4rem);
-    font-style: italic;
+    font-style: normal;
     text-align: center;
     color: var(--tagline);
   }
 
   .tagline p {
-    margin-block: 1rem;
+    margin-block: 0.5rem;
+    line-height: 1.1;
   }
 
   .tagline u {
-    font-weight: 700;
-    font-size: 1.1em;
+    font-weight: 900;
+    font-size: 1.2em;
+    text-decoration: none;
+    background: var(--fg);
+    color: var(--bg);
+    padding-inline: 0.15em;
+    margin-inline-end: -0.15rem;
+    display: inline-block;
+    transform: rotate(2deg);
+  }
+
+  .tagline p:first-child u {
+    transform: rotate(-2deg);
+  }
+
+  .tagline p:last-child u {
+    transform: rotate(-2deg);
+    background: var(--accent);
+    color: #fff;
   }
 
   .hero {
@@ -334,7 +539,7 @@ const formattedStars =
 
   .logo-container {
     position: relative;
-    height: clamp(80px, 120px + 5vw, 180px);
+    height: clamp(80px, 120px + 5vw, 140px);
     aspect-ratio: 1 / 1;
     margin-block-end: 1.5rem;
   }
@@ -401,16 +606,16 @@ const formattedStars =
 
   .title {
     font-size: 3rem;
-    font-weight: 700;
-    margin-block-start: 1rem;
-    margin-block-end: 0;
+    font-weight: 900;
+    margin-block-start: 2rem;
+    margin-block-end: 0rem;
     text-align: center;
   }
 
   .subtitle {
     font-size: 1.75rem;
-    margin-block-start: 1.5rem;
-    margin-block-end: 3.5rem;
+    margin-block-start: 1rem;
+    margin-block-end: 4.5rem;
     text-align: center;
     color: var(--subtitle);
   }
@@ -424,7 +629,7 @@ const formattedStars =
   }
 
   .actions .button {
-    width: 220px;
+    width: 240px;
     text-align: center;
     box-sizing: border-box;
   }
@@ -446,7 +651,7 @@ const formattedStars =
     }
 
     .actions .button {
-      width: 160px;
+      width: 140px;
       padding: 1rem 1.25rem;
       font-size: 1.2rem;
     }
@@ -455,28 +660,50 @@ const formattedStars =
   .button {
     display: inline-block;
     padding: 1rem 1.75rem;
-    border-radius: 999px;
     text-decoration: none;
     background: var(--btn-primary-bg);
     color: var(--btn-primary-fg);
-    font-weight: 600;
+    font-weight: 800;
     font-size: 1.5rem;
-    transition: opacity 0.2s;
+    text-transform: uppercase;
+    border: var(--border);
+    outline: 2px solid var(--btn-primary-inner-border);
+    outline-offset: -5px;
+    box-shadow: 4px 4px 0 var(--fg);
+    transform: translate(-2px, -2px);
+    transition:
+      transform 0.1s linear,
+      box-shadow 0.1s linear;
   }
 
   .button:hover {
-    opacity: 0.9;
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 var(--fg);
   }
 
   .button-secondary {
     background: var(--btn-secondary-bg);
     color: var(--btn-secondary-fg);
-    border: 1px solid var(--btn-secondary-border);
+    border: var(--border);
   }
 
-  .button-pill {
+  .button-header {
     font-size: 1rem;
     padding: 0.8rem 1.4rem;
+    box-shadow: 2px 2px 0 var(--fg);
+    transform: translate(-1px, -1px);
+  }
+
+  .button-header:hover {
+    box-shadow: 1px 1px 0 var(--fg);
+    transform: translate(0, 0);
+  }
+
+  .additional-info {
+    font-size: 0.7em;
+    font-weight: 400;
+    text-transform: none;
+    margin-block-start: 0.25rem;
   }
 
   .highlights {
@@ -509,9 +736,9 @@ const formattedStars =
   }
 
   .highlights div[role="separator"] {
-    width: 1px;
-    height: 1em;
-    background-color: var(--subtitle);
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--fg);
   }
 
   .highlight-icon {
@@ -524,7 +751,7 @@ const formattedStars =
     font-size: 2rem;
     color: var(--subtitle);
     transform: rotate(90deg);
-    transition: opacity 0.2s ease;
+    transition: opacity 0.1s linear;
   }
 
   .scroll-hint.is-hidden {
@@ -533,31 +760,53 @@ const formattedStars =
   }
 
   .explainer {
-    margin-block: 10rem;
-    font-size: 2rem;
+    margin-block-start: 10rem;
+    margin-block-end: 2rem;
+    font-size: 1.8rem;
     line-height: 2.5;
   }
 
-  .explainer-title {
-    margin-block-start: 0rem;
-    margin-block-end: 1rem;
-    font-size: 2rem;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.25rem;
+  .explainer h2::before {
+    content: "## ";
   }
 
-  .explainer p,
-  .explainer ol {
+  .explainer h2 {
+    margin-block-start: 6rem;
+    margin-block-end: 3.5rem;
+    font-size: 2rem;
+    line-height: 2;
+    border-block-end: var(--border);
+  }
+  .explainer h2:first-child {
+    margin-block-start: 0;
+  }
+
+  .explainer > * {
     margin-block-end: 4rem;
   }
 
-  .explainer p:has(+ ol) {
+  .explainer p:has(+ ol),
+  .explainer p:has(+ ul) {
     margin-block-end: 2rem;
   }
 
   .explainer li:not(.roadmap li) {
-    margin-inline-start: 1.8rem;
+    margin-inline-start: 0rem;
+    padding-inline-start: 1.5rem;
+  }
+
+  .explainer a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.2em;
+  }
+
+  .explainer blockquote {
+    margin-inline-start: 1rem;
+    padding-inline-start: 2rem;
+    border-inline-start: var(--border);
+    font-style: italic;
   }
 
   .roadmap {
@@ -569,9 +818,17 @@ const formattedStars =
     content: "[ ] ";
   }
 
+  .roadmap .in-progress::before {
+    content: "[⋯] ";
+  }
+  .roadmap .in-progress::after {
+    content: " 🚧";
+  }
+
   .roadmap .done {
     text-decoration: line-through;
-    text-decoration-color: color-mix(in srgb, var(--fg) 25%, transparent);
+    text-decoration-thickness: 3px;
+    text-decoration-color: color-mix(in srgb, var(--fg) 40%, transparent);
   }
 
   .roadmap .done::before {
@@ -581,10 +838,7 @@ const formattedStars =
   iframe {
     width: 100%;
     aspect-ratio: 720 / 405;
-    border: 0;
-    border-radius: 0.5rem;
-    margin-block-start: 2.6rem;
-    margin-block-end: 4rem;
+    border: var(--border);
   }
 
   @media (max-width: 640px) {
@@ -594,16 +848,16 @@ const formattedStars =
       margin-block: 4rem;
     }
 
-    .explainer-title {
+    .explainer h2 {
       font-size: 1.4rem;
     }
 
-    .explainer p,
-    .explainer ol {
+    .explainer * {
       margin-block-end: 2rem;
     }
 
-    .explainer p:has(+ ol) {
+    .explainer p:has(+ ol),
+    .explainer p:has(+ ul) {
       margin-block-end: 1rem;
     }
 
@@ -613,7 +867,8 @@ const formattedStars =
     }
 
     .explainer li:not(.roadmap li) {
-      margin-inline-start: 1rem;
+      margin-inline-start: -1.5rem;
+      padding-inline-start: 0.5rem;
     }
   }
 </style>

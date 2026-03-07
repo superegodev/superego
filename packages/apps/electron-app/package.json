@@ -1,7 +1,7 @@
 {
   "name": "@superego/electron-app",
   "productName": "superego",
-  "description": "Your Digital Freedom",
+  "description": "A personal data store and app platform",
   "version": "2026.2.2",
   "type": "module",
   "private": true,
