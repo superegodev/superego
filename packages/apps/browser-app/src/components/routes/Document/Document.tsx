@@ -8,7 +8,6 @@ import {
   PiArrowSquareOut,
   PiClockCountdown,
   PiClockCountdownFill,
-  PiCloudCheck,
   PiFloppyDisk,
   PiInfo,
   PiTrash,
@@ -136,12 +135,10 @@ export default function Document({
                     }),
                 },
                 {
-                  label: isRemote
-                    ? intl.formatMessage({
-                        defaultMessage: "Remote document info",
-                      })
-                    : intl.formatMessage({ defaultMessage: "Document info" }),
-                  icon: isRemote ? <PiCloudCheck /> : <PiInfo />,
+                  label: intl.formatMessage({
+                    defaultMessage: "Document info",
+                  }),
+                  icon: <PiInfo />,
                   onPress: () => setIsDocumentInfoModalOpen(true),
                 },
                 document.remoteUrl

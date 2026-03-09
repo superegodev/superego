@@ -228,7 +228,7 @@ export default function App(props: Props): React.ReactElement | null {
             element="h3"
             size="lg"
             weight="medium"
-            style={{ marginBottom: "0.25rem", marginTop: "1rem" }}
+            style={{ marginBottom: "0.25rem" }}
           >
             Average Expense
           </Text>
@@ -237,7 +237,7 @@ export default function App(props: Props): React.ReactElement | null {
             size="xl3"
             weight="bold"
             color="primary"
-            style={{ marginBottom: "0.25rem" }}
+            style={{ marginBottom: "0.25rem", marginTop: "1rem" }}
           >
             €{stats.average.toLocaleString()}
           </Text>
