@@ -240,6 +240,8 @@ export declare function Select(
           /** New value selected by the user. */
           newValue: string | null,
         ) => void;
+        /** Shows a button that sets the value to null. Defaults to true. */
+        showClearButton?: boolean | undefined;
       }
     | {
         mode: "multiple";

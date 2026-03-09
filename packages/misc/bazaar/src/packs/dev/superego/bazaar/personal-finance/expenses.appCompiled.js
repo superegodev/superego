@@ -89,25 +89,18 @@ export default function App(props) {
         {
           type: "pie",
           radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 10,
             borderColor: "#fff",
             borderWidth: 2,
           },
           label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 20,
-              fontWeight: "bold",
-            },
+            show: true,
+            formatter: "{b}",
           },
           labelLine: {
-            show: false,
+            show: true,
           },
           data: data,
         },
@@ -128,25 +121,18 @@ export default function App(props) {
         {
           type: "pie",
           radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 10,
             borderColor: "#fff",
             borderWidth: 2,
           },
           label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 20,
-              fontWeight: "bold",
-            },
+            show: true,
+            formatter: "{b}",
           },
           labelLine: {
-            show: false,
+            show: true,
           },
           data: data,
         },
@@ -179,15 +165,17 @@ export default function App(props) {
       Grid.Col,
       { span: { sm: 12 } },
       React.createElement(Select, {
+        mode: "single",
         value: selectedMonth,
         onChange: setSelectedMonth,
+        showClearButton: false,
         options: monthOptions,
         label: "Select Month",
       }),
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 4 } },
+      { span: { sm: 6 } },
       React.createElement(
         Tile,
         null,
@@ -197,13 +185,19 @@ export default function App(props) {
             element: "h3",
             size: "lg",
             weight: "medium",
-            style: { marginBottom: "0.5rem" },
+            style: { marginBottom: "0.25rem" },
           },
           "Total Expenses",
         ),
         React.createElement(
           Text,
-          { element: "p", size: "xl3", weight: "bold", color: "primary" },
+          {
+            element: "p",
+            size: "xl3",
+            weight: "bold",
+            color: "primary",
+            style: { marginBottom: "0.25rem", marginTop: "1rem" },
+          },
           "\u20AC",
           stats.total.toLocaleString(),
         ),
@@ -217,7 +211,7 @@ export default function App(props) {
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 4 } },
+      { span: { sm: 6 } },
       React.createElement(
         Tile,
         null,
@@ -227,13 +221,19 @@ export default function App(props) {
             element: "h3",
             size: "lg",
             weight: "medium",
-            style: { marginBottom: "0.5rem" },
+            style: { marginBottom: "0.25rem" },
           },
           "Average Expense",
         ),
         React.createElement(
           Text,
-          { element: "p", size: "xl3", weight: "bold", color: "primary" },
+          {
+            element: "p",
+            size: "xl3",
+            weight: "bold",
+            color: "primary",
+            style: { marginBottom: "0.25rem", marginTop: "1rem" },
+          },
           "\u20AC",
           stats.average.toLocaleString(),
         ),
@@ -241,34 +241,6 @@ export default function App(props) {
           Text,
           { element: "p", color: "secondary", size: "sm" },
           "Per transaction",
-        ),
-      ),
-    ),
-    React.createElement(
-      Grid.Col,
-      { span: { sm: 12, md: 4 } },
-      React.createElement(
-        Tile,
-        null,
-        React.createElement(
-          Text,
-          {
-            element: "h3",
-            size: "lg",
-            weight: "medium",
-            style: { marginBottom: "0.5rem" },
-          },
-          "Transaction Count",
-        ),
-        React.createElement(
-          Text,
-          { element: "p", size: "xl3", weight: "bold", color: "primary" },
-          stats.count,
-        ),
-        React.createElement(
-          Text,
-          { element: "p", color: "secondary", size: "sm" },
-          "This month",
         ),
       ),
     ),

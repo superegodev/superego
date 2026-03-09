@@ -156,10 +156,12 @@ export default function App(props) {
           null,
           React.createElement(
             "div",
-            { style: { display: "flex", gap: "16px" } },
+            { style: { display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" } },
             React.createElement(Select, {
+              mode: "single",
               value: period.type,
               onChange: handlePeriodTypeChange,
+              showClearButton: false,
               ariaLabel: "Select time period",
               options: [
                 { value: "1-month", label: "1 Month" },
@@ -169,14 +171,18 @@ export default function App(props) {
               ],
             }),
             React.createElement(
-              Button,
-              { onPress: () => handlePeriodShift("backward") },
-              "\u2190 Previous",
-            ),
-            React.createElement(
-              Button,
-              { onPress: () => handlePeriodShift("forward") },
-              "Next \u2192",
+              "div",
+              { style: { display: "flex", gap: "16px" } },
+              React.createElement(
+                Button,
+                { onPress: () => handlePeriodShift("backward") },
+                "\u2190 Previous",
+              ),
+              React.createElement(
+                Button,
+                { onPress: () => handlePeriodShift("forward") },
+                "Next \u2192",
+              ),
             ),
             React.createElement(
               Text,
@@ -261,10 +267,12 @@ export default function App(props) {
         null,
         React.createElement(
           "div",
-          { style: { display: "flex", gap: "16px" } },
+          { style: { display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" } },
           React.createElement(Select, {
+            mode: "single",
             value: period.type,
             onChange: handlePeriodTypeChange,
+            showClearButton: false,
             ariaLabel: "Select time period",
             options: [
               { value: "1-month", label: "1 Month" },
@@ -274,14 +282,18 @@ export default function App(props) {
             ],
           }),
           React.createElement(
-            Button,
-            { onPress: () => handlePeriodShift("backward") },
-            "\u2190 Previous",
-          ),
-          React.createElement(
-            Button,
-            { onPress: () => handlePeriodShift("forward") },
-            "Next \u2192",
+            "div",
+            { style: { display: "flex", gap: "16px" } },
+            React.createElement(
+              Button,
+              { onPress: () => handlePeriodShift("backward") },
+              "\u2190 Previous",
+            ),
+            React.createElement(
+              Button,
+              { onPress: () => handlePeriodShift("forward") },
+              "Next \u2192",
+            ),
           ),
           React.createElement(
             Text,
@@ -295,7 +307,7 @@ export default function App(props) {
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 6, lg: 3 } },
+      { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
         null,
@@ -321,7 +333,7 @@ export default function App(props) {
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 6, lg: 3 } },
+      { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
         null,
@@ -347,7 +359,7 @@ export default function App(props) {
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 6, lg: 3 } },
+      { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
         null,
@@ -371,7 +383,7 @@ export default function App(props) {
     ),
     React.createElement(
       Grid.Col,
-      { span: { sm: 12, md: 6, lg: 3 } },
+      { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
         null,
