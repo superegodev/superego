@@ -8,5 +8,8 @@ export default function getProtoApps(basePath: string): string[] {
         name.startsWith("ProtoApp_") &&
         statSync(join(basePath, name)).isDirectory(),
     )
-    .sort();
+    .sort(
+      (a, b) =>
+        Number(a.split("_")[1]) - Number(b.split("_")[1]),
+    );
 }
