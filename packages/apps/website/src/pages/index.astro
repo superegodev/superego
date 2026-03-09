@@ -18,7 +18,7 @@ const formattedStars =
     <title>Superego</title>
     <meta
       name="description"
-      content="An open-source, local-first personal data store and app platform."
+      content="An open-source, local-first personal database and app platform."
     />
   </head>
   <body>
@@ -176,8 +176,8 @@ const formattedStars =
             />
           </div>
           <h1 class="title">Superego</h1>
-          <p class="subtitle">A personal data store and app platform</p>
-          <div class="actions">
+          <p class="subtitle">Personal database and app platform</p>
+          <div class="actions cta">
             <a href="https://demo.superego.dev" class="button">
               Try demo
               <div class="additional-info">(no login)</div>
@@ -205,40 +205,45 @@ const formattedStars =
       </section>
 
       <section class="explainer">
-        <h2>You Deserve Better Software</h2>
+        <h2>Your Apps Don't Fit You</h2>
         <p>
-          <b>Apps are not serving you.</b> They serve growth targets, while you get
-          bloat, banners, enshittification, and monthly subscription bills.
+          They're built for a generic user, then evolve for growth, not for your
+          needs.
+        </p>
+        <h2>Your Data Isn't Yours</h2>
+        <p>
+          It’s trapped inside apps, leaving you with limited access and no real
+          ownership.
+        </p>
+        <h2>Superego Puts You Back In Control</h2>
+        <p>
+          It's a private place to store your data and build apps around it,
+          tailored to how you live and work.
         </p>
         <p>
-          <b>You don't have control of your data.</b> It's scattered, trapped inside
-          those apps.
+          Build a portfolio manager that matches how you invest. Vibe a chore
+          scoreboard for your family. Make niche tools you'll never find in an
+          app store.
         </p>
-        <h2>That's Why We Built Superego</h2>
+        <h2>It Brings Your Data Together</h2>
         <p>
-          A private place to <b>collect all your data</b> and a platform to
-          <b>vibe <i>home-cooked</i> apps</b>.
+          Not scattered across apps, but unified and structured. And you always
+          have full, unrestricted access.
         </p>
+        <h2>It Makes AI Actually Helpful</h2>
         <p>
-          Need a portfolio tracker? Skip the <i>one-size-fits-all</i>, and make
-          one just like
-          <b>you</b> want it.
-        </p>
-        <p>
-          A chore scoreboard for your family? Too niche for the app stores, but
-          you can <b>build it yourself</b>.
-        </p>
-        <h2>With an AI That Actually Knows You</h2>
-        <p>
-          Bring your own LLM. Direct access to your data gives it
-          <b>precise understanding</b> of your world.
+          With that context, Superego's assistant can answer questions ordinary
+          tools can’t.
         </p>
         <blockquote>
-          I need 30k for a car. What stocks should I sell?
+          Looking at my finances and my lifestyle, when could I retire?
         </blockquote>
         <p>
-          <a href="https://demo.superego.dev">Try it in the demo</a>. Can
-          ChatGPT answer that?
+          <a
+            href="https://demo.superego.dev?initialMessage=Looking%20at%20my%20finances%20and%20my%20lifestyle%2C%20when%20could%20I%20retire%3F"
+          >
+            Try it in the demo</a
+          > and see how it answers.
         </p>
         <h2>See It in Action</h2>
         <div>
@@ -249,10 +254,11 @@ const formattedStars =
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen></iframe>
         </div>
-        <h2>Feature Highlights</h2>
+        <h2>What Else?</h2>
         <ul>
           <li>Open-source, local-first, no-login.</li>
           <li>Everything in a <b>single SQLite file</b>.</li>
+          <li>Bring-your-own LLM.</li>
           <li>
             CLI to integrate with your personal <a
               href="https://simonwillison.net/2026/Feb/21/claws/"><i>Claw</i></a
@@ -296,6 +302,13 @@ const formattedStars =
           >
             Download
             <div class="additional-info">(alpha)</div>
+          </a>
+          <a
+            href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}
+            class="button button-secondary"
+          >
+            Discuss
+            <div class="additional-info">(Discord)</div>
           </a>
         </div>
       </section>
@@ -710,15 +723,18 @@ const formattedStars =
   .actions {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     margin-block-end: 2rem;
   }
 
   .actions .button {
-    width: 240px;
+    min-width: 180px;
     text-align: center;
     box-sizing: border-box;
+  }
+  .actions.cta .button {
+    min-width: 240px;
   }
 
   @media (max-width: 640px) {
@@ -737,10 +753,21 @@ const formattedStars =
       margin-block-end: 2rem;
     }
 
+    .actions {
+      align-self: stretch;
+    }
+
     .actions .button {
-      width: 140px;
+      flex: 1;
+      min-width: 0;
       padding: 1rem 1.25rem;
       font-size: 1.2rem;
+    }
+    .actions:not(.cta) .button {
+      font-size: 1rem;
+    }
+    .actions.cta .button {
+      min-width: 0;
     }
   }
 
@@ -898,27 +925,22 @@ const formattedStars =
   .explainer {
     margin-block-start: 10rem;
     margin-block-end: 2rem;
-    font-size: 1.8rem;
-    line-height: 2.5;
-  }
-
-  .explainer h2::before {
-    content: "## ";
+    font-size: 1.7rem;
+    line-height: 2;
   }
 
   .explainer h2 {
-    margin-block-start: 6rem;
-    margin-block-end: 3.5rem;
+    margin-block-start: 4.5rem;
+    margin-block-end: 1.5rem;
     font-size: 2rem;
     line-height: 2;
-    border-block-end: var(--border);
   }
   .explainer h2:first-child {
     margin-block-start: 0;
   }
 
   .explainer > * {
-    margin-block-end: 4rem;
+    margin-block-end: 3rem;
   }
 
   .explainer p:has(+ ol),
@@ -1001,10 +1023,11 @@ const formattedStars =
     }
 
     .explainer h2 {
+      margin-block-start: 3rem;
       font-size: 1.4rem;
     }
 
-    .explainer * {
+    .explainer > * {
       margin-block-end: 2rem;
     }
 
