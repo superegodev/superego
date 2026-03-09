@@ -4,53 +4,51 @@
   <img alt="Superego logo" src="./docs/images/logo.svg" style="height: 150px;" />
 </p>
 
-# Superego: Personal Data Store and App Platform
+# Superego
 
-[Try the demo @ demo.superego.dev](https://demo.superego.dev).
+A personal database you can extend with apps.
 
-## You Deserve Better Software
+[Try the demo](https://demo.superego.dev) ·
+[Download](https://github.com/superegodev/superego/releases/latest)
 
-**You don't have control of your data.** It's scattered, trapped inside apps
-that hold it hostage.
+## Your Apps Don't Fit You
 
-**Apps are not serving you.** They serve growth targets, while you get bloat,
-banners, enshittification.
+They're built for a generic user and shaped by growth targets, not your needs.
 
-## So We Built Superego
+## Your Data Isn't Yours
 
-A private place to **collect your data** and a platform to **build (or vibe)
-your _home-cooked_ apps** around it.
+It's trapped inside apps, leaving you with limited access and no real ownership.
 
-Your portfolio tracker? Don't settle for generic. Make it just like **you** want
-it. A chore scoreboard for your family? Too niche for the app stores, but you
-can **build it yourself**.
+## Superego Puts You Back In Control
 
-## With an AI That Actually Knows You
+It's a private place to store your data and build apps tailored to how you live
+and work.
 
-Bring your own LLM. Direct access to your data gives it a precise understanding
-of your world, so it can answer questions like:
+Build a portfolio manager that matches how you invest. Vibe-code a chore
+scoreboard for your family. Make niche tools you'll never find in an app store.
 
-> I need 30k for a car. What stocks should I sell?
+## It Makes AI Actually Helpful
+
+Having access to your data, Superego's assistant can answer questions ordinary
+tools can't.
+
+> Looking at my finances and my lifestyle, when could I retire?
 
 ![Demo Screenshots](./docs/images/demo-screenshots-light.png#gh-light-mode-only)
 ![Demo Screenshots](./docs/images/demo-screenshots-dark.png#gh-dark-mode-only)
 
-## Feature Highlights
+## What Else?
 
 - Open-source, local-first, no-login.
-- Everything in one **single SQLite file**.
-- Built-in **version control** for your documents.
-- A **CLI** to integrate with your personal
-  [_Claw_](https://simonwillison.net/2026/Feb/21/claws/) (for managing data) or
-  coding agent (for writing apps).
+- Everything in a **single SQLite file**.
+- Bring-your-own LLM.
+- CLI to integrate with other tools (e.g., your coding agent to write apps).
 
 ## Roadmap
 
 - [x] Document versioning.
-- [x] Data-aware AI assistant.
-- [x] User-defined apps.
 - [x] Full-text search.
-- [-] CLI. (in progress)
+- [-] CLI. 🚧
 - [ ] AI-assisted data import.
 - [ ] Mobile app.
 - [ ] Sync via file-syncing service.
