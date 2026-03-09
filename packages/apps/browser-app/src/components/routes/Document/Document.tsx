@@ -10,6 +10,7 @@ import {
   PiClockCountdownFill,
   PiCloudCheck,
   PiFloppyDisk,
+  PiInfo,
   PiTrash,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -28,13 +29,14 @@ import classnames from "../../../utils/classnames.js";
 import DocumentUtils from "../../../utils/DocumentUtils.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
+import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import DeleteDocumentModalForm from "../../widgets/DeleteDocumentModalForm/DeleteDocumentModalForm.js";
 import * as cs from "./Document.css.js";
 import DocumentContent from "./DocumentContent.js";
+import DocumentInfoModal from "./DocumentInfoModal.js";
 import History from "./History/History.js";
 import RedirectIfLatest from "./RedirectIfLatest.js";
-import RemoteDocumentInfoModal from "./RemoteDocumentInfoModal.js";
 
 interface Props {
   collectionId: CollectionId;
@@ -53,8 +55,7 @@ export default function Document({
     useState(true);
   const { collections } = useGlobalData();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isRemoteDocumentInfoModalOpen, setIsRemoteDocumentInfoModalOpen] =
-    useState(false);
+  const [isDocumentInfoModalOpen, setIsDocumentInfoModalOpen] = useState(false);
   const collection = CollectionUtils.findCollection(collections, collectionId);
 
   const defaultDocumentViewUiOptions =
@@ -134,6 +135,25 @@ export default function Document({
                         : document.latestVersion.id,
                     }),
                 },
+                {
+                  label: isRemote
+                    ? intl.formatMessage({
+                        defaultMessage: "Remote document info",
+                      })
+                    : intl.formatMessage({ defaultMessage: "Document info" }),
+                  icon: isRemote ? <PiCloudCheck /> : <PiInfo />,
+                  onPress: () => setIsDocumentInfoModalOpen(true),
+                },
+                document.remoteUrl
+                  ? {
+                      label: intl.formatMessage({
+                        defaultMessage: "Go to remote document",
+                      }),
+                      icon: <PiArrowSquareOut />,
+                      href: document.remoteUrl,
+                    }
+                  : null,
+                !isRemote ? PanelHeaderActionSeparator : null,
                 !isRemote && !isShowingHistory
                   ? {
                       label: intl.formatMessage({ defaultMessage: "Save" }),
@@ -150,24 +170,6 @@ export default function Document({
                       icon: <PiTrash />,
                       onPress: () => setIsDeleteModalOpen(true),
                       isDanger: true,
-                    }
-                  : null,
-                isRemote
-                  ? {
-                      label: intl.formatMessage({
-                        defaultMessage: "Remote document info",
-                      }),
-                      icon: <PiCloudCheck />,
-                      onPress: () => setIsRemoteDocumentInfoModalOpen(true),
-                    }
-                  : null,
-                document.remoteUrl
-                  ? {
-                      label: intl.formatMessage({
-                        defaultMessage: "Go to remote document",
-                      }),
-                      icon: <PiArrowSquareOut />,
-                      href: document.remoteUrl,
                     }
                   : null,
               ]}
@@ -223,11 +225,11 @@ export default function Document({
                   navigateTo({ name: RouteName.Collection, collectionId })
                 }
               />
-              <RemoteDocumentInfoModal
+              <DocumentInfoModal
                 collection={collection}
                 document={document}
-                isOpen={isRemoteDocumentInfoModalOpen}
-                onClose={() => setIsRemoteDocumentInfoModalOpen(false)}
+                isOpen={isDocumentInfoModalOpen}
+                onClose={() => setIsDocumentInfoModalOpen(false)}
               />
             </Shell.Panel.Content>
           </Shell.Panel>

@@ -530,8 +530,35 @@
   "Document.tsx_otVWer": {
     "defaultMessage": "Informazioni sul documento remoto"
   },
+  "Document.tsx_ps0LGU": {
+    "defaultMessage": "Informazioni documento"
+  },
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
+  },
+  "DocumentInfoModal.tsx_1D7voQ": {
+    "defaultMessage": "Sincronizzato con {remote}"
+  },
+  "DocumentInfoModal.tsx_gm5+Hy": {
+    "defaultMessage": "ID collezione:"
+  },
+  "DocumentInfoModal.tsx_i3P6ZD": {
+    "defaultMessage": "Creato il:"
+  },
+  "DocumentInfoModal.tsx_h6SlY+": {
+    "defaultMessage": "ID documento remoto:"
+  },
+  "DocumentInfoModal.tsx_nY1/sq": {
+    "defaultMessage": "ID versione documento remoto:"
+  },
+  "DocumentInfoModal.tsx_ps0LGU": {
+    "defaultMessage": "Informazioni documento"
+  },
+  "DocumentInfoModal.tsx_qAhp5A": {
+    "defaultMessage": "Ultima modifica il:"
+  },
+  "DocumentInfoModal.tsx_uhPUU0": {
+    "defaultMessage": "ID documento:"
   },
   "DocumentRefField.tsx_79lKyO": {
     "defaultMessage": "Risultati della ricerca"
@@ -1177,15 +1204,6 @@
   },
   "RemoteConvertersTab.tsx_J/yjzE": {
     "defaultMessage": "Crea una nuova versione e migra i documenti"
-  },
-  "RemoteDocumentInfoModal.tsx_1D7voQ": {
-    "defaultMessage": "Sincronizzato con {remote}"
-  },
-  "RemoteDocumentInfoModal.tsx_h6SlY+": {
-    "defaultMessage": "ID documento remoto:"
-  },
-  "RemoteDocumentInfoModal.tsx_nY1/sq": {
-    "defaultMessage": "ID versione documento remoto:"
   },
   "RenameCollectionCategoryModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"

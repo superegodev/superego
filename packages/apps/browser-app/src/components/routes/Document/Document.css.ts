@@ -102,7 +102,7 @@ export const CreateNewDocumentVersionForm = {
   }),
 };
 
-export const RemoteDocumentInfoModal = {
+export const DocumentInfoModal = {
   infoProperties: style({
     display: "flex",
     flexDirection: "column",
@@ -123,14 +123,23 @@ export const RemoteDocumentInfoModal = {
     whiteSpace: "nowrap",
   }),
 
-  infoPropertyValue: style({
-    minWidth: vars.spacing._40,
-    verticalAlign: "middle",
-    marginInlineStart: 0,
-    color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.md,
-    textWrap: "nowrap",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
+  infoPropertyValue: styleVariants({
+    id: {
+      verticalAlign: "middle",
+      marginInlineStart: "auto",
+      color: vars.colors.text.primary,
+      fontSize: vars.typography.fontSizes.md,
+      fontFamily: vars.typography.fontFamilies.monospace,
+      textWrap: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+    },
+    date: {
+      verticalAlign: "middle",
+      marginInlineStart: "auto",
+      color: vars.colors.text.primary,
+      fontSize: vars.typography.fontSizes.md,
+      textWrap: "nowrap",
+    },
   }),
 };

@@ -8,8 +8,5 @@ export default function getProtoCollections(basePath: string): string[] {
         name.startsWith("ProtoCollection_") &&
         statSync(join(basePath, name)).isDirectory(),
     )
-    .sort(
-      (a, b) =>
-        Number(a.split("_")[1]) - Number(b.split("_")[1]),
-    );
+    .sort((a, b) => Number(a.split("_")[1]) - Number(b.split("_")[1]));
 }
