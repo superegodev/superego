@@ -127,6 +127,7 @@ export const DocumentInfoModal = {
     id: {
       verticalAlign: "middle",
       marginInlineStart: "auto",
+      minWidth: 0,
       color: vars.colors.text.primary,
       fontSize: vars.typography.fontSizes.md,
       fontFamily: vars.typography.fontFamilies.monospace,
