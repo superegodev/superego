@@ -15,9 +15,11 @@ interface Props {
 }
 export default function Table({ ariaLabel, children }: Props) {
   return (
-    <TableRAC aria-label={ariaLabel} className={cs.Table.root}>
-      {children}
-    </TableRAC>
+    <div className={cs.Table.wrapper}>
+      <TableRAC aria-label={ariaLabel} className={cs.Table.root}>
+        {children}
+      </TableRAC>
+    </div>
   );
 }
 

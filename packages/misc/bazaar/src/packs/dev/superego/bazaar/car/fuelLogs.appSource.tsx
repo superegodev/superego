@@ -191,10 +191,12 @@ export default function App(props: Props): React.ReactElement | null {
       <Grid>
         <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
           <Tile>
-            <div style={{ display: "flex", gap: "16px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
               <Select
+                mode="single"
                 value={period.type}
                 onChange={handlePeriodTypeChange}
+                showClearButton={false}
                 ariaLabel="Select time period"
                 options={[
                   { value: "1-month", label: "1 Month" },
@@ -203,12 +205,14 @@ export default function App(props: Props): React.ReactElement | null {
                   { value: "1-year", label: "1 Year" },
                 ]}
               />
-              <Button onPress={() => handlePeriodShift("backward")}>
-                ← Previous
-              </Button>
-              <Button onPress={() => handlePeriodShift("forward")}>
-                Next →
-              </Button>
+              <div style={{ display: "flex", gap: "16px" }}>
+                <Button onPress={() => handlePeriodShift("backward")}>
+                  ← Previous
+                </Button>
+                <Button onPress={() => handlePeriodShift("forward")}>
+                  Next →
+                </Button>
+              </div>
               <Text color="secondary" size="sm" style={{ lineHeight: "2rem" }}>
                 {period.startDate.toLocaleDateString()} -{" "}
                 {period.endDate.toLocaleDateString()}
@@ -284,10 +288,12 @@ export default function App(props: Props): React.ReactElement | null {
       {/* Period Controls */}
       <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
         <Tile>
-          <div style={{ display: "flex", gap: "16px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
             <Select
+              mode="single"
               value={period.type}
               onChange={handlePeriodTypeChange}
+              showClearButton={false}
               ariaLabel="Select time period"
               options={[
                 { value: "1-month", label: "1 Month" },
@@ -296,10 +302,14 @@ export default function App(props: Props): React.ReactElement | null {
                 { value: "1-year", label: "1 Year" },
               ]}
             />
-            <Button onPress={() => handlePeriodShift("backward")}>
-              ← Previous
-            </Button>
-            <Button onPress={() => handlePeriodShift("forward")}>Next →</Button>
+            <div style={{ display: "flex", gap: "16px" }}>
+              <Button onPress={() => handlePeriodShift("backward")}>
+                ← Previous
+              </Button>
+              <Button onPress={() => handlePeriodShift("forward")}>
+                Next →
+              </Button>
+            </div>
             <Text color="secondary" size="sm" style={{ lineHeight: "2rem" }}>
               {period.startDate.toLocaleDateString()} -{" "}
               {period.endDate.toLocaleDateString()}
@@ -309,7 +319,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       {/* Statistics Cards */}
-      <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+      <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
         <Tile>
           <Text element="h3" size="lg" weight="semibold">
             Total Fuel
@@ -323,7 +333,7 @@ export default function App(props: Props): React.ReactElement | null {
         </Tile>
       </Grid.Col>
 
-      <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+      <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
         <Tile>
           <Text element="h3" size="lg" weight="semibold">
             Total Cost
@@ -337,7 +347,7 @@ export default function App(props: Props): React.ReactElement | null {
         </Tile>
       </Grid.Col>
 
-      <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+      <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
         <Tile>
           <Text element="h3" size="lg" weight="semibold">
             Distance
@@ -351,7 +361,7 @@ export default function App(props: Props): React.ReactElement | null {
         </Tile>
       </Grid.Col>
 
-      <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+      <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
         <Tile>
           <Text element="h3" size="lg" weight="semibold">
             Avg Efficiency
