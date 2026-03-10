@@ -22,7 +22,7 @@ export default function MainPanel() {
   const { activeRoute } = useNavigationState();
   switch (activeRoute.name) {
     case RouteName.Ask:
-      return <Ask />;
+      return <Ask initialMessage={activeRoute.initialMessage} />;
     case RouteName.Conversations:
       return <Conversations />;
     case RouteName.Conversation:

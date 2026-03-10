@@ -41,6 +41,7 @@ export enum PackSource {
 type Route =
   | {
       name: RouteName.Ask;
+      initialMessage?: string;
     }
   | {
       name: RouteName.Conversations;

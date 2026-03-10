@@ -9,6 +9,10 @@ const testRoutes: Route[] = [
     name: RouteName.Ask,
   },
   {
+    name: RouteName.Ask,
+    initialMessage: "initialMessage",
+  },
+  {
     name: RouteName.Conversations,
   },
   {

@@ -14,7 +14,9 @@ import { CollectionRouteView, PackSource, RouteName } from "./Route.js";
 export function toHref(route: Route): string {
   switch (route.name) {
     case RouteName.Ask:
-      return "/";
+      return route.initialMessage
+        ? `/?initialMessage=${encodeURIComponent(route.initialMessage)}`
+        : "/";
     case RouteName.Conversations:
       return "/conversations";
     case RouteName.Conversation:
@@ -279,7 +281,12 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/" }),
-    toRoute: () => ({ name: RouteName.Ask }),
+    toRoute: (match) => ({
+      name: RouteName.Ask,
+      initialMessage:
+        new URLSearchParams(match.search.input).get("initialMessage") ??
+        undefined,
+    }),
   },
 ];
 

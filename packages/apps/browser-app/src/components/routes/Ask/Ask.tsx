@@ -16,7 +16,10 @@ import * as cs from "./Ask.css.js";
 import Hero from "./Hero.js";
 import Welcome from "./Welcome.js";
 
-export default function Ask() {
+interface Props {
+  initialMessage?: string;
+}
+export default function Ask({ initialMessage }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
@@ -48,6 +51,7 @@ export default function Ask() {
           placeholder={intl.formatMessage({
             defaultMessage: "How can I help you?",
           })}
+          initialMessage={initialMessage}
           autoFocus={true}
         />
         <Link
