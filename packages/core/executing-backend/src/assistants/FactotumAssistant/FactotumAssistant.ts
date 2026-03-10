@@ -1,10 +1,14 @@
 import {
   type Collection,
   type ConversationId,
+  type InferenceOptions,
+  type InferenceSettings,
   type ToolCall,
   ToolName,
   type ToolResult,
 } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
@@ -30,7 +34,8 @@ import SearchDocuments from "./tools/SearchDocuments.js";
 export default class FactotumAssistant extends Assistant {
   constructor(
     private conversationId: ConversationId,
-    private userName: string | null,
+    private userInfo: string | null,
+    private userPreferences: string | null,
     private developerPrompt: string | null,
     protected inferenceService: InferenceService,
     private collections: Collection[],
@@ -57,20 +62,6 @@ export default class FactotumAssistant extends Assistant {
 
   protected getDeveloperPrompt(): string {
     return (this.developerPrompt ?? defaultDeveloperPrompt)
-      .replaceAll(
-        "$USER_IDENTITY",
-        this.userName
-          ? [
-              "User identity:",
-              `- Name: ${this.userName}.`,
-              `- Canonical reference: “the user” (${this.userName}).`,
-              "- Safety: do not infer traits from the name. Do not invent personal facts.",
-              "- Pronouns: use they/them unless provided; otherwise mirror the user's own usage.",
-              `- Coreference: “I/me/my” in user messages refers to ${this.userName};`,
-              `  “you/your” in assistant replies refers to ${this.userName}.`,
-            ].join("\n")
-          : "",
-      )
       .replaceAll("$TOOL_NAME_CREATE_DOCUMENTS", ToolName.CreateDocuments)
       .replaceAll(
         "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",
@@ -96,7 +87,7 @@ export default class FactotumAssistant extends Assistant {
 
   protected getUserContextPrompt(): string {
     const now = DateTime.now();
-    return [
+    return compact([
       "<collections>",
       JSON.stringify(
         this.collections.map((collection) => ({
@@ -115,12 +106,21 @@ export default class FactotumAssistant extends Assistant {
       "</user-time-zone>",
       "<weekday>",
       now.toFormat("cccc"),
-      "<weekday>",
-    ].join("\n");
+      "</weekday>",
+      this.userInfo ? "<user-info>" : null,
+      this.userInfo,
+      this.userInfo ? "</user-info>" : null,
+      this.userPreferences ? "<user-preferences>" : null,
+      this.userPreferences,
+      this.userPreferences ? "</user-preferences>" : null,
+    ]).join("\n");
   }
 
-  protected getTools(): InferenceService.Tool[] {
-    return [
+  protected getTools(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): InferenceService.Tool[] {
+    return compact([
       GetCollectionTypescriptSchema.get(),
       ExecuteTypescriptFunction.get(),
       CreateDocuments.get(),
@@ -129,11 +129,16 @@ export default class FactotumAssistant extends Assistant {
       CreateGeoJSONMap.get(),
       CreateDocumentsTables.get(),
       SearchDocuments.get(),
-      InspectFile.get(),
-    ];
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+        ? InspectFile.get(inferenceSettings, inferenceOptions)
+        : null,
+    ]);
   }
 
-  protected async processToolCall(toolCall: ToolCall): Promise<ToolResult> {
+  protected async processToolCall(
+    toolCall: ToolCall,
+    inferenceOptions: InferenceOptions<"completion">,
+  ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
     }
@@ -193,11 +198,15 @@ export default class FactotumAssistant extends Assistant {
     if (SearchDocuments.is(toolCall)) {
       return SearchDocuments.exec(toolCall, this.usecases.documentsSearch);
     }
-    if (InspectFile.is(toolCall)) {
+    if (
+      InspectFile.is(toolCall) &&
+      inferenceOptionsHas(inferenceOptions, "fileInspection")
+    ) {
       return InspectFile.exec(
         toolCall,
         this.inferenceService,
         this.usecases.filesGetContent,
+        inferenceOptions,
       );
     }
     return Unknown.exec(toolCall);

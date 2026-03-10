@@ -8,9 +8,11 @@ import {
 } from "react-hook-form";
 import classnames from "../../../utils/classnames.js";
 import EmojiInput from "../../design-system/EmojiInput/EmojiInput.js";
-import FieldError from "../../design-system/forms/FieldError.js";
-import { Description } from "../../design-system/forms/forms.js";
-import Label from "../../design-system/forms/Label.js";
+import {
+  Description,
+  FieldError,
+  Label,
+} from "../../design-system/forms/forms.js";
 import * as cs from "./RHFEmojiField.css.js";
 
 interface Props<

@@ -15,9 +15,10 @@ export default class BackendIPCProxyClient implements Backend {
   inference: Backend["inference"];
   apps: Backend["apps"];
   packs: Backend["packs"];
-  bazaar: Backend["bazaar"];
+  boutique: Backend["boutique"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
+  database: Backend["database"];
 
   constructor() {
     this.collectionCategories = {
@@ -76,6 +77,9 @@ export default class BackendIPCProxyClient implements Backend {
       ),
       deleteConversation: this.makeMainIpcCall("assistants.deleteConversation"),
       getConversation: this.makeMainIpcCall("assistants.getConversation"),
+      getLiveConversation: this.makeMainIpcCall(
+        "assistants.getLiveConversation",
+      ),
       listConversations: this.makeMainIpcCall("assistants.listConversations"),
       searchConversations: this.makeMainIpcCall(
         "assistants.searchConversations",
@@ -87,7 +91,6 @@ export default class BackendIPCProxyClient implements Backend {
 
     this.inference = {
       stt: this.makeMainIpcCall("inference.stt"),
-      tts: this.makeMainIpcCall("inference.tts"),
       implementTypescriptModule: this.makeMainIpcCall(
         "inference.implementTypescriptModule",
       ),
@@ -105,9 +108,9 @@ export default class BackendIPCProxyClient implements Backend {
       install: this.makeMainIpcCall("packs.install"),
     };
 
-    this.bazaar = {
-      listPacks: this.makeMainIpcCall("bazaar.listPacks"),
-      getPack: this.makeMainIpcCall("bazaar.getPack"),
+    this.boutique = {
+      listPacks: this.makeMainIpcCall("boutique.listPacks"),
+      getPack: this.makeMainIpcCall("boutique.getPack"),
     };
 
     this.backgroundJobs = {
@@ -118,6 +121,10 @@ export default class BackendIPCProxyClient implements Backend {
     this.globalSettings = {
       get: this.makeMainIpcCall("globalSettings.get"),
       update: this.makeMainIpcCall("globalSettings.update"),
+    };
+
+    this.database = {
+      export: this.makeMainIpcCall("database.export"),
     };
   }
 

@@ -13,8 +13,8 @@ import IconLink from "../../design-system/IconLink/IconLink.js";
 import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
-  areChatCompletionsConfigured: boolean;
-  areTranscriptionsConfigured: boolean;
+  isCompletionConfigured: boolean;
+  isTranscriptionConfigured: boolean;
   isWriting: boolean;
   isRecording: boolean;
   isDisabled: boolean;
@@ -24,8 +24,8 @@ interface Props {
   onCancelRecording: () => void;
 }
 export default function SendRecordButtons({
-  areChatCompletionsConfigured,
-  areTranscriptionsConfigured,
+  isCompletionConfigured,
+  isTranscriptionConfigured,
   isWriting,
   isRecording,
   isDisabled,
@@ -48,11 +48,11 @@ export default function SendRecordButtons({
           <PiX />
         </IconButton>
       ) : null}
-      {areChatCompletionsConfigured && !areTranscriptionsConfigured ? (
+      {isCompletionConfigured && !isTranscriptionConfigured ? (
         <IconLink
           variant="invisible"
           label={intl.formatMessage({
-            defaultMessage: "Configure assistant for transcription",
+            defaultMessage: "Add model w/ audio understanding to use voice",
           })}
           to={{ name: RouteName.GlobalSettings }}
           isDisabled={isDisabled}
@@ -62,15 +62,13 @@ export default function SendRecordButtons({
           <PiMicrophoneFill />
         </IconLink>
       ) : null}
-      {areChatCompletionsConfigured &&
-      areTranscriptionsConfigured &&
-      !isWriting ? (
+      {isCompletionConfigured && isTranscriptionConfigured && !isWriting ? (
         <IconButton
           variant="invisible"
           label={
             isRecording
               ? intl.formatMessage({ defaultMessage: "Finish and send" })
-              : intl.formatMessage({ defaultMessage: "Record" })
+              : intl.formatMessage({ defaultMessage: "Speak" })
           }
           onPress={isRecording ? onFinishRecording : onStartRecording}
           isDisabled={isDisabled}
@@ -79,7 +77,7 @@ export default function SendRecordButtons({
           {isRecording ? <PiStopFill /> : <PiMicrophoneFill />}
         </IconButton>
       ) : null}
-      {!areChatCompletionsConfigured ? (
+      {!isCompletionConfigured ? (
         <IconLink
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Configure assistant" })}
@@ -90,8 +88,8 @@ export default function SendRecordButtons({
           <PiGear />
         </IconLink>
       ) : null}
-      {areChatCompletionsConfigured &&
-      (areTranscriptionsConfigured ? isWriting : true) ? (
+      {isCompletionConfigured &&
+      (isTranscriptionConfigured ? isWriting : true) ? (
         <IconButton
           variant="invisible"
           label={intl.formatMessage({ defaultMessage: "Send" })}

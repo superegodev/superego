@@ -16,8 +16,115 @@ const formattedStars =
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Superego</title>
+    <meta
+      name="description"
+      content="A personal database you can extend with apps."
+    />
+    <link rel="canonical" href={`${import.meta.env.SITE}/`} />
   </head>
   <body>
+    <div class="bg-icons" aria-hidden="true">
+      <span
+        class="bg-icon"
+        style="--offset-x:-399px;--offset-y:-45px;--rotation:-12deg;--range:35vh"
+        >🏃</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-536px;--offset-y:84px;--rotation:-14deg;--range:40vh"
+        >🩺</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-843px;--offset-y:56px;--rotation:-13deg;--range:50vh"
+        >🌱</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:776px;--offset-y:258px;--rotation:1deg;--range:45vh"
+        >😊</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:535px;--offset-y:-190px;--rotation:6deg;--range:30vh"
+        >✅</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:809px;--offset-y:-129px;--rotation:5deg;--range:48vh"
+        >📝</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-607px;--offset-y:243px;--rotation:9deg;--range:42vh"
+        >👤</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:481px;--offset-y:189px;--rotation:11deg;--range:33vh"
+        >📅</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-563px;--offset-y:-347px;--rotation:13deg;--range:52vh"
+        >📚</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:680px;--offset-y:414px;--rotation:-10deg;--range:38vh"
+        >🍳</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:600px;--offset-y:-376px;--rotation:-5deg;--range:46vh"
+        >💸</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-865px;--offset-y:308px;--rotation:9deg;--range:55vh"
+        >💊</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-720px;--offset-y:391px;--rotation:-14deg;--range:44vh"
+        >🎯</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-642px;--offset-y:-140px;--rotation:-3deg;--range:36vh"
+        >💡</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-766px;--offset-y:-434px;--rotation:13deg;--range:50vh"
+        >✈️</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:678px;--offset-y:59px;--rotation:5deg;--range:32vh"
+        >🍗</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:831px;--offset-y:-421px;--rotation:-10deg;--range:53vh"
+        >💤</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:814px;--offset-y:159px;--rotation:10deg;--range:47vh"
+        >📊</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:362px;--offset-y:-15px;--rotation:5deg;--range:28vh"
+        >🐾</span
+      >
+      <span
+        class="bg-icon"
+        style="--offset-x:-874px;--offset-y:-238px;--rotation:1deg;--range:51vh"
+        >🔗</span
+      >
+    </div>
     <header class="sticky-header">
       <div class="sticky-inner">
         <div class="sticky-brand">
@@ -44,8 +151,8 @@ const formattedStars =
           >
             <Icon name="github" class="icon" />
           </a>
-          <a href="https://demo.superego.dev" class="button button-pill">
-            Try the demo
+          <a href="https://demo.superego.dev" class="button button-header">
+            Try demo
           </a>
         </div>
       </div>
@@ -53,37 +160,38 @@ const formattedStars =
     <main>
       <section class="fold">
         <section class="tagline">
-          <p><u>Own</u> your data</p>
-          <p><u>Build</u> your own apps</p>
-          <p><u>Shape</u> your AI</p>
+          <p><u>ditch</u> your apps</p>
+          <p><u>build</u> your own</p>
+          <p><u>own</u> your data</p>
         </section>
 
         <section class="hero">
           <div class="logo-container">
-            <Image src={logo} alt="Superego logo" class="logo" height={180} />
+            <Image src={logo} alt="Superego logo" class="logo" height={140} />
             <Image
               src={logo}
               alt=""
               class="logo-glitch"
               aria-hidden="true"
-              height={180}
+              height={140}
             />
           </div>
           <h1 class="title">Superego</h1>
-          <p class="subtitle">Your Digital Freedom</p>
-          <div class="actions">
-            <a href="https://demo.superego.dev" class="button">Try the demo</a>
+          <p class="subtitle">A personal database you can extend with apps</p>
+          <div class="actions cta">
+            <a href="https://demo.superego.dev" class="button">
+              Try demo
+              <div class="additional-info">(no login)</div>
+            </a>
             <a
               href="https://github.com/superegodev/superego/releases/latest"
               class="button button-secondary"
             >
-              Get the alpha
+              Download
+              <div class="additional-info">(alpha)</div>
             </a>
           </div>
-          <div
-            class="highlights"
-            aria-label="Superego highlights and positioning"
-          >
+          <div class="highlights">
             <span class="highlight-item">
               <Icon name="github" class="icon highlight-icon" />
               {formattedStars} stars
@@ -98,114 +206,270 @@ const formattedStars =
       </section>
 
       <section class="explainer">
-        <h2 class="explainer-title">## What</h2>
+        <h2>Your Apps Don't Fit You</h2>
         <p>
-          Superego is an <b>open-source <i>personal</i> database</b> where you can
-          store <i>anything</i> you want about your life.
+          They're built for a generic user and shaped by growth targets, not
+          your needs.
+        </p>
+        <h2>Your Data Isn't Yours</h2>
+        <p>
+          It’s trapped inside apps, leaving you with limited access and no real
+          ownership.
+        </p>
+        <h2>Superego Puts You Back In Control</h2>
+        <p>
+          It's a private place to store your data and build apps tailored to how
+          you live and work.
         </p>
         <p>
-          Your data is stored <b>locally</b>, in files you can back up and sync
-          with Dropbox, Google Drive, or any service you already use.
-          <b>No accounts, no middlemen.</b>
+          Build a portfolio manager that matches how you invest. Vibe-code a
+          chore scoreboard for your family. Make niche tools you'll never find
+          in an app store.
         </p>
-        <p>Superego is also:</p>
-        <ol>
+        <h2>It Brings Your Data Together</h2>
+        <p>
+          Not scattered across apps, but unified and structured. And you always
+          have full, unrestricted access.
+        </p>
+        <h2>It Makes AI Actually Helpful</h2>
+        <p>
+          Having access to your data, Superego's assistant can answer questions
+          ordinary tools can't.
+        </p>
+        <blockquote>
+          Looking at my finances and my lifestyle, when could I retire?
+        </blockquote>
+        <p>
+          <a
+            href="https://demo.superego.dev/?initialMessage=Looking%20at%20my%20finances%20and%20my%20lifestyle%2C%20when%20could%20I%20retire%3F"
+          >
+            Try it in the demo</a
+          > and see how it answers.
+        </p>
+        <h2>See It in Action</h2>
+        <div>
+          <iframe
+            src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
+            title="Superego Demo Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <h2>What Else?</h2>
+        <ul>
+          <li>Open-source, local-first, no-login.</li>
+          <li>Everything in a <b>single SQLite file</b>.</li>
+          <li>Bring-your-own LLM.</li>
           <li>
-            An <b>app platform</b> for building (or vibe-coding) your own personal
-            apps.
+            CLI to integrate with other tools (e.g., your coding agent to write
+            apps).
           </li>
-          <li>
-            An <b>AI assistant</b> with a precise and detailed understanding of your
-            data that can extract meaningful answers from it.
-          </li>
-        </ol>
-        <h2 class="explainer-title">## Why</h2>
-        <p>
-          <b>I'm tired</b> of apps that hold my data hostage and make me jump through
-          hoops to get it. Apps that drop features, enshittify, and go on incredible
-          journeys.
-        </p>
-        <p>
-          I want <b>access to my data</b> and
-          <b>apps that serve <i>me</i></b>.
-        </p>
-        <p>
-          I also want <b>an AI assistant that actually knows me</b>, not one
-          that slops out bland, canned responses.
-        </p>
-        <h2 class="explainer-title">## See It in Action</h2>
-        <iframe
-          src={import.meta.env["PUBLIC_DEMO_VIDEO_URL"]}
-          title="Superego Demo Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen></iframe>
-        <h2 class="explainer-title">## Core Philosophy</h2>
-        <p>
-          Ownership requires awareness. To truly own your data you first need to
-          know what it is.
-        </p>
-        <p>
-          <b>Superego puts your data right in front of you.</b> You can view it all
-          and you have unrestricted access to it.
-        </p>
-        <p>
-          You can have nicer interfaces to manage it – that's what <i>apps</i> are
-          for – but the database foundation is always visible. You own it.
-        </p>
-        <h2 class="explainer-title">## Roadmap</h2>
-        <ul class="roadmap">
-          <li class="done">Document versioning.</li>
-          <li class="done">Search.</li>
-          <li class="done">Collection view apps.</li>
-          <li class="done">Data-aware AI assistant.</li>
-          <li class="done">Write apps with your coding agent.</li>
-          <li class="todo">CLI.</li>
-          <li class="todo">AI-powered data import.</li>
-          <li class="todo">Mobile app.</li>
-          <li class="todo">Sync between devices.</li>
-          <li class="todo">Database encryption.</li>
-          <li class="todo">Database hooks.</li>
         </ul>
+        <h2>Where We're Headed</h2>
+        <ul class="roadmap">
+          <li class="done">
+            <span class="sr-only">Done: </span>Document versioning.
+          </li>
+          <li class="done">
+            <span class="sr-only">Done: </span>Full-text search.
+          </li>
+          <li class="in-progress">
+            <span class="sr-only">In progress: </span>CLI.
+          </li>
+          <li class="todo">
+            <span class="sr-only">To do: </span>AI-assisted data import.
+          </li>
+          <li class="todo"><span class="sr-only">To do: </span>Mobile app.</li>
+          <li class="todo">
+            <span class="sr-only">To do: </span>Sync via file-syncing service.
+          </li>
+          <li class="todo">
+            <span class="sr-only">To do: </span>Database encryption.
+          </li>
+          <li class="todo">
+            <span class="sr-only">To do: </span>Database hooks.
+          </li>
+        </ul>
+        <h2>Sounds Good?</h2>
+        <div class="actions">
+          <a href="https://demo.superego.dev" class="button">
+            Try demo
+            <div class="additional-info">(no login)</div>
+          </a>
+          <a
+            href="https://github.com/superegodev/superego/releases/latest"
+            class="button button-secondary"
+          >
+            Download
+            <div class="additional-info">(alpha)</div>
+          </a>
+          <a
+            href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}
+            class="button button-secondary"
+          >
+            Discuss
+            <div class="additional-info">(Discord)</div>
+          </a>
+        </div>
       </section>
     </main>
-    <script>
-      const header = document.querySelector(".sticky-header");
-      const scrollHint = document.querySelector(".scroll-hint");
-      const toggleHeader = () => {
-        header?.classList.toggle("is-visible", window.scrollY > 24);
-        scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
-      };
-      toggleHeader();
-      window.addEventListener("scroll", toggleHeader, { passive: true });
-    </script>
+    <footer class="footer">
+      <nav class="footer-links">
+        <a href="/getting-started/overview">Docs</a>
+        <a href="https://github.com/superegodev/superego">GitHub</a>
+        <a href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}>Discord</a>
+      </nav>
+      <p class="footer-license">
+        © {new Date().getFullYear()} Paolo Scanferla · AGPL-3.0-only
+      </p>
+    </footer>
   </body>
+  <script>
+    const scrollHint = document.querySelector(".scroll-hint");
+    const header = document.querySelector<HTMLElement>(".sticky-header");
+
+    const supportsScrollTimeline = CSS.supports(
+      "animation-timeline",
+      "scroll()",
+    );
+
+    const icons = !supportsScrollTimeline
+      ? [...document.querySelectorAll<HTMLElement>(".bg-icon")].map(
+          (element) => {
+            const style = getComputedStyle(element);
+            return {
+              element,
+              offsetX: parseFloat(style.getPropertyValue("--offset-x")),
+              offsetY: parseFloat(style.getPropertyValue("--offset-y")),
+              range:
+                (parseFloat(style.getPropertyValue("--range")) *
+                  window.innerHeight) /
+                100,
+            };
+          },
+        )
+      : [];
+
+    const onScroll = () => {
+      scrollHint?.classList.toggle("is-hidden", window.scrollY > 24);
+
+      if (!supportsScrollTimeline && header) {
+        const start = window.innerHeight * 0.7;
+        const end = window.innerHeight;
+        const progress = Math.min(
+          1,
+          Math.max(0, (window.scrollY - start) / (end - start)),
+        );
+        header.style.translate = `0 ${-100 + progress * 100}%`;
+        header.style.opacity = String(progress);
+        header.style.pointerEvents = progress > 0 ? "auto" : "none";
+      }
+
+      for (const icon of icons) {
+        const progress = Math.min(1, Math.max(0, window.scrollY / icon.range));
+        const translateX = (-icon.offsetX - 20) * progress;
+        const translateY = (-icon.offsetY + 20) * progress;
+        icon.element.style.translate = `${translateX}px ${translateY}px`;
+      }
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  </script>
 </html>
 
 <style>
   :root {
     --bg: #fff;
-    --fg: #111;
-    --tagline: #111;
-    --subtitle: #666;
-    --btn-primary-bg: #111;
+    --fg: #000;
+    --tagline: #000;
+    --subtitle: #555;
+    --btn-primary-bg: #000;
     --btn-primary-fg: #fff;
+    --btn-primary-inner-border: #fff;
     --btn-secondary-bg: #fff;
-    --btn-secondary-fg: #111;
-    --btn-secondary-border: #111;
+    --btn-secondary-fg: #000;
+    --btn-secondary-border: #000;
+    --accent: #e63946;
+    --border: 3px solid #000;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #111;
+      --bg: #0a0a0a;
       --fg: #fff;
       --tagline: #fff;
-      --subtitle: #888;
+      --subtitle: #999;
       --btn-primary-bg: #fff;
-      --btn-primary-fg: #111;
-      --btn-secondary-bg: #111;
+      --btn-primary-fg: #000;
+      --btn-primary-inner-border: #000;
+      --btn-secondary-bg: #0a0a0a;
       --btn-secondary-fg: #fff;
       --btn-secondary-border: #fff;
+      --border: 3px solid #fff;
+    }
+  }
+
+  @keyframes pull-to-center {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: calc(-1 * var(--offset-x) - 20px)
+        calc(-1 * var(--offset-y) + 20px);
+    }
+  }
+
+  .bg-icons {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: radial-gradient(
+      circle at center,
+      black 0%,
+      black 70%,
+      transparent 95%
+    );
+  }
+
+  .bg-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.8rem;
+    background: var(--bg);
+    border: var(--border);
+    box-shadow: 3px 3px 0 var(--fg);
+    opacity: 0.7;
+    top: calc(50vh + var(--offset-y));
+    left: calc(50vw + var(--offset-x));
+    transform: rotate(var(--rotation));
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .bg-icon {
+      animation: pull-to-center linear forwards;
+      animation-timeline: scroll(root);
+      animation-range: 0vh var(--range);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .bg-icon {
+      width: 2.8rem;
+      height: 2.8rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bg-icons {
+      display: none;
     }
   }
 
@@ -220,6 +484,8 @@ const formattedStars =
   }
 
   main {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -228,26 +494,37 @@ const formattedStars =
     padding: 0 1.5rem;
   }
 
+  @keyframes lower-header {
+    from {
+      translate: 0 -100%;
+      opacity: 0;
+      pointer-events: none;
+    }
+    to {
+      translate: 0 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
   .sticky-header {
     position: fixed;
     inset-block-start: 0;
     inset-inline: 0;
     z-index: 20;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 3px 16px rgb(0 0 0 / 0.08);
-    transform: translateY(-120%);
+    background: var(--bg);
+    border-block-end: var(--border);
+    translate: 0 -100%;
     opacity: 0;
     pointer-events: none;
-    transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
   }
 
-  .sticky-header.is-visible {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
+  @supports (animation-timeline: scroll()) {
+    .sticky-header {
+      animation: lower-header linear forwards;
+      animation-timeline: scroll(root);
+      animation-range: 70vh 100vh;
+    }
   }
 
   .sticky-inner {
@@ -264,8 +541,15 @@ const formattedStars =
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    font-weight: 700;
+    font-weight: 900;
     font-size: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .sticky-header {
+      background: transparent;
+      border-block-end: none;
+    }
   }
 
   @media (max-width: 640px) {
@@ -293,6 +577,11 @@ const formattedStars =
     justify-content: center;
   }
 
+  .icon-link:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
   .icon {
     width: 2.2rem;
     height: 2.2rem;
@@ -312,18 +601,36 @@ const formattedStars =
     justify-content: center;
     align-items: center;
     font-size: clamp(2rem, 1rem + 4.1vw, 4rem);
-    font-style: italic;
+    font-style: normal;
     text-align: center;
     color: var(--tagline);
   }
 
   .tagline p {
-    margin-block: 1rem;
+    margin-block: 0.5rem;
+    line-height: 1.1;
   }
 
   .tagline u {
-    font-weight: 700;
-    font-size: 1.1em;
+    font-weight: 900;
+    font-size: 1.2em;
+    text-decoration: none;
+    background: var(--fg);
+    color: var(--bg);
+    padding-inline: 0.15em;
+    margin-inline-end: -0.15rem;
+    display: inline-block;
+    transform: rotate(2deg);
+  }
+
+  .tagline p:first-child u {
+    transform: rotate(-2deg);
+  }
+
+  .tagline p:last-child u {
+    transform: rotate(-2deg);
+    background: var(--accent);
+    color: #fff;
   }
 
   .hero {
@@ -334,7 +641,7 @@ const formattedStars =
 
   .logo-container {
     position: relative;
-    height: clamp(80px, 120px + 5vw, 180px);
+    height: clamp(80px, 120px + 5vw, 140px);
     aspect-ratio: 1 / 1;
     margin-block-end: 1.5rem;
   }
@@ -401,16 +708,16 @@ const formattedStars =
 
   .title {
     font-size: 3rem;
-    font-weight: 700;
-    margin-block-start: 1rem;
-    margin-block-end: 0;
+    font-weight: 900;
+    margin-block-start: 2rem;
+    margin-block-end: 0rem;
     text-align: center;
   }
 
   .subtitle {
     font-size: 1.75rem;
-    margin-block-start: 1.5rem;
-    margin-block-end: 3.5rem;
+    margin-block-start: 1rem;
+    margin-block-end: 4.5rem;
     text-align: center;
     color: var(--subtitle);
   }
@@ -418,15 +725,18 @@ const formattedStars =
   .actions {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     margin-block-end: 2rem;
   }
 
   .actions .button {
-    width: 220px;
+    min-width: 180px;
     text-align: center;
     box-sizing: border-box;
+  }
+  .actions.cta .button {
+    min-width: 240px;
   }
 
   @media (max-width: 640px) {
@@ -445,38 +755,71 @@ const formattedStars =
       margin-block-end: 2rem;
     }
 
+    .actions {
+      align-self: stretch;
+    }
+
     .actions .button {
-      width: 160px;
+      flex: 1;
+      min-width: 0;
       padding: 1rem 1.25rem;
       font-size: 1.2rem;
+    }
+    .actions:not(.cta) .button {
+      font-size: 1rem;
+    }
+    .actions.cta .button {
+      min-width: 0;
     }
   }
 
   .button {
     display: inline-block;
     padding: 1rem 1.75rem;
-    border-radius: 999px;
     text-decoration: none;
     background: var(--btn-primary-bg);
     color: var(--btn-primary-fg);
-    font-weight: 600;
+    font-weight: 800;
     font-size: 1.5rem;
-    transition: opacity 0.2s;
+    text-transform: uppercase;
+    border: var(--border);
+    outline: 2px solid var(--btn-primary-inner-border);
+    outline-offset: -5px;
+    box-shadow: 4px 4px 0 var(--fg);
+    transform: translate(-2px, -2px);
+    transition:
+      transform 0.1s linear,
+      box-shadow 0.1s linear;
   }
 
   .button:hover {
-    opacity: 0.9;
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 var(--fg);
   }
 
   .button-secondary {
     background: var(--btn-secondary-bg);
     color: var(--btn-secondary-fg);
-    border: 1px solid var(--btn-secondary-border);
+    border: var(--border);
   }
 
-  .button-pill {
+  .button-header {
     font-size: 1rem;
     padding: 0.8rem 1.4rem;
+    box-shadow: 2px 2px 0 var(--fg);
+    transform: translate(-1px, -1px);
+  }
+
+  .button-header:hover {
+    box-shadow: 1px 1px 0 var(--fg);
+    transform: translate(0, 0);
+  }
+
+  .additional-info {
+    font-size: 0.7em;
+    font-weight: 400;
+    text-transform: none;
+    margin-block-start: 0.25rem;
   }
 
   .highlights {
@@ -509,9 +852,9 @@ const formattedStars =
   }
 
   .highlights div[role="separator"] {
-    width: 1px;
-    height: 1em;
-    background-color: var(--subtitle);
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--fg);
   }
 
   .highlight-icon {
@@ -521,10 +864,59 @@ const formattedStars =
 
   .scroll-hint {
     display: block;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--subtitle);
     transform: rotate(90deg);
-    transition: opacity 0.2s ease;
+    transition: opacity 0.1s linear;
+    animation: bounce 8s infinite;
+    animation-delay: 8s;
+  }
+
+  @keyframes bounce {
+    0% {
+      translate: 0 -100vh;
+      scale: 1.5;
+      animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0);
+    }
+    3% {
+      translate: 0 0;
+      scale: 1.5;
+      animation-timing-function: cubic-bezier(0.33, 1, 0.66, 1);
+    }
+    6% {
+      translate: 0 -22px;
+      scale: 1.4;
+      animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0);
+    }
+    9% {
+      translate: 0 0;
+      scale: 1.3;
+      animation-timing-function: cubic-bezier(0.33, 1, 0.66, 1);
+    }
+    11.5% {
+      translate: 0 -10px;
+      scale: 1.2;
+      animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0);
+    }
+    14% {
+      translate: 0 0;
+      scale: 1.1;
+      animation-timing-function: cubic-bezier(0.33, 1, 0.66, 1);
+    }
+    15.5% {
+      translate: 0 -4px;
+      scale: 1.05;
+      animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0);
+    }
+    17% {
+      translate: 0 0;
+      scale: 1;
+    }
+    18%,
+    100% {
+      translate: 0 0;
+      scale: 1;
+    }
   }
 
   .scroll-hint.is-hidden {
@@ -533,31 +925,64 @@ const formattedStars =
   }
 
   .explainer {
-    margin-block: 10rem;
+    margin-block-start: 10rem;
+    margin-block-end: 2rem;
+    font-size: 1.7rem;
+    line-height: 2;
+  }
+
+  .explainer h2 {
+    margin-block-start: 4.5rem;
+    margin-block-end: 1.5rem;
     font-size: 2rem;
-    line-height: 2.5;
+    line-height: 2;
+  }
+  .explainer h2:first-child {
+    margin-block-start: 0;
   }
 
-  .explainer-title {
-    margin-block-start: 0rem;
-    margin-block-end: 1rem;
-    font-size: 2rem;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.25rem;
+  .explainer > * {
+    margin-block-end: 3rem;
   }
 
-  .explainer p,
-  .explainer ol {
-    margin-block-end: 4rem;
-  }
-
-  .explainer p:has(+ ol) {
+  .explainer p:has(+ ol),
+  .explainer p:has(+ ul) {
     margin-block-end: 2rem;
   }
 
   .explainer li:not(.roadmap li) {
-    margin-inline-start: 1.8rem;
+    margin-inline-start: 0rem;
+    padding-inline-start: 1.5rem;
+  }
+
+  .explainer .actions {
+    line-height: normal;
+  }
+
+  .explainer a:not(.button) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.2em;
+  }
+
+  .explainer blockquote {
+    margin-inline-start: 1rem;
+    padding-inline-start: 2rem;
+    border-inline-start: var(--border);
+    font-style: italic;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .roadmap {
@@ -569,9 +994,17 @@ const formattedStars =
     content: "[ ] ";
   }
 
+  .roadmap .in-progress::before {
+    content: "[⋯] ";
+  }
+  .roadmap .in-progress::after {
+    content: " 🚧";
+  }
+
   .roadmap .done {
     text-decoration: line-through;
-    text-decoration-color: color-mix(in srgb, var(--fg) 25%, transparent);
+    text-decoration-thickness: 3px;
+    text-decoration-color: color-mix(in srgb, var(--fg) 40%, transparent);
   }
 
   .roadmap .done::before {
@@ -581,10 +1014,7 @@ const formattedStars =
   iframe {
     width: 100%;
     aspect-ratio: 720 / 405;
-    border: 0;
-    border-radius: 0.5rem;
-    margin-block-start: 2.6rem;
-    margin-block-end: 4rem;
+    border: var(--border);
   }
 
   @media (max-width: 640px) {
@@ -594,16 +1024,17 @@ const formattedStars =
       margin-block: 4rem;
     }
 
-    .explainer-title {
+    .explainer h2 {
+      margin-block-start: 3rem;
       font-size: 1.4rem;
     }
 
-    .explainer p,
-    .explainer ol {
+    .explainer > * {
       margin-block-end: 2rem;
     }
 
-    .explainer p:has(+ ol) {
+    .explainer p:has(+ ol),
+    .explainer p:has(+ ul) {
       margin-block-end: 1rem;
     }
 
@@ -613,7 +1044,43 @@ const formattedStars =
     }
 
     .explainer li:not(.roadmap li) {
-      margin-inline-start: 1rem;
+      margin-inline-start: -1.5rem;
+      padding-inline-start: 0.5rem;
     }
+  }
+
+  .footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 3rem 1.5rem;
+    margin-block-start: 4rem;
+    border-block-start: var(--border);
+    font-size: 1rem;
+    color: var(--subtitle);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    display: inline-block;
+    width: 5rem;
+    text-align: center;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-license {
+    margin: 0;
   }
 </style>

@@ -78,6 +78,20 @@ export default class DemoDocumentTextSearchIndex
     this.ensureNotDisposed();
     this.loadIndex();
 
+    if (query === "") {
+      const entries = Object.values(this.documentTextSearchTexts)
+        .filter(
+          (entry) =>
+            collectionId === null || entry.collectionId === collectionId,
+        )
+        .slice(0, options.limit);
+      return entries.map((entry) => ({
+        collectionId: entry.collectionId,
+        documentId: entry.documentId,
+        matchedText: "",
+      }));
+    }
+
     const results = this.searchTextIndexState.index.search(query, {
       tag: collectionId ? { collectionId } : undefined,
       limit: options.limit,

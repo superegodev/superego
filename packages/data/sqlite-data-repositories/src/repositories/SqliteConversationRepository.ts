@@ -26,17 +26,19 @@ export default class SqliteConversationRepository
             "context_fingerprint",
             "messages",
             "status",
+            "processing_started_at",
             "error",
             "created_at"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT("id") DO UPDATE SET
           "assistant" = excluded."assistant",
           "title" = excluded."title",
           "context_fingerprint" = excluded."context_fingerprint",
           "messages" = excluded."messages",
           "status" = excluded."status",
+          "processing_started_at" = excluded."processing_started_at",
           "error" = excluded."error",
           "created_at" = excluded."created_at"
       `)
@@ -47,6 +49,7 @@ export default class SqliteConversationRepository
         conversation.contextFingerprint,
         encode(conversation.messages),
         conversation.status,
+        conversation.processingStartedAt?.toISOString() ?? null,
         conversation.error ? JSON.stringify(conversation.error) : null,
         conversation.createdAt.toISOString(),
       );

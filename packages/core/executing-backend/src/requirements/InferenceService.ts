@@ -1,4 +1,8 @@
-import type { AudioContent, Message } from "@superego/backend";
+import type {
+  AudioContent,
+  InferenceOptions,
+  Message,
+} from "@superego/backend";
 import type { JSONSchema7 } from "json-schema";
 
 namespace InferenceService {
@@ -17,16 +21,16 @@ namespace InferenceService {
 }
 
 interface InferenceService {
-  // TODO: handle multiple messages. Apparently both OpenAI and Anthropic models
-  // can output multiple messages.
   generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
+    inferenceOptions: InferenceOptions<"completion">,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
 
-  tts(text: string): Promise<AudioContent>;
-
-  stt(audio: AudioContent): Promise<string>;
+  stt(
+    audio: AudioContent,
+    inferenceOptions: InferenceOptions<"transcription">,
+  ): Promise<string>;
 
   inspectFile(
     file: {
@@ -35,6 +39,7 @@ interface InferenceService {
       content: Uint8Array<ArrayBuffer>;
     },
     prompt: string,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<string>;
 }
 

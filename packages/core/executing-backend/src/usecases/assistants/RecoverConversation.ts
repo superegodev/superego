@@ -6,34 +6,52 @@ import {
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
-  type Message,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
   type UnexpectedError,
 } from "@superego/backend";
-import type { Milliseconds, ResultPromise } from "@superego/global-types";
+import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  validateInferenceOptions,
 } from "@superego/shared-utils";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import last from "../../utils/last.js";
+import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
-
-const PROCESSING_TIMEOUT: Milliseconds = 5 * 60 * 1000;
 
 export default class AssistantsRecoverConversation extends Usecase<
   Backend["assistants"]["recoverConversation"]
 > {
   async exec(
     id: ConversationId,
+    inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,
-    ConversationNotFound | CannotRecoverConversation | UnexpectedError
+    | ConversationNotFound
+    | CannotRecoverConversation
+    | InferenceOptionsNotValid
+    | UnexpectedError
   > {
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsIssues = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
+    }
+
     const conversation = await this.repos.conversation.find(id);
     if (!conversation) {
       return makeUnsuccessfulResult(
@@ -47,10 +65,12 @@ export default class AssistantsRecoverConversation extends Usecase<
     }
     const contextFingerprint =
       await ConversationUtils.getContextFingerprint(collections);
+    const isStuckProcessing =
+      conversation.status === ConversationStatus.Processing &&
+      Date.now() - conversation.processingStartedAt.getTime() >=
+        this.config.conversationProcessingStuckTimeout;
     const canBeRecovered =
-      ((conversation.status === ConversationStatus.Processing &&
-        lastMessageOlderThan(conversation.messages, PROCESSING_TIMEOUT)) ||
-        conversation.status === ConversationStatus.Error) &&
+      (isStuckProcessing || conversation.status === ConversationStatus.Error) &&
       conversation.contextFingerprint === contextFingerprint;
     if (!canBeRecovered) {
       return makeUnsuccessfulResult(
@@ -69,29 +89,18 @@ export default class AssistantsRecoverConversation extends Usecase<
     const updatedConversation: ConversationEntity = {
       ...conversation,
       status: ConversationStatus.Processing,
+      processingStartedAt: new Date(),
       error: null,
     };
     await this.repos.conversation.upsert(updatedConversation);
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id },
+      input: { id, inferenceOptions },
     });
 
     return makeSuccessfulResult(
       makeConversation(updatedConversation, contextFingerprint),
     );
   }
-}
-
-function lastMessageOlderThan(
-  messages: Message[],
-  threshold: Milliseconds,
-): boolean {
-  const lastMessage = last(messages);
-  return (
-    lastMessage !== null &&
-    "createdAt" in lastMessage &&
-    Date.now() - lastMessage.createdAt.getTime() > threshold
-  );
 }

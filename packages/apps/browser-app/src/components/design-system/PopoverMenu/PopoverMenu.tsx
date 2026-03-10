@@ -5,9 +5,11 @@ import {
   type ReactNode,
 } from "react";
 import { MenuTrigger, type PopoverProps } from "react-aria-components";
+import classnames from "../../../utils/classnames.js";
 import Popover from "../Popover/Popover.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
+import * as cs from "./PopoverMenu.css.js";
 import Trigger from "./Trigger.js";
 
 interface Props {
@@ -31,7 +33,10 @@ export default function PopoverMenu({ placement, className, children }: Props) {
   return (
     <MenuTrigger>
       {trigger}
-      <Popover placement={placement} className={className}>
+      <Popover
+        placement={placement}
+        className={classnames(cs.PopoverMenu.popover, className)}
+      >
         {menu}
       </Popover>
     </MenuTrigger>

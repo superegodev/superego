@@ -1,9 +1,15 @@
 import { mkdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AssistantName, Theme } from "@superego/backend";
+import {
+  AssistantName,
+  InferenceProviderDriver,
+  type InferenceSettings,
+  ReasoningEffort,
+  Theme,
+} from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
+import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
@@ -11,14 +17,10 @@ import { afterAll, assert, beforeAll, describe } from "vitest";
 import registerTests from "./registerTests.js";
 import Evaluator from "./utils/Evaluator.js";
 
-const chatCompletionsBaseUrl = import.meta.env[
-  "SUPEREGO_TESTS_CHAT_COMPLETIONS_BASE_URL"
-];
-assert.isDefined(chatCompletionsBaseUrl);
-const chatCompletionsApiKey = import.meta.env[
-  "SUPEREGO_TESTS_CHAT_COMPLETIONS_API_KEY"
-];
-assert.isDefined(chatCompletionsApiKey);
+const responsesBaseUrl = import.meta.env["SUPEREGO_TESTS_RESPONSES_BASE_URL"];
+assert.isDefined(responsesBaseUrl);
+const responsesApiKey = import.meta.env["SUPEREGO_TESTS_RESPONSES_API_KEY"];
+assert.isDefined(responsesApiKey);
 
 const databasesTmpDir = join(tmpdir(), "superego-assistants-e2e-tests");
 beforeAll(() => {
@@ -35,33 +37,51 @@ const javascriptSandbox = new QuickjsJavascriptSandbox();
 const typescriptCompiler = new TscTypescriptCompiler();
 
 // Inference service
-const inferenceServiceFactory = new OpenAICompatInferenceServiceFactory();
+const inferenceServiceFactory = new MultiDriverInferenceServiceFactory();
+
+function makeInferenceSettings(model: string): InferenceSettings {
+  const providerName = "test-provider";
+  return {
+    providers: [
+      {
+        name: providerName,
+        baseUrl: responsesBaseUrl,
+        apiKey: responsesApiKey,
+        driver: InferenceProviderDriver.OpenResponses,
+        models: [
+          {
+            id: model,
+            name: model,
+            capabilities: {
+              audioUnderstanding: false,
+              imageUnderstanding: false,
+              pdfUnderstanding: false,
+            },
+          },
+        ],
+      },
+    ],
+    defaultInferenceOptions: {
+      completion: {
+        providerModelRef: { providerName, modelId: model },
+        reasoningEffort: ReasoningEffort.Medium,
+      },
+      transcription: null,
+      fileInspection: null,
+    },
+  };
+}
 
 // Evaluator
 const evaluatorModel = "openai/gpt-oss-120b";
 const evaluator = new Evaluator(
-  inferenceServiceFactory.create({
-    chatCompletions: {
-      provider: {
-        baseUrl: chatCompletionsBaseUrl,
-        apiKey: chatCompletionsApiKey,
-      },
-      model: evaluatorModel,
-    },
-    transcriptions: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-    speech: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-      voice: null,
-    },
-    fileInspection: {
-      provider: { baseUrl: null, apiKey: null },
-      model: null,
-    },
-  }),
+  inferenceServiceFactory.create(makeInferenceSettings(evaluatorModel)),
+  {
+    completion:
+      makeInferenceSettings(evaluatorModel).defaultInferenceOptions.completion!,
+    transcription: null,
+    fileInspection: null,
+  },
 );
 
 const assistantsModels = [
@@ -97,30 +117,10 @@ describe.concurrent.each(
   registerTests(() => {
     const defaultGlobalSettings = {
       appearance: { theme: Theme.Auto },
-      inference: {
-        chatCompletions: {
-          provider: {
-            baseUrl: chatCompletionsBaseUrl,
-            apiKey: chatCompletionsApiKey,
-          },
-          model: model,
-        },
-        transcriptions: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-        speech: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-          voice: null,
-        },
-        fileInspection: {
-          provider: { baseUrl: null, apiKey: null },
-          model: null,
-        },
-      },
+      inference: makeInferenceSettings(model),
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,
@@ -144,6 +144,13 @@ describe.concurrent.each(
       [],
     );
 
-    return { backend, booleanOracle: evaluator };
+    const inferenceOptions = {
+      completion:
+        makeInferenceSettings(model).defaultInferenceOptions.completion!,
+      transcription: null,
+      fileInspection: null,
+    };
+
+    return { backend, booleanOracle: evaluator, inferenceOptions };
   });
 });

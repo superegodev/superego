@@ -175,6 +175,7 @@ export const SelectButton = {
 
   clearButtonStub: style({
     width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin})`,
+    marginInlineStart: vars.spacing._3,
     height: "100%",
     flexShrink: 0,
   }),

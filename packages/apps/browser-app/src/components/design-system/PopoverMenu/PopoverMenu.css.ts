@@ -1,8 +1,17 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
+export const PopoverMenu = {
+  popover: style({
+    display: "flex",
+    flexDirection: "column",
+  }),
+};
+
 export const Menu = {
   root: style({
+    flexGrow: "1",
+    overflow: "auto",
     display: "flex",
     flexDirection: "column",
     gap: vars.spacing._1,

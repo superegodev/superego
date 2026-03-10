@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+export type { default as Config } from "./Config.js";
 export { default as ExecutingBackend } from "./ExecutingBackend.js";
 
 //////////////

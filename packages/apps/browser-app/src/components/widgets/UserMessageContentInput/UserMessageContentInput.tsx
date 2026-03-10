@@ -1,16 +1,22 @@
 import {
   type Conversation,
   ConversationStatus,
+  type InferenceOptions,
   type Message,
   MessageContentPartType,
 } from "@superego/backend";
+import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import { type RefObject, useRef, useState } from "react";
 import { DropZone, TextArea, TextField } from "react-aria-components";
 import { useIntl } from "react-intl";
-import useIsInferenceConfigured from "../../../business-logic/assistant/useIsInferenceConfigured.js";
 import useRecordAudio from "../../../business-logic/audio/useRecordAudio.js";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import getIsInferenceConfigured from "../../../business-logic/inference/getIsInferenceConfigured.js";
+import mergeInferenceOptions from "../../../business-logic/inference/mergeInferenceOptions.js";
+import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import classnames from "../../../utils/classnames.js";
 import AddFilesButton from "./AddFilesButton.js";
+import CompletionInferenceOptionsInput from "./CompletionInferenceOptionsInput/CompletionInferenceOptionsInput.js";
 import FilesTray from "./FilesTray.js";
 import SendRecordButtons from "./SendRecordButtons.js";
 import * as cs from "./UserMessageContentInput.css.js";
@@ -19,7 +25,10 @@ import useFiles from "./useFiles.js";
 
 interface Props {
   conversation: Conversation | null;
-  onSend: (messageContent: Message.User["content"]) => void;
+  onSend: (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => void;
   isSending: boolean;
   initialMessage?: string | undefined;
   placeholder: string;
@@ -38,22 +47,33 @@ export default function UserMessageContentInput({
   autoFocus,
   allowFileParts = true,
   ref,
-  textAreaRef,
+  textAreaRef: externalTextAreaRef,
   className,
 }: Props) {
   const intl = useIntl();
 
   // We define an internal ref in case one is not provided from outside.
   const internalTextAreaRef = useRef<HTMLTextAreaElement>(null);
-  const actualTextAreaRef = textAreaRef ?? internalTextAreaRef;
+  const textAreaRef = externalTextAreaRef ?? internalTextAreaRef;
 
-  const isInferenceConfigured = useIsInferenceConfigured();
-  const isDisabled =
+  const { globalSettings } = useGlobalData();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
+  const [customInferenceOptions, setCustomInferenceOptions] =
+    useState<InferenceOptions<"completion"> | null>(null);
+  const inferenceOptions = mergeInferenceOptions(
+    defaultInferenceOptions,
+    customInferenceOptions,
+  );
+
+  const isInferenceConfigured = getIsInferenceConfigured(
+    defaultInferenceOptions,
+  );
+  const globalIsDisabled =
     (conversation !== null &&
       (conversation.hasOutdatedContext ||
         conversation?.status !== ConversationStatus.Idle)) ||
     isSending ||
-    !isInferenceConfigured.chatCompletions;
+    !isInferenceConfigured.completion;
 
   const {
     files,
@@ -63,41 +83,53 @@ export default function UserMessageContentInput({
     onRemoveFile,
     removeAllFiles,
     getContentParts,
-  } = useFiles(allowFileParts && isInferenceConfigured.fileInspection);
+  } = useFiles(allowFileParts && !globalIsDisabled);
 
   const [text, setText] = useState(initialMessage ?? "");
   const sendText = async () => {
-    onSend([
-      { type: MessageContentPartType.Text, text: text },
-      ...(await getContentParts()),
-    ]);
+    assertInferenceOptionsHas(inferenceOptions, "completion");
+    onSend(
+      [
+        { type: MessageContentPartType.Text, text: text },
+        ...(await getContentParts()),
+      ],
+      inferenceOptions,
+    );
     setText("");
     removeAllFiles();
   };
 
   const { isRecording, startRecording, finishRecording, cancelRecording } =
     useRecordAudio(async (audio) => {
-      onSend([
-        { type: MessageContentPartType.Audio, audio: audio },
-        ...(await getContentParts()),
-      ]);
+      assertInferenceOptionsHas(
+        inferenceOptions,
+        "completion",
+        "transcription",
+      );
+      onSend(
+        [
+          { type: MessageContentPartType.Audio, audio: audio },
+          ...(await getContentParts()),
+        ],
+        inferenceOptions,
+      );
       removeAllFiles();
     });
 
   // Auto-resize textarea.
-  useAutoResizeTextArea(actualTextAreaRef, text);
+  useAutoResizeTextArea(textAreaRef, text);
 
   return (
     <DropZone
       ref={ref}
       onDrop={onDrop}
-      isDisabled={isDisabled || isRecording}
+      isDisabled={globalIsDisabled || isRecording}
       className={classnames(cs.UserMessageContentInput.root, className)}
     >
       <FilesTray
         files={files}
         onRemoveFile={onRemoveFile}
-        isRemoveDisabled={isDisabled || isRecording}
+        isRemoveDisabled={globalIsDisabled || isRecording}
       />
       <TextField
         className={cs.UserMessageContentInput.textField}
@@ -105,7 +137,7 @@ export default function UserMessageContentInput({
         value={text}
         aria-label={intl.formatMessage({ defaultMessage: "Message assistant" })}
         autoFocus={autoFocus}
-        isDisabled={isDisabled || isRecording}
+        isDisabled={globalIsDisabled || isRecording}
         onPaste={onPaste}
         onKeyDown={(evt) => {
           if (evt.key === "Enter" && !evt.shiftKey) {
@@ -117,6 +149,7 @@ export default function UserMessageContentInput({
         }}
       >
         <TextArea
+          ref={textAreaRef}
           rows={1}
           placeholder={
             conversation?.hasOutdatedContext
@@ -124,32 +157,37 @@ export default function UserMessageContentInput({
                   defaultMessage:
                     "Your collections changed since having this conversation. It cannot be continued.",
                 })
-              : isInferenceConfigured.chatCompletions
+              : isInferenceConfigured.completion
                 ? placeholder
                 : intl.formatMessage({
                     defaultMessage: "Configure assistant to start chatting",
                   })
           }
           className={cs.UserMessageContentInput.textArea}
-          ref={actualTextAreaRef}
         />
       </TextField>
       <div className={cs.UserMessageContentInput.actionsToolbar}>
-        <div>
+        <div className={cs.UserMessageContentInput.actionsToolbarLeft}>
           {allowFileParts ? (
             <AddFilesButton
               onFilesAdded={onFilesAdded}
-              isDisabled={isDisabled || isRecording}
-              isFileInspectionConfigured={isInferenceConfigured.fileInspection}
+              isDisabled={globalIsDisabled || isRecording}
             />
           ) : null}
+          <CompletionInferenceOptionsInput
+            inferenceSettings={globalSettings.inference}
+            defaultInferenceOptions={defaultInferenceOptions}
+            value={customInferenceOptions}
+            onChange={setCustomInferenceOptions}
+            isDisabled={globalIsDisabled || isRecording}
+          />
         </div>
         <SendRecordButtons
-          areChatCompletionsConfigured={isInferenceConfigured.chatCompletions}
-          areTranscriptionsConfigured={isInferenceConfigured.transcriptions}
+          isCompletionConfigured={isInferenceConfigured.completion}
+          isTranscriptionConfigured={isInferenceConfigured.transcription}
           isWriting={text.trim() !== ""}
           isRecording={isRecording}
-          isDisabled={isDisabled}
+          isDisabled={globalIsDisabled}
           onSend={sendText}
           onStartRecording={startRecording}
           onCancelRecording={cancelRecording}

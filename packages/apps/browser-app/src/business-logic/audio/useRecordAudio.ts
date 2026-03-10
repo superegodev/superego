@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import convertToWav from "./convertToWav.js";
 
 interface UseRecordAudio {
   isRecording: boolean;
@@ -30,7 +31,11 @@ export default function useRecordAudio(
   const startRecording = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaStreamRef.current = stream;
-    const mediaRecorder = new MediaRecorder(stream, { audioBitsPerSecond });
+    const mimeType = getPreferredMimeType();
+    const mediaRecorder = new MediaRecorder(stream, {
+      audioBitsPerSecond,
+      ...(mimeType ? { mimeType } : null),
+    });
     mediaRecorderRef.current = mediaRecorder;
 
     const recordedChunks: BlobPart[] = [];
@@ -47,8 +52,11 @@ export default function useRecordAudio(
             type: mediaRecorder.mimeType,
           });
           onFinish({
-            content: new Uint8Array(await chunksBlob.arrayBuffer()),
-            contentType: mediaRecorder.mimeType,
+            content:
+              mediaRecorder.mimeType === "audio/wav"
+                ? new Uint8Array(await chunksBlob.arrayBuffer())
+                : await convertToWav(chunksBlob),
+            contentType: "audio/wav",
           });
         }
       } finally {
@@ -76,6 +84,19 @@ export default function useRecordAudio(
   }, []);
 
   return { isRecording, startRecording, finishRecording, cancelRecording };
+}
+
+const PREFERRED_MIME_TYPES = [
+  "audio/wav",
+  "audio/webm",
+  "audio/ogg",
+  "audio/mp4",
+];
+
+function getPreferredMimeType(): string | undefined {
+  return PREFERRED_MIME_TYPES.find((type) =>
+    MediaRecorder.isTypeSupported(type),
+  );
 }
 
 function cleanup(

@@ -240,6 +240,8 @@ export declare function Select(
           /** New value selected by the user. */
           newValue: string | null,
         ) => void;
+        /** Shows a button that sets the value to null. Defaults to true. */
+        showClearButton?: boolean | undefined;
       }
     | {
         mode: "multiple";
@@ -267,6 +269,50 @@ export declare function TextField(props: {
   ariaLabel?: string;
   description?: ReactNode;
   placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+/**
+ * A markdown editor field with a formatting toolbar. The value is a plain
+ * markdown string. Use `null` to represent empty.
+ */
+export declare function MarkdownField(props: {
+  /** Controlled value for the editor. Use `null` to represent empty. */
+  value: string | null;
+  onChange: (
+    /** New markdown string typed by the user, or `null` if the field is empty. */
+    newValue: string | null,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
+  placeholder?: string;
+  isDisabled?: boolean;
+}): JSX.Element;
+
+/**
+ * A rich text editor field powered by Tiptap. The value is a valid Tiptap
+ * JSONContent object branded with `__dataType: "JsonObject"` (a Superego
+ * JsonObject). Use `null` to represent empty.
+ */
+export declare function TiptapRichTextField(props: {
+  /**
+   * Controlled value for the editor: a valid Tiptap JSONContent object branded
+   * with `{ __dataType: "JsonObject" }`, or `null` when empty.
+   */
+  value: any;
+  onChange: (
+    /**
+     * New content produced by the editor (a Tiptap JSONContent object branded
+     * with `{ __dataType: "JsonObject" }`), or `null` if the editor is empty.
+     */
+    newValue: any,
+  ) => void;
+  label?: ReactNode;
+  /** Required if label is not supplied. */
+  ariaLabel?: string;
+  description?: ReactNode;
   isDisabled?: boolean;
 }): JSX.Element;
 

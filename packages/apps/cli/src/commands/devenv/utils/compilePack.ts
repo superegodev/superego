@@ -154,10 +154,14 @@ export default async function compilePack(
   if (options?.includeDemoDocuments) {
     const demoDocumentsDir = join(basePath, "demo-documents");
     if (existsSync(demoDocumentsDir)) {
-      const demoFiles = readdirSync(demoDocumentsDir)
+      const demoDocumentFileNames = readdirSync(demoDocumentsDir)
         .filter((f) => /^ProtoDocument_\d+\.json$/.test(f))
-        .sort();
-      for (const fileName of demoFiles) {
+        .sort(
+          (a, b) =>
+            Number(a.split(".")[0]!.split("_")[1]) -
+            Number(b.split(".")[0]!.split("_")[1]),
+        );
+      for (const fileName of demoDocumentFileNames) {
         const filePath = join(demoDocumentsDir, fileName);
         const data = readJsonFile(filePath);
         if (

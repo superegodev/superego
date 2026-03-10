@@ -53,6 +53,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Build demo-app for preview environment
+        env:
+          VITE_SANDBOX_URL: /app-sandbox.html
         run: yarn build-demo:preview
       - name: Deploy demo-app to preview environment
         env:

@@ -7,8 +7,8 @@ import type { Page } from "@playwright/test";
  * Ends: newly-created Contacts collection page.
  */
 export default async function installProductivityPack(page: Page) {
-  // Navigate to the Bazaar page.
-  await page.goto("/bazaar");
+  // Navigate to the Boutique page.
+  await page.goto("/boutique");
 
   // Navigate to the Productivity pack detail page.
   await page.getByRole("link", { name: /Productivity/i }).click();

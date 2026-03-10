@@ -17,6 +17,7 @@ interface Props {
   label?: ReactNode | undefined;
   ariaLabel?: string | undefined;
   description?: ReactNode | undefined;
+  showClearButton?: boolean | undefined;
 }
 export default function Select({
   mode = "single",
@@ -28,6 +29,7 @@ export default function Select({
   label,
   ariaLabel,
   description,
+  showClearButton = true,
 }: Props) {
   return (
     <SelectRAC
@@ -40,7 +42,11 @@ export default function Select({
     >
       {label ? <Label>{label}</Label> : null}
       <SelectButton
-        onClear={typeof value === "string" ? () => onChange(null) : undefined}
+        onClear={
+          showClearButton && typeof value === "string"
+            ? () => onChange(null)
+            : undefined
+        }
       />
       <SelectOptions options={options} />
       {description ? <Description>{description}</Description> : null}

@@ -16,26 +16,6 @@ export const CollectionsTree = {
     overflow: "auto",
     overscrollBehavior: "contain",
   }),
-
-  emptyTree: style({
-    display: "flex",
-    gap: vars.spacing._2,
-    alignItems: "center",
-    width: "100%",
-    fontSize: vars.typography.fontSizes.sm,
-    color: vars.colors.text.secondary,
-  }),
-
-  emptyTreeText: style({
-    // Pixel-specific width to line up the arrow with the toolbar button.
-    width: "172.5px",
-    paddingInlineStart: vars.spacing._2,
-  }),
-
-  emptyTreeIcon: style({
-    fontSize: vars.typography.fontSizes.lg,
-    marginBlockEnd: vars.spacing._2,
-  }),
 };
 
 export const Header = {

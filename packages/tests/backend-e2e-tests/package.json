@@ -8,12 +8,12 @@
     "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/node": "^25.3.1",
+    "@types/node": "^25.4.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
-    "@superego/bazaar": "workspace:*",
+    "@superego/boutique": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/fake-javascript-sandbox": "workspace:*",
     "@superego/global-types": "workspace:*",
@@ -26,7 +26,7 @@
     "@superego/vitest-registered": "workspace:*",
     "@vitest/browser": "^4.0.18",
     "@vitest/browser-playwright": "^4.0.18",
-    "es-toolkit": "^1.44.0",
+    "es-toolkit": "^1.45.1",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.58.2",
     "vitest": "^4.0.18"

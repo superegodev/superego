@@ -245,6 +245,12 @@ export const getConversationQuery = makeBackendQueryGetter(
   (conversationId) => ["getConversation", conversationId],
 );
 
+export const getLiveConversationQuery = makeBackendQueryGetter(
+  "assistants",
+  "getLiveConversation",
+  (conversationId) => ["getLiveConversation", conversationId],
+);
+
 export const getDeveloperPromptsQuery = makeBackendQueryGetter(
   "assistants",
   "getDeveloperPrompts",
@@ -295,8 +301,6 @@ export const useDeleteConversation = makeUseBackendMutation(
 
 export const useStt = makeUseBackendMutation("inference", "stt", () => []);
 
-export const useTts = makeUseBackendMutation("inference", "tts", () => []);
-
 export const useImplementTypescriptModule = makeUseBackendMutation(
   "inference",
   "implementTypescriptModule",
@@ -343,19 +347,19 @@ export const useInstallPack = makeUseBackendMutation("packs", "install", () => [
 ]);
 
 /*
- * Bazaar
+ * Boutique
  */
 
-export const listBazaarPacksQuery = makeBackendQueryGetter(
-  "bazaar",
+export const listBoutiquePacksQuery = makeBackendQueryGetter(
+  "boutique",
   "listPacks",
-  () => ["listBazaarPacks"],
+  () => ["listBoutiquePacks"],
 );
 
-export const getBazaarPackQuery = makeBackendQueryGetter(
-  "bazaar",
+export const getBoutiquePackQuery = makeBackendQueryGetter(
+  "boutique",
   "getPack",
-  (packId) => ["getBazaarPack", packId],
+  (packId) => ["getBoutiquePack", packId],
 );
 
 /*

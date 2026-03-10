@@ -9,7 +9,7 @@ import { BrowserSessionStorage } from "@superego/connectors/requirements/browser
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
-import { OpenAICompatInferenceServiceFactory } from "@superego/openai-compat-inference-service";
+import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
@@ -20,26 +20,16 @@ const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
     inference: {
-      chatCompletions: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
-      transcriptions: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-      },
-      speech: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
-        voice: null,
-      },
-      fileInspection: {
-        provider: { baseUrl: null, apiKey: null },
-        model: null,
+      providers: [],
+      defaultInferenceOptions: {
+        completion: null,
+        transcription: null,
+        fileInspection: null,
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.Factotum]: null,
         [AssistantName.CollectionCreator]: null,
@@ -50,7 +40,7 @@ const backend = new ExecutingBackend(
   new MonacoTypescriptCompiler(
     async () => (await import("../src/monaco.js")).default,
   ),
-  new OpenAICompatInferenceServiceFactory(),
+  new MultiDriverInferenceServiceFactory(),
   [
     new GoogleCalendar(redirectUri, sessionStorage),
     new GoogleContacts(redirectUri, sessionStorage),

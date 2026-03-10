@@ -14,9 +14,10 @@ export default class BackendIPCProxyServer {
       "inference",
       "apps",
       "packs",
-      "bazaar",
+      "boutique",
       "backgroundJobs",
       "globalSettings",
+      "database",
     ];
     for (const domainName of domainNames) {
       const methodNames = Object.keys(this.backend[domainName]) as string[];

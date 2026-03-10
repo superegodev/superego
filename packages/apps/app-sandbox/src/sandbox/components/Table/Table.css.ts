@@ -2,6 +2,10 @@ import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
 export const Table = {
+  wrapper: style({
+    overflowX: "auto",
+  }),
+
   root: style({
     width: "100%",
     borderCollapse: "collapse",

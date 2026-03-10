@@ -14,7 +14,9 @@ import { CollectionRouteView, PackSource, RouteName } from "./Route.js";
 export function toHref(route: Route): string {
   switch (route.name) {
     case RouteName.Ask:
-      return "/";
+      return route.initialMessage
+        ? `/?initialMessage=${encodeURIComponent(route.initialMessage)}`
+        : "/";
     case RouteName.Conversations:
       return "/conversations";
     case RouteName.Conversation:
@@ -59,8 +61,8 @@ export function toHref(route: Route): string {
     }
     case RouteName.EditApp:
       return `/apps/${route.appId}/edit`;
-    case RouteName.Bazaar:
-      return "/bazaar";
+    case RouteName.Boutique:
+      return "/boutique";
     case RouteName.Pack:
       return `/packs/${route.packId}?source=${route.source}`;
     case RouteName.BackgroundJobs:
@@ -232,13 +234,13 @@ const routeMatchers: RouteMatcher[] = [
         name: RouteName.Pack,
         packId: decodePathSegment<PackId>(match.pathname.groups["packId"]),
         source:
-          source === PackSource.Local ? PackSource.Local : PackSource.Bazaar,
+          source === PackSource.Local ? PackSource.Local : PackSource.Boutique,
       };
     },
   },
   {
-    pattern: new URLPattern({ pathname: "/bazaar{/}?" }),
-    toRoute: () => ({ name: RouteName.Bazaar }),
+    pattern: new URLPattern({ pathname: "/boutique{/}?" }),
+    toRoute: () => ({ name: RouteName.Boutique }),
   },
   {
     pattern: new URLPattern({
@@ -279,7 +281,12 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/" }),
-    toRoute: () => ({ name: RouteName.Ask }),
+    toRoute: (match) => ({
+      name: RouteName.Ask,
+      initialMessage:
+        new URLSearchParams(match.search.input).get("initialMessage") ??
+        undefined,
+    }),
   },
 ];
 

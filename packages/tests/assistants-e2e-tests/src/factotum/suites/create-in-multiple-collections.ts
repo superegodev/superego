@@ -51,53 +51,52 @@ export default rd<GetDependencies>(
       });
     });
 
-    it(
-      "All info provided, explicit request",
-      { deps, passRate: 1 },
-      async (factotum) => {
-        // Exercise + verify
-        const [, , expenses, fuelLogs] = await factotum.createCollections(
-          defineCollection.calendar([]),
-          defineCollection.contacts([]),
-          defineCollection.expenses([]),
-          defineCollection.fuelLogs([]),
-          defineCollection.vetVisits([]),
-        );
-        await factotum.say(
-          "Log a refuelling. Kia, 43.04 liters, 58.10 euros, 123456km. Also log it as an expense.",
-        );
-        await factotum.assertAssistantIs(
-          "giving a concise acknowledgement that one or more actions were performed.",
-        );
-        await factotum.expectCollectionState(expenses.collection.id, {
-          created: [
-            {
-              date: expect.todaysPlainDate(),
-              amount: 58.1,
-              currency: "EUR",
-              category: "Transportation",
-              paymentMethod: "Credit Card",
-            },
-          ],
-          updated: [],
-          unmodified: [],
-        });
-        await factotum.expectCollectionState(fuelLogs.collection.id, {
-          created: [
-            {
-              timestamp: expect.instantCloseToNow(60_000),
-              vehicle: "Kia Sportage",
-              liters: 43.04,
-              totalCost: 58.1,
-              fullTank: true,
-              odometer: 123456,
-            },
-          ],
-          updated: [],
-          unmodified: [],
-        });
-      },
-    );
+    it("All info provided, explicit request", {
+      deps,
+      passRate: 1,
+    }, async (factotum) => {
+      // Exercise + verify
+      const [, , expenses, fuelLogs] = await factotum.createCollections(
+        defineCollection.calendar([]),
+        defineCollection.contacts([]),
+        defineCollection.expenses([]),
+        defineCollection.fuelLogs([]),
+        defineCollection.vetVisits([]),
+      );
+      await factotum.say(
+        "Log a refuelling. Kia, 43.04 liters, 58.10 euros, 123456km. Also log it as an expense.",
+      );
+      await factotum.assertAssistantIs(
+        "giving a concise acknowledgement that one or more actions were performed.",
+      );
+      await factotum.expectCollectionState(expenses.collection.id, {
+        created: [
+          {
+            date: expect.todaysPlainDate(),
+            amount: 58.1,
+            currency: "EUR",
+            category: "Transportation",
+            paymentMethod: "Credit Card",
+          },
+        ],
+        updated: [],
+        unmodified: [],
+      });
+      await factotum.expectCollectionState(fuelLogs.collection.id, {
+        created: [
+          {
+            timestamp: expect.instantCloseToNow(60_000),
+            vehicle: "Kia Sportage",
+            liters: 43.04,
+            totalCost: 58.1,
+            fullTank: true,
+            odometer: 123456,
+          },
+        ],
+        updated: [],
+        unmodified: [],
+      });
+    });
 
     it("One info missing, implicit request", { deps }, async (factotum) => {
       // Exercise + verify

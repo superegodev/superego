@@ -17,6 +17,10 @@ export default defineConfig({
       ],
       sidebar: [
         {
+          label: "Getting Started",
+          items: ["getting-started/overview", "getting-started/cli"],
+        },
+        {
           label: "Customization",
           autogenerate: { directory: "customization" },
         },

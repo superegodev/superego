@@ -21,4 +21,13 @@ export default isProduction
         },
       },
     })
-  : browserAppViteConfig;
+  : mergeConfig(browserAppViteConfig as UserConfig, {
+      build: {
+        rollupOptions: {
+          input: {
+            index: resolve(import.meta.dirname, "./index.html"),
+            appSandbox: resolve(import.meta.dirname, "./app-sandbox.html"),
+          },
+        },
+      },
+    });

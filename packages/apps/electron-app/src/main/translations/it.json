@@ -17,6 +17,18 @@
   "cli.ts_qqfYjN": {
     "defaultMessage": "Installazione CLI fallita"
   },
+  "exportDatabase.ts_Y3aZlu": {
+    "defaultMessage": "Esportazione completata"
+  },
+  "exportDatabase.ts_heAhPr": {
+    "defaultMessage": "Esportazione fallita"
+  },
+  "exportDatabase.ts_vVq/iv": {
+    "defaultMessage": "Database esportato con successo."
+  },
+  "setApplicationMenu.ts_OC234H": {
+    "defaultMessage": "Esporta database"
+  },
   "setApplicationMenu.ts_PJD5PQ": {
     "defaultMessage": "Disinstalla CLI"
   },
