@@ -7,6 +7,8 @@ import holdings from "./holdings.js";
 import portfolioDashboardApp from "./portfolioDashboardApp.js";
 import screenshot0Dark from "./screenshots/0.dark.avif?inline";
 import screenshot0Light from "./screenshots/0.light.avif?inline";
+import screenshot1Dark from "./screenshots/1.dark.avif?inline";
+import screenshot1Light from "./screenshots/1.light.avif?inline";
 import securities from "./securities.js";
 
 export default {
@@ -27,6 +29,16 @@ export default {
         theme: Theme.Dark,
         mimeType: "image/avif",
         content: decodeInlineBase64Asset(screenshot0Dark),
+      },
+      {
+        theme: Theme.Light,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot1Light),
+      },
+      {
+        theme: Theme.Dark,
+        mimeType: "image/avif",
+        content: decodeInlineBase64Asset(screenshot1Dark),
       },
     ],
   },
