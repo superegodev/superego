@@ -93,7 +93,8 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
           },
         },
     assistants: {
-      userName: null,
+      userInfo: "Name: Alex. Born: 1990-09-01",
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.Factotum]: null,
         [AssistantName.CollectionCreator]: null,

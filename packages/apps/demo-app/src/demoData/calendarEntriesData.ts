@@ -3,7 +3,7 @@ import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
 
 type CalendarEntry = TypeOf<
-  (typeof packsAsConst)[3]["collections"][1]["schema"]
+  (typeof packsAsConst)[0]["collections"][1]["schema"]
 >;
 
 export default [

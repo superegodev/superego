@@ -2,7 +2,7 @@ import type { packsAsConst } from "@superego/bazaar";
 import type { TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
 
-type FuelLog = TypeOf<(typeof packsAsConst)[0]["collections"][0]["schema"]>;
+type FuelLog = TypeOf<(typeof packsAsConst)[3]["collections"][0]["schema"]>;
 
 export default [
   {

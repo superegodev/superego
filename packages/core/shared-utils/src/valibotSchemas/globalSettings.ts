@@ -53,7 +53,8 @@ export default function globalSettings(): v.GenericSchema<
         }),
       }),
       assistants: v.strictObject({
-        userName: v.nullable(v.string()),
+        userInfo: v.nullable(v.string()),
+        userPreferences: v.nullable(v.string()),
         developerPrompts: v.strictObject({
           [AssistantName.CollectionCreator]: v.nullable(v.string()),
           [AssistantName.Factotum]: v.nullable(v.string()),

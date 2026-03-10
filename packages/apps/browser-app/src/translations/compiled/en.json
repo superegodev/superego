@@ -29,6 +29,24 @@
       "value": "How can I help you?"
     }
   ],
+  "AssistantsSettings.tsx_MyqNS6": [
+    {
+      "type": 0,
+      "value": "Name: Sigmund. Born: May 6, 1856"
+    }
+  ],
+  "AssistantsSettings.tsx_PrDhYG": [
+    {
+      "type": 0,
+      "value": "Always reply in German. Use informal tone. Use metric units."
+    }
+  ],
+  "AssistantsSettings.tsx_c2z6MR": [
+    {
+      "type": 0,
+      "value": "About you"
+    }
+  ],
   "AssistantsSettings.tsx_mTE6Ss": [
     {
       "type": 0,
@@ -41,10 +59,10 @@
       "value": "Factotum developer prompt"
     }
   ],
-  "AssistantsSettings.tsx_vlKhIl": [
+  "AssistantsSettings.tsx_xIOlmn": [
     {
       "type": 0,
-      "value": "Your name"
+      "value": "Your preferences"
     }
   ],
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [

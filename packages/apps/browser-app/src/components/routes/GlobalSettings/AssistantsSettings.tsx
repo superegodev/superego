@@ -7,7 +7,6 @@ import type { Control } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { Fields } from "../../design-system/forms/forms.js";
 import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
 interface Props {
   control: Control<GlobalSettings, any, GlobalSettings>;
@@ -20,12 +19,26 @@ export default function AssistantsSettings({
   const intl = useIntl();
   return (
     <Fields>
-      <RHFTextField
+      <RHFMarkdownField
         control={control}
-        name="assistants.userName"
+        name="assistants.userInfo"
         emptyInputValue={null}
-        label={intl.formatMessage({ defaultMessage: "Your name" })}
-        placeholder="Alex"
+        showToolbar={false}
+        label={intl.formatMessage({ defaultMessage: "About you" })}
+        placeholder={intl.formatMessage({
+          defaultMessage: "Name: Sigmund. Born: May 6, 1856",
+        })}
+      />
+      <RHFMarkdownField
+        control={control}
+        name="assistants.userPreferences"
+        emptyInputValue={null}
+        showToolbar={false}
+        label={intl.formatMessage({ defaultMessage: "Your preferences" })}
+        placeholder={intl.formatMessage({
+          defaultMessage:
+            "Always reply in German. Use informal tone. Use metric units.",
+        })}
       />
       <RHFMarkdownField
         control={control}

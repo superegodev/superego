@@ -18,7 +18,8 @@ describe("IndexedDB", () => {
           },
         },
         assistants: {
-          userName: null,
+          userInfo: null,
+          userPreferences: null,
           developerPrompts: {
             [AssistantName.Factotum]: null,
             [AssistantName.CollectionCreator]: null,
@@ -46,7 +47,8 @@ describe("InMemory", () => {
           },
         },
         assistants: {
-          userName: null,
+          userInfo: null,
+          userPreferences: null,
           developerPrompts: {
             [AssistantName.Factotum]: null,
             [AssistantName.CollectionCreator]: null,

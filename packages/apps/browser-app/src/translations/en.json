@@ -14,14 +14,23 @@
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
   },
+  "AssistantsSettings.tsx_MyqNS6": {
+    "defaultMessage": "Name: Sigmund. Born: May 6, 1856"
+  },
+  "AssistantsSettings.tsx_PrDhYG": {
+    "defaultMessage": "Always reply in German. Use informal tone. Use metric units."
+  },
+  "AssistantsSettings.tsx_c2z6MR": {
+    "defaultMessage": "About you"
+  },
   "AssistantsSettings.tsx_mTE6Ss": {
     "defaultMessage": "Collection Creator developer prompt"
   },
   "AssistantsSettings.tsx_qmPVim": {
     "defaultMessage": "Factotum developer prompt"
   },
-  "AssistantsSettings.tsx_vlKhIl": {
-    "defaultMessage": "Your name"
+  "AssistantsSettings.tsx_xIOlmn": {
+    "defaultMessage": "Your preferences"
   },
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
     "defaultMessage": "Authenticate connector"

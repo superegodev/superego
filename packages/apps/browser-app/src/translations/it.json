@@ -20,8 +20,17 @@
   "AssistantsSettings.tsx_qmPVim": {
     "defaultMessage": "Prompt per sviluppatori di Factotum"
   },
-  "AssistantsSettings.tsx_vlKhIl": {
-    "defaultMessage": "Il tuo nome"
+  "AssistantsSettings.tsx_MyqNS6": {
+    "defaultMessage": "Nome: Sigmund. Nascita: 6 maggio 1856"
+  },
+  "AssistantsSettings.tsx_PrDhYG": {
+    "defaultMessage": "Rispondi sempre in tedesco. Usa un tono informale. Usa le unità metriche."
+  },
+  "AssistantsSettings.tsx_c2z6MR": {
+    "defaultMessage": "Su di te"
+  },
+  "AssistantsSettings.tsx_xIOlmn": {
+    "defaultMessage": "Le tue preferenze"
   },
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
     "defaultMessage": "Autentica il connettore"

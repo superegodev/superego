@@ -19,7 +19,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,
@@ -46,7 +47,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,
@@ -85,7 +87,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,

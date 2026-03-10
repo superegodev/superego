@@ -4,7 +4,7 @@ import useNavigationState from "./useNavigationState.js";
 export default function useExitWarning(message: string | null): void {
   const { setExitWarningMessage } = useNavigationState();
   useEffect(() => {
-    setExitWarningMessage(message);
+    setExitWarningMessage(import.meta.env.PROD ? message : null);
     return () => setExitWarningMessage(null);
   }, [message, setExitWarningMessage]);
 }
