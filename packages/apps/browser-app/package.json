@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.3.0",
-    "@formatjs/cli": "^6.13.0",
+    "@formatjs/cli": "^6.13.1",
     "@superego/app-sandbox": "workspace:*",
     "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
@@ -89,7 +89,7 @@
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
     "maplibre-gl": "^5.19.0",
-    "markdown-to-jsx": "9.7.6",
+    "markdown-to-jsx": "9.7.9",
     "monaco-editor": "0.55.1",
     "overtype": "^2.3.4",
     "p-map": "^7.0.4",
