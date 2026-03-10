@@ -1,7 +1,8 @@
 import type { IntlShape } from "@formatjs/intl";
-import { BrowserWindow, Menu } from "electron";
+import { Menu } from "electron";
 import { compact } from "es-toolkit";
 import cli from "./cli.js";
+import navigateFocusedWindow from "./navigateFocusedWindow.js";
 
 interface ActionHandlers {
   onNewWindow: () => void;
@@ -57,12 +58,7 @@ export default function setApplicationMenu(
           { type: "separator" },
           {
             label: intl.formatMessage({ defaultMessage: "Background Jobs" }),
-            click: () => {
-              BrowserWindow.getFocusedWindow()?.webContents.postMessage(
-                "NavigationRequested",
-                { type: "NavigationRequested", href: "/background-jobs" },
-              );
-            },
+            click: () => navigateFocusedWindow("/background-jobs"),
           },
         ],
       },
