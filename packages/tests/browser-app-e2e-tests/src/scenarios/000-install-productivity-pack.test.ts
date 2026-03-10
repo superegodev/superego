@@ -16,17 +16,17 @@ test("000. Install Productivity pack", async ({ page }) => {
     );
   });
 
-  await test.step("01. Click on Bazaar sidebar link", async () => {
+  await test.step("01. Click on Boutique sidebar link", async () => {
     // Exercise
     await openSidebar(page);
-    await page.getByRole("link", { name: /^Bazaar$/i }).click();
+    await page.getByRole("link", { name: /^Boutique$/i }).click();
     await page.getByRole("link", { name: /Productivity/i }).waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(
       "01.png",
       page,
-      'Bazaar page with a list of "packs" as cards, Productivity pack card',
+      'Boutique page with a list of "packs" as cards, Productivity pack card',
     );
   });
 

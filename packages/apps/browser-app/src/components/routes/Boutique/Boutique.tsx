@@ -3,7 +3,7 @@ import type { Pack } from "@superego/backend";
 import { DropZone } from "react-aria-components";
 import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
-import { listBazaarPacksQuery } from "../../../business-logic/backend/hooks.js";
+import { listBoutiquePacksQuery } from "../../../business-logic/backend/hooks.js";
 import {
   PackSource,
   RouteName,
@@ -15,12 +15,12 @@ import toasts from "../../../business-logic/toasts/toasts.js";
 import PackCard from "../../design-system/PackCard/PackCard.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
-import * as cs from "./Bazaar.css.js";
+import * as cs from "./Boutique.css.js";
 import Explainer from "./Explainer.js";
 
-export default function Bazaar() {
+export default function Boutique() {
   const intl = useIntl();
-  const title = intl.formatMessage({ defaultMessage: "Bazaar" });
+  const title = intl.formatMessage({ defaultMessage: "Boutique" });
   const { setPack } = usePackStore();
   const { navigateTo } = useNavigationState();
 
@@ -51,7 +51,7 @@ export default function Bazaar() {
 
   return (
     <DataLoader
-      queries={[listBazaarPacksQuery([])]}
+      queries={[listBoutiquePacksQuery([])]}
       renderErrors={(errors) => (
         <RouteLevelErrors headerTitle={title} errors={errors} />
       )}
@@ -59,11 +59,11 @@ export default function Bazaar() {
       {(packs) => (
         <Shell.Panel slot="Main">
           <Shell.Panel.Header title={title} />
-          <DropZone onDrop={handleDrop} className={cs.Bazaar.pageDropZone}>
+          <DropZone onDrop={handleDrop} className={cs.Boutique.pageDropZone}>
             <Shell.Panel.Content fullWidth={true}>
               <Explainer />
 
-              <div className={cs.Bazaar.grid}>
+              <div className={cs.Boutique.grid}>
                 {packs.map((pack) => (
                   <PackCard
                     key={pack.id}
@@ -71,20 +71,20 @@ export default function Bazaar() {
                     to={{
                       name: RouteName.Pack,
                       packId: pack.id,
-                      source: PackSource.Bazaar,
+                      source: PackSource.Boutique,
                     }}
                   />
                 ))}
               </div>
-              <h4 className={cs.Bazaar.bazaarHeading}>
+              <h4 className={cs.Boutique.boutiqueHeading}>
                 <FormattedMessage defaultMessage="Or install your own" />
               </h4>
-              <div className={cs.Bazaar.dropZoneHint}>
+              <div className={cs.Boutique.dropZoneHint}>
                 <FormattedMessage
                   defaultMessage="Drop <packMpk>pack.mpk</packMpk> to install"
                   values={{
                     packMpk: (chunks) => (
-                      <span className={cs.Bazaar.packMpk}>{chunks}</span>
+                      <span className={cs.Boutique.packMpk}>{chunks}</span>
                     ),
                   }}
                 />

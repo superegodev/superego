@@ -7998,7 +7998,7 @@ __metadata:
   resolution: "@superego/backend-e2e-tests@workspace:packages/tests/backend-e2e-tests"
   dependencies:
     "@superego/backend": "workspace:*"
-    "@superego/bazaar": "workspace:*"
+    "@superego/boutique": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/fake-javascript-sandbox": "workspace:*"
     "@superego/global-types": "workspace:*"
@@ -8031,9 +8031,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/bazaar@workspace:*, @superego/bazaar@workspace:packages/misc/bazaar":
+"@superego/boutique@workspace:*, @superego/boutique@workspace:packages/misc/boutique":
   version: 0.0.0-use.local
-  resolution: "@superego/bazaar@workspace:packages/misc/bazaar"
+  resolution: "@superego/boutique@workspace:packages/misc/boutique"
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/shared-utils": "workspace:*"
@@ -8182,7 +8182,7 @@ __metadata:
     "@cloudflare/workers-types": "npm:4.20260301.1"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
-    "@superego/bazaar": "workspace:*"
+    "@superego/boutique": "workspace:*"
     "@superego/browser-app": "workspace:*"
     "@superego/connectors": "workspace:*"
     "@superego/demo-data-repositories": "workspace:*"
@@ -8261,7 +8261,7 @@ __metadata:
   dependencies:
     "@fast-check/vitest": "npm:^0.2.4"
     "@superego/backend": "workspace:*"
-    "@superego/bazaar": "workspace:*"
+    "@superego/boutique": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/schema": "workspace:*"

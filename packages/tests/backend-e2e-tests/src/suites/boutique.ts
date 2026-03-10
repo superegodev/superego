@@ -1,16 +1,16 @@
-import { packs } from "@superego/bazaar";
+import { packs } from "@superego/boutique";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
-export default rd<GetDependencies>("Bazaar", (deps) => {
+export default rd<GetDependencies>("Boutique", (deps) => {
   describe("listPacks", () => {
-    it("success: lists bazaar packs as lite packs", async () => {
+    it("success: lists boutique packs as lite packs", async () => {
       // Setup SUT
       const { backend } = deps();
 
       // Exercise
-      const result = await backend.bazaar.listPacks();
+      const result = await backend.boutique.listPacks();
 
       // Verify
       expect(result.data).toHaveLength(packs.length);
@@ -24,7 +24,7 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
 
       // Exercise
       const packId = "Pack_com.example.unknown";
-      const result = await backend.bazaar.getPack(packId);
+      const result = await backend.boutique.getPack(packId);
 
       // Verify
       expect(result).toEqual({
@@ -43,7 +43,7 @@ export default rd<GetDependencies>("Bazaar", (deps) => {
 
       // Exercise
       const results = await Promise.all(
-        packs.map((pack) => backend.bazaar.getPack(pack.id)),
+        packs.map((pack) => backend.boutique.getPack(pack.id)),
       );
 
       // Verify

@@ -584,7 +584,7 @@ export default interface Backend {
     >;
   };
 
-  bazaar: {
+  boutique: {
     listPacks(): ResultPromise<LitePack[], UnexpectedError>;
 
     getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;

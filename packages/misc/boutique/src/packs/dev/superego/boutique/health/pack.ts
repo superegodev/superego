@@ -1,16 +1,19 @@
 import { type Pack, Theme } from "@superego/backend";
 import decodeInlineBase64Asset from "../../../../../utils/decodeInlineBase64Asset.js";
-import expenses from "./expenses.js";
-import expensesApp from "./expensesApp.js";
+import cycleDayLogs from "./cycleDayLogs.js";
+import cycleDayLogsApp from "./cycleDayLogsApp.js";
+import foods from "./foods.js";
+import meals from "./meals.js";
 import screenshot0Dark from "./screenshots/0.dark.avif?inline";
 import screenshot0Light from "./screenshots/0.light.avif?inline";
+import weighIns from "./weighIns.js";
 
 export default {
-  id: "Pack_dev.superego.bazaar.personal-finance",
+  id: "Pack_dev.superego.boutique.health",
   info: {
-    name: "Personal Finance",
-    shortDescription: "Track expenses and analyze your spending.",
-    longDescription: "Track expenses and analyze your spending.",
+    name: "Health",
+    shortDescription: "Track nutrition, cycle logs, and weigh-ins.",
+    longDescription: "Track nutrition, cycle logs, and weigh-ins.",
     screenshots: [
       {
         theme: Theme.Light,
@@ -24,10 +27,8 @@ export default {
       },
     ],
   },
-  collectionCategories: [
-    { name: "Personal Finance", icon: "💰️", parentId: null },
-  ],
-  collections: [expenses],
-  apps: [expensesApp],
+  collectionCategories: [{ name: "Health", icon: "🥦", parentId: null }],
+  collections: [cycleDayLogs, foods, meals, weighIns],
+  apps: [cycleDayLogsApp],
   documents: [],
 } as const satisfies Pack;

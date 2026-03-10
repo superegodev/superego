@@ -5,7 +5,7 @@ import type {
   PackNotFound,
   UnexpectedError,
 } from "@superego/backend";
-import { packs } from "@superego/bazaar";
+import { packs } from "@superego/boutique";
 import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
@@ -14,8 +14,8 @@ import {
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class BazaarGetPack extends Usecase<
-  Backend["bazaar"]["getPack"]
+export default class BoutiqueGetPack extends Usecase<
+  Backend["boutique"]["getPack"]
 > {
   async exec(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError> {
     const pack = packs.find((pack) => pack.id === id);

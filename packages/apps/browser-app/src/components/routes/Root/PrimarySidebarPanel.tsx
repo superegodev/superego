@@ -63,11 +63,11 @@ export default function PrimarySidebarPanel() {
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"
-            to={{ name: RouteName.Bazaar }}
+            to={{ name: RouteName.Boutique }}
             isHighlighted={isEmpty(collections)}
           >
             <PiStorefront />
-            <FormattedMessage defaultMessage="Bazaar" />
+            <FormattedMessage defaultMessage="Boutique" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"

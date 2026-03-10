@@ -225,25 +225,37 @@
       "value": "Status"
     }
   ],
-  "Bazaar.tsx_T5A49y": [
+  "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
-      "value": "Bazaar"
+      "value": "True"
     }
   ],
-  "Bazaar.tsx_XBMGwY": [
+  "BooleanField.tsx_rxqs5U": [
+    {
+      "type": 0,
+      "value": "False"
+    }
+  ],
+  "Boutique.tsx_J4ocUB": [
+    {
+      "type": 0,
+      "value": "Boutique"
+    }
+  ],
+  "Boutique.tsx_XBMGwY": [
     {
       "type": 0,
       "value": "Failed to decode pack file"
     }
   ],
-  "Bazaar.tsx_a1s4zI": [
+  "Boutique.tsx_a1s4zI": [
     {
       "type": 0,
       "value": "Or install your own"
     }
   ],
-  "Bazaar.tsx_rrrB1P": [
+  "Boutique.tsx_rrrB1P": [
     {
       "type": 0,
       "value": "Drop "
@@ -263,26 +275,14 @@
       "value": " to install"
     }
   ],
-  "BazaarPack.tsx_40netJ": [
+  "BoutiquePack.tsx_AHlDyN": [
     {
       "type": 0,
-      "value": "Bazaar » "
+      "value": "Boutique » "
     },
     {
       "type": 1,
       "value": "packId"
-    }
-  ],
-  "BooleanField.tsx_KKkUks": [
-    {
-      "type": 0,
-      "value": "True"
-    }
-  ],
-  "BooleanField.tsx_rxqs5U": [
-    {
-      "type": 0,
-      "value": "False"
     }
   ],
   "BrowserApp.tsx_w1vfWS": [
@@ -1642,12 +1642,12 @@
       "value": "The assistant encountered an error."
     }
   ],
-  "Explainer.tsx_Nxd++A": [
+  "Explainer.tsx_kM11wK": [
     {
       "children": [
         {
           "type": 0,
-          "value": " Here in the Bazaar you can find pre-made collections and apps, bundled into thematic "
+          "value": " Here in the Boutique you can find pre-made collections and apps, bundled into thematic "
         },
         {
           "children": [
@@ -2766,20 +2766,20 @@
       "value": "collectionsCount"
     }
   ],
-  "PackMainPanel.tsx_DzgcGx": [
-    {
-      "type": 0,
-      "value": "Bazaar » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
   "PackMainPanel.tsx_HUc4Bb": [
     {
       "type": 0,
       "value": "Toggle collections preview"
+    }
+  ],
+  "PackMainPanel.tsx_OYAe1w": [
+    {
+      "type": 0,
+      "value": "Boutique » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
     }
   ],
   "PackMainPanel.tsx_hgmRAL": [
@@ -2882,10 +2882,10 @@
       "value": "Settings"
     }
   ],
-  "PrimarySidebarPanel.tsx_T5A49y": [
+  "PrimarySidebarPanel.tsx_J4ocUB": [
     {
       "type": 0,
-      "value": "Bazaar"
+      "value": "Boutique"
     }
   ],
   "PrimarySidebarPanel.tsx_ZT0z9z": [
@@ -4580,7 +4580,7 @@
       "value": "."
     }
   ],
-  "Welcome.tsx_Ulg4S2": [
+  "Welcome.tsx_mD6yYG": [
     {
       "children": [
         {
@@ -4603,11 +4603,11 @@
         }
       ],
       "type": 8,
-      "value": "bazaarLink"
+      "value": "boutiqueLink"
     },
     {
       "type": 0,
-      "value": " from the Bazaar."
+      "value": " from the Boutique."
     }
   ],
   "Welcome.tsx_mNIlLz": [

@@ -51,9 +51,9 @@ export default function PackMainPanel({ pack, source }: Props) {
     isCollectionsOpen && collectionPreviews.length > 0;
 
   const title =
-    source === PackSource.Bazaar
+    source === PackSource.Boutique
       ? intl.formatMessage(
-          { defaultMessage: "Bazaar » {packName}" },
+          { defaultMessage: "Boutique » {packName}" },
           { packName: pack.info.name },
         )
       : intl.formatMessage(

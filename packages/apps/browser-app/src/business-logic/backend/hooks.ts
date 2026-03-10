@@ -347,19 +347,19 @@ export const useInstallPack = makeUseBackendMutation("packs", "install", () => [
 ]);
 
 /*
- * Bazaar
+ * Boutique
  */
 
-export const listBazaarPacksQuery = makeBackendQueryGetter(
-  "bazaar",
+export const listBoutiquePacksQuery = makeBackendQueryGetter(
+  "boutique",
   "listPacks",
-  () => ["listBazaarPacks"],
+  () => ["listBoutiquePacks"],
 );
 
-export const getBazaarPackQuery = makeBackendQueryGetter(
-  "bazaar",
+export const getBoutiquePackQuery = makeBackendQueryGetter(
+  "boutique",
   "getPack",
-  (packId) => ["getBazaarPack", packId],
+  (packId) => ["getBoutiquePack", packId],
 );
 
 /*

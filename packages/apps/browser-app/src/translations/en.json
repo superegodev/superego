@@ -110,26 +110,26 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
-  "Bazaar.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
-  },
-  "Bazaar.tsx_XBMGwY": {
-    "defaultMessage": "Failed to decode pack file"
-  },
-  "Bazaar.tsx_a1s4zI": {
-    "defaultMessage": "Or install your own"
-  },
-  "Bazaar.tsx_rrrB1P": {
-    "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
-  },
-  "BazaarPack.tsx_40netJ": {
-    "defaultMessage": "Bazaar » {packId}"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
   "BooleanField.tsx_rxqs5U": {
     "defaultMessage": "False"
+  },
+  "Boutique.tsx_J4ocUB": {
+    "defaultMessage": "Boutique"
+  },
+  "Boutique.tsx_XBMGwY": {
+    "defaultMessage": "Failed to decode pack file"
+  },
+  "Boutique.tsx_a1s4zI": {
+    "defaultMessage": "Or install your own"
+  },
+  "Boutique.tsx_rrrB1P": {
+    "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
+  },
+  "BoutiquePack.tsx_AHlDyN": {
+    "defaultMessage": "Boutique » {packId}"
   },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
@@ -674,8 +674,8 @@
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
   },
-  "Explainer.tsx_Nxd++A": {
-    "defaultMessage": "<p> Here in the Bazaar you can find pre-made collections and apps, bundled into thematic <b>packs</b> you can install in one click. </p> <p> You can also use the <cliDocsLink>Superego CLI</cliDocsLink> to create your own packs. (Drop below to install.) </p>"
+  "Explainer.tsx_kM11wK": {
+    "defaultMessage": "<p> Here in the Boutique you can find pre-made collections and apps, bundled into thematic <b>packs</b> you can install in one click. </p> <p> You can also use the <cliDocsLink>Superego CLI</cliDocsLink> to create your own packs. (Drop below to install.) </p>"
   },
   "Explainer.tsx_u7Yd2T": {
     "defaultMessage": "<p> Your data in Superego is stored in <b>collections</b> of <b>documents</b>. Each collection has a <b>schema</b> that defines what data each document contains. </p> <p> Example: an <b>Expenses</b> collection contains many <b>Expense</b> documents. Each document contains the date of the expense, the amount, and a description. (This is its schema.) </p> <p> Just tell the <b>Collection Creator</b> what data you want to store, and it will create a collection for you. </p>"
@@ -1043,11 +1043,11 @@
   "PackEntityCounts.tsx_pKXETD": {
     "defaultMessage": "{collectionsCount, plural, one {# collection} other {# collections}}"
   },
-  "PackMainPanel.tsx_DzgcGx": {
-    "defaultMessage": "Bazaar » {packName}"
-  },
   "PackMainPanel.tsx_HUc4Bb": {
     "defaultMessage": "Toggle collections preview"
+  },
+  "PackMainPanel.tsx_OYAe1w": {
+    "defaultMessage": "Boutique » {packName}"
   },
   "PackMainPanel.tsx_hgmRAL": {
     "defaultMessage": "Custom Packs » {packName}"
@@ -1085,8 +1085,8 @@
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
-  "PrimarySidebarPanel.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
+  "PrimarySidebarPanel.tsx_J4ocUB": {
+    "defaultMessage": "Boutique"
   },
   "PrimarySidebarPanel.tsx_ZT0z9z": {
     "defaultMessage": "Ask"
@@ -1541,8 +1541,8 @@
   "Welcome.tsx_NZjpCr": {
     "defaultMessage": "<settingsLink>Configure the AI assistant</settingsLink>."
   },
-  "Welcome.tsx_Ulg4S2": {
-    "defaultMessage": "<createCollectionLink>Create your first collection</createCollectionLink>, or <bazaarLink>install a pre-made one</bazaarLink> from the Bazaar."
+  "Welcome.tsx_mD6yYG": {
+    "defaultMessage": "<createCollectionLink>Create your first collection</createCollectionLink>, or <boutiqueLink>install a pre-made one</boutiqueLink> from the Boutique."
   },
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Create your first app</createAppLink>."

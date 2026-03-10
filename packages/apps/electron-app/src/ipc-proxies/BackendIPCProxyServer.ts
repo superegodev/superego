@@ -14,7 +14,7 @@ export default class BackendIPCProxyServer {
       "inference",
       "apps",
       "packs",
-      "bazaar",
+      "boutique",
       "backgroundJobs",
       "globalSettings",
       "database",

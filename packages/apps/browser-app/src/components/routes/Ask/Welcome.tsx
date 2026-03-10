@@ -45,7 +45,7 @@ export default function Welcome() {
         </WelcomeStep>
         <WelcomeStep completed={isStep2Complete} enabled={isStep2Enabled}>
           <FormattedMessage
-            defaultMessage="<createCollectionLink>Create your first collection</createCollectionLink>, or <bazaarLink>install a pre-made one</bazaarLink> from the Bazaar."
+            defaultMessage="<createCollectionLink>Create your first collection</createCollectionLink>, or <boutiqueLink>install a pre-made one</boutiqueLink> from the Boutique."
             values={{
               createCollectionLink: (chunks: ReactNode) =>
                 isStep2Complete ? (
@@ -58,12 +58,12 @@ export default function Welcome() {
                     {chunks}
                   </Link>
                 ),
-              bazaarLink: (chunks: ReactNode) =>
+              boutiqueLink: (chunks: ReactNode) =>
                 isStep2Complete ? (
                   chunks
                 ) : (
                   <Link
-                    to={{ name: RouteName.Bazaar }}
+                    to={{ name: RouteName.Boutique }}
                     className={cs.Welcome.stepLink}
                   >
                     {chunks}

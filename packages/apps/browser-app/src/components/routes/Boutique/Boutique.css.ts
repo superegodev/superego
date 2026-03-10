@@ -1,7 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { breakpoints, vars } from "../../../themes.css.js";
 
-export const Bazaar = {
+export const Boutique = {
   pageDropZone: style({
     display: "contents",
   }),
@@ -28,7 +28,7 @@ export const Bazaar = {
     color: vars.colors.text.primary,
   }),
 
-  bazaarHeading: style({
+  boutiqueHeading: style({
     fontWeight: vars.typography.fontWeights.regular,
     fontSize: vars.typography.fontSizes.md,
     marginBlockStart: vars.spacing._6,

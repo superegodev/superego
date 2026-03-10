@@ -15,7 +15,7 @@ import tasks from "./tasks.js";
 import tasksApp from "./tasksApp.js";
 
 export default {
-  id: "Pack_dev.superego.bazaar.productivity",
+  id: "Pack_dev.superego.boutique.productivity",
   info: {
     name: "Productivity",
     shortDescription: "Contacts, calendar, tasks, notes, and drawings.",
