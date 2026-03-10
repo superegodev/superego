@@ -18,7 +18,7 @@ import type { Security } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(security: Security): string[] {
   const keys: string[] = [];
-  keys.push(\`ticker:\${security.ticker.trim().toLowerCase()}\`);
+  keys.push(\`ticker:\${security.ticker.trim().toLowerCase()}:\${security.currency.trim().toLowerCase()}:\${(security.exchange ?? "").trim().toLowerCase()}\`);
   if (security.isin !== null) {
     keys.push(\`isin:\${security.isin.trim().toLowerCase()}\`);
   }
@@ -28,7 +28,7 @@ export default function getContentBlockingKeys(security: Security): string[] {
       compiled: `
 export default function getContentBlockingKeys(security) {
   const keys = [];
-  keys.push(\`ticker:\${security.ticker.trim().toLowerCase()}\`);
+  keys.push(\`ticker:\${security.ticker.trim().toLowerCase()}:\${security.currency.trim().toLowerCase()}:\${(security.exchange ?? "").trim().toLowerCase()}\`);
   if (security.isin !== null) {
     keys.push(\`isin:\${security.isin.trim().toLowerCase()}\`);
   }

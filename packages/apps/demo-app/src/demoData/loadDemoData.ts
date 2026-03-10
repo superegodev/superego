@@ -20,37 +20,36 @@ const packsWithDocuments = [
   {
     ...packs[0]!,
     documents: [
-      ...packs[0]!.documents,
       ...makeDocuments("ProtoCollection_0", contactsData),
       ...makeDocuments("ProtoCollection_1", calendarEntriesData),
+      ...packs[0]!.documents,
     ],
   },
   {
     ...packs[1]!,
     documents: [
-      ...packs[1]!.documents,
       ...makeDocuments("ProtoCollection_1", foodsData),
       ...makeDocuments("ProtoCollection_2", mealsData),
       ...makeDocuments("ProtoCollection_3", weighInsData),
+      ...packs[1]!.documents,
     ],
   },
   {
     ...packs[2]!,
     documents: [
-      ...packs[2]!.documents,
-      // Accounts and securities must come first so that holdings can
-      // reference them by stable ProtoDocument indices.
+      // Note: order matters since there are cross-references between documents.
       ...makeDocuments("ProtoCollection_3", accountsData),
       ...makeDocuments("ProtoCollection_1", securitiesData),
-      ...makeDocuments("ProtoCollection_0", expensesData),
       ...makeDocuments("ProtoCollection_2", holdingsData),
+      ...makeDocuments("ProtoCollection_0", expensesData),
+      ...packs[2]!.documents,
     ],
   },
   {
     ...packs[3]!,
     documents: [
-      ...packs[3]!.documents,
       ...makeDocuments("ProtoCollection_0", fuelLogsData),
+      ...packs[3]!.documents,
     ],
   },
 ] as const satisfies Pack[];
