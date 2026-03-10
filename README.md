@@ -88,7 +88,7 @@ required to get started on something.
 ## License
 
 Unless otherwise specified, all files in this repository are licensed under the
-**GNU Affero General Public License, Version 3 (AGPL-3.0)**.
+**GNU Affero General Public License, Version 3 (AGPL-3.0-only)**.
 
 You can find a copy of the full license text in the `LICENSE` file at the root
 of this repository.
