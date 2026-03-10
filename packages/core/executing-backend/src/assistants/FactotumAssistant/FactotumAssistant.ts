@@ -106,7 +106,7 @@ export default class FactotumAssistant extends Assistant {
       "</user-time-zone>",
       "<weekday>",
       now.toFormat("cccc"),
-      "<weekday>",
+      "</weekday>",
       this.userInfo ? "<user-info>" : null,
       this.userInfo,
       this.userInfo ? "</user-info>" : null,

@@ -96,7 +96,7 @@ export default class CollectionCreatorAssistant extends Assistant {
       "</user-time-zone>",
       "<weekday>",
       now.toFormat("cccc"),
-      "<weekday>",
+      "</weekday>",
     ].join("\n");
   }
 

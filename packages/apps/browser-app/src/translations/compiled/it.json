@@ -252,7 +252,7 @@
   "Boutique.tsx_a1s4zI": [
     {
       "type": 0,
-      "value": "Oppure installa it tuo"
+      "value": "Oppure installa il tuo"
     }
   ],
   "Boutique.tsx_rrrB1P": [
@@ -1634,61 +1634,7 @@
       "value": "L'assistente ha riscontrato un errore."
     }
   ],
-  "Explainer.tsx_kM11wK": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Qui nel Boutique puoi trovare collezioni e app già pronte, raggruppate in "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "pack"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " tematici che puoi installare con un click. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Puoi anche usare la "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "CLI di Superego"
-            }
-          ],
-          "type": 8,
-          "value": "cliDocsLink"
-        },
-        {
-          "type": 0,
-          "value": " per creare i tuoi pack. (Trascinali qui sotto per installarli.) "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "Explainer.tsx_u7Yd2T": [
+  "Explainer.tsx_Np7GhL": [
     {
       "children": [
         {
@@ -1777,7 +1723,7 @@
         },
         {
           "type": 0,
-          "value": ". Ogni documento contiene la data della spesa, l'importo e una descrizione. (Questo è il suo schema.) "
+          "value": ". Ogni documento contiene la data della spesa, l'importo e una descrizione. (Questo è lo schema.) "
         }
       ],
       "type": 8,
@@ -1806,6 +1752,60 @@
         {
           "type": 0,
           "value": " quali dati vuoi archiviare e creerà una collezione per te. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Explainer.tsx_kM11wK": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Qui nel Boutique puoi trovare collezioni e app già pronte, raggruppate in "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "pack"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " tematici che puoi installare con un click. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Puoi anche usare la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "CLI di Superego"
+            }
+          ],
+          "type": 8,
+          "value": "cliDocsLink"
+        },
+        {
+          "type": 0,
+          "value": " per creare i tuoi pack. (Trascinali qui sotto per installarli.) "
         }
       ],
       "type": 8,

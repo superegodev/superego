@@ -674,11 +674,11 @@
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
   },
+  "Explainer.tsx_Np7GhL": {
+    "defaultMessage": "<p> Your data in Superego is stored in <b>collections</b> of <b>documents</b>. Each collection has a <b>schema</b> that defines what data each document contains. </p> <p> Example: an <b>Expenses</b> collection contains many <b>Expense</b> documents. Each document contains the date of the expense, the amount, and a description. (This is the schema.) </p> <p> Just tell the <b>Collection Creator</b> what data you want to store, and it will create a collection for you. </p>"
+  },
   "Explainer.tsx_kM11wK": {
     "defaultMessage": "<p> Here in the Boutique you can find pre-made collections and apps, bundled into thematic <b>packs</b> you can install in one click. </p> <p> You can also use the <cliDocsLink>Superego CLI</cliDocsLink> to create your own packs. (Drop below to install.) </p>"
-  },
-  "Explainer.tsx_u7Yd2T": {
-    "defaultMessage": "<p> Your data in Superego is stored in <b>collections</b> of <b>documents</b>. Each collection has a <b>schema</b> that defines what data each document contains. </p> <p> Example: an <b>Expenses</b> collection contains many <b>Expense</b> documents. Each document contains the date of the expense, the amount, and a description. (This is its schema.) </p> <p> Just tell the <b>Collection Creator</b> what data you want to store, and it will create a collection for you. </p>"
   },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"

@@ -15,7 +15,7 @@ export default function Explainer() {
           <p>
             Example: an <b>Expenses</b> collection contains many <b>Expense</b>
             documents. Each document contains the date of the expense, the
-            amount, and a description. (This is its schema.)
+            amount, and a description. (This is the schema.)
           </p>
           <p>
             Just tell the <b>Collection Creator</b> what data you want to store,

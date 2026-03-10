@@ -21,7 +21,7 @@ export default function Explainer() {
           ...formattedMessageHtmlTags,
           cliDocsLink: (chunks: ReactNode[]) => (
             <a
-              href="https://superego.dev/docs/cli"
+              href="https://superego.dev/cli"
               target="_blank"
               rel="noopener noreferrer"
             >
