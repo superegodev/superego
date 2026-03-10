@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { renderBrowserApp } from "@superego/browser-app";
+import { navigateToHref, renderBrowserApp } from "@superego/browser-app";
 import { QueryClient } from "@tanstack/react-query";
 
 const queryClient = new QueryClient({
@@ -25,8 +25,7 @@ window.addEventListener("message", (evt) => {
     evt.data?.type === "NavigationRequested" &&
     typeof evt.data.href === "string"
   ) {
-    window.history.pushState({}, "", evt.data.href);
-    window.dispatchEvent(new PopStateEvent("popstate"));
+    navigateToHref(evt.data.href);
   }
 });
 

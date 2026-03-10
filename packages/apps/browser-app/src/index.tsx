@@ -15,3 +15,5 @@ export function renderBrowserApp(backend: Backend, queryClient: QueryClient) {
     </StrictMode>,
   );
 }
+
+export { default as navigateToHref } from "./business-logic/navigation/navigateToHref.js";
