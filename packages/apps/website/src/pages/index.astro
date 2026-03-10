@@ -20,6 +20,7 @@ const formattedStars =
       name="description"
       content="A personal database you can extend with apps."
     />
+    <link rel="canonical" href={`${import.meta.env.SITE}/`} />
   </head>
   <body>
     <div class="bg-icons" aria-hidden="true">
@@ -318,7 +319,9 @@ const formattedStars =
         <a href="https://github.com/superegodev/superego">GitHub</a>
         <a href={import.meta.env["PUBLIC_DISCORD_INVITE_URL"]}>Discord</a>
       </nav>
-      <p class="footer-license">© {new Date().getFullYear()} Paolo Scanferla · AGPL-3.0-only</p>
+      <p class="footer-license">
+        © {new Date().getFullYear()} Paolo Scanferla · AGPL-3.0-only
+      </p>
     </footer>
   </body>
   <script>
