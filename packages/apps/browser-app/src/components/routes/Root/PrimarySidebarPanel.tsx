@@ -1,7 +1,6 @@
 import {
   PiArrowLeft,
   PiGear,
-  PiListChecks,
   PiMagnifyingGlass,
   PiRobot,
   PiStorefront,
@@ -56,18 +55,11 @@ export default function PrimarySidebarPanel() {
         <div className={cs.PrimarySidebarPanel.bottomActions}>
           <PrimarySidebarPanelAction
             type="link"
-            to={{ name: RouteName.BackgroundJobs }}
-          >
-            <PiListChecks />
-            <FormattedMessage defaultMessage="Background jobs" />
-          </PrimarySidebarPanelAction>
-          <PrimarySidebarPanelAction
-            type="link"
-            to={{ name: RouteName.Bazaar }}
+            to={{ name: RouteName.Boutique }}
             isHighlighted={isEmpty(collections)}
           >
             <PiStorefront />
-            <FormattedMessage defaultMessage="Bazaar" />
+            <FormattedMessage defaultMessage="Boutique" />
           </PrimarySidebarPanelAction>
           <PrimarySidebarPanelAction
             type="link"

@@ -438,6 +438,70 @@ export default rd<GetDependencies>("DocumentTextSearchIndex", (deps) => {
       ]);
     });
 
+    it("case: search with empty query and collectionId => returns all documents in collection", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionId1 = Id.generate.collection();
+      const collectionId2 = Id.generate.collection();
+      const documentId1 = Id.generate.document();
+      const documentId2 = Id.generate.document();
+      const documentId3 = Id.generate.document();
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.documentTextSearchIndex.upsert(
+            collectionId1,
+            documentId1,
+            {
+              title: ["First document"],
+            },
+          );
+          await repos.documentTextSearchIndex.upsert(
+            collectionId1,
+            documentId2,
+            {
+              title: ["Second document"],
+            },
+          );
+          await repos.documentTextSearchIndex.upsert(
+            collectionId2,
+            documentId3,
+            {
+              title: ["Third document"],
+            },
+          );
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const results =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: await repos.documentTextSearchIndex.search(
+              collectionId1,
+              "",
+              { limit: 20 },
+            ),
+          }),
+        );
+
+      // Verify
+      expect(results).toHaveLength(2);
+      expect(results).toContainEqual(
+        expect.objectContaining({
+          collectionId: collectionId1,
+          documentId: documentId1,
+        }),
+      );
+      expect(results).toContainEqual(
+        expect.objectContaining({
+          collectionId: collectionId1,
+          documentId: documentId2,
+        }),
+      );
+    });
+
     it("case: search matches partial words", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();

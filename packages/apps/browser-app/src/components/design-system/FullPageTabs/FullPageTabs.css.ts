@@ -5,7 +5,29 @@ export const FullPageTabs = {
   tabList: style({
     display: "flex",
     fontSize: vars.typography.fontSizes.xl,
-    borderBlockEnd: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+    position: "sticky",
+    top: vars.shell.panelHeaderHeight,
+    paddingBlockStart: vars.spacing._4,
+    background: vars.colors.background.surface,
+    zIndex: 99,
+    selectors: {
+      "&::after": {
+        content: "",
+        position: "absolute",
+        borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
+        insetInline: 0,
+        top: "100%",
+        height: vars.spacing._4,
+        background: `
+          linear-gradient(
+            180deg,
+            ${vars.colors.background.surface} 0%,
+            rgb(from ${vars.colors.background.surface} r g b / 0) 100%
+          )
+        `,
+        pointerEvents: "none",
+      },
+    },
   }),
 
   tab: style({

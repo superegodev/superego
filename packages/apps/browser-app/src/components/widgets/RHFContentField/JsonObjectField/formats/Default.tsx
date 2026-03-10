@@ -23,7 +23,7 @@ export default function Default({
   label,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { grow } = useFieldUiOptions(name);
+  const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
   const [jsonValue, setJsonValue] = useState(() =>
     getJsonValueFromValue(field.value),
@@ -68,7 +68,7 @@ export default function Default({
       data-testid="widgets.RHFContentField.JsonObjectField.Default.root"
       className={classnames(
         isListItem && cs.ListItemField.root,
-        grow && cs.Field.grow,
+        flexGrow && cs.Field.flexGrow,
       )}
     >
       {!isListItem ? (
@@ -84,7 +84,7 @@ export default function Default({
         placeholder={field.value === null ? "null" : undefined}
         className={classnames(
           cs.JsonObjectField.Default.textArea,
-          grow && cs.Field.growContent,
+          flexGrow && cs.Field.flexGrowContent,
         )}
       />
       <FieldError>

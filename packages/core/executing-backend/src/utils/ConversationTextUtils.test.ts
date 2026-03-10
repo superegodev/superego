@@ -1,4 +1,9 @@
-import { MessageContentPartType, MessageRole } from "@superego/backend";
+import {
+  MessageContentPartType,
+  MessageRole,
+  ReasoningEffort,
+} from "@superego/backend";
+import { Id } from "@superego/shared-utils";
 import { describe, expect, it } from "vitest";
 import ConversationTextUtils from "./ConversationTextUtils.js";
 
@@ -29,6 +34,7 @@ describe("extractTextChunks", () => {
       // Exercise
       const textChunks = ConversationTextUtils.extractTextChunks(null, [
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [
             { type: MessageContentPartType.Text, text: "Hello" },
@@ -46,6 +52,7 @@ describe("extractTextChunks", () => {
       // Exercise
       const textChunks = ConversationTextUtils.extractTextChunks(null, [
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [
             { type: MessageContentPartType.Text, text: "Hello" },
@@ -74,11 +81,30 @@ describe("extractTextChunks", () => {
       // Exercise
       const textChunks = ConversationTextUtils.extractTextChunks(null, [
         {
+          id: Id.generate.message(),
           role: MessageRole.Assistant,
           content: [
             { type: MessageContentPartType.Text, text: "Response 1" },
             { type: MessageContentPartType.Text, text: "Response 2" },
           ],
+          reasoning: {},
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
           createdAt: new Date(),
         },
       ]);
@@ -91,8 +117,27 @@ describe("extractTextChunks", () => {
       // Exercise
       const textChunks = ConversationTextUtils.extractTextChunks(null, [
         {
+          id: Id.generate.message(),
           role: MessageRole.Assistant,
           toolCalls: [{ id: "call-1", tool: "someTool", input: {} }],
+          reasoning: {},
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
           createdAt: new Date(),
         },
       ]);
@@ -133,6 +178,7 @@ describe("extractTextChunks", () => {
       // Exercise
       const textChunks = ConversationTextUtils.extractTextChunks(null, [
         {
+          id: Id.generate.message(),
           role: MessageRole.Tool,
           toolResults: [],
           createdAt: new Date(),
@@ -151,6 +197,7 @@ describe("extractTextChunks", () => {
           content: [{ type: MessageContentPartType.Text, text: "Dev text" }],
         },
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [
             { type: MessageContentPartType.Text, text: "User question" },
@@ -158,18 +205,39 @@ describe("extractTextChunks", () => {
           createdAt: new Date(),
         },
         {
+          id: Id.generate.message(),
           role: MessageRole.Assistant,
           content: [
             { type: MessageContentPartType.Text, text: "Assistant reply" },
           ],
+          reasoning: {},
+          inferenceOptions: {
+            completion: {
+              providerModelRef: {
+                providerName: "providerName",
+                modelId: "modelId",
+              },
+              reasoningEffort: ReasoningEffort.Medium,
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
           createdAt: new Date(),
         },
         {
+          id: Id.generate.message(),
           role: MessageRole.Tool,
           toolResults: [],
           createdAt: new Date(),
         },
         {
+          id: Id.generate.message(),
           role: MessageRole.User,
           content: [{ type: MessageContentPartType.Text, text: "Follow up" }],
           createdAt: new Date(),
@@ -200,6 +268,7 @@ describe("extractTextChunks", () => {
         "Conversation Title",
         [
           {
+            id: Id.generate.message(),
             role: MessageRole.User,
             content: [{ type: MessageContentPartType.Text, text: "Question" }],
             createdAt: new Date(),

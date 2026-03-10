@@ -4,23 +4,16 @@ import type { QueryClient } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import BrowserApp from "./BrowserApp.js";
-import type LoadDemoDataFn from "./business-logic/load-demo-data/LoadDemoDataFn.js";
 
-export function renderBrowserApp(
-  backend: Backend,
-  queryClient: QueryClient,
-  loadDemoData?: LoadDemoDataFn,
-) {
+export function renderBrowserApp(backend: Backend, queryClient: QueryClient) {
   const root = document.createElement("div");
   root.id = "root";
   document.body.appendChild(root);
   createRoot(root).render(
     <StrictMode>
-      <BrowserApp
-        backend={backend}
-        queryClient={queryClient}
-        loadDemoData={loadDemoData}
-      />
+      <BrowserApp backend={backend} queryClient={queryClient} />
     </StrictMode>,
   );
 }
+
+export { default as navigateToHref } from "./business-logic/navigation/navigateToHref.js";

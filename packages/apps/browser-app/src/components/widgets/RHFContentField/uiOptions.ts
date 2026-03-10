@@ -14,6 +14,7 @@ export interface UiOptions {
     };
   }[];
   defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
+  documentId: string | null;
 }
 
 const UiOptionsContext = createContext<UiOptions>({
@@ -23,6 +24,7 @@ const UiOptionsContext = createContext<UiOptions>({
   isReadOnly: false,
   protoCollections: [],
   defaultDocumentViewUiOptions: null,
+  documentId: null,
 });
 
 export const UiOptionsProvider = UiOptionsContext.Provider;

@@ -26,6 +26,7 @@ export default interface DataRepositories {
   conversation: ConversationRepository;
   backgroundJob: BackgroundJobRepository;
   globalSettings: GlobalSettingsRepository;
+  export(path: string): Promise<void>;
   createSavepoint(): Promise<string>;
   rollbackToSavepoint(savepoint: string): Promise<void>;
 }

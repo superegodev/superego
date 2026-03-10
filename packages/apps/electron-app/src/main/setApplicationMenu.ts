@@ -1,9 +1,12 @@
 import type { IntlShape } from "@formatjs/intl";
 import { Menu } from "electron";
+import { compact } from "es-toolkit";
 import cli from "./cli.js";
+import navigateFocusedWindow from "./navigateFocusedWindow.js";
 
 interface ActionHandlers {
   onNewWindow: () => void;
+  onExportDatabase?: () => void;
 }
 
 export default function setApplicationMenu(
@@ -15,15 +18,23 @@ export default function setApplicationMenu(
       { role: "appMenu" },
       {
         role: "fileMenu",
-        submenu: [
+        submenu: compact([
           {
             label: intl.formatMessage({ defaultMessage: "New Window" }),
             accelerator: "CmdOrCtrl+N",
             click: handlers.onNewWindow,
           },
+          handlers.onExportDatabase
+            ? {
+                label: intl.formatMessage({
+                  defaultMessage: "Export database",
+                }),
+                click: handlers.onExportDatabase,
+              }
+            : null,
           { type: "separator" },
           { role: "close" },
-        ],
+        ]),
       },
       { role: "editMenu" },
       { role: "viewMenu" },
@@ -43,6 +54,11 @@ export default function setApplicationMenu(
               }
               setApplicationMenu(intl, handlers);
             },
+          },
+          { type: "separator" },
+          {
+            label: intl.formatMessage({ defaultMessage: "Background Jobs" }),
+            click: () => navigateFocusedWindow("/background-jobs"),
           },
         ],
       },

@@ -42,6 +42,8 @@ export default function extractErrorDetails(error: unknown): any {
         code: "code" in error ? error.code : undefined,
         signal: "signal" in error ? error.signal : undefined,
         cause: "cause" in error ? extractErrorDetails(error.cause) : undefined,
+        // ResultErrors have the details prop, and can sometimes be thrown.
+        details: "details" in error ? error.details : undefined,
       };
     }
 

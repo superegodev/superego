@@ -1,4 +1,5 @@
 import type {
+  InferenceOptions,
   Message,
   MessageContentPart,
   NonEmptyArray,
@@ -30,6 +31,7 @@ export default function EagerRHFAppVersionFilesField({
   targetCollections,
 }: Props) {
   const intl = useIntl();
+
   const [activeView, setActiveView] = useState(View.Preview);
 
   const fieldName = `${name}./main__DOT__tsx`;
@@ -44,12 +46,16 @@ export default function EagerRHFAppVersionFilesField({
     typescriptLibs,
   );
 
-  const onSend = async (messageContent: Message.User["content"]) => {
+  const onSend = async (
+    messageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => {
     const { success, data, error } = await mutate(
       // There aren't File parts since allowFileParts is set to false.
       messageContent as NonEmptyArray<
         MessageContentPart.Text | MessageContentPart.Audio
       >,
+      inferenceOptions,
     );
     if (success) {
       field.onChange(data);

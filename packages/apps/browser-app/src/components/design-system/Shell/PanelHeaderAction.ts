@@ -5,7 +5,6 @@ type PanelHeaderAction = {
   label: string;
   icon: ReactNode;
   isDisabled?: boolean | undefined;
-  isPrimary?: boolean | undefined;
   className?: string | undefined;
 } & (
   | { to: Route }
@@ -20,7 +19,15 @@ type PanelHeaderAction = {
         isDisabled?: boolean;
       }[];
     }
-  | { onPress: () => void }
-  | { submit: string }
+  | {
+      onPress: () => void;
+      isPrimary?: boolean | undefined;
+      isDanger?: boolean | undefined;
+    }
+  | {
+      submit: string;
+      isPrimary?: boolean | undefined;
+      isDanger?: boolean | undefined;
+    }
 );
 export default PanelHeaderAction;

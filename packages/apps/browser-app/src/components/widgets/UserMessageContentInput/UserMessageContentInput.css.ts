@@ -12,10 +12,9 @@ export const UserMessageContentInput = {
     paddingBlockEnd: vars.spacing._2,
     borderRadius: vars.borders.radius.xl,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.subtle}`,
-    boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgba(from ${vars.colors.border.focus} r g b / 0.1)`,
+    boxShadow: `0 ${vars.spacing._0_5} ${vars.spacing._0_5} rgb(from ${vars.colors.shadow.default} r g b / 0.1)`,
     selectors: {
       [`${dark} &`]: {
-        boxShadow: "none",
         background: vars.colors.background.secondarySurface,
       },
     },
@@ -28,12 +27,12 @@ export const UserMessageContentInput = {
   textArea: style({
     width: "100%",
     maxHeight: vars.spacing._80,
+    fieldSizing: "content",
     fontFamily: vars.typography.fontFamilies.sansSerif,
     fontSize: vars.typography.fontSizes.md,
     border: 0,
     background: vars.colors.background.surface,
     color: vars.colors.text.primary,
-    height: 16.5,
     padding: 0,
     marginBlock: vars.spacing._0_5,
     resize: "none",
@@ -63,6 +62,12 @@ export const UserMessageContentInput = {
   actionsToolbar: style({
     display: "flex",
     justifyContent: "space-between",
+  }),
+
+  actionsToolbarLeft: style({
+    display: "flex",
+    alignItems: "center",
+    gap: vars.spacing._1,
   }),
 };
 
@@ -141,13 +146,6 @@ const actionsToolbarButtonBase = style({
 
 export const AddFilesButton = {
   button: actionsToolbarButtonBase,
-
-  disabledLookingButton: style([
-    actionsToolbarButtonBase,
-    {
-      color: vars.colors.button.invisible.disabled.text,
-    },
-  ]),
 };
 
 export const SendRecordButtons = {

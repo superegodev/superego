@@ -14,12 +14,12 @@
     "deploy:preview": "wrangler pages deploy dist/ --project-name superegodev"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/starlight": "^0.37.6",
-    "astro": "^5.17.2",
-    "starlight-theme-nova": "^0.11.5",
+    "@astrojs/check": "^0.9.7",
+    "@astrojs/mdx": "^4.3.14",
+    "@astrojs/starlight": "^0.37.7",
+    "astro": "^5.18.1",
+    "starlight-theme-nova": "^0.11.7",
     "typescript": "^5.9.3",
-    "wrangler": "^4.65.0"
+    "wrangler": "^4.71.0"
   }
 }

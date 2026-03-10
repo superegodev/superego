@@ -1,3 +1,5 @@
+import type Theme from "../enums/Theme.js";
+
 export default interface PackInfo {
   name: string;
   /** Markdown. */
@@ -5,6 +7,7 @@ export default interface PackInfo {
   /** Markdown. */
   longDescription: string;
   screenshots: {
+    theme: Theme.Light | Theme.Dark;
     mimeType: `image/${string}`;
     content: Uint8Array<ArrayBuffer>;
   }[];

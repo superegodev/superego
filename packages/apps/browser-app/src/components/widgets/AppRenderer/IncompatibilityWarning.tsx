@@ -19,6 +19,7 @@ export default function IncompatibilityWarning({ app, onDismiss }: Props) {
       title={intl.formatMessage({
         defaultMessage: "Incompatibility warning",
       })}
+      className={cs.IncompatibilityWarning.root}
     >
       <FormattedMessage
         defaultMessage={`
@@ -33,7 +34,10 @@ export default function IncompatibilityWarning({ app, onDismiss }: Props) {
         values={formattedMessageHtmlTags}
       />
       <div className={cs.IncompatibilityWarning.buttons}>
-        <Link to={{ name: RouteName.EditApp, appId: app.id }}>
+        <Link
+          to={{ name: RouteName.EditApp, appId: app.id }}
+          className={cs.IncompatibilityWarning.linkButton}
+        >
           <Button onPress={(evt) => evt.continuePropagation()}>
             <FormattedMessage defaultMessage="Update the app" />
           </Button>

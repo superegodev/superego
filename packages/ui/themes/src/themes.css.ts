@@ -349,6 +349,19 @@ export const [light, vars] = createTheme({
           border: colors.greys._4,
         },
       },
+      invisibleDanger: {
+        base: {
+          background: "none",
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        hover: {
+          background: colors.reds._1,
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        disabled: { background: "none", text: colors.greys._6 },
+      },
     },
     neutral: colors.greys,
     text: {
@@ -373,6 +386,9 @@ export const [light, vars] = createTheme({
       disabled: colors.greys._2,
       inverse: colors.greys._10,
     },
+    shadow: {
+      default: colors.greys._12,
+    },
   },
 });
 
@@ -383,37 +399,37 @@ export const dark = createTheme(vars, {
     accent: colors.oranges._4,
     semantic: {
       info: {
-        border: colors.blues._1,
-        background: colors.blues._5,
-        text: colors.blues._1,
+        border: colors.blues._5,
+        background: colors.blues._1,
+        text: colors.blues._5,
         backgroundFilled: colors.blues._5,
         textFilled: colors.greys._0,
       },
       success: {
-        border: colors.greens._1,
-        background: colors.greens._5,
-        text: colors.greens._1,
+        border: colors.greens._5,
+        background: colors.greens._1,
+        text: colors.greens._5,
         backgroundFilled: colors.greens._5,
         textFilled: colors.greys._0,
       },
       pending: {
-        border: colors.oranges._1,
-        background: colors.oranges._5,
-        text: colors.oranges._1,
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
         backgroundFilled: colors.oranges._5,
         textFilled: colors.greys._0,
       },
       warning: {
-        border: colors.oranges._1,
-        background: colors.oranges._5,
-        text: colors.oranges._1,
+        border: colors.oranges._5,
+        background: colors.oranges._1,
+        text: colors.oranges._5,
         backgroundFilled: colors.oranges._5,
         textFilled: colors.greys._0,
       },
       error: {
-        border: colors.reds._1,
-        background: colors.reds._5,
-        text: colors.reds._1,
+        border: colors.reds._5,
+        background: colors.reds._1,
+        text: colors.reds._5,
         backgroundFilled: colors.reds._5,
         textFilled: colors.greys._0,
       },
@@ -484,6 +500,19 @@ export const dark = createTheme(vars, {
           border: colors.greys._8,
         },
       },
+      invisibleDanger: {
+        base: {
+          background: "none",
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        hover: {
+          background: colors.greys._8,
+          text: colors.reds._5,
+          border: "transparent",
+        },
+        disabled: { background: "none", text: colors.greys._6 },
+      },
     },
     neutral: {
       _0: colors.greys._12,
@@ -527,6 +556,9 @@ export const dark = createTheme(vars, {
       focus: colors.greys._5,
       disabled: colors.greys._10,
       inverse: colors.greys._0,
+    },
+    shadow: {
+      default: colors.greys._12,
     },
   },
 });

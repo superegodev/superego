@@ -8,18 +8,9 @@ export const ConversationMessages = {
     width: "100%",
     containerType: "inline-size",
   }),
-};
 
-export const ThinkingMessage = {
-  root: style({
-    display: "flex",
-    alignItems: "center",
-    width: "100%",
-  }),
-
-  spinner: style({
-    width: "auto",
-    height: vars.spacing._4,
+  tail: style({
+    display: "flow-root",
   }),
 };
 

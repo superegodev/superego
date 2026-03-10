@@ -2,8 +2,7 @@ import type { CollectionCategoryId, CollectionId } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { useCollator } from "react-aria";
 import { Tree } from "react-aria-components";
-import { PiArrowBendRightUpBold } from "react-icons/pi";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
   useDeleteCollectionCategory,
@@ -12,7 +11,6 @@ import {
 } from "../../../business-logic/backend/hooks.js";
 import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";
-import LoadDemoDataButton from "../LoadDemoDataButton/LoadDemoDataButton.js";
 import CollectionCategoryTreeItem from "./CollectionCategoryTreeItem.js";
 import * as cs from "./CollectionsTree.css.js";
 import CollectionTreeItem from "./CollectionTreeItem.js";
@@ -57,9 +55,6 @@ export default function CollectionsTree({ className }: Props) {
   return (
     <IsParentDropDisabledProvider value={false}>
       <div className={classnames(cs.CollectionsTree.root, className)}>
-        {import.meta.env["VITE_IS_DEMO"] === "true" ? (
-          <LoadDemoDataButton />
-        ) : null}
         <Header alwaysShowToolbar={isEmpty(collectionsTree.children)} />
         <Tree
           aria-label={intl.formatMessage({
@@ -69,16 +64,6 @@ export default function CollectionsTree({ className }: Props) {
           items={collectionsTree.children}
           defaultExpandedKeys={collectionCategories.map(({ id }) => id)}
           className={cs.CollectionsTree.tree}
-          renderEmptyState={() => (
-            <div className={cs.CollectionsTree.emptyTree}>
-              <div className={cs.CollectionsTree.emptyTreeText}>
-                <FormattedMessage defaultMessage="Create collection to start." />
-              </div>
-              <PiArrowBendRightUpBold
-                className={cs.CollectionsTree.emptyTreeIcon}
-              />
-            </div>
-          )}
         >
           {function renderItem(item) {
             return item.type === tree.TreeItemType.CollectionCategory ? (

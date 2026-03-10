@@ -38,7 +38,7 @@ export default function CollectionPreview({
         control={control}
         showNullability={true}
         zoomLevel={0.9}
-        isReadOnly={true}
+        isReadOnly={false}
         protoCollections={protoCollections}
       />
     </Form>

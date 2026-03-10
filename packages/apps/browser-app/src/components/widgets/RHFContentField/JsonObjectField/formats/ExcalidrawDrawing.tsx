@@ -5,6 +5,7 @@ import { FieldErrorContext } from "react-aria-components";
 import { useController } from "react-hook-form";
 import forms from "../../../../../business-logic/forms/forms.js";
 import classnames from "../../../../../utils/classnames.js";
+import type ExcalidrawDrawingValue from "../../../../design-system/ExcalidrawInput/ExcalidrawDrawingValue.js";
 import ExcalidrawInput from "../../../../design-system/ExcalidrawInput/ExcalidrawInput.js";
 import { FieldError } from "../../../../design-system/forms/forms.js";
 import AnyFieldLabel from "../../AnyFieldLabel.js";
@@ -26,24 +27,58 @@ export default function ExcalidrawDrawing({
   name,
   label,
 }: Props) {
-  const { isReadOnly } = useUiOptions();
-  const { grow } = useFieldUiOptions(name);
+  const { isReadOnly, documentId } = useUiOptions();
+  const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+
+  const localStorageKey = documentId
+    ? getLocalStorageKey(documentId, field.name)
+    : null;
+
   const { __dataType, ...value } =
     field.value ?? forms.defaults.excalidrawDrawingJsonObject();
+
   const onChange = useCallback(
-    (newValue: typeof value) =>
-      field.value === null && isEqual(newValue, defaultValue)
-        ? field.onChange(null)
-        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange, field.value],
+    (newValue: ExcalidrawDrawingValue) => {
+      const { appState, ...rest } = newValue;
+
+      if (localStorageKey && appState) {
+        try {
+          localStorage.setItem(localStorageKey, JSON.stringify(appState));
+        } catch {
+          // Ignore rare errors, fallback to not saving.
+        }
+      }
+
+      field.onChange(
+        isEqual(rest, defaultValue) && field.value === null
+          ? null
+          : { ...rest, __dataType: DataType.JsonObject },
+      );
+    },
+    [field.onChange, field.value, localStorageKey],
   );
+
+  const inputValue = (() => {
+    if (!isReadOnly && localStorageKey) {
+      try {
+        const stored = localStorage.getItem(localStorageKey);
+        if (stored) {
+          return { ...value, appState: JSON.parse(stored) };
+        }
+      } catch {
+        // Ignore rare errors, fallback to not restoring.
+      }
+    }
+    return value;
+  })();
+
   return (
     <div
       className={classnames(
         cs.JsonObjectField.ExcalidrawDrawing.root,
         isListItem && cs.ListItemField.root,
-        grow && cs.Field.grow,
+        flexGrow && cs.Field.flexGrow,
       )}
       data-data-type={typeDefinition.dataType}
       data-is-list-item={isListItem}
@@ -65,13 +100,13 @@ export default function ExcalidrawDrawing({
         />
       ) : null}
       <ExcalidrawInput
-        value={value}
+        value={inputValue}
         onChange={onChange}
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         ref={field.ref}
-        className={grow ? cs.Field.growContent : undefined}
+        className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext
         value={{
@@ -86,4 +121,8 @@ export default function ExcalidrawDrawing({
       </FieldErrorContext>
     </div>
   );
+}
+
+function getLocalStorageKey(documentId: string, fieldName: string) {
+  return `edap-${documentId}-${fieldName}`;
 }

@@ -7,6 +7,7 @@ import {
 import type { IntlShape } from "react-intl";
 
 const DISPLAY_NAME_LENGTH = 16;
+const PROCESSING_TIMEOUT = 5 * 60 * 1_000;
 
 export default {
   getDisplayTitle(
@@ -115,6 +116,17 @@ export default {
     );
   },
 
+  isSuccessfulCreateGeoJSONMapToolResult(
+    toolResult: ToolResult,
+  ): toolResult is ToolResult.CreateGeoJSONMap & {
+    output: { success: true };
+    artifacts: NonNullable<ToolResult.CreateGeoJSONMap["artifacts"]>;
+  } {
+    return (
+      toolResult.tool === ToolName.CreateGeoJSONMap && toolResult.output.success
+    );
+  },
+
   isSuccessfulCreateDocumentsTablesToolResult(
     toolResult: ToolResult,
   ): toolResult is ToolResult.CreateDocumentsTables & {
@@ -149,6 +161,12 @@ export default {
     return toolCall.tool === ToolName.CreateChart;
   },
 
+  isCreateGeoJSONMapToolCall(
+    toolCall: ToolCall,
+  ): toolCall is ToolCall.CreateGeoJSONMap {
+    return toolCall.tool === ToolName.CreateGeoJSONMap;
+  },
+
   isCreateDocumentsTablesToolCall(
     toolCall: ToolCall,
   ): toolCall is ToolCall.CreateDocumentsTables {
@@ -159,5 +177,15 @@ export default {
     toolCall: ToolCall,
   ): toolCall is ToolCall.GetCollectionTypescriptSchema {
     return toolCall.tool === ToolName.GetCollectionTypescriptSchema;
+  },
+
+  isStuckProcessing(conversation: Conversation): boolean {
+    if (conversation.processingStartedAt) {
+      return (
+        Date.now() - conversation.processingStartedAt.getTime() >=
+        PROCESSING_TIMEOUT
+      );
+    }
+    return false;
   },
 };

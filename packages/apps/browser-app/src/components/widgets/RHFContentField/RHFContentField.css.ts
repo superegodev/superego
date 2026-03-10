@@ -260,16 +260,14 @@ export const NullifyFieldAction = {
 };
 
 export const Field = {
-  grow: style({
+  flexGrow: style({
     flexGrow: 1,
     minHeight: 0,
-    height: "100%",
   }),
 
-  growContent: style({
+  flexGrowContent: style({
     flexGrow: 1,
     minHeight: 0,
-    height: "100%",
   }),
 
   root: style({

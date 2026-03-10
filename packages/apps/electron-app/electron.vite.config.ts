@@ -39,6 +39,11 @@ export default defineConfig({
     },
   },
   renderer: mergeConfig(browserAppViteConfig as UserConfig, {
+    define: {
+      "import.meta.env.VITE_SANDBOX_URL": JSON.stringify(
+        "dev.superego.app-sandbox://localhost/app-sandbox.html",
+      ),
+    },
     build: {
       sourcemap: false,
       rollupOptions: {

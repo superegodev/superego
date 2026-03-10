@@ -1,10 +1,4 @@
 {
-  "AddFilesButton.tsx_DYNOvl": [
-    {
-      "type": 0,
-      "value": "Configura l'assistente per l'ispezione dei file"
-    }
-  ],
   "AddFilesButton.tsx_sXiGbo": [
     {
       "type": 0,
@@ -35,6 +29,24 @@
       "value": "Come posso aiutarti?"
     }
   ],
+  "AssistantsSettings.tsx_MyqNS6": [
+    {
+      "type": 0,
+      "value": "Nome: Sigmund. Nascita: 6 maggio 1856"
+    }
+  ],
+  "AssistantsSettings.tsx_PrDhYG": [
+    {
+      "type": 0,
+      "value": "Rispondi sempre in tedesco. Usa un tono informale. Usa le unità metriche."
+    }
+  ],
+  "AssistantsSettings.tsx_c2z6MR": [
+    {
+      "type": 0,
+      "value": "Su di te"
+    }
+  ],
   "AssistantsSettings.tsx_mTE6Ss": [
     {
       "type": 0,
@@ -47,10 +59,10 @@
       "value": "Prompt per sviluppatori di Factotum"
     }
   ],
-  "AssistantsSettings.tsx_vlKhIl": [
+  "AssistantsSettings.tsx_xIOlmn": [
     {
       "type": 0,
-      "value": "Il tuo nome"
+      "value": "Le tue preferenze"
     }
   ],
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
@@ -186,7 +198,7 @@
   "BackgroundJobsTable.tsx_IBAQRm": [
     {
       "type": 0,
-      "value": "Non c'è ancora nessuno lavoro in background."
+      "value": "Non c'è ancora nessun lavoro in background."
     }
   ],
   "BackgroundJobsTable.tsx_TDUfVk": [
@@ -213,19 +225,37 @@
       "value": "Stato"
     }
   ],
-  "Bazaar.tsx_T5A49y": [
+  "BooleanField.tsx_KKkUks": [
     {
       "type": 0,
-      "value": "Bazaar"
+      "value": "Vero"
     }
   ],
-  "Bazaar.tsx_XBMGwY": [
+  "BooleanField.tsx_rxqs5U": [
+    {
+      "type": 0,
+      "value": "Falso"
+    }
+  ],
+  "Boutique.tsx_J4ocUB": [
+    {
+      "type": 0,
+      "value": "Boutique"
+    }
+  ],
+  "Boutique.tsx_XBMGwY": [
     {
       "type": 0,
       "value": "Impossibile decodificare il file pack"
     }
   ],
-  "Bazaar.tsx_rrrB1P": [
+  "Boutique.tsx_a1s4zI": [
+    {
+      "type": 0,
+      "value": "Oppure installa il tuo"
+    }
+  ],
+  "Boutique.tsx_rrrB1P": [
     {
       "type": 0,
       "value": "Trascina "
@@ -245,32 +275,14 @@
       "value": " per installare"
     }
   ],
-  "Bazaar.tsx_sX7yk3": [
+  "BoutiquePack.tsx_AHlDyN": [
     {
       "type": 0,
-      "value": "Oppure installa dal bazaar"
-    }
-  ],
-  "BazaarPack.tsx_40netJ": [
-    {
-      "type": 0,
-      "value": "Bazaar » "
+      "value": "Boutique » "
     },
     {
       "type": 1,
       "value": "packId"
-    }
-  ],
-  "BooleanField.tsx_KKkUks": [
-    {
-      "type": 0,
-      "value": "Vero"
-    }
-  ],
-  "BooleanField.tsx_rxqs5U": [
-    {
-      "type": 0,
-      "value": "Falso"
     }
   ],
   "BrowserApp.tsx_w1vfWS": [
@@ -317,6 +329,24 @@
       "value": " versioni)"
     }
   ],
+  "Capabilities.tsx_HjTr28": [
+    {
+      "type": 0,
+      "value": "Supporta la comprensione delle immagini"
+    }
+  ],
+  "Capabilities.tsx_KihMPW": [
+    {
+      "type": 0,
+      "value": "Supporta la comprensione audio"
+    }
+  ],
+  "Capabilities.tsx_xRp25e": [
+    {
+      "type": 0,
+      "value": "Supporta la comprensione PDF"
+    }
+  ],
   "Carousel.tsx_F+ukuP": [
     {
       "type": 0,
@@ -360,7 +390,7 @@
   "Collection.tsx_5WK7jL": [
     {
       "type": 0,
-      "value": "Crea nuova app"
+      "value": "Crea nuova"
     }
   ],
   "Collection.tsx_B+R508": [
@@ -479,12 +509,6 @@
       "value": "Azioni delle impostazioni della collezione"
     }
   ],
-  "CollectionsTree.tsx_XjdXFR": [
-    {
-      "type": 0,
-      "value": "Crea una collezione per iniziare."
-    }
-  ],
   "CollectionsTree.tsx_gykodq": [
     {
       "type": 0,
@@ -544,7 +568,7 @@
   "ContentSummary.tsx_kvPscx": [
     {
       "type": 0,
-      "value": "Errore durante l'elaborazione del sommario dei contenuti: "
+      "value": "Errore durante la derivazione del sommario dei contenuti: "
     },
     {
       "type": 1,
@@ -607,6 +631,12 @@
       "value": "Elimina conversazione"
     }
   ],
+  "Conversation.tsx_A4DzYS": [
+    {
+      "type": 0,
+      "value": "Mostra le tool call"
+    }
+  ],
   "Conversation.tsx_eq3LES": [
     {
       "type": 0,
@@ -615,12 +645,6 @@
     {
       "type": 1,
       "value": "conversation"
-    }
-  ],
-  "Conversation.tsx_gKk3/v": [
-    {
-      "type": 0,
-      "value": "Attiva/disattiva le chiamate allo strumento"
     }
   ],
   "Conversation.tsx_oZLZvb": [
@@ -645,10 +669,16 @@
       "value": "conversationId"
     }
   ],
+  "Conversation.tsx_yGVyFv": [
+    {
+      "type": 0,
+      "value": "Nascondi le tool call"
+    }
+  ],
   "Conversation.tsx_yWDfdE": [
     {
       "type": 0,
-      "value": "Che tipo di dati vuoi archiviare?"
+      "value": "Che tipo di dati vuoi salvare?"
     }
   ],
   "Conversation.tsx_yYmfIl": [
@@ -735,12 +765,6 @@
       "value": "Crea app"
     }
   ],
-  "CreateAppForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -762,7 +786,7 @@
   "CreateCollectionAssisted.tsx_yWDfdE": [
     {
       "type": 0,
-      "value": "Che tipo di dati vuoi archiviare?"
+      "value": "Che tipo di dati vuoi salvare?"
     }
   ],
   "CreateCollectionForm.tsx_+gaKsp": [
@@ -789,12 +813,6 @@
       "value": "1. Impostazioni generali"
     }
   ],
-  "CreateCollectionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateCollectionManual.tsx_9/rVBT": [
     {
       "type": 0,
@@ -816,7 +834,7 @@
   "CreateDocument.tsx_K6tRTv": [
     {
       "type": 0,
-      "value": "Azioni crea documento"
+      "value": "Azioni della pagina di creazione documento"
     }
   ],
   "CreateDocument.tsx_VzzYJk": [
@@ -890,12 +908,6 @@
       "value": "Errore durante la creazione di una nuova versione dell'app"
     }
   ],
-  "CreateNewAppVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateNewCollectionVersion.tsx_WgkS3f": [
     {
       "type": 1,
@@ -922,12 +934,6 @@
     {
       "type": 0,
       "value": "3. Sommario dei contenuti"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_dISRjb": [
@@ -984,12 +990,6 @@
       "value": ". La modifica del documento è disabilitata."
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
     {
       "type": 0,
@@ -1026,6 +1026,12 @@
       "value": "Creato dalla sincronizzazione"
     }
   ],
+  "DatePickerInput.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "Default.tsx_9CnsYv": [
     {
       "type": 0,
@@ -1036,6 +1042,36 @@
     {
       "type": 0,
       "value": "Opzioni UI predefinite per la vista documento"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Sforzo di ragionamento"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_DEgFqm": [
+    {
+      "type": 0,
+      "value": "Opzioni di trascrizione predefinite"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_qAb0dx": [
+    {
+      "type": 0,
+      "value": "Opzioni di completamento predefinite"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Modello"
+    }
+  ],
+  "DefaultInferenceOptions.tsx_uIQJ+w": [
+    {
+      "type": 0,
+      "value": "Opzioni di ispezione file predefinite"
     }
   ],
   "DeleteAppModalForm.tsx_47FYwb": [
@@ -1226,78 +1262,6 @@
       "value": "Conferma comando"
     }
   ],
-  "DeleteDocumentModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Elimina"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_cpePvc": [
-    {
-      "type": 0,
-      "value": "Elimina il documento \""
-    },
-    {
-      "type": 1,
-      "value": "documentName"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_lml5ZH": [
-    {
-      "type": 0,
-      "value": "Conferma comando"
-    }
-  ],
-  "DeleteDocumentModalForm.tsx_qjTjxw": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "delete"
-            }
-          ],
-          "type": 8,
-          "value": "i"
-        },
-        {
-          "type": 0,
-          "value": " nel campo sottostante. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
   "Document.tsx_AB6IO/": [
     {
       "type": 0,
@@ -1348,10 +1312,10 @@
       "value": "Salva"
     }
   ],
-  "Document.tsx_otVWer": [
+  "Document.tsx_ps0LGU": [
     {
       "type": 0,
-      "value": "Informazioni sul documento remoto"
+      "value": "Informazioni documento"
     }
   ],
   "Document.tsx_zugcbb": [
@@ -1366,6 +1330,58 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Sincronizzato con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DocumentInfoModal.tsx_gm5+Hy": [
+    {
+      "type": 0,
+      "value": "ID collezione:"
+    }
+  ],
+  "DocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "ID documento remoto:"
+    }
+  ],
+  "DocumentInfoModal.tsx_i3P6ZD": [
+    {
+      "type": 0,
+      "value": "Creato il:"
+    }
+  ],
+  "DocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "ID versione documento remoto:"
+    }
+  ],
+  "DocumentInfoModal.tsx_ps0LGU": [
+    {
+      "type": 0,
+      "value": "Informazioni documento"
+    }
+  ],
+  "DocumentInfoModal.tsx_qAhp5A": [
+    {
+      "type": 0,
+      "value": "Ultima modifica il:"
+    }
+  ],
+  "DocumentInfoModal.tsx_uhPUU0": [
+    {
+      "type": 0,
+      "value": "ID documento:"
     }
   ],
   "DocumentRefField.tsx_79lKyO": [
@@ -1514,6 +1530,12 @@
       "value": "Crea comunque"
     }
   ],
+  "EagerEchart.tsx_1nnRAQ": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering del grafico."
+    }
+  ],
   "EagerExcalidrawInput.tsx_QqavBC": [
     {
       "type": 0,
@@ -1524,6 +1546,12 @@
     {
       "type": 0,
       "value": "Esci dalla modalità a schermo intero"
+    }
+  ],
+  "EagerGeoJSONMap.tsx_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
   "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
@@ -1542,12 +1570,6 @@
     {
       "type": 0,
       "value": "Scrivi..."
-    }
-  ],
-  "Echart.tsx_1nnRAQ": [
-    {
-      "type": 0,
-      "value": "Si è verificato un errore durante il rendering del grafico."
     }
   ],
   "EditApp.tsx_K3r6DQ": [
@@ -1664,6 +1686,184 @@
       "value": "L'assistente ha riscontrato un errore."
     }
   ],
+  "Explainer.tsx_Np7GhL": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " I tuoi dati in Superego sono organizzati in "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "collezioni"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " di "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "documenti"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": ". Ogni collezione ha uno "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "schema"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " che definisce quali dati contiene ciascun documento. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Esempio: una collezione "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Spese"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " contiene molti documenti "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Spesa"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": ". Ogni documento contiene la data della spesa, l'importo e una descrizione. (Questo è lo schema.) "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Descrivi al "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Creatore di Collezioni"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " quali dati vuoi archiviare e creerà una collezione per te. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Explainer.tsx_kM11wK": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Qui nel Boutique puoi trovare collezioni e app già pronte, raggruppate in "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "pack"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " tematici che puoi installare con un click. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Puoi anche usare la "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "CLI di Superego"
+            }
+          ],
+          "type": 8,
+          "value": "cliDocsLink"
+        },
+        {
+          "type": 0,
+          "value": " per creare i tuoi pack. (Trascinali qui sotto per installarli.) "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "FileField.tsx_5q3qC0": [
     {
       "type": 0,
@@ -1710,6 +1910,12 @@
     {
       "type": 0,
       "value": "Scarica"
+    }
+  ],
+  "FormStateEffects.tsx_Wq1yhE": [
+    {
+      "type": 0,
+      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "FormattingToolbar.tsx_+im1ZA": [
@@ -2000,16 +2206,16 @@
       "value": "Crea categoria di collezioni"
     }
   ],
+  "Hero.tsx_BrZb1S": [
+    {
+      "type": 0,
+      "value": "Il software che si adatta a te"
+    }
+  ],
   "Hero.tsx_OpKKos": [
     {
       "type": 0,
       "value": "Ciao!"
-    }
-  ],
-  "Hero.tsx_cWa0gy": [
-    {
-      "type": 0,
-      "value": "La tua libertà digitale"
     }
   ],
   "Hero.tsx_q4FNnF": [
@@ -2164,196 +2370,24 @@
       "value": "Avviso di incompatibilità"
     }
   ],
-  "InferenceSettings.tsx_25pjeS": [
+  "InferenceSettings.tsx_P817ae": [
     {
       "type": 0,
-      "value": "Chat Completions"
-    }
-  ],
-  "InferenceSettings.tsx_AJlr3w": [
-    {
-      "type": 0,
-      "value": "Ispezione dei file"
-    }
-  ],
-  "InferenceSettings.tsx_BUf4e4": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello supportato dal provider che hai scelto. Di solito lo trovi nella documentazione del provider. "
+      "value": "Configura un "
     },
     {
       "children": [
         {
           "type": 0,
-          "value": "z-ai/glm-4.7"
+          "value": "fornitore di inferenza"
         }
       ],
       "type": 8,
-      "value": "code"
+      "value": "b"
     },
     {
       "type": 0,
-      "value": ", "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "openai/gpt-oss-120b"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " e "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "qwen/qwen3-coder"
-        }
-      ],
-      "type": 8,
-      "value": "code"
-    },
-    {
-      "type": 0,
-      "value": " funzionano generalmente molto bene."
-    }
-  ],
-  "InferenceSettings.tsx_FJPyVh": [
-    {
-      "type": 0,
-      "value": ": veloce, economico, supporta tutte le API."
-    }
-  ],
-  "InferenceSettings.tsx_HRac2N": [
-    {
-      "type": 0,
-      "value": "Sintesi vocale (necessaria perché l'assistente ti parli)"
-    }
-  ],
-  "InferenceSettings.tsx_NNEajY": [
-    {
-      "type": 0,
-      "value": "URL di base del provider"
-    }
-  ],
-  "InferenceSettings.tsx_RPpwVn": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Per far funzionare l'assistente devi collegarlo a un "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "fornitore di inferenza"
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " — un servizio che offre API per LLM, trascrizione vocale e sintesi vocale. Il provider deve offrire API "
-        },
-        {
-          "children": [
-            {
-              "type": 0,
-              "value": "compatibili con il formato OpenAI."
-            }
-          ],
-          "type": 8,
-          "value": "b"
-        },
-        {
-          "type": 0,
-          "value": " "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Provider che funzionano: "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_YctX0J": [
-    {
-      "type": 0,
-      "value": "Chiave API del provider"
-    }
-  ],
-  "InferenceSettings.tsx_eV3UHK": [
-    {
-      "type": 0,
-      "value": "Trascrizioni (necessarie per parlare con l'assistente)"
-    }
-  ],
-  "InferenceSettings.tsx_gi9ckp": [
-    {
-      "type": 0,
-      "value": ": supporta solo l'API Chat Completions."
-    }
-  ],
-  "InferenceSettings.tsx_mnJYBQ": [
-    {
-      "type": 0,
-      "value": "Voce"
-    }
-  ],
-  "InferenceSettings.tsx_rhSI1/": [
-    {
-      "type": 0,
-      "value": "Modello"
-    }
-  ],
-  "InferenceSettings.tsx_u2jTeg": [
-    {
-      "type": 0,
-      "value": ": supporta tutte le API."
-    }
-  ],
-  "InferenceSettings.tsx_uTE4Se": [
-    {
-      "type": 0,
-      "value": "Il nome di un modello multimodale che supporta immagini, video e PDF."
-    }
-  ],
-  "InferenceSettings.tsx_vuJYgx": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": " Crea un account con il provider scelto, ottieni una chiave API e inserisci i dettagli qui sotto. "
-        }
-      ],
-      "type": 8,
-      "value": "p"
-    }
-  ],
-  "InferenceSettings.tsx_waSfdV": [
-    {
-      "type": 0,
-      "value": ": app che gira localmente sul tuo computer (richiede molta RAM e una GPU potente). Supporta solo l'API Chat Completions."
+      "value": " per abilitare l'assistente. Un modello con capacità di comprensione audio è necessario per la funzione \"parla\"."
     }
   ],
   "InstallPackModal.tsx_+Toiai": [
@@ -2371,7 +2405,7 @@
   "InstallPackModal.tsx_B8WL2e": [
     {
       "type": 0,
-      "value": "Installare \""
+      "value": "Installare il pacchetto \""
     },
     {
       "type": 1,
@@ -2492,50 +2526,6 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
-  "LoadDemoDataButton.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "LoadDemoDataButton.tsx_8EGRF9": [
-    {
-      "type": 0,
-      "value": "Carica"
-    }
-  ],
-  "LoadDemoDataButton.tsx_FBs/WA": [
-    {
-      "type": 1,
-      "value": "current"
-    },
-    {
-      "type": 0,
-      "value": " pacchetti installati su "
-    },
-    {
-      "type": 1,
-      "value": "total"
-    }
-  ],
-  "LoadDemoDataButton.tsx_GCRF0i": [
-    {
-      "type": 0,
-      "value": "Caricamento dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_VXuroA": [
-    {
-      "type": 0,
-      "value": "Carica dati demo"
-    }
-  ],
-  "LoadDemoDataButton.tsx_ZBdI8u": [
-    {
-      "type": 0,
-      "value": "Carica alcune raccolte e documenti demo con cui puoi fare delle prove."
-    }
-  ],
   "LocalPack.tsx_/hNhmZ": [
     {
       "type": 0,
@@ -2568,6 +2558,108 @@
     {
       "type": 0,
       "value": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
+    }
+  ],
+  "ModalContent.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "ModalContent.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Elimina"
+    }
+  ],
+  "ModalContent.tsx_cpePvc": [
+    {
+      "type": 0,
+      "value": "Elimina il documento \""
+    },
+    {
+      "type": 1,
+      "value": "documentName"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "ModalContent.tsx_lml5ZH": [
+    {
+      "type": 0,
+      "value": "Conferma comando"
+    }
+  ],
+  "ModalContent.tsx_qjTjxw": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Se sei sicuro di voler eliminare il documento, scrivi "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "delete"
+            }
+          ],
+          "type": 8,
+          "value": "i"
+        },
+        {
+          "type": 0,
+          "value": " nel campo sottostante. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Model.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "Model.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "Model.tsx_qlcuNQ": [
+    {
+      "type": 0,
+      "value": "ID"
+    }
+  ],
+  "ModelActionMenu.tsx_SikIJG": [
+    {
+      "type": 0,
+      "value": "(precedentemente usato)"
+    }
+  ],
+  "ModelSelect.tsx_rhSI1/": [
+    {
+      "type": 0,
+      "value": "Modello"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [
@@ -2718,20 +2810,20 @@
       "value": "collectionsCount"
     }
   ],
-  "PackMainPanel.tsx_DzgcGx": [
-    {
-      "type": 0,
-      "value": "Bazaar » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
   "PackMainPanel.tsx_HUc4Bb": [
     {
       "type": 0,
       "value": "Mostra/nascondi anteprima collezioni"
+    }
+  ],
+  "PackMainPanel.tsx_OYAe1w": [
+    {
+      "type": 0,
+      "value": "Boutique » "
+    },
+    {
+      "type": 1,
+      "value": "packName"
     }
   ],
   "PackMainPanel.tsx_hgmRAL": [
@@ -2834,10 +2926,10 @@
       "value": "Impostazioni"
     }
   ],
-  "PrimarySidebarPanel.tsx_T5A49y": [
+  "PrimarySidebarPanel.tsx_J4ocUB": [
     {
       "type": 0,
-      "value": "Bazaar"
+      "value": "Boutique"
     }
   ],
   "PrimarySidebarPanel.tsx_ZT0z9z": [
@@ -2852,16 +2944,64 @@
       "value": "Indietro"
     }
   ],
-  "PrimarySidebarPanel.tsx_lZrF3s": [
-    {
-      "type": 0,
-      "value": "Lavori in background"
-    }
-  ],
   "PrimarySidebarPanel.tsx_xmcVZ0": [
     {
       "type": 0,
       "value": "Cerca"
+    }
+  ],
+  "Provider.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "Provider.tsx_HAlOn1": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "Provider.tsx_KTNoOq": [
+    {
+      "type": 0,
+      "value": "Chiave API"
+    }
+  ],
+  "Provider.tsx_MbbFzn": [
+    {
+      "type": 0,
+      "value": "Driver"
+    }
+  ],
+  "Provider.tsx_blWvag": [
+    {
+      "type": 0,
+      "value": "Modelli"
+    }
+  ],
+  "Provider.tsx_dqWH5L": [
+    {
+      "type": 0,
+      "value": "URL di base"
+    }
+  ],
+  "Provider.tsx_zUO6Ii": [
+    {
+      "type": 0,
+      "value": "Aggiungi modello"
+    }
+  ],
+  "Providers.tsx_+goFsL": [
+    {
+      "type": 0,
+      "value": "Aggiungi provider"
+    }
+  ],
+  "Providers.tsx_IL1Uey": [
+    {
+      "type": 0,
+      "value": "Provider"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -3171,7 +3311,7 @@
       "children": [
         {
           "type": 0,
-          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la compressione della barra laterale e la definizione di un layout personalizzato dei campi. "
+          "value": " Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la chiusura della barra laterale e la definizione di un layout personalizzato dei campi. "
         }
       ],
       "type": 8,
@@ -3222,6 +3362,42 @@
     {
       "type": 0,
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+    }
+  ],
+  "ReasoningEffortSelect.tsx_2X1lvg": [
+    {
+      "type": 0,
+      "value": "Sforzo di ragionamento"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_450Fty": [
+    {
+      "type": 0,
+      "value": "Nessuno"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_477I0g": [
+    {
+      "type": 0,
+      "value": "Basso"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_AxMhQr": [
+    {
+      "type": 0,
+      "value": "Alto"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_kDEj60": [
+    {
+      "type": 0,
+      "value": "Extra alto"
+    }
+  ],
+  "ReasoningEffortSelect.tsx_ovJ26C": [
+    {
+      "type": 0,
+      "value": "Medio"
     }
   ],
   "Remote.tsx_s8FZNF": [
@@ -3393,7 +3569,7 @@
   "RemoteConverters.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
     },
     {
       "children": [
@@ -3425,7 +3601,7 @@
   "RemoteConvertersTab.tsx_3cBs4J": [
     {
       "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Ritorna "
+      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
     },
     {
       "children": [
@@ -3472,28 +3648,6 @@
     {
       "type": 0,
       "value": "Crea una nuova versione e migra i documenti"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_1D7voQ": [
-    {
-      "type": 0,
-      "value": "Sincronizzato con "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_h6SlY+": [
-    {
-      "type": 0,
-      "value": "ID documento remoto:"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_nY1/sq": [
-    {
-      "type": 0,
-      "value": "ID versione documento remoto:"
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_47FYwb": [
@@ -3620,6 +3774,12 @@
       },
       "type": 5,
       "value": "type"
+    }
+  ],
+  "ResolveIncompatibilityModal.tsx_kAEQyV": [
+    {
+      "type": 0,
+      "value": "OK"
     }
   ],
   "RestoreVersionModal.tsx_47FYwb": [
@@ -3874,6 +4034,12 @@
       "value": "Nessun risultato trovato"
     }
   ],
+  "SelectButton.tsx_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "SelectButton.tsx_EPTOBf": [
     {
       "type": 1,
@@ -3910,12 +4076,6 @@
       "value": " » Documento d'esempio"
     }
   ],
-  "SendRecordButtons.tsx_/8QiK8": [
-    {
-      "type": 0,
-      "value": "Configura l'assistente per la trascrizione"
-    }
-  ],
   "SendRecordButtons.tsx_3LSnIf": [
     {
       "type": 0,
@@ -3928,16 +4088,16 @@
       "value": "Annulla"
     }
   ],
-  "SendRecordButtons.tsx_7Y6Yvq": [
-    {
-      "type": 0,
-      "value": "Registra"
-    }
-  ],
   "SendRecordButtons.tsx_9WRlF4": [
     {
       "type": 0,
       "value": "Invia"
+    }
+  ],
+  "SendRecordButtons.tsx_GEd3kV": [
+    {
+      "type": 0,
+      "value": "Parla"
     }
   ],
   "SendRecordButtons.tsx_kNl1RN": [
@@ -3946,10 +4106,10 @@
       "value": "Configura assistente"
     }
   ],
-  "SetCollectionRemoteForm.tsx_Wq1yhE": [
+  "SendRecordButtons.tsx_kSy9pJ": [
     {
       "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+      "value": "Aggiungi un modello con comprensione audio per usare la voce"
     }
   ],
   "SetCollectionRemoteForm.tsx_fsGyC4": [
@@ -3994,30 +4154,6 @@
       "value": "Crea app"
     }
   ],
-  "SpeakButton.tsx_FUvUuG": [
-    {
-      "type": 0,
-      "value": "Configura la sintesi vocale per riprodurre i messaggi dell'assistente"
-    }
-  ],
-  "SpeakButton.tsx_J3ca41": [
-    {
-      "type": 0,
-      "value": "Riproduci"
-    }
-  ],
-  "SpeakButton.tsx_mM7O7f": [
-    {
-      "type": 0,
-      "value": "Sintesi vocale in corso..."
-    }
-  ],
-  "SpeakButton.tsx_tFFMkF": [
-    {
-      "type": 0,
-      "value": "Pausa"
-    }
-  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4028,6 +4164,18 @@
     {
       "type": 0,
       "value": "null - fai clic per impostare un valore"
+    }
+  ],
+  "StuckProcessingMessage.tsx_62nsdy": [
+    {
+      "type": 0,
+      "value": "Riprova"
+    }
+  ],
+  "StuckProcessingMessage.tsx_kCDSl2": [
+    {
+      "type": 0,
+      "value": "L'assistente sembra impiegare troppo tempo."
     }
   ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [
@@ -4054,10 +4202,14 @@
       "value": "Errore durante la creazione delle collezioni"
     }
   ],
-  "ThinkingTime.tsx_uKcW4C": [
+  "ThinkingTime.tsx_O5Mn+P": [
+    {
+      "type": 1,
+      "value": "model"
+    },
     {
       "type": 0,
-      "value": "Riflessione per "
+      "value": " ha pensato per "
     },
     {
       "type": 1,
@@ -4118,6 +4270,16 @@
       "value": "Nessuna risposta"
     }
   ],
+  "Title.tsx_fBfv7E": [
+    {
+      "type": 0,
+      "value": "Crea mappa da "
+    },
+    {
+      "type": 1,
+      "value": "collections"
+    }
+  ],
   "Title.tsx_foZAHu": [
     {
       "type": 0,
@@ -4166,6 +4328,76 @@
       "value": "Chiudi"
     }
   ],
+  "TokenUsage.tsx_6nAVv6": [
+    {
+      "type": 0,
+      "value": "Messaggio + "
+    },
+    {
+      "offset": 0,
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " chiamata strumento"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " chiamate strumento"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "toolCallCount"
+    }
+  ],
+  "TokenUsage.tsx_MJ2jZQ": [
+    {
+      "type": 0,
+      "value": "Totale"
+    }
+  ],
+  "TokenUsage.tsx_Wk7BO4": [
+    {
+      "type": 1,
+      "value": "totalTokens"
+    },
+    {
+      "type": 0,
+      "value": " token"
+    }
+  ],
+  "TokenUsage.tsx_fBG/Ge": [
+    {
+      "type": 0,
+      "value": "Costo"
+    }
+  ],
+  "TokenUsage.tsx_fio5op": [
+    {
+      "type": 0,
+      "value": "Output"
+    }
+  ],
+  "TokenUsage.tsx_it6Lig": [
+    {
+      "type": 0,
+      "value": "Input"
+    }
+  ],
   "ToolCallResult.tsx_yq9SNC": [
     {
       "type": 0,
@@ -4194,12 +4426,6 @@
     {
       "type": 0,
       "value": "Descrizione"
-    }
-  ],
-  "UpdateCollectionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_kk4TVW": [
@@ -4232,12 +4458,6 @@
       "value": "Opzioni UI della vista documento"
     }
   ],
-  "UpdateCollectionVersionSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
-    }
-  ],
   "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": [
     {
       "type": 0,
@@ -4254,12 +4474,6 @@
     {
       "type": 0,
       "value": "Aspetto"
-    }
-  ],
-  "UpdateGlobalSettingsForm.tsx_Wq1yhE": [
-    {
-      "type": 0,
-      "value": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_jvrMfo": [
@@ -4344,6 +4558,74 @@
     {
       "type": 0,
       "value": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
+    }
+  ],
+  "Welcome.tsx_C3+BqB": [
+    {
+      "type": 0,
+      "value": "Per iniziare:"
+    }
+  ],
+  "Welcome.tsx_NZjpCr": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Configura l'assistente AI"
+        }
+      ],
+      "type": 8,
+      "value": "settingsLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "Welcome.tsx_mD6yYG": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Crea la tua prima collezione"
+        }
+      ],
+      "type": 8,
+      "value": "createCollectionLink"
+    },
+    {
+      "type": 0,
+      "value": ", o "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "installane una già pronta"
+        }
+      ],
+      "type": 8,
+      "value": "boutiqueLink"
+    },
+    {
+      "type": 0,
+      "value": " dal Boutique."
+    }
+  ],
+  "Welcome.tsx_mNIlLz": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Crea la tua prima app"
+        }
+      ],
+      "type": 8,
+      "value": "createAppLink"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "downloadFile.ts_sG8Krh": [
@@ -4465,6 +4747,12 @@
       "value": "Ultima sincronizzazione non riuscita"
     }
   ],
+  "getIntlMessages.ts_/GCoTA": [
+    {
+      "type": 0,
+      "value": "Cancella"
+    }
+  ],
   "getIntlMessages.ts_1nnRAQ": [
     {
       "type": 0,
@@ -4475,6 +4763,12 @@
     {
       "type": 0,
       "value": "Mese precedente"
+    }
+  ],
+  "getIntlMessages.ts_FUqf3/": [
+    {
+      "type": 0,
+      "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
   "getIntlMessages.ts_J1XXSx": [
@@ -4525,6 +4819,12 @@
       "value": "In questa sezione puoi vedere l'anteprima live della tua app."
     }
   ],
+  "getIntlMessages.ts_r5pj/5": [
+    {
+      "type": 0,
+      "value": "Trascina"
+    }
+  ],
   "getIntlMessages.ts_rbrahO": [
     {
       "type": 0,
@@ -4535,6 +4835,222 @@
     {
       "type": 0,
       "value": "Oggi"
+    }
+  ],
+  "getStatusText.ts_+cQcX2": [
+    {
+      "type": 0,
+      "value": "creazione di mappe da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_/0ISuY": [
+    {
+      "type": 0,
+      "value": "ancora in esecuzione codice"
+    }
+  ],
+  "getStatusText.ts_1dVfTZ": [
+    {
+      "type": 0,
+      "value": "lettura di altri schemi collezione"
+    }
+  ],
+  "getStatusText.ts_2eapm9": [
+    {
+      "type": 0,
+      "value": "esecuzione di strumenti"
+    }
+  ],
+  "getStatusText.ts_2j+fZj": [
+    {
+      "type": 0,
+      "value": "creazione di grafici da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_4Trl/i": [
+    {
+      "type": 0,
+      "value": "aggiornamento dei documenti esistenti"
+    }
+  ],
+  "getStatusText.ts_8UqYYj": [
+    {
+      "type": 0,
+      "value": "ricerca tra più documenti"
+    }
+  ],
+  "getStatusText.ts_8jDOjv": [
+    {
+      "type": 0,
+      "value": "aggiornamento di più documenti"
+    }
+  ],
+  "getStatusText.ts_Aneja+": [
+    {
+      "type": 0,
+      "value": "lettura di più schemi collezione"
+    }
+  ],
+  "getStatusText.ts_BJ4SuP": [
+    {
+      "type": 0,
+      "value": "esecuzione di codice per analizzare i documenti"
+    }
+  ],
+  "getStatusText.ts_EYmnCf": [
+    {
+      "type": 0,
+      "value": "esecuzione di più strumenti"
+    }
+  ],
+  "getStatusText.ts_EdD8dJ": [
+    {
+      "type": 0,
+      "value": "creazione di più grafici"
+    }
+  ],
+  "getStatusText.ts_FV3TfA": [
+    {
+      "type": 0,
+      "value": "ricerca tra altri documenti"
+    }
+  ],
+  "getStatusText.ts_G5yjJ5": [
+    {
+      "type": 0,
+      "value": "suggerimento di più collezioni"
+    }
+  ],
+  "getStatusText.ts_Gx9pE5": [
+    {
+      "type": 0,
+      "value": "ispezione di più file"
+    }
+  ],
+  "getStatusText.ts_GzcNLM": [
+    {
+      "type": 0,
+      "value": "creazione di più mappe"
+    }
+  ],
+  "getStatusText.ts_HRMIeI": [
+    {
+      "type": 0,
+      "value": "esecuzione di altri strumenti"
+    }
+  ],
+  "getStatusText.ts_IOpa7w": [
+    {
+      "type": 0,
+      "value": "ispezione di altri file"
+    }
+  ],
+  "getStatusText.ts_NGqPvQ": [
+    {
+      "type": 0,
+      "value": "Ruminando"
+    }
+  ],
+  "getStatusText.ts_NwXVbw": [
+    {
+      "type": 0,
+      "value": "creazione di altri documenti"
+    }
+  ],
+  "getStatusText.ts_P5Fv4Z": [
+    {
+      "type": 0,
+      "value": "creazione di più tabelle"
+    }
+  ],
+  "getStatusText.ts_P9gC6s": [
+    {
+      "type": 0,
+      "value": "lettura schemi collezione"
+    }
+  ],
+  "getStatusText.ts_Q0zqsp": [
+    {
+      "type": 0,
+      "value": "creazione di altri grafici"
+    }
+  ],
+  "getStatusText.ts_b63n3p": [
+    {
+      "type": 0,
+      "value": "creazione di altre mappe"
+    }
+  ],
+  "getStatusText.ts_cAkSRB": [
+    {
+      "type": 0,
+      "value": "Ponderando"
+    }
+  ],
+  "getStatusText.ts_cmj5Mv": [
+    {
+      "type": 0,
+      "value": "esecuzione di più codice"
+    }
+  ],
+  "getStatusText.ts_f8cQJW": [
+    {
+      "type": 0,
+      "value": "aggiornamento di altri documenti"
+    }
+  ],
+  "getStatusText.ts_gKneh7": [
+    {
+      "type": 0,
+      "value": "suggerimento di altre collezioni"
+    }
+  ],
+  "getStatusText.ts_hU96dI": [
+    {
+      "type": 0,
+      "value": "suggerimento di nuove collezioni"
+    }
+  ],
+  "getStatusText.ts_nP8jqi": [
+    {
+      "type": 0,
+      "value": "Cogitando"
+    }
+  ],
+  "getStatusText.ts_rvd9sh": [
+    {
+      "type": 0,
+      "value": "creazione di tabelle da usare nella risposta"
+    }
+  ],
+  "getStatusText.ts_ryvDft": [
+    {
+      "type": 0,
+      "value": "creazione di più documenti"
+    }
+  ],
+  "getStatusText.ts_sso0oA": [
+    {
+      "type": 0,
+      "value": "ricerca tra i documenti"
+    }
+  ],
+  "getStatusText.ts_u7GfRG": [
+    {
+      "type": 0,
+      "value": "ispezione dei file forniti"
+    }
+  ],
+  "getStatusText.ts_uL10Ji": [
+    {
+      "type": 0,
+      "value": "creazione di altre tabelle"
+    }
+  ],
+  "getStatusText.ts_uf3oCA": [
+    {
+      "type": 0,
+      "value": "creazione di nuovi documenti"
     }
   ],
   "openFileWithNativeApp.ts_Blh3UZ": [

@@ -1,4 +1,8 @@
-import { AssistantName, type Message } from "@superego/backend";
+import {
+  AssistantName,
+  type InferenceOptions,
+  type Message,
+} from "@superego/backend";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -10,26 +14,36 @@ import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Ask.css.js";
 import Hero from "./Hero.js";
+import Welcome from "./Welcome.js";
 
-export default function Ask() {
+interface Props {
+  initialMessage?: string;
+}
+export default function Ask({ initialMessage }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
 
   const { result, mutate, isPending } = useStartConversation();
-  const onSend = async (userMessageContent: Message.User["content"]) => {
+  const onSend = async (
+    userMessageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => {
     const { success, data } = await mutate(
       AssistantName.Factotum,
       userMessageContent,
+      inferenceOptions,
     );
     if (success) {
       navigateTo({ name: RouteName.Conversation, conversationId: data.id });
     }
   };
+
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header />
       <Shell.Panel.Content className={cs.Ask.panelContent}>
         <Hero />
+        <Welcome />
         <UserMessageContentInput
           conversation={null}
           onSend={onSend}
@@ -37,6 +51,7 @@ export default function Ask() {
           placeholder={intl.formatMessage({
             defaultMessage: "How can I help you?",
           })}
+          initialMessage={initialMessage}
           autoFocus={true}
         />
         <Link

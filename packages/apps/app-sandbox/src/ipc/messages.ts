@@ -73,24 +73,6 @@ export function isSandboxReadyMessage(
   );
 }
 
-export type HeightChangedMessage = BaseMessage<
-  MessageSender.Sandbox,
-  MessageType.HeightChanged,
-  {
-    /** Height in px. */
-    height: number;
-  }
->;
-export function isHeightChangedMessage(
-  message: unknown,
-): message is HeightChangedMessage {
-  return isMessageWith(
-    message,
-    MessageSender.Sandbox,
-    MessageType.HeightChanged,
-  );
-}
-
 export type InvokeBackendMethodMessage = BaseMessage<
   MessageSender.Sandbox,
   MessageType.InvokeBackendMethod,

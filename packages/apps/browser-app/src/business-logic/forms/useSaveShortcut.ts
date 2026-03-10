@@ -6,17 +6,13 @@ export default function useSaveShortcut(
   isDisabled: boolean,
 ): void {
   useEffect(() => {
-    if (isDisabled) {
-      return;
-    }
-
     function handleKeyDown(event: KeyboardEvent) {
       const isModifierKeyPressed = isMacos() ? event.metaKey : event.ctrlKey;
       if (isModifierKeyPressed && event.key.toLowerCase() === "s") {
         event.preventDefault();
         event.stopPropagation();
         const form = document.getElementById(formId);
-        if (form instanceof HTMLFormElement) {
+        if (form instanceof HTMLFormElement && !isDisabled) {
           form.requestSubmit();
         }
       }

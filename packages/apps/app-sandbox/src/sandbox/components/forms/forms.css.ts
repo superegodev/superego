@@ -1,12 +1,18 @@
-import { type ComplexStyleRule, style } from "@vanilla-extract/css";
+import {
+  type ComplexStyleRule,
+  globalStyle,
+  style,
+  styleVariants,
+} from "@vanilla-extract/css";
 import { vars } from "../../themes.css.js";
 
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
+  // Pixel adjustment so all inputs' heights match.
+  height: `calc(${vars.spacing._9} + 1px)`,
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
   padding: vars.spacing._2,
-  marginBlockEnd: vars.spacing._2,
   borderWidth: vars.borders.width.thin,
   borderRadius: vars.borders.radius.md,
   borderStyle: "solid",
@@ -26,39 +32,64 @@ const inputRootBase: ComplexStyleRule = {
   },
 };
 
+const labelRootBase = style({
+  display: "block",
+  fontSize: vars.typography.fontSizes.md,
+  fontWeight: vars.typography.fontWeights.medium,
+  color: vars.colors.text.primary,
+  selectors: {
+    '[data-disabled="true"] > &': {
+      color: vars.colors.text.secondary,
+    },
+  },
+});
+
+const verticalFieldRootBase: ComplexStyleRule = {
+  display: "flex",
+  flexDirection: "column",
+  gap: vars.spacing._2,
+};
+
+const horizontalFieldBase = style({
+  display: "grid",
+  gridTemplateColumns: "auto 1fr",
+  gap: vars.spacing._2,
+  alignItems: "center",
+});
+
+globalStyle(`${horizontalFieldBase} > :not(${labelRootBase})`, {
+  gridColumn: 2,
+});
+
 export const TextField = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBase,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
 export const NumberField = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBase,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
 export const RadioGroup = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
-    color: vars.colors.text.primary,
+  root: styleVariants({
+    vertical: { ...verticalFieldRootBase, color: vars.colors.text.primary },
+    horizontal: [horizontalFieldBase, { color: vars.colors.text.primary }],
   }),
 };
 
 export const Radio = {
   root: style({
     display: "flex",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: vars.spacing._2,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
-      "&:not(:last-child)": {
-        marginBlockEnd: vars.spacing._2,
-      },
       "&::before": {
         content: "''",
         display: "block",
@@ -105,9 +136,9 @@ export const Radio = {
 };
 
 export const Select = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBase,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
@@ -117,24 +148,46 @@ export const Input = {
 
 export const SelectButton = {
   root: style({
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: vars.spacing._2,
+    position: "relative",
   }),
+
+  trigger: style([
+    inputRootBase,
+    {
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+    },
+  ]),
 
   selectValue: style({
     display: "flex",
     flexWrap: "nowrap",
     alignItems: "center",
-    width: "100%",
+    flexGrow: 1,
     overflow: "hidden",
   }),
 
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
+  }),
+
+  clearButtonStub: style({
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin})`,
+    marginInlineStart: vars.spacing._3,
+    height: "100%",
+    flexShrink: 0,
+  }),
+
+  clearButton: style({
+    position: "absolute",
+    height: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin}) !important`,
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin}) !important`,
+    // Manual pixel adjustment to center the button.
+    top: "5.5px",
+    right: `calc(${vars.spacing._2} + ${vars.spacing._4} + ${vars.spacing._2})`,
+    color: `${vars.colors.text.secondary} !important`,
   }),
 };
 
@@ -149,9 +202,11 @@ export const SelectOptions = {
     flexWrap: "nowrap",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: vars.spacing._2,
     padding: vars.spacing._2,
     cursor: "default",
     borderRadius: vars.borders.radius.md,
+    border: `${vars.borders.width.thin} solid transparent`,
     color: vars.colors.text.primary,
     fontSize: vars.typography.fontSizes.md,
     selectors: {
@@ -160,10 +215,15 @@ export const SelectOptions = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.medium,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        borderColor: vars.colors.border.inverse,
       },
       '&:hover:not([data-disabled="true"])': {
         background: vars.colors.background.surfaceHighlight,
+      },
+      '&[data-selected="true"]:hover': {
+        background: vars.colors.background.inverseHighlight,
       },
       '&[data-disabled="true"]': {
         color: vars.colors.text.secondary,
@@ -179,6 +239,14 @@ export const SelectOptions = {
     flexShrink: 0,
   }),
 
+  optionDash: style({
+    selectors: {
+      [`${SelectButton.selectValue} &`]: {
+        padding: vars.spacing._2,
+      },
+    },
+  }),
+
   optionDescription: style({
     flexGrow: 1,
     color: vars.colors.text.secondary,
@@ -190,19 +258,13 @@ export const SelectOptions = {
   }),
 };
 
+globalStyle(
+  `${SelectOptions.option}[data-selected="true"] .${SelectOptions.optionDescription}`,
+  { color: vars.colors.text.inverse },
+);
+
 export const Label = {
-  root: style({
-    display: "block",
-    marginBlockEnd: vars.spacing._2,
-    fontSize: vars.typography.fontSizes.md,
-    fontWeight: vars.typography.fontWeights.medium,
-    color: vars.colors.text.primary,
-    selectors: {
-      '[data-disabled="true"] > &': {
-        color: vars.colors.text.secondary,
-      },
-    },
-  }),
+  root: labelRootBase,
 };
 
 export const Description = {
@@ -218,9 +280,9 @@ export const Description = {
 };
 
 export const DatePicker = {
-  root: style({
-    display: "flex",
-    flexDirection: "column",
+  root: styleVariants({
+    vertical: verticalFieldRootBase,
+    horizontal: [horizontalFieldBase],
   }),
 };
 
@@ -234,12 +296,12 @@ export const DatePickerInput = {
 
   dateInput: style({
     border: 0,
-    marginBlockEnd: 0,
     alignItems: "center",
     alignSelf: "center",
     width: "fit-content",
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
+    flexGrow: 1,
   }),
 
   dateSegment: style({
@@ -254,12 +316,26 @@ export const DatePickerInput = {
     },
   }),
 
-  button: style({
+  clearButton: style({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
     height: vars.spacing._9,
-    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
     cursor: "pointer",
@@ -267,13 +343,86 @@ export const DatePickerInput = {
   }),
 };
 
-export const DatePickerCalendar = {
+export const DateRangePicker = {
+  root: styleVariants({
+    vertical: verticalFieldRootBase,
+    horizontal: [horizontalFieldBase],
+  }),
+};
+
+export const DateRangePickerInput = {
+  root: style([
+    inputRootBase,
+    {
+      display: "flex",
+    },
+  ]),
+
+  dateFields: style({
+    display: "flex",
+    alignItems: "center",
+    flexGrow: 1,
+  }),
+
+  dateInput: style({
+    border: 0,
+    alignItems: "center",
+    alignSelf: "center",
+    width: "fit-content",
+    whiteSpace: "nowrap",
+    forcedColorAdjust: "none",
+  }),
+
+  separator: style({
+    paddingInline: vars.spacing._1,
+    color: vars.colors.text.secondary,
+  }),
+
+  dateSegment: style({
+    paddingInline: vars.spacing._0_5,
+    selectors: {
+      "&:focus": {
+        borderRadius: vars.borders.radius.sm,
+        background: vars.colors.accent,
+        color: vars.colors.text.onAccent,
+        outlineOffset: 0,
+      },
+    },
+  }),
+
+  clearButton: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+  }),
+};
+
+export const DateRangePickerCalendar = {
   previousNextButton: style({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     height: `calc(${vars.spacing._9} + 1px)`,
-    marginBlockEnd: 0,
     border: 0,
     cursor: "pointer",
   }),
@@ -308,9 +457,6 @@ export const DatePickerCalendar = {
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",
     selectors: {
-      '&[data-is-today="true"]': {
-        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
-      },
       '&[data-outside-month="true"]': {
         color: vars.colors.text.secondary,
         pointerEvents: "none",
@@ -320,7 +466,88 @@ export const DatePickerCalendar = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.bold,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.inverse}`,
+      },
+      '&[data-selected="true"][data-hovered="true"]': {
+        background: vars.colors.background.inverseHighlight,
+      },
+      '&[data-selection-start="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+      },
+      '&[data-selection-end="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+      },
+      '&[data-is-today="true"]': {
+        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
+      },
+    },
+  }),
+};
+
+export const DatePickerCalendar = {
+  previousNextButton: style({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: `calc(${vars.spacing._9} + 1px)`,
+    border: 0,
+    cursor: "pointer",
+  }),
+
+  header: style({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }),
+
+  heading: style({
+    flexGrow: 1,
+    margin: 0,
+    textAlign: "center",
+    fontSize: vars.typography.fontSizes.lg,
+  }),
+
+  headerCell: style({
+    paddingBlock: vars.spacing._3,
+    fontSize: vars.typography.fontSizes.sm,
+  }),
+
+  cell: style({
+    width: vars.spacing._9,
+    height: vars.spacing._9,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: vars.spacing._0_5,
+    fontSize: vars.typography.fontSizes.md,
+    color: vars.colors.text.primary,
+    borderRadius: vars.borders.radius.md,
+    cursor: "pointer",
+    selectors: {
+      '&[data-outside-month="true"]': {
+        color: vars.colors.text.secondary,
+        pointerEvents: "none",
+      },
+      '&[data-hovered="true"]': {
+        backgroundColor: vars.colors.background.surfaceHighlight,
+      },
+      '&[data-selected="true"]': {
+        fontWeight: vars.typography.fontWeights.bold,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.inverse}`,
+      },
+      '&[data-selected="true"][data-hovered="true"]': {
+        background: vars.colors.background.inverseHighlight,
+      },
+      '&[data-is-today="true"]': {
+        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
       },
     },
   }),

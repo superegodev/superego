@@ -96,101 +96,9 @@ export const Select = {
   }),
 };
 
-export const SelectButton = {
-  root: style({
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: vars.spacing._2,
-    // Pixel adjustment to all inputs' heights match.
-    height: `calc(${vars.spacing._9} + 1px)`,
-    fontSize: vars.typography.fontSizes.md,
-  }),
-
-  selectValue: style({
-    display: "flex",
-    flexWrap: "nowrap",
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-  }),
-
-  placeholder: style({
-    color: vars.colors.text.secondary,
-    fontStyle: "italic",
-  }),
-};
-
-export const SelectOptions = {
-  root: style({
-    width: "calc(var(--trigger-width) * var(--zoom-level))",
-    overflow: "auto",
-  }),
-
-  option: style({
-    display: "flex",
-    flexWrap: "nowrap",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: vars.spacing._2,
-    padding: vars.spacing._2,
-    cursor: "default",
-    borderRadius: vars.borders.radius.md,
-    color: vars.colors.text.primary,
-    fontSize: vars.typography.fontSizes.md,
-    selectors: {
-      "&:not(:last-child)": {
-        marginBlockEnd: vars.spacing._1,
-      },
-      '&[data-selected="true"]': {
-        fontWeight: vars.typography.fontWeights.medium,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
-      },
-      '&:hover:not([data-disabled="true"])': {
-        background: vars.colors.background.surfaceHighlight,
-      },
-      '&[data-disabled="true"]': {
-        color: vars.colors.text.secondary,
-        cursor: "not-allowed",
-      },
-    },
-  }),
-
-  optionValue: style({
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    textWrap: "nowrap",
-    flexShrink: 0,
-  }),
-
-  optionDescription: style({
-    flexGrow: 1,
-    color: vars.colors.text.secondary,
-    fontSize: vars.typography.fontSizes.sm,
-    textAlign: "left",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    textWrap: "nowrap",
-  }),
-};
-
-export const Label = {
-  root: style({
-    display: "block",
-    fontSize: vars.typography.fontSizes.md,
-    fontWeight: vars.typography.fontWeights.medium,
-    color: vars.colors.text.primary,
-    selectors: {
-      '[data-disabled="true"] > &': {
-        color: vars.colors.text.secondary,
-      },
-    },
-  }),
-};
-
 const inputRootBase: ComplexStyleRule = {
   width: "100%",
-  // Pixel adjustment to all inputs' heights match.
+  // Pixel adjustment so all inputs' heights match.
   height: `calc(${vars.spacing._9} + 1px)`,
   fontFamily: vars.typography.fontFamilies.sansSerif,
   fontSize: vars.typography.fontSizes.md,
@@ -212,6 +120,143 @@ const inputRootBase: ComplexStyleRule = {
       fontStyle: "italic",
     },
   },
+};
+
+export const SelectButton = {
+  root: style({
+    position: "relative",
+  }),
+
+  trigger: style([
+    inputRootBase,
+    {
+      display: "flex",
+      alignItems: "center",
+      gap: vars.spacing._2,
+      cursor: "pointer",
+    },
+  ]),
+
+  selectValue: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    flexGrow: 1,
+    overflow: "hidden",
+  }),
+
+  placeholder: style({
+    color: vars.colors.text.secondary,
+    fontStyle: "italic",
+  }),
+
+  clearButtonStub: style({
+    width: `calc(${vars.spacing._4} + 2 * ${vars.spacing._1} + 2 * ${vars.borders.width.thin})`,
+    marginInlineStart: vars.spacing._3,
+    height: "100%",
+    flexShrink: 0,
+  }),
+
+  clearButton: style({
+    position: "absolute",
+    // Manual pixel adjustment to center the button.
+    top: "5.5px",
+    right: `calc(${vars.spacing._2} + ${vars.spacing._4} + ${vars.spacing._2})`,
+    color: vars.colors.text.secondary,
+  }),
+};
+
+export const SelectOptions = {
+  root: style({
+    width: "calc(var(--trigger-width) * var(--zoom-level))",
+    display: "flex",
+    flexDirection: "column",
+  }),
+
+  list: style({
+    flexGrow: "1",
+    overflow: "auto",
+  }),
+
+  option: style({
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: vars.spacing._2,
+    padding: vars.spacing._2,
+    cursor: "default",
+    borderRadius: vars.borders.radius.md,
+    border: `${vars.borders.width.thin} solid transparent`,
+    color: vars.colors.text.primary,
+    fontSize: vars.typography.fontSizes.md,
+    selectors: {
+      "&:not(:last-child)": {
+        marginBlockEnd: vars.spacing._1,
+      },
+      '&[data-selected="true"]': {
+        fontWeight: vars.typography.fontWeights.medium,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        borderColor: vars.colors.border.inverse,
+      },
+      '&:hover:not([data-disabled="true"])': {
+        background: vars.colors.background.surfaceHighlight,
+      },
+      '&[data-selected="true"]:hover': {
+        background: vars.colors.background.inverseHighlight,
+      },
+      '&[data-disabled="true"]': {
+        color: vars.colors.text.secondary,
+        cursor: "not-allowed",
+      },
+    },
+  }),
+
+  optionValue: style({
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
+    flexShrink: 0,
+    maxWidth: "100%",
+  }),
+
+  optionDash: style({
+    selectors: {
+      [`${SelectButton.selectValue} &`]: {
+        padding: vars.spacing._2,
+      },
+    },
+  }),
+
+  optionDescription: style({
+    flexGrow: 1,
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.sm,
+    textAlign: "left",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textWrap: "nowrap",
+  }),
+};
+
+globalStyle(
+  `${SelectOptions.option}[data-selected="true"] .${SelectOptions.optionDescription}`,
+  { color: vars.colors.text.inverse },
+);
+
+export const Label = {
+  root: style({
+    display: "block",
+    fontSize: vars.typography.fontSizes.md,
+    fontWeight: vars.typography.fontWeights.medium,
+    color: vars.colors.text.primary,
+    selectors: {
+      '[data-disabled="true"] > &': {
+        color: vars.colors.text.secondary,
+      },
+    },
+  }),
 };
 
 export const Input = {
@@ -280,6 +325,7 @@ export const DatePickerInput = {
     width: "fit-content",
     whiteSpace: "nowrap",
     forcedColorAdjust: "none",
+    flexGrow: 1,
   }),
 
   dateSegment: style({
@@ -294,12 +340,26 @@ export const DatePickerInput = {
     },
   }),
 
-  button: style({
+  clearButton: style({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
     height: vars.spacing._9,
-    flexGrow: 1,
+    marginBlock: `calc(-1 * ${vars.spacing._2})`,
+    border: 0,
+    cursor: "pointer",
+    background: "transparent",
+    color: vars.colors.text.secondary,
+    selectors: {
+      "&:hover": {
+        color: vars.colors.text.primary,
+      },
+    },
+  }),
+
+  button: style({
+    display: "flex",
+    alignItems: "center",
+    height: vars.spacing._9,
     marginBlock: `calc(-1 * ${vars.spacing._2})`,
     border: 0,
     cursor: "pointer",
@@ -405,7 +465,6 @@ export const TimeInputWithMilliseconds = {
 export const Switch = {
   root: style({
     display: "flex",
-    alignItems: "center",
     gap: vars.spacing._2,
     fontSize: vars.typography.fontSizes.md,
     color: vars.colors.text.primary,
@@ -503,9 +562,6 @@ export const DatePickerCalendar = {
     borderRadius: vars.borders.radius.md,
     cursor: "pointer",
     selectors: {
-      '&[data-is-today="true"]': {
-        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
-      },
       '&[data-outside-month="true"]': {
         color: vars.colors.text.secondary,
         pointerEvents: "none",
@@ -515,7 +571,15 @@ export const DatePickerCalendar = {
       },
       '&[data-selected="true"]': {
         fontWeight: vars.typography.fontWeights.bold,
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.background.inverse,
+        color: vars.colors.text.inverse,
+        border: `${vars.borders.width.thin} solid ${vars.colors.border.inverse}`,
+      },
+      '&[data-selected="true"][data-hovered="true"]': {
+        background: vars.colors.background.inverseHighlight,
+      },
+      '&[data-is-today="true"]': {
+        border: `${vars.borders.width.medium} solid ${vars.colors.accent}`,
       },
     },
   }),

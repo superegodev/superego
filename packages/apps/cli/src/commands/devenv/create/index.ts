@@ -6,6 +6,7 @@ import Log from "../utils/Log.js";
 import writeFile from "../utils/writeFile.js";
 import writeJsonFile from "../utils/writeJsonFile.js";
 import agentFiles from "./agent-files.js";
+import initGitRepository from "./initGitRepository.js";
 import {
   appMainTsxStub,
   appSettingsStub,
@@ -13,6 +14,7 @@ import {
   collectionSettingsStub,
   contentBlockingKeysGetterStub,
   contentSummaryGetterStub,
+  demoDocumentStub,
   packJsonStub,
 } from "./stubs.js";
 import tsconfig from "./tsconfig.js";
@@ -63,12 +65,21 @@ export default async function createAction(targetPath: string): Promise<void> {
     trailingNewline: true,
   });
 
-  // 8. Generate types for the stub schema
+  // 8. Demo document stub (demo-documents/ProtoDocument_0.json)
+  writeJsonFile(
+    join(basePath, "demo-documents", "ProtoDocument_0.json"),
+    demoDocumentStub,
+  );
+
+  // 9. Generate types for the stub schema
   const generatedTypes = codegen(collectionSchemaStub);
   writeFile(
     join(basePath, "generated", "ProtoCollection_0.ts"),
     generatedTypes,
   );
+
+  // 10. Initialize git repository
+  initGitRepository(basePath);
 
   Log.info(`Development environment created at ${basePath}`);
 }

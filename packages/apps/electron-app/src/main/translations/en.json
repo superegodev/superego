@@ -17,8 +17,23 @@
   "cli.ts_qqfYjN": {
     "defaultMessage": "CLI installation failed"
   },
+  "exportDatabase.ts_Y3aZlu": {
+    "defaultMessage": "Export completed"
+  },
+  "exportDatabase.ts_heAhPr": {
+    "defaultMessage": "Export failed"
+  },
+  "exportDatabase.ts_vVq/iv": {
+    "defaultMessage": "Database exported successfully."
+  },
+  "setApplicationMenu.ts_OC234H": {
+    "defaultMessage": "Export database"
+  },
   "setApplicationMenu.ts_PJD5PQ": {
     "defaultMessage": "Uninstall CLI"
+  },
+  "setApplicationMenu.ts_jaYIfr": {
+    "defaultMessage": "Background Jobs"
   },
   "setApplicationMenu.ts_k+NxC/": {
     "defaultMessage": "New Window"

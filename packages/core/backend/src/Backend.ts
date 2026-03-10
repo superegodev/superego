@@ -42,6 +42,8 @@ import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
+import type GlobalSettingsNotValid from "./errors/GlobalSettingsNotValid.js";
+import type InferenceOptionsNotValid from "./errors/InferenceOptionsNotValid.js";
 import type MakingContentBlockingKeysFailed from "./errors/MakingContentBlockingKeysFailed.js";
 import type PackNotFound from "./errors/PackNotFound.js";
 import type PackNotValid from "./errors/PackNotValid.js";
@@ -83,6 +85,7 @@ import type Document from "./types/Document.js";
 import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
+import type InferenceOptions from "./types/InferenceOptions.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
@@ -426,31 +429,45 @@ export default interface Backend {
     startConversation(
       assistant: AssistantName,
       userMessageContent: Message.User["content"],
-    ): ResultPromise<Conversation, FilesNotFound | UnexpectedError>;
+      inferenceOptions: InferenceOptions<"completion">,
+    ): ResultPromise<
+      Conversation,
+      FilesNotFound | InferenceOptionsNotValid | UnexpectedError
+    >;
 
     continueConversation(
       id: ConversationId,
       userMessageContent: Message.User["content"],
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
       | ConversationNotFound
       | CannotContinueConversation
       | FilesNotFound
+      | InferenceOptionsNotValid
       | UnexpectedError
     >;
 
     retryLastResponse(
       id: ConversationId,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotRetryLastResponse | UnexpectedError
+      | ConversationNotFound
+      | CannotRetryLastResponse
+      | InferenceOptionsNotValid
+      | UnexpectedError
     >;
 
     recoverConversation(
       id: ConversationId,
+      inferenceOptions: InferenceOptions<"completion">,
     ): ResultPromise<
       Conversation,
-      ConversationNotFound | CannotRecoverConversation | UnexpectedError
+      | ConversationNotFound
+      | CannotRecoverConversation
+      | InferenceOptionsNotValid
+      | UnexpectedError
     >;
 
     deleteConversation(
@@ -467,6 +484,10 @@ export default interface Backend {
       id: ConversationId,
     ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError>;
 
+    getLiveConversation(
+      id: ConversationId,
+    ): ResultPromise<Conversation | null, UnexpectedError>;
+
     searchConversations(
       query: string,
       options: { limit: number },
@@ -476,20 +497,25 @@ export default interface Backend {
   };
 
   inference: {
-    stt(audio: AudioContent): ResultPromise<string, UnexpectedError>;
+    stt(
+      audio: AudioContent,
+      inferenceOptions: InferenceOptions<"transcription">,
+    ): ResultPromise<string, InferenceOptionsNotValid | UnexpectedError>;
 
-    tts(text: string): ResultPromise<AudioContent, UnexpectedError>;
-
-    implementTypescriptModule(spec: {
-      description: string;
-      rules: string | null;
-      additionalInstructions: string | null;
-      template: string;
-      libs: TypescriptFile[];
-      startingPoint: TypescriptFile;
-      userRequest: string;
-    }): ResultPromise<
+    implementTypescriptModule(
+      spec: {
+        description: string;
+        rules: string | null;
+        additionalInstructions: string | null;
+        template: string;
+        libs: TypescriptFile[];
+        startingPoint: TypescriptFile;
+        userRequest: string;
+      },
+      inferenceOptions: InferenceOptions<"completion">,
+    ): ResultPromise<
       TypescriptModule,
+      | InferenceOptionsNotValid
       | WriteTypescriptModuleToolNotCalled
       | TooManyFailedImplementationAttempts
       | UnexpectedError
@@ -558,7 +584,7 @@ export default interface Backend {
     >;
   };
 
-  bazaar: {
+  boutique: {
     listPacks(): ResultPromise<LitePack[], UnexpectedError>;
 
     getPack(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError>;
@@ -577,6 +603,10 @@ export default interface Backend {
 
     update(
       globalSettingsPatch: Partial<GlobalSettings>,
-    ): ResultPromise<GlobalSettings, UnexpectedError>;
+    ): ResultPromise<GlobalSettings, GlobalSettingsNotValid | UnexpectedError>;
+  };
+
+  database: {
+    export(path: string): ResultPromise<null, UnexpectedError>;
   };
 }

@@ -1,3 +1,4 @@
+import type { OverTypeInstance } from "overtype";
 import type { RefObject } from "react";
 import { Group, Separator, Toolbar } from "react-aria-components";
 import {
@@ -16,10 +17,9 @@ import {
 import { useIntl } from "react-intl";
 import IconButton from "../IconButton/IconButton.js";
 import * as cs from "./MarkdownInput.css.js";
-import type OverTypeEditor from "./OverTypeEditor.js";
 
 interface Props {
-  editorRef: RefObject<OverTypeEditor | null>;
+  editorRef: RefObject<OverTypeInstance | null>;
 }
 export default function FormattingToolbar({ editorRef }: Props) {
   const intl = useIntl();

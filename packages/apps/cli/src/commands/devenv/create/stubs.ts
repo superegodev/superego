@@ -1,37 +1,37 @@
 import { DataType, type Schema } from "@superego/schema";
 
 export const packJsonStub = {
-  id: "Pack_com.example.mypack",
-  name: "My Pack",
+  id: "Pack_com.example.stub",
+  name: "Stub Pack",
   shortDescription: "",
   longDescription: "",
   collectionCategories: [],
 };
 
 export const collectionSettingsStub = {
-  name: "My Collection",
+  name: "Stub Collection",
   icon: null,
   collectionCategoryId: null,
   description: null,
   assistantInstructions: null,
-  defaultCollectionViewAppId: null,
+  defaultCollectionViewAppId: "ProtoApp_0",
 };
 
 export const collectionSchemaStub: Schema = {
   types: {
-    Item: {
+    StubItem: {
       dataType: DataType.Struct,
       properties: {},
     },
   },
-  rootType: "Item",
+  rootType: "StubItem",
 };
 
 export const contentSummaryGetterStub = `
-import type { Item } from "../generated/ProtoCollection_0.js";
+import type { StubItem } from "../generated/ProtoCollection_0.js";
 
 export default function getContentSummary(
-  item: Item
+  stubItem: StubItem
 ): Record<string, string | number | boolean | null> {
   return {};
 }
@@ -39,19 +39,24 @@ export default function getContentSummary(
 
 export const appSettingsStub = {
   type: "CollectionView",
-  name: "My App",
+  name: "Stub App",
   targetCollectionIds: ["ProtoCollection_0"],
 };
 
 export const contentBlockingKeysGetterStub = `
-import type { Item } from "../generated/ProtoCollection_0.js";
+import type { StubItem } from "../generated/ProtoCollection_0.js";
 
 export default function getContentBlockingKeys(
-  item: Item
+  stubItem: StubItem
 ): string[] {
   return [];
 }
 `.trim();
+
+export const demoDocumentStub = {
+  collectionId: "ProtoCollection_0",
+  content: {},
+};
 
 export const appMainTsxStub = `
 import React from "react";
@@ -65,14 +70,14 @@ interface Props {
       versionId: string;
       displayName: string;
       documents: {
-        id: \`Document_\${string}\`;
-        versionId: \`DocumentVersion_\${string}\`;
+        id: string;
+        versionId: string;
         /**
          * Href to the document details page. The anchor element setting this as
          * \`href\` must also set \`target=_top\`.
          */
         href: string;
-        content: ProtoCollection_0.Item;
+        content: ProtoCollection_0.StubItem;
       }[];
     };
   };

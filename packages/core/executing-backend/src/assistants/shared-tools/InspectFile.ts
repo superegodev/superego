@@ -1,5 +1,7 @@
 import {
   type FileId,
+  type InferenceOptions,
+  type InferenceSettings,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -8,9 +10,11 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import { compact } from "es-toolkit";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
+import isEmpty from "../../utils/isEmpty.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.InspectFile {
@@ -21,6 +25,7 @@ export default {
     toolCall: ToolCall.InspectFile,
     inferenceService: InferenceService,
     filesGetContent: FilesGetContent,
+    inferenceOptions: InferenceOptions<"fileInspection">,
   ): Promise<ToolResult.InspectFile> {
     const { file, prompt } = toolCall.input;
 
@@ -47,6 +52,7 @@ export default {
     const fileInfo = await inferenceService.inspectFile(
       { name: file.name, mimeType: file.mimeType, content: content },
       prompt,
+      inferenceOptions,
     );
 
     return {
@@ -56,13 +62,22 @@ export default {
     };
   },
 
-  get(): InferenceService.Tool {
+  get(
+    inferenceSettings: InferenceSettings,
+    inferenceOptions: InferenceOptions<"fileInspection">,
+  ): InferenceService.Tool {
+    const supportedFileTypes = getSupportedFileTypes(
+      inferenceSettings,
+      inferenceOptions,
+    );
+
     return {
       type: InferenceService.ToolType.Function,
       name: ToolName.InspectFile,
       description: `
-Delegates the analysis of a file (Image, Video, or PDF) to a specialized
-multimodal model.
+Delegates the analysis of a file to a specialized multimodal model. Only
+${supportedFileTypes} files are supported. **Never** use this tool for
+unsupported file types.
 
 You don't have direct access to files referenced in a user message or in a
 document content. Use this tool when you need to inspect those files. You act as
@@ -99,3 +114,28 @@ prompt. Therefore, your prompt must explicitly include any necessary context.
     };
   },
 };
+
+function getSupportedFileTypes(
+  inferenceSettings: InferenceSettings,
+  inferenceOptions: InferenceOptions<"fileInspection">,
+): string {
+  // inferenceOptions has been validated at this point, so we know that provider
+  // and model will be found and won't be undefined.
+  const { providerName, modelId } =
+    inferenceOptions.fileInspection.providerModelRef;
+  const provider = inferenceSettings.providers.find(
+    ({ name }) => name === providerName,
+  )!;
+  const model = provider.models.find(({ id }) => id === modelId)!;
+
+  const types = compact([
+    model.capabilities.imageUnderstanding ? "Image" : null,
+    model.capabilities.audioUnderstanding ? "Audio" : null,
+    model.capabilities.pdfUnderstanding ? "PDF" : null,
+  ]);
+  if (isEmpty(types)) {
+    throw new Error("No supported file types");
+  }
+
+  return types.join(", ");
+}

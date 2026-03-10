@@ -1,4 +1,8 @@
-import { AssistantName, type Message } from "@superego/backend";
+import {
+  AssistantName,
+  type InferenceOptions,
+  type Message,
+} from "@superego/backend";
 import { PiCode } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
@@ -8,6 +12,7 @@ import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./CreateCollectionAssisted.css.js";
+import Explainer from "./Explainer.js";
 import Hero from "./Hero.js";
 
 interface Props {
@@ -18,10 +23,14 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const { navigateTo } = useNavigationState();
 
   const { result, mutate, isPending } = useStartConversation();
-  const onSend = async (userMessageContent: Message.User["content"]) => {
+  const onSend = async (
+    userMessageContent: Message.User["content"],
+    inferenceOptions: InferenceOptions<"completion">,
+  ) => {
     const { success, data } = await mutate(
       AssistantName.CollectionCreator,
       userMessageContent,
+      inferenceOptions,
     );
     if (success) {
       navigateTo({ name: RouteName.Conversation, conversationId: data.id });
@@ -46,6 +55,7 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
       />
       <Shell.Panel.Content className={cs.CreateCollectionAssisted.panelContent}>
         <Hero />
+        <Explainer />
         <UserMessageContentInput
           conversation={null}
           onSend={onSend}

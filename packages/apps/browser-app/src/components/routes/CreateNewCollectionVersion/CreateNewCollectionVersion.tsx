@@ -24,8 +24,9 @@ export default function CreateNewCollectionVersion({ collectionId }: Props) {
           { defaultMessage: "{collection} » Create New Version" },
           { collection: CollectionUtils.getDisplayName(collection) },
         )}
+        noFadedBackground={true}
       />
-      <Shell.Panel.Content>
+      <Shell.Panel.Content noBlockStartPadding={true}>
         <CreateNewCollectionVersionForm
           key={`CreateNewCollectionVersionForm_${collectionId}`}
           collection={collection}

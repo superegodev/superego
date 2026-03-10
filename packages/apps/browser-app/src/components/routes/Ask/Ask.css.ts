@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const Ask = {
@@ -52,5 +52,74 @@ export const Hero = {
     fontWeight: vars.typography.fontWeights.regular,
     marginBlockStart: vars.spacing._2,
     marginBlockEnd: vars.spacing._24,
+  }),
+};
+
+export const Welcome = {
+  root: style({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    fontSize: vars.typography.fontSizes.lg,
+    width: "100%",
+    paddingInline: vars.spacing._4,
+    marginBlockStart: `calc(-1 * ${vars.spacing._24} + ${vars.spacing._8})`,
+    marginBlockEnd: vars.spacing._16,
+  }),
+
+  heading: style({
+    width: "100%",
+    textAlign: "left",
+    color: vars.colors.text.secondary,
+    marginBlockEnd: vars.spacing._4,
+  }),
+
+  steps: style({
+    listStyle: "none",
+    padding: 0,
+    margin: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._3,
+    textAlign: "left",
+    alignSelf: "stretch",
+  }),
+
+  stepLink: style({
+    color: vars.colors.text.secondary,
+    textDecorationLine: "underline",
+    textDecorationStyle: "dashed",
+  }),
+};
+
+export const WelcomeStep = {
+  root: styleVariants({
+    completed: {
+      display: "flex",
+      alignItems: "baseline",
+      gap: vars.spacing._2,
+      color: vars.colors.semantic.success.text,
+    },
+    enabled: {
+      display: "flex",
+      alignItems: "baseline",
+      gap: vars.spacing._2,
+      color: vars.colors.text.secondary,
+    },
+    disabled: {
+      display: "flex",
+      alignItems: "baseline",
+      gap: vars.spacing._2,
+      color: vars.colors.text.secondary,
+      opacity: 0.5,
+      pointerEvents: "none",
+    },
+  }),
+
+  icon: style({
+    flexShrink: 0,
+    position: "relative",
+    top: "2px",
   }),
 };

@@ -15,6 +15,8 @@ type SqliteConversation = {
   /** MessagePack */
   messages: Buffer;
   status: ConversationStatus;
+  /** ISO 8601 */
+  processing_started_at: string | null;
   /** JSON */
   error: string | null;
   /** ISO 8601 */
@@ -30,7 +32,10 @@ export function toEntity(conversation: SqliteConversation): ConversationEntity {
     contextFingerprint: conversation.context_fingerprint,
     messages: decode(conversation.messages) as Message[],
     status: conversation.status,
+    processingStartedAt: conversation.processing_started_at
+      ? new Date(conversation.processing_started_at)
+      : null,
     error: conversation.error ? JSON.parse(conversation.error) : null,
     createdAt: new Date(conversation.created_at),
-  };
+  } as ConversationEntity;
 }

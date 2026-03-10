@@ -42,8 +42,8 @@ ${collection.id}: {
   versionId: "${collection.latestVersion.id}";
   displayName: string;
   documents: {
-    id: \`Document_\${string}\`;
-    versionId: \`DocumentVersion_\${string}\`;
+    id: string;
+    versionId: string;
     /**
      * Href to the document details page. The anchor element setting this as
      * \`href\` must also set \`target=_top\`.

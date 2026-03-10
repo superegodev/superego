@@ -1,6 +1,6 @@
 import type { PackId } from "@superego/backend";
 import { PackSource } from "../../../business-logic/navigation/Route.js";
-import BazaarPack from "./BazaarPack.js";
+import BoutiquePack from "./BoutiquePack.js";
 import LocalPack from "./LocalPack.js";
 
 interface Props {
@@ -11,6 +11,6 @@ export default function Pack({ packId, source }: Props) {
   return source === PackSource.Local ? (
     <LocalPack packId={packId} />
   ) : (
-    <BazaarPack packId={packId} />
+    <BoutiquePack packId={packId} />
   );
 }

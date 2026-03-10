@@ -12,11 +12,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateLatestCollectionVersionSettings } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import wellKnownLibPaths from "../../../business-logic/typescript/wellKnownLibPaths.js";
 import { Form } from "../../design-system/forms/forms.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Section from "../../design-system/Section/Section.js";
+import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFContentBlockingKeysGetterField from "../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
 import RHFDefaultDocumentViewUiOptionsField from "../../widgets/RHFDefaultDocumentViewUiOptionsField/RHFDefaultDocumentViewUiOptionsField.js";
@@ -39,7 +39,7 @@ export default function UpdateCollectionVersionSettingsForm({
 
   const { result, mutate } = useUpdateLatestCollectionVersionSettings();
 
-  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
+  const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       contentBlockingKeysGetter:
         collection.latestVersion.settings.contentBlockingKeysGetter,
@@ -83,15 +83,6 @@ export default function UpdateCollectionVersionSettingsForm({
       });
     }
   };
-  useExitWarning(
-    formState.isDirty
-      ? intl.formatMessage({
-          defaultMessage:
-            "You have unsaved changes. Are you sure you want to leave?",
-        })
-      : null,
-  );
-
   const schemaTypescriptLib = useMemo(
     () => ({
       path: wellKnownLibPaths.collectionSchema,
@@ -102,6 +93,7 @@ export default function UpdateCollectionVersionSettingsForm({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
       <Section
         title={intl.formatMessage({ defaultMessage: "Deduplication" })}
         level={3}

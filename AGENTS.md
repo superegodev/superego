@@ -6,9 +6,10 @@
 ## Tooling & conventions
 
 - **Package manager:** Yarn (Berry) via Corepack. PnP is **not** used.
-- **Node version:** >= 24.
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
+- **Never** use abbreviations for variable names, aside from common
+  abbreviations (e.g., `i` for loop variables) and acronyms (e.g., `url`).
 - **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
   bodies.
 

@@ -1,13 +1,18 @@
 import type { Conversation, Message } from "@superego/backend";
 import { PiArrowsClockwise } from "react-icons/pi";
 import { useIntl } from "react-intl";
+import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
+import isEmpty from "../../../../utils/isEmpty.js";
 import last from "../../../../utils/last.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
+import ModelActionMenu from "../ModelActionMenu/ModelActionMenu.js";
+import makeModelActionMenuItems from "../ModelActionMenu/makeModelActionMenuItems.js";
 
 interface Props {
   conversation: Conversation;
-  message: Message;
+  message: Message.ContentAssistant;
   className: string;
 }
 export default function RetryButton({
@@ -17,21 +22,48 @@ export default function RetryButton({
 }: Props) {
   const intl = useIntl();
 
+  const { globalSettings } = useGlobalData();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useRetryLastResponse();
 
+  const models = makeModelActionMenuItems(
+    globalSettings.inference.providers,
+    message.inferenceOptions.completion.providerModelRef,
+  );
+
+  const lastMessage = last(conversation.messages);
   return conversation.canRetryLastResponse &&
-    message === last(conversation.messages) ? (
-    <IconButton
-      variant="invisible"
-      label={
-        isPending
-          ? intl.formatMessage({ defaultMessage: "Retrying..." })
-          : intl.formatMessage({ defaultMessage: "Retry response" })
+    lastMessage !== null &&
+    "id" in lastMessage &&
+    lastMessage.id === message.id &&
+    !isEmpty(models) ? (
+    <ModelActionMenu
+      trigger={
+        <IconButton
+          variant="invisible"
+          label={
+            isPending
+              ? intl.formatMessage({ defaultMessage: "Retrying..." })
+              : intl.formatMessage({ defaultMessage: "Retry response" })
+          }
+          isDisabled={isPending}
+          className={className}
+        >
+          <PiArrowsClockwise />
+        </IconButton>
       }
-      onPress={() => mutate(conversation.id)}
-      className={className}
-    >
-      <PiArrowsClockwise />
-    </IconButton>
+      models={models}
+      onModelAction={(providerModelRef) =>
+        mutate(conversation.id, {
+          completion: {
+            providerModelRef,
+            reasoningEffort:
+              message.inferenceOptions.completion.reasoningEffort,
+          },
+          transcription: defaultInferenceOptions.transcription,
+          fileInspection: defaultInferenceOptions.fileInspection,
+        })
+      }
+    />
   ) : null;
 }

@@ -1,9 +1,10 @@
 import type { TypescriptFile, TypescriptModule } from "@superego/backend";
+import { inferenceOptionsHas } from "@superego/shared-utils";
 import type { RefObject } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import useIsInferenceConfigured from "../../../../business-logic/assistant/useIsInferenceConfigured.js";
 import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
+import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import type monaco from "../../../../monaco.js";
@@ -34,9 +35,10 @@ export default function ImplementWithAssistantButton({
   onImplemented,
 }: Props) {
   const intl = useIntl();
-  const { chatCompletions } = useIsInferenceConfigured();
+  const defaultInferenceOptions = useDefaultInferenceOptions();
   const { isPending, mutate } = useImplementTypescriptModule();
-  return chatCompletions && assistantImplementation ? (
+  return inferenceOptionsHas(defaultInferenceOptions, "completion") &&
+    assistantImplementation ? (
     <>
       <IconButton
         variant="primary"
@@ -48,19 +50,22 @@ export default function ImplementWithAssistantButton({
           if (!valueModelRef.current) {
             return;
           }
-          const result = await mutate({
-            description: assistantImplementation.description,
-            rules: assistantImplementation.rules ?? null,
-            additionalInstructions:
-              assistantImplementation.additionalInstructions ?? null,
-            template: assistantImplementation.template,
-            libs: typescriptLibs,
-            startingPoint: {
-              path: filePath,
-              source: valueModelRef.current.getValue(),
+          const result = await mutate(
+            {
+              description: assistantImplementation.description,
+              rules: assistantImplementation.rules ?? null,
+              additionalInstructions:
+                assistantImplementation.additionalInstructions ?? null,
+              template: assistantImplementation.template,
+              libs: typescriptLibs,
+              startingPoint: {
+                path: filePath,
+                source: valueModelRef.current.getValue(),
+              },
+              userRequest: assistantImplementation.userRequest,
             },
-            userRequest: assistantImplementation.userRequest,
-          });
+            defaultInferenceOptions,
+          );
           if (result.success) {
             onImplemented(result.data);
           } else {

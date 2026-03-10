@@ -68,6 +68,14 @@ export const CreateChart = {
   }),
 };
 
+export const CreateGeoJSONMap = {
+  root: style({
+    marginBlockStart: vars.spacing._6,
+    borderRadius: vars.borders.radius.md,
+    overflow: "hidden",
+  }),
+};
+
 export const CreateDocumentsTables = {
   root: style({
     marginBlockEnd: vars.spacing._6,

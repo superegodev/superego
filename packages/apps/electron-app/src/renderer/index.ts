@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { renderBrowserApp } from "@superego/browser-app";
+import { navigateToHref, renderBrowserApp } from "@superego/browser-app";
 import { QueryClient } from "@tanstack/react-query";
 
 const queryClient = new QueryClient({
@@ -7,6 +7,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       networkMode: "always",
+      refetchOnWindowFocus: false,
     },
     mutations: {
       networkMode: "always",
@@ -19,6 +20,12 @@ renderBrowserApp((window as any).backend, queryClient);
 window.addEventListener("message", (evt) => {
   if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
     queryClient.invalidateQueries({ queryKey: ["listCollections"] });
+  }
+  if (
+    evt.data?.type === "NavigationRequested" &&
+    typeof evt.data.href === "string"
+  ) {
+    navigateToHref(evt.data.href);
   }
 });
 

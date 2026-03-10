@@ -1,27 +1,53 @@
 import type { ReactNode } from "react";
-import { SelectValue } from "react-aria-components";
-import { PiCaretDown } from "react-icons/pi";
+import { Button, Group, SelectValue } from "react-aria-components";
+import { PiCaretDown, PiX } from "react-icons/pi";
+import { useIntl } from "react-intl";
 import classnames from "../../../utils/classnames.js";
-import Button from "../Button/Button.js";
+import IconButton from "../IconButton/IconButton.js";
 import * as cs from "./forms.css.js";
 
 interface Props {
+  onClear?: (() => void) | undefined;
   placeholder?: ReactNode | undefined;
-  className?: string | undefined;
+  prefix?: ReactNode | undefined;
+  triggerClassName?: string | undefined;
 }
-export default function SelectButton({ placeholder, className }: Props) {
+export default function SelectButton({
+  onClear,
+  placeholder,
+  prefix,
+  triggerClassName,
+}: Props) {
+  const intl = useIntl();
   return (
-    <Button className={classnames(cs.SelectButton.root, className)}>
-      <SelectValue className={cs.SelectButton.selectValue}>
-        {({ defaultChildren, isPlaceholder }) =>
-          isPlaceholder && placeholder !== undefined ? (
-            <span className={cs.SelectButton.placeholder}>{placeholder}</span>
-          ) : (
-            defaultChildren
-          )
-        }
-      </SelectValue>
-      <PiCaretDown aria-hidden="true" />
-    </Button>
+    <Group className={cs.SelectButton.root}>
+      <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
+        {prefix}
+        <SelectValue className={cs.SelectButton.selectValue}>
+          {({ defaultChildren, isPlaceholder }) =>
+            isPlaceholder ? (
+              <span className={cs.SelectButton.placeholder}>
+                {placeholder ?? defaultChildren}
+              </span>
+            ) : (
+              defaultChildren
+            )
+          }
+        </SelectValue>
+        {onClear ? <div className={cs.SelectButton.clearButtonStub} /> : null}
+        <PiCaretDown aria-hidden="true" />
+      </Button>
+      {onClear ? (
+        <IconButton
+          slot={null}
+          variant="invisible"
+          label={intl.formatMessage({ defaultMessage: "Clear" })}
+          onPress={onClear}
+          className={cs.SelectButton.clearButton}
+        >
+          <PiX aria-hidden="true" />
+        </IconButton>
+      ) : null}
+    </Group>
   );
 }

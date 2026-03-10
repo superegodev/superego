@@ -34,7 +34,7 @@ export default class DemoDataRepositories implements DataRepositories {
   globalSettings: DemoGlobalSettingsRepository;
 
   constructor(
-    data: Data,
+    private data: Data,
     onWrite: () => void,
     onTransactionSucceeded: (callback: () => void) => void,
     searchTextIndexStates: {
@@ -85,6 +85,22 @@ export default class DemoDataRepositories implements DataRepositories {
       data.globalSettings,
       onWrite,
     );
+  }
+
+  async export(path: string): Promise<void> {
+    // No-op in demo mode.
+    if (typeof document === "undefined") {
+      return;
+    }
+    const blob = new Blob([JSON.stringify(this.data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = path;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   dispose() {

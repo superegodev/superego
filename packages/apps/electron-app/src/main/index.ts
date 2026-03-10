@@ -23,7 +23,7 @@ app
   })
   .on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      createWindow(isDevenv);
     }
   })
   .on("web-contents-created", (_event, contents) => {

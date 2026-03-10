@@ -2,7 +2,7 @@ import type { JSX, ReactNode } from "react";
 import * as cs from "./Section.css.js";
 
 interface Props {
-  title: string;
+  title: ReactNode;
   // Add more levels as necessary.
   level: 2 | 3 | 4;
   children: ReactNode;

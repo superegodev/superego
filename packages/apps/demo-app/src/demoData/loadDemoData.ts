@@ -4,83 +4,66 @@ import type {
   Pack,
   ProtoCollectionId,
 } from "@superego/backend";
-import { packs } from "@superego/bazaar";
+import { packs } from "@superego/boutique";
+import accountsData from "./accountsData.js";
 import calendarEntriesData from "./calendarEntriesData.js";
 import contactsData from "./contactsData.js";
 import expensesData from "./expensesData.js";
 import foodsData from "./foodsData.js";
 import fuelLogsData from "./fuelLogsData.js";
+import holdingsData from "./holdingsData.js";
 import mealsData from "./mealsData.js";
+import securitiesData from "./securitiesData.js";
 import weighInsData from "./weighInsData.js";
-
-export type LoadDemoDataProgress = {
-  current: number;
-  total: number;
-};
 
 const packsWithDocuments = [
   {
     ...packs[0]!,
     documents: [
+      ...makeDocuments("ProtoCollection_0", contactsData),
+      ...makeDocuments("ProtoCollection_1", calendarEntriesData),
       ...packs[0]!.documents,
-      ...makeDocuments("ProtoCollection_0", fuelLogsData),
     ],
   },
   {
     ...packs[1]!,
     documents: [
-      ...packs[1]!.documents,
       ...makeDocuments("ProtoCollection_1", foodsData),
       ...makeDocuments("ProtoCollection_2", mealsData),
       ...makeDocuments("ProtoCollection_3", weighInsData),
+      ...packs[1]!.documents,
     ],
   },
   {
     ...packs[2]!,
     documents: [
-      ...packs[2]!.documents,
+      // Note: order matters since there are cross-references between documents.
+      ...makeDocuments("ProtoCollection_3", accountsData),
+      ...makeDocuments("ProtoCollection_1", securitiesData),
+      ...makeDocuments("ProtoCollection_2", holdingsData),
       ...makeDocuments("ProtoCollection_0", expensesData),
+      ...packs[2]!.documents,
     ],
   },
   {
     ...packs[3]!,
     documents: [
+      ...makeDocuments("ProtoCollection_0", fuelLogsData),
       ...packs[3]!.documents,
-      ...makeDocuments("ProtoCollection_0", contactsData),
-      ...makeDocuments("ProtoCollection_1", calendarEntriesData),
     ],
   },
 ] as const satisfies Pack[];
 
-export default async function loadDemoData(
-  backend: Backend,
-  onProgress: (progress: LoadDemoDataProgress) => void,
-): Promise<void> {
-  const totalPacks = packsWithDocuments.length;
-
-  onProgress({
-    current: 0,
-    total: totalPacks,
-  });
-
-  for (const [packIndex, pack] of packsWithDocuments.entries()) {
-    const currentPackNumber = packIndex + 1;
-    onProgress({
-      current: packIndex,
-      total: totalPacks,
-    });
-
+export default async function loadDemoData(backend: Backend): Promise<void> {
+  for (const pack of packsWithDocuments) {
     const installPackResult = await backend.packs.install(pack);
     if (!installPackResult.success) {
-      throw new Error(
-        `Failed to install pack ${pack.id}: ${JSON.stringify(installPackResult.error)}`,
+      // Just log the error and move on.
+      console.error(
+        `Failed to install pack ${pack.id}`,
+        installPackResult.error,
       );
     }
-
-    onProgress({
-      current: currentPackNumber,
-      total: totalPacks,
-    });
   }
 }
 

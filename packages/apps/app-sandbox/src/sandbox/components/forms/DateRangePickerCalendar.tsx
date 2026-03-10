@@ -1,0 +1,63 @@
+import { getLocalTimeZone, isToday } from "@internationalized/date";
+import {
+  CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  Dialog,
+  Heading,
+  RangeCalendar,
+} from "react-aria-components";
+import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
+import Button from "../Button/Button.js";
+import Popover from "../Popover/Popover.js";
+import * as cs from "./forms.css.js";
+
+export default function DateRangePickerCalendar() {
+  return (
+    <Popover>
+      <Dialog>
+        <RangeCalendar>
+          <header className={cs.DateRangePickerCalendar.header}>
+            <Button
+              slot="previous"
+              variant="invisible"
+              className={cs.DateRangePickerCalendar.previousNextButton}
+            >
+              <PiCaretLeft aria-hidden="true" />
+            </Button>
+            <Heading className={cs.DateRangePickerCalendar.heading} />
+            <Button
+              slot="next"
+              variant="invisible"
+              className={cs.DateRangePickerCalendar.previousNextButton}
+            >
+              <PiCaretRight aria-hidden="true" />
+            </Button>
+          </header>
+          <CalendarGrid>
+            <CalendarGridHeader>
+              {(day) => (
+                <CalendarHeaderCell
+                  className={cs.DateRangePickerCalendar.headerCell}
+                >
+                  {day}
+                </CalendarHeaderCell>
+              )}
+            </CalendarGridHeader>
+            <CalendarGridBody>
+              {(date) => (
+                <CalendarCell
+                  className={cs.DateRangePickerCalendar.cell}
+                  data-is-today={isToday(date, getLocalTimeZone())}
+                  date={date}
+                />
+              )}
+            </CalendarGridBody>
+          </CalendarGrid>
+        </RangeCalendar>
+      </Dialog>
+    </Popover>
+  );
+}

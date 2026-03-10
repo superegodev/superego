@@ -8,6 +8,7 @@ import packJsonSchema from "../utils/packJsonSchema.js";
 import type CheckResult from "./CheckResult.js";
 import checkApp from "./checkApp.js";
 import checkCollection from "./checkCollection.js";
+import checkDemoDocuments from "./checkDemoDocuments.js";
 import checkJsonValidation from "./checkJsonValidation.js";
 
 export default async function checkAction(): Promise<void> {
@@ -33,6 +34,8 @@ export default async function checkAction(): Promise<void> {
       schemas.set(collectionName, schema);
     }
   }
+
+  results.push(...checkDemoDocuments(basePath, schemas));
 
   const apps = getProtoApps(basePath);
   for (const appName of apps) {

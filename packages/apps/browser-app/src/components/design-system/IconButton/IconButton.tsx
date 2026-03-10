@@ -3,43 +3,39 @@ import type { Placement } from "react-aria";
 import {
   Button,
   type ButtonProps,
-  ToggleButton,
-  type ToggleButtonProps,
   TooltipTrigger,
 } from "react-aria-components";
 import classnames from "../../../utils/classnames.js";
 import Tooltip from "../Tooltip/Tooltip.js";
 import * as cs from "./IconButton.css.js";
 
-type Props<IsToggle extends boolean = false> = {
-  variant?: "default" | "primary" | "invisible" | undefined;
+type Props = {
+  variant?:
+    | "default"
+    | "primary"
+    | "invisible"
+    | "invisible-danger"
+    | undefined;
   label: string;
-  isToggle?: IsToggle | undefined;
   tooltipPlacement?: Placement | undefined;
   tooltipDelay?: number | undefined;
   tooltipCloseDelay?: number | undefined;
   className?: string | undefined;
-} & Omit<
-  IsToggle extends true ? ToggleButtonProps : ButtonProps,
-  "className" | "aria-label"
->;
-export default function IconButton<IsToggle extends boolean = false>({
+} & Omit<ButtonProps, "className" | "aria-label">;
+
+export default function IconButton({
   variant = "default",
   label,
-  isToggle,
   tooltipPlacement,
   tooltipDelay,
   tooltipCloseDelay,
   className,
   ...props
-}: Props<IsToggle> & RefAttributes<HTMLButtonElement>) {
-  const Component = isToggle ? ToggleButton : Button;
+}: Props & RefAttributes<HTMLButtonElement>) {
   return (
     <TooltipTrigger delay={tooltipDelay} closeDelay={tooltipCloseDelay}>
-      <Component
-        // props has the correct type, but TypeScript cannot infer it. Hence the
-        // case as any.
-        {...(props as any)}
+      <Button
+        {...props}
         aria-label={label}
         className={classnames(cs.IconButton.root[variant], className)}
       />
