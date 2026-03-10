@@ -82,9 +82,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-15-intel
+          - os: macos-26-large
             arch: x64
-          - os: macos-latest
+          - os: macos-26-xlarge
             arch: arm64
           - os: ubuntu-latest
             arch: x64
