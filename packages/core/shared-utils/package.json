@@ -14,7 +14,7 @@
     "bench": "vitest bench"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.2.4",
+    "@fast-check/vitest": "^0.3.0",
     "@vitest/browser-playwright": "^4.0.18",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"

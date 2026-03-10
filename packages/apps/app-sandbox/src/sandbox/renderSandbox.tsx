@@ -12,7 +12,11 @@ export default function renderSandbox() {
   const backend = new Backend(sandboxIpc);
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: { retry: false, networkMode: "always" },
+      queries: {
+        retry: false,
+        networkMode: "always",
+        refetchOnWindowFocus: false,
+      },
       mutations: { networkMode: "always" },
     },
   });

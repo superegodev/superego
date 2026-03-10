@@ -1312,10 +1312,10 @@
       "value": "Salva"
     }
   ],
-  "Document.tsx_otVWer": [
+  "Document.tsx_ps0LGU": [
     {
       "type": 0,
-      "value": "Informazioni sul documento remoto"
+      "value": "Informazioni documento"
     }
   ],
   "Document.tsx_zugcbb": [
@@ -1330,6 +1330,58 @@
     {
       "type": 1,
       "value": "documentId"
+    }
+  ],
+  "DocumentInfoModal.tsx_1D7voQ": [
+    {
+      "type": 0,
+      "value": "Sincronizzato con "
+    },
+    {
+      "type": 1,
+      "value": "remote"
+    }
+  ],
+  "DocumentInfoModal.tsx_gm5+Hy": [
+    {
+      "type": 0,
+      "value": "ID collezione:"
+    }
+  ],
+  "DocumentInfoModal.tsx_h6SlY+": [
+    {
+      "type": 0,
+      "value": "ID documento remoto:"
+    }
+  ],
+  "DocumentInfoModal.tsx_i3P6ZD": [
+    {
+      "type": 0,
+      "value": "Creato il:"
+    }
+  ],
+  "DocumentInfoModal.tsx_nY1/sq": [
+    {
+      "type": 0,
+      "value": "ID versione documento remoto:"
+    }
+  ],
+  "DocumentInfoModal.tsx_ps0LGU": [
+    {
+      "type": 0,
+      "value": "Informazioni documento"
+    }
+  ],
+  "DocumentInfoModal.tsx_qAhp5A": [
+    {
+      "type": 0,
+      "value": "Ultima modifica il:"
+    }
+  ],
+  "DocumentInfoModal.tsx_uhPUU0": [
+    {
+      "type": 0,
+      "value": "ID documento:"
     }
   ],
   "DocumentRefField.tsx_79lKyO": [
@@ -3602,28 +3654,6 @@
     {
       "type": 0,
       "value": "Crea una nuova versione e migra i documenti"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_1D7voQ": [
-    {
-      "type": 0,
-      "value": "Sincronizzato con "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_h6SlY+": [
-    {
-      "type": 0,
-      "value": "ID documento remoto:"
-    }
-  ],
-  "RemoteDocumentInfoModal.tsx_nY1/sq": [
-    {
-      "type": 0,
-      "value": "ID versione documento remoto:"
     }
   ],
   "RenameCollectionCategoryModalForm.tsx_47FYwb": [

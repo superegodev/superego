@@ -3,7 +3,7 @@ import {
   globalStyle,
   style,
 } from "@vanilla-extract/css";
-import { vars } from "../../../../themes.css.js";
+import { breakpoints, vars } from "../../../../themes.css.js";
 
 const selectTriggerBase: ComplexStyleRule = {
   height: vars.spacing._6,
@@ -14,6 +14,11 @@ const selectTriggerBase: ComplexStyleRule = {
   paddingInline: vars.spacing._2,
   border: 0,
   borderRadius: vars.borders.radius.full,
+  "@media": {
+    [`(max-width: ${breakpoints.small})`]: {
+      maxWidth: vars.spacing._24,
+    },
+  },
   selectors: {
     "&:hover": {
       background: vars.colors.background.surfaceHighlight,

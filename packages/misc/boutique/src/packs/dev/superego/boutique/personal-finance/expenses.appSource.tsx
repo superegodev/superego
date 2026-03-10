@@ -117,25 +117,18 @@ export default function App(props: Props): React.ReactElement | null {
         {
           type: "pie",
           radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 10,
             borderColor: "#fff",
             borderWidth: 2,
           },
           label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 20,
-              fontWeight: "bold",
-            },
+            show: true,
+            formatter: "{b}",
           },
           labelLine: {
-            show: false,
+            show: true,
           },
           data: data,
         },
@@ -158,25 +151,18 @@ export default function App(props: Props): React.ReactElement | null {
         {
           type: "pie",
           radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
+          avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 10,
             borderColor: "#fff",
             borderWidth: 2,
           },
           label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 20,
-              fontWeight: "bold",
-            },
+            show: true,
+            formatter: "{b}",
           },
           labelLine: {
-            show: false,
+            show: true,
           },
           data: data,
         },
@@ -202,24 +188,32 @@ export default function App(props: Props): React.ReactElement | null {
     <Grid>
       <Grid.Col span={{ sm: 12 }}>
         <Select
+          mode="single"
           value={selectedMonth}
           onChange={setSelectedMonth}
+          showClearButton={false}
           options={monthOptions}
           label="Select Month"
         />
       </Grid.Col>
 
-      <Grid.Col span={{ sm: 12, md: 4 }}>
+      <Grid.Col span={{ sm: 6 }}>
         <Tile>
           <Text
             element="h3"
             size="lg"
             weight="medium"
-            style={{ marginBottom: "0.5rem" }}
+            style={{ marginBottom: "0.25rem" }}
           >
             Total Expenses
           </Text>
-          <Text element="p" size="xl3" weight="bold" color="primary">
+          <Text
+            element="p"
+            size="xl3"
+            weight="bold"
+            color="primary"
+            style={{ marginBottom: "0.25rem", marginTop: "1rem" }}
+          >
             €{stats.total.toLocaleString()}
           </Text>
           <Text element="p" color="secondary" size="sm">
@@ -228,40 +222,27 @@ export default function App(props: Props): React.ReactElement | null {
         </Tile>
       </Grid.Col>
 
-      <Grid.Col span={{ sm: 12, md: 4 }}>
+      <Grid.Col span={{ sm: 6 }}>
         <Tile>
           <Text
             element="h3"
             size="lg"
             weight="medium"
-            style={{ marginBottom: "0.5rem" }}
+            style={{ marginBottom: "0.25rem" }}
           >
             Average Expense
           </Text>
-          <Text element="p" size="xl3" weight="bold" color="primary">
+          <Text
+            element="p"
+            size="xl3"
+            weight="bold"
+            color="primary"
+            style={{ marginBottom: "0.25rem", marginTop: "1rem" }}
+          >
             €{stats.average.toLocaleString()}
           </Text>
           <Text element="p" color="secondary" size="sm">
             Per transaction
-          </Text>
-        </Tile>
-      </Grid.Col>
-
-      <Grid.Col span={{ sm: 12, md: 4 }}>
-        <Tile>
-          <Text
-            element="h3"
-            size="lg"
-            weight="medium"
-            style={{ marginBottom: "0.5rem" }}
-          >
-            Transaction Count
-          </Text>
-          <Text element="p" size="xl3" weight="bold" color="primary">
-            {stats.count}
-          </Text>
-          <Text element="p" color="secondary" size="sm">
-            This month
           </Text>
         </Tile>
       </Grid.Col>

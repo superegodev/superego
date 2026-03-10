@@ -218,6 +218,7 @@ export const SelectOptions = {
     textOverflow: "ellipsis",
     textWrap: "nowrap",
     flexShrink: 0,
+    maxWidth: "100%",
   }),
 
   optionDash: style({
