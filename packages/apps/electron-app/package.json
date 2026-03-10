@@ -2,7 +2,7 @@
   "name": "@superego/electron-app",
   "productName": "superego",
   "description": "A personal database you can extend with apps",
-  "version": "2026.3.0",
+  "version": "2026.3.1",
   "type": "module",
   "private": true,
   "main": "./dist/main/index.js",
