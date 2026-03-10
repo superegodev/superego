@@ -1,4 +1,4 @@
-import type { packsAsConst } from "@superego/bazaar";
+import type { packsAsConst } from "@superego/boutique";
 import type { TypeOf } from "@superego/schema";
 
 type Food = TypeOf<(typeof packsAsConst)[1]["collections"][1]["schema"]>;

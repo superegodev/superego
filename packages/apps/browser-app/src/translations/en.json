@@ -14,14 +14,23 @@
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
   },
+  "AssistantsSettings.tsx_MyqNS6": {
+    "defaultMessage": "Name: Sigmund. Born: May 6, 1856"
+  },
+  "AssistantsSettings.tsx_PrDhYG": {
+    "defaultMessage": "Always reply in German. Use informal tone. Use metric units."
+  },
+  "AssistantsSettings.tsx_c2z6MR": {
+    "defaultMessage": "About you"
+  },
   "AssistantsSettings.tsx_mTE6Ss": {
     "defaultMessage": "Collection Creator developer prompt"
   },
   "AssistantsSettings.tsx_qmPVim": {
     "defaultMessage": "Factotum developer prompt"
   },
-  "AssistantsSettings.tsx_vlKhIl": {
-    "defaultMessage": "Your name"
+  "AssistantsSettings.tsx_xIOlmn": {
+    "defaultMessage": "Your preferences"
   },
   "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
     "defaultMessage": "Authenticate connector"
@@ -101,26 +110,26 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Status"
   },
-  "Bazaar.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
-  },
-  "Bazaar.tsx_XBMGwY": {
-    "defaultMessage": "Failed to decode pack file"
-  },
-  "Bazaar.tsx_rrrB1P": {
-    "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
-  },
-  "Bazaar.tsx_sX7yk3": {
-    "defaultMessage": "Or install from the bazaar"
-  },
-  "BazaarPack.tsx_40netJ": {
-    "defaultMessage": "Bazaar » {packId}"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "True"
   },
   "BooleanField.tsx_rxqs5U": {
     "defaultMessage": "False"
+  },
+  "Boutique.tsx_J4ocUB": {
+    "defaultMessage": "Boutique"
+  },
+  "Boutique.tsx_XBMGwY": {
+    "defaultMessage": "Failed to decode pack file"
+  },
+  "Boutique.tsx_a1s4zI": {
+    "defaultMessage": "Or install your own"
+  },
+  "Boutique.tsx_rrrB1P": {
+    "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
+  },
+  "BoutiquePack.tsx_AHlDyN": {
+    "defaultMessage": "Boutique » {packId}"
   },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
@@ -217,9 +226,6 @@
   },
   "CollectionSettings.tsx_zNudDK": {
     "defaultMessage": "Collection settings actions"
-  },
-  "CollectionsTree.tsx_XjdXFR": {
-    "defaultMessage": "Create collection to start."
   },
   "CollectionsTree.tsx_gykodq": {
     "defaultMessage": "Tree of collection categories and collections"
@@ -692,6 +698,12 @@
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
   },
+  "Explainer.tsx_Np7GhL": {
+    "defaultMessage": "<p> Your data in Superego is stored in <b>collections</b> of <b>documents</b>. Each collection has a <b>schema</b> that defines what data each document contains. </p> <p> Example: an <b>Expenses</b> collection contains many <b>Expense</b> documents. Each document contains the date of the expense, the amount, and a description. (This is the schema.) </p> <p> Just tell the <b>Collection Creator</b> what data you want to store, and it will create a collection for you. </p>"
+  },
+  "Explainer.tsx_kM11wK": {
+    "defaultMessage": "<p> Here in the Boutique you can find pre-made collections and apps, bundled into thematic <b>packs</b> you can install in one click. </p> <p> You can also use the <cliDocsLink>Superego CLI</cliDocsLink> to create your own packs. (Drop below to install.) </p>"
+  },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"
   },
@@ -863,11 +875,11 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Create collection category"
   },
+  "Hero.tsx_BrZb1S": {
+    "defaultMessage": "Software That Fits You"
+  },
   "Hero.tsx_OpKKos": {
     "defaultMessage": "Hello!"
-  },
-  "Hero.tsx_cWa0gy": {
-    "defaultMessage": "Your Digital Freedom"
   },
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
@@ -1055,11 +1067,11 @@
   "PackEntityCounts.tsx_pKXETD": {
     "defaultMessage": "{collectionsCount, plural, one {# collection} other {# collections}}"
   },
-  "PackMainPanel.tsx_DzgcGx": {
-    "defaultMessage": "Bazaar » {packName}"
-  },
   "PackMainPanel.tsx_HUc4Bb": {
     "defaultMessage": "Toggle collections preview"
+  },
+  "PackMainPanel.tsx_OYAe1w": {
+    "defaultMessage": "Boutique » {packName}"
   },
   "PackMainPanel.tsx_hgmRAL": {
     "defaultMessage": "Custom Packs » {packName}"
@@ -1097,8 +1109,8 @@
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
-  "PrimarySidebarPanel.tsx_T5A49y": {
-    "defaultMessage": "Bazaar"
+  "PrimarySidebarPanel.tsx_J4ocUB": {
+    "defaultMessage": "Boutique"
   },
   "PrimarySidebarPanel.tsx_ZT0z9z": {
     "defaultMessage": "Ask"
@@ -1537,6 +1549,18 @@
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."
+  },
+  "Welcome.tsx_C3+BqB": {
+    "defaultMessage": "To get started:"
+  },
+  "Welcome.tsx_NZjpCr": {
+    "defaultMessage": "<settingsLink>Configure the AI assistant</settingsLink>."
+  },
+  "Welcome.tsx_mD6yYG": {
+    "defaultMessage": "<createCollectionLink>Create your first collection</createCollectionLink>, or <boutiqueLink>install a pre-made one</boutiqueLink> from the Boutique."
+  },
+  "Welcome.tsx_mNIlLz": {
+    "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
   },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Downloading file failed"

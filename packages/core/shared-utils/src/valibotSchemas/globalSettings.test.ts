@@ -81,7 +81,8 @@ test("valid settings with all null inference options returns no issues", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -127,7 +128,8 @@ test("valid settings with completion returns no issues", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -173,7 +175,8 @@ test("completion referencing unknown provider returns issue", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -229,7 +232,8 @@ test("completion referencing unknown model returns issue", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -284,7 +288,8 @@ test("transcription model without audio understanding returns issue", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -340,7 +345,8 @@ test("valid transcription model with audio understanding returns no issues", {
       },
     },
     assistants: {
-      userName: null,
+      userInfo: null,
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.CollectionCreator]: null,
         [AssistantName.Factotum]: null,
@@ -387,7 +393,8 @@ test(
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.CollectionCreator]: null,
           [AssistantName.Factotum]: null,

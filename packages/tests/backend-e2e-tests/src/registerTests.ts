@@ -2,7 +2,7 @@ import type GetDependencies from "./GetDependencies.js";
 import apps from "./suites/apps.js";
 import assistants from "./suites/assistants.js";
 import backgroundJobs from "./suites/background-jobs.js";
-import bazaar from "./suites/bazaar.js";
+import boutique from "./suites/boutique.js";
 import collectionCategories from "./suites/collection-categories.js";
 import collections from "./suites/collections.js";
 import database from "./suites/database.js";
@@ -16,7 +16,7 @@ export default function registerTests(deps: GetDependencies) {
   apps(deps);
   assistants(deps);
   backgroundJobs(deps);
-  bazaar(deps);
+  boutique(deps);
   collectionCategories(deps);
   collections(deps);
   database(deps);

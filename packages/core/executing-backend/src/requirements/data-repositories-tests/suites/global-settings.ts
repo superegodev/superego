@@ -11,7 +11,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: [],
-
         defaultInferenceOptions: {
           completion: null,
           transcription: null,
@@ -19,7 +18,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,
@@ -38,7 +38,6 @@ export default rd<GetDependencies>("Global settings", (deps) => {
       appearance: { theme: Theme.Auto },
       inference: {
         providers: [],
-
         defaultInferenceOptions: {
           completion: null,
           transcription: null,
@@ -46,7 +45,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: "userInfo",
+        userPreferences: "userPreferences",
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,
@@ -85,7 +85,8 @@ export default rd<GetDependencies>("Global settings", (deps) => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,

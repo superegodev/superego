@@ -34,7 +34,8 @@ import SearchDocuments from "./tools/SearchDocuments.js";
 export default class FactotumAssistant extends Assistant {
   constructor(
     private conversationId: ConversationId,
-    private userName: string | null,
+    private userInfo: string | null,
+    private userPreferences: string | null,
     private developerPrompt: string | null,
     protected inferenceService: InferenceService,
     private collections: Collection[],
@@ -61,20 +62,6 @@ export default class FactotumAssistant extends Assistant {
 
   protected getDeveloperPrompt(): string {
     return (this.developerPrompt ?? defaultDeveloperPrompt)
-      .replaceAll(
-        "$USER_IDENTITY",
-        this.userName
-          ? [
-              "User identity:",
-              `- Name: ${this.userName}.`,
-              `- Canonical reference: “the user” (${this.userName}).`,
-              "- Safety: do not infer traits from the name. Do not invent personal facts.",
-              "- Pronouns: use they/them unless provided; otherwise mirror the user's own usage.",
-              `- Coreference: “I/me/my” in user messages refers to ${this.userName};`,
-              `  “you/your” in assistant replies refers to ${this.userName}.`,
-            ].join("\n")
-          : "",
-      )
       .replaceAll("$TOOL_NAME_CREATE_DOCUMENTS", ToolName.CreateDocuments)
       .replaceAll(
         "$TOOL_NAME_CREATE_NEW_DOCUMENT_VERSION",
@@ -100,7 +87,7 @@ export default class FactotumAssistant extends Assistant {
 
   protected getUserContextPrompt(): string {
     const now = DateTime.now();
-    return [
+    return compact([
       "<collections>",
       JSON.stringify(
         this.collections.map((collection) => ({
@@ -119,8 +106,14 @@ export default class FactotumAssistant extends Assistant {
       "</user-time-zone>",
       "<weekday>",
       now.toFormat("cccc"),
-      "<weekday>",
-    ].join("\n");
+      "</weekday>",
+      this.userInfo ? "<user-info>" : null,
+      this.userInfo,
+      this.userInfo ? "</user-info>" : null,
+      this.userPreferences ? "<user-preferences>" : null,
+      this.userPreferences,
+      this.userPreferences ? "</user-preferences>" : null,
+    ]).join("\n");
   }
 
   protected getTools(

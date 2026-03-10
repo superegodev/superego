@@ -42,17 +42,8 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               driver: InferenceProviderDriver.OpenResponses,
               models: [
                 {
-                  id: "openai/gpt-oss-120b",
-                  name: "GPT OSS 120B",
-                  capabilities: {
-                    audioUnderstanding: false,
-                    imageUnderstanding: false,
-                    pdfUnderstanding: false,
-                  },
-                },
-                {
-                  id: "google/gemini-2.5-flash-lite",
-                  name: "Gemini 2.5 Flash Lite",
+                  id: "google/gemini-3.1-flash-lite-preview",
+                  name: "Gemini 3 Flash Lite",
                   capabilities: {
                     audioUnderstanding: true,
                     imageUnderstanding: true,
@@ -66,20 +57,20 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
             completion: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "openai/gpt-oss-120b",
+                modelId: "google/gemini-3.1-flash-lite-preview",
               },
               reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "google/gemini-2.5-flash-lite",
+                modelId: "google/gemini-3.1-flash-lite-preview",
               },
             },
             fileInspection: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "google/gemini-2.5-flash-lite",
+                modelId: "google/gemini-3.1-flash-lite-preview",
               },
             },
           },
@@ -93,7 +84,8 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
           },
         },
     assistants: {
-      userName: null,
+      userInfo: "Name: Alex. Born: 1990-09-01",
+      userPreferences: null,
       developerPrompts: {
         [AssistantName.Factotum]: null,
         [AssistantName.CollectionCreator]: null,

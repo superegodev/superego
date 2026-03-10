@@ -72,9 +72,12 @@ export default class SqliteGlobalSettingsRepository
         },
       },
       assistants: {
-        userName:
-          settings.assistants?.userName ??
-          this.defaultGlobalSettings.assistants.userName,
+        userInfo:
+          settings.assistants?.userInfo ??
+          this.defaultGlobalSettings.assistants.userInfo,
+        userPreferences:
+          settings.assistants?.userPreferences ??
+          this.defaultGlobalSettings.assistants.userPreferences,
         developerPrompts: {
           [AssistantName.CollectionCreator]:
             settings.assistants?.developerPrompts?.[

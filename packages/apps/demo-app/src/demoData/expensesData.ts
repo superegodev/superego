@@ -1,4 +1,4 @@
-import type { packsAsConst } from "@superego/bazaar";
+import type { packsAsConst } from "@superego/boutique";
 import { DataType, type TypeOf } from "@superego/schema";
 import { DateTime } from "luxon";
 

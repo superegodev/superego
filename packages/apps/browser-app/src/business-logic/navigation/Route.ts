@@ -21,7 +21,7 @@ export enum RouteName {
   Document = "Document",
   CreateApp = "CreateApp",
   EditApp = "EditApp",
-  Bazaar = "Bazaar",
+  Boutique = "Boutique",
   Pack = "Pack",
   BackgroundJobs = "BackgroundJobs",
   BackgroundJob = "BackgroundJob",
@@ -35,12 +35,13 @@ export enum CollectionRouteView {
 
 export enum PackSource {
   Local = "Local",
-  Bazaar = "Bazaar",
+  Boutique = "Boutique",
 }
 
 type Route =
   | {
       name: RouteName.Ask;
+      initialMessage?: string;
     }
   | {
       name: RouteName.Conversations;
@@ -98,7 +99,7 @@ type Route =
       appId: AppId;
     }
   | {
-      name: RouteName.Bazaar;
+      name: RouteName.Boutique;
     }
   | {
       name: RouteName.Pack;

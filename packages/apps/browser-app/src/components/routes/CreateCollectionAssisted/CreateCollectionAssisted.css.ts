@@ -33,6 +33,16 @@ export const Hero = {
     fontSize: vars.typography.fontSizes.xl,
     fontWeight: vars.typography.fontWeights.regular,
     marginBlockStart: vars.spacing._2,
-    marginBlockEnd: vars.spacing._24,
+    marginBlockEnd: vars.spacing._8,
+  }),
+};
+
+export const Explainer = {
+  root: style({
+    paddingInline: vars.spacing._4,
+    marginBlockEnd: vars.spacing._8,
+    color: vars.colors.text.secondary,
+    fontSize: vars.typography.fontSizes.md,
+    lineHeight: vars.typography.lineHeights.relaxed,
   }),
 };

@@ -21,33 +21,33 @@ export const BackgroundJobStatus = {
     [BackgroundJobStatusB.Enqueued]: [
       backgroundJobStatusRootBase,
       {
-        color: vars.colors.semantic.pending.text,
+        color: vars.colors.semantic.pending.textFilled,
         borderColor: vars.colors.semantic.pending.border,
-        background: vars.colors.semantic.pending.background,
+        background: vars.colors.semantic.pending.backgroundFilled,
       },
     ],
     [BackgroundJobStatusB.Processing]: [
       backgroundJobStatusRootBase,
       {
-        color: vars.colors.semantic.pending.text,
+        color: vars.colors.semantic.pending.textFilled,
         borderColor: vars.colors.semantic.pending.border,
-        background: vars.colors.semantic.pending.background,
+        background: vars.colors.semantic.pending.backgroundFilled,
       },
     ],
     [BackgroundJobStatusB.Succeeded]: [
       backgroundJobStatusRootBase,
       {
-        color: vars.colors.semantic.success.text,
+        color: vars.colors.semantic.success.textFilled,
         borderColor: vars.colors.semantic.success.border,
-        background: vars.colors.semantic.success.background,
+        background: vars.colors.semantic.success.backgroundFilled,
       },
     ],
     [BackgroundJobStatusB.Failed]: [
       backgroundJobStatusRootBase,
       {
-        color: vars.colors.semantic.error.text,
+        color: vars.colors.semantic.error.textFilled,
         borderColor: vars.colors.semantic.error.border,
-        background: vars.colors.semantic.error.background,
+        background: vars.colors.semantic.error.backgroundFilled,
       },
     ],
   }),

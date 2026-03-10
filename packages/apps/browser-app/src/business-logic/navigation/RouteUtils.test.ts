@@ -9,6 +9,10 @@ const testRoutes: Route[] = [
     name: RouteName.Ask,
   },
   {
+    name: RouteName.Ask,
+    initialMessage: "initialMessage",
+  },
+  {
     name: RouteName.Conversations,
   },
   {
@@ -110,16 +114,16 @@ const testRoutes: Route[] = [
     appId: Id.generate.app(),
   },
   {
-    name: RouteName.Bazaar,
+    name: RouteName.Boutique,
   },
   {
     name: RouteName.Pack,
-    packId: "Pack_dev.superego.bazaar.productivity",
-    source: PackSource.Bazaar,
+    packId: "Pack_dev.superego.boutique.productivity",
+    source: PackSource.Boutique,
   },
   {
     name: RouteName.Pack,
-    packId: "Pack_dev.superego.bazaar.productivity",
+    packId: "Pack_dev.superego.boutique.productivity",
     source: PackSource.Local,
   },
   {

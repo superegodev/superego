@@ -3,7 +3,7 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import Ask from "../Ask/Ask.js";
 import BackgroundJob from "../BackgroundJob/BackgroundJob.js";
 import BackgroundJobs from "../BackgroundJobs/BackgroundJobs.js";
-import Bazaar from "../Bazaar/Bazaar.js";
+import Boutique from "../Boutique/Boutique.js";
 import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
@@ -22,7 +22,7 @@ export default function MainPanel() {
   const { activeRoute } = useNavigationState();
   switch (activeRoute.name) {
     case RouteName.Ask:
-      return <Ask />;
+      return <Ask initialMessage={activeRoute.initialMessage} />;
     case RouteName.Conversations:
       return <Conversations />;
     case RouteName.Conversation:
@@ -57,8 +57,8 @@ export default function MainPanel() {
       return <CreateApp collectionIds={activeRoute.collectionIds} />;
     case RouteName.EditApp:
       return <EditApp appId={activeRoute.appId} />;
-    case RouteName.Bazaar:
-      return <Bazaar />;
+    case RouteName.Boutique:
+      return <Boutique />;
     case RouteName.Pack:
       return <Pack packId={activeRoute.packId} source={activeRoute.source} />;
     case RouteName.BackgroundJobs:

@@ -2,8 +2,7 @@ import type { CollectionCategoryId, CollectionId } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { useCollator } from "react-aria";
 import { Tree } from "react-aria-components";
-import { PiArrowBendRightUpBold } from "react-icons/pi";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
   useDeleteCollectionCategory,
@@ -65,16 +64,6 @@ export default function CollectionsTree({ className }: Props) {
           items={collectionsTree.children}
           defaultExpandedKeys={collectionCategories.map(({ id }) => id)}
           className={cs.CollectionsTree.tree}
-          renderEmptyState={() => (
-            <div className={cs.CollectionsTree.emptyTree}>
-              <div className={cs.CollectionsTree.emptyTreeText}>
-                <FormattedMessage defaultMessage="Create collection to start." />
-              </div>
-              <PiArrowBendRightUpBold
-                className={cs.CollectionsTree.emptyTreeIcon}
-              />
-            </div>
-          )}
         >
           {function renderItem(item) {
             return item.type === tree.TreeItemType.CollectionCategory ? (

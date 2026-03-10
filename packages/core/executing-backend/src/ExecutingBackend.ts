@@ -30,8 +30,8 @@ import AssistantsSearchConversations from "./usecases/assistants/SearchConversat
 import AssistantsStartConversation from "./usecases/assistants/StartConversation.js";
 import BackgroundJobsGet from "./usecases/background-jobs/Get.js";
 import BackgroundJobsList from "./usecases/background-jobs/List.js";
-import BazaarGetPack from "./usecases/bazaar/GetPack.js";
-import BazaarListPacks from "./usecases/bazaar/ListPacks.js";
+import BoutiqueGetPack from "./usecases/boutique/GetPack.js";
+import BoutiqueListPacks from "./usecases/boutique/ListPacks.js";
 import CollectionCategoriesCreate from "./usecases/collection-categories/Create.js";
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
@@ -75,7 +75,7 @@ export default class ExecutingBackend implements Backend {
   inference: Backend["inference"];
   apps: Backend["apps"];
   packs: Backend["packs"];
-  bazaar: Backend["bazaar"];
+  boutique: Backend["boutique"];
   backgroundJobs: Backend["backgroundJobs"];
   globalSettings: Backend["globalSettings"];
   database: Backend["database"];
@@ -194,9 +194,9 @@ export default class ExecutingBackend implements Backend {
       install: this.makeUsecase(PacksInstall, true),
     };
 
-    this.bazaar = {
-      listPacks: this.makeUsecase(BazaarListPacks, false),
-      getPack: this.makeUsecase(BazaarGetPack, false),
+    this.boutique = {
+      listPacks: this.makeUsecase(BoutiqueListPacks, false),
+      getPack: this.makeUsecase(BoutiqueGetPack, false),
     };
 
     this.backgroundJobs = {

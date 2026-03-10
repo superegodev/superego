@@ -32,7 +32,8 @@ registerDataRepositoriesTests(() => {
         },
       },
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,

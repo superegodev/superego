@@ -119,7 +119,8 @@ describe.concurrent.each(
       appearance: { theme: Theme.Auto },
       inference: makeInferenceSettings(model),
       assistants: {
-        userName: null,
+        userInfo: null,
+        userPreferences: null,
         developerPrompts: {
           [AssistantName.Factotum]: null,
           [AssistantName.CollectionCreator]: null,

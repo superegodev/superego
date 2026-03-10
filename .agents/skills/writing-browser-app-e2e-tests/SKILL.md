@@ -26,7 +26,7 @@ to reach a specific goal. Each test starts from the empty state of the
 application, so the first steps of the scenarios should be about configuring and
 creating everything needed for the later steps.
 
-The Bazaar section of the app contains ready-made "packs" of collection
+The Boutique section of the app contains ready-made "packs" of collection
 categories, collections, and apps, that can be installed to create a useful
 starting point.
 
@@ -84,7 +84,7 @@ Guidelines:
 - Locators must **not** contain steps, assertions, or waits.
 - Return `Locator`s (or small grouped locator objects) and scope within
   containers when possible.
-- Name by intent + target (e.g., `bazaarPackCard`, `installPackButton`).
+- Name by intent + target (e.g., `boutiquePackCard`, `installPackButton`).
 
 ### Actions
 
