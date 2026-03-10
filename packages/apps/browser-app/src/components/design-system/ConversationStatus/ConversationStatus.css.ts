@@ -21,25 +21,25 @@ export const ConversationStatus = {
     [ConversationStatusB.Idle]: [
       conversationStatusRootBase,
       {
-        color: vars.colors.semantic.success.text,
+        color: vars.colors.semantic.success.textFilled,
         borderColor: vars.colors.semantic.success.border,
-        background: vars.colors.semantic.success.background,
+        background: vars.colors.semantic.success.backgroundFilled,
       },
     ],
     [ConversationStatusB.Processing]: [
       conversationStatusRootBase,
       {
-        color: vars.colors.semantic.pending.text,
+        color: vars.colors.semantic.pending.textFilled,
         borderColor: vars.colors.semantic.pending.border,
-        background: vars.colors.semantic.pending.background,
+        background: vars.colors.semantic.pending.backgroundFilled,
       },
     ],
     [ConversationStatusB.Error]: [
       conversationStatusRootBase,
       {
-        color: vars.colors.semantic.error.text,
+        color: vars.colors.semantic.error.textFilled,
         borderColor: vars.colors.semantic.error.border,
-        background: vars.colors.semantic.error.background,
+        background: vars.colors.semantic.error.backgroundFilled,
       },
     ],
   }),

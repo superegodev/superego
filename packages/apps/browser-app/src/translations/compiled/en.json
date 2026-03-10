@@ -219,6 +219,12 @@
       "value": "Failed to decode pack file"
     }
   ],
+  "Bazaar.tsx_a1s4zI": [
+    {
+      "type": 0,
+      "value": "Or install your own"
+    }
+  ],
   "Bazaar.tsx_rrrB1P": [
     {
       "type": 0,
@@ -237,12 +243,6 @@
     {
       "type": 0,
       "value": " to install"
-    }
-  ],
-  "Bazaar.tsx_sX7yk3": [
-    {
-      "type": 0,
-      "value": "Or install from the bazaar"
     }
   ],
   "BazaarPack.tsx_40netJ": [
@@ -493,12 +493,6 @@
     {
       "type": 0,
       "value": "Collection settings actions"
-    }
-  ],
-  "CollectionsTree.tsx_XjdXFR": [
-    {
-      "type": 0,
-      "value": "Create collection to start."
     }
   ],
   "CollectionsTree.tsx_gykodq": [
@@ -1630,6 +1624,184 @@
       "value": "The assistant encountered an error."
     }
   ],
+  "Explainer.tsx_Nxd++A": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Here in the Bazaar you can find pre-made collections and apps, bundled into thematic "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "packs"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " you can install in one click. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " You can also use the "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Superego CLI"
+            }
+          ],
+          "type": 8,
+          "value": "cliDocsLink"
+        },
+        {
+          "type": 0,
+          "value": " to create your own packs. (Drop below to install.) "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
+  "Explainer.tsx_u7Yd2T": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Your data in Superego is stored in "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "collections"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " of "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "documents"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": ". Each collection has a "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "schema"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " that defines what data each document contains. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Example: an "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Expenses"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " collection contains many "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Expense"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " documents. Each document contains the date of the expense, the amount, and a description. (This is its schema.) "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": " Just tell the "
+        },
+        {
+          "children": [
+            {
+              "type": 0,
+              "value": "Collection Creator"
+            }
+          ],
+          "type": 8,
+          "value": "b"
+        },
+        {
+          "type": 0,
+          "value": " what data you want to store, and it will create a collection for you. "
+        }
+      ],
+      "type": 8,
+      "value": "p"
+    }
+  ],
   "FileField.tsx_5q3qC0": [
     {
       "type": 0,
@@ -1972,16 +2144,16 @@
       "value": "Create collection category"
     }
   ],
+  "Hero.tsx_BrZb1S": [
+    {
+      "type": 0,
+      "value": "Software That Fits You"
+    }
+  ],
   "Hero.tsx_OpKKos": [
     {
       "type": 0,
       "value": "Hello!"
-    }
-  ],
-  "Hero.tsx_cWa0gy": [
-    {
-      "type": 0,
-      "value": "Your Digital Freedom"
     }
   ],
   "Hero.tsx_q4FNnF": [
@@ -4366,6 +4538,74 @@
     {
       "type": 0,
       "value": "Your collections changed since having this conversation. It cannot be continued."
+    }
+  ],
+  "Welcome.tsx_C3+BqB": [
+    {
+      "type": 0,
+      "value": "To get started:"
+    }
+  ],
+  "Welcome.tsx_NZjpCr": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Configure the AI assistant"
+        }
+      ],
+      "type": 8,
+      "value": "settingsLink"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "Welcome.tsx_Ulg4S2": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Create your first collection"
+        }
+      ],
+      "type": 8,
+      "value": "createCollectionLink"
+    },
+    {
+      "type": 0,
+      "value": ", or "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "install a pre-made one"
+        }
+      ],
+      "type": 8,
+      "value": "bazaarLink"
+    },
+    {
+      "type": 0,
+      "value": " from the Bazaar."
+    }
+  ],
+  "Welcome.tsx_mNIlLz": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Create your first app"
+        }
+      ],
+      "type": 8,
+      "value": "createAppLink"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "downloadFile.ts_sG8Krh": [

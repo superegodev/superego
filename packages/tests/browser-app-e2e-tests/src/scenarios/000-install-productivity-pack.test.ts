@@ -6,7 +6,7 @@ test("000. Install Productivity pack", async ({ page }) => {
   await test.step("00. Go to homepage", async () => {
     // Exercise
     await page.goto("/");
-    await page.getByText("Your Digital Freedom").waitFor();
+    await page.getByText("Superego").waitFor();
 
     // Verify
     await VisualEvaluator.expectToSee(

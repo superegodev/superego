@@ -16,6 +16,7 @@ import PackCard from "../../design-system/PackCard/PackCard.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import * as cs from "./Bazaar.css.js";
+import Explainer from "./Explainer.js";
 
 export default function Bazaar() {
   const intl = useIntl();
@@ -60,19 +61,8 @@ export default function Bazaar() {
           <Shell.Panel.Header title={title} />
           <DropZone onDrop={handleDrop} className={cs.Bazaar.pageDropZone}>
             <Shell.Panel.Content fullWidth={true}>
-              <div className={cs.Bazaar.dropZoneHint}>
-                <FormattedMessage
-                  defaultMessage="Drop <packMpk>pack.mpk</packMpk> to install"
-                  values={{
-                    packMpk: (chunks) => (
-                      <span className={cs.Bazaar.packMpk}>{chunks}</span>
-                    ),
-                  }}
-                />
-              </div>
-              <h4 className={cs.Bazaar.bazaarHeading}>
-                <FormattedMessage defaultMessage="Or install from the bazaar" />
-              </h4>
+              <Explainer />
+
               <div className={cs.Bazaar.grid}>
                 {packs.map((pack) => (
                   <PackCard
@@ -85,6 +75,19 @@ export default function Bazaar() {
                     }}
                   />
                 ))}
+              </div>
+              <h4 className={cs.Bazaar.bazaarHeading}>
+                <FormattedMessage defaultMessage="Or install your own" />
+              </h4>
+              <div className={cs.Bazaar.dropZoneHint}>
+                <FormattedMessage
+                  defaultMessage="Drop <packMpk>pack.mpk</packMpk> to install"
+                  values={{
+                    packMpk: (chunks) => (
+                      <span className={cs.Bazaar.packMpk}>{chunks}</span>
+                    ),
+                  }}
+                />
               </div>
             </Shell.Panel.Content>
           </DropZone>

@@ -14,6 +14,7 @@ import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./Ask.css.js";
 import Hero from "./Hero.js";
+import Welcome from "./Welcome.js";
 
 export default function Ask() {
   const intl = useIntl();
@@ -33,11 +34,13 @@ export default function Ask() {
       navigateTo({ name: RouteName.Conversation, conversationId: data.id });
     }
   };
+
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header />
       <Shell.Panel.Content className={cs.Ask.panelContent}>
         <Hero />
+        <Welcome />
         <UserMessageContentInput
           conversation={null}
           onSend={onSend}

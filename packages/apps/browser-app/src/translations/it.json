@@ -107,11 +107,11 @@
   "Bazaar.tsx_XBMGwY": {
     "defaultMessage": "Impossibile decodificare il file pack"
   },
+  "Bazaar.tsx_a1s4zI": {
+    "defaultMessage": "Oppure installa it tuo"
+  },
   "Bazaar.tsx_rrrB1P": {
     "defaultMessage": "Trascina <packMpk>pack.mpk</packMpk> per installare"
-  },
-  "Bazaar.tsx_sX7yk3": {
-    "defaultMessage": "Oppure installa dal bazaar"
   },
   "BazaarPack.tsx_40netJ": {
     "defaultMessage": "Bazaar » {packId}"
@@ -208,9 +208,6 @@
   },
   "CollectionSettings.tsx_zNudDK": {
     "defaultMessage": "Azioni delle impostazioni della collezione"
-  },
-  "CollectionsTree.tsx_XjdXFR": {
-    "defaultMessage": "Crea una collezione per iniziare."
   },
   "CollectionsTree.tsx_gykodq": {
     "defaultMessage": "Albero delle categorie di collezioni e delle collezioni"
@@ -674,6 +671,12 @@
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "L'assistente ha riscontrato un errore."
   },
+  "Explainer.tsx_u7Yd2T": {
+    "defaultMessage": "<p> I tuoi dati in Superego sono organizzati in <b>collezioni</b> di <b>documenti</b>. Ogni collezione ha uno <b>schema</b> che definisce quali dati contiene ciascun documento. </p> <p> Esempio: una collezione <b>Spese</b> contiene molti documenti <b>Spesa</b>. Ogni documento contiene la data della spesa, l'importo e una descrizione. (Questo è il suo schema.) </p> <p> Descrivi al <b>Creatore di Collezioni</b> quali dati vuoi archiviare e creerà una collezione per te. </p>"
+  },
+  "Explainer.tsx_Nxd++A": {
+    "defaultMessage": "<p> Qui nel Bazaar puoi trovare collezioni e app già pronte, raggruppate in <b>pack</b> tematici che puoi installare con un click. </p> <p> Puoi anche usare la <cliDocsLink>CLI di Superego</cliDocsLink> per creare i tuoi pack. (Trascinali qui sotto per installarli.) </p>"
+  },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Scarica"
   },
@@ -848,8 +851,8 @@
   "Hero.tsx_OpKKos": {
     "defaultMessage": "Ciao!"
   },
-  "Hero.tsx_cWa0gy": {
-    "defaultMessage": "La tua libertà digitale"
+  "Hero.tsx_BrZb1S": {
+    "defaultMessage": "Il software che si adatta a te"
   },
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
@@ -1630,6 +1633,18 @@
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
+  },
+  "Welcome.tsx_C3+BqB": {
+    "defaultMessage": "Per iniziare:"
+  },
+  "Welcome.tsx_NZjpCr": {
+    "defaultMessage": "<settingsLink>Configura l'assistente AI</settingsLink>."
+  },
+  "Welcome.tsx_Ulg4S2": {
+    "defaultMessage": "<createCollectionLink>Crea la tua prima collezione</createCollectionLink>, o <bazaarLink>installane una già pronta</bazaarLink> dal Bazaar."
+  },
+  "Welcome.tsx_mNIlLz": {
+    "defaultMessage": "<createAppLink>Crea la tua prima app</createAppLink>."
   },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Download del file non riuscito"

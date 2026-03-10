@@ -5,10 +5,10 @@ import personalFinance from "./packs/dev/superego/bazaar/personal-finance/pack.j
 import productivity from "./packs/dev/superego/bazaar/productivity/pack.js";
 
 export const packsAsConst = [
-  car,
+  productivity,
   health,
   personalFinance,
-  productivity,
+  car,
 ] as const satisfies Pack[];
 
 export const packs: Pack[] = packsAsConst;

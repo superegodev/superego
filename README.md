@@ -11,15 +11,15 @@ A personal database you can extend with apps.
 [Try the demo](https://demo.superego.dev) ·
 [Download](https://github.com/superegodev/superego/releases/latest)
 
-## Your Apps Don't Fit You
+### Your Apps Don't Fit You
 
 They're built for a generic user and shaped by growth targets, not your needs.
 
-## Your Data Isn't Yours
+### Your Data Isn't Yours
 
 It's trapped inside apps, leaving you with limited access and no real ownership.
 
-## Superego Puts You Back In Control
+### Superego Puts You Back In Control
 
 It's a private place to store your data and build apps tailored to how you live
 and work.
@@ -27,7 +27,7 @@ and work.
 Build a portfolio manager that matches how you invest. Vibe-code a chore
 scoreboard for your family. Make niche tools you'll never find in an app store.
 
-## It Makes AI Actually Helpful
+### It Makes AI Actually Helpful
 
 Having access to your data, Superego's assistant can answer questions ordinary
 tools can't.
@@ -37,7 +37,7 @@ tools can't.
 ![Demo Screenshots](./docs/images/demo-screenshots-light.png#gh-light-mode-only)
 ![Demo Screenshots](./docs/images/demo-screenshots-dark.png#gh-dark-mode-only)
 
-## What Else?
+### What Else?
 
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
@@ -88,7 +88,7 @@ required to get started on something.
 ## License
 
 Unless otherwise specified, all files in this repository are licensed under the
-**GNU Affero General Public License, Version 3 or later (AGPL-3.0-or-later)**.
+**GNU Affero General Public License, Version 3 (AGPL-3.0)**.
 
 You can find a copy of the full license text in the `LICENSE` file at the root
 of this repository.

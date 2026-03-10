@@ -41,6 +41,12 @@ export const Alert = {
         color: vars.colors.semantic.info.text,
         background: vars.colors.semantic.info.background,
         borderColor: vars.colors.semantic.info.border,
+        selectors: {
+          [`${dark} &`]: {
+            color: vars.colors.semantic.info.textFilled,
+            background: vars.colors.semantic.info.backgroundFilled,
+          },
+        },
       },
     ],
     error: [
@@ -49,14 +55,36 @@ export const Alert = {
         color: vars.colors.semantic.error.text,
         background: vars.colors.semantic.error.background,
         borderColor: vars.colors.semantic.error.border,
+        selectors: {
+          [`${dark} &`]: {
+            color: vars.colors.semantic.error.textFilled,
+            background: vars.colors.semantic.error.backgroundFilled,
+          },
+        },
       },
     ],
   }),
 
   title: styleVariants({
     neutral: [alertTitleBase, { color: vars.colors.text.primary }],
-    info: [alertTitleBase, { color: vars.colors.semantic.info.text }],
-    error: [alertTitleBase, { color: vars.colors.semantic.error.text }],
+    info: [
+      alertTitleBase,
+      {
+        color: vars.colors.semantic.info.text,
+        selectors: {
+          [`${dark} &`]: { color: vars.colors.semantic.info.textFilled },
+        },
+      },
+    ],
+    error: [
+      alertTitleBase,
+      {
+        color: vars.colors.semantic.error.text,
+        selectors: {
+          [`${dark} &`]: { color: vars.colors.semantic.error.textFilled },
+        },
+      },
+    ],
   }),
 };
 

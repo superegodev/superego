@@ -12,6 +12,7 @@ import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import UserMessageContentInput from "../../widgets/UserMessageContentInput/UserMessageContentInput.js";
 import * as cs from "./CreateCollectionAssisted.css.js";
+import Explainer from "./Explainer.js";
 import Hero from "./Hero.js";
 
 interface Props {
@@ -54,6 +55,7 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
       />
       <Shell.Panel.Content className={cs.CreateCollectionAssisted.panelContent}>
         <Hero />
+        <Explainer />
         <UserMessageContentInput
           conversation={null}
           onSend={onSend}

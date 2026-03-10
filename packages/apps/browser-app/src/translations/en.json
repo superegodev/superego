@@ -107,11 +107,11 @@
   "Bazaar.tsx_XBMGwY": {
     "defaultMessage": "Failed to decode pack file"
   },
+  "Bazaar.tsx_a1s4zI": {
+    "defaultMessage": "Or install your own"
+  },
   "Bazaar.tsx_rrrB1P": {
     "defaultMessage": "Drop <packMpk>pack.mpk</packMpk> to install"
-  },
-  "Bazaar.tsx_sX7yk3": {
-    "defaultMessage": "Or install from the bazaar"
   },
   "BazaarPack.tsx_40netJ": {
     "defaultMessage": "Bazaar » {packId}"
@@ -217,9 +217,6 @@
   },
   "CollectionSettings.tsx_zNudDK": {
     "defaultMessage": "Collection settings actions"
-  },
-  "CollectionsTree.tsx_XjdXFR": {
-    "defaultMessage": "Create collection to start."
   },
   "CollectionsTree.tsx_gykodq": {
     "defaultMessage": "Tree of collection categories and collections"
@@ -668,6 +665,12 @@
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
   },
+  "Explainer.tsx_Nxd++A": {
+    "defaultMessage": "<p> Here in the Bazaar you can find pre-made collections and apps, bundled into thematic <b>packs</b> you can install in one click. </p> <p> You can also use the <cliDocsLink>Superego CLI</cliDocsLink> to create your own packs. (Drop below to install.) </p>"
+  },
+  "Explainer.tsx_u7Yd2T": {
+    "defaultMessage": "<p> Your data in Superego is stored in <b>collections</b> of <b>documents</b>. Each collection has a <b>schema</b> that defines what data each document contains. </p> <p> Example: an <b>Expenses</b> collection contains many <b>Expense</b> documents. Each document contains the date of the expense, the amount, and a description. (This is its schema.) </p> <p> Just tell the <b>Collection Creator</b> what data you want to store, and it will create a collection for you. </p>"
+  },
   "FileField.tsx_5q3qC0": {
     "defaultMessage": "Download"
   },
@@ -839,11 +842,11 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Create collection category"
   },
+  "Hero.tsx_BrZb1S": {
+    "defaultMessage": "Software That Fits You"
+  },
   "Hero.tsx_OpKKos": {
     "defaultMessage": "Hello!"
-  },
-  "Hero.tsx_cWa0gy": {
-    "defaultMessage": "Your Digital Freedom"
   },
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
@@ -1522,6 +1525,18 @@
   },
   "UserMessageContentInput.tsx_yvK6cX": {
     "defaultMessage": "Your collections changed since having this conversation. It cannot be continued."
+  },
+  "Welcome.tsx_C3+BqB": {
+    "defaultMessage": "To get started:"
+  },
+  "Welcome.tsx_NZjpCr": {
+    "defaultMessage": "<settingsLink>Configure the AI assistant</settingsLink>."
+  },
+  "Welcome.tsx_Ulg4S2": {
+    "defaultMessage": "<createCollectionLink>Create your first collection</createCollectionLink>, or <bazaarLink>install a pre-made one</bazaarLink> from the Bazaar."
+  },
+  "Welcome.tsx_mNIlLz": {
+    "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
   },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Downloading file failed"

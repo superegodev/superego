@@ -10,7 +10,7 @@ export default function Hero() {
         <FormattedMessage defaultMessage="Superego" />
       </h1>
       <p className={cs.Hero.tagLine}>
-        <FormattedMessage defaultMessage="Your Digital Freedom" />
+        <FormattedMessage defaultMessage="Software That Fits You" />
       </p>
     </div>
   );
