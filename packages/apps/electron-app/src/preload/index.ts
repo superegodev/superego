@@ -20,6 +20,6 @@ ipcRenderer.on("OAuth2PKCEFlowSucceeded", (_evt, data) => {
   window.postMessage(data, "*");
 });
 
-ipcRenderer.on("navigate-to", (_evt, data) => {
+ipcRenderer.on("NavigationRequested", (_evt, data) => {
   window.postMessage(data, "*");
 });

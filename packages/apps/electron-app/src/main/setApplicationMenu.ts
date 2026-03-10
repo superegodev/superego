@@ -49,8 +49,8 @@ export default function setApplicationMenu(
             label: intl.formatMessage({ defaultMessage: "Background Jobs" }),
             click: () => {
               BrowserWindow.getFocusedWindow()?.webContents.postMessage(
-                "navigate-to",
-                { type: "navigate-to", href: "/background-jobs" },
+                "NavigationRequested",
+                { type: "NavigationRequested", href: "/background-jobs" },
               );
             },
           },

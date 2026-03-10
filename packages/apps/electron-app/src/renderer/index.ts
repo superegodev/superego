@@ -20,7 +20,10 @@ window.addEventListener("message", (evt) => {
   if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
     queryClient.invalidateQueries({ queryKey: ["listCollections"] });
   }
-  if (evt.data?.type === "navigate-to" && typeof evt.data.href === "string") {
+  if (
+    evt.data?.type === "NavigationRequested" &&
+    typeof evt.data.href === "string"
+  ) {
     window.history.pushState({}, "", evt.data.href);
     window.dispatchEvent(new PopStateEvent("popstate"));
   }
