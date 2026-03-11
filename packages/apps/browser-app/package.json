@@ -88,7 +88,7 @@
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
-    "maplibre-gl": "^5.19.0",
+    "maplibre-gl": "^5.20.0",
     "markdown-to-jsx": "9.7.9",
     "monaco-editor": "0.55.1",
     "overtype": "^2.3.4",
