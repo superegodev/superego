@@ -34,8 +34,10 @@ tools can't.
 
 > Looking at my finances and my lifestyle, when could I retire?
 
-![Demo Recording](./docs/media/demo-recording.dark.gif#gh-light-mode-only)
-![Demo Recording](./docs/media/demo-recording.light.gif#gh-dark-mode-only)
+<p align="center">
+  <img alt="Demo Recording" src="./docs/media/demo-recording.dark.gif#gh-light-mode-only" style="height: 500px;" />
+  <img alt="Demo Recording" src="./docs/media/demo-recording.light.gif#gh-dark-mode-only" style="height: 500px;" />
+</p>
 
 ### What Else?
 
