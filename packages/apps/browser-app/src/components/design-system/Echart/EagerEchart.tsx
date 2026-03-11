@@ -1,6 +1,5 @@
+import { echarts, getEchartsTheme } from "@superego/echarts";
 import { extractErrorDetails } from "@superego/shared-utils";
-import { getEchartsTheme } from "@superego/themes";
-import * as echarts from "echarts";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import useTheme from "../../../business-logic/theme/useTheme.js";

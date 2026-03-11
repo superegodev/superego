@@ -1,7 +1,7 @@
-import type * as echarts from "echarts";
+import type { EChartsOption } from "@superego/echarts";
 
 export default interface Props {
-  option: echarts.EChartsOption;
+  option: EChartsOption;
   width: string;
   height: string;
   className?: string | undefined;

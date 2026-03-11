@@ -1,7 +1,8 @@
 import { Theme } from "@superego/backend";
+import { resolveVar, themes } from "@superego/themes";
 import * as echarts from "echarts";
-import resolveVar from "./resolveVar.js";
-import { colors, vars } from "./themes.css.js";
+
+const { colors, vars } = themes;
 
 const seriesColors = [
   colors.blues._4,
