@@ -1,7 +1,7 @@
 ![main-and-tags workflow status](https://github.com/superegodev/superego/actions/workflows/main-and-tags.yml/badge.svg)
 
 <p align="center">
-  <img alt="Superego logo" src="./docs/images/logo.svg" style="height: 150px;" />
+  <img alt="Superego logo" src="./docs/media/logo.svg" style="height: 150px;" />
 </p>
 
 # Superego
@@ -34,8 +34,8 @@ tools can't.
 
 > Looking at my finances and my lifestyle, when could I retire?
 
-![Demo Screenshots](./docs/images/demo-screenshots-light.png#gh-light-mode-only)
-![Demo Screenshots](./docs/images/demo-screenshots-dark.png#gh-dark-mode-only)
+![Demo Recording](./docs/media/demo-recording.light.mp4#gh-light-mode-only)
+![Demo Recording](./docs/media/demo-recording.dark.mp4#gh-dark-mode-only)
 
 ### What Else?
 
