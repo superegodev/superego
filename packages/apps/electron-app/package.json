@@ -41,7 +41,6 @@
     "babel-plugin-formatjs": "^11.2.4",
     "electron": "40.8.0",
     "electron-vite": "^5.0.0",
-    "typescript": "^5.9.3",
     "vite": "^7.3.1"
   },
   "dependencies": {
@@ -60,7 +59,9 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
+    "@typescript/vfs": "^1.6.4",
     "es-toolkit": "^1.45.1",
-    "filenamify": "^7.0.1"
+    "filenamify": "^7.0.1",
+    "typescript": "^5.9.3"
   }
 }
