@@ -34,6 +34,9 @@ tools can't.
 
 > Looking at my finances and my lifestyle, when could I retire?
 
+[Try it in the demo](https://demo.superego.dev/?initialMessage=Looking%20at%20my%20finances%20and%20my%20lifestyle%2C%20when%20could%20I%20retire%3F)
+and see how it answers.
+
 <p align="center">
   <img alt="Demo Recording" src="./docs/media/demo-recording.dark.gif#gh-light-mode-only" style="height: 500px;" />
   <img alt="Demo Recording" src="./docs/media/demo-recording.light.gif#gh-dark-mode-only" style="height: 500px;" />
