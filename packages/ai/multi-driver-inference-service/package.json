@@ -1,6 +1,6 @@
 {
   "name": "@superego/multi-driver-inference-service",
-  "version": "2026.3.1",
+  "version": "2026.3.2",
   "type": "module",
   "exports": {
     ".": {
