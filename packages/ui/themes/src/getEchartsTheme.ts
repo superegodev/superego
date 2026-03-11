@@ -1,5 +1,6 @@
 import { Theme } from "@superego/backend";
 import * as echarts from "echarts";
+import resolveVar from "./resolveVar.js";
 import { colors, vars } from "./themes.css.js";
 
 const seriesColors = [
@@ -13,33 +14,6 @@ const seriesColors = [
   colors.violets._4,
   colors.pinks._4,
 ];
-
-const CSS_VAR_REGEX = /^var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)$/;
-
-const resolveVar = (styles: CSSStyleDeclaration, value: string): string => {
-  const trimmedValue = value.trim();
-  const match = CSS_VAR_REGEX.exec(trimmedValue);
-  if (!match) {
-    return trimmedValue;
-  }
-
-  const [, variableName, fallback] = match;
-  if (!variableName) {
-    return trimmedValue;
-  }
-
-  const computedValue = styles.getPropertyValue(variableName)?.trim();
-
-  if (computedValue) {
-    return computedValue;
-  }
-
-  if (fallback) {
-    return resolveVar(styles, fallback);
-  }
-
-  return trimmedValue;
-};
 
 const buildAxisOptions = (
   axisLineColor: string,
