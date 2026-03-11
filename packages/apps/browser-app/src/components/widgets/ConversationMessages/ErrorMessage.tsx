@@ -9,6 +9,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
@@ -52,8 +54,8 @@ export default function ErrorMessage({ conversation }: Props) {
               </IconButton>
             }
             models={models}
-            onModelAction={(providerModelRef) =>
-              mutate(conversation.id, {
+            onModelAction={async (providerModelRef) => {
+              const { error } = await mutate(conversation.id, {
                 completion: {
                   providerModelRef,
                   reasoningEffort:
@@ -62,8 +64,17 @@ export default function ErrorMessage({ conversation }: Props) {
                 },
                 transcription: defaultInferenceOptions.transcription,
                 fileInspection: defaultInferenceOptions.fileInspection,
-              })
-            }
+              });
+              if (error) {
+                toasts.add({
+                  type: ToastType.Error,
+                  title: intl.formatMessage({
+                    defaultMessage: "Recovery failed",
+                  }),
+                  error,
+                });
+              }
+            }}
           />
         ) : null}
       </div>

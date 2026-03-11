@@ -695,6 +695,9 @@
   "ErrorMessage.tsx_Lv0zJu": {
     "defaultMessage": "Details"
   },
+  "ErrorMessage.tsx_mh8pWp": {
+    "defaultMessage": "Recovery failed"
+  },
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "The assistant encountered an error."
   },
@@ -1286,6 +1289,9 @@
   "RetryButton.tsx_HMN20q": {
     "defaultMessage": "Retry response"
   },
+  "RetryButton.tsx_IeZnKQ": {
+    "defaultMessage": "Retry failed"
+  },
   "RetryButton.tsx_l02CSg": {
     "defaultMessage": "Retrying..."
   },
@@ -1390,6 +1396,9 @@
   },
   "StuckProcessingMessage.tsx_kCDSl2": {
     "defaultMessage": "The assistant seems to be taking too long."
+  },
+  "StuckProcessingMessage.tsx_mh8pWp": {
+    "defaultMessage": "Recovery failed"
   },
   "SuggestCollectionsDefinitions.tsx_65g2mb": {
     "defaultMessage": "Suggested collections"

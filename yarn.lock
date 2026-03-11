@@ -8316,6 +8316,7 @@ __metadata:
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/tsc-typescript-compiler": "workspace:*"
+    "@typescript/vfs": "npm:^1.6.4"
     babel-plugin-formatjs: "npm:^11.2.4"
     electron: "npm:40.8.0"
     electron-vite: "npm:^5.0.0"

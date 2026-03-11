@@ -8,6 +8,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
+import toasts from "../../../business-logic/toasts/toasts.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
@@ -53,8 +55,7 @@ export default function StuckProcessingMessage({
             }
             models={models}
             onModelAction={async (providerModelRef) => {
-              onRecoverStarted();
-              await mutate(conversation.id, {
+              const result = await mutate(conversation.id, {
                 completion: {
                   providerModelRef,
                   reasoningEffort:
@@ -64,6 +65,17 @@ export default function StuckProcessingMessage({
                 transcription: defaultInferenceOptions.transcription,
                 fileInspection: defaultInferenceOptions.fileInspection,
               });
+              if (result.success) {
+                onRecoverStarted();
+              } else {
+                toasts.add({
+                  type: ToastType.Error,
+                  title: intl.formatMessage({
+                    defaultMessage: "Recovery failed",
+                  }),
+                  error: result.error,
+                });
+              }
             }}
           />
         ) : null}

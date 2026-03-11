@@ -3,7 +3,7 @@ import type WellKnownKey from "./WellKnownKey.js";
 
 type UseSessionStorageItem<Value> = [
   value: Value,
-  setValue: (newValue: Value) => void,
+  setValue: (newValue: Value | ((prev: Value) => Value)) => void,
 ];
 
 export default function useSessionStorageItem<Value>(
@@ -21,9 +21,17 @@ export default function useSessionStorageItem<Value>(
   return [
     value,
     useCallback(
-      (newValue) => {
-        sessionStorage.setItem(key, JSON.stringify(newValue));
-        setValue(newValue);
+      (newValueOrUpdater: Value | ((previousValue: Value) => Value)) => {
+        setValue((previousValue: Value) => {
+          const newValue =
+            typeof newValueOrUpdater === "function"
+              ? (newValueOrUpdater as (previousValue: Value) => Value)(
+                  previousValue,
+                )
+              : newValueOrUpdater;
+          sessionStorage.setItem(key, JSON.stringify(newValue));
+          return newValue;
+        });
       },
       [key],
     ),
