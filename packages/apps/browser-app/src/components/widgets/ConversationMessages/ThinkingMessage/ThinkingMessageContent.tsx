@@ -1,5 +1,4 @@
-import type { Conversation, ConversationId } from "@superego/backend";
-import { useQueryClient } from "@tanstack/react-query";
+import type { Conversation } from "@superego/backend";
 import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import MatrixSpinner from "../../../design-system/MatrixSpinner/MatrixSpinner.js";
@@ -10,22 +9,9 @@ import * as cs from "./ThinkingMessage.css.js";
 
 interface Props {
   conversation: Conversation;
-  invalidateConversationId?: ConversationId | undefined;
 }
-export default function ThinkingMessageContent({
-  conversation,
-  invalidateConversationId,
-}: Props) {
+export default function ThinkingMessageContent({ conversation }: Props) {
   const intl = useIntl();
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (invalidateConversationId) {
-      queryClient.invalidateQueries({
-        queryKey: ["getConversation", invalidateConversationId],
-      });
-    }
-  }, [invalidateConversationId, queryClient]);
 
   const statusText = getStatusText(intl, conversation);
   const reasoningTrace = getReasoningTrace(conversation);

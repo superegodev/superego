@@ -1688,6 +1688,12 @@
       "value": "Details"
     }
   ],
+  "ErrorMessage.tsx_mh8pWp": [
+    {
+      "type": 0,
+      "value": "Recovery failed"
+    }
+  ],
   "ErrorMessage.tsx_zg3wLI": [
     {
       "type": 0,
@@ -3854,6 +3860,12 @@
       "value": "Retry response"
     }
   ],
+  "RetryButton.tsx_IeZnKQ": [
+    {
+      "type": 0,
+      "value": "Retry failed"
+    }
+  ],
   "RetryButton.tsx_l02CSg": [
     {
       "type": 0,
@@ -4198,6 +4210,12 @@
     {
       "type": 0,
       "value": "The assistant seems to be taking too long."
+    }
+  ],
+  "StuckProcessingMessage.tsx_mh8pWp": [
+    {
+      "type": 0,
+      "value": "Recovery failed"
     }
   ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [

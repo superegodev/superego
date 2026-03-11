@@ -10,7 +10,7 @@ import * as cs from "./ConversationMessages.css.js";
 import ErrorMessage from "./ErrorMessage.js";
 import StuckProcessingMessage from "./StuckProcessingMessage.js";
 import ThinkingMessage from "./ThinkingMessage/ThinkingMessage.js";
-import useRecoveringConversationIds from "./useRecoveringConversationIds.js";
+import useRecoveringConversation from "./useRecoveringConversation.js";
 import useTailMinHeight from "./useTailMinHeight.js";
 
 interface Props {
@@ -23,9 +23,8 @@ export default function ConversationMessages({
   showToolCalls,
   className,
 }: Props) {
-  const { isRecovering, setIsRecovering } = useRecoveringConversationIds(
-    conversation.id,
-  );
+  const { isRecovering, setIsRecovering } =
+    useRecoveringConversation(conversation);
 
   const lastUserMessageIndex = conversation.messages.findLastIndex(
     (message) => message.role === MessageRole.User,

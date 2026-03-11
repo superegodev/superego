@@ -1680,6 +1680,12 @@
       "value": "Dettagli"
     }
   ],
+  "ErrorMessage.tsx_mh8pWp": [
+    {
+      "type": 0,
+      "value": "Recupero fallito"
+    }
+  ],
   "ErrorMessage.tsx_zg3wLI": [
     {
       "type": 0,
@@ -3832,6 +3838,12 @@
       "value": "Riprova la risposta"
     }
   ],
+  "RetryButton.tsx_IeZnKQ": [
+    {
+      "type": 0,
+      "value": "Nuovo tentativo fallito"
+    }
+  ],
   "RetryButton.tsx_l02CSg": [
     {
       "type": 0,
@@ -4176,6 +4188,12 @@
     {
       "type": 0,
       "value": "L'assistente sembra impiegare troppo tempo."
+    }
+  ],
+  "StuckProcessingMessage.tsx_mh8pWp": [
+    {
+      "type": 0,
+      "value": "Recupero fallito"
     }
   ],
   "SuggestCollectionsDefinitions.tsx_65g2mb": [

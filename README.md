@@ -48,7 +48,7 @@ tools can't.
 
 - [x] Document versioning.
 - [x] Full-text search.
-- [-] CLI. 🚧
+- [ ] CLI. 🚧
 - [ ] AI-assisted data import.
 - [ ] Mobile app.
 - [ ] Sync via file-syncing service.

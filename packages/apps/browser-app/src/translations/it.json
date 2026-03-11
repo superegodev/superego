@@ -701,6 +701,9 @@
   "ErrorMessage.tsx_Lv0zJu": {
     "defaultMessage": "Dettagli"
   },
+  "ErrorMessage.tsx_mh8pWp": {
+    "defaultMessage": "Recupero fallito"
+  },
   "ErrorMessage.tsx_zg3wLI": {
     "defaultMessage": "L'assistente ha riscontrato un errore."
   },
@@ -1265,6 +1268,9 @@
   "RetryButton.tsx_HMN20q": {
     "defaultMessage": "Riprova la risposta"
   },
+  "RetryButton.tsx_IeZnKQ": {
+    "defaultMessage": "Nuovo tentativo fallito"
+  },
   "RetryButton.tsx_l02CSg": {
     "defaultMessage": "Riprovo..."
   },
@@ -1369,6 +1375,9 @@
   },
   "StuckProcessingMessage.tsx_kCDSl2": {
     "defaultMessage": "L'assistente sembra impiegare troppo tempo."
+  },
+  "StuckProcessingMessage.tsx_mh8pWp": {
+    "defaultMessage": "Recupero fallito"
   },
   "SuggestCollectionsDefinitions.tsx_65g2mb": {
     "defaultMessage": "Collezioni suggerite"
