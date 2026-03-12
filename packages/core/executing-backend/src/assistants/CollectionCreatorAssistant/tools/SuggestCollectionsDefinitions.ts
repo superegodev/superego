@@ -38,6 +38,27 @@ export default {
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
 
+    // Validate schemas before dry-run, since the dry-run traverses the schema
+    // tree and would crash on malformed schemas.
+    for (const collection of collections) {
+      const schemaValidationResult = v.safeParse(
+        valibotSchemas.schema(),
+        collection.schema,
+      );
+      if (!schemaValidationResult.success) {
+        return {
+          tool: toolCall.tool,
+          toolCallId: toolCall.id,
+          output: makeUnsuccessfulResult(
+            makeResultError("CollectionSchemaNotValid", {
+              collectionId: null,
+              issues: makeValidationIssues(schemaValidationResult.issues),
+            }),
+          ),
+        };
+      }
+    }
+
     // Validate schema and settings with dry-run.
     const createManyResult = await collectionsCreateMany.exec(
       collections.map(({ settings, schema }) => ({
