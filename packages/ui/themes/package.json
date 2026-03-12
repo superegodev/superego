@@ -5,6 +5,9 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./resolve-var": {
+      "import": "./src/resolveVar.ts"
     }
   },
   "private": true,

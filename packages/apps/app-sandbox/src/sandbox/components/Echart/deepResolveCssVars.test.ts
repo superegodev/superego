@@ -1,12 +1,10 @@
 import { expect, it, vi } from "vitest";
 
-// Importing @superego/themes, which depends on vanilla-extract, would trigger
-// vanilla-extract's file-scope check outside of a .css.ts context, causing
-// issues.
+// Importing @superego/themes would trigger vanilla-extract's file-scope check
+// outside of a .css.ts context. Re-export only resolveVar via a subpath that
+// doesn't pull in themes.css.ts.
 vi.mock("@superego/themes", async () => {
-  const { default: resolveVar } = await import(
-    "../../../../../../ui/themes/src/resolveVar.js"
-  );
+  const { default: resolveVar } = await import("@superego/themes/resolve-var");
   return { resolveVar };
 });
 
