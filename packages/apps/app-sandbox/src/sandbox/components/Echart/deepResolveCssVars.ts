@@ -13,14 +13,17 @@ export default function deepResolveCssVars<Value>(
     return value.map((item) => deepResolveCssVars(item, styles)) as Value;
   }
   if (value !== null && typeof value === "object") {
-    const resolvedValue: Record<string, unknown> = {};
-    for (const key of Object.keys(value)) {
-      resolvedValue[key] = deepResolveCssVars(
-        (value as Record<string, unknown>)[key],
-        styles,
-      );
+    const proto = Object.getPrototypeOf(value);
+    if (proto === Object.prototype || proto === null) {
+      const resolvedValue: Record<string, unknown> = {};
+      for (const key of Object.keys(value)) {
+        resolvedValue[key] = deepResolveCssVars(
+          (value as Record<string, unknown>)[key],
+          styles,
+        );
+      }
+      return resolvedValue as Value;
     }
-    return resolvedValue as Value;
   }
   return value;
 }
