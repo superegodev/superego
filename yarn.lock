@@ -341,9 +341,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/starlight@npm:^0.38.0":
-  version: 0.38.0
-  resolution: "@astrojs/starlight@npm:0.38.0"
+"@astrojs/starlight@npm:^0.38.1":
+  version: 0.38.1
+  resolution: "@astrojs/starlight@npm:0.38.1"
   dependencies:
     "@astrojs/markdown-remark": "npm:^7.0.0"
     "@astrojs/mdx": "npm:^5.0.0"
@@ -375,7 +375,7 @@ __metadata:
     vfile: "npm:^6.0.2"
   peerDependencies:
     astro: ^6.0.0
-  checksum: 10c0/71efbc85b1610938a90d09fc3178b715b63877edd70e8720dd6c4deb664360c626ba7f2b30741f370514fdae2a593b7184068ff7323fe80b3b981c9a0e998430
+  checksum: 10c0/dd454a31cac4304d57766d2bc877acbec1eaf34134b4f88c2f5b07827b2db67cdc63ff4a73727a26e580343e50ab4a16f03d36471a9320d8c654d7e24f4a5816
   languageName: node
   linkType: hard
 
@@ -1126,10 +1126,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:4.20260310.1":
-  version: 4.20260310.1
-  resolution: "@cloudflare/workers-types@npm:4.20260310.1"
-  checksum: 10c0/887f79b2db34a9a21e95176d91bbdd73bedbc3bea9dedf815997e0b2a306cb1761bfc498fca2aa5cc104309a86ef03a3ffa398c5a6da6a92290eb18da7cb1436
+"@cloudflare/workers-types@npm:4.20260312.1":
+  version: 4.20260312.1
+  resolution: "@cloudflare/workers-types@npm:4.20260312.1"
+  checksum: 10c0/1e99c245b05784eb39ef5c7eaa842c40ded7fb8470e1a6ef1e4e0154c23f1e1f961698b0afa7a8f3f7f499e2d29c2fe53685a15c1efcff0be125291b7a40d0c6
   languageName: node
   linkType: hard
 
@@ -8193,7 +8193,7 @@ __metadata:
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
     "@cloudflare/vite-plugin": "npm:1.27.0"
-    "@cloudflare/workers-types": "npm:4.20260310.1"
+    "@cloudflare/workers-types": "npm:4.20260312.1"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/boutique": "workspace:*"
@@ -8493,7 +8493,7 @@ __metadata:
   dependencies:
     "@astrojs/check": "npm:^0.9.7"
     "@astrojs/mdx": "npm:^5.0.0"
-    "@astrojs/starlight": "npm:^0.38.0"
+    "@astrojs/starlight": "npm:^0.38.1"
     astro: "npm:^6.0.3"
     starlight-theme-nova: "npm:^0.11.7"
     typescript: "npm:^5.9.3"
