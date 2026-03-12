@@ -18,7 +18,9 @@ export default function resolveVar(
   const computedValue = styles.getPropertyValue(variableName)?.trim();
 
   if (computedValue) {
-    return computedValue;
+    return CSS_VAR_REGEX.test(computedValue)
+      ? resolveVar(styles, computedValue)
+      : computedValue;
   }
 
   if (fallback) {
