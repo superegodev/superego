@@ -6,6 +6,7 @@ import {
 } from "@superego/backend";
 import { valibotSchemas } from "@superego/schema";
 import {
+  Id,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
@@ -37,6 +38,27 @@ export default {
     inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
+
+    // Validate schemas before dry-run, since the dry-run traverses the schema
+    // tree and would crash on malformed schemas.
+    for (const [index, collection] of collections.entries()) {
+      const schemaValidationResult = v.safeParse(
+        valibotSchemas.schema(),
+        collection.schema,
+      );
+      if (!schemaValidationResult.success) {
+        return {
+          tool: toolCall.tool,
+          toolCallId: toolCall.id,
+          output: makeUnsuccessfulResult(
+            makeResultError("CollectionSchemaNotValid", {
+              collectionId: Id.generate.protoCollection(index),
+              issues: makeValidationIssues(schemaValidationResult.issues),
+            }),
+          ),
+        };
+      }
+    }
 
     // Validate schema and settings with dry-run.
     const createManyResult = await collectionsCreateMany.exec(
