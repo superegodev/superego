@@ -84,7 +84,7 @@ jobs:
         include:
           - os: macos-15-intel
             arch: x64
-          - os: macos-26
+          - os: macos-latest
             arch: arm64
           - os: ubuntu-latest
             arch: x64
