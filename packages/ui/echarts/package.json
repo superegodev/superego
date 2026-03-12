@@ -1,13 +1,10 @@
 {
-  "name": "@superego/themes",
+  "name": "@superego/echarts",
   "version": "2026.3.3",
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
-    },
-    "./resolve-var": {
-      "import": "./src/resolveVar.ts"
     }
   },
   "private": true,
@@ -18,6 +15,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@vanilla-extract/css": "^1.18.0"
+    "@superego/backend": "workspace:*",
+    "@superego/themes": "workspace:*",
+    "echarts": "^6.0.0"
   }
 }

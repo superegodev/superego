@@ -1,4 +1,4 @@
-import type { EChartsOption } from "echarts";
+import type { EChartsOption } from "@superego/echarts";
 
 export default interface Props {
   option: EChartsOption;

@@ -1,10 +1,10 @@
+import { echarts, getEchartsTheme } from "@superego/echarts";
 import { extractErrorDetails } from "@superego/shared-utils";
-import { getEchartsTheme } from "@superego/themes";
-import * as echarts from "echarts";
 import { useEffect, useRef, useState } from "react";
 import useIntlMessages from "../../business-logic/intl-messages/useIntlMessages.js";
 import useTheme from "../../business-logic/theme/useTheme.js";
 import Alert from "../Alert/Alert.js";
+import deepResolveCssVars from "./deepResolveCssVars.js";
 import type Props from "./Props.js";
 
 export default function Echart({ option, width, height }: Props) {
@@ -18,9 +18,11 @@ export default function Echart({ option, width, height }: Props) {
       return;
     }
     setRenderingError(null);
+    const styles = getComputedStyle(chartElementRef.current);
+    const resolvedOption = deepResolveCssVars(option, styles);
     const chart = echarts.init(chartElementRef.current, getEchartsTheme(theme));
     try {
-      chart.setOption(option);
+      chart.setOption(resolvedOption);
     } catch (error) {
       setRenderingError(error);
     }

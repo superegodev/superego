@@ -1,0 +1,7 @@
+{
+  "extends": ["../../../tsconfig.common.json"],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+  }
+}
