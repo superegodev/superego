@@ -1,6 +1,6 @@
 import type { OverTypeInstance } from "overtype";
 import type { RefObject } from "react";
-import { Button, Group, Separator, Toolbar } from "react-aria-components";
+import { Group, Separator, Toolbar } from "react-aria-components";
 import {
   PiCode,
   PiLink,
@@ -14,80 +14,41 @@ import {
   PiTextHTwo,
   PiTextItalic,
 } from "react-icons/pi";
+import IconToggleButton from "../IconToggleButton/IconToggleButton.js";
 import * as cs from "./MarkdownField.css.js";
 
 interface Props {
   editorRef: RefObject<OverTypeInstance | null>;
+  activeFormats: Set<string>;
 }
-export default function FormattingToolbar({ editorRef }: Props) {
+export default function FormattingToolbar({ editorRef, activeFormats }: Props) {
   return (
     <Toolbar aria-label="Text formatting" className={cs.FormattingToolbar.root}>
-      <Group aria-label="Style" className={cs.FormattingToolbar.group}>
-        <Button
-          aria-label="Bold"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleBold")}
-        >
-          <PiTextBBold />
-        </Button>
-        <Button
-          aria-label="Italic"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleItalic")}
-        >
-          <PiTextItalic />
-        </Button>
-        <Button
-          aria-label="Code"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleCode")}
-        >
-          <PiCode />
-        </Button>
-      </Group>
-
-      <Separator
-        orientation="vertical"
-        className={cs.FormattingToolbar.separator}
-      />
-
-      <Group aria-label="Link" className={cs.FormattingToolbar.group}>
-        <Button
-          aria-label="Link"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("insertLink")}
-        >
-          <PiLink />
-        </Button>
-      </Group>
-
-      <Separator
-        orientation="vertical"
-        className={cs.FormattingToolbar.separator}
-      />
-
       <Group aria-label="Headings" className={cs.FormattingToolbar.group}>
-        <Button
-          aria-label="Heading 1"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH1")}
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Heading 1"
+          isSelected={activeFormats.has("header")}
+          onChange={() => editorRef.current?.performAction("toggleH1")}
         >
           <PiTextHOne />
-        </Button>
-        <Button
-          aria-label="Heading 2"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH2")}
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Heading 2"
+          isSelected={activeFormats.has("header-2")}
+          onChange={() => editorRef.current?.performAction("toggleH2")}
         >
           <PiTextHTwo />
-        </Button>
-        <Button
-          aria-label="Heading 3"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH3")}
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Heading 3"
+          isSelected={activeFormats.has("header-3")}
+          onChange={() => editorRef.current?.performAction("toggleH3")}
         >
           <PiTextHThree />
-        </Button>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -96,27 +57,32 @@ export default function FormattingToolbar({ editorRef }: Props) {
       />
 
       <Group aria-label="Lists" className={cs.FormattingToolbar.group}>
-        <Button
-          aria-label="Bullet list"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleBulletList")}
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Bullet list"
+          isSelected={activeFormats.has("bullet-list")}
+          onChange={() => editorRef.current?.performAction("toggleBulletList")}
         >
           <PiListBullets />
-        </Button>
-        <Button
-          aria-label="Numbered list"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleNumberedList")}
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Numbered list"
+          isSelected={activeFormats.has("numbered-list")}
+          onChange={() =>
+            editorRef.current?.performAction("toggleNumberedList")
+          }
         >
           <PiListNumbers />
-        </Button>
-        <Button
-          aria-label="Task list"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleTaskList")}
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Task list"
+          isSelected={activeFormats.has("task-list")}
+          onChange={() => editorRef.current?.performAction("toggleTaskList")}
         >
           <PiListChecks />
-        </Button>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -125,13 +91,54 @@ export default function FormattingToolbar({ editorRef }: Props) {
       />
 
       <Group aria-label="Block" className={cs.FormattingToolbar.group}>
-        <Button
-          aria-label="Quote"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleQuote")}
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Quote"
+          isSelected={activeFormats.has("quote")}
+          onChange={() => editorRef.current?.performAction("toggleQuote")}
         >
           <PiQuotes />
-        </Button>
+        </IconToggleButton>
+      </Group>
+
+      <Separator
+        orientation="vertical"
+        className={cs.FormattingToolbar.separator}
+      />
+
+      <Group aria-label="Style" className={cs.FormattingToolbar.group}>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Bold"
+          isSelected={activeFormats.has("bold")}
+          onChange={() => editorRef.current?.performAction("toggleBold")}
+        >
+          <PiTextBBold />
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Italic"
+          isSelected={activeFormats.has("italic")}
+          onChange={() => editorRef.current?.performAction("toggleItalic")}
+        >
+          <PiTextItalic />
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Code"
+          isSelected={activeFormats.has("code")}
+          onChange={() => editorRef.current?.performAction("toggleCode")}
+        >
+          <PiCode />
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.toggleButton}
+          label="Link"
+          isSelected={activeFormats.has("link")}
+          onChange={() => editorRef.current?.performAction("insertLink")}
+        >
+          <PiLink />
+        </IconToggleButton>
       </Group>
     </Toolbar>
   );

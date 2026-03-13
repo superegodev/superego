@@ -7,6 +7,7 @@ import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownField.css.js";
 import type Props from "./Props.js";
 import theme from "./theme.js";
+import useActiveFormats from "./useActiveFormats.js";
 
 export default function EagerMarkdownField({
   value,
@@ -20,6 +21,7 @@ export default function EagerMarkdownField({
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
   const editorRef = useRef<OverTypeInstance | null>(null);
+  const activeFormats = useActiveFormats(editorRef);
   const containerRef = useRef<HTMLDivElement>(null);
   const rootElementRef = useRef<HTMLDivElement>(null);
 
@@ -96,7 +98,12 @@ export default function EagerMarkdownField({
         data-focus-visible={hasFocus && isFocusVisible}
         className={cs.MarkdownInput.root}
       >
-        {!isDisabled ? <FormattingToolbar editorRef={editorRef} /> : null}
+        {!isDisabled ? (
+          <FormattingToolbar
+            editorRef={editorRef}
+            activeFormats={activeFormats}
+          />
+        ) : null}
         <div ref={containerRef} />
       </div>
       {description ? <Description>{description}</Description> : null}

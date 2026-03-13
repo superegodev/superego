@@ -51,20 +51,7 @@ export const FormattingToolbar = {
     width: vars.borders.width.thin,
   }),
 
-  button: style({
+  toggleButton: style({
     fontSize: vars.typography.fontSizes.xl,
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    padding: vars.spacing._1,
-    borderRadius: vars.borders.radius.md,
-    color: vars.colors.text.primary,
-    display: "flex",
-    alignItems: "center",
-    selectors: {
-      "&:hover": {
-        background: vars.colors.background.surfaceHighlight,
-      },
-    },
   }),
 };
