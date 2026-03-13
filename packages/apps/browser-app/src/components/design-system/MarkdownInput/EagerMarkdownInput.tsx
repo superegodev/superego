@@ -6,6 +6,7 @@ import FormattingToolbar from "./FormattingToolbar.js";
 import * as cs from "./MarkdownInput.css.js";
 import type Props from "./Props.js";
 import theme from "./theme.js";
+import useActiveFormats from "./useActiveFormats.js";
 
 export default function EagerMarkdownInput({
   value,
@@ -22,6 +23,7 @@ export default function EagerMarkdownInput({
   const { isFocusVisible } = useFocusVisible();
   const [hasFocus, setHasFocus] = useState(false);
   const editorRef = useRef<OverTypeInstance | null>(null);
+  const activeFormats = useActiveFormats(editorRef);
   const containerRef = useRef<HTMLDivElement>(null);
   const rootElementRef = useRef<HTMLDivElement>(null);
 
@@ -43,6 +45,7 @@ export default function EagerMarkdownInput({
       theme,
       padding: "8px 16px 16px 16px",
       fontSize: "16px",
+      spellcheck: true,
       textareaProps: {
         id: id,
         readOnly: isReadOnly,
@@ -114,7 +117,10 @@ export default function EagerMarkdownInput({
       className={classnames(cs.MarkdownInput.root, className)}
     >
       {showToolbar && !isReadOnly ? (
-        <FormattingToolbar editorRef={editorRef} />
+        <FormattingToolbar
+          editorRef={editorRef}
+          activeFormats={activeFormats}
+        />
       ) : null}
       <div ref={containerRef} />
     </div>

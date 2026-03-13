@@ -71,7 +71,13 @@ export const FormattingToolbar = {
     active: [
       formattingMenuItemBase,
       {
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.button.primary.base.background,
+        color: vars.colors.button.primary.base.text,
+        selectors: {
+          "&:hover": {
+            background: `${vars.colors.background.inverseHighlight} !important`,
+          },
+        },
       },
     ],
   }),

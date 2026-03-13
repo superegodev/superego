@@ -1,0 +1,25 @@
+diff --git a/dist/overtype.d.ts b/dist/overtype.d.ts
+index d382a5850c303c982d4665c04858697fa3f8f92c..cbbc5d289f288990ed61b650f49b044ab8c14dc6 100644
+--- a/dist/overtype.d.ts
++++ b/dist/overtype.d.ts
+@@ -225,6 +225,8 @@ export type OverType = OverTypeInstance;
+ // Module exports - default export is the constructor
+ export default OverType;
+ 
++export function getActiveFormats(textarea: HTMLTextAreaElement): string[];
++
+ /**
+  * Pre-defined toolbar buttons
+  */
+diff --git a/dist/overtype.esm.js b/dist/overtype.esm.js
+index 54c547b685ed263229c29a7dbd980c5d01b54546..5a8d798d51590e5cc75f3ce26869a51cc95f18f2 100644
+--- a/dist/overtype.esm.js
++++ b/dist/overtype.esm.js
+@@ -5984,6 +5984,7 @@ export {
+   OverType,
+   overtype_default as default,
+   defaultToolbarButtons,
++  getActiveFormats2 as getActiveFormats,
+   toolbarButtons
+ };
+ /**

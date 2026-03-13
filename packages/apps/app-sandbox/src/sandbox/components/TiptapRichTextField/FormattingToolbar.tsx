@@ -11,7 +11,6 @@ import {
   MenuTrigger,
   Popover,
   Separator,
-  ToggleButton,
   Toolbar,
 } from "react-aria-components";
 import {
@@ -41,6 +40,7 @@ import {
   PiTextSuperscript,
   PiTextUnderline,
 } from "react-icons/pi";
+import IconToggleButton from "../IconToggleButton/IconToggleButton.js";
 import * as cs from "./TiptapRichTextField.css.js";
 
 function selector({ editor: e }: EditorStateSnapshot<Editor>) {
@@ -101,10 +101,6 @@ function selector({ editor: e }: EditorStateSnapshot<Editor>) {
   };
 }
 
-function toggleVariant(isSelected: boolean): "selected" | "default" {
-  return isSelected ? "selected" : "default";
-}
-
 function menuItemVariant(isActive: boolean): "active" | "default" {
   return isActive ? "active" : "default";
 }
@@ -143,19 +139,16 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
 
       <Group aria-label="Blocks" className={cs.FormattingToolbar.group}>
         <MenuTrigger>
-          <Button
-            aria-label="Headings"
-            className={
-              cs.FormattingToolbar.toggleButton[
-                toggleVariant(
-                  state.isHeading1 ||
-                    state.isHeading2 ||
-                    state.isHeading3 ||
-                    state.isHeading4 ||
-                    state.isHeading5 ||
-                    state.isHeading6,
-                )
-              ]
+          <IconToggleButton
+            className={cs.FormattingToolbar.iconToggleButton}
+            label="Open headings menu"
+            isSelected={
+              state.isHeading1 ||
+              state.isHeading2 ||
+              state.isHeading3 ||
+              state.isHeading4 ||
+              state.isHeading5 ||
+              state.isHeading6
             }
             isDisabled={
               !(
@@ -169,8 +162,11 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
             }
           >
             <PiTextH />
-          </Button>
-          <Popover data-tiptap-input-id={tiptapInputId}>
+          </IconToggleButton>
+          <Popover
+            className={cs.FormattingToolbar.popover}
+            data-tiptap-input-id={tiptapInputId}
+          >
             <Menu className={cs.FormattingToolbar.menu}>
               <MenuItem
                 onAction={() =>
@@ -248,19 +244,26 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
           </Popover>
         </MenuTrigger>
         <MenuTrigger>
-          <Button
-            aria-label="Lists"
-            className={
-              cs.FormattingToolbar.toggleButton[
-                toggleVariant(
-                  state.isBulletList || state.isOrderedList || state.isTaskList,
-                )
-              ]
+          <IconToggleButton
+            className={cs.FormattingToolbar.iconToggleButton}
+            label="Open list menu"
+            isSelected={
+              state.isBulletList || state.isOrderedList || state.isTaskList
+            }
+            isDisabled={
+              !(
+                state.canBulletList ||
+                state.canOrderedList ||
+                state.canTaskList
+              )
             }
           >
             <PiListBullets />
-          </Button>
-          <Popover data-tiptap-input-id={tiptapInputId}>
+          </IconToggleButton>
+          <Popover
+            className={cs.FormattingToolbar.popover}
+            data-tiptap-input-id={tiptapInputId}
+          >
             <Menu className={cs.FormattingToolbar.menu}>
               <MenuItem
                 onAction={() => editor.chain().focus().toggleBulletList().run()}
@@ -297,28 +300,24 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
             </Menu>
           </Popover>
         </MenuTrigger>
-        <ToggleButton
-          aria-label="Quote"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isBlockquote)]
-          }
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Quote"
           isSelected={state.isBlockquote}
           isDisabled={!state.canBlockquote}
           onChange={() => editor.chain().focus().toggleBlockquote().run()}
         >
           <PiQuotes />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Code block"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isCodeBlock)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Code block"
           isSelected={state.isCodeBlock}
           isDisabled={!state.canCodeBlock}
           onChange={() => editor.chain().focus().toggleCodeBlock().run()}
         >
           <PiCodeBlock />
-        </ToggleButton>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -327,85 +326,69 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
       />
 
       <Group aria-label="Style" className={cs.FormattingToolbar.group}>
-        <ToggleButton
-          aria-label="Bold"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isBold)]
-          }
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Bold"
           isSelected={state.isBold}
           isDisabled={!state.canBold}
           onChange={() => editor.chain().focus().toggleBold().run()}
         >
           <PiTextBBold />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Italic"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isItalic)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Italic"
           isSelected={state.isItalic}
           isDisabled={!state.canItalic}
           onChange={() => editor.chain().focus().toggleItalic().run()}
         >
           <PiTextItalic />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Strike"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isStrike)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Strike"
           isSelected={state.isStrike}
           isDisabled={!state.canStrike}
           onChange={() => editor.chain().focus().toggleStrike().run()}
         >
           <PiTextStrikethrough />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Underline"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isUnderline)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Underline"
           isSelected={state.isUnderline}
           isDisabled={!state.canUnderline}
           onChange={() => editor.chain().focus().toggleUnderline().run()}
         >
           <PiTextUnderline />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Code"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isCode)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Code"
           isSelected={state.isCode}
           isDisabled={!state.canCode}
           onChange={() => editor.chain().focus().toggleCode().run()}
         >
           <PiCode />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Superscript"
-          className={
-            cs.FormattingToolbar.toggleButton[
-              toggleVariant(state.isSuperscript)
-            ]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Superscript"
           isSelected={state.isSuperscript}
           isDisabled={!state.canSuperscript}
           onChange={() => editor.chain().focus().toggleSuperscript().run()}
         >
           <PiTextSuperscript />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Subscript"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isSubscript)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Subscript"
           isSelected={state.isSubscript}
           isDisabled={!state.canSubscript}
           onChange={() => editor.chain().focus().toggleSubscript().run()}
         >
           <PiTextSubscript />
-        </ToggleButton>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -414,24 +397,18 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
       />
 
       <Group aria-label="Alignment" className={cs.FormattingToolbar.group}>
-        <ToggleButton
-          aria-label="Align left"
-          className={
-            cs.FormattingToolbar.toggleButton[
-              toggleVariant(state.isAlignedLeft)
-            ]
-          }
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Align left"
           isSelected={state.isAlignedLeft}
           isDisabled={!state.canAlignLeft}
           onChange={() => editor.chain().focus().toggleTextAlign("left").run()}
         >
           <PiTextAlignLeft />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Center"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isCentered)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Center"
           isSelected={state.isCentered}
           isDisabled={!state.canCenter}
           onChange={() =>
@@ -439,25 +416,19 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
           }
         >
           <PiTextAlignCenter />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Align right"
-          className={
-            cs.FormattingToolbar.toggleButton[
-              toggleVariant(state.isAlignedRight)
-            ]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Align right"
           isSelected={state.isAlignedRight}
           isDisabled={!state.canAlignRight}
           onChange={() => editor.chain().focus().toggleTextAlign("right").run()}
         >
           <PiTextAlignRight />
-        </ToggleButton>
-        <ToggleButton
-          aria-label="Justify"
-          className={
-            cs.FormattingToolbar.toggleButton[toggleVariant(state.isJustified)]
-          }
+        </IconToggleButton>
+        <IconToggleButton
+          className={cs.FormattingToolbar.iconToggleButton}
+          label="Justify"
           isSelected={state.isJustified}
           isDisabled={!state.canJustify}
           onChange={() =>
@@ -465,7 +436,7 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
           }
         >
           <PiTextAlignJustify />
-        </ToggleButton>
+        </IconToggleButton>
       </Group>
     </Toolbar>
   );

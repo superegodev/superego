@@ -15,13 +15,14 @@ import {
   PiTextItalic,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import IconButton from "../IconButton/IconButton.js";
+import IconToggleButton from "../IconToggleButton/IconToggleButton.js";
 import * as cs from "./MarkdownInput.css.js";
 
 interface Props {
   editorRef: RefObject<OverTypeInstance | null>;
+  activeFormats: Set<string>;
 }
-export default function FormattingToolbar({ editorRef }: Props) {
+export default function FormattingToolbar({ editorRef, activeFormats }: Props) {
   const intl = useIntl();
   return (
     <Toolbar
@@ -29,87 +30,33 @@ export default function FormattingToolbar({ editorRef }: Props) {
       className={cs.FormattingToolbar.root}
     >
       <Group
-        aria-label={intl.formatMessage({ defaultMessage: "Style" })}
-        className={cs.FormattingToolbar.group}
-      >
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Bold" })}
-          variant="invisible"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleBold")}
-        >
-          <PiTextBBold />
-        </IconButton>
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Italic" })}
-          variant="invisible"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleItalic")}
-        >
-          <PiTextItalic />
-        </IconButton>
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Code" })}
-          variant="invisible"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleCode")}
-        >
-          <PiCode />
-        </IconButton>
-      </Group>
-
-      <Separator
-        orientation="vertical"
-        className={cs.FormattingToolbar.separator}
-      />
-
-      <Group
-        aria-label={intl.formatMessage({ defaultMessage: "Link" })}
-        className={cs.FormattingToolbar.group}
-      >
-        <IconButton
-          label={intl.formatMessage({ defaultMessage: "Link" })}
-          variant="invisible"
-          className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("insertLink")}
-        >
-          <PiLink />
-        </IconButton>
-      </Group>
-
-      <Separator
-        orientation="vertical"
-        className={cs.FormattingToolbar.separator}
-      />
-
-      <Group
         aria-label={intl.formatMessage({ defaultMessage: "Headings" })}
         className={cs.FormattingToolbar.group}
       >
-        <IconButton
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Heading 1" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH1")}
+          isSelected={activeFormats.has("header")}
+          onChange={() => editorRef.current?.performAction("toggleH1")}
         >
           <PiTextHOne />
-        </IconButton>
-        <IconButton
+        </IconToggleButton>
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Heading 2" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH2")}
+          isSelected={activeFormats.has("header-2")}
+          onChange={() => editorRef.current?.performAction("toggleH2")}
         >
           <PiTextHTwo />
-        </IconButton>
-        <IconButton
+        </IconToggleButton>
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Heading 3" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleH3")}
+          isSelected={activeFormats.has("header-3")}
+          onChange={() => editorRef.current?.performAction("toggleH3")}
         >
           <PiTextHThree />
-        </IconButton>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -121,30 +68,32 @@ export default function FormattingToolbar({ editorRef }: Props) {
         aria-label={intl.formatMessage({ defaultMessage: "Lists" })}
         className={cs.FormattingToolbar.group}
       >
-        <IconButton
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Bullet list" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleBulletList")}
+          isSelected={activeFormats.has("bullet-list")}
+          onChange={() => editorRef.current?.performAction("toggleBulletList")}
         >
           <PiListBullets />
-        </IconButton>
-        <IconButton
+        </IconToggleButton>
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Numbered list" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleNumberedList")}
+          isSelected={activeFormats.has("numbered-list")}
+          onChange={() =>
+            editorRef.current?.performAction("toggleNumberedList")
+          }
         >
           <PiListNumbers />
-        </IconButton>
-        <IconButton
+        </IconToggleButton>
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Task list" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleTaskList")}
+          isSelected={activeFormats.has("task-list")}
+          onChange={() => editorRef.current?.performAction("toggleTaskList")}
         >
           <PiListChecks />
-        </IconButton>
+        </IconToggleButton>
       </Group>
 
       <Separator
@@ -156,14 +105,57 @@ export default function FormattingToolbar({ editorRef }: Props) {
         aria-label={intl.formatMessage({ defaultMessage: "Block" })}
         className={cs.FormattingToolbar.group}
       >
-        <IconButton
+        <IconToggleButton
           label={intl.formatMessage({ defaultMessage: "Quote" })}
-          variant="invisible"
           className={cs.FormattingToolbar.button}
-          onPress={() => editorRef.current?.performAction("toggleQuote")}
+          isSelected={activeFormats.has("quote")}
+          onChange={() => editorRef.current?.performAction("toggleQuote")}
         >
           <PiQuotes />
-        </IconButton>
+        </IconToggleButton>
+      </Group>
+
+      <Separator
+        orientation="vertical"
+        className={cs.FormattingToolbar.separator}
+      />
+
+      <Group
+        aria-label={intl.formatMessage({ defaultMessage: "Style" })}
+        className={cs.FormattingToolbar.group}
+      >
+        <IconToggleButton
+          label={intl.formatMessage({ defaultMessage: "Bold" })}
+          className={cs.FormattingToolbar.button}
+          isSelected={activeFormats.has("bold")}
+          onChange={() => editorRef.current?.performAction("toggleBold")}
+        >
+          <PiTextBBold />
+        </IconToggleButton>
+        <IconToggleButton
+          label={intl.formatMessage({ defaultMessage: "Italic" })}
+          className={cs.FormattingToolbar.button}
+          isSelected={activeFormats.has("italic")}
+          onChange={() => editorRef.current?.performAction("toggleItalic")}
+        >
+          <PiTextItalic />
+        </IconToggleButton>
+        <IconToggleButton
+          label={intl.formatMessage({ defaultMessage: "Code" })}
+          className={cs.FormattingToolbar.button}
+          isSelected={activeFormats.has("code")}
+          onChange={() => editorRef.current?.performAction("toggleCode")}
+        >
+          <PiCode />
+        </IconToggleButton>
+        <IconToggleButton
+          label={intl.formatMessage({ defaultMessage: "Link" })}
+          className={cs.FormattingToolbar.button}
+          isSelected={activeFormats.has("link")}
+          onChange={() => editorRef.current?.performAction("insertLink")}
+        >
+          <PiLink />
+        </IconToggleButton>
       </Group>
     </Toolbar>
   );

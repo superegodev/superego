@@ -64,7 +64,21 @@ const formattingMenuItemBase = style({
   display: "flex",
   alignItems: "center",
   gap: vars.spacing._2,
-  cursor: "pointer",
+  padding: vars.spacing._2,
+  cursor: "default",
+  borderRadius: vars.borders.radius.md,
+  color: vars.colors.text.primary,
+  fontSize: vars.typography.fontSizes.md,
+  textDecoration: "none",
+  selectors: {
+    '&:hover:not([data-disabled="true"])': {
+      background: vars.colors.background.surfaceHighlight,
+    },
+    '&[data-disabled="true"]': {
+      color: vars.colors.text.secondary,
+      cursor: "not-allowed",
+    },
+  },
 });
 
 export const FormattingToolbar = {
@@ -98,29 +112,39 @@ export const FormattingToolbar = {
     active: [
       formattingMenuItemBase,
       {
-        border: `${vars.borders.width.thin} solid ${vars.colors.border.strong}`,
+        background: vars.colors.button.primary.base.background,
+        color: vars.colors.button.primary.base.text,
+        selectors: {
+          "&:hover": {
+            background: `${vars.colors.background.inverseHighlight} !important`,
+          },
+        },
       },
     ],
   }),
 
   button: formattingToolbarButtonBase,
 
-  toggleButton: styleVariants({
-    default: [formattingToolbarButtonBase],
-    selected: [
-      formattingToolbarButtonBase,
-      {
-        background: vars.colors.background.surfaceHighlight,
-      },
-    ],
+  iconToggleButton: style({
+    fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  popover: style({
+    padding: vars.spacing._1,
+    background: vars.colors.background.surface,
+    borderColor: vars.colors.border.default,
+    borderWidth: vars.borders.width.thin,
+    borderStyle: "solid",
+    borderRadius: vars.borders.radius.md,
+    boxShadow: `0 ${vars.spacing._2} ${vars.spacing._4} rgb(from ${vars.colors.shadow.default} r g b / 0.25)`,
   }),
 
   menu: style({
-    padding: vars.spacing._2,
-    background: vars.colors.background.surface,
-    border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
-    borderRadius: vars.borders.radius.md,
-    boxShadow: `0 4px 12px rgb(from ${vars.colors.text.primary} r g b / 0.15)`,
+    flexGrow: "1",
+    overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._1,
   }),
 };
 

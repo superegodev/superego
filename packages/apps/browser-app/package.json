@@ -91,7 +91,7 @@
     "maplibre-gl": "^5.20.0",
     "markdown-to-jsx": "9.7.9",
     "monaco-editor": "0.55.1",
-    "overtype": "^2.3.4",
+    "overtype": "patch:overtype@npm%3A2.3.4#~/.yarn/patches/overtype-npm-2.3.4-4e2a6a910a.patch",
     "p-map": "^7.0.4",
     "p-timeout": "^7.0.1",
     "react": "^19.2.4",

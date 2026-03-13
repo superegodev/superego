@@ -54,9 +54,9 @@ export const ToggleButton = {
         borderStyle: "solid",
         selectors: {
           "&:hover": {
-            background: baseColorVar,
+            background: `rgb(from ${baseColorVar} r g b / 0.8)`,
             color: vars.colors.button.primary.base.text,
-            borderColor: baseColorVar,
+            borderColor: `rgb(from ${baseColorVar} r g b / 0.8)`,
           },
           "&[disabled]": {
             background: vars.colors.button.primary.disabled.background,

@@ -37,7 +37,7 @@ a test.
 
 - `yarn install`
 - `yarn test`: runs tests for **all** packages
-- `yarn fix-formatting`
+- `yarn fix-formatting`: run this after you're done making some changes
 - `yarn fix-linting`
 - `yarn check-linting`
 - `yarn check-types`: checks that **all packages** compile correctly

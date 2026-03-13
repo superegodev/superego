@@ -308,9 +308,9 @@ export const [light, vars] = createTheme({
           border: colors.greys._10,
         },
         hover: {
-          background: colors.greys._12,
+          background: colors.greys._8,
           text: colors.greys._2,
-          border: colors.greys._12,
+          border: colors.greys._8,
         },
         disabled: {
           background: colors.greys._8,
@@ -459,9 +459,9 @@ export const dark = createTheme(vars, {
           border: colors.greys._2,
         },
         hover: {
-          background: colors.greys._0,
+          background: colors.greys._3,
           text: colors.greys._10,
-          border: colors.greys._0,
+          border: colors.greys._3,
         },
         disabled: {
           background: colors.greys._4,
