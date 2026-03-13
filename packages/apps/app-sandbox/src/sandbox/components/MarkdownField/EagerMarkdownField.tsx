@@ -41,6 +41,7 @@ export default function EagerMarkdownField({
       theme,
       padding: "8px 16px 16px 16px",
       fontSize: "16px",
+      spellcheck: true,
       textareaProps: {
         readOnly: isDisabled,
         ...(ariaLabel ? { "aria-label": ariaLabel } : {}),
