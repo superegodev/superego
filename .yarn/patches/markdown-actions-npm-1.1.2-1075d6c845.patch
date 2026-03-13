@@ -1,0 +1,19 @@
+diff --git a/dist/markdown-actions.d.ts b/dist/markdown-actions.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..5b5121e724b6f6b5b1e46324b660b0d19c0702f8
+--- /dev/null
++++ b/dist/markdown-actions.d.ts
+@@ -0,0 +1 @@
++export function getActiveFormats(textarea: HTMLTextAreaElement): string[];
+diff --git a/package.json b/package.json
+index 7caf9789d60c5188774d54506962aaeaa12cdb4f..eef1255826bda2dae6abc419cfb018cf898e16a3 100644
+--- a/package.json
++++ b/package.json
+@@ -3,6 +3,7 @@
+   "version": "1.1.2",
+   "description": "A lightweight, zero-dependency JavaScript library for adding markdown formatting functionality to any textarea element",
+   "main": "dist/markdown-actions.js",
++  "types": "dist/markdown-actions.d.ts",
+   "module": "dist/markdown-actions.esm.js",
+   "type": "module",
+   "scripts": {

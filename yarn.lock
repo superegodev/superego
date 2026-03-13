@@ -7971,7 +7971,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     luxon: "npm:^3.7.2"
     maplibre-gl: "npm:^5.20.0"
-    markdown-actions: "npm:^1.1.2"
+    markdown-actions: "patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch"
     overtype: "npm:^2.3.4"
     playwright: "npm:^1.58.2"
     react: "npm:^19.2.4"
@@ -8126,7 +8126,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     luxon: "npm:^3.7.2"
     maplibre-gl: "npm:^5.20.0"
-    markdown-actions: "npm:^1.1.2"
+    markdown-actions: "patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch"
     markdown-to-jsx: "npm:9.7.9"
     monaco-editor: "npm:0.55.1"
     overtype: "npm:^2.3.4"
@@ -15881,10 +15881,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-actions@npm:^1.1.2":
+"markdown-actions@npm:1.1.2":
   version: 1.1.2
   resolution: "markdown-actions@npm:1.1.2"
   checksum: 10c0/67f9853c5fa748f34836f84be965a667fad13b96ebbc8cacb35fce873c669e3b473b1cb3da7694331fdf05e18ce6ef8b46426df4d6a25801df881cb3faf92ea6
+  languageName: node
+  linkType: hard
+
+"markdown-actions@patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch":
+  version: 1.1.2
+  resolution: "markdown-actions@patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch::version=1.1.2&hash=35b514"
+  checksum: 10c0/4ab29c08d1266f3c5aee2cf044c4b0ec90b37560a01c189eb9fc9ff17fb5cdbca1fe050a3c4408821af166773c4932b1a782f15b46f71a3f2269b3f3e74b052a
   languageName: node
   linkType: hard
 
