@@ -250,6 +250,13 @@ export default function FormattingToolbar({ editor, tiptapInputId }: Props) {
             isSelected={
               state.isBulletList || state.isOrderedList || state.isTaskList
             }
+            isDisabled={
+              !(
+                state.canBulletList ||
+                state.canOrderedList ||
+                state.canTaskList
+              )
+            }
           >
             <PiListBullets />
           </IconToggleButton>

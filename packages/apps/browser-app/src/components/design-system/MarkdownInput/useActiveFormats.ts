@@ -6,9 +6,16 @@ export default function useActiveFormats(
   editorRef: RefObject<OverTypeInstance | null>,
 ): Set<string> {
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
+  const [textarea, setTextarea] = useState<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    const textarea = editorRef.current?.textarea;
+    const current = editorRef.current?.textarea ?? null;
+    if (current !== textarea) {
+      setTextarea(current);
+    }
+  });
+
+  useEffect(() => {
     if (!textarea) {
       return;
     }
@@ -24,7 +31,7 @@ export default function useActiveFormats(
       textarea.removeEventListener("selectionchange", update);
       textarea.removeEventListener("input", update);
     };
-  });
+  }, [textarea]);
 
   return activeFormats;
 }
