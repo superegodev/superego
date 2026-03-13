@@ -7971,8 +7971,7 @@ __metadata:
     lowlight: "npm:^3.3.0"
     luxon: "npm:^3.7.2"
     maplibre-gl: "npm:^5.20.0"
-    markdown-actions: "patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch"
-    overtype: "npm:^2.3.4"
+    overtype: "patch:overtype@npm%3A2.3.4#~/.yarn/patches/overtype-npm-2.3.4-4e2a6a910a.patch"
     playwright: "npm:^1.58.2"
     react: "npm:^19.2.4"
     react-aria: "npm:^3.47.0"
@@ -8126,10 +8125,9 @@ __metadata:
     lowlight: "npm:^3.3.0"
     luxon: "npm:^3.7.2"
     maplibre-gl: "npm:^5.20.0"
-    markdown-actions: "patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch"
     markdown-to-jsx: "npm:9.7.9"
     monaco-editor: "npm:0.55.1"
-    overtype: "npm:^2.3.4"
+    overtype: "patch:overtype@npm%3A2.3.4#~/.yarn/patches/overtype-npm-2.3.4-4e2a6a910a.patch"
     p-map: "npm:^7.0.4"
     p-timeout: "npm:^7.0.1"
     playwright: "npm:^1.58.2"
@@ -15881,17 +15879,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-actions@npm:1.1.2":
+"markdown-actions@npm:^1.1.2":
   version: 1.1.2
   resolution: "markdown-actions@npm:1.1.2"
   checksum: 10c0/67f9853c5fa748f34836f84be965a667fad13b96ebbc8cacb35fce873c669e3b473b1cb3da7694331fdf05e18ce6ef8b46426df4d6a25801df881cb3faf92ea6
-  languageName: node
-  linkType: hard
-
-"markdown-actions@patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch":
-  version: 1.1.2
-  resolution: "markdown-actions@patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch::version=1.1.2&hash=35b514"
-  checksum: 10c0/4ab29c08d1266f3c5aee2cf044c4b0ec90b37560a01c189eb9fc9ff17fb5cdbca1fe050a3c4408821af166773c4932b1a782f15b46f71a3f2269b3f3e74b052a
   languageName: node
   linkType: hard
 
@@ -17421,13 +17412,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"overtype@npm:^2.3.4":
+"overtype@npm:2.3.4":
   version: 2.3.4
   resolution: "overtype@npm:2.3.4"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     markdown-actions: "npm:^1.1.2"
   checksum: 10c0/338aa79678ba0397371ca15bebe8c96ab1138a2344d8f88007c8a811113126b78a889444fa1747f3b354c0ed732debc6637b87d8c83187a0709876d1fbabdd9e
+  languageName: node
+  linkType: hard
+
+"overtype@patch:overtype@npm%3A2.3.4#~/.yarn/patches/overtype-npm-2.3.4-4e2a6a910a.patch":
+  version: 2.3.4
+  resolution: "overtype@patch:overtype@npm%3A2.3.4#~/.yarn/patches/overtype-npm-2.3.4-4e2a6a910a.patch::version=2.3.4&hash=ca78b0"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.7.4"
+    markdown-actions: "npm:^1.1.2"
+  checksum: 10c0/18dc0260c27dd893581577a8fb056ed388f7e8af4fbe15f7b44e2796a4b7fb67075d8e0e507086005730ebdf247655409b361bf3ca3cf7b91060ec02370ef0dd
   languageName: node
   linkType: hard
 

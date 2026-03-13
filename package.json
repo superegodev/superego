@@ -37,8 +37,7 @@
   },
   "resolutions": {
     "browserslist": "4.28.1",
-    "baseline-browser-mapping": "2.9.19",
-    "markdown-actions@npm:^1.1.2": "patch:markdown-actions@npm%3A1.1.2#~/.yarn/patches/markdown-actions-npm-1.1.2-1075d6c845.patch"
+    "baseline-browser-mapping": "2.9.19"
   },
   "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7"
 }

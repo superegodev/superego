@@ -1,5 +1,4 @@
-import { getActiveFormats } from "markdown-actions";
-import type { OverTypeInstance } from "overtype";
+import { getActiveFormats, type OverTypeInstance } from "overtype";
 import { type RefObject, useEffect, useState } from "react";
 
 export default function useActiveFormats(
