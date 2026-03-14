@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   qa:
-    runs-on: warp-macos-26-arm64-6x
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -91,10 +91,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: warp-macos-26-arm64-6x
+          - os: macos-latest
             arch: x64
             artifact-path: packages/apps/electron-app/out/make/zip/darwin/x64/*.zip
-          - os: warp-macos-26-arm64-6x
+          - os: macos-latest
             arch: arm64
             artifact-path: packages/apps/electron-app/out/make/zip/darwin/arm64/*.zip
           - os: ubuntu-latest
