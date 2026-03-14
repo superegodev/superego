@@ -91,7 +91,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-15-intel
+          - os: macos-latest
             arch: x64
             artifact-path: packages/apps/electron-app/out/make/zip/darwin/x64/*.zip
           - os: macos-latest
@@ -135,7 +135,7 @@ jobs:
       - name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=6144
-        run: yarn build-electron
+        run: yarn build-electron --arch=${{ matrix.arch }}
       - name: Get OS friendly name
         id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT

@@ -82,9 +82,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-15-intel
+          - os: warp-macos-26-arm64-6x
             arch: x64
-          - os: macos-latest
+          - os: warp-macos-26-arm64-6x
             arch: arm64
           - os: ubuntu-latest
             arch: x64
@@ -110,7 +110,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Setup macOS for signing and notarizing
-        if: startsWith(matrix.os, 'macos')
+        if: contains(matrix.os, 'macos')
         env:
           MACOS_CERTIFICATE_P12_BASE64: ${{ secrets.MACOS_CERTIFICATE_P12_BASE64 }}
           MACOS_CERTIFICATE_P12_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_P12_PASSWORD }}
@@ -137,9 +137,9 @@ jobs:
       - name: Build electron app
         env:
           NODE_OPTIONS: --max-old-space-size=6144
-        run: yarn build-electron
+        run: yarn build-electron --arch=${{ matrix.arch }}
       - name: Notarize macOS app
-        if: startsWith(matrix.os, 'macos')
+        if: contains(matrix.os, 'macos')
         env:
           APPLE_API_KEY: ${{ runner.temp }}/AppleApiKey.p8
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
@@ -178,7 +178,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn deploy-electron
       - name: Clean up sensitive info
-        if: always() && startsWith(matrix.os, 'macos')
+        if: always() && contains(matrix.os, 'macos')
         env:
           MACOS_TEMP_KEYCHAIN_PATH: ${{ runner.temp }}/MacosKeychain.keychain-db
           MACOS_CERTIFICATE_P12_PATH: ${{ runner.temp }}/MacosCertificate.p12
