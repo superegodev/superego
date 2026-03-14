@@ -9,7 +9,7 @@ on:
 
 jobs:
   qa:
-    runs-on: macos-latest
+    runs-on: warp-macos-26-arm64-6x
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
