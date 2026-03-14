@@ -1,5 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { App, Collection } from "@superego/backend";
+import type { App, CollectionId } from "@superego/backend";
+import { valibotSchemas } from "@superego/shared-utils";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -11,22 +12,23 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
+import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";
 
 interface FormValues {
-  files: RHFAppVersionFiles;
+  appVersion: {
+    targetCollectionIds: CollectionId[];
+    files: RHFAppVersionFiles;
+  };
 }
 
 interface Props {
   app: App;
-  targetCollections: Collection[];
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
 }
 export default function CreateNewAppVersionForm({
   app,
-  targetCollections,
   formId,
   setSubmitDisabled,
 }: Props) {
@@ -36,30 +38,46 @@ export default function CreateNewAppVersionForm({
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
-      files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
-        app.latestVersion.files,
-      ),
+      appVersion: {
+        targetCollectionIds: app.latestVersion.targetCollections.map(
+          ({ id }) => id,
+        ),
+        files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+          app.latestVersion.files,
+        ),
+      },
     },
     mode: "onSubmit",
     resolver: standardSchemaResolver(
       v.strictObject({
-        files: forms.schemas.rhfAppVersionFiles(intl),
+        appVersion: v.strictObject({
+          targetCollectionIds: v.pipe(
+            v.array(valibotSchemas.id.collection()),
+            v.minLength(1),
+          ),
+          files: forms.schemas.rhfAppVersionFiles(intl),
+        }),
       }),
     ),
   });
 
-  const onSubmit = async ({ files }: FormValues) => {
+  const onSubmit = async ({ appVersion }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
-      app.latestVersion.targetCollections.map(({ id }) => id),
-      RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
+      appVersion.targetCollectionIds,
+      RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     );
     if (success) {
       reset(
         {
-          files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
-            data.latestVersion.files,
-          ),
+          appVersion: {
+            targetCollectionIds: data.latestVersion.targetCollections.map(
+              ({ id }) => id,
+            ),
+            files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+              data.latestVersion.files,
+            ),
+          },
         },
         { keepValues: true },
       );
@@ -86,12 +104,7 @@ export default function CreateNewAppVersionForm({
         setSubmitDisabled={setSubmitDisabled}
         triggerExitWarningWhenDirty={true}
       />
-      <RHFAppVersionFilesField
-        control={control}
-        name="files"
-        app={app}
-        targetCollections={targetCollections}
-      />
+      <RHFAppVersionField control={control} name="appVersion" app={app} />
     </Form>
   );
 }

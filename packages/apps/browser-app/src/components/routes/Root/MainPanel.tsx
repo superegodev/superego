@@ -54,7 +54,7 @@ export default function MainPanel() {
         />
       );
     case RouteName.CreateApp:
-      return <CreateApp collectionIds={activeRoute.collectionIds} />;
+      return <CreateApp initialCollectionIds={activeRoute.initialCollectionIds} />;
     case RouteName.EditApp:
       return <EditApp appId={activeRoute.appId} />;
     case RouteName.Boutique:

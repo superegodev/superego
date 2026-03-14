@@ -638,10 +638,10 @@
   "EagerGeoJSONMap.tsx_FUqf3/": {
     "defaultMessage": "An error occurred rendering the map."
   },
-  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+  "EagerRHFAppVersionField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
-  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+  "EagerRHFAppVersionField.tsx_Yhz0gl": {
     "defaultMessage": "An error occurred generating the app"
   },
   "EagerTiptapInput.tsx_0he+1r": {
@@ -668,8 +668,14 @@
   "EditingToolbar.tsx_EwYOYc": {
     "defaultMessage": "View code"
   },
+  "EditingToolbar.tsx_FXmJvH": {
+    "defaultMessage": "Select collections"
+  },
   "EditingToolbar.tsx_JkS37H": {
     "defaultMessage": "Undo"
+  },
+  "EditingToolbar.tsx_ou7tYh": {
+    "defaultMessage": "Target collections"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Select emoji"

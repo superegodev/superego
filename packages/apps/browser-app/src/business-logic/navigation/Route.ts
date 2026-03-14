@@ -92,7 +92,7 @@ type Route =
     }
   | {
       name: RouteName.CreateApp;
-      collectionIds: CollectionId[];
+      initialCollectionIds: CollectionId[];
     }
   | {
       name: RouteName.EditApp;

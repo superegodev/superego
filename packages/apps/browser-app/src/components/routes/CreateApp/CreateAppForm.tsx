@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { AppType, type Collection } from "@superego/backend";
+import { AppType, type Collection, type CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
 import { useId } from "react";
 import { Form } from "react-aria-components";
@@ -17,22 +17,25 @@ import {
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
+import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
 import SetNameAndSaveModal from "./SetNameAndSaveModal.js";
 
 interface FormValues {
   name: string;
-  files: RHFAppVersionFiles;
+  appVersion: {
+    targetCollectionIds: CollectionId[];
+    files: RHFAppVersionFiles;
+  };
 }
 
 interface Props {
-  targetCollections: Collection[];
+  initialTargetCollections: Collection[];
   isSetNameAndSaveModalOpen: boolean;
   onSetNameAndSaveModalClose: () => void;
 }
 export default function CreateAppForm({
-  targetCollections,
+  initialTargetCollections,
   isSetNameAndSaveModalOpen,
   onSetNameAndSaveModalClose,
 }: Props) {
@@ -44,23 +47,32 @@ export default function CreateAppForm({
   const formId = useId();
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      files: forms.defaults.collectionViewAppFiles(targetCollections),
+      appVersion: {
+        targetCollectionIds: initialTargetCollections.map(({ id }) => id),
+        files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
+      },
     },
     mode: "onSubmit",
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.appName(),
-        files: forms.schemas.rhfAppVersionFiles(intl),
+        appVersion: v.strictObject({
+          targetCollectionIds: v.pipe(
+            v.array(valibotSchemas.id.collection()),
+            v.minLength(1),
+          ),
+          files: forms.schemas.rhfAppVersionFiles(intl),
+        }),
       }),
     ),
   });
 
-  const onSubmit = async ({ name, files }: FormValues) => {
+  const onSubmit = async ({ name, appVersion }: FormValues) => {
     const { success, data } = await mutate({
       type: AppType.CollectionView,
       name,
-      targetCollectionIds: targetCollections.map(({ id }) => id),
-      files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
+      targetCollectionIds: appVersion.targetCollectionIds,
+      files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     });
     if (success) {
       const firstTargetedCollectionId =
@@ -86,12 +98,7 @@ export default function CreateAppForm({
       className={cs.CreateAppForm.root}
     >
       <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
-      <RHFAppVersionFilesField
-        control={control}
-        name="files"
-        app={null}
-        targetCollections={targetCollections}
-      />
+      <RHFAppVersionField control={control} name="appVersion" app={null} />
       <SetNameAndSaveModal
         control={control}
         formId={formId}

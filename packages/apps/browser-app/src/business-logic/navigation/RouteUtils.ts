@@ -55,7 +55,7 @@ export function toHref(route: Route): string {
     }
     case RouteName.CreateApp: {
       const search = new URLSearchParams(
-        route.collectionIds.map((id) => ["collectionId", id]),
+        route.initialCollectionIds.map((id) => ["collectionId", id]),
       );
       return `/apps/new?${search}`;
     }
@@ -265,7 +265,7 @@ const routeMatchers: RouteMatcher[] = [
     pattern: new URLPattern({ pathname: "/apps/new{/}?" }),
     toRoute: (match) => ({
       name: RouteName.CreateApp,
-      collectionIds: new URLSearchParams(match.search.input).getAll(
+      initialCollectionIds: new URLSearchParams(match.search.input).getAll(
         "collectionId",
       ) as CollectionId[],
     }),

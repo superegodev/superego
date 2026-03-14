@@ -22,17 +22,19 @@ export default function SelectButton({ onClear, placeholder }: Props) {
                 {placeholder ?? defaultChildren}
               </span>
             ) : selectedItems && selectedItems.length > 1 ? (
-              intersperse(
-                selectedItems.map((item) => item?.label),
-                ", ",
-              )
+              <span className={cs.SelectButton.selectValueText}>
+                {intersperse(
+                  selectedItems.map((item) => item?.label),
+                  ", ",
+                )}
+              </span>
             ) : (
               defaultChildren
             )
           }
         </SelectValue>
         <div className={cs.SelectButton.clearButtonStub} />
-        <PiCaretDown aria-hidden="true" />
+        <PiCaretDown aria-hidden="true" className={cs.SelectButton.caret} />
       </Button>
       {onClear ? (
         <IconButton

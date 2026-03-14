@@ -9,18 +9,18 @@ import * as cs from "./CreateApp.css.js";
 import CreateAppForm from "./CreateAppForm.js";
 
 interface Props {
-  collectionIds: CollectionId[];
+  initialCollectionIds: CollectionId[];
 }
-export default function CreateApp({ collectionIds }: Props) {
+export default function CreateApp({ initialCollectionIds }: Props) {
   const intl = useIntl();
 
   const [isSetNameAndSaveModalOpen, setIsSetNameAndSaveModalOpen] =
     useState(false);
 
   const { collections } = useGlobalData();
-  const targetCollection = useMemo(
-    () => CollectionUtils.findAllCollections(collections, collectionIds),
-    [collections, collectionIds],
+  const initialTargetCollections = useMemo(
+    () => CollectionUtils.findAllCollections(collections, initialCollectionIds),
+    [collections, initialCollectionIds],
   );
   return (
     <Shell.Panel slot="Main">
@@ -39,7 +39,7 @@ export default function CreateApp({ collectionIds }: Props) {
         className={cs.CreateApp.panelContent}
       >
         <CreateAppForm
-          targetCollections={targetCollection}
+          initialTargetCollections={initialTargetCollections}
           isSetNameAndSaveModalOpen={isSetNameAndSaveModalOpen}
           onSetNameAndSaveModalClose={() => setIsSetNameAndSaveModalOpen(false)}
         />

@@ -1,15 +1,18 @@
 import type {
+  CollectionId,
   InferenceOptions,
   Message,
   MessageContentPart,
   NonEmptyArray,
   TypescriptModule,
 } from "@superego/backend";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import useUndoRedo from "../CodeInput/common-hooks/useUndoRedo.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
@@ -18,25 +21,35 @@ import ImplementingSpinner from "./ImplementingSpinner.js";
 import Preview from "./Preview.js";
 import type Props from "./Props.js";
 import ResolveIncompatibilityModal from "./ResolveIncompatibilityModal.js";
-import * as cs from "./RHFAppVersionFilesField.css.js";
+import * as cs from "./RHFAppVersionField.css.js";
 import useElementHeight from "./useElementHeight.js";
 import useSttAndImplement from "./useSttAndImplement.js";
 import useTypescriptLibs from "./useTypescriptLibs.js";
 import View from "./View.js";
 
-export default function EagerRHFAppVersionFilesField({
-  control,
-  name,
-  app,
-  targetCollections,
-}: Props) {
+export default function EagerRHFAppVersionField({ control, name, app }: Props) {
   const intl = useIntl();
+  const { collections } = useGlobalData();
 
   const [activeView, setActiveView] = useState(View.Preview);
 
-  const fieldName = `${name}./main__DOT__tsx`;
-  const { field } = useController({ control, name: fieldName });
-  const mainTsx: TypescriptModule = field.value;
+  const filesFieldName = `${name}.files./main__DOT__tsx`;
+  const { field: filesField } = useController({
+    control,
+    name: filesFieldName,
+  });
+  const mainTsx: TypescriptModule = filesField.value;
+
+  const targetCollectionIdsFieldName = `${name}.targetCollectionIds`;
+  const { field: targetCollectionIdsField } = useController({
+    control,
+    name: targetCollectionIdsFieldName,
+  });
+  const targetCollectionIds: CollectionId[] = targetCollectionIdsField.value;
+  const targetCollections = useMemo(
+    () => CollectionUtils.findAllCollections(collections, targetCollectionIds),
+    [collections, targetCollectionIds],
+  );
 
   const typescriptLibs = useTypescriptLibs(targetCollections);
 
@@ -58,7 +71,7 @@ export default function EagerRHFAppVersionFilesField({
       inferenceOptions,
     );
     if (success) {
-      field.onChange(data);
+      filesField.onChange(data);
     } else {
       console.error(error);
       toasts.add({
@@ -79,7 +92,7 @@ export default function EagerRHFAppVersionFilesField({
   const undoRedo = useUndoRedo();
 
   return (
-    <div className={cs.EagerRHFAppVersionFilesField.root}>
+    <div className={cs.EagerRHFAppVersionField.root}>
       <EditingToolbar
         onUndo={undoRedo.undo}
         isUndoDisabled={!undoRedo.canUndo}
@@ -87,9 +100,12 @@ export default function EagerRHFAppVersionFilesField({
         isRedoDisabled={!undoRedo.canRedo}
         onActivateView={setActiveView}
         activeView={activeView}
-        className={cs.EagerRHFAppVersionFilesField.editingToolbar}
+        collections={collections}
+        selectedCollectionIds={targetCollectionIds}
+        onSelectedCollectionIdsChange={targetCollectionIdsField.onChange}
+        className={cs.EagerRHFAppVersionField.editingToolbar}
       />
-      <div className={cs.EagerRHFAppVersionFilesField.content}>
+      <div className={cs.EagerRHFAppVersionField.content}>
         {app ? (
           <ResolveIncompatibilityModal
             app={app}
@@ -102,14 +118,14 @@ export default function EagerRHFAppVersionFilesField({
           mainTsx={mainTsx}
           targetCollections={targetCollections}
           className={
-            cs.EagerRHFAppVersionFilesField.preview[
+            cs.EagerRHFAppVersionField.preview[
               activeView === View.Preview ? "visible" : "hidden"
             ]
           }
         />
         <RHFTypescriptModuleField
           control={control}
-          name={fieldName}
+          name={filesFieldName}
           language="typescript-jsx"
           undoRedo={undoRedo.prop}
           typescriptLibs={typescriptLibs}
@@ -118,12 +134,12 @@ export default function EagerRHFAppVersionFilesField({
           // externally difficult. Hence the manual pixel value.
           maxHeight={`calc(100svh - ${156 + userMessageContentInputHeight}px)`}
           className={
-            cs.EagerRHFAppVersionFilesField.typescriptModule[
+            cs.EagerRHFAppVersionField.typescriptModule[
               activeView === View.Code ? "visible" : "hidden"
             ]
           }
           codeInputClassName={
-            cs.EagerRHFAppVersionFilesField.typescriptModuleCodeInput
+            cs.EagerRHFAppVersionField.typescriptModuleCodeInput
           }
         />
       </div>
@@ -137,7 +153,7 @@ export default function EagerRHFAppVersionFilesField({
         })}
         autoFocus={true}
         allowFileParts={false}
-        className={cs.EagerRHFAppVersionFilesField.userMessageContentInput}
+        className={cs.EagerRHFAppVersionField.userMessageContentInput}
       />
     </div>
   );

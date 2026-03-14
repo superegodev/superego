@@ -644,10 +644,10 @@
   "EagerGeoJSONMap.tsx_FUqf3/": {
     "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
   },
-  "EagerRHFAppVersionFilesField.tsx_4rTNK7": {
+  "EagerRHFAppVersionField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
   },
-  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": {
+  "EagerRHFAppVersionField.tsx_Yhz0gl": {
     "defaultMessage": "Si è verificato un errore durante la generazione dell'app"
   },
   "EagerTiptapInput.tsx_0he+1r": {
@@ -674,8 +674,14 @@
   "EditingToolbar.tsx_EwYOYc": {
     "defaultMessage": "Visualizza codice"
   },
+  "EditingToolbar.tsx_FXmJvH": {
+    "defaultMessage": "Seleziona collezioni"
+  },
   "EditingToolbar.tsx_JkS37H": {
     "defaultMessage": "Annulla"
+  },
+  "EditingToolbar.tsx_ou7tYh": {
+    "defaultMessage": "Collezioni di destinazione"
   },
   "EmojiInput.tsx_CqyOwA": {
     "defaultMessage": "Seleziona emoji"
