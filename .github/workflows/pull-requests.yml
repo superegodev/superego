@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   qa:
-    runs-on: macos-latest
+    runs-on: warp-macos-26-arm64-6x
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -91,10 +91,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-15-intel
+          - os: warp-macos-26-arm64-6x
             arch: x64
             artifact-path: packages/apps/electron-app/out/make/zip/darwin/x64/*.zip
-          - os: macos-latest
+          - os: warp-macos-26-arm64-6x
             arch: arm64
             artifact-path: packages/apps/electron-app/out/make/zip/darwin/arm64/*.zip
           - os: ubuntu-latest
@@ -135,7 +135,7 @@ jobs:
       - name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=6144
-        run: yarn build-electron
+        run: yarn build-electron --arch=${{ matrix.arch }}
       - name: Get OS friendly name
         id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
