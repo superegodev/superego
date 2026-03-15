@@ -1,6 +1,6 @@
 {
   "name": "@superego/root",
-  "version": "2026.3.6",
+  "version": "2026.3.7",
   "type": "module",
   "private": true,
   "workspaces": [
