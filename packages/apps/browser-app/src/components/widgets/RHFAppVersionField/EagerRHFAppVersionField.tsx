@@ -9,7 +9,6 @@ import type {
 import { useMemo, useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
-import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
@@ -27,9 +26,13 @@ import useSttAndImplement from "./useSttAndImplement.js";
 import useTypescriptLibs from "./useTypescriptLibs.js";
 import View from "./View.js";
 
-export default function EagerRHFAppVersionField({ control, name, app }: Props) {
+export default function EagerRHFAppVersionField({
+  control,
+  name,
+  app,
+  collections,
+}: Props) {
   const intl = useIntl();
-  const { collections } = useGlobalData();
 
   const [activeView, setActiveView] = useState(View.Preview);
 

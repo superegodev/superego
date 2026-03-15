@@ -23,7 +23,7 @@ export default function SelectButton({
     <Group className={cs.SelectButton.root}>
       <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
         {prefix}
-        <SelectValue className={cs.SelectButton.selectValue}>
+        <SelectValue<{ label: string }> className={cs.SelectButton.selectValue}>
           {({ defaultChildren, isPlaceholder, selectedItems }) =>
             isPlaceholder ? (
               <span className={cs.SelectButton.placeholder}>
@@ -32,9 +32,7 @@ export default function SelectButton({
             ) : selectedItems && selectedItems.length > 1 ? (
               <span className={cs.SelectButton.selectValueText}>
                 {intersperse(
-                  selectedItems.map(
-                    (item) => (item as { label: string })?.label,
-                  ),
+                  selectedItems.map((item) => item?.label),
                   ", ",
                 )}
               </span>

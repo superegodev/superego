@@ -1,10 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { App, CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
+import { useMemo } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import * as v from "valibot";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
@@ -33,15 +35,23 @@ export default function CreateNewAppVersionForm({
   setSubmitDisabled,
 }: Props) {
   const intl = useIntl();
+  const { collections } = useGlobalData();
 
   const { mutate } = useCreateNewAppVersion();
+
+  const validTargetCollectionIds = useMemo(
+    () => [
+      ...new Set(
+        app.latestVersion.targetCollections.map(({ id }) => id),
+      ).intersection(new Set(collections.map(({ id }) => id))),
+    ],
+    [app.latestVersion.targetCollections, collections],
+  );
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       appVersion: {
-        targetCollectionIds: app.latestVersion.targetCollections.map(
-          ({ id }) => id,
-        ),
+        targetCollectionIds: validTargetCollectionIds,
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -104,7 +114,12 @@ export default function CreateNewAppVersionForm({
         setSubmitDisabled={setSubmitDisabled}
         triggerExitWarningWhenDirty={true}
       />
-      <RHFAppVersionField control={control} name="appVersion" app={app} />
+      <RHFAppVersionField
+        control={control}
+        name="appVersion"
+        app={app}
+        collections={collections}
+      />
     </Form>
   );
 }

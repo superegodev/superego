@@ -39,6 +39,7 @@ export default function CreateApp({ initialCollectionIds }: Props) {
         className={cs.CreateApp.panelContent}
       >
         <CreateAppForm
+          collections={collections}
           initialTargetCollections={initialTargetCollections}
           isSetNameAndSaveModalOpen={isSetNameAndSaveModalOpen}
           onSetNameAndSaveModalClose={() => setIsSetNameAndSaveModalOpen(false)}

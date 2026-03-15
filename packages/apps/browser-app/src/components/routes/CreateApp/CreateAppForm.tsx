@@ -30,11 +30,13 @@ interface FormValues {
 }
 
 interface Props {
+  collections: Collection[];
   initialTargetCollections: Collection[];
   isSetNameAndSaveModalOpen: boolean;
   onSetNameAndSaveModalClose: () => void;
 }
 export default function CreateAppForm({
+  collections,
   initialTargetCollections,
   isSetNameAndSaveModalOpen,
   onSetNameAndSaveModalClose,
@@ -98,7 +100,12 @@ export default function CreateAppForm({
       className={cs.CreateAppForm.root}
     >
       <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
-      <RHFAppVersionField control={control} name="appVersion" app={null} />
+      <RHFAppVersionField
+        control={control}
+        name="appVersion"
+        app={null}
+        collections={collections}
+      />
       <SetNameAndSaveModal
         control={control}
         formId={formId}
