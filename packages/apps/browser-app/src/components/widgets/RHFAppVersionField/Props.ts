@@ -5,5 +5,5 @@ export default interface Props {
   control: Control<any>;
   name: string;
   app: App | null;
-  targetCollections: Collection[];
+  collections: Collection[];
 }

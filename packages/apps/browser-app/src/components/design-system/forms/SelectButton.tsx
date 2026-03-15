@@ -23,11 +23,18 @@ export default function SelectButton({
     <Group className={cs.SelectButton.root}>
       <Button className={classnames(cs.SelectButton.trigger, triggerClassName)}>
         {prefix}
-        <SelectValue className={cs.SelectButton.selectValue}>
-          {({ defaultChildren, isPlaceholder }) =>
+        <SelectValue<{ label: string }> className={cs.SelectButton.selectValue}>
+          {({ defaultChildren, isPlaceholder, selectedItems }) =>
             isPlaceholder ? (
               <span className={cs.SelectButton.placeholder}>
                 {placeholder ?? defaultChildren}
+              </span>
+            ) : selectedItems && selectedItems.length > 1 ? (
+              <span className={cs.SelectButton.selectValueText}>
+                {intersperse(
+                  selectedItems.map((item) => item?.label),
+                  ", ",
+                )}
               </span>
             ) : (
               defaultChildren
@@ -35,7 +42,7 @@ export default function SelectButton({
           }
         </SelectValue>
         {onClear ? <div className={cs.SelectButton.clearButtonStub} /> : null}
-        <PiCaretDown aria-hidden="true" />
+        <PiCaretDown aria-hidden="true" className={cs.SelectButton.caret} />
       </Button>
       {onClear ? (
         <IconButton
@@ -50,4 +57,8 @@ export default function SelectButton({
       ) : null}
     </Group>
   );
+}
+
+function intersperse(items: ReactNode[], separator: ReactNode): ReactNode[] {
+  return items.flatMap((item, i) => (i === 0 ? [item] : [separator, item]));
 }

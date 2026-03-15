@@ -1,11 +1,10 @@
 import type { AppId } from "@superego/backend";
-import { useId, useMemo, useState } from "react";
+import { useId, useState } from "react";
 import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
 import AppUtils from "../../../utils/AppUtils.js";
-import CollectionUtils from "../../../utils/CollectionUtils.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateNewAppVersionForm from "./CreateNewAppVersionForm.js";
 import DeleteAppModalForm from "./DeleteAppModalForm.js";
@@ -17,7 +16,7 @@ interface Props {
 }
 export default function EditApp({ appId }: Props) {
   const intl = useIntl();
-  const { apps, collections } = useGlobalData();
+  const { apps } = useGlobalData();
 
   const [isUpdateNameModalFormOpen, setIsUpdateNameModalFormOpen] =
     useState(false);
@@ -34,18 +33,8 @@ export default function EditApp({ appId }: Props) {
   useSaveShortcut(createNewVersionFormId, isCreateNewVersionFormSubmitDisabled);
 
   const app = AppUtils.findApp(apps, appId);
-  const targetCollections = useMemo(
-    () =>
-      app
-        ? CollectionUtils.findAllCollections(
-            collections,
-            app.latestVersion.targetCollections.map(({ id }) => id),
-          )
-        : null,
-    [collections, app],
-  );
 
-  return app && targetCollections ? (
+  return app ? (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage(
@@ -75,7 +64,6 @@ export default function EditApp({ appId }: Props) {
       <Shell.Panel.Content fullWidth={true} className={cs.EditApp.panelContent}>
         <CreateNewAppVersionForm
           app={app}
-          targetCollections={targetCollections}
           formId={createNewVersionFormId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}
         />

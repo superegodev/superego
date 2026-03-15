@@ -83,7 +83,7 @@ export default function Welcome() {
                   <Link
                     to={{
                       name: RouteName.CreateApp,
-                      collectionIds: collections.map(
+                      initialCollectionIds: collections.map(
                         (collection) => collection.id,
                       ),
                     }}

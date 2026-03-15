@@ -1,7 +1,7 @@
 import { keyframes, style, styleVariants } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
-export const EagerRHFAppVersionFilesField = {
+export const EagerRHFAppVersionField = {
   root: style({
     height: "100%",
     display: "flex",
@@ -80,10 +80,23 @@ export const EditingToolbar = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: vars.spacing._2,
+  }),
+
+  undoRedoGroup: style({
+    display: "flex",
+    flexShrink: 0,
   }),
 
   button: style({
+    flexShrink: 0,
     fontSize: vars.typography.fontSizes.xl,
+  }),
+
+  collectionsSelect: style({
+    flexGrow: 1,
+    minWidth: 0,
+    maxWidth: vars.spacing._120,
   }),
 };
 

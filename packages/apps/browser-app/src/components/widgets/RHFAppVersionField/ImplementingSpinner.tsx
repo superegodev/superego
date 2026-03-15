@@ -2,7 +2,7 @@ import { sample, shuffle } from "es-toolkit";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import Logo from "../../design-system/Logo/Logo.js";
-import * as cs from "./RHFAppVersionFilesField.css.js";
+import * as cs from "./RHFAppVersionField.css.js";
 
 const totalDots = 3;
 const resetDotsTickCount = totalDots + 2;

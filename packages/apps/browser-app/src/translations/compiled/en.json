@@ -1562,13 +1562,13 @@
       "value": "An error occurred rendering the map."
     }
   ],
-  "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
+  "EagerRHFAppVersionField.tsx_4rTNK7": [
     {
       "type": 0,
       "value": "What do you want to build?"
     }
   ],
-  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
+  "EagerRHFAppVersionField.tsx_Yhz0gl": [
     {
       "type": 0,
       "value": "An error occurred generating the app"
@@ -1630,10 +1630,22 @@
       "value": "View code"
     }
   ],
+  "EditingToolbar.tsx_FXmJvH": [
+    {
+      "type": 0,
+      "value": "Select collections"
+    }
+  ],
   "EditingToolbar.tsx_JkS37H": [
     {
       "type": 0,
       "value": "Undo"
+    }
+  ],
+  "EditingToolbar.tsx_ou7tYh": [
+    {
+      "type": 0,
+      "value": "Target collections"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [

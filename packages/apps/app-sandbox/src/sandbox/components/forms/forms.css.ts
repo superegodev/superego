@@ -168,9 +168,19 @@ export const SelectButton = {
     overflow: "hidden",
   }),
 
+  selectValueText: style({
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  }),
+
   placeholder: style({
     color: vars.colors.text.secondary,
     fontStyle: "italic",
+  }),
+
+  caret: style({
+    flexShrink: 0,
   }),
 
   clearButtonStub: style({

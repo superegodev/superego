@@ -99,15 +99,15 @@ const testRoutes: Route[] = [
   },
   {
     name: RouteName.CreateApp,
-    collectionIds: [],
+    initialCollectionIds: [],
   },
   {
     name: RouteName.CreateApp,
-    collectionIds: [Id.generate.collection()],
+    initialCollectionIds: [Id.generate.collection()],
   },
   {
     name: RouteName.CreateApp,
-    collectionIds: [Id.generate.collection(), Id.generate.collection()],
+    initialCollectionIds: [Id.generate.collection(), Id.generate.collection()],
   },
   {
     name: RouteName.EditApp,

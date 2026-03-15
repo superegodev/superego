@@ -1554,13 +1554,13 @@
       "value": "Si è verificato un errore durante il rendering della mappa."
     }
   ],
-  "EagerRHFAppVersionFilesField.tsx_4rTNK7": [
+  "EagerRHFAppVersionField.tsx_4rTNK7": [
     {
       "type": 0,
       "value": "Cosa vuoi creare?"
     }
   ],
-  "EagerRHFAppVersionFilesField.tsx_Yhz0gl": [
+  "EagerRHFAppVersionField.tsx_Yhz0gl": [
     {
       "type": 0,
       "value": "Si è verificato un errore durante la generazione dell'app"
@@ -1622,10 +1622,22 @@
       "value": "Visualizza codice"
     }
   ],
+  "EditingToolbar.tsx_FXmJvH": [
+    {
+      "type": 0,
+      "value": "Seleziona collezioni"
+    }
+  ],
   "EditingToolbar.tsx_JkS37H": [
     {
       "type": 0,
       "value": "Annulla"
+    }
+  ],
+  "EditingToolbar.tsx_ou7tYh": [
+    {
+      "type": 0,
+      "value": "Collezioni di destinazione"
     }
   ],
   "EmojiInput.tsx_CqyOwA": [

@@ -1,9 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { App, Collection } from "@superego/backend";
+import type { App, CollectionId } from "@superego/backend";
+import { valibotSchemas } from "@superego/shared-utils";
+import { useMemo } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import * as v from "valibot";
+import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
@@ -11,55 +14,80 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import RHFAppVersionFilesField from "../../widgets/RHFAppVersionFilesField/RHFAppVersionFilesField.js";
+import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";
 
 interface FormValues {
-  files: RHFAppVersionFiles;
+  appVersion: {
+    targetCollectionIds: CollectionId[];
+    files: RHFAppVersionFiles;
+  };
 }
 
 interface Props {
   app: App;
-  targetCollections: Collection[];
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
 }
 export default function CreateNewAppVersionForm({
   app,
-  targetCollections,
   formId,
   setSubmitDisabled,
 }: Props) {
   const intl = useIntl();
+  const { collections } = useGlobalData();
 
   const { mutate } = useCreateNewAppVersion();
 
+  const validTargetCollectionIds = useMemo(
+    () => [
+      ...new Set(
+        app.latestVersion.targetCollections.map(({ id }) => id),
+      ).intersection(new Set(collections.map(({ id }) => id))),
+    ],
+    [app.latestVersion.targetCollections, collections],
+  );
+
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
-      files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
-        app.latestVersion.files,
-      ),
+      appVersion: {
+        targetCollectionIds: validTargetCollectionIds,
+        files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+          app.latestVersion.files,
+        ),
+      },
     },
     mode: "onSubmit",
     resolver: standardSchemaResolver(
       v.strictObject({
-        files: forms.schemas.rhfAppVersionFiles(intl),
+        appVersion: v.strictObject({
+          targetCollectionIds: v.pipe(
+            v.array(valibotSchemas.id.collection()),
+            v.minLength(1),
+          ),
+          files: forms.schemas.rhfAppVersionFiles(intl),
+        }),
       }),
     ),
   });
 
-  const onSubmit = async ({ files }: FormValues) => {
+  const onSubmit = async ({ appVersion }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
-      app.latestVersion.targetCollections.map(({ id }) => id),
-      RHFAppVersionFilesUtils.fromRhfAppVersionFiles(files),
+      appVersion.targetCollectionIds,
+      RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     );
     if (success) {
       reset(
         {
-          files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
-            data.latestVersion.files,
-          ),
+          appVersion: {
+            targetCollectionIds: data.latestVersion.targetCollections.map(
+              ({ id }) => id,
+            ),
+            files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+              data.latestVersion.files,
+            ),
+          },
         },
         { keepValues: true },
       );
@@ -86,11 +114,11 @@ export default function CreateNewAppVersionForm({
         setSubmitDisabled={setSubmitDisabled}
         triggerExitWarningWhenDirty={true}
       />
-      <RHFAppVersionFilesField
+      <RHFAppVersionField
         control={control}
-        name="files"
+        name="appVersion"
         app={app}
-        targetCollections={targetCollections}
+        collections={collections}
       />
     </Form>
   );

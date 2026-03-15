@@ -163,7 +163,7 @@ export default function Collection(props: Props) {
                 ),
                 to: {
                   name: RouteName.CreateApp,
-                  collectionIds: [collection.id],
+                  initialCollectionIds: [collection.id],
                 },
               },
             ],

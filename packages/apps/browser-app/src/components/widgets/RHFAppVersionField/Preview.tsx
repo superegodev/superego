@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import classnames from "../../../utils/classnames.js";
 import AppRenderer from "../AppRenderer/AppRenderer.js";
-import * as cs from "./RHFAppVersionFilesField.css.js";
+import * as cs from "./RHFAppVersionField.css.js";
 
 const invalidCompiledValues = new Set([
   forms.constants.COMPILATION_FAILED,
@@ -37,7 +37,12 @@ export default function Preview({
         className,
       )}
     >
-      {app ? <AppRenderer app={app} /> : null}
+      {app ? (
+        <AppRenderer
+          key={targetCollections.map(({ id }) => id).join(",")}
+          app={app}
+        />
+      ) : null}
       {appCompilationFailed ? (
         <FormattedMessage defaultMessage="App compilation failed." />
       ) : null}
