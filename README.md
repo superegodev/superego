@@ -12,36 +12,11 @@
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
 
-<br />
-
-### Watch the demo
+## Watch the demo
 
 [![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
-<br />
-
-### Screenshots
-
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td>
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./docs/media/holdings-app.dark.avif">
-        <img alt="Holdings app" src="./docs/media/holdings-app.light.avif" width="100%">
-      </picture>
-    </td>
-    <td>
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./docs/media/plants-app.dark.avif">
-        <img alt="Plants app" src="./docs/media/plants-app.light.avif" width="100%">
-      </picture>
-    </td>
-  </tr>
-</table>
-
-<br />
-
-### Roadmap
+## Roadmap
 
 - [x] Document versioning.
 - [x] Full-text search.
@@ -52,9 +27,7 @@
 - [ ] Database encryption.
 - [ ] Database hooks.
 
-<br />
-
-### Is This Vibe-Coded Slop?
+## Is This Vibe-Coded Slop?
 
 Short answer: **no**.
 
@@ -84,9 +57,7 @@ Does this speed me up? I feel like it, but it's hard to tell for sure. It
 definitely makes me more productive, though, because it lowers the effort
 required to get started on something.
 
-<br />
-
-### License
+## License
 
 Unless otherwise specified, all files in this repository are licensed under the
 **GNU Affero General Public License, Version 3 (AGPL-3.0-only)**.
@@ -94,9 +65,7 @@ Unless otherwise specified, all files in this repository are licensed under the
 You can find a copy of the full license text in the `LICENSE` file at the root
 of this repository.
 
-<br />
-
-### Contributing
+## Contributing
 
 Check the [docs/setup.md](./docs/setup.md) for instructions on how to setup your
 local dev environment.
