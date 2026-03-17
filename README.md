@@ -1,4 +1,5 @@
-![Superego logo](./docs/media/logo.light.png)
+![Superego logo](./docs/media/logo.light.png#gh-light-mode-only)
+![Superego logo](./docs/media/logo.dark.png#gh-dark-mode-only)
 
 [Try the demo](https://demo.superego.dev) ·
 [Download](https://github.com/superegodev/superego/releases/latest)
