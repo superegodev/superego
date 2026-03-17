@@ -1,24 +1,33 @@
 ![Superego: a personal database you can extend with apps](./docs/media/logo.light.avif#gh-light-mode-only)
 ![Superego: a personal database you can extend with apps](./docs/media/logo.dark.avif#gh-dark-mode-only)
 
-[Try the demo](https://demo.superego.dev) ·
-[Download](https://github.com/superegodev/superego/releases/latest)
-
-
-[![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
-
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
 
+## Watch the demo
+
+[![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
+
 ## Screenshots
 
-![Holdings app](./docs/media/holdings-app.light.avif#gh-light-mode-only)
-![Holdings app](./docs/media/holdings-app.dark.avif#gh-dark-mode-only)
-
-![Plants app](./docs/media/plants-app.light.avif#gh-light-mode-only)
-![Plants app](./docs/media/plants-app.dark.avif#gh-dark-mode-only)
+<table>
+  <tr>
+    <td>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./docs/media/holdings-app.dark.avif">
+        <img alt="Holdings app" src="./docs/media/holdings-app.light.avif" width="100%">
+      </picture>
+    </td>
+    <td>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./docs/media/plants-app.dark.avif">
+        <img alt="Plants app" src="./docs/media/plants-app.light.avif" width="100%">
+      </picture>
+    </td>
+  </tr>
+</table>
 
 ## Roadmap
 
