@@ -1,8 +1,7 @@
 ![main-and-tags workflow status](https://github.com/superegodev/superego/actions/workflows/main-and-tags.yml/badge.svg)
 
-<p align="center">
-  <img alt="Superego logo" src="./docs/media/logo.svg" style="height: 150px;" />
-</p>
+![Superego logo](./docs/media/logo.light.png#gh-light-mode-only)
+![Superego logo](./docs/media/logo.dark.png#gh-dark-mode-only)
 
 # Superego
 
