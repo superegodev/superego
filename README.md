@@ -12,9 +12,13 @@
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
 
-## Watch the demo
+## Install
 
-[![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
+[Download the latest release](https://github.com/superegodev/superego/releases/latest), or [try the online demo (no login required)](https://demo.superego.dev).
+
+## Watch a short demo
+
+[![Watch a short demo](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
 ## Roadmap
 
