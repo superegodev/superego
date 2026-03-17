@@ -1,18 +1,23 @@
 ![Superego: a personal database you can extend with apps](./docs/media/logo.light.avif#gh-light-mode-only)
 ![Superego: a personal database you can extend with apps](./docs/media/logo.dark.avif#gh-dark-mode-only)
 
+<br />
+<br />
+
+### Designed to respect your digital rights
+
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
 
-## Watch the demo
+### Watch the demo
 
 [![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
-## Screenshots
+### Screenshots
 
-<table>
+<table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>
       <picture>
@@ -29,7 +34,7 @@
   </tr>
 </table>
 
-## Roadmap
+### Roadmap
 
 - [x] Document versioning.
 - [x] Full-text search.
@@ -40,7 +45,7 @@
 - [ ] Database encryption.
 - [ ] Database hooks.
 
-## Is This Vibe-Coded Slop?
+### Is This Vibe-Coded Slop?
 
 Short answer: **no**.
 
@@ -70,7 +75,7 @@ Does this speed me up? I feel like it, but it's hard to tell for sure. It
 definitely makes me more productive, though, because it lowers the effort
 required to get started on something.
 
-## License
+### License
 
 Unless otherwise specified, all files in this repository are licensed under the
 **GNU Affero General Public License, Version 3 (AGPL-3.0-only)**.
@@ -78,7 +83,7 @@ Unless otherwise specified, all files in this repository are licensed under the
 You can find a copy of the full license text in the `LICENSE` file at the root
 of this repository.
 
-## Contributing
+### Contributing
 
 Check the [docs/setup.md](./docs/setup.md) for instructions on how to setup your
 local dev environment.
