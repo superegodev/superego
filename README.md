@@ -1,11 +1,11 @@
-![Superego: a personal database you can extend with apps](./docs/media/logo.light.png#gh-light-mode-only)
-![Superego: a personal database you can extend with apps](./docs/media/logo.dark.png#gh-dark-mode-only)
+![Superego: a personal database you can extend with apps](./docs/media/logo.light.avif#gh-light-mode-only)
+![Superego: a personal database you can extend with apps](./docs/media/logo.dark.avif#gh-dark-mode-only)
 
 [Try the demo](https://demo.superego.dev) ·
 [Download](https://github.com/superegodev/superego/releases/latest)
 
 
-[![Watch the video](./docs/media/demo-thumbnail.png)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
+[![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
@@ -14,11 +14,11 @@
 
 ## Screenshots
 
-![Holdings app](./docs/media/holdings-app.light.png#gh-light-mode-only)
-![Holdings app](./docs/media/holdings-app.dark.png#gh-dark-mode-only)
+![Holdings app](./docs/media/holdings-app.light.avif#gh-light-mode-only)
+![Holdings app](./docs/media/holdings-app.dark.avif#gh-dark-mode-only)
 
-![Plants app](./docs/media/plants-app.light.png#gh-light-mode-only)
-![Plants app](./docs/media/plants-app.dark.png#gh-dark-mode-only)
+![Plants app](./docs/media/plants-app.light.avif#gh-light-mode-only)
+![Plants app](./docs/media/plants-app.dark.avif#gh-dark-mode-only)
 
 ## Roadmap
 
