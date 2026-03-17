@@ -5,7 +5,7 @@
 
 <br />
 
-#### Designed to respect your digital rights:
+### Designed to respect your digital rights:
 
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
