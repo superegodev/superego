@@ -15,7 +15,7 @@
 ## Install
 
 - [Download the latest release](https://github.com/superegodev/superego/releases/latest) (local app).
-- Or [try the online demo (no login required)](https://demo.superego.dev).
+- Or [try the online demo](https://demo.superego.dev) (no login required).
 
 ## Watch a short demo
 
