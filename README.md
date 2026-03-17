@@ -12,9 +12,13 @@
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
 
+<br />
+
 ### Watch the demo
 
 [![Watch the video](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
+
+<br />
 
 ### Screenshots
 
@@ -35,6 +39,8 @@
   </tr>
 </table>
 
+<br />
+
 ### Roadmap
 
 - [x] Document versioning.
@@ -45,6 +51,8 @@
 - [ ] Sync via file-syncing service.
 - [ ] Database encryption.
 - [ ] Database hooks.
+
+<br />
 
 ### Is This Vibe-Coded Slop?
 
@@ -76,6 +84,8 @@ Does this speed me up? I feel like it, but it's hard to tell for sure. It
 definitely makes me more productive, though, because it lowers the effort
 required to get started on something.
 
+<br />
+
 ### License
 
 Unless otherwise specified, all files in this repository are licensed under the
@@ -83,6 +93,8 @@ Unless otherwise specified, all files in this repository are licensed under the
 
 You can find a copy of the full license text in the `LICENSE` file at the root
 of this repository.
+
+<br />
 
 ### Contributing
 
