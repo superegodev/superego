@@ -1,7 +1,8 @@
+<br />
+
 ![Superego: a personal database you can extend with apps](./docs/media/logo.light.avif#gh-light-mode-only)
 ![Superego: a personal database you can extend with apps](./docs/media/logo.dark.avif#gh-dark-mode-only)
 
-<br />
 <br />
 
 ### Designed to respect your digital rights
