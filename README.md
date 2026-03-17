@@ -1,53 +1,26 @@
-![main-and-tags workflow status](https://github.com/superegodev/superego/actions/workflows/main-and-tags.yml/badge.svg)
+<br />
 
-<p align="center">
-  <img alt="Superego logo" src="./docs/media/logo.svg" style="height: 150px;" />
-</p>
+![Superego: a personal database you can extend with apps](./docs/media/logo.light.avif#gh-light-mode-only)
+![Superego: a personal database you can extend with apps](./docs/media/logo.dark.avif#gh-dark-mode-only)
 
-# Superego
+<br />
 
-A personal database you can extend with apps.
-
-[Try the demo](https://demo.superego.dev) ·
-[Download](https://github.com/superegodev/superego/releases/latest)
-
-### Your Apps Don't Fit You
-
-They're built for a generic user and shaped by growth targets, not your needs.
-
-### Your Data Isn't Yours
-
-It's trapped inside apps, leaving you with limited access and no real ownership.
-
-### Superego Puts You Back In Control
-
-It's a private place to store your data and build apps tailored to how you live
-and work.
-
-Build a portfolio manager that matches how you invest. Vibe-code a chore
-scoreboard for your family. Make niche tools you'll never find in an app store.
-
-### It Makes AI Actually Helpful
-
-Having access to your data, Superego's assistant can answer questions ordinary
-tools can't.
-
-> Looking at my finances and my lifestyle, when could I retire?
-
-[Try it in the demo](https://demo.superego.dev/?initialMessage=Looking%20at%20my%20finances%20and%20my%20lifestyle%2C%20when%20could%20I%20retire%3F)
-and see how it answers.
-
-<p align="center">
-  <img alt="Demo Recording" src="./docs/media/demo-recording.dark.gif#gh-light-mode-only" style="height: 500px;" />
-  <img alt="Demo Recording" src="./docs/media/demo-recording.light.gif#gh-dark-mode-only" style="height: 500px;" />
-</p>
-
-### What Else?
+### Designed to respect your digital rights:
 
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
 - Bring-your-own LLM.
 - CLI to integrate with other tools (e.g., your coding agent to write apps).
+
+## Install
+
+- [Download the latest release](https://github.com/superegodev/superego/releases/latest)
+  (local app).
+- Or [try the online demo](https://demo.superego.dev) (no login required).
+
+## Watch a short demo
+
+[![Watch a short demo](./docs/media/demo-thumbnail.avif)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
 ## Roadmap
 
