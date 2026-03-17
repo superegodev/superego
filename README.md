@@ -5,7 +5,7 @@
 [Download](https://github.com/superegodev/superego/releases/latest)
 
 
-[![Watch the video](https://img.youtube.com/vi/vB3xo2qn_g4/maxresdefault.jpg)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
+[![Watch the video](./docs/media/demo-thumbnail.png)](https://www.youtube.com/watch?v=vB3xo2qn_g4)
 
 - Open-source, local-first, no-login.
 - Everything in a **single SQLite file**.
