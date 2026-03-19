@@ -11,6 +11,7 @@ export default {
         Done: { value: "Done" },
       },
       membersOrder: ["Backlog", "Scheduled", "Doing", "Done"],
+      default: "Backlog",
     },
     Task: {
       dataType: DataType.Struct,
@@ -27,8 +28,9 @@ export default {
         },
         priority: {
           dataType: DataType.Number,
+          default: 0,
         },
-        archived: { dataType: DataType.Boolean },
+        archived: { dataType: DataType.Boolean, default: false },
       },
       nullableProperties: ["description", "dueDate"],
     },

@@ -8,6 +8,7 @@ import enumMembers from "../enumMembers/enumMembers.js";
 import identifier from "../identifier/identifier.js";
 import mimeTypeMatcher from "../mimeTypeMatcher/mimeTypeMatcher.js";
 import allReferencedTypesExist from "./checks/allReferencedTypesExist.js";
+import defaultIsValidMember from "./checks/defaultIsValidMember.js";
 import membersOrderIsValid from "./checks/membersOrderIsValid.js";
 import noTopLevelTypeDefinitionRefs from "./checks/noTopLevelTypeDefinitionRefs.js";
 import noUnusedTypes from "./checks/noUnusedTypes.js";
@@ -18,6 +19,7 @@ const StringTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.literal(DataType.String),
   format: v.optional(v.string()),
+  default: v.optional(v.string()),
 });
 
 const EnumTypeDefinitionValibotSchema = v.pipe(
@@ -26,19 +28,23 @@ const EnumTypeDefinitionValibotSchema = v.pipe(
     dataType: v.literal(DataType.Enum),
     members: enumMembers(),
     membersOrder: v.optional(v.array(v.pipe(v.string()))),
+    default: v.optional(v.string()),
   }),
   membersOrderIsValid,
+  defaultIsValidMember,
 );
 
 const NumberTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.literal(DataType.Number),
   format: v.optional(v.string()),
+  default: v.optional(v.number()),
 });
 
 const BooleanTypeDefinitionValibotSchema = v.strictObject({
   ...described().entries,
   dataType: v.literal(DataType.Boolean),
+  default: v.optional(v.boolean()),
 });
 
 const StringLiteralTypeDefinitionValibotSchema = v.strictObject({

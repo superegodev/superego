@@ -518,6 +518,133 @@ describe("Invalid schemas", () => {
       });
     });
 
+    describe("invalid default in enum type definition", () => {
+      test("case: non-existing member", {
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                enum: {
+                  dataType: DataType.Enum,
+                  members: {
+                    A: { value: "A" },
+                    B: { value: "B" },
+                  },
+                  default: "NonExisting",
+                },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        expectedIssues: [
+          {
+            kind: "validation",
+            message: "Must be a valid member name",
+            path: [
+              { key: "types" },
+              { key: "Root" },
+              { key: "properties" },
+              { key: "enum" },
+              { key: "default" },
+            ],
+          },
+        ],
+      });
+    });
+
+    test("invalid default type in string type definition", {
+      schema: {
+        types: {
+          Root: {
+            dataType: DataType.Struct,
+            properties: {
+              string: {
+                dataType: DataType.String,
+                default: 123,
+              },
+            },
+          },
+        },
+        rootType: "Root",
+      },
+      expectedIssues: [
+        {
+          kind: "schema",
+          message: "Invalid type: Expected string but received 123",
+          path: [
+            { key: "types" },
+            { key: "Root" },
+            { key: "properties" },
+            { key: "string" },
+            { key: "default" },
+          ],
+        },
+      ],
+    });
+
+    test("invalid default type in number type definition", {
+      schema: {
+        types: {
+          Root: {
+            dataType: DataType.Struct,
+            properties: {
+              number: {
+                dataType: DataType.Number,
+                default: "not a number",
+              },
+            },
+          },
+        },
+        rootType: "Root",
+      },
+      expectedIssues: [
+        {
+          kind: "schema",
+          message: 'Invalid type: Expected number but received "not a number"',
+          path: [
+            { key: "types" },
+            { key: "Root" },
+            { key: "properties" },
+            { key: "number" },
+            { key: "default" },
+          ],
+        },
+      ],
+    });
+
+    test("invalid default type in boolean type definition", {
+      schema: {
+        types: {
+          Root: {
+            dataType: DataType.Struct,
+            properties: {
+              boolean: {
+                dataType: DataType.Boolean,
+                default: "not a boolean",
+              },
+            },
+          },
+        },
+        rootType: "Root",
+      },
+      expectedIssues: [
+        {
+          kind: "schema",
+          message:
+            'Invalid type: Expected boolean but received "not a boolean"',
+          path: [
+            { key: "types" },
+            { key: "Root" },
+            { key: "properties" },
+            { key: "boolean" },
+            { key: "default" },
+          ],
+        },
+      ],
+    });
+
     test("invalid accept in file type definition", {
       schema: {
         types: {
@@ -862,6 +989,32 @@ describe("Valid schemas", () => {
               collectionId: "collectionId",
             },
           },
+        },
+      },
+      rootType: "Root",
+    },
+    expectedIssues: [],
+  });
+
+  test("type definitions with defaults", {
+    schema: {
+      types: {
+        Root: {
+          dataType: DataType.Struct,
+          properties: {
+            title: { dataType: DataType.String, default: "Untitled" },
+            priority: { dataType: DataType.Number, default: 0 },
+            archived: { dataType: DataType.Boolean, default: false },
+            stage: { dataType: null, ref: "Stage" },
+          },
+        },
+        Stage: {
+          dataType: DataType.Enum,
+          members: {
+            Backlog: { value: "Backlog" },
+            Done: { value: "Done" },
+          },
+          default: "Backlog",
         },
       },
       rootType: "Root",

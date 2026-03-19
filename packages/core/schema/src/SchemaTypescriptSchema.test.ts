@@ -45,6 +45,8 @@ it("exports the Schema type definition", () => {
       dataType: DataType.String;
       /** Id of the format the string value must abide by. */
       format?: string | undefined;
+      /** Default value for this type definition. */
+      default?: string | undefined;
     }
 
     interface EnumMember extends Described {
@@ -65,16 +67,25 @@ it("exports the Schema type definition", () => {
        * - **Must** not contain duplicates.
        */
       membersOrder?: string[] | undefined;
+      /**
+       * Default member for this enum. If specified, **must** be a key present in
+       * {@link members}.
+       */
+      default?: string | undefined;
     }
 
     interface NumberTypeDefinition extends Described {
       dataType: DataType.Number;
       /** Id of the format the number value must abide by. */
       format?: string | undefined;
+      /** Default value for this type definition. */
+      default?: number | undefined;
     }
 
     interface BooleanTypeDefinition extends Described {
       dataType: DataType.Boolean;
+      /** Default value for this type definition. */
+      default?: boolean | undefined;
     }
 
     interface StringLiteralTypeDefinition extends Described {

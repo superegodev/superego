@@ -10,10 +10,15 @@ export default function typeDefinitionValue(
   schema: Schema,
 ): any {
   switch (typeDefinition.dataType) {
-    case DataType.String:
     case DataType.Enum:
+      if (typeDefinition.default !== undefined) {
+        return typeDefinition.members[typeDefinition.default]!.value;
+      }
+      return null;
+    case DataType.String:
     case DataType.Number:
     case DataType.Boolean:
+      return typeDefinition.default ?? null;
     case DataType.JsonObject:
     case DataType.File:
       return null;

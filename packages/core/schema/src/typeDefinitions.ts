@@ -8,6 +8,8 @@ export interface StringTypeDefinition extends Described {
   dataType: DataType.String;
   /** Id of the format the string value must abide by. */
   format?: string | undefined;
+  /** Default value for this type definition. */
+  default?: string | undefined;
 }
 
 export interface EnumMember extends Described {
@@ -28,16 +30,25 @@ export interface EnumTypeDefinition extends Described {
    * - **Must** not contain duplicates.
    */
   membersOrder?: string[] | undefined;
+  /**
+   * Default member for this enum. If specified, **must** be a key present in
+   * {@link members}.
+   */
+  default?: string | undefined;
 }
 
 export interface NumberTypeDefinition extends Described {
   dataType: DataType.Number;
   /** Id of the format the number value must abide by. */
   format?: string | undefined;
+  /** Default value for this type definition. */
+  default?: number | undefined;
 }
 
 export interface BooleanTypeDefinition extends Described {
   dataType: DataType.Boolean;
+  /** Default value for this type definition. */
+  default?: boolean | undefined;
 }
 
 export interface StringLiteralTypeDefinition extends Described {
