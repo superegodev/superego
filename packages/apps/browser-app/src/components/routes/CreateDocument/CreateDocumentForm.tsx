@@ -36,8 +36,13 @@ export default function CreateDocumentForm({
     useState<DuplicateDocumentDetected | null>(null);
   const [pendingContent, setPendingContent] = useState<any>(null);
 
+  const defaultDocumentContent =
+    collection.latestVersion.settings.defaultDocumentContent;
   const { control, handleSubmit } = useForm<any>({
-    defaultValues: forms.defaults.schemaValue(schema),
+    defaultValues:
+      defaultDocumentContent !== null
+        ? forms.utils.RHFContent.toRHFContent(defaultDocumentContent, schema)
+        : forms.defaults.schemaValue(schema),
     mode: "onSubmit",
     resolver: standardSchemaResolver(valibotSchemas.content(schema, "rhf")),
   });

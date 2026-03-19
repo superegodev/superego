@@ -34,6 +34,7 @@ into a single `pack.mpk` file.
     content
   - `contentBlockingKeysGetter.ts` - (optional) Function to derive
     duplicate-detection keys
+  - `defaultDocumentContent.json` - (optional) Default content for new documents
   - `defaultDocumentViewUiOptions.json` - (optional) Custom UI layout for the
     document view
 - `demo-documents/` - (optional) Demo documents for previewing

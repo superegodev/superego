@@ -14,12 +14,6 @@
   "Ask.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
   },
-  "AssistantsSettings.tsx_mTE6Ss": {
-    "defaultMessage": "Prompt per sviluppatori di Collection Creator"
-  },
-  "AssistantsSettings.tsx_qmPVim": {
-    "defaultMessage": "Prompt per sviluppatori di Factotum"
-  },
   "AssistantsSettings.tsx_MyqNS6": {
     "defaultMessage": "Nome: Sigmund. Nascita: 6 maggio 1856"
   },
@@ -28,6 +22,12 @@
   },
   "AssistantsSettings.tsx_c2z6MR": {
     "defaultMessage": "Su di te"
+  },
+  "AssistantsSettings.tsx_mTE6Ss": {
+    "defaultMessage": "Prompt per sviluppatori di Collection Creator"
+  },
+  "AssistantsSettings.tsx_qmPVim": {
+    "defaultMessage": "Prompt per sviluppatori di Factotum"
   },
   "AssistantsSettings.tsx_xIOlmn": {
     "defaultMessage": "Le tue preferenze"
@@ -110,6 +110,12 @@
   "BackgroundJobsTable.tsx_tzMNF3": {
     "defaultMessage": "Stato"
   },
+  "BooleanField.tsx_KKkUks": {
+    "defaultMessage": "Vero"
+  },
+  "BooleanField.tsx_rxqs5U": {
+    "defaultMessage": "Falso"
+  },
   "Boutique.tsx_J4ocUB": {
     "defaultMessage": "Boutique"
   },
@@ -125,12 +131,6 @@
   "BoutiquePack.tsx_AHlDyN": {
     "defaultMessage": "Boutique » {packId}"
   },
-  "BooleanField.tsx_KKkUks": {
-    "defaultMessage": "Vero"
-  },
-  "BooleanField.tsx_rxqs5U": {
-    "defaultMessage": "Falso"
-  },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Errore durante il caricamento dell'app"
   },
@@ -142,6 +142,15 @@
   },
   "BucketTimelineNode.tsx_eF7IVx": {
     "defaultMessage": "{label} ({count} versioni)"
+  },
+  "Capabilities.tsx_HjTr28": {
+    "defaultMessage": "Supporta la comprensione delle immagini"
+  },
+  "Capabilities.tsx_KihMPW": {
+    "defaultMessage": "Supporta la comprensione audio"
+  },
+  "Capabilities.tsx_xRp25e": {
+    "defaultMessage": "Supporta la comprensione PDF"
   },
   "Carousel.tsx_F+ukuP": {
     "defaultMessage": "Immagine successiva"
@@ -263,11 +272,11 @@
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Elimina conversazione"
   },
-  "Conversation.tsx_eq3LES": {
-    "defaultMessage": "🤖 Conversazioni » {conversation}"
-  },
   "Conversation.tsx_A4DzYS": {
     "defaultMessage": "Mostra le tool call"
+  },
+  "Conversation.tsx_eq3LES": {
+    "defaultMessage": "🤖 Conversazioni » {conversation}"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
@@ -383,26 +392,29 @@
   "CreateNewCollectionVersion.tsx_WgkS3f": {
     "defaultMessage": "{collection} » Crea nuova versione"
   },
+  "CreateNewCollectionVersionForm.tsx_/q1jgk": {
+    "defaultMessage": "6. Migrazione"
+  },
   "CreateNewCollectionVersionForm.tsx_2n41AE": {
     "defaultMessage": "Creata nuova versione della collezione"
   },
-  "CreateNewCollectionVersionForm.tsx_FQCqoH": {
-    "defaultMessage": "5. Migrazione"
+  "CreateNewCollectionVersionForm.tsx_B8ejT5": {
+    "defaultMessage": "5. Opzioni UI"
   },
   "CreateNewCollectionVersionForm.tsx_HxoW8w": {
     "defaultMessage": "3. Sommario dei contenuti"
   },
-  "CreateNewCollectionVersionForm.tsx_dISRjb": {
-    "defaultMessage": "4. Opzioni UI"
+  "CreateNewCollectionVersionForm.tsx_N7Izrw": {
+    "defaultMessage": "6. Convertitori remoti"
+  },
+  "CreateNewCollectionVersionForm.tsx_hYwzDX": {
+    "defaultMessage": "4. Contenuto predefinito"
   },
   "CreateNewCollectionVersionForm.tsx_jacE9I": {
     "defaultMessage": "1. Schema"
   },
   "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
     "defaultMessage": "2. Deduplicazione"
-  },
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": {
-    "defaultMessage": "5. Convertitori remoti"
   },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
@@ -497,21 +509,6 @@
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Conferma comando"
   },
-  "ModalContent.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "ModalContent.tsx_K3r6DQ": {
-    "defaultMessage": "Elimina"
-  },
-  "ModalContent.tsx_cpePvc": {
-    "defaultMessage": "Elimina il documento \"{documentName}\""
-  },
-  "ModalContent.tsx_lml5ZH": {
-    "defaultMessage": "Conferma comando"
-  },
-  "ModalContent.tsx_qjTjxw": {
-    "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
-  },
   "Document.tsx_AB6IO/": {
     "defaultMessage": "Vai al documento remoto"
   },
@@ -545,11 +542,11 @@
   "DocumentInfoModal.tsx_gm5+Hy": {
     "defaultMessage": "ID collezione:"
   },
-  "DocumentInfoModal.tsx_i3P6ZD": {
-    "defaultMessage": "Creato il:"
-  },
   "DocumentInfoModal.tsx_h6SlY+": {
     "defaultMessage": "ID documento remoto:"
+  },
+  "DocumentInfoModal.tsx_i3P6ZD": {
+    "defaultMessage": "Creato il:"
   },
   "DocumentInfoModal.tsx_nY1/sq": {
     "defaultMessage": "ID versione documento remoto:"
@@ -890,11 +887,11 @@
   "Header.tsx_zpIkYq": {
     "defaultMessage": "Crea categoria di collezioni"
   },
-  "Hero.tsx_OpKKos": {
-    "defaultMessage": "Ciao!"
-  },
   "Hero.tsx_BrZb1S": {
     "defaultMessage": "Il software che si adatta a te"
+  },
+  "Hero.tsx_OpKKos": {
+    "defaultMessage": "Ciao!"
   },
   "Hero.tsx_q4FNnF": {
     "defaultMessage": "Superego"
@@ -962,56 +959,8 @@
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Avviso di incompatibilità"
   },
-  "Capabilities.tsx_HjTr28": {
-    "defaultMessage": "Supporta la comprensione delle immagini"
-  },
-  "Capabilities.tsx_KihMPW": {
-    "defaultMessage": "Supporta la comprensione audio"
-  },
-  "Capabilities.tsx_xRp25e": {
-    "defaultMessage": "Supporta la comprensione PDF"
-  },
   "InferenceSettings.tsx_P817ae": {
     "defaultMessage": "Configura un <b>fornitore di inferenza</b> per abilitare l'assistente. Un modello con capacità di comprensione audio è necessario per la funzione \"parla\"."
-  },
-  "Model.tsx_G/yZLu": {
-    "defaultMessage": "Rimuovi"
-  },
-  "Model.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "Model.tsx_qlcuNQ": {
-    "defaultMessage": "ID"
-  },
-  "ModelActionMenu.tsx_SikIJG": {
-    "defaultMessage": "(precedentemente usato)"
-  },
-  "Provider.tsx_G/yZLu": {
-    "defaultMessage": "Rimuovi"
-  },
-  "Provider.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "Provider.tsx_KTNoOq": {
-    "defaultMessage": "Chiave API"
-  },
-  "Provider.tsx_MbbFzn": {
-    "defaultMessage": "Driver"
-  },
-  "Provider.tsx_blWvag": {
-    "defaultMessage": "Modelli"
-  },
-  "Provider.tsx_dqWH5L": {
-    "defaultMessage": "URL di base"
-  },
-  "Provider.tsx_zUO6Ii": {
-    "defaultMessage": "Aggiungi modello"
-  },
-  "Providers.tsx_+goFsL": {
-    "defaultMessage": "Aggiungi provider"
-  },
-  "Providers.tsx_IL1Uey": {
-    "defaultMessage": "Provider"
   },
   "InstallPackModal.tsx_+Toiai": {
     "defaultMessage": "saranno installati."
@@ -1082,6 +1031,36 @@
   "MigrationTab.tsx_i8zErH": {
     "defaultMessage": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
   },
+  "ModalContent.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "ModalContent.tsx_K3r6DQ": {
+    "defaultMessage": "Elimina"
+  },
+  "ModalContent.tsx_cpePvc": {
+    "defaultMessage": "Elimina il documento \"{documentName}\""
+  },
+  "ModalContent.tsx_lml5ZH": {
+    "defaultMessage": "Conferma comando"
+  },
+  "ModalContent.tsx_qjTjxw": {
+    "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
+  },
+  "Model.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "Model.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "Model.tsx_qlcuNQ": {
+    "defaultMessage": "ID"
+  },
+  "ModelActionMenu.tsx_SikIJG": {
+    "defaultMessage": "(precedentemente usato)"
+  },
+  "ModelSelect.tsx_rhSI1/": {
+    "defaultMessage": "Modello"
+  },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
   },
@@ -1100,11 +1079,11 @@
   "PackEntityCounts.tsx_pKXETD": {
     "defaultMessage": "{collectionsCount, plural, one {# collezione} other {# collezioni}}"
   },
-  "PackMainPanel.tsx_OYAe1w": {
-    "defaultMessage": "Boutique » {packName}"
-  },
   "PackMainPanel.tsx_HUc4Bb": {
     "defaultMessage": "Mostra/nascondi anteprima collezioni"
+  },
+  "PackMainPanel.tsx_OYAe1w": {
+    "defaultMessage": "Boutique » {packName}"
   },
   "PackMainPanel.tsx_hgmRAL": {
     "defaultMessage": "Pack personalizzati » {packName}"
@@ -1154,6 +1133,33 @@
   "PrimarySidebarPanel.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
   },
+  "Provider.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "Provider.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "Provider.tsx_KTNoOq": {
+    "defaultMessage": "Chiave API"
+  },
+  "Provider.tsx_MbbFzn": {
+    "defaultMessage": "Driver"
+  },
+  "Provider.tsx_blWvag": {
+    "defaultMessage": "Modelli"
+  },
+  "Provider.tsx_dqWH5L": {
+    "defaultMessage": "URL di base"
+  },
+  "Provider.tsx_zUO6Ii": {
+    "defaultMessage": "Aggiungi modello"
+  },
+  "Providers.tsx_+goFsL": {
+    "defaultMessage": "Aggiungi provider"
+  },
+  "Providers.tsx_IL1Uey": {
+    "defaultMessage": "Provider"
+  },
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
     "defaultMessage": "Getter delle content blocking keys"
   },
@@ -1171,6 +1177,21 @@
   },
   "RHFContentSummaryGetterField.tsx_BmNFs6": {
     "defaultMessage": "<p> Il <b>sommario dei contenuti</b> di un documento è un <code>Record'<name: string, value: string | number | boolean | null>'</code>, derivato dal contenuto del documento, che raccoglie le informazioni più importanti. Le proprietà del record vengono mostrate quando si visualizza una \"vista sommario\" del documento; ad esempio nelle tabelle, dove ogni proprietà diventa una colonna. </p> <p> Il <b>content summary getter</b> è la funzione TypeScript che ricava il sommario dal contenuto del documento. </p> <p> I nomi delle proprietà dell'oggetto sommario possono essere preceduti da attributi che configurano il comportamento delle interfacce che lo mostrano. Ad esempio, quando si renderizza una tabella di documenti, <code>'{position:0,sortable:true,default-sort:asc}' Nome</code> rende <code>Nome</code> la prima colonna, la rende ordinabile e imposta la colonna come ordinamento predefinito della tabella. </p>"
+  },
+  "RHFDefaultDocumentContentField.tsx_9CnsYv": {
+    "defaultMessage": "Stringa JSON non valida"
+  },
+  "RHFDefaultDocumentContentField.tsx_A89PQ/": {
+    "defaultMessage": "A"
+  },
+  "RHFDefaultDocumentContentField.tsx_Lz0uen": {
+    "defaultMessage": "Imposta valori predefiniti per i nuovi documenti creati in questa raccolta. Il contenuto deve corrispondere allo schema della raccolta."
+  },
+  "RHFDefaultDocumentContentField.tsx_fzzo03": {
+    "defaultMessage": "Abilita contenuto predefinito del documento"
+  },
+  "RHFDefaultDocumentContentField.tsx_yZecZ3": {
+    "defaultMessage": "Definisce il contenuto predefinito per i nuovi documenti in questa raccolta."
   },
   "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
@@ -1195,6 +1216,24 @@
   },
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+  },
+  "ReasoningEffortSelect.tsx_2X1lvg": {
+    "defaultMessage": "Sforzo di ragionamento"
+  },
+  "ReasoningEffortSelect.tsx_450Fty": {
+    "defaultMessage": "Nessuno"
+  },
+  "ReasoningEffortSelect.tsx_477I0g": {
+    "defaultMessage": "Basso"
+  },
+  "ReasoningEffortSelect.tsx_AxMhQr": {
+    "defaultMessage": "Alto"
+  },
+  "ReasoningEffortSelect.tsx_kDEj60": {
+    "defaultMessage": "Extra alto"
+  },
+  "ReasoningEffortSelect.tsx_ovJ26C": {
+    "defaultMessage": "Medio"
   },
   "Remote.tsx_s8FZNF": {
     "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
@@ -1397,6 +1436,234 @@
   "SuggestCollectionsDefinitions.tsx_wNj/kt": {
     "defaultMessage": "Errore durante la creazione delle collezioni"
   },
+  "ThinkingTime.tsx_O5Mn+P": {
+    "defaultMessage": "{model} ha pensato per {time}"
+  },
+  "TimeInputWithMilliseconds.tsx_/w7Rru": {
+    "defaultMessage": "Millisecondi"
+  },
+  "Title.tsx_8yzKPa": {
+    "defaultMessage": "Crea documenti"
+  },
+  "Title.tsx_9Hs+7t": {
+    "defaultMessage": "Crea grafico da {collections}"
+  },
+  "Title.tsx_LOghU6": {
+    "defaultMessage": "Riuscito"
+  },
+  "Title.tsx_RG9Nzq": {
+    "defaultMessage": "Ottieni lo schema TypeScript per {collection}"
+  },
+  "Title.tsx_T0B1v2": {
+    "defaultMessage": "Esegui la funzione TypeScript su {collections}"
+  },
+  "Title.tsx_XnBm2q": {
+    "defaultMessage": "Nessuna risposta"
+  },
+  "Title.tsx_fBfv7E": {
+    "defaultMessage": "Crea mappa da {collections}"
+  },
+  "Title.tsx_foZAHu": {
+    "defaultMessage": "Chiama strumento: {tool}"
+  },
+  "Title.tsx_oHtaJ1": {
+    "defaultMessage": "Crea tabella dei documenti da {collections}"
+  },
+  "Title.tsx_vXCeIi": {
+    "defaultMessage": "Fallito"
+  },
+  "Title.tsx_vlxsWA": {
+    "defaultMessage": "Crea una nuova versione del documento in {collection}"
+  },
+  "Toast.tsx_Lv0zJu": {
+    "defaultMessage": "Dettagli"
+  },
+  "Toast.tsx_rbrahO": {
+    "defaultMessage": "Chiudi"
+  },
+  "TokenUsage.tsx_6nAVv6": {
+    "defaultMessage": "Messaggio + {toolCallCount, plural, one {# chiamata strumento} other {# chiamate strumento}}"
+  },
+  "TokenUsage.tsx_MJ2jZQ": {
+    "defaultMessage": "Totale"
+  },
+  "TokenUsage.tsx_Wk7BO4": {
+    "defaultMessage": "{totalTokens} token"
+  },
+  "TokenUsage.tsx_fBG/Ge": {
+    "defaultMessage": "Costo"
+  },
+  "TokenUsage.tsx_fio5op": {
+    "defaultMessage": "Output"
+  },
+  "TokenUsage.tsx_it6Lig": {
+    "defaultMessage": "Input"
+  },
+  "ToolCallResult.tsx_yq9SNC": {
+    "defaultMessage": "Questa chiamata non ha alcun risultato."
+  },
+  "TrayFile.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "UpdateCollectionSettingsForm.tsx_1W2oHf": {
+    "defaultMessage": "Istruzioni dell'assistente"
+  },
+  "UpdateCollectionSettingsForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
+    "defaultMessage": "Descrizione"
+  },
+  "UpdateCollectionSettingsForm.tsx_kk4TVW": {
+    "defaultMessage": "Icona"
+  },
+  "UpdateCollectionSettingsForm.tsx_muqizb": {
+    "defaultMessage": "Salva impostazioni"
+  },
+  "UpdateCollectionSettingsForm.tsx_qmIyad": {
+    "defaultMessage": "Istruzioni specifiche per questa collezione da passare all'assistente."
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": {
+    "defaultMessage": "Sommario dei contenuti"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": {
+    "defaultMessage": "Opzioni UI della vista documento"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": {
+    "defaultMessage": "Deduplicazione"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
+    "defaultMessage": "Salva le impostazioni della versione della collezione"
+  },
+  "UpdateCollectionVersionSettingsForm.tsx_wH+PSV": {
+    "defaultMessage": "Contenuto predefinito del documento"
+  },
+  "UpdateGlobalSettingsForm.tsx_2GURQY": {
+    "defaultMessage": "Aspetto"
+  },
+  "UpdateGlobalSettingsForm.tsx_jvrMfo": {
+    "defaultMessage": "Assistenti"
+  },
+  "UpdateGlobalSettingsForm.tsx_n0wQL1": {
+    "defaultMessage": "Inferenza"
+  },
+  "UpdateGlobalSettingsForm.tsx_pbF7L9": {
+    "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
+  },
+  "UpdateNameModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "UpdateNameModalForm.tsx_BWpuKl": {
+    "defaultMessage": "Aggiorna"
+  },
+  "UpdateNameModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateNameModalForm.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "UpdateNameModalForm.tsx_btR6aV": {
+    "defaultMessage": "Aggiorna il nome dell'app"
+  },
+  "UserMessage.tsx_J3ca41": {
+    "defaultMessage": "Riproduci"
+  },
+  "UserMessage.tsx_Wf1OoY": {
+    "defaultMessage": "Trascrizione audio in corso..."
+  },
+  "UserMessage.tsx_tFFMkF": {
+    "defaultMessage": "Pausa"
+  },
+  "UserMessageContentInput.tsx_8MXjTC": {
+    "defaultMessage": "Configura l'assistente per iniziare a chattare"
+  },
+  "UserMessageContentInput.tsx_XE7R4v": {
+    "defaultMessage": "Invia messaggio all'assistente"
+  },
+  "UserMessageContentInput.tsx_yvK6cX": {
+    "defaultMessage": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
+  },
+  "Welcome.tsx_C3+BqB": {
+    "defaultMessage": "Per iniziare:"
+  },
+  "Welcome.tsx_NZjpCr": {
+    "defaultMessage": "<settingsLink>Configura l'assistente AI</settingsLink>."
+  },
+  "Welcome.tsx_mD6yYG": {
+    "defaultMessage": "<createCollectionLink>Crea la tua prima collezione</createCollectionLink>, o <boutiqueLink>installane una già pronta</boutiqueLink> dal Boutique."
+  },
+  "Welcome.tsx_mNIlLz": {
+    "defaultMessage": "<createAppLink>Crea la tua prima app</createAppLink>."
+  },
+  "downloadFile.ts_sG8Krh": {
+    "defaultMessage": "Download del file non riuscito"
+  },
+  "formatDuration.ts_26OSN4": {
+    "defaultMessage": "{minutes, plural, one {1 minuto} other {# minuti}} {seconds} secondi"
+  },
+  "formatDuration.ts_lf6GDO": {
+    "defaultMessage": "{seconds, number, ::.##} secondi"
+  },
+  "getDownSyncAction.tsx_IJWuS/": {
+    "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
+  },
+  "getDownSyncAction.tsx_RRA+40": {
+    "defaultMessage": "Autenticati con {remote}"
+  },
+  "getDownSyncAction.tsx_dKtz/9": {
+    "defaultMessage": "Sincronizza"
+  },
+  "getDownSyncAction.tsx_eOnwqs": {
+    "defaultMessage": "Sincronizzazione in corso"
+  },
+  "getDownSyncAction.tsx_mG35sa": {
+    "defaultMessage": "Ultima sincronizzazione non riuscita"
+  },
+  "getIntlMessages.ts_/GCoTA": {
+    "defaultMessage": "Cancella"
+  },
+  "getIntlMessages.ts_1nnRAQ": {
+    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
+  },
+  "getIntlMessages.ts_8mRNBD": {
+    "defaultMessage": "Mese precedente"
+  },
+  "getIntlMessages.ts_FUqf3/": {
+    "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
+  },
+  "getIntlMessages.ts_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "getIntlMessages.ts_PqmLVn": {
+    "defaultMessage": "Mese successivo"
+  },
+  "getIntlMessages.ts_PyA0WU": {
+    "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
+  },
+  "getIntlMessages.ts_UfI09W": {
+    "defaultMessage": "Si è verificato un errore durante l'importazione dell'app."
+  },
+  "getIntlMessages.ts_XBQLkj": {
+    "defaultMessage": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
+  },
+  "getIntlMessages.ts_bzhBew": {
+    "defaultMessage": "Si è verificato un errore durante il rendering dell'app."
+  },
+  "getIntlMessages.ts_eIxrAW": {
+    "defaultMessage": "Questa app ha accesso alle seguenti collezioni:"
+  },
+  "getIntlMessages.ts_hPMG1H": {
+    "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
+  },
+  "getIntlMessages.ts_r5pj/5": {
+    "defaultMessage": "Trascina"
+  },
+  "getIntlMessages.ts_rbrahO": {
+    "defaultMessage": "Chiudi"
+  },
+  "getIntlMessages.ts_zWgbGg": {
+    "defaultMessage": "Oggi"
+  },
   "getStatusText.ts_+cQcX2": {
     "defaultMessage": "creazione di mappe da usare nella risposta"
   },
@@ -1504,252 +1771,6 @@
   },
   "getStatusText.ts_uf3oCA": {
     "defaultMessage": "creazione di nuovi documenti"
-  },
-  "ThinkingTime.tsx_O5Mn+P": {
-    "defaultMessage": "{model} ha pensato per {time}"
-  },
-  "TimeInputWithMilliseconds.tsx_/w7Rru": {
-    "defaultMessage": "Millisecondi"
-  },
-  "Title.tsx_8yzKPa": {
-    "defaultMessage": "Crea documenti"
-  },
-  "Title.tsx_9Hs+7t": {
-    "defaultMessage": "Crea grafico da {collections}"
-  },
-  "Title.tsx_LOghU6": {
-    "defaultMessage": "Riuscito"
-  },
-  "Title.tsx_RG9Nzq": {
-    "defaultMessage": "Ottieni lo schema TypeScript per {collection}"
-  },
-  "Title.tsx_T0B1v2": {
-    "defaultMessage": "Esegui la funzione TypeScript su {collections}"
-  },
-  "Title.tsx_XnBm2q": {
-    "defaultMessage": "Nessuna risposta"
-  },
-  "Title.tsx_fBfv7E": {
-    "defaultMessage": "Crea mappa da {collections}"
-  },
-  "Title.tsx_foZAHu": {
-    "defaultMessage": "Chiama strumento: {tool}"
-  },
-  "Title.tsx_oHtaJ1": {
-    "defaultMessage": "Crea tabella dei documenti da {collections}"
-  },
-  "Title.tsx_vXCeIi": {
-    "defaultMessage": "Fallito"
-  },
-  "Title.tsx_vlxsWA": {
-    "defaultMessage": "Crea una nuova versione del documento in {collection}"
-  },
-  "Toast.tsx_Lv0zJu": {
-    "defaultMessage": "Dettagli"
-  },
-  "Toast.tsx_rbrahO": {
-    "defaultMessage": "Chiudi"
-  },
-  "TokenUsage.tsx_MJ2jZQ": {
-    "defaultMessage": "Totale"
-  },
-  "TokenUsage.tsx_Wk7BO4": {
-    "defaultMessage": "{totalTokens} token"
-  },
-  "TokenUsage.tsx_fBG/Ge": {
-    "defaultMessage": "Costo"
-  },
-  "TokenUsage.tsx_fio5op": {
-    "defaultMessage": "Output"
-  },
-  "TokenUsage.tsx_it6Lig": {
-    "defaultMessage": "Input"
-  },
-  "TokenUsage.tsx_6nAVv6": {
-    "defaultMessage": "Messaggio + {toolCallCount, plural, one {# chiamata strumento} other {# chiamate strumento}}"
-  },
-  "ToolCallResult.tsx_yq9SNC": {
-    "defaultMessage": "Questa chiamata non ha alcun risultato."
-  },
-  "TrayFile.tsx_G/yZLu": {
-    "defaultMessage": "Rimuovi"
-  },
-  "UpdateCollectionSettingsForm.tsx_1W2oHf": {
-    "defaultMessage": "Istruzioni dell'assistente"
-  },
-  "UpdateCollectionSettingsForm.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
-    "defaultMessage": "Descrizione"
-  },
-  "UpdateCollectionSettingsForm.tsx_kk4TVW": {
-    "defaultMessage": "Icona"
-  },
-  "UpdateCollectionSettingsForm.tsx_muqizb": {
-    "defaultMessage": "Salva impostazioni"
-  },
-  "UpdateCollectionSettingsForm.tsx_qmIyad": {
-    "defaultMessage": "Istruzioni specifiche per questa collezione da passare all'assistente."
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_AERMcJ": {
-    "defaultMessage": "Sommario dei contenuti"
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_U64U7V": {
-    "defaultMessage": "Opzioni UI della vista documento"
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_dPkbhX": {
-    "defaultMessage": "Deduplicazione"
-  },
-  "UpdateCollectionVersionSettingsForm.tsx_qTBVbt": {
-    "defaultMessage": "Salva le impostazioni della versione della collezione"
-  },
-  "UpdateGlobalSettingsForm.tsx_2GURQY": {
-    "defaultMessage": "Aspetto"
-  },
-  "UpdateGlobalSettingsForm.tsx_jvrMfo": {
-    "defaultMessage": "Assistenti"
-  },
-  "UpdateGlobalSettingsForm.tsx_n0wQL1": {
-    "defaultMessage": "Inferenza"
-  },
-  "UpdateGlobalSettingsForm.tsx_pbF7L9": {
-    "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
-  },
-  "UpdateNameModalForm.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "UpdateNameModalForm.tsx_BWpuKl": {
-    "defaultMessage": "Aggiorna"
-  },
-  "UpdateNameModalForm.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "UpdateNameModalForm.tsx_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "UpdateNameModalForm.tsx_btR6aV": {
-    "defaultMessage": "Aggiorna il nome dell'app"
-  },
-  "UserMessage.tsx_J3ca41": {
-    "defaultMessage": "Riproduci"
-  },
-  "UserMessage.tsx_Wf1OoY": {
-    "defaultMessage": "Trascrizione audio in corso..."
-  },
-  "UserMessage.tsx_tFFMkF": {
-    "defaultMessage": "Pausa"
-  },
-  "UserMessageContentInput.tsx_8MXjTC": {
-    "defaultMessage": "Configura l'assistente per iniziare a chattare"
-  },
-  "UserMessageContentInput.tsx_XE7R4v": {
-    "defaultMessage": "Invia messaggio all'assistente"
-  },
-  "ModelSelect.tsx_rhSI1/": {
-    "defaultMessage": "Modello"
-  },
-  "ReasoningEffortSelect.tsx_2X1lvg": {
-    "defaultMessage": "Sforzo di ragionamento"
-  },
-  "ReasoningEffortSelect.tsx_450Fty": {
-    "defaultMessage": "Nessuno"
-  },
-  "ReasoningEffortSelect.tsx_477I0g": {
-    "defaultMessage": "Basso"
-  },
-  "ReasoningEffortSelect.tsx_AxMhQr": {
-    "defaultMessage": "Alto"
-  },
-  "ReasoningEffortSelect.tsx_kDEj60": {
-    "defaultMessage": "Extra alto"
-  },
-  "ReasoningEffortSelect.tsx_ovJ26C": {
-    "defaultMessage": "Medio"
-  },
-  "UserMessageContentInput.tsx_yvK6cX": {
-    "defaultMessage": "Le tue collezioni sono cambiate dopo questa conversazione. Non può essere continuata."
-  },
-  "Welcome.tsx_C3+BqB": {
-    "defaultMessage": "Per iniziare:"
-  },
-  "Welcome.tsx_NZjpCr": {
-    "defaultMessage": "<settingsLink>Configura l'assistente AI</settingsLink>."
-  },
-  "Welcome.tsx_mD6yYG": {
-    "defaultMessage": "<createCollectionLink>Crea la tua prima collezione</createCollectionLink>, o <boutiqueLink>installane una già pronta</boutiqueLink> dal Boutique."
-  },
-  "Welcome.tsx_mNIlLz": {
-    "defaultMessage": "<createAppLink>Crea la tua prima app</createAppLink>."
-  },
-  "downloadFile.ts_sG8Krh": {
-    "defaultMessage": "Download del file non riuscito"
-  },
-  "formatDuration.ts_26OSN4": {
-    "defaultMessage": "{minutes, plural, one {1 minuto} other {# minuti}} {seconds} secondi"
-  },
-  "formatDuration.ts_lf6GDO": {
-    "defaultMessage": "{seconds, number, ::.##} secondi"
-  },
-  "getDownSyncAction.tsx_IJWuS/": {
-    "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
-  },
-  "getDownSyncAction.tsx_RRA+40": {
-    "defaultMessage": "Autenticati con {remote}"
-  },
-  "getDownSyncAction.tsx_dKtz/9": {
-    "defaultMessage": "Sincronizza"
-  },
-  "getDownSyncAction.tsx_eOnwqs": {
-    "defaultMessage": "Sincronizzazione in corso"
-  },
-  "getDownSyncAction.tsx_mG35sa": {
-    "defaultMessage": "Ultima sincronizzazione non riuscita"
-  },
-  "getIntlMessages.ts_/GCoTA": {
-    "defaultMessage": "Cancella"
-  },
-  "getIntlMessages.ts_1nnRAQ": {
-    "defaultMessage": "Si è verificato un errore durante il rendering del grafico."
-  },
-  "getIntlMessages.ts_8mRNBD": {
-    "defaultMessage": "Mese precedente"
-  },
-  "getIntlMessages.ts_FUqf3/": {
-    "defaultMessage": "Si è verificato un errore durante il rendering della mappa."
-  },
-  "getIntlMessages.ts_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "getIntlMessages.ts_PqmLVn": {
-    "defaultMessage": "Mese successivo"
-  },
-  "getIntlMessages.ts_PyA0WU": {
-    "defaultMessage": "Puoi vibe-codare l'app chiedendo all'assistente."
-  },
-  "getIntlMessages.ts_UfI09W": {
-    "defaultMessage": "Si è verificato un errore durante l'importazione dell'app."
-  },
-  "getIntlMessages.ts_XBQLkj": {
-    "defaultMessage": "Oppure puoi scrivere tu stesso il codice passando alla vista codice."
-  },
-  "getIntlMessages.ts_bzhBew": {
-    "defaultMessage": "Si è verificato un errore durante il rendering dell'app."
-  },
-  "getIntlMessages.ts_eIxrAW": {
-    "defaultMessage": "Questa app ha accesso alle seguenti collezioni:"
-  },
-  "getIntlMessages.ts_hPMG1H": {
-    "defaultMessage": "In questa sezione puoi vedere l'anteprima live della tua app."
-  },
-  "getIntlMessages.ts_r5pj/5": {
-    "defaultMessage": "Trascina"
-  },
-  "getIntlMessages.ts_rbrahO": {
-    "defaultMessage": "Chiudi"
-  },
-  "getIntlMessages.ts_zWgbGg": {
-    "defaultMessage": "Oggi"
   },
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Apertura del file non riuscita"

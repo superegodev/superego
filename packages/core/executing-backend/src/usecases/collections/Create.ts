@@ -10,6 +10,7 @@ import type {
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentContentNotValid,
   DefaultDocumentViewUiOptionsNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
@@ -56,6 +57,7 @@ export default class CollectionsCreate extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentContentNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
@@ -198,6 +200,23 @@ export default class CollectionsCreate extends Usecase<
       );
     }
 
+    // Validate defaultDocumentContent.
+    if (versionSettings.defaultDocumentContent !== null) {
+      const contentValidationResult = v.safeParse(
+        schemaValibotSchemas.content(resolvedSchema),
+        versionSettings.defaultDocumentContent,
+      );
+      if (!contentValidationResult.success) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentContentNotValid", {
+            collectionId: null,
+            collectionVersionId: null,
+            issues: makeValidationIssues(contentValidationResult.issues),
+          }),
+        );
+      }
+    }
+
     // Validate defaultDocumentViewUiOptions.
     if (versionSettings.defaultDocumentViewUiOptions !== null) {
       const uiOptionsValidationResult = v.safeParse(
@@ -240,6 +259,7 @@ export default class CollectionsCreate extends Usecase<
       settings: {
         contentBlockingKeysGetter: versionSettings.contentBlockingKeysGetter,
         contentSummaryGetter: versionSettings.contentSummaryGetter,
+        defaultDocumentContent: versionSettings.defaultDocumentContent,
         defaultDocumentViewUiOptions:
           versionSettings.defaultDocumentViewUiOptions,
       },

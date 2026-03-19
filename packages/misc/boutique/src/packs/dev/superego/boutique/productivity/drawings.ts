@@ -12,6 +12,7 @@ export default {
   },
   schema: drawingsSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

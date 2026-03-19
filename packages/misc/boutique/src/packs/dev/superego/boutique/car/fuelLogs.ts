@@ -16,6 +16,7 @@ export default {
   },
   schema: fuelLogsSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: {
       source: `
 import type { FuelLog } from "./CollectionSchema.js";

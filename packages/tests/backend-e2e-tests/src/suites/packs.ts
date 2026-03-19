@@ -79,6 +79,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -145,6 +146,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -220,6 +222,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -376,6 +379,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: {
                 fullWidth: false,
                 alwaysCollapsePrimarySidebar: false,
@@ -440,6 +444,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -566,6 +571,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -627,6 +633,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -696,6 +703,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -770,6 +778,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -897,6 +906,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -940,6 +950,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -979,6 +990,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -1227,6 +1239,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
                 compiled:
                   "export default function getContentSummary() { return {}; }",
               },
+              defaultDocumentContent: null,
               defaultDocumentViewUiOptions: null,
             },
           },

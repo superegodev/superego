@@ -108,6 +108,26 @@ export default async function compilePack(
       );
     }
 
+    // defaultDocumentContent.json (optional)
+    let defaultDocumentContent = null;
+    const defaultDocumentContentPath = join(
+      collectionDir,
+      "defaultDocumentContent.json",
+    );
+    if (existsSync(defaultDocumentContentPath)) {
+      const contentData = readJsonFile(defaultDocumentContentPath);
+      const contentResult = v.safeParse(
+        schemaValibotSchemas.content(schema),
+        contentData,
+      );
+      if (!contentResult.success) {
+        throw new Error(
+          `${collectionName}/defaultDocumentContent.json validation failed:\n${contentResult.issues.map((i) => i.message).join("\n")}`,
+        );
+      }
+      defaultDocumentContent = contentResult.output;
+    }
+
     // defaultDocumentViewUiOptions.json (optional)
     let defaultDocumentViewUiOptions = null;
     const defaultDocumentViewUiOptionsPath = join(
@@ -145,6 +165,7 @@ export default async function compilePack(
       versionSettings: {
         contentSummaryGetter,
         contentBlockingKeysGetter,
+        defaultDocumentContent,
         defaultDocumentViewUiOptions,
       },
     });

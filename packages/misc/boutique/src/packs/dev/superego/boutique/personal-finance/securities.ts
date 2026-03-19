@@ -12,6 +12,7 @@ export default {
   },
   schema: securitiesSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: {
       source: `
 import type { Security } from "./CollectionSchema.js";

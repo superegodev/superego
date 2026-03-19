@@ -468,6 +468,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });

@@ -12,6 +12,7 @@ export default {
   },
   schema: calendarEntriesSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

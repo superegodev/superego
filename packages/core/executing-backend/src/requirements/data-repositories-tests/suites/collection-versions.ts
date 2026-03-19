@@ -13,6 +13,7 @@ const schema: Schema = {
 const settings: CollectionVersionSettings = {
   contentBlockingKeysGetter: null,
   contentSummaryGetter: { source: "", compiled: "" },
+  defaultDocumentContent: null,
   defaultDocumentViewUiOptions: null,
 };
 
@@ -81,6 +82,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
           source: "updatedSource",
           compiled: "updatedCompiled",
         },
+        defaultDocumentContent: null,
         defaultDocumentViewUiOptions: null,
       },
     };

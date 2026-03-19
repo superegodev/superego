@@ -12,6 +12,14 @@ export default {
   },
   schema: tasksSchema,
   versionSettings: {
+    defaultDocumentContent: {
+      title: "",
+      description: null,
+      stage: "Backlog",
+      dueDate: null,
+      priority: 0,
+      archived: false,
+    },
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

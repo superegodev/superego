@@ -9,6 +9,7 @@ export default interface CreateNewCollectionVersionFormValues {
   schema: Schema;
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  defaultDocumentContent: any | null;
   defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
   migration: TypescriptModule | null;
   remoteConverters: RemoteConverters | null;

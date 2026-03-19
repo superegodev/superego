@@ -926,16 +926,22 @@
       "value": " » Create New Version"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_/q1jgk": [
+    {
+      "type": 0,
+      "value": "6. Migration"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_2n41AE": [
     {
       "type": 0,
       "value": "New collection version created"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_FQCqoH": [
+  "CreateNewCollectionVersionForm.tsx_B8ejT5": [
     {
       "type": 0,
-      "value": "5. Migration"
+      "value": "5. UI options"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_HxoW8w": [
@@ -944,10 +950,16 @@
       "value": "3. Content summary"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_dISRjb": [
+  "CreateNewCollectionVersionForm.tsx_N7Izrw": [
     {
       "type": 0,
-      "value": "4. UI options"
+      "value": "6. Remote converters"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_hYwzDX": [
+    {
+      "type": 0,
+      "value": "4. Default content"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
@@ -960,12 +972,6 @@
     {
       "type": 0,
       "value": "2. Deduplication"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
-    {
-      "type": 0,
-      "value": "5. Remote converters"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -3322,6 +3328,36 @@
       "value": "p"
     }
   ],
+  "RHFDefaultDocumentContentField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Not a valid JSON string"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "At"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_Lz0uen": [
+    {
+      "type": 0,
+      "value": "Set default values for new documents created in this collection. The content must match the collection schema."
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_fzzo03": [
+    {
+      "type": 0,
+      "value": "Enable default document content"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_yZecZ3": [
+    {
+      "type": 0,
+      "value": "Defines the default content for new documents in this collection."
+    }
+  ],
   "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4520,6 +4556,12 @@
     {
       "type": 0,
       "value": "Save collection version settings"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_wH+PSV": [
+    {
+      "type": 0,
+      "value": "Default document content"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_2GURQY": [

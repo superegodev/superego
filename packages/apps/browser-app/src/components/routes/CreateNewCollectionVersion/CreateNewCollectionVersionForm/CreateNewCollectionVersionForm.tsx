@@ -21,6 +21,7 @@ import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects
 import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
 import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
+import DefaultDocumentContentTab from "./DefaultDocumentContentTab.js";
 import DefaultDocumentViewUiOptionsTab from "./DefaultDocumentViewUiOptionsTab.js";
 import MigrationTab from "./MigrationTab.js";
 import RemoteConvertersTab from "./RemoteConvertersTab.js";
@@ -52,6 +53,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           collection.latestVersion.settings.contentBlockingKeysGetter,
         contentSummaryGetter:
           collection.latestVersion.settings.contentSummaryGetter,
+        defaultDocumentContent:
+          collection.latestVersion.settings.defaultDocumentContent,
         defaultDocumentViewUiOptions:
           collection.latestVersion.settings.defaultDocumentViewUiOptions,
         migration: CollectionUtils.hasRemote(collection)
@@ -75,6 +78,9 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
               forms.schemas.typescriptModule(intl),
             ),
             contentSummaryGetter: forms.schemas.typescriptModule(intl),
+            defaultDocumentContent: v.nullable(
+              valibotSchemas.content(currentSchema),
+            ),
             defaultDocumentViewUiOptions: v.nullable(
               sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
                 currentSchema,
@@ -95,6 +101,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       {
         contentBlockingKeysGetter: values.contentBlockingKeysGetter,
         contentSummaryGetter: values.contentSummaryGetter,
+        defaultDocumentContent: values.defaultDocumentContent,
         defaultDocumentViewUiOptions: values.defaultDocumentViewUiOptions,
       },
       values.migration,
@@ -219,10 +226,21 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           },
           {
             title: (
+              <TabTitle hasErrors={!!formState.errors.defaultDocumentContent}>
+                <FormattedMessage defaultMessage="4. Default content" />
+              </TabTitle>
+            ),
+            panel: (
+              <DefaultDocumentContentTab control={control} schema={schema} />
+            ),
+            isDisabled: !(isSchemaDirty && isSchemaValid),
+          },
+          {
+            title: (
               <TabTitle
                 hasErrors={!!formState.errors.defaultDocumentViewUiOptions}
               >
-                <FormattedMessage defaultMessage="4. UI options" />
+                <FormattedMessage defaultMessage="5. UI options" />
               </TabTitle>
             ),
             panel: (
@@ -237,7 +255,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.remoteConverters}>
-                    <FormattedMessage defaultMessage="5. Remote converters" />
+                    <FormattedMessage defaultMessage="6. Remote converters" />
                   </TabTitle>
                 ),
                 panel: (
@@ -256,7 +274,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ? {
                 title: (
                   <TabTitle hasErrors={!!formState.errors.migration}>
-                    <FormattedMessage defaultMessage="5. Migration" />
+                    <FormattedMessage defaultMessage="6. Migration" />
                   </TabTitle>
                 ),
                 panel: (

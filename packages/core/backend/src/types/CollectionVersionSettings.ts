@@ -9,5 +9,6 @@ export default interface CollectionVersionSettings {
    */
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  defaultDocumentContent: any | null;
   defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
 }

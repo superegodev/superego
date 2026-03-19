@@ -8,11 +8,13 @@ import type {
   CollectionVersionSettings,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentContentNotValid,
   DefaultDocumentViewUiOptionsNotValid,
   MakingContentBlockingKeysFailed,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
@@ -44,6 +46,7 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
     | ContentBlockingKeysGetterNotValid
     | MakingContentBlockingKeysFailed
     | ContentSummaryGetterNotValid
+    | DefaultDocumentContentNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {
@@ -109,6 +112,25 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
       }
     }
 
+    // Validate defaultDocumentContent.
+    if (settingsPatch.defaultDocumentContent !== undefined) {
+      if (settingsPatch.defaultDocumentContent !== null) {
+        const contentValidationResult = v.safeParse(
+          schemaValibotSchemas.content(latestVersion.schema),
+          settingsPatch.defaultDocumentContent,
+        );
+        if (!contentValidationResult.success) {
+          return makeUnsuccessfulResult(
+            makeResultError("DefaultDocumentContentNotValid", {
+              collectionId: id,
+              collectionVersionId: latestVersion.id,
+              issues: makeValidationIssues(contentValidationResult.issues),
+            }),
+          );
+        }
+      }
+    }
+
     // Validate defaultDocumentViewUiOptions.
     if (settingsPatch.defaultDocumentViewUiOptions !== undefined) {
       if (settingsPatch.defaultDocumentViewUiOptions !== null) {
@@ -140,6 +162,10 @@ export default class CollectionUpdateLatestVersionSettings extends Usecase<
         contentSummaryGetter:
           settingsPatch.contentSummaryGetter ??
           latestVersion.settings.contentSummaryGetter,
+        defaultDocumentContent:
+          settingsPatch.defaultDocumentContent !== undefined
+            ? settingsPatch.defaultDocumentContent
+            : latestVersion.settings.defaultDocumentContent,
         defaultDocumentViewUiOptions:
           settingsPatch.defaultDocumentViewUiOptions !== undefined
             ? settingsPatch.defaultDocumentViewUiOptions

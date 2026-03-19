@@ -10,6 +10,7 @@ import type {
   CollectionSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentContentNotValid,
   DefaultDocumentViewUiOptionsNotValid,
   ReferencedCollectionsNotFound,
   UnexpectedError,
@@ -50,6 +51,7 @@ export default class CollectionsCreateMany extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentContentNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | UnexpectedError
   > {

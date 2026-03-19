@@ -18,6 +18,7 @@ import type {
   ConnectorDoesNotSupportUpSyncing,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
+  DefaultDocumentContentNotValid,
   DefaultDocumentViewUiOptionsNotValid,
   Document,
   DocumentContentNotValid,
@@ -82,6 +83,7 @@ export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentContentNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | AppNameNotValid
     | CollectionNotFound

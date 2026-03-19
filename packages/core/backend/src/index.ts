@@ -58,6 +58,7 @@ export type { default as ContentSummaryGetterNotValid } from "./errors/ContentSu
 export type { default as ContentSummaryNotValid } from "./errors/ContentSummaryNotValid.js";
 export type { default as ConversationNotFound } from "./errors/ConversationNotFound.js";
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
+export type { default as DefaultDocumentContentNotValid } from "./errors/DefaultDocumentContentNotValid.js";
 export type { default as DefaultDocumentViewUiOptionsNotValid } from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
 export type { default as DocumentIsReferenced } from "./errors/DocumentIsReferenced.js";

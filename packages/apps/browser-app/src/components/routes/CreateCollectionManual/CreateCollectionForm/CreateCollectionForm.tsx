@@ -84,6 +84,7 @@ export default function CreateCollectionForm() {
       versionSettings: {
         contentBlockingKeysGetter,
         contentSummaryGetter,
+        defaultDocumentContent: null,
         defaultDocumentViewUiOptions: null,
       },
     });

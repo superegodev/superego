@@ -90,6 +90,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -309,6 +310,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -469,6 +471,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });

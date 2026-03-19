@@ -65,6 +65,7 @@ class FactotumObject {
           compiled:
             'export default function getValue() { return { name: "name" }; }',
         },
+        defaultDocumentContent: null,
         defaultDocumentViewUiOptions: null,
       },
     });

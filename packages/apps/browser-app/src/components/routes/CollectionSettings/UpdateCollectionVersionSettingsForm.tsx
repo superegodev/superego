@@ -4,7 +4,10 @@ import type {
   DefaultDocumentViewUiOptions,
   TypescriptModule,
 } from "@superego/backend";
-import { codegen } from "@superego/schema";
+import {
+  codegen,
+  valibotSchemas as schemaValibotSchemas,
+} from "@superego/schema";
 import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-utils";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -19,6 +22,7 @@ import Section from "../../design-system/Section/Section.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFContentBlockingKeysGetterField from "../../widgets/RHFContentBlockingKeysGetterField/RHFContentBlockingKeysGetterField.js";
 import RHFContentSummaryGetterField from "../../widgets/RHFContentSummaryGetterField/RHFContentSummaryGetterField.js";
+import RHFDefaultDocumentContentField from "../../widgets/RHFDefaultDocumentContentField/RHFDefaultDocumentContentField.js";
 import RHFDefaultDocumentViewUiOptionsField from "../../widgets/RHFDefaultDocumentViewUiOptionsField/RHFDefaultDocumentViewUiOptionsField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -26,6 +30,7 @@ import * as cs from "./CollectionSettings.css.js";
 interface FormValues {
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
+  defaultDocumentContent: any | null;
   defaultDocumentViewUiOptions: DefaultDocumentViewUiOptions | null;
 }
 
@@ -45,6 +50,8 @@ export default function UpdateCollectionVersionSettingsForm({
         collection.latestVersion.settings.contentBlockingKeysGetter,
       contentSummaryGetter:
         collection.latestVersion.settings.contentSummaryGetter,
+      defaultDocumentContent:
+        collection.latestVersion.settings.defaultDocumentContent,
       defaultDocumentViewUiOptions:
         collection.latestVersion.settings.defaultDocumentViewUiOptions,
     },
@@ -55,6 +62,9 @@ export default function UpdateCollectionVersionSettingsForm({
           forms.schemas.typescriptModule(intl),
         ),
         contentSummaryGetter: forms.schemas.typescriptModule(intl),
+        defaultDocumentContent: v.nullable(
+          schemaValibotSchemas.content(collection.latestVersion.schema),
+        ),
         defaultDocumentViewUiOptions: v.nullable(
           sharedUtilsValibotSchemas.defaultDocumentViewUiOptions(
             collection.latestVersion.schema,
@@ -74,11 +84,13 @@ export default function UpdateCollectionVersionSettingsForm({
       const {
         contentBlockingKeysGetter,
         contentSummaryGetter,
+        defaultDocumentContent,
         defaultDocumentViewUiOptions,
       } = data.latestVersion.settings;
       reset({
         contentBlockingKeysGetter,
         contentSummaryGetter,
+        defaultDocumentContent,
         defaultDocumentViewUiOptions,
       });
     }
@@ -114,6 +126,17 @@ export default function UpdateCollectionVersionSettingsForm({
           name="contentSummaryGetter"
           schema={collection.latestVersion.schema}
           schemaTypescriptLib={schemaTypescriptLib}
+        />
+      </Section>
+      <Section
+        title={intl.formatMessage({
+          defaultMessage: "Default document content",
+        })}
+        level={3}
+      >
+        <RHFDefaultDocumentContentField
+          control={control}
+          name="defaultDocumentContent"
         />
       </Section>
       <Section

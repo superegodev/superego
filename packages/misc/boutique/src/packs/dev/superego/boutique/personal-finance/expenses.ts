@@ -16,6 +16,7 @@ export default {
   },
   schema: expensesSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

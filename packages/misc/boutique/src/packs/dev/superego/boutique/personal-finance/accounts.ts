@@ -12,6 +12,7 @@ export default {
   },
   schema: accountsSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: {
       source: `
 import type { Account } from "./CollectionSchema.js";

@@ -12,6 +12,7 @@ export default {
   },
   schema: holdingsSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: {
       source: `
 import type { Holding } from "./CollectionSchema.js";

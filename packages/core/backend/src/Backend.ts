@@ -33,6 +33,7 @@ import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.j
 import type ContentBlockingKeysGetterNotValid from "./errors/ContentBlockingKeysGetterNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
+import type DefaultDocumentContentNotValid from "./errors/DefaultDocumentContentNotValid.js";
 import type DefaultDocumentViewUiOptionsNotValid from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
 import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
@@ -147,6 +148,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentContentNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
@@ -162,6 +164,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentContentNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
@@ -246,6 +249,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentSummaryGetterNotValid
       | ContentBlockingKeysGetterNotValid
+      | DefaultDocumentContentNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | CollectionMigrationNotValid
       | RemoteConvertersNotValid
@@ -264,6 +268,7 @@ export default interface Backend {
       | ContentBlockingKeysGetterNotValid
       | MakingContentBlockingKeysFailed
       | ContentSummaryGetterNotValid
+      | DefaultDocumentContentNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | UnexpectedError
     >;
@@ -571,6 +576,7 @@ export default interface Backend {
       | ReferencedCollectionsNotFound
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
+      | DefaultDocumentContentNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | AppNameNotValid
       | CollectionNotFound

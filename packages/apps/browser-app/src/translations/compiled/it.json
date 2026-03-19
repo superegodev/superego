@@ -918,16 +918,22 @@
       "value": " » Crea nuova versione"
     }
   ],
+  "CreateNewCollectionVersionForm.tsx_/q1jgk": [
+    {
+      "type": 0,
+      "value": "6. Migrazione"
+    }
+  ],
   "CreateNewCollectionVersionForm.tsx_2n41AE": [
     {
       "type": 0,
       "value": "Creata nuova versione della collezione"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_FQCqoH": [
+  "CreateNewCollectionVersionForm.tsx_B8ejT5": [
     {
       "type": 0,
-      "value": "5. Migrazione"
+      "value": "5. Opzioni UI"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_HxoW8w": [
@@ -936,10 +942,16 @@
       "value": "3. Sommario dei contenuti"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_dISRjb": [
+  "CreateNewCollectionVersionForm.tsx_N7Izrw": [
     {
       "type": 0,
-      "value": "4. Opzioni UI"
+      "value": "6. Convertitori remoti"
+    }
+  ],
+  "CreateNewCollectionVersionForm.tsx_hYwzDX": [
+    {
+      "type": 0,
+      "value": "4. Contenuto predefinito"
     }
   ],
   "CreateNewCollectionVersionForm.tsx_jacE9I": [
@@ -952,12 +964,6 @@
     {
       "type": 0,
       "value": "2. Deduplicazione"
-    }
-  ],
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
-    {
-      "type": 0,
-      "value": "5. Convertitori remoti"
     }
   ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
@@ -3300,6 +3306,36 @@
       "value": "p"
     }
   ],
+  "RHFDefaultDocumentContentField.tsx_9CnsYv": [
+    {
+      "type": 0,
+      "value": "Stringa JSON non valida"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_A89PQ/": [
+    {
+      "type": 0,
+      "value": "A"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_Lz0uen": [
+    {
+      "type": 0,
+      "value": "Imposta valori predefiniti per i nuovi documenti creati in questa raccolta. Il contenuto deve corrispondere allo schema della raccolta."
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_fzzo03": [
+    {
+      "type": 0,
+      "value": "Abilita contenuto predefinito del documento"
+    }
+  ],
+  "RHFDefaultDocumentContentField.tsx_yZecZ3": [
+    {
+      "type": 0,
+      "value": "Definisce il contenuto predefinito per i nuovi documenti in questa raccolta."
+    }
+  ],
   "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
     {
       "type": 0,
@@ -4498,6 +4534,12 @@
     {
       "type": 0,
       "value": "Salva le impostazioni della versione della collezione"
+    }
+  ],
+  "UpdateCollectionVersionSettingsForm.tsx_wH+PSV": [
+    {
+      "type": 0,
+      "value": "Contenuto predefinito del documento"
     }
   ],
   "UpdateGlobalSettingsForm.tsx_2GURQY": [

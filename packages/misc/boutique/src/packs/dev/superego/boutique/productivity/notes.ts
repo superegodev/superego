@@ -12,6 +12,7 @@ export default {
   },
   schema: notesSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

@@ -88,6 +88,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -197,6 +198,7 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });

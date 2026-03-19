@@ -53,6 +53,7 @@ export default rd<GetDependencies>("Files", (deps) => {
             compiled:
               "export default function getContentSummary() { return {}; }",
           },
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       });

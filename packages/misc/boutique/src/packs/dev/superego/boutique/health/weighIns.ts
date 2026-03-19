@@ -15,6 +15,7 @@ export default {
   },
   schema: weighInsSchema,
   versionSettings: {
+    defaultDocumentContent: null,
     contentBlockingKeysGetter: null,
     contentSummaryGetter: {
       source: `

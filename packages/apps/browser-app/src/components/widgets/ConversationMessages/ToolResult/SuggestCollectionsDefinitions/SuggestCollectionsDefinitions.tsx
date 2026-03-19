@@ -46,6 +46,7 @@ export default function SuggestCollectionsDefinitions({
             toolResult.artifacts.collections[index]!.contentBlockingKeysGetter,
           contentSummaryGetter:
             toolResult.artifacts.collections[index]!.contentSummaryGetter,
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       })),

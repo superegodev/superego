@@ -11,6 +11,7 @@ import {
   type CollectionVersionSettings,
   type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
+  type DefaultDocumentContentNotValid,
   type DefaultDocumentViewUiOptionsNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
@@ -64,6 +65,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
     | ReferencedCollectionsNotFound
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
+    | DefaultDocumentContentNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | CollectionMigrationNotValid
     | RemoteConvertersNotValid
@@ -171,6 +173,23 @@ export default class CollectionsCreateNewVersion extends Usecase<
           ],
         }),
       );
+    }
+
+    // Validate settings.defaultDocumentContent.
+    if (settings.defaultDocumentContent !== null) {
+      const contentValidationResult = v.safeParse(
+        valibotSchemas.content(resolvedSchema),
+        settings.defaultDocumentContent,
+      );
+      if (!contentValidationResult.success) {
+        return makeUnsuccessfulResult(
+          makeResultError("DefaultDocumentContentNotValid", {
+            collectionId: id,
+            collectionVersionId: latestVersion.id,
+            issues: makeValidationIssues(contentValidationResult.issues),
+          }),
+        );
+      }
     }
 
     // Validate settings.defaultDocumentViewUiOptions.
@@ -286,6 +305,7 @@ export default class CollectionsCreateNewVersion extends Usecase<
       settings: {
         contentSummaryGetter: settings.contentSummaryGetter,
         contentBlockingKeysGetter: settings.contentBlockingKeysGetter,
+        defaultDocumentContent: settings.defaultDocumentContent,
         defaultDocumentViewUiOptions: settings.defaultDocumentViewUiOptions,
       },
       migration: migration,

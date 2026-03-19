@@ -43,7 +43,22 @@ export default async function checkCollection(
   }
   const schema = readJsonFile(schemaPath) as Schema;
 
-  // 3. defaultDocumentViewUiOptions.json (optional)
+  // 3. defaultDocumentContent.json (optional)
+  const defaultDocumentContentPath = join(
+    collectionDir,
+    "defaultDocumentContent.json",
+  );
+  if (existsSync(defaultDocumentContentPath)) {
+    results.push(
+      checkJsonValidation(
+        `${collectionName}/defaultDocumentContent.json`,
+        defaultDocumentContentPath,
+        schemaValibotSchemas.content(schema),
+      ),
+    );
+  }
+
+  // 4. defaultDocumentViewUiOptions.json (optional)
   const defaultDocumentViewUiOptionsPath = join(
     collectionDir,
     "defaultDocumentViewUiOptions.json",
@@ -58,7 +73,7 @@ export default async function checkCollection(
     );
   }
 
-  // 4. generated types
+  // 5. generated types
   const generatedTypes = codegen(schema);
   results.push(
     checkGeneratedTypes(
@@ -72,7 +87,7 @@ export default async function checkCollection(
     source: generatedTypes,
   };
 
-  // 5. contentSummaryGetter.ts
+  // 6. contentSummaryGetter.ts
   const contentSummaryGetterPath = join(
     collectionDir,
     "contentSummaryGetter.ts",
@@ -94,7 +109,7 @@ export default async function checkCollection(
     });
   }
 
-  // 6. contentBlockingKeysGetter.ts (optional)
+  // 7. contentBlockingKeysGetter.ts (optional)
   const contentBlockingKeysGetterPath = join(
     collectionDir,
     "contentBlockingKeysGetter.ts",

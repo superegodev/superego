@@ -38,6 +38,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
           compiled:
             "export default function getContentSummary() { return {}; }",
         },
+        defaultDocumentContent: null,
         defaultDocumentViewUiOptions: null,
       },
     });

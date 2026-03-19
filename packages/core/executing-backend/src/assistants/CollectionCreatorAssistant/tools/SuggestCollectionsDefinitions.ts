@@ -72,6 +72,7 @@ export default {
         versionSettings: {
           contentBlockingKeysGetter: null,
           contentSummaryGetter: stubContentSummaryGetter,
+          defaultDocumentContent: null,
           defaultDocumentViewUiOptions: null,
         },
       })),
@@ -85,6 +86,7 @@ export default {
         createManyResult.error.name === "AppNotFound" ||
         createManyResult.error.name === "ContentBlockingKeysGetterNotValid" ||
         createManyResult.error.name === "ContentSummaryGetterNotValid" ||
+        createManyResult.error.name === "DefaultDocumentContentNotValid" ||
         createManyResult.error.name === "DefaultDocumentViewUiOptionsNotValid")
     ) {
       throw new UnexpectedAssistantError(
