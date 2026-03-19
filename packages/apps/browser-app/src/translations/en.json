@@ -1493,11 +1493,17 @@
   "UpdateCollectionSettingsForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
+  "UpdateCollectionSettingsForm.tsx_JL+VrQ": {
+    "defaultMessage": "When enabled, creating a document will navigate back to the collection page instead of to the new document."
+  },
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Description"
   },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
+  },
+  "UpdateCollectionSettingsForm.tsx_lPpMBs": {
+    "defaultMessage": "Redirect to collection after document creation"
   },
   "UpdateCollectionSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"

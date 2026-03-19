@@ -7,6 +7,7 @@ export default {
     icon: "📅",
     description: null,
     assistantInstructions: "- If duration not supplied, default to 1 hour",
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_0",
   },

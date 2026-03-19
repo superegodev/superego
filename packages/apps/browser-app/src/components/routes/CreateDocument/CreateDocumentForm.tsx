@@ -64,14 +64,24 @@ export default function CreateDocumentForm({
       options: { skipDuplicateCheck },
     });
     if (success) {
-      navigateTo(
-        {
-          name: RouteName.Document,
-          collectionId: collection.id,
-          documentId: data.id,
-        },
-        { ignoreExitWarning: true },
-      );
+      if (collection.settings.redirectToCollectionAfterDocumentCreation) {
+        navigateTo(
+          {
+            name: RouteName.Collection,
+            collectionId: collection.id,
+          },
+          { ignoreExitWarning: true },
+        );
+      } else {
+        navigateTo(
+          {
+            name: RouteName.Document,
+            collectionId: collection.id,
+            documentId: data.id,
+          },
+          { ignoreExitWarning: true },
+        );
+      }
     } else if (error?.name === "DuplicateDocumentDetected") {
       setPendingContent(content);
       setDuplicateError(error);

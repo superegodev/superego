@@ -10,6 +10,7 @@ export default {
       "- Defaults for things I don't specify:",
       "  - Scale -> Garmin Index S2.",
     ].join("\n"),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },

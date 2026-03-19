@@ -7,6 +7,7 @@ export default {
     icon: "🔑",
     description: "Brokerage and exchange accounts",
     assistantInstructions: null,
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_1",
     defaultCollectionViewAppId: null,
   },

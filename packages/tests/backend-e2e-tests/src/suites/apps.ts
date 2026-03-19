@@ -73,6 +73,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -292,6 +293,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -452,6 +454,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {

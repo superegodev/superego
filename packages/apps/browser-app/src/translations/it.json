@@ -1577,6 +1577,9 @@
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Istruzioni dell'assistente"
   },
+  "UpdateCollectionSettingsForm.tsx_JL+VrQ": {
+    "defaultMessage": "Se attivato, la creazione di un documento riporterà alla pagina della collezione invece che al nuovo documento."
+  },
   "UpdateCollectionSettingsForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
@@ -1585,6 +1588,9 @@
   },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
+  },
+  "UpdateCollectionSettingsForm.tsx_lPpMBs": {
+    "defaultMessage": "Reindirizza alla collezione dopo la creazione del documento"
   },
   "UpdateCollectionSettingsForm.tsx_muqizb": {
     "defaultMessage": "Salva impostazioni"

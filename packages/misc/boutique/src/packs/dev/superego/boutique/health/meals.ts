@@ -10,6 +10,7 @@ export default {
 Track meals by selecting foods from the Foods collection.
 Default serving sizes come from the Foods collection if not specified.
     `.trim(),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },

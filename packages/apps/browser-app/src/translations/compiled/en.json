@@ -4474,6 +4474,12 @@
       "value": "Name"
     }
   ],
+  "UpdateCollectionSettingsForm.tsx_JL+VrQ": [
+    {
+      "type": 0,
+      "value": "When enabled, creating a document will navigate back to the collection page instead of to the new document."
+    }
+  ],
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": [
     {
       "type": 0,
@@ -4484,6 +4490,12 @@
     {
       "type": 0,
       "value": "Icon"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_lPpMBs": [
+    {
+      "type": 0,
+      "value": "Redirect to collection after document creation"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_muqizb": [

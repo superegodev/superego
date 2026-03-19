@@ -4452,6 +4452,12 @@
       "value": "Nome"
     }
   ],
+  "UpdateCollectionSettingsForm.tsx_JL+VrQ": [
+    {
+      "type": 0,
+      "value": "Se attivato, la creazione di un documento riporterà alla pagina della collezione invece che al nuovo documento."
+    }
+  ],
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": [
     {
       "type": 0,
@@ -4462,6 +4468,12 @@
     {
       "type": 0,
       "value": "Icona"
+    }
+  ],
+  "UpdateCollectionSettingsForm.tsx_lPpMBs": [
+    {
+      "type": 0,
+      "value": "Reindirizza alla collezione dopo la creazione del documento"
     }
   ],
   "UpdateCollectionSettingsForm.tsx_muqizb": [

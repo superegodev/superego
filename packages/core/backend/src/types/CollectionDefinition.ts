@@ -20,6 +20,7 @@ export default interface CollectionDefinition<
       : AppId | null;
     description: string | null;
     assistantInstructions: string | null;
+    redirectToCollectionAfterDocumentCreation: boolean;
   };
   schema: Schema;
   versionSettings: CollectionVersionSettings;

@@ -79,6 +79,7 @@ export default function CreateCollectionForm() {
         defaultCollectionViewAppId: null,
         description,
         assistantInstructions,
+        redirectToCollectionAfterDocumentCreation: false,
       },
       schema,
       versionSettings: {
