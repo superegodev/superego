@@ -167,8 +167,10 @@ export default function EagerExcalidrawInput({
       }}
     >
       <Excalidraw
-        excalidrawAPI={(excalidrawApi) => {
-          excalidrawApiRef.current = excalidrawApi;
+        onExcalidrawAPI={(excalidrawApi) => {
+          if (excalidrawApi) {
+            excalidrawApiRef.current = excalidrawApi;
+          }
         }}
         initialData={value as ExcalidrawInitialDataState}
         onChange={handleExcalidrawChange}

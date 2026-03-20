@@ -8,7 +8,7 @@
     "test": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose"
   },
   "devDependencies": {
-    "@types/node": "^25.4.0",
+    "@types/node": "^25.5.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -24,11 +24,11 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "@vitest/browser": "^4.0.18",
-    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/browser": "^4.1.0",
+    "@vitest/browser-playwright": "^4.1.0",
     "es-toolkit": "^1.45.1",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.58.2",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }

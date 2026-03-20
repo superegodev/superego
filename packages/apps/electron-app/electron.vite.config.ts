@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import babel from "@rollup/plugin-babel";
+import formatjs from "@formatjs/unplugin/rollup";
 import browserAppViteConfig from "@superego/browser-app/vite.config.js";
 import { defineConfig } from "electron-vite";
 import { mergeConfig, type UserConfig } from "vite";
@@ -10,21 +10,12 @@ export default defineConfig({
       externalizeDeps: false,
       rollupOptions: {
         output: { format: "es" },
-        external: ["typescript", "@typescript/vfs"],
+        external: ["electron", "typescript", "@typescript/vfs"],
         plugins: [
-          babel({
-            babelHelpers: "bundled",
-            extensions: [".ts"],
-            plugins: [
-              [
-                "formatjs",
-                {
-                  idInterpolationPattern:
-                    "[name].[ext]_[sha512:contenthash:base64:6]",
-                  removeDefaultMessage: true,
-                },
-              ],
-            ],
+          formatjs({
+            idInterpolationPattern:
+              "[name].[ext]_[sha512:contenthash:base64:6]",
+            removeDefaultMessage: true,
           }),
         ],
       },
@@ -35,6 +26,7 @@ export default defineConfig({
       externalizeDeps: false,
       rollupOptions: {
         output: { format: "cjs" },
+        external: ["electron"],
       },
     },
   },

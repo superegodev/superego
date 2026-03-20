@@ -34,7 +34,7 @@ export default {
     executableName: "superego-app",
     asar: true,
     ignore: [
-      "src",
+      "^/src",
       "cli.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",

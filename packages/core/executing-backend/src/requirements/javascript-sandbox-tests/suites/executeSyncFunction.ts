@@ -26,7 +26,7 @@ export default rd<GetDependencies>("executeSyncFunction", (deps, it) => {
         // Verify
         assert(!result.success);
         expect(result.error.details).toMatchObject({
-          name: expect.stringMatching(/SyntaxError|RollupError/),
+          name: expect.stringMatching(/SyntaxError|RolldownError/),
         });
       });
 

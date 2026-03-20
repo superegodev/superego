@@ -65,8 +65,8 @@ export const PrimarySidebarPanelAction = {
     button: [
       primarySidebarPanelActionRootBase,
       style({
-        height: "auto",
-        justifyContent: "flex-start",
+        height: "auto !important",
+        justifyContent: "flex-start !important",
         borderRadius: vars.borders.radius.md,
         selectors: {
           "&:hover": {
