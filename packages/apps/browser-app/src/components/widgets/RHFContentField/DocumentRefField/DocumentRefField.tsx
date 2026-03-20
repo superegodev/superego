@@ -37,7 +37,6 @@ interface Props {
   control: Control;
   name: string;
   label: string;
-  /** Not used. */
   autoFocus: boolean;
 }
 export default function DocumentRefField({
@@ -47,6 +46,8 @@ export default function DocumentRefField({
   control,
   name,
   label,
+  // Not used.
+  autoFocus: _autoFocus,
 }: Props) {
   const intl = useIntl();
   const { isReadOnly, protoCollections } = useUiOptions();

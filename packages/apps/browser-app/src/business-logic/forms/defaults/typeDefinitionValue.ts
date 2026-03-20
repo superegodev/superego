@@ -5,6 +5,7 @@ import {
   type Schema,
   utils,
 } from "@superego/schema";
+import { DateTime } from "luxon";
 
 export default function typeDefinitionValue(
   typeDefinition: AnyTypeDefinition,
@@ -14,11 +15,17 @@ export default function typeDefinitionValue(
     case DataType.String: {
       switch (typeDefinition.format) {
         case FormatId.String.PlainDate:
-          return new Date().toISOString().slice(0, 10);
+          return DateTime.now().toISODate();
         case FormatId.String.PlainTime:
-          return new Date().toISOString().slice(11, 23);
+          return DateTime.now().toISOTime({
+            includeOffset: false,
+            suppressMilliseconds: false,
+          });
         case FormatId.String.Instant:
-          return new Date().toISOString();
+          return DateTime.now().toISO({
+            includeOffset: true,
+            suppressMilliseconds: false,
+          });
         default:
           return "";
       }
