@@ -17,14 +17,9 @@ type SqliteCollection = {
 export default SqliteCollection;
 
 export function toEntity(collection: SqliteCollection): CollectionEntity {
-  const settings = JSON.parse(collection.settings);
   return {
     id: collection.id,
-    settings: {
-      ...settings,
-      redirectToCollectionAfterDocumentCreation:
-        settings.redirectToCollectionAfterDocumentCreation ?? false,
-    },
+    settings: JSON.parse(collection.settings),
     remote: collection.remote
       ? (decode(collection.remote) as RemoteEntity)
       : null,
