@@ -42,6 +42,7 @@ export default function CreateCollectionForm() {
         icon: null,
         description: null,
         assistantInstructions: null,
+        redirectToCollectionAfterDocumentCreation: false,
         schema: defaultSchema,
         contentBlockingKeysGetter: defaultContentBlockingKeysGetter,
         contentSummaryGetter: defaultContentSummaryGetter,
@@ -53,6 +54,7 @@ export default function CreateCollectionForm() {
           icon: v.nullable(backendUtilsValibotSchemas.icon()),
           description: v.nullable(v.string()),
           assistantInstructions: v.nullable(v.string()),
+          redirectToCollectionAfterDocumentCreation: v.boolean(),
           schema: schemaValibotSchemas.schema(),
           contentBlockingKeysGetter: v.nullable(
             forms.schemas.typescriptModule(intl),
@@ -68,6 +70,7 @@ export default function CreateCollectionForm() {
     icon,
     description,
     assistantInstructions,
+    redirectToCollectionAfterDocumentCreation,
     contentBlockingKeysGetter,
     contentSummaryGetter,
   }: CreateCollectionFormValues) => {
@@ -79,7 +82,7 @@ export default function CreateCollectionForm() {
         defaultCollectionViewAppId: null,
         description,
         assistantInstructions,
-        redirectToCollectionAfterDocumentCreation: false,
+        redirectToCollectionAfterDocumentCreation,
       },
       schema,
       versionSettings: {

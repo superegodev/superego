@@ -9,4 +9,8 @@ SET "settings" = json_set(
   '$.redirectToCollectionAfterDocumentCreation',
   json('false')
 )
-WHERE json_extract("settings", '$.redirectToCollectionAfterDocumentCreation') IS NULL;
+WHERE
+  json_extract(
+    "settings",
+    '$.redirectToCollectionAfterDocumentCreation'
+  ) IS NULL;

@@ -1190,6 +1190,12 @@
   "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": {
     "defaultMessage": "<p> Customize how the document form looks when viewing or editing documents in this collection. Options include using the full page width, collapsing the sidebar, and defining a custom field layout. </p> <p> For more information, see <a>https://superego.dev/customization/default-document-view-ui-options</a>. </p>"
   },
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_JL+VrQ": {
+    "defaultMessage": "When enabled, creating a document will navigate back to the collection page instead of to the new document."
+  },
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_lPpMBs": {
+    "defaultMessage": "Redirect to collection after document creation"
+  },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Not a valid JSON string"
   },
@@ -1493,17 +1499,11 @@
   "UpdateCollectionSettingsForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "UpdateCollectionSettingsForm.tsx_JL+VrQ": {
-    "defaultMessage": "When enabled, creating a document will navigate back to the collection page instead of to the new document."
-  },
   "UpdateCollectionSettingsForm.tsx_Q8Qw5B": {
     "defaultMessage": "Description"
   },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icon"
-  },
-  "UpdateCollectionSettingsForm.tsx_lPpMBs": {
-    "defaultMessage": "Redirect to collection after document creation"
   },
   "UpdateCollectionSettingsForm.tsx_muqizb": {
     "defaultMessage": "Save settings"

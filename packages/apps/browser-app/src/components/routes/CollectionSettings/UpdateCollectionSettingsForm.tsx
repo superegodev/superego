@@ -1,15 +1,16 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
-import { type Control, useController, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useUpdateCollectionSettings } from "../../../business-logic/backend/hooks.js";
-import { Description, Form, Switch } from "../../design-system/forms/forms.js";
+import { Form } from "../../design-system/forms/forms.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
+import RHFRedirectToCollectionAfterDocumentCreationField from "../../widgets/RHFRedirectToCollectionAfterDocumentCreationField/RHFRedirectToCollectionAfterDocumentCreationField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -108,7 +109,10 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
             "Specific instructions for this collection to pass to the assistant.",
         })}
       />
-      <RedirectToCollectionAfterDocumentCreationSwitch control={control} />
+      <RHFRedirectToCollectionAfterDocumentCreationField
+        control={control}
+        name="redirectToCollectionAfterDocumentCreation"
+      />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">
           <FormattedMessage defaultMessage="Save settings" />
@@ -116,26 +120,5 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
       </div>
       {result?.error ? <ResultErrors errors={[result.error]} /> : null}
     </Form>
-  );
-}
-
-function RedirectToCollectionAfterDocumentCreationSwitch({
-  control,
-}: {
-  control: Control<FormValues>;
-}) {
-  const { field } = useController({
-    control,
-    name: "redirectToCollectionAfterDocumentCreation",
-  });
-  return (
-    <div>
-      <Switch isSelected={field.value} onChange={field.onChange}>
-        <FormattedMessage defaultMessage="Redirect to collection after document creation" />
-      </Switch>
-      <Description>
-        <FormattedMessage defaultMessage="When enabled, creating a document will navigate back to the collection page instead of to the new document." />
-      </Description>
-    </div>
   );
 }

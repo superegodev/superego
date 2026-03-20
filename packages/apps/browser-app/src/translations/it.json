@@ -1187,6 +1187,12 @@
   "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": {
     "defaultMessage": "<p> Personalizza l'aspetto del modulo del documento durante la visualizzazione o la modifica dei documenti in questa collezione. Le opzioni includono l'utilizzo dell'intera larghezza della pagina, la chiusura della barra laterale e la definizione di un layout personalizzato dei campi. </p> <p> Per maggiori informazioni, vedi <a>https://superego.dev/customization/default-document-view-ui-options</a>. </p>"
   },
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_JL+VrQ": {
+    "defaultMessage": "Se attivato, la creazione di un documento riporterà alla pagina della collezione invece che al nuovo documento."
+  },
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_lPpMBs": {
+    "defaultMessage": "Reindirizza alla collezione dopo la creazione del documento"
+  },
   "RHFSchemaField.tsx_9CnsYv": {
     "defaultMessage": "Stringa JSON non valida"
   },
@@ -1577,9 +1583,6 @@
   "UpdateCollectionSettingsForm.tsx_1W2oHf": {
     "defaultMessage": "Istruzioni dell'assistente"
   },
-  "UpdateCollectionSettingsForm.tsx_JL+VrQ": {
-    "defaultMessage": "Se attivato, la creazione di un documento riporterà alla pagina della collezione invece che al nuovo documento."
-  },
   "UpdateCollectionSettingsForm.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
@@ -1588,9 +1591,6 @@
   },
   "UpdateCollectionSettingsForm.tsx_kk4TVW": {
     "defaultMessage": "Icona"
-  },
-  "UpdateCollectionSettingsForm.tsx_lPpMBs": {
-    "defaultMessage": "Reindirizza alla collezione dopo la creazione del documento"
   },
   "UpdateCollectionSettingsForm.tsx_muqizb": {
     "defaultMessage": "Salva impostazioni"

@@ -6,6 +6,7 @@ export default interface CreateCollectionFormValues {
   icon: string | null;
   description: string | null;
   assistantInstructions: string | null;
+  redirectToCollectionAfterDocumentCreation: boolean;
   schema: Schema;
   contentBlockingKeysGetter: TypescriptModule | null;
   contentSummaryGetter: TypescriptModule;
