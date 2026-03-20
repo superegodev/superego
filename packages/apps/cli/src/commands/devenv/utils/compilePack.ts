@@ -141,7 +141,7 @@ export default async function compilePack(
         description: settings.description,
         assistantInstructions: settings.assistantInstructions,
         redirectToCollectionAfterDocumentCreation:
-          settings.redirectToCollectionAfterDocumentCreation ?? false,
+          settings.redirectToCollectionAfterDocumentCreation,
       },
       schema,
       versionSettings: {

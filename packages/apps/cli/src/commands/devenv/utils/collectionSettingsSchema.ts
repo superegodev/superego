@@ -9,6 +9,6 @@ export default function collectionSettingsSchema() {
     defaultCollectionViewAppId: v.nullable(v.string()),
     description: v.nullable(v.string()),
     assistantInstructions: v.nullable(v.string()),
-    redirectToCollectionAfterDocumentCreation: v.optional(v.boolean(), false),
+    redirectToCollectionAfterDocumentCreation: v.boolean(),
   });
 }
