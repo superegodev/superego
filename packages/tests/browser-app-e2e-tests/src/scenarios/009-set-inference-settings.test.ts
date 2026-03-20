@@ -25,6 +25,7 @@ test("009. Set inference settings", async ({ page }) => {
     await page
       .getByRole("textbox", { name: /^Base URL$/i })
       .fill("https://openrouter.ai/api/v1/responses");
+    await page.getByRole("textbox", { name: /^Base URL$/i }).blur();
     await page
       .getByRole("button", { name: /^Save$/i, disabled: false })
       .waitFor();
@@ -47,6 +48,7 @@ test("009. Set inference settings", async ({ page }) => {
       .getByRole("textbox", { name: /^Name$/i })
       .last()
       .fill("GPT OSS 120b");
+    await page.getByRole("textbox", { name: /^Name$/i }).last().blur();
 
     // Verify
     await VisualEvaluator.expectToSee(

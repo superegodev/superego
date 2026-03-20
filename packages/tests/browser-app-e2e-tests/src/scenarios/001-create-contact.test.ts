@@ -44,6 +44,7 @@ test("001. Create Contact", async ({ page }) => {
     await tiptapRichTextJsonObjectField(page)
       .locator(".ProseMirror")
       .fill("Ambitious. Watch his drift toward mysticism.");
+    await tiptapRichTextJsonObjectField(page).locator(".ProseMirror").blur();
     // Wait for the debounce on the TipTap input.
     await page.waitForTimeout(500);
 

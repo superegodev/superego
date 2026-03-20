@@ -92,6 +92,7 @@ Keep the left ridge in sight after the old bridge.
 The keyword ${plainWord} should remain plain text.
         `.trim(),
       );
+    await tiptapRichTextJsonObjectField(page).locator(".ProseMirror").blur();
     // Wait for debounce on Tiptap input updates.
     await page.waitForTimeout(500);
 

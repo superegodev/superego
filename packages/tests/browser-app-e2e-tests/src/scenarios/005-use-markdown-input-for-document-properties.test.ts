@@ -100,6 +100,7 @@ echo "checkpoint alpha"
 The keyword ${plainWord} should remain plain text.
         `.trim(),
       );
+    await markdownStringField(page).locator(".overtype-input").blur();
     await page.waitForTimeout(100);
 
     // Verify
