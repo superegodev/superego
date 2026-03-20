@@ -60,7 +60,8 @@ export default function typeDefinitionValue(
       return [{ value: typeDefinitionValue(typeDefinition.items, schema) }];
     case null:
       return typeDefinitionValue(utils.getType(schema, typeDefinition), schema);
-    // Triggers a TypeScript error if a new DataType is added but not handled above.
+    // Triggers a TypeScript error if a new DataType is added but not handled
+    // above.
     default: {
       const _exhaustiveCheck: never = typeDefinition;
       void _exhaustiveCheck;
