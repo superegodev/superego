@@ -26,6 +26,7 @@ test("008. Use GeoJSON input for document properties", async ({ page }) => {
         defaultCollectionViewAppId: null,
         description: null,
         assistantInstructions: null,
+        redirectToCollectionAfterDocumentCreation: false,
       },
       schema: {
         types: {

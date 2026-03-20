@@ -8,4 +8,5 @@ export default interface CollectionSettings {
   defaultCollectionViewAppId: AppId | null;
   description: string | null;
   assistantInstructions: string | null;
+  redirectToCollectionAfterDocumentCreation: boolean;
 }

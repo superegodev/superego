@@ -67,6 +67,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -133,6 +134,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: Id.generate.protoApp(99),
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -198,6 +200,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -357,6 +360,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -417,6 +421,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -549,6 +554,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -610,6 +616,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -679,6 +686,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -753,6 +761,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: Id.generate.protoApp(0),
               description: "A collection",
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -877,6 +886,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: "Collection of authors",
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -909,6 +919,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: "Collection of articles",
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -952,6 +963,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: "Collection of comments",
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {
@@ -1196,6 +1208,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               defaultCollectionViewAppId: null,
               description: "Hierarchical tasks collection",
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             schema: {
               types: {

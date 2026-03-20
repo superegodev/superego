@@ -7,6 +7,7 @@ export default {
     icon: "☎️",
     description: "Personal address book.",
     assistantInstructions: null,
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },

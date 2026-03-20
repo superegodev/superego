@@ -10,6 +10,7 @@ import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFEmojiField from "../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFMarkdownField from "../../widgets/RHFMarkdownField/RHFMarkdownField.js";
+import RHFRedirectToCollectionAfterDocumentCreationField from "../../widgets/RHFRedirectToCollectionAfterDocumentCreationField/RHFRedirectToCollectionAfterDocumentCreationField.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CollectionSettings.css.js";
@@ -19,6 +20,7 @@ interface FormValues {
   icon: string | null;
   description: string | null;
   assistantInstructions: string | null;
+  redirectToCollectionAfterDocumentCreation: boolean;
 }
 
 interface Props {
@@ -35,6 +37,8 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
       icon: collection.settings.icon,
       description: collection.settings.description,
       assistantInstructions: collection.settings.assistantInstructions,
+      redirectToCollectionAfterDocumentCreation:
+        collection.settings.redirectToCollectionAfterDocumentCreation,
     },
     mode: "onBlur",
     resolver: standardSchemaResolver(
@@ -43,6 +47,7 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
         icon: v.nullable(valibotSchemas.icon()),
         description: v.nullable(v.string()),
         assistantInstructions: v.nullable(v.string()),
+        redirectToCollectionAfterDocumentCreation: v.boolean(),
       }),
     ),
   });
@@ -50,8 +55,20 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
   const onSubmit = async (values: FormValues) => {
     const { success, data } = await mutate(collection.id, values);
     if (success) {
-      const { name, icon, description, assistantInstructions } = data.settings;
-      reset({ name, icon, description, assistantInstructions });
+      const {
+        name,
+        icon,
+        description,
+        assistantInstructions,
+        redirectToCollectionAfterDocumentCreation,
+      } = data.settings;
+      reset({
+        name,
+        icon,
+        description,
+        assistantInstructions,
+        redirectToCollectionAfterDocumentCreation,
+      });
     }
   };
 
@@ -91,6 +108,10 @@ export default function UpdateCollectionSettingsForm({ collection }: Props) {
           defaultMessage:
             "Specific instructions for this collection to pass to the assistant.",
         })}
+      />
+      <RHFRedirectToCollectionAfterDocumentCreationField
+        control={control}
+        name="redirectToCollectionAfterDocumentCreation"
       />
       <div className={cs.UpdateCollectionSettingsForm.submitButtonContainer}>
         <RHFSubmitButton control={control} variant="primary">

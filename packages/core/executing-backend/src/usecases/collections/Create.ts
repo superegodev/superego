@@ -71,6 +71,7 @@ export default class CollectionsCreate extends Usecase<
         ),
         description: v.nullable(v.string()),
         assistantInstructions: v.nullable(v.string()),
+        redirectToCollectionAfterDocumentCreation: v.boolean(),
       }),
       settings,
     );
@@ -228,6 +229,9 @@ export default class CollectionsCreate extends Usecase<
         description: settingsValidationResult.output.description,
         assistantInstructions:
           settingsValidationResult.output.assistantInstructions,
+        redirectToCollectionAfterDocumentCreation:
+          settingsValidationResult.output
+            .redirectToCollectionAfterDocumentCreation,
       },
       remote: null,
       createdAt: now,

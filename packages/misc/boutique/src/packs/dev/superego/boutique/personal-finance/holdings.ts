@@ -7,6 +7,7 @@ export default {
     icon: "🏦",
     description: "Security holdings with buy/sell transaction histories",
     assistantInstructions: null,
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_1",
     defaultCollectionViewAppId: "ProtoApp_1",
   },

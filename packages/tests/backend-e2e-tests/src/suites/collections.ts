@@ -26,6 +26,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -75,6 +76,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -116,6 +118,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -156,6 +159,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.String } },
@@ -204,6 +208,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -252,6 +257,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -304,6 +310,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -374,6 +381,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -427,6 +435,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -475,6 +484,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           remote: null,
           createdAt: expect.dateCloseToNow(),
@@ -502,6 +512,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -558,6 +569,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           remote: null,
           createdAt: expect.dateCloseToNow(),
@@ -579,6 +591,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -642,6 +655,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -693,6 +707,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -736,6 +751,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -778,6 +794,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.String } },
@@ -828,6 +845,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -878,6 +896,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -932,6 +951,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: {
@@ -1004,6 +1024,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: {
@@ -1061,6 +1082,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: {
@@ -1116,6 +1138,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1166,6 +1189,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             remote: null,
             createdAt: expect.dateCloseToNow(),
@@ -1195,6 +1219,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1218,6 +1243,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1268,6 +1294,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             remote: null,
             createdAt: expect.dateCloseToNow(),
@@ -1301,6 +1328,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
               defaultCollectionViewAppId: null,
               description: null,
               assistantInstructions: null,
+              redirectToCollectionAfterDocumentCreation: false,
             },
             remote: null,
             createdAt: expect.dateCloseToNow(),
@@ -1333,6 +1361,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: {
@@ -1370,6 +1399,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: null,
             description: null,
             assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
           },
           schema: {
             types: {
@@ -1471,6 +1501,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1524,6 +1555,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1570,6 +1602,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1630,6 +1663,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1657,6 +1691,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: createAppResult.data.id,
           description: "updated description",
           assistantInstructions: "updated instructions",
+          redirectToCollectionAfterDocumentCreation: true,
         },
       );
 
@@ -1672,6 +1707,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             defaultCollectionViewAppId: createAppResult.data.id,
             description: "updated description",
             assistantInstructions: "updated instructions",
+            redirectToCollectionAfterDocumentCreation: true,
           },
         },
         error: null,
@@ -1758,6 +1794,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1822,6 +1859,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -1913,6 +1951,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2019,6 +2058,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2113,6 +2153,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2217,6 +2258,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2309,6 +2351,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2403,6 +2446,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2505,6 +2549,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2631,6 +2676,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2735,6 +2781,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2808,6 +2855,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -2911,6 +2959,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -2996,6 +3045,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -3070,6 +3120,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -3173,6 +3224,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3270,6 +3322,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -3347,6 +3400,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3455,6 +3509,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3554,6 +3609,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3658,6 +3714,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3775,6 +3832,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -3905,6 +3963,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -4054,6 +4113,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -4195,6 +4255,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -4403,6 +4464,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -4556,6 +4618,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -4617,6 +4680,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -4681,6 +4745,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -4758,6 +4823,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -4826,6 +4892,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -4955,6 +5022,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5042,6 +5110,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5110,6 +5179,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5178,6 +5248,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5285,6 +5356,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5400,6 +5472,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5488,6 +5561,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5573,6 +5647,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5697,6 +5772,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5840,6 +5916,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -5957,6 +6034,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6136,6 +6214,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6307,6 +6386,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6359,6 +6439,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6420,6 +6501,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6491,6 +6573,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6554,6 +6637,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6632,6 +6716,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6707,6 +6792,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6783,6 +6869,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -6870,6 +6957,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6920,6 +7008,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -6945,6 +7034,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -7004,6 +7094,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -7034,6 +7125,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -7112,6 +7204,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -7165,6 +7258,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -7248,6 +7342,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -7272,6 +7367,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -7296,6 +7392,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -7364,6 +7461,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },
@@ -7413,6 +7511,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {
@@ -7460,6 +7559,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {

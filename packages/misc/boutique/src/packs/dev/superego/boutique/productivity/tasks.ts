@@ -7,6 +7,7 @@ export default {
     icon: "✅️",
     description: "Task manager.",
     assistantInstructions: null,
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_1",
   },

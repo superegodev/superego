@@ -11,6 +11,7 @@ export default {
       "  - Currency -> EUR.",
       "  - Payment method -> Credit Card.",
     ].join("\n"),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_0",
   },

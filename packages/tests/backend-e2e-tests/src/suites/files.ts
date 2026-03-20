@@ -36,6 +36,7 @@ export default rd<GetDependencies>("Files", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: {

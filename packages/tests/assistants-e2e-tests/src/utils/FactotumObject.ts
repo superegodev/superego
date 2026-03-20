@@ -54,6 +54,7 @@ class FactotumObject {
         collectionCategoryId: null,
         description: definition.description ?? null,
         assistantInstructions: definition.assistantInstructions ?? null,
+        redirectToCollectionAfterDocumentCreation: false,
         defaultCollectionViewAppId: null,
       },
       schema: definition.schema,

@@ -16,6 +16,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
         defaultCollectionViewAppId: null,
         description: null,
         assistantInstructions: null,
+        redirectToCollectionAfterDocumentCreation: false,
       },
       schema: {
         types: {

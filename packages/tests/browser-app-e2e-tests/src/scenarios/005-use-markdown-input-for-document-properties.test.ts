@@ -18,6 +18,7 @@ test("005. Use markdown input for document properties", async ({ page }) => {
         defaultCollectionViewAppId: null,
         description: null,
         assistantInstructions: null,
+        redirectToCollectionAfterDocumentCreation: false,
       },
       schema: {
         types: {

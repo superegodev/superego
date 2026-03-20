@@ -10,6 +10,7 @@ export default {
       "- Keep exactly one log per date.",
       "- Keep symptoms concise and practical.",
     ].join("\n"),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_0",
   },

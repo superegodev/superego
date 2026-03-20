@@ -11,6 +11,7 @@ export default {
       "- Default to full tank if I don't specify it.",
       "- Always ask for the odometer reading.",
     ].join("\n"),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: "ProtoApp_0",
   },

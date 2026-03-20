@@ -140,6 +140,8 @@ export default async function compilePack(
           | null,
         description: settings.description,
         assistantInstructions: settings.assistantInstructions,
+        redirectToCollectionAfterDocumentCreation:
+          settings.redirectToCollectionAfterDocumentCreation,
       },
       schema,
       versionSettings: {

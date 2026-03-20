@@ -7,6 +7,7 @@ export default {
     icon: "📈",
     description: "Catalogue of securities: stocks, ETFs, bonds, and crypto",
     assistantInstructions: null,
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_1",
     defaultCollectionViewAppId: null,
   },

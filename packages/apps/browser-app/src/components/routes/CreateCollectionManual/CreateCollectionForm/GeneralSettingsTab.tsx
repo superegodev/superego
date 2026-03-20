@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { Fields } from "../../../design-system/forms/forms.js";
 import RHFEmojiField from "../../../widgets/RHFEmojiField/RHFEmojiField.js";
 import RHFMarkdownField from "../../../widgets/RHFMarkdownField/RHFMarkdownField.js";
+import RHFRedirectToCollectionAfterDocumentCreationField from "../../../widgets/RHFRedirectToCollectionAfterDocumentCreationField/RHFRedirectToCollectionAfterDocumentCreationField.js";
 import RHFTextField from "../../../widgets/RHFTextField/RHFTextField.js";
 import * as cs from "./CreateCollectionForm.css.js";
 import type CreateCollectionFormValues from "./CreateCollectionFormValues.js";
@@ -48,6 +49,10 @@ export default function GeneralSettingsTab({ control }: Props) {
           defaultMessage:
             "Specific instructions for this collection to pass to the assistant.",
         })}
+      />
+      <RHFRedirectToCollectionAfterDocumentCreationField
+        control={control}
+        name="redirectToCollectionAfterDocumentCreation"
       />
     </Fields>
   );

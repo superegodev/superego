@@ -56,6 +56,7 @@ export default class CollectionsUpdateSettings extends Usecase<
           defaultCollectionViewAppId: v.nullable(valibotSchemas.id.app()),
           description: v.nullable(v.string()),
           assistantInstructions: v.nullable(v.string()),
+          redirectToCollectionAfterDocumentCreation: v.boolean(),
         }),
       ),
       settingsPatch,
@@ -123,6 +124,10 @@ export default class CollectionsUpdateSettings extends Usecase<
           settingsPatch.assistantInstructions !== undefined
             ? settingsPatch.assistantInstructions
             : collection.settings.assistantInstructions,
+        redirectToCollectionAfterDocumentCreation:
+          settingsPatch.redirectToCollectionAfterDocumentCreation !== undefined
+            ? settingsPatch.redirectToCollectionAfterDocumentCreation
+            : collection.settings.redirectToCollectionAfterDocumentCreation,
       },
     };
     await this.repos.collection.replace(updatedCollection);

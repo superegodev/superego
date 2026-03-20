@@ -9,6 +9,7 @@ export default {
     assistantInstructions: `
 Use 100g as serving size if not specified.
     `.trim(),
+    redirectToCollectionAfterDocumentCreation: false,
     collectionCategoryId: "ProtoCollectionCategory_0",
     defaultCollectionViewAppId: null,
   },

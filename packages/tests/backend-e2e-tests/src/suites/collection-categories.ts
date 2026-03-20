@@ -456,6 +456,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
           defaultCollectionViewAppId: null,
           description: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema: {
           types: { Root: { dataType: DataType.Struct, properties: {} } },

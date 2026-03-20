@@ -18,6 +18,7 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
         defaultCollectionViewAppId: null,
         description: null,
         assistantInstructions: null,
+        redirectToCollectionAfterDocumentCreation: false,
       },
       schema: {
         types: {

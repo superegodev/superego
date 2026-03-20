@@ -39,6 +39,7 @@ export default function SuggestCollectionsDefinitions({
           ...settings,
           defaultCollectionViewAppId: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema,
         versionSettings: {

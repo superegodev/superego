@@ -3386,6 +3386,18 @@
       "value": "p"
     }
   ],
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_JL+VrQ": [
+    {
+      "type": 0,
+      "value": "When enabled, creating a document will navigate back to the collection page instead of to the new document."
+    }
+  ],
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_lPpMBs": [
+    {
+      "type": 0,
+      "value": "Redirect to collection after document creation"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,

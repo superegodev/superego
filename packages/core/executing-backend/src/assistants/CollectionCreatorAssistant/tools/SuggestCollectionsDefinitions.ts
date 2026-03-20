@@ -67,6 +67,7 @@ export default {
           ...settings,
           defaultCollectionViewAppId: null,
           assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
         },
         schema,
         versionSettings: {

@@ -65,11 +65,13 @@ export default function CreateDocumentForm({
     });
     if (success) {
       navigateTo(
-        {
-          name: RouteName.Document,
-          collectionId: collection.id,
-          documentId: data.id,
-        },
+        collection.settings.redirectToCollectionAfterDocumentCreation
+          ? { name: RouteName.Collection, collectionId: collection.id }
+          : {
+              name: RouteName.Document,
+              collectionId: collection.id,
+              documentId: data.id,
+            },
         { ignoreExitWarning: true },
       );
     } else if (error?.name === "DuplicateDocumentDetected") {

@@ -14,6 +14,7 @@ export const collectionSettingsStub = {
   collectionCategoryId: null,
   description: null,
   assistantInstructions: null,
+  redirectToCollectionAfterDocumentCreation: false,
   defaultCollectionViewAppId: "ProtoApp_0",
 };
 

@@ -3364,6 +3364,18 @@
       "value": "p"
     }
   ],
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_JL+VrQ": [
+    {
+      "type": 0,
+      "value": "Se attivato, la creazione di un documento riporterà alla pagina della collezione invece che al nuovo documento."
+    }
+  ],
+  "RHFRedirectToCollectionAfterDocumentCreationField.tsx_lPpMBs": [
+    {
+      "type": 0,
+      "value": "Reindirizza alla collezione dopo la creazione del documento"
+    }
+  ],
   "RHFSchemaField.tsx_9CnsYv": [
     {
       "type": 0,
