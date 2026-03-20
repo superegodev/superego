@@ -48,7 +48,10 @@ test("009. Set inference settings", async ({ page }) => {
       .getByRole("textbox", { name: /^Name$/i })
       .last()
       .fill("GPT OSS 120b");
-    await page.getByRole("textbox", { name: /^Name$/i }).last().blur();
+    await page
+      .getByRole("textbox", { name: /^Name$/i })
+      .last()
+      .blur();
 
     // Verify
     await VisualEvaluator.expectToSee(
