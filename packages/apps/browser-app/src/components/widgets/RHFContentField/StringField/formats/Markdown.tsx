@@ -17,7 +17,7 @@ export default function Markdown({
   control,
   name,
   label,
-  autoFocus: _autoFocus,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
@@ -54,6 +54,7 @@ export default function Markdown({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         placeholder="null"
+        autoFocus={autoFocus}
         ref={field.ref}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />

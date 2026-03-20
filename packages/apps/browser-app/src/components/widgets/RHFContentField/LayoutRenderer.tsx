@@ -1,6 +1,6 @@
 import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import type { Schema, StructTypeDefinition } from "@superego/schema";
-import { type CSSProperties, useRef } from "react";
+import type { CSSProperties } from "react";
 import type { Control } from "react-hook-form";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import AnyField from "./AnyField.js";
@@ -21,8 +21,7 @@ export default function LayoutRenderer({
   name,
   autoFocus,
 }: Props) {
-  const autoFocusClaimedRef = useRef(false);
-  autoFocusClaimedRef.current = false;
+  const autoFocusPath = autoFocus ? findFirstFieldPath(layout) : undefined;
   return layout.map((node, index) => (
     <AstNode
       // Layout is a static AST that doesn't reorder.
@@ -33,8 +32,7 @@ export default function LayoutRenderer({
       typeDefinition={typeDefinition}
       control={control}
       name={name}
-      autoFocus={autoFocus}
-      autoFocusClaimedRef={autoFocusClaimedRef}
+      autoFocusPath={autoFocusPath}
     />
   ));
 }
@@ -45,16 +43,14 @@ function AstNode({
   typeDefinition,
   control,
   name,
-  autoFocus,
-  autoFocusClaimedRef,
+  autoFocusPath,
 }: {
   node: DefaultDocumentViewUiOptions.HtmlAstNode;
   schema: Schema;
   typeDefinition: StructTypeDefinition;
   control: Control;
   name: string;
-  autoFocus: boolean;
-  autoFocusClaimedRef: React.RefObject<boolean>;
+  autoFocusPath: string | undefined;
 }) {
   if ("propertyPath" in node) {
     const propertyName = node.propertyPath.split(".")[0]!;
@@ -62,8 +58,6 @@ function AstNode({
     if (!propertyTypeDefinition) {
       return null;
     }
-    const shouldAutoFocus = autoFocus && !autoFocusClaimedRef.current;
-    autoFocusClaimedRef.current = true;
     return (
       <AnyField
         schema={schema}
@@ -75,7 +69,7 @@ function AstNode({
         control={control}
         name={name !== "" ? `${name}.${propertyName}` : propertyName}
         label={toTitleCase(propertyName)}
-        autoFocus={shouldAutoFocus}
+        autoFocus={propertyName === autoFocusPath}
       />
     );
   }
@@ -92,10 +86,26 @@ function AstNode({
           typeDefinition={typeDefinition}
           control={control}
           name={name}
-          autoFocus={autoFocus}
-          autoFocusClaimedRef={autoFocusClaimedRef}
+          autoFocusPath={autoFocusPath}
         />
       ))}
     </div>
   );
+}
+
+function findFirstFieldPath(
+  layout: DefaultDocumentViewUiOptions.Layout,
+): string | undefined {
+  for (const node of layout) {
+    if ("propertyPath" in node) {
+      return node.propertyPath.split(".")[0];
+    }
+    if (node.children) {
+      const found = findFirstFieldPath(node.children);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return undefined;
 }
