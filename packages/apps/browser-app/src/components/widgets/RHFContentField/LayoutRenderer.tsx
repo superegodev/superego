@@ -1,6 +1,6 @@
 import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import type { Schema, StructTypeDefinition } from "@superego/schema";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useRef } from "react";
 import type { Control } from "react-hook-form";
 import toTitleCase from "../../../utils/toTitleCase.js";
 import AnyField from "./AnyField.js";
@@ -11,6 +11,7 @@ interface Props {
   typeDefinition: StructTypeDefinition;
   control: Control;
   name: string;
+  autoFocus: boolean;
 }
 export default function LayoutRenderer({
   layout,
@@ -18,7 +19,10 @@ export default function LayoutRenderer({
   typeDefinition,
   control,
   name,
+  autoFocus,
 }: Props) {
+  const autoFocusClaimedRef = useRef(false);
+  autoFocusClaimedRef.current = false;
   return layout.map((node, index) => (
     <AstNode
       // Layout is a static AST that doesn't reorder.
@@ -29,6 +33,8 @@ export default function LayoutRenderer({
       typeDefinition={typeDefinition}
       control={control}
       name={name}
+      autoFocus={autoFocus}
+      autoFocusClaimedRef={autoFocusClaimedRef}
     />
   ));
 }
@@ -39,17 +45,26 @@ function AstNode({
   typeDefinition,
   control,
   name,
+  autoFocus,
+  autoFocusClaimedRef,
 }: {
   node: DefaultDocumentViewUiOptions.HtmlAstNode;
   schema: Schema;
   typeDefinition: StructTypeDefinition;
   control: Control;
   name: string;
+  autoFocus: boolean;
+  autoFocusClaimedRef: React.RefObject<boolean>;
 }) {
   if ("propertyPath" in node) {
     const propertyName = node.propertyPath.split(".")[0]!;
     const propertyTypeDefinition = typeDefinition.properties[propertyName];
-    return propertyTypeDefinition ? (
+    if (!propertyTypeDefinition) {
+      return null;
+    }
+    const shouldAutoFocus = autoFocus && !autoFocusClaimedRef.current;
+    autoFocusClaimedRef.current = true;
+    return (
       <AnyField
         schema={schema}
         typeDefinition={propertyTypeDefinition}
@@ -60,8 +75,9 @@ function AstNode({
         control={control}
         name={name !== "" ? `${name}.${propertyName}` : propertyName}
         label={toTitleCase(propertyName)}
+        autoFocus={shouldAutoFocus}
       />
-    ) : null;
+    );
   }
 
   return (
@@ -76,6 +92,8 @@ function AstNode({
           typeDefinition={typeDefinition}
           control={control}
           name={name}
+          autoFocus={autoFocus}
+          autoFocusClaimedRef={autoFocusClaimedRef}
         />
       ))}
     </div>

@@ -41,6 +41,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function FileField({
   typeDefinition,
@@ -49,6 +50,7 @@ export default function FileField({
   control,
   name,
   label,
+  autoFocus: _autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const backend = useBackend();

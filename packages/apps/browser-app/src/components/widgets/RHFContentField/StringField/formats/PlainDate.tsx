@@ -19,6 +19,7 @@ export default function PlainDate({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
@@ -32,6 +33,7 @@ export default function PlainDate({
       }}
       onBlur={field.onBlur}
       validationBehavior="aria"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

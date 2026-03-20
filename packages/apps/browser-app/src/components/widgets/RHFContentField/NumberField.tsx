@@ -20,6 +20,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function NumberField({
   typeDefinition,
@@ -28,6 +29,7 @@ export default function NumberField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
@@ -39,6 +41,7 @@ export default function NumberField({
       onChange={(value) => field.onChange(!Number.isNaN(value) ? value : null)}
       onBlur={field.onBlur}
       validationBehavior="aria"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

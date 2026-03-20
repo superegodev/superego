@@ -11,4 +11,5 @@ export default interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }

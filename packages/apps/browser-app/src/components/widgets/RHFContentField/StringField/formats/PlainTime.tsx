@@ -18,6 +18,7 @@ export default function PlainTime({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
@@ -52,6 +53,7 @@ export default function PlainTime({
       onBlur={field.onBlur}
       granularity="second"
       validationBehavior="aria"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

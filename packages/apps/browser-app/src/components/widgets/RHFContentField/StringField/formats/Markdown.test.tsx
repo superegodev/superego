@@ -20,6 +20,7 @@ function MarkdownWithForm({ defaultValue }: { defaultValue?: string | null }) {
       control={control as unknown as Control}
       name="markdown"
       label="Markdown field"
+      autoFocus={false}
     />
   );
 }
@@ -61,6 +62,7 @@ describe("Markdown", () => {
           control={control as unknown as Control}
           name="markdown"
           label="Markdown field"
+          autoFocus={false}
         />
       );
     }

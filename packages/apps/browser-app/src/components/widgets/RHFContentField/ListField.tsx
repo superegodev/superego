@@ -28,6 +28,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function ListField(props: Props) {
   const value = useWatch({ control: props.control, name: props.name });
@@ -238,6 +239,7 @@ function ItemField({
         isListItem={true}
         control={control}
         name={name}
+        autoFocus={false}
         label={intl.formatMessage(
           { defaultMessage: "{itemName} number {itemNumber}" },
           {

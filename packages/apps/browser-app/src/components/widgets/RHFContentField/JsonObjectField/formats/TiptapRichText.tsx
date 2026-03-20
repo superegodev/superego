@@ -20,6 +20,7 @@ export default function TiptapRichText({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
@@ -58,6 +59,7 @@ export default function TiptapRichText({
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
+        autoFocus={autoFocus}
         ref={field.ref}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />

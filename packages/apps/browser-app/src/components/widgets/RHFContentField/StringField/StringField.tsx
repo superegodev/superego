@@ -13,6 +13,7 @@ export default function StringField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const Component = getComponent(typeDefinition);
   return (
@@ -23,6 +24,7 @@ export default function StringField({
       control={control}
       name={name}
       label={label}
+      autoFocus={autoFocus}
     />
   );
 }

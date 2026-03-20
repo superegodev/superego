@@ -21,6 +21,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function EnumField({
   typeDefinition,
@@ -29,6 +30,7 @@ export default function EnumField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { zoomLevel, isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
@@ -72,6 +74,7 @@ export default function EnumField({
       value={field.value ?? null}
       onChange={field.onChange}
       validationBehavior="aria"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       aria-label={isListItem ? label : undefined}
       data-data-type={typeDefinition.dataType}

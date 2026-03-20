@@ -22,6 +22,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function BooleanField({
   typeDefinition,
@@ -30,6 +31,7 @@ export default function BooleanField({
   control,
   name,
   label,
+  autoFocus: _autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });

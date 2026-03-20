@@ -27,6 +27,7 @@ export default function GeoJSON({
   control,
   name,
   label,
+  autoFocus: _autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);

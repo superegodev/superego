@@ -21,6 +21,7 @@ export default function Default({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
@@ -60,6 +61,7 @@ export default function Default({
       }}
       validationBehavior="aria"
       autoComplete="off"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

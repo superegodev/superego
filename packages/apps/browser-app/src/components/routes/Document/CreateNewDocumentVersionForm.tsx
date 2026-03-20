@@ -160,6 +160,7 @@ export default function CreateNewDocumentVersionForm({
         schema={collectionSchema}
         control={control}
         isReadOnly={isReadOnly}
+        autoFocus={true}
         defaultDocumentViewUiOptions={defaultDocumentViewUiOptions}
         documentId={document.id}
       />

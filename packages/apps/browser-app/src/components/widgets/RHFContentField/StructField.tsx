@@ -27,6 +27,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function StructField({
   schema,
@@ -36,6 +37,7 @@ export default function StructField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field } = useController({ control, name });
@@ -48,6 +50,7 @@ export default function StructField({
         control={control}
         name={name}
         layout={layout}
+        autoFocus={autoFocus}
       />
     );
   }
@@ -105,6 +108,7 @@ export default function StructField({
             control={control}
             name={name}
             layout={layout}
+            autoFocus={autoFocus}
           />
         )}
       </Fieldset.Fields>
@@ -118,7 +122,11 @@ function Fields({
   control,
   name,
   layout,
-}: Pick<Props, "schema" | "typeDefinition" | "control" | "name"> & {
+  autoFocus,
+}: Pick<
+  Props,
+  "schema" | "typeDefinition" | "control" | "name" | "autoFocus"
+> & {
   layout: ReturnType<typeof useFieldUiOptions>["layout"];
 }) {
   if (layout) {
@@ -129,12 +137,13 @@ function Fields({
         typeDefinition={typeDefinition}
         control={control}
         name={name}
+        autoFocus={autoFocus}
       />
     );
   }
   return (
     <FormsFields>
-      {Object.keys(typeDefinition.properties).map((propertyName) => (
+      {Object.keys(typeDefinition.properties).map((propertyName, index) => (
         <AnyField
           key={propertyName}
           schema={schema}
@@ -146,6 +155,7 @@ function Fields({
           control={control}
           name={name !== "" ? `${name}.${propertyName}` : propertyName}
           label={toTitleCase(propertyName)}
+          autoFocus={autoFocus && index === 0}
         />
       ))}
     </FormsFields>
