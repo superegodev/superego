@@ -11,6 +11,7 @@ interface Props {
   typeDefinition: StructTypeDefinition;
   control: Control;
   name: string;
+  autoFocus: boolean;
 }
 export default function LayoutRenderer({
   layout,
@@ -18,7 +19,9 @@ export default function LayoutRenderer({
   typeDefinition,
   control,
   name,
+  autoFocus,
 }: Props) {
+  const autoFocusPath = autoFocus ? findFirstFieldPath(layout) : undefined;
   return layout.map((node, index) => (
     <AstNode
       // Layout is a static AST that doesn't reorder.
@@ -29,6 +32,7 @@ export default function LayoutRenderer({
       typeDefinition={typeDefinition}
       control={control}
       name={name}
+      autoFocusPath={autoFocusPath}
     />
   ));
 }
@@ -39,17 +43,22 @@ function AstNode({
   typeDefinition,
   control,
   name,
+  autoFocusPath,
 }: {
   node: DefaultDocumentViewUiOptions.HtmlAstNode;
   schema: Schema;
   typeDefinition: StructTypeDefinition;
   control: Control;
   name: string;
+  autoFocusPath: string | undefined;
 }) {
   if ("propertyPath" in node) {
     const propertyName = node.propertyPath.split(".")[0]!;
     const propertyTypeDefinition = typeDefinition.properties[propertyName];
-    return propertyTypeDefinition ? (
+    if (!propertyTypeDefinition) {
+      return null;
+    }
+    return (
       <AnyField
         schema={schema}
         typeDefinition={propertyTypeDefinition}
@@ -60,8 +69,9 @@ function AstNode({
         control={control}
         name={name !== "" ? `${name}.${propertyName}` : propertyName}
         label={toTitleCase(propertyName)}
+        autoFocus={propertyName === autoFocusPath}
       />
-    ) : null;
+    );
   }
 
   return (
@@ -76,8 +86,26 @@ function AstNode({
           typeDefinition={typeDefinition}
           control={control}
           name={name}
+          autoFocusPath={autoFocusPath}
         />
       ))}
     </div>
   );
+}
+
+function findFirstFieldPath(
+  layout: DefaultDocumentViewUiOptions.Layout,
+): string | undefined {
+  for (const node of layout) {
+    if ("propertyPath" in node) {
+      return node.propertyPath.split(".")[0];
+    }
+    if (node.children) {
+      const found = findFirstFieldPath(node.children);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return undefined;
 }

@@ -23,6 +23,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function AnyField({
   schema,
@@ -32,6 +33,7 @@ export default function AnyField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   switch (typeDefinition.dataType) {
     case DataType.String:
@@ -44,6 +46,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.Enum:
@@ -55,6 +58,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.Number:
@@ -67,6 +71,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.Boolean:
@@ -79,6 +84,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.JsonObject:
@@ -90,6 +96,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.File:
@@ -101,6 +108,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.Struct:
@@ -113,6 +121,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.List:
@@ -125,6 +134,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case DataType.DocumentRef:
@@ -136,6 +146,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
     case null:
@@ -148,6 +159,7 @@ export default function AnyField({
           control={control}
           name={name}
           label={label}
+          autoFocus={autoFocus}
         />
       );
   }

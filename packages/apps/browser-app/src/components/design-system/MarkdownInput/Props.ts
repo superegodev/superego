@@ -7,6 +7,7 @@ export default interface Props {
   isReadOnly?: boolean | undefined;
   showToolbar?: boolean | undefined;
   placeholder?: string | undefined;
+  autoFocus?: boolean | undefined;
   /**
    * react-hook-form ref callback. Used to allow the input to be focused by rhf
    * in certain circumstances.

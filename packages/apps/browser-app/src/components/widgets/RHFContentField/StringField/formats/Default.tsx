@@ -17,6 +17,7 @@ export default function Default({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { field, fieldState } = useController({ control, name });
@@ -29,6 +30,7 @@ export default function Default({
       onBlur={field.onBlur}
       validationBehavior="aria"
       autoComplete="off"
+      autoFocus={autoFocus}
       isInvalid={fieldState.invalid}
       isReadOnly={isReadOnly}
       aria-label={isListItem ? label : undefined}

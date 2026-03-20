@@ -12,6 +12,7 @@ export default function JsonObjectField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const Component = getComponent(typeDefinition);
   return (
@@ -22,6 +23,7 @@ export default function JsonObjectField({
       control={control}
       name={name}
       label={label}
+      autoFocus={autoFocus}
     />
   );
 }

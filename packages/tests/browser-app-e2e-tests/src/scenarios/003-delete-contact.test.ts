@@ -60,6 +60,7 @@ test("003. Delete Contact", async ({ page }) => {
     await page
       .getByRole("textbox", { name: /Command confirmation/i })
       .fill("delete");
+    await page.getByRole("textbox", { name: /Command confirmation/i }).blur();
 
     // Verify
     await VisualEvaluator.expectToSee(

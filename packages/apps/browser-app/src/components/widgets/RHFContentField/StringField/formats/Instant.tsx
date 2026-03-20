@@ -25,6 +25,7 @@ export default function Instant({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const intl = useIntl();
   const { isReadOnly } = useUiOptions();
@@ -70,6 +71,7 @@ export default function Instant({
           }
           onBlur={field.onBlur}
           validationBehavior="aria"
+          autoFocus={autoFocus}
           isInvalid={fieldState.invalid}
           isReadOnly={isReadOnly}
           aria-label={

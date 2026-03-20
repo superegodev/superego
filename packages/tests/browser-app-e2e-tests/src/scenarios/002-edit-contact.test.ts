@@ -27,6 +27,7 @@ test("002. Edit Contact", async ({ page }) => {
   await test.step("01. Edit relation field", async () => {
     // Exercise
     await page.getByRole("textbox", { name: /^Relation/i }).fill("Colleague");
+    await page.getByRole("textbox", { name: /^Relation/i }).blur();
     await page
       .getByRole("button", { name: /^Save$/i, disabled: false })
       .waitFor();

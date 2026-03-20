@@ -118,6 +118,7 @@ export default function CreateDocumentForm({
         <RHFContentField
           schema={schema}
           control={control}
+          autoFocus={true}
           defaultDocumentViewUiOptions={
             collection.latestVersion.settings.defaultDocumentViewUiOptions
           }

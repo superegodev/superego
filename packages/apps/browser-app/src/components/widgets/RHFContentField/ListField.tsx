@@ -28,6 +28,7 @@ interface Props {
   control: Control;
   name: string;
   label: string;
+  autoFocus: boolean;
 }
 export default function ListField(props: Props) {
   const value = useWatch({ control: props.control, name: props.name });
@@ -92,6 +93,7 @@ function NonNullListField({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const intl = useIntl();
@@ -154,6 +156,7 @@ function NonNullListField({
             isFirstItem={index === 0}
             isLastItem={index === fields.length - 1}
             isReadOnly={isReadOnly}
+            autoFocus={autoFocus && index === 0}
             onRemoveItem={() => remove(index)}
             onMoveItemUp={() => move(index, index - 1)}
             onMoveItemDown={() => move(index, index + 1)}
@@ -173,6 +176,7 @@ interface ItemFieldProps {
   isFirstItem: boolean;
   isLastItem: boolean;
   isReadOnly: boolean;
+  autoFocus: boolean;
   onRemoveItem: () => void;
   onMoveItemUp: () => void;
   onMoveItemDown: () => void;
@@ -186,6 +190,7 @@ function ItemField({
   isFirstItem,
   isLastItem,
   isReadOnly,
+  autoFocus,
   onRemoveItem,
   onMoveItemUp,
   onMoveItemDown,
@@ -238,6 +243,7 @@ function ItemField({
         isListItem={true}
         control={control}
         name={name}
+        autoFocus={autoFocus}
         label={intl.formatMessage(
           { defaultMessage: "{itemName} number {itemNumber}" },
           {

@@ -17,6 +17,7 @@ export default function EagerMarkdownInput({
   isReadOnly = false,
   showToolbar = true,
   placeholder,
+  autoFocus = false,
   ref,
   className,
 }: Props) {
@@ -42,6 +43,7 @@ export default function EagerMarkdownInput({
       toolbar: false,
       smartLists: true,
       placeholder: placeholder ?? "",
+      autofocus: autoFocus,
       theme,
       padding: "8px 16px 16px 16px",
       fontSize: "16px",

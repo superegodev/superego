@@ -15,6 +15,7 @@ interface Props {
   protoCollections?: UiOptions["protoCollections"];
   defaultDocumentViewUiOptions?: DefaultDocumentViewUiOptions | null;
   documentId?: string | null;
+  autoFocus?: boolean;
 }
 export default function RHFContentField({
   schema,
@@ -27,6 +28,7 @@ export default function RHFContentField({
   protoCollections = [],
   defaultDocumentViewUiOptions = null,
   documentId = null,
+  autoFocus = false,
 }: Props) {
   return (
     <UiOptionsProvider
@@ -48,6 +50,7 @@ export default function RHFContentField({
         control={control}
         name={name}
         label=""
+        autoFocus={autoFocus}
       />
     </UiOptionsProvider>
   );

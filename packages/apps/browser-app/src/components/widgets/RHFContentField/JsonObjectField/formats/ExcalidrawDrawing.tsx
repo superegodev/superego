@@ -26,6 +26,7 @@ export default function ExcalidrawDrawing({
   control,
   name,
   label,
+  autoFocus,
 }: Props) {
   const { isReadOnly, documentId } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
@@ -105,6 +106,7 @@ export default function ExcalidrawDrawing({
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
+        autoFocus={autoFocus}
         ref={field.ref}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
