@@ -9,8 +9,6 @@ export default function useAutoResizeTextArea(
   textAreaRef: RefObject<HTMLTextAreaElement | null>,
   content: string,
 ) {
-  // We want to resize the textarea on content change.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (!supportsFieldSizing && textAreaRef.current) {
       textAreaRef.current.style.overflowY = "hidden";

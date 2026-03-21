@@ -37,8 +37,6 @@ export default function useSyncValue({
 
   // Sync onChange: re-register the global events listener when onChange
   // changes.
-  // refs are stable, .current is read not tracked.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const geoman = geomanRef.current;
     if (!isLoaded || !geoman) {
@@ -59,11 +57,10 @@ export default function useSyncValue({
       debouncedOnChange.clear();
       geoman.setGlobalEventsListener(null);
     };
+    // oxlint-disable-next-line react/exhaustive-deps: refs are stable, .current is read, not tracked.
   }, [onChange, isLoaded]);
 
   // Sync value: when the value changes externally, re-import into Geoman.
-  // refs are stable, .current is read not tracked.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const geoman = geomanRef.current;
     if (!isLoaded || !geoman) {
@@ -97,5 +94,6 @@ export default function useSyncValue({
         >[0],
       );
     }
+    // oxlint-disable-next-line react/exhaustive-deps: refs are stable, .current is read, not tracked.
   }, [value, isLoaded]);
 }

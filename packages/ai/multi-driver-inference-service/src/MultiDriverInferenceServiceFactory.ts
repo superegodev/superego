@@ -5,9 +5,7 @@ import type {
 } from "@superego/executing-backend";
 import MultiDriverInferenceService from "./MultiDriverInferenceService.js";
 
-export default class MultiDriverInferenceServiceFactory
-  implements InferenceServiceFactory
-{
+export default class MultiDriverInferenceServiceFactory implements InferenceServiceFactory {
   create(settings: InferenceSettings): InferenceService {
     return new MultiDriverInferenceService(settings);
   }

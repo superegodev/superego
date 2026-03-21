@@ -9,8 +9,8 @@ import {
   type TreeItemProps,
 } from "react-aria-components";
 import { PiCaretDown, PiCaretRight } from "react-icons/pi";
-import CollectionCategoryUtils from "../../../utils/CollectionCategoryUtils.js";
 import classnames from "../../../utils/classnames.js";
+import CollectionCategoryUtils from "../../../utils/CollectionCategoryUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import CollectionCategoryActionsMenu from "./CollectionCategoryActionsMenu.js";
 import * as cs from "./CollectionsTree.css.js";
@@ -21,8 +21,8 @@ import {
   useIsParentDropDisabled,
 } from "./dnd.js";
 import RenameCollectionCategoryModalForm from "./RenameCollectionCategoryModalForm.js";
-import TreeItemDragPreview from "./TreeItemDragPreview.js";
 import type * as tree from "./tree.js";
+import TreeItemDragPreview from "./TreeItemDragPreview.js";
 
 interface Props extends Partial<TreeItemProps> {
   item: tree.CollectionCategoryTreeItem;

@@ -11,12 +11,12 @@ interface Props {
   };
 }
 export default function CreateGeoJSONMap({ toolResult }: Props) {
-  // geoJSON actual value (not ref) only changes when toolCallId changes.
-  // Since we don't want to recreate the map on every change of ref, we memoize
-  // the geoJSON.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   const geoJSON = useMemo(
     () => toolResult.artifacts.geoJSON,
+    // geoJSON actual value (not ref) only changes when toolCallId changes.
+    // Since we don't want to recreate the map on every change of ref, we
+    // memoize the geoJSON.
+    // oxlint-disable-next-line react/exhaustive-deps
     [toolResult.toolCallId],
   );
   return (

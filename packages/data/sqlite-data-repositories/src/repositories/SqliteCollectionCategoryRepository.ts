@@ -9,9 +9,7 @@ import { toEntity } from "../types/SqliteCollectionCategory.js";
 
 const table = "collection_categories";
 
-export default class SqliteCollectionCategoryRepository
-  implements CollectionCategoryRepository
-{
+export default class SqliteCollectionCategoryRepository implements CollectionCategoryRepository {
   constructor(private db: DatabaseSync) {}
 
   async insert(collectionCategory: CollectionCategoryEntity): Promise<void> {

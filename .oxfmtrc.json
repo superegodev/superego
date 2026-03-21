@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "sortImports": { "newlinesBetween": false },
+  "ignorePatterns": [
+    "**/package.json",
+    "**/translations/**/*",
+    "packages/misc/boutique/src/**/*.appSource.*",
+    "packages/misc/boutique/src/**/*.appCompiled.*",
+    "packages/core/schema/src/codegen/test-schemas/*.generated.*"
+  ],
+  "overrides": [
+    {
+      "files": ["*.yml"],
+      "options": { "printWidth": 120 }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": { "proseWrap": "always" }
+    }
+  ]
+}

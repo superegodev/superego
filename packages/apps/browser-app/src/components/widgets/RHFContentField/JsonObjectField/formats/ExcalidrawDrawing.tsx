@@ -31,6 +31,7 @@ export default function ExcalidrawDrawing({
   const { isReadOnly, documentId } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+  const fieldOnChange = field.onChange;
 
   const localStorageKey = documentId
     ? getLocalStorageKey(documentId, field.name)
@@ -51,13 +52,13 @@ export default function ExcalidrawDrawing({
         }
       }
 
-      field.onChange(
+      fieldOnChange(
         isEqual(rest, defaultValue) && field.value === null
           ? null
           : { ...rest, __dataType: DataType.JsonObject },
       );
     },
-    [field.onChange, field.value, localStorageKey],
+    [fieldOnChange, field.value, localStorageKey],
   );
 
   const inputValue = (() => {

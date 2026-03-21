@@ -66,8 +66,6 @@ export default function AppRenderer({ app }: Props) {
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
-  // We want to reset incompatibilityWarningDismissed when the app changes.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     setIncompatibilityWarningDismissed(false);
   }, [app.id]);

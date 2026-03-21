@@ -9,9 +9,9 @@ import {
 import { valibotSchemas as sharedValibotSchemas } from "@superego/shared-utils";
 import collectionSettingsSchema from "../utils/collectionSettingsSchema.js";
 import readJsonFile from "../utils/readJsonFile.js";
-import type CheckResult from "./CheckResult.js";
 import checkGeneratedTypes from "./checkGeneratedTypes.js";
 import checkJsonValidation from "./checkJsonValidation.js";
+import type CheckResult from "./CheckResult.js";
 import checkTypescriptCompilation from "./checkTypescriptCompilation.js";
 
 export default async function checkCollection(

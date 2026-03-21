@@ -31,8 +31,6 @@ export default function MatrixSpinner({ size = 20 }: { size?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const theme = useTheme();
 
-  // Theme triggers color re-resolution.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {

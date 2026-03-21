@@ -13,8 +13,8 @@ import { useCreateNewCollectionVersion } from "../../../../business-logic/backen
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
-import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../../business-logic/toasts/ToastType.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects.js";

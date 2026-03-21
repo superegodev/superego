@@ -19,9 +19,9 @@ import AddFilesButton from "./AddFilesButton.js";
 import CompletionInferenceOptionsInput from "./CompletionInferenceOptionsInput/CompletionInferenceOptionsInput.js";
 import FilesTray from "./FilesTray.js";
 import SendRecordButtons from "./SendRecordButtons.js";
-import * as cs from "./UserMessageContentInput.css.js";
 import useAutoResizeTextArea from "./useAutoResizeTextArea.js";
 import useFiles from "./useFiles.js";
+import * as cs from "./UserMessageContentInput.css.js";
 
 interface Props {
   conversation: Conversation | null;

@@ -22,7 +22,7 @@ export default function FullPageTabs({ tabs }: Props) {
           .filter((tab) => tab !== null)
           .map((tab, index) => (
             <Tab
-              // biome-ignore lint/suspicious/noArrayIndexKey: tabs is stable.
+              // oxlint-disable-next-line react/no-array-index-key: tabs is stable.
               key={index}
               id={`${tabsId}-${index}`}
               className={cs.FullPageTabs.tab}
@@ -37,7 +37,7 @@ export default function FullPageTabs({ tabs }: Props) {
         .filter((tab) => tab !== null && "panel" in tab)
         .map((tab, index) => (
           <TabPanel
-            // biome-ignore lint/suspicious/noArrayIndexKey: tabs is stable.
+            // oxlint-disable-next-line react/no-array-index-key: tabs is stable.
             key={index}
             id={`${tabsId}-${index}`}
             className={cs.FullPageTabs.tabPanel}

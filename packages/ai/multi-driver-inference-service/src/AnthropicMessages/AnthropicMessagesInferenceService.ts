@@ -17,9 +17,7 @@ import {
   toAnthropicMessagesRequest,
 } from "./AnthropicMessages.js";
 
-export default class AnthropicMessagesInferenceService
-  implements InferenceService
-{
+export default class AnthropicMessagesInferenceService implements InferenceService {
   constructor(private settings: InferenceSettings) {}
 
   async generateNextMessage(

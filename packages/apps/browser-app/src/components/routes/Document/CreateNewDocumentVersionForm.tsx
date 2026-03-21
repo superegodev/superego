@@ -11,8 +11,8 @@ import { useForm } from "react-hook-form";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 import { useCreateNewDocumentVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import { DOCUMENT_AUTOSAVE_INTERVAL } from "../../../config.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
@@ -73,7 +73,6 @@ export default function CreateNewDocumentVersionForm({
   // invalidated and re-fetched. In that case we don't care to update the form
   // though.
   const latestVersionIdRef = useRef(document.latestVersion.id);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (document.latestVersion.id !== latestVersionIdRef.current) {
       reset(
@@ -84,6 +83,7 @@ export default function CreateNewDocumentVersionForm({
       );
       latestVersionIdRef.current = document.latestVersion.id;
     }
+    // oxlint-disable-next-line react/exhaustive-deps: see comment above.
   }, [document.latestVersion.id]);
 
   const onSubmit = async (contentData: any) => {

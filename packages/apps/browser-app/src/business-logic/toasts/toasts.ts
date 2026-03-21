@@ -1,6 +1,6 @@
 import type ToastContent from "./ToastContent.js";
-import ToastType from "./ToastType.js";
 import toastQueue from "./toastQueue.js";
+import ToastType from "./ToastType.js";
 
 export default {
   add: (toastContent: ToastContent) => {

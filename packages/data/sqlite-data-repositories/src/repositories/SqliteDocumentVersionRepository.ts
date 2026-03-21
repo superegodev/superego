@@ -21,9 +21,7 @@ const documentVersionContentBlockingKeysTable =
 
 const jdp = create({ omitRemovedValues: true });
 
-export default class SqliteDocumentVersionRepository
-  implements DocumentVersionRepository
-{
+export default class SqliteDocumentVersionRepository implements DocumentVersionRepository {
   constructor(private db: DatabaseSync) {}
 
   async insert(documentVersion: DocumentVersionEntity): Promise<void> {

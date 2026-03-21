@@ -22,9 +22,10 @@ export default function Markdown({
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+  const fieldOnChange = field.onChange;
   const onChange = useCallback(
-    (newValue: string) => field.onChange(newValue !== "" ? newValue : null),
-    [field.onChange],
+    (newValue: string) => fieldOnChange(newValue !== "" ? newValue : null),
+    [fieldOnChange],
   );
   return (
     <div

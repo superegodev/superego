@@ -102,11 +102,10 @@ export default function EagerExcalidrawInput({
 
   useEffect(() => () => debouncedFlushScene.clear(), [debouncedFlushScene]);
 
-  // Stable callback with no dependencies to avoid Excalidraw re-render loops.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   const handleExcalidrawChange = useCallback(() => {
     hasPendingLocalChangesRef.current = true;
     debouncedFlushScene();
+    // oxlint-disable-next-line react/exhaustive-deps: stable callback with no dependencies to avoid Excalidraw re-render loops.
   }, []);
 
   useEffect(() => {

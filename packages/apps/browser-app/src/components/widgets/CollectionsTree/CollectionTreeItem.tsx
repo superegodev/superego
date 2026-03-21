@@ -10,16 +10,16 @@ import { RouteName } from "../../../business-logic/navigation/Route.js";
 import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
-import CollectionUtils from "../../../utils/CollectionUtils.js";
 import classnames from "../../../utils/classnames.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import * as cs from "./CollectionsTree.css.js";
 import {
   useDragTreeItem,
   useDropTreeItem,
   useIsParentDropDisabled,
 } from "./dnd.js";
-import TreeItemDragPreview from "./TreeItemDragPreview.js";
 import type * as tree from "./tree.js";
+import TreeItemDragPreview from "./TreeItemDragPreview.js";
 
 interface Props extends Partial<TreeItemProps> {
   item: tree.CollectionTreeItem;

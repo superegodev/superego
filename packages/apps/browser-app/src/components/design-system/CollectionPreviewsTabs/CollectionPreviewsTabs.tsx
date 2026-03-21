@@ -33,6 +33,7 @@ export default function CollectionPreviewsTabs({
         <TabList className={cs.CollectionPreviewsTabs.tabList}>
           {collections.map((collection, index) => (
             <Tab
+              // oxlint-disable-next-line react/no-array-index-key: list is stable.
               key={Id.generate.protoCollection(index)}
               id={`${tabsId}-${index}`}
               className={classnames(
@@ -46,6 +47,7 @@ export default function CollectionPreviewsTabs({
         </TabList>
         {collections.map((collection, index) => (
           <TabPanel
+            // oxlint-disable-next-line react/no-array-index-key: list is stable.
             key={Id.generate.protoCollection(index)}
             id={`${tabsId}-${index}`}
             className={cs.CollectionPreviewsTabs.tabPanel}

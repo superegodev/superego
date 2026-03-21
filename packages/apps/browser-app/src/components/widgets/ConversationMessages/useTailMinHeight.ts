@@ -71,6 +71,9 @@ export default function useTailMinHeight(
 
   useEffect(() => {
     recalculate();
+    // deps are also treated as useEffect dependencies by the consumer, so they
+    // have the same "semantics".
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
   }, [recalculate, ...deps]);
 
   useEffect(() => {

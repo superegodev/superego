@@ -24,8 +24,7 @@ export default function LayoutRenderer({
   const autoFocusPath = autoFocus ? findFirstFieldPath(layout) : undefined;
   return layout.map((node, index) => (
     <AstNode
-      // Layout is a static AST that doesn't reorder.
-      // biome-ignore lint/suspicious/noArrayIndexKey: see above.
+      // oxlint-disable-next-line react/no-array-index-key: layout is a static AST that doesn't reorder.
       key={index}
       node={node}
       schema={schema}
@@ -79,7 +78,7 @@ function AstNode({
       {node.children?.map((child, index) => (
         <AstNode
           // Layout is a static AST that doesn't reorder.
-          // biome-ignore lint/suspicious/noArrayIndexKey: see above.
+          // oxlint-disable-next-line react/no-array-index-key: see above.
           key={index}
           node={child}
           schema={schema}

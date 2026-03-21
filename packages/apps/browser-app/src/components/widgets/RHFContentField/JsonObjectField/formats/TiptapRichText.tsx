@@ -25,14 +25,15 @@ export default function TiptapRichText({
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+  const fieldOnChange = field.onChange;
   const { __dataType, ...value } =
     field.value ?? forms.defaults.tiptapRichTextJsonObject();
   const onChange = useCallback(
     (newValue: JSONContent | null) =>
       newValue === null
-        ? field.onChange(null)
-        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange],
+        ? fieldOnChange(null)
+        : fieldOnChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [fieldOnChange],
   );
   return (
     <div

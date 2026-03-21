@@ -11,8 +11,8 @@ import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";

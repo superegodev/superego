@@ -10,8 +10,8 @@ import getRootType from "./utils/getRootType.js";
 import getType from "./utils/getType.js";
 import getTypeDefinitionAtPath from "./utils/getTypeDefinitionAtPath.js";
 import parsePath from "./utils/parsePath.js";
-import RHFProtoFile from "./utils/RHFProtoFile.js";
 import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
+import RHFProtoFile from "./utils/RHFProtoFile.js";
 import content from "./valibot-schemas/content/content.js";
 import schema from "./valibot-schemas/schema/schema.js";
 

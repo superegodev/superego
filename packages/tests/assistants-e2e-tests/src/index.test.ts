@@ -111,46 +111,47 @@ const assistantsModels = [
   // "x-ai/grok-4-fast",
 ];
 
-describe.concurrent.each(
-  assistantsModels,
-)(`Assistants model: %s; Evaluator model: ${evaluatorModel}`, (model) => {
-  registerTests(() => {
-    const defaultGlobalSettings = {
-      appearance: { theme: Theme.Auto },
-      inference: makeInferenceSettings(model),
-      assistants: {
-        userInfo: null,
-        userPreferences: null,
-        developerPrompts: {
-          [AssistantName.Factotum]: null,
-          [AssistantName.CollectionCreator]: null,
+describe.concurrent.each(assistantsModels)(
+  `Assistants model: %s; Evaluator model: ${evaluatorModel}`,
+  (model) => {
+    registerTests(() => {
+      const defaultGlobalSettings = {
+        appearance: { theme: Theme.Auto },
+        inference: makeInferenceSettings(model),
+        assistants: {
+          userInfo: null,
+          userPreferences: null,
+          developerPrompts: {
+            [AssistantName.Factotum]: null,
+            [AssistantName.CollectionCreator]: null,
+          },
         },
-      },
-    };
+      };
 
-    // Data repositories
-    const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-      fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-      defaultGlobalSettings: defaultGlobalSettings,
+      // Data repositories
+      const dataRepositoriesManager = new SqliteDataRepositoriesManager({
+        fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
+        defaultGlobalSettings: defaultGlobalSettings,
+      });
+      dataRepositoriesManager.runMigrations();
+
+      // Backend
+      const backend = new ExecutingBackend(
+        dataRepositoriesManager,
+        javascriptSandbox,
+        typescriptCompiler,
+        inferenceServiceFactory,
+        [],
+      );
+
+      const inferenceOptions = {
+        completion:
+          makeInferenceSettings(model).defaultInferenceOptions.completion!,
+        transcription: null,
+        fileInspection: null,
+      };
+
+      return { backend, booleanOracle: evaluator, inferenceOptions };
     });
-    dataRepositoriesManager.runMigrations();
-
-    // Backend
-    const backend = new ExecutingBackend(
-      dataRepositoriesManager,
-      javascriptSandbox,
-      typescriptCompiler,
-      inferenceServiceFactory,
-      [],
-    );
-
-    const inferenceOptions = {
-      completion:
-        makeInferenceSettings(model).defaultInferenceOptions.completion!,
-      transcription: null,
-      fileInspection: null,
-    };
-
-    return { backend, booleanOracle: evaluator, inferenceOptions };
-  });
-});
+  },
+);

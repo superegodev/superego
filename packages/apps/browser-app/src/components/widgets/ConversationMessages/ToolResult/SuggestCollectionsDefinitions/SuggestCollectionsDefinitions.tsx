@@ -6,8 +6,8 @@ import {
 } from "@superego/backend";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useCreateManyCollections } from "../../../../../business-logic/backend/hooks.js";
-import ToastType from "../../../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../../../business-logic/toasts/ToastType.js";
 import Button from "../../../../design-system/Button/Button.js";
 import CollectionPreviewsTabs from "../../../../design-system/CollectionPreviewsTabs/CollectionPreviewsTabs.js";
 import Title from "../Title.js";
