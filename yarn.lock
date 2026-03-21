@@ -2551,9 +2551,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.13.4":
-  version: 6.13.4
-  resolution: "@formatjs/cli@npm:6.13.4"
+"@formatjs/cli@npm:^6.14.0":
+  version: 6.14.0
+  resolution: "@formatjs/cli@npm:6.14.0"
   peerDependencies:
     "@glimmer/syntax": ^0.84.3 || ^0.95.0
     "@vue/compiler-core": ^3.5.0
@@ -2576,7 +2576,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: 10c0/c984d37d217886e9cb19257c11f6e0fee7d39c54c48aa93131ee65db06a73b851770244a0145ad4c7a46d43defadd2eeb00c98ae4a341dfb395148af70224818
+  checksum: 10c0/ad1c9c531cfc84c72b21c84bb21b4cf42e0664784218fade0a2c000a008a5ca7bfe01646ddbdaac92ed3230744f5e6edbac2c8eda1e54431b67ebe6489dad458
   languageName: node
   linkType: hard
 
@@ -2711,9 +2711,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/unplugin@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@formatjs/unplugin@npm:1.1.3"
+"@formatjs/unplugin@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@formatjs/unplugin@npm:1.1.4"
   dependencies:
     "@formatjs/icu-messageformat-parser": "npm:3.5.3"
     "@formatjs/ts-transformer": "npm:4.4.2"
@@ -2737,7 +2737,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/4a1e6a98a450b5ef5544bd7dfdd225b3d8dff4d71aa1547302895abc28dad35bc040de8cb1d2756d344b8c8f17c1a9066ae07bc636c78a728ed0b63ede9f5efa
+  checksum: 10c0/20094932c2d75d9f69398c0edfdf9667ff898be4c356e6092f0b9804f62ea0af95b118898b14257c4c51893da8c25adef39e00db137697b257516686e778b3ea
   languageName: node
   linkType: hard
 
@@ -8280,8 +8280,8 @@ __metadata:
   dependencies:
     "@excalidraw/excalidraw": "npm:0.18.0-81ab857"
     "@fast-check/vitest": "npm:^0.3.0"
-    "@formatjs/cli": "npm:^6.13.4"
-    "@formatjs/unplugin": "npm:^1.1.3"
+    "@formatjs/cli": "npm:^6.14.0"
+    "@formatjs/unplugin": "npm:^1.1.4"
     "@geoman-io/maplibre-geoman-free": "npm:^0.7.1"
     "@hookform/resolvers": "npm:^5.2.2"
     "@msgpack/msgpack": "npm:^3.1.3"
@@ -8457,9 +8457,9 @@ __metadata:
     "@electron-forge/plugin-fuses": "npm:^7.11.1"
     "@electron-forge/publisher-github": "npm:^7.11.1"
     "@electron/fuses": "npm:^2.1.0"
-    "@formatjs/cli": "npm:^6.13.4"
+    "@formatjs/cli": "npm:^6.14.0"
     "@formatjs/intl": "npm:^4.1.4"
-    "@formatjs/unplugin": "npm:^1.1.3"
+    "@formatjs/unplugin": "npm:^1.1.4"
     "@reforged/maker-appimage": "npm:^5.2.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
