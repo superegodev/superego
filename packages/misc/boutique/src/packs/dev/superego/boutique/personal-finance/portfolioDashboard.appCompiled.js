@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Grid,
   Tile,
@@ -9,6 +8,7 @@ import {
   Select,
 } from "@superego/app-sandbox/components";
 import theme from "@superego/app-sandbox/theme";
+import React from "react";
 
 function getLatestPrice(security) {
   if (security.priceHistory.length === 0) return null;
@@ -123,14 +123,22 @@ function SummaryStats({ rows }) {
   return React.createElement(
     Grid,
     null,
-    React.createElement("style", null, ".summary-grid { --cols: 1; } .summary-grid p { margin: 8px 0 0 0; } @media (min-width: 768px) { .summary-grid { --cols: 2; } }"),
+    React.createElement(
+      "style",
+      null,
+      ".summary-grid { --cols: 1; } .summary-grid p { margin: 8px 0 0 0; } @media (min-width: 768px) { .summary-grid { --cols: 2; } }",
+    ),
     React.createElement(
       Grid.Col,
       { span: { sm: 12, md: 6 } },
       React.createElement(
         Tile,
         null,
-        React.createElement(Text, { color: "secondary", size: "sm" }, "Total Value"),
+        React.createElement(
+          Text,
+          { color: "secondary", size: "sm" },
+          "Total Value",
+        ),
         React.createElement(
           "div",
           {
@@ -159,7 +167,11 @@ function SummaryStats({ rows }) {
       React.createElement(
         Tile,
         null,
-        React.createElement(Text, { color: "secondary", size: "sm" }, "Total Gain/Loss"),
+        React.createElement(
+          Text,
+          { color: "secondary", size: "sm" },
+          "Total Gain/Loss",
+        ),
         React.createElement(
           "div",
           {
@@ -216,9 +228,7 @@ function SummaryStats({ rows }) {
 
 function TopGainers({ rows }) {
   const withPct = rows.filter((r) => r.gainLossPct !== null);
-  const sorted = withPct
-    .slice()
-    .sort((a, b) => b.gainLossPct - a.gainLossPct);
+  const sorted = withPct.slice().sort((a, b) => b.gainLossPct - a.gainLossPct);
   const gainers = sorted.slice(0, 5);
 
   return React.createElement(
@@ -226,7 +236,12 @@ function TopGainers({ rows }) {
     null,
     React.createElement(
       Text,
-      { element: "h2", size: "lg", weight: "semibold", style: { marginBottom: theme.spacing._4 } },
+      {
+        element: "h2",
+        size: "lg",
+        weight: "semibold",
+        style: { marginBottom: theme.spacing._4 },
+      },
       "Top Gainers",
     ),
     React.createElement(
@@ -262,12 +277,18 @@ function TopGainers({ rows }) {
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLoss, suffix: ` ${row.currency}` }),
+              React.createElement(GainLossText, {
+                value: row.gainLoss,
+                suffix: ` ${row.currency}`,
+              }),
             ),
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLossPct, suffix: "%" }),
+              React.createElement(GainLossText, {
+                value: row.gainLossPct,
+                suffix: "%",
+              }),
             ),
           ),
         ),
@@ -278,9 +299,7 @@ function TopGainers({ rows }) {
 
 function TopLosers({ rows }) {
   const withPct = rows.filter((r) => r.gainLossPct !== null);
-  const sorted = withPct
-    .slice()
-    .sort((a, b) => a.gainLossPct - b.gainLossPct);
+  const sorted = withPct.slice().sort((a, b) => a.gainLossPct - b.gainLossPct);
   const losers = sorted.slice(0, 5);
 
   return React.createElement(
@@ -288,7 +307,12 @@ function TopLosers({ rows }) {
     null,
     React.createElement(
       Text,
-      { element: "h2", size: "lg", weight: "semibold", style: { marginBottom: theme.spacing._4 } },
+      {
+        element: "h2",
+        size: "lg",
+        weight: "semibold",
+        style: { marginBottom: theme.spacing._4 },
+      },
       "Top Losers",
     ),
     React.createElement(
@@ -324,12 +348,18 @@ function TopLosers({ rows }) {
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLoss, suffix: ` ${row.currency}` }),
+              React.createElement(GainLossText, {
+                value: row.gainLoss,
+                suffix: ` ${row.currency}`,
+              }),
             ),
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLossPct, suffix: "%" }),
+              React.createElement(GainLossText, {
+                value: row.gainLossPct,
+                suffix: "%",
+              }),
             ),
           ),
         ),
@@ -394,7 +424,11 @@ function AllocationChart({ rows, groupBy, onGroupByChange }) {
           marginBottom: theme.spacing._4,
         },
       },
-      React.createElement(Text, { element: "h2", size: "lg", weight: "semibold" }, "Allocation"),
+      React.createElement(
+        Text,
+        { element: "h2", size: "lg", weight: "semibold" },
+        "Allocation",
+      ),
       React.createElement(Select, {
         ariaLabel: "Group by",
         layout: "horizontal",
@@ -488,7 +522,12 @@ function PortfolioValueChart({ props }) {
     null,
     React.createElement(
       Text,
-      { element: "h2", size: "lg", weight: "semibold", style: { marginBottom: theme.spacing._4 } },
+      {
+        element: "h2",
+        size: "lg",
+        weight: "semibold",
+        style: { marginBottom: theme.spacing._4 },
+      },
       "Portfolio Value Over Time",
     ),
     React.createElement(Echart, { option, width: "100%", height: "300px" }),
@@ -499,7 +538,11 @@ function HoldingsTable({ rows }) {
   return React.createElement(
     Tile,
     null,
-    React.createElement(Text, { element: "h2", size: "lg", weight: "semibold" }, "Holdings"),
+    React.createElement(
+      Text,
+      { element: "h2", size: "lg", weight: "semibold" },
+      "Holdings",
+    ),
     React.createElement(
       Table,
       { ariaLabel: "Holdings" },
@@ -525,12 +568,27 @@ function HoldingsTable({ rows }) {
             React.createElement(
               Table.Cell,
               null,
-              React.createElement(Link, { href: row.holdingHref, target: "_top" }, row.ticker),
-              React.createElement(Text, { color: "secondary", size: "xs" }, " ", row.securityName),
+              React.createElement(
+                Link,
+                { href: row.holdingHref, target: "_top" },
+                row.ticker,
+              ),
+              React.createElement(
+                Text,
+                { color: "secondary", size: "xs" },
+                " ",
+                row.securityName,
+              ),
             ),
             React.createElement(Table.Cell, null, row.account),
             React.createElement(Table.Cell, { align: "right" }, row.netQty),
-            React.createElement(Table.Cell, { align: "right" }, row.avgCost, " ", row.currency),
+            React.createElement(
+              Table.Cell,
+              { align: "right" },
+              row.avgCost,
+              " ",
+              row.currency,
+            ),
             React.createElement(
               Table.Cell,
               { align: "right" },
@@ -548,12 +606,18 @@ function HoldingsTable({ rows }) {
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLoss, suffix: ` ${row.currency}` }),
+              React.createElement(GainLossText, {
+                value: row.gainLoss,
+                suffix: ` ${row.currency}`,
+              }),
             ),
             React.createElement(
               Table.Cell,
               { align: "right" },
-              React.createElement(GainLossText, { value: row.gainLossPct, suffix: "%" }),
+              React.createElement(GainLossText, {
+                value: row.gainLossPct,
+                suffix: "%",
+              }),
             ),
           ),
         ),

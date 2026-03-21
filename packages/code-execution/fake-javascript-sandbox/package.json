@@ -1,6 +1,7 @@
 {
   "name": "@superego/fake-javascript-sandbox",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     "./browser": {
@@ -10,10 +11,15 @@
       "import": "./src/index.nodejs.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/javascript-sandbox-global-utils": "workspace:*"
   },
   "devDependencies": {
     "@vitest/browser": "^4.1.0",
@@ -21,11 +27,5 @@
     "playwright": "^1.58.2",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
-  },
-  "dependencies": {
-    "@superego/backend": "workspace:*",
-    "@superego/executing-backend": "workspace:*",
-    "@superego/global-types": "workspace:*",
-    "@superego/javascript-sandbox-global-utils": "workspace:*"
   }
 }

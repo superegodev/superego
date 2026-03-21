@@ -32,7 +32,8 @@ interface Props {
   };
 }
 
-type DayDocument = Props["collections"]["ProtoCollection_0"]["documents"][number];
+type DayDocument =
+  Props["collections"]["ProtoCollection_0"]["documents"][number];
 type Flow = ProtoCollection_0.Flow | null;
 type LoggedFlow = Exclude<Flow, null>;
 type BleedingFlow = Exclude<LoggedFlow, "None">;
@@ -424,7 +425,11 @@ function extractEpisodes(logsByDate: Map<string, DayDocument>): Episode[] {
 function buildCompleteCycles(episodes: Episode[]): CompleteCycle[] {
   const completeCycles: CompleteCycle[] = [];
 
-  for (let episodeIndex = 0; episodeIndex < episodes.length - 1; episodeIndex += 1) {
+  for (
+    let episodeIndex = 0;
+    episodeIndex < episodes.length - 1;
+    episodeIndex += 1
+  ) {
     const cycleStart = episodes[episodeIndex]!.start;
     const nextCycleStart = episodes[episodeIndex + 1]!.start;
 
@@ -466,10 +471,13 @@ function estimateCycleModelFromLastSix(
   const muCycle = Math.max(1, Math.round(cycleLengthAverage));
 
   const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
-  const weightedSquaredDistanceSum = cycleLengths.reduce((sum, cycleLength, index) => {
-    const distance = cycleLength - muCycle;
-    return sum + weights[index]! * distance * distance;
-  }, 0);
+  const weightedSquaredDistanceSum = cycleLengths.reduce(
+    (sum, cycleLength, index) => {
+      const distance = cycleLength - muCycle;
+      return sum + weights[index]! * distance * distance;
+    },
+    0,
+  );
   const sigmaCycle =
     weightSum > 0 ? Math.sqrt(weightedSquaredDistanceSum / weightSum) : 0;
 
@@ -639,9 +647,8 @@ function classifyClosedCycleDay(
   const cycleDay = dayOrdinal - cycle.start + 1;
   const isLoggedNoFlow = loggedFlow === "None";
   const isLoggedBleeding = isBleedingFlow(loggedFlow);
-  const classificationStatus: Exclude<PredictionStatus, "no-data"> = isLoggedNoFlow
-    ? "logged"
-    : "inferred";
+  const classificationStatus: Exclude<PredictionStatus, "no-data"> =
+    isLoggedNoFlow ? "logged" : "inferred";
   const withNoFlowRationale = (rationale: string): string =>
     isLoggedNoFlow ? `No flow logged for this day. ${rationale}` : rationale;
 
@@ -743,9 +750,8 @@ function classifyForecastDay(
   const cycleDay = dayOrdinal - cycleStart + 1;
   const isLoggedNoFlow = loggedFlow === "None";
   const isLoggedBleeding = isBleedingFlow(loggedFlow);
-  const classificationStatus: Exclude<PredictionStatus, "no-data"> = isLoggedNoFlow
-    ? "logged"
-    : "forecast";
+  const classificationStatus: Exclude<PredictionStatus, "no-data"> =
+    isLoggedNoFlow ? "logged" : "forecast";
   const withNoFlowRationale = (rationale: string): string =>
     isLoggedNoFlow ? `No flow logged for this day. ${rationale}` : rationale;
 
@@ -1031,7 +1037,8 @@ export default function App(props: Props): React.ReactElement | null {
   const createDocument = useCreateDocument();
   const createNewDocumentVersion = useCreateNewDocumentVersion();
 
-  const isMutating = createDocument.isPending || createNewDocumentVersion.isPending;
+  const isMutating =
+    createDocument.isPending || createNewDocumentVersion.isPending;
 
   const mutationError =
     createNewDocumentVersion.error?.name ?? createDocument.error?.name ?? null;
@@ -1093,7 +1100,9 @@ export default function App(props: Props): React.ReactElement | null {
           ? currentSymptoms.includes(symptom)
             ? currentSymptoms
             : [...currentSymptoms, symptom]
-          : currentSymptoms.filter((currentSymptom) => currentSymptom !== symptom);
+          : currentSymptoms.filter(
+              (currentSymptom) => currentSymptom !== symptom,
+            );
 
         return {
           ...log,
@@ -1168,7 +1177,8 @@ export default function App(props: Props): React.ReactElement | null {
             {isFutureDay &&
             !flowIndicator &&
             !fertilityIndicator &&
-            (prediction.phase === "Period" || prediction.phase === "Fertile") ? (
+            (prediction.phase === "Period" ||
+              prediction.phase === "Fertile") ? (
               <Text
                 element="span"
                 size="xs"
@@ -1205,10 +1215,7 @@ export default function App(props: Props): React.ReactElement | null {
     (day: string): React.ReactElement => {
       const logDocument = logsByDate.get(day) ?? null;
       const log = logDocument?.content ?? null;
-      const detailsHref =
-        logDocument !== null
-          ? logDocument.href
-          : null;
+      const detailsHref = logDocument !== null ? logDocument.href : null;
       const prediction = predictDay(day, predictionContext, log);
       const today = getTodayPlainDate();
       const isFutureDay = day > today;
@@ -1297,7 +1304,8 @@ export default function App(props: Props): React.ReactElement | null {
                   {fertilityLabel(prediction.fertilityLevel)}
                 </Text>
               </Text>
-              {prediction.cycleDay !== null && prediction.cycleLength !== null ? (
+              {prediction.cycleDay !== null &&
+              prediction.cycleLength !== null ? (
                 <Text element="p" size="sm">
                   Cycle day:{" "}
                   <Text element="span" size="sm" weight="bold">
@@ -1317,11 +1325,7 @@ export default function App(props: Props): React.ReactElement | null {
             </>
           )}
 
-          <Text
-            element="h4"
-            size="lg"
-            weight="semibold"
-          >
+          <Text element="h4" size="lg" weight="semibold">
             Flow
           </Text>
           <div
@@ -1358,11 +1362,7 @@ export default function App(props: Props): React.ReactElement | null {
             ))}
           </div>
 
-          <Text
-            element="h4"
-            size="lg"
-            weight="semibold"
-          >
+          <Text element="h4" size="lg" weight="semibold">
             Symptoms
           </Text>
           <div

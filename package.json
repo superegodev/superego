@@ -1,11 +1,11 @@
 {
   "name": "@superego/root",
   "version": "2026.3.7",
-  "type": "module",
   "private": true,
   "workspaces": [
     "packages/**/*"
   ],
+  "type": "module",
   "scripts": {
     "test": "CI=true yarn workspaces foreach --all --topological-dev --verbose run test",
     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
@@ -37,8 +37,8 @@
     "zx": "8.8.5-lite"
   },
   "resolutions": {
-    "browserslist": "4.28.1",
-    "baseline-browser-mapping": "2.9.19"
+    "baseline-browser-mapping": "2.9.19",
+    "browserslist": "4.28.1"
   },
   "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7"
 }

@@ -27,7 +27,8 @@ interface Props {
   };
 }
 
-type CalendarDocument = Props["collections"]["ProtoCollection_1"]["documents"][number];
+type CalendarDocument =
+  Props["collections"]["ProtoCollection_1"]["documents"][number];
 
 const COLLECTION_ID = "ProtoCollection_1";
 
@@ -58,7 +59,9 @@ function sortByStartTime(documents: CalendarDocument[]): CalendarDocument[] {
   );
 }
 
-function groupByDay(documents: CalendarDocument[]): Map<string, CalendarDocument[]> {
+function groupByDay(
+  documents: CalendarDocument[],
+): Map<string, CalendarDocument[]> {
   const documentsByDay = new Map<string, CalendarDocument[]>();
 
   for (const document of sortByStartTime(documents)) {
@@ -73,7 +76,10 @@ function groupByDay(documents: CalendarDocument[]): Map<string, CalendarDocument
 
 export default function App(props: Props): React.ReactElement {
   const documents = props.collections.ProtoCollection_1.documents;
-  const documentsByDay = React.useMemo(() => groupByDay(documents), [documents]);
+  const documentsByDay = React.useMemo(
+    () => groupByDay(documents),
+    [documents],
+  );
   const createNewHref = `/collections/${COLLECTION_ID}/documents/new`;
   const rowLinkStyle: React.CSSProperties = React.useMemo(
     () => ({
@@ -133,7 +139,8 @@ export default function App(props: Props): React.ReactElement {
                     lineHeight: 1.2,
                   }}
                 >
-                  {formatTime(document.content.startTime)} {document.content.title}
+                  {formatTime(document.content.startTime)}{" "}
+                  {document.content.title}
                 </Text>
               </div>
             ))}
@@ -180,17 +187,29 @@ export default function App(props: Props): React.ReactElement {
                 {dayDocuments.map((document) => (
                   <Table.Row key={document.id}>
                     <Table.Cell>
-                      <Link href={document.href} target="_top" style={rowLinkStyle}>
+                      <Link
+                        href={document.href}
+                        target="_top"
+                        style={rowLinkStyle}
+                      >
                         {formatTime(document.content.startTime)}
                       </Link>
                     </Table.Cell>
                     <Table.Cell>
-                      <Link href={document.href} target="_top" style={rowLinkStyle}>
+                      <Link
+                        href={document.href}
+                        target="_top"
+                        style={rowLinkStyle}
+                      >
                         {formatEndTime(document.content.endTime)}
                       </Link>
                     </Table.Cell>
                     <Table.Cell>
-                      <Link href={document.href} target="_top" style={rowLinkStyle}>
+                      <Link
+                        href={document.href}
+                        target="_top"
+                        style={rowLinkStyle}
+                      >
                         {document.content.title}
                       </Link>
                     </Table.Cell>

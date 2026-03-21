@@ -191,7 +191,14 @@ export default function App(props: Props): React.ReactElement | null {
       <Grid>
         <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
           <Tile>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "16px",
+                alignItems: "center",
+              }}
+            >
               <Select
                 mode="single"
                 value={period.type}
@@ -288,7 +295,14 @@ export default function App(props: Props): React.ReactElement | null {
       {/* Period Controls */}
       <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
         <Tile>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "16px",
+              alignItems: "center",
+            }}
+          >
             <Select
               mode="single"
               value={period.type}

@@ -1,13 +1,13 @@
 {
   "name": "@superego/global-types",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit"
   },

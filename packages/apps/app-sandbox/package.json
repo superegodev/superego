@@ -1,6 +1,7 @@
 {
   "name": "@superego/app-sandbox",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     "./host": {
@@ -16,19 +17,9 @@
       "import": "./src/typescript-libs/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose"
-  },
-  "devDependencies": {
-    "@types/luxon": "^3.7.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitest/browser": "^4.1.0",
-    "@vitest/browser-playwright": "^4.1.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
   },
   "dependencies": {
     "@internationalized/date": "^3.12.0",
@@ -67,5 +58,14 @@
     "react-icons": "^5.6.0",
     "react-intl": "^10.1.0",
     "react-stately": "^3.45.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/browser": "^4.1.0",
+    "@vitest/browser-playwright": "^4.1.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }

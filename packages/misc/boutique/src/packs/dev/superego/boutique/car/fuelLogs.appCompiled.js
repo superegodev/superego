@@ -156,7 +156,14 @@ export default function App(props) {
           null,
           React.createElement(
             "div",
-            { style: { display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" } },
+            {
+              style: {
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "16px",
+                alignItems: "center",
+              },
+            },
             React.createElement(Select, {
               mode: "single",
               value: period.type,
@@ -267,7 +274,14 @@ export default function App(props) {
         null,
         React.createElement(
           "div",
-          { style: { display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" } },
+          {
+            style: {
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "16px",
+              alignItems: "center",
+            },
+          },
           React.createElement(Select, {
             mode: "single",
             value: period.type,

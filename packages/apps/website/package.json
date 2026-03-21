@@ -1,8 +1,8 @@
 {
   "name": "@superego/website",
   "version": "2026.3.7",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "clean-astro-cache": "rm -rf .astro-build-cache",
