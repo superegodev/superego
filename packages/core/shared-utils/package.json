@@ -1,23 +1,17 @@
 {
   "name": "@superego/shared-utils",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose",
     "bench": "vitest bench"
-  },
-  "devDependencies": {
-    "@fast-check/vitest": "^0.3.0",
-    "@vitest/browser-playwright": "^4.0.18",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -26,6 +20,12 @@
     "base-x": "^5.0.1",
     "es-toolkit": "^1.45.1",
     "uuid": "^13.0.0",
-    "valibot": "^1.2.0"
+    "valibot": "^1.3.1"
+  },
+  "devDependencies": {
+    "@fast-check/vitest": "^0.3.0",
+    "@vitest/browser-playwright": "^4.1.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }

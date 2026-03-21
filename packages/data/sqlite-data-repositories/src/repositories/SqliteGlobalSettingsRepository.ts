@@ -12,9 +12,7 @@ import type DeepPartial from "../utils/DeepPartial.js";
 
 const table = "singleton__global_settings";
 
-export default class SqliteGlobalSettingsRepository
-  implements GlobalSettingsRepository
-{
+export default class SqliteGlobalSettingsRepository implements GlobalSettingsRepository {
   constructor(
     private db: DatabaseSync,
     private defaultGlobalSettings: GlobalSettings,

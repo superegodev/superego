@@ -28,9 +28,6 @@ export default function EagerMarkdownInput({
   const containerRef = useRef<HTMLDivElement>(null);
   const rootElementRef = useRef<HTMLDivElement>(null);
 
-  // When value, onChange, or placeholder change, they editor's references are
-  // updated by other hooks.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (!containerRef.current) {
       return;
@@ -59,6 +56,9 @@ export default function EagerMarkdownInput({
       editorRef.current?.destroy();
       editorRef.current = null;
     };
+    // When value, onChange, or placeholder change, they editor's references are
+    // updated by other hooks.
+    // oxlint-disable-next-line react/exhaustive-deps
   }, []);
 
   useEffect(() => {

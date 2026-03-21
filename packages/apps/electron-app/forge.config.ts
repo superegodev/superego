@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import { join, resolve } from "node:path";
-import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
+import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerAppImage } from "@reforged/maker-appimage";
 
 const { GITHUB_REF: githubRef } = process.env;
@@ -34,8 +34,10 @@ export default {
     executableName: "superego-app",
     asar: true,
     ignore: [
-      "src",
+      "^/scripts",
+      "^/src",
       "cli.vite.config.ts",
+      "devenv.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",
       "tsconfig.json",

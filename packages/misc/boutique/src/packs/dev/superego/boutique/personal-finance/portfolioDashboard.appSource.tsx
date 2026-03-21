@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Grid,
   Tile,
@@ -9,13 +8,11 @@ import {
   Select,
 } from "@superego/app-sandbox/components";
 import theme from "@superego/app-sandbox/theme";
-import type {
-  Security,
-  PriceSnapshot,
-} from "./ProtoCollection_1.js";
+import type { EChartsOption } from "echarts";
+import React from "react";
+import type { Security, PriceSnapshot } from "./ProtoCollection_1.js";
 import type { Holding, Transaction } from "./ProtoCollection_2.js";
 import type { Account } from "./ProtoCollection_3.js";
-import type { EChartsOption } from "echarts";
 
 interface Props {
   collections: {

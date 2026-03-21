@@ -6831,7 +6831,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             contentBlockingKeysGetter: {
               source: "",
               compiled:
-                // biome-ignore lint/suspicious/noTemplateCurlyInString: intended.
+                // oxlint-disable-next-line no-template-curly-in-string: intended.
                 "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
             },
           },

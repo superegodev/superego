@@ -8,7 +8,6 @@ import * as cs from "./GeoJSONInput.css.js";
 import type Props from "./Props.js";
 import useCreateMap from "./useCreateMap.js";
 import useSyncReadOnly from "./useSyncReadOnly.js";
-
 import useSyncValue from "./useSyncValue.js";
 
 export default function EagerGeoJSONInput({

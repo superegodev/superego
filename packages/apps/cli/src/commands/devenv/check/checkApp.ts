@@ -5,8 +5,8 @@ import type { TypescriptFile } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import { codegen } from "@superego/schema";
 import appSettingsSchema from "../utils/appSettingsSchema.js";
-import type CheckResult from "./CheckResult.js";
 import checkJsonValidation from "./checkJsonValidation.js";
+import type CheckResult from "./CheckResult.js";
 import checkTypescriptCompilation from "./checkTypescriptCompilation.js";
 
 export default async function checkApp(

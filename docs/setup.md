@@ -41,7 +41,7 @@ From the project's root directory, you can run the following scripts:
 
 ## Editor setup
 
-You should install the biome extension for your editor (see
-[instructions](https://biomejs.dev/guides/editors/first-party-extensions/)), so
-that you can see linting errors directly in the editor. It's also recommended
-that you configure the extension to make it format your code "on save".
+You should install the oxc extension for your editor (see
+[instructions](https://oxc.rs/docs/guide/usage/linter/editors.html)), so that
+you can see linting errors directly in the editor. It's also recommended that
+you configure the extension to make it format your code "on save".

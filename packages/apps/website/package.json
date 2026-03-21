@@ -1,8 +1,8 @@
 {
   "name": "@superego/website",
   "version": "2026.3.7",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "clean-astro-cache": "rm -rf .astro-build-cache",
@@ -14,12 +14,12 @@
     "deploy:preview": "wrangler pages deploy dist/ --project-name superegodev"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.7",
-    "@astrojs/mdx": "^5.0.0",
-    "@astrojs/starlight": "^0.38.1",
-    "astro": "^6.0.3",
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/mdx": "^5.0.2",
+    "@astrojs/starlight": "^0.38.2",
+    "astro": "^6.0.8",
     "starlight-theme-nova": "^0.11.7",
     "typescript": "^5.9.3",
-    "wrangler": "^4.72.0"
+    "wrangler": "^4.76.0"
   }
 }

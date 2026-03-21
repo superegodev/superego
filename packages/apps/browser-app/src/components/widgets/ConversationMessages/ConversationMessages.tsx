@@ -3,8 +3,8 @@ import {
   ConversationStatus,
   MessageRole,
 } from "@superego/backend";
-import ConversationUtils from "../../../utils/ConversationUtils.js";
 import classnames from "../../../utils/classnames.js";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import ConversationMessage from "./ConversationMessage.js";
 import * as cs from "./ConversationMessages.css.js";
 import ErrorMessage from "./ErrorMessage.js";
@@ -56,6 +56,7 @@ export default function ConversationMessages({
       ) : null}
       {tailMessages.map((message, index) => (
         <ConversationMessage
+          // oxlint-disable-next-line react/no-array-index-key
           key={"id" in message ? message.id : `tail-${index}`}
           message={message}
           conversation={conversation}
@@ -80,7 +81,8 @@ export default function ConversationMessages({
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {headMessages.map((message, index) => (
         <ConversationMessage
-          key={"id" in message ? message.id : index}
+          // oxlint-disable-next-line react/no-array-index-key
+          key={"id" in message ? message.id : `head-${index}`}
           message={message}
           conversation={conversation}
           showToolCalls={showToolCalls}

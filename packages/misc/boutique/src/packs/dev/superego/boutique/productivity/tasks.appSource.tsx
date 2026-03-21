@@ -1,4 +1,3 @@
-import React from "react";
 import {
   KanbanBoard,
   Text,
@@ -12,6 +11,7 @@ import {
   useDeleteDocument,
 } from "@superego/app-sandbox/hooks";
 import theme from "@superego/app-sandbox/theme";
+import React from "react";
 import type * as ProtoCollection_2 from "./ProtoCollection_2.js";
 
 type Task = ProtoCollection_2.Task;
@@ -334,7 +334,9 @@ export default function App(props: Props): React.ReactElement | null {
 
                   <div style={{ minHeight: "1.25rem" }}>
                     {(() => {
-                      const subtasks = doc.content.description ? parseSubtasks(doc.content.description) : null;
+                      const subtasks = doc.content.description
+                        ? parseSubtasks(doc.content.description)
+                        : null;
                       return subtasks ? (
                         <Text size="xs" color="secondary">
                           Subtasks: {subtasks.done}/{subtasks.total}

@@ -339,10 +339,10 @@ const formattedStars =
             const style = getComputedStyle(element);
             return {
               element,
-              offsetX: parseFloat(style.getPropertyValue("--offset-x")),
-              offsetY: parseFloat(style.getPropertyValue("--offset-y")),
+              offsetX: Number.parseFloat(style.getPropertyValue("--offset-x")),
+              offsetY: Number.parseFloat(style.getPropertyValue("--offset-y")),
               range:
-                (parseFloat(style.getPropertyValue("--range")) *
+                (Number.parseFloat(style.getPropertyValue("--range")) *
                   window.innerHeight) /
                 100,
             };

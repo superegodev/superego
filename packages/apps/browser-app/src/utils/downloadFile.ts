@@ -1,8 +1,8 @@
 import type { Backend, FileId } from "@superego/backend";
 import type { FileRef, ProtoFile } from "@superego/schema";
 import type { IntlShape } from "react-intl";
-import ToastType from "../business-logic/toasts/ToastType.js";
 import toasts from "../business-logic/toasts/toasts.js";
+import ToastType from "../business-logic/toasts/ToastType.js";
 
 export default async function downloadFile(
   intl: IntlShape,

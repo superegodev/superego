@@ -28,8 +28,8 @@ import {
 } from "../../../business-logic/navigation/Route.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import PanelHeaderActionSeparator from "../../design-system/Shell/PanelHeaderActionSeparator.js";

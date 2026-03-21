@@ -21,8 +21,6 @@ export default function EagerCodeBlock({
   const theme = useTheme();
   const codeElement = useRef<HTMLElement>(null);
   const formattedCode = language === "json" ? formatJson(code) : code;
-  // We want the effect to re-run when code changes.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     if (codeElement.current) {
       monaco.editor
@@ -45,9 +43,7 @@ export default function EagerCodeBlock({
       <div className={cs.EagerCodeBlock.lineNumbers}>
         {formattedCode.split("\n").map((_, index) => (
           <div
-            // Rule-ignore explanation: the index is the correct identifier
-            // for a line number.
-            // biome-ignore lint/suspicious/noArrayIndexKey: see above.
+            // oxlint-disable-next-line react/no-array-index-key: the index is the correct identifier for a line number.
             key={index}
             className={cs.EagerCodeBlock.lineNumber}
             style={mirrorCodeInput ? { paddingInlineEnd: 26 } : undefined}

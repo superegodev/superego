@@ -1,6 +1,7 @@
 {
   "name": "@superego/connectors",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
@@ -13,15 +14,9 @@
       "import": "./src/requirement-implementations/nodejs/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose"
-  },
-  "devDependencies": {
-    "@fast-check/vitest": "^0.3.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
@@ -31,5 +26,10 @@
     "@superego/shared-utils": "workspace:*",
     "es-toolkit": "^1.45.1",
     "p-retry": "^7.1.1"
+  },
+  "devDependencies": {
+    "@fast-check/vitest": "^0.3.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }

@@ -9,8 +9,8 @@ import type {
 import { useMemo, useState } from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import useUndoRedo from "../CodeInput/common-hooks/useUndoRedo.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";

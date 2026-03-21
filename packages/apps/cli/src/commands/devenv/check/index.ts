@@ -5,11 +5,11 @@ import getProtoApps from "../utils/getProtoApps.js";
 import getProtoCollections from "../utils/getProtoCollections.js";
 import Log from "../utils/Log.js";
 import packJsonSchema from "../utils/packJsonSchema.js";
-import type CheckResult from "./CheckResult.js";
 import checkApp from "./checkApp.js";
 import checkCollection from "./checkCollection.js";
 import checkDemoDocuments from "./checkDemoDocuments.js";
 import checkJsonValidation from "./checkJsonValidation.js";
+import type CheckResult from "./CheckResult.js";
 
 export default async function checkAction(): Promise<void> {
   const basePath = process.cwd();

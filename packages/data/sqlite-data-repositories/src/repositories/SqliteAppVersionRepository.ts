@@ -10,9 +10,7 @@ import { toEntity } from "../types/SqliteAppVersion.js";
 
 const table = "app_versions";
 
-export default class SqliteAppVersionRepository
-  implements AppVersionRepository
-{
+export default class SqliteAppVersionRepository implements AppVersionRepository {
   constructor(private db: DatabaseSync) {}
 
   async insert(appVersion: AppVersionEntity): Promise<void> {

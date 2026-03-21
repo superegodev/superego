@@ -11,9 +11,7 @@ import clone from "./utils/clone.js";
 
 const OVERWRITE = "OVERWRITE";
 
-export default class DemoDataRepositoriesManager
-  implements DataRepositoriesManager
-{
+export default class DemoDataRepositoriesManager implements DataRepositoriesManager {
   private databaseVersion = 1;
   private objectStoreName = "data";
   private objectStoreDataKeyPath = "id";

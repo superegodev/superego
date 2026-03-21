@@ -18,9 +18,7 @@ export interface SearchTextIndexState {
   isLoaded: boolean;
 }
 
-export default class SqliteDocumentTextSearchIndex
-  implements DocumentTextSearchIndex
-{
+export default class SqliteDocumentTextSearchIndex implements DocumentTextSearchIndex {
   constructor(
     private db: DatabaseSync,
     private searchTextIndexState: SearchTextIndexState,

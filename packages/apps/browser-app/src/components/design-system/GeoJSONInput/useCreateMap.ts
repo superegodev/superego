@@ -23,7 +23,6 @@ export default function useCreateMap({
   const geomanRef = useRef<Geoman | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const mapContainer = mapContainerRef.current;
     if (!mapContainer) {
@@ -68,6 +67,7 @@ export default function useCreateMap({
       setIsLoaded(false);
       map.remove();
     };
+    // oxlint-disable-next-line react/exhaustive-deps: see top comment.
   }, [theme]);
 
   return { mapContainerRef, geomanRef, isLoaded };

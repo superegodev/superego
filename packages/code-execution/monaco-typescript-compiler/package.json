@@ -1,13 +1,13 @@
 {
   "name": "@superego/monaco-typescript-compiler",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose"
@@ -20,10 +20,10 @@
     "monaco-editor": "0.55.1"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.0.18",
-    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/browser": "^4.1.0",
+    "@vitest/browser-playwright": "^4.1.0",
     "playwright": "^1.58.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }

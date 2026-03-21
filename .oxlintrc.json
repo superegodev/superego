@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "jsx-a11y", "unicorn", "import"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "no-unused-expressions": "off",
+    "no-param-reassign": "error",
+    "default-param-last": "error",
+    "no-else-return": "error",
+    "no-template-curly-in-string": "warn",
+
+    "typescript/no-non-null-assertion": "off",
+    "typescript/no-explicit-any": "off",
+    "typescript/prefer-as-const": "error",
+    "typescript/prefer-enum-initializers": "error",
+    "typescript/no-inferrable-types": "error",
+    "typescript/ban-types": "off",
+    "typescript/prefer-optional-chain": "off",
+
+    "react/self-closing-comp": "error",
+    "react/no-array-index-key": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+
+    "unicorn/no-array-for-each": "off",
+    "unicorn/no-empty-file": "off",
+    "unicorn/prefer-number-properties": "error",
+
+    "import/default": "off",
+
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/no-svg-without-title": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+
+    "array-callback-return": "off",
+    "dot-notation": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        "no-shadow-restricted-names": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/translations/**/*",
+    "packages/misc/boutique/src/**/*.appSource.*",
+    "packages/misc/boutique/src/**/*.appCompiled.*",
+    "packages/core/schema/src/codegen/test-schemas/*.generated.*"
+  ]
+}

@@ -7,8 +7,8 @@ import {
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import { useContinueConversation } from "../../../business-logic/backend/hooks.js";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import classnames from "../../../utils/classnames.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../ConversationMessages/ConversationMessages.js";
@@ -40,10 +40,7 @@ export default function Chat({
       ? lastMessage.createdAt.getTime()
       : null;
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  // We want to avoid scrolling if the last message didn't change, even if the
-  // ref of the message object changed. Since messages are immutable, we can use
-  // the id as a stable identity: id didn't change => message didn't change.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
+
   useEffect(() => {
     if (lastMessageId) {
       // Hack: scrolling doesn't work unless we delay it a bit.
@@ -61,6 +58,10 @@ export default function Chat({
     if (lastMessage?.role === MessageRole.Assistant) {
       inputRef.current?.focus();
     }
+    // We want to avoid scrolling if the last message didn't change, even if the
+    // ref of the message object changed. Since messages are immutable, we can use
+    // the id as a stable identity: id didn't change => message didn't change.
+    // oxlint-disable-next-line react/exhaustive-deps
   }, [lastMessageId]);
 
   const onSend = async (

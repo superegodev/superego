@@ -99,7 +99,7 @@ $.sync`yarn translations:verify`;
       throw new Error();
     }
 
-    for (const compiledFileName of [...expectedCompiledFileNames]) {
+    for (const compiledFileName of expectedCompiledFileNames) {
       const actualCompiledLocale = readFileSync(
         join(compiledDir, compiledFileName),
       );

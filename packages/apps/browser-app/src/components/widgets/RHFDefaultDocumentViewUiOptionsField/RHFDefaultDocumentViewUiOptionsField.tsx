@@ -35,9 +35,10 @@ export default function RHFDefaultDocumentViewUiOptionsField({
   className,
 }: Props) {
   const { field, fieldState } = useController({ control, name });
+  const fieldOnChange = field.onChange;
   const isEnabled = field.value !== null;
   const handleSwitchChange = (isSelected: boolean) =>
-    field.onChange(isSelected ? {} : null);
+    fieldOnChange(isSelected ? {} : null);
   const [jsonValue, setJsonValue] = useState(() =>
     typeof field.value === "string"
       ? field.value
@@ -48,16 +49,16 @@ export default function RHFDefaultDocumentViewUiOptionsField({
     (newValue: string) => {
       setJsonValue(newValue);
       if (newValue === "") {
-        field.onChange(null);
+        fieldOnChange(null);
       } else {
         try {
-          field.onChange(JSON.parse(newValue));
+          fieldOnChange(JSON.parse(newValue));
         } catch {
-          field.onChange(newValue);
+          fieldOnChange(newValue);
         }
       }
     },
-    [field.onChange],
+    [fieldOnChange],
   );
   return (
     <div

@@ -8,13 +8,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useRecoverConversation } from "../../../business-logic/backend/hooks.js";
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
-import ToastType from "../../../business-logic/toasts/ToastType.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
+import ToastType from "../../../business-logic/toasts/ToastType.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import * as cs from "./ConversationMessages.css.js";
-import ModelActionMenu from "./ModelActionMenu/ModelActionMenu.js";
 import makeModelActionMenuItems from "./ModelActionMenu/makeModelActionMenuItems.js";
+import ModelActionMenu from "./ModelActionMenu/ModelActionMenu.js";
 
 interface Props {
   conversation: Conversation;

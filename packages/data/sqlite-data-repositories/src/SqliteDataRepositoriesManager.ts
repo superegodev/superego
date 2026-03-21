@@ -9,9 +9,7 @@ import SqliteConversationTextSearchIndex from "./repositories/SqliteConversation
 import SqliteDocumentTextSearchIndex from "./repositories/SqliteDocumentTextSearchIndex.js";
 import SqliteDataRepositories from "./SqliteDataRepositories.js";
 
-export default class SqliteDataRepositoriesManager
-  implements DataRepositoriesManager
-{
+export default class SqliteDataRepositoriesManager implements DataRepositoriesManager {
   private searchTextIndexStates = {
     conversation: SqliteConversationTextSearchIndex.getSearchTextIndexState(),
     document: SqliteDocumentTextSearchIndex.getSearchTextIndexState(),

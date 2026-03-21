@@ -1,6 +1,7 @@
 {
   "name": "@superego/javascript-sandbox-global-utils",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
@@ -10,20 +11,19 @@
       "import": "./types/LocalInstant.d.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose",
     "generate-types": "node scripts/generateTypes.ts"
   },
-  "devDependencies": {
-    "@types/luxon": "^3.7.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
-    "zx": "8.8.5-lite"
-  },
   "dependencies": {
     "@superego/schema": "workspace:*",
     "luxon": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0",
+    "zx": "8.8.5-lite"
   }
 }

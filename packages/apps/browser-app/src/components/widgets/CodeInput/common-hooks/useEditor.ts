@@ -119,6 +119,8 @@ export default function useEditor(
       valueModelRef.current?.dispose();
       valueModelRef.current = null;
       if (undoRedo) {
+        // Intentional, we want to clear the ref.
+        // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
         undoRedo.commandsRef.current = null;
       }
     };

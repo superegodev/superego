@@ -1,6 +1,4 @@
 import type { DistributiveOmit } from "@superego/global-types";
-import MessageSender from "./MessageSender.js";
-import MessageType from "./MessageType.js";
 import {
   type InvokeBackendMethodMessage,
   isRenderAppMessage,
@@ -10,6 +8,8 @@ import {
   type RespondToBackendMethodInvocationMessage,
   type SandboxReadyMessage,
 } from "./messages.js";
+import MessageSender from "./MessageSender.js";
+import MessageType from "./MessageType.js";
 
 export default class SandboxIpc {
   constructor(

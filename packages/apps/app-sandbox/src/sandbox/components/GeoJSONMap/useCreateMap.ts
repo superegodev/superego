@@ -16,8 +16,6 @@ export default function useCreateMap(geoJSON: {
   const [isLoaded, setIsLoaded] = useState(false);
   const theme = useTheme();
 
-  // geoJSON is synced in a separate effect.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const mapContainer = mapContainerRef.current;
     if (!mapContainer) {
@@ -160,10 +158,9 @@ export default function useCreateMap(geoJSON: {
       setIsLoaded(false);
       map.remove();
     };
+    // oxlint-disable-next-line react/exhaustive-deps: geoJSON is synced in a separate effect.
   }, [theme]);
 
-  // Depend on stringified geoJSON for deep comparison.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !isLoaded) {
@@ -175,6 +172,7 @@ export default function useCreateMap(geoJSON: {
     if (source) {
       source.setData(geoJSON as unknown as GeoJSON.GeoJSON);
     }
+    // oxlint-disable-next-line react/exhaustive-deps: depend on stringified geoJSON for deep comparison.
   }, [isLoaded, JSON.stringify(geoJSON)]);
 
   return { renderingError, mapContainerRef };

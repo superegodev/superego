@@ -10,9 +10,7 @@ import { toEntity } from "../types/SqliteConversation.js";
 
 const table = "conversations";
 
-export default class SqliteConversationRepository
-  implements ConversationRepository
-{
+export default class SqliteConversationRepository implements ConversationRepository {
   constructor(private db: DatabaseSync) {}
 
   async upsert(conversation: ConversationEntity): Promise<void> {

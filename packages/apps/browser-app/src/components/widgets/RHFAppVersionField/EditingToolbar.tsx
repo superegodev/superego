@@ -8,8 +8,8 @@ import {
   PiPresentationChart,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import CollectionUtils from "../../../utils/CollectionUtils.js";
 import classnames from "../../../utils/classnames.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import {
   type Option,
   Select,

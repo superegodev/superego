@@ -41,9 +41,7 @@ class MockInferenceService implements InferenceService {
   }
 }
 
-export default class MockInferenceServiceFactory
-  implements InferenceServiceFactory
-{
+export default class MockInferenceServiceFactory implements InferenceServiceFactory {
   create(): InferenceService {
     return new MockInferenceService();
   }

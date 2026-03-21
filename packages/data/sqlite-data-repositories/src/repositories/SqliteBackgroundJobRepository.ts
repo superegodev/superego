@@ -9,9 +9,7 @@ import { toEntity } from "../types/SqliteBackgroundJob.js";
 
 const table = "background_jobs";
 
-export default class SqliteBackgroundJobRepository
-  implements BackgroundJobRepository
-{
+export default class SqliteBackgroundJobRepository implements BackgroundJobRepository {
   constructor(private db: DatabaseSync) {}
 
   async insert(backgroundJob: BackgroundJobEntity): Promise<void> {

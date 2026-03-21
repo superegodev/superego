@@ -1,13 +1,13 @@
 {
   "name": "@superego/tsc-typescript-compiler",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "vitest --reporter=verbose"
@@ -21,6 +21,6 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }

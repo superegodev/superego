@@ -7,6 +7,8 @@ export default function useActiveFormats(
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
   const [textarea, setTextarea] = useState<HTMLTextAreaElement | null>(null);
 
+  // We want the effect to run on each re-render.
+  // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
   useEffect(() => {
     const current = editorRef.current?.textarea ?? null;
     if (current !== textarea) {

@@ -16,12 +16,12 @@ interface Props {
 export default function CreateChart({ toolResult }: Props) {
   const { echartsOption } = toolResult.artifacts;
   const { title } = echartsOption;
-  // echartsOption actual value (not ref) only changes when toolCallId changes.
-  // Since we don't want to redraw the chart on every change of ref, we memoize
-  // the option.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above.
   const option = useMemo(
     () => omit(echartsOption as EChartsOption, ["title", "toolbox"]),
+    // echartsOption actual value (not ref) only changes when toolCallId
+    // changes. Since we don't want to redraw the chart on every change of ref,
+    // we memoize the option.
+    // oxlint-disable-next-line react/exhaustive-deps
     [toolResult.toolCallId],
   );
   return (

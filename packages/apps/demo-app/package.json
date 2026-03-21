@@ -1,8 +1,8 @@
 {
   "name": "@superego/demo-app",
   "version": "2026.3.7",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "clear-vite-cache": "rm -rf node_modules/.vite node_modules/.vite-temp",
@@ -12,13 +12,6 @@
     "build:production": "yarn clean && VITE_DEPLOY_ENVIRONMENT=production vite build",
     "deploy:preview": "wrangler pages deploy dist/ --project-name demosuperegodev",
     "deploy:production": "wrangler deploy"
-  },
-  "devDependencies": {
-    "@cloudflare/vite-plugin": "1.27.0",
-    "@cloudflare/workers-types": "4.20260312.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1",
-    "wrangler": "^4.72.0"
   },
   "dependencies": {
     "@superego/app-sandbox": "workspace:*",
@@ -33,7 +26,14 @@
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
-    "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-query": "^5.91.3",
     "urlpattern-polyfill": "^10.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.30.0",
+    "@cloudflare/workers-types": "4.20260317.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.1",
+    "wrangler": "^4.76.0"
   }
 }

@@ -33,14 +33,15 @@ export default function GeoJSON({
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
   const { field, fieldState } = useController({ control, name });
+  const fieldOnChange = field.onChange;
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
   const onChange = useCallback(
     (newValue: GeoJSONFeatureCollection) =>
       field.value === null && isEqual(newValue, defaultValue)
-        ? field.onChange(null)
-        : field.onChange({ ...newValue, __dataType: DataType.JsonObject }),
-    [field.onChange, field.value],
+        ? fieldOnChange(null)
+        : fieldOnChange({ ...newValue, __dataType: DataType.JsonObject }),
+    [fieldOnChange, field.value],
   );
   return (
     <div

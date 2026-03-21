@@ -1,22 +1,22 @@
 {
   "name": "@superego/echarts",
   "version": "2026.3.7",
+  "private": true,
   "type": "module",
   "exports": {
     ".": {
       "import": "./src/index.ts"
     }
   },
-  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/themes": "workspace:*",
     "echarts": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
