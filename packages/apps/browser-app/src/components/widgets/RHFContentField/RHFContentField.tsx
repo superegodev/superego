@@ -1,12 +1,12 @@
 import type { DefaultDocumentViewUiOptions } from "@superego/backend";
 import { type Schema, utils } from "@superego/schema";
-import type { Control } from "react-hook-form";
+import type { Control, FieldValues } from "react-hook-form";
 import AnyField from "./AnyField.js";
 import { type UiOptions, UiOptionsProvider } from "./uiOptions.js";
 
-interface Props {
+interface Props<T extends FieldValues = FieldValues> {
   schema: Schema;
-  control: Control<any>;
+  control: Control<T>;
   name?: string;
   showTypes?: boolean;
   showNullability?: boolean;
@@ -17,7 +17,7 @@ interface Props {
   documentId?: string | null;
   autoFocus?: boolean;
 }
-export default function RHFContentField({
+export default function RHFContentField<T extends FieldValues>({
   schema,
   control,
   name = "",
@@ -29,7 +29,7 @@ export default function RHFContentField({
   defaultDocumentViewUiOptions = null,
   documentId = null,
   autoFocus = false,
-}: Props) {
+}: Props<T>) {
   return (
     <UiOptionsProvider
       value={{
@@ -47,7 +47,7 @@ export default function RHFContentField({
         typeDefinition={utils.getRootType(schema)}
         isNullable={false}
         isListItem={false}
-        control={control}
+        control={control as Control}
         name={name}
         label=""
         autoFocus={autoFocus}

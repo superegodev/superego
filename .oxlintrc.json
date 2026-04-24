@@ -40,7 +40,6 @@
     "jsx-a11y/no-autofocus": "off",
     "jsx-a11y/no-noninteractive-tabindex": "off",
     "jsx-a11y/prefer-tag-over-role": "off",
-    "jsx-a11y/no-svg-without-title": "off",
     "jsx-a11y/no-static-element-interactions": "off",
 
     "array-callback-return": "off",

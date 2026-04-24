@@ -16,6 +16,7 @@ export default defineConfig({
             idInterpolationPattern:
               "[name].[ext]_[sha512:contenthash:base64:6]",
             removeDefaultMessage: true,
+            flatten: false,
           }),
         ],
       },

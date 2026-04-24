@@ -12,10 +12,10 @@ index d382a5850c303c982d4665c04858697fa3f8f92c..cbbc5d289f288990ed61b650f49b044a
   * Pre-defined toolbar buttons
   */
 diff --git a/dist/overtype.esm.js b/dist/overtype.esm.js
-index 54c547b685ed263229c29a7dbd980c5d01b54546..5a8d798d51590e5cc75f3ce26869a51cc95f18f2 100644
+index 8d92869a8ea277ef5db3d7e7ff7bed734f4c8cd7..40b1445effde5064ea38a80dcd91588b62fdec5b 100644
 --- a/dist/overtype.esm.js
 +++ b/dist/overtype.esm.js
-@@ -5984,6 +5984,7 @@ export {
+@@ -5998,6 +5998,7 @@ export {
    OverType,
    overtype_default as default,
    defaultToolbarButtons,

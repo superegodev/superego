@@ -1,7 +1,7 @@
 import type { TypescriptFile } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import { useMemo } from "react";
-import type { Control } from "react-hook-form";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
@@ -10,20 +10,16 @@ import { Description, Switch } from "../../design-system/forms/forms.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import * as cs from "./RHFContentBlockingKeysGetterField.css.js";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues = FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
   isDisabled?: boolean | undefined;
   schema: Schema;
   schemaTypescriptLib: TypescriptFile | null;
 }
-export default function RHFContentBlockingKeysGetterField({
-  control,
-  name,
-  isDisabled,
-  schema,
-  schemaTypescriptLib,
-}: Props) {
+export default function RHFContentBlockingKeysGetterField<
+  T extends FieldValues,
+>({ control, name, isDisabled, schema, schemaTypescriptLib }: Props<T>) {
   const intl = useIntl();
   const { field } = useController({ control, name });
   const isDeduplicationEnabled = field.value !== null;

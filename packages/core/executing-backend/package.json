@@ -23,16 +23,16 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "es-toolkit": "^1.45.1",
+    "es-toolkit": "^1.46.0",
     "luxon": "^3.7.2",
     "p-map": "^7.0.4",
     "valibot": "^1.3.1",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.5"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.3.0",
+    "@fast-check/vitest": "^0.4.0",
     "@types/json-schema": "^7.0.15",
     "@types/luxon": "^3.7.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }

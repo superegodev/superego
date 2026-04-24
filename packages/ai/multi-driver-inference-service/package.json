@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }

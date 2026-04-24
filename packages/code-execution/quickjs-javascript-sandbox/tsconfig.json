@@ -1,4 +1,7 @@
 {
   "extends": ["../../../tsconfig.common.json"],
+  "compilerOptions": {
+    "types": ["node"]
+  },
   "exclude": ["src/global-utils/LocalInstant.quickjs.js"]
 }

@@ -1,7 +1,12 @@
 import type { TypescriptFile } from "@superego/backend";
 import type { ReactNode } from "react";
 import { FieldErrorContext } from "react-aria-components";
-import { type Control, useController } from "react-hook-form";
+import {
+  type Control,
+  type FieldPath,
+  type FieldValues,
+  useController,
+} from "react-hook-form";
 import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
@@ -15,9 +20,9 @@ import type IncludedGlobalUtils from "../CodeInput/typescript/IncludedGlobalUtil
 import type UndoRedo from "../CodeInput/UndoRedo.js";
 import * as cs from "./RHFTypescriptModuleField.css.js";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues = FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
   label?: ReactNode | undefined;
   description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
@@ -41,7 +46,7 @@ interface Props {
   className?: string | undefined;
   codeInputClassName?: string | undefined;
 }
-export default function RHFTypescriptModuleField({
+export default function RHFTypescriptModuleField<T extends FieldValues>({
   control,
   name,
   label,
@@ -57,14 +62,15 @@ export default function RHFTypescriptModuleField({
   maxHeight,
   className,
   codeInputClassName,
-}: Props) {
+}: Props<T>) {
   const { field, fieldState } = useController({ control, name });
+  const value = field.value as Record<string, unknown> | null;
   const isInvalid =
     fieldState.invalid &&
     !(
-      field.value !== null &&
-      typeof field.value === "object" &&
-      field.value.compiled === forms.constants.COMPILATION_IN_PROGRESS
+      value !== null &&
+      typeof value === "object" &&
+      value["compiled"] === forms.constants.COMPILATION_IN_PROGRESS
     );
   return (
     <div

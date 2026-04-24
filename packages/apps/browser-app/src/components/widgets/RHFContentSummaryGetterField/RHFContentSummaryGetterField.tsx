@@ -1,26 +1,26 @@
 import type { TypescriptFile } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import { useMemo } from "react";
-import type { Control } from "react-hook-form";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues = FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
   isDisabled?: boolean | undefined;
   schema: Schema;
   schemaTypescriptLib: TypescriptFile | null;
 }
-export default function RHFContentSummaryGetterField({
+export default function RHFContentSummaryGetterField<T extends FieldValues>({
   control,
   name,
   isDisabled,
   schema,
   schemaTypescriptLib,
-}: Props) {
+}: Props<T>) {
   const intl = useIntl();
   const typescriptLibs = useMemo(
     () => (schemaTypescriptLib ? [schemaTypescriptLib] : []),

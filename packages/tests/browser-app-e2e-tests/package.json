@@ -11,14 +11,14 @@
     "playwright": "playwright"
   },
   "dependencies": {
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
     "@superego/schema": "workspace:*",
     "luxon": "^3.7.2"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^5.9.3"
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
   }
 }

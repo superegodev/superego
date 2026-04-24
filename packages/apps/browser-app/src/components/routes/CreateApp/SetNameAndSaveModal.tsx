@@ -1,4 +1,4 @@
-import type { Control } from "react-hook-form";
+import type { Control, FieldValues } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
@@ -6,20 +6,20 @@ import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
 import RHFSubmitButton from "../../widgets/RHFSubmitButton/RHFSubmitButton.js";
 import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
-interface Props {
-  control: Control<any>;
+interface Props<T extends FieldValues = FieldValues> {
+  control: Control<T>;
   formId: string;
   result: any;
   isOpen: boolean;
   onClose: () => void;
 }
-export default function SetNameAndSaveModal({
+export default function SetNameAndSaveModal<T extends FieldValues>({
   control,
   formId,
   result,
   isOpen,
   onClose,
-}: Props) {
+}: Props<T>) {
   const intl = useIntl();
   return (
     <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
@@ -27,7 +27,7 @@ export default function SetNameAndSaveModal({
         <FormattedMessage defaultMessage="Create app" />
       </ModalDialog.Heading>
       <RHFTextField
-        control={control}
+        control={control as Control<FieldValues>}
         name="name"
         form={formId}
         label={intl.formatMessage({ defaultMessage: "Name" })}
