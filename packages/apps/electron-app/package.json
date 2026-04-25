@@ -27,7 +27,7 @@
     "deploy": "electron-forge publish --from-dry-run"
   },
   "dependencies": {
-    "@formatjs/intl": "^4.1.6",
+    "@formatjs/intl": "^4.1.7",
     "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
@@ -55,8 +55,8 @@
     "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron-forge/publisher-github": "^7.11.1",
     "@electron/fuses": "^2.1.1",
-    "@formatjs/cli": "^6.14.2",
-    "@formatjs/unplugin": "^1.1.7",
+    "@formatjs/cli": "^6.14.3",
+    "@formatjs/unplugin": "^1.1.8",
     "@reforged/maker-appimage": "^5.2.0",
     "electron": "41.3.0",
     "electron-vite": "^5.0.0",

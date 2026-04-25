@@ -753,74 +753,74 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/unenv-preset@npm:2.16.0":
-  version: 2.16.0
-  resolution: "@cloudflare/unenv-preset@npm:2.16.0"
+"@cloudflare/unenv-preset@npm:2.16.1":
+  version: 2.16.1
+  resolution: "@cloudflare/unenv-preset@npm:2.16.1"
   peerDependencies:
     unenv: 2.0.0-rc.24
-    workerd: 1.20260301.1 || ~1.20260302.1 || ~1.20260303.1 || ~1.20260304.1 || >1.20260305.0 <2.0.0-0
+    workerd: ">1.20260305.0 <2.0.0-0"
   peerDependenciesMeta:
     workerd:
       optional: true
-  checksum: 10c0/ddb2939cd05b5a0cb17d44b98a11b5c8e24dc6fa31171e98d8f1d7ffbb9cd35fde2ad2873715dc90db63183d6768ea43256ce3e4eb8c359542a2051f2d8bd919
+  checksum: 10c0/08c9bd9ef488a14fd5330eb2c0829fc221f97f12295f8263dc8e3a6816ebd1a629e7255a3619b8bb688f1f58deafe28042c4e90ea84c926438c768f235f82ad9
   languageName: node
   linkType: hard
 
-"@cloudflare/vite-plugin@npm:1.33.1":
-  version: 1.33.1
-  resolution: "@cloudflare/vite-plugin@npm:1.33.1"
+"@cloudflare/vite-plugin@npm:1.33.2":
+  version: 1.33.2
+  resolution: "@cloudflare/vite-plugin@npm:1.33.2"
   dependencies:
-    "@cloudflare/unenv-preset": "npm:2.16.0"
-    miniflare: "npm:4.20260421.0"
+    "@cloudflare/unenv-preset": "npm:2.16.1"
+    miniflare: "npm:4.20260424.0"
     unenv: "npm:2.0.0-rc.24"
-    wrangler: "npm:4.84.1"
+    wrangler: "npm:4.85.0"
     ws: "npm:8.18.0"
   peerDependencies:
     vite: ^6.1.0 || ^7.0.0 || ^8.0.0
-    wrangler: ^4.84.1
-  checksum: 10c0/97832dc4080e53c9b6b9a430896e5d581b7a57272a1efeb0c59d74cba569b3fee5f09ffa63c974ff295d6e1c63811ae0b158874c6e01bf9fafc61eeae493fc8c
+    wrangler: ^4.85.0
+  checksum: 10c0/1c3d7a7b533599d55cb8d7ef9726ae5632ea278f6c3e1d7f32895518dc67f056f4de9ec92a76238142c70f2d93ad3171d6af26380a8dd0426a95e06da87f7841
   languageName: node
   linkType: hard
 
-"@cloudflare/workerd-darwin-64@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "@cloudflare/workerd-darwin-64@npm:1.20260421.1"
+"@cloudflare/workerd-darwin-64@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "@cloudflare/workerd-darwin-64@npm:1.20260424.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@cloudflare/workerd-darwin-arm64@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "@cloudflare/workerd-darwin-arm64@npm:1.20260421.1"
+"@cloudflare/workerd-darwin-arm64@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "@cloudflare/workerd-darwin-arm64@npm:1.20260424.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@cloudflare/workerd-linux-64@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "@cloudflare/workerd-linux-64@npm:1.20260421.1"
+"@cloudflare/workerd-linux-64@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "@cloudflare/workerd-linux-64@npm:1.20260424.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@cloudflare/workerd-linux-arm64@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "@cloudflare/workerd-linux-arm64@npm:1.20260421.1"
+"@cloudflare/workerd-linux-arm64@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "@cloudflare/workerd-linux-arm64@npm:1.20260424.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@cloudflare/workerd-windows-64@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "@cloudflare/workerd-windows-64@npm:1.20260421.1"
+"@cloudflare/workerd-windows-64@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "@cloudflare/workerd-windows-64@npm:1.20260424.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:4.20260424.1":
-  version: 4.20260424.1
-  resolution: "@cloudflare/workers-types@npm:4.20260424.1"
-  checksum: 10c0/82d25c277051927d3dc3fa0b21947b19c478cf71f70180af50a119cd3ac1740ae86aaf65ebad2144aa206a78c05427436d3847e44eb1108404df900e679ee08e
+"@cloudflare/workers-types@npm:4.20260425.1":
+  version: 4.20260425.1
+  resolution: "@cloudflare/workers-types@npm:4.20260425.1"
+  checksum: 10c0/e3c228612cd1dacdfcbdca10a42320a158a7728d0a5cb09dc1c9263ec00b2331d167f3fa20cbc1c58e1e405e3fb2e11009730a2549564dddd73648bbc8f7f6fd
   languageName: node
   linkType: hard
 
@@ -1425,6 +1425,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emnapi/core@npm:1.9.2":
+  version: 1.9.2
+  resolution: "@emnapi/core@npm:1.9.2"
+  dependencies:
+    "@emnapi/wasi-threads": "npm:1.2.1"
+    tslib: "npm:^2.4.0"
+  checksum: 10c0/5500393f953951bad0768fafaa9191f2d938956b20c6d6a79e5ab696a613a25ce6ad23422bc18e86e6ce8deb147619d8d0d7d413a69f84adc01a6633cc353cd9
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^1.7.1":
   version: 1.9.1
   resolution: "@emnapi/core@npm:1.9.1"
@@ -1441,6 +1451,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10c0/953f14991d1aefb92ee6f8eb27dea725e484791a53a0cb5f47d9e0087b9a2c929ff2e92adf95af15d6ad456db6300c6b761ebf72b50a875b874a83520b3ba093
+  languageName: node
+  linkType: hard
+
+"@emnapi/runtime@npm:1.9.2":
+  version: 1.9.2
+  resolution: "@emnapi/runtime@npm:1.9.2"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10c0/61c3a59e0c36784558b8d58eb02bd04815aa5fb0dbfbaf84d1b3050a78aa0cc63ea129ae806bd1e48062bfeb7fc36eb0e5431740d62f64ea51bdf426404b8caa
   languageName: node
   linkType: hard
 
@@ -2472,9 +2491,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.14.2":
-  version: 6.14.2
-  resolution: "@formatjs/cli@npm:6.14.2"
+"@formatjs/cli@npm:^6.14.3":
+  version: 6.14.3
+  resolution: "@formatjs/cli@npm:6.14.3"
   peerDependencies:
     "@glimmer/syntax": ^0.84.3 || ^0.95.0
     "@vue/compiler-core": ^3.5.0
@@ -2497,7 +2516,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: 10c0/a991511d8925f6bb36eea5e7b08de1825f37700d6cb17cfa75abddc9644cb05bdc46cf3b86b1fe3ae9558cead0e56943db8e0fbd56c4763f1fd21d0c02b4e491
+  checksum: 10c0/35d52c996dc486c726ec569618dea68b58b1e49d9553a7fa4a4851fa0e3be6feb40fa2498c038e0cc7fbd25f7c33849c1e6bed2567e82b7fed9678f41f6a5621
   languageName: node
   linkType: hard
 
@@ -2508,38 +2527,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-messageformat-parser@npm:3.5.4":
-  version: 3.5.4
-  resolution: "@formatjs/icu-messageformat-parser@npm:3.5.4"
+"@formatjs/icu-messageformat-parser@npm:3.5.5":
+  version: 3.5.5
+  resolution: "@formatjs/icu-messageformat-parser@npm:3.5.5"
   dependencies:
-    "@formatjs/icu-skeleton-parser": "npm:2.1.4"
-  checksum: 10c0/3ff5ab209b63113d6b1779a4e8de6ee2cf941f3ad3f3ede2c8e425953a25456b6a1d880d734845244615dc9887fad10b62e75dee38858c731e45812402110efb
+    "@formatjs/icu-skeleton-parser": "npm:2.1.5"
+  checksum: 10c0/54ef60422f994699a947b1ff4164cf351a234b604273c97e981d9b8fb7ddb08236e86c5068c93fbaeb200c0113b3af5d7b753d216812ba0c4b3126c7aaa090ef
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:2.1.4":
-  version: 2.1.4
-  resolution: "@formatjs/icu-skeleton-parser@npm:2.1.4"
-  checksum: 10c0/9d6292443e4079c5718c50e32041a3bd192047449d181ae87e8cb6ef78c90f156f8b2d454008c9d0c2920c215daee5250c0eb214d13a105522a631f269e71b3c
+"@formatjs/icu-skeleton-parser@npm:2.1.5":
+  version: 2.1.5
+  resolution: "@formatjs/icu-skeleton-parser@npm:2.1.5"
+  checksum: 10c0/9788b08962bd07e06db2bf12480c27c17a5a213e7d766d92865ed140f1b4e9e89d4c2bf499b07ee063a089827efa96ff5c5d41ccb59264e1c3f7affe133356a5
   languageName: node
   linkType: hard
 
-"@formatjs/intl@npm:4.1.6, @formatjs/intl@npm:^4.1.6":
-  version: 4.1.6
-  resolution: "@formatjs/intl@npm:4.1.6"
+"@formatjs/intl@npm:4.1.7, @formatjs/intl@npm:^4.1.7":
+  version: 4.1.7
+  resolution: "@formatjs/intl@npm:4.1.7"
   dependencies:
     "@formatjs/fast-memoize": "npm:3.1.2"
-    "@formatjs/icu-messageformat-parser": "npm:3.5.4"
-    intl-messageformat: "npm:11.2.1"
-  checksum: 10c0/d1bdd4ba373efc249090970c54bb7b5373f88d4294b9e6c889f91c8214b047715578b4fde4c917f809fddd0d52d3ec360ddc9a96def9e7c237c4024161ca29a0
+    "@formatjs/icu-messageformat-parser": "npm:3.5.5"
+    intl-messageformat: "npm:11.2.2"
+  checksum: 10c0/dbeeb6c8d2e929dda38af1e0d87a7e096373496828dead98a5cf0ca23a0a20d34e507f39f0fd62bc76cd78fa6b3645c9e0f7832c42e4a8344a1df30bf4d8b36c
   languageName: node
   linkType: hard
 
-"@formatjs/ts-transformer@npm:4.4.4":
-  version: 4.4.4
-  resolution: "@formatjs/ts-transformer@npm:4.4.4"
+"@formatjs/ts-transformer@npm:4.4.5":
+  version: 4.4.5
+  resolution: "@formatjs/ts-transformer@npm:4.4.5"
   dependencies:
-    "@formatjs/icu-messageformat-parser": "npm:3.5.4"
+    "@formatjs/icu-messageformat-parser": "npm:3.5.5"
     "@types/node": "npm:22 || 24"
     json-stable-stringify: "npm:^1.3.0"
     typescript: "npm:^5.6 || 6"
@@ -2548,18 +2567,18 @@ __metadata:
   peerDependenciesMeta:
     ts-jest:
       optional: true
-  checksum: 10c0/88aecd69792c34d3dbe3da3866422c3c6668102d316dd0bad848ec56ac1cd11d011e4b9253b72e0241e934a68d6b0144dda85ab0e200019c572edab4b257d93b
+  checksum: 10c0/4266e00b684890858ff757423e429d7103a97483cf532b7fb71acbf63970523d360353382270ad5f97c313fe751b5c905fc6c0f9edce0dc6df7624b9420ebf69
   languageName: node
   linkType: hard
 
-"@formatjs/unplugin@npm:^1.1.7":
-  version: 1.1.7
-  resolution: "@formatjs/unplugin@npm:1.1.7"
+"@formatjs/unplugin@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "@formatjs/unplugin@npm:1.1.8"
   dependencies:
-    "@formatjs/icu-messageformat-parser": "npm:3.5.4"
-    "@formatjs/ts-transformer": "npm:4.4.4"
+    "@formatjs/icu-messageformat-parser": "npm:3.5.5"
+    "@formatjs/ts-transformer": "npm:4.4.5"
     magic-string: "npm:^0.30.0"
-    oxc-parser: "npm:^0.124.0"
+    oxc-parser: "npm:^0.127.0"
     unplugin: "npm:^3.0.0"
   peerDependencies:
     "@rspack/core": ">=1"
@@ -2578,7 +2597,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/4578e27f0063095ac11dc717c42a483bd5e29e8eeba5ddafe95238f7c124a1c3f86edf933591f7efa3af950e5031bda77dd639fc10a11e11aae88ccdee61a0d2
+  checksum: 10c0/5a1f5136622c0763e6ea1bbdddd52b7020703213485ef4729b11b54e886681dd0727687e2b93387d2571bd627749803ce2070a539118b0e598b3b15d2e376fb8
   languageName: node
   linkType: hard
 
@@ -3655,7 +3674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/wasm-runtime@npm:^1.1.2, @napi-rs/wasm-runtime@npm:^1.1.4":
+"@napi-rs/wasm-runtime@npm:^1.1.4":
   version: 1.1.4
   resolution: "@napi-rs/wasm-runtime@npm:1.1.4"
   dependencies:
@@ -3904,144 +3923,146 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-android-arm-eabi@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-android-arm-eabi@npm:0.124.0"
+"@oxc-parser/binding-android-arm-eabi@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-android-arm-eabi@npm:0.127.0"
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-android-arm64@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-android-arm64@npm:0.124.0"
+"@oxc-parser/binding-android-arm64@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-android-arm64@npm:0.127.0"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-darwin-arm64@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-darwin-arm64@npm:0.124.0"
+"@oxc-parser/binding-darwin-arm64@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-darwin-arm64@npm:0.127.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-darwin-x64@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-darwin-x64@npm:0.124.0"
+"@oxc-parser/binding-darwin-x64@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-darwin-x64@npm:0.127.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-freebsd-x64@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-freebsd-x64@npm:0.124.0"
+"@oxc-parser/binding-freebsd-x64@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-freebsd-x64@npm:0.127.0"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-arm-gnueabihf@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-arm-gnueabihf@npm:0.124.0"
+"@oxc-parser/binding-linux-arm-gnueabihf@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-arm-gnueabihf@npm:0.127.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-arm-musleabihf@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-arm-musleabihf@npm:0.124.0"
+"@oxc-parser/binding-linux-arm-musleabihf@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-arm-musleabihf@npm:0.127.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-arm64-gnu@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-arm64-gnu@npm:0.124.0"
+"@oxc-parser/binding-linux-arm64-gnu@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-arm64-gnu@npm:0.127.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-arm64-musl@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-arm64-musl@npm:0.124.0"
+"@oxc-parser/binding-linux-arm64-musl@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-arm64-musl@npm:0.127.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-ppc64-gnu@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-ppc64-gnu@npm:0.124.0"
+"@oxc-parser/binding-linux-ppc64-gnu@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-ppc64-gnu@npm:0.127.0"
   conditions: os=linux & cpu=ppc64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-riscv64-gnu@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-riscv64-gnu@npm:0.124.0"
+"@oxc-parser/binding-linux-riscv64-gnu@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-riscv64-gnu@npm:0.127.0"
   conditions: os=linux & cpu=riscv64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-riscv64-musl@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-riscv64-musl@npm:0.124.0"
+"@oxc-parser/binding-linux-riscv64-musl@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-riscv64-musl@npm:0.127.0"
   conditions: os=linux & cpu=riscv64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-s390x-gnu@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-s390x-gnu@npm:0.124.0"
+"@oxc-parser/binding-linux-s390x-gnu@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-s390x-gnu@npm:0.127.0"
   conditions: os=linux & cpu=s390x & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-x64-gnu@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-x64-gnu@npm:0.124.0"
+"@oxc-parser/binding-linux-x64-gnu@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-x64-gnu@npm:0.127.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-linux-x64-musl@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-linux-x64-musl@npm:0.124.0"
+"@oxc-parser/binding-linux-x64-musl@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-linux-x64-musl@npm:0.127.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-openharmony-arm64@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-openharmony-arm64@npm:0.124.0"
+"@oxc-parser/binding-openharmony-arm64@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-openharmony-arm64@npm:0.127.0"
   conditions: os=openharmony & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-wasm32-wasi@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-wasm32-wasi@npm:0.124.0"
+"@oxc-parser/binding-wasm32-wasi@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-wasm32-wasi@npm:0.127.0"
   dependencies:
-    "@napi-rs/wasm-runtime": "npm:^1.1.2"
+    "@emnapi/core": "npm:1.9.2"
+    "@emnapi/runtime": "npm:1.9.2"
+    "@napi-rs/wasm-runtime": "npm:^1.1.4"
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-win32-arm64-msvc@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-win32-arm64-msvc@npm:0.124.0"
+"@oxc-parser/binding-win32-arm64-msvc@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-win32-arm64-msvc@npm:0.127.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-win32-ia32-msvc@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-win32-ia32-msvc@npm:0.124.0"
+"@oxc-parser/binding-win32-ia32-msvc@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-win32-ia32-msvc@npm:0.127.0"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@oxc-parser/binding-win32-x64-msvc@npm:0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-parser/binding-win32-x64-msvc@npm:0.124.0"
+"@oxc-parser/binding-win32-x64-msvc@npm:0.127.0":
+  version: 0.127.0
+  resolution: "@oxc-parser/binding-win32-x64-msvc@npm:0.127.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -4060,17 +4081,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxc-project/types@npm:=0.127.0":
+"@oxc-project/types@npm:=0.127.0, @oxc-project/types@npm:^0.127.0":
   version: 0.127.0
   resolution: "@oxc-project/types@npm:0.127.0"
   checksum: 10c0/52c0947ac64a9ca119fe971f947e784a35ecd14a072fa3f542a58a5f6c42010b53f2bf92731e39b9899b83c990a9517bbd29d1e5a5b7b489e52616685c6a9278
-  languageName: node
-  linkType: hard
-
-"@oxc-project/types@npm:^0.124.0":
-  version: 0.124.0
-  resolution: "@oxc-project/types@npm:0.124.0"
-  checksum: 10c0/9564ee3ce41f4b87802ffd0d62a7602d27f4503fbd39c1bedab98d54fde06e2ac254a8f85d8f679af1281a26e8fc7aa053fadbb3e09e786b38178eb38a8e2fb3
   languageName: node
   linkType: hard
 
@@ -6550,7 +6564,7 @@ __metadata:
     react-aria-components: "npm:^1.17.0"
     react-dom: "npm:^19.2.5"
     react-icons: "npm:^5.6.0"
-    react-intl: "npm:^10.1.2"
+    react-intl: "npm:^10.1.3"
     react-stately: "npm:^3.46.0"
     typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.5"
@@ -6646,8 +6660,8 @@ __metadata:
   dependencies:
     "@excalidraw/excalidraw": "npm:0.18.0-81ab857"
     "@fast-check/vitest": "npm:^0.4.0"
-    "@formatjs/cli": "npm:^6.14.2"
-    "@formatjs/unplugin": "npm:^1.1.7"
+    "@formatjs/cli": "npm:^6.14.3"
+    "@formatjs/unplugin": "npm:^1.1.8"
     "@geoman-io/maplibre-geoman-free": "npm:^0.7.1"
     "@hookform/resolvers": "npm:^5.2.2"
     "@msgpack/msgpack": "npm:^3.1.3"
@@ -6709,7 +6723,7 @@ __metadata:
     react-dom: "npm:^19.2.5"
     react-hook-form: "npm:^7.73.1"
     react-icons: "npm:^5.6.0"
-    react-intl: "npm:^10.1.2"
+    react-intl: "npm:^10.1.3"
     react-stately: "npm:^3.46.0"
     react-zoom-pan-pinch: "npm:^4.0.3"
     typescript: "npm:^6.0.3"
@@ -6763,8 +6777,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/demo-app@workspace:packages/apps/demo-app"
   dependencies:
-    "@cloudflare/vite-plugin": "npm:1.33.1"
-    "@cloudflare/workers-types": "npm:4.20260424.1"
+    "@cloudflare/vite-plugin": "npm:1.33.2"
+    "@cloudflare/workers-types": "npm:4.20260425.1"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/boutique": "workspace:*"
@@ -6781,7 +6795,7 @@ __metadata:
     typescript: "npm:^6.0.3"
     urlpattern-polyfill: "npm:^10.1.0"
     vite: "npm:^8.0.10"
-    wrangler: "npm:^4.84.1"
+    wrangler: "npm:^4.85.0"
   languageName: unknown
   linkType: soft
 
@@ -6823,9 +6837,9 @@ __metadata:
     "@electron-forge/plugin-fuses": "npm:^7.11.1"
     "@electron-forge/publisher-github": "npm:^7.11.1"
     "@electron/fuses": "npm:^2.1.1"
-    "@formatjs/cli": "npm:^6.14.2"
-    "@formatjs/intl": "npm:^4.1.6"
-    "@formatjs/unplugin": "npm:^1.1.7"
+    "@formatjs/cli": "npm:^6.14.3"
+    "@formatjs/intl": "npm:^4.1.7"
+    "@formatjs/unplugin": "npm:^1.1.8"
     "@reforged/maker-appimage": "npm:^5.2.0"
     "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
@@ -7068,7 +7082,7 @@ __metadata:
     astro: "npm:^6.1.9"
     starlight-theme-nova: "npm:^0.11.9"
     typescript: "npm:^6.0.3"
-    wrangler: "npm:^4.84.1"
+    wrangler: "npm:^4.85.0"
   languageName: unknown
   linkType: soft
 
@@ -13448,13 +13462,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:11.2.1":
-  version: 11.2.1
-  resolution: "intl-messageformat@npm:11.2.1"
+"intl-messageformat@npm:11.2.2":
+  version: 11.2.2
+  resolution: "intl-messageformat@npm:11.2.2"
   dependencies:
     "@formatjs/fast-memoize": "npm:3.1.2"
-    "@formatjs/icu-messageformat-parser": "npm:3.5.4"
-  checksum: 10c0/c4d2e43c2e7940a8dbd75d7a3b77d722c7ac8802707f7410067097e3a923243343bd36367edb4e922b13d1a10425a2f52c544c65c9368841d481816ed04c6c2b
+    "@formatjs/icu-messageformat-parser": "npm:3.5.5"
+  checksum: 10c0/8a0e27584b6c6129f52fc14ac26c3537cdc8b4d6beaa518b56c49946bf5f79dcc75c3b86ebeabc29d14596464c4123a5188c0d30fa60689c0a71b995bdc641fb
   languageName: node
   linkType: hard
 
@@ -15317,19 +15331,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:4.20260421.0":
-  version: 4.20260421.0
-  resolution: "miniflare@npm:4.20260421.0"
+"miniflare@npm:4.20260424.0":
+  version: 4.20260424.0
+  resolution: "miniflare@npm:4.20260424.0"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     sharp: "npm:^0.34.5"
     undici: "npm:7.24.8"
-    workerd: "npm:1.20260421.1"
+    workerd: "npm:1.20260424.1"
     ws: "npm:8.18.0"
     youch: "npm:4.1.0-beta.10"
   bin:
     miniflare: bootstrap.js
-  checksum: 10c0/3a74aae66399a4fa194516b2bc03034cdb850c15ce7d514c10d6e54556020c10b71cbadc05e150a5d277b7dc1c3951f29efe1f5288b7eaea333e2d0a7700f860
+  checksum: 10c0/c01802224ed46a29ef2705808409896446bb09acd588bf85f38adc7bee8c8d45ca3232860da757a33a3761ed7f0cff7df28b5bb04604e72a8dc30a1d2868cd4c
   languageName: node
   linkType: hard
 
@@ -15930,31 +15944,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxc-parser@npm:^0.124.0":
-  version: 0.124.0
-  resolution: "oxc-parser@npm:0.124.0"
+"oxc-parser@npm:^0.127.0":
+  version: 0.127.0
+  resolution: "oxc-parser@npm:0.127.0"
   dependencies:
-    "@oxc-parser/binding-android-arm-eabi": "npm:0.124.0"
-    "@oxc-parser/binding-android-arm64": "npm:0.124.0"
-    "@oxc-parser/binding-darwin-arm64": "npm:0.124.0"
-    "@oxc-parser/binding-darwin-x64": "npm:0.124.0"
-    "@oxc-parser/binding-freebsd-x64": "npm:0.124.0"
-    "@oxc-parser/binding-linux-arm-gnueabihf": "npm:0.124.0"
-    "@oxc-parser/binding-linux-arm-musleabihf": "npm:0.124.0"
-    "@oxc-parser/binding-linux-arm64-gnu": "npm:0.124.0"
-    "@oxc-parser/binding-linux-arm64-musl": "npm:0.124.0"
-    "@oxc-parser/binding-linux-ppc64-gnu": "npm:0.124.0"
-    "@oxc-parser/binding-linux-riscv64-gnu": "npm:0.124.0"
-    "@oxc-parser/binding-linux-riscv64-musl": "npm:0.124.0"
-    "@oxc-parser/binding-linux-s390x-gnu": "npm:0.124.0"
-    "@oxc-parser/binding-linux-x64-gnu": "npm:0.124.0"
-    "@oxc-parser/binding-linux-x64-musl": "npm:0.124.0"
-    "@oxc-parser/binding-openharmony-arm64": "npm:0.124.0"
-    "@oxc-parser/binding-wasm32-wasi": "npm:0.124.0"
-    "@oxc-parser/binding-win32-arm64-msvc": "npm:0.124.0"
-    "@oxc-parser/binding-win32-ia32-msvc": "npm:0.124.0"
-    "@oxc-parser/binding-win32-x64-msvc": "npm:0.124.0"
-    "@oxc-project/types": "npm:^0.124.0"
+    "@oxc-parser/binding-android-arm-eabi": "npm:0.127.0"
+    "@oxc-parser/binding-android-arm64": "npm:0.127.0"
+    "@oxc-parser/binding-darwin-arm64": "npm:0.127.0"
+    "@oxc-parser/binding-darwin-x64": "npm:0.127.0"
+    "@oxc-parser/binding-freebsd-x64": "npm:0.127.0"
+    "@oxc-parser/binding-linux-arm-gnueabihf": "npm:0.127.0"
+    "@oxc-parser/binding-linux-arm-musleabihf": "npm:0.127.0"
+    "@oxc-parser/binding-linux-arm64-gnu": "npm:0.127.0"
+    "@oxc-parser/binding-linux-arm64-musl": "npm:0.127.0"
+    "@oxc-parser/binding-linux-ppc64-gnu": "npm:0.127.0"
+    "@oxc-parser/binding-linux-riscv64-gnu": "npm:0.127.0"
+    "@oxc-parser/binding-linux-riscv64-musl": "npm:0.127.0"
+    "@oxc-parser/binding-linux-s390x-gnu": "npm:0.127.0"
+    "@oxc-parser/binding-linux-x64-gnu": "npm:0.127.0"
+    "@oxc-parser/binding-linux-x64-musl": "npm:0.127.0"
+    "@oxc-parser/binding-openharmony-arm64": "npm:0.127.0"
+    "@oxc-parser/binding-wasm32-wasi": "npm:0.127.0"
+    "@oxc-parser/binding-win32-arm64-msvc": "npm:0.127.0"
+    "@oxc-parser/binding-win32-ia32-msvc": "npm:0.127.0"
+    "@oxc-parser/binding-win32-x64-msvc": "npm:0.127.0"
+    "@oxc-project/types": "npm:^0.127.0"
   dependenciesMeta:
     "@oxc-parser/binding-android-arm-eabi":
       optional: true
@@ -15996,7 +16010,7 @@ __metadata:
       optional: true
     "@oxc-parser/binding-win32-x64-msvc":
       optional: true
-  checksum: 10c0/06bd6b937f0574f49b74112cf2af3fb9990e7445d40126fca2c6ceb950c7ba5e10fbb223d941341c8207376620f6ee37466779a4fbff78ed7a67e15df3459d9c
+  checksum: 10c0/9d109fb3a79c0862a36434cc01c8c0e8f6cf5f1efe9369e02d2183fd518479b10262cf092da2e7f8328befae446afa05ccf742ce12f8346d81429c8f2cdf1651
   languageName: node
   linkType: hard
 
@@ -17255,17 +17269,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-intl@npm:^10.1.2":
-  version: 10.1.2
-  resolution: "react-intl@npm:10.1.2"
+"react-intl@npm:^10.1.3":
+  version: 10.1.3
+  resolution: "react-intl@npm:10.1.3"
   dependencies:
-    "@formatjs/icu-messageformat-parser": "npm:3.5.4"
-    "@formatjs/intl": "npm:4.1.6"
-    intl-messageformat: "npm:11.2.1"
+    "@formatjs/icu-messageformat-parser": "npm:3.5.5"
+    "@formatjs/intl": "npm:4.1.7"
+    intl-messageformat: "npm:11.2.2"
   peerDependencies:
     "@types/react": 19
     react: 19
-  checksum: 10c0/785a4c0d16a5cb64888b23f6f2d8a87296bde05f1f834c34c5f7f6a73dcab6115afbbb0d4e71471fb287a9c919f32b54ed4b6284e60d21368dec1244eaf3e736
+  checksum: 10c0/3d615c3f0dba3fe82352901b4d0082f18eecf48cbcbb2eb8602d84f8d03ebfe091f6439d0c68c8ee20ea295b94a9165675e637f4c42194a20a6010a260fa138d
   languageName: node
   linkType: hard
 
@@ -20762,15 +20776,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workerd@npm:1.20260421.1":
-  version: 1.20260421.1
-  resolution: "workerd@npm:1.20260421.1"
+"workerd@npm:1.20260424.1":
+  version: 1.20260424.1
+  resolution: "workerd@npm:1.20260424.1"
   dependencies:
-    "@cloudflare/workerd-darwin-64": "npm:1.20260421.1"
-    "@cloudflare/workerd-darwin-arm64": "npm:1.20260421.1"
-    "@cloudflare/workerd-linux-64": "npm:1.20260421.1"
-    "@cloudflare/workerd-linux-arm64": "npm:1.20260421.1"
-    "@cloudflare/workerd-windows-64": "npm:1.20260421.1"
+    "@cloudflare/workerd-darwin-64": "npm:1.20260424.1"
+    "@cloudflare/workerd-darwin-arm64": "npm:1.20260424.1"
+    "@cloudflare/workerd-linux-64": "npm:1.20260424.1"
+    "@cloudflare/workerd-linux-arm64": "npm:1.20260424.1"
+    "@cloudflare/workerd-windows-64": "npm:1.20260424.1"
   dependenciesMeta:
     "@cloudflare/workerd-darwin-64":
       optional: true
@@ -20784,25 +20798,25 @@ __metadata:
       optional: true
   bin:
     workerd: bin/workerd
-  checksum: 10c0/fee7c72e8e3a22b8a98d02c9926f8d4827b6f5aa0c1065463457331b9245473e471ad64221757304026b143c2fc2a2a9bea958a6170561ab93b963ec36e2c428
+  checksum: 10c0/566cfe48a2202fb977174275e678f52c2fa126e42fcc2edc2fbe1250eb94d9987200662cc1b487924c2a5ade83c2bf3e6879e7f684e2139815fb9337ce0d8c45
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.84.1, wrangler@npm:^4.84.1":
-  version: 4.84.1
-  resolution: "wrangler@npm:4.84.1"
+"wrangler@npm:4.85.0, wrangler@npm:^4.85.0":
+  version: 4.85.0
+  resolution: "wrangler@npm:4.85.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.2"
-    "@cloudflare/unenv-preset": "npm:2.16.0"
+    "@cloudflare/unenv-preset": "npm:2.16.1"
     blake3-wasm: "npm:2.1.5"
     esbuild: "npm:0.27.3"
     fsevents: "npm:~2.3.2"
-    miniflare: "npm:4.20260421.0"
+    miniflare: "npm:4.20260424.0"
     path-to-regexp: "npm:6.3.0"
     unenv: "npm:2.0.0-rc.24"
-    workerd: "npm:1.20260421.1"
+    workerd: "npm:1.20260424.1"
   peerDependencies:
-    "@cloudflare/workers-types": ^4.20260421.1
+    "@cloudflare/workers-types": ^4.20260424.1
   dependenciesMeta:
     fsevents:
       optional: true
@@ -20812,7 +20826,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/cebf371687f278969e32592ddc327490c4efc7300537af06d1e60656a6d82e06100f1204a47d274c0ce57df3659bc0544c42848b9c3cbbeaeec209bdf180e277
+  checksum: 10c0/b301e1b4c70bebb3adbf4b4fa9a90351b1847d940208b1878e491e751706ba3efe477bb43dce4f2a90b00b548f93858a60f4a87c012da1186f56eaa260d61115
   languageName: node
   linkType: hard
 

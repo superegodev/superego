@@ -30,10 +30,10 @@
     "urlpattern-polyfill": "^10.1.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.33.1",
-    "@cloudflare/workers-types": "4.20260424.1",
+    "@cloudflare/vite-plugin": "1.33.2",
+    "@cloudflare/workers-types": "4.20260425.1",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
-    "wrangler": "^4.84.1"
+    "wrangler": "^4.85.0"
   }
 }
