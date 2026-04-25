@@ -2243,39 +2243,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/common@npm:0.18.0-81ab857":
-  version: 0.18.0-81ab857
-  resolution: "@excalidraw/common@npm:0.18.0-81ab857"
+"@excalidraw/common@npm:0.18.0-b1c6bfc":
+  version: 0.18.0-b1c6bfc
+  resolution: "@excalidraw/common@npm:0.18.0-b1c6bfc"
   dependencies:
     tinycolor2: "npm:1.6.0"
-  checksum: 10c0/5d7c397988ab76252ed25e7461c14250d59aff46c9102227f115e3f0db459b753ab36a2be9a4e61a0fb8ee332b836a7361780770cca88c77c718eb087263b9d2
+  checksum: 10c0/51c56af4c3c536d0cf52362c6c15d95394be5eda9e56cf703939f997d2dcbc1234ae1535164a0b1c73cd6b33a67a32d5285ca757809030f3968126672b466872
   languageName: node
   linkType: hard
 
-"@excalidraw/element@npm:0.18.0-81ab857":
-  version: 0.18.0-81ab857
-  resolution: "@excalidraw/element@npm:0.18.0-81ab857"
+"@excalidraw/element@npm:0.18.0-b1c6bfc":
+  version: 0.18.0-b1c6bfc
+  resolution: "@excalidraw/element@npm:0.18.0-b1c6bfc"
   dependencies:
-    "@excalidraw/common": "npm:0.18.0-81ab857"
-    "@excalidraw/math": "npm:0.18.0-81ab857"
-  checksum: 10c0/38dbc9297809d3da316610b57fac4da7b13b643c1a1afc5e55a73a4c4bccc9fd0e34c604b7db48139f4de06ef67940e136f056d146597262605ca29af1fbf24d
+    "@excalidraw/common": "npm:0.18.0-b1c6bfc"
+    "@excalidraw/math": "npm:0.18.0-b1c6bfc"
+  checksum: 10c0/8db706bd50df32bb7fad15b0fab1407db3bf87daa2fcb29a9b32a6dd3681e7a4987e0bdeefb6e9f3271b40e0beca447503477f756fc2bcf4796dc77444fd59bc
   languageName: node
   linkType: hard
 
-"@excalidraw/excalidraw@npm:0.18.0-81ab857":
-  version: 0.18.0-81ab857
-  resolution: "@excalidraw/excalidraw@npm:0.18.0-81ab857"
+"@excalidraw/excalidraw@npm:0.18.0-b1c6bfc":
+  version: 0.18.0-b1c6bfc
+  resolution: "@excalidraw/excalidraw@npm:0.18.0-b1c6bfc"
   dependencies:
     "@braintree/sanitize-url": "npm:6.0.2"
     "@codemirror/commands": "npm:^6.0.0"
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/state": "npm:^6.0.0"
     "@codemirror/view": "npm:^6.0.0"
-    "@excalidraw/common": "npm:0.18.0-81ab857"
-    "@excalidraw/element": "npm:0.18.0-81ab857"
+    "@excalidraw/common": "npm:0.18.0-b1c6bfc"
+    "@excalidraw/element": "npm:0.18.0-b1c6bfc"
     "@excalidraw/laser-pointer": "npm:1.3.1"
-    "@excalidraw/math": "npm:0.18.0-81ab857"
-    "@excalidraw/mermaid-to-excalidraw": "npm:2.1.1"
+    "@excalidraw/math": "npm:0.18.0-b1c6bfc"
+    "@excalidraw/mermaid-to-excalidraw": "npm:2.2.2"
     "@excalidraw/random-username": "npm:1.1.0"
     "@lezer/highlight": "npm:^1.0.0"
     browser-fs-access: "npm:0.38.0"
@@ -2306,7 +2306,7 @@ __metadata:
   peerDependencies:
     react: ^17.0.2 || ^18.2.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.2.0 || ^19.0.0
-  checksum: 10c0/773742d1c8a311274cf3adf8ca171d84587e6899c5937ac0ec5ec916a9da303060c5b03adcedf85bfa0dd58143d7bda741fd2b8cc976576d3eea466eb6421271
+  checksum: 10c0/1866f5f09bb471512fd2ae8489ac566ce598d90e99d85f3731ab6d367e9e52feb9bc93739ded960ef99f6d21ad3a09177715c99a322d0fb0286ba231865c212c
   languageName: node
   linkType: hard
 
@@ -2324,24 +2324,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/math@npm:0.18.0-81ab857":
-  version: 0.18.0-81ab857
-  resolution: "@excalidraw/math@npm:0.18.0-81ab857"
+"@excalidraw/math@npm:0.18.0-b1c6bfc":
+  version: 0.18.0-b1c6bfc
+  resolution: "@excalidraw/math@npm:0.18.0-b1c6bfc"
   dependencies:
-    "@excalidraw/common": "npm:0.18.0-81ab857"
-  checksum: 10c0/d92f9108e2fa7439d4de0cde7c9c212cd535e9527747fde9052dd71482da43580464ad5089ab6fc564ceff51286d06f9385d420754d6132b140ec4a31cdda130
+    "@excalidraw/common": "npm:0.18.0-b1c6bfc"
+  checksum: 10c0/d16e52862798789233bc2f4a20e3cfb669b781130269f441fafbdba40abca50959feb24a70abd6e607c3d08819d37326b2002f4a53def59a68c49933d08fab1c
   languageName: node
   linkType: hard
 
-"@excalidraw/mermaid-to-excalidraw@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@excalidraw/mermaid-to-excalidraw@npm:2.1.1"
+"@excalidraw/mermaid-to-excalidraw@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@excalidraw/mermaid-to-excalidraw@npm:2.2.2"
   dependencies:
     "@excalidraw/markdown-to-text": "npm:0.1.2"
     "@mermaid-js/parser": "npm:^0.6.3"
     mermaid: "npm:^11.12.1"
     nanoid: "npm:4.0.2"
-  checksum: 10c0/5e2612ac12803fe91b2012934bf9b532a4060cc143eded0ed4e888c3d7de1dc7af35e8a2c3c910bb582ac8d44f440e6c9cad9d526f0f219bedb2a40e82f2dcb1
+  checksum: 10c0/1195a726e1227e030f8ff8ec6599efa333c51f815a7d554f7f129ec8de14fea2c26a7ff4b5d9d3e2dad5d2d7174d214711173f582bbb0dc3030e6b79880a371e
   languageName: node
   linkType: hard
 
@@ -6532,7 +6532,7 @@ __metadata:
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/themes": "workspace:*"
-    "@tanstack/react-query": "npm:^5.100.1"
+    "@tanstack/react-query": "npm:^5.100.3"
     "@tiptap/extension-code-block-lowlight": "npm:^3.22.4"
     "@tiptap/extension-list": "npm:^3.22.4"
     "@tiptap/extension-subscript": "npm:^3.22.4"
@@ -6658,7 +6658,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superego/browser-app@workspace:packages/apps/browser-app"
   dependencies:
-    "@excalidraw/excalidraw": "npm:0.18.0-81ab857"
+    "@excalidraw/excalidraw": "npm:0.18.0-b1c6bfc"
     "@fast-check/vitest": "npm:^0.4.0"
     "@formatjs/cli": "npm:^6.14.3"
     "@formatjs/unplugin": "npm:^1.1.8"
@@ -6681,7 +6681,7 @@ __metadata:
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/themes": "workspace:*"
-    "@tanstack/react-query": "npm:^5.100.1"
+    "@tanstack/react-query": "npm:^5.100.3"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"
     "@testing-library/react": "npm:^16.3.2"
@@ -6791,7 +6791,7 @@ __metadata:
     "@superego/multi-driver-inference-service": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
-    "@tanstack/react-query": "npm:^5.100.1"
+    "@tanstack/react-query": "npm:^5.100.3"
     typescript: "npm:^6.0.3"
     urlpattern-polyfill: "npm:^10.1.0"
     vite: "npm:^8.0.10"
@@ -7104,21 +7104,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.100.1":
-  version: 5.100.1
-  resolution: "@tanstack/query-core@npm:5.100.1"
-  checksum: 10c0/62eebf0b493d5931fd0f7946bc321736d9467b9c2e1e52f02eac930a221c38e465305b29920ef6437d18fe10c7f0f3671d2ff60e218672134ef104a2f33edaf5
+"@tanstack/query-core@npm:5.100.3":
+  version: 5.100.3
+  resolution: "@tanstack/query-core@npm:5.100.3"
+  checksum: 10c0/a292eee2c7ffc9d4251e9cfcd5d26f90eef4a539de9c17ea3633739fa58547ada9d80c09532907cef24c5beef6bb716144324075caad5a37626dd4d9c569cc5e
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.100.1":
-  version: 5.100.1
-  resolution: "@tanstack/react-query@npm:5.100.1"
+"@tanstack/react-query@npm:^5.100.3":
+  version: 5.100.3
+  resolution: "@tanstack/react-query@npm:5.100.3"
   dependencies:
-    "@tanstack/query-core": "npm:5.100.1"
+    "@tanstack/query-core": "npm:5.100.3"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/23617f2197b400c32ea15bf448d7cc03b0441f8c431e9c4ecf48c5a85cbfdbca48b4d07ec0590984bd9795e1c9fd7e828f57a2bbe808c2526edde09e15815250
+  checksum: 10c0/b66e8271062b937834e72c81c3cbecadf92b85115ce545a79d07d3af9715e10c601f99619cd3a6f49b71f39a2e74c373dac2c0c93aaf2a0515da0bb028bbbab9
   languageName: node
   linkType: hard
 
