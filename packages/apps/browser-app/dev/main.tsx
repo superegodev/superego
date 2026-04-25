@@ -13,6 +13,7 @@ import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-infer
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
+import monaco from "../src/monaco.js";
 
 const redirectUri = "http://localhost:5173/OAuth2PKCECallback";
 const sessionStorage = new BrowserSessionStorage();
@@ -86,3 +87,4 @@ window.addEventListener("message", (evt) => {
 });
 
 (window as any).backend = backend;
+(window as any).monaco = monaco;
