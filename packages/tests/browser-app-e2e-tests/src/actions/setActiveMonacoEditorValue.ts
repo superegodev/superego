@@ -26,7 +26,17 @@ export default async function setActiveMonacoEditorValue(
   // Move focus out of Monaco so the caret / current-line highlight don't
   // make the resulting screenshot flaky.
   await page.locator("body").click({ position: { x: 0, y: 0 } });
-  // Let Monaco finish its async TypeScript semantic highlighting pass and
-  // any pending getter-compilation round trip complete.
-  await page.waitForTimeout(1500);
+  // Wait for any pending TypeScript compilation to complete. The
+  // CompilationInProgressIndicator's class includes "visible" while
+  // compilation is in progress and "hidden" once it finishes.
+  await page.waitForFunction(() => {
+    const indicators = document.querySelectorAll(
+      '[class*="CompilationInProgressIndicator"]',
+    );
+    return Array.from(indicators).every(
+      (element) => !element.className.includes("visible"),
+    );
+  });
+  // Let Monaco finish its async TypeScript semantic highlighting pass.
+  await page.waitForTimeout(500);
 }
