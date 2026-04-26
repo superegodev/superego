@@ -24,6 +24,7 @@ export default defineConfig({
     formatjs({
       idInterpolationPattern: "[name].[ext]_[sha512:contenthash:base64:6]",
       removeDefaultMessage: true,
+      flatten: false,
     }),
     vanillaExtractPlugin(),
   ],

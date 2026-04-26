@@ -15,11 +15,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "@astrojs/mdx": "^5.0.2",
-    "@astrojs/starlight": "^0.38.2",
-    "astro": "^6.0.8",
-    "starlight-theme-nova": "^0.11.7",
-    "typescript": "^5.9.3",
-    "wrangler": "^4.76.0"
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/starlight": "^0.38.4",
+    "astro": "^6.1.9",
+    "starlight-theme-nova": "^0.11.9",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.85.0"
   }
 }

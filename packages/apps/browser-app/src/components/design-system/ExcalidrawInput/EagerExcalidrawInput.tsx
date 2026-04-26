@@ -14,6 +14,10 @@ import { useIntl } from "react-intl";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import { EXCALIDRAW_INPUT_ON_CHANGE_DEBOUNCE } from "../../../config.js";
 import classnames from "../../../utils/classnames.js";
+import {
+  PERSISTED_APP_STATE_KEYS,
+  type PersistedExcalidrawAppState,
+} from "./ExcalidrawDrawingValue.js";
 import * as cs from "./ExcalidrawInput.css.js";
 import type Props from "./Props.js";
 
@@ -85,8 +89,11 @@ export default function EagerExcalidrawInput({
         element.boundElements ? element : { ...element, boundElements: [] },
       );
     const files = excalidrawApi.getFiles();
-    const { scrollX, scrollY, zoom } = excalidrawApi.getAppState();
-    const appState = { scrollX, scrollY, zoom: { value: zoom.value } };
+    const fullAppState = excalidrawApi.getAppState();
+    const appState: PersistedExcalidrawAppState = {};
+    for (const key of PERSISTED_APP_STATE_KEYS) {
+      (appState as Record<string, unknown>)[key] = fullAppState[key];
+    }
     const serialized = JSON.stringify({ elements, files, appState });
     hasPendingLocalChangesRef.current = false;
     if (serialized !== previousSerializedRef.current) {

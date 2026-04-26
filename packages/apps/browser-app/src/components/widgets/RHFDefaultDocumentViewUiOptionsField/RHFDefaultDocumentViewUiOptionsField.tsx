@@ -1,6 +1,11 @@
 import { useCallback, useState } from "react";
 import { FieldErrorContext } from "react-aria-components";
-import { type Control, useController } from "react-hook-form";
+import {
+  type Control,
+  type FieldPath,
+  type FieldValues,
+  useController,
+} from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
@@ -16,16 +21,18 @@ import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import CodeInput from "../CodeInput/CodeInput.js";
 import * as cs from "./RHFDefaultDocumentViewUiOptionsField.css.js";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues = FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
   label?: string | undefined;
   isDisabled?: boolean | undefined;
   isReadOnly?: boolean | undefined;
   autoFocus?: boolean | undefined;
   className?: string | undefined;
 }
-export default function RHFDefaultDocumentViewUiOptionsField({
+export default function RHFDefaultDocumentViewUiOptionsField<
+  T extends FieldValues,
+>({
   control,
   name,
   label,
@@ -33,7 +40,7 @@ export default function RHFDefaultDocumentViewUiOptionsField({
   isReadOnly,
   autoFocus,
   className,
-}: Props) {
+}: Props<T>) {
   const { field, fieldState } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const isEnabled = field.value !== null;

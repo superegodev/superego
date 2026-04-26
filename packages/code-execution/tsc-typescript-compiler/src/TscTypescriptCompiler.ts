@@ -37,7 +37,7 @@ export default class TscTypescriptCompiler implements TypescriptCompiler {
 
         // Modules
         module: ts.ModuleKind.ESNext,
-        moduleResolution: ts.ModuleResolutionKind.NodeJs,
+        moduleResolution: ts.ModuleResolutionKind.Bundler,
 
         // Interop constraints
         allowSyntheticDefaultImports: true,

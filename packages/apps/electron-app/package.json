@@ -27,7 +27,7 @@
     "deploy": "electron-forge publish --from-dry-run"
   },
   "dependencies": {
-    "@formatjs/intl": "^4.1.4",
+    "@formatjs/intl": "^4.1.7",
     "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
@@ -43,9 +43,9 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@typescript/vfs": "^1.6.4",
-    "es-toolkit": "^1.45.1",
+    "es-toolkit": "^1.46.0",
     "filenamify": "^7.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.11.1",
@@ -54,13 +54,13 @@
     "@electron-forge/maker-zip": "^7.11.1",
     "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron-forge/publisher-github": "^7.11.1",
-    "@electron/fuses": "^2.1.0",
-    "@formatjs/cli": "^6.14.0",
-    "@formatjs/unplugin": "^1.1.4",
+    "@electron/fuses": "^2.1.1",
+    "@formatjs/cli": "^6.14.3",
+    "@formatjs/unplugin": "^1.1.8",
     "@reforged/maker-appimage": "^5.2.0",
-    "electron": "41.0.3",
+    "electron": "41.3.0",
     "electron-vite": "^5.0.0",
-    "vite": "^8.0.1"
+    "vite": "^8.0.10"
   },
   "productName": "superego"
 }
