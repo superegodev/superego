@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type CannotChangeCollectionRemoteConnector = ResultError<
+const CannotChangeCollectionRemoteConnectorSchema = defineError(
   "CannotChangeCollectionRemoteConnector",
-  {
-    collectionId: CollectionId;
-    currentConnectorName: string;
-    suppliedConnectorName: string;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    currentConnectorName: v.string(),
+    suppliedConnectorName: v.string(),
+  }),
+);
+export default CannotChangeCollectionRemoteConnectorSchema;
+export type CannotChangeCollectionRemoteConnector = v.InferOutput<
+  typeof CannotChangeCollectionRemoteConnectorSchema
 >;
-export default CannotChangeCollectionRemoteConnector;

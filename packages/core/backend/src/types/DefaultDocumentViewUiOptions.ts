@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 interface DefaultDocumentViewUiOptions {
   /** Use the full width of the Main panel content. Defaults to false. */
   fullWidth?: boolean;
@@ -58,4 +60,32 @@ namespace DefaultDocumentViewUiOptions {
   export type Layout = HtmlAstNode[];
 }
 
-export default DefaultDocumentViewUiOptions;
+const divNodeSchema: v.GenericSchema<DefaultDocumentViewUiOptions.DivNode> =
+  v.object({
+    style: v.optional(v.record(v.string(), v.union([v.string(), v.number()]))),
+    children: v.optional(v.array(v.lazy(() => htmlAstNodeSchema))),
+  });
+
+const fieldNodeSchema: v.GenericSchema<DefaultDocumentViewUiOptions.FieldNode> =
+  v.object({
+    propertyPath: v.string(),
+    layout: v.optional(v.lazy(() => layoutSchema)),
+    hideLabel: v.optional(v.boolean()),
+    allowCollapsing: v.optional(v.boolean()),
+    flexGrow: v.optional(v.boolean()),
+  });
+
+const htmlAstNodeSchema: v.GenericSchema<DefaultDocumentViewUiOptions.HtmlAstNode> =
+  v.union([divNodeSchema, fieldNodeSchema]);
+
+const layoutSchema: v.GenericSchema<DefaultDocumentViewUiOptions.Layout> =
+  v.array(htmlAstNodeSchema);
+
+const DefaultDocumentViewUiOptionsSchema: v.GenericSchema<DefaultDocumentViewUiOptions> =
+  v.object({
+    fullWidth: v.optional(v.boolean()),
+    alwaysCollapsePrimarySidebar: v.optional(v.boolean()),
+    rootLayout: v.optional(v.record(v.string(), layoutSchema)),
+  });
+export default DefaultDocumentViewUiOptionsSchema;
+export type { DefaultDocumentViewUiOptions };

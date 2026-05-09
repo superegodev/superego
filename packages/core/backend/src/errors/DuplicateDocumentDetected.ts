@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type Document from "../types/Document.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import DocumentSchema from "../types/Document.js";
 
-type DuplicateDocumentDetected = ResultError<
+const DuplicateDocumentDetectedSchema = defineError(
   "DuplicateDocumentDetected",
-  {
-    collectionId: CollectionId;
-    duplicateDocument: Document;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    duplicateDocument: DocumentSchema,
+  }),
+);
+export default DuplicateDocumentDetectedSchema;
+export type DuplicateDocumentDetected = v.InferOutput<
+  typeof DuplicateDocumentDetectedSchema
 >;
-export default DuplicateDocumentDetected;

@@ -1,9 +1,11 @@
-import type { ResultError } from "@superego/global-types";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
 
-type TooManyFailedImplementationAttempts = ResultError<
+const TooManyFailedImplementationAttemptsSchema = defineError(
   "TooManyFailedImplementationAttempts",
-  {
-    failedAttemptsCount: number;
-  }
+  v.object({ failedAttemptsCount: v.number() }),
+);
+export default TooManyFailedImplementationAttemptsSchema;
+export type TooManyFailedImplementationAttempts = v.InferOutput<
+  typeof TooManyFailedImplementationAttemptsSchema
 >;
-export default TooManyFailedImplementationAttempts;

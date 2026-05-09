@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type ConversationId from "../ids/ConversationId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ConversationIdSchema from "../ids/ConversationId.js";
 
-type ConversationStatusNotProcessing = ResultError<
+const ConversationStatusNotProcessingSchema = defineError(
   "ConversationStatusNotProcessing",
-  {
-    conversationId: ConversationId;
-  }
+  v.object({ conversationId: ConversationIdSchema }),
+);
+export default ConversationStatusNotProcessingSchema;
+export type ConversationStatusNotProcessing = v.InferOutput<
+  typeof ConversationStatusNotProcessingSchema
 >;
-export default ConversationStatusNotProcessing;

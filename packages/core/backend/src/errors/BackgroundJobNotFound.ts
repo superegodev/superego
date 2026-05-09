@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type BackgroundJobId from "../ids/BackgroundJobId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import BackgroundJobIdSchema from "../ids/BackgroundJobId.js";
 
-type BackgroundJobNotFound = ResultError<
+const BackgroundJobNotFoundSchema = defineError(
   "BackgroundJobNotFound",
-  {
-    backgroundJobId: BackgroundJobId;
-  }
+  v.object({ backgroundJobId: BackgroundJobIdSchema }),
+);
+export default BackgroundJobNotFoundSchema;
+export type BackgroundJobNotFound = v.InferOutput<
+  typeof BackgroundJobNotFoundSchema
 >;
-export default BackgroundJobNotFound;

@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import fuelLogsAppCompiled from "./fuelLogs.appCompiled.js?raw";
 import fuelLogsAppSource from "./fuelLogs.appSource.tsx?raw";
 
@@ -12,4 +12,4 @@ export default {
       compiled: fuelLogsAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

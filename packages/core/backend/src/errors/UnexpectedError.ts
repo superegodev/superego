@@ -1,9 +1,9 @@
-import type { ResultError } from "@superego/global-types";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
 
-type UnexpectedError = ResultError<
+const UnexpectedErrorSchema = defineError(
   "UnexpectedError",
-  {
-    cause: any;
-  }
->;
-export default UnexpectedError;
+  v.object({ cause: v.any() }),
+);
+export default UnexpectedErrorSchema;
+export type UnexpectedError = v.InferOutput<typeof UnexpectedErrorSchema>;

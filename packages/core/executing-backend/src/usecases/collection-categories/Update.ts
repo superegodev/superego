@@ -1,13 +1,13 @@
-import type {
-  Backend,
-  CollectionCategory,
-  CollectionCategoryIconNotValid,
-  CollectionCategoryId,
-  CollectionCategoryNameNotValid,
-  CollectionCategoryNotFound,
-  ParentCollectionCategoryIsDescendant,
-  ParentCollectionCategoryNotFound,
-  UnexpectedError,
+import {
+  type CollectionCategory,
+  type CollectionCategoryIconNotValid,
+  type CollectionCategoryId,
+  type CollectionCategoryNameNotValid,
+  type CollectionCategoryNotFound,
+  type ParentCollectionCategoryIsDescendant,
+  type ParentCollectionCategoryNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -23,7 +23,7 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionCategoriesUpdate extends Usecase<
-  Backend["collectionCategories"]["update"]
+  typeof backendContracts.collectionCategories.update
 > {
   async exec(
     id: CollectionCategoryId,

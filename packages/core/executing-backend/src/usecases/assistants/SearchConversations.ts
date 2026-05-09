@@ -1,7 +1,7 @@
-import type {
-  LiteConversation,
-  TextSearchResult,
-  UnexpectedError,
+import {
+  type LiteConversation,
+  type TextSearchResult,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";

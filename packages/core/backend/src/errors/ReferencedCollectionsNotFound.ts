@@ -1,13 +1,17 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type ReferencedCollectionsNotFound = ResultError<
+const ReferencedCollectionsNotFoundSchema = defineError(
   "ReferencedCollectionsNotFound",
-  {
+  v.object({
     /** The collection being created or updated. Null for new collections. */
-    collectionId: CollectionId | null;
+    collectionId: v.nullable(CollectionIdSchema),
     /** Collection IDs referenced in the schema that do not exist. */
-    notFoundCollectionIds: string[];
-  }
+    notFoundCollectionIds: v.array(v.string()),
+  }),
+);
+export default ReferencedCollectionsNotFoundSchema;
+export type ReferencedCollectionsNotFound = v.InferOutput<
+  typeof ReferencedCollectionsNotFoundSchema
 >;
-export default ReferencedCollectionsNotFound;

@@ -1,13 +1,19 @@
-import type Theme from "../enums/Theme.js";
+import * as v from "valibot";
+import Theme from "../enums/Theme.js";
 
-export default interface LitePackInfo {
-  name: string;
-  /** Markdown. */
-  shortDescription: string;
-  /** Contains at most one screenshot per theme. */
-  screenshots: {
-    theme: Theme.Light | Theme.Dark;
-    mimeType: `image/${string}`;
-    content: Uint8Array<ArrayBuffer>;
-  }[];
-}
+const LitePackInfoSchema = v.object({
+  name: v.string(),
+  shortDescription: v.string(),
+  screenshots: v.array(
+    v.object({
+      theme: v.picklist([Theme.Light, Theme.Dark]),
+      mimeType: v.pipe(
+        v.string(),
+        v.regex(/^image\/.+$/),
+      ) as v.GenericSchema<`image/${string}`>,
+      content: v.instance(Uint8Array),
+    }),
+  ),
+});
+export default LitePackInfoSchema;
+export type LitePackInfo = v.InferOutput<typeof LitePackInfoSchema>;

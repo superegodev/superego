@@ -1,10 +1,10 @@
 import {
   type InferenceModel,
-  type InferenceOptions,
   type InferenceProvider,
   type InferenceProviderModelRef,
   type InferenceSettings,
   ReasoningEffort,
+  type InferenceOptions,
 } from "@superego/backend";
 import { useGlobalData } from "../backend/GlobalData.js";
 

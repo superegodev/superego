@@ -8,7 +8,7 @@ import {
   ConversationStatus,
   type ConversationStatusNotProcessing,
   type GlobalSettings,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceOptionsNotValid,
   type Message,
   type MessageContentPart,
@@ -53,7 +53,7 @@ export default class AssistantsProcessConversation extends Usecase {
     inferenceOptions,
   }: {
     id: ConversationId;
-    inferenceOptions: InferenceOptions<"completion">;
+    inferenceOptions: InferenceOptionsCompletion;
   }): ResultPromise<
     null,
     | CannotTranscribeAudioMessage
@@ -258,7 +258,7 @@ export default class AssistantsProcessConversation extends Usecase {
   private async transcribeLastUserMessage(
     inferenceService: InferenceService,
     conversation: ConversationEntity,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): ResultPromise<Message[], CannotTranscribeAudioMessage> {
     const otherMessages = [...conversation.messages];
     const lastMessage = otherMessages.pop();

@@ -1,4 +1,7 @@
-import type { InferenceOptions } from "@superego/backend";
+import type {
+  InferenceOptions,
+  InferenceOptionsHaving,
+} from "@superego/backend";
 import inferenceOptionsHas from "./inferenceOptionsHas.js";
 
 export default function assertInferenceOptionsHas<
@@ -6,7 +9,7 @@ export default function assertInferenceOptionsHas<
 >(
   inferenceOptions: InferenceOptions,
   ...capabilities: Capabilities
-): asserts inferenceOptions is InferenceOptions<Capabilities[number]> {
+): asserts inferenceOptions is InferenceOptionsHaving<Capabilities[number]> {
   if (!inferenceOptionsHas(inferenceOptions, ...capabilities)) {
     const message = `inferenceOptions expected to have capabilities ${capabilities.join(", ")}`;
     console.error(message, { inferenceOptions, capabilities });

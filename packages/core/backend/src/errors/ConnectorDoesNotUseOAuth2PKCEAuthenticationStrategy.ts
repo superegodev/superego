@@ -1,11 +1,15 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy = ResultError<
+const ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategySchema = defineError(
   "ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy",
-  {
-    collectionId: CollectionId;
-    connectorName: string;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    connectorName: v.string(),
+  }),
+);
+export default ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategySchema;
+export type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy = v.InferOutput<
+  typeof ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategySchema
 >;
-export default ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy;

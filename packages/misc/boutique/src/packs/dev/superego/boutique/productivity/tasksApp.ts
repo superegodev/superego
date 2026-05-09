@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import tasksAppCompiled from "./tasks.appCompiled.js?raw";
 import tasksAppSource from "./tasks.appSource.tsx?raw";
 
@@ -12,4 +12,4 @@ export default {
       compiled: tasksAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

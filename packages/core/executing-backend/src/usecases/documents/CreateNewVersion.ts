@@ -1,5 +1,4 @@
 import {
-  type Backend,
   type CollectionId,
   type CollectionNotFound,
   type ConnectorDoesNotSupportUpSyncing,
@@ -15,6 +14,7 @@ import {
   type MakingContentBlockingKeysFailed,
   type ReferencedDocumentsNotFound,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { type DocumentRef, utils, valibotSchemas } from "@superego/schema";
@@ -53,7 +53,7 @@ type ExecReturnValue = ResultPromise<
   | UnexpectedError
 >;
 export default class DocumentsCreateNewVersion extends Usecase<
-  Backend["documents"]["createNewVersion"]
+  typeof backendContracts.documents.createNewVersion
 > {
   async exec(
     collectionId: CollectionId,

@@ -1,12 +1,14 @@
-import type { ResultError } from "@superego/global-types";
-import type AppId from "../ids/AppId.js";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import AppIdSchema from "../ids/AppId.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type AppNameNotValid = ResultError<
+const AppNameNotValidSchema = defineError(
   "AppNameNotValid",
-  {
-    appId: AppId | null;
-    issues: ValidationIssue[];
-  }
->;
-export default AppNameNotValid;
+  v.object({
+    appId: v.nullable(AppIdSchema),
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default AppNameNotValidSchema;
+export type AppNameNotValid = v.InferOutput<typeof AppNameNotValidSchema>;

@@ -1,6 +1,7 @@
 import {
+  type ArgumentsNotValid,
   type Collection,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceOptionsNotValid,
   type MessageContentPart,
   MessageContentPartType,
@@ -25,9 +26,10 @@ interface UseSttAndImplement {
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => ResultPromise<
     TypescriptModule,
+    | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
@@ -51,9 +53,10 @@ export default function useSttAndImplement(
     messageContent: NonEmptyArray<
       MessageContentPart.Text | MessageContentPart.Audio
     >,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): ResultPromise<
     TypescriptModule,
+    | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts

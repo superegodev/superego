@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionCategoryIdSchema from "../ids/CollectionCategoryId.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type CollectionCategoryIconNotValid = ResultError<
+const CollectionCategoryIconNotValidSchema = defineError(
   "CollectionCategoryIconNotValid",
-  {
-    collectionCategoryId: CollectionCategoryId | null;
-    issues: ValidationIssue[];
-  }
+  v.object({
+    collectionCategoryId: v.nullable(CollectionCategoryIdSchema),
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default CollectionCategoryIconNotValidSchema;
+export type CollectionCategoryIconNotValid = v.InferOutput<
+  typeof CollectionCategoryIconNotValidSchema
 >;
-export default CollectionCategoryIconNotValid;

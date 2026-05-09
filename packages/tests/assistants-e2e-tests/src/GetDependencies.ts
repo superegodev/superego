@@ -1,9 +1,9 @@
-import type { Backend, InferenceOptions } from "@superego/backend";
+import type { Backend, InferenceOptionsCompletion } from "@superego/backend";
 import type Evaluator from "./utils/Evaluator.js";
 
 type GetDependencies = () => {
   backend: Backend;
   booleanOracle: Evaluator;
-  inferenceOptions: InferenceOptions<"completion">;
+  inferenceOptions: InferenceOptionsCompletion;
 };
 export default GetDependencies;

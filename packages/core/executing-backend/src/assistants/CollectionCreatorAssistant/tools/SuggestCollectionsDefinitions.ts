@@ -1,5 +1,5 @@
 import {
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -35,7 +35,7 @@ export default {
     toolCall: ToolCall.SuggestCollectionsDefinitions,
     collectionsCreateMany: CollectionsCreateMany,
     inferenceImplementTypescriptModule: InferenceImplementTypescriptModule,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<ToolResult.SuggestCollectionsDefinitions> {
     const { collections } = toolCall.input;
 

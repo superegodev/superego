@@ -1,7 +1,11 @@
-import type DocumentVersion from "./DocumentVersion.js";
+import * as v from "valibot";
+import { omitEntries } from "../contracts/objectUtils.js";
+import DocumentVersionSchema from "./DocumentVersion.js";
 
-type MinimalDocumentVersion = Omit<
-  DocumentVersion,
-  "content" | "contentSummary"
+const MinimalDocumentVersionSchema = v.object(
+  omitEntries(DocumentVersionSchema.entries, ["content", "contentSummary"]),
+);
+export default MinimalDocumentVersionSchema;
+export type MinimalDocumentVersion = v.InferOutput<
+  typeof MinimalDocumentVersionSchema
 >;
-export default MinimalDocumentVersion;

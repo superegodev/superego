@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 enum ToolName {
   // Factotum
   CreateDocuments = "createDocuments",
@@ -16,3 +18,5 @@ enum ToolName {
   WriteTypescriptModule = "writeTypescriptModule",
 }
 export default ToolName;
+
+export const ToolNameSchema = v.enum(ToolName);

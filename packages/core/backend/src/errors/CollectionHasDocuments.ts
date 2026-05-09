@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type CollectionHasDocuments = ResultError<
+const CollectionHasDocumentsSchema = defineError(
   "CollectionHasDocuments",
-  {
-    collectionId: CollectionId;
-  }
+  v.object({ collectionId: CollectionIdSchema }),
+);
+export default CollectionHasDocumentsSchema;
+export type CollectionHasDocuments = v.InferOutput<
+  typeof CollectionHasDocumentsSchema
 >;
-export default CollectionHasDocuments;

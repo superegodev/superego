@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import weighInsSchema from "./weighInsSchema.js";
 
 export default {
@@ -43,4 +43,4 @@ export default function getContentSummary(weighIn) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

@@ -1,9 +1,12 @@
-import type AppearanceSettings from "./AppearanceSettings.js";
-import type AssistantsSettings from "./AssistantsSettings.js";
-import type InferenceSettings from "./InferenceSettings.js";
+import * as v from "valibot";
+import AppearanceSettingsSchema from "./AppearanceSettings.js";
+import AssistantsSettingsSchema from "./AssistantsSettings.js";
+import InferenceSettingsSchema from "./InferenceSettings.js";
 
-export default interface GlobalSettings {
-  inference: InferenceSettings;
-  assistants: AssistantsSettings;
-  appearance: AppearanceSettings;
-}
+const GlobalSettingsSchema = v.object({
+  inference: InferenceSettingsSchema,
+  assistants: AssistantsSettingsSchema,
+  appearance: AppearanceSettingsSchema,
+});
+export default GlobalSettingsSchema;
+export type GlobalSettings = v.InferOutput<typeof GlobalSettingsSchema>;

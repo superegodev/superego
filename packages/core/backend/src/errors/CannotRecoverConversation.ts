@@ -1,14 +1,19 @@
-import type { ResultError } from "@superego/global-types";
-import type ConversationId from "../ids/ConversationId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ConversationIdSchema from "../ids/ConversationId.js";
 
-type CannotRecoverConversation = ResultError<
+const CannotRecoverConversationSchema = defineError(
   "CannotRecoverConversation",
-  {
-    conversationId: ConversationId;
-    reason:
-      | "ConversationIsIdle"
-      | "ConversationIsProcessing"
-      | "ConversationHasOutdatedContext";
-  }
+  v.object({
+    conversationId: ConversationIdSchema,
+    reason: v.picklist([
+      "ConversationIsIdle",
+      "ConversationIsProcessing",
+      "ConversationHasOutdatedContext",
+    ]),
+  }),
+);
+export default CannotRecoverConversationSchema;
+export type CannotRecoverConversation = v.InferOutput<
+  typeof CannotRecoverConversationSchema
 >;
-export default CannotRecoverConversation;

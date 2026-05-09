@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type Message from "../types/Message.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import MessageSchema from "../types/Message.js";
 
-type WriteTypescriptModuleToolNotCalled = ResultError<
+const WriteTypescriptModuleToolNotCalledSchema = defineError(
   "WriteTypescriptModuleToolNotCalled",
-  {
-    generatedMessage: Message;
-  }
+  v.object({ generatedMessage: MessageSchema }),
+);
+export default WriteTypescriptModuleToolNotCalledSchema;
+export type WriteTypescriptModuleToolNotCalled = v.InferOutput<
+  typeof WriteTypescriptModuleToolNotCalledSchema
 >;
-export default WriteTypescriptModuleToolNotCalled;

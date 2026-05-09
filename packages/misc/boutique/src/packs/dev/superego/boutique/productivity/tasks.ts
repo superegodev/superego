@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import tasksSchema from "./tasksSchema.js";
 
 export default {
@@ -141,4 +141,4 @@ export default function getContentSummary(
       },
     },
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

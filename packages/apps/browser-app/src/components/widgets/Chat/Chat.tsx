@@ -1,8 +1,8 @@
 import {
   type Conversation,
-  type InferenceOptions,
   type Message,
   MessageRole,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -66,7 +66,7 @@ export default function Chat({
 
   const onSend = async (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => {
     const { error } = await mutate(
       conversation.id,

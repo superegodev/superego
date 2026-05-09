@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import portfolioDashboardAppCompiled from "./portfolioDashboard.appCompiled.js?raw";
 import portfolioDashboardAppSource from "./portfolioDashboard.appSource.tsx?raw";
 
@@ -16,4 +16,4 @@ export default {
       compiled: portfolioDashboardAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

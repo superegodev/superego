@@ -1,6 +1,9 @@
-import type AssistantName from "../enums/AssistantName.js";
+import * as v from "valibot";
+import AssistantName from "../enums/AssistantName.js";
 
-type DeveloperPrompts = {
-  [assistant in AssistantName]: string;
-};
-export default DeveloperPrompts;
+const DeveloperPromptsSchema = v.object({
+  [AssistantName.CollectionCreator]: v.string(),
+  [AssistantName.Factotum]: v.string(),
+}) as v.GenericSchema<{ [K in AssistantName]: string }>;
+export default DeveloperPromptsSchema;
+export type DeveloperPrompts = v.InferOutput<typeof DeveloperPromptsSchema>;

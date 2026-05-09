@@ -1,7 +1,7 @@
-import type {
-  Backend,
-  LiteConversation,
-  UnexpectedError,
+import {
+  type LiteConversation,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
@@ -12,7 +12,7 @@ import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsListConversations extends Usecase<
-  Backend["assistants"]["listConversations"]
+  typeof backendContracts.assistants.listConversations
 > {
   async exec(): ResultPromise<LiteConversation[], UnexpectedError> {
     const conversations = await this.repos.conversation.findAll();

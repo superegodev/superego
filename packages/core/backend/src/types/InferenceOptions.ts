@@ -1,29 +1,69 @@
-import type ReasoningEffort from "../enums/ReasoningEffort.js";
-import type InferenceProviderModelRef from "./InferenceProviderModelRef.js";
+import * as v from "valibot";
+import { ReasoningEffortSchema } from "../enums/ReasoningEffort.js";
+import InferenceProviderModelRefSchema from "./InferenceProviderModelRef.js";
 
-type NullableExceptForProps<Type, NonNullableProp extends keyof Type> = {
-  [P in keyof Type]: P extends NonNullableProp ? Type[P] : Type[P] | null;
-};
-
-type NonNullableInferenceOptions = {
-  completion: {
-    providerModelRef: InferenceProviderModelRef;
-    reasoningEffort: ReasoningEffort;
-  };
-  transcription: {
-    providerModelRef: InferenceProviderModelRef;
-  };
-  fileInspection: {
-    providerModelRef: InferenceProviderModelRef;
-  };
-};
+const completionSchema = v.object({
+  providerModelRef: InferenceProviderModelRefSchema,
+  reasoningEffort: ReasoningEffortSchema,
+});
+const transcriptionSchema = v.object({
+  providerModelRef: InferenceProviderModelRefSchema,
+});
+const fileInspectionSchema = v.object({
+  providerModelRef: InferenceProviderModelRefSchema,
+});
 
 /**
- * Inference options for each capability (completion, transcription,
- * fileInspection). By default every property is nullable. Pass capability names
- * as the `Prop` type parameter to mark them as non-nullable, e.g.
- * `InferenceOptions<"completion">` guarantees `completion` is non-null.
+ * Inference options for each capability — every property nullable. Use the
+ * `*Completion` / `*Transcription` variants when a specific capability must
+ * be present.
  */
-type InferenceOptions<Prop extends keyof NonNullableInferenceOptions = never> =
-  NullableExceptForProps<NonNullableInferenceOptions, Prop>;
-export default InferenceOptions;
+const InferenceOptionsSchema = v.object({
+  completion: v.nullable(completionSchema),
+  transcription: v.nullable(transcriptionSchema),
+  fileInspection: v.nullable(fileInspectionSchema),
+});
+export default InferenceOptionsSchema;
+export type InferenceOptions = v.InferOutput<typeof InferenceOptionsSchema>;
+
+/** Variant guaranteeing that `completion` is non-null. */
+export const InferenceOptionsCompletionSchema = v.object({
+  completion: completionSchema,
+  transcription: v.nullable(transcriptionSchema),
+  fileInspection: v.nullable(fileInspectionSchema),
+});
+export type InferenceOptionsCompletion = v.InferOutput<
+  typeof InferenceOptionsCompletionSchema
+>;
+
+/** Variant guaranteeing that `transcription` is non-null. */
+export const InferenceOptionsTranscriptionSchema = v.object({
+  completion: v.nullable(completionSchema),
+  transcription: transcriptionSchema,
+  fileInspection: v.nullable(fileInspectionSchema),
+});
+export type InferenceOptionsTranscription = v.InferOutput<
+  typeof InferenceOptionsTranscriptionSchema
+>;
+
+/** Variant guaranteeing that `fileInspection` is non-null. */
+export const InferenceOptionsFileInspectionSchema = v.object({
+  completion: v.nullable(completionSchema),
+  transcription: v.nullable(transcriptionSchema),
+  fileInspection: fileInspectionSchema,
+});
+export type InferenceOptionsFileInspection = v.InferOutput<
+  typeof InferenceOptionsFileInspectionSchema
+>;
+
+/**
+ * Helper type to narrow `InferenceOptions` when one or more capabilities are
+ * known to be non-null. Used by `inferenceOptionsHas` /
+ * `assertInferenceOptionsHas` in @superego/shared-utils.
+ */
+export type InferenceOptionsHaving<Capability extends keyof InferenceOptions> =
+  {
+    [K in keyof InferenceOptions]: K extends Capability
+      ? NonNullable<InferenceOptions[K]>
+      : InferenceOptions[K];
+  };

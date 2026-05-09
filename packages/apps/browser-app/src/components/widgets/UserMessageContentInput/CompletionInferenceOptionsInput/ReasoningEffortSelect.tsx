@@ -1,4 +1,8 @@
-import { type InferenceOptions, ReasoningEffort } from "@superego/backend";
+import {
+  ReasoningEffort,
+  type InferenceOptionsCompletion,
+  type InferenceOptions,
+} from "@superego/backend";
 import { PiBrain } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import {
@@ -11,8 +15,8 @@ import * as cs from "./CompletionInferenceOptionsInput.css.js";
 
 interface Props {
   defaultInferenceOptions: InferenceOptions;
-  value: InferenceOptions<"completion"> | null;
-  onChange: (value: InferenceOptions<"completion">) => void;
+  value: InferenceOptionsCompletion | null;
+  onChange: (value: InferenceOptionsCompletion) => void;
   isDisabled: boolean;
 }
 export default function ReasoningEffortSelect({

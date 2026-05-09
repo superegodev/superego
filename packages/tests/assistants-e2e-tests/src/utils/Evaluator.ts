@@ -1,7 +1,7 @@
 import {
-  type InferenceOptions,
   MessageContentPartType,
   MessageRole,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
 import { Id } from "@superego/shared-utils";
@@ -9,7 +9,7 @@ import { Id } from "@superego/shared-utils";
 export default class Evaluator {
   constructor(
     private inferenceService: InferenceService,
-    private inferenceOptions: InferenceOptions<"completion">,
+    private inferenceOptions: InferenceOptionsCompletion,
   ) {}
 
   async score(

@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type CollectionHasNoRemote = ResultError<
+const CollectionHasNoRemoteSchema = defineError(
   "CollectionHasNoRemote",
-  {
-    collectionId: CollectionId;
-  }
+  v.object({ collectionId: CollectionIdSchema }),
+);
+export default CollectionHasNoRemoteSchema;
+export type CollectionHasNoRemote = v.InferOutput<
+  typeof CollectionHasNoRemoteSchema
 >;
-export default CollectionHasNoRemote;

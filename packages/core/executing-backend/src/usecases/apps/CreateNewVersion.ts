@@ -1,11 +1,11 @@
-import type {
-  App,
-  AppId,
-  AppNotFound,
-  Backend,
-  CollectionId,
-  CollectionNotFound,
-  UnexpectedError,
+import {
+  type App,
+  type AppId,
+  type AppNotFound,
+  type CollectionId,
+  type CollectionNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -21,7 +21,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class AppsCreateNewVersion extends Usecase<
-  Backend["apps"]["createNewVersion"]
+  typeof backendContracts.apps.createNewVersion
 > {
   async exec(
     id: AppId,

@@ -1,10 +1,10 @@
-import type {
-  App,
-  AppId,
-  AppNameNotValid,
-  AppNotFound,
-  Backend,
-  UnexpectedError,
+import {
+  type App,
+  type AppId,
+  type AppNameNotValid,
+  type AppNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -21,7 +21,7 @@ import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class AppsUpdateName extends Usecase<
-  Backend["apps"]["updateName"]
+  typeof backendContracts.apps.updateName
 > {
   async exec(
     id: AppId,

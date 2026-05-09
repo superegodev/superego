@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import cycleDayLogsAppCompiled from "./cycleDayLogs.appCompiled.js?raw";
 import cycleDayLogsAppSource from "./cycleDayLogs.appSource.tsx?raw";
 
@@ -12,4 +12,4 @@ export default {
       compiled: cycleDayLogsAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type GlobalSettingsNotValid = ResultError<
+const GlobalSettingsNotValidSchema = defineError(
   "GlobalSettingsNotValid",
-  {
-    issues: ValidationIssue[];
-  }
+  v.object({ issues: v.array(ValidationIssueSchema) }),
+);
+export default GlobalSettingsNotValidSchema;
+export type GlobalSettingsNotValid = v.InferOutput<
+  typeof GlobalSettingsNotValidSchema
 >;
-export default GlobalSettingsNotValid;

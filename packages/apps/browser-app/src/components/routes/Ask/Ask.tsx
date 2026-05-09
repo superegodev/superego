@@ -1,7 +1,7 @@
 import {
   AssistantName,
-  type InferenceOptions,
   type Message,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,7 +26,7 @@ export default function Ask({ initialMessage }: Props) {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (
     userMessageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => {
     const { success, data } = await mutate(
       AssistantName.Factotum,

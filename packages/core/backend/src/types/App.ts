@@ -1,11 +1,14 @@
-import type AppType from "../enums/AppType.js";
-import type AppId from "../ids/AppId.js";
-import type AppVersion from "./AppVersion.js";
+import * as v from "valibot";
+import { AppTypeSchema } from "../enums/AppType.js";
+import AppIdSchema from "../ids/AppId.js";
+import AppVersionSchema from "./AppVersion.js";
 
-export default interface App {
-  id: AppId;
-  type: AppType;
-  name: string;
-  latestVersion: AppVersion;
-  createdAt: Date;
-}
+const AppSchema = v.object({
+  id: AppIdSchema,
+  type: AppTypeSchema,
+  name: v.string(),
+  latestVersion: AppVersionSchema,
+  createdAt: v.date(),
+});
+export default AppSchema;
+export type App = v.InferOutput<typeof AppSchema>;

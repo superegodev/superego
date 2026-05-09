@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import expensesAppCompiled from "./expenses.appCompiled.js?raw";
 import expensesAppSource from "./expenses.appSource.tsx?raw";
 
@@ -12,4 +12,4 @@ export default {
       compiled: expensesAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

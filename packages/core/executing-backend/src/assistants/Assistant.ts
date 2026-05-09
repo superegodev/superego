@@ -1,5 +1,5 @@
 import {
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceSettings,
   type Message,
   type MessageContentPart,
@@ -18,11 +18,11 @@ export default abstract class Assistant {
   protected abstract inferenceService: InferenceService;
   protected abstract getTools(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): InferenceService.Tool[];
   protected abstract processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<ToolResult>;
   protected abstract getDeveloperPrompt(): string;
   protected abstract getUserContextPrompt(): string;
@@ -30,7 +30,7 @@ export default abstract class Assistant {
   async generateAndProcessNextMessages(
     messages: Message[],
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
     onMessagesUpdated: (messages: Message[]) => void,
   ): Promise<Message[]> {
     try {

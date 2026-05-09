@@ -103,9 +103,7 @@ export default function AppRenderer({ app }: Props) {
   return (
     <>
       <DataLoader
-        queries={targetCollections.map(({ id }) =>
-          listDocumentsQuery([id, false]),
-        )}
+        queries={targetCollections.map(({ id }) => listDocumentsQuery([id]))}
       >
         {(...documentsLists) => (
           <Sandbox

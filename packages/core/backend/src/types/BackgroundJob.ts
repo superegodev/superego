@@ -1,64 +1,83 @@
-import type { ResultError } from "@superego/global-types";
-import type BackgroundJobName from "../enums/BackgroundJobName.js";
-import type BackgroundJobStatus from "../enums/BackgroundJobStatus.js";
-import type BackgroundJobId from "../ids/BackgroundJobId.js";
-import type CollectionId from "../ids/CollectionId.js";
-import type ConversationId from "../ids/ConversationId.js";
-import type InferenceOptions from "./InferenceOptions.js";
+import * as v from "valibot";
+import BackgroundJobName from "../enums/BackgroundJobName.js";
+import BackgroundJobStatus from "../enums/BackgroundJobStatus.js";
+import BackgroundJobIdSchema from "../ids/BackgroundJobId.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import ConversationIdSchema from "../ids/ConversationId.js";
+import { InferenceOptionsCompletionSchema } from "./InferenceOptions.js";
 
-type BaseBackgroundJob<Name extends BackgroundJobName, Input> = {
-  id: BackgroundJobId;
-  name: Name;
-  input: Input;
-  status: BackgroundJobStatus;
-  enqueuedAt: Date;
-  startedProcessingAt: Date | null;
-  finishedProcessingAt: Date | null;
-  error: ResultError<any, any> | null;
-} & (
-  | {
-      status: BackgroundJobStatus.Enqueued;
-      startedProcessingAt: null;
-      finishedProcessingAt: null;
-      error: null;
-    }
-  | {
-      status: BackgroundJobStatus.Processing;
-      startedProcessingAt: Date;
-      finishedProcessingAt: null;
-      error: null;
-    }
-  | {
-      status: BackgroundJobStatus.Succeeded;
-      startedProcessingAt: Date;
-      finishedProcessingAt: Date;
-      error: null;
-    }
-  | {
-      status: BackgroundJobStatus.Failed;
-      startedProcessingAt: Date;
-      finishedProcessingAt: Date;
-      error: ResultError<any, any>;
-    }
-);
+const errorShape = v.object({ name: v.string(), details: v.any() });
 
-namespace BackgroundJob {
-  export type ProcessConversation = BaseBackgroundJob<
-    BackgroundJobName.ProcessConversation,
-    {
-      id: ConversationId;
-      inferenceOptions: InferenceOptions<"completion">;
-    }
-  >;
+const processConversationInputSchema = v.object({
+  id: ConversationIdSchema,
+  inferenceOptions: InferenceOptionsCompletionSchema,
+});
+const downSyncCollectionInputSchema = v.object({ id: CollectionIdSchema });
 
-  export type DownSyncCollection = BaseBackgroundJob<
-    BackgroundJobName.DownSyncCollection,
-    { id: CollectionId }
-  >;
+function makeStatusVariants<InputSchema extends v.GenericSchema>(
+  nameLiteral: BackgroundJobName,
+  inputSchema: InputSchema,
+) {
+  const baseEntries = {
+    id: BackgroundJobIdSchema,
+    name: v.literal(nameLiteral),
+    input: inputSchema,
+    enqueuedAt: v.date(),
+  };
+  return [
+    v.object({
+      ...baseEntries,
+      status: v.literal(BackgroundJobStatus.Enqueued),
+      startedProcessingAt: v.null(),
+      finishedProcessingAt: v.null(),
+      error: v.null(),
+    }),
+    v.object({
+      ...baseEntries,
+      status: v.literal(BackgroundJobStatus.Processing),
+      startedProcessingAt: v.date(),
+      finishedProcessingAt: v.null(),
+      error: v.null(),
+    }),
+    v.object({
+      ...baseEntries,
+      status: v.literal(BackgroundJobStatus.Succeeded),
+      startedProcessingAt: v.date(),
+      finishedProcessingAt: v.date(),
+      error: v.null(),
+    }),
+    v.object({
+      ...baseEntries,
+      status: v.literal(BackgroundJobStatus.Failed),
+      startedProcessingAt: v.date(),
+      finishedProcessingAt: v.date(),
+      error: errorShape,
+    }),
+  ];
 }
 
-type BackgroundJob =
-  | BackgroundJob.ProcessConversation
-  | BackgroundJob.DownSyncCollection;
+const BackgroundJobSchema = v.union([
+  ...makeStatusVariants(
+    BackgroundJobName.ProcessConversation,
+    processConversationInputSchema,
+  ),
+  ...makeStatusVariants(
+    BackgroundJobName.DownSyncCollection,
+    downSyncCollectionInputSchema,
+  ),
+]);
+export default BackgroundJobSchema;
 
-export default BackgroundJob;
+type BackgroundJob = v.InferOutput<typeof BackgroundJobSchema>;
+
+namespace BackgroundJob {
+  export type ProcessConversation = Extract<
+    BackgroundJob,
+    { name: BackgroundJobName.ProcessConversation }
+  >;
+  export type DownSyncCollection = Extract<
+    BackgroundJob,
+    { name: BackgroundJobName.DownSyncCollection }
+  >;
+}
+export type { BackgroundJob };

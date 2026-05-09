@@ -1,13 +1,14 @@
-import type { ResultError } from "@superego/global-types";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
 
-type TypescriptCompilationFailed = ResultError<
+const TypescriptCompilationFailedSchema = defineError(
   "TypescriptCompilationFailed",
-  | {
-      reason: "TypeErrors";
-      errors: string;
-    }
-  | {
-      reason: "MissingOutput";
-    }
+  v.union([
+    v.object({ reason: v.literal("TypeErrors"), errors: v.string() }),
+    v.object({ reason: v.literal("MissingOutput") }),
+  ]),
+);
+export default TypescriptCompilationFailedSchema;
+export type TypescriptCompilationFailed = v.InferOutput<
+  typeof TypescriptCompilationFailedSchema
 >;
-export default TypescriptCompilationFailed;

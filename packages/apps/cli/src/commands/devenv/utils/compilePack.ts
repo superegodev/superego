@@ -2,13 +2,14 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { extname, join } from "node:path";
 import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import {
-  type AppDefinition,
+  type PackAppDefinition,
   AppType,
-  type CollectionCategoryDefinition,
-  type CollectionDefinition,
-  type DocumentDefinition,
+  type PackCollectionCategoryDefinition,
+  type PackCollectionDefinition,
+  type PackDocumentDefinition,
   type Pack,
   type PackId,
+  type ProtoAppId,
   type ProtoCollectionCategoryId,
   Theme,
   type TypescriptFile,
@@ -33,9 +34,9 @@ export default async function compilePack(
   basePath: string,
   options?: { includeDemoDocuments?: boolean },
 ): Promise<Pack> {
-  const collections: CollectionDefinition<true, true>[] = [];
-  const apps: AppDefinition<true>[] = [];
-  const documents: DocumentDefinition<true>[] = [];
+  const collections: PackCollectionDefinition[] = [];
+  const apps: PackAppDefinition[] = [];
+  const documents: PackDocumentDefinition[] = [];
   const generatedLibs: TypescriptFile[] = [];
   const collectionSchemas = new Map<string, Schema>();
 
@@ -135,9 +136,8 @@ export default async function compilePack(
         collectionCategoryId:
           (settings.collectionCategoryId as ProtoCollectionCategoryId | null) ??
           null,
-        defaultCollectionViewAppId: settings.defaultCollectionViewAppId as
-          | `ProtoApp_${string}`
-          | null,
+        defaultCollectionViewAppId:
+          settings.defaultCollectionViewAppId as ProtoAppId | null,
         description: settings.description,
         assistantInstructions: settings.assistantInstructions,
         redirectToCollectionAfterDocumentCreation:
@@ -297,7 +297,7 @@ export default async function compilePack(
           })
       : [];
 
-    const collectionCategories: CollectionCategoryDefinition<true>[] =
+    const collectionCategories: PackCollectionCategoryDefinition[] =
       packJson.collectionCategories.map((cat) => ({
         name: cat.name,
         icon: cat.icon,

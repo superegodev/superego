@@ -1,11 +1,15 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type SyncingChangesFailed = ResultError<
+const SyncingChangesFailedSchema = defineError(
   "SyncingChangesFailed",
-  {
-    collectionId: CollectionId;
-    errors: ResultError<any, any>[];
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    errors: v.array(v.object({ name: v.string(), details: v.any() })),
+  }),
+);
+export default SyncingChangesFailedSchema;
+export type SyncingChangesFailed = v.InferOutput<
+  typeof SyncingChangesFailedSchema
 >;
-export default SyncingChangesFailed;

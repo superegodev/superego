@@ -1,5 +1,4 @@
 import {
-  type Backend,
   BackgroundJobName,
   type Collection,
   type CollectionHasNoRemote,
@@ -10,6 +9,7 @@ import {
   type ConnectorNotAuthenticated,
   DownSyncStatus,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -24,7 +24,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsTriggerDownSync extends Usecase<
-  Backend["collections"]["triggerDownSync"]
+  typeof backendContracts.collections.triggerDownSync
 > {
   async exec(
     id: CollectionId,

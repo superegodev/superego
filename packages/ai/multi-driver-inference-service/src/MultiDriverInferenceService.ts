@@ -1,11 +1,13 @@
 import {
   type AudioContent,
-  type InferenceOptions,
   type InferenceProvider,
   InferenceProviderDriver,
   type InferenceProviderModelRef,
   type InferenceSettings,
   type Message,
+  type InferenceOptionsCompletion,
+  type InferenceOptionsFileInspection,
+  type InferenceOptionsTranscription,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 import AnthropicMessagesInferenceService from "./AnthropicMessages/AnthropicMessagesInferenceService.js";
@@ -17,7 +19,7 @@ export default class MultiDriverInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
     return this.getDriver(
       inferenceOptions.completion.providerModelRef,
@@ -26,7 +28,7 @@ export default class MultiDriverInferenceService implements InferenceService {
 
   async stt(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions<"transcription">,
+    inferenceOptions: InferenceOptionsTranscription,
   ): Promise<string> {
     return this.getDriver(inferenceOptions.transcription.providerModelRef).stt(
       audio,
@@ -37,7 +39,7 @@ export default class MultiDriverInferenceService implements InferenceService {
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
-    inferenceOptions: InferenceOptions<"fileInspection">,
+    inferenceOptions: InferenceOptionsFileInspection,
   ): Promise<string> {
     return this.getDriver(
       inferenceOptions.fileInspection.providerModelRef,

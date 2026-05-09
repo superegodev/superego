@@ -1,9 +1,11 @@
-import type { ResultError } from "@superego/global-types";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
 
-type ConnectorAuthenticationFailed = ResultError<
+const ConnectorAuthenticationFailedSchema = defineError(
   "ConnectorAuthenticationFailed",
-  {
-    cause: any;
-  }
+  v.object({ cause: v.any() }),
+);
+export default ConnectorAuthenticationFailedSchema;
+export type ConnectorAuthenticationFailed = v.InferOutput<
+  typeof ConnectorAuthenticationFailedSchema
 >;
-export default ConnectorAuthenticationFailed;

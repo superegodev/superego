@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import foodsSchema from "./foodsSchema.js";
 
 export default {
@@ -93,4 +93,4 @@ export default function getContentSummary(food) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

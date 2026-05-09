@@ -1,23 +1,28 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type CollectionVersionId from "../ids/CollectionVersionId.js";
-import type DocumentId from "../ids/DocumentId.js";
-import type ExecutingJavascriptFunctionFailed from "./ExecutingJavascriptFunctionFailed.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import CollectionVersionIdSchema from "../ids/CollectionVersionId.js";
+import DocumentIdSchema from "../ids/DocumentId.js";
+import ExecutingJavascriptFunctionFailedSchema from "./ExecutingJavascriptFunctionFailed.js";
 
-type MakingContentBlockingKeysFailed = ResultError<
+const contentBlockingKeysNotValidSchema = defineError(
+  "ContentBlockingKeysNotValid",
+  v.object({ contentBlockingKeys: v.any() }),
+);
+
+const MakingContentBlockingKeysFailedSchema = defineError(
   "MakingContentBlockingKeysFailed",
-  {
-    collectionId: CollectionId;
-    collectionVersionId: CollectionVersionId;
-    documentId: DocumentId | null;
-    cause:
-      | ResultError<
-          "ContentBlockingKeysNotValid",
-          {
-            contentBlockingKeys: any;
-          }
-        >
-      | ExecutingJavascriptFunctionFailed;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    collectionVersionId: CollectionVersionIdSchema,
+    documentId: v.nullable(DocumentIdSchema),
+    cause: v.union([
+      contentBlockingKeysNotValidSchema,
+      ExecutingJavascriptFunctionFailedSchema,
+    ]),
+  }),
+);
+export default MakingContentBlockingKeysFailedSchema;
+export type MakingContentBlockingKeysFailed = v.InferOutput<
+  typeof MakingContentBlockingKeysFailedSchema
 >;
-export default MakingContentBlockingKeysFailed;

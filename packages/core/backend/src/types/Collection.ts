@@ -1,12 +1,15 @@
-import type CollectionId from "../ids/CollectionId.js";
-import type CollectionSettings from "./CollectionSettings.js";
-import type CollectionVersion from "./CollectionVersion.js";
-import type Remote from "./Remote.js";
+import * as v from "valibot";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import CollectionSettingsSchema from "./CollectionSettings.js";
+import CollectionVersionSchema from "./CollectionVersion.js";
+import RemoteSchema from "./Remote.js";
 
-export default interface Collection {
-  id: CollectionId;
-  latestVersion: CollectionVersion;
-  settings: CollectionSettings;
-  remote: Remote | null;
-  createdAt: Date;
-}
+const CollectionSchema = v.object({
+  id: CollectionIdSchema,
+  latestVersion: CollectionVersionSchema,
+  settings: CollectionSettingsSchema,
+  remote: v.nullable(RemoteSchema),
+  createdAt: v.date(),
+});
+export default CollectionSchema;
+export type Collection = v.InferOutput<typeof CollectionSchema>;

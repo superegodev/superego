@@ -1,13 +1,13 @@
-import type {
-  Backend,
-  CollectionId,
-  CollectionNotFound,
-  CommandConfirmationNotValid,
-  ConnectorDoesNotSupportUpSyncing,
-  DocumentId,
-  DocumentIsReferenced,
-  DocumentNotFound,
-  UnexpectedError,
+import {
+  type CollectionId,
+  type CollectionNotFound,
+  type CommandConfirmationNotValid,
+  type ConnectorDoesNotSupportUpSyncing,
+  type DocumentId,
+  type DocumentIsReferenced,
+  type DocumentNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import type { DocumentRef } from "@superego/schema";
@@ -19,7 +19,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsDelete extends Usecase<
-  Backend["documents"]["delete"]
+  typeof backendContracts.documents.delete
 > {
   async exec(
     collectionId: CollectionId,

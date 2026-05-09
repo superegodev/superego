@@ -1,16 +1,21 @@
-import type AppVersionId from "../ids/AppVersionId.js";
-import type CollectionId from "../ids/CollectionId.js";
-import type CollectionVersionId from "../ids/CollectionVersionId.js";
-import type TypescriptModule from "./TypescriptModule.js";
+import * as v from "valibot";
+import AppVersionIdSchema from "../ids/AppVersionId.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import CollectionVersionIdSchema from "../ids/CollectionVersionId.js";
+import TypescriptModuleSchema from "./TypescriptModule.js";
 
-export default interface AppVersion {
-  id: AppVersionId;
-  targetCollections: {
-    id: CollectionId;
-    versionId: CollectionVersionId;
-  }[];
-  files: {
-    "/main.tsx": TypescriptModule;
-  };
-  createdAt: Date;
-}
+const AppVersionSchema = v.object({
+  id: AppVersionIdSchema,
+  targetCollections: v.array(
+    v.object({
+      id: CollectionIdSchema,
+      versionId: CollectionVersionIdSchema,
+    }),
+  ),
+  files: v.object({
+    "/main.tsx": TypescriptModuleSchema,
+  }),
+  createdAt: v.date(),
+});
+export default AppVersionSchema;
+export type AppVersion = v.InferOutput<typeof AppVersionSchema>;

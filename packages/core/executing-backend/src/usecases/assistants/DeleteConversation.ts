@@ -1,9 +1,9 @@
-import type {
-  Backend,
-  CommandConfirmationNotValid,
-  ConversationId,
-  ConversationNotFound,
-  UnexpectedError,
+import {
+  type CommandConfirmationNotValid,
+  type ConversationId,
+  type ConversationNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -14,7 +14,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class AssistantsDeleteConversation extends Usecase<
-  Backend["assistants"]["deleteConversation"]
+  typeof backendContracts.assistants.deleteConversation
 > {
   async exec(
     id: ConversationId,

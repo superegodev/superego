@@ -1,6 +1,6 @@
 import {
   type Backend,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -12,6 +12,7 @@ import {
   type TypescriptModule,
   type UnexpectedError,
   type WriteTypescriptModuleToolNotCalled,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -29,7 +30,7 @@ import Usecase from "../../utils/Usecase.js";
 const MAX_ATTEMPTS = 5;
 
 export default class InferenceImplementTypescriptModule extends Usecase<
-  Backend["inference"]["implementTypescriptModule"]
+  typeof backendContracts.inference.implementTypescriptModule
 > {
   async exec(
     {
@@ -41,7 +42,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       startingPoint,
       userRequest,
     }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
     const globalSettings = await this.repos.globalSettings.get();
 
@@ -77,7 +78,7 @@ export default class InferenceImplementTypescriptModule extends Usecase<
 
   private async attemptImplementation(
     inferenceService: InferenceService,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
     description: string,
     rules: string | null,
     additionalInstructions: string | null,

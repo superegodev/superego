@@ -1,13 +1,13 @@
-import type {
-  AppNotFound,
-  Backend,
-  Collection,
-  CollectionCategoryNotFound,
-  CollectionId,
-  CollectionNotFound,
-  CollectionSettings,
-  CollectionSettingsNotValid,
-  UnexpectedError,
+import {
+  type AppNotFound,
+  type Collection,
+  type CollectionCategoryNotFound,
+  type CollectionId,
+  type CollectionNotFound,
+  type CollectionSettings,
+  type CollectionSettingsNotValid,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -24,7 +24,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsUpdateSettings extends Usecase<
-  Backend["collections"]["updateSettings"]
+  typeof backendContracts.collections.updateSettings
 > {
   async exec(
     id: CollectionId,

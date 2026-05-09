@@ -1,14 +1,19 @@
-import type { ResultError } from "@superego/global-types";
-import type ConversationId from "../ids/ConversationId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ConversationIdSchema from "../ids/ConversationId.js";
 
-type CannotContinueConversation = ResultError<
+const CannotContinueConversationSchema = defineError(
   "CannotContinueConversation",
-  {
-    conversationId: ConversationId;
-    reason:
-      | "ConversationIsProcessing"
-      | "ConversationHasError"
-      | "ConversationHasOutdatedContext";
-  }
+  v.object({
+    conversationId: ConversationIdSchema,
+    reason: v.picklist([
+      "ConversationIsProcessing",
+      "ConversationHasError",
+      "ConversationHasOutdatedContext",
+    ]),
+  }),
+);
+export default CannotContinueConversationSchema;
+export type CannotContinueConversation = v.InferOutput<
+  typeof CannotContinueConversationSchema
 >;
-export default CannotContinueConversation;

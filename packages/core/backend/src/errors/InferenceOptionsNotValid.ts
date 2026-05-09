@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type InferenceOptionsNotValid = ResultError<
+const InferenceOptionsNotValidSchema = defineError(
   "InferenceOptionsNotValid",
-  {
-    issues: ValidationIssue[];
-  }
+  v.object({ issues: v.array(ValidationIssueSchema) }),
+);
+export default InferenceOptionsNotValidSchema;
+export type InferenceOptionsNotValid = v.InferOutput<
+  typeof InferenceOptionsNotValidSchema
 >;
-export default InferenceOptionsNotValid;

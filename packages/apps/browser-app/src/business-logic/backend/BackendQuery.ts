@@ -40,7 +40,9 @@ export function makeBackendQueryGetter<
           backend[entity][method] as any
         )(...args);
         if (!result.success) {
-          throw new ResultErrorWrapper(result);
+          throw new ResultErrorWrapper(
+            result as Result<any, ResultError<any, any>> & { success: false },
+          );
         }
         return result;
       },

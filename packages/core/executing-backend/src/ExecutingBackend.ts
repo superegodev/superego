@@ -1,12 +1,19 @@
-import type { Backend } from "@superego/backend";
+import {
+  type Backend,
+  backendContracts,
+  type Contract,
+  makeResultSchema,
+} from "@superego/backend";
 import {
   extractErrorDetails,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
 import type Config from "./Config.js";
 import LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
+import makeValidationIssues from "./makers/makeValidationIssues.js";
 import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
@@ -99,118 +106,288 @@ export default class ExecutingBackend implements Backend {
       ...config,
     };
     this.collectionCategories = {
-      create: this.makeUsecase(CollectionCategoriesCreate, true),
-      update: this.makeUsecase(CollectionCategoriesUpdate, true),
-      delete: this.makeUsecase(CollectionCategoriesDelete, true),
-      list: this.makeUsecase(CollectionCategoriesList, false),
+      create: this.makeUsecase(
+        backendContracts.collectionCategories.create,
+        CollectionCategoriesCreate,
+        true,
+      ),
+      update: this.makeUsecase(
+        backendContracts.collectionCategories.update,
+        CollectionCategoriesUpdate,
+        true,
+      ),
+      delete: this.makeUsecase(
+        backendContracts.collectionCategories.delete,
+        CollectionCategoriesDelete,
+        true,
+      ),
+      list: this.makeUsecase(
+        backendContracts.collectionCategories.list,
+        CollectionCategoriesList,
+        false,
+      ),
     };
 
     this.collections = {
-      create: this.makeUsecase(CollectionsCreate, true),
-      createMany: this.makeUsecase(CollectionsCreateMany, true),
-      updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
-      setRemote: this.makeUsecase(CollectionsSetRemote, true),
+      create: this.makeUsecase(
+        backendContracts.collections.create,
+        CollectionsCreate,
+        true,
+      ),
+      createMany: this.makeUsecase(
+        backendContracts.collections.createMany,
+        CollectionsCreateMany,
+        true,
+      ),
+      updateSettings: this.makeUsecase(
+        backendContracts.collections.updateSettings,
+        CollectionsUpdateSettings,
+        true,
+      ),
+      setRemote: this.makeUsecase(
+        backendContracts.collections.setRemote,
+        CollectionsSetRemote,
+        true,
+      ),
       getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(
+        backendContracts.collections
+          .getOAuth2PKCEConnectorAuthorizationRequestUrl,
         CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl,
         false,
       ),
       authenticateOAuth2PKCEConnector: this.makeUsecase(
+        backendContracts.collections.authenticateOAuth2PKCEConnector,
         CollectionsAuthenticateOAuth2PKCEConnector,
         true,
       ),
-      createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
+      createNewVersion: this.makeUsecase(
+        backendContracts.collections.createNewVersion,
+        CollectionsCreateNewVersion,
+        true,
+      ),
       updateLatestVersionSettings: this.makeUsecase(
+        backendContracts.collections.updateLatestVersionSettings,
         CollectionUpdateLatestVersionSettings,
         true,
       ),
-      delete: this.makeUsecase(CollectionsDelete, true),
-      list: this.makeUsecase(CollectionsList, false),
-      triggerDownSync: this.makeUsecase(CollectionsTriggerDownSync, true),
-      listConnectors: this.makeUsecase(CollectionsListConnectors, false),
-      getVersion: this.makeUsecase(CollectionsGetVersion, false),
+      delete: this.makeUsecase(
+        backendContracts.collections.delete,
+        CollectionsDelete,
+        true,
+      ),
+      list: this.makeUsecase(
+        backendContracts.collections.list,
+        CollectionsList,
+        false,
+      ),
+      triggerDownSync: this.makeUsecase(
+        backendContracts.collections.triggerDownSync,
+        CollectionsTriggerDownSync,
+        true,
+      ),
+      listConnectors: this.makeUsecase(
+        backendContracts.collections.listConnectors,
+        CollectionsListConnectors,
+        false,
+      ),
+      getVersion: this.makeUsecase(
+        backendContracts.collections.getVersion,
+        CollectionsGetVersion,
+        false,
+      ),
     };
 
     this.documents = {
-      create: this.makeUsecase(DocumentsCreate, true),
-      createMany: this.makeUsecase(DocumentsCreateMany, true),
-      createNewVersion: this.makeUsecase(DocumentsCreateNewVersion, true),
-      delete: this.makeUsecase(DocumentsDelete, true),
-      list: this.makeUsecase(DocumentsList, false),
-      listVersions: this.makeUsecase(DocumentsListVersions, false),
-      search: this.makeUsecase(DocumentsSearch, false),
-      get: this.makeUsecase(DocumentsGet, false),
-      getVersion: this.makeUsecase(DocumentsGetVersion, false),
+      create: this.makeUsecase(
+        backendContracts.documents.create,
+        DocumentsCreate,
+        true,
+      ),
+      createMany: this.makeUsecase(
+        backendContracts.documents.createMany,
+        DocumentsCreateMany,
+        true,
+      ),
+      createNewVersion: this.makeUsecase(
+        backendContracts.documents.createNewVersion,
+        DocumentsCreateNewVersion,
+        true,
+      ),
+      delete: this.makeUsecase(
+        backendContracts.documents.delete,
+        DocumentsDelete,
+        true,
+      ),
+      list: this.makeUsecase(
+        backendContracts.documents.list,
+        DocumentsList,
+        false,
+      ),
+      listVersions: this.makeUsecase(
+        backendContracts.documents.listVersions,
+        DocumentsListVersions,
+        false,
+      ),
+      search: this.makeUsecase(
+        backendContracts.documents.search,
+        DocumentsSearch,
+        false,
+      ),
+      get: this.makeUsecase(
+        backendContracts.documents.get,
+        DocumentsGet,
+        false,
+      ),
+      getVersion: this.makeUsecase(
+        backendContracts.documents.getVersion,
+        DocumentsGetVersion,
+        false,
+      ),
     };
 
     this.files = {
-      getContent: this.makeUsecase(FilesGetContent, false),
+      getContent: this.makeUsecase(
+        backendContracts.files.getContent,
+        FilesGetContent,
+        false,
+      ),
     };
 
     this.assistants = {
-      startConversation: this.makeUsecase(AssistantsStartConversation, true),
+      startConversation: this.makeUsecase(
+        backendContracts.assistants.startConversation,
+        AssistantsStartConversation,
+        true,
+      ),
       continueConversation: this.makeUsecase(
+        backendContracts.assistants.continueConversation,
         AssistantsContinueConversation,
         true,
       ),
-      retryLastResponse: this.makeUsecase(AssistantsRetryLastResponse, true),
+      retryLastResponse: this.makeUsecase(
+        backendContracts.assistants.retryLastResponse,
+        AssistantsRetryLastResponse,
+        true,
+      ),
       recoverConversation: this.makeUsecase(
+        backendContracts.assistants.recoverConversation,
         AssistantsRecoverConversation,
         true,
       ),
-      deleteConversation: this.makeUsecase(AssistantsDeleteConversation, true),
-      listConversations: this.makeUsecase(AssistantsListConversations, false),
-      getConversation: this.makeUsecase(AssistantsGetConversation, false),
+      deleteConversation: this.makeUsecase(
+        backendContracts.assistants.deleteConversation,
+        AssistantsDeleteConversation,
+        true,
+      ),
+      listConversations: this.makeUsecase(
+        backendContracts.assistants.listConversations,
+        AssistantsListConversations,
+        false,
+      ),
+      getConversation: this.makeUsecase(
+        backendContracts.assistants.getConversation,
+        AssistantsGetConversation,
+        false,
+      ),
       searchConversations: this.makeUsecase(
+        backendContracts.assistants.searchConversations,
         AssistantsSearchConversations,
         false,
       ),
       getLiveConversation: this.makeUsecase(
+        backendContracts.assistants.getLiveConversation,
         AssistantsGetLiveConversation,
         false,
       ),
       getDeveloperPrompts: this.makeUsecase(
+        backendContracts.assistants.getDeveloperPrompts,
         AssistantsGetDeveloperPrompts,
         false,
       ),
     };
 
     this.inference = {
-      stt: this.makeUsecase(InferenceStt, false),
+      stt: this.makeUsecase(
+        backendContracts.inference.stt,
+        InferenceStt,
+        false,
+      ),
       implementTypescriptModule: this.makeUsecase(
+        backendContracts.inference.implementTypescriptModule,
         InferenceImplementTypescriptModule,
         false,
       ),
     };
 
     this.apps = {
-      create: this.makeUsecase(AppsCreate, true),
-      updateName: this.makeUsecase(AppsUpdateName, true),
-      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
-      delete: this.makeUsecase(AppsDelete, true),
-      list: this.makeUsecase(AppsList, false),
+      create: this.makeUsecase(backendContracts.apps.create, AppsCreate, true),
+      updateName: this.makeUsecase(
+        backendContracts.apps.updateName,
+        AppsUpdateName,
+        true,
+      ),
+      createNewVersion: this.makeUsecase(
+        backendContracts.apps.createNewVersion,
+        AppsCreateNewVersion,
+        true,
+      ),
+      delete: this.makeUsecase(backendContracts.apps.delete, AppsDelete, true),
+      list: this.makeUsecase(backendContracts.apps.list, AppsList, false),
     };
 
     this.packs = {
-      install: this.makeUsecase(PacksInstall, true),
+      install: this.makeUsecase(
+        backendContracts.packs.install,
+        PacksInstall,
+        true,
+      ),
     };
 
     this.boutique = {
-      listPacks: this.makeUsecase(BoutiqueListPacks, false),
-      getPack: this.makeUsecase(BoutiqueGetPack, false),
+      listPacks: this.makeUsecase(
+        backendContracts.boutique.listPacks,
+        BoutiqueListPacks,
+        false,
+      ),
+      getPack: this.makeUsecase(
+        backendContracts.boutique.getPack,
+        BoutiqueGetPack,
+        false,
+      ),
     };
 
     this.backgroundJobs = {
-      list: this.makeUsecase(BackgroundJobsList, false),
-      get: this.makeUsecase(BackgroundJobsGet, false),
+      list: this.makeUsecase(
+        backendContracts.backgroundJobs.list,
+        BackgroundJobsList,
+        false,
+      ),
+      get: this.makeUsecase(
+        backendContracts.backgroundJobs.get,
+        BackgroundJobsGet,
+        false,
+      ),
     };
 
     this.globalSettings = {
-      get: this.makeUsecase(GlobalSettingsGet, false),
-      update: this.makeUsecase(GlobalSettingsUpdate, true),
+      get: this.makeUsecase(
+        backendContracts.globalSettings.get,
+        GlobalSettingsGet,
+        false,
+      ),
+      update: this.makeUsecase(
+        backendContracts.globalSettings.update,
+        GlobalSettingsUpdate,
+        true,
+      ),
     };
 
     this.database = {
-      export: this.makeUsecase(DatabaseExport, false),
+      export: this.makeUsecase(
+        backendContracts.database.export,
+        DatabaseExport,
+        false,
+      ),
     };
 
     this.liveConversationStore = new LiveConversationStore();
@@ -225,7 +402,8 @@ export default class ExecutingBackend implements Backend {
     );
   }
 
-  private makeUsecase<Exec extends (...args: any[]) => any>(
+  private makeUsecase<C extends Contract>(
+    contract: C,
     UsecaseClass: new (
       repos: DataRepositories,
       javascriptSandbox: JavascriptSandbox,
@@ -234,11 +412,32 @@ export default class ExecutingBackend implements Backend {
       connectors: Connector[],
       liveConversationStore: LiveConversationStore,
       config: Config,
-    ) => { exec: Exec },
+    ) => { exec: (...args: any[]) => Promise<any> },
     triggerBackgroundJobCheck: boolean,
-  ): Exec {
-    return (async (...args: any[]) =>
-      this.dataRepositoriesManager
+  ): (...args: any[]) => Promise<any> {
+    // Output schema is computed once per wiring and reused; valibot schemas
+    // are immutable so this is safe to share.
+    const outputSchema = makeResultSchema(
+      contract.dataSchema,
+      contract.errorSchemas,
+    );
+    return async (...args: any[]) => {
+      // 1. Structural input validation.
+      const argsResult = v.safeParse(contract.argumentsSchema, args);
+      if (!argsResult.success) {
+        return makeUnsuccessfulResult(
+          makeResultError("ArgumentsNotValid", {
+            issues: makeValidationIssues(argsResult.issues),
+          }),
+        );
+      }
+
+      // 2. Run the usecase, then validate output structurally.
+      // Output validation failures collapse into UnexpectedError. Note: when
+      // the success path's data fails schema validation the transaction has
+      // already been committed — we do NOT roll back. The data is consistent
+      // with what the usecase intended; only the wire shape is wrong.
+      return this.dataRepositoriesManager
         .runInSerializableTransaction(async (repos) => {
           const usecase = new UsecaseClass(
             repos,
@@ -256,12 +455,21 @@ export default class ExecutingBackend implements Backend {
           };
         })
         .then((result) => {
-          // We trigger a background job check only _after_ the transaction that
-          // might have created some background jobs has been committed. (Else
-          // the BackgroundJobExecutor wouldn't even see the created background
-          // jobs, since it executes in a separate transaction.)
+          // Structural output validation.
+          const outputResult = v.safeParse(outputSchema, result);
+          if (!outputResult.success) {
+            return makeUnsuccessfulResult(
+              makeResultError("UnexpectedError", {
+                cause: {
+                  message: "Usecase output failed structural validation",
+                  issues: makeValidationIssues(outputResult.issues),
+                },
+              }),
+            );
+          }
+          // Trigger a background job check only _after_ the transaction has
+          // been committed so the executor can see any newly-created jobs.
           if (triggerBackgroundJobCheck) {
-            // Trigger after the current microtask queue drains.
             setTimeout(() => {
               this.backgroundJobExecutor.executeNext().catch((error) => {
                 console.error("Error triggering next background job execution");
@@ -277,6 +485,7 @@ export default class ExecutingBackend implements Backend {
               cause: extractErrorDetails(error),
             }),
           ),
-        )) as Exec;
+        );
+    };
   }
 }

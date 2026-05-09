@@ -1,11 +1,15 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type ConnectorNotAuthenticated = ResultError<
+const ConnectorNotAuthenticatedSchema = defineError(
   "ConnectorNotAuthenticated",
-  {
-    collectionId: CollectionId;
-    connectorName: string;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    connectorName: v.string(),
+  }),
+);
+export default ConnectorNotAuthenticatedSchema;
+export type ConnectorNotAuthenticated = v.InferOutput<
+  typeof ConnectorNotAuthenticatedSchema
 >;
-export default ConnectorNotAuthenticated;

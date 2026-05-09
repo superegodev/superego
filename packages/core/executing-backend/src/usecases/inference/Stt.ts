@@ -1,9 +1,9 @@
-import type {
-  AudioContent,
-  Backend,
-  InferenceOptions,
-  InferenceOptionsNotValid,
-  UnexpectedError,
+import {
+  type AudioContent,
+  backendContracts,
+  type InferenceOptionsNotValid,
+  type InferenceOptionsTranscription,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -15,10 +15,12 @@ import makeResultError from "../../makers/makeResultError.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
+export default class InferenceStt extends Usecase<
+  typeof backendContracts.inference.stt
+> {
   async exec(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions<"transcription">,
+    inferenceOptions: InferenceOptionsTranscription,
   ): ResultPromise<string, InferenceOptionsNotValid | UnexpectedError> {
     const globalSettings = await this.repos.globalSettings.get();
 

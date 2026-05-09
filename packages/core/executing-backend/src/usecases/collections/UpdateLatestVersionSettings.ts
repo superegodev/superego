@@ -1,16 +1,16 @@
-import type {
-  Backend,
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-  CollectionVersionId,
-  CollectionVersionIdNotMatching,
-  CollectionVersionSettings,
-  ContentBlockingKeysGetterNotValid,
-  ContentSummaryGetterNotValid,
-  DefaultDocumentViewUiOptionsNotValid,
-  MakingContentBlockingKeysFailed,
-  UnexpectedError,
+import {
+  type Collection,
+  type CollectionId,
+  type CollectionNotFound,
+  type CollectionVersionId,
+  type CollectionVersionIdNotMatching,
+  type CollectionVersionSettings,
+  type ContentBlockingKeysGetterNotValid,
+  type ContentSummaryGetterNotValid,
+  type DefaultDocumentViewUiOptionsNotValid,
+  type MakingContentBlockingKeysFailed,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -31,7 +31,7 @@ import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
-  Backend["collections"]["updateLatestVersionSettings"]
+  typeof backendContracts.collections.updateLatestVersionSettings
 > {
   async exec(
     id: CollectionId,

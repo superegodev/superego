@@ -1,11 +1,15 @@
-import type { ResultError } from "@superego/global-types";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
 
-type ExecutingJavascriptFunctionFailed = ResultError<
+const ExecutingJavascriptFunctionFailedSchema = defineError(
   "ExecutingJavascriptFunctionFailed",
-  {
-    message: string;
-    name?: string | undefined;
-    stack?: string | undefined;
-  }
+  v.object({
+    message: v.string(),
+    name: v.optional(v.string()),
+    stack: v.optional(v.string()),
+  }),
+);
+export default ExecutingJavascriptFunctionFailedSchema;
+export type ExecutingJavascriptFunctionFailed = v.InferOutput<
+  typeof ExecutingJavascriptFunctionFailedSchema
 >;
-export default ExecutingJavascriptFunctionFailed;

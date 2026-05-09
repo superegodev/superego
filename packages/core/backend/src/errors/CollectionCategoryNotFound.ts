@@ -1,10 +1,12 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionCategoryIdSchema from "../ids/CollectionCategoryId.js";
 
-type CollectionCategoryNotFound = ResultError<
+const CollectionCategoryNotFoundSchema = defineError(
   "CollectionCategoryNotFound",
-  {
-    collectionCategoryId: CollectionCategoryId;
-  }
+  v.object({ collectionCategoryId: CollectionCategoryIdSchema }),
+);
+export default CollectionCategoryNotFoundSchema;
+export type CollectionCategoryNotFound = v.InferOutput<
+  typeof CollectionCategoryNotFoundSchema
 >;
-export default CollectionCategoryNotFound;

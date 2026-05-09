@@ -1,8 +1,8 @@
 import {
   AssistantName,
-  type Backend,
   type DeveloperPrompts,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
@@ -11,7 +11,7 @@ import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssist
 import Usecase from "../../utils/Usecase.js";
 
 export default class AssistantsGetDeveloperPrompts extends Usecase<
-  Backend["assistants"]["getDeveloperPrompts"]
+  typeof backendContracts.assistants.getDeveloperPrompts
 > {
   async exec(): ResultPromise<DeveloperPrompts, UnexpectedError> {
     return makeSuccessfulResult({

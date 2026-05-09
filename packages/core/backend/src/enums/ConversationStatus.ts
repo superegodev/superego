@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 enum ConversationStatus {
   /*
    * State of the conversation:
@@ -30,3 +32,5 @@ enum ConversationStatus {
   Error = "Error",
 }
 export default ConversationStatus;
+
+export const ConversationStatusSchema = v.enum(ConversationStatus);

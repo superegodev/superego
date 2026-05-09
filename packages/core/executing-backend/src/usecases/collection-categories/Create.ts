@@ -1,12 +1,12 @@
-import type {
-  Backend,
-  CollectionCategory,
-  CollectionCategoryDefinition,
-  CollectionCategoryIconNotValid,
-  CollectionCategoryId,
-  CollectionCategoryNameNotValid,
-  ParentCollectionCategoryNotFound,
-  UnexpectedError,
+import {
+  type CollectionCategory,
+  type CollectionCategoryDefinition,
+  type CollectionCategoryIconNotValid,
+  type CollectionCategoryId,
+  type CollectionCategoryNameNotValid,
+  type ParentCollectionCategoryNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -28,7 +28,7 @@ interface CollectionCategoriesCreateOptions {
 }
 
 export default class CollectionCategoriesCreate extends Usecase<
-  Backend["collectionCategories"]["create"]
+  typeof backendContracts.collectionCategories.create
 > {
   async exec(
     definition: CollectionCategoryDefinition,

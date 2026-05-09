@@ -1,11 +1,11 @@
-import type {
-  App,
-  AppDefinition,
-  AppId,
-  AppNameNotValid,
-  Backend,
-  CollectionNotFound,
-  UnexpectedError,
+import {
+  type App,
+  type AppDefinition,
+  type AppId,
+  type AppNameNotValid,
+  type CollectionNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -27,7 +27,9 @@ interface AppsCreateOptions {
   appId?: AppId;
 }
 
-export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
+export default class AppsCreate extends Usecase<
+  typeof backendContracts.apps.create
+> {
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,
     options: AppsCreateOptions = {},

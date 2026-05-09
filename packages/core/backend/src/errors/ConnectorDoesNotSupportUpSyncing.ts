@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type ConnectorDoesNotSupportUpSyncing = ResultError<
+const ConnectorDoesNotSupportUpSyncingSchema = defineError(
   "ConnectorDoesNotSupportUpSyncing",
-  {
-    collectionId: CollectionId;
-    connectorName: string;
-    message: string;
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    connectorName: v.string(),
+    message: v.string(),
+  }),
+);
+export default ConnectorDoesNotSupportUpSyncingSchema;
+export type ConnectorDoesNotSupportUpSyncing = v.InferOutput<
+  typeof ConnectorDoesNotSupportUpSyncingSchema
 >;
-export default ConnectorDoesNotSupportUpSyncing;

@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import cycleDayLogsSchema from "./cycleDayLogsSchema.js";
 
 export default {
@@ -60,4 +60,4 @@ export default function getContentSummary(cycleDayLog) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

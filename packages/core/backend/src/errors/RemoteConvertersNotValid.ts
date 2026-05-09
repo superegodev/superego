@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type RemoteConvertersNotValid = ResultError<
+const RemoteConvertersNotValidSchema = defineError(
   "RemoteConvertersNotValid",
-  {
-    collectionId: CollectionId;
-    issues: ValidationIssue[];
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default RemoteConvertersNotValidSchema;
+export type RemoteConvertersNotValid = v.InferOutput<
+  typeof RemoteConvertersNotValidSchema
 >;
-export default RemoteConvertersNotValid;

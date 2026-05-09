@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import drawingsSchema from "./drawingsSchema.js";
 
 export default {
@@ -55,4 +55,4 @@ export default function getContentSummary(drawing) {
       },
     },
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

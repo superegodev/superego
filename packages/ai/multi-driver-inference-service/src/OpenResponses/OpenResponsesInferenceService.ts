@@ -1,13 +1,15 @@
 import {
   type AudioContent,
   type InferenceModel,
-  type InferenceOptions,
   type InferenceProvider,
   type InferenceProviderModelRef,
   type InferenceSettings,
   type Message,
   MessageContentPartType,
   MessageRole,
+  type InferenceOptionsCompletion,
+  type InferenceOptionsFileInspection,
+  type InferenceOptionsTranscription,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 import { failedResponseToError, Id } from "@superego/shared-utils";
@@ -24,7 +26,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
   async generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant> {
     const { provider, model } = this.resolveProviderAndModel(
       inferenceOptions.completion.providerModelRef,
@@ -58,7 +60,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
 
   async stt(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions<"transcription">,
+    inferenceOptions: InferenceOptionsTranscription,
   ): Promise<string> {
     const { provider, model } = this.resolveProviderAndModel(
       inferenceOptions.transcription.providerModelRef,
@@ -104,7 +106,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
   async inspectFile(
     file: { name: string; mimeType: string; content: Uint8Array<ArrayBuffer> },
     prompt: string,
-    inferenceOptions: InferenceOptions<"fileInspection">,
+    inferenceOptions: InferenceOptionsFileInspection,
   ): Promise<string> {
     const { provider, model } = this.resolveProviderAndModel(
       inferenceOptions.fileInspection.providerModelRef,

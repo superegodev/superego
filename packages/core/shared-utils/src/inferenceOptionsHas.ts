@@ -1,11 +1,14 @@
-import type { InferenceOptions } from "@superego/backend";
+import type {
+  InferenceOptions,
+  InferenceOptionsHaving,
+} from "@superego/backend";
 
 export default function inferenceOptionsHas<
   Capabilities extends (keyof InferenceOptions)[],
 >(
   inferenceOptions: InferenceOptions,
   ...capabilities: Capabilities
-): inferenceOptions is InferenceOptions<Capabilities[number]> {
+): inferenceOptions is InferenceOptionsHaving<Capabilities[number]> {
   return capabilities.every(
     (capability) => inferenceOptions[capability] !== null,
   );

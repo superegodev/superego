@@ -1,18 +1,18 @@
-import type {
-  AppId,
-  AppNotFound,
-  Backend,
-  Collection,
-  CollectionCategoryNotFound,
-  CollectionDefinition,
-  CollectionId,
-  CollectionSchemaNotValid,
-  CollectionSettingsNotValid,
-  ContentBlockingKeysGetterNotValid,
-  ContentSummaryGetterNotValid,
-  DefaultDocumentViewUiOptionsNotValid,
-  ReferencedCollectionsNotFound,
-  UnexpectedError,
+import {
+  type AppId,
+  type AppNotFound,
+  type Collection,
+  type CollectionCategoryNotFound,
+  type CollectionDefinition,
+  type CollectionId,
+  type CollectionSchemaNotValid,
+  type CollectionSettingsNotValid,
+  type ContentBlockingKeysGetterNotValid,
+  type ContentSummaryGetterNotValid,
+  type DefaultDocumentViewUiOptionsNotValid,
+  type ReferencedCollectionsNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -42,7 +42,7 @@ interface CollectionsCreateOptions {
 }
 
 export default class CollectionsCreate extends Usecase<
-  Backend["collections"]["create"]
+  typeof backendContracts.collections.create
 > {
   async exec(
     { settings, schema, versionSettings }: CollectionDefinition,

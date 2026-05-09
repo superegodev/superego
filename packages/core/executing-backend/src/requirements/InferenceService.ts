@@ -1,6 +1,8 @@
 import type {
   AudioContent,
-  InferenceOptions,
+  InferenceOptionsCompletion,
+  InferenceOptionsTranscription,
+  InferenceOptionsFileInspection,
   Message,
 } from "@superego/backend";
 import type { JSONSchema7 } from "json-schema";
@@ -24,12 +26,12 @@ interface InferenceService {
   generateNextMessage(
     previousMessages: Message[],
     tools: InferenceService.Tool[],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<Message.ToolCallAssistant | Message.ContentAssistant>;
 
   stt(
     audio: AudioContent,
-    inferenceOptions: InferenceOptions<"transcription">,
+    inferenceOptions: InferenceOptionsTranscription,
   ): Promise<string>;
 
   inspectFile(
@@ -39,7 +41,7 @@ interface InferenceService {
       content: Uint8Array<ArrayBuffer>;
     },
     prompt: string,
-    inferenceOptions: InferenceOptions<"fileInspection">,
+    inferenceOptions: InferenceOptionsFileInspection,
   ): Promise<string>;
 }
 

@@ -1,16 +1,25 @@
-import type { ResultError } from "@superego/global-types";
-import type { DocumentRef } from "@superego/schema";
-import type CollectionId from "../ids/CollectionId.js";
-import type DocumentId from "../ids/DocumentId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import DocumentIdSchema from "../ids/DocumentId.js";
 
-type ReferencedDocumentsNotFound = ResultError<
+// Inline schema for DocumentRef from @superego/schema (structural-only).
+const documentRefSchema = v.object({
+  collectionId: v.string(),
+  documentId: v.string(),
+});
+
+const ReferencedDocumentsNotFoundSchema = defineError(
   "ReferencedDocumentsNotFound",
-  {
-    collectionId: CollectionId;
+  v.object({
+    collectionId: CollectionIdSchema,
     /** The document being created or updated. Null for new documents. */
-    documentId: DocumentId | null;
+    documentId: v.nullable(DocumentIdSchema),
     /** DocumentRefs in the content that reference non-existing documents. */
-    notFoundDocumentRefs: DocumentRef[];
-  }
+    notFoundDocumentRefs: v.array(documentRefSchema),
+  }),
+);
+export default ReferencedDocumentsNotFoundSchema;
+export type ReferencedDocumentsNotFound = v.InferOutput<
+  typeof ReferencedDocumentsNotFoundSchema
 >;
-export default ReferencedDocumentsNotFound;

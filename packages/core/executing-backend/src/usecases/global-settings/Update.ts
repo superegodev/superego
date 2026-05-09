@@ -1,8 +1,8 @@
-import type {
-  Backend,
-  GlobalSettings,
-  GlobalSettingsNotValid,
-  UnexpectedError,
+import {
+  type GlobalSettings,
+  type GlobalSettingsNotValid,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -16,7 +16,7 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class GlobalSettingsUpdate extends Usecase<
-  Backend["globalSettings"]["update"]
+  typeof backendContracts.globalSettings.update
 > {
   async exec(
     globalSettingsPatch: Partial<GlobalSettings>,

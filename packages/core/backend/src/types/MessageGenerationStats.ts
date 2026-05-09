@@ -1,9 +1,13 @@
-import type { Milliseconds } from "@superego/global-types";
+import * as v from "valibot";
 
-export default interface MessageGenerationStats {
-  timeTaken: Milliseconds;
-  inputTokens: number;
-  outputTokens: number;
-  totalTokens: number;
-  cost?: number;
-}
+const MessageGenerationStatsSchema = v.object({
+  timeTaken: v.number(),
+  inputTokens: v.number(),
+  outputTokens: v.number(),
+  totalTokens: v.number(),
+  cost: v.optional(v.number()),
+});
+export default MessageGenerationStatsSchema;
+export type MessageGenerationStats = v.InferOutput<
+  typeof MessageGenerationStatsSchema
+>;

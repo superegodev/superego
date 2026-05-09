@@ -1,10 +1,10 @@
-import type {
-  Backend,
-  CollectionId,
-  DocumentId,
-  DocumentNotFound,
-  MinimalDocumentVersion,
-  UnexpectedError,
+import {
+  type CollectionId,
+  type DocumentId,
+  type DocumentNotFound,
+  type MinimalDocumentVersion,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -16,7 +16,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class DocumentsListVersions extends Usecase<
-  Backend["documents"]["listVersions"]
+  typeof backendContracts.documents.listVersions
 > {
   async exec(
     collectionId: CollectionId,

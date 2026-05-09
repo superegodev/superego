@@ -1,7 +1,7 @@
 import {
   type Collection,
   type ConversationId,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceSettings,
   type ToolCall,
   ToolName,
@@ -118,7 +118,7 @@ export default class FactotumAssistant extends Assistant {
 
   protected getTools(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): InferenceService.Tool[] {
     return compact([
       GetCollectionTypescriptSchema.get(),
@@ -137,7 +137,7 @@ export default class FactotumAssistant extends Assistant {
 
   protected async processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
       return GetCollectionTypescriptSchema.exec(toolCall, this.collections);

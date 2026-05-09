@@ -1,6 +1,6 @@
 import {
   type FileId,
-  type InferenceOptions,
+  type InferenceOptionsFileInspection,
   type InferenceSettings,
   type ToolCall,
   ToolName,
@@ -25,7 +25,7 @@ export default {
     toolCall: ToolCall.InspectFile,
     inferenceService: InferenceService,
     filesGetContent: FilesGetContent,
-    inferenceOptions: InferenceOptions<"fileInspection">,
+    inferenceOptions: InferenceOptionsFileInspection,
   ): Promise<ToolResult.InspectFile> {
     const { file, prompt } = toolCall.input;
 
@@ -64,7 +64,7 @@ export default {
 
   get(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions<"fileInspection">,
+    inferenceOptions: InferenceOptionsFileInspection,
   ): InferenceService.Tool {
     const supportedFileTypes = getSupportedFileTypes(
       inferenceSettings,
@@ -117,7 +117,7 @@ prompt. Therefore, your prompt must explicitly include any necessary context.
 
 function getSupportedFileTypes(
   inferenceSettings: InferenceSettings,
-  inferenceOptions: InferenceOptions<"fileInspection">,
+  inferenceOptions: InferenceOptionsFileInspection,
 ): string {
   // inferenceOptions has been validated at this point, so we know that provider
   // and model will be found and won't be undefined.

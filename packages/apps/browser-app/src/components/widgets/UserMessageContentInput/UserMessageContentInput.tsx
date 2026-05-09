@@ -1,9 +1,9 @@
 import {
   type Conversation,
   ConversationStatus,
-  type InferenceOptions,
   type Message,
   MessageContentPartType,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import { type RefObject, useRef, useState } from "react";
@@ -27,7 +27,7 @@ interface Props {
   conversation: Conversation | null;
   onSend: (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => void;
   isSending: boolean;
   initialMessage?: string | undefined;
@@ -59,7 +59,7 @@ export default function UserMessageContentInput({
   const { globalSettings } = useGlobalData();
   const defaultInferenceOptions = useDefaultInferenceOptions();
   const [customInferenceOptions, setCustomInferenceOptions] =
-    useState<InferenceOptions<"completion"> | null>(null);
+    useState<InferenceOptionsCompletion | null>(null);
   const inferenceOptions = mergeInferenceOptions(
     defaultInferenceOptions,
     customInferenceOptions,

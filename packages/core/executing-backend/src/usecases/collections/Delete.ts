@@ -1,12 +1,12 @@
 import {
   AppType,
-  type Backend,
   type CollectionId,
   type CollectionIsReferenced,
   type CollectionNotFound,
   type CommandConfirmationNotValid,
   type DocumentIsReferenced,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { utils as schemaUtils } from "@superego/schema";
@@ -22,7 +22,7 @@ import AppsList from "../apps/List.js";
 import DocumentsDelete from "../documents/Delete.js";
 
 export default class CollectionsDelete extends Usecase<
-  Backend["collections"]["delete"]
+  typeof backendContracts.collections.delete
 > {
   async exec(
     id: CollectionId,

@@ -1,9 +1,9 @@
-import type {
-  Backend,
-  Pack,
-  PackId,
-  PackNotFound,
-  UnexpectedError,
+import {
+  type Pack,
+  type PackId,
+  type PackNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import { packs } from "@superego/boutique";
 import type { ResultPromise } from "@superego/global-types";
@@ -15,7 +15,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class BoutiqueGetPack extends Usecase<
-  Backend["boutique"]["getPack"]
+  typeof backendContracts.boutique.getPack
 > {
   async exec(id: PackId): ResultPromise<Pack, PackNotFound | UnexpectedError> {
     const pack = packs.find((pack) => pack.id === id);

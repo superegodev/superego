@@ -1,4 +1,4 @@
-import { type AppDefinition, AppType } from "@superego/backend";
+import { type PackAppDefinition, AppType } from "@superego/backend";
 import calendarAppCompiled from "./calendar.appCompiled.js?raw";
 import calendarAppSource from "./calendar.appSource.tsx?raw";
 
@@ -12,4 +12,4 @@ export default {
       compiled: calendarAppCompiled,
     },
   },
-} as const satisfies AppDefinition<true>;
+} as const satisfies PackAppDefinition;

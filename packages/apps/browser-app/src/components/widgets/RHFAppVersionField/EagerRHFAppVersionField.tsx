@@ -1,10 +1,10 @@
 import type {
   CollectionId,
-  InferenceOptions,
   Message,
   MessageContentPart,
   NonEmptyArray,
   TypescriptModule,
+  InferenceOptionsCompletion,
 } from "@superego/backend";
 import { useMemo, useState } from "react";
 import { useController } from "react-hook-form";
@@ -64,7 +64,7 @@ export default function EagerRHFAppVersionField({
 
   const onSend = async (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => {
     const { success, data, error } = await mutate(
       // There aren't File parts since allowFileParts is set to false.

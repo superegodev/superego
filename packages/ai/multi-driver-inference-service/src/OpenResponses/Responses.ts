@@ -1,10 +1,10 @@
 import {
-  type InferenceOptions,
   type Message,
   type MessageContentPart,
   MessageContentPartType,
   MessageRole,
   type ReasoningEffort,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import type { InferenceService } from "@superego/executing-backend";
 import { Id } from "@superego/shared-utils";
@@ -333,7 +333,7 @@ function extractReasoning(
 
 export function fromResponsesResponse(
   response: Responses.Response,
-  inferenceOptions: InferenceOptions<"completion">,
+  inferenceOptions: InferenceOptionsCompletion,
   timeTaken: number,
 ): Message.ToolCallAssistant | Message.ContentAssistant {
   const baseMessage = {

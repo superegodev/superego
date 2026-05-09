@@ -1,10 +1,10 @@
-import type { ResultError } from "@superego/global-types";
-import type PackId from "../ids/PackId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import PackIdSchema from "../ids/PackId.js";
 
-type PackNotFound = ResultError<
+const PackNotFoundSchema = defineError(
   "PackNotFound",
-  {
-    packId: PackId;
-  }
->;
-export default PackNotFound;
+  v.object({ packId: PackIdSchema }),
+);
+export default PackNotFoundSchema;
+export type PackNotFound = v.InferOutput<typeof PackNotFoundSchema>;

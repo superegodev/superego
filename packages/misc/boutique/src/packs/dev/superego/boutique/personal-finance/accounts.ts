@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import accountsSchema from "./accountsSchema.js";
 
 export default {
@@ -57,4 +57,4 @@ export default function getContentSummary(account) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

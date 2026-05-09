@@ -1,18 +1,18 @@
-import type {
-  Backend,
-  CollectionNotFound,
-  ConnectorDoesNotSupportUpSyncing,
-  ConversationId,
-  Document,
-  DocumentContentNotValid,
-  DocumentDefinition,
-  DocumentId,
-  DocumentVersionCreator,
-  DuplicateDocumentDetected,
-  FilesNotFound,
-  MakingContentBlockingKeysFailed,
-  ReferencedDocumentsNotFound,
-  UnexpectedError,
+import {
+  type CollectionNotFound,
+  type ConnectorDoesNotSupportUpSyncing,
+  type ConversationId,
+  type Document,
+  type DocumentContentNotValid,
+  type DocumentDefinition,
+  type DocumentId,
+  type DocumentVersionCreator,
+  type DuplicateDocumentDetected,
+  type FilesNotFound,
+  type MakingContentBlockingKeysFailed,
+  type ReferencedDocumentsNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -37,7 +37,7 @@ interface DocumentsCreateManyOptions {
 }
 
 export default class DocumentsCreateMany extends Usecase<
-  Backend["documents"]["createMany"]
+  typeof backendContracts.documents.createMany
 > {
   async exec(
     definitions: DocumentDefinition[],

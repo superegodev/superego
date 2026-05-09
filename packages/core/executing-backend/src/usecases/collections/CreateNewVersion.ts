@@ -1,5 +1,4 @@
 import {
-  type Backend,
   type Collection,
   type CollectionId,
   type CollectionMigrationFailed,
@@ -18,6 +17,7 @@ import {
   type RemoteConvertersNotValid,
   type TypescriptModule,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -47,7 +47,7 @@ import Usecase from "../../utils/Usecase.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends Usecase<
-  Backend["collections"]["createNewVersion"]
+  typeof backendContracts.collections.createNewVersion
 > {
   async exec(
     id: CollectionId,

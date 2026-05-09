@@ -7,8 +7,8 @@ import {
   ConversationStatus,
   type Document,
   type DocumentId,
-  type InferenceOptions,
   MessageContentPartType,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import pMap from "p-map";
@@ -23,7 +23,7 @@ class FactotumObject {
   constructor(
     private backend: Backend,
     private evaluator: Evaluator,
-    private inferenceOptions: InferenceOptions<"completion">,
+    private inferenceOptions: InferenceOptionsCompletion,
   ) {}
 
   /////////////////////////////////////

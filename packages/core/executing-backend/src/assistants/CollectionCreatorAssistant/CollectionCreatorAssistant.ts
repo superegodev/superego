@@ -1,7 +1,7 @@
 import {
   type Collection,
   type CollectionCategory,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceSettings,
   type ToolCall,
   ToolName,
@@ -102,7 +102,7 @@ export default class CollectionCreatorAssistant extends Assistant {
 
   protected getTools(
     inferenceSettings: InferenceSettings,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): InferenceService.Tool[] {
     return compact([
       SuggestCollectionsDefinitions.get(),
@@ -114,7 +114,7 @@ export default class CollectionCreatorAssistant extends Assistant {
 
   protected async processToolCall(
     toolCall: ToolCall,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): Promise<ToolResult> {
     if (SuggestCollectionsDefinitions.is(toolCall)) {
       return SuggestCollectionsDefinitions.exec(

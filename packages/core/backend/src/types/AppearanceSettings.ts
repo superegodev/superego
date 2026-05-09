@@ -1,5 +1,8 @@
-import type Theme from "../enums/Theme.js";
+import * as v from "valibot";
+import { ThemeSchema } from "../enums/Theme.js";
 
-export default interface AppearanceSettings {
-  theme: Theme;
-}
+const AppearanceSettingsSchema = v.object({
+  theme: ThemeSchema,
+});
+export default AppearanceSettingsSchema;
+export type AppearanceSettings = v.InferOutput<typeof AppearanceSettingsSchema>;

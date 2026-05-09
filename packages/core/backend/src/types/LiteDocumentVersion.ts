@@ -1,4 +1,11 @@
-import type DocumentVersion from "./DocumentVersion.js";
+import * as v from "valibot";
+import { omitEntries } from "../contracts/objectUtils.js";
+import DocumentVersionSchema from "./DocumentVersion.js";
 
-type LiteDocumentVersion = Omit<DocumentVersion, "content">;
-export default LiteDocumentVersion;
+const LiteDocumentVersionSchema = v.object(
+  omitEntries(DocumentVersionSchema.entries, ["content"]),
+);
+export default LiteDocumentVersionSchema;
+export type LiteDocumentVersion = v.InferOutput<
+  typeof LiteDocumentVersionSchema
+>;

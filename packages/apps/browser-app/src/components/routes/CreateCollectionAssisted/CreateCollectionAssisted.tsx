@@ -1,7 +1,7 @@
 import {
   AssistantName,
-  type InferenceOptions,
   type Message,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { PiCode } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -25,7 +25,7 @@ export default function CreateCollectionAssisted({ initialMessage }: Props) {
   const { result, mutate, isPending } = useStartConversation();
   const onSend = async (
     userMessageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => {
     const { success, data } = await mutate(
       AssistantName.CollectionCreator,

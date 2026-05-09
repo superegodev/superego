@@ -1,9 +1,9 @@
-import type {
-  Backend,
-  Conversation,
-  ConversationId,
-  ConversationNotFound,
-  UnexpectedError,
+import {
+  type Conversation,
+  type ConversationId,
+  type ConversationNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -18,7 +18,7 @@ import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsGetConversation extends Usecase<
-  Backend["assistants"]["getConversation"]
+  typeof backendContracts.assistants.getConversation
 > {
   async exec(
     id: ConversationId,

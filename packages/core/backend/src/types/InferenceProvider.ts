@@ -1,10 +1,13 @@
-import type InferenceProviderDriver from "../enums/InferenceProviderDriver.js";
-import type InferenceModel from "./InferenceModel.js";
+import * as v from "valibot";
+import { InferenceProviderDriverSchema } from "../enums/InferenceProviderDriver.js";
+import InferenceModelSchema from "./InferenceModel.js";
 
-export default interface InferenceProvider {
-  name: string;
-  baseUrl: string;
-  apiKey: string | null;
-  driver: InferenceProviderDriver;
-  models: InferenceModel[];
-}
+const InferenceProviderSchema = v.object({
+  name: v.string(),
+  baseUrl: v.string(),
+  apiKey: v.nullable(v.string()),
+  driver: InferenceProviderDriverSchema,
+  models: v.array(InferenceModelSchema),
+});
+export default InferenceProviderSchema;
+export type InferenceProvider = v.InferOutput<typeof InferenceProviderSchema>;

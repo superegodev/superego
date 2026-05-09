@@ -1,9 +1,17 @@
-import type { FileRef, Schema } from "@superego/schema";
-import type ToolName from "../enums/ToolName.js";
-import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
-import type CollectionId from "../ids/CollectionId.js";
-import type DocumentId from "../ids/DocumentId.js";
-import type DocumentVersionId from "../ids/DocumentVersionId.js";
+import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
+import * as v from "valibot";
+import ToolName from "../enums/ToolName.js";
+import CollectionCategoryIdSchema from "../ids/CollectionCategoryId.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import DocumentIdSchema from "../ids/DocumentId.js";
+import DocumentVersionIdSchema from "../ids/DocumentVersionId.js";
+
+// Inline schema for FileRef (structural only — schema package doesn't export it).
+const fileRefSchema = v.object({
+  id: v.string(),
+  name: v.string(),
+  mimeType: v.string(),
+});
 
 interface ToolCall<Tool extends ToolName | string = string, Input = any> {
   id: string;
@@ -12,18 +20,15 @@ interface ToolCall<Tool extends ToolName | string = string, Input = any> {
 }
 
 namespace ToolCall {
-  // Factotum
   export type GetCollectionTypescriptSchema = ToolCall<
     ToolName.GetCollectionTypescriptSchema,
-    {
-      collectionId: CollectionId;
-    }
+    { collectionId: import("../ids/CollectionId.js").CollectionId }
   >;
   export type CreateDocuments = ToolCall<
     ToolName.CreateDocuments,
     {
       documents: {
-        collectionId: CollectionId;
+        collectionId: import("../ids/CollectionId.js").CollectionId;
         content: any;
         skipDuplicateCheck?: boolean;
       }[];
@@ -32,37 +37,37 @@ namespace ToolCall {
   export type CreateNewDocumentVersion = ToolCall<
     ToolName.CreateNewDocumentVersion,
     {
-      collectionId: CollectionId;
-      id: DocumentId;
-      latestVersionId: DocumentVersionId;
+      collectionId: import("../ids/CollectionId.js").CollectionId;
+      id: import("../ids/DocumentId.js").DocumentId;
+      latestVersionId: import("../ids/DocumentVersionId.js").DocumentVersionId;
       content: any;
     }
   >;
   export type ExecuteTypescriptFunction = ToolCall<
     ToolName.ExecuteTypescriptFunction,
     {
-      collectionIds: CollectionId[];
+      collectionIds: import("../ids/CollectionId.js").CollectionId[];
       typescriptFunction: string;
     }
   >;
   export type CreateChart = ToolCall<
     ToolName.CreateChart,
     {
-      collectionIds: CollectionId[];
+      collectionIds: import("../ids/CollectionId.js").CollectionId[];
       getEChartsOption: string;
     }
   >;
   export type CreateGeoJSONMap = ToolCall<
     ToolName.CreateGeoJSONMap,
     {
-      collectionIds: CollectionId[];
+      collectionIds: import("../ids/CollectionId.js").CollectionId[];
       getGeoJSON: string;
     }
   >;
   export type CreateDocumentsTables = ToolCall<
     ToolName.CreateDocumentsTables,
     {
-      collectionIds: CollectionId[];
+      collectionIds: import("../ids/CollectionId.js").CollectionId[];
       getDocumentIds: string;
     }
   >;
@@ -70,14 +75,12 @@ namespace ToolCall {
     ToolName.SearchDocuments,
     {
       searches: {
-        collectionId: CollectionId | null;
+        collectionId: import("../ids/CollectionId.js").CollectionId | null;
         query: string;
         limit?: number;
       }[];
     }
   >;
-
-  // CollectionCreator
   export type SuggestCollectionsDefinitions = ToolCall<
     ToolName.SuggestCollectionsDefinitions,
     {
@@ -86,30 +89,150 @@ namespace ToolCall {
           name: string;
           icon: string | null;
           description: string | null;
-          collectionCategoryId: CollectionCategoryId | null;
+          collectionCategoryId:
+            | import("../ids/CollectionCategoryId.js").CollectionCategoryId
+            | null;
         };
-        schema: Schema;
+        schema: import("@superego/schema").Schema;
         exampleDocument: any;
       }[];
     }
   >;
-
-  // Shared
   export type InspectFile = ToolCall<
     ToolName.InspectFile,
     {
-      file: FileRef;
+      file: import("@superego/schema").FileRef;
       prompt: string;
     }
   >;
-
-  // Other tools, not used by an assistant
   export type WriteTypescriptModule = ToolCall<
     ToolName.WriteTypescriptModule,
-    {
-      source: string;
-    }
+    { source: string }
   >;
 }
 
-export default ToolCall;
+const baseToolCallSchema = {
+  id: v.string(),
+  tool: v.string(),
+};
+
+const getCollectionTypescriptSchemaSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.GetCollectionTypescriptSchema),
+  input: v.object({ collectionId: CollectionIdSchema }),
+});
+const createDocumentsSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.CreateDocuments),
+  input: v.object({
+    documents: v.array(
+      v.object({
+        collectionId: CollectionIdSchema,
+        content: v.any(),
+        skipDuplicateCheck: v.optional(v.boolean()),
+      }),
+    ),
+  }),
+});
+const createNewDocumentVersionSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.CreateNewDocumentVersion),
+  input: v.object({
+    collectionId: CollectionIdSchema,
+    id: DocumentIdSchema,
+    latestVersionId: DocumentVersionIdSchema,
+    content: v.any(),
+  }),
+});
+const executeTypescriptFunctionSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.ExecuteTypescriptFunction),
+  input: v.object({
+    collectionIds: v.array(CollectionIdSchema),
+    typescriptFunction: v.string(),
+  }),
+});
+const createChartSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.CreateChart),
+  input: v.object({
+    collectionIds: v.array(CollectionIdSchema),
+    getEChartsOption: v.string(),
+  }),
+});
+const createGeoJSONMapSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.CreateGeoJSONMap),
+  input: v.object({
+    collectionIds: v.array(CollectionIdSchema),
+    getGeoJSON: v.string(),
+  }),
+});
+const createDocumentsTablesSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.CreateDocumentsTables),
+  input: v.object({
+    collectionIds: v.array(CollectionIdSchema),
+    getDocumentIds: v.string(),
+  }),
+});
+const searchDocumentsSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.SearchDocuments),
+  input: v.object({
+    searches: v.array(
+      v.object({
+        collectionId: v.nullable(CollectionIdSchema),
+        query: v.string(),
+        limit: v.optional(v.number()),
+      }),
+    ),
+  }),
+});
+const suggestCollectionsDefinitionsSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.SuggestCollectionsDefinitions),
+  input: v.object({
+    collections: v.array(
+      v.object({
+        settings: v.object({
+          name: v.string(),
+          icon: v.nullable(v.string()),
+          description: v.nullable(v.string()),
+          collectionCategoryId: v.nullable(CollectionCategoryIdSchema),
+        }),
+        schema: schemaValibotSchemas.schema(),
+        exampleDocument: v.any(),
+      }),
+    ),
+  }),
+});
+const inspectFileSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.InspectFile),
+  input: v.object({ file: fileRefSchema, prompt: v.string() }),
+});
+const writeTypescriptModuleSchema = v.object({
+  ...baseToolCallSchema,
+  tool: v.literal(ToolName.WriteTypescriptModule),
+  input: v.object({ source: v.string() }),
+});
+
+const ToolCallSchema = v.union([
+  getCollectionTypescriptSchemaSchema,
+  createDocumentsSchema,
+  createNewDocumentVersionSchema,
+  executeTypescriptFunctionSchema,
+  createChartSchema,
+  createGeoJSONMapSchema,
+  createDocumentsTablesSchema,
+  searchDocumentsSchema,
+  suggestCollectionsDefinitionsSchema,
+  inspectFileSchema,
+  writeTypescriptModuleSchema,
+  // Catch-all for unknown tools — preserves runtime tolerance.
+  v.object({ ...baseToolCallSchema, input: v.any() }),
+]) as v.GenericSchema<ToolCall>;
+
+export default ToolCallSchema;
+export type { ToolCall };

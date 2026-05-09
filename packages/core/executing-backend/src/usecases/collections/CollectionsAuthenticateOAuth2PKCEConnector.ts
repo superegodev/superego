@@ -1,5 +1,4 @@
 import {
-  type Backend,
   type Collection,
   type CollectionHasNoRemote,
   type CollectionId,
@@ -8,6 +7,7 @@ import {
   ConnectorAuthenticationStrategy,
   type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -22,7 +22,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsAuthenticateOAuth2PKCEConnector extends Usecase<
-  Backend["collections"]["authenticateOAuth2PKCEConnector"]
+  typeof backendContracts.collections.authenticateOAuth2PKCEConnector
 > {
   async exec(
     id: CollectionId,

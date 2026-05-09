@@ -1,14 +1,14 @@
 import {
-  type Backend,
   BackgroundJobName,
   type CannotRecoverConversation,
   type Conversation,
   type ConversationId,
   type ConversationNotFound,
   ConversationStatus,
-  type InferenceOptions,
+  type InferenceOptionsCompletion,
   type InferenceOptionsNotValid,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -26,11 +26,11 @@ import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsRecoverConversation extends Usecase<
-  Backend["assistants"]["recoverConversation"]
+  typeof backendContracts.assistants.recoverConversation
 > {
   async exec(
     id: ConversationId,
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ): ResultPromise<
     Conversation,
     | ConversationNotFound

@@ -1,10 +1,10 @@
-import type { ResultError } from "@superego/global-types";
-import type AppId from "../ids/AppId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import AppIdSchema from "../ids/AppId.js";
 
-type AppNotFound = ResultError<
+const AppNotFoundSchema = defineError(
   "AppNotFound",
-  {
-    appId: AppId;
-  }
->;
-export default AppNotFound;
+  v.object({ appId: AppIdSchema }),
+);
+export default AppNotFoundSchema;
+export type AppNotFound = v.InferOutput<typeof AppNotFoundSchema>;

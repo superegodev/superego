@@ -1,13 +1,17 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
 
-type CollectionIsReferenced = ResultError<
+const CollectionIsReferencedSchema = defineError(
   "CollectionIsReferenced",
-  {
+  v.object({
     /** The collection that cannot be deleted. */
-    collectionId: CollectionId;
+    collectionId: CollectionIdSchema,
     /** Collections whose schemas reference this collection via DocumentRef. */
-    referencingCollectionIds: CollectionId[];
-  }
+    referencingCollectionIds: v.array(CollectionIdSchema),
+  }),
+);
+export default CollectionIsReferencedSchema;
+export type CollectionIsReferenced = v.InferOutput<
+  typeof CollectionIsReferencedSchema
 >;
-export default CollectionIsReferenced;

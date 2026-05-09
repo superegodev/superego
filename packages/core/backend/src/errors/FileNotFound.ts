@@ -1,10 +1,10 @@
-import type { ResultError } from "@superego/global-types";
-import type FileId from "../ids/FileId.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import FileIdSchema from "../ids/FileId.js";
 
-type FileNotFound = ResultError<
+const FileNotFoundSchema = defineError(
   "FileNotFound",
-  {
-    fileId: FileId;
-  }
->;
-export default FileNotFound;
+  v.object({ fileId: FileIdSchema }),
+);
+export default FileNotFoundSchema;
+export type FileNotFound = v.InferOutput<typeof FileNotFoundSchema>;

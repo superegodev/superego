@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 enum ReasoningEffort {
   None = "none",
   Low = "low",
@@ -6,3 +8,5 @@ enum ReasoningEffort {
   XHigh = "xhigh",
 }
 export default ReasoningEffort;
+
+export const ReasoningEffortSchema = v.enum(ReasoningEffort);

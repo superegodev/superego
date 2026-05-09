@@ -1,8 +1,8 @@
-import type {
-  Backend,
-  FileId,
-  FileNotFound,
-  UnexpectedError,
+import {
+  type FileId,
+  type FileNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -13,7 +13,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class FilesGetContent extends Usecase<
-  Backend["files"]["getContent"]
+  typeof backendContracts.files.getContent
 > {
   async exec(
     id: FileId,

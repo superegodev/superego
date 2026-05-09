@@ -1,29 +1,42 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type DocumentId from "../ids/DocumentId.js";
-import type UnexpectedError from "./UnexpectedError.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import DocumentIdSchema from "../ids/DocumentId.js";
+import UnexpectedErrorSchema from "./UnexpectedError.js";
 
-type CollectionMigrationFailed = ResultError<
+const applyingMigrationFailedSchema = defineError(
+  "ApplyingMigrationFailed",
+  v.object({
+    message: v.string(),
+    name: v.optional(v.string()),
+    stack: v.optional(v.string()),
+  }),
+);
+
+const creatingNewDocumentVersionFailedSchema = defineError(
+  "CreatingNewDocumentVersionFailed",
+  v.object({
+    cause: v.object({ name: v.string(), details: v.any() }),
+  }),
+);
+
+const CollectionMigrationFailedSchema = defineError(
   "CollectionMigrationFailed",
-  {
-    collectionId: CollectionId;
-    failedDocumentMigrations: {
-      documentId: DocumentId;
-      cause:
-        | ResultError<
-            "ApplyingMigrationFailed",
-            {
-              message: string;
-              name?: string | undefined;
-              stack?: string | undefined;
-            }
-          >
-        | ResultError<
-            "CreatingNewDocumentVersionFailed",
-            { cause: ResultError<string, any> }
-          >
-        | UnexpectedError;
-    }[];
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    failedDocumentMigrations: v.array(
+      v.object({
+        documentId: DocumentIdSchema,
+        cause: v.union([
+          applyingMigrationFailedSchema,
+          creatingNewDocumentVersionFailedSchema,
+          UnexpectedErrorSchema,
+        ]),
+      }),
+    ),
+  }),
+);
+export default CollectionMigrationFailedSchema;
+export type CollectionMigrationFailed = v.InferOutput<
+  typeof CollectionMigrationFailedSchema
 >;
-export default CollectionMigrationFailed;

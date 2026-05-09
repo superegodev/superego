@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import notesSchema from "./notesSchema.js";
 
 export default {
@@ -87,4 +87,4 @@ export default function getContentSummary(note) {
       },
     },
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

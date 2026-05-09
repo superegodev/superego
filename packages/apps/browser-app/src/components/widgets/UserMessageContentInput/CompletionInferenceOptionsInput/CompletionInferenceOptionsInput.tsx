@@ -1,4 +1,8 @@
-import type { InferenceOptions, InferenceSettings } from "@superego/backend";
+import type {
+  InferenceSettings,
+  InferenceOptionsCompletion,
+  InferenceOptions,
+} from "@superego/backend";
 import isEmpty from "../../../../utils/isEmpty.js";
 import ModelSelect from "./ModelSelect.js";
 import ReasoningEffortSelect from "./ReasoningEffortSelect.js";
@@ -6,8 +10,8 @@ import ReasoningEffortSelect from "./ReasoningEffortSelect.js";
 interface Props {
   inferenceSettings: InferenceSettings;
   defaultInferenceOptions: InferenceOptions;
-  value: InferenceOptions<"completion"> | null;
-  onChange: (value: InferenceOptions<"completion">) => void;
+  value: InferenceOptionsCompletion | null;
+  onChange: (value: InferenceOptionsCompletion) => void;
   isDisabled: boolean;
 }
 export default function CompletionInferenceOptionsInput({

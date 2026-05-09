@@ -1,8 +1,8 @@
-import type {
-  Backend,
-  Collection,
-  CollectionId,
-  UnexpectedError,
+import {
+  type Collection,
+  type CollectionId,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
@@ -12,7 +12,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsList extends Usecase<
-  Backend["collections"]["list"]
+  typeof backendContracts.collections.list
 > {
   async exec(): ResultPromise<Collection[], UnexpectedError> {
     const collections = await this.repos.collection.findAll();

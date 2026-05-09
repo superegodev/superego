@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import contactsSchema from "./contactsSchema.js";
 
 export default {
@@ -176,4 +176,4 @@ export default function getContentSummary(contact) {
       },
     },
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

@@ -1,9 +1,8 @@
-import type TypescriptModule from "./TypescriptModule.js";
+import * as v from "valibot";
+import TypescriptModuleSchema from "./TypescriptModule.js";
 
-export default interface RemoteConverters {
-  /**
-   * Function to transforms a remote document into the content of a local
-   * document.
-   */
-  fromRemoteDocument: TypescriptModule;
-}
+const RemoteConvertersSchema = v.object({
+  fromRemoteDocument: TypescriptModuleSchema,
+});
+export default RemoteConvertersSchema;
+export type RemoteConverters = v.InferOutput<typeof RemoteConvertersSchema>;

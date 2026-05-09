@@ -1,9 +1,9 @@
 import {
-  type InferenceOptions,
   type Message,
   MessageContentPartType,
   MessageRole,
   ReasoningEffort,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { InferenceService } from "@superego/executing-backend";
 import { Id } from "@superego/shared-utils";
@@ -15,7 +15,7 @@ import {
   toResponsesRequest,
 } from "./Responses.js";
 
-const inferenceOptions: InferenceOptions<"completion"> = {
+const inferenceOptions: InferenceOptionsCompletion = {
   completion: {
     providerModelRef: {
       providerName: "providerName",

@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 enum DocumentVersionCreator {
   User = "User",
   Migration = "Migration",
@@ -5,3 +7,5 @@ enum DocumentVersionCreator {
   Connector = "Connector",
 }
 export default DocumentVersionCreator;
+
+export const DocumentVersionCreatorSchema = v.enum(DocumentVersionCreator);

@@ -1,9 +1,9 @@
-import type {
-  Backend,
-  BackgroundJob,
-  BackgroundJobId,
-  BackgroundJobNotFound,
-  UnexpectedError,
+import {
+  type BackgroundJob,
+  type BackgroundJobId,
+  type BackgroundJobNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -15,7 +15,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class BackgroundJobsGet extends Usecase<
-  Backend["backgroundJobs"]["get"]
+  typeof backendContracts.backgroundJobs.get
 > {
   async exec(
     id: BackgroundJobId,

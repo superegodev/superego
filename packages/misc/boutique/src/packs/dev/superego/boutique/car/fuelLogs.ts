@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import fuelLogsSchema from "./fuelLogsSchema.js";
 
 export default {
@@ -75,4 +75,4 @@ export default function getContentSummary(fuelLog) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

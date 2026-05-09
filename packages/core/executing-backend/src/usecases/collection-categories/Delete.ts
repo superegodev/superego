@@ -1,9 +1,9 @@
-import type {
-  Backend,
-  CollectionCategoryHasChildren,
-  CollectionCategoryId,
-  CollectionCategoryNotFound,
-  UnexpectedError,
+import {
+  type CollectionCategoryHasChildren,
+  type CollectionCategoryId,
+  type CollectionCategoryNotFound,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -14,7 +14,7 @@ import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionCategoriesDelete extends Usecase<
-  Backend["collectionCategories"]["delete"]
+  typeof backendContracts.collectionCategories.delete
 > {
   async exec(
     id: CollectionCategoryId,

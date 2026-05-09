@@ -1,14 +1,24 @@
-import type CollectionId from "../ids/CollectionId.js";
-import type ProtoCollectionId from "../ids/ProtoCollectionId.js";
+import * as v from "valibot";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import ProtoCollectionIdSchema from "../ids/ProtoCollectionId.js";
 
-export default interface DocumentDefinition<
-  AllowProtoCollectionIds extends boolean = false,
-> {
-  collectionId: AllowProtoCollectionIds extends true
-    ? ProtoCollectionId | CollectionId
-    : CollectionId;
-  content: any;
-  options?: {
-    skipDuplicateCheck: boolean;
-  };
-}
+const DocumentDefinitionSchema = v.object({
+  collectionId: CollectionIdSchema,
+  content: v.any(),
+  options: v.optional(v.object({ skipDuplicateCheck: v.boolean() })),
+});
+export default DocumentDefinitionSchema;
+export type DocumentDefinition = v.InferOutput<typeof DocumentDefinitionSchema>;
+
+/**
+ * Variant used inside Pack definitions, where collectionId may also be a
+ * ProtoCollectionId referencing a sibling pack entry.
+ */
+export const PackDocumentDefinitionSchema = v.object({
+  collectionId: v.union([ProtoCollectionIdSchema, CollectionIdSchema]),
+  content: v.any(),
+  options: v.optional(v.object({ skipDuplicateCheck: v.boolean() })),
+});
+export type PackDocumentDefinition = v.InferOutput<
+  typeof PackDocumentDefinitionSchema
+>;

@@ -1,4 +1,4 @@
-import type { CollectionDefinition } from "@superego/backend";
+import type { PackCollectionDefinition } from "@superego/backend";
 import calendarEntriesSchema from "./calendarSchema.js";
 
 export default {
@@ -42,4 +42,4 @@ export default function getContentSummary(calendarEntry) {
     },
     defaultDocumentViewUiOptions: null,
   },
-} as const satisfies CollectionDefinition<true, true>;
+} as const satisfies PackCollectionDefinition;

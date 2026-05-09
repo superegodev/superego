@@ -1,16 +1,20 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type CollectionVersionId from "../ids/CollectionVersionId.js";
-import type DocumentId from "../ids/DocumentId.js";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import CollectionVersionIdSchema from "../ids/CollectionVersionId.js";
+import DocumentIdSchema from "../ids/DocumentId.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type DocumentContentNotValid = ResultError<
+const DocumentContentNotValidSchema = defineError(
   "DocumentContentNotValid",
-  {
-    collectionId: CollectionId;
-    collectionVersionId: CollectionVersionId;
-    documentId: DocumentId | null;
-    issues: ValidationIssue[];
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    collectionVersionId: CollectionVersionIdSchema,
+    documentId: v.nullable(DocumentIdSchema),
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default DocumentContentNotValidSchema;
+export type DocumentContentNotValid = v.InferOutput<
+  typeof DocumentContentNotValidSchema
 >;
-export default DocumentContentNotValid;

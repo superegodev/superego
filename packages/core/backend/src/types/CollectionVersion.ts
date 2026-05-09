@@ -1,20 +1,23 @@
-import type { Schema } from "@superego/schema";
-import type CollectionVersionId from "../ids/CollectionVersionId.js";
-import type CollectionVersionSettings from "./CollectionVersionSettings.js";
-import type RemoteConverters from "./RemoteConverters.js";
-import type TypescriptModule from "./TypescriptModule.js";
+import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
+import * as v from "valibot";
+import CollectionVersionIdSchema from "../ids/CollectionVersionId.js";
+import CollectionVersionSettingsSchema from "./CollectionVersionSettings.js";
+import RemoteConvertersSchema from "./RemoteConverters.js";
+import TypescriptModuleSchema from "./TypescriptModule.js";
 
-export default interface CollectionVersion {
-  id: CollectionVersionId;
+const CollectionVersionSchema = v.object({
+  id: CollectionVersionIdSchema,
   /** Id of the previous version. Null if this is the first version. */
-  previousVersionId: CollectionVersionId | null;
-  schema: Schema;
-  settings: CollectionVersionSettings;
+  previousVersionId: v.nullable(CollectionVersionIdSchema),
+  schema: schemaValibotSchemas.schema(),
+  settings: CollectionVersionSettingsSchema,
   /**
    * The function that was run to migrate documents from the previous
    * version to this version. Null if this is the first version.
    */
-  migration: TypescriptModule | null;
-  remoteConverters: RemoteConverters | null;
-  createdAt: Date;
-}
+  migration: v.nullable(TypescriptModuleSchema),
+  remoteConverters: v.nullable(RemoteConvertersSchema),
+  createdAt: v.date(),
+});
+export default CollectionVersionSchema;
+export type CollectionVersion = v.InferOutput<typeof CollectionVersionSchema>;

@@ -1,11 +1,15 @@
-import type { ResultError } from "@superego/global-types";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type ConnectorSettingsNotValid = ResultError<
+const ConnectorSettingsNotValidSchema = defineError(
   "ConnectorSettingsNotValid",
-  {
-    connectorName: string;
-    issues: ValidationIssue[];
-  }
+  v.object({
+    connectorName: v.string(),
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default ConnectorSettingsNotValidSchema;
+export type ConnectorSettingsNotValid = v.InferOutput<
+  typeof ConnectorSettingsNotValidSchema
 >;
-export default ConnectorSettingsNotValid;

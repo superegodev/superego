@@ -1,9 +1,9 @@
 import {
   type App,
   type Collection,
-  type InferenceOptions,
   type Message,
   MessageContentPartType,
+  type InferenceOptionsCompletion,
 } from "@superego/backend";
 import { inferenceOptionsHas } from "@superego/shared-utils";
 import { useState } from "react";
@@ -21,7 +21,7 @@ interface Props {
   targetCollections: Collection[];
   onResolveWithAssistant: (
     messageContent: Message.User["content"],
-    inferenceOptions: InferenceOptions<"completion">,
+    inferenceOptions: InferenceOptionsCompletion,
   ) => void;
 }
 export default function ResolveIncompatibilityModal({

@@ -1,12 +1,16 @@
-import type { ResultError } from "@superego/global-types";
-import type CollectionId from "../ids/CollectionId.js";
-import type ValidationIssue from "../types/ValidationIssue.js";
+import * as v from "valibot";
+import { defineError } from "../contracts/contractUtils.js";
+import CollectionIdSchema from "../ids/CollectionId.js";
+import ValidationIssueSchema from "../types/ValidationIssue.js";
 
-type CollectionMigrationNotValid = ResultError<
+const CollectionMigrationNotValidSchema = defineError(
   "CollectionMigrationNotValid",
-  {
-    collectionId: CollectionId;
-    issues: ValidationIssue[];
-  }
+  v.object({
+    collectionId: CollectionIdSchema,
+    issues: v.array(ValidationIssueSchema),
+  }),
+);
+export default CollectionMigrationNotValidSchema;
+export type CollectionMigrationNotValid = v.InferOutput<
+  typeof CollectionMigrationNotValidSchema
 >;
-export default CollectionMigrationNotValid;

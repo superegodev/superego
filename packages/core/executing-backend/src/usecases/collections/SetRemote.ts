@@ -1,5 +1,4 @@
 import {
-  type Backend,
   type CannotChangeCollectionRemoteConnector,
   type Collection,
   type CollectionHasDocuments,
@@ -14,6 +13,7 @@ import {
   type RemoteConverters,
   type RemoteConvertersNotValid,
   type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { valibotSchemas } from "@superego/schema";
@@ -31,7 +31,7 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import Usecase from "../../utils/Usecase.js";
 
 export default class CollectionsSetRemote extends Usecase<
-  Backend["collections"]["setRemote"]
+  typeof backendContracts.collections.setRemote
 > {
   async exec(
     id: CollectionId,

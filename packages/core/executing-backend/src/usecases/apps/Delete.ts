@@ -1,9 +1,9 @@
-import type {
-  AppId,
-  AppNotFound,
-  Backend,
-  CommandConfirmationNotValid,
-  UnexpectedError,
+import {
+  type AppId,
+  type AppNotFound,
+  type CommandConfirmationNotValid,
+  type UnexpectedError,
+  backendContracts,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -13,7 +13,9 @@ import {
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
 
-export default class AppsDelete extends Usecase<Backend["apps"]["delete"]> {
+export default class AppsDelete extends Usecase<
+  typeof backendContracts.apps.delete
+> {
   async exec(
     id: AppId,
     commandConfirmation: string,

@@ -1,41 +1,51 @@
-import type { ResultError } from "@superego/global-types";
-import type DownSyncStatus from "../enums/DownSyncStatus.js";
-import type ConnectorAuthenticationFailed from "../errors/ConnectorAuthenticationFailed.js";
-import type ConnectorNotAuthenticated from "../errors/ConnectorNotAuthenticated.js";
-import type SyncingChangesFailed from "../errors/SyncingChangesFailed.js";
-import type UnexpectedError from "../errors/UnexpectedError.js";
-import type ConnectorAuthenticationSettings from "./ConnectorAuthenticationSettings.js";
+import * as v from "valibot";
+import DownSyncStatus from "../enums/DownSyncStatus.js";
+import ConnectorAuthenticationFailedSchema from "../errors/ConnectorAuthenticationFailed.js";
+import ConnectorNotAuthenticatedSchema from "../errors/ConnectorNotAuthenticated.js";
+import SyncingChangesFailedSchema from "../errors/SyncingChangesFailed.js";
+import UnexpectedErrorSchema from "../errors/UnexpectedError.js";
+import ConnectorAuthenticationSettingsSchema from "./ConnectorAuthenticationSettings.js";
 
-export default interface Remote {
-  connector: {
-    name: string;
-    authenticationSettings: ConnectorAuthenticationSettings;
-    settings: any;
-  };
-  connectorAuthenticationState: {
-    isAuthenticated: boolean;
-  };
-  syncState: {
-    down: {
-      status: DownSyncStatus;
-      error: ResultError<any, any> | null;
-      lastSucceededAt: Date | null;
-    } & (
-      | {
-          status: DownSyncStatus.NeverSynced;
-          error: null;
-          lastSucceededAt: null;
-        }
-      | { status: DownSyncStatus.Syncing; error: null }
-      | { status: DownSyncStatus.LastSyncSucceeded; error: null }
-      | {
-          status: DownSyncStatus.LastSyncFailed;
-          error:
-            | ConnectorNotAuthenticated
-            | ConnectorAuthenticationFailed
-            | SyncingChangesFailed
-            | UnexpectedError;
-        }
-    );
-  };
-}
+const downSyncStateSchema = v.variant("status", [
+  v.object({
+    status: v.literal(DownSyncStatus.NeverSynced),
+    error: v.null(),
+    lastSucceededAt: v.null(),
+  }),
+  v.object({
+    status: v.literal(DownSyncStatus.Syncing),
+    error: v.null(),
+    lastSucceededAt: v.nullable(v.date()),
+  }),
+  v.object({
+    status: v.literal(DownSyncStatus.LastSyncSucceeded),
+    error: v.null(),
+    lastSucceededAt: v.nullable(v.date()),
+  }),
+  v.object({
+    status: v.literal(DownSyncStatus.LastSyncFailed),
+    error: v.union([
+      ConnectorNotAuthenticatedSchema,
+      ConnectorAuthenticationFailedSchema,
+      SyncingChangesFailedSchema,
+      UnexpectedErrorSchema,
+    ]),
+    lastSucceededAt: v.nullable(v.date()),
+  }),
+]);
+
+const RemoteSchema = v.object({
+  connector: v.object({
+    name: v.string(),
+    authenticationSettings: ConnectorAuthenticationSettingsSchema,
+    settings: v.any(),
+  }),
+  connectorAuthenticationState: v.object({
+    isAuthenticated: v.boolean(),
+  }),
+  syncState: v.object({
+    down: downSyncStateSchema,
+  }),
+});
+export default RemoteSchema;
+export type Remote = v.InferOutput<typeof RemoteSchema>;

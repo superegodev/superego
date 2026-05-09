@@ -1,6 +1,6 @@
 import type {
   Backend,
-  DocumentDefinition,
+  PackDocumentDefinition,
   Pack,
   ProtoCollectionId,
 } from "@superego/backend";
@@ -70,7 +70,7 @@ export default async function loadDemoData(backend: Backend): Promise<void> {
 function makeDocuments(
   collectionId: ProtoCollectionId,
   contents: readonly unknown[],
-): DocumentDefinition<true>[] {
+): PackDocumentDefinition[] {
   return contents.map((content) => ({
     collectionId,
     content,
