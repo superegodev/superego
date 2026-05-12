@@ -15,12 +15,40 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import {
+  collectionNotFound,
+  commandConfirmationNotValid,
+  connectorDoesNotSupportUpSyncing,
+  documentIsReferenced,
+  documentNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import {
+  collectionId as collectionIdSchema,
+  documentId as documentIdSchema,
+} from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsDelete extends Usecase<
   Backend["documents"]["delete"]
 > {
+  argumentsSchema = v.tuple([
+    collectionIdSchema(),
+    documentIdSchema(),
+    v.string(),
+  ]);
+  resultSchema = makeResultSchema(v.null(), [
+    collectionNotFound(),
+    commandConfirmationNotValid(),
+    connectorDoesNotSupportUpSyncing(),
+    documentIsReferenced(),
+    documentNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

@@ -1,6 +1,7 @@
 import {
   type Backend,
   type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -21,16 +22,39 @@ import {
   validateInferenceOptions,
 } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { typescriptModule as typescriptModuleSchema } from "../../validation/domain/typescript.js";
+import {
+  inferenceOptionsNotValid,
+  tooManyFailedImplementationAttempts,
+  unexpectedError,
+  writeTypescriptModuleToolNotCalled,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 const MAX_ATTEMPTS = 5;
 
 export default class InferenceImplementTypescriptModule extends Usecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
+  argumentsSchema = v.tuple([
+    looseObjectAs<
+      Parameters<Backend["inference"]["implementTypescriptModule"]>[0]
+    >(),
+    looseObjectAs<InferenceOptions<"completion">>(),
+  ]);
+  resultSchema = makeResultSchema(typescriptModuleSchema(), [
+    inferenceOptionsNotValid(),
+    tooManyFailedImplementationAttempts(),
+    unexpectedError(),
+    writeTypescriptModuleToolNotCalled(),
+  ]);
+
   async exec(
     {
       description,
@@ -42,7 +66,13 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       userRequest,
     }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
     inferenceOptions: InferenceOptions<"completion">,
-  ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
+  ): ResultPromise<
+    TypescriptModule,
+    | InferenceOptionsNotValid
+    | TooManyFailedImplementationAttempts
+    | WriteTypescriptModuleToolNotCalled
+    | UnexpectedError
+  > {
     const globalSettings = await this.repos.globalSettings.get();
 
     const inferenceOptionsIssues = validateInferenceOptions(

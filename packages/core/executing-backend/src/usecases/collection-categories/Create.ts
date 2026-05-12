@@ -21,6 +21,15 @@ import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
+import { collectionCategory } from "../../validation/domain/collectionCategory.js";
+import {
+  collectionCategoryIconNotValid,
+  collectionCategoryNameNotValid,
+  parentCollectionCategoryNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface CollectionCategoriesCreateOptions {
   collectionCategoryId?: CollectionCategoryId;
@@ -30,6 +39,14 @@ interface CollectionCategoriesCreateOptions {
 export default class CollectionCategoriesCreate extends Usecase<
   Backend["collectionCategories"]["create"]
 > {
+  argumentsSchema = v.tuple([looseObjectAs<CollectionCategoryDefinition>()]);
+  resultSchema = makeResultSchema(collectionCategory(), [
+    collectionCategoryIconNotValid(),
+    collectionCategoryNameNotValid(),
+    parentCollectionCategoryNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     definition: CollectionCategoryDefinition,
     options: CollectionCategoriesCreateOptions = {},

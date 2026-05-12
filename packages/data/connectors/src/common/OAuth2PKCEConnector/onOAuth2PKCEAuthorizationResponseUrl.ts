@@ -1,4 +1,5 @@
 import type {
+  ArgumentsNotValid,
   Backend,
   Collection,
   CollectionHasNoRemote,
@@ -21,6 +22,7 @@ export default async function onOAuth2PKCEAuthorizationResponseUrl(
       "OAuth2PKCEInvalidStateParam",
       { reason: string; authorizationResponseUrl: string }
     >
+  | ArgumentsNotValid
   | CollectionNotFound
   | CollectionHasNoRemote
   | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy

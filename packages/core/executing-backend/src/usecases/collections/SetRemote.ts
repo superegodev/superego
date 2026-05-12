@@ -29,10 +29,42 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  cannotChangeCollectionRemoteConnector,
+  collectionHasDocuments,
+  collectionNotFound,
+  connectorAuthenticationSettingsNotValid,
+  connectorNotFound,
+  connectorSettingsNotValid,
+  remoteConvertersNotValid,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsSetRemote extends Usecase<
   Backend["collections"]["setRemote"]
 > {
+  argumentsSchema = v.tuple([
+    collectionIdSchema(),
+    v.string(),
+    looseObjectAs<ConnectorAuthenticationSettings>(),
+    v.any(),
+    looseObjectAs<RemoteConverters>(),
+  ]);
+  resultSchema = makeResultSchema(collectionDomainSchema(), [
+    cannotChangeCollectionRemoteConnector(),
+    collectionHasDocuments(),
+    collectionNotFound(),
+    connectorAuthenticationSettingsNotValid(),
+    connectorNotFound(),
+    connectorSettingsNotValid(),
+    remoteConvertersNotValid(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
     connectorName: string,

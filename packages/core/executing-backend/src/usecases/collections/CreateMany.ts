@@ -20,6 +20,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import {
   extractProtoCollectionIds,
@@ -27,6 +28,20 @@ import {
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  appNotFound,
+  collectionCategoryNotFound,
+  collectionSchemaNotValid,
+  collectionSettingsNotValid,
+  contentBlockingKeysGetterNotValid,
+  contentSummaryGetterNotValid,
+  defaultDocumentViewUiOptionsNotValid,
+  referencedCollectionsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
@@ -38,6 +53,19 @@ interface CollectionsCreateManyOptions {
 export default class CollectionsCreateMany extends Usecase<
   Backend["collections"]["createMany"]
 > {
+  argumentsSchema = v.tuple([v.array(looseObjectAs<CollectionDefinition>())]);
+  resultSchema = makeResultSchema(v.array(collectionDomainSchema()), [
+    appNotFound(),
+    collectionCategoryNotFound(),
+    collectionSchemaNotValid(),
+    collectionSettingsNotValid(),
+    contentBlockingKeysGetterNotValid(),
+    contentSummaryGetterNotValid(),
+    defaultDocumentViewUiOptionsNotValid(),
+    referencedCollectionsNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     definitions: CollectionDefinition[],
     options: CollectionsCreateManyOptions = {},

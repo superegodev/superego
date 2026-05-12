@@ -24,6 +24,7 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 // Errors
 export type { default as AppNameNotValid } from "./errors/AppNameNotValid.js";
 export type { default as AppNotFound } from "./errors/AppNotFound.js";
+export type { default as ArgumentsNotValid } from "./errors/ArgumentsNotValid.js";
 export type { default as BackgroundJobNotFound } from "./errors/BackgroundJobNotFound.js";
 export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";
 export type { default as CannotContinueConversation } from "./errors/CannotContinueConversation.js";

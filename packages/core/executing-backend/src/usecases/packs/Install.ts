@@ -43,6 +43,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import isEmpty from "../../utils/isEmpty.js";
 import {
@@ -58,12 +59,74 @@ import {
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import { app as appSchema } from "../../validation/domain/app.js";
+import { collection as collectionSchema } from "../../validation/domain/collection.js";
+import { collectionCategory } from "../../validation/domain/collectionCategory.js";
+import { document as documentSchema } from "../../validation/domain/document.js";
+import {
+  appNameNotValid,
+  appNotFound,
+  collectionCategoryIconNotValid,
+  collectionCategoryNameNotValid,
+  collectionCategoryNotFound,
+  collectionNotFound,
+  collectionSchemaNotValid,
+  collectionSettingsNotValid,
+  connectorDoesNotSupportUpSyncing,
+  contentBlockingKeysGetterNotValid,
+  contentSummaryGetterNotValid,
+  defaultDocumentViewUiOptionsNotValid,
+  documentContentNotValid,
+  duplicateDocumentDetected,
+  filesNotFound,
+  makingContentBlockingKeysFailed,
+  packNotValid,
+  parentCollectionCategoryNotFound,
+  referencedCollectionsNotFound,
+  referencedDocumentsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import AppsCreate from "../apps/Create.js";
 import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
 export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
+  argumentsSchema = v.tuple([looseObjectAs<Pack>()]);
+  resultSchema = makeResultSchema(
+    v.strictObject({
+      collectionCategories: v.array(collectionCategory()),
+      collections: v.array(collectionSchema()),
+      apps: v.array(appSchema()),
+      documents: v.array(documentSchema()),
+    }),
+    [
+      appNameNotValid(),
+      appNotFound(),
+      collectionCategoryIconNotValid(),
+      collectionCategoryNameNotValid(),
+      collectionCategoryNotFound(),
+      collectionNotFound(),
+      collectionSchemaNotValid(),
+      collectionSettingsNotValid(),
+      connectorDoesNotSupportUpSyncing(),
+      contentBlockingKeysGetterNotValid(),
+      contentSummaryGetterNotValid(),
+      defaultDocumentViewUiOptionsNotValid(),
+      documentContentNotValid(),
+      duplicateDocumentDetected(),
+      filesNotFound(),
+      makingContentBlockingKeysFailed(),
+      packNotValid(),
+      parentCollectionCategoryNotFound(),
+      referencedCollectionsNotFound(),
+      referencedDocumentsNotFound(),
+      unexpectedError(),
+    ],
+  );
+
   async exec(pack: Pack): ResultPromise<
     {
       collectionCategories: CollectionCategory[];

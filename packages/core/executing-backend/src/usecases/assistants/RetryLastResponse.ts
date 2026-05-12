@@ -16,6 +16,7 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
@@ -23,11 +24,32 @@ import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
+import {
+  cannotRetryLastResponse,
+  conversationNotFound,
+  inferenceOptionsNotValid,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { conversationId } from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsRetryLastResponse extends Usecase<
   Backend["assistants"]["retryLastResponse"]
 > {
+  argumentsSchema = v.tuple([
+    conversationId(),
+    looseObjectAs<InferenceOptions<"completion">>(),
+  ]);
+  resultSchema = makeResultSchema(conversationSchema(), [
+    cannotRetryLastResponse(),
+    conversationNotFound(),
+    inferenceOptionsNotValid(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: ConversationId,
     inferenceOptions: InferenceOptions<"completion">,

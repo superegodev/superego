@@ -14,10 +14,23 @@ import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
+import { globalSettings as globalSettingsSchema } from "../../validation/domain/globalSettings.js";
+import {
+  globalSettingsNotValid,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class GlobalSettingsUpdate extends Usecase<
   Backend["globalSettings"]["update"]
 > {
+  argumentsSchema = v.tuple([looseObjectAs<Partial<GlobalSettings>>()]);
+  resultSchema = makeResultSchema(globalSettingsSchema(), [
+    globalSettingsNotValid(),
+    unexpectedError(),
+  ]);
+
   async exec(
     globalSettingsPatch: Partial<GlobalSettings>,
   ): ResultPromise<GlobalSettings, GlobalSettingsNotValid | UnexpectedError> {

@@ -10,16 +10,30 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
+import {
+  conversationNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { conversationId } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsGetConversation extends Usecase<
   Backend["assistants"]["getConversation"]
 > {
+  argumentsSchema = v.tuple([conversationId()]);
+  resultSchema = makeResultSchema(conversationSchema(), [
+    conversationNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: ConversationId,
   ): ResultPromise<Conversation, ConversationNotFound | UnexpectedError> {

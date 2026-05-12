@@ -1,4 +1,5 @@
 import {
+  AssistantName as AssistantNameEnum,
   type AssistantName,
   type Backend,
   BackgroundJobName,
@@ -20,6 +21,7 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
@@ -30,11 +32,33 @@ import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
+import {
+  filesNotFound,
+  inferenceOptionsNotValid,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsStartConversation extends Usecase<
   Backend["assistants"]["startConversation"]
 > {
+  argumentsSchema = v.tuple([
+    v.picklist(Object.values(AssistantNameEnum)),
+    v.array(v.unknown()) as unknown as v.GenericSchema<
+      unknown,
+      NonEmptyArray<MessageContentPart>
+    >,
+    looseObjectAs<InferenceOptions<"completion">>(),
+  ]);
+  resultSchema = makeResultSchema(conversationSchema(), [
+    filesNotFound(),
+    inferenceOptionsNotValid(),
+    unexpectedError(),
+  ]);
+
   async exec(
     assistant: AssistantName,
     userMessageContent: Message.User["content"],

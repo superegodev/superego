@@ -22,12 +22,27 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import { app } from "../../validation/domain/app.js";
+import {
+  appNameNotValid,
+  collectionNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
 }
 
 export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
+  argumentsSchema = v.tuple([looseObjectAs<AppDefinition>()]);
+  resultSchema = makeResultSchema(app(), [
+    appNameNotValid(),
+    collectionNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,
     options: AppsCreateOptions = {},

@@ -44,11 +44,53 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collectionMigrationFailed,
+  collectionMigrationNotValid,
+  collectionNotFound,
+  collectionSchemaNotValid,
+  collectionVersionIdNotMatching,
+  contentBlockingKeysGetterNotValid,
+  contentSummaryGetterNotValid,
+  defaultDocumentViewUiOptionsNotValid,
+  referencedCollectionsNotFound,
+  remoteConvertersNotValid,
+  unexpectedError,
+} from "../../validation/errors.js";
+import {
+  collectionId as collectionIdSchema,
+  collectionVersionId as collectionVersionIdSchema,
+} from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends Usecase<
   Backend["collections"]["createNewVersion"]
 > {
+  argumentsSchema = v.tuple([
+    collectionIdSchema(),
+    collectionVersionIdSchema(),
+    looseObjectAs<Schema>(),
+    looseObjectAs<CollectionVersionSettings>(),
+    v.nullable(looseObjectAs<TypescriptModule>()),
+    v.nullable(looseObjectAs<RemoteConverters>()),
+  ]);
+  resultSchema = makeResultSchema(collectionDomainSchema(), [
+    collectionMigrationFailed(),
+    collectionMigrationNotValid(),
+    collectionNotFound(),
+    collectionSchemaNotValid(),
+    collectionVersionIdNotMatching(),
+    contentBlockingKeysGetterNotValid(),
+    contentSummaryGetterNotValid(),
+    defaultDocumentViewUiOptionsNotValid(),
+    referencedCollectionsNotFound(),
+    remoteConvertersNotValid(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
     latestVersionId: CollectionVersionId,

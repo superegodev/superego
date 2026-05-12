@@ -1,6 +1,7 @@
 import type {
   AppNameNotValid,
   AppNotFound,
+  ArgumentsNotValid,
   CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
@@ -64,6 +65,7 @@ import type {
 type KnownResultError =
   | AppNameNotValid
   | AppNotFound
+  | ArgumentsNotValid
   | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation

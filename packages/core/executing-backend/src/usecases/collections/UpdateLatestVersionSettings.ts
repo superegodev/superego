@@ -29,10 +29,41 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collectionNotFound,
+  collectionVersionIdNotMatching,
+  contentBlockingKeysGetterNotValid,
+  contentSummaryGetterNotValid,
+  defaultDocumentViewUiOptionsNotValid,
+  makingContentBlockingKeysFailed,
+  unexpectedError,
+} from "../../validation/errors.js";
+import {
+  collectionId as collectionIdSchema,
+  collectionVersionId as collectionVersionIdSchema,
+} from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionUpdateLatestVersionSettings extends Usecase<
   Backend["collections"]["updateLatestVersionSettings"]
 > {
+  argumentsSchema = v.tuple([
+    collectionIdSchema(),
+    collectionVersionIdSchema(),
+    looseObjectAs<Partial<CollectionVersionSettings>>(),
+  ]);
+  resultSchema = makeResultSchema(collectionDomainSchema(), [
+    collectionNotFound(),
+    collectionVersionIdNotMatching(),
+    contentBlockingKeysGetterNotValid(),
+    contentSummaryGetterNotValid(),
+    defaultDocumentViewUiOptionsNotValid(),
+    makingContentBlockingKeysFailed(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
     latestVersionId: CollectionVersionId,

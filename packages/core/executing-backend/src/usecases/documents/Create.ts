@@ -37,6 +37,19 @@ import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { document as documentDomainSchema } from "../../validation/domain/document.js";
+import {
+  collectionNotFound,
+  connectorDoesNotSupportUpSyncing,
+  documentContentNotValid,
+  duplicateDocumentDetected,
+  filesNotFound,
+  makingContentBlockingKeysFailed,
+  referencedDocumentsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
@@ -52,6 +65,18 @@ type ExecReturnValue = ResultPromise<
 export default class DocumentsCreate extends Usecase<
   Backend["documents"]["create"]
 > {
+  argumentsSchema = v.tuple([looseObjectAs<DocumentDefinition>()]);
+  resultSchema = makeResultSchema(documentDomainSchema(), [
+    collectionNotFound(),
+    connectorDoesNotSupportUpSyncing(),
+    documentContentNotValid(),
+    duplicateDocumentDetected(),
+    filesNotFound(),
+    makingContentBlockingKeysFailed(),
+    referencedDocumentsNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     definition: DocumentDefinition,
     options?: {

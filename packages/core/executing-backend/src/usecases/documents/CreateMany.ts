@@ -20,6 +20,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import {
@@ -28,6 +29,19 @@ import {
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
 import Usecase from "../../utils/Usecase.js";
+import { document as documentDomainSchema } from "../../validation/domain/document.js";
+import {
+  collectionNotFound,
+  connectorDoesNotSupportUpSyncing,
+  documentContentNotValid,
+  duplicateDocumentDetected,
+  filesNotFound,
+  makingContentBlockingKeysFailed,
+  referencedDocumentsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreate from "./Create.js";
 
 interface DocumentsCreateManyOptions {
@@ -39,6 +53,18 @@ interface DocumentsCreateManyOptions {
 export default class DocumentsCreateMany extends Usecase<
   Backend["documents"]["createMany"]
 > {
+  argumentsSchema = v.tuple([v.array(looseObjectAs<DocumentDefinition>())]);
+  resultSchema = makeResultSchema(v.array(documentDomainSchema()), [
+    collectionNotFound(),
+    connectorDoesNotSupportUpSyncing(),
+    documentContentNotValid(),
+    duplicateDocumentDetected(),
+    filesNotFound(),
+    makingContentBlockingKeysFailed(),
+    referencedDocumentsNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     definitions: DocumentDefinition[],
     options?: DocumentsCreateManyOptions,

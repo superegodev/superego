@@ -21,10 +21,37 @@ import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import Usecase from "../../utils/Usecase.js";
+import { collectionCategory } from "../../validation/domain/collectionCategory.js";
+import {
+  collectionCategoryIconNotValid,
+  collectionCategoryNameNotValid,
+  collectionCategoryNotFound,
+  parentCollectionCategoryIsDescendant,
+  parentCollectionCategoryNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { collectionCategoryId } from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionCategoriesUpdate extends Usecase<
   Backend["collectionCategories"]["update"]
 > {
+  argumentsSchema = v.tuple([
+    collectionCategoryId(),
+    looseObjectAs<
+      Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>
+    >(),
+  ]);
+  resultSchema = makeResultSchema(collectionCategory(), [
+    collectionCategoryIconNotValid(),
+    collectionCategoryNameNotValid(),
+    collectionCategoryNotFound(),
+    parentCollectionCategoryIsDescendant(),
+    parentCollectionCategoryNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionCategoryId,
     patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,

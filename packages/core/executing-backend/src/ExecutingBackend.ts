@@ -3,10 +3,12 @@ import {
   extractErrorDetails,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import BackgroundJobExecutor from "./BackgroundJobExecutor.js";
 import type Config from "./Config.js";
 import LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
+import makeValidationIssues from "./makers/makeValidationIssues.js";
 import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
@@ -65,6 +67,7 @@ import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import PacksInstall from "./usecases/packs/Install.js";
+import type Usecase from "./utils/Usecase.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -234,27 +237,66 @@ export default class ExecutingBackend implements Backend {
       connectors: Connector[],
       liveConversationStore: LiveConversationStore,
       config: Config,
-    ) => { exec: Exec },
+    ) => Usecase<Exec>,
     triggerBackgroundJobCheck: boolean,
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
-        .runInSerializableTransaction(async (repos) => {
-          const usecase = new UsecaseClass(
-            repos,
-            this.javascriptSandbox,
-            this.typescriptCompiler,
-            this.inferenceServiceFactory,
-            this.connectors,
-            this.liveConversationStore,
-            this.resolvedConfig,
-          );
-          const result = await usecase.exec(...args);
-          return {
-            action: result.success ? "commit" : "rollback",
-            returnValue: result,
-          };
-        })
+        .runInSerializableTransaction<Awaited<ReturnType<Exec>>>(
+          async (repos) => {
+            const usecase = new UsecaseClass(
+              repos,
+              this.javascriptSandbox,
+              this.typescriptCompiler,
+              this.inferenceServiceFactory,
+              this.connectors,
+              this.liveConversationStore,
+              this.resolvedConfig,
+            );
+            const argumentsValidationResult = v.safeParse(
+              usecase.argumentsSchema,
+              args,
+            );
+            if (!argumentsValidationResult.success) {
+              return {
+                action: "rollback",
+                returnValue: makeUnsuccessfulResult(
+                  makeResultError("ArgumentsNotValid", {
+                    issues: makeValidationIssues(
+                      argumentsValidationResult.issues,
+                    ),
+                  }),
+                ) as Awaited<ReturnType<Exec>>,
+              };
+            }
+            const result = await usecase.exec(
+              ...argumentsValidationResult.output,
+            );
+            const resultValidationResult = v.safeParse(
+              usecase.resultSchema,
+              result,
+            );
+            if (!resultValidationResult.success) {
+              return {
+                action: "rollback",
+                returnValue: makeUnsuccessfulResult(
+                  makeResultError("UnexpectedError", {
+                    cause: {
+                      reason: "ResultValidationFailed",
+                      issues: makeValidationIssues(
+                        resultValidationResult.issues,
+                      ),
+                    },
+                  }),
+                ) as Awaited<ReturnType<Exec>>,
+              };
+            }
+            return {
+              action: result.success ? "commit" : "rollback",
+              returnValue: result as Awaited<ReturnType<Exec>>,
+            };
+          },
+        )
         .then((result) => {
           // We trigger a background job check only _after_ the transaction that
           // might have created some background jobs has been committed. (Else

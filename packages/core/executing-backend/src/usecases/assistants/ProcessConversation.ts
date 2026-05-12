@@ -35,8 +35,8 @@ import type InferenceService from "../../requirements/InferenceService.js";
 import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import generateTitle from "../../utils/generateTitle.js";
+import InternalUsecase from "../../utils/InternalUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
 import CollectionsList from "../collections/List.js";
@@ -47,7 +47,7 @@ import DocumentsSearch from "../documents/Search.js";
 import FilesGetContent from "../files/GetContent.js";
 import InferenceImplementTypescriptModule from "../inference/ImplementTypescriptModule.js";
 
-export default class AssistantsProcessConversation extends Usecase {
+export default class AssistantsProcessConversation extends InternalUsecase {
   async exec({
     id,
     inferenceOptions,

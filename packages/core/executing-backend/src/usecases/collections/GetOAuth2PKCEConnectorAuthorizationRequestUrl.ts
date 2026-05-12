@@ -13,13 +13,30 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import Usecase from "../../utils/Usecase.js";
+import {
+  collectionHasNoRemote,
+  collectionNotFound,
+  connectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends Usecase<
   Backend["collections"]["getOAuth2PKCEConnectorAuthorizationRequestUrl"]
 > {
+  argumentsSchema = v.tuple([collectionIdSchema()]);
+  resultSchema = makeResultSchema(v.string(), [
+    collectionHasNoRemote(),
+    collectionNotFound(),
+    connectorDoesNotUseOAuth2PKCEAuthenticationStrategy(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
   ): ResultPromise<

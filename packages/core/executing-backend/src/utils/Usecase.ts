@@ -1,78 +1,51 @@
-import { BackgroundJobStatus } from "@superego/backend";
-import type { DistributivePick, ResultPromise } from "@superego/global-types";
-import { Id } from "@superego/shared-utils";
-import type Config from "../Config.js";
-import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
-import type CollectionEntity from "../entities/CollectionEntity.js";
-import type LiveConversationStore from "../LiveConversationStore.js";
-import type Connector from "../requirements/Connector.js";
-import type DataRepositories from "../requirements/DataRepositories.js";
-import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
-import type TypescriptCompiler from "../requirements/TypescriptCompiler.js";
+import type { ArgumentsNotValid } from "@superego/backend";
+import type {
+  Result,
+  ResultError,
+  ResultPromise,
+} from "@superego/global-types";
+import type * as v from "valibot";
+import BaseUsecase from "./BaseUsecase.js";
 
+/**
+ * Strips `ArgumentsNotValid` from a Backend method's error union. The error
+ * is added by `ExecutingBackend.makeUsecase` when input validation fails — the
+ * usecase implementation itself never returns it. Subtracting it here keeps
+ * the usecase's exec signature honest, so internal `sub()` callers don't see
+ * a phantom error variant they could never receive.
+ */
+type StripArgumentsNotValid<Exec> = Exec extends (
+  ...args: infer Args
+) => Promise<Result<infer Data, infer Error>>
+  ? (
+      ...args: Args
+    ) => Promise<
+      Result<
+        Data,
+        Exclude<Error, ArgumentsNotValid> extends ResultError<string, any>
+          ? Exclude<Error, ArgumentsNotValid>
+          : never
+      >
+    >
+  : Exec;
+
+/**
+ * Base class for usecases exposed via the public `Backend` interface. Each
+ * subclass must declare an `argumentsSchema` and a `resultSchema` that the
+ * `ExecutingBackend` uses to validate inputs and outputs at the RPC
+ * boundary.
+ */
 export default abstract class Usecase<
   Exec extends (...args: any[]) => ResultPromise<any, any> = (
     ...args: any[]
   ) => ResultPromise<any, any>,
-> {
-  constructor(
-    protected repos: DataRepositories,
-    protected javascriptSandbox: JavascriptSandbox,
-    protected typescriptCompiler: TypescriptCompiler,
-    protected inferenceServiceFactory: InferenceServiceFactory,
-    protected connectors: Connector[],
-    protected liveConversationStore: LiveConversationStore,
-    protected config: Config,
-  ) {}
-
-  abstract exec(...args: Parameters<Exec>): ReturnType<Exec>;
-
-  protected sub<
-    SubUsecase extends new (
-      repos: DataRepositories,
-      javascriptSandbox: JavascriptSandbox,
-      typescriptCompiler: TypescriptCompiler,
-      inferenceServiceFactory: InferenceServiceFactory,
-      connectors: Connector[],
-      liveConversationStore: LiveConversationStore,
-      config: Config,
-    ) => Usecase,
-  >(UsecaseClass: SubUsecase): InstanceType<SubUsecase> {
-    return new UsecaseClass(
-      this.repos,
-      this.javascriptSandbox,
-      this.typescriptCompiler,
-      this.inferenceServiceFactory,
-      this.connectors,
-      this.liveConversationStore,
-      this.config,
-    ) as InstanceType<SubUsecase>;
-  }
-
-  protected async enqueueBackgroundJob(
-    protoBackgroundJob: DistributivePick<BackgroundJobEntity, "name" | "input">,
-  ): Promise<void> {
-    await this.repos.backgroundJob.insert({
-      ...protoBackgroundJob,
-      id: Id.generate.backgroundJob(),
-      status: BackgroundJobStatus.Enqueued,
-      enqueuedAt: new Date(),
-      startedProcessingAt: null,
-      finishedProcessingAt: null,
-      error: null,
-    });
-  }
-
-  protected getConnector(
-    collectionOrName: CollectionEntity | string,
-  ): Connector | null {
-    const connectorName =
-      typeof collectionOrName !== "string"
-        ? (collectionOrName.remote?.connector.name ?? null)
-        : collectionOrName;
-    return connectorName !== null
-      ? (this.connectors.find(({ name }) => name === connectorName) ?? null)
-      : null;
-  }
+> extends BaseUsecase<StripArgumentsNotValid<Exec>> {
+  abstract argumentsSchema: v.GenericSchema<
+    unknown,
+    Parameters<StripArgumentsNotValid<Exec>>
+  >;
+  abstract resultSchema: v.GenericSchema<
+    unknown,
+    Awaited<ReturnType<StripArgumentsNotValid<Exec>>>
+  >;
 }

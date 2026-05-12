@@ -39,6 +39,24 @@ import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { document as documentDomainSchema } from "../../validation/domain/document.js";
+import {
+  collectionNotFound,
+  connectorDoesNotSupportUpSyncing,
+  documentContentNotValid,
+  documentNotFound,
+  documentVersionIdNotMatching,
+  filesNotFound,
+  makingContentBlockingKeysFailed,
+  referencedDocumentsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import {
+  collectionId as collectionIdSchema,
+  documentId as documentIdSchema,
+  documentVersionId as documentVersionIdSchema,
+} from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
@@ -55,6 +73,24 @@ type ExecReturnValue = ResultPromise<
 export default class DocumentsCreateNewVersion extends Usecase<
   Backend["documents"]["createNewVersion"]
 > {
+  argumentsSchema = v.tuple([
+    collectionIdSchema(),
+    documentIdSchema(),
+    documentVersionIdSchema(),
+    v.any(),
+  ]);
+  resultSchema = makeResultSchema(documentDomainSchema(), [
+    collectionNotFound(),
+    connectorDoesNotSupportUpSyncing(),
+    documentContentNotValid(),
+    documentNotFound(),
+    documentVersionIdNotMatching(),
+    filesNotFound(),
+    makingContentBlockingKeysFailed(),
+    referencedDocumentsNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

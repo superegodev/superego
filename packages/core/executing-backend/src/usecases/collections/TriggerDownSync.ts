@@ -16,16 +16,36 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collectionHasNoRemote,
+  collectionIsSyncing,
+  collectionNotFound,
+  connectorNotAuthenticated,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsTriggerDownSync extends Usecase<
   Backend["collections"]["triggerDownSync"]
 > {
+  argumentsSchema = v.tuple([collectionIdSchema()]);
+  resultSchema = makeResultSchema(collectionDomainSchema(), [
+    collectionHasNoRemote(),
+    collectionIsSyncing(),
+    collectionNotFound(),
+    connectorNotAuthenticated(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
   ): ResultPromise<

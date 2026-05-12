@@ -13,16 +13,40 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import pMap from "p-map";
+import * as v from "valibot";
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import {
+  document as documentDomainSchema,
+  liteDocument,
+} from "../../validation/domain/document.js";
+import { textSearchResult } from "../../validation/domain/textSearchResult.js";
+import {
+  collectionNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsSearch extends Usecase<
   Backend["documents"]["search"]
 > {
+  argumentsSchema = v.tuple([
+    v.nullable(collectionIdSchema()),
+    v.string(),
+    v.strictObject({ limit: v.number() }),
+  ]);
+  resultSchema = makeResultSchema(
+    v.array(
+      textSearchResult(v.union([liteDocument(), documentDomainSchema()])),
+    ),
+    [collectionNotFound(), unexpectedError()],
+  );
+
   async exec(
     collectionId: CollectionId | null,
     query: string,

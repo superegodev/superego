@@ -19,10 +19,25 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import { app } from "../../validation/domain/app.js";
+import {
+  appNameNotValid,
+  appNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { appId } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsUpdateName extends Usecase<
   Backend["apps"]["updateName"]
 > {
+  argumentsSchema = v.tuple([appId(), v.string()]);
+  resultSchema = makeResultSchema(app(), [
+    appNameNotValid(),
+    appNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: AppId,
     name: string,

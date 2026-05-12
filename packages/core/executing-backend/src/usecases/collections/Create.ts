@@ -33,6 +33,20 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
+import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  appNotFound,
+  collectionCategoryNotFound,
+  collectionSchemaNotValid,
+  collectionSettingsNotValid,
+  contentBlockingKeysGetterNotValid,
+  contentSummaryGetterNotValid,
+  defaultDocumentViewUiOptionsNotValid,
+  referencedCollectionsNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -44,6 +58,19 @@ interface CollectionsCreateOptions {
 export default class CollectionsCreate extends Usecase<
   Backend["collections"]["create"]
 > {
+  argumentsSchema = v.tuple([looseObjectAs<CollectionDefinition>()]);
+  resultSchema = makeResultSchema(collectionDomainSchema(), [
+    appNotFound(),
+    collectionCategoryNotFound(),
+    collectionSchemaNotValid(),
+    collectionSettingsNotValid(),
+    contentBlockingKeysGetterNotValid(),
+    contentSummaryGetterNotValid(),
+    defaultDocumentViewUiOptionsNotValid(),
+    referencedCollectionsNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     { settings, schema, versionSettings }: CollectionDefinition,
     options: CollectionsCreateOptions = {},

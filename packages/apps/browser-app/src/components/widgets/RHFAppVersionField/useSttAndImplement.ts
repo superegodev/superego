@@ -1,4 +1,5 @@
 import {
+  type ArgumentsNotValid,
   type Collection,
   type InferenceOptions,
   type InferenceOptionsNotValid,
@@ -28,6 +29,7 @@ interface UseSttAndImplement {
     inferenceOptions: InferenceOptions<"completion">,
   ) => ResultPromise<
     TypescriptModule,
+    | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts
@@ -54,6 +56,7 @@ export default function useSttAndImplement(
     inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     TypescriptModule,
+    | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
     | TooManyFailedImplementationAttempts

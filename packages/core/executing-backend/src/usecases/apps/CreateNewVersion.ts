@@ -13,16 +13,40 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import Usecase from "../../utils/Usecase.js";
+import { app } from "../../validation/domain/app.js";
+import {
+  appNotFound,
+  collectionNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import {
+  appId,
+  collectionId as collectionIdSchema,
+} from "../../validation/helpers/idSchemas.js";
+import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsCreateNewVersion extends Usecase<
   Backend["apps"]["createNewVersion"]
 > {
+  argumentsSchema = v.tuple([
+    appId(),
+    v.array(collectionIdSchema()),
+    looseObjectAs<AppVersionEntity["files"]>(),
+  ]);
+  resultSchema = makeResultSchema(app(), [
+    appNotFound(),
+    collectionNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: AppId,
     targetCollectionIds: CollectionId[],

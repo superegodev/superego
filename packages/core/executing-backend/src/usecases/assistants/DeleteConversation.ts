@@ -10,12 +10,27 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import Usecase from "../../utils/Usecase.js";
+import {
+  commandConfirmationNotValid,
+  conversationNotFound,
+  unexpectedError,
+} from "../../validation/errors.js";
+import { conversationId } from "../../validation/helpers/idSchemas.js";
+import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AssistantsDeleteConversation extends Usecase<
   Backend["assistants"]["deleteConversation"]
 > {
+  argumentsSchema = v.tuple([conversationId(), v.string()]);
+  resultSchema = makeResultSchema(v.null(), [
+    commandConfirmationNotValid(),
+    conversationNotFound(),
+    unexpectedError(),
+  ]);
+
   async exec(
     id: ConversationId,
     commandConfirmation: string,
