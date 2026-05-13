@@ -11,12 +11,12 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { fileNotFound, unexpectedError } from "../../validation/errors.js";
 import { fileId } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class FilesGetContent extends Usecase<
+export default class FilesGetContent extends BackendUsecase<
   Backend["files"]["getContent"]
 > {
   argumentsSchema = v.tuple([fileId()]);

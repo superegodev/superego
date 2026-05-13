@@ -22,12 +22,12 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   extractProtoCollectionIds,
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
 import {
   appNotFound,
@@ -50,7 +50,7 @@ interface CollectionsCreateManyOptions {
   skipReferenceCheckForAppIds?: AppId[];
 }
 
-export default class CollectionsCreateMany extends Usecase<
+export default class CollectionsCreateMany extends BackendUsecase<
   Backend["collections"]["createMany"]
 > {
   argumentsSchema = v.tuple([v.array(looseObjectAs<CollectionDefinition>())]);

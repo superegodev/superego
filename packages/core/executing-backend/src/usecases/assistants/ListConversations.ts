@@ -8,14 +8,14 @@ import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { liteConversation } from "../../validation/domain/conversation.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsListConversations extends Usecase<
+export default class AssistantsListConversations extends BackendUsecase<
   Backend["assistants"]["listConversations"]
 > {
   argumentsSchema = v.tuple([]);

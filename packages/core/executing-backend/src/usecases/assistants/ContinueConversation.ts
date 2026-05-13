@@ -28,11 +28,11 @@ import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
 import {
   cannotContinueConversation,
@@ -46,7 +46,7 @@ import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsContinueConversation extends Usecase<
+export default class AssistantsContinueConversation extends BackendUsecase<
   Backend["assistants"]["continueConversation"]
 > {
   argumentsSchema = v.tuple([

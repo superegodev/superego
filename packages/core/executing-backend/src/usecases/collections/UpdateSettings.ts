@@ -21,7 +21,7 @@ import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
 import {
   appNotFound,
@@ -34,7 +34,7 @@ import { collectionId as collectionIdSchema } from "../../validation/helpers/idS
 import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionsUpdateSettings extends Usecase<
+export default class CollectionsUpdateSettings extends BackendUsecase<
   Backend["collections"]["updateSettings"]
 > {
   argumentsSchema = v.tuple([

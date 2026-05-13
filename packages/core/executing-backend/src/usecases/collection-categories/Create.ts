@@ -20,7 +20,7 @@ import type CollectionCategoryEntity from "../../entities/CollectionCategoryEnti
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collectionCategory } from "../../validation/domain/collectionCategory.js";
 import {
   collectionCategoryIconNotValid,
@@ -36,7 +36,7 @@ interface CollectionCategoriesCreateOptions {
   skipReferenceCheckForCollectionCategoryIds?: CollectionCategoryId[];
 }
 
-export default class CollectionCategoriesCreate extends Usecase<
+export default class CollectionCategoriesCreate extends BackendUsecase<
   Backend["collectionCategories"]["create"]
 > {
   argumentsSchema = v.tuple([looseObjectAs<CollectionCategoryDefinition>()]);

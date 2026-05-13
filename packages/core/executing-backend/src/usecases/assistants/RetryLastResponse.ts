@@ -21,9 +21,9 @@ import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
 import {
   cannotRetryLastResponse,
@@ -36,7 +36,7 @@ import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsRetryLastResponse extends Usecase<
+export default class AssistantsRetryLastResponse extends BackendUsecase<
   Backend["assistants"]["retryLastResponse"]
 > {
   argumentsSchema = v.tuple([

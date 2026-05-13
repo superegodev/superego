@@ -42,8 +42,8 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import type ArrayElement from "../../utils/ArrayElement.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
 import {
   collectionMigrationFailed,
@@ -66,7 +66,7 @@ import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
-export default class CollectionsCreateNewVersion extends Usecase<
+export default class CollectionsCreateNewVersion extends BackendUsecase<
   Backend["collections"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([

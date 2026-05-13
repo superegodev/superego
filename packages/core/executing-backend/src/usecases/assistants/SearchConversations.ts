@@ -8,15 +8,15 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeConversation from "../../makers/makeConversation.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { liteConversation } from "../../validation/domain/conversation.js";
 import { textSearchResult } from "../../validation/domain/textSearchResult.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsSearchConversations extends Usecase<
+export default class AssistantsSearchConversations extends BackendUsecase<
   Backend["assistants"]["searchConversations"]
 > {
   argumentsSchema = v.tuple([

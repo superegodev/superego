@@ -45,6 +45,7 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
 import {
   extractProtoCollectionIds,
@@ -58,7 +59,6 @@ import {
   replaceProtoCollectionIds,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { app as appSchema } from "../../validation/domain/app.js";
 import { collection as collectionSchema } from "../../validation/domain/collection.js";
 import { collectionCategory } from "../../validation/domain/collectionCategory.js";
@@ -93,7 +93,9 @@ import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
-export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
+export default class PacksInstall extends BackendUsecase<
+  Backend["packs"]["install"]
+> {
   argumentsSchema = v.tuple([looseObjectAs<Pack>()]);
   resultSchema = makeResultSchema(
     v.strictObject({

@@ -23,12 +23,12 @@ import {
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   extractProtoDocumentIds,
   makeProtoDocumentIdMapping,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { document as documentDomainSchema } from "../../validation/domain/document.js";
 import {
   collectionNotFound,
@@ -50,7 +50,7 @@ interface DocumentsCreateManyOptions {
   documentIds?: DocumentId[];
 }
 
-export default class DocumentsCreateMany extends Usecase<
+export default class DocumentsCreateMany extends BackendUsecase<
   Backend["documents"]["createMany"]
 > {
   argumentsSchema = v.tuple([v.array(looseObjectAs<DocumentDefinition>())]);

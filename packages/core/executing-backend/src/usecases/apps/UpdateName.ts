@@ -18,7 +18,7 @@ import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { app } from "../../validation/domain/app.js";
 import {
   appNameNotValid,
@@ -28,7 +28,7 @@ import {
 import { appId } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class AppsUpdateName extends Usecase<
+export default class AppsUpdateName extends BackendUsecase<
   Backend["apps"]["updateName"]
 > {
   argumentsSchema = v.tuple([appId(), v.string()]);

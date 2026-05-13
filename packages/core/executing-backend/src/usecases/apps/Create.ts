@@ -21,7 +21,7 @@ import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { app } from "../../validation/domain/app.js";
 import {
   appNameNotValid,
@@ -35,7 +35,9 @@ interface AppsCreateOptions {
   appId?: AppId;
 }
 
-export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
+export default class AppsCreate extends BackendUsecase<
+  Backend["apps"]["create"]
+> {
   argumentsSchema = v.tuple([looseObjectAs<AppDefinition>()]);
   resultSchema = makeResultSchema(app(), [
     appNameNotValid(),

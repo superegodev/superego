@@ -25,8 +25,8 @@ import { compact } from "es-toolkit";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { typescriptModule as typescriptModuleSchema } from "../../validation/domain/typescript.js";
 import {
   inferenceOptionsNotValid,
@@ -39,7 +39,7 @@ import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 const MAX_ATTEMPTS = 5;
 
-export default class InferenceImplementTypescriptModule extends Usecase<
+export default class InferenceImplementTypescriptModule extends BackendUsecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
   argumentsSchema = v.tuple([

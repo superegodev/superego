@@ -4,12 +4,12 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeLitePack from "../../makers/makeLitePack.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { litePack } from "../../validation/domain/pack.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class BoutiqueListPacks extends Usecase<
+export default class BoutiqueListPacks extends BackendUsecase<
   Backend["boutique"]["listPacks"]
 > {
   argumentsSchema = v.tuple([]);

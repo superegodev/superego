@@ -15,7 +15,7 @@ import {
 import * as v from "valibot";
 import makeDocumentVersion from "../../makers/makeDocumentVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { documentVersion as documentVersionSchema } from "../../validation/domain/document.js";
 import {
   documentVersionNotFound,
@@ -28,7 +28,7 @@ import {
 } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsGetVersion extends Usecase<
+export default class DocumentsGetVersion extends BackendUsecase<
   Backend["documents"]["getVersion"]
 > {
   argumentsSchema = v.tuple([

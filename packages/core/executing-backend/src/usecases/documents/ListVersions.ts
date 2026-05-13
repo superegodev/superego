@@ -14,7 +14,7 @@ import {
 import * as v from "valibot";
 import makeMinimalDocumentVersion from "../../makers/makeMinimalDocumentVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { minimalDocumentVersion } from "../../validation/domain/document.js";
 import { documentNotFound, unexpectedError } from "../../validation/errors.js";
 import {
@@ -23,7 +23,7 @@ import {
 } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsListVersions extends Usecase<
+export default class DocumentsListVersions extends BackendUsecase<
   Backend["documents"]["listVersions"]
 > {
   argumentsSchema = v.tuple([collectionIdSchema(), documentIdSchema()]);

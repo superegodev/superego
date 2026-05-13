@@ -3,12 +3,12 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeConnector from "../../makers/makeConnector.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { connector } from "../../validation/domain/connector.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionsListConnectors extends Usecase<
+export default class CollectionsListConnectors extends BackendUsecase<
   Backend["collections"]["listConnectors"]
 > {
   argumentsSchema = v.tuple([]);

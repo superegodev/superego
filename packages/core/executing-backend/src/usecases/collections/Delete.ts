@@ -16,8 +16,8 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import {
   collectionIsReferenced,
   collectionNotFound,
@@ -31,7 +31,7 @@ import AppsDelete from "../apps/Delete.js";
 import AppsList from "../apps/List.js";
 import DocumentsDelete from "../documents/Delete.js";
 
-export default class CollectionsDelete extends Usecase<
+export default class CollectionsDelete extends BackendUsecase<
   Backend["collections"]["delete"]
 > {
   argumentsSchema = v.tuple([collectionIdSchema(), v.string()]);

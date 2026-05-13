@@ -20,7 +20,7 @@ import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
 import {
   collectionHasNoRemote,
@@ -31,7 +31,7 @@ import {
 import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionsAuthenticateOAuth2PKCEConnector extends Usecase<
+export default class CollectionsAuthenticateOAuth2PKCEConnector extends BackendUsecase<
   Backend["collections"]["authenticateOAuth2PKCEConnector"]
 > {
   argumentsSchema = v.tuple([collectionIdSchema(), v.string()]);

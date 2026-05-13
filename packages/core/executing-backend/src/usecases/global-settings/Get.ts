@@ -6,12 +6,12 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { globalSettings as globalSettingsSchema } from "../../validation/domain/globalSettings.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class GlobalSettingsGet extends Usecase<
+export default class GlobalSettingsGet extends BackendUsecase<
   Backend["globalSettings"]["get"]
 > {
   argumentsSchema = v.tuple([]);

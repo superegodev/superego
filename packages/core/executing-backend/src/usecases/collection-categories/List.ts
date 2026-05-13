@@ -7,12 +7,12 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collectionCategory } from "../../validation/domain/collectionCategory.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionCategoriesList extends Usecase<
+export default class CollectionCategoriesList extends BackendUsecase<
   Backend["collectionCategories"]["list"]
 > {
   argumentsSchema = v.tuple([]);

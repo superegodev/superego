@@ -32,11 +32,11 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { document as documentDomainSchema } from "../../validation/domain/document.js";
 import {
   collectionNotFound,
@@ -62,7 +62,7 @@ type ExecReturnValue = ResultPromise<
   | DuplicateDocumentDetected
   | UnexpectedError
 >;
-export default class DocumentsCreate extends Usecase<
+export default class DocumentsCreate extends BackendUsecase<
   Backend["documents"]["create"]
 > {
   argumentsSchema = v.tuple([looseObjectAs<DocumentDefinition>()]);

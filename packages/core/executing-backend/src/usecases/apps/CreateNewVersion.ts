@@ -19,7 +19,7 @@ import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { app } from "../../validation/domain/app.js";
 import {
   appNotFound,
@@ -33,7 +33,7 @@ import {
 import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class AppsCreateNewVersion extends Usecase<
+export default class AppsCreateNewVersion extends BackendUsecase<
   Backend["apps"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([

@@ -31,8 +31,8 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
 import {
   appNotFound,
@@ -55,7 +55,7 @@ interface CollectionsCreateOptions {
   skipReferenceCheckForAppIds?: AppId[];
 }
 
-export default class CollectionsCreate extends Usecase<
+export default class CollectionsCreate extends BackendUsecase<
   Backend["collections"]["create"]
 > {
   argumentsSchema = v.tuple([looseObjectAs<CollectionDefinition>()]);

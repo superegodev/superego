@@ -13,8 +13,8 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import {
   inferenceOptionsNotValid,
   unexpectedError,
@@ -22,7 +22,9 @@ import {
 import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
+export default class InferenceStt extends BackendUsecase<
+  Backend["inference"]["stt"]
+> {
   argumentsSchema = v.tuple([
     looseObjectAs<AudioContent>(),
     looseObjectAs<InferenceOptions<"transcription">>(),

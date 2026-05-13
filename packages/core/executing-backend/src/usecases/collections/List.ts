@@ -10,12 +10,12 @@ import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collection } from "../../validation/domain/collection.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionsList extends Usecase<
+export default class CollectionsList extends BackendUsecase<
   Backend["collections"]["list"]
 > {
   argumentsSchema = v.tuple([]);

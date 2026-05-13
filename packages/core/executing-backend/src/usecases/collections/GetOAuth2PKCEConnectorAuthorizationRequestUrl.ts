@@ -16,7 +16,7 @@ import {
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   collectionHasNoRemote,
   collectionNotFound,
@@ -26,7 +26,7 @@ import {
 import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends Usecase<
+export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends BackendUsecase<
   Backend["collections"]["getOAuth2PKCEConnectorAuthorizationRequestUrl"]
 > {
   argumentsSchema = v.tuple([collectionIdSchema()]);

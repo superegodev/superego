@@ -17,7 +17,7 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   collectionNotFound,
   commandConfirmationNotValid,
@@ -32,7 +32,7 @@ import {
 } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsDelete extends Usecase<
+export default class DocumentsDelete extends BackendUsecase<
   Backend["documents"]["delete"]
 > {
   argumentsSchema = v.tuple([

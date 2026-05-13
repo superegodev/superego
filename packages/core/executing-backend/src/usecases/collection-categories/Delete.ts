@@ -12,7 +12,7 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   collectionCategoryHasChildren,
   collectionCategoryNotFound,
@@ -21,7 +21,7 @@ import {
 import { collectionCategoryId } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class CollectionCategoriesDelete extends Usecase<
+export default class CollectionCategoriesDelete extends BackendUsecase<
   Backend["collectionCategories"]["delete"]
 > {
   argumentsSchema = v.tuple([collectionCategoryId()]);

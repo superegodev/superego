@@ -15,7 +15,7 @@ import * as v from "valibot";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { document as documentDomainSchema } from "../../validation/domain/document.js";
 import { documentNotFound, unexpectedError } from "../../validation/errors.js";
 import {
@@ -24,7 +24,9 @@ import {
 } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsGet extends Usecase<Backend["documents"]["get"]> {
+export default class DocumentsGet extends BackendUsecase<
+  Backend["documents"]["get"]
+> {
   argumentsSchema = v.tuple([collectionIdSchema(), documentIdSchema()]);
   resultSchema = makeResultSchema(documentDomainSchema(), [
     documentNotFound(),

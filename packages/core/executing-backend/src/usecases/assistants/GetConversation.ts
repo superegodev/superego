@@ -14,8 +14,8 @@ import * as v from "valibot";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
 import {
   conversationNotFound,
@@ -25,7 +25,7 @@ import { conversationId } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsGetConversation extends Usecase<
+export default class AssistantsGetConversation extends BackendUsecase<
   Backend["assistants"]["getConversation"]
 > {
   argumentsSchema = v.tuple([conversationId()]);

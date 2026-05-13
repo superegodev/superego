@@ -7,12 +7,12 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeLiteBackgroundJob from "../../makers/makeLiteBackgroundJob.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { liteBackgroundJob } from "../../validation/domain/backgroundJob.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class BackgroundJobsList extends Usecase<
+export default class BackgroundJobsList extends BackendUsecase<
   Backend["backgroundJobs"]["list"]
 > {
   argumentsSchema = v.tuple([]);

@@ -9,12 +9,12 @@ import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { developerPrompts } from "../../validation/domain/conversation.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class AssistantsGetDeveloperPrompts extends Usecase<
+export default class AssistantsGetDeveloperPrompts extends BackendUsecase<
   Backend["assistants"]["getDeveloperPrompts"]
 > {
   argumentsSchema = v.tuple([]);

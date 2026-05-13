@@ -18,7 +18,7 @@ import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   document as documentDomainSchema,
   liteDocument,
@@ -30,7 +30,7 @@ import {
 import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsList extends Usecase<
+export default class DocumentsList extends BackendUsecase<
   Backend["documents"]["list"]
 > {
   // The public Backend signature has overloads but `Parameters<>` resolves to

@@ -34,11 +34,11 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import { document as documentDomainSchema } from "../../validation/domain/document.js";
 import {
   collectionNotFound,
@@ -70,7 +70,7 @@ type ExecReturnValue = ResultPromise<
   | ReferencedDocumentsNotFound
   | UnexpectedError
 >;
-export default class DocumentsCreateNewVersion extends Usecase<
+export default class DocumentsCreateNewVersion extends BackendUsecase<
   Backend["documents"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([

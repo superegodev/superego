@@ -24,13 +24,13 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertCollectionVersionHasRemoteConverters from "../../utils/assertCollectionVersionHasRemoteConverters.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import CollectionUtils from "../../utils/CollectionUtils.js";
-import InternalUsecase from "../../utils/InternalUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
+import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "../documents/Create.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 import DocumentsDelete from "../documents/Delete.js";
 
-export default class CollectionsDownSync extends InternalUsecase {
+export default class CollectionsDownSync extends Usecase {
   async exec({
     id,
   }: {

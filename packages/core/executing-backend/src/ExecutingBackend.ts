@@ -67,7 +67,7 @@ import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import PacksInstall from "./usecases/packs/Install.js";
-import type Usecase from "./utils/Usecase.js";
+import type BackendUsecase from "./utils/BackendUsecase.js";
 
 export default class ExecutingBackend implements Backend {
   collectionCategories: Backend["collectionCategories"];
@@ -237,7 +237,7 @@ export default class ExecutingBackend implements Backend {
       connectors: Connector[],
       liveConversationStore: LiveConversationStore,
       config: Config,
-    ) => Usecase<Exec>,
+    ) => BackendUsecase<Exec>,
     triggerBackgroundJobCheck: boolean,
   ): Exec {
     return (async (...args: any[]) =>

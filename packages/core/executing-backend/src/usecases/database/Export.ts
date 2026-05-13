@@ -2,11 +2,11 @@ import type { Backend, UnexpectedError } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { unexpectedError } from "../../validation/errors.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DatabaseExport extends Usecase<
+export default class DatabaseExport extends BackendUsecase<
   Backend["database"]["export"]
 > {
   argumentsSchema = v.tuple([v.string()]);

@@ -19,7 +19,7 @@ import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   document as documentDomainSchema,
   liteDocument,
@@ -32,7 +32,7 @@ import {
 import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class DocumentsSearch extends Usecase<
+export default class DocumentsSearch extends BackendUsecase<
   Backend["documents"]["search"]
 > {
   argumentsSchema = v.tuple([

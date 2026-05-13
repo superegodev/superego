@@ -13,7 +13,7 @@ import {
 import * as v from "valibot";
 import makeBackgroundJob from "../../makers/makeBackgroundJob.js";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { backgroundJob } from "../../validation/domain/backgroundJob.js";
 import {
   backgroundJobNotFound,
@@ -22,7 +22,7 @@ import {
 import { backgroundJobId } from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class BackgroundJobsGet extends Usecase<
+export default class BackgroundJobsGet extends BackendUsecase<
   Backend["backgroundJobs"]["get"]
 > {
   argumentsSchema = v.tuple([backgroundJobId()]);

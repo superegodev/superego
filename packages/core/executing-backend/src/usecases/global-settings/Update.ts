@@ -13,7 +13,7 @@ import {
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import { globalSettings as globalSettingsSchema } from "../../validation/domain/globalSettings.js";
 import {
   globalSettingsNotValid,
@@ -22,7 +22,7 @@ import {
 import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
-export default class GlobalSettingsUpdate extends Usecase<
+export default class GlobalSettingsUpdate extends BackendUsecase<
   Backend["globalSettings"]["update"]
 > {
   argumentsSchema = v.tuple([looseObjectAs<Partial<GlobalSettings>>()]);
