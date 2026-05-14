@@ -33,7 +33,10 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collection as collectionDomainSchema,
+  collectionDefinition,
+} from "../../validation/domain/collection.js";
 import {
   appNotFound,
   collectionCategoryNotFound,
@@ -45,7 +48,6 @@ import {
   referencedCollectionsNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface CollectionsCreateOptions {
@@ -58,7 +60,7 @@ interface CollectionsCreateOptions {
 export default class CollectionsCreate extends BackendUsecase<
   Backend["collections"]["create"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<CollectionDefinition>()]);
+  argumentsSchema = v.tuple([collectionDefinition()]);
   resultSchema = makeResultSchema(collectionDomainSchema(), [
     appNotFound(),
     collectionCategoryNotFound(),

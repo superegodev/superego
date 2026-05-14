@@ -63,6 +63,7 @@ import { app as appSchema } from "../../validation/domain/app.js";
 import { collection as collectionSchema } from "../../validation/domain/collection.js";
 import { collectionCategory } from "../../validation/domain/collectionCategory.js";
 import { document as documentSchema } from "../../validation/domain/document.js";
+import { pack as packSchema } from "../../validation/domain/pack.js";
 import {
   appNameNotValid,
   appNotFound,
@@ -86,7 +87,6 @@ import {
   referencedDocumentsNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import AppsCreate from "../apps/Create.js";
 import CollectionCategoriesCreate from "../collection-categories/Create.js";
@@ -96,7 +96,7 @@ import DocumentsCreate from "../documents/Create.js";
 export default class PacksInstall extends BackendUsecase<
   Backend["packs"]["install"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<Pack>()]);
+  argumentsSchema = v.tuple([packSchema()]);
   resultSchema = makeResultSchema(
     v.strictObject({
       collectionCategories: v.array(collectionCategory()),

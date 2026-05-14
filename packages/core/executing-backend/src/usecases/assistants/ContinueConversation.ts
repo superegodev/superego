@@ -33,7 +33,11 @@ import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
-import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
+import {
+  conversation as conversationSchema,
+  nonEmptyMessageContentParts,
+} from "../../validation/domain/conversation.js";
+import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
 import {
   cannotContinueConversation,
   conversationNotFound,
@@ -42,7 +46,6 @@ import {
   unexpectedError,
 } from "../../validation/errors.js";
 import { conversationId } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
@@ -51,11 +54,8 @@ export default class AssistantsContinueConversation extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     conversationId(),
-    v.array(v.unknown()) as unknown as v.GenericSchema<
-      unknown,
-      NonEmptyArray<MessageContentPart.Text>
-    >,
-    looseObjectAs<InferenceOptions<"completion">>(),
+    nonEmptyMessageContentParts(),
+    inferenceOptionsSchema("completion"),
   ]);
   resultSchema = makeResultSchema(conversationSchema(), [
     cannotContinueConversation(),

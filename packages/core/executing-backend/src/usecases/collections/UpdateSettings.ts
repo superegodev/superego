@@ -30,8 +30,11 @@ import {
   collectionSettingsNotValid,
   unexpectedError,
 } from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
+import {
+  appId,
+  collectionCategoryId,
+  collectionId as collectionIdSchema,
+} from "../../validation/helpers/idSchemas.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsUpdateSettings extends BackendUsecase<
@@ -39,7 +42,15 @@ export default class CollectionsUpdateSettings extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     collectionIdSchema(),
-    looseObjectAs<Partial<CollectionSettings>>(),
+    v.strictObject({
+      name: v.optional(v.string()),
+      icon: v.optional(v.nullable(v.string())),
+      collectionCategoryId: v.optional(v.nullable(collectionCategoryId())),
+      defaultCollectionViewAppId: v.optional(v.nullable(appId())),
+      description: v.optional(v.nullable(v.string())),
+      assistantInstructions: v.optional(v.nullable(v.string())),
+      redirectToCollectionAfterDocumentCreation: v.optional(v.boolean()),
+    }),
   ]);
   resultSchema = makeResultSchema(collectionDomainSchema(), [
     appNotFound(),

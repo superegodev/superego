@@ -30,6 +30,8 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import { defaultDocumentViewUiOptions } from "../../validation/domain/defaultDocumentViewUiOptions.js";
+import { typescriptModule } from "../../validation/domain/typescript.js";
 import {
   collectionNotFound,
   collectionVersionIdNotMatching,
@@ -43,7 +45,6 @@ import {
   collectionId as collectionIdSchema,
   collectionVersionId as collectionVersionIdSchema,
 } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionUpdateLatestVersionSettings extends BackendUsecase<
@@ -52,7 +53,13 @@ export default class CollectionUpdateLatestVersionSettings extends BackendUsecas
   argumentsSchema = v.tuple([
     collectionIdSchema(),
     collectionVersionIdSchema(),
-    looseObjectAs<Partial<CollectionVersionSettings>>(),
+    v.strictObject({
+      contentBlockingKeysGetter: v.optional(v.nullable(typescriptModule())),
+      contentSummaryGetter: v.optional(typescriptModule()),
+      defaultDocumentViewUiOptions: v.optional(
+        v.nullable(defaultDocumentViewUiOptions()),
+      ),
+    }),
   ]);
   resultSchema = makeResultSchema(collectionDomainSchema(), [
     collectionNotFound(),

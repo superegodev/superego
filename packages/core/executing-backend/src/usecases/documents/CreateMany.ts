@@ -29,7 +29,10 @@ import {
   makeProtoDocumentIdMapping,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import { document as documentDomainSchema } from "../../validation/domain/document.js";
+import {
+  document as documentDomainSchema,
+  documentDefinition,
+} from "../../validation/domain/document.js";
 import {
   collectionNotFound,
   connectorDoesNotSupportUpSyncing,
@@ -40,7 +43,6 @@ import {
   referencedDocumentsNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreate from "./Create.js";
 
@@ -53,7 +55,7 @@ interface DocumentsCreateManyOptions {
 export default class DocumentsCreateMany extends BackendUsecase<
   Backend["documents"]["createMany"]
 > {
-  argumentsSchema = v.tuple([v.array(looseObjectAs<DocumentDefinition>())]);
+  argumentsSchema = v.tuple([v.array(documentDefinition())]);
   resultSchema = makeResultSchema(v.array(documentDomainSchema()), [
     collectionNotFound(),
     connectorDoesNotSupportUpSyncing(),

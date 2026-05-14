@@ -19,13 +19,21 @@ import {
   globalSettingsNotValid,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class GlobalSettingsUpdate extends BackendUsecase<
   Backend["globalSettings"]["update"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<Partial<GlobalSettings>>()]);
+  // Structural-only: the patch is merged with the stored settings and the
+  // result is fully validated by `valibotSchemas.globalSettings()` in `exec`,
+  // which surfaces `GlobalSettingsNotValid`.
+  argumentsSchema = v.tuple([
+    v.strictObject({
+      appearance: v.optional(v.looseObject({})),
+      inference: v.optional(v.looseObject({})),
+      assistants: v.optional(v.looseObject({})),
+    }) as unknown as v.GenericSchema<unknown, Partial<GlobalSettings>>,
+  ]);
   resultSchema = makeResultSchema(globalSettingsSchema(), [
     globalSettingsNotValid(),
     unexpectedError(),

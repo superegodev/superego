@@ -37,7 +37,10 @@ import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { document as documentDomainSchema } from "../../validation/domain/document.js";
+import {
+  document as documentDomainSchema,
+  documentDefinition,
+} from "../../validation/domain/document.js";
 import {
   collectionNotFound,
   connectorDoesNotSupportUpSyncing,
@@ -48,7 +51,6 @@ import {
   referencedDocumentsNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 type ExecReturnValue = ResultPromise<
@@ -65,7 +67,7 @@ type ExecReturnValue = ResultPromise<
 export default class DocumentsCreate extends BackendUsecase<
   Backend["documents"]["create"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<DocumentDefinition>()]);
+  argumentsSchema = v.tuple([documentDefinition()]);
   resultSchema = makeResultSchema(documentDomainSchema(), [
     collectionNotFound(),
     connectorDoesNotSupportUpSyncing(),

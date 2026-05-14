@@ -28,7 +28,10 @@ import {
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collection as collectionDomainSchema,
+  collectionDefinition,
+} from "../../validation/domain/collection.js";
 import {
   appNotFound,
   collectionCategoryNotFound,
@@ -40,7 +43,6 @@ import {
   referencedCollectionsNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsCreate from "./Create.js";
 
@@ -53,7 +55,7 @@ interface CollectionsCreateManyOptions {
 export default class CollectionsCreateMany extends BackendUsecase<
   Backend["collections"]["createMany"]
 > {
-  argumentsSchema = v.tuple([v.array(looseObjectAs<CollectionDefinition>())]);
+  argumentsSchema = v.tuple([v.array(collectionDefinition())]);
   resultSchema = makeResultSchema(v.array(collectionDomainSchema()), [
     appNotFound(),
     collectionCategoryNotFound(),

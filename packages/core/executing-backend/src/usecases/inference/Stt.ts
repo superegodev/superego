@@ -15,19 +15,20 @@ import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
+import { audioContent } from "../../validation/domain/audioContent.js";
+import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
 import {
   inferenceOptionsNotValid,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class InferenceStt extends BackendUsecase<
   Backend["inference"]["stt"]
 > {
   argumentsSchema = v.tuple([
-    looseObjectAs<AudioContent>(),
-    looseObjectAs<InferenceOptions<"transcription">>(),
+    audioContent(),
+    inferenceOptionsSchema("transcription"),
   ]);
   resultSchema = makeResultSchema(v.string(), [
     inferenceOptionsNotValid(),

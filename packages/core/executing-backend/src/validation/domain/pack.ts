@@ -7,6 +7,10 @@ import {
 } from "@superego/backend";
 import * as v from "valibot";
 import { packId } from "../helpers/idSchemas.js";
+import { protoAppDefinition } from "./app.js";
+import { protoCollectionDefinition } from "./collection.js";
+import { protoCollectionCategoryDefinition } from "./collectionCategory.js";
+import { protoDocumentDefinition } from "./document.js";
 
 const screenshot = () =>
   v.looseObject({
@@ -42,10 +46,10 @@ export function pack(): v.GenericSchema<unknown, Pack> {
   return v.looseObject({
     id: packId(),
     info: packInfo(),
-    collectionCategories: v.array(v.looseObject({})),
-    collections: v.array(v.looseObject({})),
-    apps: v.array(v.looseObject({})),
-    documents: v.array(v.looseObject({})),
+    collectionCategories: v.array(protoCollectionCategoryDefinition()),
+    collections: v.array(protoCollectionDefinition()),
+    apps: v.array(protoAppDefinition()),
+    documents: v.array(protoDocumentDefinition()),
   }) as unknown as v.GenericSchema<unknown, Pack>;
 }
 

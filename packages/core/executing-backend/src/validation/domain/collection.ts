@@ -70,6 +70,20 @@ export function collection(): v.GenericSchema<unknown, Collection> {
   });
 }
 
+/**
+ * Structural-only shape check for a `Schema`. Used in argument schemas, where
+ * the full semantic validation (`schemaValibotSchemas.schema()`, which also
+ * enforces rules like "root type must be a Struct") is left to the usecase so
+ * it can surface a `CollectionSchemaNotValid` error instead of a generic
+ * `ArgumentsNotValid`.
+ */
+export function schemaShape() {
+  return v.looseObject({
+    types: v.record(v.string(), v.looseObject({})),
+    rootType: v.string(),
+  });
+}
+
 export function collectionDefinition(): v.GenericSchema<
   unknown,
   CollectionDefinition<false, false>
@@ -84,9 +98,9 @@ export function collectionDefinition(): v.GenericSchema<
       assistantInstructions: v.nullable(v.string()),
       redirectToCollectionAfterDocumentCreation: v.boolean(),
     }),
-    schema: schemaValibotSchemas.schema(),
+    schema: schemaShape(),
     versionSettings: collectionVersionSettings(),
-  });
+  }) as unknown as v.GenericSchema<unknown, CollectionDefinition<false, false>>;
 }
 
 export function protoCollectionDefinition(): v.GenericSchema<
@@ -105,7 +119,7 @@ export function protoCollectionDefinition(): v.GenericSchema<
       assistantInstructions: v.nullable(v.string()),
       redirectToCollectionAfterDocumentCreation: v.boolean(),
     }),
-    schema: schemaValibotSchemas.schema(),
+    schema: schemaShape(),
     versionSettings: collectionVersionSettings(),
-  });
+  }) as unknown as v.GenericSchema<unknown, CollectionDefinition<true, true>>;
 }

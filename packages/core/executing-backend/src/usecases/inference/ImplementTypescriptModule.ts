@@ -27,14 +27,17 @@ import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { typescriptModule as typescriptModuleSchema } from "../../validation/domain/typescript.js";
+import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
+import {
+  typescriptFile,
+  typescriptModule as typescriptModuleSchema,
+} from "../../validation/domain/typescript.js";
 import {
   inferenceOptionsNotValid,
   tooManyFailedImplementationAttempts,
   unexpectedError,
   writeTypescriptModuleToolNotCalled,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 const MAX_ATTEMPTS = 5;
@@ -43,10 +46,16 @@ export default class InferenceImplementTypescriptModule extends BackendUsecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
   argumentsSchema = v.tuple([
-    looseObjectAs<
-      Parameters<Backend["inference"]["implementTypescriptModule"]>[0]
-    >(),
-    looseObjectAs<InferenceOptions<"completion">>(),
+    v.strictObject({
+      description: v.string(),
+      rules: v.nullable(v.string()),
+      additionalInstructions: v.nullable(v.string()),
+      template: v.string(),
+      libs: v.array(typescriptFile()),
+      startingPoint: typescriptFile(),
+      userRequest: v.string(),
+    }),
+    inferenceOptionsSchema("completion"),
   ]);
   resultSchema = makeResultSchema(typescriptModuleSchema(), [
     inferenceOptionsNotValid(),

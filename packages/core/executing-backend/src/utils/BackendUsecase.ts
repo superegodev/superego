@@ -8,11 +8,11 @@ import type * as v from "valibot";
 import Usecase from "./Usecase.js";
 
 /**
- * Strips `ArgumentsNotValid` from a Backend method's error union. The error
- * is added by `ExecutingBackend.makeUsecase` when input validation fails — the
- * usecase implementation itself never returns it. Subtracting it here keeps
- * the usecase's exec signature honest, so internal `sub()` callers don't see
- * a phantom error variant they could never receive.
+ * Strips `ArgumentsNotValid` from a Backend method's error union. The error is
+ * added by `ExecutingBackend.makeUsecase` when input validation fails — the
+ * usecase implementation itself never returns it. Subtracting it here keeps the
+ * usecase's exec signature honest, so internal `sub()` callers don't see a
+ * phantom error variant they could never receive.
  */
 type StripArgumentsNotValid<Exec> = Exec extends (
   ...args: infer Args
@@ -32,8 +32,7 @@ type StripArgumentsNotValid<Exec> = Exec extends (
 /**
  * Base class for usecases exposed via the public `Backend` interface. Each
  * subclass must declare an `argumentsSchema` and a `resultSchema` that the
- * `ExecutingBackend` uses to validate inputs and outputs at the RPC
- * boundary.
+ * `ExecutingBackend` uses to validate inputs and outputs at the RPC boundary.
  */
 export default abstract class BackendUsecase<
   Exec extends (...args: any[]) => ResultPromise<any, any> = (

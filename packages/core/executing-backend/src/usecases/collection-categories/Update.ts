@@ -31,7 +31,6 @@ import {
   unexpectedError,
 } from "../../validation/errors.js";
 import { collectionCategoryId } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionCategoriesUpdate extends BackendUsecase<
@@ -39,9 +38,11 @@ export default class CollectionCategoriesUpdate extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     collectionCategoryId(),
-    looseObjectAs<
-      Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>
-    >(),
+    v.strictObject({
+      name: v.optional(v.string()),
+      icon: v.optional(v.nullable(v.string())),
+      parentId: v.optional(v.nullable(collectionCategoryId())),
+    }),
   ]);
   resultSchema = makeResultSchema(collectionCategory(), [
     collectionCategoryIconNotValid(),

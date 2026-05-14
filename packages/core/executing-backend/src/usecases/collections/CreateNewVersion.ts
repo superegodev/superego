@@ -44,7 +44,13 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import {
+  collection as collectionDomainSchema,
+  collectionVersionSettings,
+  schemaShape,
+} from "../../validation/domain/collection.js";
+import { remoteConverters } from "../../validation/domain/remote.js";
+import { typescriptModule } from "../../validation/domain/typescript.js";
 import {
   collectionMigrationFailed,
   collectionMigrationNotValid,
@@ -62,7 +68,6 @@ import {
   collectionId as collectionIdSchema,
   collectionVersionId as collectionVersionIdSchema,
 } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
@@ -72,10 +77,10 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
   argumentsSchema = v.tuple([
     collectionIdSchema(),
     collectionVersionIdSchema(),
-    looseObjectAs<Schema>(),
-    looseObjectAs<CollectionVersionSettings>(),
-    v.nullable(looseObjectAs<TypescriptModule>()),
-    v.nullable(looseObjectAs<RemoteConverters>()),
+    schemaShape() as unknown as v.GenericSchema<unknown, Schema>,
+    collectionVersionSettings(),
+    v.nullable(typescriptModule()),
+    v.nullable(remoteConverters()),
   ]);
   resultSchema = makeResultSchema(collectionDomainSchema(), [
     collectionMigrationFailed(),

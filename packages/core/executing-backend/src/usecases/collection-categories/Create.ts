@@ -21,14 +21,16 @@ import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collectionCategory } from "../../validation/domain/collectionCategory.js";
+import {
+  collectionCategory,
+  collectionCategoryDefinition,
+} from "../../validation/domain/collectionCategory.js";
 import {
   collectionCategoryIconNotValid,
   collectionCategoryNameNotValid,
   parentCollectionCategoryNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface CollectionCategoriesCreateOptions {
@@ -39,7 +41,7 @@ interface CollectionCategoriesCreateOptions {
 export default class CollectionCategoriesCreate extends BackendUsecase<
   Backend["collectionCategories"]["create"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<CollectionCategoryDefinition>()]);
+  argumentsSchema = v.tuple([collectionCategoryDefinition()]);
   resultSchema = makeResultSchema(collectionCategory(), [
     collectionCategoryIconNotValid(),
     collectionCategoryNameNotValid(),

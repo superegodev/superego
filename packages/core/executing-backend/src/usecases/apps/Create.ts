@@ -22,13 +22,12 @@ import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { app } from "../../validation/domain/app.js";
+import { app, appDefinition } from "../../validation/domain/app.js";
 import {
   appNameNotValid,
   collectionNotFound,
   unexpectedError,
 } from "../../validation/errors.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface AppsCreateOptions {
@@ -38,7 +37,7 @@ interface AppsCreateOptions {
 export default class AppsCreate extends BackendUsecase<
   Backend["apps"]["create"]
 > {
-  argumentsSchema = v.tuple([looseObjectAs<AppDefinition>()]);
+  argumentsSchema = v.tuple([appDefinition()]);
   resultSchema = makeResultSchema(app(), [
     appNameNotValid(),
     collectionNotFound(),

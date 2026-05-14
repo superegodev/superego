@@ -30,6 +30,7 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
+import { remoteConverters } from "../../validation/domain/remote.js";
 import {
   cannotChangeCollectionRemoteConnector,
   collectionHasDocuments,
@@ -41,7 +42,6 @@ import {
   unexpectedError,
 } from "../../validation/errors.js";
 import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsSetRemote extends BackendUsecase<
@@ -50,9 +50,15 @@ export default class CollectionsSetRemote extends BackendUsecase<
   argumentsSchema = v.tuple([
     collectionIdSchema(),
     v.string(),
-    looseObjectAs<ConnectorAuthenticationSettings>(),
+    // The connector validates the authentication settings against its own
+    // schema and surfaces `ConnectorAuthenticationSettingsNotValid`, so the
+    // boundary check here is only structural (it's an object).
+    v.looseObject({}) as unknown as v.GenericSchema<
+      unknown,
+      ConnectorAuthenticationSettings
+    >,
     v.any(),
-    looseObjectAs<RemoteConverters>(),
+    remoteConverters(),
   ]);
   resultSchema = makeResultSchema(collectionDomainSchema(), [
     cannotChangeCollectionRemoteConnector(),

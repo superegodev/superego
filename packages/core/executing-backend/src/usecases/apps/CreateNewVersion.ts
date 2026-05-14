@@ -21,6 +21,7 @@ import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import { app } from "../../validation/domain/app.js";
+import { typescriptModule } from "../../validation/domain/typescript.js";
 import {
   appNotFound,
   collectionNotFound,
@@ -30,7 +31,6 @@ import {
   appId,
   collectionId as collectionIdSchema,
 } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsCreateNewVersion extends BackendUsecase<
@@ -39,7 +39,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
   argumentsSchema = v.tuple([
     appId(),
     v.array(collectionIdSchema()),
-    looseObjectAs<AppVersionEntity["files"]>(),
+    v.strictObject({ "/main.tsx": typescriptModule() }),
   ]);
   resultSchema = makeResultSchema(app(), [
     appNotFound(),

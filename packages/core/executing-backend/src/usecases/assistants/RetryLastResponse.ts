@@ -25,6 +25,7 @@ import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
 import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
+import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
 import {
   cannotRetryLastResponse,
   conversationNotFound,
@@ -32,7 +33,6 @@ import {
   unexpectedError,
 } from "../../validation/errors.js";
 import { conversationId } from "../../validation/helpers/idSchemas.js";
-import looseObjectAs from "../../validation/helpers/looseObjectAs.js";
 import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
@@ -41,7 +41,7 @@ export default class AssistantsRetryLastResponse extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     conversationId(),
-    looseObjectAs<InferenceOptions<"completion">>(),
+    inferenceOptionsSchema("completion"),
   ]);
   resultSchema = makeResultSchema(conversationSchema(), [
     cannotRetryLastResponse(),
